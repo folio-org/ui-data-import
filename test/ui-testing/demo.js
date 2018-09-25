@@ -1,7 +1,7 @@
 /* global Nightmare, describe, it, before, after */
 
 module.exports.test = (uiTestCtx) => {
-  describe('Module test: ui-cataload:', function() {
+  describe('Module test: ui-data-import:', function () {
     const { config, helpers: { login, logout } } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
@@ -16,11 +16,11 @@ module.exports.test = (uiTestCtx) => {
       });
       it('should open app and see stripes-new-app-greeting', (done) => {
         nightmare
-          .wait('#clickable-cataload-module')
-          .click('#clickable-cataload-module')
-          .wait('#cataload-module-display')
+          .wait('#clickable-data-import-module')
+          .click('#clickable-data-import-module')
+          .wait('#data-import-module-display')
           .wait('#stripes-new-app-greeting')
-          .then(result => { done(); })
+          .then(() => { done(); })
           .catch(done);
       });
     });
@@ -36,12 +36,12 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait(config.select.settings)
           .click(config.select.settings)
-          .wait('a[href="/settings/cataload"]')
-          .click('a[href="/settings/cataload"]')
-          .wait('a[href="/settings/cataload/general"]')
-          .click('a[href="/settings/cataload/general"]')
+          .wait('a[href="/settings/data-import"]')
+          .click('a[href="/settings/data-import"]')
+          .wait('a[href="/settings/data-import/general"]')
+          .click('a[href="/settings/data-import/general"]')
           .wait('#stripes-new-app-settings-message')
-          .then(result => { done(); })
+          .then(() => { done(); })
           .catch(done);
       });
     });

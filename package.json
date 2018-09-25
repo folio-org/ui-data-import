@@ -1,9 +1,12 @@
 {
-  "name": "@folio/cataload",
+  "name": "@folio/data-import",
   "version": "0.1.0",
-  "description": "Stripes applicaiton for Data Import application.",
+  "description": "Stripes application for Data Import feature.",
   "main": "src/index.js",
-  "repository": "",
+  "repository": "folio-org/ui-data-import",
+  "publishConfig": {
+    "registry": "https://repository.folio.org/repository/npm-folio/"
+  },
   "license": "Apache-2.0",
   "engines": {
     "node": ">=6.0.0"
@@ -12,17 +15,26 @@
     "start": "stripes serve",
     "build": "stripes build --output ./output",
     "test": "stripes test nightmare --run demo --show",
-    "lint": "eslint src"
+    "lint": "eslint .",
+    "lintfix": "eslint . --fix"
   },
   "devDependencies": {
-    "@folio/eslint-config-stripes": "^1.1.0",
-    "@folio/stripes-cli": "^1.2.0",
-    "babel-eslint": "^8.0.3",
-    "eslint": "^4.8.0"
+    "@folio/eslint-config-stripes": "^3.2.1",
+    "@folio/stripes-core": "^2.13.0",
+    "@folio/stripes-connect": "^3.2.1",
+    "@folio/stripes-cli": "^1.4.0",
+    "@folio/stripes-logger": "^1.0.0",
+    "babel-eslint": "^9.0.0",
+    "eslint": "^5.5.0",
+    "webpack": "^4.10.2",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
   },
   "dependencies": {
-    "@folio/stripes-components": "^2.0.0",
+    "@folio/stripes-components": "^3.0.0",
+    "@folio/stripes-smart-components": "^1.8.0",
     "prop-types": "^15.6.0",
+    "react-intl": "^2.3.0",
     "react-router-dom": "^4.1.1"
   },
   "peerDependencies": {
@@ -30,19 +42,19 @@
   },
   "stripes": {
     "type": "app",
-    "displayName": "ui-cataload",
-    "route": "/cataload",
+    "displayName": "ui-data-import.meta.title",
+    "route": "/data-import",
     "hasSettings": true,
     "okapiInterfaces": {},
     "permissionSets": [
       {
-        "permissionName": "module.cataload.enabled",
-        "displayName": "UI: ui-cataload module is enabled",
+        "permissionName": "module.data-import.enabled",
+        "displayName": "UI: ui-data-import module is enabled",
         "visible": true
       },
       {
-        "permissionName": "settings.cataload.enabled",
-        "displayName": "Settings (cataload): display list of settings pages",
+        "permissionName": "settings.data-import.enabled",
+        "displayName": "Settings (data-import): display list of settings pages",
         "subPermissions": [
           "settings.enabled"
         ],

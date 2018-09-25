@@ -11,7 +11,7 @@ export default class GeneralSettings extends React.Component {
   render() {
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
-        <div id="stripes-new-app-settings-message"><FormattedMessage id="ui-cataload.settings.general.message" /></div>
+        <div id="stripes-new-app-settings-message"><FormattedMessage id="ui-data-import.settings.general.message" /></div>
       </Pane>
     );
   }
