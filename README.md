@@ -1,4 +1,4 @@
-# ui-cataload
+# ui-data-import
 
 Copyright (C) 2018 The Open Library Foundation
 
@@ -6,25 +6,26 @@ This software is distributed under the terms of the Apache License, Version 2.0.
 
 ## Introduction
 
-Application fro Data Import functionality
+Application for Data Import functionality
+
 ## Prerequisites
 
 In order to view and log into the platform being served up, a suitable Okapi backend will need to be running. The [Folio testing-backend](https://app.vagrantup.com/folio/boxes/testing-backend) Vagrant box should work if your app does not yet have its own backend module.
 
 ## Run your new app
 
-Run the following from the ui-cataload directory to serve your new app using a development server:
+Run the following from the ui-data-import directory to serve your new app using a development server:
 ```
 stripes serve
 ```
 If you would like to include this compoenent into platform, please add
 ```
-"@folio/cataload": "../ui-cataload"
+"@folio/data-import": "../ui-data-import"
 ```
 to `.stripesclirc` file.
 And
 ```
-'@folio/cataload': {}
+'@folio/data-import': {}
 ```
 to `stripes.config.js` file.
 
@@ -45,3 +46,11 @@ Run the included UI test `demo` with the following command:
 stripes test --run demo --show
 ```
 
+## Additional information
+
+Other [modules](https://dev.folio.org/source-code/#client-side).
+
+See project [UIDATIMP](https://issues.folio.org/browse/UIDATIMP)
+at the [FOLIO issue tracker](https://dev.folio.org/guidelines/issue-tracker).
+
+Other FOLIO Developer documentation is at [dev.folio.org](https://dev.folio.org/)

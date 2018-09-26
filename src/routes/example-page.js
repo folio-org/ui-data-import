@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -14,10 +13,6 @@ import GreetingModal from '../components/greeting-modal';
 */
 
 export default class ExamplePage extends React.Component {
-  static propTypes = {
-    match: PropTypes.object.isRequired,
-  }
-
   constructor(props) {
     super(props);
     this.toggleModal = this.toggleModal.bind(this);
@@ -45,7 +40,7 @@ export default class ExamplePage extends React.Component {
           <Headline size="small">Paneset and Panes</Headline>
           These columns are created with Paneset and Pane components.
           <hr />
-          <Link to={`/cataload`}>home page</Link>
+          <Link to="/data-import">home page</Link>
         </Pane>
         <Pane defaultWidth="80%" paneTitle="Some Stripes Components">
           <Headline size="small" margin="medium">Button with modal</Headline>

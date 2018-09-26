@@ -1,4 +1,5 @@
 .idea
+.DS_Store
 
 package-lock.json
 yarn.lock
@@ -12,6 +13,7 @@ yarn-error.log*
 
 # Coverage directory
 coverage
+artifacts
 
 # Dependency directories
 node_modules/

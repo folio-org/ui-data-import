@@ -11,16 +11,17 @@ import Settings from './settings';
   This is the main entry point into your new app.
 */
 
-class Cataload extends React.Component {
+class DataImport extends React.Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     showSettings: PropTypes.bool,
-  }
+  };
 
   render() {
     if (this.props.showSettings) {
       return <Settings {...this.props} />;
     }
+
     return (
       <Switch>
         <Route path={`${this.props.match.path}`} exact component={Application} />
@@ -30,4 +31,4 @@ class Cataload extends React.Component {
   }
 }
 
-export default Cataload;
+export default DataImport;

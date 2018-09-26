@@ -11,7 +11,7 @@ export default class FeatureSettings extends React.Component {
   render() {
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
-        <FormattedMessage id="ui-cataload.settings.some-feature.message" />
+        <FormattedMessage id="ui-data-import.settings.some-feature.message" />
       </Pane>
     );
   }
