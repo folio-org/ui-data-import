@@ -1,0 +1,47 @@
+.nested-container {
+    margin-left: 1rem
+}
+
+.container {
+    margin-left: 1.5rem
+}
+
+.record-type {
+    height: 10px;
+    width: 10px;
+    margin: 0 5px 0 0;
+    display: inline-block;
+    background-color: gray;
+    border-radius: 50%;
+}
+
+.record-type--orange {
+     background-color: orange;
+ }
+
+.record-type--red {
+     background-color: red;
+ }
+
+.record-type--green {
+     background-color: green;
+ }
+
+.record-type--blue {
+     background-color: blue;
+ }
+
+.record-type--deepskyblue {
+     background-color: deepskyblue;
+ }
+
+.record-type--darkslateblue {
+     background-color: darkslateblue;
+ }
+
+.panel {
+    height: 1rem;
+    width: 100px;
+    background-color: gray;
+    border-radius: 5px;
+}

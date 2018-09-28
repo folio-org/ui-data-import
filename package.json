@@ -35,7 +35,8 @@
     "@folio/stripes-smart-components": "^1.8.0",
     "prop-types": "^15.6.0",
     "react-intl": "^2.3.0",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "classnames": "^2.2.5"
   },
   "peerDependencies": {
     "react": "*"
