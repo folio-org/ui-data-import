@@ -26,12 +26,12 @@ export default function SearchPanel() {
         separator={false}
         header={FilterAccordionHeader}
       >
-        <div className={css['nested-container']}>
+        <div className={css.nestedContainer}>
           <Checkbox
             name="checkbox_1"
             label="Succesful (25)"
           />
-          <div className={css['nested-container']}>
+          <div className={css.nestedContainer}>
             <Checkbox
               name="checkbox_1-1"
               label="overlays (2330)"
@@ -45,7 +45,7 @@ export default function SearchPanel() {
             name="checkbox_2"
             label="Review (98)"
           />
-          <div className={css['nested-container']}>
+          <div className={css.nestedContainer}>
             <Checkbox
               name="checkbox_2-1"
               label="Non-matches (20)"
@@ -58,7 +58,7 @@ export default function SearchPanel() {
               name="checkbox_2-3"
               label="Matching problems/ errors?"
             />
-            <div className={css['nested-container']}>
+            <div className={css.nestedContainer}>
               <Checkbox
                 name="checkbox_2-3-1"
                 label="found error"
@@ -92,8 +92,8 @@ export default function SearchPanel() {
             label={(
               <div>
                 <div className={classNames(
-                  css['record-type'],
-                  css['record-type--orange']
+                  css.recordType,
+                  css.recordTypeOrange
                 )}
                 />
                 Instances (32)
@@ -105,8 +105,8 @@ export default function SearchPanel() {
             label={(
               <div>
                 <div className={classNames(
-                  css['record-type'],
-                  css['record-type--red']
+                  css.recordType,
+                  css.recordTypeRed,
                 )}
                 />
                 Holdings (14)
@@ -118,8 +118,8 @@ export default function SearchPanel() {
             label={(
               <div>
                 <div className={classNames(
-                  css['record-type'],
-                  css['record-type--green']
+                  css.recordType,
+                  css.recordTypeGreen
                 )}
                 />
                 Items (11)
@@ -131,8 +131,8 @@ export default function SearchPanel() {
             label={(
               <div>
                 <div className={classNames(
-                  css['record-type'],
-                  css['record-type--blue']
+                  css.recordType,
+                  css.recordTypeBlue
                 )}
                 />
                 Orders (3)
@@ -144,8 +144,8 @@ export default function SearchPanel() {
             label={(
               <div>
                 <div className={classNames(
-                  css['record-type'],
-                  css['record-type--deepskyblue']
+                  css.recordType,
+                  css.recordTypeDeepskyblue
                 )}
                 />
                 MARK bibs (42)
@@ -157,8 +157,8 @@ export default function SearchPanel() {
             label={(
               <div>
                 <div className={classNames(
-                  css['record-type'],
-                  css['record-type--darkslateblue']
+                  css.recordType,
+                  css.recordTypeDarkslateblue
                 )}
                 />
                 Invaices (12)
@@ -174,7 +174,7 @@ export default function SearchPanel() {
         separator={false}
         header={FilterAccordionHeader}
       >
-        <div style={{ marginLeft: '1.5rem' }}>
+        <div className={css.container}>
           <Checkbox
             name="checkbox_1"
             label={(
