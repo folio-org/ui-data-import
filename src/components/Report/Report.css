@@ -1,0 +1,17 @@
+.recordContent {
+  padding: 5px 0 10px;
+}
+
+.recordDetails {
+  display: inline-flex;
+
+  & > div {
+    padding-right: 10px;
+  }
+}
+
+.recordHeader {
+  & h4 {
+    margin: 5px 0;
+  }
+}

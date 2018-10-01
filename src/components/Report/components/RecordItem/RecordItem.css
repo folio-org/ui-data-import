@@ -1,0 +1,63 @@
+.resultRecordItemLink {
+  display: block;
+  border-radius: 3px;
+
+  &,
+  &:visited {
+    color: #000;
+  }
+
+  &:nth-child(even) {
+     background-color: #fff;
+   }
+}
+
+.resultRecordItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.resultRecordViewInfo {
+  display: flex;
+  align-items: center;
+}
+
+.resultRecordItemType {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 3px;
+  border: 1px solid #000;
+  background-color: #0f0;
+}
+
+.resultRecordItemType--instance {
+  background-color: orange;
+}
+
+.resultRecordItemType--holding {
+  background-color: red;
+}
+
+.resultRecordItemType--item {
+  background-color: green;
+}
+
+.resultRecordItemType--order {
+  background-color: deepskyblue;
+}
+
+.resultRecordItemType--bib {
+  background-color: blue;
+}
+
+.resultRecordViewItem {
+  display: flex;
+  align-items: center;
+
+  & span:last-child {
+    transform: rotate(90deg);
+  }
+}
