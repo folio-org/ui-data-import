@@ -2,19 +2,24 @@ import React from 'react';
 import classNames from 'classnames';
 import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components/lib/Accordion';
 import Checkbox from '@folio/stripes-components/lib/Checkbox';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Icon from '@folio/stripes-components/lib/Icon';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import Pane from '@folio/stripes-components/lib/Pane';
-import Paneset from '@folio/stripes-components/lib/Paneset';
-import IconButton from '@folio/stripes-components/lib/IconButton';
+import { SearchField } from '@folio/stripes-components';
 
 import css from './search-panel.css';
 
 
-export default function SearchPanel(props) {
+export default function SearchPanel() {
   return (
     <AccordionSet>
+      <Accordion
+        label="Search"
+        id="ex-0"
+        separator={false}
+        header={FilterAccordionHeader}
+      >
+        <SearchField
+          id="input-search"
+        />
+      </Accordion>
       <Accordion
         label="Status"
         id="ex-1"
