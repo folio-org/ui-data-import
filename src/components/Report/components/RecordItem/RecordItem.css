@@ -7,7 +7,6 @@
     color: #000;
   }
 
-
   &:nth-child(even) {
      background-color: #fff;
    }
@@ -32,6 +31,26 @@
   border-radius: 3px;
   border: 1px solid #000;
   background-color: #0f0;
+}
+
+.resultRecordItemType--instance {
+  background-color: orange;
+}
+
+.resultRecordItemType--holding {
+  background-color: red;
+}
+
+.resultRecordItemType--item {
+  background-color: green;
+}
+
+.resultRecordItemType--order {
+  background-color: deepskyblue;
+}
+
+.resultRecordItemType--bib {
+  background-color: blue;
 }
 
 .resultRecordViewItem {

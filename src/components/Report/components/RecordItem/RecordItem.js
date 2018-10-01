@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
-import {
-  Icon,
-} from '@folio/stripes-components';
+import { Icon } from '@folio/stripes-components';
 
 import css from './RecordItem.css';
 
@@ -15,42 +14,45 @@ const recordTypes = {
     title: 'Marc',
   },
   item: {
-    title: 'Item'
+    title: 'Item',
   },
   holding: {
-    title: 'Holding'
+    title: 'Holding',
   },
   order: {
-    title: 'Order'
+    title: 'Order',
   },
 };
 
-class RecordItem extends React.Component {
-  static propTypes = {
-    record: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-    }),
-  };
-
-  render() {
-    const { record } = this.props;
-
-    return (
-      <a href="/" className={css.resultRecordItemLink}>
-        <div className={css.resultRecordItem}>
-          <div className={css.resultRecordViewInfo}>
-            <span className={css.resultRecordItemType} />
-            <span>{recordTypes[record.type].title}</span> <span>{record.id}</span>
-          </div>
-          <div className={css.resultRecordViewItem}>
-            <span>View item</span>
-            <Icon icon="up-caret" />
-          </div>
+const RecordItem = ({ record }) => {
+  return (
+    <a href="/" className={css.resultRecordItemLink}>
+      <div className={css.resultRecordItem}>
+        <div className={css.resultRecordViewInfo}>
+          <span
+            className={classNames(
+              css.resultRecordItemType,
+              css[`resultRecordItemType--${record.type}`]
+            )}
+          />
+          <span>
+            {recordTypes[record.type].title} {record.id}
+          </span>
         </div>
-      </a>
-    );
-  }
-}
+        <div className={css.resultRecordViewItem}>
+          <span>View item</span>
+          <Icon icon="up-caret" />
+        </div>
+      </div>
+    </a>
+  );
+};
+
+RecordItem.propTypes = {
+  record: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  }),
+};
 
 export default RecordItem;
