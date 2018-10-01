@@ -1,26 +1,55 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Link from 'react-router-dom/Link';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
-import NewAppGreeting from '../components/new-app-greeting';
-
+import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import IconButton from '@folio/stripes-components/lib/IconButton';
+import SearchPanel from '../components/search-panel';
 
 export default class Application extends React.Component {
-  static propTypes = {
-    match: PropTypes.object.isRequired,
+  constructor(props) {
+    super(props);
+    this.state = { filterPaneIsVisible: true };
+  }
+
+  toggleFilterPane = () => {
+    this.setState(prevState => ({ filterPaneIsVisible: !prevState.filterPaneIsVisible }));
   };
 
+  addFirstMenu() {
+    return (
+      <PaneMenu>
+        <IconButton
+          onClick={this.toggleFilterPane}
+          icon="closeX"
+        />
+      </PaneMenu>
+    );
+  }
+
+  addResultsFirstMenu() {
+    return (
+      <PaneMenu>
+        <IconButton
+          icon="search"
+          onClick={this.toggleFilterPane}
+        />
+      </PaneMenu>
+    );
+  }
+
   render() {
+    const { filterPaneIsVisible } = this.state;
+
     return (
       <Paneset>
-        <Pane defaultWidth="fill" fluidContentWidth paneTitle="Batch Bot">
-          <NewAppGreeting />
-          <br />
-          <ul>
-            <li>View the <Link to={`${this.props.match.path}/examples`}>examples page</Link> to see some useful components.</li>
-            <li>Please refer to the <a href="https://github.com/folio-org/stripes-core/blob/master/doc/dev-guide.md">Stripes Module Developer‘s Guide</a> for more information.</li>
-          </ul>
+        {/* Filter Pane */}
+        {filterPaneIsVisible &&
+          <Pane defaultWidth="20" paneTitle="Search and Filter" firstMenu={this.addFirstMenu()}>
+            <SearchPanel />
+          </Pane>
+        }
+        <Pane defaultWidth="fill" paneTitle="Search Results" firstMenu={this.addResultsFirstMenu()}>
+          Pane Content
         </Pane>
       </Paneset>
     );

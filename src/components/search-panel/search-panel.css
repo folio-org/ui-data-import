@@ -1,0 +1,47 @@
+.nestedContainer {
+  margin-left: 1rem;
+}
+
+.container {
+  margin-left: 1.5rem;
+}
+
+.recordType {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px 0 0;
+  background-color: gray;
+  border-radius: 50%;
+}
+
+.recordTypeOrange {
+   background-color: orange;
+ }
+
+.recordTypeRed {
+   background-color: red;
+ }
+
+.recordTypeGreen {
+   background-color: green;
+ }
+
+.recordTypeBlue {
+   background-color: blue;
+ }
+
+.recordTypeDeepskyblue {
+   background-color: deepskyblue;
+ }
+
+.recordTypeDarkslateblue {
+   background-color: darkslateblue;
+ }
+
+.panel {
+  width: 100px;
+  height: 1rem;
+  background-color: gray;
+  border-radius: 5px;
+}
