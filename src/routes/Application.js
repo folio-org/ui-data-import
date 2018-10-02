@@ -89,7 +89,7 @@ export default class Application extends React.Component {
           firstMenu={this.addResultsFirstMenu()}
           lastMenu={this.addResultsLastMenu()}
         >
-          <ResultPanel />
+          <ResultPanel itemOnClick={this.toggleRecordDetailsPane} />
         </Pane>
         {recordDetailsPaneIsVisible &&
         <Pane defaultWidth="fill" paneTitle="Source Record 51/354" firstMenu={this.addRecordDetailsMenu()}>

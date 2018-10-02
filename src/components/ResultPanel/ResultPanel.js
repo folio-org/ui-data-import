@@ -2,12 +2,17 @@ import React from 'react';
 import classNames from 'classnames';
 import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components/lib/Accordion';
 import { Icon } from '@folio/stripes-components';
+import PropTypes from 'prop-types';
 
 import css from './ResultPanel.css';
 
 const accordionsAmount = 4;
 
 export default class ResultPanel extends React.Component {
+  static propTypes = {
+    itemOnClick: PropTypes.func.isRequired,
+  };
+
   getAccordionLabeL() {
     return (
       <div className={classNames(css.accordionHeaderItem, css.accordionHeader)}>
@@ -24,7 +29,7 @@ export default class ResultPanel extends React.Component {
     );
   }
 
-  getAccordions(amount) {
+  getAccordions(amount, itemOnClick) {
     const result = [];
 
     for (let i = 0; i < amount; i++) {
@@ -35,8 +40,8 @@ export default class ResultPanel extends React.Component {
           separator={false}
           header={FilterAccordionHeader}
         >
-          <ul className={css.list}>
-            <li className={css.listItem}>
+          <div className={css.list}>
+            <button type="button" className={css.listItem} onClick={itemOnClick}>
               <div className={classNames(
                 css.recordType,
                 css.recordTypeOrange
@@ -44,8 +49,8 @@ export default class ResultPanel extends React.Component {
               />
               <Icon icon="calendar" />
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
-            </li>
-            <li className={css.listItem}>
+            </button>
+            <button type="button" className={css.listItem} onClick={itemOnClick}>
               <div className={classNames(
                 css.recordType,
                 css.recordTypeRed
@@ -53,8 +58,8 @@ export default class ResultPanel extends React.Component {
               />
               <Icon icon="calendar" />
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
-            </li>
-            <li className={css.listItem}>
+            </button>
+            <button type="button" className={css.listItem} onClick={itemOnClick}>
               <div className={classNames(
                 css.recordType,
                 css.recordTypeGreen
@@ -62,8 +67,8 @@ export default class ResultPanel extends React.Component {
               />
               <Icon icon="calendar" />
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
-            </li>
-            <li className={css.listItem}>
+            </button>
+            <button type="button" className={css.listItem} onClick={itemOnClick}>
               <div className={classNames(
                 css.recordType,
                 css.recordTypeBlue
@@ -71,8 +76,8 @@ export default class ResultPanel extends React.Component {
               />
               <Icon icon="calendar" />
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
-            </li>
-            <li className={css.listItem}>
+            </button>
+            <button type="button" className={css.listItem} onClick={itemOnClick}>
               <div className={classNames(
                 css.recordType,
                 css.recordTypeDeepskyblue
@@ -80,8 +85,8 @@ export default class ResultPanel extends React.Component {
               />
               <Icon icon="calendar" />
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
-            </li>
-            <li className={css.listItem}>
+            </button>
+            <button type="button" className={css.listItem} onClick={itemOnClick}>
               <div className={classNames(
                 css.recordType,
                 css.recordTypeDarkslateblue
@@ -89,8 +94,8 @@ export default class ResultPanel extends React.Component {
               />
               <Icon icon="calendar" />
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
-            </li>
-          </ul>
+            </button>
+          </div>
         </Accordion>
       );
     }
@@ -99,9 +104,11 @@ export default class ResultPanel extends React.Component {
   }
 
   render() {
+    const { itemOnClick } = this.props;
+
     return (
       <AccordionSet>
-        {this.getAccordions(accordionsAmount)}
+        {this.getAccordions(accordionsAmount, itemOnClick)}
       </AccordionSet>
     );
   }
