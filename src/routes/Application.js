@@ -76,7 +76,6 @@ export default class Application extends React.Component {
 
     return (
       <Paneset>
-        {/* Filter Pane */}
         {filterPaneIsVisible &&
           <Pane defaultWidth="20" paneTitle="Search and Filter" firstMenu={this.addFirstMenu()}>
             <SearchPanel />
@@ -92,9 +91,9 @@ export default class Application extends React.Component {
           <ResultPanel itemOnClick={this.toggleRecordDetailsPane} />
         </Pane>
         {recordDetailsPaneIsVisible &&
-        <Pane defaultWidth="fill" paneTitle="Source Record 51/354" firstMenu={this.addRecordDetailsMenu()}>
-          <Report />
-        </Pane>
+          <Pane defaultWidth="fill" paneTitle="Source Record 51/354" firstMenu={this.addRecordDetailsMenu()}>
+            <Report />
+          </Pane>
         }
       </Paneset>
     );
