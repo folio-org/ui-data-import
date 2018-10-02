@@ -3,7 +3,9 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+import { Button, Icon } from '@folio/stripes-components';
 import SearchPanel from '../components/search-panel';
+import ResultPanel from '../components/ResultPanel';
 
 export default class Application extends React.Component {
   constructor(props) {
@@ -37,6 +39,22 @@ export default class Application extends React.Component {
     );
   }
 
+  addResultsLastMenu() {
+    return (
+      <PaneMenu>
+        <Button
+          id="clickable-new-12"
+          href="#"
+          buttonStyle="primary paneHeaderNewButton"
+          marginBottom0
+        >
+          Export <Icon icon="down-caret" />
+        </Button>
+      </PaneMenu>
+    );
+  }
+
+
   render() {
     const { filterPaneIsVisible } = this.state;
 
@@ -48,8 +66,14 @@ export default class Application extends React.Component {
             <SearchPanel />
           </Pane>
         }
-        <Pane defaultWidth="fill" paneTitle="Search Results" firstMenu={this.addResultsFirstMenu()}>
-          Pane Content
+        <Pane
+          defaultWidth="fill"
+          paneTitle={<div>Search Results <Icon icon="down-caret" /></div>}
+          paneSub="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur beatae blanditiis"
+          firstMenu={this.addResultsFirstMenu()}
+          lastMenu={this.addResultsLastMenu()}
+        >
+          <ResultPanel />
         </Pane>
       </Paneset>
     );
