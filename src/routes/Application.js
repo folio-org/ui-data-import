@@ -1,20 +1,25 @@
 import React from 'react';
-import Pane from '@folio/stripes-components/lib/Pane';
-import Paneset from '@folio/stripes-components/lib/Paneset';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import IconButton from '@folio/stripes-components/lib/IconButton';
-import { Button, Icon } from '@folio/stripes-components';
-import SearchPanel from '../components/search-panel';
+import { Button, Icon, Pane, Paneset, PaneMenu, IconButton } from '@folio/stripes-components';
+import SearchPanel from '../components/SearchPanel';
 import ResultPanel from '../components/ResultPanel';
+import Report from '../components/Report/Report';
 
 export default class Application extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { filterPaneIsVisible: true };
+
+    this.state = {
+      filterPaneIsVisible: true,
+      recordDetailsPaneIsVisible: true,
+    };
   }
 
   toggleFilterPane = () => {
     this.setState(prevState => ({ filterPaneIsVisible: !prevState.filterPaneIsVisible }));
+  };
+
+  toggleRecordDetailsPane = () => {
+    this.setState(prevState => ({ recordDetailsPaneIsVisible: !prevState.recordDetailsPaneIsVisible }));
   };
 
   addFirstMenu() {
@@ -54,9 +59,20 @@ export default class Application extends React.Component {
     );
   }
 
+  addRecordDetailsMenu() {
+    return (
+      <PaneMenu>
+        <IconButton
+          onClick={this.toggleRecordDetailsPane}
+          icon="closeX"
+        />
+      </PaneMenu>
+    );
+  }
+
 
   render() {
-    const { filterPaneIsVisible } = this.state;
+    const { filterPaneIsVisible, recordDetailsPaneIsVisible } = this.state;
 
     return (
       <Paneset>
@@ -75,6 +91,11 @@ export default class Application extends React.Component {
         >
           <ResultPanel />
         </Pane>
+        {recordDetailsPaneIsVisible &&
+        <Pane defaultWidth="fill" paneTitle="Source Record 51/354" firstMenu={this.addRecordDetailsMenu()}>
+          <Report />
+        </Pane>
+        }
       </Paneset>
     );
   }

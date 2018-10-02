@@ -4,8 +4,7 @@ import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-c
 import Checkbox from '@folio/stripes-components/lib/Checkbox';
 import { SearchField } from '@folio/stripes-components';
 
-import css from './search-panel.css';
-
+import css from './SearchPanel.css';
 
 export default function SearchPanel() {
   return (
