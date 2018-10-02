@@ -1,7 +1,7 @@
 import React from 'react';
-import { Pane, Paneset, PaneMenu, IconButton } from '@folio/stripes-components';
-
+import { Button, Icon, Pane, Paneset, PaneMenu, IconButton } from '@folio/stripes-components';
 import SearchPanel from '../components/SearchPanel';
+import ResultPanel from '../components/ResultPanel';
 import Report from '../components/Report/Report';
 
 export default class Application extends React.Component {
@@ -44,6 +44,21 @@ export default class Application extends React.Component {
     );
   }
 
+  addResultsLastMenu() {
+    return (
+      <PaneMenu>
+        <Button
+          id="clickable-new-12"
+          href="#"
+          buttonStyle="primary paneHeaderNewButton"
+          marginBottom0
+        >
+          Export <Icon icon="down-caret" />
+        </Button>
+      </PaneMenu>
+    );
+  }
+
   addRecordDetailsMenu() {
     return (
       <PaneMenu>
@@ -55,6 +70,7 @@ export default class Application extends React.Component {
     );
   }
 
+
   render() {
     const { filterPaneIsVisible, recordDetailsPaneIsVisible } = this.state;
 
@@ -65,10 +81,14 @@ export default class Application extends React.Component {
             <SearchPanel />
           </Pane>
         }
-        <Pane defaultWidth="fill" paneTitle="Search Results" firstMenu={this.addResultsFirstMenu()}>
-          <div>
-            <button type="button" onClick={this.toggleRecordDetailsPane}>Pane Content</button>
-          </div>
+        <Pane
+          defaultWidth="fill"
+          paneTitle={<div>Search Results <Icon icon="down-caret" /></div>}
+          paneSub="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur beatae blanditiis"
+          firstMenu={this.addResultsFirstMenu()}
+          lastMenu={this.addResultsLastMenu()}
+        >
+          <ResultPanel itemOnClick={this.toggleRecordDetailsPane} />
         </Pane>
         {recordDetailsPaneIsVisible &&
           <Pane defaultWidth="fill" paneTitle="Source Record 51/354" firstMenu={this.addRecordDetailsMenu()}>

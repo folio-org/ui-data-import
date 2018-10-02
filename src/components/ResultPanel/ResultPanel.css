@@ -1,0 +1,104 @@
+@import '../../../../stripes-components/lib/variables.css';
+
+.recordType {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: gray;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.recordTypeOrange {
+  background-color: orange;
+}
+
+.recordTypeRed {
+  background-color: red;
+}
+
+.recordTypeGreen {
+  background-color: green;
+}
+
+.recordTypeBlue {
+  background-color: blue;
+}
+
+.recordTypeDeepskyblue {
+  background-color: deepskyblue;
+}
+
+.recordTypeDarkslateblue {
+  background-color: darkslateblue;
+}
+
+.accordionHeader {
+  width: 100%;
+}
+
+.accordionHeaderItem {
+  margin: 0 4px;
+}
+
+.accordionHeaderItem,
+.accordionHeader {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 12px;
+}
+
+.accordionHeaderError {
+  padding: 4px 8px;
+}
+
+.accordionHeaderRecords {
+  display: flex;
+  margin-left: auto;
+}
+
+.list {
+  padding: 0;
+}
+
+.listItem {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  width: 100%;
+  padding-left: 3rem;
+  margin: 6px 0;
+  border-radius: 6px;
+}
+
+.listItem:nth-child(odd) {
+  background-color: #f7f7f7;
+}
+
+.listItem:nth-child(3),
+.accordionHeaderError {
+  border: 1px solid red;
+  background-color: lightpink;
+}
+
+.listItem:hover {
+  background-color: var(--color-fill-hover);
+}
+
+.listItem:active {
+  background-color: var(--color-fill-active);
+}
+
+.accordion {
+  background-color: #f7f7f7;
+}
+
+div[class^="labelArea"] > div:nth-child(1) {
+  width: 100%;
+}
