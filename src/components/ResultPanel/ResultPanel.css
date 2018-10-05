@@ -1,7 +1,6 @@
 @import '../../../../stripes-components/lib/variables.css';
 
 .recordType {
-  display: inline-block;
   flex-shrink: 0;
   width: 15px;
   height: 15px;
@@ -39,8 +38,8 @@
 }
 
 .accordionHeader {
-  width: 100%;
   flex-wrap: wrap;
+  width: 100%;
   min-width: 700px;
 }
 
