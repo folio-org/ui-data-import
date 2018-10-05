@@ -2,6 +2,7 @@
 
 .recordType {
   display: inline-block;
+  flex-shrink: 0;
   width: 15px;
   height: 15px;
   border: 1px solid black;
@@ -39,6 +40,8 @@
 
 .accordionHeader {
   width: 100%;
+  flex-wrap: wrap;
+  min-width: 700px;
 }
 
 .accordionHeaderItem {
@@ -64,6 +67,7 @@
 }
 
 .list {
+  min-width: 700px;
   padding: 0;
 }
 
@@ -75,6 +79,11 @@
   padding-left: 3rem;
   margin: 6px 0;
   border-radius: 6px;
+  text-align: left;
+}
+
+.listItemIcon{
+ flex-shrink: 0;
 }
 
 .listItem:nth-child(odd) {
