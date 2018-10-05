@@ -47,8 +47,10 @@ export default class ResultPanel extends React.Component {
                 css.recordTypeOrange
               )}
               />
-              <Icon icon="calendar" />
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
+              <Icon className={css.listItemIcon} icon="calendar" />
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
+              </div>
             </button>
             <button type="button" className={css.listItem} onClick={itemOnClick}>
               <div className={classNames(
@@ -56,8 +58,10 @@ export default class ResultPanel extends React.Component {
                 css.recordTypeRed
               )}
               />
-              <Icon icon="calendar" />
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
+              <Icon className={css.listItemIcon} icon="calendar" />
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
+              </div>
             </button>
             <button type="button" className={css.listItem} onClick={itemOnClick}>
               <div className={classNames(
@@ -65,8 +69,10 @@ export default class ResultPanel extends React.Component {
                 css.recordTypeGreen
               )}
               />
-              <Icon icon="calendar" />
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
+              <Icon className={css.listItemIcon} icon="calendar" />
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
+              </div>
             </button>
             <button type="button" className={css.listItem} onClick={itemOnClick}>
               <div className={classNames(
@@ -74,8 +80,10 @@ export default class ResultPanel extends React.Component {
                 css.recordTypeBlue
               )}
               />
-              <Icon icon="calendar" />
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
+              <Icon className={css.listItemIcon} icon="calendar" />
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
+              </div>
             </button>
             <button type="button" className={css.listItem} onClick={itemOnClick}>
               <div className={classNames(
@@ -83,8 +91,10 @@ export default class ResultPanel extends React.Component {
                 css.recordTypeDeepskyblue
               )}
               />
-              <Icon icon="calendar" />
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
+              <Icon className={css.listItemIcon} icon="calendar" />
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
+              </div>
             </button>
             <button type="button" className={css.listItem} onClick={itemOnClick}>
               <div className={classNames(
@@ -92,8 +102,10 @@ export default class ResultPanel extends React.Component {
                 css.recordTypeDarkslateblue
               )}
               />
-              <Icon icon="calendar" />
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
+              <Icon className={css.listItemIcon} icon="calendar" />
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci, atque delectus.
+              </div>
             </button>
           </div>
         </Accordion>
