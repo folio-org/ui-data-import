@@ -45,7 +45,17 @@
     "displayName": "ui-data-import.meta.title",
     "route": "/data-import",
     "hasSettings": true,
-    "okapiInterfaces": {},
+    "okapiInterfaces": {
+      "data-import": "1.0",
+      "source-record-manager": "1.0"
+    },
+    "icons": [
+      {
+        "name": "app",
+        "alt": "Data import loader for MARC records",
+        "title": "Data import"
+      }
+    ],
     "permissionSets": [
       {
         "permissionName": "module.data-import.enabled",
