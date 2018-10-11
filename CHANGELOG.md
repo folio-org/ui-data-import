@@ -4,4 +4,4 @@
 
 * New app created with stripes-cli
 * Adjust skeleton application (UIDATIMP-2)
-* Add app icon and okapiInterfaces (UIDATIMP-19)
+* Add app icon (UIDATIMP-19)

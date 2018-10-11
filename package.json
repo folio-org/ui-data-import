@@ -45,10 +45,6 @@
     "displayName": "ui-data-import.meta.title",
     "route": "/data-import",
     "hasSettings": true,
-    "okapiInterfaces": {
-      "data-import": "1.0",
-      "source-record-manager": "1.0"
-    },
     "icons": [
       {
         "name": "app",
