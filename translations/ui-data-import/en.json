@@ -1,8 +1,7 @@
 {
-  "meta.title": "Batch Bot",
-  "settings.index.paneTitle": "Batch Bot",
+  "meta.title": "Data Import",
+  "settings.index.paneTitle": "Data Import",
 
-  "new-app.message": "Your Stripes app is running.",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
