@@ -1,8 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
-import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components/lib/Accordion';
-import Checkbox from '@folio/stripes-components/lib/Checkbox';
-import { SearchField } from '@folio/stripes-components';
+import { 
+  AccordionSet,
+  Accordion,
+  FilterAccordionHeader,
+  Checkbox,
+  SearchField,
+} from '@folio/stripes/components';
 
 import css from './SearchPanel.css';
 

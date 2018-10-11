@@ -5,3 +5,4 @@
 * New app created with stripes-cli
 * Adjust skeleton application (UIDATIMP-2)
 * Add app icon (UIDATIMP-19)
+* Update stripes-* dependencies and imports to use stripes framework 1.0 (FOLIO-1549)

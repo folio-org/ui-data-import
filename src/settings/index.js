@@ -1,6 +1,6 @@
 import React from 'react';
-import { Settings } from '@folio/stripes-smart-components';
-import { stripesShape } from '@folio/stripes-core/src/Stripes';
+import { Settings } from '@folio/stripes/smart-components';
+import { stripesShape } from '@folio/stripes/core';
 
 import GeneralSettings from './general-settings';
 import SomeFeatureSettings from './some-feature-settings';
