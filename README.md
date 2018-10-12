@@ -39,13 +39,6 @@ To specify your own tenant ID or to use an Okapi instance other than http://loca
 stripes serve --okapi http://my-okapi.example.com:9130 --tenant my-tenant-id
 ```
 
-## Run the tests
-
-Run the included UI test `demo` with the following command:
-```
-stripes test --run demo --show
-```
-
 ## Additional information
 
 Other [modules](https://dev.folio.org/source-code/#client-side).
