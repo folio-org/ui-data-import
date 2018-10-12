@@ -1,7 +1,7 @@
 {
   "name": "@folio/data-import",
   "version": "0.1.0",
-  "description": "Stripes application for Data Import feature.",
+  "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
   "publishConfig": {
