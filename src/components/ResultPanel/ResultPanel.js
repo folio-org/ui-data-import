@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components/lib/Accordion';
-import { Icon } from '@folio/stripes-components';
+import { AccordionSet, Accordion, FilterAccordionHeader, Icon } from '@folio/stripes/components';
 import PropTypes from 'prop-types';
 
 import css from './ResultPanel.css';

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { Icon } from '@folio/stripes-components';
+import { Icon } from '@folio/stripes/components';
 
 import css from './RecordItem.css';
 

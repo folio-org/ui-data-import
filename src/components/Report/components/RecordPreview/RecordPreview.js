@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Row, Col } from '@folio/stripes-components';
+import { Row, Col } from '@folio/stripes/components';
 
 import css from './RecordPreview.css';
 
