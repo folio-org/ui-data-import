@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Icon, Pane, Paneset, PaneMenu, IconButton } from '@folio/stripes-components';
+import { Button, Icon, Pane, Paneset, PaneMenu, IconButton } from '@folio/stripes/components';
 import SearchPanel from '../components/SearchPanel';
 import ResultPanel from '../components/ResultPanel';
 import Report from '../components/Report/Report';
