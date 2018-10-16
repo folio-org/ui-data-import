@@ -2,21 +2,11 @@ import React from 'react';
 import { Button, Pane, Paneset, PaneMenu } from '@folio/stripes/components';
 
 export default class Application extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      filterPaneIsVisible: true,
-      recordDetailsPaneIsVisible: true,
-    };
-  }
-
   addResultsFirstMenu() {
     const buttonRightStyle = {
       position: 'absolute',
       right: 0
     };
-
 
     return (
       <PaneMenu>
@@ -52,8 +42,7 @@ export default class Application extends React.Component {
               buttonStyle="primary paneHeaderNewButton"
               marginBottom0
             >View all
-            </Button>
-          </div>}
+            </Button></div>}
         />
         <Pane defaultWidth="fill" paneTitle="Import" />
       </Paneset>
