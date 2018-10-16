@@ -1,50 +1,13 @@
 import React from 'react';
-import { Button, Icon, Pane, Paneset, PaneMenu, IconButton } from '@folio/stripes/components';
-import SearchPanel from '../components/SearchPanel';
-import ResultPanel from '../components/ResultPanel';
-import Report from '../components/Report/Report';
+import { Button, Pane, Paneset, PaneMenu } from '@folio/stripes/components';
 
 export default class Application extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      filterPaneIsVisible: true,
-      recordDetailsPaneIsVisible: true,
-    };
-  }
-
-  toggleFilterPane = () => {
-    this.setState(prevState => ({ filterPaneIsVisible: !prevState.filterPaneIsVisible }));
-  };
-
-  toggleRecordDetailsPane = () => {
-    this.setState(prevState => ({ recordDetailsPaneIsVisible: !prevState.recordDetailsPaneIsVisible }));
-  };
-
-  addFirstMenu() {
-    return (
-      <PaneMenu>
-        <IconButton
-          onClick={this.toggleFilterPane}
-          icon="closeX"
-        />
-      </PaneMenu>
-    );
-  }
-
   addResultsFirstMenu() {
-    return (
-      <PaneMenu>
-        <IconButton
-          icon="search"
-          onClick={this.toggleFilterPane}
-        />
-      </PaneMenu>
-    );
-  }
+    const buttonRightStyle = {
+      position: 'absolute',
+      right: 0
+    };
 
-  addResultsLastMenu() {
     return (
       <PaneMenu>
         <Button
@@ -52,49 +15,36 @@ export default class Application extends React.Component {
           href="#"
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
+          style={buttonRightStyle}
         >
-          Export <Icon icon="down-caret" />
+                    Manage
         </Button>
       </PaneMenu>
     );
   }
 
-  addRecordDetailsMenu() {
-    return (
-      <PaneMenu>
-        <IconButton
-          onClick={this.toggleRecordDetailsPane}
-          icon="closeX"
-        />
-      </PaneMenu>
-    );
-  }
-
-
   render() {
-    const { filterPaneIsVisible, recordDetailsPaneIsVisible } = this.state;
+    const buttonRightStyle = {
+      position: 'absolute',
+      right: 0
+    };
 
     return (
       <Paneset>
-        {filterPaneIsVisible &&
-          <Pane defaultWidth="20" paneTitle="Search and Filter" firstMenu={this.addFirstMenu()}>
-            <SearchPanel />
-          </Pane>
-        }
+        <Pane defaultWidth="20" paneTitle="Jobs" firstMenu={this.addResultsFirstMenu()} />
         <Pane
           defaultWidth="fill"
-          paneTitle={<div>Search Results <Icon icon="down-caret" /></div>}
-          paneSub="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur beatae blanditiis"
-          firstMenu={this.addResultsFirstMenu()}
-          lastMenu={this.addResultsLastMenu()}
-        >
-          <ResultPanel itemOnClick={this.toggleRecordDetailsPane} />
-        </Pane>
-        {recordDetailsPaneIsVisible &&
-          <Pane defaultWidth="fill" paneTitle="Source Record 51/354" firstMenu={this.addRecordDetailsMenu()}>
-            <Report />
-          </Pane>
-        }
+          paneTitle={<div>Logs
+            <Button
+              style={buttonRightStyle}
+              id="clickable-new-12"
+              href="#"
+              buttonStyle="primary paneHeaderNewButton"
+              marginBottom0
+            >View all
+            </Button></div>}
+        />
+        <Pane defaultWidth="fill" paneTitle="Import" />
       </Paneset>
     );
   }
