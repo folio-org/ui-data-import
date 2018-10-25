@@ -1,17 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
-import {
-  calculatePercentage,
-  formatValuesWithDelimiter,
-} from '../../../../utils';
+import { calculatePercentage } from '../../../../utils';
 
 import css from './Progress.css';
 
 const progressInfoFormatters = {
   percentage: (current, total) => `${calculatePercentage(current, total)}%`,
-  default: (current, total) => formatValuesWithDelimiter([current, total]),
 };
 
 const Progress = props => {
@@ -21,6 +16,7 @@ const Progress = props => {
     progressInfoType,
   } = props;
   const progressValue = calculatePercentage(current, total);
+  const progressInfo = progressInfoFormatters[progressInfoType](current, total);
 
   return (
     <div className={css.progress}>
@@ -31,7 +27,7 @@ const Progress = props => {
         />
       </div>
       <div className={css.progressInfo}>
-        <FormattedMessage id="ui-data-import.progressRunning" /> {progressInfoFormatters[progressInfoType](current, total)}
+        {progressInfo}
       </div>
     </div>
   );
@@ -44,7 +40,7 @@ Progress.propTypes = {
 };
 
 Progress.defaultProps = {
-  progressInfoType: 'default'
+  progressInfoType: 'percentage',
 };
 
 export default Progress;

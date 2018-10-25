@@ -12,7 +12,9 @@
   "triggeredBy": "Triggered by",
   "beganRunning": "Began",
   "endedRunning": "Ended",
-  "progressRunning": "Running",
+  "progressRunning": "In progress",
+  "record": "record",
+  "records": "records",
   "today": "today",
 
   "settings.index.paneTitle": "Data Import",

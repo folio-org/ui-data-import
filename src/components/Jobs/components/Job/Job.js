@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
@@ -7,6 +7,8 @@ import {
   FormattedDate,
   FormattedTime,
   FormattedMessage,
+  FormattedNumber,
+  FormattedPlural,
 } from 'react-intl';
 
 import { Button } from '@folio/stripes/components';
@@ -16,9 +18,9 @@ import jobMetaTypes from './jobMetaTypes';
 
 import css from './Job.css';
 
-class Job extends React.Component {
+class Job extends Component {
   static defaultProps = {
-    handlePreview: noop, // TODO: to be implemented in further stories
+    handlePreview: noop,
   };
 
   static propTypes = {
@@ -90,16 +92,30 @@ class Job extends React.Component {
           </span>
         </div>
 
-        <div>
-          <FormattedMessage id={dateLabelId} /> {this.formatTime(jobMeta.date)}
+        <div className={css.delimiter}>
+          {jobMeta && (
+            <span>
+              <FormattedNumber value={total} />{' '}
+              <FormattedPlural
+                value={total}
+                one={<FormattedMessage id="ui-data-import.record" />}
+                other={<FormattedMessage id="ui-data-import.records" />}
+              />
+            </span>
+          )}
+          <span><FormattedMessage id={dateLabelId} /> {this.formatTime(jobMeta.date)}</span>
         </div>
 
         {jobMeta.showProgress && (
-          <Progress
-            current={current}
-            total={total}
-            progressInfoType={jobMeta.progressType}
-          />
+          <Fragment>
+            <div>
+              <FormattedMessage id="ui-data-import.progressRunning" />
+            </div>
+            <Progress
+              current={current}
+              total={total}
+            />
+          </Fragment>
         )}
 
         {jobMeta.showPreview && (

@@ -1,11 +1,14 @@
 import React from 'react';
 
 import { stripesShape } from '@folio/stripes/core';
-import { AccordionSet, Accordion } from '@folio/stripes/components';
+import {
+  AccordionSet,
+  Accordion,
+} from '@folio/stripes/components';
 
 import Job from './components/Job';
 import EndOfList from './components/EndOfList';
-import jobsMocks from './jobsMocks'; // TODO: to be replaced with real data in further stories
+import jobsMocks from './jobsMocks'; // TODO: to be replaced with real data in further stories (UIDATIMP-23, UIDATIMP-27)
 
 import css from './Jobs.css';
 
@@ -20,6 +23,38 @@ export default class Jobs extends React.Component {
     return formatDate(new Date()) === formatDate(date);
   };
 
+  renderPreviewJobs() {
+    return (
+      <div>
+        {
+          jobsMocks.preview.map(job => (
+            <Job
+              key={job.jobExecutionHRID}
+              job={job}
+              checkDateIsToday={this.checkDateIsToday}
+            />
+          ))
+        }
+      </div>
+    );
+  }
+
+  renderRunningJobs() {
+    return (
+      <div>
+        {
+          jobsMocks.running.map(job => (
+            <Job
+              key={job.jobExecutionHRID}
+              job={job}
+              checkDateIsToday={this.checkDateIsToday}
+            />
+          ))
+        }
+      </div>
+    );
+  }
+
   render() {
     const { formatMessage } = this.props.stripes.intl;
 
@@ -31,10 +66,7 @@ export default class Jobs extends React.Component {
             separator={false}
           >
             <div className={css.jobList}>
-              <Job
-                job={jobsMocks[0]}
-                checkDateIsToday={this.checkDateIsToday}
-              />
+              {this.renderPreviewJobs()}
             </div>
             <EndOfList />
           </Accordion>
@@ -43,10 +75,7 @@ export default class Jobs extends React.Component {
             separator={false}
           >
             <div className={css.jobList}>
-              <Job
-                job={jobsMocks[1]}
-                checkDateIsToday={this.checkDateIsToday}
-              />
+              {this.renderRunningJobs()}
             </div>
             <EndOfList />
           </Accordion>

@@ -1,7 +1,10 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { Layout, Icon } from '@folio/stripes/components';
+import {
+  Layout,
+  Icon,
+} from '@folio/stripes/components';
 
 const EndOfList = () => (
   <Layout className="textCentered">

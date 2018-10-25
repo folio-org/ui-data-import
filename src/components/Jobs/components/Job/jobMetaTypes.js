@@ -3,7 +3,6 @@ import { PREPARING_FOR_PREVIEW, READY_FOR_PREVIEW, RUNNING } from '../../jobStat
 const jobMetaTypes = {
   [PREPARING_FOR_PREVIEW]: job => ({
     showProgress: true,
-    progressType: 'progress',
     showPreview: false,
     date: job.startedDate,
     dateLabel: 'began',
