@@ -27,10 +27,11 @@
     "react-dom": "^16.5.0"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
+    "lodash": "^4.16.4",
     "prop-types": "^15.6.0",
     "react-intl": "^2.3.0",
-    "react-router-dom": "^4.1.1",
-    "classnames": "^2.2.5"
+    "react-router-dom": "^4.1.1"
   },
   "peerDependencies": {
     "@folio/stripes": "^1.0.0",

@@ -7,6 +7,13 @@
   "manageJobs": "Manage",
   "previewJobs": "Previews",
   "runningJobs": "Running",
+  "readyForPreview": "Ready for preview",
+  "previewNow": "Preview now",
+  "triggeredBy": "Triggered by",
+  "beganRunning": "Began",
+  "endedRunning": "Ended",
+  "progressRunning": "Running",
+  "today": "today",
 
   "settings.index.paneTitle": "Data Import",
   "settings.general": "General",
