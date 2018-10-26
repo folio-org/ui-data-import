@@ -17,6 +17,9 @@
   "records": "records",
   "today": "today",
 
+  "uploadTitle": "Drag and drop to start a new data import job",
+  "uploadBtnText": "or choose files",
+
   "settings.index.paneTitle": "Data Import",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
