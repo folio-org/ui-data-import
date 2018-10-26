@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Pane } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
+
+import { Pane } from '@folio/stripes/components';
 
 export default class GeneralSettings extends React.Component {
   static propTypes = {
