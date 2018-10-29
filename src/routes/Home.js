@@ -4,6 +4,7 @@ import { stripesShape } from '@folio/stripes/core';
 import { Button, Pane, Paneset } from '@folio/stripes/components';
 
 import Jobs from '../components/Jobs';
+import ImportJobs from '../components/ImportJobs';
 
 export default class Home extends React.Component {
   static propTypes = {
@@ -63,7 +64,9 @@ export default class Home extends React.Component {
         <Pane
           defaultWidth="fill"
           paneTitle={formatMessage({ id: 'ui-data-import.importPaneTitle' })}
-        />
+        >
+          <ImportJobs stripes={stripes} />
+        </Pane>
       </Paneset>
     );
   }
