@@ -16,3 +16,14 @@
   margin-bottom: 0.5rem;
   font-weight: 600;
 }
+
+
+.activeUpload {
+  background: black;
+  color: #fff;
+  border-style: dashed;
+}
+
+.activeUploadTitle {
+  font-size: 30px;
+}
