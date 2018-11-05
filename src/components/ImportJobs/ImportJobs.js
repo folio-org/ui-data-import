@@ -1,57 +1,64 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, { Component } from 'react';
+import {
+  injectIntl,
+  intlShape,
+} from 'react-intl';
 
 import FileUpload from './components/FileUpload';
+
 import css from './components/FileUpload/FileUpload.css';
 
+class ImportJobs extends Component {
+  static propTypes = {
+    intl: intlShape.isRequired,
+  };
 
-class ImportJobs extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      isDropZoneActive: false
-    };
-  }
+  state = {
+    isDropZoneActive: false,
+  };
 
   onDragEnter = () => {
-    this.setState({ isDropZoneActive: true });
-  };
-
-  onDragLeave = () => {
-    this.setState({ isDropZoneActive: false });
-  };
-
-  onDrop = (acceptedFiles, rejectedFiles) => {
-    console.log(acceptedFiles);
     this.setState({
-      isDropZoneActive: false
+      isDropZoneActive: true,
     });
   };
 
-
-  getTitleMessageId = () => {
-    if (this.state.isDropZoneActive) {
-      return 'ui-data-import.activeUploadTitle';
-    }
-
-    return 'ui-data-import.uploadTitle';
+  onDragLeave = () => {
+    this.setState({
+      isDropZoneActive: false,
+    });
   };
 
+  onDrop = () => {
+    this.setState({
+      isDropZoneActive: false,
+    });
+  };
+
+  getMessageById = (idEnding, moduleName = 'ui-data-import') => {
+    const id = `${moduleName}.${idEnding}`;
+
+    return this.props.intl.formatMessage({ id });
+  };
 
   render() {
+    const titleMessageIdEnding = this.state.isDropZoneActive ? 'activeUploadTitle' : 'uploadTitle';
+    const titleText = this.getMessageById(titleMessageIdEnding);
+    const uploadBtnText = this.getMessageById('uploadBtnText');
+
     return (
       <FileUpload
-        title={<FormattedMessage id={this.getTitleMessageId()} />}
-        uploadBtnText={<FormattedMessage id="ui-data-import.uploadBtnText" />}
+        title={titleText}
+        uploadBtnText={uploadBtnText}
         isDropZoneActive={this.state.isDropZoneActive}
+        className={css.upload}
+        activeClassName={css.activeUpload}
         onDragEnter={this.onDragEnter}
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
-        className={css.upload}
-        activeClassName={css.activeUpload}
       />
     );
   }
 }
 
-export default ImportJobs;
+export default injectIntl(ImportJobs);

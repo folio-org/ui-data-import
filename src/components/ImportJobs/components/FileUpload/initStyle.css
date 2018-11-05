@@ -1,0 +1,12 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.defaultFileUploader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px dashed var(--color-border);
+  background-color: var(--color-fill);
+  border-radius: var(--radius);
+  min-height: 200px;
+}  
