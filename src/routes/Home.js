@@ -26,6 +26,12 @@ class Home extends Component {
     intl: intlShape.isRequired,
   };
 
+  static defaultProps = {
+    resources: {
+      logs: {},
+    }
+  };
+
   static manifest = Object.freeze({
     logs: {
       type: 'okapi',
