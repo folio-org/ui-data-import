@@ -1,15 +1,38 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl';
+
 import { stripesShape } from '@folio/stripes/core';
-import { Button, Pane, Paneset } from '@folio/stripes/components';
+import {
+  Button,
+  Pane,
+  Paneset,
+} from '@folio/stripes/components';
 
 import Jobs from '../components/Jobs';
+import JobLogs from '../components/JobLogs';
 import ImportJobs from '../components/ImportJobs';
 
-export default class Home extends React.Component {
+class Home extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
+    resources: PropTypes.shape({
+      logs: PropTypes.object,
+    }),
+    intl: intlShape.isRequired,
   };
+
+  static manifest = Object.freeze({
+    logs: {
+      type: 'okapi',
+      path: 'metadata-provider/logs?landingPage=true',
+      throwErrors: false,
+    },
+  });
 
   handleManageJobs = () => {
     // TODO: to be implemented in further stories
@@ -44,8 +67,11 @@ export default class Home extends React.Component {
   }
 
   render() {
-    const { stripes } = this.props;
-    const { formatMessage } = stripes.intl;
+    const {
+      stripes,
+      resources: { logs },
+      intl: { formatMessage },
+    } = this.props;
 
     return (
       <Paneset>
@@ -60,7 +86,9 @@ export default class Home extends React.Component {
           defaultWidth="fill"
           paneTitle={formatMessage({ id: 'ui-data-import.logsPaneTitle' })}
           lastMenu={this.addViewAllLogs()}
-        />
+        >
+          <JobLogs resource={logs} />
+        </Pane>
         <Pane
           defaultWidth="fill"
           paneTitle={formatMessage({ id: 'ui-data-import.importPaneTitle' })}
@@ -71,3 +99,5 @@ export default class Home extends React.Component {
     );
   }
 }
+
+export default injectIntl(Home);
