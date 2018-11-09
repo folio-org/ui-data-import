@@ -15,4 +15,15 @@
 .uploadTitle {
   margin-bottom: 0.5rem;
   font-weight: 600;
+  text-align: center;
+}
+
+.activeUpload {
+  background-color: var(--color-fill-current);
+  color: var(--bg);
+  border-style: dashed;
+}
+
+.activeUploadTitle {
+  font-size: var(--font-size-xx-large);
 }
