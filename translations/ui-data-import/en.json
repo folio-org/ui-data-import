@@ -7,6 +7,8 @@
   "manageJobs": "Manage",
   "previewJobs": "Previews",
   "runningJobs": "Running",
+  "noPreviewsJobsMessage": "No previews to show",
+  "noRunningJobsMessage": "No running jobs to show",
   "readyForPreview": "Ready for preview",
   "previewNow": "Preview now",
   "triggeredBy": "Triggered by",

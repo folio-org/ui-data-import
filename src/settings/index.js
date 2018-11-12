@@ -13,24 +13,24 @@ import SomeFeatureSettings from './some-feature-settings';
 
 export default class DataImportSettings extends React.Component {
   static propTypes = {
-    stripes: stripesShape.isRequired
+    stripes: stripesShape.isRequired,
   };
 
   pages = [
     {
       route: 'general',
       label: this.props.stripes.intl.formatMessage({
-        id: 'ui-data-import.settings.general'
+        id: 'ui-data-import.settings.general',
       }),
-      component: GeneralSettings
+      component: GeneralSettings,
     },
     {
       route: 'somefeature',
       label: this.props.stripes.intl.formatMessage({
-        id: 'ui-data-import.settings.some-feature'
+        id: 'ui-data-import.settings.some-feature',
       }),
-      component: SomeFeatureSettings
-    }
+      component: SomeFeatureSettings,
+    },
   ];
 
   render() {
@@ -39,7 +39,7 @@ export default class DataImportSettings extends React.Component {
         {...this.props}
         pages={this.pages}
         paneTitle={this.props.stripes.intl.formatMessage({
-          id: 'ui-data-import.settings.index.paneTitle'
+          id: 'ui-data-import.settings.index.paneTitle',
         })}
       />
     );

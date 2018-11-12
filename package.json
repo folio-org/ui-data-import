@@ -50,6 +50,10 @@
         "title": "Data import"
       }
     ],
+    "okapiInterfaces": {
+      "data-import": "1.0",
+      "source-record-manager": "1.0"
+    },
     "permissionSets": [
       {
         "permissionName": "module.data-import.enabled",

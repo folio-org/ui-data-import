@@ -15,6 +15,7 @@ import { Button } from '@folio/stripes/components';
 
 import Progress from '../Progress';
 import jobMetaTypes from './jobMetaTypes';
+import jobPropTypes from './jobPropTypes';
 
 import css from './Job.css';
 
@@ -24,24 +25,9 @@ class Job extends Component {
   };
 
   static propTypes = {
-    job: PropTypes.shape({
-      jobExecutionHRID: PropTypes.string.isRequired,
-      jobProfileName: PropTypes.string.isRequired,
-      fileName: PropTypes.string.isRequired,
-      startedDate: PropTypes.string.isRequired,
-      completedDate: PropTypes.string.isRequired,
-      status: PropTypes.string.isRequired,
-      runBy: PropTypes.shape({
-        firstName: PropTypes.string.isRequired,
-        lastName: PropTypes.string.isRequired,
-      }).isRequired,
-      progress: PropTypes.shape({
-        current: PropTypes.number.isRequired,
-        total: PropTypes.number.isRequired,
-      }).isRequired,
-    }).isRequired,
-    handlePreview: PropTypes.func,
+    job: jobPropTypes.isRequired,
     checkDateIsToday: PropTypes.func.isRequired,
+    handlePreview: PropTypes.func,
   };
 
   formatTime(dateStr) {
@@ -65,7 +51,7 @@ class Job extends Component {
       jobProfileName,
       fileName,
       status,
-      jobExecutionHRID,
+      jobExecutionHrId,
       runBy: {
         firstName,
         lastName,
@@ -86,7 +72,7 @@ class Job extends Component {
         </div>
 
         <div className={css.delimiter}>
-          <span>{jobExecutionHRID}</span>
+          <span>{jobExecutionHrId}</span>
           <span>
             <FormattedMessage id="ui-data-import.triggeredBy" /> <span>{firstName} {lastName}</span>
           </span>
