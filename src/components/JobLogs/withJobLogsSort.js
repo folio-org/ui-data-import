@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import get from 'lodash/get';
-import { intlShape } from 'react-intl';
 import { withRouter } from 'react-router';
 
 import { compose } from '../../utils';
@@ -15,7 +14,6 @@ import {
 const withJobLogsSort = WrappedComponent => {
   return class extends Component {
     static propTypes = {
-      intl: intlShape.isRequired,
       formatter: PropTypes.object,
       resource: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.shape({

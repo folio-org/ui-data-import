@@ -82,8 +82,8 @@ const FileUpload = (props) => {
 };
 
 FileUpload.propTypes = {
-  title: PropTypes.string.isRequired,
-  uploadBtnText: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
+  uploadBtnText: PropTypes.node.isRequired,
   isDropZoneActive: PropTypes.bool.isRequired,
   onDrop: PropTypes.func.isRequired,
   onDragEnter: PropTypes.func,

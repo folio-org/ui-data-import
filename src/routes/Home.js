@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormattedMessage,
-  injectIntl,
-  intlShape,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
-import { stripesShape } from '@folio/stripes/core';
 import {
   Button,
   Pane,
@@ -19,11 +14,9 @@ import ImportJobs from '../components/ImportJobs';
 
 class Home extends Component {
   static propTypes = {
-    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       logs: PropTypes.object,
     }),
-    intl: intlShape.isRequired,
   };
 
   static defaultProps = {
@@ -74,36 +67,34 @@ class Home extends Component {
 
   render() {
     const {
-      stripes,
       resources: { logs },
-      intl: { formatMessage },
     } = this.props;
 
     return (
       <Paneset>
         <Pane
           defaultWidth="320px"
-          paneTitle={formatMessage({ id: 'ui-data-import.jobsPaneTitle' })}
+          paneTitle={<FormattedMessage id="ui-data-import.jobsPaneTitle" />}
           lastMenu={this.addManageJobs()}
         >
-          <Jobs stripes={stripes} />
+          <Jobs />
         </Pane>
         <Pane
           defaultWidth="fill"
-          paneTitle={formatMessage({ id: 'ui-data-import.logsPaneTitle' })}
+          paneTitle={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
           lastMenu={this.addViewAllLogs()}
         >
           <JobLogs resource={logs} />
         </Pane>
         <Pane
           defaultWidth="fill"
-          paneTitle={formatMessage({ id: 'ui-data-import.importPaneTitle' })}
+          paneTitle={<FormattedMessage id="ui-data-import.importPaneTitle" />}
         >
-          <ImportJobs stripes={stripes} />
+          <ImportJobs />
         </Pane>
       </Paneset>
     );
   }
 }
 
-export default injectIntl(Home);
+export default Home;
