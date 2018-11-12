@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
-import {
-  injectIntl,
-  intlShape,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import FileUpload from './components/FileUpload';
 
 import css from './components/FileUpload/FileUpload.css';
 
-class ImportJobs extends Component {
-  static propTypes = {
-    intl: intlShape.isRequired,
-  };
-
+export default class ImportJobs extends Component {
   state = {
     isDropZoneActive: false,
   };
@@ -38,7 +31,7 @@ class ImportJobs extends Component {
   getMessageById = (idEnding, moduleName = 'ui-data-import') => {
     const id = `${moduleName}.${idEnding}`;
 
-    return this.props.intl.formatMessage({ id });
+    return <FormattedMessage id={id} />;
   };
 
   render() {
@@ -60,5 +53,3 @@ class ImportJobs extends Component {
     );
   }
 }
-
-export default injectIntl(ImportJobs);

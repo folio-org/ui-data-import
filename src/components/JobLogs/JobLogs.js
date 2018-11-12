@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   MultiColumnList,
@@ -13,7 +13,6 @@ import withJobLogsSort from './withJobLogsSort';
 
 class JobLogs extends Component {
   static propTypes = {
-    intl: intlShape.isRequired,
     sortField: PropTypes.string.isRequired,
     sortDirection: PropTypes.string.isRequired,
     formatter: PropTypes.object.isRequired,
@@ -40,14 +39,12 @@ class JobLogs extends Component {
   constructor(props) {
     super(props);
 
-    const { intl: { formatMessage } } = props;
-
     this.columnMapping = {
-      fileName: formatMessage({ id: 'ui-data-import.jobFileName' }),
-      jobProfileName: formatMessage({ id: 'ui-data-import.jobProfileName' }),
-      jobExecutionHrId: formatMessage({ id: 'ui-data-import.jobExecutionHrId' }),
-      completedDate: formatMessage({ id: 'ui-data-import.jobCompletedDate' }),
-      runBy: formatMessage({ id: 'ui-data-import.jobRunBy' }),
+      fileName: <FormattedMessage id="ui-data-import.jobFileName" />,
+      jobProfileName: <FormattedMessage id="ui-data-import.jobProfileName" />,
+      jobExecutionHrId: <FormattedMessage id="ui-data-import.jobExecutionHrId" />,
+      completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
+      runBy: <FormattedMessage id="ui-data-import.jobRunBy" />,
     };
 
     this.visibleColumns = [

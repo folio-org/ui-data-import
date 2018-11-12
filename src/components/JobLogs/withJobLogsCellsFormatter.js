@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  injectIntl,
-  intlShape,
-} from 'react-intl';
-
-import { compose } from '../../utils';
+import { FormattedTime } from 'react-intl';
 
 const withJobLogsCellsFormatter = WrappedComponent => {
   return class extends Component {
     static propTypes = {
-      intl: intlShape.isRequired,
       formatter: PropTypes.object,
     };
 
@@ -41,12 +35,15 @@ const withJobLogsCellsFormatter = WrappedComponent => {
 
     formatEndedRunningDate = record => {
       const { completedDate } = record;
-      const {
-        formatDate,
-        formatTime,
-      } = this.props.intl;
 
-      return `${formatDate(completedDate)} ${formatTime(completedDate)}`;
+      return (
+        <FormattedTime
+          value={completedDate}
+          day="numeric"
+          month="numeric"
+          year="numeric"
+        />
+      );
     };
 
     render() {
@@ -60,7 +57,4 @@ const withJobLogsCellsFormatter = WrappedComponent => {
   };
 };
 
-export default compose(
-  injectIntl,
-  withJobLogsCellsFormatter,
-);
+export default withJobLogsCellsFormatter;

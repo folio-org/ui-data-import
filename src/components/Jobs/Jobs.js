@@ -1,6 +1,6 @@
 import React from 'react';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
-import { stripesShape } from '@folio/stripes/core';
 import {
   AccordionSet,
   Accordion,
@@ -12,13 +12,13 @@ import jobsMocks from './jobsMocks'; // TODO: to be replaced with real data in f
 
 import css from './Jobs.css';
 
-export default class Jobs extends React.Component {
+class Jobs extends React.Component {
   static propTypes = {
-    stripes: stripesShape.isRequired,
+    intl: intlShape.isRequired,
   };
 
   checkDateIsToday = date => {
-    const { formatDate } = this.props.stripes.intl;
+    const { formatDate } = this.props.intl;
 
     return formatDate(new Date()) === formatDate(date);
   };
@@ -56,13 +56,11 @@ export default class Jobs extends React.Component {
   }
 
   render() {
-    const { formatMessage } = this.props.stripes.intl;
-
     return (
       <div className={css.jobsPane}>
         <AccordionSet>
           <Accordion
-            label={formatMessage({ id: 'ui-data-import.previewJobs' })}
+            label={<FormattedMessage id="ui-data-import.previewJobs" />}
             separator={false}
           >
             <div className={css.jobList}>
@@ -71,7 +69,7 @@ export default class Jobs extends React.Component {
             <EndOfList />
           </Accordion>
           <Accordion
-            label={formatMessage({ id: 'ui-data-import.runningJobs' })}
+            label={<FormattedMessage id="ui-data-import.runningJobs" />}
             separator={false}
           >
             <div className={css.jobList}>
@@ -84,3 +82,5 @@ export default class Jobs extends React.Component {
     );
   }
 }
+
+export default injectIntl(Jobs);
