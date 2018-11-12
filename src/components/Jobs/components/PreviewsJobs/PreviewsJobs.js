@@ -9,7 +9,7 @@ import { DataFetcherContext } from '../../../DataFetcher/DataFetcherContext';
 class PreviewsJobs extends PureComponent {
   static propTypes = {
     checkDateIsToday: PropTypes.func.isRequired,
-    noJobsMessage: PropTypes.string,
+    noJobsMessage: PropTypes.node,
   };
 
   static defaultProps = {

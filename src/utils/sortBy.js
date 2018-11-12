@@ -1,4 +1,4 @@
-const isPureObject = obj => obj !== null && obj.constructor === Object;
+import isPlainObject from 'lodash/isPlainObject';
 
 /**
  * @typedef {Object} SortConfig
@@ -33,7 +33,7 @@ const mapStringToConfig = iteratees => iteratees
       };
     }
 
-    if (isPureObject(iterateeObject)) {
+    if (isPlainObject(iterateeObject)) {
       return iterateeObject;
     }
 
@@ -57,7 +57,7 @@ const configurableSort = ({ property, sequence, descending }, a, b) => {
   let result = 0;
 
   // if order is sequence array than indexes are checked instead of alphabetical order
-  if (sequence instanceof Array) {
+  if (Array.isArray(sequence)) {
     // get index from sequence array
     propA = sequence.findIndex(el => el === propA);
     propB = sequence.findIndex(el => el === propB);

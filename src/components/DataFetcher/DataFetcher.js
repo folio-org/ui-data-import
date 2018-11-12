@@ -9,7 +9,7 @@ import {
 } from '../Jobs/jobStatuses';
 import { DataFetcherContextProvider } from './DataFetcherContext';
 
-const DEFAULT_UPDATE_INTERVAL = 5;
+const DEFAULT_UPDATE_INTERVAL = 5000;
 
 export default class DataFetcher extends Component {
   static propTypes = {
@@ -33,7 +33,7 @@ export default class DataFetcher extends Component {
         ),
       }),
     }).isRequired,
-    updateInterval: PropTypes.number, // seconds
+    updateInterval: PropTypes.number, // milliseconds
   };
 
   static defaultProps = {
@@ -67,9 +67,7 @@ export default class DataFetcher extends Component {
   }
 
   updateResourcesData() {
-    let { updateInterval } = this.props;
-
-    updateInterval *= 1000; // seconds to milliseconds
+    const { updateInterval } = this.props;
 
     this.intervalId = setInterval(this.getAllResourcesData, updateInterval);
   }
@@ -77,24 +75,24 @@ export default class DataFetcher extends Component {
   setInitialState() {
     const { mutator } = this.props;
 
-    for (const key of Object.keys(mutator)) {
+    Object.keys(mutator).forEach(resourceName => {
       this.setState(({ contextData }) => ({
         contextData: {
           ...contextData,
-          [key]: {
+          [resourceName]: {
             hasLoaded: false,
           },
         },
       }));
-    }
+    });
   }
 
   getResourcesData = () => {
     const { mutator } = this.props;
 
-    for (const [resourceName, resourceMutator] of Object.entries(mutator)) {
+    Object.entries(mutator).forEach(([resourceName, resourceMutator]) => {
       this.getResourceData(resourceName, resourceMutator);
-    }
+    });
   };
 
   getResourceData(resourceName, resourceMutator) {

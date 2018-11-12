@@ -11,7 +11,7 @@ export default {
       fileName: 'import7.marc',
       jobExecutionId: '182984498',
       jobExecutionHrId: '182984498',
-      startedDate: new Date(new Date() - constructHoursInMs(0.1)),
+      startedDate: new Date(new Date() - constructHoursInMs(0.1)).toString(),
       status: RUNNING,
       runBy: {
         firstName: 'John',
@@ -28,7 +28,7 @@ export default {
       fileName: 'import_156.mrc',
       jobExecutionId: '182984589',
       jobExecutionHrId: '182984589',
-      startedDate: new Date(new Date() - constructHoursInMs(0.2)),
+      startedDate: new Date(new Date() - constructHoursInMs(0.2)).toString(),
       status: RUNNING,
       runBy: {
         firstName: 'John',

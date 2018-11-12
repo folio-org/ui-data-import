@@ -6,17 +6,23 @@ import {
 
 const statusSequence = [READY_FOR_PREVIEW, PREPARING_FOR_PREVIEW];
 
-const sortingOptions = [{ property: 'status', statusSequence }, 'startedDate'];
+const sortingOptions = [{ property: 'status', sequence: statusSequence }, 'startedDate'];
 
-const normalizeDates = jobs => jobs.map(({ startedDate, ...job }) => ({
+const datesToMilliseconds = jobs => jobs.map(({ startedDate, ...job }) => ({
   ...job,
   startedDate: new Date(startedDate).valueOf(),
 }));
 
-const sortPreviewJobs = jobs => {
-  const correctDateJobs = normalizeDates(jobs);
+const datesToStrings = jobs => jobs.map(({ startedDate, ...job }) => ({
+  ...job,
+  startedDate: new Date(startedDate).toString(),
+}));
 
-  return sortBy(correctDateJobs, sortingOptions);
+const sortPreviewJobs = jobs => {
+  const correctDateJobs = datesToMilliseconds(jobs);
+  const sortedJobs = sortBy(correctDateJobs, sortingOptions);
+
+  return datesToStrings(sortedJobs);
 };
 
 export default sortPreviewJobs;

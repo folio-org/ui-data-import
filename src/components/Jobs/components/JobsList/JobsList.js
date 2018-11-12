@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import identity from 'lodash/identity';
 
 import {
@@ -27,7 +28,7 @@ const JobsList = ({
       checkDateIsToday={checkDateIsToday}
     />
   );
-  const jobsList = (
+  const LoadedJobsList = (
     <List
       items={sort(jobs)}
       itemFormatter={itemFormatter}
@@ -36,15 +37,21 @@ const JobsList = ({
       marginBottom0
     />
   );
-  const loading = (
+  const Loading = (
     <div className={css.loading}>
-      Loading <Icon icon="spinner-ellipsis" size="small" />
+      <FormattedMessage
+        id="ui-data-import.loading"
+      />
+      <Icon
+        icon="spinner-ellipsis"
+        size="small"
+      />
     </div>
   );
 
   return (
     <div className={css.listContainer}>
-      {hasLoaded ? jobsList : loading}
+      {hasLoaded ? LoadedJobsList : Loading}
       <EndOfList />
     </div>
   );
@@ -55,7 +62,7 @@ JobsList.propTypes = {
   hasLoaded: PropTypes.bool.isRequired,
   checkDateIsToday: PropTypes.func.isRequired,
   sort: PropTypes.func,
-  noJobsMessage: PropTypes.string,
+  noJobsMessage: PropTypes.node,
 };
 
 JobsList.defaultProps = {

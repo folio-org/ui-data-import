@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   intlShape,
   injectIntl,
+  FormattedMessage,
 } from 'react-intl';
 
 import {
@@ -27,11 +28,31 @@ class Jobs extends Component {
   };
 
   render() {
-    const { formatMessage } = this.props.intl;
-    const previewsLabelText = formatMessage({ id: 'ui-data-import.previewJobs' });
-    const runningLabelText = formatMessage({ id: 'ui-data-import.runningJobs' });
-    const noPreviewsJobsMessage = formatMessage({ id: 'ui-data-import.noPreviewsJobsMessage' });
-    const noRunningJobsMessage = formatMessage({ id: 'ui-data-import.noRunningJobsMessage' });
+    // const { formatMessage } = this.props.intl;
+    // const previewsLabelText = formatMessage({ id: 'ui-data-import.previewJobs' });
+    const previewsLabelText = (
+      <FormattedMessage
+        id="ui-data-import.previewJobs"
+      />
+    );
+    // const runningLabelText = formatMessage({ id: 'ui-data-import.runningJobs' });
+    const runningLabelText = (
+      <FormattedMessage
+        id="ui-data-import.runningJobs"
+      />
+    );
+    // const noPreviewsJobsMessage = formatMessage({ id: 'ui-data-import.noPreviewsJobsMessage' });
+    const noPreviewsJobsMessage = (
+      <FormattedMessage
+        id="ui-data-import.noPreviewsJobsMessage"
+      />
+    );
+    // const noRunningJobsMessage = formatMessage({ id: 'ui-data-import.noRunningJobsMessage' });
+    const noRunningJobsMessage = (
+      <FormattedMessage
+        id="ui-data-import.noRunningJobsMessage"
+      />
+    );
 
     return (
       <div className={css.jobsPane}>
