@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
 import {
   injectIntl,
   intlShape,
@@ -11,6 +13,8 @@ import css from './components/FileUpload/FileUpload.css';
 class ImportJobs extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
+    history: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
   };
 
   state = {
@@ -29,10 +33,17 @@ class ImportJobs extends Component {
     });
   };
 
-  onDrop = () => {
+  onDrop = (acceptedFiles, rejectedFiles) => {
+    const {
+      history,
+      match,
+    } = this.props;
+
     this.setState({
       isDropZoneActive: false,
     });
+
+    history.push(`${match.url}/job-profile`, { acceptedFiles });
   };
 
   getMessageById = (idEnding, moduleName = 'ui-data-import') => {
@@ -61,4 +72,4 @@ class ImportJobs extends Component {
   }
 }
 
-export default injectIntl(ImportJobs);
+export default withRouter(injectIntl(ImportJobs));
