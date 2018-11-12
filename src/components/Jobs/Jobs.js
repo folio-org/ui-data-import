@@ -1,5 +1,9 @@
 import React from 'react';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { 
+  FormattedMessage, 
+  injectIntl, 
+  intlShape,
+} from 'react-intl';
 
 import {
   AccordionSet,
