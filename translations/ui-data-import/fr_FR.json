@@ -21,5 +21,15 @@
     "jobProfileName": "Job profile",
     "jobExecutionHrId": "Import ID",
     "jobCompletedDate": "Ended running",
-    "jobRunBy": "Run by"
+    "jobRunBy": "Run by",
+    "noPreviewsJobsMessage": "No previews to show",
+    "noRunningJobsMessage": "No running jobs to show",
+    "loading": "Loading",
+    "meta.title": "Data Import",
+    "today": "today",
+    "settings.index.paneTitle": "Data Import",
+    "settings.general": "General",
+    "settings.general.message": "These are your general app settings.",
+    "settings.some-feature": "Some Feature",
+    "settings.some-feature.message": "These are your settings for some app feature."
 }
