@@ -8,13 +8,13 @@ import isPlainObject from 'lodash/isPlainObject';
  */
 
 /**
- * Transforms string options in sort options objects
+ * Generates SortConfig objects from string options or if SortConfig provided returns itself
  *
  * @param {Array<SortConfig | string>} iteratees
  *
  * @returns {Array<Object>}
  */
-const mapStringToConfig = iteratees => iteratees
+const generateSortConfigs = iteratees => iteratees
   .map(iterateeObject => {
     // strings must be transformed in config objects
     if (typeof iterateeObject === 'string') {
@@ -80,18 +80,18 @@ const configurableSort = ({ property, sequence, descending }, a, b) => {
 };
 
 /**
- * Sorts an array of objects
+ * Sorts collections (arrays of objects)
  *
- * @param  {Array<Object>} array An array of objects to sort
+ * @param  {Array<Object>} collection An array of objects to sort
  * @param  {Array<SortConfig | string>} iteratees An array with sorting options
  *
  * @returns {Array<Object>} Sorted array
  */
-const sortBy = (array, iteratees) => {
-  const arrayCopy = [...array];
-  const iterateesObjects = mapStringToConfig(iteratees);
+const sortBy = (collection, iteratees) => {
+  const collectionCopy = [...collection];
+  const iterateesObjects = generateSortConfigs(iteratees);
 
-  return arrayCopy.sort((a, b) => {
+  return collectionCopy.sort((a, b) => {
     let i = 0;
     let result = 0;
 

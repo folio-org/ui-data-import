@@ -69,7 +69,7 @@ export default class DataFetcher extends Component {
   updateResourcesData() {
     const { updateInterval } = this.props;
 
-    this.intervalId = setInterval(this.getAllResourcesData, updateInterval);
+    this.intervalId = setInterval(this.getResourcesData, updateInterval);
   }
 
   setInitialState() {

@@ -20,14 +20,14 @@ import jobPropTypes from './jobPropTypes';
 import css from './Job.css';
 
 class Job extends Component {
-  static defaultProps = {
-    handlePreview: noop,
-  };
-
   static propTypes = {
     job: jobPropTypes.isRequired,
     checkDateIsToday: PropTypes.func.isRequired,
     handlePreview: PropTypes.func,
+  };
+
+  static defaultProps = {
+    handlePreview: noop,
   };
 
   formatTime(dateStr) {
