@@ -6,9 +6,18 @@
   "parser": "babel-eslint",
   "root": true,
   "rules": {
-    "key-spacing": ["error", { "beforeColon": false }],
+    "key-spacing": [
+      "error",
+      {
+        "beforeColon": false
+      }
+    ],
     "newline-before-return": 2,
     "newline-after-var": 2,
-    "react/jsx-one-expression-per-line": false
+    "react/jsx-one-expression-per-line": false,
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ]
   }
 }

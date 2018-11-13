@@ -34,17 +34,13 @@ const record = {
 };
 
 class Report extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      accordions: {
-        'request-info': false,
-        'item-info': false,
-        'requester-info': false,
-      },
-    };
-  }
+  state = {
+    accordions: {
+      'request-info': false,
+      'item-info': false,
+      'requester-info': false,
+    },
+  };
 
   onToggleSection = ({ id }) => {
     this.setState(({ accordions }) => {
