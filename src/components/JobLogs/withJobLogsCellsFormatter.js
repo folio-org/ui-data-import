@@ -4,7 +4,6 @@ import {
   injectIntl,
   intlShape,
 } from 'react-intl';
-
 import { compose } from '../../utils';
 
 const withJobLogsCellsFormatter = WrappedComponent => {
@@ -41,12 +40,13 @@ const withJobLogsCellsFormatter = WrappedComponent => {
 
     formatEndedRunningDate = record => {
       const { completedDate } = record;
-      const {
-        formatDate,
-        formatTime,
-      } = this.props.intl;
+      const { formatTime } = this.props.intl;
 
-      return `${formatDate(completedDate)} ${formatTime(completedDate)}`;
+      return formatTime(completedDate, {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+      });
     };
 
     render() {

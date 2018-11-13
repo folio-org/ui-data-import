@@ -28,46 +28,20 @@ class Jobs extends Component {
   };
 
   render() {
-    // const { formatMessage } = this.props.intl;
-    // const previewsLabelText = formatMessage({ id: 'ui-data-import.previewJobs' });
-    const previewsLabelText = (
-      <FormattedMessage
-        id="ui-data-import.previewJobs"
-      />
-    );
-    // const runningLabelText = formatMessage({ id: 'ui-data-import.runningJobs' });
-    const runningLabelText = (
-      <FormattedMessage
-        id="ui-data-import.runningJobs"
-      />
-    );
-    // const noPreviewsJobsMessage = formatMessage({ id: 'ui-data-import.noPreviewsJobsMessage' });
-    const noPreviewsJobsMessage = (
-      <FormattedMessage
-        id="ui-data-import.noPreviewsJobsMessage"
-      />
-    );
-    // const noRunningJobsMessage = formatMessage({ id: 'ui-data-import.noRunningJobsMessage' });
-    const noRunningJobsMessage = (
-      <FormattedMessage
-        id="ui-data-import.noRunningJobsMessage"
-      />
-    );
-
     return (
       <div className={css.jobsPane}>
         <AccordionSet>
           <Accordion
-            label={previewsLabelText}
+            label={<FormattedMessage id="ui-data-import.previewJobs" />}
             separator={false}
           >
             <PreviewsJobs
               checkDateIsToday={this.checkDateIsToday}
-              noJobsMessage={noPreviewsJobsMessage}
+              noJobsMessage={<FormattedMessage id="ui-data-import.noPreviewsJobsMessage" />}
             />
           </Accordion>
           <Accordion
-            label={runningLabelText}
+            label={<FormattedMessage id="ui-data-import.runningJobs" />}
             separator={false}
           >
             {/* TODO: UIDATIMP-27 story */}
@@ -75,7 +49,7 @@ class Jobs extends Component {
               jobs={jobsMocks.running}
               checkDateIsToday={this.checkDateIsToday}
               hasLoaded
-              noJobsMessage={noRunningJobsMessage}
+              noJobsMessage={<FormattedMessage id="ui-data-import.noRunningJobsMessage" />}
             />
           </Accordion>
         </AccordionSet>

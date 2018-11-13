@@ -40,7 +40,7 @@ class JobLogs extends Component {
   constructor(props) {
     super(props);
 
-    const { intl: { formatMessage } } = props;
+    const { intl: { formatMessage } } = this.props;
 
     this.columnMapping = {
       fileName: formatMessage({ id: 'ui-data-import.jobFileName' }),
@@ -92,4 +92,7 @@ class JobLogs extends Component {
   }
 }
 
-export default compose(withJobLogsCellsFormatter, withJobLogsSort)(JobLogs);
+export default compose(
+  withJobLogsCellsFormatter,
+  withJobLogsSort,
+)(JobLogs);
