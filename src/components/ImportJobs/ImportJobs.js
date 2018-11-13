@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
+import {
+  injectIntl,
+  intlShape,
+} from 'react-intl';
 
 import FileUpload from './components/FileUpload';
 
 import css from './components/FileUpload/FileUpload.css';
 
-export default class ImportJobs extends Component {
+class ImportJobs extends Component {
+  static propTypes = {
+    intl: intlShape.isRequired,
+    history: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
+  };
+
   state = {
     isDropZoneActive: false,
   };
@@ -22,16 +33,23 @@ export default class ImportJobs extends Component {
     });
   };
 
-  onDrop = () => {
+  onDrop = (acceptedFiles, rejectedFiles) => {
+    const {
+      history,
+      match,
+    } = this.props;
+
     this.setState({
       isDropZoneActive: false,
     });
+
+    history.push(`${match.url}/job-profile`, { acceptedFiles });
   };
 
   getMessageById = (idEnding, moduleName = 'ui-data-import') => {
     const id = `${moduleName}.${idEnding}`;
 
-    return <FormattedMessage id={id} />;
+    return this.props.intl.formatMessage({ id });
   };
 
   render() {
@@ -53,3 +71,5 @@ export default class ImportJobs extends Component {
     );
   }
 }
+
+export default withRouter(injectIntl(ImportJobs));

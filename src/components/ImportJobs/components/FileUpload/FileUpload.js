@@ -108,11 +108,6 @@ FileUpload.propTypes = {
 
 FileUpload.defaultProps = {
   className: initStyle.defaultFileUploader,
-  activeClassName: '',
-  acceptClassName: '',
-  rejectClassName: '',
-  disabledClassName: '',
-  maxSize: null,
 };
 
 export default FileUpload;
