@@ -6,7 +6,7 @@ import {
 
 const statusSequence = [READY_FOR_PREVIEW, PREPARING_FOR_PREVIEW];
 
-const sortingOptions = [{ property: 'status', sequence: statusSequence }, 'startedDate'];
+const sortingOptions = [{ property: 'status', sequence: statusSequence }, '-startedDate'];
 
 const datesToMilliseconds = jobs => jobs.map(({ startedDate, ...job }) => ({
   ...job,
