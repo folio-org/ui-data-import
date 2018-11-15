@@ -5,7 +5,7 @@ import Route from 'react-router-dom/Route';
 
 import Home from './routes/Home';
 import Results from './routes/Results';
-import Some from './routes/Some';
+import JobProfile from './routes/JobProfile';
 import Settings from './settings';
 
 class DataImport extends React.Component {
@@ -38,7 +38,7 @@ class DataImport extends React.Component {
           render={this.renderConnectedHome}
         />
         <Route path={`${this.props.match.path}/results`} exact component={Results} />
-        <Route path={`${this.props.match.path}/job-profile`} exact component={Some} />
+        <Route path={`${this.props.match.path}/job-profile`} exact component={JobProfile} />
       </Switch>
     );
   }
