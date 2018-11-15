@@ -1,86 +1,61 @@
-import React from 'react';
+import React, { Component } from 'react';
+import {
+  intlShape,
+  injectIntl,
+  FormattedMessage,
+} from 'react-intl';
 
-import { stripesShape } from '@folio/stripes/core';
 import {
   AccordionSet,
   Accordion,
 } from '@folio/stripes/components';
 
-import Job from './components/Job';
-import EndOfList from './components/EndOfList';
-import jobsMocks from './jobsMocks'; // TODO: to be replaced with real data in further stories (UIDATIMP-23, UIDATIMP-27)
+import PreviewsJobs from './components/PreviewsJobs';
+import JobsList from './components/JobsList';
+import jobsMocks from './jobsMocks';
 
 import css from './Jobs.css';
 
-export default class Jobs extends React.Component {
+class Jobs extends Component {
   static propTypes = {
-    stripes: stripesShape.isRequired,
+    intl: intlShape.isRequired,
   };
 
   checkDateIsToday = date => {
-    const { formatDate } = this.props.stripes.intl;
+    const { formatDate } = this.props.intl;
 
     return formatDate(new Date()) === formatDate(date);
   };
 
-  renderPreviewJobs() {
-    return (
-      <div>
-        {
-          jobsMocks.preview.map(job => (
-            <Job
-              key={job.jobExecutionHRID}
-              job={job}
-              checkDateIsToday={this.checkDateIsToday}
-            />
-          ))
-        }
-      </div>
-    );
-  }
-
-  renderRunningJobs() {
-    return (
-      <div>
-        {
-          jobsMocks.running.map(job => (
-            <Job
-              key={job.jobExecutionHRID}
-              job={job}
-              checkDateIsToday={this.checkDateIsToday}
-            />
-          ))
-        }
-      </div>
-    );
-  }
-
   render() {
-    const { formatMessage } = this.props.stripes.intl;
-
     return (
       <div className={css.jobsPane}>
         <AccordionSet>
           <Accordion
-            label={formatMessage({ id: 'ui-data-import.previewJobs' })}
+            label={<FormattedMessage id="ui-data-import.previewJobs" />}
             separator={false}
           >
-            <div className={css.jobList}>
-              {this.renderPreviewJobs()}
-            </div>
-            <EndOfList />
+            <PreviewsJobs
+              checkDateIsToday={this.checkDateIsToday}
+              noJobsMessage={<FormattedMessage id="ui-data-import.noPreviewsJobsMessage" />}
+            />
           </Accordion>
           <Accordion
-            label={formatMessage({ id: 'ui-data-import.runningJobs' })}
+            label={<FormattedMessage id="ui-data-import.runningJobs" />}
             separator={false}
           >
-            <div className={css.jobList}>
-              {this.renderRunningJobs()}
-            </div>
-            <EndOfList />
+            {/* TODO: UIDATIMP-27 story */}
+            <JobsList
+              jobs={jobsMocks.running}
+              checkDateIsToday={this.checkDateIsToday}
+              hasLoaded
+              noJobsMessage={<FormattedMessage id="ui-data-import.noRunningJobsMessage" />}
+            />
           </Accordion>
         </AccordionSet>
       </div>
     );
   }
 }
+
+export default injectIntl(Jobs);

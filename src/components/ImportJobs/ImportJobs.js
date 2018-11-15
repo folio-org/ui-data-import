@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import {
   injectIntl,
   intlShape,
+  FormattedMessage
 } from 'react-intl';
 
 import FileUpload from './components/FileUpload';
 
 import css from './components/FileUpload/FileUpload.css';
+
 
 class ImportJobs extends Component {
   static propTypes = {
@@ -49,7 +51,7 @@ class ImportJobs extends Component {
   getMessageById = (idEnding, moduleName = 'ui-data-import') => {
     const id = `${moduleName}.${idEnding}`;
 
-    return this.props.intl.formatMessage({ id });
+    return <FormattedMessage id={id} />;
   };
 
   render() {

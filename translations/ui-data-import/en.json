@@ -7,6 +7,8 @@
   "manageJobs": "Manage",
   "previewJobs": "Previews",
   "runningJobs": "Running",
+  "noPreviewsJobsMessage": "No previews to show",
+  "noRunningJobsMessage": "No running jobs to show",
   "readyForPreview": "Ready for preview",
   "previewNow": "Preview now",
   "triggeredBy": "Triggered by",
@@ -16,11 +18,18 @@
   "record": "record",
   "records": "records",
   "today": "today",
+  "loading": "Loading",
 
   "uploadTitle": "Drag and drop to start a new data import job",
   "activeUploadTitle": "Drop to start import",
   "uploadBtnText": "or choose files",
   "uploadingPaneTitle": "Files",
+  
+  "jobFileName": "File name",
+  "jobProfileName": "Job profile",
+  "jobExecutionHrId": "Import ID",
+  "jobCompletedDate": "Ended running",
+  "jobRunBy": "Run by",
 
   "settings.index.paneTitle": "Data Import",
   "settings.general": "General",

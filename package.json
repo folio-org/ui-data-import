@@ -33,7 +33,8 @@
     "react-dropzone": "^7.0.1",
     "react-intl": "^2.3.0",
     "react-router": "^4.3.1",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "qs": "^6.5.1"
   },
   "peerDependencies": {
     "@folio/stripes": "^1.0.0",
@@ -51,6 +52,10 @@
         "title": "Data import"
       }
     ],
+    "okapiInterfaces": {
+      "data-import": "1.0",
+      "source-record-manager": "1.0"
+    },
     "permissionSets": [
       {
         "permissionName": "module.data-import.enabled",
