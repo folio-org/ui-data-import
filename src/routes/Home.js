@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import { stripesShape } from '@folio/stripes/core';
+
 import {
   Button,
   Pane,
@@ -11,9 +13,11 @@ import {
 import Jobs from '../components/Jobs';
 import JobLogs from '../components/JobLogs';
 import ImportJobs from '../components/ImportJobs';
+import DataFetcher from '../components/DataFetcher';
 
 class Home extends Component {
   static propTypes = {
+    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       logs: PropTypes.object,
     }),
@@ -22,7 +26,7 @@ class Home extends Component {
   static defaultProps = {
     resources: {
       logs: {},
-    }
+    },
   };
 
   static manifest = Object.freeze({
@@ -32,6 +36,14 @@ class Home extends Component {
       throwErrors: false,
     },
   });
+
+  constructor(props) {
+    super(props);
+
+    const { connect } = props.stripes;
+
+    this.connectedDataFetcher = connect(DataFetcher);
+  }
 
   handleManageJobs = () => {
     // TODO: to be implemented in further stories
@@ -66,33 +78,33 @@ class Home extends Component {
   }
 
   render() {
-    const {
-      resources: { logs },
-    } = this.props;
+    const { resources: { logs } } = this.props;
 
     return (
-      <Paneset>
-        <Pane
-          defaultWidth="320px"
-          paneTitle={<FormattedMessage id="ui-data-import.jobsPaneTitle" />}
-          lastMenu={this.addManageJobs()}
-        >
-          <Jobs />
-        </Pane>
-        <Pane
-          defaultWidth="fill"
-          paneTitle={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
-          lastMenu={this.addViewAllLogs()}
-        >
-          <JobLogs resource={logs} />
-        </Pane>
-        <Pane
-          defaultWidth="fill"
-          paneTitle={<FormattedMessage id="ui-data-import.importPaneTitle" />}
-        >
-          <ImportJobs />
-        </Pane>
-      </Paneset>
+      <this.connectedDataFetcher>
+        <Paneset>
+          <Pane
+            defaultWidth="320px"
+            paneTitle={<FormattedMessage id="ui-data-import.jobsPaneTitle" />}
+            lastMenu={this.addManageJobs()}
+          >
+            <Jobs />
+          </Pane>
+          <Pane
+            defaultWidth="fill"
+            paneTitle={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
+            lastMenu={this.addViewAllLogs()}
+          >
+            <JobLogs resource={logs} />
+          </Pane>
+          <Pane
+            defaultWidth="fill"
+            paneTitle={<FormattedMessage id="ui-data-import.importPaneTitle" />}
+          >
+            <ImportJobs />
+          </Pane>
+        </Paneset>
+      </this.connectedDataFetcher>
     );
   }
 }

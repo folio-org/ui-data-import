@@ -1,33 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
+import {
+  Paneset,
+  Pane,
+} from '@folio/stripes/components';
 
 import UploadingDisplay from '../components/UplaodingDisplay';
-import { Button, Icon, Pane, Paneset} from '@folio/stripes/components';
 
 
-const JobProfile = props => {
-  return (
+class JobProfile extends Component {
+  static propTypes = {
+    location: PropTypes.object,
+  }
+
+  render = () => {
+    const initUploadingState = this.props.location ? this.props.location.state : undefined;
+
+    return (
       <Paneset>
-          <Pane defaultWidth="20" paneTitle="Files">
-              <Button
-                  id="clickable-new-12"
-                  href="#"
-                  buttonStyle="primary paneHeaderNewButton"
-                  marginBottom0
-              >
-                  Upload more files
-              </Button>
-              <UploadingDisplay />
-          </Pane>
-
-          <Pane
-              defaultWidth="fill"
-              paneTitle={<div>2nd Pane <Icon icon="down-caret" /></div>}
-              paneSub="Job Profiles"
-          >
-          </Pane>
+        <Pane
+          defaultWidth="300px"
+          paneTitle={<FormattedMessage id="ui-data-import.uploadingPaneTitle" />}
+        >
+          <UploadingDisplay initState={initUploadingState} />
+        </Pane>
       </Paneset>
-
-  );
-};
+    );
+  }
+}
 
 export default JobProfile;

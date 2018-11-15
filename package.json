@@ -60,6 +60,10 @@
       {
         "permissionName": "module.data-import.enabled",
         "displayName": "UI: ui-data-import module is enabled",
+        "subPermissions": [
+          "data-import.upload.definition.post",
+          "data-import.upload.definition.get"
+        ],
         "visible": true
       },
       {

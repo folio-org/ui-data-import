@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import get from 'lodash/get';
-import { withRouter } from 'react-router';
 
 import { compose } from '../../utils';
 import {

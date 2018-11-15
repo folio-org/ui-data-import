@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import {
   injectIntl,
   intlShape,
+  FormattedMessage
 } from 'react-intl';
 
 import FileUpload from './components/FileUpload';
 
 import css from './components/FileUpload/FileUpload.css';
+
 
 class ImportJobs extends Component {
   static propTypes = {
@@ -43,7 +45,8 @@ class ImportJobs extends Component {
       isDropZoneActive: false,
     });
 
-    history.push(`${match.url}/job-profile`, { acceptedFiles });
+    history.push(`${match.path}/job-profile`, { acceptedFiles, rejectedFiles });
+
   };
 
   getMessageById = (idEnding, moduleName = 'ui-data-import') => {
