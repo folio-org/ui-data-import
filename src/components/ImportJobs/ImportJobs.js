@@ -46,12 +46,13 @@ class ImportJobs extends Component {
     });
 
     history.push(`${match.path}/job-profile`, { acceptedFiles, rejectedFiles });
+
   };
 
   getMessageById = (idEnding, moduleName = 'ui-data-import') => {
     const id = `${moduleName}.${idEnding}`;
 
-    return <FormattedMessage id={id} />;
+    return this.props.intl.formatMessage({ id });
   };
 
   render() {
@@ -60,16 +61,20 @@ class ImportJobs extends Component {
     const uploadBtnText = this.getMessageById('uploadBtnText');
 
     return (
-      <FileUpload
-        title={titleText}
-        uploadBtnText={uploadBtnText}
-        isDropZoneActive={this.state.isDropZoneActive}
-        className={css.upload}
-        activeClassName={css.activeUpload}
-        onDragEnter={this.onDragEnter}
-        onDragLeave={this.onDragLeave}
-        onDrop={this.onDrop}
-      />
+      <div>
+          <FileUpload
+              title={titleText}
+              uploadBtnText={uploadBtnText}
+              isDropZoneActive={this.state.isDropZoneActive}
+              className={css.upload}
+              activeClassName={css.activeUpload}
+              onDragEnter={this.onDragEnter}
+              onDragLeave={this.onDragLeave}
+              onDrop={this.onDrop}
+          />
+        <div uploadDOne></div>
+      </div>
+
     );
   }
 }

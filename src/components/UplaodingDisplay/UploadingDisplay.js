@@ -54,6 +54,19 @@ class UploadingDisplay extends Component {
       .then(console.log);
   }
 
+  renderFiles(files) {
+    return files.map(file => {
+      const { name, isUploaded } = file;
+
+      return (
+        <FileItem
+          name={name}
+          isUploaded={isUploaded}
+        />
+      );
+    });
+  }
+
   render() {
     console.log(this.props.stripes);
 
@@ -63,16 +76,7 @@ class UploadingDisplay extends Component {
 
     return (
       <div>
-        {acceptedFiles && acceptedFiles.map(file => {
-          const { name, isUploaded } = file;
-
-          return (
-            <FileItem
-              name={name}
-              isUploaded={isUploaded}
-            />
-          );
-        })}
+        {acceptedFiles && this.renderFiles(acceptedFiles)}
       </div>
     );
   }
