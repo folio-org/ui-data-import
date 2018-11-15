@@ -43,7 +43,7 @@ class ImportJobs extends Component {
       isDropZoneActive: false,
     });
 
-    history.push(`${match.url}/job-profile`, { acceptedFiles });
+    history.push(`${match.path}/job-profile`, { acceptedFiles, rejectedFiles });
   };
 
   getMessageById = (idEnding, moduleName = 'ui-data-import') => {

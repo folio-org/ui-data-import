@@ -13,7 +13,7 @@ import {
 
 import { Button } from '@folio/stripes/components';
 
-import Progress from '../Progress';
+import Progress from '../../../Progress';
 import jobMetaTypes from './jobMetaTypes';
 
 import css from './Job.css';
