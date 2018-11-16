@@ -24,7 +24,7 @@ class PreviewsJobs extends PureComponent {
       noJobsMessage,
     } = this.props;
     const { jobsPreviews = {} } = this.context;
-    const { jobExecutions: jobs = [] } = get(jobsPreviews, 'itemsObject', {});
+    const { jobExecutionDtos: jobs = [] } = get(jobsPreviews, 'itemsObject', {});
     const { hasLoaded = false } = jobsPreviews;
 
     return (
