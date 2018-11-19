@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import qs from 'qs';
-import get from 'lodash/get';
 
 import { compose } from '../../utils';
 import {
@@ -10,6 +10,7 @@ import {
   sortDates,
   sortStrings,
 } from '../../utils/sort';
+import { DataFetcherContext } from '../DataFetcher/DataFetcherContext';
 
 const withJobLogsSort = WrappedComponent => {
   return class extends Component {
@@ -41,6 +42,8 @@ const withJobLogsSort = WrappedComponent => {
     static defaultProps = {
       formatter: {},
     };
+
+    static contextType = DataFetcherContext;
 
     constructor(props) {
       super(props);
@@ -96,8 +99,7 @@ const withJobLogsSort = WrappedComponent => {
         direction,
       } = this.state;
 
-      const { resource } = this.props;
-      const logs = get(resource, 'records.0.logs') || [];
+      const logs = get(this.context, ['logs', 'itemsObject', 'logs'], []);
 
       return logs.sort((a, b) => {
         const cellFormatter = this.props.formatter[sort];
@@ -144,8 +146,7 @@ const withJobLogsSort = WrappedComponent => {
     };
 
     render() {
-      const { resource } = this.props;
-      const isLoading = Boolean(get(resource, 'isPending'));
+      const { logs: { hasLoaded = false } = {} } = this.context;
       const contentData = this.prepareLogsData();
 
       return (
@@ -154,7 +155,7 @@ const withJobLogsSort = WrappedComponent => {
           contentData={contentData}
           sortField={this.state.sort}
           sortDirection={this.state.direction}
-          isLoading={isLoading}
+          hasLoaded={hasLoaded}
           onSort={this.onSort}
         />
       );

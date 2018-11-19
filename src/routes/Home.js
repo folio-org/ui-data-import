@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { stripesShape } from '@folio/stripes/core';
@@ -18,15 +17,6 @@ import DataFetcher from '../components/DataFetcher';
 class Home extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
-    resources: PropTypes.shape({
-      logs: PropTypes.object,
-    }),
-  };
-
-  static defaultProps = {
-    resources: {
-      logs: {},
-    },
   };
 
   static manifest = Object.freeze({
@@ -78,8 +68,6 @@ class Home extends Component {
   }
 
   render() {
-    const { resources: { logs } } = this.props;
-
     return (
       <this.connectedDataFetcher>
         <Paneset>
@@ -95,7 +83,7 @@ class Home extends Component {
             paneTitle={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
             lastMenu={this.addViewAllLogs()}
           >
-            <JobLogs resource={logs} />
+            <JobLogs />
           </Pane>
           <Pane
             defaultWidth="fill"

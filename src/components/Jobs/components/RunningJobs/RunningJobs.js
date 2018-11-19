@@ -6,22 +6,19 @@ import {
 } from 'lodash';
 
 import JobsList from '../JobsList';
-import sortPreviewJobs from './sortPreviewJobs';
+import sortRunningJobs from './sortRunningJobs';
 import { DataFetcherContext } from '../../../DataFetcher/DataFetcherContext';
-import {
-  READY_FOR_PREVIEW,
-  PREPARING_FOR_PREVIEW,
-} from '../../jobStatuses';
+import { RUNNING } from '../../jobStatuses';
 
-class PreviewsJobs extends PureComponent {
+class RunningJobs extends PureComponent {
   static contextType = DataFetcherContext;
 
   prepareJobsData() {
     let jobs = get(this.context, ['jobs', 'itemsObject', 'jobExecutions'], []);
 
-    jobs = filter(jobs, ({ status }) => status === READY_FOR_PREVIEW || status === PREPARING_FOR_PREVIEW);
+    jobs = filter(jobs, ['status', RUNNING]);
 
-    return sortPreviewJobs(jobs);
+    return sortRunningJobs(jobs);
   }
 
   render() {
@@ -32,10 +29,10 @@ class PreviewsJobs extends PureComponent {
       <JobsList
         jobs={jobs}
         hasLoaded={hasLoaded}
-        noJobsMessage={<FormattedMessage id="ui-data-import.noPreviewsJobsMessage" />}
+        noJobsMessage={<FormattedMessage id="ui-data-import.noRunningJobsMessage" />}
       />
     );
   }
 }
 
-export default PreviewsJobs;
+export default RunningJobs;

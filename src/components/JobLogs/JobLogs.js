@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { intlShape } from 'react-intl';
 
-import {
-  MultiColumnList,
-  Icon,
-} from '@folio/stripes/components';
+import { MultiColumnList } from '@folio/stripes/components';
 
-import compose from '../../utils/compose';
+import Preloader from '../Preloader';
 import withJobLogsCellsFormatter from './withJobLogsCellsFormatter';
 import withJobLogsSort from './withJobLogsSort';
+import compose from '../../utils/compose';
 
 class JobLogs extends Component {
   static propTypes = {
@@ -18,6 +16,7 @@ class JobLogs extends Component {
     sortDirection: PropTypes.string.isRequired,
     formatter: PropTypes.object.isRequired,
     onSort: PropTypes.func.isRequired,
+    hasLoaded: PropTypes.bool.isRequired,
     contentData: PropTypes.arrayOf(
       PropTypes.shape({
         fileName: PropTypes.string,
@@ -30,7 +29,6 @@ class JobLogs extends Component {
         }),
       }),
     ),
-    isLoading: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -63,33 +61,28 @@ class JobLogs extends Component {
     const {
       formatter,
       contentData,
-      isLoading,
+      hasLoaded,
       sortDirection,
       sortField,
       onSort,
     } = this.props;
 
-    if (isLoading) {
+    if (hasLoaded) {
       return (
-        <Icon
-          icon="spinner-ellipsis"
-          size="small"
+        <MultiColumnList
+          contentData={contentData}
+          columnMapping={this.columnMapping}
+          visibleColumns={this.visibleColumns}
+          formatter={formatter}
+          sortOrder={this.columnMapping[sortField]}
+          sortDirection={sortDirection}
+          autosize
+          onHeaderClick={onSort}
         />
       );
     }
 
-    return (
-      <MultiColumnList
-        contentData={contentData}
-        columnMapping={this.columnMapping}
-        visibleColumns={this.visibleColumns}
-        formatter={formatter}
-        sortOrder={this.columnMapping[sortField]}
-        sortDirection={sortDirection}
-        autosize
-        onHeaderClick={onSort}
-      />
-    );
+    return <Preloader />;
   }
 }
 

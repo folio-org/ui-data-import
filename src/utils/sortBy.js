@@ -1,4 +1,4 @@
-import isPlainObject from 'lodash/isPlainObject';
+import { isPlainObject } from 'lodash';
 
 /**
  * @typedef {Object} SortConfig
@@ -8,11 +8,15 @@ import isPlainObject from 'lodash/isPlainObject';
  */
 
 /**
+ * @typedef {Array<Object>} Collection
+ */
+
+/**
  * Generates SortConfig objects from string options or if SortConfig provided returns itself
  *
  * @param {Array<SortConfig | string>} iteratees
  *
- * @returns {Array<Object>}
+ * @returns {Collection}
  */
 const generateSortConfigs = iteratees => iteratees
   .map(iterateeObject => {
@@ -47,7 +51,7 @@ const generateSortConfigs = iteratees => iteratees
  * @param  {Object} a
  * @param  {Object} b
  *
- * @returns {number}
+ * @returns {number} 1, -1 or 0
  */
 const configurableSort = ({ property, sequence, descending }, a, b) => {
   // 1 - ascending, -1 - descending
@@ -80,18 +84,31 @@ const configurableSort = ({ property, sequence, descending }, a, b) => {
 };
 
 /**
- * Sorts collections (arrays of objects)
+ * Sorts collections by parameters specified in configs.
+ * Second argument accepts an array with SortConfig objects and/or field names.
+ * SortConfig object example:
+ * {
+ *   property: 'propName',
+ *   descending: true
+ * }
+ * The sort config example above could be changed with '-propName' string
+ * where '-' in the beginning means descending order.
+ * However SortConfig with sequence property must be passed as object.
+ * SortConfig with sequence example:
+ * {
+ *   property: 'status',
+ *   sequence: ['RUNNING', 'FAILED']
+ * }
  *
- * @param  {Array<Object>} collection An array of objects to sort
- * @param  {Array<SortConfig | string>} iteratees An array with sorting options
+ * @param  {Collection} [collection = []] A collection to sort
+ * @param  {Array<SortConfig | string>} [iteratees = []] An array with sorting options
  *
- * @returns {Array<Object>} Sorted array
+ * @returns {Collection} Sorted collection
  */
-const sortBy = (collection, iteratees) => {
-  const collectionCopy = [...collection];
+const sortBy = (collection = [], iteratees = []) => {
   const iterateesObjects = generateSortConfigs(iteratees);
 
-  return collectionCopy.sort((a, b) => {
+  return [...collection].sort((a, b) => {
     let i = 0;
     let result = 0;
 
