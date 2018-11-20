@@ -14,8 +14,8 @@ class FileItem extends PureComponent {
   render() {
     const {
       name,
-      current,
-      total,
+      currentUploaded,
+      size,
       isUploaded,
       onRemove,
     } = this.props;
@@ -29,8 +29,8 @@ class FileItem extends PureComponent {
           progressClassName={css.progress}
           progressWrapperClassName={css.progressWrapper}
           progressInfoClassName={css.progressInfo}
-          total={1320}
-          current={570}
+          total={size}
+          current={currentUploaded}
         />
       </div>
     );

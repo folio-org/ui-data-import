@@ -16,7 +16,7 @@ class JobProfile extends Component {
   }
 
   render = () => {
-    const initUploadingState = this.props.location ? this.props.location.state : undefined;
+    const initUploadingState = this.props.location ? this.props.location.state.acceptedFiles : null;
 
     return (
       <Paneset>
