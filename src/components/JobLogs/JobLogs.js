@@ -8,6 +8,7 @@ import Preloader from '../Preloader';
 import withJobLogsCellsFormatter from './withJobLogsCellsFormatter';
 import withJobLogsSort from './withJobLogsSort';
 import compose from '../../utils/compose';
+import jobLogPropTypes from './jobLogPropTypes';
 
 class JobLogs extends Component {
   static propTypes = {
@@ -17,18 +18,7 @@ class JobLogs extends Component {
     formatter: PropTypes.object.isRequired,
     onSort: PropTypes.func.isRequired,
     hasLoaded: PropTypes.bool.isRequired,
-    contentData: PropTypes.arrayOf(
-      PropTypes.shape({
-        fileName: PropTypes.string,
-        jobProfileName: PropTypes.string,
-        jobExecutionHrId: PropTypes.string,
-        completedDate: PropTypes.string,
-        runBy: PropTypes.shape({
-          firstName: PropTypes.string,
-          lastName: PropTypes.string,
-        }),
-      }),
-    ),
+    contentData: PropTypes.arrayOf(jobLogPropTypes),
   };
 
   static defaultProps = {
@@ -67,22 +57,22 @@ class JobLogs extends Component {
       onSort,
     } = this.props;
 
-    if (hasLoaded) {
-      return (
-        <MultiColumnList
-          contentData={contentData}
-          columnMapping={this.columnMapping}
-          visibleColumns={this.visibleColumns}
-          formatter={formatter}
-          sortOrder={this.columnMapping[sortField]}
-          sortDirection={sortDirection}
-          autosize
-          onHeaderClick={onSort}
-        />
-      );
+    if (!hasLoaded) {
+      return <Preloader />;
     }
 
-    return <Preloader />;
+    return (
+      <MultiColumnList
+        contentData={contentData}
+        columnMapping={this.columnMapping}
+        visibleColumns={this.visibleColumns}
+        formatter={formatter}
+        sortOrder={this.columnMapping[sortField]}
+        sortDirection={sortDirection}
+        autosize
+        onHeaderClick={onSort}
+      />
+    );
   }
 }
 

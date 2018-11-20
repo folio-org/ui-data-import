@@ -1,4 +1,4 @@
-import { sortBy } from '../../../../utils';
+import { sortCollection } from '../../../../utils';
 import { convertDate } from '../../utils';
 
 const sortRunningJobs = jobs => {
@@ -6,7 +6,7 @@ const sortRunningJobs = jobs => {
     ...props,
     startedDate: convertDate(startedDate, 'number'),
   }));
-  const sortedJobs = sortBy(correctDateJobs, ['-startedDate']);
+  const sortedJobs = sortCollection(correctDateJobs, ['-startedDate']);
 
   return sortedJobs.map(({ startedDate, ...props }) => ({
     ...props,

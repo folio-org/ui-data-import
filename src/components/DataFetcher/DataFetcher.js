@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
 import jobPropTypes from '../Jobs/components/Job/jobPropTypes';
+import jobLogPropTypes from '../JobLogs/jobLogPropTypes';
 import { DataFetcherContextProvider } from './DataFetcherContext';
 
 const DEFAULT_UPDATE_INTERVAL = 5000;
@@ -35,7 +36,7 @@ class DataFetcher extends Component {
         records: PropTypes.arrayOf(
           PropTypes.shape(
             PropTypes.arrayOf({
-              logs: PropTypes.arrayOf(jobPropTypes).isRequired,
+              logs: PropTypes.arrayOf(jobLogPropTypes).isRequired,
             }).isRequired,
           ).isRequired,
         ),
@@ -87,22 +88,25 @@ class DataFetcher extends Component {
     const { mutator } = this.props;
 
     Object.keys(mutator)
-      .forEach(resourceName => this.setState(({ contextData }) => ({
-        contextData: {
-          ...contextData,
-          [resourceName]: {
-            hasLoaded: false,
+      .forEach(resourceName => {
+        this.setState(({ contextData }) => ({
+          contextData: {
+            ...contextData,
+            [resourceName]: {
+              hasLoaded: false,
+            },
           },
-        },
-      })));
+        }));
+      });
   }
 
   getResourcesData = async () => {
     const { mutator } = this.props;
-    const fetchResourcesPromises = [];
 
-    Object.values(mutator)
-      .forEach(resourceMutator => fetchResourcesPromises.push(this.getResourceData(resourceMutator)));
+    const fetchResourcesPromises = Object.values(mutator)
+      .reduce((res, resourceMutator) => {
+        return res.concat(this.getResourceData(resourceMutator));
+      }, []);
 
     try {
       await Promise.all(fetchResourcesPromises);
@@ -129,7 +133,7 @@ class DataFetcher extends Component {
           ...contextData,
           [resourceName]: {
             hasLoaded: true,
-            itemsObject: get(resourceValue, ['records', 0]),
+            itemsObject: get(resourceValue, ['records', 0], {}),
           },
         },
       })));

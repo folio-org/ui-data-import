@@ -22,7 +22,7 @@ class RunningJobs extends PureComponent {
   }
 
   render() {
-    const { jobs: { hasLoaded = false } = {} } = this.context;
+    const hasLoaded = get(this.context, ['jobs', 'hasLoaded'], false);
     const jobs = this.prepareJobsData();
 
     return (

@@ -1,8 +1,12 @@
-import { isPlainObject } from 'lodash';
+import {
+  isPlainObject,
+  isFunction,
+} from 'lodash';
 
 /**
  * @typedef {Object} SortConfig
- * @property {string} property
+ * @property {string} [propertyName]
+ * @property {Function} [compareFunction]
  * @property {Array<string>} [sequence]
  * @property {boolean} [descending]
  */
@@ -14,34 +18,40 @@ import { isPlainObject } from 'lodash';
 /**
  * Generates SortConfig objects from string options or if SortConfig provided returns itself
  *
- * @param {Array<SortConfig | string>} iteratees
+ * @param {Array<SortConfig | string | Function>} iteratees
  *
  * @returns {Collection}
  */
 const generateSortConfigs = iteratees => iteratees
-  .map(iterateeObject => {
+  .map(iteratee => {
     // strings must be transformed in config objects
-    if (typeof iterateeObject === 'string') {
+    if (typeof iteratee === 'string') {
       let descending = false;
-      let property = iterateeObject;
+      let propertyName = iteratee;
 
       // if string starts with "-" than sorting should be descending
-      if (property[0] === '-') {
+      if (propertyName[0] === '-') {
         descending = true;
-        property = iterateeObject.substr(1);
+        propertyName = iteratee.substr(1);
       }
 
       return {
-        property,
+        propertyName,
         descending,
       };
     }
 
-    if (isPlainObject(iterateeObject)) {
-      return iterateeObject;
+    if (isFunction(iteratee)) {
+      return {
+        compareFunction: iteratee,
+      };
     }
 
-    throw new TypeError(`${JSON.stringify(iterateeObject)} is not valid value.`);
+    if (isPlainObject(iteratee)) {
+      return iteratee;
+    }
+
+    throw new TypeError(`${JSON.stringify(iteratee)} is not valid value.`);
   });
 
 /**
@@ -53,11 +63,19 @@ const generateSortConfigs = iteratees => iteratees
  *
  * @returns {number} 1, -1 or 0
  */
-const configurableSort = ({ property, sequence, descending }, a, b) => {
+const configurableSort = ({
+  compareFunction,
+  propertyName,
+  sequence,
+  descending,
+}, a, b) => {
+  if (compareFunction) {
+    return compareFunction(a, b);
+  }
   // 1 - ascending, -1 - descending
   const sortOrder = descending ? -1 : 1;
-  let propA = a[property];
-  let propB = b[property];
+  let propA = a[propertyName];
+  let propB = b[propertyName];
   let result = 0;
 
   // if order is sequence array than indexes are checked instead of alphabetical order
@@ -85,7 +103,7 @@ const configurableSort = ({ property, sequence, descending }, a, b) => {
 
 /**
  * Sorts collections by parameters specified in configs.
- * Second argument accepts an array with SortConfig objects and/or field names.
+ * Second argument accepts an array with SortConfig objects and/or field names and/or compare functions.
  * SortConfig object example:
  * {
  *   property: 'propName',
@@ -99,21 +117,27 @@ const configurableSort = ({ property, sequence, descending }, a, b) => {
  *   property: 'status',
  *   sequence: ['RUNNING', 'FAILED']
  * }
+ * Compare function takes two adjacent elements and must return a number determining sort order.
+ * Compare function example:
+ * (a, b) => b.propName - a.propName;
  *
  * @param  {Collection} [collection = []] A collection to sort
- * @param  {Array<SortConfig | string>} [iteratees = []] An array with sorting options
+ * @param  {Array<SortConfig | string | Function>} [iteratees = []] An array with sorting options
  *
  * @returns {Collection} Sorted collection
  */
-const sortBy = (collection = [], iteratees = []) => {
+const sortCollection = (collection = [], iteratees = []) => {
   const iterateesObjects = generateSortConfigs(iteratees);
+  const { length } = iterateesObjects;
 
   return [...collection].sort((a, b) => {
     let i = 0;
     let result = 0;
 
-    while (result === 0 && i < iterateesObjects.length) {
-      result = configurableSort(iterateesObjects[i], a, b);
+    while (result === 0 && i < length) {
+      const { [i]: sortOption } = iterateesObjects;
+
+      result = configurableSort(sortOption, a, b);
       i++;
     }
 
@@ -121,4 +145,4 @@ const sortBy = (collection = [], iteratees = []) => {
   });
 };
 
-export default sortBy;
+export default sortCollection;

@@ -146,7 +146,7 @@ const withJobLogsSort = WrappedComponent => {
     };
 
     render() {
-      const { logs: { hasLoaded = false } = {} } = this.context;
+      const hasLoaded = get(this.context, ['jobs', 'hasLoaded'], false);
       const contentData = this.prepareLogsData();
 
       return (
