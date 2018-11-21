@@ -22,7 +22,7 @@ const JobsList = ({
     />
   );
   const EmptyMessage = (
-    <span className={css.isEmptyMessage}>
+    <span className={css.emptyMessage}>
       {noJobsMessage}
     </span>
   );

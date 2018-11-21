@@ -1,25 +1,22 @@
 import React, { PureComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
-import {
-  get,
-  filter,
-} from 'lodash';
+import { get } from 'lodash';
 
 import JobsList from '../JobsList';
 import sortPreviewJobs from './sortPreviewJobs';
-import { DataFetcherContext } from '../../../DataFetcher/DataFetcherContext';
 import {
   READY_FOR_PREVIEW,
   PREPARING_FOR_PREVIEW,
 } from '../../jobStatuses';
+import { DataFetcherContext } from '../../../DataFetcher/DataFetcherContext';
 
 class PreviewsJobs extends PureComponent {
   static contextType = DataFetcherContext;
 
   prepareJobsData() {
-    let jobs = get(this.context, ['jobs', 'itemsObject', 'jobExecutions'], []);
-
-    jobs = filter(jobs, ({ status }) => status === READY_FOR_PREVIEW || status === PREPARING_FOR_PREVIEW);
+    const jobStatuses = [READY_FOR_PREVIEW, PREPARING_FOR_PREVIEW]; // TODO: could be changed on backend
+    const jobs = get(this.context, ['jobs', 'itemsObject', 'jobExecutions'], [])
+      .filter(({ status }) => jobStatuses.includes(status));
 
     return sortPreviewJobs(jobs);
   }

@@ -16,19 +16,19 @@ export const DATE_TYPES = {
  * @returns  {string | number | Date} Converted date
  */
 export const convertDate = (date, toType = DATE_TYPES.string) => {
-  const _date = new Date(date);
+  const dateInstance = new Date(date);
 
-  if (_date.toString() === INVALID_DATE) {
+  if (dateInstance.toString() === INVALID_DATE) {
     return date;
   }
 
   switch (toType) {
     case DATE_TYPES.string:
-      return _date.toString();
+      return dateInstance.toString();
     case DATE_TYPES.number:
-      return _date.valueOf();
+      return dateInstance.valueOf();
     case DATE_TYPES.Date:
-      return _date;
+      return dateInstance;
     default:
       return date;
   }

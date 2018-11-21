@@ -4,6 +4,11 @@ import { get } from 'lodash';
 
 import jobPropTypes from '../Jobs/components/Job/jobPropTypes';
 import jobLogPropTypes from '../JobLogs/jobLogPropTypes';
+import {
+  PREPARING_FOR_PREVIEW,
+  READY_FOR_PREVIEW,
+  RUNNING,
+} from '../Jobs/jobStatuses';
 import { DataFetcherContextProvider } from './DataFetcherContext';
 
 const DEFAULT_UPDATE_INTERVAL = 5000;
@@ -21,27 +26,23 @@ class DataFetcher extends Component {
       logs: PropTypes.shape({
         GET: PropTypes.func.isRequired,
       }).isRequired,
-    }),
+    }).isRequired,
     resources: PropTypes.shape({
       jobs: PropTypes.shape({
         records: PropTypes.arrayOf(
-          PropTypes.shape(
-            PropTypes.arrayOf({
-              jobExecutions: PropTypes.arrayOf(jobPropTypes).isRequired,
-            }).isRequired,
-          ).isRequired,
-        ),
+          PropTypes.shape({
+            jobExecutions: PropTypes.arrayOf(jobPropTypes).isRequired,
+          }),
+        ).isRequired,
       }),
       logs: PropTypes.shape({
         records: PropTypes.arrayOf(
-          PropTypes.shape(
-            PropTypes.arrayOf({
-              logs: PropTypes.arrayOf(jobLogPropTypes).isRequired,
-            }).isRequired,
-          ).isRequired,
-        ),
+          PropTypes.shape({
+            logs: PropTypes.arrayOf(jobLogPropTypes).isRequired,
+          }),
+        ).isRequired,
       }),
-    }),
+    }).isRequired,
     updateInterval: PropTypes.number, // milliseconds
   };
 
@@ -52,7 +53,7 @@ class DataFetcher extends Component {
   static manifest = Object.freeze({
     jobs: {
       type: 'okapi',
-      path: 'metadata-provider/jobExecutions',
+      path: `metadata-provider/jobExecutions?query=(status=${READY_FOR_PREVIEW}, ${PREPARING_FOR_PREVIEW}, ${RUNNING})`,
       accumulate: true,
       throwErrors: false,
     },
@@ -113,7 +114,7 @@ class DataFetcher extends Component {
 
       this.mapResourcesToState();
     } catch ({ message }) {
-      // TODO: error handling logic
+      // TODO: should be described in UIDATIMP-53
     }
   };
 
@@ -128,15 +129,17 @@ class DataFetcher extends Component {
     const { resources } = this.props;
 
     Object.entries(resources)
-      .forEach(([resourceName, resourceValue]) => this.setState(({ contextData }) => ({
-        contextData: {
-          ...contextData,
-          [resourceName]: {
-            hasLoaded: true,
-            itemsObject: get(resourceValue, ['records', 0], {}),
+      .forEach(([resourceName, resourceValue]) => {
+        this.setState(({ contextData }) => ({
+          contextData: {
+            ...contextData,
+            [resourceName]: {
+              hasLoaded: true,
+              itemsObject: get(resourceValue, ['records', 0], {}),
+            },
           },
-        },
-      })));
+        }));
+      });
   }
 
   render() {

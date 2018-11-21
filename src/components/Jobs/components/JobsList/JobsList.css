@@ -6,7 +6,7 @@
   margin-bottom: 5px;
 }
 
-.isEmptyMessage {
+.emptyMessage {
   display: block;
   width: 100%;
   text-align: center;

@@ -72,6 +72,7 @@ const configurableSort = ({
   if (compareFunction) {
     return compareFunction(a, b);
   }
+
   // 1 - ascending, -1 - descending
   const sortOrder = descending ? -1 : 1;
   let propA = a[propertyName];
