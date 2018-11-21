@@ -11,48 +11,20 @@ class UploadingDisplay extends Component {
     stripes: PropTypes.object,
     endpointFileDef: PropTypes.string,
     endpointFileUpload: PropTypes.string,
-  }
+  };
 
   static defaultProps = {
     endpointFileDef: '/data-import/upload/definition',
     endpointFileUpload: '/data-import/upload/file',
-  }
+  };
 
-  state = this.mapFilesFromProps(this.props, this.mapFilesFromPropsReducer);
-
-  async componentDidMount() {
-    const {
-      stripes: { okapi: { url: host } },
-      endpointFileDef,
-      endpointFileUpload,
-    } = this.props;
-    const obj = this.prepareFilesDefinition(this.state);
-    const fullUrl = host + endpointFileDef;
-    const config = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Okapi-Tenant': 'diku',
-        'X-Okapi-Token': this.props.stripes.okapi.token,
-      },
-      body: JSON.stringify(obj),
-    };
-
-    const { fileDefinitions } = await this.getUploadDefinition(fullUrl, config);
-    const prepearedFiles = this.prepareFilesToUpload(this.state, fileDefinitions);
-
-    this.setState(prepearedFiles, () => {
-      this.postFiles(this.state, host, endpointFileUpload, this.postFile);
-    });
-  }
-
-  mapFilesFromProps(props, reducer, initReducerValue = {}) {
+  static mapFilesFromProps(props, reducer, initReducerValue = {}) {
     if (!props.initState) return {};
 
     return props.initState.reduce(reducer, initReducerValue);
   }
 
-  mapFilesFromPropsReducer(result, currentFile) {
+  static mapFilesFromPropsReducer(result, currentFile) {
     const keyNameValue = currentFile.name + currentFile.lastModified;
 
     currentFile.keyName = keyNameValue;
@@ -62,70 +34,144 @@ class UploadingDisplay extends Component {
     return result;
   }
 
-  getUploadDefinition(fullUrl, config) {
+  static addHeaders = (xhr, headersObj) => {
+    const headerKeys = Object.keys(headersObj);
+
+    headerKeys.forEach(headerKey => {
+      xhr.setRequestHeader(headerKey, headersObj[headerKey]);
+    });
+
+    return xhr;
+  };
+
+  static prepareFilesDefinition(filesToUploadObj) {
+    return Object.keys(filesToUploadObj)
+      .reduce((result, currentKey) => {
+        if (!result.fileDefinitions) result.fileDefinitions = [];
+        result.fileDefinitions.push({ name: currentKey });
+
+        return result;
+      }, {});
+  }
+
+  static async getUploadDefinition(fullUrl, config) {
     return fetch(fullUrl, config)
       .then(res => res.json());
   }
 
-  postFiles(filesObj, host, endpointFileUpload, postFileMethod) {
-    const filesArr = Object.values(filesObj);
-    const initFileIndex = 0;
+  state = UploadingDisplay.mapFilesFromProps(this.props, UploadingDisplay.mapFilesFromPropsReducer);
 
-    postFileMethod(initFileIndex, filesArr, host, endpointFileUpload);
-  }
+  async componentDidMount() {
+    const { endpointFileDef, endpointFileUpload } = this.props;
+    const { url: host, token, tenant } = this.props.stripes.okapi;
 
-  postFile = async (fileIndex, filesArray, host, endpointFileUpload) => {
-    const file = filesArray[fileIndex];
-    const params = {
-      fileId: file.id,
-      uploadDefinitionId: file.uploadDefinitionId,
+    const filesDefinition = UploadingDisplay.prepareFilesDefinition(this.state);
+    const definitionsUrl = host + endpointFileDef;
+    const definitionHeaders = {
+      'Content-Type': 'application/json',
+      'X-Okapi-Tenant': tenant,
+      'X-Okapi-Token': token,
+    };
+    const definitionRequestConfig = {
+      method: 'POST',
+      headers: definitionHeaders,
+      body: JSON.stringify(filesDefinition),
+    };
+    const { fileDefinitions } = await UploadingDisplay.getUploadDefinition(definitionsUrl, definitionRequestConfig);
+
+    const prepearedFiles = this.prepareFilesToUpload(this.state, fileDefinitions);
+    const fileUploadHeaders = {
+      'Content-Type': 'application/octet-stream',
+      'X-Okapi-Tenant': tenant,
+      'X-Okapi-Token': token,
     };
 
-    const url = host + endpointFileUpload + '?' + this.generateParamsString(params);
-    const xhr = new XMLHttpRequest();
+    this.setState(prepearedFiles, () => {
+      this.postFiles(
+        this.state,
+        host,
+        endpointFileUpload,
+        fileUploadHeaders,
+        this.postFile,
+        this.onXHRprogress,
+        this.onXHRload,
+        this.onXHRerror,
+      );
+    });
+  }
 
-    try {
-      const octetStream = await this.fileToOctetStream(file);
+  prepareFilesToUpload(filesObj, fileDefinitions) {
+    const prepearedFiles = Object.assign({}, filesObj);
 
-      xhr.open('POST', url);
-      xhr.setRequestHeader('Content-Type', 'application/octet-stream');
-      xhr.setRequestHeader('X-Okapi-Tenant', 'diku');
-      xhr.setRequestHeader('X-Okapi-Token', this.props.stripes.okapi.token);
-      xhr.upload.onerror = error => {
-        if (++fileIndex < filesArray.length) {
-          this.postFile(fileIndex, filesArray, host, endpointFileUpload);
-        }
+    fileDefinitions.forEach(item => {
+      const { name, id, uploadDefinitionId } = item;
+
+      prepearedFiles[name].id = id;
+      prepearedFiles[name].uploadDefinitionId = uploadDefinitionId;
+    });
+
+    return prepearedFiles;
+  }
+
+  postFiles(
+    filesObj,
+    host,
+    endpointFileUpload,
+    headers,
+    postFile,
+    onXHRprogress,
+    onXHRload,
+    onXHRerror,
+  ) {
+    const filesArr = Object.values(filesObj);
+    let promise = Promise.resolve();
+
+    filesArr.forEach(file => {
+      promise = promise
+        .then(() => postFile(file, host, endpointFileUpload, headers, onXHRprogress))
+        .then(onXHRload)
+        .catch(onXHRerror);
+    });
+  }
+
+  postFile = (file, host, endpoint, headers, onprogress) => {
+    return new Promise(async (resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      const paramString = `?fileId=${file.id}&uploadDefinitionId=${file.uploadDefinitionId}`;
+
+      xhr.open('POST', host + endpoint + paramString);
+      xhr = UploadingDisplay.addHeaders(
+        xhr,
+        headers,
+      );
+
+      try {
+        const octet = await this.fileToOctetStream(file);
+
+
+        xhr.upload.onprogress = onprogress.bind(null, file);
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState !== 4) return;
+          const response = {
+            status: xhr.status,
+            statusText: xhr.statusText,
+            body: xhr.response,
+            file,
+          };
+
+          if (xhr.status === 200) {
+            resolve(response);
+          } else {
+            reject(response);
+          }
+        };
+
+        xhr.send(octet);
+      } catch (e) {
+        this.onFileReadError();
       }
-      xhr.upload.onprogress = event => {
-        this.setState(state => {
-          const updatedFile = Object.assign(state[file.keyName], { currentUploaded: event.loaded });
-
-          return { [file.keyName]: updatedFile };
-        });
-      };
-      xhr.upload.onload = () => {
-        if (++fileIndex < filesArray.length) {
-          this.postFile(fileIndex, filesArray, host, endpointFileUpload);
-        }
-      };
-      xhr.send(octetStream);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  generateParamsString(params) {
-    const paramKeys = Object.keys(params);
-
-    return paramKeys.reduce((result, currentKey, i, arr) => {
-      const queryString = `${currentKey}=${params[currentKey]}`;
-
-      result += (i < arr.length - 1) ? `${queryString}&` :
-        `${queryString}`;
-
-      return result;
-    }, '');
-  }
+    });
+  };
 
   fileToOctetStream(file) {
     const fileReader = new FileReader();
@@ -144,49 +190,56 @@ class UploadingDisplay extends Component {
     });
   }
 
-  prepareFilesDefinition(filesToUploadObj) {
-    return Object.keys(filesToUploadObj).reduce((result, currentKey) => {
-      if (!result.fileDefinitions) result.fileDefinitions = [];
-      result.fileDefinitions.push({ name: currentKey });
+  onXHRprogress = (file, event) => {
+    this.setState(state => {
+      const updatedFile = Object.assign(state[file.keyName], { currentUploaded: event.loaded });
 
-      return result;
-    }, {});
-  }
-
-  prepareFilesToUpload(filesObj, fileDefinitions) {
-    const prepearedFiles = Object.assign({}, filesObj);
-
-    fileDefinitions.forEach(item => {
-      const { name, id, uploadDefinitionId } = item;
-
-      prepearedFiles[name].id = id;
-      prepearedFiles[name].uploadDefinitionId = uploadDefinitionId;
+      return { [file.keyName]: updatedFile };
     });
+  };
 
-    return prepearedFiles;
+  onXHRload = ({ file }) => {
+    this.setState(state => {
+      const updatedFile = Object.assign(state[file.keyName], { uploadStatus: 'success' });
+
+      return { [file.keyName]: updatedFile };
+    });
+  };
+
+  onXHRerror = ({ file }) => {
+    this.setState(state => {
+      const updatedFile = Object.assign(state[file.keyName], { uploadStatus: 'failed' });
+
+      return { [file.keyName]: updatedFile };
+    });
+  };
+
+  onFileReadError() {
+    return undefined;
   }
 
   renderFiles(filesObj) {
     if (!filesObj) return false;
 
-    return Object.keys(filesObj).map(key => {
-      const {
-        name,
-        size,
-        currentUploaded,
-        isUploaded,
-      } = filesObj[key];
+    return Object.keys(filesObj)
+      .map(key => {
+        const {
+          name,
+          size,
+          currentUploaded,
+          uploadStatus,
+        } = filesObj[key];
 
-      return (
-        <FileItem
-          key={key}
-          name={name}
-          size={size}
-          currentUploaded={currentUploaded}
-          isUploaded={isUploaded}
-        />
-      );
-    });
+        return (
+          <FileItem
+            key={key}
+            name={name}
+            size={size}
+            currentUploaded={currentUploaded}
+            uploadStatus={uploadStatus}
+          />
+        );
+      });
   }
 
   render() {
