@@ -69,6 +69,7 @@ class DataFetcher extends Component {
     contextData: {},
   };
 
+
   componentDidMount() {
     this.setInitialState();
     this.getResourcesData();
@@ -87,18 +88,18 @@ class DataFetcher extends Component {
 
   setInitialState() {
     const { mutator } = this.props;
+    const initialContextData = {};
 
     Object.keys(mutator)
       .forEach(resourceName => {
-        this.setState(({ contextData }) => ({
-          contextData: {
-            ...contextData,
-            [resourceName]: {
-              hasLoaded: false,
-            },
-          },
-        }));
+        initialContextData[resourceName] = {
+          hasLoaded: false,
+        };
       });
+
+    this.setState({
+      contextData: initialContextData,
+    });
   }
 
   getResourcesData = async () => {
@@ -127,19 +128,19 @@ class DataFetcher extends Component {
 
   mapResourcesToState() {
     const { resources } = this.props;
+    const contextData = {};
 
     Object.entries(resources)
       .forEach(([resourceName, resourceValue]) => {
-        this.setState(({ contextData }) => ({
-          contextData: {
-            ...contextData,
-            [resourceName]: {
-              hasLoaded: true,
-              itemsObject: get(resourceValue, ['records', 0], {}),
-            },
-          },
-        }));
+        contextData[resourceName] = {
+          hasLoaded: true,
+          itemsObject: get(resourceValue, ['records', 0], {}),
+        };
       });
+
+    this.setState({
+      contextData,
+    });
   }
 
   render() {
