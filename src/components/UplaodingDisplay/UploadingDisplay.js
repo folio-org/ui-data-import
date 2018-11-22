@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { withStripes } from '@folio/stripes/core';
+import {
+  withStripes,
+  stripesShape,
+} from '@folio/stripes/core';
 
 import FileItem from './components/FileItem';
 
-
 class UploadingDisplay extends Component {
   static propTypes = {
-    stripes: PropTypes.object,
+    stripes: stripesShape.isRequired,
+    initState: PropTypes.arrayOf(PropTypes.object),
     endpointFileDef: PropTypes.string,
     endpointFileUpload: PropTypes.string,
   };
@@ -18,40 +21,35 @@ class UploadingDisplay extends Component {
     endpointFileUpload: '/data-import/upload/file',
   };
 
-  static mapFilesFromProps(props, reducer, initReducerValue = {}) {
-    if (!props.initState) return {};
+  static mapFilesFromProps(props) {
+    const reducer = (result, currentFile) => {
+      const keyNameValue = currentFile.name + currentFile.lastModified;
 
-    return props.initState.reduce(reducer, initReducerValue);
+      currentFile.keyName = keyNameValue;
+      currentFile.currentUploaded = 0;
+      result[keyNameValue] = currentFile;
+
+      return result;
+    };
+
+    return props.initState.reduce(reducer, {});
   }
 
-  static mapFilesFromPropsReducer(result, currentFile) {
-    const keyNameValue = currentFile.name + currentFile.lastModified;
-
-    currentFile.keyName = keyNameValue;
-    currentFile.currentUploaded = 0;
-    result[keyNameValue] = currentFile;
-
-    return result;
-  }
-
-  static addHeaders = (xhr, headersObj) => {
-    const headerKeys = Object.keys(headersObj);
+  static addHeaders = (xhr, headers) => {
+    const headerKeys = Object.keys(headers);
 
     headerKeys.forEach(headerKey => {
-      xhr.setRequestHeader(headerKey, headersObj[headerKey]);
+      xhr.setRequestHeader(headerKey, headers[headerKey]);
     });
 
     return xhr;
   };
 
-  static prepareFilesDefinition(filesToUploadObj) {
-    return Object.keys(filesToUploadObj)
-      .reduce((result, currentKey) => {
-        if (!result.fileDefinitions) result.fileDefinitions = [];
-        result.fileDefinitions.push({ name: currentKey });
+  static prepareFilesDefinition(filesToUpload) {
+    const resultFiles = Object.keys(filesToUpload)
+      .reduce((files, currentKey) => files.concat({ name: currentKey }), []);
 
-        return result;
-      }, {});
+    return { fileDefinitions: resultFiles };
   }
 
   static async getUploadDefinition(fullUrl, config) {
@@ -59,11 +57,18 @@ class UploadingDisplay extends Component {
       .then(res => res.json());
   }
 
-  state = UploadingDisplay.mapFilesFromProps(this.props, UploadingDisplay.mapFilesFromPropsReducer);
+  state = UploadingDisplay.mapFilesFromProps(this.props);
 
   async componentDidMount() {
-    const { endpointFileDef, endpointFileUpload } = this.props;
-    const { url: host, token, tenant } = this.props.stripes.okapi;
+    const {
+      endpointFileDef,
+      endpointFileUpload,
+    } = this.props;
+    const {
+      url: host,
+      token,
+      tenant,
+    } = this.props.stripes.okapi;
 
     const filesDefinition = UploadingDisplay.prepareFilesDefinition(this.state);
     const definitionsUrl = host + endpointFileDef;
@@ -79,14 +84,14 @@ class UploadingDisplay extends Component {
     };
     const { fileDefinitions } = await UploadingDisplay.getUploadDefinition(definitionsUrl, definitionRequestConfig);
 
-    const prepearedFiles = this.prepareFilesToUpload(this.state, fileDefinitions);
+    const preparedFiles = this.prepareFilesToUpload(this.state, fileDefinitions);
     const fileUploadHeaders = {
       'Content-Type': 'application/octet-stream',
       'X-Okapi-Tenant': tenant,
       'X-Okapi-Token': token,
     };
 
-    this.setState(prepearedFiles, () => {
+    this.setState(preparedFiles, () => {
       this.postFiles(
         this.state,
         host,
@@ -100,21 +105,21 @@ class UploadingDisplay extends Component {
     });
   }
 
-  prepareFilesToUpload(filesObj, fileDefinitions) {
-    const prepearedFiles = Object.assign({}, filesObj);
+  prepareFilesToUpload(files, fileDefinitions) {
+    const preparedFiles = Object.assign({}, files);
 
     fileDefinitions.forEach(item => {
       const { name, id, uploadDefinitionId } = item;
 
-      prepearedFiles[name].id = id;
-      prepearedFiles[name].uploadDefinitionId = uploadDefinitionId;
+      preparedFiles[name].id = id;
+      preparedFiles[name].uploadDefinitionId = uploadDefinitionId;
     });
 
-    return prepearedFiles;
+    return preparedFiles;
   }
 
   postFiles(
-    filesObj,
+    files,
     host,
     endpointFileUpload,
     headers,
@@ -123,7 +128,7 @@ class UploadingDisplay extends Component {
     onXHRload,
     onXHRerror,
   ) {
-    const filesArr = Object.values(filesObj);
+    const filesArr = Object.values(files);
     let promise = Promise.resolve();
 
     filesArr.forEach(file => {
@@ -148,7 +153,6 @@ class UploadingDisplay extends Component {
       try {
         const octet = await this.fileToOctetStream(file);
 
-
         xhr.upload.onprogress = onprogress.bind(null, file);
         xhr.onreadystatechange = () => {
           if (xhr.readyState !== 4) return;
@@ -168,7 +172,7 @@ class UploadingDisplay extends Component {
 
         xhr.send(octet);
       } catch (e) {
-        this.onFileReadError();
+        this.onFileReadError(e);
       }
     });
   };
@@ -214,21 +218,21 @@ class UploadingDisplay extends Component {
     });
   };
 
-  onFileReadError() {
-    return undefined;
+  onFileReadError(error) {
+    console.error(error);
   }
 
-  renderFiles(filesObj) {
-    if (!filesObj) return false;
+  renderFiles(files) {
+    if (!files) return false;
 
-    return Object.keys(filesObj)
+    return Object.keys(files)
       .map(key => {
         const {
           name,
           size,
           currentUploaded,
           uploadStatus,
-        } = filesObj[key];
+        } = files[key];
 
         return (
           <FileItem

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+import { withRouter, Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -7,15 +7,16 @@ import FileUpload from './components/FileUpload';
 
 import css from './components/FileUpload/FileUpload.css';
 
-
 class ImportJobs extends Component {
   static propTypes = {
-    history: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
+    match: PropTypes.shape({
+      path: PropTypes.string.isRequired,
+    }),
   };
 
   state = {
     isDropZoneActive: false,
+    toRedirect: false,
   };
 
   onDragEnter = () => {
@@ -31,16 +32,12 @@ class ImportJobs extends Component {
   };
 
   onDrop = (acceptedFiles, rejectedFiles) => {
-    const {
-      history,
-      match,
-    } = this.props;
-
     this.setState({
       isDropZoneActive: false,
+      acceptedFiles,
+      rejectedFiles,
+      toRedirect: true,
     });
-
-    history.push(`${match.path}/job-profile`, { acceptedFiles, rejectedFiles });
   };
 
   getMessageById = (idEnding, moduleName = 'ui-data-import') => {
@@ -50,9 +47,21 @@ class ImportJobs extends Component {
   };
 
   render() {
+    const { acceptedFiles, rejectedFiles, toRedirect } = this.state;
+    const { match } = this.props;
     const titleMessageIdEnding = this.state.isDropZoneActive ? 'activeUploadTitle' : 'uploadTitle';
     const titleText = this.getMessageById(titleMessageIdEnding);
     const uploadBtnText = this.getMessageById('uploadBtnText');
+
+    if (toRedirect) {
+      return (
+        <Redirect to={{
+          pathname: `${match.path}/job-profile`,
+          state: { acceptedFiles, rejectedFiles },
+        }}
+        />
+      );
+    }
 
     return (
       <FileUpload

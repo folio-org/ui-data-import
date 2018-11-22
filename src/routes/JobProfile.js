@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { get } from 'lodash';
 
 import {
   Paneset,
@@ -12,11 +13,15 @@ import UploadingDisplay from '../components/UplaodingDisplay';
 
 class JobProfile extends Component {
   static propTypes = {
-    location: PropTypes.object,
-  }
+    location: PropTypes.shape({
+      state: PropTypes.shape({
+        acceptedFiles: PropTypes.array,
+      }),
+    }),
+  };
 
   render = () => {
-    const initUploadingState = this.props.location ? this.props.location.state.acceptedFiles : null;
+    const initUploadingState = get(this.props, 'location.state.acceptedFiles', []);
 
     return (
       <Paneset>

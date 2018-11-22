@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { calculatePercentage } from '../../utils';
 
@@ -7,7 +8,12 @@ import css from './Progress.css';
 
 const progressInfoFormatters = {
   percentage: (current, total) => `${calculatePercentage(current, total)}%`,
-  messagedPercentage: (current, total, message) => `${message} ${calculatePercentage(current, total)}%`,
+  messagedPercentage: (current, total, payload) => (
+    <React.Fragment>
+      {payload.message}
+      {` ${calculatePercentage(current, total)} %`}
+    </React.Fragment>
+  ),
 };
 
 const Progress = props => {
@@ -15,22 +21,15 @@ const Progress = props => {
     current,
     total,
     progressInfoType,
-    message,
+    payload,
     progressClassName,
     progressWrapperClassName,
     progressInfoClassName,
     progressCurrentClassName,
   } = props;
-  const progressValue = calculatePercentage(current, total);
-  let progressInfo;
 
-  switch (progressInfoType) {
-    case 'messagedPercentage':
-      progressInfo = progressInfoFormatters[progressInfoType](current, total, message);
-      break;
-    default:
-      progressInfo = progressInfoFormatters[progressInfoType](current, total);
-  }
+  const progressValue = calculatePercentage(current, total);
+  const progressInfo = progressInfoFormatters[progressInfoType](current, total, payload);
 
   return (
     <div className={progressClassName}>
@@ -51,7 +50,9 @@ Progress.propTypes = {
   current: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired,
   progressInfoType: PropTypes.string,
-  message: PropTypes.string,
+  payload: PropTypes.shape({
+    message: PropTypes.object.isRequired,
+  }),
   progressWrapperClassName: PropTypes.string,
   progressClassName: PropTypes.string,
   progressCurrentClassName: PropTypes.string,
@@ -60,6 +61,7 @@ Progress.propTypes = {
 
 Progress.defaultProps = {
   progressInfoType: 'percentage',
+  payload: { message: <FormattedMessage id="ui-data-import.uploadingMessage" /> },
   progressWrapperClassName: css.progressWrapper,
   progressClassName: css.progress,
   progressCurrentClassName: css.progressCurrent,

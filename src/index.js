@@ -34,11 +34,19 @@ class DataImport extends React.Component {
       <Switch>
         <Route
           path={`${this.props.match.path}`}
-          exact
           render={this.renderConnectedHome}
+          exact
         />
-        <Route path={`${this.props.match.path}/results`} exact component={Results} />
-        <Route path={`${this.props.match.path}/job-profile`} exact component={JobProfile} />
+        <Route
+          path={`${this.props.match.path}/results`}
+          component={Results}
+          exact
+        />
+        <Route
+          path={`${this.props.match.path}/job-profile`}
+          component={JobProfile}
+          exact
+        />
       </Switch>
     );
   }
