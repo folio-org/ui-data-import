@@ -25,11 +25,11 @@
     "noPreviewsJobsMessage": "لا توجد معاينات للعرض",
     "noRunningJobsMessage": "لا توجد مهام قيد التشغيل للعرض",
     "loading": "جاري التحميل",
-    "meta.title": "Data Import",
-    "today": "today",
-    "settings.index.paneTitle": "Data Import",
-    "settings.general": "General",
-    "settings.general.message": "These are your general app settings.",
-    "settings.some-feature": "Some Feature",
-    "settings.some-feature.message": "These are your settings for some app feature."
+    "meta.title": "استيراد البيانات",
+    "today": "اليوم",
+    "settings.index.paneTitle": "استيراد البيانات",
+    "settings.general": "عام",
+    "settings.general.message": "هذه هي إعداداتك العامة للتطبيق",
+    "settings.some-feature": "بعض الخصائص",
+    "settings.some-feature.message": "هذه هي إعداداتك لبعض خصائص التطبيق."
 }
