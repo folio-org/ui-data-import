@@ -9,8 +9,10 @@ import Settings from './settings';
 
 class DataImport extends React.Component {
   static propTypes = {
-    match: PropTypes.object.isRequired,
-    showSettings: PropTypes.bool,
+    match: PropTypes.shape({
+      path: PropTypes.string.isRequired,
+    }).isRequired,
+    showSettings: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -25,18 +27,27 @@ class DataImport extends React.Component {
   };
 
   render() {
-    if (this.props.showSettings) {
+    const {
+      showSettings,
+      match: { path },
+    } = this.props;
+
+    if (showSettings) {
       return <Settings {...this.props} />;
     }
 
     return (
       <Switch>
         <Route
-          path={`${this.props.match.path}`}
+          path={`${path}`}
           exact
           render={this.renderConnectedHome}
         />
-        <Route path={`${this.props.match.path}/results`} exact component={Results} />
+        <Route
+          path={`${path}/results`}
+          exact
+          component={Results}
+        />
       </Switch>
     );
   }
