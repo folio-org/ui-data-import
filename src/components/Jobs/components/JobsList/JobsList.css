@@ -6,9 +6,8 @@
   margin-bottom: 5px;
 }
 
-.loading {
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.emptyMessage {
+  display: block;
+  width: 100%;
+  text-align: center;
 }

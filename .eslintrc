@@ -12,8 +12,8 @@
         "beforeColon": false
       }
     ],
-    "newline-before-return": 2,
-    "newline-after-var": 2,
+    "newline-before-return": "error",
+    "newline-after-var": "error",
     "react/jsx-one-expression-per-line": false,
     "comma-dangle": [
       "error",

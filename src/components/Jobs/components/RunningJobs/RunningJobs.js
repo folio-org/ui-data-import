@@ -3,22 +3,19 @@ import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
 import JobsList from '../JobsList';
-import sortPreviewJobs from './sortPreviewJobs';
-import {
-  PROCESSING_FINISHED,
-  PROCESSING_IN_PROGRESS,
-} from '../../jobStatuses';
+import sortRunningJobs from './sortRunningJobs';
+import { PARSING_IN_PROGRESS } from '../../jobStatuses';
 import { DataFetcherContext } from '../../../DataFetcher/DataFetcherContext';
 
-class PreviewsJobs extends PureComponent {
+class RunningJobs extends PureComponent {
   static contextType = DataFetcherContext;
 
   prepareJobsData() {
-    const jobStatuses = [PROCESSING_FINISHED, PROCESSING_IN_PROGRESS]; // TODO: could be changed on backend
+    const jobStatuses = [PARSING_IN_PROGRESS]; // TODO: could be changed on backend
     const jobs = get(this.context, ['jobs', 'itemsObject', 'jobExecutionDtos'], [])
       .filter(({ status }) => jobStatuses.includes(status));
 
-    return sortPreviewJobs(jobs);
+    return sortRunningJobs(jobs);
   }
 
   render() {
@@ -29,10 +26,10 @@ class PreviewsJobs extends PureComponent {
       <JobsList
         jobs={jobs}
         hasLoaded={hasLoaded}
-        noJobsMessage={<FormattedMessage id="ui-data-import.noPreviewsJobsMessage" />}
+        noJobsMessage={<FormattedMessage id="ui-data-import.noRunningJobsMessage" />}
       />
     );
   }
 }
 
-export default PreviewsJobs;
+export default RunningJobs;

@@ -8,7 +8,6 @@ import { Button } from '@folio/stripes/components';
 import initStyle from './initStyle.css';
 import css from './FileUpload.css';
 
-
 const cx = classNames.bind(css);
 
 const getTitleClassName = dropZoneState => {

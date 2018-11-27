@@ -1,15 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import noop from 'lodash/noop';
-
 import {
+  injectIntl,
+  intlShape,
   FormattedDate,
   FormattedTime,
   FormattedMessage,
   FormattedNumber,
   FormattedPlural,
 } from 'react-intl';
+import { noop } from 'lodash';
+import classNames from 'classnames';
 
 import { Button } from '@folio/stripes/components';
 
@@ -22,7 +23,7 @@ import css from './Job.css';
 class Job extends Component {
   static propTypes = {
     job: jobPropTypes.isRequired,
-    checkDateIsToday: PropTypes.func.isRequired,
+    intl: intlShape.isRequired,
     handlePreview: PropTypes.func,
   };
 
@@ -30,8 +31,14 @@ class Job extends Component {
     handlePreview: noop,
   };
 
+  checkDateIsToday = date => {
+    const { formatDate } = this.props.intl;
+
+    return formatDate(new Date()) === formatDate(date);
+  };
+
   formatTime(dateStr) {
-    const isToday = this.props.checkDateIsToday(dateStr);
+    const isToday = this.checkDateIsToday(dateStr);
     const datePart = !isToday && <FormattedDate value={dateStr} />;
     const timePart = <FormattedTime value={dateStr} />;
     const todayPart = isToday && <FormattedMessage id="ui-data-import.today" />;
@@ -41,17 +48,13 @@ class Job extends Component {
     );
   }
 
-  getRootClasses() {
-    return classNames(css.delimiter, css.jobHeader);
-  }
-
   render() {
     const { job } = this.props;
     const {
       jobProfileName,
       fileName,
       status,
-      jobExecutionHrId,
+      hrId,
       runBy: {
         firstName,
         lastName,
@@ -66,13 +69,13 @@ class Job extends Component {
 
     return (
       <div className={css.job}>
-        <div className={this.getRootClasses()}>
+        <div className={classNames(css.delimiter, css.jobHeader)}>
           <span>{jobProfileName}</span>
           <span>{fileName}</span>
         </div>
 
         <div className={css.delimiter}>
-          <span>{jobExecutionHrId}</span>
+          <span>{hrId}</span>
           <span>
             <FormattedMessage id="ui-data-import.triggeredBy" /> <span>{firstName} {lastName}</span>
           </span>
@@ -121,4 +124,4 @@ class Job extends Component {
   }
 }
 
-export default Job;
+export default injectIntl(Job);

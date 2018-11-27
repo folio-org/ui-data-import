@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { intlShape } from 'react-intl';
 
-import {
-  MultiColumnList,
-  Icon,
-} from '@folio/stripes/components';
+import { MultiColumnList } from '@folio/stripes/components';
 
-import compose from '../../utils/compose';
+import Preloader from '../Preloader';
 import withJobLogsCellsFormatter from './withJobLogsCellsFormatter';
 import withJobLogsSort from './withJobLogsSort';
+import compose from '../../utils/compose';
+import jobLogPropTypes from './jobLogPropTypes';
 
 class JobLogs extends Component {
   static propTypes = {
@@ -18,19 +17,8 @@ class JobLogs extends Component {
     sortDirection: PropTypes.string.isRequired,
     formatter: PropTypes.object.isRequired,
     onSort: PropTypes.func.isRequired,
-    contentData: PropTypes.arrayOf(
-      PropTypes.shape({
-        fileName: PropTypes.string,
-        jobProfileName: PropTypes.string,
-        jobExecutionHrId: PropTypes.string,
-        completedDate: PropTypes.string,
-        runBy: PropTypes.shape({
-          firstName: PropTypes.string,
-          lastName: PropTypes.string,
-        }),
-      }),
-    ),
-    isLoading: PropTypes.bool.isRequired,
+    hasLoaded: PropTypes.bool.isRequired,
+    contentData: PropTypes.arrayOf(jobLogPropTypes),
   };
 
   static defaultProps = {
@@ -63,19 +51,14 @@ class JobLogs extends Component {
     const {
       formatter,
       contentData,
-      isLoading,
+      hasLoaded,
       sortDirection,
       sortField,
       onSort,
     } = this.props;
 
-    if (isLoading) {
-      return (
-        <Icon
-          icon="spinner-ellipsis"
-          size="small"
-        />
-      );
+    if (!hasLoaded) {
+      return <Preloader />;
     }
 
     return (
