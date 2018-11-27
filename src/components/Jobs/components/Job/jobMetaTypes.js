@@ -1,19 +1,23 @@
-import { PREPARING_FOR_PREVIEW, READY_FOR_PREVIEW, RUNNING } from '../../jobStatuses';
+import {
+  PROCESSING_IN_PROGRESS,
+  PROCESSING_FINISHED,
+  PARSING_IN_PROGRESS,
+} from '../../jobStatuses';
 
 const jobMetaTypes = {
-  [PREPARING_FOR_PREVIEW]: job => ({
+  [PROCESSING_IN_PROGRESS]: job => ({
     showProgress: true,
     showPreview: false,
     date: job.startedDate,
     dateLabel: 'began',
   }),
-  [READY_FOR_PREVIEW]: job => ({
+  [PROCESSING_FINISHED]: job => ({
     showProgress: false,
     showPreview: true,
     date: job.completedDate,
     dateLabel: 'ended',
   }),
-  [RUNNING]: job => ({
+  [PARSING_IN_PROGRESS]: job => ({
     showProgress: true,
     showPreview: false,
     date: job.startedDate,

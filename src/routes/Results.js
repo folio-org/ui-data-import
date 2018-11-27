@@ -70,7 +70,6 @@ export default class Results extends React.Component {
     );
   }
 
-
   render() {
     const { filterPaneIsVisible, recordDetailsPaneIsVisible } = this.state;
 

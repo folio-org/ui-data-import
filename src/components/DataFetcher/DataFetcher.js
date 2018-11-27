@@ -5,9 +5,9 @@ import { get } from 'lodash';
 import jobPropTypes from '../Jobs/components/Job/jobPropTypes';
 import jobLogPropTypes from '../JobLogs/jobLogPropTypes';
 import {
-  PREPARING_FOR_PREVIEW,
-  READY_FOR_PREVIEW,
-  RUNNING,
+  PROCESSING_IN_PROGRESS,
+  PROCESSING_FINISHED,
+  PARSING_IN_PROGRESS,
 } from '../Jobs/jobStatuses';
 import { DataFetcherContextProvider } from './DataFetcherContext';
 
@@ -31,7 +31,7 @@ class DataFetcher extends Component {
       jobs: PropTypes.shape({
         records: PropTypes.arrayOf(
           PropTypes.shape({
-            jobExecutions: PropTypes.arrayOf(jobPropTypes).isRequired,
+            jobExecutionDtos: PropTypes.arrayOf(jobPropTypes).isRequired,
           }),
         ).isRequired,
       }),
@@ -53,7 +53,7 @@ class DataFetcher extends Component {
   static manifest = Object.freeze({
     jobs: {
       type: 'okapi',
-      path: `metadata-provider/jobExecutions?query=(status=${READY_FOR_PREVIEW}, ${PREPARING_FOR_PREVIEW}, ${RUNNING})`,
+      path: `metadata-provider/jobExecutions?query=(status=("${PROCESSING_IN_PROGRESS}" OR "${PROCESSING_FINISHED}" OR "${PARSING_IN_PROGRESS}"))`,
       accumulate: true,
       throwErrors: false,
     },
@@ -69,7 +69,6 @@ class DataFetcher extends Component {
     contextData: {},
   };
 
-
   componentDidMount() {
     this.setInitialState();
     this.getResourcesData();
@@ -79,6 +78,8 @@ class DataFetcher extends Component {
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
+
+  hasLoaded = false;
 
   updateResourcesData() {
     const { updateInterval } = this.props;
@@ -110,11 +111,16 @@ class DataFetcher extends Component {
         return res.concat(this.getResourceData(resourceMutator));
       }, []);
 
+    this.hasLoaded = true;
+
     try {
       await Promise.all(fetchResourcesPromises);
 
       this.mapResourcesToState();
-    } catch ({ message }) {
+    } catch (e) {
+      if (this.hasLoaded) {
+        this.mapResourcesToState(true);
+      }
       // TODO: should be described in UIDATIMP-53
     }
   };
@@ -126,15 +132,20 @@ class DataFetcher extends Component {
     await GET();
   }
 
-  mapResourcesToState() {
+  /**
+   * @param  {boolean} [isEmpty] flag to fill contextData with empty data
+   */
+  mapResourcesToState(isEmpty) {
     const { resources } = this.props;
     const contextData = {};
 
     Object.entries(resources)
       .forEach(([resourceName, resourceValue]) => {
+        const itemsObject = isEmpty ? {} : get(resourceValue, ['records', 0], {});
+
         contextData[resourceName] = {
           hasLoaded: true,
-          itemsObject: get(resourceValue, ['records', 0], {}),
+          itemsObject,
         };
       });
 

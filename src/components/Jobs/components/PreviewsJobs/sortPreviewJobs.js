@@ -4,11 +4,11 @@ import {
   convertDate,
 } from '../../utils';
 import {
-  READY_FOR_PREVIEW,
-  PREPARING_FOR_PREVIEW,
+  PROCESSING_FINISHED,
+  PROCESSING_IN_PROGRESS,
 } from '../../jobStatuses';
 
-const statusSequence = [READY_FOR_PREVIEW, PREPARING_FOR_PREVIEW];
+const statusSequence = [PROCESSING_FINISHED, PROCESSING_IN_PROGRESS];
 const sortByDates = (a, b) => {
   const { status: statusA } = a;
   const { status: statusB } = b;
@@ -26,11 +26,15 @@ const sortByDates = (a, b) => {
   completedDateA = convertDate(completedDateA, DATE_TYPES.number);
   completedDateB = convertDate(completedDateB, DATE_TYPES.number);
 
-  if (statusA === PREPARING_FOR_PREVIEW && statusB === PREPARING_FOR_PREVIEW) {
+  const isSortingByStartedDate = statusA === PROCESSING_IN_PROGRESS && statusB === PROCESSING_IN_PROGRESS;
+
+  if (isSortingByStartedDate) {
     return startedDateB - startedDateA;
   }
 
-  if (statusA === READY_FOR_PREVIEW && statusB === READY_FOR_PREVIEW) {
+  const isSortingByCompletedDate = statusA === PROCESSING_FINISHED && statusB === PROCESSING_FINISHED;
+
+  if (isSortingByCompletedDate) {
     return completedDateB - completedDateA;
   }
 
@@ -38,12 +42,14 @@ const sortByDates = (a, b) => {
 };
 const sortingOptions = [
   {
-    property: 'status',
+    propertyName: 'status',
     sequence: statusSequence,
   },
   sortByDates,
 ];
 
-const sortPreviewJobs = jobs => sortCollection(jobs, sortingOptions);
+const sortPreviewJobs = jobs => {
+  return sortCollection(jobs, sortingOptions);
+};
 
 export default sortPreviewJobs;

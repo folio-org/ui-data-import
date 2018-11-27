@@ -1,8 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { noop } from 'lodash';
-
 import {
   injectIntl,
   intlShape,
@@ -12,6 +9,8 @@ import {
   FormattedNumber,
   FormattedPlural,
 } from 'react-intl';
+import { noop } from 'lodash';
+import classNames from 'classnames';
 
 import { Button } from '@folio/stripes/components';
 
@@ -55,7 +54,7 @@ class Job extends Component {
       jobProfileName,
       fileName,
       status,
-      jobExecutionHrId,
+      hrId,
       runBy: {
         firstName,
         lastName,
@@ -76,7 +75,7 @@ class Job extends Component {
         </div>
 
         <div className={css.delimiter}>
-          <span>{jobExecutionHrId}</span>
+          <span>{hrId}</span>
           <span>
             <FormattedMessage id="ui-data-import.triggeredBy" /> <span>{firstName} {lastName}</span>
           </span>

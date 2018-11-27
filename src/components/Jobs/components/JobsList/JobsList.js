@@ -17,7 +17,7 @@ const JobsList = ({
 }) => {
   const itemFormatter = job => (
     <Job
-      key={job.jobExecutionHrId}
+      key={job.hrId}
       job={job}
     />
   );

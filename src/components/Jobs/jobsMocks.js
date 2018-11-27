@@ -1,20 +1,20 @@
 import {
-  RUNNING,
-  READY_FOR_PREVIEW,
-  PREPARING_FOR_PREVIEW,
+  PARSING_IN_PROGRESS,
+  PROCESSING_FINISHED,
+  PROCESSING_IN_PROGRESS,
 } from './jobStatuses';
 
 const constructHoursInMs = hours => hours * 60 * 60 * 1000;
 
 // could be used to test jobs sorting in UIDATIMP-27
-const jobMocks = [
+const jobsMocks = [
   {
     jobProfileName: 'Authority updates',
     fileName: 'import7.marc',
-    jobExecutionId: '112984498',
-    jobExecutionHrId: '112984498',
+    id: '112984498',
+    hrId: '112984498',
     startedDate: new Date(new Date() - constructHoursInMs(1000.5)).toString(),
-    status: READY_FOR_PREVIEW,
+    status: PROCESSING_FINISHED,
     runBy: {
       firstName: 'John',
       lastName: 'Doe',
@@ -28,10 +28,10 @@ const jobMocks = [
   {
     jobProfileName: 'Authority updates',
     fileName: 'import8.marc',
-    jobExecutionId: '112974998',
-    jobExecutionHrId: '112974998',
+    id: '112974998',
+    hrId: '112974998',
     startedDate: new Date(new Date() - constructHoursInMs(1000.3)).toString(),
-    status: READY_FOR_PREVIEW,
+    status: PROCESSING_FINISHED,
     runBy: {
       firstName: 'John',
       lastName: 'Lennon',
@@ -45,10 +45,10 @@ const jobMocks = [
   {
     jobProfileName: 'Marc bib jobs',
     fileName: 'import_156.mrc',
-    jobExecutionId: '122984588',
-    jobExecutionHrId: '122984588',
+    id: '122984588',
+    hrId: '122984588',
     startedDate: new Date(new Date() - constructHoursInMs(1.5)).toString(),
-    status: RUNNING,
+    status: PARSING_IN_PROGRESS,
     runBy: {
       firstName: 'John',
       lastName: 'Doe',
@@ -62,10 +62,10 @@ const jobMocks = [
   {
     jobProfileName: 'Marc jobs',
     fileName: 'import_209.mrc',
-    jobExecutionId: '122984589',
-    jobExecutionHrId: '122984589',
+    id: '122984589',
+    hrId: '122984589',
     startedDate: new Date(new Date() - constructHoursInMs(0.7)).toString(),
-    status: RUNNING,
+    status: PARSING_IN_PROGRESS,
     runBy: {
       firstName: 'Indiana',
       lastName: 'Jones',
@@ -79,10 +79,10 @@ const jobMocks = [
   {
     jobProfileName: 'Marc bib',
     fileName: 'import_159.mrc',
-    jobExecutionId: '182984219',
-    jobExecutionHrId: '182984219',
+    id: '182984219',
+    hrId: '182984219',
     startedDate: new Date(new Date() - constructHoursInMs(0.2)).toString(),
-    status: RUNNING,
+    status: PARSING_IN_PROGRESS,
     runBy: {
       firstName: 'Mark',
       lastName: 'Anderson',
@@ -96,10 +96,10 @@ const jobMocks = [
   {
     jobProfileName: 'Library indexing',
     fileName: 'import_150.mrc',
-    jobExecutionId: '182984532',
-    jobExecutionHrId: '182984532',
+    id: '182984532',
+    hrId: '182984532',
     startedDate: new Date(new Date() - constructHoursInMs(0.4)).toString(),
-    status: PREPARING_FOR_PREVIEW,
+    status: PROCESSING_IN_PROGRESS,
     runBy: {
       firstName: 'Jack',
       lastName: 'Doe',
@@ -113,10 +113,10 @@ const jobMocks = [
   {
     jobProfileName: 'Library indexing',
     fileName: 'import_102.mrc',
-    jobExecutionId: '182982989',
-    jobExecutionHrId: '182982989',
+    id: '182982989',
+    hrId: '182982989',
     startedDate: new Date(new Date() - constructHoursInMs(0.1)).toString(),
-    status: PREPARING_FOR_PREVIEW,
+    status: PROCESSING_IN_PROGRESS,
     runBy: {
       firstName: 'Marie',
       lastName: 'Curie',
@@ -129,4 +129,4 @@ const jobMocks = [
   },
 ];
 
-export default jobMocks;
+export default jobsMocks;

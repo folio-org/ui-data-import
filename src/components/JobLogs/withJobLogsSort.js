@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import qs from 'qs';
 
-import { compose } from '../../utils';
 import {
   sortNums,
   sortDates,
   sortStrings,
 } from '../../utils/sort';
+import { compose } from '../../utils';
+import jobLogPropTypes from './jobLogPropTypes';
 import { DataFetcherContext } from '../DataFetcher/DataFetcherContext';
 
 const withJobLogsSort = WrappedComponent => {
@@ -18,16 +19,7 @@ const withJobLogsSort = WrappedComponent => {
       formatter: PropTypes.object,
       resource: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.shape({
-          logs: PropTypes.arrayOf(PropTypes.shape({
-            fileName: PropTypes.string,
-            jobProfileName: PropTypes.string,
-            jobExecutionHrId: PropTypes.string,
-            completedDate: PropTypes.string,
-            runBy: PropTypes.shape({
-              firstName: PropTypes.string,
-              lastName: PropTypes.string,
-            }),
-          })).isRequired,
+          logs: PropTypes.arrayOf(jobLogPropTypes).isRequired,
         })),
         isPending: PropTypes.bool.isRequired,
       }),

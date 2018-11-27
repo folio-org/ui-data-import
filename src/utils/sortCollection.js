@@ -16,7 +16,7 @@ import {
  */
 
 /**
- * Generates SortConfig objects from string options or if SortConfig provided returns itself
+ * Generates SortConfig objects from string options or returns provided SortConfig as is
  *
  * @param {Array<SortConfig | string | Function>} iteratees
  *
