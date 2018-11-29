@@ -1,28 +1,55 @@
-import { sortBy } from '../../../../utils';
+import { sortCollection } from '../../../../utils';
 import {
-  READY_FOR_PREVIEW,
-  PREPARING_FOR_PREVIEW,
+  DATE_TYPES,
+  convertDate,
+} from '../../utils';
+import {
+  PROCESSING_FINISHED,
+  PROCESSING_IN_PROGRESS,
 } from '../../jobStatuses';
 
-const statusSequence = [READY_FOR_PREVIEW, PREPARING_FOR_PREVIEW];
+const statusSequence = [PROCESSING_FINISHED, PROCESSING_IN_PROGRESS];
+const sortByDates = (a, b) => {
+  const { status: statusA } = a;
+  const { status: statusB } = b;
+  let {
+    startedDate: startedDateA,
+    completedDate: completedDateA,
+  } = a;
+  let {
+    startedDate: startedDateB,
+    completedDate: completedDateB,
+  } = b;
 
-const sortingOptions = [{ property: 'status', sequence: statusSequence }, '-startedDate'];
+  startedDateA = convertDate(startedDateA, DATE_TYPES.number);
+  startedDateB = convertDate(startedDateB, DATE_TYPES.number);
+  completedDateA = convertDate(completedDateA, DATE_TYPES.number);
+  completedDateB = convertDate(completedDateB, DATE_TYPES.number);
 
-const datesToMilliseconds = jobs => jobs.map(({ startedDate, ...job }) => ({
-  ...job,
-  startedDate: new Date(startedDate).valueOf(),
-}));
+  const isSortingByStartedDate = statusA === PROCESSING_IN_PROGRESS && statusB === PROCESSING_IN_PROGRESS;
 
-const datesToStrings = jobs => jobs.map(({ startedDate, ...job }) => ({
-  ...job,
-  startedDate: new Date(startedDate).toString(),
-}));
+  if (isSortingByStartedDate) {
+    return startedDateB - startedDateA;
+  }
+
+  const isSortingByCompletedDate = statusA === PROCESSING_FINISHED && statusB === PROCESSING_FINISHED;
+
+  if (isSortingByCompletedDate) {
+    return completedDateB - completedDateA;
+  }
+
+  return 0;
+};
+const sortingOptions = [
+  {
+    propertyName: 'status',
+    sequence: statusSequence,
+  },
+  sortByDates,
+];
 
 const sortPreviewJobs = jobs => {
-  const correctDateJobs = datesToMilliseconds(jobs);
-  const sortedJobs = sortBy(correctDateJobs, sortingOptions);
-
-  return datesToStrings(sortedJobs);
+  return sortCollection(jobs, sortingOptions);
 };
 
 export default sortPreviewJobs;

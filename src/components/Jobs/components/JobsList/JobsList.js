@@ -1,57 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import identity from 'lodash/identity';
 
-import {
-  List,
-  Icon,
-} from '@folio/stripes/components';
+import { List } from '@folio/stripes/components';
 
 import Job from '../Job';
-import jobPropTypes from '../Job/jobPropTypes';
+import Preloader from '../../../Preloader';
 import EndOfList from '../EndOfList';
+import jobPropTypes from '../Job/jobPropTypes';
 
 import css from './JobsList.css';
 
 const JobsList = ({
   jobs,
   hasLoaded,
-  checkDateIsToday,
-  sort,
   noJobsMessage,
 }) => {
   const itemFormatter = job => (
     <Job
-      key={job.jobExecutionHrId}
+      key={job.hrId}
       job={job}
-      checkDateIsToday={checkDateIsToday}
     />
+  );
+  const EmptyMessage = (
+    <span className={css.emptyMessage}>
+      {noJobsMessage}
+    </span>
   );
   const LoadedJobsList = (
     <List
-      items={sort(jobs)}
+      items={jobs}
       itemFormatter={itemFormatter}
-      isEmptyMessage={noJobsMessage}
+      isEmptyMessage={EmptyMessage}
       listClass={css.list}
       marginBottom0
     />
   );
-  const Loading = (
-    <div className={css.loading}>
-      <FormattedMessage
-        id="ui-data-import.loading"
-      />
-      <Icon
-        icon="spinner-ellipsis"
-        size="small"
-      />
-    </div>
-  );
 
   return (
     <div className={css.listContainer}>
-      {hasLoaded ? LoadedJobsList : Loading}
+      {hasLoaded ? LoadedJobsList : <Preloader />}
       <EndOfList />
     </div>
   );
@@ -60,13 +47,10 @@ const JobsList = ({
 JobsList.propTypes = {
   jobs: PropTypes.arrayOf(jobPropTypes).isRequired,
   hasLoaded: PropTypes.bool.isRequired,
-  checkDateIsToday: PropTypes.func.isRequired,
-  sort: PropTypes.func,
   noJobsMessage: PropTypes.node,
 };
 
 JobsList.defaultProps = {
-  sort: identity,
   noJobsMessage: '',
 };
 

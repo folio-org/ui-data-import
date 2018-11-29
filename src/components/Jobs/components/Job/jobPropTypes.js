@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
 const jobPropTypes = PropTypes.shape({
-  jobExecutionId: PropTypes.string.isRequired,
-  jobExecutionHrId: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  hrId: PropTypes.string.isRequired,
   jobProfileName: PropTypes.string.isRequired,
   fileName: PropTypes.string.isRequired,
   runBy: PropTypes.shape({

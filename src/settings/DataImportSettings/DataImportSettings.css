@@ -1,0 +1,10 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.profilesLabel {
+  display: flex;
+}
+
+.profilesPopoverContent {
+  font-size: var(--font-size-small);
+  text-align: left;
+}

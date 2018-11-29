@@ -47,6 +47,26 @@
     "hasSettings": true,
     "icons": [
       {
+        "name": "jobProfiles",
+        "alt": "Job Profiles",
+        "title": "Job Profiles"
+      },
+      {
+        "name": "matchProfiles",
+        "alt": "Match Profiles",
+        "title": "Match Profiles"
+      },
+      {
+        "name": "actionProfiles",
+        "alt": "Action Profiles",
+        "title": "Action Profiles"
+      },
+      {
+        "name": "fieldMapping",
+        "alt": "Field Mapping Profiles",
+        "title": "Field Mapping Profiles"
+      },
+      {
         "name": "app",
         "alt": "Data import loader for MARC records",
         "title": "Data import"
@@ -70,7 +90,9 @@
         "permissionName": "settings.data-import.enabled",
         "displayName": "Settings (data-import): display list of settings pages",
         "subPermissions": [
-          "settings.enabled"
+          "settings.enabled",
+          "metadata-provider.log.get",
+          "metadata-provider.jobexecution.get"
         ],
         "visible": true
       }
