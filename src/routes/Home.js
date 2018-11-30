@@ -19,14 +19,6 @@ class Home extends Component {
     stripes: stripesShape.isRequired,
   };
 
-  static manifest = Object.freeze({
-    logs: {
-      type: 'okapi',
-      path: 'metadata-provider/logs?landingPage=true',
-      throwErrors: false,
-    },
-  });
-
   constructor(props) {
     super(props);
 

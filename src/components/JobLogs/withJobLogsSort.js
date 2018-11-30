@@ -19,7 +19,7 @@ const withJobLogsSort = WrappedComponent => {
       formatter: PropTypes.object,
       resource: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.shape({
-          logs: PropTypes.arrayOf(jobLogPropTypes).isRequired,
+          logDtos: PropTypes.arrayOf(jobLogPropTypes).isRequired,
         })),
         isPending: PropTypes.bool.isRequired,
       }),
@@ -91,7 +91,7 @@ const withJobLogsSort = WrappedComponent => {
         direction,
       } = this.state;
 
-      const logs = get(this.context, ['logs', 'itemsObject', 'logs'], []);
+      const logs = get(this.context, ['logs', 'itemsObject', 'logDtos'], []);
 
       return logs.sort((a, b) => {
         const cellFormatter = this.props.formatter[sort];

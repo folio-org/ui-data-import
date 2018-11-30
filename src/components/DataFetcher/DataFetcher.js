@@ -8,6 +8,7 @@ import {
   PROCESSING_IN_PROGRESS,
   PROCESSING_FINISHED,
   PARSING_IN_PROGRESS,
+  COMMITTED,
 } from '../Jobs/jobStatuses';
 import { DataFetcherContextProvider } from './DataFetcherContext';
 
@@ -38,7 +39,7 @@ class DataFetcher extends Component {
       logs: PropTypes.shape({
         records: PropTypes.arrayOf(
           PropTypes.shape({
-            logs: PropTypes.arrayOf(jobLogPropTypes).isRequired,
+            logDtos: PropTypes.arrayOf(jobLogPropTypes).isRequired,
           }),
         ).isRequired,
       }),
@@ -53,13 +54,13 @@ class DataFetcher extends Component {
   static manifest = Object.freeze({
     jobs: {
       type: 'okapi',
-      path: `metadata-provider/jobExecutions?query=(status=("${PROCESSING_IN_PROGRESS}" OR "${PROCESSING_FINISHED}" OR "${PARSING_IN_PROGRESS}"))`,
+      path: `metadata-provider/jobExecutions?query=(status=(${PROCESSING_IN_PROGRESS} OR ${PROCESSING_FINISHED} OR ${PARSING_IN_PROGRESS}))`,
       accumulate: true,
       throwErrors: false,
     },
     logs: {
       type: 'okapi',
-      path: 'metadata-provider/logs?landingPage=true',
+      path: `metadata-provider/logs?query=(status=${COMMITTED})&landingPage=true&limit=25`,
       accumulate: true,
       throwErrors: false,
     },
