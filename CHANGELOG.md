@@ -1,6 +1,8 @@
 # Change history for ui-data-import
 
-## 0.1.0 (IN PROGRESS)
+## 1.0.1 (IN-PROGRESS)
+
+## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
 
 * New app created with stripes-cli
 * Adjust skeleton application (UIDATIMP-2)
