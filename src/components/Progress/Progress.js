@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
 import { calculatePercentage } from '../../utils';
 
@@ -39,9 +38,7 @@ const Progress = props => {
           style={{ width: `${progressValue}%` }}
         />
       </div>
-      <div className={progressInfoClassName}>
-        {progressInfo}
-      </div>
+      <div className={progressInfoClassName}>{progressInfo}</div>
     </div>
   );
 };
@@ -50,9 +47,7 @@ Progress.propTypes = {
   current: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired,
   progressInfoType: PropTypes.string,
-  payload: PropTypes.shape({
-    message: PropTypes.object.isRequired,
-  }),
+  payload: PropTypes.object,
   progressWrapperClassName: PropTypes.string,
   progressClassName: PropTypes.string,
   progressCurrentClassName: PropTypes.string,
@@ -61,7 +56,7 @@ Progress.propTypes = {
 
 Progress.defaultProps = {
   progressInfoType: 'percentage',
-  payload: { message: <FormattedMessage id="ui-data-import.uploadingMessage" /> },
+  payload: {},
   progressWrapperClassName: css.progressWrapper,
   progressClassName: css.progress,
   progressCurrentClassName: css.progressCurrent,

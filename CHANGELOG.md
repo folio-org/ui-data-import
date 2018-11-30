@@ -15,3 +15,4 @@
 * Update stripes-* dependencies and imports to use stripes framework 1.0 (FOLIO-1549)
 * Implement data fetching for JobExecutions and JobLogs on Landing Page (UIDATIMP-27)
 * Add Data Import settings page (UIDATIMP-5)
+* Create UI for File Upload: Action & Styling for "In Process" file uploads (UIDATIMP-37)

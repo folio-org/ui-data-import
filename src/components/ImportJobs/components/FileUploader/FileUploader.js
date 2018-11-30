@@ -5,8 +5,8 @@ import classNames from 'classnames/bind';
 
 import { Button } from '@folio/stripes/components';
 
-import initStyle from './initStyle.css';
-import css from './FileUpload.css';
+import defaultStyles from './defaultStyles.css';
+import css from './FileUploader.css';
 
 const cx = classNames.bind(css);
 
@@ -21,7 +21,7 @@ const getUsedStyle = (styleFromProps, classNameFromProps) => {
   return classNameFromProps ? null : styleFromProps;
 };
 
-const FileUpload = (props) => {
+const FileUploader = (props) => {
   const {
     title,
     uploadBtnText,
@@ -80,7 +80,7 @@ const FileUpload = (props) => {
   );
 };
 
-FileUpload.propTypes = {
+FileUploader.propTypes = {
   title: PropTypes.node.isRequired,
   uploadBtnText: PropTypes.node.isRequired,
   isDropZoneActive: PropTypes.bool.isRequired,
@@ -105,8 +105,8 @@ FileUpload.propTypes = {
   ]),
 };
 
-FileUpload.defaultProps = {
-  className: initStyle.defaultFileUploader,
+FileUploader.defaultProps = {
+  className: defaultStyles.defaultFileUploader,
 };
 
-export default FileUpload;
+export default FileUploader;

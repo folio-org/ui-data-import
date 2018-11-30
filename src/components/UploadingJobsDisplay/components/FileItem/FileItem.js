@@ -10,35 +10,35 @@ class FileItem extends PureComponent {
   static propTypes = {
     name: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired,
-    currentUploaded: PropTypes.number,
+    uploadedValue: PropTypes.number,
   };
 
   static defaultProps = {
-    currentUploaded: 0,
+    uploadedValue: 0,
+  };
+
+  progressPayload = {
+    message: <FormattedMessage id="ui-data-import.uploadingMessage" />,
   };
 
   render() {
     const {
       name,
-      currentUploaded,
+      uploadedValue,
       size,
     } = this.props;
-
-    const payload = {
-      message: <FormattedMessage id="ui-data-import.uploadingMessage" />,
-    };
 
     return (
       <div className={css.fileItem}>
         <span>{name}</span>
         <Progress
-          payload={payload}
+          payload={this.progressPayload}
           progressInfoType="messagedPercentage"
           progressClassName={css.progress}
           progressWrapperClassName={css.progressWrapper}
           progressInfoClassName={css.progressInfo}
           total={size}
-          current={currentUploaded}
+          current={uploadedValue}
         />
       </div>
     );

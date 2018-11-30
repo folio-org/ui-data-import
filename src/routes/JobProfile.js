@@ -8,8 +8,7 @@ import {
   Pane,
 } from '@folio/stripes/components';
 
-import UploadingDisplay from '../components/UplaodingDisplay';
-
+import UploadingJobsDisplay from '../components/UploadingJobsDisplay';
 
 class JobProfile extends Component {
   static propTypes = {
@@ -17,11 +16,11 @@ class JobProfile extends Component {
       state: PropTypes.shape({
         acceptedFiles: PropTypes.array,
       }),
-    }),
+    }).isRequired,
   };
 
-  render = () => {
-    const initUploadingState = get(this.props, 'location.state.acceptedFiles', []);
+  render() {
+    const files = get(this.props, 'location.state.acceptedFiles', []);
 
     return (
       <Paneset>
@@ -29,7 +28,7 @@ class JobProfile extends Component {
           defaultWidth="300px"
           paneTitle={<FormattedMessage id="ui-data-import.uploadingPaneTitle" />}
         >
-          <UploadingDisplay initState={initUploadingState} />
+          <UploadingJobsDisplay files={files} />
         </Pane>
       </Paneset>
     );

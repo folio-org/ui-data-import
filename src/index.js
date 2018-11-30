@@ -13,7 +13,11 @@ class DataImport extends React.Component {
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
     }).isRequired,
-    showSettings: PropTypes.bool.isRequired,
+    showSettings: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    showSettings: false,
   };
 
   constructor(props) {
