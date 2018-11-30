@@ -5,6 +5,7 @@ import Route from 'react-router-dom/Route';
 
 import Home from './routes/Home';
 import Results from './routes/Results';
+import JobProfile from './routes/JobProfile';
 import Settings from './settings';
 
 class DataImport extends React.Component {
@@ -12,7 +13,11 @@ class DataImport extends React.Component {
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
     }).isRequired,
-    showSettings: PropTypes.bool.isRequired,
+    showSettings: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    showSettings: false,
   };
 
   constructor(props) {
@@ -47,6 +52,11 @@ class DataImport extends React.Component {
           path={`${path}/results`}
           exact
           component={Results}
+        />
+        <Route
+          path={`${this.props.match.path}/job-profile`}
+          component={JobProfile}
+          exact
         />
       </Switch>
     );

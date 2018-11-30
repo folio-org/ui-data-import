@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
+import { withRouter, Redirect } from 'react-router';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import FileUpload from './components/FileUpload';
+import FileUploader from './components/FileUploader';
 
-import css from './components/FileUpload/FileUpload.css';
+import css from './components/FileUploader/FileUploader.css';
 
-export default class ImportJobs extends Component {
+class ImportJobs extends Component {
+  static propTypes = {
+    match: PropTypes.shape({
+      path: PropTypes.string.isRequired,
+    }).isRequired,
+  };
+
   state = {
     isDropZoneActive: false,
+    redirect: false,
   };
 
   onDragEnter = () => {
@@ -22,9 +31,12 @@ export default class ImportJobs extends Component {
     });
   };
 
-  onDrop = () => {
+  onDrop = (acceptedFiles, rejectedFiles) => {
     this.setState({
       isDropZoneActive: false,
+      acceptedFiles,
+      rejectedFiles,
+      redirect: true,
     });
   };
 
@@ -35,15 +47,36 @@ export default class ImportJobs extends Component {
   };
 
   render() {
-    const titleMessageIdEnding = this.state.isDropZoneActive ? 'activeUploadTitle' : 'uploadTitle';
+    const {
+      acceptedFiles,
+      rejectedFiles,
+      redirect,
+      isDropZoneActive,
+    } = this.state;
+    const { match } = this.props;
+    const titleMessageIdEnding = isDropZoneActive ? 'activeUploadTitle' : 'uploadTitle';
     const titleText = this.getMessageById(titleMessageIdEnding);
     const uploadBtnText = this.getMessageById('uploadBtnText');
 
+    if (redirect) {
+      return (
+        <Redirect
+          to={{
+            pathname: `${match.path}/job-profile`,
+            state: {
+              acceptedFiles,
+              rejectedFiles,
+            },
+          }}
+        />
+      );
+    }
+
     return (
-      <FileUpload
+      <FileUploader
         title={titleText}
         uploadBtnText={uploadBtnText}
-        isDropZoneActive={this.state.isDropZoneActive}
+        isDropZoneActive={isDropZoneActive}
         className={css.upload}
         activeClassName={css.activeUpload}
         onDragEnter={this.onDragEnter}
@@ -53,3 +86,5 @@ export default class ImportJobs extends Component {
     );
   }
 }
+
+export default withRouter(ImportJobs);

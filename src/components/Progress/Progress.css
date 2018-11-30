@@ -12,8 +12,8 @@
 }
 
 .progressCurrent {
-  background-color: var(--primary);
   height: 100%;
+  background-color: var(--primary);
 }
 
 .progressInfo {

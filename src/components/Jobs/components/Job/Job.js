@@ -14,7 +14,7 @@ import classNames from 'classnames';
 
 import { Button } from '@folio/stripes/components';
 
-import Progress from '../Progress';
+import Progress from '../../../Progress';
 import jobMetaTypes from './jobMetaTypes';
 import jobPropTypes from './jobPropTypes';
 

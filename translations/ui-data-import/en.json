@@ -19,10 +19,14 @@
   "records": "records",
   "today": "today",
   "loading": "Loading",
+  "undo": "Undo",
 
   "uploadTitle": "Drag and drop to start a new data import job",
   "activeUploadTitle": "Drop to start import",
   "uploadBtnText": "or choose files",
+  "uploadingPaneTitle": "Files",
+  "uploadingMessage": "Uploading",
+  
   "jobFileName": "File name",
   "jobProfileName": "Job profile",
   "jobExecutionHrId": "Import ID",

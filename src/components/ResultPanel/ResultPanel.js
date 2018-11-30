@@ -1,18 +1,24 @@
-import React from 'react';
-import classNames from 'classnames';
-import { AccordionSet, Accordion, FilterAccordionHeader, Icon } from '@folio/stripes/components';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
+import {
+  AccordionSet,
+  Accordion,
+  FilterAccordionHeader,
+  Icon,
+} from '@folio/stripes/components';
 
 import css from './ResultPanel.css';
 
 const accordionsAmount = 4;
 
-export default class ResultPanel extends React.Component {
+export default class ResultPanel extends Component {
   static propTypes = {
     itemOnClick: PropTypes.func.isRequired,
   };
 
-  getAccordionLabeL() {
+  getAccordionLabel() {
     return (
       <div className={classNames(css.accordionHeaderItem, css.accordionHeader)}>
         <Icon icon="calendar" />
@@ -34,7 +40,7 @@ export default class ResultPanel extends React.Component {
     for (let i = 0; i < amount; i++) {
       result.push(
         <Accordion
-          label={this.getAccordionLabeL()}
+          label={this.getAccordionLabel()}
           id={`ex-012${i}`}
           separator={false}
           header={FilterAccordionHeader}

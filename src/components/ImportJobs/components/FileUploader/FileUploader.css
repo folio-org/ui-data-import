@@ -5,8 +5,8 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  padding: var(--gutter);
   height: 100%;
+  padding: var(--gutter);
   border: 1px dashed var(--color-border);
   border-radius: var(--radius);
   background-color: var(--color-fill);
