@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ReactDropzone from 'react-dropzone';
 import classNames from 'classnames/bind';
+import { isFunction } from 'lodash';
 
 import { Button } from '@folio/stripes/components';
 
@@ -21,26 +22,24 @@ const getUsedStyle = (styleFromProps, classNameFromProps) => {
   return classNameFromProps ? null : styleFromProps;
 };
 
-const FileUploader = (props) => {
-  const {
-    title,
-    uploadBtnText,
-    accept,
-    isDropZoneActive,
-    className,
-    acceptClassName,
-    activeClassName,
-    rejectClassName,
-    disabledClassName,
-    maxSize,
-    children,
-    style,
-    getDataTransferItems,
-    onDrop,
-    onDragEnter,
-    onDragLeave,
-  } = props;
-
+const FileUploader = ({
+  title,
+  uploadBtnText,
+  accept,
+  isDropZoneActive,
+  className,
+  acceptClassName,
+  activeClassName,
+  rejectClassName,
+  disabledClassName,
+  maxSize,
+  children,
+  style,
+  getDataTransferItems,
+  onDrop,
+  onDragEnter,
+  onDragLeave,
+}) => {
   const titleClassName = getTitleClassName(isDropZoneActive);
   const usedStyle = getUsedStyle(style, className);
 
@@ -61,8 +60,10 @@ const FileUploader = (props) => {
       onDragLeave={onDragLeave}
     >
       {({ open }) => (
-        <React.Fragment>
-          <span className={titleClassName}>{title}</span>
+        <Fragment>
+          <span className={titleClassName}>
+            {title}
+          </span>
           <div hidden={isDropZoneActive}>
             <Button
               buttonStyle="primary"
@@ -72,9 +73,9 @@ const FileUploader = (props) => {
             </Button>
           </div>
           <div hidden={isDropZoneActive}>
-            {children}
+            {isFunction(children) ? children(open) : children}
           </div>
-        </React.Fragment>
+        </Fragment>
       )}
     </ReactDropzone>
   );
@@ -102,6 +103,7 @@ FileUploader.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
+    PropTypes.func,
   ]),
 };
 

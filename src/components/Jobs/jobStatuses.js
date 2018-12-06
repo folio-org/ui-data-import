@@ -1,9 +1,3 @@
-// export const READY_FOR_PREVIEW = 'READY_FOR_PREVIEW';
-// export const PREPARING_FOR_PREVIEW = 'PREPARING_FOR_PREVIEW';
-// export const RUNNING = 'RUNNING';
-
-// temporary status names
 export const PROCESSING_FINISHED = 'PROCESSING_FINISHED';
 export const PROCESSING_IN_PROGRESS = 'PROCESSING_IN_PROGRESS';
 export const PARSING_IN_PROGRESS = 'PARSING_IN_PROGRESS';
-export const COMMITTED = 'COMMITTED';
