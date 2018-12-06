@@ -18,3 +18,4 @@
 * Implement data fetching for JobExecutions and JobLogs on Landing Page (UIDATIMP-27)
 * Add Data Import settings page (UIDATIMP-5)
 * Create UI for File Upload: Action & Styling for "In Process" file uploads (UIDATIMP-37)
+* Add file extensions validation and InvalidFilesModal component for file upload (UIDATIMP-46)

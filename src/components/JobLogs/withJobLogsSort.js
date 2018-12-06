@@ -10,25 +10,19 @@ import {
   sortStrings,
 } from '../../utils/sort';
 import { compose } from '../../utils';
-import jobLogPropTypes from './jobLogPropTypes';
-import { DataFetcherContext } from '../DataFetcher/DataFetcherContext';
+import { DataFetcherContext } from '../DataFetcher';
 
 const withJobLogsSort = WrappedComponent => {
   return class extends Component {
     static propTypes = {
-      formatter: PropTypes.object,
-      resource: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.shape({
-          logDtos: PropTypes.arrayOf(jobLogPropTypes).isRequired,
-        })),
-        isPending: PropTypes.bool.isRequired,
-      }),
       history: PropTypes.shape({
         push: PropTypes.func.isRequired,
       }).isRequired,
       location: PropTypes.shape({
         search: PropTypes.string.isRequired,
+        pathname: PropTypes.string.isRequired,
       }).isRequired,
+      formatter: PropTypes.object,
     };
 
     static defaultProps = {
@@ -91,7 +85,7 @@ const withJobLogsSort = WrappedComponent => {
         direction,
       } = this.state;
 
-      const logs = get(this.context, ['logs', 'itemsObject', 'logDtos'], []);
+      const logs = get(this.context, ['logs', 'logDtos'], []);
 
       return logs.sort((a, b) => {
         const cellFormatter = this.props.formatter[sort];
@@ -138,7 +132,7 @@ const withJobLogsSort = WrappedComponent => {
     };
 
     render() {
-      const hasLoaded = get(this.context, ['jobs', 'hasLoaded'], false);
+      const { hasLoaded } = this.context;
       const contentData = this.prepareLogsData();
 
       return (
