@@ -117,12 +117,39 @@ class UploadingJobsDisplay extends Component {
   };
 
   onFileUploadSuccess = ({ file }) => {
-    this.updateFileState(file, { uploadStatus: 'success' });
+    this.updateFileState(
+      file,
+      {
+        fileStatus: 'uploaded',
+        uploadDate: new Date(),
+      }
+    );
   };
 
   onFileUploadFail = ({ file }) => {
-    this.updateFileState(file, { uploadStatus: 'failed' });
+    this.updateFileState(file, { fileStatus: 'failed' });
   };
+
+  removeFileFromState = key => {
+    const {
+      files,
+    } = this.state;
+    const updatedFiles = Object.assign({}, files);
+
+    delete updatedFiles[key];
+
+    this.setState({ files: updatedFiles });
+  }
+
+  onDeleteHadnler = (key, event) => {
+    const file = { ...this.state.files[key] };
+
+    file.fileStatus = 'forDelete';
+
+    const updatedFiles = { ...this.state.files, [key]: file };
+
+    console.log(updatedFiles);
+  }
 
   renderFiles() {
     const { files } = this.state;
@@ -137,16 +164,20 @@ class UploadingJobsDisplay extends Component {
           name,
           size,
           uploadedValue,
-          uploadStatus,
+          fileStatus,
+          uploadDate,
+          keyName,
         } = files[key];
 
         return (
           <FileItem
-            key={key}
+            key={keyName}
             name={name}
             size={size}
             uploadedValue={uploadedValue}
-            uploadStatus={uploadStatus}
+            fileStatus={fileStatus}
+            uploadDate={uploadDate}
+            onDelete={this.onDeleteHadnler}
           />
         );
       });

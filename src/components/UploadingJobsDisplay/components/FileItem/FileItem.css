@@ -1,10 +1,41 @@
 @import "@folio/stripes-components/lib/variables.css";
 
 .fileItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   margin-bottom: .7rem;
   padding: .5rem;
   border: 2px solid var(--color-border);
   border-radius: var(--radius);
+}
+
+.fileItemForDelete {
+  background-color: #ffebeb;
+  border-color: var(--danger)
+}
+
+.dateWrapper {
+  margin-top: .1rem;
+  font-size: var(--font-size-small);
+  color: var(--color-text-p2);
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.trashIcon {
+  color: var(--color-border);
+  left: 95%;
+}
+
+.undoIcon {
+  text-decoration: underline;
+  color: var(--color-text);
+  left: 90%;
 }
 
 .progress {

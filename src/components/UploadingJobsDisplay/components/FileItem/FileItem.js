@@ -1,16 +1,26 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  FormattedDate,
+  intlShape,
+  injectIntl,
+} from 'react-intl';
+
+import { IconButton } from '@folio/stripes/components';
 
 import Progress from '../../../Progress';
-
-import css from './FileItem.css';
+import config from './utils/fileItemConfig';
 
 class FileItem extends PureComponent {
   static propTypes = {
     name: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired,
     uploadedValue: PropTypes.number,
+    uploadDate: PropTypes.object,
+    fileStatus: PropTypes.string,
+    intl: intlShape.isRequired,
+    onDelete: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -21,28 +31,113 @@ class FileItem extends PureComponent {
     message: <FormattedMessage id="ui-data-import.uploadingMessage" />,
   };
 
-  render() {
+  renderUploaded(name) {
     const {
-      name,
-      uploadedValue,
-      size,
+      intl: { formatMessage },
+      uploadDate,
+      key,
+      onDelete,
     } = this.props;
 
+    const {
+      fileItem,
+      trashIcon,
+      dateWrapper,
+    } = config.classNames;
+
+    const bindedOnDelete = () => {
+      onDelete(key);
+    };
+
     return (
-      <div className={css.fileItem}>
+      <div className={fileItem}>
+        <span>{name}</span>
+        <IconButton
+          icon="trash"
+          title={formatMessage({ id: 'ui-data-import.delete' })}
+          size="small"
+          className={trashIcon}
+          onClick={bindedOnDelete}
+        />
+        <div className={dateWrapper}>
+          <FormattedDate
+            value={uploadDate}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  renderForDelete(name) {
+    const {
+      forDelete,
+      undoBtn,
+    } = config.classNames;
+
+    return (
+      <div className={forDelete}>
+        <FormattedMessage
+          id="ui-data-import.deletedFile"
+          values={{
+            name,
+          }}
+        />
+        <button
+          type="button"
+          className={undoBtn}
+        >
+          <FormattedMessage id="ui-data-import.undo" />
+        </button>
+      </div>
+    );
+  }
+
+  renderInProgress(name, size, uploadedValue) {
+    const {
+      fileItem,
+      progress,
+      progressWrapper,
+      progressInfo,
+    } = config.classNames;
+
+    return (
+      <div className={fileItem}>
         <span>{name}</span>
         <Progress
           payload={this.progressPayload}
           progressInfoType="messagedPercentage"
-          progressClassName={css.progress}
-          progressWrapperClassName={css.progressWrapper}
-          progressInfoClassName={css.progressInfo}
+          progressClassName={progress}
+          progressWrapperClassName={progressWrapper}
+          progressInfoClassName={progressInfo}
           total={size}
           current={uploadedValue}
         />
       </div>
     );
   }
+
+  render() {
+    const {
+      name,
+      uploadedValue,
+      size,
+      fileStatus,
+    } = this.props;
+
+    if (fileStatus === 'uploaded') {
+      return this.renderUploaded(name);
+    }
+
+    if (fileStatus === 'forDelete') {
+      return this.renderForDelete(name);
+    }
+
+    return this.renderInProgress(
+      name,
+      size,
+      uploadedValue
+    );
+  }
 }
 
-export default FileItem;
+export default injectIntl(FileItem);
