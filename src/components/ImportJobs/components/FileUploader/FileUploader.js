@@ -11,43 +11,35 @@ import css from './FileUploader.css';
 
 const cx = classNames.bind(css);
 
-const getTitleClassName = dropZoneState => {
-  return cx({
+const FileUploader = props => {
+  const {
+    title,
+    uploadBtnText,
+    accept,
+    isDropZoneActive,
+    className,
+    acceptClassName,
+    activeClassName,
+    rejectClassName,
+    disabledClassName,
+    maxSize,
+    children,
+    style,
+    getDataTransferItems,
+    onDrop,
+    onDragEnter,
+    onDragLeave,
+  } = props;
+  const titleClassName = cx({
     uploadTitle: true,
-    activeUploadTitle: dropZoneState,
+    activeUploadTitle: isDropZoneActive,
   });
-};
-
-const getUsedStyle = (styleFromProps, classNameFromProps) => {
-  return classNameFromProps ? null : styleFromProps;
-};
-
-const FileUploader = ({
-  title,
-  uploadBtnText,
-  accept,
-  isDropZoneActive,
-  className,
-  acceptClassName,
-  activeClassName,
-  rejectClassName,
-  disabledClassName,
-  maxSize,
-  children,
-  style,
-  getDataTransferItems,
-  onDrop,
-  onDragEnter,
-  onDragLeave,
-}) => {
-  const titleClassName = getTitleClassName(isDropZoneActive);
-  const usedStyle = getUsedStyle(style, className);
 
   return (
     <ReactDropzone
       disableClick
       className={className}
-      style={usedStyle}
+      style={style}
       activeClassName={activeClassName}
       accept={accept}
       acceptClassName={acceptClassName}
