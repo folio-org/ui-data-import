@@ -11,12 +11,14 @@ import {
   createFileDefinition, // eslint-disable-line
   prepareFilesToUpload, // eslint-disable-line
   uploadFiles,
+  checkDeleteResponse,
 } from './utils/upload';
 
 class UploadingJobsDisplay extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     files: PropTypes.arrayOf(PropTypes.object),
+    timeForDelete: PropTypes.number.isRequired,
   };
 
   constructor(props) {
@@ -32,6 +34,9 @@ class UploadingJobsDisplay extends Component {
 
     this.fileDefinitionUrl = `${host}/data-import/upload/definition`;
     this.fileUploaderUrl = `${host}/data-import/upload/file`;
+    this.deleteFileUrl = (fileId, UDId) => `${host}/data-import/upload/definition/file/${fileId}?uploadDefinitionId=${UDId}`;
+
+    this._deleteTimeouts = {};
   }
 
   componentDidMount() {
@@ -87,6 +92,18 @@ class UploadingJobsDisplay extends Component {
     };
   }
 
+  createDeleteFileHeaders() {
+    const {
+      token,
+      tenant,
+    } = this.props.stripes.okapi;
+
+    return {
+      'X-Okapi-Tenant': tenant,
+      'X-Okapi-Token': token,
+    };
+  }
+
   mapFilesFromProps() {
     return this.props.files.reduce((result, currentFile) => {
       const keyNameValue = currentFile.name + currentFile.lastModified;
@@ -117,12 +134,55 @@ class UploadingJobsDisplay extends Component {
   };
 
   onFileUploadSuccess = ({ file }) => {
-    this.updateFileState(file, { uploadStatus: 'success' });
+    this.updateFileState(
+      file,
+      {
+        fileStatus: 'uploaded',
+        uploadDate: new Date(),
+      }
+    );
   };
 
   onFileUploadFail = ({ file }) => {
-    this.updateFileState(file, { uploadStatus: 'failed' });
+    this.updateFileState(file, { fileStatus: 'failed' });
   };
+
+  onDeleteHadnler = key => {
+    const { timeForDelete } = this.props;
+    const file = { ...this.state.files[key] };
+
+    this._deleteTimeouts[key] = setTimeout(() => {
+      this.deleteFileFromServer(file)
+        .then(checkDeleteResponse)
+        .then(() => this.deleteFileFromState(key))
+        .catch(error => console.error(error));
+    }, timeForDelete);
+
+    this.updateFileState(file, { fileStatus: 'forDelete' });
+  }
+
+  deleteFileFromState = key => {
+    const {
+      files,
+    } = this.state;
+    const updatedFiles = Object.assign({}, files);
+
+    delete updatedFiles[key];
+
+    this.setState({ files: updatedFiles });
+  }
+
+  deleteFileFromServer(file) {
+    const config = {
+      method: 'DELETE',
+      headers: this.createDeleteFileHeaders(),
+    };
+
+    return fetch(
+      this.deleteFileUrl(file.id, file.uploadDefinitionId),
+      config
+    );
+  }
 
   renderFiles() {
     const { files } = this.state;
@@ -137,16 +197,21 @@ class UploadingJobsDisplay extends Component {
           name,
           size,
           uploadedValue,
-          uploadStatus,
+          fileStatus,
+          uploadDate,
+          keyName,
         } = files[key];
 
         return (
           <FileItem
-            key={key}
+            key={keyName}
+            keyName={keyName}
             name={name}
             size={size}
             uploadedValue={uploadedValue}
-            uploadStatus={uploadStatus}
+            fileStatus={fileStatus}
+            uploadDate={uploadDate}
+            onDelete={this.onDeleteHadnler}
           />
         );
       });

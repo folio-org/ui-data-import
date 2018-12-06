@@ -28,7 +28,10 @@ class JobProfile extends Component {
           defaultWidth="300px"
           paneTitle={<FormattedMessage id="ui-data-import.uploadingPaneTitle" />}
         >
-          <UploadingJobsDisplay files={files} />
+          <UploadingJobsDisplay
+            files={files}
+            timeForDelete={10000}
+          />
         </Pane>
       </Paneset>
     );

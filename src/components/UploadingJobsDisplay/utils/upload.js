@@ -119,3 +119,14 @@ export const uploadFiles = (
       .catch(onXHRerror);
   });
 };
+
+export const checkDeleteResponse = res => {
+  if (res.status !== 204) {
+    const error = {
+      status: res.status,
+      statusText: res.statusText,
+    };
+
+    throw new Error(error);
+  }
+};

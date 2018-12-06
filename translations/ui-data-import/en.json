@@ -19,7 +19,9 @@
   "records": "records",
   "today": "today",
   "loading": "Loading",
+  "delete": "Delete",
   "undo": "Undo",
+  "deletedFile": "{name} has been deleted",
 
   "uploadTitle": "Drag and drop to start a new data import job",
   "activeUploadTitle": "Drop to start import",
