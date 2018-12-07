@@ -33,7 +33,7 @@ class DataFetcher extends Component {
     },
     logs: {
       type: 'okapi',
-      path: logsUrl,
+      path: logsUrl + '&query=(status=COMMITTED)', // TODO: remove query once backend issue is fixed
       accumulate: true,
       throwErrors: false,
     },
