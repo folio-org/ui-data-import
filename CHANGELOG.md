@@ -1,6 +1,8 @@
 # Change history for ui-data-import
 
 ## 1.0.1 (IN-PROGRESS)
+* Add file extensions validation and InvalidFilesModal component for file upload (UIDATIMP-46)
+* Hide popover when user clicks on the link button (UIDATIMP-71)
 
 ## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
 
@@ -18,4 +20,3 @@
 * Implement data fetching for JobExecutions and JobLogs on Landing Page (UIDATIMP-27)
 * Add Data Import settings page (UIDATIMP-5)
 * Create UI for File Upload: Action & Styling for "In Process" file uploads (UIDATIMP-37)
-* Add file extensions validation and InvalidFilesModal component for file upload (UIDATIMP-46)
