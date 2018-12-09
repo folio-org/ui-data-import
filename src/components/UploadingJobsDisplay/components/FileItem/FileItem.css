@@ -1,10 +1,32 @@
 @import "@folio/stripes-components/lib/variables.css";
 
 .fileItem {
+  position: relative;
   margin-bottom: .7rem;
-  padding: .5rem;
+  padding: .5rem 35px .5rem .5rem;
   border: 2px solid var(--color-border);
   border-radius: var(--radius);
+}
+
+.fileItemFailed {
+  border-color: var(--danger);
+  background-color: color(var(--error) alpha(-90%));
+  color: var(--danger);
+}
+
+.fileItemHeader {
+  display: inline-block;
+  overflow-wrap: break-word;
+}
+
+.fileItemHeaderName {
+  margin-right: 2rem;
+}
+
+.icon {
+  position: absolute;
+  top: 0.5rem;
+  right: 10px;
 }
 
 .progress {
