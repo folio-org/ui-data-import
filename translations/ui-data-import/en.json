@@ -36,16 +36,19 @@
   "jobRunBy": "Run by",
 
   "settings.index.paneTitle": "Data Import",
-
   "settings.profiles": "Profiles",
   "settings.learnMore": "Learn more",
   "settings.profilesInfo": "The four types of profiles allow you to create, and centrally maintain, jobs, matches, actions and field mappings across multiple jobs. When you update a profile, all the jobs that contain it, are automatically updated.",
-
   "settings.jobProfiles": "Job profiles",
   "settings.matchProfiles": "Match profiles",
   "settings.actionProfiles": "Action profiles",
   "settings.fieldMappingProfiles": "Field mapping profiles",
-
   "settings.other": "Other",
-  "settings.fileExtensions": "File extensions"
+  "settings.fileExtensions": "File extensions",
+
+  "modal.header": "Inconsistent file extensions",
+  "modal.message": "You cannot upload files with {highlightedText}. Please upload files with the same extension.",
+  "modal.messageHighlightedText": "different extensions",
+  "modal.cancel": "Cancel",
+  "modal.actionButtonText": "Choose other files to upload"
 }

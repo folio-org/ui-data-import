@@ -1,5 +1,11 @@
 import React from 'react';
-import { Accordion, AccordionSet, Row, Col } from '@folio/stripes/components';
+
+import {
+  Accordion,
+  AccordionSet,
+  Row,
+  Col,
+} from '@folio/stripes/components';
 
 import RecordItem from './components/RecordItem';
 import RecordPreview from './components/RecordPreview';

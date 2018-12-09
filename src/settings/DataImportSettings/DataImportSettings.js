@@ -62,6 +62,7 @@ class DataImportSettings extends Component {
         <FormattedMessage id="ui-data-import.settings.profiles" />
         <InfoPopover
           allowAnchorClick
+          hideOnButtonClick
           buttonHref={profilesLink}
           buttonLabel={<FormattedMessage id="ui-data-import.settings.learnMore" />}
           content={<FormattedMessage id="ui-data-import.settings.profilesInfo" />}
