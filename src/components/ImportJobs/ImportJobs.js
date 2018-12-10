@@ -24,11 +24,11 @@ class ImportJobs extends Component {
 
   onDragEnter = () => {
     this.setState({ isDropZoneActive: true });
-  }
+  };
 
   onDragLeave = () => {
     this.setState({ isDropZoneActive: false });
-  }
+  };
 
   /**
    * @param  {Array<File>} acceptedFiles
@@ -67,7 +67,7 @@ class ImportJobs extends Component {
 
   hideModal = () => {
     this.setState({ isModalOpen: false });
-  }
+  };
 
   getMessageById(idEnding, moduleName = 'ui-data-import') {
     const id = `${moduleName}.${idEnding}`;
