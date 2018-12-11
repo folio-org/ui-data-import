@@ -16,11 +16,12 @@ class FileItem extends PureComponent {
   static propTypes = {
     name: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired,
+    keyName: PropTypes.string.isRequired,
+    intl: intlShape.isRequired,
+    onDelete: PropTypes.func.isRequired,
     uploadedValue: PropTypes.number,
     uploadDate: PropTypes.object,
     fileStatus: PropTypes.string,
-    intl: intlShape.isRequired,
-    onDelete: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -31,12 +32,19 @@ class FileItem extends PureComponent {
     message: <FormattedMessage id="ui-data-import.uploadingMessage" />,
   };
 
+  handleFileDelete = () => {
+    const {
+      onDelete,
+      keyName,
+    } = this.props;
+
+    onDelete(keyName);
+  };
+
   renderUploaded(name) {
     const {
       intl: { formatMessage },
       uploadDate,
-      keyName,
-      onDelete,
     } = this.props;
 
     const {
@@ -44,10 +52,6 @@ class FileItem extends PureComponent {
       trashIcon,
       dateWrapper,
     } = config.classNames;
-
-    const bindedOnDelete = () => {
-      onDelete(keyName);
-    };
 
     return (
       <div className={fileItem}>
@@ -57,7 +61,7 @@ class FileItem extends PureComponent {
           title={formatMessage({ id: 'ui-data-import.delete' })}
           size="small"
           className={trashIcon}
-          onClick={bindedOnDelete}
+          onClick={this.handleFileDelete}
         />
         <div className={dateWrapper}>
           <FormattedDate
