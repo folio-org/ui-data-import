@@ -8,11 +8,12 @@ import {
   ModalFooter,
 } from '@folio/stripes/components';
 
-const InvalidFilesModal = ({
-  isModalOpen,
-  onConfirmModal,
-  openFileUploadDialogWindow,
-}) => {
+const InvalidFilesModal = props => {
+  const {
+    isModalOpen,
+    onConfirmModal,
+    openFileUploadDialogWindow,
+  } = props;
   const Footer = (
     <ModalFooter
       primaryButton={{
