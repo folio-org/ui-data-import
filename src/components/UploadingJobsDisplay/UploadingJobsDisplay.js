@@ -6,6 +6,11 @@ import {
   stripesShape,
 } from '@folio/stripes/core';
 
+import {
+  UPLOADED,
+  UPLOADING,
+  FAILED,
+} from './components/FileItem/fileItemStatuses';
 import FileItem from './components/FileItem';
 import {
   createFileDefinition, // eslint-disable-line
@@ -57,24 +62,28 @@ class UploadingJobsDisplay extends Component {
   async uploadJobs() {
     const { files } = this.state;
 
-    const { fileDefinitions } = await createFileDefinition(
-      files,
-      this.fileDefinitionUrl,
-      this.createJobFilesDefinitionHeaders()
-    );
-
-    const preparedFiles = prepareFilesToUpload(files, fileDefinitions);
-
-    this.setState({ files: preparedFiles }, () => {
-      uploadFiles(
-        this.state.files,
-        this.fileUploaderUrl,
-        this.createUploadJobFilesHeaders(),
-        this.onFileUploadProgress,
-        this.onFileUploadSuccess,
-        this.onFileUploadFail,
+    try {
+      const { fileDefinitions } = await createFileDefinition(
+        files,
+        this.fileDefinitionUrl,
+        this.createJobFilesDefinitionHeaders(),
       );
-    });
+
+      const preparedFiles = prepareFilesToUpload(files, fileDefinitions);
+
+      this.setState({ files: preparedFiles }, () => {
+        uploadFiles(
+          this.state.files,
+          this.fileUploaderUrl,
+          this.createUploadJobFilesHeaders(),
+          this.onFileUploadProgress,
+          this.onFileUploadSuccess,
+          this.onFileUploadFail,
+        );
+      });
+    } catch (e) {
+      this.onAllFilesUploadFail();
+    }
   }
 
   createJobFilesDefinitionHeaders() {
@@ -120,6 +129,7 @@ class UploadingJobsDisplay extends Component {
       const keyNameValue = currentFile.name + currentFile.lastModified;
 
       currentFile.keyName = keyNameValue;
+      currentFile.uploadStatus = UPLOADING;
       currentFile.currentUploaded = 0;
       result[keyNameValue] = currentFile;
 
@@ -146,13 +156,13 @@ class UploadingJobsDisplay extends Component {
 
   onFileUploadSuccess = ({ file }) => {
     this.updateFileState(file, {
-      fileStatus: 'uploaded',
+      uploadStatus: UPLOADED,
       uploadDate: new Date(),
     });
   };
 
   onFileUploadFail = ({ file }) => {
-    this.updateFileState(file, { fileStatus: 'failed' });
+    this.updateFileState(file, { uploadStatus: FAILED });
   };
 
   onDeleteHandler = key => {
@@ -164,7 +174,7 @@ class UploadingJobsDisplay extends Component {
         .then(checkDeleteResponse)
         .then(() => this.deleteFileFromState(key))
         .catch(error => {
-          this.updateFileState(file, { fileStatus: 'uploaded' });
+          this.updateFileState(file, { fileStatus: UPLOADED });
           console.error(error); // eslint-disable-line no-console
         });
     }, timeForDelete);
@@ -193,6 +203,23 @@ class UploadingJobsDisplay extends Component {
     );
   }
 
+  onAllFilesUploadFail() {
+    this.setState(state => {
+      const files = Object.keys(state.files).reduce((res, key) => {
+        const file = state.files[key];
+
+        file.uploadStatus = FAILED;
+
+        return {
+          ...res,
+          [key]: file,
+        };
+      }, {});
+
+      return { files };
+    });
+  }
+
   renderFiles() {
     const { files } = this.state;
 
@@ -206,7 +233,7 @@ class UploadingJobsDisplay extends Component {
           name,
           size,
           uploadedValue,
-          fileStatus,
+          uploadStatus,
           uploadDate,
           keyName,
         } = files[key];
@@ -218,7 +245,7 @@ class UploadingJobsDisplay extends Component {
             name={name}
             size={size}
             uploadedValue={uploadedValue}
-            fileStatus={fileStatus}
+            uploadStatus={uploadStatus}
             uploadDate={uploadDate}
             onDelete={this.onDeleteHandler}
           />

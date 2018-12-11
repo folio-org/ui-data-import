@@ -19,8 +19,8 @@
   "records": "records",
   "today": "today",
   "loading": "Loading",
-  "delete": "Delete",
   "undo": "Undo",
+  "delete": "Delete",
   "deletedFile": "{name} has been deleted",
 
   "uploadTitle": "Drag and drop to start a new data import job",
@@ -28,7 +28,8 @@
   "uploadBtnText": "or choose files",
   "uploadingPaneTitle": "Files",
   "uploadingMessage": "Uploading",
-  
+  "uploadFileError": "Error: file upload",
+
   "jobFileName": "File name",
   "jobProfileName": "Job profile",
   "jobExecutionHrId": "Import ID",
