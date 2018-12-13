@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ReactDropzone from 'react-dropzone';
 import classNames from 'classnames/bind';
+import { isFunction } from 'lodash';
 
 import { Button } from '@folio/stripes/components';
 
@@ -10,18 +11,7 @@ import css from './FileUploader.css';
 
 const cx = classNames.bind(css);
 
-const getTitleClassName = dropZoneState => {
-  return cx({
-    uploadTitle: true,
-    activeUploadTitle: dropZoneState,
-  });
-};
-
-const getUsedStyle = (styleFromProps, classNameFromProps) => {
-  return classNameFromProps ? null : styleFromProps;
-};
-
-const FileUploader = (props) => {
+const FileUploader = props => {
   const {
     title,
     uploadBtnText,
@@ -40,15 +30,16 @@ const FileUploader = (props) => {
     onDragEnter,
     onDragLeave,
   } = props;
-
-  const titleClassName = getTitleClassName(isDropZoneActive);
-  const usedStyle = getUsedStyle(style, className);
+  const titleClassName = cx({
+    uploadTitle: true,
+    activeUploadTitle: isDropZoneActive,
+  });
 
   return (
     <ReactDropzone
       disableClick
       className={className}
-      style={usedStyle}
+      style={style}
       activeClassName={activeClassName}
       accept={accept}
       acceptClassName={acceptClassName}
@@ -61,8 +52,10 @@ const FileUploader = (props) => {
       onDragLeave={onDragLeave}
     >
       {({ open }) => (
-        <React.Fragment>
-          <span className={titleClassName}>{title}</span>
+        <Fragment>
+          <span className={titleClassName}>
+            {title}
+          </span>
           <div hidden={isDropZoneActive}>
             <Button
               buttonStyle="primary"
@@ -72,9 +65,9 @@ const FileUploader = (props) => {
             </Button>
           </div>
           <div hidden={isDropZoneActive}>
-            {children}
+            {isFunction(children) ? children(open) : children}
           </div>
-        </React.Fragment>
+        </Fragment>
       )}
     </ReactDropzone>
   );
@@ -102,6 +95,7 @@ FileUploader.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
+    PropTypes.func,
   ]),
 };
 

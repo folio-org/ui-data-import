@@ -1,5 +1,14 @@
 import React from 'react';
-import { Button, Icon, Pane, Paneset, PaneMenu, IconButton } from '@folio/stripes/components';
+
+import {
+  Button,
+  Icon,
+  Pane,
+  Paneset,
+  PaneMenu,
+  IconButton,
+} from '@folio/stripes/components';
+
 import SearchPanel from '../components/SearchPanel';
 import ResultPanel from '../components/ResultPanel';
 import Report from '../components/Report/Report';
@@ -71,7 +80,10 @@ export default class Results extends React.Component {
   }
 
   render() {
-    const { filterPaneIsVisible, recordDetailsPaneIsVisible } = this.state;
+    const {
+      filterPaneIsVisible,
+      recordDetailsPaneIsVisible,
+    } = this.state;
 
     return (
       <Paneset>

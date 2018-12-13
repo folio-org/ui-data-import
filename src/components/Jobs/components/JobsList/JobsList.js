@@ -10,11 +10,12 @@ import jobPropTypes from '../Job/jobPropTypes';
 
 import css from './JobsList.css';
 
-const JobsList = ({
-  jobs,
-  hasLoaded,
-  noJobsMessage,
-}) => {
+const JobsList = props => {
+  const {
+    jobs,
+    hasLoaded,
+    noJobsMessage,
+  } = props;
   const itemFormatter = job => (
     <Job
       key={job.hrId}

@@ -4,17 +4,41 @@ import { get } from 'lodash';
 
 import jobPropTypes from '../Jobs/components/Job/jobPropTypes';
 import jobLogPropTypes from '../JobLogs/jobLogPropTypes';
+import { createUrl } from '../../utils';
 import {
   PROCESSING_IN_PROGRESS,
   PROCESSING_FINISHED,
   PARSING_IN_PROGRESS,
-  COMMITTED,
 } from '../Jobs/jobStatuses';
-import { DataFetcherContextProvider } from './DataFetcherContext';
+import { DataFetcherContextProvider } from '.';
 
 const DEFAULT_UPDATE_INTERVAL = 5000;
 
+const jobsUrl = createUrl('metadata-provider/jobExecutions', {
+  query: `(status=("${PROCESSING_IN_PROGRESS}" OR "${PROCESSING_FINISHED}" OR "${PARSING_IN_PROGRESS}"))`,
+});
+
+const logsUrl = createUrl('metadata-provider/logs', {
+  landingPage: true,
+  limit: 25,
+});
+
 class DataFetcher extends Component {
+  static manifest = Object.freeze({
+    jobs: {
+      type: 'okapi',
+      path: jobsUrl,
+      accumulate: true,
+      throwErrors: false,
+    },
+    logs: {
+      type: 'okapi',
+      path: logsUrl + '&query=(status=COMMITTED)', // TODO: remove query once backend issue is fixed
+      accumulate: true,
+      throwErrors: false,
+    },
+  });
+
   static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
@@ -51,27 +75,13 @@ class DataFetcher extends Component {
     updateInterval: DEFAULT_UPDATE_INTERVAL,
   };
 
-  static manifest = Object.freeze({
-    jobs: {
-      type: 'okapi',
-      path: `metadata-provider/jobExecutions?query=(status=(${PROCESSING_IN_PROGRESS} OR ${PROCESSING_FINISHED} OR ${PARSING_IN_PROGRESS}))`,
-      accumulate: true,
-      throwErrors: false,
-    },
-    logs: {
-      type: 'okapi',
-      path: `metadata-provider/logs?query=(status=${COMMITTED})&landingPage=true&limit=25`,
-      accumulate: true,
-      throwErrors: false,
-    },
-  });
-
   state = {
-    contextData: {},
+    contextData: {
+      hasLoaded: false,
+    },
   };
 
   componentDidMount() {
-    this.setInitialState();
     this.getResourcesData();
     this.updateResourcesData();
   }
@@ -86,22 +96,6 @@ class DataFetcher extends Component {
     const { updateInterval } = this.props;
 
     this.intervalId = setInterval(this.getResourcesData, updateInterval);
-  }
-
-  setInitialState() {
-    const { mutator } = this.props;
-    const initialContextData = {};
-
-    Object.keys(mutator)
-      .forEach(resourceName => {
-        initialContextData[resourceName] = {
-          hasLoaded: false,
-        };
-      });
-
-    this.setState({
-      contextData: initialContextData,
-    });
   }
 
   getResourcesData = async () => {
@@ -126,7 +120,10 @@ class DataFetcher extends Component {
     }
   };
 
-  async getResourceData({ GET, reset }) {
+  async getResourceData({
+    GET,
+    reset,
+  }) {
     // accumulate: true in manifest saves the results of all requests
     // because of that it is required to clear old data by invoking reset method before each request
     reset();
@@ -138,21 +135,14 @@ class DataFetcher extends Component {
    */
   mapResourcesToState(isEmpty) {
     const { resources } = this.props;
-    const contextData = {};
+    const contextData = { hasLoaded: true };
 
     Object.entries(resources)
       .forEach(([resourceName, resourceValue]) => {
-        const itemsObject = isEmpty ? {} : get(resourceValue, ['records', 0], {});
-
-        contextData[resourceName] = {
-          hasLoaded: true,
-          itemsObject,
-        };
+        contextData[resourceName] = isEmpty ? {} : get(resourceValue, ['records', 0], {});
       });
 
-    this.setState({
-      contextData,
-    });
+    this.setState({ contextData });
   }
 
   render() {

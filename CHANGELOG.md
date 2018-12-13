@@ -1,6 +1,9 @@
 # Change history for ui-data-import
 
 ## 1.0.1 (IN-PROGRESS)
+* Add file extensions validation and `InvalidFilesModal` component for file upload (UIDATIMP-46)
+* Hide popover when user clicks on the link button (UIDATIMP-71)
+* Write documentation for `FileUploader` component and some code refactor (UIDATIMP-65)
 
 ## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
 
