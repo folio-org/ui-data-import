@@ -31,5 +31,17 @@
     "settings.general": "Geral",
     "settings.general.message": "Estas são as suas configurações gerais de aplicativos.",
     "settings.some-feature": "Algum recurso",
-    "settings.some-feature.message": "Estas são suas configurações para alguns recursos do aplicativo."
+    "settings.some-feature.message": "Estas são suas configurações para alguns recursos do aplicativo.",
+    "settings.profiles": "Perfis",
+    "settings.learnMore": "Saber mais",
+    "settings.profilesInfo": "Os quatro tipos de perfis permitem criar e manter centralmente trabalhos, correspondências, ações e mapeamentos de campos em várias tarefas. Quando você atualiza um perfil, todos os trabalhos que o contêm são atualizados automaticamente.",
+    "settings.jobProfiles": "Perfis de trabalho",
+    "settings.matchProfiles": "Perfis de correspondência",
+    "settings.actionProfiles": "Perfis de ação",
+    "settings.fieldMappingProfiles": "Perfis de mapeamento de campo",
+    "settings.other": "Outros",
+    "settings.fileExtensions": "Extensões de arquivo",
+    "undo": "Desfazer",
+    "uploadingPaneTitle": "Arquivos",
+    "uploadingMessage": "Carregando"
 }
