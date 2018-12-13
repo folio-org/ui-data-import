@@ -10,7 +10,7 @@ const progressInfoFormatters = {
   messagedPercentage: (current, total, payload) => (
     <React.Fragment>
       {payload.message}
-      {` ${calculatePercentage(current, total)} %`}
+      {` ${calculatePercentage(current, total)}%`}
     </React.Fragment>
   ),
 };

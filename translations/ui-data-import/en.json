@@ -29,6 +29,7 @@
   "uploadingPaneTitle": "Files",
   "uploadingMessage": "Uploading",
   "uploadFileError": "Error: file upload",
+  "noUploadedFiles": "No files to show",
 
   "jobFileName": "File name",
   "jobProfileName": "Job profile",

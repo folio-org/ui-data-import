@@ -6,30 +6,27 @@ import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   FormattedDate,
-  intlShape,
-  injectIntl,
 } from 'react-intl';
 import classNames from 'classnames';
+import noop from 'lodash/noop';
 
 import {
   Icon,
   IconButton,
 } from '@folio/stripes/components';
 
-import {
-  UPLOADED,
-  UPLOADING,
-  FAILED,
-} from './fileItemStatuses';
+import * as fileStatuses from './fileItemStatuses';
 import Progress from '../../../Progress';
-import config from './utils/fileItemConfig';
 
 import css from './FileItem.css';
 
-const getFileItemMeta = (props) => {
+const getFileItemMeta = props => {
   const {
-    uploadStatus,
+    status,
     name,
+    uploadDate,
+    deleteFile,
+    undoDeleteFile,
   } = props;
 
   const defaultFileMeta = {
@@ -42,37 +39,63 @@ const getFileItemMeta = (props) => {
   };
 
   const fileTypesMeta = {
-    [UPLOADING]: {
+    [fileStatuses.UPLOADING]: {
+      fileWrapperClassName: css.fileItemUploading,
       showProgress: true,
-      renderHeading: () => (
-        <Fragment>
-          <span>{name}</span>
-        </Fragment>
-      ),
     },
-    [UPLOADED]: {
-      renderHeading: () => (
-        <Fragment>
-          <span>{name}</span>
-        </Fragment>
-      ),
-    },
-    [FAILED]: {
-      fileWrapperClassName: css.fileItemFailed,
+    [fileStatuses.UPLOADED]: {
       renderHeading: () => (
         <Fragment>
           <span className={css.fileItemHeaderName}>{name}</span>
-          <span>
+          <span className={classNames(css.fileItemHeaderContent, css.fileItemUploadedHeaderContent)}>
+            <FormattedDate value={uploadDate} />
+          </span>
+          <IconButton
+            icon="trash"
+            size="small"
+            title={<FormattedMessage id="ui-data-import.delete" />}
+            className={css.icon}
+            onClick={deleteFile}
+          />
+        </Fragment>
+      ),
+    },
+    [fileStatuses.FAILED]: {
+      fileWrapperClassName: classNames(css.fileItemDanger, css.fileItemFailed),
+      renderHeading: () => (
+        <Fragment>
+          <span className={css.fileItemHeaderName}>{name}</span>
+          <span className={css.fileItemHeaderContent}>
             <Icon icon="exclamation-circle">
               <FormattedMessage id="ui-data-import.uploadFileError" />
             </Icon>
           </span>
           <IconButton
             icon="times"
-            title={<FormattedMessage id="ui-data-import.delete" />}
             size="small"
+            title={<FormattedMessage id="ui-data-import.delete" />}
             className={css.icon}
           />
+        </Fragment>
+      ),
+    },
+    [fileStatuses.DELETING]: {
+      fileWrapperClassName: css.fileItemDanger,
+      renderHeading: () => (
+        <Fragment>
+          <span className={css.fileItemHeaderName}>
+            <FormattedMessage
+              id="ui-data-import.deletedFile"
+              values={{ name: <strong>{name}</strong> }}
+            />
+          </span>
+          <button
+            type="button"
+            className={classNames(css.icon, css.undoIcon)}
+            onClick={undoDeleteFile}
+          >
+            <FormattedMessage id="ui-data-import.undo" />
+          </button>
         </Fragment>
       ),
     },
@@ -80,7 +103,7 @@ const getFileItemMeta = (props) => {
 
   return {
     ...defaultFileMeta,
-    ...fileTypesMeta[uploadStatus],
+    ...fileTypesMeta[status],
   };
 };
 
@@ -89,22 +112,26 @@ class FileItem extends PureComponent {
     name: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired,
     keyName: PropTypes.string.isRequired,
-    intl: intlShape.isRequired,
-    onDelete: PropTypes.func.isRequired,
+    onDelete: PropTypes.func,
+    onUndoDelete: PropTypes.func,
     uploadedValue: PropTypes.number,
-    uploadStatus: PropTypes.string,
+    status: PropTypes.string,
+    uploadDate: PropTypes.instanceOf(Date),
   };
 
   static defaultProps = {
     uploadedValue: 0,
-    uploadStatus: UPLOADING,
+    status: fileStatuses.UPLOADING,
+    onDelete: noop,
+    onUndoDelete: noop,
+    uploadDate: null,
   };
 
   progressPayload = {
     message: <FormattedMessage id="ui-data-import.uploadingMessage" />,
   };
 
-  handleFileDelete = () => {
+  deleteFile = () => {
     const {
       onDelete,
       keyName,
@@ -113,119 +140,30 @@ class FileItem extends PureComponent {
     onDelete(keyName);
   };
 
-  renderUploaded(name) {
+  undoDeleteFile = () => {
     const {
-      intl: { formatMessage },
-      uploadDate,
+      onUndoDelete,
+      keyName,
     } = this.props;
 
-    const {
-      fileItem,
-      trashIcon,
-      dateWrapper,
-    } = config.classNames;
-
-    return (
-      <div className={fileItem}>
-        <span>{name}</span>
-        <IconButton
-          icon="trash"
-          title={formatMessage({ id: 'ui-data-import.delete' })}
-          size="small"
-          className={trashIcon}
-          onClick={this.handleFileDelete}
-        />
-        <div className={dateWrapper}>
-          <FormattedDate
-            value={uploadDate}
-          />
-        </div>
-      </div>
-    );
-  }
-
-  renderForDelete(name) {
-    const {
-      forDelete,
-      undoBtn,
-    } = config.classNames;
-
-    return (
-      <div className={forDelete}>
-        <FormattedMessage
-          id="ui-data-import.deletedFile"
-          values={{
-            name,
-          }}
-        />
-        <button
-          type="button"
-          className={undoBtn}
-        >
-          <FormattedMessage id="ui-data-import.undo" />
-        </button>
-      </div>
-    );
-  }
-
-  renderInProgress(name, size, uploadedValue) {
-    const {
-      fileItem,
-      progress,
-      progressWrapper,
-      progressInfo,
-    } = config.classNames;
-
-    return (
-      <div className={fileItem}>
-        <span>{name}</span>
-        <Progress
-          payload={this.progressPayload}
-          progressInfoType="messagedPercentage"
-          progressClassName={progress}
-          progressWrapperClassName={progressWrapper}
-          progressInfoClassName={progressInfo}
-          total={size}
-          current={uploadedValue}
-        />
-      </div>
-    );
-  }
-
-  // render() {
-  //   const {
-  //     name,
-  //     uploadedValue,
-  //     size,
-  //     fileStatus,
-  //   } = this.props;
-  //
-  //   if (fileStatus === 'uploaded') {
-  //     return this.renderUploaded(name);
-  //   }
-  //
-  //   if (fileStatus === 'forDelete') {
-  //     return this.renderForDelete(name);
-  //   }
-  //
-  //   return this.renderInProgress(
-  //     name,
-  //     size,
-  //     uploadedValue
-  //   );
-  // }
+    onUndoDelete(keyName);
+  };
 
   render() {
     const {
-      uploadedValue,
+      status,
       size,
-      uploadStatus,
       name,
+      uploadDate,
+      uploadedValue,
     } = this.props;
 
     const meta = getFileItemMeta({
-      uploadStatus,
+      status,
       name,
+      uploadDate,
+      deleteFile: this.deleteFile,
+      undoDeleteFile: this.undoDeleteFile,
     });
 
     return (
@@ -250,4 +188,4 @@ class FileItem extends PureComponent {
   }
 }
 
-export default injectIntl(FileItem);
+export default FileItem;

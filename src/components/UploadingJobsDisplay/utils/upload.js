@@ -120,13 +120,28 @@ export const uploadFiles = (
   });
 };
 
-export const checkDeleteResponse = res => {
-  if (res.status !== 204) {
+const processDeleteResponse = response => {
+  const {
+    status,
+    statusText,
+  } = response;
+
+  if (status !== 204) {
     const error = {
-      status: res.status,
-      statusText: res.statusText,
+      status,
+      statusText,
     };
 
     throw new Error(error);
   }
+};
+
+export const deleteFile = (url, headers) => {
+  const config = {
+    method: 'DELETE',
+    headers,
+  };
+
+  return fetch(url, config)
+    .then(processDeleteResponse);
 };

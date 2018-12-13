@@ -30,7 +30,7 @@ class JobProfile extends Component {
         >
           <UploadingJobsDisplay
             files={files}
-            timeForDelete={10000}
+            timeoutBeforeFileDeletion={10000}
           />
         </Pane>
       </Paneset>
