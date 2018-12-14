@@ -119,3 +119,29 @@ export const uploadFiles = (
       .catch(onXHRerror);
   });
 };
+
+const processDeleteResponse = response => {
+  const {
+    status,
+    statusText,
+  } = response;
+
+  if (status !== 204) {
+    const error = {
+      status,
+      statusText,
+    };
+
+    throw new Error(error);
+  }
+};
+
+export const deleteFile = (url, headers) => {
+  const config = {
+    method: 'DELETE',
+    headers,
+  };
+
+  return fetch(url, config)
+    .then(processDeleteResponse);
+};

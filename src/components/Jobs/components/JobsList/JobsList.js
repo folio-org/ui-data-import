@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import { List } from '@folio/stripes/components';
 
-import Job from '../Job';
-import Preloader from '../../../Preloader';
-import EndOfList from '../EndOfList';
 import jobPropTypes from '../Job/jobPropTypes';
+import Preloader from '../../../Preloader';
+import EndOfList from '../../../EndOfList';
+import Job from '../Job';
 
 import css from './JobsList.css';
 

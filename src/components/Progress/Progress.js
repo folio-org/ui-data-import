@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { calculatePercentage } from '../../utils';
@@ -8,10 +8,10 @@ import css from './Progress.css';
 const progressInfoFormatters = {
   percentage: (current, total) => `${calculatePercentage(current, total)}%`,
   messagedPercentage: (current, total, payload) => (
-    <React.Fragment>
+    <Fragment>
       {payload.message}
-      {` ${calculatePercentage(current, total)} %`}
-    </React.Fragment>
+      {` ${calculatePercentage(current, total)}%`}
+    </Fragment>
   ),
 };
 
