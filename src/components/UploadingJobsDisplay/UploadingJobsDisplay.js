@@ -52,10 +52,11 @@ class UploadingJobsDisplay extends Component {
     if (!this.props.files) {
       return;
     }
+
     let dontLeave = false;
 
     for (const file in this.props.files) {
-      if (this.props.files[file].uploadStatus.includes('Uploading')) {
+      if (this.props.files[file].status.includes('Uploading')) {
         dontLeave = true;
         break;
       }
