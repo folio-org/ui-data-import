@@ -43,6 +43,28 @@ class UploadingJobsDisplay extends Component {
     this.uploadJobs();
   }
 
+  componentDidUpdate() {
+    if (!this.props.files) {
+      return;
+    }
+    let dontLeave = false;
+
+    for (const file in this.props.files) {
+      if (this.props.files[file].uploadStatus.includes('Uploading')) {
+        dontLeave = true;
+        break;
+      }
+    }
+    // prevent from leaving the page in case of download in progress
+    if (dontLeave) {
+      window.onbeforeunload = () => {
+        return false;
+      };
+    } else {
+      window.onbeforeunload = null;
+    }
+  }
+
   async uploadJobs() {
     const { files } = this.state;
 
