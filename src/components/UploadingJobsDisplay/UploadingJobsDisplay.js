@@ -1,42 +1,47 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import {
   withStripes,
   stripesShape,
 } from '@folio/stripes/core';
+import { Layout } from '@folio/stripes/components';
 
-import {
-  UPLOADED,
-  UPLOADING,
-  FAILED,
-} from './components/FileItem/fileItemStatuses';
+import * as fileStatuses from './components/FileItem/fileItemStatuses';
+import EndOfList from '../EndOfList';
 import FileItem from './components/FileItem';
-import {
-  createFileDefinition, // eslint-disable-line
-  prepareFilesToUpload, // eslint-disable-line
-  uploadFiles,
-} from './utils/upload';
+import createUrl from '../../utils/createUrl';
+import { DEFAULT_TIMEOUT_BEFORE_FILE_DELETION } from '../../utils/constants';
+import * as API from './utils/upload';
 
 class UploadingJobsDisplay extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     files: PropTypes.arrayOf(PropTypes.object),
+    timeoutBeforeFileDeletion: PropTypes.number, // milliseconds
+  };
+
+  static defaultProps = {
+    files: [],
+    timeoutBeforeFileDeletion: DEFAULT_TIMEOUT_BEFORE_FILE_DELETION,
   };
 
   constructor(props) {
     super(props);
 
-    const {
-      url: host,
-    } = props.stripes.okapi;
+    const { url: host } = props.stripes.okapi;
 
     this.state = {
       files: this.mapFilesFromProps(),
     };
 
-    this.fileDefinitionUrl = `${host}/data-import/upload/definition`;
-    this.fileUploaderUrl = `${host}/data-import/upload/file`;
+    this.fileDefinitionUrl = createUrl(`${host}/data-import/upload/definition`);
+    this.fileUploaderUrl = createUrl(`${host}/data-import/upload/file`);
+    this.deleteFileUrl = file => createUrl(`${host}/data-import/upload/definition/file/${file.id}`, {
+      uploadDefinitionId: file.uploadDefinitionId,
+    });
+    this.deleteFileTimeouts = {};
   }
 
   componentDidMount() {
@@ -65,20 +70,34 @@ class UploadingJobsDisplay extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.cancelFileRemovals();
+  }
+
+  cancelFileRemovals() {
+    Object
+      .keys(this.deleteFileTimeouts)
+      .forEach(timeoutId => {
+        clearTimeout(this.deleteFileTimeouts[timeoutId]);
+      });
+
+    this.deleteFileTimeouts = {};
+  }
+
   async uploadJobs() {
     const { files } = this.state;
 
     try {
-      const { fileDefinitions } = await createFileDefinition(
+      const { fileDefinitions } = await API.createFileDefinition(
         files,
         this.fileDefinitionUrl,
         this.createJobFilesDefinitionHeaders(),
       );
 
-      const preparedFiles = prepareFilesToUpload(files, fileDefinitions);
+      const preparedFiles = API.prepareFilesToUpload(files, fileDefinitions);
 
       this.setState({ files: preparedFiles }, () => {
-        uploadFiles(
+        API.uploadFiles(
           this.state.files,
           this.fileUploaderUrl,
           this.createUploadJobFilesHeaders(),
@@ -118,12 +137,24 @@ class UploadingJobsDisplay extends Component {
     };
   }
 
+  createDeleteFileHeaders() {
+    const {
+      token,
+      tenant,
+    } = this.props.stripes.okapi;
+
+    return {
+      'X-Okapi-Tenant': tenant,
+      'X-Okapi-Token': token,
+    };
+  }
+
   mapFilesFromProps() {
     return this.props.files.reduce((result, currentFile) => {
       const keyNameValue = currentFile.name + currentFile.lastModified;
 
       currentFile.keyName = keyNameValue;
-      currentFile.uploadStatus = UPLOADING;
+      currentFile.status = fileStatuses.UPLOADING;
       currentFile.currentUploaded = 0;
       result[keyNameValue] = currentFile;
 
@@ -149,11 +180,50 @@ class UploadingJobsDisplay extends Component {
   };
 
   onFileUploadSuccess = ({ file }) => {
-    this.updateFileState(file, { uploadStatus: UPLOADED });
+    this.updateFileState(file, {
+      status: fileStatuses.UPLOADED,
+      uploadDate: new Date(), // TODO replace with field from backend (MODDATAIMP-54)
+    });
   };
 
   onFileUploadFail = ({ file }) => {
-    this.updateFileState(file, { uploadStatus: FAILED });
+    this.updateFileState(file, { status: fileStatuses.FAILED });
+  };
+
+  handleUndoDeleteFile = key => {
+    const file = this.state.files[key];
+
+    clearTimeout(this.deleteFileTimeouts[key]);
+
+    this.updateFileState(file, { status: fileStatuses.UPLOADED });
+  };
+
+  handleDeleteFile = key => {
+    const { timeoutBeforeFileDeletion } = this.props;
+    const file = this.state.files[key];
+
+    this.deleteFileTimeouts[key] = setTimeout(() => {
+      API.deleteFile(
+        this.deleteFileUrl(file),
+        this.createDeleteFileHeaders(),
+      )
+        .then(() => this.deleteFileFromState(key))
+        .catch(error => {
+          this.updateFileState(file, { status: fileStatuses.UPLOADED });
+          console.error(error); // eslint-disable-line no-console
+        });
+    }, timeoutBeforeFileDeletion);
+
+    this.updateFileState(file, { status: fileStatuses.DELETING });
+  };
+
+  deleteFileFromState = key => {
+    const { files } = this.state;
+    const updatedFiles = { ...files };
+
+    delete updatedFiles[key];
+
+    this.setState({ files: updatedFiles });
   };
 
   onAllFilesUploadFail() {
@@ -161,7 +231,7 @@ class UploadingJobsDisplay extends Component {
       const files = Object.keys(state.files).reduce((res, key) => {
         const file = state.files[key];
 
-        file.uploadStatus = FAILED;
+        file.status = fileStatuses.FAILED;
 
         return {
           ...res,
@@ -176,8 +246,12 @@ class UploadingJobsDisplay extends Component {
   renderFiles() {
     const { files } = this.state;
 
-    if (!files) {
-      return null;
+    if (!Object.keys(files).length) {
+      return (
+        <Layout className="textCentered">
+          <FormattedMessage id="ui-data-import.noUploadedFiles" />
+        </Layout>
+      );
     }
 
     return Object.keys(files)
@@ -186,16 +260,22 @@ class UploadingJobsDisplay extends Component {
           name,
           size,
           uploadedValue,
-          uploadStatus,
+          status,
+          uploadDate,
+          keyName,
         } = files[key];
 
         return (
           <FileItem
-            key={key}
+            key={keyName}
+            keyName={keyName}
             name={name}
             size={size}
             uploadedValue={uploadedValue}
-            uploadStatus={uploadStatus}
+            status={status}
+            uploadDate={uploadDate}
+            onDelete={this.handleDeleteFile}
+            onUndoDelete={this.handleUndoDeleteFile}
           />
         );
       });
@@ -205,6 +285,7 @@ class UploadingJobsDisplay extends Component {
     return (
       <div>
         {this.renderFiles()}
+        <EndOfList />
       </div>
     );
   }

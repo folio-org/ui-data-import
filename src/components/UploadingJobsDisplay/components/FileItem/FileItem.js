@@ -1,111 +1,72 @@
-import React, {
-  PureComponent,
-  Fragment,
-} from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
+import { noop } from 'lodash';
 
-import {
-  Icon,
-  IconButton,
-} from '@folio/stripes/components';
-
-import {
-  UPLOADED,
-  UPLOADING,
-  FAILED,
-} from './fileItemStatuses';
+import * as fileStatuses from './fileItemStatuses';
+import getFileItemMeta from './getFileItemMeta';
 import Progress from '../../../Progress';
 
 import css from './FileItem.css';
-
-const getFileItemMeta = (props) => {
-  const {
-    uploadStatus,
-    name,
-  } = props;
-
-  const defaultFileMeta = {
-    showProgress: false,
-    renderHeading: () => (
-      <Fragment>
-        <span>{name}</span>
-      </Fragment>
-    ),
-  };
-
-  const fileTypesMeta = {
-    [UPLOADING]: {
-      showProgress: true,
-      renderHeading: () => (
-        <Fragment>
-          <span>{name}</span>
-        </Fragment>
-      ),
-    },
-    [UPLOADED]: {
-      renderHeading: () => (
-        <Fragment>
-          <span>{name}</span>
-        </Fragment>
-      ),
-    },
-    [FAILED]: {
-      fileWrapperClassName: css.fileItemFailed,
-      renderHeading: () => (
-        <Fragment>
-          <span className={css.fileItemHeaderName}>{name}</span>
-          <span>
-            <Icon icon="exclamation-circle">
-              <FormattedMessage id="ui-data-import.uploadFileError" />
-            </Icon>
-          </span>
-          <IconButton
-            icon="times"
-            title={<FormattedMessage id="ui-data-import.delete" />}
-            size="small"
-            className={css.icon}
-          />
-        </Fragment>
-      ),
-    },
-  };
-
-  return {
-    ...defaultFileMeta,
-    ...fileTypesMeta[uploadStatus],
-  };
-};
 
 class FileItem extends PureComponent {
   static propTypes = {
     name: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired,
+    keyName: PropTypes.string.isRequired,
+    onDelete: PropTypes.func,
+    onUndoDelete: PropTypes.func,
     uploadedValue: PropTypes.number,
-    uploadStatus: PropTypes.string,
+    status: PropTypes.string,
+    uploadDate: PropTypes.instanceOf(Date),
   };
 
   static defaultProps = {
     uploadedValue: 0,
-    uploadStatus: UPLOADING,
+    status: fileStatuses.UPLOADING,
+    onDelete: noop,
+    onUndoDelete: noop,
+    uploadDate: null,
   };
 
   progressPayload = {
     message: <FormattedMessage id="ui-data-import.uploadingMessage" />,
   };
 
+  deleteFile = () => {
+    const {
+      onDelete,
+      keyName,
+    } = this.props;
+
+    onDelete(keyName);
+  };
+
+  undoDeleteFile = () => {
+    const {
+      onUndoDelete,
+      keyName,
+    } = this.props;
+
+    onUndoDelete(keyName);
+  };
+
   render() {
     const {
-      uploadedValue,
+      status,
       size,
-      uploadStatus,
       name,
+      uploadDate,
+      uploadedValue,
     } = this.props;
 
     const meta = getFileItemMeta({
-      uploadStatus,
+      status,
       name,
+      uploadDate,
+      deleteFile: this.deleteFile,
+      undoDeleteFile: this.undoDeleteFile,
     });
 
     return (

@@ -21,6 +21,7 @@
   "loading": "Loading",
   "undo": "Undo",
   "delete": "Delete",
+  "deletedFile": "{name} has been deleted",
 
   "uploadTitle": "Drag and drop to start a new data import job",
   "activeUploadTitle": "Drop to start import",
@@ -28,6 +29,7 @@
   "uploadingPaneTitle": "Files",
   "uploadingMessage": "Uploading",
   "uploadFileError": "Error: file upload",
+  "noUploadedFiles": "No files to show",
 
   "jobFileName": "File name",
   "jobProfileName": "Job profile",

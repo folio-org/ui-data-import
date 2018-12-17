@@ -4,6 +4,7 @@ import { get } from 'lodash';
 
 import jobPropTypes from '../Jobs/components/Job/jobPropTypes';
 import jobLogPropTypes from '../JobLogs/jobLogPropTypes';
+import { DEFAULT_FETCHER_UPDATE_INTERVAL } from '../../utils/constants';
 import { createUrl } from '../../utils';
 import {
   PROCESSING_IN_PROGRESS,
@@ -11,8 +12,6 @@ import {
   PARSING_IN_PROGRESS,
 } from '../Jobs/jobStatuses';
 import { DataFetcherContextProvider } from '.';
-
-const DEFAULT_UPDATE_INTERVAL = 5000;
 
 const jobsUrl = createUrl('metadata-provider/jobExecutions', {
   query: `(status=("${PROCESSING_IN_PROGRESS}" OR "${PROCESSING_FINISHED}" OR "${PARSING_IN_PROGRESS}"))`,
@@ -72,7 +71,7 @@ class DataFetcher extends Component {
   };
 
   static defaultProps = {
-    updateInterval: DEFAULT_UPDATE_INTERVAL,
+    updateInterval: DEFAULT_FETCHER_UPDATE_INTERVAL,
   };
 
   state = {
