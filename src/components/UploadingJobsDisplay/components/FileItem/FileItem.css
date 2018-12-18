@@ -28,6 +28,10 @@
   overflow-wrap: break-word;
 }
 
+.fileIcon {
+  position: absolute;
+}
+
 .fileItemHeaderContent {
   word-break: break-word;
 }
@@ -38,11 +42,11 @@
 
 .fileItemHeaderName {
   margin-right: 2rem;
+  text-indent: 18px;
 }
 
 .icon {
   position: absolute;
-  top: 0.5rem;
   right: 10px;
 }
 

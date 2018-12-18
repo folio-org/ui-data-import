@@ -83,6 +83,7 @@
         "subPermissions": [
           "data-import.upload.definition.post",
           "data-import.upload.definition.get",
+          "data-import.upload.definition.file.delete",
           "data-import.upload.file.post"
         ],
         "visible": true

@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { noop } from 'lodash';
 
+import { Icon } from '@folio/stripes/components';
+
 import * as fileStatuses from './fileItemStatuses';
 import getFileItemMeta from './getFileItemMeta';
 import Progress from '../../../Progress';
@@ -72,6 +74,12 @@ class FileItem extends PureComponent {
     return (
       <div className={classNames(css.fileItem, meta.fileWrapperClassName)}>
         <div className={css.fileItemHeader}>
+          <span className={css.fileIcon}>
+            <Icon
+              size="small"
+              icon="document"
+            />
+          </span>
           {meta.renderHeading()}
         </div>
 
