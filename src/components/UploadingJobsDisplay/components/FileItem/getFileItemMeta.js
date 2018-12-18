@@ -44,13 +44,17 @@ const getFileItemMeta = props => {
           <span className={classNames(css.fileItemHeaderContent, css.fileItemUploadedHeaderContent)}>
             <FormattedDate value={uploadDate} />
           </span>
-          <IconButton
-            icon="trash"
-            size="small"
-            title={<FormattedMessage id="ui-data-import.delete" />}
-            className={css.icon}
-            onClick={deleteFile}
-          />
+          <FormattedMessage id="ui-data-import.delete">
+            {label => (
+              <IconButton
+                icon="trash"
+                size="small"
+                ariaLabel={label}
+                className={css.icon}
+                onClick={deleteFile}
+              />
+            )}
+          </FormattedMessage>
         </Fragment>
       ),
     },
@@ -64,12 +68,16 @@ const getFileItemMeta = props => {
               <FormattedMessage id="ui-data-import.uploadFileError" />
             </Icon>
           </span>
-          <IconButton
-            icon="times"
-            size="small"
-            title={<FormattedMessage id="ui-data-import.delete" />}
-            className={css.icon}
-          />
+          <FormattedMessage id="ui-data-import.delete">
+            {label => (
+              <IconButton
+                icon="times"
+                size="small"
+                ariaLabel={label}
+                className={css.icon}
+              />
+            )}
+          </FormattedMessage>
         </Fragment>
       ),
     },
