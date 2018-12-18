@@ -27,7 +27,7 @@ const getFileItemMeta = props => {
     showProgress: false,
     renderHeading: () => (
       <Fragment>
-        <span>{name}</span>
+        <span className={css.fileItemHeaderName}>{name}</span>
       </Fragment>
     ),
   };
