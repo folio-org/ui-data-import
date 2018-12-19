@@ -1,4 +1,4 @@
-# FileUploader
+# `FileUploader`
 
 Component is built on top of [ReactDropzone](https://react-dropzone.netlify.com) component. Provides drag-and-drop zone for file uploading. Note that uploading files to a server is out of scope of this component and should be implemented additionally on the client and server.
 
@@ -84,9 +84,9 @@ Here `<FormattedMessage id={id} />` will be rendered below the title and upload 
 When using a function as `children` this function accepts `openFileUploadDialogWindow` as an argument and `FileUploader` renders the returned value.
 `openFileUploadDialogWindow` is a function provided by the `ReactDropzone` component that opens a modal file upload window for manually selecting files from the OS file system.
 
-## FileUploader props
+## `FileUploader` props
 
-`FileUploader` component is built on top of the `ReactDropzone` component. For this reason, he has both his own props and some of the ReactDropzone props.
+`FileUploader` component is built on top of the `ReactDropzone` component. For this reason, he has both his own props and some of the `ReactDropzone` props.
 
 ### Own props
 
@@ -99,19 +99,19 @@ When using a function as `children` this function accepts `openFileUploadDialogW
 
 ### Props passed to `ReactDropzone`
 
-| Prop                 | Type               | Default  | Required | Description                                                                                         |
-|----------------------|--------------------|----------|----------|-----------------------------------------------------------------------------------------------------|
-| onDrop               | func               |          | Yes      | onDrop callback that takes acceptedFiles and rejectedFiles as arguments                             |
-| onDragEnter          | func               |          | No       | onDragEnter callback                                                                                |
-| onDragLeave          | func               |          | No       | onDragLeave callback                                                                                |
-| className            | string             |          | No       | `FileUploader` puts default styles in case the property is not passed                               |
-| style                | object             |          | No       | CSS styles to apply                                                                                 |
-| acceptClassName      | string             |          | No       | className to apply when drop will be accepted                                                       |
-| activeClassName      | string             |          | No       | className to apply when drag is active                                                              |
-| rejectClassName      | string             |          | No       | className to apply when drop will be rejected                                                       |
-| disabledClassName    | string             |          | No       | className to apply when dropzone is disabled                                                        |
-| maxSize              | number             | Infinity  | No       | Maximum file size (in bytes)                                                                         |
-| getDataTransferItems | func               |          | No       | Find info about getDataTransferItems [here](https://react-dropzone.netlify.com/#extending-dropzone) |
-| accept               | string \| string[] |          | No       | Allow specific types of files                                                                         |
+| Prop                 | Type               | Default  | Required | Description                                                                                           |
+|----------------------|--------------------|----------|----------|-------------------------------------------------------------------------------------------------------|
+| onDrop               | func               |          | Yes      | `onDrop` callback that takes `acceptedFiles` and `rejectedFiles` as arguments                         |
+| onDragEnter          | func               |          | No       | `onDragEnter` callback                                                                                |
+| onDragLeave          | func               |          | No       | `onDragLeave` callback                                                                                |
+| className            | string             |          | No       | `FileUploader` puts default styles in case the property is not passed                                 |
+| style                | object             |          | No       | CSS styles to apply                                                                                   |
+| acceptClassName      | string             |          | No       | `className` to apply when drop will be accepted                                                       |
+| activeClassName      | string             |          | No       | `className` to apply when drag is active                                                              |
+| rejectClassName      | string             |          | No       | `className` to apply when drop will be rejected                                                       |
+| disabledClassName    | string             |          | No       | `className` to apply when dropzone is disabled                                                        |
+| maxSize              | number             | Infinity  | No       | Maximum file size (in bytes)                                                                           |
+| getDataTransferItems | func               |          | No       | Find info about `getDataTransferItems` [here](https://react-dropzone.netlify.com/#extending-dropzone) |
+| accept               | string \| string[] |          | No       | Allow specific types of files                                                                           |
 
-Find more info about `ReactDropzone` props by following this [link](https://react-dropzone.netlify.com/#proptypes)
+Find more info about `ReactDropzone` props by following this [link](https://react-dropzone.netlify.com/#proptypes).
