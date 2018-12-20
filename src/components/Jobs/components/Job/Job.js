@@ -56,7 +56,7 @@ class Job extends Component {
     const {
       jobProfileName,
       fileName,
-      status,
+      uiStatus,
       hrId,
       runBy: {
         firstName,
@@ -67,7 +67,7 @@ class Job extends Component {
         total,
       },
     } = job;
-    const jobMeta = jobMetaTypes[status](job);
+    const jobMeta = jobMetaTypes[uiStatus](job);
     const dateLabelId = `ui-data-import.${jobMeta.dateLabel}Running`;
 
     return (

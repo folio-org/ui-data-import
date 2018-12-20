@@ -13,7 +13,7 @@ const jobPropTypes = PropTypes.shape({
     current: PropTypes.number.isRequired,
     total: PropTypes.number.isRequired,
   }).isRequired,
-  status: PropTypes.string.isRequired,
+  uiStatus: PropTypes.string.isRequired,
   startedDate: PropTypes.string.isRequired,
   completedDate: PropTypes.string,
 });

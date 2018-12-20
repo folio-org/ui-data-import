@@ -56,7 +56,7 @@ class ImportJobs extends Component {
    */
   validateFileExtensions(files = []) {
     const fileTypeRegex = /\.(\w+)$/;
-    const filesTypes = files.map(({ name }) => name.match(fileTypeRegex)[1]);
+    const filesTypes = files.map(({ name }) => (name.match(fileTypeRegex) || [])[1]);
     const baseFileType = filesTypes[0];
 
     return filesTypes.every(type => type === baseFileType);
