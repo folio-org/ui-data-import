@@ -51,7 +51,7 @@ const generateSortConfigs = iteratees => iteratees
       return iteratee;
     }
 
-    throw new TypeError(`${JSON.stringify(iteratee)} is not valid value.`);
+    throw new TypeError(`${JSON.stringify(iteratee)} is not valid value`);
   });
 
 /**
@@ -71,6 +71,11 @@ const configurableSort = ({
 }, a, b) => {
   if (compareFunction) {
     return compareFunction(a, b);
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(a, propertyName) ||
+    !Object.prototype.hasOwnProperty.call(b, propertyName)) {
+    throw new Error(`${propertyName} does not exist`);
   }
 
   // 1 - ascending, -1 - descending
@@ -128,6 +133,10 @@ const configurableSort = ({
  * @returns {Collection} Sorted collection
  */
 const sortCollection = (collection = [], iteratees = []) => {
+  if (!Array.isArray(collection)) {
+    throw new TypeError('collection parameter must be an array');
+  }
+
   const iterateesObjects = generateSortConfigs(iteratees);
   const { length } = iterateesObjects;
 

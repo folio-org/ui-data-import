@@ -81,8 +81,8 @@ class DataFetcher extends Component {
     },
   };
 
-  componentDidMount() {
-    this.getResourcesData();
+  async componentDidMount() {
+    await this.getResourcesData(true);
     this.updateResourcesData();
   }
 
@@ -90,15 +90,14 @@ class DataFetcher extends Component {
     clearInterval(this.intervalId);
   }
 
-  hasLoaded = false;
-
   updateResourcesData() {
     const { updateInterval } = this.props;
 
     this.intervalId = setInterval(this.getResourcesData, updateInterval);
   }
 
-  getResourcesData = async () => {
+  /** @param  {boolean} [initial] indicates initial data retrieval */
+  getResourcesData = async initial => {
     const { mutator } = this.props;
 
     const fetchResourcesPromises = Object.values(mutator)
@@ -106,14 +105,13 @@ class DataFetcher extends Component {
         return res.concat(this.getResourceData(resourceMutator));
       }, []);
 
-    this.hasLoaded = true;
-
     try {
       await Promise.all(fetchResourcesPromises);
 
       this.mapResourcesToState();
-    } catch (e) {
-      if (this.hasLoaded) {
+    } catch (error) {
+      if (initial) {
+        // fill contextData with empty data on unsuccessful initial data retrieval
         this.mapResourcesToState(true);
       }
       // TODO: should be described in UIDATIMP-53
@@ -130,9 +128,7 @@ class DataFetcher extends Component {
     await GET();
   }
 
-  /**
-   * @param  {boolean} [isEmpty] flag to fill contextData with empty data
-   */
+  /** @param  {boolean} [isEmpty] flag to fill contextData with empty data */
   mapResourcesToState(isEmpty) {
     const { resources } = this.props;
     const contextData = { hasLoaded: true };

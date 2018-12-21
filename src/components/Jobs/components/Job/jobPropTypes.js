@@ -5,6 +5,7 @@ const jobPropTypes = PropTypes.shape({
   hrId: PropTypes.string.isRequired,
   jobProfileName: PropTypes.string.isRequired,
   fileName: PropTypes.string.isRequired,
+  uiStatus: PropTypes.string.isRequired,
   runBy: PropTypes.shape({
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
@@ -13,7 +14,6 @@ const jobPropTypes = PropTypes.shape({
     current: PropTypes.number.isRequired,
     total: PropTypes.number.isRequired,
   }).isRequired,
-  uiStatus: PropTypes.string.isRequired,
   startedDate: PropTypes.string.isRequired,
   completedDate: PropTypes.string,
 });
