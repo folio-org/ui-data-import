@@ -4,14 +4,14 @@ import {
   convertDate,
 } from '../../utils';
 import {
-  PROCESSING_FINISHED,
-  PROCESSING_IN_PROGRESS,
+  READY_FOR_PREVIEW,
+  PREPARING_FOR_PREVIEW,
 } from '../../jobStatuses';
 
-const statusSequence = [PROCESSING_FINISHED, PROCESSING_IN_PROGRESS];
+const statusSequence = [READY_FOR_PREVIEW, PREPARING_FOR_PREVIEW];
 const sortByDates = (a, b) => {
-  const { status: statusA } = a;
-  const { status: statusB } = b;
+  const { uiStatus: statusA } = a;
+  const { uiStatus: statusB } = b;
   let {
     startedDate: startedDateA,
     completedDate: completedDateA,
@@ -26,13 +26,13 @@ const sortByDates = (a, b) => {
   completedDateA = convertDate(completedDateA, DATE_TYPES.number);
   completedDateB = convertDate(completedDateB, DATE_TYPES.number);
 
-  const isSortingByStartedDate = statusA === PROCESSING_IN_PROGRESS && statusB === PROCESSING_IN_PROGRESS;
+  const isSortingByStartedDate = statusA === PREPARING_FOR_PREVIEW && statusB === PREPARING_FOR_PREVIEW;
 
   if (isSortingByStartedDate) {
     return startedDateB - startedDateA;
   }
 
-  const isSortingByCompletedDate = statusA === PROCESSING_FINISHED && statusB === PROCESSING_FINISHED;
+  const isSortingByCompletedDate = statusA === READY_FOR_PREVIEW && statusB === READY_FOR_PREVIEW;
 
   if (isSortingByCompletedDate) {
     return completedDateB - completedDateA;
@@ -42,7 +42,7 @@ const sortByDates = (a, b) => {
 };
 const sortingOptions = [
   {
-    propertyName: 'status',
+    propertyName: 'uiStatus',
     sequence: statusSequence,
   },
   sortByDates,

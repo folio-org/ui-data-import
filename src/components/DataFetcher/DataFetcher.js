@@ -7,14 +7,15 @@ import jobLogPropTypes from '../JobLogs/jobLogPropTypes';
 import { DEFAULT_FETCHER_UPDATE_INTERVAL } from '../../utils/constants';
 import { createUrl } from '../../utils';
 import {
-  PROCESSING_IN_PROGRESS,
-  PROCESSING_FINISHED,
-  PARSING_IN_PROGRESS,
+  RUNNING,
+  READY_FOR_PREVIEW,
+  PREPARING_FOR_PREVIEW,
 } from '../Jobs/jobStatuses';
 import { DataFetcherContextProvider } from '.';
 
 const jobsUrl = createUrl('metadata-provider/jobExecutions', {
-  query: `(status=("${PROCESSING_IN_PROGRESS}" OR "${PROCESSING_FINISHED}" OR "${PARSING_IN_PROGRESS}"))`,
+  query: `(uiStatus==("${PREPARING_FOR_PREVIEW}" OR "${READY_FOR_PREVIEW}" OR "${RUNNING}"))`,
+  limit: 50,
 });
 
 const logsUrl = createUrl('metadata-provider/logs', {
