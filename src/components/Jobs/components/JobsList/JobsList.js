@@ -23,18 +23,23 @@ const JobsList = props => {
     />
   );
   const EmptyMessage = (
-    <span className={css.emptyMessage}>
+    <span
+      data-test-empty-message
+      className={css.emptyMessage}
+    >
       {noJobsMessage}
     </span>
   );
   const LoadedJobsList = (
-    <List
-      items={jobs}
-      itemFormatter={itemFormatter}
-      isEmptyMessage={EmptyMessage}
-      listClass={css.list}
-      marginBottom0
-    />
+    <div data-test-jobs-list>
+      <List
+        items={jobs}
+        itemFormatter={itemFormatter}
+        isEmptyMessage={EmptyMessage}
+        listClass={css.list}
+        marginBottom0
+      />
+    </div>
   );
 
   return (

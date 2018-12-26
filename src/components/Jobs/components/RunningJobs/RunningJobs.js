@@ -23,11 +23,13 @@ class RunningJobs extends PureComponent {
     const jobs = this.prepareJobsData();
 
     return (
-      <JobsList
-        jobs={jobs}
-        hasLoaded={hasLoaded}
-        noJobsMessage={<FormattedMessage id="ui-data-import.noRunningJobsMessage" />}
-      />
+      <div data-test-running-jobs>
+        <JobsList
+          jobs={jobs}
+          hasLoaded={hasLoaded}
+          noJobsMessage={<FormattedMessage id="ui-data-import.noRunningJobsMessage" />}
+        />
+      </div>
     );
   }
 }

@@ -26,11 +26,13 @@ class PreviewsJobs extends PureComponent {
     const jobs = this.prepareJobsData();
 
     return (
-      <JobsList
-        jobs={jobs}
-        hasLoaded={hasLoaded}
-        noJobsMessage={<FormattedMessage id="ui-data-import.noPreviewsJobsMessage" />}
-      />
+      <div data-test-preview-jobs>
+        <JobsList
+          jobs={jobs}
+          hasLoaded={hasLoaded}
+          noJobsMessage={<FormattedMessage id="ui-data-import.noPreviewsJobsMessage" />}
+        />
+      </div>
     );
   }
 }

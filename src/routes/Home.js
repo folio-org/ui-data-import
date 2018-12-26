@@ -64,8 +64,13 @@ class Home extends Component {
       <this.connectedDataFetcher>
         <Paneset>
           <Pane
+            data-test-jobs-pane
             defaultWidth="320px"
-            paneTitle={<FormattedMessage id="ui-data-import.jobsPaneTitle" />}
+            paneTitle={(
+              <span data-test-title>
+                <FormattedMessage id="ui-data-import.jobsPaneTitle" />
+              </span>
+            )}
             lastMenu={this.addManageJobs()}
           >
             <Jobs />

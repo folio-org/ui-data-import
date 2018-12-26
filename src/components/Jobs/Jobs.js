@@ -17,13 +17,21 @@ class Jobs extends Component {
       <div className={css.jobsPane}>
         <AccordionSet>
           <Accordion
-            label={<FormattedMessage id="ui-data-import.previewJobs" />}
+            label={(
+              <span data-test-preview-jobs-accordion-title>
+                <FormattedMessage id="ui-data-import.previewJobs" />
+              </span>
+            )}
             separator={false}
           >
             <PreviewsJobs />
           </Accordion>
           <Accordion
-            label={<FormattedMessage id="ui-data-import.runningJobs" />}
+            label={(
+              <span data-test-running-jobs-accordion-title>
+                <FormattedMessage id="ui-data-import.runningJobs" />
+              </span>
+            )}
             separator={false}
           >
             <RunningJobs />
