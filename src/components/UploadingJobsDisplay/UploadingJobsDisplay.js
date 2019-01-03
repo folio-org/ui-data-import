@@ -52,27 +52,31 @@ class UploadingJobsDisplay extends Component {
     if (!this.props.files) {
       return;
     }
-
-    let dontLeave = false;
-
-    for (const file in this.props.files) {
-      if (this.props.files[file].status.includes('Uploading')) {
-        dontLeave = true;
-        break;
-      }
-    }
-    // prevent from leaving the page in case of download in progress
-    if (dontLeave) {
-      window.onbeforeunload = () => {
-        return false;
-      };
-    } else {
-      window.onbeforeunload = null;
-    }
+    this.onLeaveHandler();
   }
 
   componentWillUnmount() {
     this.cancelFileRemovals();
+    this.resetLeaveThePagePrevention();
+  }
+
+  onLeaveHandler() {
+    const notAbleToLeave = Object.keys(this.props.files).some((file) => {
+      return this.props.files[file].status.toLowerCase() === 'uploading';
+    });
+    // prevent from leaving the page in case of download in progress
+
+    if (notAbleToLeave) {
+      window.onbeforeunload = () => {
+        return false;
+      };
+    } else {
+      this.resetLeaveThePagePrevention();
+    }
+  }
+
+  resetLeaveThePagePrevention() {
+    window.onbeforeunload = null;
   }
 
   cancelFileRemovals() {
