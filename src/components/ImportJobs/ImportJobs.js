@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 
 import FileUploader from './components/FileUploader';
 import InvalidFilesModal from './components/InvalidFilesModal';
@@ -56,9 +55,11 @@ class ImportJobs extends Component {
    * @param  {Array<File>} files
    */
   validateFileExtensions(files = []) {
-    const filesType = get(files, [0, 'type'], '');
+    const fileTypeRegex = /\.(\w+)$/;
+    const filesTypes = files.map(({ name }) => (name.match(fileTypeRegex) || [])[1]);
+    const baseFileType = filesTypes[0];
 
-    return files.every(({ type }) => type === filesType);
+    return filesTypes.every(type => type === baseFileType);
   }
 
   showModal() {

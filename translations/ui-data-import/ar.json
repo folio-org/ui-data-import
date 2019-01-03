@@ -43,5 +43,14 @@
     "settings.fileExtensions": "File extensions",
     "undo": "Undo",
     "uploadingPaneTitle": "Files",
-    "uploadingMessage": "Uploading"
+    "uploadingMessage": "Uploading",
+    "delete": "Delete",
+    "uploadFileError": "Error: file upload",
+    "modal.header": "Inconsistent file extensions",
+    "modal.message": "You cannot upload files with {highlightedText}. Please upload files with the same extension.",
+    "modal.messageHighlightedText": "different extensions",
+    "modal.cancel": "Cancel",
+    "modal.actionButtonText": "Choose other files to upload",
+    "deletedFile": "{name} has been deleted",
+    "noUploadedFiles": "No files to show"
 }

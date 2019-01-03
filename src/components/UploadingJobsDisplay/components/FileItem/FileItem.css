@@ -26,6 +26,11 @@
   display: flex;
   flex-wrap: wrap;
   overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.fileIcon {
+  position: absolute;
 }
 
 .fileItemHeaderContent {
@@ -38,11 +43,11 @@
 
 .fileItemHeaderName {
   margin-right: 2rem;
+  text-indent: 18px;
 }
 
 .icon {
   position: absolute;
-  top: 0.5rem;
   right: 10px;
 }
 

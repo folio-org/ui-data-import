@@ -14,7 +14,7 @@
     "progressRunning": "Em andamento",
     "record": "registro",
     "records": "registros",
-    "uploadTitle": "Arraste e solte para iniciar um novo trabalho de importação de dados",
+    "uploadTitle": "Arraste e solte para iniciar uma nova importação de dados",
     "activeUploadTitle": "Solte para iniciar a importação",
     "uploadBtnText": "ou escolher os arquivos",
     "jobFileName": "Nome do arquivo",
@@ -43,5 +43,14 @@
     "settings.fileExtensions": "Extensões de arquivo",
     "undo": "Desfazer",
     "uploadingPaneTitle": "Arquivos",
-    "uploadingMessage": "Carregando"
+    "uploadingMessage": "Carregando",
+    "delete": "Excluir",
+    "uploadFileError": "Erro: upload de arquivo",
+    "modal.header": "Extensões de arquivos inconsistentes",
+    "modal.message": "Você não pode fazer upload de arquivos com {highlightedText} . Por favor, envie arquivos com a mesma extensão.",
+    "modal.messageHighlightedText": "extensões diferentes",
+    "modal.cancel": "Cancelar",
+    "modal.actionButtonText": "Escolha outros arquivos para upload",
+    "deletedFile": "{name} foi excluído",
+    "noUploadedFiles": "Nenhum arquivo para mostrar"
 }

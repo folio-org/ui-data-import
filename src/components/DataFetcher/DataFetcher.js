@@ -7,14 +7,15 @@ import jobLogPropTypes from '../JobLogs/jobLogPropTypes';
 import { DEFAULT_FETCHER_UPDATE_INTERVAL } from '../../utils/constants';
 import { createUrl } from '../../utils';
 import {
-  PROCESSING_IN_PROGRESS,
-  PROCESSING_FINISHED,
-  PARSING_IN_PROGRESS,
+  RUNNING,
+  READY_FOR_PREVIEW,
+  PREPARING_FOR_PREVIEW,
 } from '../Jobs/jobStatuses';
 import { DataFetcherContextProvider } from '.';
 
 const jobsUrl = createUrl('metadata-provider/jobExecutions', {
-  query: `(status=("${PROCESSING_IN_PROGRESS}" OR "${PROCESSING_FINISHED}" OR "${PARSING_IN_PROGRESS}"))`,
+  query: `(uiStatus==("${PREPARING_FOR_PREVIEW}" OR "${READY_FOR_PREVIEW}" OR "${RUNNING}"))`,
+  limit: 50,
 });
 
 const logsUrl = createUrl('metadata-provider/logs', {
@@ -80,8 +81,8 @@ class DataFetcher extends Component {
     },
   };
 
-  componentDidMount() {
-    this.getResourcesData();
+  async componentDidMount() {
+    await this.getResourcesData(true);
     this.updateResourcesData();
   }
 
@@ -89,15 +90,14 @@ class DataFetcher extends Component {
     clearInterval(this.intervalId);
   }
 
-  hasLoaded = false;
-
   updateResourcesData() {
     const { updateInterval } = this.props;
 
     this.intervalId = setInterval(this.getResourcesData, updateInterval);
   }
 
-  getResourcesData = async () => {
+  /** @param  {boolean} [initial] indicates initial data retrieval */
+  getResourcesData = async initial => {
     const { mutator } = this.props;
 
     const fetchResourcesPromises = Object.values(mutator)
@@ -105,14 +105,13 @@ class DataFetcher extends Component {
         return res.concat(this.getResourceData(resourceMutator));
       }, []);
 
-    this.hasLoaded = true;
-
     try {
       await Promise.all(fetchResourcesPromises);
 
       this.mapResourcesToState();
-    } catch (e) {
-      if (this.hasLoaded) {
+    } catch (error) {
+      if (initial) {
+        // fill contextData with empty data on unsuccessful initial data retrieval
         this.mapResourcesToState(true);
       }
       // TODO: should be described in UIDATIMP-53
@@ -129,9 +128,7 @@ class DataFetcher extends Component {
     await GET();
   }
 
-  /**
-   * @param  {boolean} [isEmpty] flag to fill contextData with empty data
-   */
+  /** @param  {boolean} [isEmpty] flag to fill contextData with empty data */
   mapResourcesToState(isEmpty) {
     const { resources } = this.props;
     const contextData = { hasLoaded: true };

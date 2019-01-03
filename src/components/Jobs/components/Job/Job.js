@@ -52,11 +52,14 @@ class Job extends Component {
   }
 
   render() {
-    const { job } = this.props;
+    const {
+      job,
+      handlePreview,
+    } = this.props;
     const {
       jobProfileName,
       fileName,
-      status,
+      uiStatus,
       hrId,
       runBy: {
         firstName,
@@ -67,11 +70,14 @@ class Job extends Component {
         total,
       },
     } = job;
-    const jobMeta = jobMetaTypes[status](job);
+    const jobMeta = jobMetaTypes[uiStatus](job);
     const dateLabelId = `ui-data-import.${jobMeta.dateLabel}Running`;
 
     return (
-      <div className={css.job}>
+      <div
+        data-test-job-item
+        className={css.job}
+      >
         <div className={classNames(css.delimiter, css.jobHeader)}>
           <span>{jobProfileName}</span>
           <span>{fileName}</span>
@@ -95,7 +101,9 @@ class Job extends Component {
               />
             </span>
           )}
-          <span><FormattedMessage id={dateLabelId} /> {this.formatTime(jobMeta.date)}</span>
+          <span>
+            <span data-test-date-label><FormattedMessage id={dateLabelId} /></span> {this.formatTime(jobMeta.date)}
+          </span>
         </div>
 
         {jobMeta.showProgress && (
@@ -103,23 +111,27 @@ class Job extends Component {
             <div>
               <FormattedMessage id="ui-data-import.progressRunning" />
             </div>
-            <Progress
-              current={current}
-              total={total}
-            />
+            <div data-test-progress-bar>
+              <Progress
+                current={current}
+                total={total}
+              />
+            </div>
           </Fragment>
         )}
 
         {jobMeta.showPreview && (
           <div className={css.jobPreview}>
             <FormattedMessage id="ui-data-import.readyForPreview" />
-            <Button
-              buttonStyle="primary"
-              marginBottom0
-              onClick={this.props.handlePreview}
-            >
-              <FormattedMessage id="ui-data-import.previewNow" />
-            </Button>
+            <div data-test-preview-now-button>
+              <Button
+                buttonStyle="primary"
+                marginBottom0
+                onClick={handlePreview}
+              >
+                <FormattedMessage id="ui-data-import.previewNow" />
+              </Button>
+            </div>
           </div>
         )}
       </div>
