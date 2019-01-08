@@ -64,8 +64,8 @@ class UploadingJobsDisplay extends Component {
     const notAbleToLeave = Object.keys(this.props.files).some((file) => {
       return this.props.files[file].status.toLowerCase() === 'uploading';
     });
-    // prevent from leaving the page in case of download in progress
 
+    // prevent from leaving the page in case of download in progress
     if (notAbleToLeave) {
       window.onbeforeunload = () => {
         return false;
