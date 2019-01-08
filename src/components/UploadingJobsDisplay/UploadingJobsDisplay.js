@@ -48,8 +48,35 @@ class UploadingJobsDisplay extends Component {
     this.uploadJobs();
   }
 
+  componentDidUpdate() {
+    if (!this.props.files) {
+      return;
+    }
+    this.onLeaveHandler();
+  }
+
   componentWillUnmount() {
     this.cancelFileRemovals();
+    this.resetLeaveThePagePrevention();
+  }
+
+  onLeaveHandler() {
+    const notAbleToLeave = Object.keys(this.props.files).some((file) => {
+      return this.props.files[file].status.toLowerCase() === 'uploading';
+    });
+
+    // prevent from leaving the page in case of download in progress
+    if (notAbleToLeave) {
+      window.onbeforeunload = () => {
+        return false;
+      };
+    } else {
+      this.resetLeaveThePagePrevention();
+    }
+  }
+
+  resetLeaveThePagePrevention() {
+    window.onbeforeunload = null;
   }
 
   cancelFileRemovals() {
