@@ -29,6 +29,7 @@
   "uploadingPaneTitle": "Files",
   "uploadingMessage": "Uploading",
   "uploadFileError": "Error: file upload",
+  "fileDeleteError": "Error while deleting {name} file",
   "noUploadedFiles": "No files to show",
 
   "jobFileName": "File name",

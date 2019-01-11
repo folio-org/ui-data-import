@@ -17,19 +17,21 @@ class FileItem extends PureComponent {
     name: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired,
     keyName: PropTypes.string.isRequired,
+    status: PropTypes.string,
+    loading: PropTypes.bool,
+    uploadedValue: PropTypes.number,
+    uploadDate: PropTypes.instanceOf(Date),
     onDelete: PropTypes.func,
     onUndoDelete: PropTypes.func,
-    uploadedValue: PropTypes.number,
-    status: PropTypes.string,
-    uploadDate: PropTypes.instanceOf(Date),
   };
 
   static defaultProps = {
-    uploadedValue: 0,
     status: fileStatuses.UPLOADING,
+    uploadedValue: 0,
+    uploadDate: null,
+    loading: false,
     onDelete: noop,
     onUndoDelete: noop,
-    uploadDate: null,
   };
 
   progressPayload = {
@@ -38,11 +40,12 @@ class FileItem extends PureComponent {
 
   deleteFile = () => {
     const {
-      onDelete,
       keyName,
+      status,
+      onDelete,
     } = this.props;
 
-    onDelete(keyName);
+    onDelete(keyName, status);
   };
 
   undoDeleteFile = () => {
@@ -61,12 +64,14 @@ class FileItem extends PureComponent {
       name,
       uploadDate,
       uploadedValue,
+      loading,
     } = this.props;
 
     const meta = getFileItemMeta({
       status,
       name,
       uploadDate,
+      loading,
       deleteFile: this.deleteFile,
       undoDeleteFile: this.undoDeleteFile,
     });
