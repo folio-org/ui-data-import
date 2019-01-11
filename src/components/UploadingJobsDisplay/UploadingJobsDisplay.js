@@ -6,7 +6,10 @@ import {
   withStripes,
   stripesShape,
 } from '@folio/stripes/core';
-import { Layout } from '@folio/stripes/components';
+import {
+  Layout,
+  Callout,
+} from '@folio/stripes/components';
 
 import * as fileStatuses from './components/FileItem/fileItemStatuses';
 import EndOfList from '../EndOfList';
@@ -42,40 +45,37 @@ class UploadingJobsDisplay extends Component {
       uploadDefinitionId: file.uploadDefinitionId,
     });
     this.deleteFileTimeouts = {};
+
+    this.fileRemovalMap = {
+      [fileStatuses.UPLOADED]: this.handleDeleteSuccessfullyUploadedFile,
+      [fileStatuses.FAILED]: this.deleteFileAPI,
+      [fileStatuses.FAILED_DEFINITION]: this.handleDeleteErroredUploadDefinitionFile,
+    };
   }
 
   componentDidMount() {
     this.uploadJobs();
-  }
-
-  componentDidUpdate() {
-    if (!this.props.files) {
-      return;
-    }
-    this.onLeaveHandler();
+    this.setPageLeaveHandler();
   }
 
   componentWillUnmount() {
     this.cancelFileRemovals();
-    this.resetLeaveThePagePrevention();
+    this.resetPageLeaveHandler();
   }
 
-  onLeaveHandler() {
-    const notAbleToLeave = Object.keys(this.props.files).some((file) => {
-      return this.props.files[file].status.toLowerCase() === 'uploading';
-    });
-
+  setPageLeaveHandler() {
     // prevent from leaving the page in case of download in progress
-    if (notAbleToLeave) {
-      window.onbeforeunload = () => {
-        return false;
-      };
-    } else {
-      this.resetLeaveThePagePrevention();
-    }
+    window.onbeforeunload = () => {
+      const { files } = this.state;
+      const notAbleToLeave = Object.keys(files).some(key => {
+        return files[key].status === fileStatuses.UPLOADING;
+      });
+
+      return notAbleToLeave ? true : undefined;
+    };
   }
 
-  resetLeaveThePagePrevention() {
+  resetPageLeaveHandler() {
     window.onbeforeunload = null;
   }
 
@@ -159,6 +159,7 @@ class UploadingJobsDisplay extends Component {
       const keyNameValue = currentFile.name + currentFile.lastModified;
 
       currentFile.keyName = keyNameValue;
+      currentFile.loading = false;
       currentFile.status = fileStatuses.UPLOADING;
       currentFile.currentUploaded = 0;
       result[keyNameValue] = currentFile;
@@ -203,23 +204,58 @@ class UploadingJobsDisplay extends Component {
     this.updateFileState(file, { status: fileStatuses.UPLOADED });
   };
 
-  handleDeleteFile = key => {
+  handleDeleteFile = (key, status) => {
+    const deleteFile = this.fileRemovalMap[status];
+
+    if (deleteFile) {
+      deleteFile(key, status);
+    }
+  };
+
+  deleteFileAPI = (key, status) => {
+    const file = this.state.files[key];
+
+    this.updateFileState(file, { loading: true });
+
+    API.deleteFile(
+      this.deleteFileUrl(file),
+      this.createDeleteFileHeaders(),
+    )
+      .then(() => this.deleteFileFromState(key))
+      .catch(error => {
+        this.updateFileState(file, {
+          status,
+          loading: false,
+        });
+
+        const errorMessage = (
+          <FormattedMessage
+            id="ui-data-import.fileDeleteError"
+            values={{ name: <strong>{file.name}</strong> }}
+          />
+        );
+
+        this.callout.sendCallout({
+          type: 'error',
+          message: errorMessage,
+        });
+        console.error(error); // eslint-disable-line no-console
+      });
+  };
+
+  handleDeleteSuccessfullyUploadedFile = key => {
     const { timeoutBeforeFileDeletion } = this.props;
     const file = this.state.files[key];
 
     this.deleteFileTimeouts[key] = setTimeout(() => {
-      API.deleteFile(
-        this.deleteFileUrl(file),
-        this.createDeleteFileHeaders(),
-      )
-        .then(() => this.deleteFileFromState(key))
-        .catch(error => {
-          this.updateFileState(file, { status: fileStatuses.UPLOADED });
-          console.error(error); // eslint-disable-line no-console
-        });
+      this.deleteFileAPI(key);
     }, timeoutBeforeFileDeletion);
 
     this.updateFileState(file, { status: fileStatuses.DELETING });
+  };
+
+  handleDeleteErroredUploadDefinitionFile = key => {
+    this.deleteFileFromState(key);
   };
 
   deleteFileFromState = key => {
@@ -236,7 +272,7 @@ class UploadingJobsDisplay extends Component {
       const files = Object.keys(state.files).reduce((res, key) => {
         const file = state.files[key];
 
-        file.status = fileStatuses.FAILED;
+        file.status = fileStatuses.FAILED_DEFINITION;
 
         return {
           ...res,
@@ -247,6 +283,10 @@ class UploadingJobsDisplay extends Component {
       return { files };
     });
   }
+
+  createCalloutRef = ref => {
+    this.callout = ref;
+  };
 
   renderFiles() {
     const { files } = this.state;
@@ -268,16 +308,18 @@ class UploadingJobsDisplay extends Component {
           status,
           uploadDate,
           keyName,
+          loading,
         } = files[key];
 
         return (
           <FileItem
             key={keyName}
             keyName={keyName}
+            status={status}
             name={name}
             size={size}
             uploadedValue={uploadedValue}
-            status={status}
+            loading={loading}
             uploadDate={uploadDate}
             onDelete={this.handleDeleteFile}
             onUndoDelete={this.handleUndoDeleteFile}
@@ -291,6 +333,7 @@ class UploadingJobsDisplay extends Component {
       <div>
         {this.renderFiles()}
         <EndOfList />
+        <Callout ref={this.createCalloutRef} />
       </div>
     );
   }

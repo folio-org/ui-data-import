@@ -46,6 +46,7 @@
     "uploadingMessage": "Uploading",
     "delete": "Delete",
     "uploadFileError": "Error: file upload",
+    "fileDeleteError": "Error while deleting {name} file",
     "modal.header": "Inconsistent file extensions",
     "modal.message": "You cannot upload files with {highlightedText}. Please upload files with the same extension.",
     "modal.messageHighlightedText": "different extensions",

@@ -5,7 +5,10 @@
 * Hide popover when user clicks on the link button (UIDATIMP-71)
 * Write documentation for `FileUploader` component and some code refactor (UIDATIMP-65)
 * Create UI for styling for `Completed` file uploads (UIDATIMP-38)
+* Prevent user navigation when file upload is in progress (UIDATIMP-67)
 * Add document icon to upload file items (UIDATIMP-74)
+* Setup BigTest and write tests for Jobs pane (UIDATIMP-75)
+* Implement deleting failed files from server feature (UIDATIMP-72)
 
 ## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
 
