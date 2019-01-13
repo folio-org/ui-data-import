@@ -52,5 +52,6 @@
     "modal.cancel": "Cancel",
     "modal.actionButtonText": "Choose other files to upload",
     "deletedFile": "{name} has been deleted",
-    "noUploadedFiles": "No files to show"
+    "noUploadedFiles": "No files to show",
+    "fileDeleteError": "Error while deleting {name} file"
 }

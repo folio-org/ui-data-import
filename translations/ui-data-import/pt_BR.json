@@ -52,5 +52,6 @@
     "modal.cancel": "Cancelar",
     "modal.actionButtonText": "Escolha outros arquivos para upload",
     "deletedFile": "{name} foi excluído",
-    "noUploadedFiles": "Nenhum arquivo para mostrar"
+    "noUploadedFiles": "Nenhum arquivo para mostrar",
+    "fileDeleteError": "Erro ao excluir o arquivo {name}"
 }
