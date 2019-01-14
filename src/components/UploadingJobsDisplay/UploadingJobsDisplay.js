@@ -96,7 +96,7 @@ class UploadingJobsDisplay extends Component {
       const { fileDefinitions } = await API.createFileDefinition(
         files,
         this.fileDefinitionUrl,
-        this.createJobFilesDefinitionHeaders(),
+        this.createFilesDefinitionHeaders(),
       );
 
       const preparedFiles = API.prepareFilesToUpload(files, fileDefinitions);
@@ -105,7 +105,7 @@ class UploadingJobsDisplay extends Component {
         API.uploadFiles(
           this.state.files,
           this.fileUploaderUrl,
-          this.createUploadJobFilesHeaders(),
+          this.createUploadFilesHeaders(),
           this.onFileUploadProgress,
           this.onFileUploadSuccess,
           this.onFileUploadFail,
@@ -116,7 +116,7 @@ class UploadingJobsDisplay extends Component {
     }
   }
 
-  createJobFilesDefinitionHeaders() {
+  createFilesDefinitionHeaders() {
     const {
       token,
       tenant,
@@ -129,7 +129,7 @@ class UploadingJobsDisplay extends Component {
     };
   }
 
-  createUploadJobFilesHeaders() {
+  createUploadFilesHeaders() {
     const {
       token,
       tenant,
@@ -137,6 +137,7 @@ class UploadingJobsDisplay extends Component {
 
     return {
       'Content-Type': 'application/octet-stream',
+      'Transfer-Encoding': 'chunked',
       'X-Okapi-Tenant': tenant,
       'X-Okapi-Token': token,
     };

@@ -4,23 +4,6 @@ const onFileReadError = (error) => {
   console.error(error); // eslint-disable-line no-console
 };
 
-const fileToOctetStream = (file) => {
-  const fileReader = new FileReader();
-
-  return new Promise((resolve, reject) => {
-    fileReader.onerror = () => {
-      fileReader.abort();
-      reject(new Error(`Problem parsing ${file.name}`));
-    };
-
-    fileReader.onloadend = () => {
-      resolve(new Uint8Array(fileReader.result));
-    };
-
-    fileReader.readAsArrayBuffer(file);
-  });
-};
-
 export const prepareFilesToUpload = (files, fileDefinitions) => {
   const preparedFiles = Object.assign({}, files);
 
@@ -69,8 +52,6 @@ export const uploadFile = (file, url, headers, onprogress) => {
     );
 
     try {
-      const octet = await fileToOctetStream(file);
-
       xhr.upload.onprogress = onprogress.bind(null, file);
       xhr.onreadystatechange = () => {
         if (xhr.readyState !== 4) {
@@ -91,7 +72,7 @@ export const uploadFile = (file, url, headers, onprogress) => {
         }
       };
 
-      xhr.send(octet);
+      xhr.send(file);
     } catch (e) {
       onFileReadError(e);
     }
