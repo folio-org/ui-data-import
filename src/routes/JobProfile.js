@@ -29,7 +29,7 @@ class JobProfile extends Component {
           paneTitle={<FormattedMessage id="ui-data-import.uploadingPaneTitle" />}
         >
           <UploadingJobsDisplay
-            files={files}
+            filesData={files}
             timeoutBeforeFileDeletion={10000}
           />
         </Pane>

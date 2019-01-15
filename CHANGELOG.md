@@ -9,6 +9,7 @@
 * Add document icon to upload file items (UIDATIMP-74)
 * Setup BigTest and write tests for Jobs pane (UIDATIMP-75)
 * Implement deleting failed files from server feature (UIDATIMP-72)
+* Handle file name issue with file upload definition (UIDATIMP-97)
 
 ## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
 

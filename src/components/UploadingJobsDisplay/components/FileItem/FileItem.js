@@ -14,13 +14,13 @@ import css from './FileItem.css';
 
 class FileItem extends PureComponent {
   static propTypes = {
+    uiKey: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired,
-    keyName: PropTypes.string.isRequired,
     status: PropTypes.string,
-    loading: PropTypes.bool,
     uploadedValue: PropTypes.number,
     uploadDate: PropTypes.instanceOf(Date),
+    loading: PropTypes.bool,
     onDelete: PropTypes.func,
     onUndoDelete: PropTypes.func,
   };
@@ -40,31 +40,31 @@ class FileItem extends PureComponent {
 
   deleteFile = () => {
     const {
-      keyName,
+      uiKey,
       status,
       onDelete,
     } = this.props;
 
-    onDelete(keyName, status);
+    onDelete(uiKey, status);
   };
 
   undoDeleteFile = () => {
     const {
+      uiKey,
       onUndoDelete,
-      keyName,
     } = this.props;
 
-    onUndoDelete(keyName);
+    onUndoDelete(uiKey);
   };
 
   render() {
     const {
       status,
-      size,
       name,
-      uploadDate,
-      uploadedValue,
+      size,
       loading,
+      uploadedValue,
+      uploadDate,
     } = this.props;
 
     const meta = getFileItemMeta({
