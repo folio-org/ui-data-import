@@ -1,53 +1,46 @@
 import { addHeaders } from '../../../utils/api';
+import createUrl from '../../../utils/createUrl';
 
-const onFileReadError = (error) => {
+const onFileUploadError = error => {
   console.error(error); // eslint-disable-line no-console
 };
 
-const fileToOctetStream = (file) => {
-  const fileReader = new FileReader();
+const convertBytesToKilobytes = size => Math.ceil(size / 1024);
 
-  return new Promise((resolve, reject) => {
-    fileReader.onerror = () => {
-      fileReader.abort();
-      reject(new Error(`Problem parsing ${file.name}`));
-    };
-
-    fileReader.onloadend = () => {
-      resolve(new Uint8Array(fileReader.result));
-    };
-
-    fileReader.readAsArrayBuffer(file);
-  });
-};
-
-export const prepareFilesToUpload = (files, fileDefinitions) => {
-  const preparedFiles = Object.assign({}, files);
+export const updateFilesWithFileDefinitionMetadata = (files, fileDefinitions) => {
+  const updatedFiles = { ...files };
 
   fileDefinitions.forEach(definition => {
     const {
-      name,
+      uiKey,
       id,
       uploadDefinitionId,
     } = definition;
 
-    preparedFiles[name].id = id;
-    preparedFiles[name].uploadDefinitionId = uploadDefinitionId;
+    updatedFiles[uiKey] = {
+      ...updatedFiles[uiKey],
+      id,
+      uploadDefinitionId,
+    };
   });
 
-  return preparedFiles;
+  return updatedFiles;
 };
 
-const prepareFilesDefinition = (filesToUpload) => {
-  const resultFiles = Object
-    .keys(filesToUpload)
-    .reduce((files, currentKey) => files.concat({ name: currentKey }), []);
+const generateFileDefinitionsBody = files => {
+  const fileDefinitions = Object
+    .keys(files)
+    .reduce((res, key) => res.concat({
+      uiKey: key,
+      size: convertBytesToKilobytes(files[key].size),
+      name: files[key].name,
+    }), []);
 
-  return { fileDefinitions: resultFiles };
+  return { fileDefinitions };
 };
 
 export const createFileDefinition = (files, url, headers) => {
-  const filesDefinition = prepareFilesDefinition(files);
+  const filesDefinition = generateFileDefinitionsBody(files);
   const config = {
     method: 'POST',
     headers,
@@ -58,7 +51,7 @@ export const createFileDefinition = (files, url, headers) => {
     .then(res => res.json());
 };
 
-export const uploadFile = (file, url, headers, onprogress) => {
+export const uploadFile = (file, fileMeta, url, headers, onprogress) => {
   return new Promise(async (resolve, reject) => {
     let xhr = new XMLHttpRequest();
 
@@ -69,9 +62,7 @@ export const uploadFile = (file, url, headers, onprogress) => {
     );
 
     try {
-      const octet = await fileToOctetStream(file);
-
-      xhr.upload.onprogress = onprogress.bind(null, file);
+      xhr.upload.onprogress = onprogress.bind(null, fileMeta.key);
       xhr.onreadystatechange = () => {
         if (xhr.readyState !== 4) {
           return;
@@ -91,33 +82,38 @@ export const uploadFile = (file, url, headers, onprogress) => {
         }
       };
 
-      xhr.send(octet);
+      xhr.send(file);
     } catch (e) {
-      onFileReadError(e);
+      onFileUploadError(e);
     }
   });
 };
 
 export const uploadFiles = (
   files,
+  filesMeta,
   url,
   headers,
   onXHRprogress,
   onXHRload,
   onXHRerror,
 ) => {
-  const filesArr = Object.values(files);
   let promise = Promise.resolve();
 
-  filesArr.forEach(file => {
-    const queryParams = `?fileId=${file.id}&uploadDefinitionId=${file.uploadDefinitionId}`;
-    const urlWithQueryParams = url + queryParams;
+  Object
+    .keys(filesMeta)
+    .forEach((key, i) => {
+      const fileMeta = filesMeta[key];
+      const urlWithQueryParams = createUrl(url, {
+        fileId: fileMeta.id,
+        uploadDefinitionId: fileMeta.uploadDefinitionId,
+      });
 
-    promise = promise
-      .then(() => uploadFile(file, urlWithQueryParams, headers, onXHRprogress))
-      .then(onXHRload)
-      .catch(onXHRerror);
-  });
+      promise = promise
+        .then(() => uploadFile(files[i], fileMeta, urlWithQueryParams, headers, onXHRprogress))
+        .then(response => onXHRload(JSON.parse(response.body), fileMeta.key))
+        .catch((response) => onXHRerror(response, fileMeta.key));
+    });
 };
 
 const processDeleteResponse = response => {
