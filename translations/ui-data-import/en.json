@@ -28,7 +28,8 @@
   "uploadBtnText": "or choose files",
   "uploadingPaneTitle": "Files",
   "uploadingMessage": "Uploading",
-  "uploadFileError": "Error: file upload",
+  "upload.invalid": "Error: file upload",
+  "upload.fileSize.invalid": "Error: not enough space to store the file. Contact system administrator",
   "fileDeleteError": "Error while deleting {name} file",
   "noUploadedFiles": "No files to show",
 
