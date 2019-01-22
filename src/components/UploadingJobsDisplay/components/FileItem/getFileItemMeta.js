@@ -33,6 +33,7 @@ const getFileItemMeta = props => {
     status,
     name,
     uploadDate,
+    errorMsgTranslationID,
     loading,
     deleteFile,
     undoDeleteFile,
@@ -79,9 +80,13 @@ const getFileItemMeta = props => {
         <Fragment>
           <span className={css.fileItemHeaderName}>{name}</span>
           <span className={css.fileItemHeaderContent}>
-            <Icon icon="exclamation-circle">
-              <FormattedMessage id="ui-data-import.uploadFileError" />
-            </Icon>
+            <FormattedMessage id={`ui-data-import.${errorMsgTranslationID}`}>
+              {content => (
+                <Fragment>
+                  <Icon icon="exclamation-circle" /> {content}
+                </Fragment>
+              )}
+            </FormattedMessage>
           </span>
           {!loading
             ? (

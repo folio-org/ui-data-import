@@ -39,7 +39,7 @@ const generateFileDefinitionsBody = files => {
   return { fileDefinitions };
 };
 
-export const createFileDefinition = (files, url, headers) => {
+export const createFileDefinition = async (files, url, headers) => {
   const filesDefinition = generateFileDefinitionsBody(files);
   const config = {
     method: 'POST',
@@ -47,8 +47,20 @@ export const createFileDefinition = (files, url, headers) => {
     body: JSON.stringify(filesDefinition),
   };
 
-  return fetch(url, config)
-    .then(res => res.json());
+  try {
+    const response = await fetch(url, config);
+    const responseJSON = await response.json();
+    const { errors } = responseJSON;
+    const hasAPIErrors = errors && errors.length > 0;
+
+    if (hasAPIErrors) {
+      return [errors[0].message, responseJSON];
+    }
+
+    return [null, responseJSON];
+  } catch (err) {
+    return [err.message];
+  }
 };
 
 export const uploadFile = (file, fileMeta, url, headers, onprogress) => {

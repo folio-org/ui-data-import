@@ -30,6 +30,14 @@ class UploadingJobsDisplay extends Component {
     timeoutBeforeFileDeletion: DEFAULT_TIMEOUT_BEFORE_FILE_DELETION,
   };
 
+  static knownErrorsIDs = ['upload.fileSize.invalid'];
+
+  static getUploadFilesErrorMessageID(msg) {
+    const defaultErrorId = 'upload.invalid';
+
+    return UploadingJobsDisplay.knownErrorsIDs.includes(msg) ? msg : defaultErrorId;
+  }
+
   constructor(props) {
     super(props);
 
@@ -95,31 +103,33 @@ class UploadingJobsDisplay extends Component {
   }
 
   async uploadJobs() {
-    try {
-      // post file upload definition with all files metadata as
-      // individual file upload should have upload definition id in the URL
-      const { fileDefinitions } = await API.createFileDefinition(
-        this.state.files,
-        this.fileDefinitionUrl,
-        this.createFilesDefinitionHeaders(),
-      );
+    // post file upload definition with all files metadata as
+    // individual file upload should have upload definition id in the URL
+    const [errMsg, response] = await API.createFileDefinition(
+      this.state.files,
+      this.fileDefinitionUrl,
+      this.createFilesDefinitionHeaders(),
+    );
 
-      this.setState(state => {
-        return { files: API.updateFilesWithFileDefinitionMetadata(state.files, fileDefinitions) };
-      }, () => {
-        API.uploadFiles(
-          this.props.filesData,
-          this.state.files,
-          this.fileUploaderUrl,
-          this.createUploadFilesHeaders(),
-          this.onFileUploadProgress,
-          this.onFileUploadSuccess,
-          this.onFileUploadFail,
-        );
-      });
-    } catch (e) {
-      this.onAllFilesUploadFail();
+    if (errMsg) {
+      this.onAllFilesUploadFail(errMsg);
+
+      return;
     }
+
+    this.setState(state => {
+      return { files: API.updateFilesWithFileDefinitionMetadata(state.files, response.fileDefinitions) };
+    }, () => {
+      API.uploadFiles(
+        this.props.filesData,
+        this.state.files,
+        this.fileUploaderUrl,
+        this.createUploadFilesHeaders(),
+        this.onFileUploadProgress,
+        this.onFileUploadSuccess,
+        this.onFileUploadFail,
+      );
+    });
   }
 
   createFilesDefinitionHeaders() {
@@ -268,11 +278,11 @@ class UploadingJobsDisplay extends Component {
       });
   };
 
-  handleDeleteSuccessfullyUploadedFile = key => {
+  handleDeleteSuccessfullyUploadedFile = (key, status) => {
     const { timeoutBeforeFileDeletion } = this.props;
 
     this.deleteFileTimeouts[key] = setTimeout(() => {
-      this.deleteFileAPI(key);
+      this.deleteFileAPI(key, status);
     }, timeoutBeforeFileDeletion);
 
     this.updateFileState(key, { status: fileStatuses.DELETING });
@@ -289,13 +299,16 @@ class UploadingJobsDisplay extends Component {
     });
   };
 
-  onAllFilesUploadFail() {
+  onAllFilesUploadFail(errMsg) {
+    const errorMsgTranslationID = UploadingJobsDisplay.getUploadFilesErrorMessageID(errMsg);
+
     this.setState(state => {
       const files = Object.keys(state.files)
         .reduce((res, key) => {
           const updatedFile = {
             ...state.files[key],
             status: fileStatuses.FAILED_DEFINITION,
+            errorMsgTranslationID,
           };
 
           return {
@@ -329,6 +342,7 @@ class UploadingJobsDisplay extends Component {
           size,
           uploadedValue,
           uploadDate,
+          errorMsgTranslationID,
           loading,
         } = files[fileKey];
 
@@ -342,6 +356,7 @@ class UploadingJobsDisplay extends Component {
             loading={loading}
             uploadedValue={uploadedValue}
             uploadDate={uploadDate}
+            errorMsgTranslationID={errorMsgTranslationID}
             onDelete={this.handleDeleteFile}
             onUndoDelete={this.handleUndoDeleteFile}
           />
