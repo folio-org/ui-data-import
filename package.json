@@ -33,6 +33,7 @@
     "chai": "^4.2.0",
     "eslint": "^5.5.0",
     "mocha": "^5.2.0",
+    "query-string": "^5.0.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "sinon": "^7.2.2"
@@ -105,7 +106,8 @@
         "permissionName": "settings.data-import.enabled",
         "displayName": "Settings (data-import): display list of settings pages",
         "subPermissions": [
-          "settings.enabled"
+          "settings.enabled",
+          "change-manager.fileExtension.get"
         ],
         "visible": true
       }

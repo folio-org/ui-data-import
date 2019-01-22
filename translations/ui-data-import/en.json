@@ -49,6 +49,11 @@
   "settings.fieldMappingProfiles": "Field mapping profiles",
   "settings.other": "Other",
   "settings.fileExtensions": "File extensions",
+  "settings.fileExtension": "Extension",
+  "settings.importBlocked": "Block import",
+  "settings.dataTypes": "Data type(s)",
+  "settings.updated": "Updated",
+  "settings.updatedBy": "Updated by",
 
   "modal.header": "Inconsistent file extensions",
   "modal.message": "You cannot upload files with {highlightedText}. Please upload files with the same extension.",

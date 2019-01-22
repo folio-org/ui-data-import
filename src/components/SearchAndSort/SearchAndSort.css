@@ -1,0 +1,9 @@
+@import '@folio/stripes-components/lib/variables';
+
+.resetButtonWrap {
+  margin-left: -3px;
+}
+
+.searchField {
+  margin-bottom: calc(var(--control-margin-bottom) / 2);
+}
