@@ -53,5 +53,7 @@
     "modal.actionButtonText": "Escolha outros arquivos para upload",
     "deletedFile": "{name} foi excluído",
     "noUploadedFiles": "Nenhum arquivo para mostrar",
-    "fileDeleteError": "Erro ao excluir o arquivo {name}"
+    "fileDeleteError": "Erro ao excluir o arquivo {name}",
+    "upload.invalid": "Erro: upload de arquivo",
+    "upload.fileSize.invalid": "Erro: não há espaço suficiente para armazenar o arquivo. Entre em contato com o administrador do sistema"
 }

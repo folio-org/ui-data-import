@@ -45,8 +45,7 @@
     "uploadingPaneTitle": "Files",
     "uploadingMessage": "Uploading",
     "delete": "Delete",
-    "upload.invalid": "Error: file upload",
-    "upload.fileSize.invalid": "Error: not enough space to store the file. Contact system administrator",
+    "uploadFileError": "Error: file upload",
     "modal.header": "Inconsistent file extensions",
     "modal.message": "You cannot upload files with {highlightedText}. Please upload files with the same extension.",
     "modal.messageHighlightedText": "different extensions",
@@ -54,5 +53,7 @@
     "modal.actionButtonText": "Choose other files to upload",
     "deletedFile": "{name} has been deleted",
     "noUploadedFiles": "No files to show",
-    "fileDeleteError": "Error while deleting {name} file"
+    "fileDeleteError": "Error while deleting {name} file",
+    "upload.invalid": "Error: file upload",
+    "upload.fileSize.invalid": "Error: not enough space to store the file. Contact system administrator"
 }
