@@ -53,5 +53,7 @@
     "modal.actionButtonText": "选择其他文件上传",
     "deletedFile": "{name}已被删除",
     "noUploadedFiles": "没有要显示的文件",
-    "fileDeleteError": "删除{name}文件时出错"
+    "fileDeleteError": "删除{name}文件时出错",
+    "upload.invalid": "Error: file upload",
+    "upload.fileSize.invalid": "Error: not enough space to store the file. Contact system administrator"
 }
