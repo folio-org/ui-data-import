@@ -63,6 +63,7 @@ class JobLogs extends Component {
 
     return (
       <MultiColumnList
+        totalCount={contentData.length}
         contentData={contentData}
         columnMapping={this.columnMapping}
         visibleColumns={this.visibleColumns}

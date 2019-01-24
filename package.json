@@ -56,6 +56,7 @@
     "type": "app",
     "displayName": "ui-data-import.meta.title",
     "route": "/data-import",
+    "queryResource": "query",
     "hasSettings": true,
     "icons": [
       {

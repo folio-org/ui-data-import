@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Route from 'react-router-dom/Route';
+import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import queryString from 'query-string';
@@ -8,6 +8,7 @@ import {
   debounce,
   get,
   upperFirst,
+  noop,
 } from 'lodash';
 
 import {
@@ -20,15 +21,11 @@ import {
   SearchField,
   SRStatus,
 } from '@folio/stripes/components';
-import { withModule } from '@folio/stripes-core/src/components/Modules';
-
 import {
   withStripes,
-  IfPermission,
+  stripesShape,
 } from '@folio/stripes-core';
-
 import {
-  Tags,
   mapNsKeys,
   getNsKey,
   makeConnectedSource,
@@ -38,50 +35,20 @@ import css from './SearchAndSort.css';
 
 class SearchAndSort extends Component {
   static propTypes = {
-    actionMenu: PropTypes.func, // parameter properties provided by caller
-    apolloQuery: PropTypes.object, // machine-readable
-    apolloResource: PropTypes.string,
-    browseOnly: PropTypes.bool,
-    columnMapping: PropTypes.object,
-    columnWidths: PropTypes.object,
-    detailProps: PropTypes.object,
-    disableRecordCreation: PropTypes.bool,
-    editRecordComponent: PropTypes.func,
-    finishedResourceName: PropTypes.string,
-    getHelperResourcePath: PropTypes.func,
+    stripes: stripesShape.isRequired,
+    objectName: PropTypes.string.isRequired,
+    resultsLabel: PropTypes.node.isRequired,
     initialResultCount: PropTypes.number.isRequired,
+    resultCountIncrement: PropTypes.number.isRequired, // collection to be exploded and passed on to the detail view
+    searchLabelKey: PropTypes.string.isRequired,
+    resultCountMessageKey: PropTypes.string.isRequired,
     location: PropTypes.shape({ // provided by withRouter
       pathname: PropTypes.string.isRequired,
       search: PropTypes.string.isRequired,
     }).isRequired,
-    massageNewRecord: PropTypes.func,
     match: PropTypes.shape({ // provided by withRouter
       path: PropTypes.string.isRequired,
     }).isRequired,
-    maxSortKeys: PropTypes.number,
-    module: PropTypes.shape({ // values specified by the ModulesContext
-      displayName: PropTypes.node, // human-readable
-    }),
-    newRecordInitialValues: PropTypes.object,
-    newRecordPerms: PropTypes.string,
-    notLoadedMessage: PropTypes.string,
-    nsParams: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-    ]),
-    objectName: PropTypes.string.isRequired,
-    onChangeIndex: PropTypes.func,
-    onComponentWillUnmount: PropTypes.func,
-    onCreate: PropTypes.func,
-    onSelectRow: PropTypes.func,
-    packageInfo: PropTypes.shape({ // values pulled from the provider's package.json config object
-      initialFilters: PropTypes.string, // default filters
-      moduleName: PropTypes.string, // machine-readable, for HTML ids and translation keys
-      stripes: PropTypes.shape({
-        route: PropTypes.string, // base route; used to construct URLs
-      }).isRequired,
-    }),
-    parentData: PropTypes.object,
     parentMutator: PropTypes.shape({
       query: PropTypes.shape({
         replace: PropTypes.func.isRequired,
@@ -90,7 +57,7 @@ class SearchAndSort extends Component {
       resultCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }).isRequired,
-    }).isRequired, // only needed when GraphQL is used
+    }).isRequired,
     parentResources: PropTypes.shape({
       query: PropTypes.shape({
         filters: PropTypes.string,
@@ -115,61 +82,56 @@ class SearchAndSort extends Component {
       }),
       resultCount: PropTypes.number,
     }).isRequired,
-    path: PropTypes.string,
-    queryFunction: PropTypes.func,
-    renderFilters: PropTypes.func,
-    resultCountIncrement: PropTypes.number.isRequired, // collection to be exploded and passed on to the detail view
-    resultCountMessageKey: PropTypes.string, // URL path to parse for detail views
-    resultsFormatter: PropTypes.shape({}),
-    searchableIndexes: PropTypes.arrayOf(
+    ViewRecordComponent: PropTypes.func.isRequired,
+    EditRecordComponent: PropTypes.func,
+    actionMenu: PropTypes.func, // parameter properties provided by caller
+    detailProps: PropTypes.object,
+    finishedResourceName: PropTypes.string,
+    massageNewRecord: PropTypes.func,
+    maxSortKeys: PropTypes.number,
+    newRecordInitialValues: PropTypes.object,
+    nsParams: PropTypes.oneOfType([
+      PropTypes.string,
       PropTypes.object,
-    ),
-    searchableIndexesPlaceholder: PropTypes.string,
+    ]),
+    onChangeIndex: PropTypes.func,
+    onComponentWillUnmount: PropTypes.func,
+    onCreate: PropTypes.func,
+    onSelectRow: PropTypes.func,
+    path: PropTypes.string,
+    searchableIndexes: PropTypes.arrayOf(PropTypes.object),
     selectedIndex: PropTypes.string, // whether to auto-show the details record when a search returns a single row
     showSingleResult: PropTypes.bool,
-    stripes: PropTypes.shape({
-      connect: PropTypes.func,
-      hasPerm: PropTypes.func.isRequired,
-    }),
-    viewRecordComponent: PropTypes.func.isRequired,
-    viewRecordPerms: PropTypes.string.isRequired,
-    visibleColumns: PropTypes.arrayOf(
-      PropTypes.string,
-    ),
+    notLoadedMessage: PropTypes.string,
+    visibleColumns: PropTypes.arrayOf(PropTypes.string),
+    columnMapping: PropTypes.object,
+    columnWidths: PropTypes.object,
+    resultsFormatter: PropTypes.shape({}),
   };
 
   static defaultProps = {
     showSingleResult: false,
     maxSortKeys: 2,
+    onComponentWillUnmount: noop,
+    onChangeIndex: noop,
+    massageNewRecord: noop,
   };
 
   constructor(props) {
     super(props);
 
-    let initiallySelected = {};
-    const match = this.props.location.pathname.match('/[^/]*/view/');
+    const {
+      stripes,
+      ViewRecordComponent,
+      match: { path: routePath },
+    } = this.props;
 
-    if (match && match.index === 0) {
-      const id = /view\/(.*)$/.exec(this.props.location.pathname)[1];
-
-      initiallySelected = { id };
-    }
-
-    this.state = { selectedItem: initiallySelected };
-
-    this.connectedViewRecord = props.stripes.connect(props.viewRecordComponent);
-
-    this.helperApps = { tags: props.stripes.connect(Tags) };
+    this.state = { selectedItem: this.initiallySelectedRecord };
 
     this.SRStatus = null;
     this.lastNonNullReaultCount = undefined;
-
-    const initialPath = (get(props.packageInfo, ['stripes', 'home']) || get(props.packageInfo, ['stripes', 'route']));
-    const initialSearch = initialPath.indexOf('?') === -1
-      ? initialPath
-      : initialPath.substr(initialPath.indexOf('?') + 1);
-
-    this.initialQuery = queryString.parse(initialSearch);
+    this.initialQuery = queryString.parse(routePath);
+    this.connectedViewRecord = stripes.connect(ViewRecordComponent);
   }
 
   componentWillReceiveProps(nextProps) {  // eslint-disable-line react/no-deprecated
@@ -180,20 +142,18 @@ class SearchAndSort extends Component {
     const oldState = makeConnectedSource(this.props, logger);
     const newState = makeConnectedSource(nextProps, logger);
 
-    {
-      // If the nominated mutation has finished, select the newly created record
-      const oldStateForFinalSource = makeConnectedSource(this.props, logger, finishedResourceName);
-      const newStateForFinalSource = makeConnectedSource(nextProps, logger, finishedResourceName);
+    // If the nominated mutation has finished, select the newly created record
+    const oldStateForFinalSource = makeConnectedSource(this.props, logger, finishedResourceName);
+    const newStateForFinalSource = makeConnectedSource(nextProps, logger, finishedResourceName);
 
-      if (oldStateForFinalSource.records()) {
-        const finishedResourceNextSM = newStateForFinalSource.successfulMutations();
+    if (oldStateForFinalSource.records()) {
+      const finishedResourceNextSM = newStateForFinalSource.successfulMutations();
 
-        if (finishedResourceNextSM.length > oldStateForFinalSource.successfulMutations().length) {
-          const sm = newState.successfulMutations();
+      if (finishedResourceNextSM.length > oldStateForFinalSource.successfulMutations().length) {
+        const sm = newState.successfulMutations();
 
-          if (sm[0]) {
-            this.onSelectRow(undefined, { id: sm[0].record.id });
-          }
+        if (sm[0]) {
+          this.onSelectRow(undefined, { id: sm[0].record.id });
         }
       }
     }
@@ -204,7 +164,10 @@ class SearchAndSort extends Component {
       const count = newState.totalCount();
 
       this.SRStatus.sendMessage(
-        <FormattedMessage id="stripes-smart-components.searchReturnedResults" values={{ count }} />
+        <FormattedMessage
+          id="stripes-smart-components.searchReturnedResults"
+          values={{ count }}
+        />
       );
     }
 
@@ -221,51 +184,55 @@ class SearchAndSort extends Component {
   }
 
   componentWillUnmount() {
-    this.props.parentMutator.query.replace(this.initialQuery);
+    const {
+      parentMutator: { query },
+      onComponentWillUnmount,
+    } = this.props;
 
-    if (this.props.onComponentWillUnmount) {
-      this.props.onComponentWillUnmount(this.props);
-    }
+    query.replace(this.initialQuery);
+    onComponentWillUnmount(this.props);
   }
 
-  craftLayerUrl = (mode) => {
-    const {
-      pathname,
-      search,
-    } = this.props.location;
+  get initiallySelectedRecord() {
+    const { location: { pathname } } = this.props;
 
-    const url = `${pathname}${search}`;
+    const match = pathname.match(/^\/.*\/view\/(.*)$/);
+    const recordId = match && match[1];
 
-    return `${url}${url.includes('?') ? '&' : '?'}layer=${mode}`;
-  };
+    return { id: recordId };
+  }
 
-  onChangeSearch = (e) => {
+  onChangeSearch = e => {
     const query = e.target.value;
 
     this.setState({ locallyChangedSearchTerm: query });
   };
 
-  onSubmitSearch = (e) => {
+  onSubmitSearch = e => {
     e.preventDefault();
     e.stopPropagation();
 
-    this.performSearch(this.state.locallyChangedSearchTerm);
+    const { locallyChangedSearchTerm } = this.state;
+
+    this.performSearch(locallyChangedSearchTerm);
   };
+
+  performSearch = debounce((query) => {
+    const {
+      parentMutator: { resultCount },
+      initialResultCount,
+    } = this.props;
+
+    resultCount.replace(initialResultCount);
+    this.transitionToParams({ query });
+  }, 350);
 
   onClearSearchQuery = () => {
     this.setState({ locallyChangedSearchTerm: '' });
     this.transitionToParams({ query: '' });
   };
 
-  onCloseEdit = (e) => {
-    if (e) {
-      e.preventDefault();
-    }
-
-    this.transitionToParams({ layer: null });
-  };
-
-  onEdit = (e) => {
+  onEditRecord = e => {
     if (e) {
       e.preventDefault();
     }
@@ -273,14 +240,12 @@ class SearchAndSort extends Component {
     this.transitionToParams({ layer: 'edit' });
   };
 
-  transitionToParams = (values) => {
-    const {
-      nsParams,
-      parentMutator,
-    } = this.props;
-    const nsValues = mapNsKeys(values, nsParams);
+  onCloseEditRecord = e => {
+    if (e) {
+      e.preventDefault();
+    }
 
-    parentMutator.query.update(nsValues);
+    this.transitionToParams({ layer: null });
   };
 
   onNeedMore = () => {
@@ -288,6 +253,7 @@ class SearchAndSort extends Component {
       stripes: { logger },
       resultCountIncrement,
     } = this.props;
+
     const source = makeConnectedSource(this.props, logger);
 
     source.fetchMore(resultCountIncrement);
@@ -296,7 +262,7 @@ class SearchAndSort extends Component {
   onSelectRow = (e, meta) => {
     const {
       onSelectRow,
-      packageInfo,
+      match: { path },
     } = this.props;
 
     if (onSelectRow) {
@@ -308,37 +274,30 @@ class SearchAndSort extends Component {
     }
 
     this.setState({ selectedItem: meta });
-    this.transitionToParams({ _path: `${packageInfo.stripes.route}/view/${meta.id}` });
+    this.transitionToParams({ _path: `${path}/view/${meta.id}` });
   };
 
   onSort = (e, meta) => {
+    const { maxSortKeys } = this.props;
+
     const newOrder = meta.alias;
     const oldOrder = this.queryParam('sort');
-
     const orders = oldOrder ? oldOrder.split(',') : [];
+    const mainSort = orders[0];
+    const isSameColumn = mainSort && newOrder === mainSort.replace(/^-/, '');
 
-    if (orders[0] && newOrder === orders[0].replace(/^-/, '')) {
-      orders[0] = `-${orders[0]}`.replace(/^--/, '');
+    if (isSameColumn) {
+      orders[0] = `-${mainSort}`.replace(/^--/, '');
     } else {
       orders.unshift(newOrder);
     }
 
-    const { maxSortKeys } = this.props;
     const sortOrder = orders.slice(0, maxSortKeys).join(',');
 
     this.transitionToParams({ sort: sortOrder });
   };
 
-  getRowURL(id) {
-    const {
-      match: { path },
-      location: { search },
-    } = this.props;
-
-    return `${path}/view/${id}${search}`;
-  }
-
-  addNewRecord = (e) => {
+  addNewRecord = e => {
     if (e) {
       e.preventDefault();
     }
@@ -346,7 +305,32 @@ class SearchAndSort extends Component {
     this.transitionToParams({ layer: 'create' });
   };
 
-  anchoredRowFormatter = (row) => {
+  createNewRecord = record => {
+    const {
+      massageNewRecord,
+      onCreate,
+    } = this.props;
+
+    massageNewRecord(record);
+    onCreate(record);
+  };
+
+  closeNewRecord = e => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    this.transitionToParams({ layer: null });
+  };
+
+  collapseRecordDetails = () => {
+    const { match: { path } } = this.props;
+
+    this.setState({ selectedItem: {} });
+    this.transitionToParams({ _path: `${path}/view` });
+  };
+
+  anchoredRowFormatter = row => {
     const {
       rowIndex,
       rowClass,
@@ -373,159 +357,101 @@ class SearchAndSort extends Component {
     );
   };
 
-  closeNewRecord = (e) => {
-    if (e) {
-      e.preventDefault();
-    }
-
-    this.transitionToParams({ layer: null });
-  };
-
-  collapseDetails = () => {
-    const { route } = this.props.packageInfo.stripes;
-
-    this.setState({ selectedItem: {} });
-    this.transitionToParams({ _path: `${route}/view` });
-  };
-
-  createRecord(record) {
+  transitionToParams(values) {
     const {
-      massageNewRecord,
-      onCreate,
+      nsParams,
+      parentMutator: { query },
     } = this.props;
 
-    if (massageNewRecord) {
-      massageNewRecord(record);
-    }
+    const nsValues = mapNsKeys(values, nsParams);
 
-    onCreate(record);
+    query.update(nsValues);
   }
-
-  performSearch = debounce((query) => {
-    const {
-      parentMutator: { resultCount },
-      initialResultCount,
-    } = this.props;
-
-    resultCount.replace(initialResultCount);
-    this.transitionToParams({ query });
-  }, 350);
 
   queryParam(name) {
     const {
       parentResources: { query },
       nsParams,
     } = this.props;
+
     const nsKey = getNsKey(name, nsParams);
 
     return get(query, nsKey);
   }
 
-  toggleHelperApp = (curHelper) => {
-    const prevHelper = this.queryParam('helper');
-    const helper = prevHelper === curHelper ? null : curHelper;
+  craftLayerURL(mode) {
+    const {
+      pathname,
+      search,
+    } = this.props.location;
 
-    this.transitionToParams({ helper });
-  };
+    const url = `${pathname}${search}`;
 
-  toggleTags = () => this.toggleHelperApp('tags');
+    return `${url}${url.includes('?') ? '&' : '?'}layer=${mode}`;
+  }
 
-  getModuleName() {
-    const { packageInfo: { name } } = this.props;
+  getRowURL(id) {
+    const {
+      match: { path },
+      location: { search },
+    } = this.props;
 
-    return name.replace(/.*\//, '');
+    return `${path}/view/${id}${search}`;
   }
 
   renderDetailsPane(source) {
     const {
       detailProps,
-      browseOnly,
       parentMutator,
       parentResources,
       stripes,
-      viewRecordPerms,
       match,
-      path,
     } = this.props;
 
-    if (browseOnly) {
-      return null;
-    }
-
-    if (stripes.hasPerm(viewRecordPerms)) {
-      return (
-        <Route
-          path={path || `${match.path}/view/:id`}
-          render={
-            props => (
-              <this.connectedViewRecord
-                stripes={stripes}
-                paneWidth="44%"
-                parentResources={parentResources}
-                connectedSource={source}
-                parentMutator={parentMutator}
-                tagsToggle={this.toggleTags}
-                onClose={this.collapseDetails}
-                onEdit={this.onEdit}
-                editLink={this.craftLayerUrl('edit')}
-                onCloseEdit={this.onCloseEdit}
-                {...props}
-                {...detailProps}
-              />
-            )
-          }
-        />
-      );
-    }
-
     return (
-      <div
-        style={{
-          position: 'absolute',
-          right: '1rem',
-          bottom: '1rem',
-          width: '34%',
-          zIndex: '9999',
-          padding: '1rem',
-          backgroundColor: '#fff',
-        }}
-      >
-        <h2><FormattedMessage id="stripes-smart-components.permissionError" /></h2>
-        <p><FormattedMessage id="stripes-smart-components.permissionsDoNotAllowAccess" /></p>
-      </div>
+      <Route
+        path={`${match.path}/view/:id`}
+        render={
+          props => (
+            <this.connectedViewRecord
+              stripes={stripes}
+              paneWidth="44%"
+              parentResources={parentResources}
+              connectedSource={source}
+              parentMutator={parentMutator}
+              editLink={this.craftLayerURL('edit')}
+              onClose={this.collapseRecordDetails}
+              onEdit={this.onEditRecord}
+              onCloseEdit={this.onCloseEditRecord}
+              {...props}
+              {...detailProps}
+            />
+          )
+        }
+      />
     );
   }
 
   renderNewRecordBtn() {
-    const {
-      newRecordPerms,
-      disableRecordCreation,
-      objectName,
-    } = this.props;
-
-    if (!disableRecordCreation || !newRecordPerms) {
-      return null;
-    }
+    const { objectName } = this.props;
 
     return (
-      <IfPermission perm={newRecordPerms}>
-        <PaneMenu>
-          <FormattedMessage id="stripes-smart-components.addNew">
-            {ariaLabel => (
-              <Button
-                id={`clickable-new${objectName}`}
-                href={this.craftLayerUrl('create')}
-                aria-label={ariaLabel}
-                buttonStyle="primary"
-                marginBottom0
-                onClick={this.addNewRecord}
-              >
-                <FormattedMessage id="stripes-smart-components.new" />
-              </Button>
-            )}
-          </FormattedMessage>
-        </PaneMenu>
-      </IfPermission>
+      <PaneMenu>
+        <FormattedMessage id="stripes-smart-components.addNew">
+          {ariaLabel => (
+            <Button
+              id={`clickable-new${objectName}`}
+              href={this.craftLayerURL('create')}
+              aria-label={ariaLabel}
+              buttonStyle="primary"
+              marginBottom0
+              onClick={this.addNewRecord}
+            >
+              <FormattedMessage id="stripes-smart-components.new" />
+            </Button>
+          )}
+        </FormattedMessage>
+      </PaneMenu>
     );
   }
 
@@ -536,6 +462,7 @@ class SearchAndSort extends Component {
       onChangeIndex,
       searchableIndexes,
       selectedIndex,
+      searchLabelKey,
     } = this.props;
 
     const query = this.queryParam('query') || '';
@@ -543,24 +470,28 @@ class SearchAndSort extends Component {
 
     return (
       <form onSubmit={this.onSubmitSearch}>
-        <FormattedMessage
-          id="stripes-smart-components.searchFieldLabel"
-          values={{ moduleName: module.displayName }}
-        >
-          {ariaLabel => (
-            <SearchField
-              ariaLabel={ariaLabel}
-              id={`input-${objectName}-search`}
-              className={css.searchField}
-              searchableIndexes={searchableIndexes}
-              selectedIndex={selectedIndex}
-              value={searchTerm}
-              loading={source.pending()}
-              marginBottom0
-              onChangeIndex={onChangeIndex}
-              onChange={this.onChangeSearch}
-              onClear={this.onClearSearchQuery}
-            />
+        <FormattedMessage id={searchLabelKey}>
+          {searchDetailsLabel => (
+            <FormattedMessage
+              id="stripes-smart-components.searchFieldLabel"
+              values={{ moduleName: searchDetailsLabel }}
+            >
+              {ariaLabel => (
+                <SearchField
+                  id={`input-${objectName}-search`}
+                  className={css.searchField}
+                  ariaLabel={ariaLabel}
+                  marginBottom0
+                  searchableIndexes={searchableIndexes}
+                  selectedIndex={selectedIndex}
+                  value={searchTerm}
+                  loading={source.pending()}
+                  onChangeIndex={onChangeIndex}
+                  onChange={this.onChangeSearch}
+                  onClear={this.onClearSearchQuery}
+                />
+              )}
+            </FormattedMessage>
           )}
         </FormattedMessage>
       </form>
@@ -577,11 +508,14 @@ class SearchAndSort extends Component {
       objectName,
     } = this.props;
 
+    const { selectedItem } = this.state;
+
     const records = source.records();
     const count = source.totalCount();
     const objectNameUC = upperFirst(objectName);
-    const sortOrder = this.queryParam('sort') || '';
-    const moduleName = this.getModuleName();
+    const sortOrderQuery = this.queryParam('sort') || '';
+    const sortDirection = sortOrderQuery.startsWith('-') ? 'descending' : 'ascending';
+    const sortOrder = sortOrderQuery.replace(/^-/, '').replace(/,.*/, '');
 
     return (
       <FormattedMessage
@@ -590,23 +524,21 @@ class SearchAndSort extends Component {
       >
         {ariaLabel => (
           <MultiColumnList
-            id={`list-${moduleName}`}
+            ariaLabel={ariaLabel}
             totalCount={count}
             contentData={records}
-            selectedRow={this.state.selectedItem}
+            selectedRow={selectedItem}
             formatter={resultsFormatter}
             visibleColumns={visibleColumns}
-            sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
-            sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
+            sortOrder={sortOrder}
+            sortDirection={sortDirection}
             isEmptyMessage={notLoadedMessage}
             columnWidths={columnWidths}
             columnMapping={columnMapping}
             loading={source.pending()}
             autosize
             virtualize
-            ariaLabel={ariaLabel}
             rowFormatter={this.anchoredRowFormatter}
-            containerRef={(ref) => { this.resultsList = ref; }}
             onRowClick={this.onSelectRow}
             onHeaderClick={this.onSort}
             onNeedMoreData={this.onNeedMore}
@@ -616,75 +548,36 @@ class SearchAndSort extends Component {
     );
   }
 
-  renderHelperApp() {
-    const {
-      stripes,
-      match: { path },
-      getHelperResourcePath,
-    } = this.props;
-
-    const moduleName = this.getModuleName();
-    const helper = this.queryParam('helper');
-    const HelperAppComponent = this.helperApps[helper];
-
-    if (!helper) {
-      return null;
-    }
-
-    return (
-      <Route
-        path={`${path}/view/:id`}
-        render={props => {
-          const { match: { params } } = props;
-          const link = getHelperResourcePath
-            ? getHelperResourcePath(helper, params.id)
-            : `${moduleName}/${params.id}`;
-
-          return (
-            <HelperAppComponent
-              stripes={stripes}
-              link={link}
-              onToggle={() => this.toggleHelperApp(helper)}
-              {...props}
-            />
-          );
-        }}
-      />
-    );
-  }
-
   renderCreateRecordLayer(source) {
     const {
-      browserOnly,
       parentResources,
       objectName,
       detailProps,
-      editRecordComponent,
+      EditRecordComponent,
       newRecordInitialValues,
       stripes,
       parentMutator,
       location: { search },
     } = this.props;
 
-    const EditRecordComponent = editRecordComponent;
-
-    if (browserOnly || !editRecordComponent) {
+    if (!EditRecordComponent) {
       return null;
     }
 
     const urlQuery = queryString.parse(search || '');
+    const isLayerOpen = urlQuery.layer ? urlQuery.layer === 'create' : false;
 
     return (
-      <Layer isOpen={urlQuery.layer ? urlQuery.layer === 'create' : false}>
+      <Layer isOpen={isLayerOpen}>
         <EditRecordComponent
-          stripes={stripes}
           id={`${objectName}form-add${objectName}`}
+          stripes={stripes}
           initialValues={newRecordInitialValues}
-          onSubmit={record => this.createRecord(record)}
-          onCancel={this.closeNewRecord}
           parentResources={parentResources}
           connectedSource={source}
           parentMutator={parentMutator}
+          onSubmit={this.createNewRecord}
+          onCancel={this.closeNewRecord}
           {...detailProps}
         />
       </Layer>
@@ -695,47 +588,46 @@ class SearchAndSort extends Component {
     const {
       stripes,
       actionMenu,
-      module,
       resultCountMessageKey,
+      resultsLabel,
     } = this.props;
 
     const source = makeConnectedSource(this.props, stripes.logger);
-    const moduleName = this.getModuleName();
-    const appIcon = { app: moduleName };
     const count = source.totalCount();
-    const messageKey = resultCountMessageKey || 'stripes-smart-components.searchResultsCountHeader';
-    const paneSub = !source.loaded()
-      ? <FormattedMessage id="stripes-smart-components.searchCriteria" />
-      : <FormattedMessage id={messageKey} values={{ count }} />;
+    const paneSubTranslationId = source.loaded()
+      ? resultCountMessageKey
+      : 'stripes-smart-components.searchCriteria';
+    const paneSub = (
+      <FormattedMessage
+        id={paneSubTranslationId}
+        values={{ count }}
+      />
+    );
 
     return (
       <Paneset>
-        <SRStatus ref={(ref) => { this.SRStatus = ref; }} />
+        <SRStatus ref={ref => { this.SRStatus = ref; }} />
 
         <Pane
-          padContent={false}
           id="pane-results"
           defaultWidth="fill"
+          noOverflow
+          padContent={false}
           actionMenu={actionMenu}
-          appIcon={appIcon}
-          paneTitle={module.displayName}
+          paneTitle={resultsLabel}
           paneSub={paneSub}
           lastMenu={this.renderNewRecordBtn()}
-          noOverflow
         >
           {this.renderSearch(source)}
           {this.renderSearchResults(source)}
         </Pane>
         {this.renderDetailsPane(source)}
         {this.renderCreateRecordLayer(source)}
-        {this.renderHelperApp(source)}
       </Paneset>
     );
   }
 }
 
 export default withRouter(
-  withModule(
-    props => props.packageInfo && props.packageInfo.name
-  )(withStripes(SearchAndSort))
+  withStripes(SearchAndSort)
 );
