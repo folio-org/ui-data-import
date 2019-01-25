@@ -53,5 +53,15 @@
     "modal.actionButtonText": "选择其他文件上传",
     "deletedFile": "{name}已被删除",
     "noUploadedFiles": "没有要显示的文件",
-    "fileDeleteError": "删除{name}文件时出错"
+    "fileDeleteError": "删除{name}文件时出错",
+    "upload.invalid": "Error: file upload",
+    "upload.fileSize.invalid": "Error: not enough space to store the file. Contact system administrator",
+    "settings.fileExtensionsCount": "{count, number} {count, plural, one {file extension} other {file extensions}}",
+    "settings.fileExtensionBlockImport": "Block import",
+    "settings.fileExtensionAllowImport": "Allow import",
+    "settings.fileExtension": "Extension",
+    "settings.importBlocked": "Block import",
+    "settings.dataTypes": "Data type(s)",
+    "settings.updated": "Updated",
+    "settings.updatedBy": "Updated by"
 }

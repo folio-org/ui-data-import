@@ -53,5 +53,15 @@
     "modal.actionButtonText": "Choose other files to upload",
     "deletedFile": "{name} has been deleted",
     "noUploadedFiles": "No files to show",
-    "fileDeleteError": "Error while deleting {name} file"
+    "fileDeleteError": "Error while deleting {name} file",
+    "upload.invalid": "Error: file upload",
+    "upload.fileSize.invalid": "Error: not enough space to store the file. Contact system administrator",
+    "settings.fileExtensionsCount": "{count, number} {count, plural, one {file extension} other {file extensions}}",
+    "settings.fileExtensionBlockImport": "Block import",
+    "settings.fileExtensionAllowImport": "Allow import",
+    "settings.fileExtension": "Extension",
+    "settings.importBlocked": "Block import",
+    "settings.dataTypes": "Data type(s)",
+    "settings.updated": "Updated",
+    "settings.updatedBy": "Updated by"
 }
