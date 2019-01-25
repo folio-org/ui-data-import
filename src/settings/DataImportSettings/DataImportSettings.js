@@ -6,6 +6,7 @@ import {
   AppIcon,
   InfoPopover,
 } from '@folio/stripes/components';
+import { stripesShape } from '@folio/stripes/core';
 
 import JobProfiles from '../JobProfiles';
 import MatchProfiles from '../MatchProfiles';
@@ -16,43 +17,53 @@ import FileExtensions from '../FileExtensions';
 import css from './DataImportSettings.css';
 
 class DataImportSettings extends Component {
-  sections = [
-    {
-      label: this.renderProfilesLabel(),
-      pages: [
-        {
-          route: 'job-profiles',
-          label: this.generateSettingsLabel('jobProfiles', 'jobProfiles'),
-          component: JobProfiles,
-        },
-        {
-          route: 'match-profiles',
-          label: this.generateSettingsLabel('matchProfiles', 'matchProfiles'),
-          component: MatchProfiles,
-        },
-        {
-          route: 'action-profiles',
-          label: this.generateSettingsLabel('actionProfiles', 'actionProfiles'),
-          component: ActionProfiles,
-        },
-        {
-          route: 'mapping-profiles',
-          label: this.generateSettingsLabel('fieldMappingProfiles', 'fieldMapping'),
-          component: FieldMappingProfiles,
-        },
-      ],
-    },
-    {
-      label: <FormattedMessage id="ui-data-import.settings.other" />,
-      pages: [
-        {
-          route: 'file-extensions',
-          label: <FormattedMessage id="ui-data-import.settings.fileExtensions" />,
-          component: FileExtensions,
-        },
-      ],
-    },
-  ];
+  static propTypes = { stripes: stripesShape.isRequired };
+
+  constructor(props) {
+    super(props);
+
+    const { stripes } = this.props;
+
+    const connectedFileExtensions = stripes.connect(FileExtensions);
+
+    this.sections = [
+      {
+        label: this.renderProfilesLabel(),
+        pages: [
+          {
+            route: 'job-profiles',
+            label: this.generateSettingsLabel('jobProfiles', 'jobProfiles'),
+            component: JobProfiles,
+          },
+          {
+            route: 'match-profiles',
+            label: this.generateSettingsLabel('matchProfiles', 'matchProfiles'),
+            component: MatchProfiles,
+          },
+          {
+            route: 'action-profiles',
+            label: this.generateSettingsLabel('actionProfiles', 'actionProfiles'),
+            component: ActionProfiles,
+          },
+          {
+            route: 'mapping-profiles',
+            label: this.generateSettingsLabel('fieldMappingProfiles', 'fieldMapping'),
+            component: FieldMappingProfiles,
+          },
+        ],
+      },
+      {
+        label: <FormattedMessage id="ui-data-import.settings.other" />,
+        pages: [
+          {
+            route: 'file-extensions',
+            label: <FormattedMessage id="ui-data-import.settings.fileExtensions" />,
+            component: connectedFileExtensions,
+          },
+        ],
+      },
+    ];
+  }
 
   renderProfilesLabel() {
     const profilesLink = 'https://wiki.folio.org/display/FOLIOtips/Creating+and+using+profiles';

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Switch from 'react-router-dom/Switch';
 import Route from 'react-router-dom/Route';
 
+import { stripesShape } from '@folio/stripes/core';
+
 import Home from './routes/Home';
 import Results from './routes/Results';
 import JobProfile from './routes/JobProfile';
@@ -10,6 +12,7 @@ import Settings from './settings';
 
 class DataImport extends React.Component {
   static propTypes = {
+    stripes: stripesShape.isRequired,
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
     }).isRequired,
