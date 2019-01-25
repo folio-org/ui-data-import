@@ -13,9 +13,7 @@ const withJobLogsCellsFormatter = WrappedComponent => {
       formatter: PropTypes.object,
     };
 
-    static defaultProps = {
-      formatter: {},
-    };
+    static defaultProps = { formatter: {} };
 
     constructor(props) {
       super(props);

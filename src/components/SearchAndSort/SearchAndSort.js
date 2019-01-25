@@ -129,7 +129,7 @@ class SearchAndSort extends Component {
     this.state = { selectedItem: this.initiallySelectedRecord };
 
     this.SRStatus = null;
-    this.lastNonNullReaultCount = undefined;
+    this.lastNonNullResultCount = undefined;
     this.initialQuery = queryString.parse(routePath);
     this.connectedViewRecord = stripes.connect(ViewRecordComponent);
   }
@@ -174,12 +174,12 @@ class SearchAndSort extends Component {
     // if the results list is winnowed down to a single record, display the record.
     if (nextProps.showSingleResult &&
       newState.totalCount() === 1 &&
-      this.lastNonNullReaultCount > 1) {
+      this.lastNonNullResultCount > 1) {
       this.onSelectRow(null, newState.records()[0]);
     }
 
     if (newState.totalCount() !== null) {
-      this.lastNonNullReaultCount = newState.totalCount();
+      this.lastNonNullResultCount = newState.totalCount();
     }
   }
 
@@ -381,9 +381,11 @@ class SearchAndSort extends Component {
 
   craftLayerURL(mode) {
     const {
-      pathname,
-      search,
-    } = this.props.location;
+      location: {
+        pathname,
+        search,
+      },
+    } = this.props;
 
     const url = `${pathname}${search}`;
 
@@ -456,7 +458,6 @@ class SearchAndSort extends Component {
   }
 
   renderSearch(source) {
-    const { locallyChangedSearchTerm } = this.state;
     const {
       objectName,
       onChangeIndex,
@@ -464,6 +465,7 @@ class SearchAndSort extends Component {
       selectedIndex,
       searchLabelKey,
     } = this.props;
+    const { locallyChangedSearchTerm } = this.state;
 
     const query = this.queryParam('query') || '';
     const searchTerm = locallyChangedSearchTerm !== undefined ? locallyChangedSearchTerm : query;
@@ -507,7 +509,6 @@ class SearchAndSort extends Component {
       notLoadedMessage,
       objectName,
     } = this.props;
-
     const { selectedItem } = this.state;
 
     const records = source.records();

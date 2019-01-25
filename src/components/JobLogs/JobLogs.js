@@ -7,7 +7,7 @@ import { MultiColumnList } from '@folio/stripes/components';
 import Preloader from '../Preloader';
 import withJobLogsCellsFormatter from './withJobLogsCellsFormatter';
 import withJobLogsSort from './withJobLogsSort';
-import compose from '../../utils/compose';
+import { compose } from '../../utils';
 import jobLogPropTypes from './jobLogPropTypes';
 
 class JobLogs extends Component {
@@ -21,9 +21,7 @@ class JobLogs extends Component {
     contentData: PropTypes.arrayOf(jobLogPropTypes),
   };
 
-  static defaultProps = {
-    contentData: [],
-  };
+  static defaultProps = { contentData: [] };
 
   constructor(props) {
     super(props);

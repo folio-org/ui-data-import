@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 
 import {
   withStripes,
@@ -10,25 +11,36 @@ import {
   Layout,
   Callout,
 } from '@folio/stripes/components';
+import { LastVisitedContext } from '@folio/stripes-core/src/components/LastVisited';
 
 import * as fileStatuses from './components/FileItem/fileItemStatuses';
 import EndOfList from '../EndOfList';
+import Preloader from '../Preloader';
 import FileItem from './components/FileItem';
-import createUrl from '../../utils/createUrl';
+import LeavePageModal from './components/LeavePageModal';
+import {
+  compose,
+  createUrl,
+  createOkapiHeaders,
+  xhrAddHeaders,
+} from '../../utils';
 import { DEFAULT_TIMEOUT_BEFORE_FILE_DELETION } from '../../utils/constants';
 import * as API from './utils/upload';
+import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 
 class UploadingJobsDisplay extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
-    filesData: PropTypes.arrayOf(PropTypes.object),
+    history: PropTypes.shape({
+      block: PropTypes.func.isRequired,
+      push: PropTypes.func.isRequired,
+    }).isRequired,
     timeoutBeforeFileDeletion: PropTypes.number, // milliseconds
   };
 
-  static defaultProps = {
-    filesData: [],
-    timeoutBeforeFileDeletion: DEFAULT_TIMEOUT_BEFORE_FILE_DELETION,
-  };
+  static defaultProps = { timeoutBeforeFileDeletion: DEFAULT_TIMEOUT_BEFORE_FILE_DELETION };
+
+  static contextType = UploadingJobsContext;
 
   static knownErrorsIDs = ['upload.fileSize.invalid'];
 
@@ -38,27 +50,26 @@ class UploadingJobsDisplay extends Component {
     return UploadingJobsDisplay.knownErrorsIDs.includes(msg) ? msg : defaultErrorId;
   }
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
-    const {
-      filesData,
-      stripes: { okapi },
-    } = props;
+    const { stripes: { okapi } } = this.props;
+    const { files } = this.context;
 
     const { url: host } = okapi;
 
     this.state = {
-      files: this.prepareFiles(filesData),
+      hasLoaded: false,
+      renderLeaveModal: false,
+      files: this.prepareFiles(files),
     };
 
-    this.fileDefinitionUrl = createUrl(`${host}/data-import/upload/definition`);
+    this.uploadDefinitionUrl = createUrl(`${host}/data-import/upload/definition`);
     this.fileUploaderUrl = createUrl(`${host}/data-import/upload/file`);
     this.deleteFileUrl = file => createUrl(`${host}/data-import/upload/definition/file/${file.id}`, {
       uploadDefinitionId: file.uploadDefinitionId,
     });
     this.deleteFileTimeouts = {};
-
     this.fileRemovalMap = {
       [fileStatuses.UPLOADED]: this.handleDeleteSuccessfullyUploadedFile,
       [fileStatuses.FAILED]: this.deleteFileAPI,
@@ -66,113 +77,245 @@ class UploadingJobsDisplay extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    this.mounted = true;
+
     this.uploadJobs();
     this.setPageLeaveHandler();
   }
 
   componentWillUnmount() {
+    this.mounted = false;
+
     this.cancelFileRemovals();
     this.resetPageLeaveHandler();
   }
 
-  setPageLeaveHandler() {
-    // prevent from leaving the page in case of download in progress
-    window.onbeforeunload = () => {
-      const { files } = this.state;
-      const notAbleToLeave = Object.keys(files).some(key => {
-        return files[key].status === fileStatuses.UPLOADING;
-      });
+  setStateAsync(state) {
+    return new Promise(resolve => {
+      this.setState(state, resolve);
+    });
+  }
 
-      return notAbleToLeave ? true : undefined;
-    };
+  // prevent from leaving the page in case if uploading is in progress
+  setPageLeaveHandler() {
+    const { history } = this.props;
+
+    this.unblockNavigation = history.block(this.navigationHandler);
+    window.addEventListener('beforeunload', this.pageLaveHandler);
   }
 
   resetPageLeaveHandler() {
-    window.onbeforeunload = null;
+    this.unblockNavigation();
+    window.removeEventListener('beforeunload', this.pageLaveHandler);
+  }
+
+  pageLaveHandler = event => {
+    const shouldPrompt = this.filesUploading;
+
+    if (shouldPrompt) {
+      event.returnValue = true;
+
+      return true;
+    }
+
+    return null;
+  };
+
+  navigationHandler = nextLocation => {
+    const shouldPrompt = this.filesUploading;
+
+    if (shouldPrompt) {
+      this.setState({
+        renderLeaveModal: true,
+        nextLocation,
+      });
+    }
+
+    return !shouldPrompt;
+  };
+
+  get filesUploading() {
+    const { files } = this.state;
+
+    return Object.keys(files).some(fileKey => {
+      return files[fileKey].status === fileStatuses.UPLOADING;
+    });
   }
 
   cancelFileRemovals() {
     Object
-      .keys(this.deleteFileTimeouts)
-      .forEach(timeoutId => {
-        clearTimeout(this.deleteFileTimeouts[timeoutId]);
-      });
+      .values(this.deleteFileTimeouts)
+      .forEach(clearTimeout);
 
     this.deleteFileTimeouts = {};
   }
 
   async uploadJobs() {
-    // post file upload definition with all files metadata as
-    // individual file upload should have upload definition id in the URL
-    const [errMsg, response] = await API.createFileDefinition(
-      this.state.files,
-      this.fileDefinitionUrl,
-      this.createFilesDefinitionHeaders(),
-    );
+    try {
+      const { updateUploadDefinition } = this.context;
 
-    if (errMsg) {
-      this.onAllFilesUploadFail(errMsg);
+      await updateUploadDefinition();
 
-      return;
+      this.setState({ hasLoaded: true });
+
+      const { uploadDefinition } = this.context;
+
+      if (uploadDefinition) {
+        return;
+      }
+
+      const { files } = this.state;
+
+      // post file upload definition with all files metadata as
+      // individual file upload should have upload definition id in the URL
+      const [errMsg, response] = await API.createUploadDefinition(
+        files,
+        this.uploadDefinitionUrl,
+        this.createFilesDefinitionHeaders(),
+      );
+
+      if (errMsg) {
+        this.onAllFilesUploadFail(errMsg);
+
+        return;
+      }
+
+      await this.updateFilesWithFileDefinitionMetadata(response.fileDefinitions);
+
+      this.uploadFiles();
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  }
+
+  updateFilesWithFileDefinitionMetadata(fileDefinitions) {
+    return this.setStateAsync(state => {
+      const updatedFiles = { ...state.files };
+
+      fileDefinitions.forEach(definition => {
+        const {
+          uiKey,
+          id,
+          uploadDefinitionId,
+        } = definition;
+
+        updatedFiles[uiKey] = {
+          ...updatedFiles[uiKey],
+          id,
+          uploadDefinitionId,
+        };
+      });
+
+      return { files: updatedFiles };
+    });
+  }
+
+  cancelCurrentFileUpload() {
+    if (this.currentFileUploadXhr) {
+      this.currentFileUploadXhr.abort();
+    }
+  }
+
+  async uploadFiles() {
+    const { files } = this.state;
+    const { setFiles } = this.context;
+
+    for (const fileKey of Object.keys(files)) {
+      try {
+        // cancel current and next file uploads if component is unmounted
+        if (!this.mounted) {
+          this.cancelCurrentFileUpload();
+          setFiles(null);
+
+          break;
+        }
+
+        // eslint-disable-next-line no-await-in-loop
+        const response = await this.uploadFile(fileKey);
+
+        this.onFileUploadSuccess(response, fileKey);
+      } catch (error) {
+        this.onFileUploadFail(fileKey);
+      }
     }
 
-    this.setState(state => {
-      return { files: API.updateFilesWithFileDefinitionMetadata(state.files, response.fileDefinitions) };
-    }, () => {
-      API.uploadFiles(
-        this.props.filesData,
-        this.state.files,
-        this.fileUploaderUrl,
-        this.createUploadFilesHeaders(),
-        this.onFileUploadProgress,
-        this.onFileUploadSuccess,
-        this.onFileUploadFail,
-      );
+    this.currentFileUploadXhr = null;
+    setFiles(null);
+  }
+
+  uploadFile(fileKey) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { files: { [fileKey]: fileMeta } } = this.state;
+
+        const urlWithQueryParams = createUrl(this.fileUploaderUrl, {
+          fileId: fileMeta.id,
+          uploadDefinitionId: fileMeta.uploadDefinitionId,
+        });
+
+        this.currentFileUploadXhr = new XMLHttpRequest();
+
+        this.currentFileUploadXhr.open('POST', urlWithQueryParams);
+
+        xhrAddHeaders(this.currentFileUploadXhr, this.createUploadFilesHeaders());
+
+        this.currentFileUploadXhr.upload.onprogress = event => {
+          this.onFileUploadProgress(fileKey, event);
+        };
+
+        this.currentFileUploadXhr.onreadystatechange = () => {
+          const {
+            status,
+            readyState,
+            response,
+          } = this.currentFileUploadXhr;
+
+          if (readyState !== 4) {
+            return;
+          }
+
+          if (status === 200) {
+            resolve(JSON.parse(response));
+          } else {
+            reject(JSON.parse(response));
+          }
+        };
+
+        this.currentFileUploadXhr.send(fileMeta.file);
+      } catch (error) {
+        reject(error);
+      }
     });
   }
 
   createFilesDefinitionHeaders() {
-    const {
-      token,
-      tenant,
-    } = this.props.stripes.okapi;
+    const { stripes: { okapi } } = this.props;
 
     return {
+      ...createOkapiHeaders(okapi),
       'Content-Type': 'application/json',
-      'X-Okapi-Tenant': tenant,
-      'X-Okapi-Token': token,
     };
   }
 
   createUploadFilesHeaders() {
-    const {
-      token,
-      tenant,
-    } = this.props.stripes.okapi;
+    const { stripes: { okapi } } = this.props;
 
     return {
+      ...createOkapiHeaders(okapi),
       'Content-Type': 'application/octet-stream',
-      'Transfer-Encoding': 'chunked',
-      'X-Okapi-Tenant': tenant,
-      'X-Okapi-Token': token,
     };
   }
 
   createDeleteFileHeaders() {
-    const {
-      token,
-      tenant,
-    } = this.props.stripes.okapi;
+    const { stripes: { okapi } } = this.props;
 
-    return {
-      'X-Okapi-Tenant': tenant,
-      'X-Okapi-Token': token,
-    };
+    return createOkapiHeaders(okapi);
   }
 
-  prepareFiles(filesData) {
-    return filesData.reduce((res, file) => {
+  prepareFiles(files) {
+    return (files || []).reduce((res, file) => {
       // `uiKey` is needed in order to match the individual file on UI with
       // the response from the backend since it returns the all files state
       const uiKey = `${file.name}${file.lastModified}`;
@@ -189,6 +332,7 @@ class UploadingJobsDisplay extends Component {
         uploadedDate: file.uploadedDate,
         status: fileStatuses.UPLOADING,
         currentUploaded: 0,
+        file,
       };
 
       return {
@@ -198,100 +342,101 @@ class UploadingJobsDisplay extends Component {
     }, {});
   }
 
-  updateFileState(key, data) {
+  updateFileState(fileKey, data) {
     this.setState(state => {
       const updatedFile = {
-        ...state.files[key],
+        ...state.files[fileKey],
         ...data,
       };
 
       return {
         files: {
           ...state.files,
-          [key]: updatedFile,
+          [fileKey]: updatedFile,
         },
       };
     });
   }
 
-  onFileUploadProgress = (key, { loaded: uploadedValue }) => {
-    this.updateFileState(key, { uploadedValue });
+  onFileUploadProgress = (fileKey, { loaded: uploadedValue }) => {
+    this.updateFileState(fileKey, { uploadedValue });
   };
 
-  onFileUploadSuccess = (resp, key) => {
-    const updatedFile = resp.fileDefinitions.find(file => file.uiKey === key);
+  onFileUploadSuccess = (response, fileKey) => {
+    const { uploadedDate } = response.fileDefinitions.find(file => file.uiKey === fileKey);
 
-    this.updateFileState(key, {
+    this.updateFileState(fileKey, {
       status: fileStatuses.UPLOADED,
-      uploadDate: updatedFile.uploadedDate,
+      uploadedDate,
     });
   };
 
-  onFileUploadFail = (resp, key) => {
-    this.updateFileState(key, { status: fileStatuses.FAILED });
+  onFileUploadFail = fileKey => {
+    this.updateFileState(fileKey, { status: fileStatuses.FAILED });
   };
 
-  handleUndoDeleteFile = key => {
-    const file = this.state.files[key];
+  handleUndoDeleteFile = fileKey => {
+    clearTimeout(this.deleteFileTimeouts[fileKey]);
 
-    clearTimeout(this.deleteFileTimeouts[key]);
-
-    this.updateFileState(file.key, { status: fileStatuses.UPLOADED });
+    this.updateFileState(fileKey, { status: fileStatuses.UPLOADED });
   };
 
-  handleDeleteFile = (key, status) => {
-    const deleteFile = this.fileRemovalMap[status];
+  handleDeleteFile = (fileKey, fileStatus) => {
+    const deleteFile = this.fileRemovalMap[fileStatus];
 
     if (deleteFile) {
-      deleteFile(key, status);
+      deleteFile(fileKey, fileStatus);
     }
   };
 
-  deleteFileAPI = (key, status) => {
-    const file = this.state.files[key];
+  deleteFileAPI = async (fileKey, fileStatus) => {
+    const { files: { [fileKey]: fileMeta } } = this.state;
 
-    this.updateFileState(file.key, { loading: true });
+    this.updateFileState(fileKey, { loading: true });
 
-    API.deleteFile(
-      this.deleteFileUrl(file),
-      this.createDeleteFileHeaders(),
-    )
-      .then(() => this.deleteFileFromState(key))
-      .catch(error => {
-        this.updateFileState(file.key, {
-          status,
-          loading: false,
-        });
+    try {
+      await API.deleteFile(
+        this.deleteFileUrl(fileMeta),
+        this.createDeleteFileHeaders(),
+      );
 
-        const errorMessage = (
-          <FormattedMessage
-            id="ui-data-import.fileDeleteError"
-            values={{ name: <strong>{file.name}</strong> }}
-          />
-        );
-
-        this.callout.sendCallout({
-          type: 'error',
-          message: errorMessage,
-        });
-        console.error(error); // eslint-disable-line no-console
+      this.deleteFileFromState(fileKey);
+    } catch (error) {
+      this.updateFileState(fileKey, {
+        status: fileStatus,
+        loading: false,
       });
+
+      const errorMessage = (
+        <FormattedMessage
+          id="ui-data-import.fileDeleteError"
+          values={{ name: <strong>{fileMeta.name}</strong> }}
+        />
+      );
+
+      this.callout.sendCallout({
+        type: 'error',
+        message: errorMessage,
+      });
+
+      console.error(error); // eslint-disable-line no-console
+    }
   };
 
-  handleDeleteSuccessfullyUploadedFile = (key, status) => {
+  handleDeleteSuccessfullyUploadedFile = (fileKey, fileStatus) => {
     const { timeoutBeforeFileDeletion } = this.props;
 
-    this.deleteFileTimeouts[key] = setTimeout(() => {
-      this.deleteFileAPI(key, status);
+    this.deleteFileTimeouts[fileKey] = setTimeout(() => {
+      this.deleteFileAPI(fileKey, fileStatus);
     }, timeoutBeforeFileDeletion);
 
-    this.updateFileState(key, { status: fileStatuses.DELETING });
+    this.updateFileState(fileKey, { status: fileStatuses.DELETING });
   };
 
-  deleteFileFromState = key => {
+  deleteFileFromState = fileKey => {
     this.setState(state => {
       const {
-        [key]: fileToDelete, // eslint-disable-line no-unused-vars
+        [fileKey]: fileToDelete, // eslint-disable-line no-unused-vars
         ...updatedFiles
       } = state.files;
 
@@ -304,16 +449,16 @@ class UploadingJobsDisplay extends Component {
 
     this.setState(state => {
       const files = Object.keys(state.files)
-        .reduce((res, key) => {
+        .reduce((res, fileKey) => {
           const updatedFile = {
-            ...state.files[key],
+            ...state.files[fileKey],
             status: fileStatuses.FAILED_DEFINITION,
             errorMsgTranslationID,
           };
 
           return {
             ...res,
-            [key]: updatedFile,
+            [fileKey]: updatedFile,
           };
         }, {});
 
@@ -336,27 +481,26 @@ class UploadingJobsDisplay extends Component {
     return Object.keys(files)
       .map(fileKey => {
         const {
-          key,
           status,
           name,
           size,
           uploadedValue,
-          uploadDate,
-          errorMsgTranslationID,
+          uploadedDate,
           loading,
+          errorMsgTranslationID,
         } = files[fileKey];
 
         return (
           <FileItem
-            key={key}
-            uiKey={key}
+            key={fileKey}
+            uiKey={fileKey}
             status={status}
             name={name}
             size={size}
             loading={loading}
             uploadedValue={uploadedValue}
-            uploadDate={uploadDate}
             errorMsgTranslationID={errorMsgTranslationID}
+            uploadedDate={uploadedDate}
             onDelete={this.handleDeleteFile}
             onUndoDelete={this.handleUndoDeleteFile}
           />
@@ -368,15 +512,49 @@ class UploadingJobsDisplay extends Component {
     this.callout = ref;
   };
 
+  continue = ctx => {
+    const { history } = this.props;
+    const { nextLocation } = this.state;
+
+    ctx.cachePreviousUrl();
+    this.unblockNavigation();
+    history.push(nextLocation.pathname);
+  };
+
+  onCloseModal = () => {
+    this.setState({ renderLeaveModal: false });
+  };
+
   render() {
+    const {
+      hasLoaded,
+      renderLeaveModal,
+    } = this.state;
+
+    if (!hasLoaded) {
+      return <Preloader />;
+    }
+
     return (
-      <div>
-        {this.renderFiles()}
-        <EndOfList />
-        <Callout ref={this.createCalloutRef} />
-      </div>
+      <LastVisitedContext.Consumer>
+        {ctx => (
+          <div>
+            {this.renderFiles()}
+            <EndOfList />
+            <Callout ref={this.createCalloutRef} />
+            <LeavePageModal
+              open={renderLeaveModal}
+              onConfirmModal={() => this.continue(ctx)}
+              onCancelModal={this.onCloseModal}
+            />
+          </div>
+        )}
+      </LastVisitedContext.Consumer>
     );
   }
 }
 
-export default withStripes(UploadingJobsDisplay);
+export default compose(
+  withRouter,
+  withStripes,
+)(UploadingJobsDisplay);

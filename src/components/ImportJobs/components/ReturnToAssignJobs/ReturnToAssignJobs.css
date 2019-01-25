@@ -1,0 +1,34 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.message {
+  margin-bottom: 10px;
+  font-size: var(--font-size-xx-large);
+  font-weight: var(--text-weight-headline-basis);
+  color: var(--color-text);
+}
+
+.subMessage {
+  margin-bottom: 40px;
+  font-size: var(--font-size-x-large);
+  color: var(--color-text); 
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+
+.button {
+  margin-left: 0 !important;
+  font-size: var(--font-size-large);
+}

@@ -25,9 +25,7 @@ const withJobLogsSort = WrappedComponent => {
       formatter: PropTypes.object,
     };
 
-    static defaultProps = {
-      formatter: {},
-    };
+    static defaultProps = { formatter: {} };
 
     static contextType = DataFetcherContext;
 

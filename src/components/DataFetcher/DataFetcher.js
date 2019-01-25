@@ -11,7 +11,7 @@ import {
   READY_FOR_PREVIEW,
   PREPARING_FOR_PREVIEW,
 } from '../Jobs/jobStatuses';
-import { DataFetcherContextProvider } from '.';
+import { DataFetcherContext } from '.';
 
 const jobsUrl = createUrl('metadata-provider/jobExecutions', {
   query: `(uiStatus==("${PREPARING_FOR_PREVIEW}" OR "${READY_FOR_PREVIEW}" OR "${RUNNING}"))`,
@@ -71,9 +71,7 @@ class DataFetcher extends Component {
     updateInterval: PropTypes.number, // milliseconds
   };
 
-  static defaultProps = {
-    updateInterval: DEFAULT_FETCHER_UPDATE_INTERVAL,
-  };
+  static defaultProps = { updateInterval: DEFAULT_FETCHER_UPDATE_INTERVAL };
 
   state = {
     contextData: {
@@ -82,11 +80,13 @@ class DataFetcher extends Component {
   };
 
   async componentDidMount() {
+    this.mounted = true;
     await this.getResourcesData(true);
     this.updateResourcesData();
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     clearInterval(this.intervalId);
   }
 
@@ -98,6 +98,10 @@ class DataFetcher extends Component {
 
   /** @param  {boolean} [initial] indicates initial data retrieval */
   getResourcesData = async initial => {
+    if (!this.mounted) {
+      return;
+    }
+
     const { mutator } = this.props;
 
     const fetchResourcesPromises = Object.values(mutator)
@@ -146,9 +150,9 @@ class DataFetcher extends Component {
     const { contextData } = this.state;
 
     return (
-      <DataFetcherContextProvider value={contextData}>
+      <DataFetcherContext.Provider value={contextData}>
         {children}
-      </DataFetcherContextProvider>
+      </DataFetcherContext.Provider>
     );
   }
 }

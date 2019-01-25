@@ -15,16 +15,14 @@ import ImportJobs from '../components/ImportJobs';
 import DataFetcher from '../components/DataFetcher';
 
 class Home extends Component {
-  static propTypes = {
-    stripes: stripesShape.isRequired,
-  };
+  static propTypes = { stripes: stripesShape.isRequired };
 
   constructor(props) {
     super(props);
 
-    const { connect } = props.stripes;
+    const { stripes } = this.props;
 
-    this.connectedDataFetcher = connect(DataFetcher);
+    this.connectedDataFetcher = stripes.connect(DataFetcher);
   }
 
   handleManageJobs = () => {
@@ -61,8 +59,8 @@ class Home extends Component {
 
   render() {
     return (
-      <this.connectedDataFetcher>
-        <Paneset>
+      <Paneset>
+        <this.connectedDataFetcher>
           <Pane
             data-test-jobs-pane
             defaultWidth="320px"
@@ -82,14 +80,14 @@ class Home extends Component {
           >
             <JobLogs />
           </Pane>
-          <Pane
-            defaultWidth="fill"
-            paneTitle={<FormattedMessage id="ui-data-import.importPaneTitle" />}
-          >
-            <ImportJobs />
-          </Pane>
-        </Paneset>
-      </this.connectedDataFetcher>
+        </this.connectedDataFetcher>
+        <Pane
+          defaultWidth="fill"
+          paneTitle={<FormattedMessage id="ui-data-import.importPaneTitle" />}
+        >
+          <ImportJobs />
+        </Pane>
+      </Paneset>
     );
   }
 }

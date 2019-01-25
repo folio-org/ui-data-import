@@ -5,6 +5,9 @@ import { FormattedMessage } from 'react-intl';
 
 import FileUploader from './components/FileUploader';
 import InvalidFilesModal from './components/InvalidFilesModal';
+import ReturnToAssignJobs from './components/ReturnToAssignJobs';
+import Preloader from '../Preloader';
+import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 
 import css from './components/FileUploader/FileUploader.css';
 
@@ -15,11 +18,31 @@ class ImportJobs extends Component {
     }).isRequired,
   };
 
+  static contextType = UploadingJobsContext;
+
   state = {
     isDropZoneActive: false,
     isModalOpen: false,
     redirect: false,
+    hasLoaded: false,
   };
+
+  componentDidMount() {
+    this.updateUploadDefinition();
+  }
+
+  async updateUploadDefinition() {
+    try {
+      const { updateUploadDefinition } = this.context;
+
+      await updateUploadDefinition();
+
+      this.setState({ hasLoaded: true });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  }
 
   onDragEnter = () => {
     this.setState({ isDropZoneActive: true });
@@ -29,31 +52,26 @@ class ImportJobs extends Component {
     this.setState({ isDropZoneActive: false });
   };
 
-  /**
-   * @param  {Array<File>} acceptedFiles
-   * @param  {Array<File>} rejectedFiles
-   */
-  onDrop = (acceptedFiles, rejectedFiles) => {
+  onDrop = async acceptedFiles => {
+    this.setState({ isDropZoneActive: false });
+
+    const { setFiles } = this.context;
     const isValidFileExtensions = this.validateFileExtensions(acceptedFiles);
 
     if (isValidFileExtensions) {
+      setFiles(acceptedFiles);
+
       this.setState({
         isDropZoneActive: false,
         redirect: true,
-        acceptedFiles,
-        rejectedFiles,
       });
 
       return;
     }
 
-    this.setState({ isDropZoneActive: false });
     this.showModal();
   };
 
-  /**
-   * @param  {Array<File>} files
-   */
   validateFileExtensions(files = []) {
     const fileTypeRegex = /\.(\w+)$/;
     const filesTypes = files.map(({ name }) => (name.match(fileTypeRegex) || [])[1]);
@@ -77,31 +95,30 @@ class ImportJobs extends Component {
   }
 
   render() {
+    const { match: { path } } = this.props;
     const {
-      acceptedFiles,
-      rejectedFiles,
       redirect,
       isDropZoneActive,
       isModalOpen,
+      hasLoaded,
     } = this.state;
-    const { match } = this.props;
+    const { uploadDefinition } = this.context;
+
+    if (!hasLoaded) {
+      return <Preloader />;
+    }
+
+    if (redirect) {
+      return <Redirect to={`${path}/job-profile`} />;
+    }
+
+    if (uploadDefinition) {
+      return <ReturnToAssignJobs />;
+    }
+
     const titleMessageIdEnding = isDropZoneActive ? 'activeUploadTitle' : 'uploadTitle';
     const titleText = this.getMessageById(titleMessageIdEnding);
     const uploadBtnText = this.getMessageById('uploadBtnText');
-
-    if (redirect) {
-      return (
-        <Redirect
-          to={{
-            pathname: `${match.path}/job-profile`,
-            state: {
-              acceptedFiles,
-              rejectedFiles,
-            },
-          }}
-        />
-      );
-    }
 
     return (
       <FileUploader

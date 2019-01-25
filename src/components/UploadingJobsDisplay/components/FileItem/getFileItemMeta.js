@@ -32,8 +32,8 @@ const getFileItemMeta = props => {
   const {
     status,
     name,
-    uploadDate,
     errorMsgTranslationID,
+    uploadedDate,
     loading,
     deleteFile,
     undoDeleteFile,
@@ -58,7 +58,7 @@ const getFileItemMeta = props => {
         <Fragment>
           <span className={css.fileItemHeaderName}>{name}</span>
           <span className={classNames(css.fileItemHeaderContent, css.fileItemUploadedHeaderContent)}>
-            <FormattedDate value={uploadDate} />
+            <FormattedDate value={uploadedDate} />
           </span>
           <FormattedMessage id="ui-data-import.delete">
             {label => (

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Switch from 'react-router-dom/Switch';
-import Route from 'react-router-dom/Route';
+import {
+  Switch,
+  Route,
+} from 'react-router-dom';
 
 import { stripesShape } from '@folio/stripes/core';
 
@@ -9,8 +11,9 @@ import Home from './routes/Home';
 import Results from './routes/Results';
 import JobProfile from './routes/JobProfile';
 import Settings from './settings';
+import UploadingJobsContextProvider from './components/UploadingJobsContextProvider';
 
-class DataImport extends React.Component {
+class DataImport extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     match: PropTypes.shape({
@@ -19,14 +22,14 @@ class DataImport extends React.Component {
     showSettings: PropTypes.bool,
   };
 
-  static defaultProps = {
-    showSettings: false,
-  };
+  static defaultProps = { showSettings: false };
 
   constructor(props) {
     super(props);
 
-    this.connectedHome = props.stripes.connect(Home);
+    const { stripes } = this.props;
+
+    this.connectedHome = stripes.connect(Home);
   }
 
   // wire up home page with stripes
@@ -45,23 +48,25 @@ class DataImport extends React.Component {
     }
 
     return (
-      <Switch>
-        <Route
-          path={`${path}`}
-          exact
-          render={this.renderConnectedHome}
-        />
-        <Route
-          path={`${path}/results`}
-          exact
-          component={Results}
-        />
-        <Route
-          path={`${this.props.match.path}/job-profile`}
-          component={JobProfile}
-          exact
-        />
-      </Switch>
+      <UploadingJobsContextProvider>
+        <Switch>
+          <Route
+            path={path}
+            exact
+            render={this.renderConnectedHome}
+          />
+          <Route
+            path={`${path}/results`}
+            exact
+            component={Results}
+          />
+          <Route
+            path={`${path}/job-profile`}
+            exact
+            component={JobProfile}
+          />
+        </Switch>
+      </UploadingJobsContextProvider>
     );
   }
 }
