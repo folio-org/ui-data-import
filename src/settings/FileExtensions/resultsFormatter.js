@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { FormattedDate } from 'react-intl';
+import { upperFirst } from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
 
@@ -16,8 +17,9 @@ const resultsFormatter = intl => ({
   dataTypes: record => {
     const { dataTypes } = record;
 
+    // TODO: remove mapping when backend is adjusted to return type in needed format (MODSOURMAN-60)
     const formattedDataTypes = dataTypes.map(type => {
-      return type !== 'Delimited' ? type.toUpperCase() : type;
+      return type !== 'DELIMITED' ? type : upperFirst(type.toLowerCase());
     });
 
     return formattedDataTypes.length > 0 ? formattedDataTypes.join(', ') : '-';
