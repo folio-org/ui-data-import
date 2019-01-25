@@ -1,4 +1,4 @@
 import { createContext } from 'react';
 
+// eslint-disable-next-line import/prefer-default-export
 export const DataFetcherContext = createContext({});
-export const DataFetcherContextProvider = DataFetcherContext.Provider;

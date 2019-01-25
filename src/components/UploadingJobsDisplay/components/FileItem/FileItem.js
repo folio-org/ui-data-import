@@ -19,8 +19,8 @@ class FileItem extends PureComponent {
     size: PropTypes.number.isRequired,
     status: PropTypes.string,
     uploadedValue: PropTypes.number,
-    uploadDate: PropTypes.instanceOf(Date),
     errorMsgTranslationID: PropTypes.string,
+    uploadedDate: PropTypes.string,
     loading: PropTypes.bool,
     onDelete: PropTypes.func,
     onUndoDelete: PropTypes.func,
@@ -29,16 +29,14 @@ class FileItem extends PureComponent {
   static defaultProps = {
     status: fileStatuses.UPLOADING,
     uploadedValue: 0,
-    uploadDate: null,
     errorMsgTranslationID: 'upload.invalid',
+    uploadedDate: null,
     loading: false,
     onDelete: noop,
     onUndoDelete: noop,
   };
 
-  progressPayload = {
-    message: <FormattedMessage id="ui-data-import.uploadingMessage" />,
-  };
+  progressPayload = { message: <FormattedMessage id="ui-data-import.uploadingMessage" /> };
 
   deleteFile = () => {
     const {
@@ -65,16 +63,16 @@ class FileItem extends PureComponent {
       name,
       size,
       uploadedValue,
-      uploadDate,
       errorMsgTranslationID,
       loading,
+      uploadedDate,
     } = this.props;
 
     const meta = getFileItemMeta({
       status,
       name,
-      uploadDate,
       errorMsgTranslationID,
+      uploadedDate,
       loading,
       deleteFile: this.deleteFile,
       undoDeleteFile: this.undoDeleteFile,

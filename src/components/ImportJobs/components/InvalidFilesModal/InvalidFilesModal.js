@@ -17,11 +17,11 @@ const InvalidFilesModal = props => {
   const Footer = (
     <ModalFooter
       primaryButton={{
-        label: <FormattedMessage id="ui-data-import.modal.actionButtonText" />,
+        label: <FormattedMessage id="ui-data-import.modal.fileExtensions.actionButton" />,
         onClick: openFileUploadDialogWindow,
       }}
       secondaryButton={{
-        label: <FormattedMessage id="ui-data-import.modal.cancel" />,
+        label: <FormattedMessage id="ui-data-import.modal.fileExtensions.cancel" />,
         onClick: onConfirmModal,
       }}
     />
@@ -30,15 +30,15 @@ const InvalidFilesModal = props => {
   return (
     <Modal
       open={isModalOpen}
-      label={<FormattedMessage id="ui-data-import.modal.header" />}
+      label={<FormattedMessage id="ui-data-import.modal.fileExtensions.header" />}
       footer={Footer}
     >
       <FormattedMessage
-        id="ui-data-import.modal.message"
+        id="ui-data-import.modal.fileExtensions.message"
         values={{
           highlightedText: (
             <strong>
-              <FormattedMessage id="ui-data-import.modal.messageHighlightedText" />
+              <FormattedMessage id="ui-data-import.modal.fileExtensions.messageHighlightedText" />
             </strong>
           ),
         }}
