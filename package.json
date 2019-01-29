@@ -83,6 +83,11 @@
         "name": "app",
         "alt": "Data import loader for MARC records",
         "title": "Data import"
+      },
+      {
+        "name": "user",
+        "alt": "User",
+        "title": "User"
       }
     ],
     "okapiInterfaces": {
@@ -109,7 +114,7 @@
         "displayName": "Settings (data-import): display list of settings pages",
         "subPermissions": [
           "settings.enabled",
-          "change-manager.fileExtension.get"
+          "metadata-provider.fileExtension.get"
         ],
         "visible": true
       }
