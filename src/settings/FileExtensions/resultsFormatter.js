@@ -1,8 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { FormattedDate } from 'react-intl';
 import { upperFirst } from 'lodash';
 
-import { Icon } from '@folio/stripes/components';
+import {
+  Icon,
+  AppIcon,
+} from '@folio/stripes/components';
 
 import css from './FileExtensions.css';
 
@@ -28,22 +31,28 @@ const resultsFormatter = intl => ({
     const { metadata: { updatedDate } } = record;
 
     return (
-      <Fragment>
-        <Icon
-          iconClassName={css.editIcon}
-          icon="edit"
-          size="small"
-        >
-          <FormattedDate value={updatedDate} />
-        </Icon>
-      </Fragment>
+      <Icon
+        iconClassName={css.editIcon}
+        icon="edit"
+        size="small"
+      >
+        <FormattedDate value={updatedDate} />
+      </Icon>
     );
   },
   updatedBy: record => {
     const { metadata: { updatedByUsername } } = record;
 
     if (updatedByUsername === 'System') {
-      return updatedByUsername.toUpperCase();
+      return (
+        <AppIcon
+          size="small"
+          app="data-import"
+          iconKey="user"
+        >
+          {updatedByUsername.toUpperCase()}
+        </AppIcon>
+      );
     }
 
     return '';

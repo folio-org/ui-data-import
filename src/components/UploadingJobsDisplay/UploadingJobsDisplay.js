@@ -276,10 +276,16 @@ class UploadingJobsDisplay extends Component {
             return;
           }
 
-          if (status === 200) {
-            resolve(JSON.parse(response));
-          } else {
-            reject(JSON.parse(response));
+          try {
+            const parsedResponse = JSON.parse(response);
+
+            if (status === 200) {
+              resolve(parsedResponse);
+            } else {
+              reject(parsedResponse);
+            }
+          } catch (error) {
+            reject(error);
           }
         };
 

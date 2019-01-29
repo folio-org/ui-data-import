@@ -62,7 +62,10 @@ class FileExtensions extends Component {
     'updatedBy',
   ];
 
-  columnWidths = { updated: 150 };
+  columnWidths = {
+    updated: 150,
+    updatedBy: 250,
+  };
 
   render() {
     const {
