@@ -56,7 +56,7 @@
     "fileDeleteError": "删除{name}文件时出错",
     "upload.invalid": "错误：文件上传",
     "upload.fileSize.invalid": "错误：没有足够的空间来存储文件。联系系统管理员",
-    "settings.fileExtensionsCount": "{count, number} {count, plural, one {file extension} other {file extensions}}",
+    "settings.fileExtensionsCount": "{count, number} {count, plural, 一个 { file extension } 其他 { file extensions }}",
     "settings.fileExtensionBlockImport": "违规记录导入",
     "settings.fileExtensionAllowImport": "允许导入",
     "settings.fileExtension": "扩展",
