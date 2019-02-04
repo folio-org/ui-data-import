@@ -95,6 +95,7 @@ When using a function as `children` this function accepts `openFileUploadDialogW
 | title            | node                   |         | Yes      | Title of the component                       |
 | uploadBtnText    | node                   |         | Yes      | Upload files button text                      |
 | isDropZoneActive | bool                   |         | Yes      | Value specifying whether dropzone is active  |
+| errorMessage     | node                   |         | No       | Error message                                |
 | children         | node \| node[] \| func |         | No       |                                              |
 
 ### Props passed to `ReactDropzone`

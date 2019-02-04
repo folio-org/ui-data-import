@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Button } from '@folio/stripes/components';
@@ -8,6 +9,10 @@ import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
 import css from './ReturnToAssignJobs.css';
 
 class ReturnToAssignJobs extends Component {
+  static propTypes = { prohibitFilesUploading: PropTypes.bool };
+
+  static defaultProps = { prohibitFilesUploading: false };
+
   static contextType = UploadingJobsContext;
 
   getIntlId(id) {
@@ -15,7 +20,7 @@ class ReturnToAssignJobs extends Component {
   }
 
   get filesAmount() {
-    const { uploadDefinition: { fileDefinitions } } = this.context;
+    const { uploadDefinition: { fileDefinitions = [] } } = this.context;
 
     return fileDefinitions.reduce((res, { loaded }) => {
       return loaded ? res + 1 : res;
@@ -24,11 +29,14 @@ class ReturnToAssignJobs extends Component {
 
   render() {
     const { deleteUploadDefinition } = this.context;
+    const { prohibitFilesUploading } = this.props;
+
+    const messageId = prohibitFilesUploading ? 'messageWhenProhibited' : 'message';
 
     return (
       <div className={css.container}>
         <span className={css.message}>
-          <FormattedMessage id={this.getIntlId('message')} />
+          <FormattedMessage id={this.getIntlId(messageId)} />
         </span>
         <span className={css.subMessage}>
           <FormattedMessage

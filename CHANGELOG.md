@@ -12,6 +12,8 @@
 * Handle file name issue with file upload definition (UIDATIMP-97)
 * Show error message on UI when there is not enough server space for uploaded file(s) on uploading jop profiles (UIDATIMP-86)
 * Create data import settings page's 3rd pane for File Extensions (UIDATIMP-47)
+* Show modal on Leaving Choose Job Profile page (UIDATIMP-104)
+* Prohibit file upload when there is a draft job in progress (UIDATIMP-106)
 
 ## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
 

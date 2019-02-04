@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
+import { isEmpty } from 'lodash';
 
 import {
   withStripes,
@@ -155,13 +156,11 @@ class UploadingJobsDisplay extends Component {
     try {
       const { updateUploadDefinition } = this.context;
 
-      await updateUploadDefinition();
+      const uploadDefinition = await updateUploadDefinition();
 
       this.setState({ hasLoaded: true });
 
-      const { uploadDefinition } = this.context;
-
-      if (uploadDefinition) {
+      if (!isEmpty(uploadDefinition)) {
         return;
       }
 
@@ -227,7 +226,7 @@ class UploadingJobsDisplay extends Component {
         // cancel current and next file uploads if component is unmounted
         if (!this.mounted) {
           this.cancelCurrentFileUpload();
-          setFiles(null);
+          setFiles();
 
           break;
         }
@@ -242,7 +241,7 @@ class UploadingJobsDisplay extends Component {
     }
 
     this.currentFileUploadXhr = null;
-    setFiles(null);
+    setFiles();
   }
 
   uploadFile(fileKey) {
@@ -320,8 +319,8 @@ class UploadingJobsDisplay extends Component {
     return createOkapiHeaders(okapi);
   }
 
-  prepareFiles(files) {
-    return (files || []).reduce((res, file) => {
+  prepareFiles(files = []) {
+    return files.reduce((res, file) => {
       // `uiKey` is needed in order to match the individual file on UI with
       // the response from the backend since it returns the all files state
       const uiKey = `${file.name}${file.lastModified}`;
@@ -527,7 +526,7 @@ class UploadingJobsDisplay extends Component {
     history.push(nextLocation.pathname);
   };
 
-  onCloseModal = () => {
+  closeModal = () => {
     this.setState({ renderLeaveModal: false });
   };
 
@@ -550,8 +549,8 @@ class UploadingJobsDisplay extends Component {
             <Callout ref={this.createCalloutRef} />
             <LeavePageModal
               open={renderLeaveModal}
-              onConfirmModal={() => this.continue(ctx)}
-              onCancelModal={this.onCloseModal}
+              onConfirm={this.closeModal}
+              onCancel={() => this.continue(ctx)}
             />
           </div>
         )}

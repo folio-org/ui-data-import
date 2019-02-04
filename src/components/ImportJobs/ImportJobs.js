@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { isEmpty } from 'lodash';
 
 import FileUploader from './components/FileUploader';
 import InvalidFilesModal from './components/InvalidFilesModal';
@@ -22,16 +23,18 @@ class ImportJobs extends Component {
 
   state = {
     isDropZoneActive: false,
-    isModalOpen: false,
+    filesExtensionsModalOpen: false,
     redirect: false,
     hasLoaded: false,
+    prohibitFilesUploading: false,
+    showErrorMessage: false,
   };
 
   componentDidMount() {
-    this.updateUploadDefinition();
+    this.fetchUploadDefinition();
   }
 
-  async updateUploadDefinition() {
+  async fetchUploadDefinition() {
     try {
       const { updateUploadDefinition } = this.context;
 
@@ -53,23 +56,41 @@ class ImportJobs extends Component {
   };
 
   onDrop = async acceptedFiles => {
-    this.setState({ isDropZoneActive: false });
+    const {
+      setFiles,
+      updateUploadDefinition,
+    } = this.context;
 
-    const { setFiles } = this.context;
+    this.setState({
+      isDropZoneActive: false,
+      showErrorMessage: false,
+    });
+
+    try {
+      const uploadDefinition = await updateUploadDefinition();
+
+      if (!isEmpty(uploadDefinition)) {
+        this.setState({ prohibitFilesUploading: true });
+
+        return;
+      }
+    } catch (error) {
+      this.setState({ showErrorMessage: true });
+
+      return;
+    }
+
     const isValidFileExtensions = this.validateFileExtensions(acceptedFiles);
 
     if (isValidFileExtensions) {
       setFiles(acceptedFiles);
 
-      this.setState({
-        isDropZoneActive: false,
-        redirect: true,
-      });
+      this.setState({ redirect: true });
 
       return;
     }
 
-    this.showModal();
+    this.showFilesExtensionsModal();
   };
 
   validateFileExtensions(files = []) {
@@ -80,12 +101,12 @@ class ImportJobs extends Component {
     return filesTypes.every(type => type === baseFileType);
   }
 
-  showModal() {
-    this.setState({ isModalOpen: true });
+  showFilesExtensionsModal() {
+    this.setState({ filesExtensionsModalOpen: true });
   }
 
-  hideModal = () => {
-    this.setState({ isModalOpen: false });
+  hideFilesExtensionsModal = () => {
+    this.setState({ filesExtensionsModalOpen: false });
   };
 
   getMessageById(idEnding, moduleName = 'ui-data-import') {
@@ -98,9 +119,11 @@ class ImportJobs extends Component {
     const { match: { path } } = this.props;
     const {
       redirect,
-      isDropZoneActive,
-      isModalOpen,
       hasLoaded,
+      showErrorMessage,
+      isDropZoneActive,
+      prohibitFilesUploading,
+      filesExtensionsModalOpen,
     } = this.state;
     const { uploadDefinition } = this.context;
 
@@ -112,18 +135,20 @@ class ImportJobs extends Component {
       return <Redirect to={`${path}/job-profile`} />;
     }
 
-    if (uploadDefinition) {
-      return <ReturnToAssignJobs />;
+    if (!isEmpty(uploadDefinition)) {
+      return <ReturnToAssignJobs prohibitFilesUploading={prohibitFilesUploading} />;
     }
 
     const titleMessageIdEnding = isDropZoneActive ? 'activeUploadTitle' : 'uploadTitle';
     const titleText = this.getMessageById(titleMessageIdEnding);
     const uploadBtnText = this.getMessageById('uploadBtnText');
+    const errorMessage = showErrorMessage && this.getMessageById('importJobs.errorMessage');
 
     return (
       <FileUploader
         title={titleText}
         uploadBtnText={uploadBtnText}
+        errorMessage={errorMessage}
         isDropZoneActive={isDropZoneActive}
         className={css.upload}
         activeClassName={css.activeUpload}
@@ -131,11 +156,11 @@ class ImportJobs extends Component {
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
       >
-        {openFileUploadDialogWindow => (
+        {openDialogWindow => (
           <InvalidFilesModal
-            isModalOpen={isModalOpen}
-            onConfirmModal={this.hideModal}
-            openFileUploadDialogWindow={openFileUploadDialogWindow}
+            open={filesExtensionsModalOpen}
+            onConfirm={openDialogWindow}
+            onCancel={this.hideFilesExtensionsModal}
           />
         )}
       </FileUploader>
