@@ -2,54 +2,45 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Modal,
-  ModalFooter,
-} from '@folio/stripes/components';
+import { ConfirmationModal } from '@folio/stripes/components';
 
 const LeavePageModal = props => {
   const {
     open,
-    onConfirmModal,
-    onCancelModal,
+    onConfirm,
+    onCancel,
   } = props;
-  const Footer = (
-    <ModalFooter
-      primaryButton={{
-        label: <FormattedMessage id="ui-data-import.modal.leavePage.actionButton" />,
-        onClick: onCancelModal,
-      }}
-      secondaryButton={{
-        label: <FormattedMessage id="ui-data-import.modal.leavePage.cancel" />,
-        onClick: onConfirmModal,
+
+  const message = (
+    <FormattedMessage
+      id="ui-data-import.modal.leavePage.message"
+      values={{
+        highlightedText: (
+          <strong>
+            <FormattedMessage id="ui-data-import.modal.leavePage.messageHighlightedText" />
+          </strong>
+        ),
       }}
     />
   );
 
   return (
-    <Modal
+    <ConfirmationModal
       open={open}
-      label={<FormattedMessage id="ui-data-import.modal.leavePage.header" />}
-      footer={Footer}
-    >
-      <FormattedMessage
-        id="ui-data-import.modal.leavePage.message"
-        values={{
-          highlightedText: (
-            <strong>
-              <FormattedMessage id="ui-data-import.modal.leavePage.messageHighlightedText" />
-            </strong>
-          ),
-        }}
-      />
-    </Modal>
+      heading={<FormattedMessage id="ui-data-import.modal.leavePage.header" />}
+      message={message}
+      confirmLabel={<FormattedMessage id="ui-data-import.modal.leavePage.actionButton" />}
+      cancelLabel={<FormattedMessage id="ui-data-import.modal.leavePage.cancel" />}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
+    />
   );
 };
 
 LeavePageModal.propTypes = {
   open: PropTypes.bool.isRequired,
-  onConfirmModal: PropTypes.func.isRequired,
-  onCancelModal: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 
 export default LeavePageModal;

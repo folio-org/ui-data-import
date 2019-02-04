@@ -27,3 +27,13 @@
 .activeUploadTitle {
   font-size: var(--font-size-xx-large);
 }
+
+.errorMessage {
+  margin-bottom: 1rem;
+  color: var(--error);
+}
+
+/* Polyfill for proper work of `hidden` attribute */
+[hidden] {
+  display: none;
+}

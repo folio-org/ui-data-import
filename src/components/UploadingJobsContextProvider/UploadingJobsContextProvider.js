@@ -26,15 +26,15 @@ class UploadingJobsContextProvider extends Component {
     super(props);
 
     this.state = {
-      files: null, // TODO: change with []
+      files: [],
       setFiles: this.setFiles,
-      uploadDefinition: null, // TODO: change with {}
+      uploadDefinition: {},
       updateUploadDefinition: this.updateUploadDefinition,
       deleteUploadDefinition: this.deleteUploadDefinition,
     };
   }
 
-  setFiles = files => {
+  setFiles = (files = []) => {
     this.setState({ files });
   };
 
@@ -56,6 +56,8 @@ class UploadingJobsContextProvider extends Component {
     const uploadDefinition = newUploadDefinition || await this.getLatestUploadDefinition();
 
     this.setState({ uploadDefinition });
+
+    return uploadDefinition;
   };
 
   getLatestUploadDefinition = async () => {

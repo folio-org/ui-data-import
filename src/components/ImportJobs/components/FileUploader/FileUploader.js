@@ -4,7 +4,10 @@ import ReactDropzone from 'react-dropzone';
 import classNames from 'classnames/bind';
 import { isFunction } from 'lodash';
 
-import { Button } from '@folio/stripes/components';
+import {
+  Icon,
+  Button,
+} from '@folio/stripes/components';
 
 import defaultStyles from './defaultStyles.css';
 import css from './FileUploader.css';
@@ -15,6 +18,7 @@ const FileUploader = props => {
   const {
     title,
     uploadBtnText,
+    errorMessage,
     accept,
     isDropZoneActive,
     className,
@@ -53,6 +57,16 @@ const FileUploader = props => {
     >
       {({ open }) => (
         <Fragment>
+          {errorMessage && (
+            <span
+              hidden={isDropZoneActive}
+              className={css.errorMessage}
+            >
+              <Icon icon="exclamation-circle">
+                {errorMessage}
+              </Icon>
+            </span>
+          )}
           <span className={titleClassName}>
             {title}
           </span>
@@ -80,6 +94,7 @@ FileUploader.propTypes = {
   onDrop: PropTypes.func.isRequired,
   onDragEnter: PropTypes.func,
   onDragLeave: PropTypes.func,
+  errorMessage: PropTypes.node,
   className: PropTypes.string,
   acceptClassName: PropTypes.string,
   activeClassName: PropTypes.string,

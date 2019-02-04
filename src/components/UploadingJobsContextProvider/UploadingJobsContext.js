@@ -3,9 +3,9 @@ import { noop } from 'lodash';
 
 // eslint-disable-next-line import/prefer-default-export
 export const UploadingJobsContext = createContext({
-  files: null,
+  files: [],
   setFiles: noop,
-  uploadDefinition: null,
+  uploadDefinition: {},
   updateUploadDefinition: noop,
   deleteUploadDefinition: noop,
 });

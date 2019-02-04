@@ -29,6 +29,7 @@
 }
 
 .button {
+  flex-shrink: 0;
   margin-left: 0 !important;
   font-size: var(--font-size-large);
 }
