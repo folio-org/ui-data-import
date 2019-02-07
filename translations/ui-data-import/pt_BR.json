@@ -65,7 +65,7 @@
     "settings.updated": "Atualizado",
     "settings.updatedBy": "Atualizado pelo",
     "returnToAssign.message": "Rascunho de trabalho em andamento",
-    "returnToAssign.subMessage": "{filesAmount} arquivos enviados",
+    "returnToAssign.subMessage": "{filesAmount, plural, one {# arquivo } other {# arquivos }} enviado(s)",
     "returnToAssign.resume": "Continuar",
     "returnToAssign.deleteFiles": "Excluir arquivos",
     "modal.fileExtensions.header": "Extensões de arquivos inconsistentes",
@@ -77,5 +77,7 @@
     "modal.leavePage.message": "Existem {highlightedText}. Se você quiser concluir todos os uploads, pressione o botão \"Manter upload\".",
     "modal.leavePage.messageHighlightedText": "uploads inacabados",
     "modal.leavePage.cancel": "Fechar e perder uploads parciais",
-    "modal.leavePage.actionButton": "Continue fazendo o upload"
+    "modal.leavePage.actionButton": "Continue fazendo o upload",
+    "importJobs.errorMessage": "A solicitação falhou. Tente novamente",
+    "returnToAssign.messageWhenProhibited": "Upload de arquivo já em andamento"
 }

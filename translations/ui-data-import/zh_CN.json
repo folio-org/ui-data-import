@@ -77,5 +77,7 @@
     "modal.leavePage.message": "有{highlightedText} 。如果您想完成所有上传，请按“保持上传”按钮。",
     "modal.leavePage.messageHighlightedText": "未完成的上传",
     "modal.leavePage.cancel": "关闭并丢失部分上传内容",
-    "modal.leavePage.actionButton": "继续上传"
+    "modal.leavePage.actionButton": "继续上传",
+    "importJobs.errorMessage": "请求失败。再试一次",
+    "returnToAssign.messageWhenProhibited": "文件上传在进行中"
 }

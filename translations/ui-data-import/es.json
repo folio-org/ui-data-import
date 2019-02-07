@@ -65,7 +65,7 @@
     "settings.updated": "Updated",
     "settings.updatedBy": "Updated by",
     "returnToAssign.message": "Draft job in progress",
-    "returnToAssign.subMessage": "{filesAmount} files uploaded",
+    "returnToAssign.subMessage": "{filesAmount, plural, one {# file} other {# files}} uploaded",
     "returnToAssign.resume": "Resume",
     "returnToAssign.deleteFiles": "Delete files",
     "modal.fileExtensions.header": "Inconsistent file extensions",
@@ -77,5 +77,7 @@
     "modal.leavePage.message": "There are {highlightedText}. If you would like to complete all uploads, press the \"Keep uploading\" button.",
     "modal.leavePage.messageHighlightedText": "unfinished uploads",
     "modal.leavePage.cancel": "Close & lose partial uploads",
-    "modal.leavePage.actionButton": "Keep uploading"
+    "modal.leavePage.actionButton": "Keep uploading",
+    "importJobs.errorMessage": "Request failed. Try again",
+    "returnToAssign.messageWhenProhibited": "File upload already in progress"
 }
