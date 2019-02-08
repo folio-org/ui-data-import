@@ -31,6 +31,8 @@ import {
   makeConnectedSource,
 } from '@folio/stripes/smart-components';
 
+import Preloader from '../JobLogs/JobLogs';
+
 import css from './SearchAndSort.css';
 
 class SearchAndSort extends Component {
@@ -217,7 +219,7 @@ class SearchAndSort extends Component {
     this.performSearch(locallyChangedSearchTerm);
   };
 
-  performSearch = debounce((query) => {
+  performSearch = debounce(query => {
     const {
       parentMutator: { resultCount },
       initialResultCount,
@@ -500,13 +502,18 @@ class SearchAndSort extends Component {
     );
   }
 
+  renderEmptyMessage(source) {
+    const { notLoadedMessage } = this.props;
+
+    return source.pending() ? <Preloader /> : notLoadedMessage;
+  }
+
   renderSearchResults(source) {
     const {
       columnMapping,
       columnWidths,
       resultsFormatter,
       visibleColumns,
-      notLoadedMessage,
       objectName,
     } = this.props;
     const { selectedItem } = this.state;
@@ -533,7 +540,7 @@ class SearchAndSort extends Component {
             visibleColumns={visibleColumns}
             sortOrder={sortOrder}
             sortDirection={sortDirection}
-            isEmptyMessage={notLoadedMessage}
+            isEmptyMessage={this.renderEmptyMessage(source)}
             columnWidths={columnWidths}
             columnMapping={columnMapping}
             loading={source.pending()}
@@ -559,6 +566,7 @@ class SearchAndSort extends Component {
       stripes,
       parentMutator,
       location: { search },
+      newRecordContainer,
     } = this.props;
 
     if (!EditRecordComponent) {
@@ -569,7 +577,10 @@ class SearchAndSort extends Component {
     const isLayerOpen = urlQuery.layer ? urlQuery.layer === 'create' : false;
 
     return (
-      <Layer isOpen={isLayerOpen}>
+      <Layer
+        isOpen={isLayerOpen}
+        container={newRecordContainer}
+      >
         <EditRecordComponent
           id={`${objectName}form-add${objectName}`}
           stripes={stripes}
@@ -595,12 +606,9 @@ class SearchAndSort extends Component {
 
     const source = makeConnectedSource(this.props, stripes.logger);
     const count = source.totalCount();
-    const paneSubTranslationId = source.loaded()
-      ? resultCountMessageKey
-      : 'stripes-smart-components.searchCriteria';
     const paneSub = (
       <FormattedMessage
-        id={paneSubTranslationId}
+        id={resultCountMessageKey}
         values={{ count }}
       />
     );
@@ -629,6 +637,4 @@ class SearchAndSort extends Component {
   }
 }
 
-export default withRouter(
-  withStripes(SearchAndSort)
-);
+export default withRouter(withStripes(SearchAndSort));

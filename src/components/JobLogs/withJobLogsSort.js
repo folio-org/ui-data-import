@@ -130,15 +130,20 @@ const withJobLogsSort = WrappedComponent => {
     };
 
     render() {
+      const {
+        sort,
+        direction,
+      } = this.state;
       const { hasLoaded } = this.context;
+
       const contentData = this.prepareLogsData();
 
       return (
         <WrappedComponent
           {...this.props}
           contentData={contentData}
-          sortField={this.state.sort}
-          sortDirection={this.state.direction}
+          sortField={sort}
+          sortDirection={direction}
           hasLoaded={hasLoaded}
           onSort={this.onSort}
         />

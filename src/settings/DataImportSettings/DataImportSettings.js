@@ -57,7 +57,7 @@ class DataImportSettings extends Component {
         pages: [
           {
             route: 'file-extensions',
-            label: <FormattedMessage id="ui-data-import.settings.fileExtensions" />,
+            label: <FormattedMessage id="ui-data-import.settings.fileExtensions.title" />,
             component: connectedFileExtensions,
           },
         ],

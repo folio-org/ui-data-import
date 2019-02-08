@@ -16,7 +16,6 @@ import {
   });
 }
 
-// https://bigtestjs.io/guides/interactors/introduction/
 @interactor class JobsPaneInteractor {
   static defaultScope = '#ModuleContainer';
 
