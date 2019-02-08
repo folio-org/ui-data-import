@@ -124,9 +124,9 @@ class FileExtensions extends Component {
                 newRecordContainer={this.newRecordContainer}
                 ViewRecordComponent={ViewFileExtension}
                 EditRecordComponent={FileExtensionForm}
-                onCreate={this.createRecord}
                 newRecordInitialValues={newRecordInitialValues}
                 showSingleResult={showSingleResult}
+                onCreate={this.createRecord}
               />
             </div>
             <div

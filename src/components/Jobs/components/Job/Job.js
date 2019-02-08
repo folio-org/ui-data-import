@@ -91,7 +91,7 @@ class Job extends Component {
             <span>
               <FormattedMessage
                 id="ui-data-import.recordsCount"
-                value={{ count: total }}
+                values={{ count: total }}
               />
             </span>
           )}
