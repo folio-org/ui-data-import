@@ -1,5 +1,34 @@
 @import "@folio/stripes-components/lib/variables.css";
 
+.fileExtensionContainer {
+  width: 100%;
+}
+
 .editIcon {
   color: var(--success);
+}
+
+.newRecordContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.form {
+  height: 100%;
+}
+
+.formContent {
+  max-width: 50em;
+  margin: 0 auto;
+}
+
+.checkBoxLabel {
+  margin: 0;
+  line-height: 1.5;
+  cursor: default;
 }

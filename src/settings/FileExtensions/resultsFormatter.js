@@ -1,6 +1,5 @@
 import React from 'react';
 import { FormattedDate } from 'react-intl';
-import { upperFirst } from 'lodash';
 
 import {
   Icon,
@@ -9,10 +8,26 @@ import {
 
 import css from './FileExtensions.css';
 
+const formatUserName = userInfo => {
+  const {
+    firstName,
+    lastName,
+    userName,
+  } = userInfo;
+
+  if (userName === 'System') {
+    return userName;
+  }
+
+  const formattedUserName = userName ? `(@${userName})` : '';
+
+  return `${firstName} ${lastName} ${formattedUserName}`;
+};
+
 const resultsFormatter = intl => ({
   importBlocked: record => {
     const { importBlocked } = record;
-    const translationIdEnding = `fileExtension${importBlocked ? 'Block' : 'Allow'}Import`;
+    const translationIdEnding = `fileExtension.${importBlocked ? 'block' : 'allow'}Import`;
     const fullTranslationId = `ui-data-import.settings.${translationIdEnding}`;
 
     return intl.formatMessage({ id: fullTranslationId });
@@ -20,12 +35,7 @@ const resultsFormatter = intl => ({
   dataTypes: record => {
     const { dataTypes } = record;
 
-    // TODO: remove mapping when backend is adjusted to return type in needed format (MODSOURMAN-60)
-    const formattedDataTypes = dataTypes.map(type => {
-      return type !== 'DELIMITED' ? type : upperFirst(type.toLowerCase());
-    });
-
-    return formattedDataTypes.length > 0 ? formattedDataTypes.join(', ') : '-';
+    return dataTypes.length > 0 ? dataTypes.join(', ') : '-';
   },
   updated: record => {
     const { metadata: { updatedDate } } = record;
@@ -41,21 +51,17 @@ const resultsFormatter = intl => ({
     );
   },
   updatedBy: record => {
-    const { metadata: { updatedByUsername } } = record;
+    const { userInfo } = record;
 
-    if (updatedByUsername === 'System') {
-      return (
-        <AppIcon
-          size="small"
-          app="data-import"
-          iconKey="user"
-        >
-          {updatedByUsername.toUpperCase()}
-        </AppIcon>
-      );
-    }
-
-    return '';
+    return (
+      <AppIcon
+        size="small"
+        app="data-import"
+        iconKey="user"
+      >
+        {formatUserName(userInfo)}
+      </AppIcon>
+    );
   },
 });
 

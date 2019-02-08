@@ -17,11 +17,14 @@ class JobLogs extends Component {
     sortDirection: PropTypes.string.isRequired,
     formatter: PropTypes.object.isRequired,
     onSort: PropTypes.func.isRequired,
-    hasLoaded: PropTypes.bool.isRequired,
+    hasLoaded: PropTypes.bool,
     contentData: PropTypes.arrayOf(jobLogPropTypes),
   };
 
-  static defaultProps = { contentData: [] };
+  static defaultProps = {
+    contentData: [],
+    hasLoaded: false,
+  };
 
   constructor(props) {
     super(props);
@@ -29,11 +32,11 @@ class JobLogs extends Component {
     const { intl: { formatMessage } } = this.props;
 
     this.columnMapping = {
-      fileName: formatMessage({ id: 'ui-data-import.jobFileName' }),
+      fileName: formatMessage({ id: 'ui-data-import.fileName' }),
       jobProfileName: formatMessage({ id: 'ui-data-import.jobProfileName' }),
       jobExecutionHrId: formatMessage({ id: 'ui-data-import.jobExecutionHrId' }),
       completedDate: formatMessage({ id: 'ui-data-import.jobCompletedDate' }),
-      runBy: formatMessage({ id: 'ui-data-import.jobRunBy' }),
+      runBy: formatMessage({ id: 'ui-data-import.runBy' }),
     };
 
     this.visibleColumns = [
@@ -61,6 +64,7 @@ class JobLogs extends Component {
 
     return (
       <MultiColumnList
+        id="list-job-logs"
         totalCount={contentData.length}
         contentData={contentData}
         columnMapping={this.columnMapping}

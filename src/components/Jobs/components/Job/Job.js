@@ -9,8 +9,6 @@ import {
   FormattedDate,
   FormattedTime,
   FormattedMessage,
-  FormattedNumber,
-  FormattedPlural,
 } from 'react-intl';
 import { noop } from 'lodash';
 import classNames from 'classnames';
@@ -91,11 +89,9 @@ class Job extends Component {
         <div className={css.delimiter}>
           {jobMeta && (
             <span>
-              <FormattedNumber value={total} />{' '}
-              <FormattedPlural
-                value={total}
-                one={<FormattedMessage id="ui-data-import.record" />}
-                other={<FormattedMessage id="ui-data-import.records" />}
+              <FormattedMessage
+                id="ui-data-import.recordsCount"
+                value={{ count: total }}
               />
             </span>
           )}

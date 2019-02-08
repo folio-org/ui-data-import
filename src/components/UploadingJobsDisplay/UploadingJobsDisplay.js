@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
-import { isEmpty } from 'lodash';
+import {
+  isEmpty,
+  omit,
+} from 'lodash';
 
 import {
   withStripes,
@@ -440,10 +443,7 @@ class UploadingJobsDisplay extends Component {
 
   deleteFileFromState = fileKey => {
     this.setState(state => {
-      const {
-        [fileKey]: fileToDelete, // eslint-disable-line no-unused-vars
-        ...updatedFiles
-      } = state.files;
+      const updatedFiles = omit(state.files, fileKey);
 
       return { files: updatedFiles };
     });
