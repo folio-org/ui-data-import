@@ -77,5 +77,30 @@
     "modal.leavePage.message": "有{highlightedText} 。如果您想完成所有上传，请按“保持上传”按钮。",
     "modal.leavePage.messageHighlightedText": "未完成的上传",
     "modal.leavePage.cancel": "关闭并丢失部分上传内容",
-    "modal.leavePage.actionButton": "继续上传"
+    "modal.leavePage.actionButton": "继续上传",
+    "importJobs.errorMessage": "请求失败。再试一次",
+    "returnToAssign.messageWhenProhibited": "文件上传在进行中",
+    "recordsCount": {
+        "one": "# record",
+        "other": "# records"
+    },
+    "fileName": "File name",
+    "updated": "Updated",
+    "updatedBy": "Updated by",
+    "runBy": "Run by",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "description": "Description",
+    "settings.fileExtension.title": "File extension",
+    "settings.fileExtension.extension": "Extension",
+    "settings.fileExtension.dataTypes": "Data type(s)",
+    "settings.fileExtension.blockImport": "Block import",
+    "settings.fileExtension.allowImport": "Allow import",
+    "settings.fileExtension.newMapping": "New file extension mapping",
+    "settings.fileExtension.create": "Create file extension",
+    "settings.fileExtensions.title": "File extensions",
+    "settings.fileExtensions.count": "{count, number} file {count, plural, one {extension} other {extensions}}",
+    "validation.enterValue": "Please enter a value",
+    "validation.fileExtension": "Please enter a valid file extension (e.g. .marc)"
 }
