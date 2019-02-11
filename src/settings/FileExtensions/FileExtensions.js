@@ -18,7 +18,7 @@ class FileExtensions extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
     query: {
-      initialValue: { sort: 'Extension' },
+      initialValue: { sort: 'extension' },
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     records: {
@@ -34,11 +34,11 @@ class FileExtensions extends Component {
             'cql.allRecords=1',
             '(extension="%{query.query}*")',
             {
-              'Extension': 'extension',
-              'Block import': 'importBlocked',
-              'Updated': 'metadata.updatedDate',
-              'Data type(s)': 'dataTypes',
-              'Updated by': 'userInfo.firstName userInfo.lastName userInfo.userName',
+              'extension': 'extension',
+              'importBlocked': 'importBlocked',
+              'updated': 'metadata.updatedDate',
+              'dataTypes': 'dataTypes',
+              'updatedBy': 'userInfo.firstName userInfo.lastName userInfo.userName',
             },
             [],
           ),

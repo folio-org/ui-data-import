@@ -14,6 +14,8 @@
 * Create data import settings page's 3rd pane for File Extensions (UIDATIMP-47)
 * Show modal on Leaving Choose Job Profile page (UIDATIMP-104)
 * Prohibit file upload when there is a draft job in progress (UIDATIMP-106)
+* Implement add new file extension feature (UIDATIMP-56)
+* Handle sorting icons for both job logs and file extensions tables (UIDATIMP-124)
 
 ## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
 

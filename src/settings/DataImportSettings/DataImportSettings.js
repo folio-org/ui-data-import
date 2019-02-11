@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { Settings } from '@folio/stripes/smart-components';
+import { InfoPopover } from '@folio/stripes/components';
 import {
   AppIcon,
-  InfoPopover,
-} from '@folio/stripes/components';
-import { stripesShape } from '@folio/stripes/core';
+  stripesShape,
+} from '@folio/stripes/core';
 
 import JobProfiles from '../JobProfiles';
 import MatchProfiles from '../MatchProfiles';

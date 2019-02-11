@@ -117,6 +117,7 @@ class ImportJobs extends Component {
 
   render() {
     const { match: { path } } = this.props;
+    const { uploadDefinition } = this.context;
     const {
       redirect,
       hasLoaded,
@@ -125,7 +126,6 @@ class ImportJobs extends Component {
       prohibitFilesUploading,
       filesExtensionsModalOpen,
     } = this.state;
-    const { uploadDefinition } = this.context;
 
     if (!hasLoaded) {
       return <Preloader />;

@@ -32,6 +32,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import Preloader from '../JobLogs/JobLogs';
+import { SORT_TYPES } from '../../utils/constants';
 
 import css from './SearchAndSort.css';
 
@@ -282,7 +283,7 @@ class SearchAndSort extends Component {
   onSort = (e, meta) => {
     const { maxSortKeys } = this.props;
 
-    const newOrder = meta.alias;
+    const newOrder = meta.name;
     const oldOrder = this.queryParam('sort');
     const orders = oldOrder ? oldOrder.split(',') : [];
     const mainSort = orders[0];
@@ -522,7 +523,7 @@ class SearchAndSort extends Component {
     const count = source.totalCount();
     const objectNameUC = upperFirst(objectName);
     const sortOrderQuery = this.queryParam('sort') || '';
-    const sortDirection = sortOrderQuery.startsWith('-') ? 'descending' : 'ascending';
+    const sortDirection = sortOrderQuery.startsWith('-') ? SORT_TYPES.DESCENDING : SORT_TYPES.ASCENDING;
     const sortOrder = sortOrderQuery.replace(/^-/, '').replace(/,.*/, '');
 
     return (

@@ -1,6 +1,7 @@
+import { map } from 'lodash';
+
 const generateQueryParams = (params = {}) => {
-  const queryParamsString = Object.entries(params)
-    .map(param => param.map(encodeURIComponent).join('='))
+  const queryParamsString = map(params, (value, key) => [key, value].map(encodeURIComponent).join('='))
     .join('&');
 
   return `${(queryParamsString.length ? '?' : '')}${queryParamsString}`;
@@ -10,14 +11,14 @@ const generateQueryParams = (params = {}) => {
  * Creates url with query parameters
  *
  * @param  {string} url
- * @param  {object} [params]
+ * @param  {object} [queryParams]
  */
-const createUrl = (url, params = {}) => {
+const createUrl = (url, queryParams = {}) => {
   if (typeof url !== 'string') {
     throw new Error('First parameter must be of type string');
   }
 
-  const paramsString = generateQueryParams(params);
+  const paramsString = generateQueryParams(queryParams);
 
   return `${url.endsWith('?') ? url.slice(0, -1) : url}${paramsString}`;
 };

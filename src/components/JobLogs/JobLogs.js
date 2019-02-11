@@ -77,7 +77,7 @@ class JobLogs extends Component {
           columnMapping={this.columnMapping}
           visibleColumns={this.visibleColumns}
           formatter={formatter}
-          sortOrder={this.columnMapping[sortField]}
+          sortOrder={sortField}
           sortDirection={sortDirection}
           autosize
           onHeaderClick={onSort}

@@ -1,4 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, {
+  Component,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -6,7 +9,6 @@ import {
   Pane,
   Headline,
 } from '@folio/stripes/components';
-
 import { TitleManager } from '@folio/stripes/core';
 
 import Preloader from '../../components/Preloader';

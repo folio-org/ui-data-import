@@ -1,10 +1,8 @@
 import React from 'react';
 import { FormattedDate } from 'react-intl';
 
-import {
-  Icon,
-  AppIcon,
-} from '@folio/stripes/components';
+import { Icon } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes/core';
 
 import css from './FileExtensions.css';
 

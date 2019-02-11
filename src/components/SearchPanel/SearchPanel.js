@@ -11,6 +11,15 @@ import {
 
 import css from './SearchPanel.css';
 
+const resultRecordTypes = [
+  'Instances (32)',
+  'Holdings (14)',
+  'Items (11)',
+  'Orders (3)',
+  'MARK bibs (42)',
+  'Invoices (12)',
+];
+
 export default function SearchPanel() {
   return (
     <AccordionSet>
@@ -20,9 +29,7 @@ export default function SearchPanel() {
         separator={false}
         header={FilterAccordionHeader}
       >
-        <SearchField
-          id="input-search"
-        />
+        <SearchField id="input-search" />
       </Accordion>
       <Accordion
         label="Status"
@@ -85,136 +92,45 @@ export default function SearchPanel() {
         <br />
       </Accordion>
       <Accordion
-        label="Resulting record type"
         id="ex-2"
+        label="Resulting record type"
         separator={false}
         header={FilterAccordionHeader}
       >
         <div className={css.container}>
-          <Checkbox
-            name="checkbox_1"
-            label={(
-              <div>
-                <div className={classNames(
-                  css.recordType,
-                  css.recordTypeOrange
-                )}
-                />
-                Instances (32)
-              </div>
-            )}
-          />
-          <Checkbox
-            name="checkbox_1"
-            label={(
-              <div>
-                <div className={classNames(
-                  css.recordType,
-                  css.recordTypeRed,
-                )}
-                />
-                Holdings (14)
-              </div>
-            )}
-          />
-          <Checkbox
-            name="checkbox_1"
-            label={(
-              <div>
-                <div className={classNames(
-                  css.recordType,
-                  css.recordTypeGreen
-                )}
-                />
-                Items (11)
-              </div>
-            )}
-          />
-          <Checkbox
-            name="checkbox_1"
-            label={(
-              <div>
-                <div className={classNames(
-                  css.recordType,
-                  css.recordTypeBlue
-                )}
-                />
-                Orders (3)
-              </div>
-            )}
-          />
-          <Checkbox
-            name="checkbox_1"
-            label={(
-              <div>
-                <div className={classNames(
-                  css.recordType,
-                  css.recordTypeDeepskyblue
-                )}
-                />
-                MARK bibs (42)
-              </div>
-            )}
-          />
-          <Checkbox
-            name="checkbox_1"
-            label={(
-              <div>
-                <div className={classNames(
-                  css.recordType,
-                  css.recordTypeDarkslateblue
-                )}
-                />
-                Invaices (12)
-              </div>
-            )}
-          />
+          {resultRecordTypes.map((type, i) => (
+            <Checkbox
+              key={i}
+              name={`checkbox_${i}`}
+              label={(
+                <div>
+                  <div className={classNames(
+                    css.recordType,
+                    css.recordTypeDarkslateblue
+                  )}
+                  />
+                  {type}
+                </div>
+              )}
+            />
+          ))}
         </div>
         <br />
       </Accordion>
       <Accordion
-        label="Filter X"
         id="ex-3"
+        label="Filter X"
         separator={false}
         header={FilterAccordionHeader}
       >
         <div className={css.container}>
-          <Checkbox
-            name="checkbox_1"
-            label={(
-              <div className={css.panel} />
-            )}
-          />
-          <Checkbox
-            name="checkbox_1"
-            label={(
-              <div className={css.panel} />
-            )}
-          />
-          <Checkbox
-            name="checkbox_1"
-            label={(
-              <div className={css.panel} />
-            )}
-          />
-          <Checkbox
-            name="checkbox_1"
-            label={(
-              <div className={css.panel} />
-            )}
-          />
-          <Checkbox
-            name="checkbox_1"
-            label={(
-              <div className={css.panel} />
-            )}
-          />
-          <Checkbox
-            name="checkbox_1"
-            label={(
-              <div className={css.panel} />
-            )}
-          />
+          {resultRecordTypes.map((_, i) => (
+            <Checkbox
+              key={i}
+              name={`checkbox_${i}`}
+              label={<div className={css.panel} />}
+            />
+          ))}
         </div>
         <br />
       </Accordion>

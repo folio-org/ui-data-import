@@ -31,7 +31,7 @@ class Job extends Component {
   static defaultProps = { handlePreview: noop };
 
   checkDateIsToday = date => {
-    const { formatDate } = this.props.intl;
+    const { intl: { formatDate } } = this.props;
 
     return formatDate(new Date()) === formatDate(date);
   };
@@ -52,6 +52,7 @@ class Job extends Component {
       job,
       handlePreview,
     } = this.props;
+
     const {
       jobProfileName,
       fileName,

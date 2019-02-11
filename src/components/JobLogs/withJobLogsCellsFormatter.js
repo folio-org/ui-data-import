@@ -37,8 +37,9 @@ const withJobLogsCellsFormatter = WrappedComponent => {
     }
 
     formatEndedRunningDate = record => {
+      const { intl: { formatTime } } = this.props;
+
       const { completedDate } = record;
-      const { formatTime } = this.props.intl;
 
       return formatTime(completedDate, {
         day: 'numeric',

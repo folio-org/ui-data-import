@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { stripesShape } from '@folio/stripes/core';
-
 import {
   Button,
   Pane,

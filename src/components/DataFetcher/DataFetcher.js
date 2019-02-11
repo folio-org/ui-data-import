@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import {
+  get,
+  forEach,
+} from 'lodash';
 
 import jobPropTypes from '../Jobs/components/Job/jobPropTypes';
 import jobLogPropTypes from '../JobLogs/jobLogPropTypes';
@@ -137,10 +140,9 @@ class DataFetcher extends Component {
     const { resources } = this.props;
     const contextData = { hasLoaded: true };
 
-    Object.entries(resources)
-      .forEach(([resourceName, resourceValue]) => {
-        contextData[resourceName] = isEmpty ? {} : get(resourceValue, ['records', 0], {});
-      });
+    forEach(resources, (resourceValue, resourceName) => {
+      contextData[resourceName] = isEmpty ? {} : get(resourceValue, ['records', 0], {});
+    });
 
     this.setState({ contextData });
   }
