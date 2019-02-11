@@ -63,18 +63,20 @@ class JobLogs extends Component {
     }
 
     return (
-      <MultiColumnList
-        id="list-job-logs"
-        totalCount={contentData.length}
-        contentData={contentData}
-        columnMapping={this.columnMapping}
-        visibleColumns={this.visibleColumns}
-        formatter={formatter}
-        sortOrder={this.columnMapping[sortField]}
-        sortDirection={sortDirection}
-        autosize
-        onHeaderClick={onSort}
-      />
+      <div data-test-logs-pane>
+        <MultiColumnList
+          id="list-job-logs"
+          totalCount={contentData.length}
+          contentData={contentData}
+          columnMapping={this.columnMapping}
+          visibleColumns={this.visibleColumns}
+          formatter={formatter}
+          sortOrder={this.columnMapping[sortField]}
+          sortDirection={sortDirection}
+          autosize
+          onHeaderClick={onSort}
+        />
+      </div>
     );
   }
 }
