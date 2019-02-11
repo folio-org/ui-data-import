@@ -80,10 +80,7 @@
     "modal.leavePage.actionButton": "继续上传",
     "importJobs.errorMessage": "请求失败。再试一次",
     "returnToAssign.messageWhenProhibited": "文件上传在进行中",
-    "recordsCount": {
-        "one": "# record",
-        "other": "# records"
-    },
+    "recordsCount": "{count, plural, one {# record} other {# records}}",
     "fileName": "File name",
     "updated": "Updated",
     "updatedBy": "Updated by",
