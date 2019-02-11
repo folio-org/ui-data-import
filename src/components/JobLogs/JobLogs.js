@@ -63,7 +63,13 @@ class JobLogs extends Component {
     }
 
     return (
-      <div data-test-logs-pane>
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+        data-test-logs-pane
+      >
         <MultiColumnList
           id="list-job-logs"
           totalCount={contentData.length}
