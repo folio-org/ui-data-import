@@ -79,11 +79,8 @@
     "modal.leavePage.cancel": "Fechar e perder uploads parciais",
     "modal.leavePage.actionButton": "Continue fazendo o upload",
     "importJobs.errorMessage": "Request failed. Try again",
-    "returnToAssign.messageWhenProhibited": "File upload already in progress",
-    "recordsCount": {
-        "one": "# record",
-        "other": "# records"
-    },
+    "returnToAssign.messageWhenProhibited": "Draft job in progress",
+    "recordsCount": "{count, plural, one {# record} other {# records}}",
     "fileName": "File name",
     "updated": "Updated",
     "updatedBy": "Updated by",
