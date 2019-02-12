@@ -106,7 +106,3 @@
 .accordion {
   background-color: #f7f7f7;
 }
-
-div[class^="labelArea"] > div:nth-child(1) {
-  width: 100%;
-}
