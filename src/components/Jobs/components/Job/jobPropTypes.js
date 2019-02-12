@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const jobPropTypes = PropTypes.shape({
+export const jobPropTypes = PropTypes.shape({
   id: PropTypes.string.isRequired,
   hrId: PropTypes.string.isRequired,
   jobProfileName: PropTypes.string.isRequired,
@@ -17,5 +17,3 @@ const jobPropTypes = PropTypes.shape({
   startedDate: PropTypes.string.isRequired,
   completedDate: PropTypes.string,
 });
-
-export default jobPropTypes;

@@ -6,7 +6,7 @@ import {
 } from 'react-intl';
 import { compose } from '../../utils';
 
-const withJobLogsCellsFormatter = WrappedComponent => {
+const withJobLogsCellsFormatterComponent = WrappedComponent => {
   return class extends Component {
     static propTypes = {
       intl: intlShape.isRequired,
@@ -59,7 +59,7 @@ const withJobLogsCellsFormatter = WrappedComponent => {
   };
 };
 
-export default compose(
+export const withJobLogsCellsFormatter = compose(
   injectIntl,
-  withJobLogsCellsFormatter,
+  withJobLogsCellsFormatterComponent,
 );

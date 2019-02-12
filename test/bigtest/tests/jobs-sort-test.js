@@ -5,8 +5,8 @@ import {
 import { expect } from 'chai';
 import { isEqual } from 'lodash';
 
-import sortPreviewJobs from '../../../src/components/Jobs/components/PreviewsJobs/sortPreviewJobs';
-import sortRunningJobs from '../../../src/components/Jobs/components/RunningJobs/sortRunningJobs';
+import { sortPreviewJobs } from '../../../src/components/Jobs/components/PreviewsJobs/sortPreviewJobs';
+import { sortRunningJobs } from '../../../src/components/Jobs/components/RunningJobs/sortRunningJobs';
 import {
   READY_FOR_PREVIEW,
   PREPARING_FOR_PREVIEW,

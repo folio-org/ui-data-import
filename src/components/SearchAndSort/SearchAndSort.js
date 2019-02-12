@@ -31,12 +31,12 @@ import {
   makeConnectedSource,
 } from '@folio/stripes/smart-components';
 
-import Preloader from '../JobLogs/JobLogs';
+import { Preloader } from '../Preloader';
 import { SORT_TYPES } from '../../utils/constants';
 
 import css from './SearchAndSort.css';
 
-class SearchAndSort extends Component {
+class SearchAndSortComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     objectName: PropTypes.string.isRequired,
@@ -638,4 +638,4 @@ class SearchAndSort extends Component {
   }
 }
 
-export default withRouter(withStripes(SearchAndSort));
+export const SearchAndSort = withRouter(withStripes(SearchAndSortComponent));

@@ -43,4 +43,4 @@ InvalidFilesModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
 };
 
-export default InvalidFilesModal;
+export { InvalidFilesModal };

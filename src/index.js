@@ -7,11 +7,13 @@ import {
 
 import { stripesShape } from '@folio/stripes/core';
 
-import Home from './routes/Home';
-import Results from './routes/Results';
-import JobProfile from './routes/JobProfile';
-import Settings from './settings';
-import UploadingJobsContextProvider from './components/UploadingJobsContextProvider';
+import {
+  Home,
+  Results,
+  JobProfile,
+} from './routes';
+import { DataImportSettings } from './settings';
+import { UploadingJobsContextProvider } from './components/UploadingJobsContextProvider';
 
 class DataImport extends Component {
   static propTypes = {
@@ -44,7 +46,7 @@ class DataImport extends Component {
     } = this.props;
 
     if (showSettings) {
-      return <Settings {...this.props} />;
+      return <DataImportSettings {...this.props} />;
     }
 
     return (

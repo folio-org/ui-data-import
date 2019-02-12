@@ -6,7 +6,7 @@ import { Icon } from '@folio/stripes/components';
 
 import css from './Preloader.css';
 
-const Preloader = ({ message }) => (
+export const Preloader = ({ message }) => (
   <div className={css.preloader}>
     {message}
     <Icon
@@ -23,5 +23,3 @@ Preloader.propTypes = {
 Preloader.defaultProps = {
   message: <FormattedMessage id="ui-data-import.loading" />,
 };
-
-export default Preloader;

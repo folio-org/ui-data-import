@@ -15,13 +15,13 @@ import classNames from 'classnames';
 
 import { Button } from '@folio/stripes/components';
 
-import Progress from '../../../Progress';
-import jobMetaTypes from './jobMetaTypes';
-import jobPropTypes from './jobPropTypes';
+import { Progress } from '../../../Progress';
+import { jobMetaTypes } from './jobMetaTypes';
+import { jobPropTypes } from './jobPropTypes';
 
 import css from './Job.css';
 
-class Job extends Component {
+class JobComponent extends Component {
   static propTypes = {
     job: jobPropTypes.isRequired,
     intl: intlShape.isRequired,
@@ -134,4 +134,4 @@ class Job extends Component {
   }
 }
 
-export default injectIntl(Job);
+export const Job = injectIntl(JobComponent);

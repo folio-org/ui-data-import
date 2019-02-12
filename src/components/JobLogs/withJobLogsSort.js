@@ -13,7 +13,7 @@ import { compose } from '../../utils';
 import { SORT_TYPES } from '../../utils/constants';
 import { DataFetcherContext } from '../DataFetcher';
 
-const withJobLogsSort = WrappedComponent => {
+const withJobLogsSortComponent = WrappedComponent => {
   return class extends Component {
     static propTypes = {
       history: PropTypes.shape({
@@ -155,7 +155,7 @@ const withJobLogsSort = WrappedComponent => {
   };
 };
 
-export default compose(
+export const withJobLogsSort = compose(
   withRouter,
-  withJobLogsSort,
+  withJobLogsSortComponent,
 );

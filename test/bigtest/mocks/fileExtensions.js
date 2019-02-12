@@ -1,4 +1,4 @@
-const fileExtensions = [
+const fileExtensionsData = [
   {
     id: 'f375ffe9-b00b-4786-b0a8-cd99f93e5aab',
     extension: '.csv',
@@ -28,4 +28,4 @@ const fileExtensions = [
   },
 ];
 
-export default [...fileExtensions];
+export const fileExtensions = [...fileExtensionsData];

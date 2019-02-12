@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import React from 'react';
+import React, { Component } from 'react';
 
 import {
   Accordion,
@@ -8,8 +8,11 @@ import {
   Col,
 } from '@folio/stripes/components';
 
-import RecordItem from './components/RecordItem';
-import RecordPreview from './components/RecordPreview';
+import {
+  RecordItem,
+  RecordPreview,
+} from './components';
+
 import css from './Report.css';
 
 const record = {
@@ -40,7 +43,7 @@ const record = {
   ],
 };
 
-class Report extends React.Component {
+export class Report extends Component {
   state = {
     accordions: {
       'request-info': false,
@@ -109,5 +112,3 @@ class Report extends React.Component {
     );
   }
 }
-
-export default Report;

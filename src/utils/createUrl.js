@@ -13,7 +13,7 @@ const generateQueryParams = (params = {}) => {
  * @param  {string} url
  * @param  {object} [queryParams]
  */
-const createUrl = (url, queryParams = {}) => {
+export const createUrl = (url, queryParams = {}) => {
   if (typeof url !== 'string') {
     throw new Error('First parameter must be of type string');
   }
@@ -22,5 +22,3 @@ const createUrl = (url, queryParams = {}) => {
 
   return `${url.endsWith('?') ? url.slice(0, -1) : url}${paramsString}`;
 };
-
-export default createUrl;

@@ -56,4 +56,4 @@ RecordItem.propTypes = {
   }),
 };
 
-export default RecordItem;
+export { RecordItem };

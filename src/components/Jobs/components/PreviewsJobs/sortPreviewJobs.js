@@ -48,8 +48,6 @@ const sortingOptions = [
   sortByDates,
 ];
 
-const sortPreviewJobs = jobs => {
+export const sortPreviewJobs = jobs => {
   return sortCollection(jobs, sortingOptions);
 };
-
-export default sortPreviewJobs;

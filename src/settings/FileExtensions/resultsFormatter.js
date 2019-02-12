@@ -22,7 +22,7 @@ const formatUserName = userInfo => {
   return `${firstName} ${lastName} ${formattedUserName}`;
 };
 
-const resultsFormatter = intl => ({
+export const resultsFormatter = intl => ({
   importBlocked: record => {
     const { importBlocked } = record;
     const translationIdEnding = `fileExtension.${importBlocked ? 'block' : 'allow'}Import`;
@@ -62,5 +62,3 @@ const resultsFormatter = intl => ({
     );
   },
 });
-
-export default resultsFormatter;

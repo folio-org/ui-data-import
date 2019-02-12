@@ -1,4 +1,4 @@
-const jobsLogs = [
+const jobsLogsData = [
   {
     jobExecutionId: '3d790a2a-86de-46f9-a9ae-c9109bba746b',
     jobExecutionHrId: '23391',
@@ -40,4 +40,4 @@ const jobsLogs = [
   },
 ];
 
-export default [...jobsLogs];
+export const jobsLogs = [...jobsLogsData];

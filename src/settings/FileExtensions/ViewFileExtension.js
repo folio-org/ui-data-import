@@ -11,10 +11,10 @@ import {
 } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
 
-import Preloader from '../../components/Preloader';
+import { Preloader } from '../../components/Preloader';
 
 // TODO: view component will be developed in UIDATIMP-61
-class ViewFileExtension extends Component {
+export class ViewFileExtension extends Component {
   static manifest = Object.freeze({
     fileExtension: {
       type: 'okapi',
@@ -111,5 +111,3 @@ class ViewFileExtension extends Component {
     );
   }
 }
-
-export default ViewFileExtension;

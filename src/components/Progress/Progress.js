@@ -15,7 +15,7 @@ const progressInfoFormatters = {
   ),
 };
 
-const Progress = props => {
+export const Progress = props => {
   const {
     current,
     total,
@@ -62,5 +62,3 @@ Progress.defaultProps = {
   progressCurrentClassName: css.progressCurrent,
   progressInfoClassName: css.progressInfo,
 };
-
-export default Progress;

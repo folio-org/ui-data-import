@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { IntlConsumer } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 
-import SearchAndSort from '../../components/SearchAndSort';
-import ViewFileExtension from './ViewFileExtension';
-import resultsFormatter from './resultsFormatter';
-import FileExtensionForm from './FileExtensionForm';
+import { SearchAndSort } from '../../components/SearchAndSort';
+import { ViewFileExtension } from './ViewFileExtension';
+import { resultsFormatter } from './resultsFormatter';
+import { FileExtensionForm } from './FileExtensionForm';
 
 import css from './FileExtensions.css';
 
@@ -140,4 +140,4 @@ class FileExtensions extends Component {
   }
 }
 
-export default FileExtensions;
+export { FileExtensions };

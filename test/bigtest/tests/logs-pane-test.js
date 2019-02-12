@@ -1,7 +1,7 @@
 import { describe, beforeEach, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 
-import setupApplication from '../helpers/setup-application';
+import { setupApplication } from '../helpers';
 import JobsLogs from '../interactors/jobs-pane';
 
 describe('Logs pane', () => {

@@ -2,15 +2,15 @@ import React, { PureComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
-import JobsList from '../JobsList';
-import sortPreviewJobs from './sortPreviewJobs';
+import { JobsList } from '../JobsList';
+import { sortPreviewJobs } from './sortPreviewJobs';
 import {
   READY_FOR_PREVIEW,
   PREPARING_FOR_PREVIEW,
 } from '../../jobStatuses';
 import { DataFetcherContext } from '../../../DataFetcher';
 
-class PreviewsJobs extends PureComponent {
+export class PreviewsJobs extends PureComponent {
   static contextType = DataFetcherContext;
 
   prepareJobsData() {
@@ -30,11 +30,9 @@ class PreviewsJobs extends PureComponent {
         <JobsList
           jobs={jobs}
           hasLoaded={hasLoaded}
-          noJobsMessage={<FormattedMessage id="ui-data-import.noPreviewsJobsMessage" />}
+          isEmptyMessage={<FormattedMessage id="ui-data-import.noPreviewsJobsMessage" />}
         />
       </div>
     );
   }
 }
-
-export default PreviewsJobs;

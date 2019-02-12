@@ -33,9 +33,7 @@ const validateFileExtension = value => {
   return <FormattedMessage id="ui-data-import.validation.fileExtension" />;
 };
 
-const validators = {
+export const validators = {
   fileExtension: [validateRequiredField, validateFileExtension],
   dataTypes: [validateDataTypes],
 };
-
-export default validators;

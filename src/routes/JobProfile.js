@@ -6,9 +6,9 @@ import {
   Pane,
 } from '@folio/stripes/components';
 
-import UploadingJobsDisplay from '../components/UploadingJobsDisplay';
+import { UploadingJobsDisplay } from '../components/UploadingJobsDisplay';
 
-class JobProfile extends Component {
+export class JobProfile extends Component {
   render() {
     return (
       <Paneset>
@@ -22,5 +22,3 @@ class JobProfile extends Component {
     );
   }
 }
-
-export default JobProfile;

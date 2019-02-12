@@ -1,1 +1,1 @@
-export { default } from './SearchAndSort';
+export * from './SearchAndSort';

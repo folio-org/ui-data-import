@@ -24,13 +24,13 @@ import {
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
-import validators from './validators';
+import { validators } from './validators';
 
 import css from '../FileExtensions.css';
 
 const formName = 'fileExtensionForm';
 
-class FileExtensionForm extends Component {
+class FileExtensionFormComponent extends Component {
   static propTypes = {
     pristine: PropTypes.bool.isRequired,
     submitting: PropTypes.bool.isRequired,
@@ -241,8 +241,10 @@ class FileExtensionForm extends Component {
   }
 }
 
-export default stripesForm({
+const FileExtensionForm = stripesForm({
   form: formName,
   navigationCheck: true,
   enableReinitialize: true,
-})(FileExtensionForm);
+})(FileExtensionFormComponent);
+
+export { FileExtensionForm };

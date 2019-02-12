@@ -5,8 +5,8 @@ import {
   forEach,
 } from 'lodash';
 
-import jobPropTypes from '../Jobs/components/Job/jobPropTypes';
-import jobLogPropTypes from '../JobLogs/jobLogPropTypes';
+import { jobPropTypes } from '../Jobs/components/Job/jobPropTypes';
+import { jobLogPropTypes } from '../JobLogs/jobLogPropTypes';
 import { DEFAULT_FETCHER_UPDATE_INTERVAL } from '../../utils/constants';
 import { createUrl } from '../../utils';
 import {
@@ -26,7 +26,7 @@ const logsUrl = createUrl('metadata-provider/logs', {
   limit: 25,
 });
 
-class DataFetcher extends Component {
+export class DataFetcher extends Component {
   static manifest = Object.freeze({
     jobs: {
       type: 'okapi',
@@ -158,5 +158,3 @@ class DataFetcher extends Component {
     );
   }
 }
-
-export default DataFetcher;

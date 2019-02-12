@@ -4,13 +4,13 @@ import { intlShape } from 'react-intl';
 
 import { MultiColumnList } from '@folio/stripes/components';
 
-import Preloader from '../Preloader';
-import withJobLogsCellsFormatter from './withJobLogsCellsFormatter';
-import withJobLogsSort from './withJobLogsSort';
+import { Preloader } from '../Preloader';
+import { withJobLogsCellsFormatter } from './withJobLogsCellsFormatter';
+import { withJobLogsSort } from './withJobLogsSort';
 import { compose } from '../../utils';
-import jobLogPropTypes from './jobLogPropTypes';
+import { jobLogPropTypes } from './jobLogPropTypes';
 
-class JobLogs extends Component {
+class JobLogsComponent extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     sortField: PropTypes.string.isRequired,
@@ -87,7 +87,7 @@ class JobLogs extends Component {
   }
 }
 
-export default compose(
+export const JobLogs = compose(
   withJobLogsCellsFormatter,
   withJobLogsSort,
-)(JobLogs);
+)(JobLogsComponent);

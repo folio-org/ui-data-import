@@ -20,7 +20,7 @@ const resultRecordTypes = [
   'Invoices (12)',
 ];
 
-export default function SearchPanel() {
+export function SearchPanel() {
   return (
     <AccordionSet>
       <Accordion

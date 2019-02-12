@@ -19,11 +19,13 @@ import {
   Callout,
 } from '@folio/stripes/components';
 
-import * as fileStatuses from './components/FileItem/fileItemStatuses';
-import EndOfList from '../EndOfList';
-import Preloader from '../Preloader';
-import FileItem from './components/FileItem';
-import LeavePageModal from './components/LeavePageModal';
+import { EndOfList } from '../EndOfList';
+import { Preloader } from '../Preloader';
+import {
+  FileItem,
+  LeavePageModal,
+  fileStatuses,
+} from './components';
 import {
   compose,
   createUrl,
@@ -34,7 +36,7 @@ import { DEFAULT_TIMEOUT_BEFORE_FILE_DELETION } from '../../utils/constants';
 import * as API from './utils/upload';
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 
-class UploadingJobsDisplay extends Component {
+class UploadingJobsDisplayComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     history: PropTypes.shape({
@@ -53,7 +55,7 @@ class UploadingJobsDisplay extends Component {
   static getUploadFilesErrorMessageID(msg) {
     const defaultErrorId = 'upload.invalid';
 
-    return UploadingJobsDisplay.knownErrorsIDs.includes(msg) ? msg : defaultErrorId;
+    return UploadingJobsDisplayComponent.knownErrorsIDs.includes(msg) ? msg : defaultErrorId;
   }
 
   constructor(props, context) {
@@ -447,7 +449,7 @@ class UploadingJobsDisplay extends Component {
   };
 
   handleAllFilesUploadFail(errMsg) {
-    const errorMsgTranslationID = UploadingJobsDisplay.getUploadFilesErrorMessageID(errMsg);
+    const errorMsgTranslationID = UploadingJobsDisplayComponent.getUploadFilesErrorMessageID(errMsg);
 
     this.setState(state => {
       const files = Object.keys(state.files)
@@ -549,7 +551,7 @@ class UploadingJobsDisplay extends Component {
   }
 }
 
-export default compose(
+export const UploadingJobsDisplay = compose(
   withRouter,
   withStripes,
-)(UploadingJobsDisplay);
+)(UploadingJobsDisplayComponent);

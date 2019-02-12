@@ -13,7 +13,7 @@ import {
 } from '../../utils';
 import { UploadingJobsContext } from '.';
 
-class UploadingJobsContextProvider extends Component {
+class UploadingJobsContextProviderComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     children: PropTypes.oneOfType([
@@ -94,4 +94,4 @@ class UploadingJobsContextProvider extends Component {
   }
 }
 
-export default withStripes(UploadingJobsContextProvider);
+export const UploadingJobsContextProvider = withStripes(UploadingJobsContextProviderComponent);

@@ -8,7 +8,7 @@ import {
 
 import css from './RecordPreview.css';
 
-const RecordPreview = () => {
+export const RecordPreview = () => {
   return (
     <Row>
       <Col xs={12} sm={7}>
@@ -41,5 +41,3 @@ const RecordPreview = () => {
     </Row>
   );
 };
-
-export default RecordPreview;

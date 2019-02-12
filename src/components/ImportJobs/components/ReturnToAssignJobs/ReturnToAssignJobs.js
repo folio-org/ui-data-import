@@ -9,7 +9,7 @@ import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
 
 import css from './ReturnToAssignJobs.css';
 
-class ReturnToAssignJobs extends Component {
+export class ReturnToAssignJobs extends Component {
   static propTypes = { prohibitFilesUploading: PropTypes.bool };
 
   static defaultProps = { prohibitFilesUploading: false };
@@ -63,5 +63,3 @@ class ReturnToAssignJobs extends Component {
     );
   }
 }
-
-export default ReturnToAssignJobs;

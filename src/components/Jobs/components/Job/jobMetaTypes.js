@@ -4,7 +4,7 @@ import {
   RUNNING,
 } from '../../jobStatuses';
 
-const jobMetaTypes = {
+export const jobMetaTypes = {
   [PREPARING_FOR_PREVIEW]: job => ({
     showProgress: true,
     showPreview: false,
@@ -24,5 +24,3 @@ const jobMetaTypes = {
     dateLabel: 'began',
   }),
 };
-
-export default jobMetaTypes;

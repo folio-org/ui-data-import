@@ -1,9 +1,7 @@
 import { forEach } from 'lodash';
 
-const xhrAddHeaders = (xhr, headers) => { // eslint-disable-line import/prefer-default-export
+export const xhrAddHeaders = (xhr, headers) => {
   forEach(headers, (value, key) => {
     xhr.setRequestHeader(key, value);
   });
 };
-
-export default xhrAddHeaders;
