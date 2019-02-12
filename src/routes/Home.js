@@ -77,6 +77,7 @@ class Home extends Component {
             defaultWidth="fill"
             paneTitle={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
             lastMenu={this.addViewAllLogs()}
+            padContent={false}
           >
             <JobLogs />
           </Pane>
