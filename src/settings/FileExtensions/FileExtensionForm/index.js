@@ -1,1 +1,1 @@
-export { default } from './FileExtensionForm';
+export * from './FileExtensionForm';

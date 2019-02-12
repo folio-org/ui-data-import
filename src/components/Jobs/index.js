@@ -1,2 +1,2 @@
-export { default } from './Jobs';
+export * from './Jobs';
 export * from './jobStatuses';

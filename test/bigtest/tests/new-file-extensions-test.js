@@ -1,7 +1,7 @@
 import { describe, beforeEach, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 
-import setupApplication from '../helpers/setup-application';
+import { setupApplication } from '../helpers';
 import FileExtensionForm from '../interactors/file-extension-form';
 
 describe('Create new file extension form', () => {

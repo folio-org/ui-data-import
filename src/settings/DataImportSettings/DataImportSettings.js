@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { Settings } from '@folio/stripes/smart-components';
+import { InfoPopover } from '@folio/stripes/components';
 import {
   AppIcon,
-  InfoPopover,
-} from '@folio/stripes/components';
-import { stripesShape } from '@folio/stripes/core';
+  stripesShape,
+} from '@folio/stripes/core';
 
-import JobProfiles from '../JobProfiles';
-import MatchProfiles from '../MatchProfiles';
-import ActionProfiles from '../ActionProfiles';
-import FieldMappingProfiles from '../FieldMappingProfiles';
-import FileExtensions from '../FileExtensions';
+import { JobProfiles } from '../JobProfiles';
+import { MatchProfiles } from '../MatchProfiles';
+import { ActionProfiles } from '../ActionProfiles';
+import { FieldMappingProfiles } from '../FieldMappingProfiles';
+import { FileExtensions } from '../FileExtensions';
 
 import css from './DataImportSettings.css';
 
-class DataImportSettings extends Component {
+export class DataImportSettings extends Component {
   static propTypes = { stripes: stripesShape.isRequired };
 
   constructor(props) {
@@ -106,5 +106,3 @@ class DataImportSettings extends Component {
     );
   }
 }
-
-export default DataImportSettings;

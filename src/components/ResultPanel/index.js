@@ -1,1 +1,1 @@
-export { default } from './ResultPanel';
+export * from './ResultPanel';

@@ -4,9 +4,9 @@ import { expect } from 'chai';
 import {
   PREVIEW_JOBS_LENGTH,
   RUNNING_JOBS_LENGTH,
-} from '../mocks/jobExecutionMocks';
+} from '../mocks/jobExecutions';
 import translation from '../../../translations/ui-data-import/en';
-import setupApplication from '../helpers/setup-application';
+import { setupApplication } from '../helpers';
 import JobsPane from '../interactors/jobs-pane';
 
 describe('Jobs pane', () => {

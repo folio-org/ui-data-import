@@ -6,13 +6,13 @@ import { noop } from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
 
+import { Progress } from '../../../Progress';
 import * as fileStatuses from './fileItemStatuses';
-import getFileItemMeta from './getFileItemMeta';
-import Progress from '../../../Progress';
+import { getFileItemMeta } from './getFileItemMeta';
 
 import css from './FileItem.css';
 
-class FileItem extends PureComponent {
+export class FileItem extends PureComponent {
   static propTypes = {
     uiKey: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -105,5 +105,3 @@ class FileItem extends PureComponent {
     );
   }
 }
-
-export default FileItem;

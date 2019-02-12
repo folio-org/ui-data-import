@@ -2,19 +2,18 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { stripesShape } from '@folio/stripes/core';
-
 import {
   Button,
   Pane,
   Paneset,
 } from '@folio/stripes/components';
 
-import Jobs from '../components/Jobs';
-import JobLogs from '../components/JobLogs';
-import ImportJobs from '../components/ImportJobs';
-import DataFetcher from '../components/DataFetcher';
+import { Jobs } from '../components/Jobs';
+import { JobLogs } from '../components/JobLogs';
+import { ImportJobs } from '../components/ImportJobs';
+import { DataFetcher } from '../components/DataFetcher';
 
-class Home extends Component {
+export class Home extends Component {
   static propTypes = { stripes: stripesShape.isRequired };
 
   constructor(props) {
@@ -92,5 +91,3 @@ class Home extends Component {
     );
   }
 }
-
-export default Home;

@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import {
+  forEach,
   isEmpty,
+  map,
   omit,
+  some,
 } from 'lodash';
 
 import {
@@ -15,13 +18,14 @@ import {
   Layout,
   Callout,
 } from '@folio/stripes/components';
-import { LastVisitedContext } from '@folio/stripes-core/src/components/LastVisited';
 
-import * as fileStatuses from './components/FileItem/fileItemStatuses';
-import EndOfList from '../EndOfList';
-import Preloader from '../Preloader';
-import FileItem from './components/FileItem';
-import LeavePageModal from './components/LeavePageModal';
+import { EndOfList } from '../EndOfList';
+import { Preloader } from '../Preloader';
+import {
+  FileItem,
+  LeavePageModal,
+  fileStatuses,
+} from './components';
 import {
   compose,
   createUrl,
@@ -32,7 +36,7 @@ import { DEFAULT_TIMEOUT_BEFORE_FILE_DELETION } from '../../utils/constants';
 import * as API from './utils/upload';
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 
-class UploadingJobsDisplay extends Component {
+class UploadingJobsDisplayComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     history: PropTypes.shape({
@@ -51,7 +55,7 @@ class UploadingJobsDisplay extends Component {
   static getUploadFilesErrorMessageID(msg) {
     const defaultErrorId = 'upload.invalid';
 
-    return UploadingJobsDisplay.knownErrorsIDs.includes(msg) ? msg : defaultErrorId;
+    return UploadingJobsDisplayComponent.knownErrorsIDs.includes(msg) ? msg : defaultErrorId;
   }
 
   constructor(props, context) {
@@ -105,16 +109,16 @@ class UploadingJobsDisplay extends Component {
   setPageLeaveHandler() {
     const { history } = this.props;
 
-    this.unblockNavigation = history.block(this.navigationHandler);
-    window.addEventListener('beforeunload', this.pageLaveHandler);
+    this.unblockNavigation = history.block(this.handleNavigation);
+    window.addEventListener('beforeunload', this.handlePageLeave);
   }
 
   resetPageLeaveHandler() {
     this.unblockNavigation();
-    window.removeEventListener('beforeunload', this.pageLaveHandler);
+    window.removeEventListener('beforeunload', this.handlePageLeave);
   }
 
-  pageLaveHandler = event => {
+  handlePageLeave = event => {
     const shouldPrompt = this.filesUploading;
 
     if (shouldPrompt) {
@@ -126,7 +130,7 @@ class UploadingJobsDisplay extends Component {
     return null;
   };
 
-  navigationHandler = nextLocation => {
+  handleNavigation = nextLocation => {
     const shouldPrompt = this.filesUploading;
 
     if (shouldPrompt) {
@@ -142,16 +146,11 @@ class UploadingJobsDisplay extends Component {
   get filesUploading() {
     const { files } = this.state;
 
-    return Object.keys(files).some(fileKey => {
-      return files[fileKey].status === fileStatuses.UPLOADING;
-    });
+    return some(files, file => file.status === fileStatuses.UPLOADING);
   }
 
   cancelFileRemovals() {
-    Object
-      .values(this.deleteFileTimeouts)
-      .forEach(clearTimeout);
-
+    forEach(this.deleteFileTimeouts, clearTimeout);
     this.deleteFileTimeouts = {};
   }
 
@@ -178,7 +177,7 @@ class UploadingJobsDisplay extends Component {
       );
 
       if (errMsg) {
-        this.onAllFilesUploadFail(errMsg);
+        this.handleAllFilesUploadFail(errMsg);
 
         return;
       }
@@ -196,7 +195,7 @@ class UploadingJobsDisplay extends Component {
     return this.setStateAsync(state => {
       const updatedFiles = { ...state.files };
 
-      fileDefinitions.forEach(definition => {
+      forEach(fileDefinitions, definition => {
         const {
           uiKey,
           id,
@@ -221,8 +220,8 @@ class UploadingJobsDisplay extends Component {
   }
 
   async uploadFiles() {
-    const { files } = this.state;
     const { setFiles } = this.context;
+    const { files } = this.state;
 
     for (const fileKey of Object.keys(files)) {
       try {
@@ -237,9 +236,9 @@ class UploadingJobsDisplay extends Component {
         // eslint-disable-next-line no-await-in-loop
         const response = await this.uploadFile(fileKey);
 
-        this.onFileUploadSuccess(response, fileKey);
+        this.handleFileUploadSuccess(response, fileKey);
       } catch (error) {
-        this.onFileUploadFail(fileKey);
+        this.handleFileUploadFail(fileKey);
       }
     }
 
@@ -370,7 +369,7 @@ class UploadingJobsDisplay extends Component {
     this.updateFileState(fileKey, { uploadedValue });
   };
 
-  onFileUploadSuccess = (response, fileKey) => {
+  handleFileUploadSuccess = (response, fileKey) => {
     const { uploadedDate } = response.fileDefinitions.find(file => file.uiKey === fileKey);
 
     this.updateFileState(fileKey, {
@@ -379,7 +378,7 @@ class UploadingJobsDisplay extends Component {
     });
   };
 
-  onFileUploadFail = fileKey => {
+  handleFileUploadFail = fileKey => {
     this.updateFileState(fileKey, { status: fileStatuses.FAILED });
   };
 
@@ -449,8 +448,8 @@ class UploadingJobsDisplay extends Component {
     });
   };
 
-  onAllFilesUploadFail(errMsg) {
-    const errorMsgTranslationID = UploadingJobsDisplay.getUploadFilesErrorMessageID(errMsg);
+  handleAllFilesUploadFail(errMsg) {
+    const errorMsgTranslationID = UploadingJobsDisplayComponent.getUploadFilesErrorMessageID(errMsg);
 
     this.setState(state => {
       const files = Object.keys(state.files)
@@ -473,9 +472,8 @@ class UploadingJobsDisplay extends Component {
 
   renderFiles() {
     const { files } = this.state;
-    const hasFiles = Object.keys(files).length > 0;
 
-    if (!hasFiles) {
+    if (isEmpty(files)) {
       return (
         <Layout className="textCentered">
           <FormattedMessage id="ui-data-import.noUploadedFiles" />
@@ -483,45 +481,43 @@ class UploadingJobsDisplay extends Component {
       );
     }
 
-    return Object.keys(files)
-      .map(fileKey => {
-        const {
-          status,
-          name,
-          size,
-          uploadedValue,
-          uploadedDate,
-          loading,
-          errorMsgTranslationID,
-        } = files[fileKey];
+    return map(files, (file, fileKey) => {
+      const {
+        status,
+        name,
+        size,
+        uploadedValue,
+        uploadedDate,
+        loading,
+        errorMsgTranslationID,
+      } = file;
 
-        return (
-          <FileItem
-            key={fileKey}
-            uiKey={fileKey}
-            status={status}
-            name={name}
-            size={size}
-            loading={loading}
-            uploadedValue={uploadedValue}
-            errorMsgTranslationID={errorMsgTranslationID}
-            uploadedDate={uploadedDate}
-            onDelete={this.handleDeleteFile}
-            onUndoDelete={this.handleUndoDeleteFile}
-          />
-        );
-      });
+      return (
+        <FileItem
+          key={fileKey}
+          uiKey={fileKey}
+          status={status}
+          name={name}
+          size={size}
+          loading={loading}
+          uploadedValue={uploadedValue}
+          errorMsgTranslationID={errorMsgTranslationID}
+          uploadedDate={uploadedDate}
+          onDelete={this.handleDeleteFile}
+          onUndoDelete={this.handleUndoDeleteFile}
+        />
+      );
+    });
   }
 
   createCalloutRef = ref => {
     this.callout = ref;
   };
 
-  continue = ctx => {
+  continue = () => {
     const { history } = this.props;
     const { nextLocation } = this.state;
 
-    ctx.cachePreviousUrl();
     this.unblockNavigation();
     history.push(nextLocation.pathname);
   };
@@ -541,25 +537,21 @@ class UploadingJobsDisplay extends Component {
     }
 
     return (
-      <LastVisitedContext.Consumer>
-        {ctx => (
-          <div>
-            {this.renderFiles()}
-            <EndOfList />
-            <Callout ref={this.createCalloutRef} />
-            <LeavePageModal
-              open={renderLeaveModal}
-              onConfirm={this.closeModal}
-              onCancel={() => this.continue(ctx)}
-            />
-          </div>
-        )}
-      </LastVisitedContext.Consumer>
+      <div>
+        {this.renderFiles()}
+        <EndOfList />
+        <Callout ref={this.createCalloutRef} />
+        <LeavePageModal
+          open={renderLeaveModal}
+          onConfirm={this.closeModal}
+          onCancel={this.continue}
+        />
+      </div>
     );
   }
 }
 
-export default compose(
+export const UploadingJobsDisplay = compose(
   withRouter,
   withStripes,
-)(UploadingJobsDisplay);
+)(UploadingJobsDisplayComponent);

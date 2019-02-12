@@ -14,7 +14,7 @@ import css from './ResultPanel.css';
 
 const accordionsAmount = 4;
 
-export default class ResultPanel extends Component {
+export class ResultPanel extends Component {
   static propTypes = { itemOnClick: PropTypes.func.isRequired };
 
   getAccordionLabel() {

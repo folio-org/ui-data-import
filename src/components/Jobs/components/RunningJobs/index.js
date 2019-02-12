@@ -1,1 +1,1 @@
-export { default } from './RunningJobs';
+export * from './RunningJobs';

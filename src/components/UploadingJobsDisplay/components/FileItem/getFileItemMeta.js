@@ -28,7 +28,7 @@ const Loading = () => (
   </FormattedMessage>
 );
 
-const getFileItemMeta = props => {
+export const getFileItemMeta = props => {
   const {
     status,
     name,
@@ -141,5 +141,3 @@ const getFileItemMeta = props => {
     ...fileTypesMeta[status],
   };
 };
-
-export default getFileItemMeta;

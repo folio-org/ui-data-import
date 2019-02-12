@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Pane } from '@folio/stripes/components';
 
-export default class MatchProfiles extends Component {
+export class MatchProfiles extends Component {
   static propTypes = {
     label: PropTypes.node.isRequired,
   };

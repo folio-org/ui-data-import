@@ -1,1 +1,4 @@
-export { default } from './FileItem';
+import * as fileStatuses from './fileItemStatuses';
+
+export * from './FileItem';
+export { fileStatuses };

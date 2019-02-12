@@ -1,1 +1,1 @@
-export { default } from './EndOfList';
+export * from './EndOfList';

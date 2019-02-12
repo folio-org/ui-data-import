@@ -140,7 +140,7 @@ const runningJobs = [
   },
 ];
 
-export const jobExecutionDtos = [...previewJobs, ...runningJobs];
+export const jobExecutions = [...previewJobs, ...runningJobs];
 
 export const PREVIEW_JOBS_LENGTH = previewJobs.length;
 

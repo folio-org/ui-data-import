@@ -2,7 +2,7 @@ import { describe, beforeEach, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 
 import translation from '../../../translations/ui-data-import/en';
-import setupApplication from '../helpers/setup-application';
+import { setupApplication } from '../helpers';
 import JobsPane from '../interactors/jobs-pane';
 
 describe('Job item', () => {

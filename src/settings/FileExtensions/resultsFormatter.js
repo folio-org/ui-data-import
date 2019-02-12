@@ -1,10 +1,8 @@
 import React from 'react';
 import { FormattedDate } from 'react-intl';
 
-import {
-  Icon,
-  AppIcon,
-} from '@folio/stripes/components';
+import { Icon } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes/core';
 
 import css from './FileExtensions.css';
 
@@ -24,7 +22,7 @@ const formatUserName = userInfo => {
   return `${firstName} ${lastName} ${formattedUserName}`;
 };
 
-const resultsFormatter = intl => ({
+export const resultsFormatter = intl => ({
   importBlocked: record => {
     const { importBlocked } = record;
     const translationIdEnding = `fileExtension.${importBlocked ? 'block' : 'allow'}Import`;
@@ -64,5 +62,3 @@ const resultsFormatter = intl => ({
     );
   },
 });
-
-export default resultsFormatter;

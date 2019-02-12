@@ -4,15 +4,17 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { isEmpty } from 'lodash';
 
-import FileUploader from './components/FileUploader';
-import InvalidFilesModal from './components/InvalidFilesModal';
-import ReturnToAssignJobs from './components/ReturnToAssignJobs';
-import Preloader from '../Preloader';
+import {
+  FileUploader,
+  InvalidFilesModal,
+  ReturnToAssignJobs,
+} from './components';
+import { Preloader } from '../Preloader';
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 
 import css from './components/FileUploader/FileUploader.css';
 
-class ImportJobs extends Component {
+class ImportJobsComponent extends Component {
   static propTypes = {
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
@@ -117,6 +119,7 @@ class ImportJobs extends Component {
 
   render() {
     const { match: { path } } = this.props;
+    const { uploadDefinition } = this.context;
     const {
       redirect,
       hasLoaded,
@@ -125,7 +128,6 @@ class ImportJobs extends Component {
       prohibitFilesUploading,
       filesExtensionsModalOpen,
     } = this.state;
-    const { uploadDefinition } = this.context;
 
     if (!hasLoaded) {
       return <Preloader />;
@@ -168,4 +170,4 @@ class ImportJobs extends Component {
   }
 }
 
-export default withRouter(ImportJobs);
+export const ImportJobs = withRouter(ImportJobsComponent);

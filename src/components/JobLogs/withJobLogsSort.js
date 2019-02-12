@@ -10,9 +10,10 @@ import {
   sortStrings,
 } from '../../utils/sort';
 import { compose } from '../../utils';
+import { SORT_TYPES } from '../../utils/constants';
 import { DataFetcherContext } from '../DataFetcher';
 
-const withJobLogsSort = WrappedComponent => {
+const withJobLogsSortComponent = WrappedComponent => {
   return class extends Component {
     static propTypes = {
       history: PropTypes.shape({
@@ -34,7 +35,7 @@ const withJobLogsSort = WrappedComponent => {
 
       this.state = {
         sort: 'completedDate',
-        direction: 'ascending',
+        direction: SORT_TYPES.ASCENDING,
       };
 
       this.sortColumns = {
@@ -66,10 +67,12 @@ const withJobLogsSort = WrappedComponent => {
     }
 
     setLogsSort() {
+      const { location: { search } } = this.props;
+
       const {
         sort = 'completedDate',
-        direction = 'ascending',
-      } = qs.parse(this.props.location.search.slice(1));
+        direction = SORT_TYPES.ASCENDING,
+      } = qs.parse(search.slice(1));
 
       this.setState({
         sort,
@@ -87,7 +90,7 @@ const withJobLogsSort = WrappedComponent => {
 
       return logs.sort((a, b) => {
         const cellFormatter = this.props.formatter[sort];
-        const sortDir = direction === 'ascending' ? -1 : 1;
+        const sortDir = direction === SORT_TYPES.ASCENDING ? 1 : -1;
         const {
           useFormatterFn,
           sortFn,
@@ -101,19 +104,19 @@ const withJobLogsSort = WrappedComponent => {
 
     onSort = (e, { name: fieldName }) => {
       const {
-        sort,
-        direction,
-      } = this.state;
-      const {
         history,
         location,
       } = this.props;
+      const {
+        sort,
+        direction,
+      } = this.state;
 
       const isSameField = sort === fieldName;
-      let sortDir = 'ascending';
+      let sortDir = SORT_TYPES.ASCENDING;
 
       if (isSameField) {
-        sortDir = direction === sortDir ? 'descending' : sortDir;
+        sortDir = direction === sortDir ? SORT_TYPES.DESCENDING : sortDir;
       }
 
       const sortState = {
@@ -130,11 +133,11 @@ const withJobLogsSort = WrappedComponent => {
     };
 
     render() {
+      const { hasLoaded } = this.context;
       const {
         sort,
         direction,
       } = this.state;
-      const { hasLoaded } = this.context;
 
       const contentData = this.prepareLogsData();
 
@@ -152,7 +155,7 @@ const withJobLogsSort = WrappedComponent => {
   };
 };
 
-export default compose(
+export const withJobLogsSort = compose(
   withRouter,
-  withJobLogsSort,
+  withJobLogsSortComponent,
 );

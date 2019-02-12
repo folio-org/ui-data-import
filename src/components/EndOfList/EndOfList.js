@@ -9,12 +9,10 @@ import {
 
 import css from './EndOfList.css';
 
-const EndOfList = () => (
+export const EndOfList = () => (
   <Layout className={classnames('textCentered', css.endOfList)}>
     <Icon icon="end-mark">
       <FormattedMessage id="stripes-components.endOfList" />
     </Icon>
   </Layout>
 );
-
-export default EndOfList;

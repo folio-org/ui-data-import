@@ -2,12 +2,12 @@ import React, { PureComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
-import JobsList from '../JobsList';
-import sortRunningJobs from './sortRunningJobs';
+import { JobsList } from '../JobsList';
+import { sortRunningJobs } from './sortRunningJobs';
 import { RUNNING } from '../../jobStatuses';
 import { DataFetcherContext } from '../../../DataFetcher';
 
-class RunningJobs extends PureComponent {
+export class RunningJobs extends PureComponent {
   static contextType = DataFetcherContext;
 
   prepareJobsData() {
@@ -27,11 +27,9 @@ class RunningJobs extends PureComponent {
         <JobsList
           jobs={jobs}
           hasLoaded={hasLoaded}
-          noJobsMessage={<FormattedMessage id="ui-data-import.noRunningJobsMessage" />}
+          isEmptyMessage={<FormattedMessage id="ui-data-import.noRunningJobsMessage" />}
         />
       </div>
     );
   }
 }
-
-export default RunningJobs;

@@ -118,4 +118,4 @@ FileUploader.defaultProps = {
   className: defaultStyles.defaultFileUploader,
 };
 
-export default FileUploader;
+export { FileUploader };

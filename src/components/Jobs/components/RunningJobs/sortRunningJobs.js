@@ -11,8 +11,6 @@ const sortByDates = (
   return convertDate(startedDateB, DATE_TYPES.number) - convertDate(startedDateA, DATE_TYPES.number);
 };
 
-const sortRunningJobs = jobs => {
+export const sortRunningJobs = jobs => {
   return sortCollection(jobs, [sortByDates]);
 };
-
-export default sortRunningJobs;

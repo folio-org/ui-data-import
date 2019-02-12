@@ -2,7 +2,7 @@ import setupStripesCore from '@folio/stripes-core/test/bigtest/helpers/setup-app
 
 import mirageOptions from '../network';
 
-export default function setupApplication({
+export function setupApplication({
   scenarios,
   hasAllPerms = true,
 } = {}) {

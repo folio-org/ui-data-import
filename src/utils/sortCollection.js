@@ -132,7 +132,7 @@ const configurableSort = ({
  *
  * @returns {Collection} Sorted collection
  */
-const sortCollection = (collection = [], iteratees = []) => {
+export const sortCollection = (collection = [], iteratees = []) => {
   if (!Array.isArray(collection)) {
     throw new TypeError('collection parameter must be an array');
   }
@@ -154,5 +154,3 @@ const sortCollection = (collection = [], iteratees = []) => {
     return result;
   });
 };
-
-export default sortCollection;

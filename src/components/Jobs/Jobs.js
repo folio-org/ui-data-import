@@ -6,12 +6,14 @@ import {
   Accordion,
 } from '@folio/stripes/components';
 
-import PreviewsJobs from './components/PreviewsJobs';
-import RunningJobs from './components/RunningJobs';
+import {
+  PreviewsJobs,
+  RunningJobs,
+} from './components';
 
 import css from './Jobs.css';
 
-class Jobs extends Component {
+export class Jobs extends Component {
   render() {
     return (
       <div className={css.jobsPane}>
@@ -41,5 +43,3 @@ class Jobs extends Component {
     );
   }
 }
-
-export default Jobs;

@@ -4,11 +4,12 @@ import { FormattedMessage } from 'react-intl';
 
 import { Button } from '@folio/stripes/components';
 
+import { UPLOADED } from '../../../UploadingJobsDisplay/components/FileItem/fileItemStatuses';
 import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
 
 import css from './ReturnToAssignJobs.css';
 
-class ReturnToAssignJobs extends Component {
+export class ReturnToAssignJobs extends Component {
   static propTypes = { prohibitFilesUploading: PropTypes.bool };
 
   static defaultProps = { prohibitFilesUploading: false };
@@ -22,8 +23,8 @@ class ReturnToAssignJobs extends Component {
   get filesAmount() {
     const { uploadDefinition: { fileDefinitions = [] } } = this.context;
 
-    return fileDefinitions.reduce((res, { loaded }) => {
-      return loaded ? res + 1 : res;
+    return fileDefinitions.reduce((res, { status }) => {
+      return status === UPLOADED ? res + 1 : res;
     }, 0);
   }
 
@@ -62,5 +63,3 @@ class ReturnToAssignJobs extends Component {
     );
   }
 }
-
-export default ReturnToAssignJobs;

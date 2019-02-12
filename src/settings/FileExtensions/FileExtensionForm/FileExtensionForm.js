@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, touch, change, untouch } from 'redux-form';
+import {
+  Field,
+  touch,
+  change,
+  untouch,
+} from 'redux-form';
+import { identity } from 'lodash';
 
 import {
   Pane,
@@ -18,17 +24,17 @@ import {
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
-import validators from './validators';
+import { validators } from './validators';
 
 import css from '../FileExtensions.css';
 
 const formName = 'fileExtensionForm';
 
-class FileExtensionForm extends React.Component {
+class FileExtensionFormComponent extends Component {
   static propTypes = {
     pristine: PropTypes.bool.isRequired,
     submitting: PropTypes.bool.isRequired,
-    initialValues: PropTypes.object,
+    initialValues: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
@@ -157,6 +163,7 @@ class FileExtensionForm extends React.Component {
       initialValues,
       handleSubmit,
     } = this.props;
+    const { dataTypesRequired } = this.state;
 
     const isEditMode = Boolean(initialValues.id);
     const paneTitle = !isEditMode
@@ -218,10 +225,10 @@ class FileExtensionForm extends React.Component {
               name="dataTypes"
               component={MultiSelection}
               dataOptions={this.dataTypes}
-              itemToString={option => option}
-              required={this.state.dataTypesRequired}
-              disabled={!this.state.dataTypesRequired}
+              required={dataTypesRequired}
+              disabled={!dataTypesRequired}
               validationEnabled
+              itemToString={identity}
               validate={validators.dataTypes}
               filter={this.filterMultiSelect}
               formatter={this.formatMultiSelect}
@@ -234,8 +241,10 @@ class FileExtensionForm extends React.Component {
   }
 }
 
-export default stripesForm({
+const FileExtensionForm = stripesForm({
   form: formName,
   navigationCheck: true,
   enableReinitialize: true,
-})(FileExtensionForm);
+})(FileExtensionFormComponent);
+
+export { FileExtensionForm };

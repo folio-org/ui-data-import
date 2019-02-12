@@ -43,4 +43,4 @@ LeavePageModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
 };
 
-export default LeavePageModal;
+export { LeavePageModal };

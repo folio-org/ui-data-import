@@ -1,2 +1,2 @@
-export { default } from './DataFetcher';
+export * from './DataFetcher';
 export * from './DataFetcherContext';

@@ -12,6 +12,8 @@
         "beforeColon": false
       }
     ],
+    "import/no-extraneous-dependencies": false,
+    "import/prefer-default-export": false,
     "padding-line-between-statements": [
       "error",
       { "blankLine": "always", "prev": ["const", "let"], "next": "*"},

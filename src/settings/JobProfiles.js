@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Pane } from '@folio/stripes/components';
 
-export default class JobProfiles extends Component {
+export class JobProfiles extends Component {
   static propTypes = {
     label: PropTypes.node.isRequired,
   };

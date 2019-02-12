@@ -6,7 +6,7 @@ import {
 } from 'react-intl';
 import { compose } from '../../utils';
 
-const withJobLogsCellsFormatter = WrappedComponent => {
+const withJobLogsCellsFormatterComponent = WrappedComponent => {
   return class extends Component {
     static propTypes = {
       intl: intlShape.isRequired,
@@ -37,8 +37,9 @@ const withJobLogsCellsFormatter = WrappedComponent => {
     }
 
     formatEndedRunningDate = record => {
+      const { intl: { formatTime } } = this.props;
+
       const { completedDate } = record;
-      const { formatTime } = this.props.intl;
 
       return formatTime(completedDate, {
         day: 'numeric',
@@ -58,7 +59,7 @@ const withJobLogsCellsFormatter = WrappedComponent => {
   };
 };
 
-export default compose(
+export const withJobLogsCellsFormatter = compose(
   injectIntl,
-  withJobLogsCellsFormatter,
+  withJobLogsCellsFormatterComponent,
 );

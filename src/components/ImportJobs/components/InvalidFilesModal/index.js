@@ -1,1 +1,1 @@
-export { default } from './InvalidFilesModal';
+export * from './InvalidFilesModal';

@@ -1,4 +1,4 @@
-const createOkapiHeaders = okapi => {
+export const createOkapiHeaders = okapi => {
   const {
     token,
     tenant,
@@ -9,5 +9,3 @@ const createOkapiHeaders = okapi => {
     'X-Okapi-Token': token,
   };
 };
-
-export default createOkapiHeaders;

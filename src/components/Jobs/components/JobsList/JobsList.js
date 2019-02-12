@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import { List } from '@folio/stripes/components';
 
-import jobPropTypes from '../Job/jobPropTypes';
-import Preloader from '../../../Preloader';
-import EndOfList from '../../../EndOfList';
-import Job from '../Job';
+import { Preloader } from '../../../Preloader';
+import { EndOfList } from '../../../EndOfList';
+import { Job } from '../Job';
+import { jobPropTypes } from '../Job/jobPropTypes';
 
 import css from './JobsList.css';
 
@@ -14,7 +14,7 @@ const JobsList = props => {
   const {
     jobs,
     hasLoaded,
-    noJobsMessage,
+    isEmptyMessage,
   } = props;
   const itemFormatter = job => (
     <Job
@@ -27,7 +27,7 @@ const JobsList = props => {
       data-test-empty-message
       className={css.emptyMessage}
     >
-      {noJobsMessage}
+      {isEmptyMessage}
     </span>
   );
   const LoadedJobsList = (
@@ -53,11 +53,11 @@ const JobsList = props => {
 JobsList.propTypes = {
   jobs: PropTypes.arrayOf(jobPropTypes).isRequired,
   hasLoaded: PropTypes.bool.isRequired,
-  noJobsMessage: PropTypes.node,
+  isEmptyMessage: PropTypes.node,
 };
 
 JobsList.defaultProps = {
-  noJobsMessage: '',
+  isEmptyMessage: '',
 };
 
-export default JobsList;
+export { JobsList };
