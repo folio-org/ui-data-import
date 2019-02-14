@@ -43,7 +43,7 @@ class UploadingJobsContextProviderComponent extends Component {
     const { uploadDefinition: { id: uploadDefinitionId } } = this.state;
 
     const { url: host } = okapi;
-    const uploadDefinitionUrl = createUrl(`${host}/data-import/upload/definition/${uploadDefinitionId}`);
+    const uploadDefinitionUrl = createUrl(`${host}/data-import/uploadDefinitions/${uploadDefinitionId}`);
 
     await fetch(uploadDefinitionUrl, {
       method: 'DELETE',
@@ -69,7 +69,7 @@ class UploadingJobsContextProviderComponent extends Component {
       IN_PROGRESS: 'IN_PROGRESS',
       LOADED: 'LOADED',
     };
-    const draftJobsUrl = createUrl(`${host}/data-import/upload/definition`, {
+    const draftJobsUrl = createUrl(`${host}/data-import/uploadDefinitions`, {
       query: `(status==("${statuses.NEW}" OR "${statuses.IN_PROGRESS}" OR "${statuses.LOADED}")) sortBy createdDate/sort.descending`,
       limit: 1,
     });

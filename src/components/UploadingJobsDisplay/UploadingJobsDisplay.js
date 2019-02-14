@@ -72,11 +72,7 @@ class UploadingJobsDisplayComponent extends Component {
       files: this.prepareFiles(files),
     };
 
-    this.uploadDefinitionUrl = createUrl(`${host}/data-import/upload/definition`);
-    this.fileUploaderUrl = createUrl(`${host}/data-import/upload/file`);
-    this.deleteFileUrl = file => createUrl(`${host}/data-import/upload/definition/file/${file.id}`, {
-      uploadDefinitionId: file.uploadDefinitionId,
-    });
+    this.uploadDefinitionUrl = createUrl(`${host}/data-import/uploadDefinitions`);
     this.deleteFileTimeouts = {};
     this.fileRemovalMap = {
       [fileStatuses.UPLOADED]: this.handleDeleteSuccessfullyUploadedFile,
@@ -251,14 +247,11 @@ class UploadingJobsDisplayComponent extends Component {
       try {
         const { files: { [fileKey]: fileMeta } } = this.state;
 
-        const urlWithQueryParams = createUrl(this.fileUploaderUrl, {
-          fileId: fileMeta.id,
-          uploadDefinitionId: fileMeta.uploadDefinitionId,
-        });
+        const url = this.createFileUrl(fileMeta);
 
         this.currentFileUploadXhr = new XMLHttpRequest();
 
-        this.currentFileUploadXhr.open('POST', urlWithQueryParams);
+        this.currentFileUploadXhr.open('POST', url);
 
         xhrAddHeaders(this.currentFileUploadXhr, this.createUploadFilesHeaders());
 
@@ -313,12 +306,6 @@ class UploadingJobsDisplayComponent extends Component {
       ...createOkapiHeaders(okapi),
       'Content-Type': 'application/octet-stream',
     };
-  }
-
-  createDeleteFileHeaders() {
-    const { stripes: { okapi } } = this.props;
-
-    return createOkapiHeaders(okapi);
   }
 
   prepareFiles(files = []) {
@@ -403,7 +390,7 @@ class UploadingJobsDisplayComponent extends Component {
 
     try {
       await API.deleteFile(
-        this.deleteFileUrl(fileMeta),
+        this.createFileUrl(fileMeta),
         this.createDeleteFileHeaders(),
       );
 
@@ -430,6 +417,28 @@ class UploadingJobsDisplayComponent extends Component {
     }
   };
 
+  createFileUrl = file => {
+    const { stripes: { okapi } } = this.props;
+
+    const { url: host } = okapi;
+
+    return createUrl(`${host}/data-import/uploadDefinitions/${file.uploadDefinitionId}/files/${file.id}`);
+  };
+
+  createDeleteFileHeaders() {
+    const { stripes: { okapi } } = this.props;
+
+    return createOkapiHeaders(okapi);
+  }
+
+  deleteFileFromState = fileKey => {
+    this.setState(state => {
+      const updatedFiles = omit(state.files, fileKey);
+
+      return { files: updatedFiles };
+    });
+  };
+
   handleDeleteSuccessfullyUploadedFile = (fileKey, fileStatus) => {
     const { timeoutBeforeFileDeletion } = this.props;
 
@@ -438,14 +447,6 @@ class UploadingJobsDisplayComponent extends Component {
     }, timeoutBeforeFileDeletion);
 
     this.updateFileState(fileKey, { status: fileStatuses.DELETING });
-  };
-
-  deleteFileFromState = fileKey => {
-    this.setState(state => {
-      const updatedFiles = omit(state.files, fileKey);
-
-      return { files: updatedFiles };
-    });
   };
 
   handleAllFilesUploadFail(errMsg) {

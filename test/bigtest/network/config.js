@@ -11,12 +11,12 @@ export default function config() {
     totalRecords: 0,
   });
 
-  this.get('/metadata-provider/file-extensions', {
+  this.get('/data-import/fileExtensions', {
     fileExtensions: [],
     totalRecords: 0,
   });
 
-  this.get('/data-import/upload/definition', {
+  this.get('/data-import/uploadDefinitions', {
     uploadDefinitions: [],
     totalRecords: 0,
   });
