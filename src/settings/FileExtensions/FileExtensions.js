@@ -26,7 +26,7 @@ class FileExtensions extends Component {
       perRequest: RESULT_COUNT_INCREMENT,
       records: 'fileExtensions',
       recordsRequired: '%{resultCount}',
-      path: 'metadata-provider/fileExtension',
+      path: 'data-import/fileExtensions',
       throwErrors: false,
       GET: {
         params: {

@@ -1,7 +1,7 @@
 import { fileExtensions } from '../../mocks';
 
 export default server => {
-  server.get('/metadata-provider/fileExtension', {
+  server.get('/data-import/fileExtensions', {
     fileExtensions,
     totalRecords: fileExtensions.length,
   });

@@ -18,7 +18,7 @@ export class ViewFileExtension extends Component {
   static manifest = Object.freeze({
     fileExtension: {
       type: 'okapi',
-      path: 'metadata-provider/fileExtension/:{id}',
+      path: 'data-import/fileExtensions/:{id}',
       throwErrors: false,
     },
   });
