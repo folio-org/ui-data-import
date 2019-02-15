@@ -1,8 +1,10 @@
-import {
+import { JOB_STATUSES } from '../../../src/utils/constants';
+
+const {
   PREPARING_FOR_PREVIEW,
   READY_FOR_PREVIEW,
   RUNNING,
-} from '../../../src/components/Jobs/jobStatuses';
+} = JOB_STATUSES;
 
 const previewJobs = [
   {

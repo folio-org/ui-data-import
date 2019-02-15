@@ -26,4 +26,4 @@ import {
   runningJobsTitleText = text('[data-test-running-jobs-accordion-title]');
 }
 
-export default new JobsPaneInteractor('[data-test-jobs-pane]');
+export const jobsPane = new JobsPaneInteractor('[data-test-jobs-pane]');

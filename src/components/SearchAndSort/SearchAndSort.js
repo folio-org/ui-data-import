@@ -29,6 +29,7 @@ import {
   mapNsKeys,
   getNsKey,
   makeConnectedSource,
+  buildUrl,
 } from '@folio/stripes/smart-components';
 
 import { Preloader } from '../Preloader';
@@ -48,6 +49,9 @@ class SearchAndSortComponent extends Component {
     location: PropTypes.shape({ // provided by withRouter
       pathname: PropTypes.string.isRequired,
       search: PropTypes.string.isRequired,
+    }).isRequired,
+    history: PropTypes.shape({ // provided by withRouter
+      push: PropTypes.func.isRequired,
     }).isRequired,
     match: PropTypes.shape({ // provided by withRouter
       path: PropTypes.string.isRequired,
@@ -110,6 +114,7 @@ class SearchAndSortComponent extends Component {
     columnMapping: PropTypes.object,
     columnWidths: PropTypes.object,
     resultsFormatter: PropTypes.shape({}),
+    defaultSort: PropTypes.string,
   };
 
   static defaultProps = {
@@ -118,6 +123,7 @@ class SearchAndSortComponent extends Component {
     onComponentWillUnmount: noop,
     onChangeIndex: noop,
     massageNewRecord: noop,
+    defaultSort: '',
   };
 
   constructor(props) {
@@ -281,10 +287,13 @@ class SearchAndSortComponent extends Component {
   };
 
   onSort = (e, meta) => {
-    const { maxSortKeys } = this.props;
+    const {
+      maxSortKeys,
+      defaultSort,
+    } = this.props;
 
     const newOrder = meta.name;
-    const oldOrder = this.queryParam('sort');
+    const oldOrder = this.queryParam('sort') || defaultSort;
     const orders = oldOrder ? oldOrder.split(',') : [];
     const mainSort = orders[0];
     const isSameColumn = mainSort && newOrder === mainSort.replace(/^-/, '');
@@ -363,12 +372,14 @@ class SearchAndSortComponent extends Component {
   transitionToParams(values) {
     const {
       nsParams,
-      parentMutator: { query },
+      location,
+      history,
     } = this.props;
 
     const nsValues = mapNsKeys(values, nsParams);
+    const url = buildUrl(location, nsValues);
 
-    query.update(nsValues);
+    history.push(url);
   }
 
   queryParam(name) {
@@ -516,13 +527,14 @@ class SearchAndSortComponent extends Component {
       resultsFormatter,
       visibleColumns,
       objectName,
+      defaultSort,
     } = this.props;
     const { selectedItem } = this.state;
 
     const records = source.records();
     const count = source.totalCount();
     const objectNameUC = upperFirst(objectName);
-    const sortOrderQuery = this.queryParam('sort') || '';
+    const sortOrderQuery = this.queryParam('sort') || defaultSort;
     const sortDirection = sortOrderQuery.startsWith('-') ? SORT_TYPES.DESCENDING : SORT_TYPES.ASCENDING;
     const sortOrder = sortOrderQuery.replace(/^-/, '').replace(/,.*/, '');
 
@@ -533,6 +545,7 @@ class SearchAndSortComponent extends Component {
       >
         {ariaLabel => (
           <MultiColumnList
+            id={`${objectName}-list`}
             ariaLabel={ariaLabel}
             totalCount={count}
             contentData={records}

@@ -36,8 +36,8 @@ export class Results extends Component {
     return (
       <PaneMenu>
         <IconButton
+          icon="times"
           onClick={this.toggleFilterPane}
-          icon="closeX"
         />
       </PaneMenu>
     );
@@ -63,7 +63,7 @@ export class Results extends Component {
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
         >
-          Export <Icon icon="down-caret" />
+          Export <Icon icon="caret-down" />
         </Button>
       </PaneMenu>
     );
@@ -73,8 +73,8 @@ export class Results extends Component {
     return (
       <PaneMenu>
         <IconButton
+          icon="times"
           onClick={this.toggleRecordDetailsPane}
-          icon="closeX"
         />
       </PaneMenu>
     );
@@ -89,13 +89,17 @@ export class Results extends Component {
     return (
       <Paneset>
         {filterPaneIsVisible &&
-          <Pane defaultWidth="20" paneTitle="Search and Filter" firstMenu={this.addFirstMenu()}>
+          <Pane
+            defaultWidth="20"
+            paneTitle="Search and Filter"
+            firstMenu={this.addFirstMenu()}
+          >
             <SearchPanel />
           </Pane>
         }
         <Pane
           defaultWidth="fill"
-          paneTitle={<div>Search Results <Icon icon="down-caret" /></div>}
+          paneTitle={<div>Search Results <Icon icon="caret-down" /></div>}
           paneSub="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur beatae blanditiis"
           firstMenu={this.addResultsFirstMenu()}
           lastMenu={this.addResultsLastMenu()}
@@ -103,7 +107,11 @@ export class Results extends Component {
           <ResultPanel itemOnClick={this.toggleRecordDetailsPane} />
         </Pane>
         {recordDetailsPaneIsVisible &&
-          <Pane defaultWidth="fill" paneTitle="Source Record 51/354" firstMenu={this.addRecordDetailsMenu()}>
+          <Pane
+            defaultWidth="fill"
+            paneTitle="Source Record 51/354"
+            firstMenu={this.addRecordDetailsMenu()}
+          >
             <Report />
           </Pane>
         }

@@ -26,7 +26,7 @@ import stripesForm from '@folio/stripes/form';
 
 import { validators } from './validators';
 
-import css from '../FileExtensions.css';
+import css from './FileExtensionForm.css';
 
 const formName = 'fileExtensionForm';
 

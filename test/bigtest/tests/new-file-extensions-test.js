@@ -2,7 +2,7 @@ import { describe, beforeEach, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 
 import { setupApplication } from '../helpers';
-import FileExtensionForm from '../interactors/file-extension-form';
+import { newFileExtensionForm } from '../interactors/file-extension-form';
 
 describe('Create new file extension form', () => {
   setupApplication();
@@ -12,6 +12,6 @@ describe('Create new file extension form', () => {
   });
 
   it('renders', () => {
-    expect(FileExtensionForm.isPresent).to.be.true;
+    expect(newFileExtensionForm.isPresent).to.be.true;
   });
 });

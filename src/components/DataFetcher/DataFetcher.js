@@ -7,14 +7,19 @@ import {
 
 import { jobPropTypes } from '../Jobs/components/Job/jobPropTypes';
 import { jobLogPropTypes } from '../JobLogs/jobLogPropTypes';
-import { DEFAULT_FETCHER_UPDATE_INTERVAL } from '../../utils/constants';
-import { createUrl } from '../../utils';
 import {
+  DEFAULT_FETCHER_UPDATE_INTERVAL,
+  JOB_STATUSES,
+} from '../../utils/constants';
+import { createUrl } from '../../utils';
+
+import { DataFetcherContext } from '.';
+
+const {
   RUNNING,
   READY_FOR_PREVIEW,
   PREPARING_FOR_PREVIEW,
-} from '../Jobs/jobStatuses';
-import { DataFetcherContext } from '.';
+} = JOB_STATUSES;
 
 const jobsUrl = createUrl('metadata-provider/jobExecutions', {
   query: `(uiStatus==("${PREPARING_FOR_PREVIEW}" OR "${READY_FOR_PREVIEW}" OR "${RUNNING}"))`,
@@ -36,7 +41,7 @@ export class DataFetcher extends Component {
     },
     logs: {
       type: 'okapi',
-      path: logsUrl + '&query=(status=COMMITTED)', // TODO: remove query once backend issue is fixed
+      path: logsUrl,
       accumulate: true,
       throwErrors: false,
     },
@@ -101,6 +106,7 @@ export class DataFetcher extends Component {
 
   /** @param  {boolean} [initial] indicates initial data retrieval */
   getResourcesData = async initial => {
+    /* istanbul ignore if  */
     if (!this.mounted) {
       return;
     }
@@ -138,6 +144,7 @@ export class DataFetcher extends Component {
   /** @param  {boolean} [isEmpty] flag to fill contextData with empty data */
   mapResourcesToState(isEmpty) {
     const { resources } = this.props;
+
     const contextData = { hasLoaded: true };
 
     forEach(resources, (resourceValue, resourceName) => {

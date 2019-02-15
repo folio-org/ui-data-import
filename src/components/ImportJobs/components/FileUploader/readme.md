@@ -71,11 +71,15 @@ Here `<FormattedMessage id={id} />` will be rendered below the title and upload 
   isDropZoneActive={isDropZoneActive}
   onDrop={onDrop}
 >
-  {openFileUploadDialogWindow => (
-    <InvalidFilesModal
-      isModalOpen={isModalOpen}
-      onConfirmModal={hideModal}
-      openFileUploadDialogWindow={openFileUploadDialogWindow}
+  {openDialogWindow => (
+    <ConfirmationModal
+      open={filesExtensionsModalOpen}
+      heading={<FormattedMessage id="ui-data-import.modal.fileExtensions.header" />}
+      message={invalidFilesMessage}
+      confirmLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.actionButton" />}
+      cancelLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.cancel" />}
+      onConfirm={openDialogWindow}
+      onCancel={this.hideFilesExtensionsModal}
     />
   )}
 </FileUploader>
@@ -96,7 +100,7 @@ When using a function as `children` this function accepts `openFileUploadDialogW
 | uploadBtnText    | node                   |         | Yes      | Upload files button text                      |
 | isDropZoneActive | bool                   |         | Yes      | Value specifying whether dropzone is active  |
 | errorMessage     | node                   |         | No       | Error message                                |
-| children         | node \| node[] \| func |         | No       |                                              |
+| children         | node | node[] | func |         | No       |                                              |
 
 ### Props passed to `ReactDropzone`
 
@@ -113,6 +117,6 @@ When using a function as `children` this function accepts `openFileUploadDialogW
 | disabledClassName    | string             |          | No       | className to apply when dropzone is disabled                                                        |
 | maxSize              | number             | Infinity  | No       | Maximum file size (in bytes)                                                                         |
 | getDataTransferItems | func               |          | No       | Find info about getDataTransferItems [here](https://react-dropzone.netlify.com/#extending-dropzone) |
-| accept               | string \| string[] |          | No       | Allow specific types of files                                                                         |
+| accept               | string | string[] |          | No       | Allow specific types of files                                                                         |
 
 Find more info about `ReactDropzone` props by following this [link](https://react-dropzone.netlify.com/#proptypes)

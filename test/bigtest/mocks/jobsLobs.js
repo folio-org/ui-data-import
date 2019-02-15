@@ -1,7 +1,7 @@
 const jobsLogsData = [
   {
     jobExecutionId: '3d790a2a-86de-46f9-a9ae-c9109bba746b',
-    jobExecutionHrId: '23391',
+    jobExecutionHrId: '02',
     jobProfileName: 'Multilingual support check',
     fileName: 'import_28.mrc',
     runBy: {
@@ -14,7 +14,7 @@ const jobsLogsData = [
   },
   {
     jobExecutionId: '2e149aef-bb77-45aa-8a28-e139674b55e1',
-    jobExecutionHrId: '20091',
+    jobExecutionHrId: '03',
     jobProfileName: 'Standard BIB profile',
     fileName: 'import_22.mrc',
     runBy: {
@@ -27,9 +27,9 @@ const jobsLogsData = [
   },
   {
     jobExecutionId: '4aa3f7f9-3fe5-4a29-a149-72f7b08879da',
-    jobExecutionHrId: '18591',
+    jobExecutionHrId: '01',
     jobProfileName: 'BIB profile with customized Holdings',
-    fileName: 'import_20.mrc',
+    fileName: 'import_22.mrc',
     runBy: {
       firstName: 'Jay',
       lastName: 'Morrowitz',

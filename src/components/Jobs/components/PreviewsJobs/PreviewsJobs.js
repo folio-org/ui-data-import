@@ -4,17 +4,14 @@ import { get } from 'lodash';
 
 import { JobsList } from '../JobsList';
 import { sortPreviewJobs } from './sortPreviewJobs';
-import {
-  READY_FOR_PREVIEW,
-  PREPARING_FOR_PREVIEW,
-} from '../../jobStatuses';
+import { JOB_STATUSES } from '../../../../utils/constants';
 import { DataFetcherContext } from '../../../DataFetcher';
 
 export class PreviewsJobs extends PureComponent {
   static contextType = DataFetcherContext;
 
   prepareJobsData() {
-    const jobStatuses = [READY_FOR_PREVIEW, PREPARING_FOR_PREVIEW];
+    const jobStatuses = [JOB_STATUSES.READY_FOR_PREVIEW, JOB_STATUSES.PREPARING_FOR_PREVIEW];
     const jobs = get(this.context, ['jobs', 'jobExecutionDtos'], [])
       .filter(({ uiStatus }) => jobStatuses.includes(uiStatus));
 

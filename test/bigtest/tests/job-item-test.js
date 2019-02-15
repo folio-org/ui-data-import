@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 import translation from '../../../translations/ui-data-import/en';
 import { setupApplication } from '../helpers';
-import JobsPane from '../interactors/jobs-pane';
+import { jobsPane } from '../interactors/jobs-pane';
 
 describe('Job item', () => {
   setupApplication({ scenarios: ['fetch-jobs-data-success'] });
@@ -14,31 +14,31 @@ describe('Job item', () => {
 
   describe('ready for preview', () => {
     it('has "Preview now" button', () => {
-      expect(JobsPane.previewJobs.jobItems(0).previewNowButton.isPresent).to.be.true;
+      expect(jobsPane.previewJobs.jobItems(0).previewNowButton.isPresent).to.be.true;
     });
 
     it('has correct date label', () => {
-      expect(JobsPane.previewJobs.jobItems(0).dateLabelText).to.be.equal(translation.endedRunning);
+      expect(jobsPane.previewJobs.jobItems(0).dateLabelText).to.be.equal(translation.endedRunning);
     });
   });
 
   describe('preview in progress', () => {
     it('has progress bar', () => {
-      expect(JobsPane.previewJobs.jobItems(4).progressBar.isPresent).to.be.true;
+      expect(jobsPane.previewJobs.jobItems(4).progressBar.isPresent).to.be.true;
     });
 
     it('has correct date label', () => {
-      expect(JobsPane.previewJobs.jobItems(4).dateLabelText).to.be.equal(translation.beganRunning);
+      expect(jobsPane.previewJobs.jobItems(4).dateLabelText).to.be.equal(translation.beganRunning);
     });
   });
 
   describe('running in progress', () => {
     it('has progress bar', () => {
-      expect(JobsPane.runningJobs.jobItems(0).progressBar.isPresent).to.be.true;
+      expect(jobsPane.runningJobs.jobItems(0).progressBar.isPresent).to.be.true;
     });
 
     it('has correct date label', () => {
-      expect(JobsPane.runningJobs.jobItems(0).dateLabelText).to.be.equal(translation.beganRunning);
+      expect(jobsPane.runningJobs.jobItems(0).dateLabelText).to.be.equal(translation.beganRunning);
     });
   });
 });

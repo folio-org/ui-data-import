@@ -4,8 +4,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { Button } from '@folio/stripes/components';
 
-import { UPLOADED } from '../../../UploadingJobsDisplay/components/FileItem/fileItemStatuses';
 import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
+import { FILE_STATUSES } from '../../../../utils/constants';
 
 import css from './ReturnToAssignJobs.css';
 
@@ -24,7 +24,7 @@ export class ReturnToAssignJobs extends Component {
     const { uploadDefinition: { fileDefinitions = [] } } = this.context;
 
     return fileDefinitions.reduce((res, { status }) => {
-      return status === UPLOADED ? res + 1 : res;
+      return status === FILE_STATUSES.UPLOADED ? res + 1 : res;
     }, 0);
   }
 
@@ -35,8 +35,14 @@ export class ReturnToAssignJobs extends Component {
     const messageId = prohibitFilesUploading ? 'messageWhenProhibited' : 'message';
 
     return (
-      <div className={css.container}>
-        <span className={css.message}>
+      <div
+        className={css.container}
+        data-return-to-assign-jobs
+      >
+        <span
+          className={css.message}
+          data-test-title
+        >
           <FormattedMessage id={this.getIntlId(messageId)} />
         </span>
         <span className={css.subMessage}>
@@ -48,12 +54,12 @@ export class ReturnToAssignJobs extends Component {
         <div className={css.buttonsContainer}>
           <Button
             buttonStyle="primary"
-            buttonClass={css.button}
+            buttonClass={css.submitBtn}
           >
             <FormattedMessage id={this.getIntlId('resume')} />
           </Button>
           <Button
-            buttonClass={css.button}
+            buttonClass={css.deleteBtn}
             onClick={deleteUploadDefinition}
           >
             <FormattedMessage id={this.getIntlId('deleteFiles')} />

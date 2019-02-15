@@ -4,14 +4,14 @@ import { get } from 'lodash';
 
 import { JobsList } from '../JobsList';
 import { sortRunningJobs } from './sortRunningJobs';
-import { RUNNING } from '../../jobStatuses';
+import { JOB_STATUSES } from '../../../../utils/constants';
 import { DataFetcherContext } from '../../../DataFetcher';
 
 export class RunningJobs extends PureComponent {
   static contextType = DataFetcherContext;
 
   prepareJobsData() {
-    const jobStatuses = [RUNNING];
+    const jobStatuses = [JOB_STATUSES.RUNNING];
     const jobs = get(this.context, ['jobs', 'jobExecutionDtos'], [])
       .filter(({ uiStatus }) => jobStatuses.includes(uiStatus));
 

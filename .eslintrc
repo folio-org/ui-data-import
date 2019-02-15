@@ -31,6 +31,10 @@
       "error",
       "always-multiline"
     ],
-    "arrow-parens": ["error", "as-needed"]
+    "arrow-parens": ["error", "as-needed"],
+    "quote-props": ["error", "as-needed"],
+    "prefer-template": "error",
+    "no-else-return": "error",
+    "newline-per-chained-call": "error"
   }
 }

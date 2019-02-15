@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { isRequiredFieldValid } from '../../../utils/formValidators';
+import { isRequiredFieldValid } from '../../utils/formValidators';
 
 const validateRequiredField = value => {
   const requiredFieldValid = isRequiredFieldValid(value);

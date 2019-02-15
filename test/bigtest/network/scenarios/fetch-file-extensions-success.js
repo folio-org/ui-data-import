@@ -1,8 +1,4 @@
-import { fileExtensions } from '../../mocks';
-
 export default server => {
-  server.get('/data-import/fileExtensions', {
-    fileExtensions,
-    totalRecords: fileExtensions.length,
-  });
+  server.createList('file-extension', 3);
+  server.get('/data-import/fileExtensions');
 };

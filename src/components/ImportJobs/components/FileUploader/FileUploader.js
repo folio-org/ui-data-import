@@ -63,11 +63,14 @@ const FileUploader = props => {
               className={css.errorMessage}
             >
               <Icon icon="exclamation-circle">
-                {errorMessage}
+                <span data-test-error-msg>{errorMessage}</span>
               </Icon>
             </span>
           )}
-          <span className={titleClassName}>
+          <span
+            className={titleClassName}
+            data-test-title
+          >
             {title}
           </span>
           <div hidden={isDropZoneActive}>
