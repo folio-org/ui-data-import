@@ -225,7 +225,6 @@ class UploadingJobsDisplayComponent extends Component {
         if (!this.mounted) {
           this.cancelCurrentFileUpload();
           setFiles();
-
           break;
         }
 
