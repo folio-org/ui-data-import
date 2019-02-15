@@ -17,24 +17,24 @@ import {
 import {
   Layout,
   Callout,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 
 import { EndOfList } from '../EndOfList';
 import { Preloader } from '../Preloader';
-import {
-  FileItem,
-  LeavePageModal,
-  fileStatuses,
-} from './components';
+import { UploadingJobsContext } from '../UploadingJobsContextProvider';
+import { FileItem } from './components';
 import {
   compose,
   createUrl,
   createOkapiHeaders,
   xhrAddHeaders,
 } from '../../utils';
-import { DEFAULT_TIMEOUT_BEFORE_FILE_DELETION } from '../../utils/constants';
+import {
+  DEFAULT_TIMEOUT_BEFORE_FILE_DELETION,
+  FILE_STATUSES,
+} from '../../utils/constants';
 import * as API from './utils/upload';
-import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 
 class UploadingJobsDisplayComponent extends Component {
   static propTypes = {
@@ -75,9 +75,9 @@ class UploadingJobsDisplayComponent extends Component {
     this.uploadDefinitionUrl = createUrl(`${host}/data-import/uploadDefinitions`);
     this.deleteFileTimeouts = {};
     this.fileRemovalMap = {
-      [fileStatuses.UPLOADED]: this.handleDeleteSuccessfullyUploadedFile,
-      [fileStatuses.FAILED]: this.deleteFileAPI,
-      [fileStatuses.FAILED_DEFINITION]: this.deleteFileFromState,
+      [FILE_STATUSES.UPLOADED]: this.handleDeleteSuccessfullyUploadedFile,
+      [FILE_STATUSES.FAILED]: this.deleteFileAPI,
+      [FILE_STATUSES.FAILED_DEFINITION]: this.deleteFileFromState,
     };
   }
 
@@ -142,7 +142,7 @@ class UploadingJobsDisplayComponent extends Component {
   get filesUploading() {
     const { files } = this.state;
 
-    return some(files, file => file.status === fileStatuses.UPLOADING);
+    return some(files, file => file.status === FILE_STATUSES.UPLOADING);
   }
 
   cancelFileRemovals() {
@@ -222,6 +222,7 @@ class UploadingJobsDisplayComponent extends Component {
     for (const fileKey of Object.keys(files)) {
       try {
         // cancel current and next file uploads if component is unmounted
+        /* istanbul ignore if  */
         if (!this.mounted) {
           this.cancelCurrentFileUpload();
           setFiles();
@@ -323,7 +324,7 @@ class UploadingJobsDisplayComponent extends Component {
         size: file.size,
         loading: false,
         uploadedDate: file.uploadedDate,
-        status: fileStatuses.UPLOADING,
+        status: FILE_STATUSES.UPLOADING,
         currentUploaded: 0,
         file,
       };
@@ -359,19 +360,19 @@ class UploadingJobsDisplayComponent extends Component {
     const { uploadedDate } = response.fileDefinitions.find(file => file.uiKey === fileKey);
 
     this.updateFileState(fileKey, {
-      status: fileStatuses.UPLOADED,
+      status: FILE_STATUSES.UPLOADED,
       uploadedDate,
     });
   };
 
   handleFileUploadFail = fileKey => {
-    this.updateFileState(fileKey, { status: fileStatuses.FAILED });
+    this.updateFileState(fileKey, { status: FILE_STATUSES.FAILED });
   };
 
   handleUndoDeleteFile = fileKey => {
     clearTimeout(this.deleteFileTimeouts[fileKey]);
 
-    this.updateFileState(fileKey, { status: fileStatuses.UPLOADED });
+    this.updateFileState(fileKey, { status: FILE_STATUSES.UPLOADED });
   };
 
   handleDeleteFile = (fileKey, fileStatus) => {
@@ -445,7 +446,7 @@ class UploadingJobsDisplayComponent extends Component {
       this.deleteFileAPI(fileKey, fileStatus);
     }, timeoutBeforeFileDeletion);
 
-    this.updateFileState(fileKey, { status: fileStatuses.DELETING });
+    this.updateFileState(fileKey, { status: FILE_STATUSES.DELETING });
   };
 
   handleAllFilesUploadFail(errMsg) {
@@ -456,7 +457,7 @@ class UploadingJobsDisplayComponent extends Component {
         .reduce((res, fileKey) => {
           const updatedFile = {
             ...state.files[fileKey],
-            status: fileStatuses.FAILED_DEFINITION,
+            status: FILE_STATUSES.FAILED_DEFINITION,
             errorMsgTranslationID,
           };
 
@@ -536,13 +537,30 @@ class UploadingJobsDisplayComponent extends Component {
       return <Preloader />;
     }
 
+    const leavePageMessage = (
+      <FormattedMessage
+        id="ui-data-import.modal.leavePage.message"
+        values={{
+          highlightedText: (
+            <strong>
+              <FormattedMessage id="ui-data-import.modal.leavePage.messageHighlightedText" />
+            </strong>
+          ),
+        }}
+      />
+    );
+
     return (
-      <div>
+      <div data-test-uploading-jobs-display>
         {this.renderFiles()}
         <EndOfList />
         <Callout ref={this.createCalloutRef} />
-        <LeavePageModal
+        <ConfirmationModal
           open={renderLeaveModal}
+          heading={<FormattedMessage id="ui-data-import.modal.leavePage.header" />}
+          message={leavePageMessage}
+          confirmLabel={<FormattedMessage id="ui-data-import.modal.leavePage.actionButton" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.modal.leavePage.cancel" />}
           onConfirm={this.closeModal}
           onCancel={this.continue}
         />

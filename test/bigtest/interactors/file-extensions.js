@@ -1,5 +1,7 @@
-import { interactor } from '@bigtest/interactor';
+import { interactor, count } from '@bigtest/interactor';
 
-@interactor class FileExtensionsInteractor {}
+@interactor class FileExtensionsInteractor {
+  count = count('a[class*="mclRow--"]');
+}
 
-export default new FileExtensionsInteractor('[data-test-file-extensions]');
+export const fileExtensions = new FileExtensionsInteractor('[data-test-file-extensions]');

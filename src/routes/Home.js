@@ -8,10 +8,12 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 
-import { Jobs } from '../components/Jobs';
-import { JobLogs } from '../components/JobLogs';
-import { ImportJobs } from '../components/ImportJobs';
-import { DataFetcher } from '../components/DataFetcher';
+import {
+  Jobs,
+  JobLogs,
+  ImportJobs,
+  DataFetcher,
+} from '../components';
 
 export class Home extends Component {
   static propTypes = { stripes: stripesShape.isRequired };

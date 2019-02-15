@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import { IntlConsumer } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 
-import { SearchAndSort } from '../../components/SearchAndSort';
+import {
+  FileExtensionForm,
+  SearchAndSort,
+} from '../../components';
 import { ViewFileExtension } from './ViewFileExtension';
 import { resultsFormatter } from './resultsFormatter';
-import { FileExtensionForm } from './FileExtensionForm';
 
 import css from './FileExtensions.css';
 
@@ -18,7 +20,7 @@ class FileExtensions extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
     query: {
-      initialValue: { sort: 'extension' },
+      initialValue: {},
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     records: {
@@ -34,11 +36,11 @@ class FileExtensions extends Component {
             'cql.allRecords=1',
             '(extension="%{query.query}*")',
             {
-              'extension': 'extension',
-              'importBlocked': 'importBlocked',
-              'updated': 'metadata.updatedDate',
-              'dataTypes': 'dataTypes',
-              'updatedBy': 'userInfo.firstName userInfo.lastName userInfo.userName',
+              extension: 'extension',
+              importBlocked: 'importBlocked',
+              updated: 'metadata.updatedDate',
+              dataTypes: 'dataTypes',
+              updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
             },
             [],
           ),
@@ -111,6 +113,7 @@ class FileExtensions extends Component {
                 searchLabelKey="ui-data-import.settings.fileExtensions.title"
                 resultCountMessageKey="ui-data-import.settings.fileExtensions.count"
                 resultsLabel={label}
+                defaultSort="extension"
                 resultsFormatter={resultsFormatter(intl)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{

@@ -7,7 +7,7 @@ import {
 } from '../mocks/jobExecutions';
 import translation from '../../../translations/ui-data-import/en';
 import { setupApplication } from '../helpers';
-import JobsPane from '../interactors/jobs-pane';
+import { jobsPane } from '../interactors/jobs-pane';
 
 describe('Jobs pane', () => {
   setupApplication();
@@ -17,43 +17,43 @@ describe('Jobs pane', () => {
   });
 
   it('renders', () => {
-    expect(JobsPane.isPresent).to.be.true;
+    expect(jobsPane.isPresent).to.be.true;
   });
 
   it('has correct title', () => {
-    expect(JobsPane.title).to.be.equal(translation.jobsPaneTitle);
+    expect(jobsPane.title).to.be.equal(translation.jobsPaneTitle);
   });
 
   describe('previews jobs section', () => {
     it('renders', () => {
-      expect(JobsPane.previewJobs.isPresent).to.be.true;
+      expect(jobsPane.previewJobs.isPresent).to.be.true;
     });
 
     it('has correct title', () => {
-      expect(JobsPane.previewJobsTitleText).to.be.equal(translation.previewJobs);
+      expect(jobsPane.previewJobsTitleText).to.be.equal(translation.previewJobs);
     });
   });
 
   describe('running jobs section', () => {
     it('renders', () => {
-      expect(JobsPane.previewJobs.isPresent).to.be.true;
+      expect(jobsPane.previewJobs.isPresent).to.be.true;
     });
 
     it('has correct title', () => {
-      expect(JobsPane.runningJobsTitleText).to.be.equal(translation.runningJobs);
+      expect(jobsPane.runningJobsTitleText).to.be.equal(translation.runningJobs);
     });
   });
 
   describe('when job data is empty', () => {
     describe('jobs preview section', () => {
       it('renders empty message', () => {
-        expect(JobsPane.previewJobs.emptyMessage.isPresent).to.be.true;
+        expect(jobsPane.previewJobs.emptyMessage.isPresent).to.be.true;
       });
     });
 
     describe('jobs running section', () => {
       it('renders empty message', () => {
-        expect(JobsPane.runningJobs.emptyMessage.isPresent).to.be.true;
+        expect(jobsPane.runningJobs.emptyMessage.isPresent).to.be.true;
       });
     });
   });
@@ -68,21 +68,21 @@ describe('Jobs pane when jobs data retrieved successfully', () => {
 
   describe('jobs preview section', () => {
     it('renders jobs list', () => {
-      expect(JobsPane.previewJobs.jobsList.isPresent).to.be.true;
+      expect(jobsPane.previewJobs.jobsList.isPresent).to.be.true;
     });
 
     it('has correct job items amount', () => {
-      expect(JobsPane.previewJobs.jobItems()).to.have.lengthOf(PREVIEW_JOBS_LENGTH);
+      expect(jobsPane.previewJobs.jobItems()).to.have.lengthOf(PREVIEW_JOBS_LENGTH);
     });
   });
 
   describe('jobs running section', () => {
     it('renders jobs list', () => {
-      expect(JobsPane.runningJobs.jobsList.isPresent).to.be.true;
+      expect(jobsPane.runningJobs.jobsList.isPresent).to.be.true;
     });
 
     it('has correct job items amount', () => {
-      expect(JobsPane.runningJobs.jobItems()).to.have.lengthOf(RUNNING_JOBS_LENGTH);
+      expect(jobsPane.runningJobs.jobItems()).to.have.lengthOf(RUNNING_JOBS_LENGTH);
     });
   });
 });
@@ -96,13 +96,13 @@ describe('Jobs pane when unable to fetch jobs data', () => {
 
   describe('jobs preview section', () => {
     it('renders empty message', () => {
-      expect(JobsPane.previewJobs.emptyMessage.isPresent).to.be.true;
+      expect(jobsPane.previewJobs.emptyMessage.isPresent).to.be.true;
     });
   });
 
   describe('jobs running section', () => {
     it('renders empty message', () => {
-      expect(JobsPane.runningJobs.emptyMessage.isPresent).to.be.true;
+      expect(jobsPane.runningJobs.emptyMessage.isPresent).to.be.true;
     });
   });
 });

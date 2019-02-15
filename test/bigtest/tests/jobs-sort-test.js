@@ -7,10 +7,12 @@ import { isEqual } from 'lodash';
 
 import { sortPreviewJobs } from '../../../src/components/Jobs/components/PreviewsJobs/sortPreviewJobs';
 import { sortRunningJobs } from '../../../src/components/Jobs/components/RunningJobs/sortRunningJobs';
-import {
+import { JOB_STATUSES } from '../../../src/utils/constants';
+
+const {
   READY_FOR_PREVIEW,
   PREPARING_FOR_PREVIEW,
-} from '../../../src/components/Jobs/jobStatuses';
+} = JOB_STATUSES;
 
 const ANOTHER_STATUS = 'ANOTHER_STATUS';
 

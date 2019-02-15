@@ -6,7 +6,7 @@ import {
   Pane,
 } from '@folio/stripes/components';
 
-import { UploadingJobsDisplay } from '../components/UploadingJobsDisplay';
+import { UploadingJobsDisplay } from '../components';
 
 export class JobProfile extends Component {
   render() {

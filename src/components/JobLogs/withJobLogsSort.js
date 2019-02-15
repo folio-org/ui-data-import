@@ -35,7 +35,7 @@ const withJobLogsSortComponent = WrappedComponent => {
 
       this.state = {
         sort: 'completedDate',
-        direction: SORT_TYPES.ASCENDING,
+        direction: SORT_TYPES.DESCENDING,
       };
 
       this.sortColumns = {
@@ -71,7 +71,7 @@ const withJobLogsSortComponent = WrappedComponent => {
 
       const {
         sort = 'completedDate',
-        direction = SORT_TYPES.ASCENDING,
+        direction = SORT_TYPES.DESCENDING,
       } = qs.parse(search.slice(1));
 
       this.setState({

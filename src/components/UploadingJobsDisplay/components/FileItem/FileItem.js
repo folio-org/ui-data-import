@@ -7,8 +7,8 @@ import { noop } from 'lodash';
 import { Icon } from '@folio/stripes/components';
 
 import { Progress } from '../../../Progress';
-import * as fileStatuses from './fileItemStatuses';
 import { getFileItemMeta } from './getFileItemMeta';
+import { FILE_STATUSES } from '../../../../utils/constants';
 
 import css from './FileItem.css';
 
@@ -27,7 +27,7 @@ export class FileItem extends PureComponent {
   };
 
   static defaultProps = {
-    status: fileStatuses.UPLOADING,
+    status: FILE_STATUSES.UPLOADING,
     uploadedValue: 0,
     errorMsgTranslationID: 'upload.invalid',
     uploadedDate: null,

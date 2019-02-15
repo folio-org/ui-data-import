@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { isEmpty } from 'lodash';
 
+import { ConfirmationModal } from '@folio/stripes/components';
+
 import {
   FileUploader,
-  InvalidFilesModal,
   ReturnToAssignJobs,
 } from './components';
 import { Preloader } from '../Preloader';
+
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 
 import css from './components/FileUploader/FileUploader.css';
@@ -120,6 +122,7 @@ class ImportJobsComponent extends Component {
   render() {
     const { match: { path } } = this.props;
     const { uploadDefinition } = this.context;
+
     const {
       redirect,
       hasLoaded,
@@ -146,6 +149,19 @@ class ImportJobsComponent extends Component {
     const uploadBtnText = this.getMessageById('uploadBtnText');
     const errorMessage = showErrorMessage && this.getMessageById('importJobs.errorMessage');
 
+    const invalidFilesMessage = (
+      <FormattedMessage
+        id="ui-data-import.modal.fileExtensions.message"
+        values={{
+          highlightedText: (
+            <strong>
+              <FormattedMessage id="ui-data-import.modal.fileExtensions.messageHighlightedText" />
+            </strong>
+          ),
+        }}
+      />
+    );
+
     return (
       <FileUploader
         title={titleText}
@@ -159,8 +175,12 @@ class ImportJobsComponent extends Component {
         onDrop={this.onDrop}
       >
         {openDialogWindow => (
-          <InvalidFilesModal
+          <ConfirmationModal
             open={filesExtensionsModalOpen}
+            heading={<FormattedMessage id="ui-data-import.modal.fileExtensions.header" />}
+            message={invalidFilesMessage}
+            confirmLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.actionButton" />}
+            cancelLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.cancel" />}
             onConfirm={openDialogWindow}
             onCancel={this.hideFilesExtensionsModal}
           />

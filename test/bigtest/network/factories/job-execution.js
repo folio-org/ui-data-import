@@ -3,7 +3,7 @@ import {
   faker,
 } from '@bigtest/mirage';
 
-import * as statuses from '../../../../src/components/Jobs/jobStatuses';
+import { JOB_STATUSES } from '../../../../src/utils/constants';
 
 export default Factory.extend({
   id: () => faker.random.uuid(),
@@ -13,7 +13,7 @@ export default Factory.extend({
       max: 999999999,
     }).toString();
   },
-  uiStatus: () => faker.random.arrayElement(Object.values(statuses)),
+  uiStatus: () => faker.random.arrayElement(Object.values(JOB_STATUSES)),
   jobProfileName: () => faker.random.arrayElement([
     'Marc bib jobs',
     'Library indexing',

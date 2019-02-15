@@ -3,10 +3,12 @@ import {
   DATE_TYPES,
   convertDate,
 } from '../../utils';
-import {
+import { JOB_STATUSES } from '../../../../utils/constants';
+
+const {
   READY_FOR_PREVIEW,
   PREPARING_FOR_PREVIEW,
-} from '../../jobStatuses';
+} = JOB_STATUSES;
 
 const statusSequence = [READY_FOR_PREVIEW, PREPARING_FOR_PREVIEW];
 const sortByDates = (a, b) => {

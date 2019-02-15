@@ -9,8 +9,7 @@ import {
   Icon,
   IconButton,
 } from '@folio/stripes/components';
-
-import * as fileStatuses from './fileItemStatuses';
+import { FILE_STATUSES } from '../../../../utils/constants';
 
 import css from './FileItem.css';
 
@@ -49,11 +48,11 @@ export const getFileItemMeta = props => {
   };
 
   const fileTypesMeta = {
-    [fileStatuses.UPLOADING]: {
+    [FILE_STATUSES.UPLOADING]: {
       fileWrapperClassName: css.fileItemUploading,
       showProgress: true,
     },
-    [fileStatuses.UPLOADED]: {
+    [FILE_STATUSES.UPLOADED]: {
       renderHeading: () => (
         <Fragment>
           <span className={css.fileItemHeaderName}>{name}</span>
@@ -74,7 +73,7 @@ export const getFileItemMeta = props => {
         </Fragment>
       ),
     },
-    [fileStatuses.FAILED]: {
+    [FILE_STATUSES.FAILED]: {
       fileWrapperClassName: classNames(css.fileItemDanger, css.fileItemFailed),
       renderHeading: () => (
         <Fragment>
@@ -107,7 +106,7 @@ export const getFileItemMeta = props => {
         </Fragment>
       ),
     },
-    [fileStatuses.DELETING]: {
+    [FILE_STATUSES.DELETING]: {
       fileWrapperClassName: css.fileItemDanger,
       renderHeading: () => (
         <Fragment>
@@ -134,7 +133,7 @@ export const getFileItemMeta = props => {
     },
   };
 
-  fileTypesMeta[fileStatuses.FAILED_DEFINITION] = fileTypesMeta[fileStatuses.FAILED];
+  fileTypesMeta[FILE_STATUSES.FAILED_DEFINITION] = fileTypesMeta[FILE_STATUSES.FAILED];
 
   return {
     ...defaultFileMeta,
