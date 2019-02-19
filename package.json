@@ -92,8 +92,8 @@
       }
     ],
     "okapiInterfaces": {
-      "data-import": "2.0",
-      "source-record-manager": "1.2"
+      "data-import": "3.0",
+      "source-record-manager": "2.0"
     },
     "permissionSets": [
       {
