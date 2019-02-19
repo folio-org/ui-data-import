@@ -37,7 +37,7 @@ export class ReturnToAssignJobs extends Component {
     return (
       <div
         className={css.container}
-        data-return-to-assign-jobs
+        data-test-return-to-assign-jobs
       >
         <span
           className={css.message}

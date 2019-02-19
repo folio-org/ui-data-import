@@ -20,4 +20,4 @@ import {
 }
 
 export const importJobs = new ImportJobsInteractor('[class*="upload---"]');
-export const returnToAssignJobs = new ReturnToAssignJobsInteracation('[data-return-to-assign-jobs]');
+export const returnToAssignJobs = new ReturnToAssignJobsInteracation('[data-test-return-to-assign-jobs]');
