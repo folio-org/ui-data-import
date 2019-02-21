@@ -8,12 +8,15 @@ import { FormattedMessage } from 'react-intl';
 import {
   Pane,
   Headline,
+  Row,
+  Col,
 } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
 
 import { Preloader } from '../../components/Preloader';
+import { EndOfRecord } from '../../components/EndOfRecord';
+import { ViewMetaData } from '@folio/stripes/smart-components';
 
-// TODO: view component will be developed in UIDATIMP-61
 export class ViewFileExtension extends Component {
   static manifest = Object.freeze({
     fileExtension: {
@@ -54,7 +57,7 @@ export class ViewFileExtension extends Component {
         dismissible
         onClose={onClose}
       >
-        <Preloader />
+        <Preloader/>
       </Pane>
     );
   }
@@ -85,26 +88,50 @@ export class ViewFileExtension extends Component {
     if (!record) {
       return this.renderSpinner();
     }
-
     return (
       <Pane
         id="pane-file-extension-details"
         defaultWidth="fill"
         fluidContentWidth
         paneTitle={record.extension}
-        paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
+        paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title"/>}
         dismissible
         onClose={onClose}
       >
         {hasLoaded && (
           <Fragment>
-            <TitleManager record={record.extension} />
+            <TitleManager record={record.extension}/>
             <Headline
               size="xx-large"
               tag="h2"
             >
               {record.extension}
             </Headline>
+
+            <Row>
+             {/* <ViewMetaData metadata={record.metadata} />*/}
+            </Row>
+
+            <Row>
+              {record.description}
+            </Row>
+
+            <section>
+              <Row>
+                <Col xs={4} class="kvLabel---3-4II">
+                  <FormattedMessage id="ui-data-import.settings.fileExtension.title"/>
+                </Col>
+                <Col xs={4} class="kvLabel---3-4II">
+                  <FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes"/>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={4} class="kvLabel---3-4II">{record.extension}</Col>
+                <Col xs={4} class="kvLabel---3-4II">{record.dataTypes}</Col>
+              </Row>
+
+            </section>
+            <EndOfRecord />
           </Fragment>
         )}
       </Pane>
