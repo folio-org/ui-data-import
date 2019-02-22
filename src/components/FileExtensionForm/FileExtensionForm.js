@@ -65,13 +65,7 @@ class FileExtensionFormComponent extends Component {
     return { renderedItems, exactMatch };
   };
 
-  formatMultiSelect = ({ option, searchTerm }) => {
-    if (option) {
-      return <OptionSegment searchTerm={searchTerm}>{option}</OptionSegment>;
-    }
-
-    return null;
-  };
+  formatMultiSelect = ({ option, searchTerm }) => <OptionSegment searchTerm={searchTerm}>{option}</OptionSegment>;
 
   getAddFirstMenu() {
     const { onCancel } = this.props;
@@ -163,6 +157,7 @@ class FileExtensionFormComponent extends Component {
       initialValues,
       handleSubmit,
     } = this.props;
+
     const { dataTypesRequired } = this.state;
 
     const isEditMode = Boolean(initialValues.id);
@@ -196,19 +191,23 @@ class FileExtensionFormComponent extends Component {
             >
               {headLine}
             </Headline>
-            <Field
-              label={<FormattedMessage id="ui-data-import.description" />}
-              name="description"
-              component={TextArea}
-            />
-            <Field
-              label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
-              name="extension"
-              required
-              component={TextField}
-              validate={validators.fileExtension}
-            />
-            <div>
+            <div data-test-description-field>
+              <Field
+                label={<FormattedMessage id="ui-data-import.description" />}
+                name="description"
+                component={TextArea}
+              />
+            </div>
+            <div data-test-extension-field>
+              <Field
+                label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
+                name="extension"
+                required
+                component={TextField}
+                validate={validators.fileExtension}
+              />
+            </div>
+            <div data-test-blocked-field>
               <p className={css.checkBoxLabel}>
                 <FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />
               </p>
@@ -220,20 +219,22 @@ class FileExtensionFormComponent extends Component {
                 onChange={this.importBlockedChange}
               />
             </div>
-            <Field
-              label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}
-              name="dataTypes"
-              component={MultiSelection}
-              dataOptions={this.dataTypes}
-              required={dataTypesRequired}
-              disabled={!dataTypesRequired}
-              validationEnabled
-              itemToString={identity}
-              validate={validators.dataTypes}
-              filter={this.filterMultiSelect}
-              formatter={this.formatMultiSelect}
-              onBlur={this.handleMultiSelectBlur}
-            />
+            <div data-test-types-field>
+              <Field
+                label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}
+                name="dataTypes"
+                component={MultiSelection}
+                dataOptions={this.dataTypes}
+                required={dataTypesRequired}
+                disabled={!dataTypesRequired}
+                validationEnabled
+                itemToString={identity}
+                validate={validators.dataTypes}
+                filter={this.filterMultiSelect}
+                formatter={this.formatMultiSelect}
+                onBlur={this.handleMultiSelectBlur}
+              />
+            </div>
           </div>
         </Pane>
       </form>

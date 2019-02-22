@@ -1,8 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { IntlConsumer } from '@folio/stripes/core';
-import { makeQueryFunction } from '@folio/stripes/smart-components';
+import { Callout } from '@folio/stripes/components';
+import {
+  makeQueryFunction,
+  buildUrl,
+} from '@folio/stripes/smart-components';
 
 import {
   FileExtensionForm,
@@ -10,6 +15,7 @@ import {
 } from '../../components';
 import { ViewFileExtension } from './ViewFileExtension';
 import { resultsFormatter } from './resultsFormatter';
+import { getXHRErrorMessage } from '../../utils';
 
 import css from './FileExtensions.css';
 
@@ -29,6 +35,7 @@ class FileExtensions extends Component {
       records: 'fileExtensions',
       recordsRequired: '%{resultCount}',
       path: 'data-import/fileExtensions',
+      clientGeneratePk: false,
       throwErrors: false,
       GET: {
         params: {
@@ -54,6 +61,13 @@ class FileExtensions extends Component {
     mutator: PropTypes.object.isRequired,
     resources: PropTypes.object.isRequired,
     label: PropTypes.node.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
+    match: PropTypes.shape({
+      path: PropTypes.string.isRequired,
+    }).isRequired,
     showSingleResult: PropTypes.bool,
   };
 
@@ -74,11 +88,61 @@ class FileExtensions extends Component {
 
   createNewRecordContainerRef = ref => { this.newRecordContainer = ref; };
 
-  createRecord = record => {
-    // eslint-disable-next-line no-console
-    console.log(record);
+  transitionToParams = params => {
+    const {
+      location,
+      history,
+    } = this.props;
 
-    // TODO: this will be handled in UIDATIMP-79
+    const url = buildUrl(location, params);
+
+    history.push(url);
+  };
+
+  createRecord = async record => {
+    const { mutator: { records } } = this.props;
+
+    try {
+      const { match: { path } } = this.props;
+
+      const newRecord = await records.POST(record);
+
+      this.transitionToParams({
+        _path: `${path}/view/${newRecord.id}`,
+        layer: null,
+      });
+
+      return newRecord;
+    } catch (error) {
+      this.showCreateRecordErrorMessage(error, record);
+
+      return error;
+    }
+  };
+
+  async showCreateRecordErrorMessage(response, fileExtension) {
+    const { extension } = fileExtension;
+    const errorMsgIdEnding = await getXHRErrorMessage(response);
+
+    const errorMsgId = errorMsgIdEnding
+      ? `ui-data-import.validation.${errorMsgIdEnding}`
+      : 'ui-data-import.error.network';
+
+    const errorMessage = (
+      <FormattedMessage
+        id={errorMsgId}
+        values={{ value: extension }}
+      />
+    );
+
+    this.callout.sendCallout({
+      type: 'error',
+      message: errorMessage,
+    });
+  }
+
+  createCalloutRef = ref => {
+    this.callout = ref;
   };
 
   render() {
@@ -136,6 +200,7 @@ class FileExtensions extends Component {
               className={css.newRecordContainer}
               ref={this.createNewRecordContainerRef}
             />
+            <Callout ref={this.createCalloutRef} />
           </Fragment>
         )}
       </IntlConsumer>

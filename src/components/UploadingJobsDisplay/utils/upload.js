@@ -31,8 +31,8 @@ export const createUploadDefinition = async (files, url, headers) => {
     }
 
     return [null, responseJSON];
-  } catch (err) {
-    return [err.message];
+  } catch (error) {
+    return [error.message];
   }
 };
 

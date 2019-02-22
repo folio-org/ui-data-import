@@ -17,6 +17,7 @@
 * Implement add new file extension feature (UIDATIMP-56)
 * Handle sorting icons for both job logs and file extensions tables (UIDATIMP-124)
 * Update API endpoints on UI due to changes on backend across the application (UIDATIMP-112, UIDATIMP-113, UIDATIMP-114)
+* Implement "Save the new file extension" feature (UIDATIMP-79)
 
 ## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
 
