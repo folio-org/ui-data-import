@@ -115,7 +115,8 @@
         "displayName": "Settings (data-import): display list of settings pages",
         "subPermissions": [
           "settings.enabled",
-          "data-import.fileExtensions.get"
+          "data-import.fileExtensions.get",
+          "data-import.fileExtensions.post"
         ],
         "visible": true
       }

@@ -75,5 +75,8 @@
   "modal.leavePage.cancel": "Close & lose partial uploads",
   "modal.leavePage.actionButton": "Keep uploading",
   "validation.enterValue": "Please enter a value",
-  "validation.fileExtension": "Please enter a valid file extension (e.g. .marc)"
+  "validation.fileExtension": "Please enter a valid file extension (e.g. .marc)",
+  "validation.fileExtension.extension.invalid": "New record not created: File extension {value} is not a valid format",
+  "validation.fileExtension.duplication.invalid": "New record not created: File extension {value} already exists",
+  "error.network": "New record not created: Communication problem with server. Please try again"
 }

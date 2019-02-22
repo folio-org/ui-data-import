@@ -56,6 +56,7 @@ export const resultsFormatter = intl => ({
         size="small"
         app="data-import"
         iconKey="user"
+        className={css.userColumn}
       >
         {formatUserName(userInfo)}
       </AppIcon>

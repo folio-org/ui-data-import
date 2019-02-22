@@ -17,3 +17,7 @@
     display: none;
   }
 }
+
+.userColumn {
+  align-items: baseline;
+}
