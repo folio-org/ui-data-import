@@ -39,52 +39,36 @@ describe('File extension form', () => {
   });
 
   describe('when file extension field', () => {
-    describe('is empty', () => {
-      beforeEach(async function () {
-        await newFileExtensionForm.extensionField
-          .focus('input')
-          .fill('input', '')
-          .blur('input');
-      });
-
-      it('then the error message does not appear', () => {
-        expect(newFileExtensionForm.hasError(newFileExtensionForm.extensionField)).to.be.true;
-      });
-    });
-
     describe('has leading or trailing spaces', () => {
       beforeEach(async function () {
-        await newFileExtensionForm.extensionField
-          .focus('input')
-          .fill('input', '  .csv  ')
-          .blur('input');
+        await newFileExtensionForm.extensionField.fillAndBlur('  .csv  ');
+        await newFileExtensionForm.submitFormBtn.click();
       });
 
       it('then the error message appears', () => {
-        expect(newFileExtensionForm.hasError(newFileExtensionForm.extensionField)).to.be.true;
+        expect(newFileExtensionForm.extensionField.inputError).to.be.true;
       });
     });
 
     describe('has not leading dot', () => {
       beforeEach(async function () {
-        await newFileExtensionForm.extensionField
-          .focus('input')
-          .fill('input', 'csv')
-          .blur('input');
+        await newFileExtensionForm.extensionField.fillAndBlur('csv');
+        await newFileExtensionForm.submitFormBtn.click();
       });
 
       it('then the error message appears', () => {
-        expect(newFileExtensionForm.hasError(newFileExtensionForm.extensionField)).to.be.true;
+        expect(newFileExtensionForm.extensionField.inputError).to.be.true;
       });
     });
 
     describe('is valid', () => {
       beforeEach(async function () {
         await newFileExtensionForm.extensionField.fillAndBlur('.csv');
+        await newFileExtensionForm.submitFormBtn.click();
       });
 
       it('then the error message does not appear', () => {
-        expect(newFileExtensionForm.hasError(newFileExtensionForm.extensionField)).to.be.false;
+        expect(newFileExtensionForm.extensionField.inputError).to.be.false;
       });
     });
   });

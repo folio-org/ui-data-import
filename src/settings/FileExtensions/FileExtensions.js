@@ -111,8 +111,12 @@ class FileExtensions extends Component {
         _path: `${path}/view/${newRecord.id}`,
         layer: null,
       });
+
+      return newRecord;
     } catch (error) {
       this.showCreateRecordErrorMessage(error, record);
+
+      return error;
     }
   };
 

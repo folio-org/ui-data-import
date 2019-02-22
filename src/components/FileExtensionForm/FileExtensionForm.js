@@ -157,6 +157,7 @@ class FileExtensionFormComponent extends Component {
       initialValues,
       handleSubmit,
     } = this.props;
+
     const { dataTypesRequired } = this.state;
 
     const isEditMode = Boolean(initialValues.id);
