@@ -65,9 +65,7 @@ class FileExtensionFormComponent extends Component {
     return { renderedItems, exactMatch };
   };
 
-  formatMultiSelect = ({ option, searchTerm }) => {
-    return <OptionSegment searchTerm={searchTerm}>{option}</OptionSegment>;
-  };
+  formatMultiSelect = ({ option, searchTerm }) => <OptionSegment searchTerm={searchTerm}>{option}</OptionSegment>;
 
   getAddFirstMenu() {
     const { onCancel } = this.props;

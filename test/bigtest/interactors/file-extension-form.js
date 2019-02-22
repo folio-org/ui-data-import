@@ -32,6 +32,12 @@ import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/inter
       .paneHeaderDropdown
       .click();
   }
+
+  hasError(control) {
+    const errorItem = control.scoped('[class*="feedbackError"]');
+
+    return errorItem.isPresent;
+  }
 }
 
 export const newFileExtensionForm = new NewFileExtensionInteractor('[data-test-file-extension-form]');

@@ -99,21 +99,21 @@ class FileExtensions extends Component {
     history.push(url);
   };
 
-  createRecord = record => {
-    const { mutator } = this.props;
+  createRecord = async record => {
+    const { mutator: { records } } = this.props;
 
-    mutator.records.POST(record)
-      .then(data => {
-        const { match: { path } } = this.props;
+    try {
+      const { match: { path } } = this.props;
 
-        this.transitionToParams({
-          _path: `${path}/view/${data.id}`,
-          layer: null,
-        });
-      })
-      .catch(error => {
-        this.showCreateRecordErrorMessage(error, record);
+      const newRecord = await records.POST(record);
+
+      this.transitionToParams({
+        _path: `${path}/view/${newRecord.id}`,
+        layer: null,
       });
+    } catch (error) {
+      this.showCreateRecordErrorMessage(error, record);
+    }
   };
 
   async showCreateRecordErrorMessage(response, fileExtension) {
