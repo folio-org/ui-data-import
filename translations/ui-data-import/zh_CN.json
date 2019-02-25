@@ -99,5 +99,9 @@
     "settings.fileExtensions.title": "文件扩展名",
     "settings.fileExtensions.count": "{count, number}文件{count, plural, one { extension } other { extensions }}",
     "validation.enterValue": "请输入一个值",
-    "validation.fileExtension": "请输入有效的文件扩展名（例如.marc）"
+    "validation.fileExtension": "请输入有效的文件扩展名（例如.marc）",
+    "validation.fileExtension.extension.invalid": "New record not created: File extension {value} is not a valid format",
+    "validation.fileExtension.duplication.invalid": "New record not created: File extension {value} already exists",
+    "error.network": "New record not created: Communication problem with server. Please try again",
+    "waitingForUpload": "Waiting for upload"
 }
