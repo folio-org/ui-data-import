@@ -1,12 +1,17 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {
+  every,
+  isEmpty,
+} from 'lodash';
 
 import {
   withStripes,
   stripesShape,
 } from '@folio/stripes/core';
 
+import { FILE_STATUSES } from '../../utils/constants';
 import {
   createUrl,
   createOkapiHeaders,
@@ -26,17 +31,11 @@ class UploadingJobsContextProviderComponent extends Component {
     super(props);
 
     this.state = {
-      files: [],
-      setFiles: this.setFiles,
       uploadDefinition: {},
       updateUploadDefinition: this.updateUploadDefinition,
       deleteUploadDefinition: this.deleteUploadDefinition,
     };
   }
-
-  setFiles = (files = []) => {
-    this.setState({ files });
-  };
 
   deleteUploadDefinition = async () => {
     const { stripes: { okapi } } = this.props;
@@ -55,10 +54,32 @@ class UploadingJobsContextProviderComponent extends Component {
   updateUploadDefinition = async newUploadDefinition => {
     const uploadDefinition = newUploadDefinition || await this.getLatestUploadDefinition();
 
+    if (this.isUploadDefinitionFailed(uploadDefinition)) {
+      return this.deleteUploadDefinition();
+    }
+
     this.setState({ uploadDefinition });
 
     return uploadDefinition;
   };
+
+  isUploadDefinitionFailed(uploadDefinition) {
+    if (isEmpty(uploadDefinition)) {
+      return false;
+    }
+
+    const {
+      status: uploadDefinitionStatus,
+      fileDefinitions,
+    } = uploadDefinition;
+    const isErrorStatus = uploadDefinitionStatus === FILE_STATUSES.ERROR;
+    const areAllFilesFailed = every(
+      fileDefinitions,
+      file => file.status === FILE_STATUSES.ERROR
+    ) && !isEmpty(fileDefinitions);
+
+    return isErrorStatus || areAllFilesFailed;
+  }
 
   getLatestUploadDefinition = async () => {
     const { stripes: { okapi } } = this.props;
@@ -78,7 +99,7 @@ class UploadingJobsContextProviderComponent extends Component {
       method: 'GET',
       headers: createOkapiHeaders(okapi),
     });
-    const { uploadDefinitions: [latestUploadDefinition] } = await response.json();
+    const { uploadDefinitions: [latestUploadDefinition = {}] } = await response.json();
 
     return latestUploadDefinition;
   };

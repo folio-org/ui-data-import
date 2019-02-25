@@ -60,10 +60,7 @@ class ImportJobsComponent extends Component {
   };
 
   onDrop = async acceptedFiles => {
-    const {
-      setFiles,
-      updateUploadDefinition,
-    } = this.context;
+    const { updateUploadDefinition } = this.context;
 
     this.setState({
       isDropZoneActive: false,
@@ -87,9 +84,7 @@ class ImportJobsComponent extends Component {
     const isValidFileExtensions = this.validateFileExtensions(acceptedFiles);
 
     if (isValidFileExtensions) {
-      setFiles(acceptedFiles);
-
-      this.setState({ redirect: true });
+      this.redirectToJobProfilePage(acceptedFiles);
 
       return;
     }
@@ -119,11 +114,19 @@ class ImportJobsComponent extends Component {
     return <FormattedMessage id={id} />;
   }
 
+  redirectToJobProfilePage = files => {
+    this.setState({
+      redirect: true,
+      files,
+    });
+  };
+
   render() {
     const { match: { path } } = this.props;
     const { uploadDefinition } = this.context;
 
     const {
+      files,
       redirect,
       hasLoaded,
       showErrorMessage,
@@ -137,11 +140,23 @@ class ImportJobsComponent extends Component {
     }
 
     if (redirect) {
-      return <Redirect to={`${path}/job-profile`} />;
+      return (
+        <Redirect
+          to={{
+            pathname: `${path}/job-profile`,
+            state: { files },
+          }}
+        />
+      );
     }
 
     if (!isEmpty(uploadDefinition)) {
-      return <ReturnToAssignJobs prohibitFilesUploading={prohibitFilesUploading} />;
+      return (
+        <ReturnToAssignJobs
+          prohibitFilesUploading={prohibitFilesUploading}
+          onResume={() => this.redirectToJobProfilePage()}
+        />
+      );
     }
 
     const titleMessageIdEnding = isDropZoneActive ? 'activeUploadTitle' : 'uploadTitle';
@@ -180,7 +195,7 @@ class ImportJobsComponent extends Component {
             heading={<FormattedMessage id="ui-data-import.modal.fileExtensions.header" />}
             message={invalidFilesMessage}
             confirmLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.actionButton" />}
-            cancelLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.cancel" />}
+            cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
             onConfirm={openDialogWindow}
             onCancel={this.hideFilesExtensionsModal}
           />

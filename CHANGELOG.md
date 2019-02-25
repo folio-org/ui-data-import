@@ -18,6 +18,7 @@
 * Handle sorting icons for both job logs and file extensions tables (UIDATIMP-124)
 * Update API endpoints on UI due to changes on backend across the application (UIDATIMP-112, UIDATIMP-113, UIDATIMP-114)
 * Implement "Save the new file extension" feature (UIDATIMP-79)
+* Implement return to Choose Job Profile page functionality (UIDATIMP-103)
 
 ## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
 
@@ -28,7 +29,7 @@
 * Add layout for first pane on Landing page (UIDATIMP-22)
 * Create a reusable stripes component for "Preview" & "Running Jobs" boxes (UIDATIMP-31)
 * Create UI for "File Upload" feature on Landing page (UIDATIMP-33)
-* Create reusable react "Drag and Drop" component (UIDATAIMP-35)
+* Create reusable react "Drag and Drop" component (UIDATIMP-35)
 * Implement "Preview jobs" feature on Landing page (UIDATIMP-23)
 * Implement "Logs" feature on Landing page (UIDATIMP-29)
 * Update stripes-* dependencies and imports to use stripes framework 1.0 (FOLIO-1549)

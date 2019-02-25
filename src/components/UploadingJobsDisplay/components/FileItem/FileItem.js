@@ -1,14 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { noop } from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
 
-import { Progress } from '../../../Progress';
-import { getFileItemMeta } from './getFileItemMeta';
 import { FILE_STATUSES } from '../../../../utils/constants';
+import { getFileItemMeta } from './getFileItemMeta';
 
 import css from './FileItem.css';
 
@@ -17,6 +15,7 @@ export class FileItem extends PureComponent {
     uiKey: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired,
+    isSnapshotMode: PropTypes.bool,
     status: PropTypes.string,
     uploadedValue: PropTypes.number,
     errorMsgTranslationID: PropTypes.string,
@@ -27,6 +26,7 @@ export class FileItem extends PureComponent {
   };
 
   static defaultProps = {
+    isSnapshotMode: false,
     status: FILE_STATUSES.UPLOADING,
     uploadedValue: 0,
     errorMsgTranslationID: 'upload.invalid',
@@ -35,8 +35,6 @@ export class FileItem extends PureComponent {
     onDelete: noop,
     onUndoDelete: noop,
   };
-
-  progressPayload = { message: <FormattedMessage id="ui-data-import.uploadingMessage" /> };
 
   deleteFile = () => {
     const {
@@ -59,16 +57,20 @@ export class FileItem extends PureComponent {
 
   render() {
     const {
-      status,
-      name,
+      isSnapshotMode,
       size,
       uploadedValue,
+      status,
+      name,
       errorMsgTranslationID,
-      loading,
       uploadedDate,
+      loading,
     } = this.props;
 
     const meta = getFileItemMeta({
+      isSnapshotMode,
+      size,
+      uploadedValue,
       status,
       name,
       errorMsgTranslationID,
@@ -90,17 +92,7 @@ export class FileItem extends PureComponent {
           {meta.renderHeading()}
         </div>
 
-        {meta.showProgress && (
-          <Progress
-            payload={this.progressPayload}
-            progressInfoType="messagedPercentage"
-            progressClassName={css.progress}
-            progressWrapperClassName={css.progressWrapper}
-            progressInfoClassName={css.progressInfo}
-            total={size}
-            current={uploadedValue}
-          />
-        )}
+        {meta.renderProgress()}
       </div>
     );
   }

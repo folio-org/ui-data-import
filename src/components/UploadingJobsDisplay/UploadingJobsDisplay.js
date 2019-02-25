@@ -43,6 +43,11 @@ class UploadingJobsDisplayComponent extends Component {
       block: PropTypes.func.isRequired,
       push: PropTypes.func.isRequired,
     }).isRequired,
+    location: PropTypes.shape({
+      state: PropTypes.shape({
+        files: PropTypes.array,
+      }),
+    }).isRequired,
     timeoutBeforeFileDeletion: PropTypes.number, // milliseconds
   };
 
@@ -61,23 +66,27 @@ class UploadingJobsDisplayComponent extends Component {
   constructor(props, context) {
     super(props, context);
 
-    const { stripes: { okapi } } = this.props;
-    const { files } = this.context;
+    const {
+      stripes: { okapi },
+      location: { state = {} },
+    } = this.props;
 
+    const { files } = state;
     const { url: host } = okapi;
 
     this.state = {
       hasLoaded: false,
       renderLeaveModal: false,
       files: this.prepareFiles(files),
+      isSnapshotMode: false,
     };
 
     this.uploadDefinitionUrl = createUrl(`${host}/data-import/uploadDefinitions`);
     this.deleteFileTimeouts = {};
     this.fileRemovalMap = {
       [FILE_STATUSES.UPLOADED]: this.handleDeleteSuccessfullyUploadedFile,
-      [FILE_STATUSES.FAILED]: this.deleteFileAPI,
-      [FILE_STATUSES.FAILED_DEFINITION]: this.deleteFileFromState,
+      [FILE_STATUSES.ERROR]: this.deleteFileAPI,
+      [FILE_STATUSES.ERROR_DEFINITION]: this.deleteFileFromState,
     };
   }
 
@@ -142,7 +151,7 @@ class UploadingJobsDisplayComponent extends Component {
   get filesUploading() {
     const { files } = this.state;
 
-    return some(files, file => file.status === FILE_STATUSES.UPLOADING);
+    return !this.isSnapshotMode && some(files, file => file.status === FILE_STATUSES.UPLOADING);
   }
 
   cancelFileRemovals() {
@@ -150,15 +159,43 @@ class UploadingJobsDisplayComponent extends Component {
     this.deleteFileTimeouts = {};
   }
 
-  async uploadJobs() {
+  renderSnapshotData() {
+    const { uploadDefinition: { fileDefinitions } } = this.context;
+
+    const files = this.prepareFiles(fileDefinitions);
+
+    this.setState({
+      files,
+      isSnapshotMode: true,
+    });
+  }
+
+  async fetchUploadDefinition() {
     try {
       const { updateUploadDefinition } = this.context;
 
-      const uploadDefinition = await updateUploadDefinition();
+      await updateUploadDefinition();
 
       this.setState({ hasLoaded: true });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  }
 
-      if (!isEmpty(uploadDefinition)) {
+  get isSnapshotMode() {
+    const { uploadDefinition } = this.context;
+
+    return !isEmpty(uploadDefinition);
+  }
+
+  async uploadJobs() {
+    try {
+      await this.fetchUploadDefinition();
+
+      if (this.isSnapshotMode) {
+        this.renderSnapshotData();
+
         return;
       }
 
@@ -216,7 +253,6 @@ class UploadingJobsDisplayComponent extends Component {
   }
 
   async uploadFiles() {
-    const { setFiles } = this.context;
     const { files } = this.state;
 
     for (const fileKey of Object.keys(files)) {
@@ -225,7 +261,6 @@ class UploadingJobsDisplayComponent extends Component {
         /* istanbul ignore if  */
         if (!this.mounted) {
           this.cancelCurrentFileUpload();
-          setFiles();
           break;
         }
 
@@ -239,7 +274,6 @@ class UploadingJobsDisplayComponent extends Component {
     }
 
     this.currentFileUploadXhr = null;
-    setFiles();
   }
 
   uploadFile(fileKey) {
@@ -315,6 +349,7 @@ class UploadingJobsDisplayComponent extends Component {
       const uiKey = `${file.name}${file.lastModified}`;
       // if file is already uploaded it has already the `uiKey` and if not it should be assigned
       const key = file.uiKey || uiKey;
+      const status = file.status || FILE_STATUSES.UPLOADING;
 
       const preparedFile = {
         id: file.id,
@@ -324,8 +359,8 @@ class UploadingJobsDisplayComponent extends Component {
         size: file.size,
         loading: false,
         uploadedDate: file.uploadedDate,
-        status: FILE_STATUSES.UPLOADING,
-        currentUploaded: 0,
+        status,
+        uploadedValue: 0,
         file,
       };
 
@@ -366,7 +401,7 @@ class UploadingJobsDisplayComponent extends Component {
   };
 
   handleFileUploadFail = fileKey => {
-    this.updateFileState(fileKey, { status: FILE_STATUSES.FAILED });
+    this.updateFileState(fileKey, { status: FILE_STATUSES.ERROR });
   };
 
   handleUndoDeleteFile = fileKey => {
@@ -457,7 +492,7 @@ class UploadingJobsDisplayComponent extends Component {
         .reduce((res, fileKey) => {
           const updatedFile = {
             ...state.files[fileKey],
-            status: FILE_STATUSES.FAILED_DEFINITION,
+            status: FILE_STATUSES.ERROR_DEFINITION,
             errorMsgTranslationID,
           };
 
@@ -472,7 +507,10 @@ class UploadingJobsDisplayComponent extends Component {
   }
 
   renderFiles() {
-    const { files } = this.state;
+    const {
+      files,
+      isSnapshotMode,
+    } = this.state;
 
     if (isEmpty(files)) {
       return (
@@ -495,6 +533,7 @@ class UploadingJobsDisplayComponent extends Component {
 
       return (
         <FileItem
+          isSnapshotMode={isSnapshotMode}
           key={fileKey}
           uiKey={fileKey}
           status={status}

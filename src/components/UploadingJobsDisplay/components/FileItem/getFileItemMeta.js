@@ -4,12 +4,15 @@ import {
   FormattedDate,
 } from 'react-intl';
 import classNames from 'classnames';
+import { noop } from 'lodash';
 
 import {
   Icon,
   IconButton,
 } from '@folio/stripes/components';
 import { FILE_STATUSES } from '../../../../utils/constants';
+
+import { Progress } from '../../../Progress';
 
 import css from './FileItem.css';
 
@@ -29,6 +32,9 @@ const Loading = () => (
 
 export const getFileItemMeta = props => {
   const {
+    isSnapshotMode,
+    size,
+    uploadedValue,
     status,
     name,
     errorMsgTranslationID,
@@ -39,104 +45,140 @@ export const getFileItemMeta = props => {
   } = props;
 
   const defaultFileMeta = {
-    showProgress: false,
-    renderHeading: () => (
-      <Fragment>
-        <span className={css.fileItemHeaderName}>{name}</span>
-      </Fragment>
-    ),
+    renderProgress: noop,
+    renderHeading: () => <span className={css.fileItemHeaderName}>{name}</span>,
   };
 
-  const fileTypesMeta = {
-    [FILE_STATUSES.UPLOADING]: {
-      fileWrapperClassName: css.fileItemUploading,
-      showProgress: true,
-    },
-    [FILE_STATUSES.UPLOADED]: {
-      renderHeading: () => (
-        <Fragment>
-          <span className={css.fileItemHeaderName}>{name}</span>
-          <span className={classNames(css.fileItemHeaderContent, css.fileItemUploadedHeaderContent)}>
-            <FormattedDate value={uploadedDate} />
-          </span>
-          <FormattedMessage id="ui-data-import.delete">
-            {label => (
-              <IconButton
-                icon="trash"
-                size="small"
-                ariaLabel={label}
-                className={css.icon}
-                onClick={deleteFile}
-              />
-            )}
-          </FormattedMessage>
-        </Fragment>
-      ),
-    },
-    [FILE_STATUSES.FAILED]: {
-      fileWrapperClassName: classNames(css.fileItemDanger, css.fileItemFailed),
-      renderHeading: () => (
-        <Fragment>
-          <span className={css.fileItemHeaderName}>{name}</span>
-          <span className={css.fileItemHeaderContent}>
-            <FormattedMessage id={`ui-data-import.${errorMsgTranslationID}`}>
-              {content => (
-                <Fragment>
-                  <Icon icon="exclamation-circle" /> {content}
-                </Fragment>
+  switch (status) {
+    case FILE_STATUSES.NEW: {
+      return {
+        ...defaultFileMeta,
+        fileWrapperClassName: css.fileItemUploading,
+        renderProgress: () => (
+          <div className={css.progressMessage}>
+            <FormattedMessage id="ui-data-import.waitingForUpload" />
+          </div>
+        ),
+      };
+    }
+    case FILE_STATUSES.UPLOADING: {
+      return {
+        ...defaultFileMeta,
+        fileWrapperClassName: css.fileItemUploading,
+        renderProgress: () => {
+          if (isSnapshotMode) {
+            return (
+              <div className={css.progressMessage}>
+                <FormattedMessage id="ui-data-import.uploadingMessage" />
+              </div>
+            );
+          }
+
+          return (
+            <Progress
+              payload={{ message: <FormattedMessage id="ui-data-import.uploadingMessage" /> }}
+              progressInfoType="messagedPercentage"
+              progressClassName={css.progress}
+              progressWrapperClassName={css.progressWrapper}
+              progressInfoClassName={css.progressInfo}
+              total={size}
+              current={uploadedValue}
+            />
+          );
+        },
+      };
+    }
+    case FILE_STATUSES.UPLOADED: {
+      return {
+        ...defaultFileMeta,
+        renderHeading: () => (
+          <Fragment>
+            <span className={css.fileItemHeaderName}>{name}</span>
+            <span className={classNames(css.fileItemHeaderContent, css.fileItemUploadedHeaderContent)}>
+              <FormattedDate value={uploadedDate} />
+            </span>
+            <FormattedMessage id="ui-data-import.delete">
+              {label => (
+                <IconButton
+                  icon="trash"
+                  size="small"
+                  ariaLabel={label}
+                  className={css.icon}
+                  onClick={deleteFile}
+                />
               )}
             </FormattedMessage>
-          </span>
-          {!loading
-            ? (
-              <FormattedMessage id="ui-data-import.delete">
-                {label => (
-                  <IconButton
-                    icon="times"
-                    size="small"
-                    ariaLabel={label}
-                    className={css.icon}
-                    onClick={deleteFile}
-                  />
+          </Fragment>
+        ),
+      };
+    }
+    case FILE_STATUSES.ERROR:
+    case FILE_STATUSES.ERROR_DEFINITION: {
+      return {
+        ...defaultFileMeta,
+        fileWrapperClassName: classNames(css.fileItemDanger, css.fileItemFailed),
+        renderHeading: () => (
+          <Fragment>
+            <span className={css.fileItemHeaderName}>{name}</span>
+            <span className={css.fileItemHeaderContent}>
+              <FormattedMessage id={`ui-data-import.${errorMsgTranslationID}`}>
+                {content => (
+                  <Fragment>
+                    <Icon icon="exclamation-circle" /> {content}
+                  </Fragment>
                 )}
               </FormattedMessage>
-            )
-            : <Loading />
-          }
-        </Fragment>
-      ),
-    },
-    [FILE_STATUSES.DELETING]: {
-      fileWrapperClassName: css.fileItemDanger,
-      renderHeading: () => (
-        <Fragment>
-          <span className={css.fileItemHeaderName}>
-            <FormattedMessage
-              id="ui-data-import.deletedFile"
-              values={{ name: <strong>{name}</strong> }}
-            />
-          </span>
-          {!loading
-            ? (
-              <button
-                type="button"
-                className={classNames(css.icon, css.undoIcon)}
-                onClick={undoDeleteFile}
-              >
-                <FormattedMessage id="ui-data-import.undo" />
-              </button>
-            )
-            : <Loading />
-          }
-        </Fragment>
-      ),
-    },
-  };
-
-  fileTypesMeta[FILE_STATUSES.FAILED_DEFINITION] = fileTypesMeta[FILE_STATUSES.FAILED];
-
-  return {
-    ...defaultFileMeta,
-    ...fileTypesMeta[status],
-  };
+            </span>
+            {!loading
+              ? (
+                <FormattedMessage id="ui-data-import.delete">
+                  {label => (
+                    <IconButton
+                      icon="times"
+                      size="small"
+                      ariaLabel={label}
+                      className={css.icon}
+                      onClick={deleteFile}
+                    />
+                  )}
+                </FormattedMessage>
+              )
+              : <Loading />
+            }
+          </Fragment>
+        ),
+      };
+    }
+    case FILE_STATUSES.DELETING: {
+      return {
+        ...defaultFileMeta,
+        fileWrapperClassName: css.fileItemDanger,
+        renderHeading: () => (
+          <Fragment>
+            <span className={css.fileItemHeaderName}>
+              <FormattedMessage
+                id="ui-data-import.deletedFile"
+                values={{ name: <strong>{name}</strong> }}
+              />
+            </span>
+            {!loading
+              ? (
+                <button
+                  type="button"
+                  className={classNames(css.icon, css.undoIcon)}
+                  onClick={undoDeleteFile}
+                >
+                  <FormattedMessage id="ui-data-import.undo" />
+                </button>
+              )
+              : <Loading />
+            }
+          </Fragment>
+        ),
+      };
+    }
+    default: {
+      return defaultFileMeta;
+    }
+  }
 };
