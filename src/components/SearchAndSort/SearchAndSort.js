@@ -324,8 +324,7 @@ class SearchAndSortComponent extends Component {
     } = this.props;
 
     massageNewRecord(record);
-
-    return onCreate(record);
+    onCreate(record);
   };
 
   closeNewRecord = e => {
