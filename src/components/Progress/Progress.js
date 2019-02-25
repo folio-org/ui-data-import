@@ -2,17 +2,37 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { calculatePercentage } from '../../utils';
+import { Preloader } from '../Preloader';
 
 import css from './Progress.css';
 
 const progressInfoFormatters = {
   percentage: (current, total) => `${calculatePercentage(current, total)}%`,
-  messagedPercentage: (current, total, payload) => (
-    <Fragment>
-      {payload.message}
-      {` ${calculatePercentage(current, total)}%`}
-    </Fragment>
-  ),
+  messagedPercentage: (current, total, payload) => {
+    const { message } = payload;
+    const percentage = calculatePercentage(current, total);
+    const isCompleted = percentage === 100;
+
+    return (
+      <Fragment>
+        {isCompleted
+          ? (
+            <Preloader
+              preloaderClassName={css.preloader}
+              message={message}
+            />
+          )
+          : (
+            <Fragment>
+              {message}
+              {` ${percentage}%`}
+            </Fragment>
+          )
+        }
+      </Fragment>
+    );
+  }
+  ,
 };
 
 export const Progress = props => {

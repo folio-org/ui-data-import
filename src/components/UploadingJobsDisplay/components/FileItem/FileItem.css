@@ -72,7 +72,13 @@
 }
 
 .progressInfo {
+  display: flex;
+  align-items: center;
   font-size: var(--font-size-small);
   font-weight: 600;
   color: var(--color-text-p2);
+}
+
+.progressMessage {
+  margin-top: 0.5rem;
 }

@@ -5,16 +5,22 @@ import { FormattedMessage } from 'react-intl';
 import { Button } from '@folio/stripes/components';
 
 import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
+import { Preloader } from '../../../Preloader';
 import { FILE_STATUSES } from '../../../../utils/constants';
 
 import css from './ReturnToAssignJobs.css';
 
 export class ReturnToAssignJobs extends Component {
-  static propTypes = { prohibitFilesUploading: PropTypes.bool };
+  static propTypes = {
+    onResume: PropTypes.func.isRequired,
+    prohibitFilesUploading: PropTypes.bool,
+  };
 
   static defaultProps = { prohibitFilesUploading: false };
 
   static contextType = UploadingJobsContext;
+
+  state = { deletingInProgress: false };
 
   getIntlId(id) {
     return `ui-data-import.returnToAssign.${id}`;
@@ -28,9 +34,38 @@ export class ReturnToAssignJobs extends Component {
     }, 0);
   }
 
-  render() {
+  onResume = () => {
+    const { onResume } = this.props;
+    const { deletingInProgress } = this.state;
+
+    if (!deletingInProgress) {
+      onResume();
+    }
+  };
+
+  onDelete = async () => {
     const { deleteUploadDefinition } = this.context;
+    const { deletingInProgress } = this.state;
+
+    if (deletingInProgress) {
+      return;
+    }
+
+    this.setState({ deletingInProgress: true });
+
+    try {
+      await deleteUploadDefinition();
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+
+    this.setState({ deletingInProgress: false });
+  }
+
+  render() {
     const { prohibitFilesUploading } = this.props;
+    const { deletingInProgress } = this.state;
 
     const messageId = prohibitFilesUploading ? 'messageWhenProhibited' : 'message';
 
@@ -55,14 +90,23 @@ export class ReturnToAssignJobs extends Component {
           <Button
             buttonStyle="primary"
             buttonClass={css.submitBtn}
+            onClick={this.onResume}
           >
             <FormattedMessage id={this.getIntlId('resume')} />
           </Button>
           <Button
             buttonClass={css.deleteBtn}
-            onClick={deleteUploadDefinition}
+            onClick={this.onDelete}
           >
-            <FormattedMessage id={this.getIntlId('deleteFiles')} />
+            {deletingInProgress
+              ? (
+                <Preloader
+                  className={css.preloader}
+                  message=""
+                />
+              )
+              : <FormattedMessage id={this.getIntlId('deleteFiles')} />
+            }
           </Button>
         </div>
       </div>
