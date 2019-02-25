@@ -99,25 +99,28 @@ class FileExtensions extends Component {
     history.push(url);
   };
 
-  createRecord = async record => {
+  createRecord = record => {
     const { mutator: { records } } = this.props;
 
-    try {
-      const { match: { path } } = this.props;
+    return records.POST(record)
+      .catch(error => {
+        this.showCreateRecordErrorMessage(error, record);
 
-      const newRecord = await records.POST(record);
-
-      this.transitionToParams({
-        _path: `${path}/view/${newRecord.id}`,
-        layer: null,
+        throw error;
       });
+  };
 
-      return newRecord;
-    } catch (error) {
-      this.showCreateRecordErrorMessage(error, record);
+  handleCreateRecordSuccess = (record, dispatch, props) => {
+    const { reset } = props;
 
-      return error;
-    }
+    reset();
+
+    const { match: { path } } = this.props;
+
+    this.transitionToParams({
+      _path: `${path}/view/${record.id}`,
+      layer: null,
+    });
   };
 
   async showCreateRecordErrorMessage(response, fileExtension) {
@@ -194,6 +197,7 @@ class FileExtensions extends Component {
                 newRecordInitialValues={newRecordInitialValues}
                 showSingleResult={showSingleResult}
                 onCreate={this.createRecord}
+                handleCreateSuccess={this.handleCreateRecordSuccess}
               />
             </div>
             <div
