@@ -10,6 +10,10 @@ import {
   Headline,
   Row,
   Col,
+  KeyValue,
+  Icon,
+  Button,
+  PaneMenu,
 } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
 
@@ -45,6 +49,12 @@ export class ViewFileExtension extends Component {
     onClose: PropTypes.func.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.cViewMetaData = props.stripes.connect(ViewMetaData);
+  }
+
   renderSpinner() {
     const { onClose } = this.props;
 
@@ -77,6 +87,22 @@ export class ViewFileExtension extends Component {
     };
   }
 
+  addEditMenu() {
+    return (
+      <PaneMenu>
+        <Button
+          id="clickable-new-12"
+          href="#"
+          buttonStyle="primary paneHeaderNewButton"
+          marginBottom0
+        >
+          <Icon icon="edit"/>&nbsp;
+          <FormattedMessage id="ui-data-import.settings.fileExtension.edit"/>
+        </Button>
+      </PaneMenu>
+    );
+  }
+
   render() {
     const { onClose } = this.props;
 
@@ -93,10 +119,11 @@ export class ViewFileExtension extends Component {
         id="pane-file-extension-details"
         defaultWidth="fill"
         fluidContentWidth
-        paneTitle={record.extension}
+        paneTitle={<Fragment>{record.extension} <Icon size="small" icon="caret-down"/></Fragment>}
         paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title"/>}
         dismissible
         onClose={onClose}
+        lastMenu={this.addEditMenu()}
       >
         {hasLoaded && (
           <Fragment>
@@ -108,30 +135,52 @@ export class ViewFileExtension extends Component {
               {record.extension}
             </Headline>
 
+            {record.metadata &&
             <Row>
-             {/* <ViewMetaData metadata={record.metadata} />*/}
+              <Col xs={12}>
+                <this.cViewMetaData metadata={record.metadata}/>
+              </Col>
+            </Row>
+            }
+
+            <Row>
+              <Col xs={12}>
+                <KeyValue
+                  label={<FormattedMessage id="ui-data-import.settings.fileExtension.description"/>}
+                  value={record.description || '-'}
+                />
+              </Col>
             </Row>
 
-            <Row>
-              {record.description}
-            </Row>
-
-            <section>
+            {record.importBlocked && <section>
               <Row>
-                <Col xs={4} class="kvLabel---3-4II">
-                  <FormattedMessage id="ui-data-import.settings.fileExtension.title"/>
-                </Col>
-                <Col xs={4} class="kvLabel---3-4II">
-                  <FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes"/>
+                <Col xs={12}>
+                  <label>
+                    <input type="checkbox" checked disabled/>
+                    &nbsp;<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport"/>
+                  </label>
                 </Col>
               </Row>
-              <Row>
-                <Col xs={4} class="kvLabel---3-4II">{record.extension}</Col>
-                <Col xs={4} class="kvLabel---3-4II">{record.dataTypes}</Col>
-              </Row>
-
             </section>
-            <EndOfRecord />
+            }
+            {!record.importBlocked && <section>
+              <Row>
+                <Col xs={4}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-data-import.settings.fileExtension.title"/>}
+                    value={record.extension}
+                  />
+                </Col>
+                <Col xs={4}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes"/>}
+                    value={record.dataTypes}
+                  />
+                </Col>
+              </Row>
+            </section>
+            }
+            <EndOfRecord/>
           </Fragment>
         )}
       </Pane>
