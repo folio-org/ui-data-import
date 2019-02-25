@@ -104,6 +104,7 @@ class SearchAndSortComponent extends Component {
     onChangeIndex: PropTypes.func,
     onComponentWillUnmount: PropTypes.func,
     onCreate: PropTypes.func,
+    handleCreateSuccess: PropTypes.func,
     onSelectRow: PropTypes.func,
     path: PropTypes.string,
     searchableIndexes: PropTypes.arrayOf(PropTypes.object),
@@ -122,6 +123,7 @@ class SearchAndSortComponent extends Component {
     maxSortKeys: 2,
     onComponentWillUnmount: noop,
     onChangeIndex: noop,
+    handleCreateSuccess: noop,
     massageNewRecord: noop,
     defaultSort: '',
   };
@@ -324,7 +326,8 @@ class SearchAndSortComponent extends Component {
     } = this.props;
 
     massageNewRecord(record);
-    onCreate(record);
+
+    return onCreate(record);
   };
 
   closeNewRecord = e => {
@@ -581,6 +584,7 @@ class SearchAndSortComponent extends Component {
       parentMutator,
       location: { search },
       newRecordContainer,
+      handleCreateSuccess,
     } = this.props;
 
     if (!EditRecordComponent) {
@@ -603,6 +607,7 @@ class SearchAndSortComponent extends Component {
           connectedSource={source}
           parentMutator={parentMutator}
           onSubmit={this.createNewRecord}
+          onSubmitSuccess={handleCreateSuccess}
           onCancel={this.closeNewRecord}
           {...detailProps}
         />
