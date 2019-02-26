@@ -15,11 +15,16 @@ import {
   Button,
   PaneMenu,
 } from '@folio/stripes/components';
-import { TitleManager } from '@folio/stripes/core';
+import {
+  TitleManager,
+  stripesShape,
+} from '@folio/stripes/core';
+import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import { Preloader } from '../../components/Preloader';
-import { EndOfRecord } from '../../components/EndOfRecord';
-import { ViewMetaData } from '@folio/stripes/smart-components';
+import { EndOfItem } from '../../components/EndOfItem';
+
+import css from './FileExtensions.css';
 
 export class ViewFileExtension extends Component {
   static manifest = Object.freeze({
@@ -31,6 +36,7 @@ export class ViewFileExtension extends Component {
   });
 
   static propTypes = {
+    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       fileExtension: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -52,7 +58,9 @@ export class ViewFileExtension extends Component {
   constructor(props) {
     super(props);
 
-    this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    const { stripes } = this.props;
+
+    this.connectedViewMetaData = stripes.connect(ViewMetaData);
   }
 
   renderSpinner() {
@@ -67,7 +75,7 @@ export class ViewFileExtension extends Component {
         dismissible
         onClose={onClose}
       >
-        <Preloader/>
+        <Preloader />
       </Pane>
     );
   }
@@ -91,13 +99,13 @@ export class ViewFileExtension extends Component {
     return (
       <PaneMenu>
         <Button
-          id="clickable-new-12"
+          id="clickable-new"
           href="#"
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
         >
-          <Icon icon="edit"/>&nbsp;
-          <FormattedMessage id="ui-data-import.settings.fileExtension.edit"/>
+          <Icon icon="edit" />&nbsp;
+          <FormattedMessage id="ui-data-import.edit" />
         </Button>
       </PaneMenu>
     );
@@ -114,20 +122,31 @@ export class ViewFileExtension extends Component {
     if (!record) {
       return this.renderSpinner();
     }
+
+    const paneTitle = (
+      <Fragment>
+        {record.extension}
+        <Icon
+          size="small"
+          icon="caret-down"
+        />
+      </Fragment>
+    );
+
     return (
       <Pane
         id="pane-file-extension-details"
         defaultWidth="fill"
         fluidContentWidth
-        paneTitle={<Fragment>{record.extension} <Icon size="small" icon="caret-down"/></Fragment>}
-        paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title"/>}
+        paneTitle={paneTitle}
+        paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
+        lastMenu={this.addEditMenu()}
         dismissible
         onClose={onClose}
-        lastMenu={this.addEditMenu()}
       >
         {hasLoaded && (
           <Fragment>
-            <TitleManager record={record.extension}/>
+            <TitleManager record={record.extension} />
             <Headline
               size="xx-large"
               tag="h2"
@@ -135,52 +154,63 @@ export class ViewFileExtension extends Component {
               {record.extension}
             </Headline>
 
-            {record.metadata &&
-            <Row>
-              <Col xs={12}>
-                <this.cViewMetaData metadata={record.metadata}/>
-              </Col>
-            </Row>
-            }
+            {record.metadata && (
+              <Row>
+                <Col xs={12}>
+                  <this.connectedViewMetaData metadata={record.metadata} />
+                </Col>
+              </Row>
+            )}
 
             <Row>
               <Col xs={12}>
                 <KeyValue
-                  label={<FormattedMessage id="ui-data-import.settings.fileExtension.description"/>}
+                  label={<FormattedMessage id="ui-data-import.description" />}
                   value={record.description || '-'}
                 />
               </Col>
             </Row>
 
-            {record.importBlocked && <section>
-              <Row>
-                <Col xs={12}>
-                  <label>
-                    <input type="checkbox" checked disabled/>
-                    &nbsp;<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport"/>
-                  </label>
-                </Col>
-              </Row>
-            </section>
-            }
-            {!record.importBlocked && <section>
-              <Row>
-                <Col xs={4}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-data-import.settings.fileExtension.title"/>}
-                    value={record.extension}
-                  />
-                </Col>
-                <Col xs={4}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes"/>}
-                    value={record.dataTypes}
-                  />
-                </Col>
-              </Row>
-            </section>
-            }
-            <EndOfRecord/>
+            {record.importBlocked && (
+              <section>
+                <Row>
+                  <Col xs={12}>
+                    <label htmlFor="import-blocked">
+                      <input
+                        id="import-blocked"
+                        className={css.checkbox}
+                        type="checkbox"
+                        checked
+                        disabled
+                      />
+                      &nbsp;<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />
+                    </label>
+                  </Col>
+                </Row>
+              </section>
+            )}
+            {!record.importBlocked && (
+              <section>
+                <Row>
+                  <Col xs={4}>
+                    <KeyValue
+                      label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
+                      value={record.extension}
+                    />
+                  </Col>
+                  <Col xs={4}>
+                    <KeyValue
+                      label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}
+                      value={record.dataTypes}
+                    />
+                  </Col>
+                </Row>
+              </section>
+            )}
+            <EndOfItem
+              className={css.endOfRecord}
+              title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+            />
           </Fragment>
         )}
       </Pane>
