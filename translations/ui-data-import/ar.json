@@ -100,8 +100,10 @@
     "settings.fileExtensions.count": "{count, number} الملف {count, plural, one {امتداد} other {امتدادات}}",
     "validation.enterValue": "يرجى إدخال قيمة",
     "validation.fileExtension": "يرجى إدخال امتداد ملف صالح (على سبيل المثال .marc)",
-    "validation.fileExtension.extension.invalid": "New record not created: File extension {value} is not a valid format",
-    "validation.fileExtension.duplication.invalid": "New record not created: File extension {value} already exists",
-    "error.network": "New record not created: Communication problem with server. Please try again",
-    "waitingForUpload": "Waiting for upload"
+    "validation.fileExtension.extension.invalid": "لم يتم إنشاء تسجيلة جديدة: امتداد الملف {value} تنسيق غير صالح",
+    "validation.fileExtension.duplication.invalid": "لم يتم إنشاء تسجيلة جديدة: امتداد الملف {value} موجود بالفعل",
+    "error.network": "لم يتم إنشاء التسجيلة الجديدة: توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة.",
+    "waitingForUpload": "في انتظار التحميل",
+    "edit": "Edit",
+    "endOfRecord": "End of record"
 }
