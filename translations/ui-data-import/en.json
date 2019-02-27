@@ -29,6 +29,8 @@
   "save": "Save",
   "cancel": "Cancel",
   "close": "Close",
+  "edit": "Edit",
+  "endOfRecord": "End of record",
   "description": "Description",
   "uploadTitle": "Drag and drop to start a new data import job",
   "activeUploadTitle": "Drop to start import",

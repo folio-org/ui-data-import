@@ -8,12 +8,24 @@ import { FormattedMessage } from 'react-intl';
 import {
   Pane,
   Headline,
+  Row,
+  Col,
+  KeyValue,
+  Icon,
+  Button,
+  PaneMenu,
 } from '@folio/stripes/components';
-import { TitleManager } from '@folio/stripes/core';
+import {
+  TitleManager,
+  stripesShape,
+} from '@folio/stripes/core';
+import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import { Preloader } from '../../components/Preloader';
+import { EndOfItem } from '../../components/EndOfItem';
 
-// TODO: view component will be developed in UIDATIMP-61
+import css from './FileExtensions.css';
+
 export class ViewFileExtension extends Component {
   static manifest = Object.freeze({
     fileExtension: {
@@ -24,6 +36,7 @@ export class ViewFileExtension extends Component {
   });
 
   static propTypes = {
+    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       fileExtension: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -41,6 +54,14 @@ export class ViewFileExtension extends Component {
     }).isRequired,
     onClose: PropTypes.func.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+
+    const { stripes } = this.props;
+
+    this.connectedViewMetaData = stripes.connect(ViewMetaData);
+  }
 
   renderSpinner() {
     const { onClose } = this.props;
@@ -74,6 +95,22 @@ export class ViewFileExtension extends Component {
     };
   }
 
+  addEditMenu() {
+    return (
+      <PaneMenu>
+        <Button
+          id="clickable-new"
+          href="#"
+          buttonStyle="primary paneHeaderNewButton"
+          marginBottom0
+        >
+          <Icon icon="edit" />&nbsp;
+          <FormattedMessage id="ui-data-import.edit" />
+        </Button>
+      </PaneMenu>
+    );
+  }
+
   render() {
     const { onClose } = this.props;
 
@@ -86,13 +123,24 @@ export class ViewFileExtension extends Component {
       return this.renderSpinner();
     }
 
+    const paneTitle = (
+      <Fragment>
+        {record.extension}
+        <Icon
+          size="small"
+          icon="caret-down"
+        />
+      </Fragment>
+    );
+
     return (
       <Pane
         id="pane-file-extension-details"
         defaultWidth="fill"
         fluidContentWidth
-        paneTitle={record.extension}
+        paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
+        lastMenu={this.addEditMenu()}
         dismissible
         onClose={onClose}
       >
@@ -105,6 +153,64 @@ export class ViewFileExtension extends Component {
             >
               {record.extension}
             </Headline>
+
+            {record.metadata && (
+              <Row>
+                <Col xs={12}>
+                  <this.connectedViewMetaData metadata={record.metadata} />
+                </Col>
+              </Row>
+            )}
+
+            <Row>
+              <Col xs={12}>
+                <KeyValue
+                  label={<FormattedMessage id="ui-data-import.description" />}
+                  value={record.description || '-'}
+                />
+              </Col>
+            </Row>
+
+            {record.importBlocked && (
+              <section>
+                <Row>
+                  <Col xs={12}>
+                    <label htmlFor="import-blocked">
+                      <input
+                        id="import-blocked"
+                        className={css.checkbox}
+                        type="checkbox"
+                        checked
+                        disabled
+                      />
+                      &nbsp;<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />
+                    </label>
+                  </Col>
+                </Row>
+              </section>
+            )}
+            {!record.importBlocked && (
+              <section>
+                <Row>
+                  <Col xs={4}>
+                    <KeyValue
+                      label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
+                      value={record.extension}
+                    />
+                  </Col>
+                  <Col xs={4}>
+                    <KeyValue
+                      label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}
+                      value={record.dataTypes}
+                    />
+                  </Col>
+                </Row>
+              </section>
+            )}
+            <EndOfItem
+              className={css.endOfRecord}
+              title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+            />
           </Fragment>
         )}
       </Pane>

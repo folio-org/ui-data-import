@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { List } from '@folio/stripes/components';
 
 import { Preloader } from '../../../Preloader';
-import { EndOfList } from '../../../EndOfList';
+import { EndOfItem } from '../../../EndOfItem';
 import { Job } from '../Job';
 import { jobPropTypes } from '../Job/jobPropTypes';
 
@@ -45,7 +45,7 @@ const JobsList = props => {
   return (
     <div className={css.listContainer}>
       {hasLoaded ? LoadedJobsList : <Preloader />}
-      <EndOfList />
+      <EndOfItem />
     </div>
   );
 };

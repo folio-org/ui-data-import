@@ -21,3 +21,13 @@
 .userColumn {
   align-items: baseline;
 }
+
+.endOfRecord {
+  text-align: left;
+}
+
+.checkbox {
+  &:disabled {
+    margin: 0;
+  }
+}

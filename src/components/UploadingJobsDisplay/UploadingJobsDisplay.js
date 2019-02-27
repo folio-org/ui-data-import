@@ -20,7 +20,7 @@ import {
   ConfirmationModal,
 } from '@folio/stripes/components';
 
-import { EndOfList } from '../EndOfList';
+import { EndOfItem } from '../EndOfItem';
 import { Preloader } from '../Preloader';
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 import { FileItem } from './components';
@@ -592,7 +592,7 @@ class UploadingJobsDisplayComponent extends Component {
     return (
       <div data-test-uploading-jobs-display>
         {this.renderFiles()}
-        <EndOfList />
+        <EndOfItem />
         <Callout ref={this.createCalloutRef} />
         <ConfirmationModal
           open={renderLeaveModal}
