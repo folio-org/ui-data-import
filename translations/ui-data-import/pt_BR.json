@@ -103,5 +103,7 @@
     "validation.fileExtension.extension.invalid": "Novo registro não foi criado: a extensão de arquivo {value} não é um formato válido",
     "validation.fileExtension.duplication.invalid": "Novo registro não foi criado: a extensão de arquivo {value} já existe",
     "error.network": "Novo registro não foi criado: problema de comunicação com o servidor. Por favor, tente novamente",
-    "waitingForUpload": "Aguardando pelo upload"
+    "waitingForUpload": "Aguardando pelo upload",
+    "edit": "Editar",
+    "endOfRecord": "Fim do registro"
 }
