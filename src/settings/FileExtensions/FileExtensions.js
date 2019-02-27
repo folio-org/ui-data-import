@@ -1,9 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import React, {
+  Component,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { IntlConsumer } from '@folio/stripes/core';
-import { Callout } from '@folio/stripes/components';
+import {
+  Callout,
+  Button,
+  ConfirmationModal,
+} from '@folio/stripes/components';
 import {
   makeQueryFunction,
   buildUrl,
@@ -55,6 +62,13 @@ class FileExtensions extends Component {
         staticFallback: { params: {} },
       },
     },
+    resetFileExtensions: {
+      type: 'okapi',
+      records: 'fileExtensions',
+      path: 'data-import/fileExtensions/restore/default',
+      fetch: false,
+      throwErrors: false,
+    },
   });
 
   static propTypes = {
@@ -72,6 +86,11 @@ class FileExtensions extends Component {
   };
 
   static defaultProps = { showSingleResult: true };
+
+  state = {
+    isResetFileExtensionsModalOpen: false,
+    areFileExtensionsResetting: false,
+  };
 
   visibleColumns = [
     'extension',
@@ -129,7 +148,7 @@ class FileExtensions extends Component {
 
     const errorMsgId = errorMsgIdEnding
       ? `ui-data-import.validation.${errorMsgIdEnding}`
-      : 'ui-data-import.error.network';
+      : 'ui-data-import.settings.fileExtension.create.error.network';
 
     const errorMessage = (
       <FormattedMessage
@@ -148,6 +167,64 @@ class FileExtensions extends Component {
     this.callout = ref;
   };
 
+  renderActionMenu = menu => {
+    const { onToggle } = menu;
+    const handleClick = async () => {
+      onToggle();
+      this.showResetFilesExtensionsModal();
+    };
+
+    return (
+      <Button
+        data-test-reset-file-extensions
+        buttonStyle="dropdownItem"
+        onClick={handleClick}
+      >
+        <FormattedMessage id="ui-data-import.settings.fileExtensions.reset" />
+      </Button>
+    );
+  };
+
+  showResetFilesExtensionsModal() {
+    this.setState({ isResetFileExtensionsModalOpen: true });
+  }
+
+  hideResetFilesExtensionsModal = () => {
+    this.setState({
+      isResetFileExtensionsModalOpen: false,
+      areFileExtensionsResetting: false,
+    });
+  };
+
+  resetFileExtensions = async () => {
+    const { areFileExtensionsResetting } = this.state;
+
+    if (areFileExtensionsResetting) {
+      return;
+    }
+
+    try {
+      this.setState({ areFileExtensionsResetting: true });
+      await this.props.mutator.resetFileExtensions.POST({});
+
+      const { match: { path } } = this.props;
+
+      this.transitionToParams({
+        _path: `${path}/view`,
+        layer: null,
+      });
+
+      this.hideResetFilesExtensionsModal();
+    } catch (e) {
+      this.hideResetFilesExtensionsModal();
+
+      this.callout.sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-data-import.settings.fileExtension.reset.error.network" />,
+      });
+    }
+  };
+
   render() {
     const {
       resources,
@@ -155,6 +232,7 @@ class FileExtensions extends Component {
       label,
       showSingleResult,
     } = this.props;
+    const { isResetFileExtensionsModalOpen } = this.state;
 
     const newRecordInitialValues = {
       importBlocked: false,
@@ -181,6 +259,7 @@ class FileExtensions extends Component {
                 resultCountMessageKey="ui-data-import.settings.fileExtensions.count"
                 resultsLabel={label}
                 defaultSort="extension"
+                actionMenu={this.renderActionMenu}
                 resultsFormatter={resultsFormatter(intl)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
@@ -203,6 +282,15 @@ class FileExtensions extends Component {
             <div
               className={css.newRecordContainer}
               ref={this.createNewRecordContainerRef}
+            />
+            <ConfirmationModal
+              open={isResetFileExtensionsModalOpen}
+              heading={<FormattedMessage id="ui-data-import.modal.fileExtensions.reset.header" />}
+              message={<FormattedMessage id="ui-data-import.modal.fileExtensions.reset.message" />}
+              confirmLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.reset.actionButton" />}
+              cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
+              onConfirm={this.resetFileExtensions}
+              onCancel={this.hideResetFilesExtensionsModal}
             />
             <Callout ref={this.createCalloutRef} />
           </Fragment>
