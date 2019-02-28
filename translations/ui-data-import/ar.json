@@ -104,6 +104,6 @@
     "validation.fileExtension.duplication.invalid": "لم يتم إنشاء تسجيلة جديدة: امتداد الملف {value} موجود بالفعل",
     "error.network": "لم يتم إنشاء التسجيلة الجديدة: توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة.",
     "waitingForUpload": "في انتظار التحميل",
-    "edit": "Edit",
-    "endOfRecord": "End of record"
+    "edit": "تحرير",
+    "endOfRecord": "نهاية التسجيلة"
 }
