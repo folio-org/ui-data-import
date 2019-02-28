@@ -1,5 +1,9 @@
-import { describe, beforeEach, it } from '@bigtest/mocha';
 import { expect } from 'chai';
+import {
+  describe,
+  beforeEach,
+  it,
+} from '@bigtest/mocha';
 
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 

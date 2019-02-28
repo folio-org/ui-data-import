@@ -148,6 +148,7 @@ export class ViewFileExtension extends Component {
           <Fragment>
             <TitleManager record={record.extension} />
             <Headline
+              data-test-headline
               size="xx-large"
               tag="h2"
             >
@@ -164,10 +165,9 @@ export class ViewFileExtension extends Component {
 
             <Row>
               <Col xs={12}>
-                <KeyValue
-                  label={<FormattedMessage id="ui-data-import.description" />}
-                  value={record.description || '-'}
-                />
+                <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
+                  <div data-test-description>{record.description || '-'}</div>
+                </KeyValue>
               </Col>
             </Row>
 
@@ -179,6 +179,7 @@ export class ViewFileExtension extends Component {
                       <input
                         id="import-blocked"
                         className={css.checkbox}
+                        data-test-import-blocked
                         type="checkbox"
                         checked
                         disabled
@@ -193,16 +194,14 @@ export class ViewFileExtension extends Component {
               <section>
                 <Row>
                   <Col xs={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
-                      value={record.extension}
-                    />
+                    <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}>
+                      <div data-test-extension>{record.extension}</div>
+                    </KeyValue>
                   </Col>
                   <Col xs={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}
-                      value={record.dataTypes}
-                    />
+                    <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}>
+                      <div data-test-data-types>{record.dataTypes}</div>
+                    </KeyValue>
                   </Col>
                 </Row>
               </section>

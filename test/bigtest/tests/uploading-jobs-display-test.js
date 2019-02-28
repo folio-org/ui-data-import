@@ -1,8 +1,12 @@
-import { describe, beforeEach, it } from '@bigtest/mocha';
 import { expect } from 'chai';
+import {
+  describe,
+  beforeEach,
+  it,
+} from '@bigtest/mocha';
 
 import { setupApplication } from '../helpers';
-import { uploadingJobsDisplay } from '../interactors/uploading-jobs-display';
+import { uploadingJobsDisplay } from '../interactors';
 
 describe('Uploading jobs display', () => {
   setupApplication();

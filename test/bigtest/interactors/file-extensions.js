@@ -1,4 +1,7 @@
-import { interactor, count } from '@bigtest/interactor';
+import {
+  interactor,
+  count,
+} from '@bigtest/interactor';
 
 @interactor class FileExtensionsInteractor {
   count = count('a[class*="mclRow--"]');
