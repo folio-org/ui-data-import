@@ -93,7 +93,6 @@ class SearchAndSortComponent extends Component {
     EditRecordComponent: PropTypes.func,
     actionMenu: PropTypes.func, // parameter properties provided by caller
     detailProps: PropTypes.object,
-    finishedResourceName: PropTypes.string,
     massageNewRecord: PropTypes.func,
     maxSortKeys: PropTypes.number,
     newRecordInitialValues: PropTypes.object,
@@ -146,28 +145,9 @@ class SearchAndSortComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {  // eslint-disable-line react/no-deprecated
-    const {
-      stripes: { logger },
-      finishedResourceName,
-    } = this.props;
+    const { stripes: { logger } } = this.props;
     const oldState = makeConnectedSource(this.props, logger);
     const newState = makeConnectedSource(nextProps, logger);
-
-    // If the nominated mutation has finished, select the newly created record
-    const oldStateForFinalSource = makeConnectedSource(this.props, logger, finishedResourceName);
-    const newStateForFinalSource = makeConnectedSource(nextProps, logger, finishedResourceName);
-
-    if (oldStateForFinalSource.records()) {
-      const finishedResourceNextSM = newStateForFinalSource.successfulMutations();
-
-      if (finishedResourceNextSM.length > oldStateForFinalSource.successfulMutations().length) {
-        const sm = newState.successfulMutations();
-
-        if (sm[0]) {
-          this.onSelectRow(undefined, { id: sm[0].record.id });
-        }
-      }
-    }
 
     const isSearchComplete = oldState.pending() && !newState.pending();
 
@@ -182,10 +162,10 @@ class SearchAndSortComponent extends Component {
       );
     }
 
-    // if the results list is winnowed down to a single record, display the record.
-    if (nextProps.showSingleResult &&
-      newState.totalCount() === 1 &&
-      this.lastNonNullResultCount > 1) {
+    const shouldShowSingleResult = nextProps.showSingleResult &&
+      newState.totalCount() === 1 && this.lastNonNullResultCount > 1;
+
+    if (shouldShowSingleResult) {
       this.onSelectRow(null, newState.records()[0]);
     }
 
