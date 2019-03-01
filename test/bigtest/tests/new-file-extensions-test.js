@@ -1,9 +1,16 @@
-import { describe, beforeEach, it } from '@bigtest/mocha';
-import { Response } from '@bigtest/mirage';
 import { expect } from 'chai';
+import { Response } from '@bigtest/mirage';
+import {
+  describe,
+  beforeEach,
+  it,
+} from '@bigtest/mocha';
 
 import { setupApplication } from '../helpers';
-import { newFileExtensionForm } from '../interactors/file-extension-form';
+import {
+  newFileExtensionForm,
+  fileExtensionDetails,
+} from '../interactors';
 
 async function setupFormSubmitErrorScenario(server, responseData = {}) {
   const {
@@ -144,6 +151,40 @@ describe('File extension form', () => {
     it('then data types field is not required', () => {
       expect(newFileExtensionForm.blockedField.inputValue).to.equal('true');
       expect(newFileExtensionForm.dataTypesField.inputError).to.be.false;
+    });
+  });
+
+  describe('when form is submitted with blocked import', () => {
+    beforeEach(async function () {
+      await newFileExtensionForm.extensionField.fillAndBlur('.csv');
+      await newFileExtensionForm.blockedField.clickAndBlur();
+      await newFileExtensionForm.submitFormBtn.click();
+    });
+
+    it('then file extension details renders the newly created file extension', () => {
+      expect(fileExtensionDetails.headline.text).to.equal('.csv');
+      expect(fileExtensionDetails.description.text).to.equal('-');
+      expect(fileExtensionDetails.extension.isPresent).to.be.false;
+      expect(fileExtensionDetails.dataTypes.isPresent).to.be.false;
+      expect(fileExtensionDetails.importBlocked.isPresent).to.be.true;
+    });
+  });
+
+  describe('when form is submitted with unblocked import', () => {
+    beforeEach(async function () {
+      await newFileExtensionForm.descriptionField.fillAndBlur('Description');
+      await newFileExtensionForm.dataTypesField.expandAndFilter('Del');
+      await newFileExtensionForm.dataTypesField.clickOption('1');
+      await newFileExtensionForm.extensionField.fillAndBlur('.csv');
+      await newFileExtensionForm.submitFormBtn.click();
+    });
+
+    it('then file extension details renders the newly created file extension', () => {
+      expect(fileExtensionDetails.description.text).to.equal('Description');
+      expect(fileExtensionDetails.headline.text).to.equal('.csv');
+      expect(fileExtensionDetails.extension.text).to.equal('.csv');
+      expect(fileExtensionDetails.dataTypes.text).to.equal('Delimited');
+      expect(fileExtensionDetails.importBlocked.isPresent).to.be.false;
     });
   });
 });

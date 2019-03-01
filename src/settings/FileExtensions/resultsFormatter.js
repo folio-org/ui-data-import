@@ -8,16 +8,16 @@ import css from './FileExtensions.css';
 
 const formatUserName = userInfo => {
   const {
-    firstName,
-    lastName,
-    userName,
+    firstName = '',
+    lastName = '',
+    userName = '',
   } = userInfo;
 
   if (userName === 'System') {
     return userName;
   }
 
-  const formattedUserName = userName ? `(@${userName})` : '';
+  const formattedUserName = userName ? `(@${userName})` : userName;
 
   return `${firstName} ${lastName} ${formattedUserName}`;
 };

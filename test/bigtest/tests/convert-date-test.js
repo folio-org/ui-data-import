@@ -1,8 +1,8 @@
+import { expect } from 'chai';
 import {
   describe,
   it,
 } from '@bigtest/mocha';
-import { expect } from 'chai';
 
 import {
   convertDate,

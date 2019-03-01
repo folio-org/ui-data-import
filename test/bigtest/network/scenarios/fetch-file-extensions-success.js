@@ -1,5 +1,11 @@
 export default server => {
-  server.createList('file-extension', 3);
+  server.create('file-extension');
+  server.create('file-extension', { userInfo: { userName: 'System' } });
+  server.create('file-extension', {
+    dataTypes: [],
+    userInfo: { lastName: 'Doe' },
+  });
+
   server.get('/data-import/fileExtensions');
   server.get('/data-import/fileExtensions/:id');
   server.post('/data-import/fileExtensions', (_, request) => {

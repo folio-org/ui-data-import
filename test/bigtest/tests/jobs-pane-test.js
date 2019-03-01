@@ -1,5 +1,9 @@
-import { describe, beforeEach, it } from '@bigtest/mocha';
 import { expect } from 'chai';
+import {
+  describe,
+  beforeEach,
+  it,
+} from '@bigtest/mocha';
 
 import {
   PREVIEW_JOBS_LENGTH,
@@ -7,7 +11,7 @@ import {
 } from '../mocks/jobExecutions';
 import translation from '../../../translations/ui-data-import/en';
 import { setupApplication } from '../helpers';
-import { jobsPane } from '../interactors/jobs-pane';
+import { jobsPane } from '../interactors';
 
 describe('Jobs pane', () => {
   setupApplication();

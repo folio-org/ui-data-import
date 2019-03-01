@@ -111,26 +111,23 @@ class FileExtensionFormComponent extends Component {
     );
   }
 
-  renderActionMenu = menu => {
+  renderActionMenu = menu => (
+    <Button
+      data-test-cancel-form-action
+      buttonStyle="dropdownItem"
+      onClick={() => this.handleCancel(menu)}
+    >
+      <Icon icon="times-circle">
+        <FormattedMessage id="ui-data-import.cancel" />
+      </Icon>
+    </Button>
+  );
+
+  handleCancel = menu => {
     const { onCancel } = this.props;
 
-    const { onToggle } = menu;
-    const handleClick = () => {
-      onCancel();
-      onToggle();
-    };
-
-    return (
-      <Button
-        data-test-cancel-form-action
-        buttonStyle="dropdownItem"
-        onClick={handleClick}
-      >
-        <Icon icon="times-circle">
-          <FormattedMessage id="ui-data-import.cancel" />
-        </Icon>
-      </Button>
-    );
+    menu.onToggle();
+    onCancel();
   };
 
   importBlockedChange = (meta, value) => {

@@ -550,10 +550,6 @@ class UploadingJobsDisplayComponent extends Component {
     });
   }
 
-  createCalloutRef = ref => {
-    this.callout = ref;
-  };
-
   continue = () => {
     const { history } = this.props;
     const { nextLocation } = this.state;
@@ -565,6 +561,8 @@ class UploadingJobsDisplayComponent extends Component {
   closeModal = () => {
     this.setState({ renderLeaveModal: false });
   };
+
+  createCalloutRef = ref => { this.callout = ref; };
 
   render() {
     const {

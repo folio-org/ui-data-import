@@ -10,7 +10,7 @@ import { setupApplication } from '../helpers';
 import {
   importJobs,
   returnToAssignJobs,
-} from '../interactors/import-pane';
+} from '../interactors';
 
 describe('Import files with no previous draft jobs', () => {
   setupApplication();

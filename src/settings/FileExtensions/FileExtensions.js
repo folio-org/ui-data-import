@@ -1,9 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import React, {
+  Component,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { IntlConsumer } from '@folio/stripes/core';
-import { Callout } from '@folio/stripes/components';
+import {
+  Callout,
+  Button,
+  ConfirmationModal,
+} from '@folio/stripes/components';
 import {
   makeQueryFunction,
   buildUrl,
@@ -55,10 +62,24 @@ class FileExtensions extends Component {
         staticFallback: { params: {} },
       },
     },
+    restoreDefaultFileExtensions: {
+      type: 'okapi',
+      records: 'fileExtensions',
+      path: 'data-import/fileExtensions/restore/default',
+      fetch: false,
+      throwErrors: false,
+    },
   });
 
   static propTypes = {
-    mutator: PropTypes.object.isRequired,
+    mutator: PropTypes.shape({
+      records: PropTypes.shape({
+        POST: PropTypes.func.isRequired,
+      }).isRequired,
+      restoreDefaultFileExtensions: PropTypes.shape({
+        POST: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
     resources: PropTypes.object.isRequired,
     label: PropTypes.node.isRequired,
     location: PropTypes.object.isRequired,
@@ -73,6 +94,11 @@ class FileExtensions extends Component {
 
   static defaultProps = { showSingleResult: true };
 
+  state = {
+    isResetFileExtensionsModalOpen: false,
+    areFileExtensionsResetting: false,
+  };
+
   visibleColumns = [
     'extension',
     'importBlocked',
@@ -85,8 +111,6 @@ class FileExtensions extends Component {
     updated: 150,
     updatedBy: 250,
   };
-
-  createNewRecordContainerRef = ref => { this.newRecordContainer = ref; };
 
   transitionToParams = params => {
     const {
@@ -111,9 +135,9 @@ class FileExtensions extends Component {
   };
 
   handleCreateRecordSuccess = (record, dispatch, props) => {
-    const { reset } = props;
+    const { reset: resetForm } = props;
 
-    reset();
+    resetForm();
 
     const { match: { path } } = this.props;
 
@@ -129,7 +153,7 @@ class FileExtensions extends Component {
 
     const errorMsgId = errorMsgIdEnding
       ? `ui-data-import.validation.${errorMsgIdEnding}`
-      : 'ui-data-import.error.network';
+      : 'ui-data-import.settings.fileExtension.create.error.network';
 
     const errorMessage = (
       <FormattedMessage
@@ -144,9 +168,67 @@ class FileExtensions extends Component {
     });
   }
 
-  createCalloutRef = ref => {
-    this.callout = ref;
+  renderActionMenu = menu => (
+    <Button
+      data-test-restore-default-file-extensions
+      buttonStyle="dropdownItem"
+      onClick={() => this.handleRestoreDefaultFileExtensions(menu)}
+    >
+      <FormattedMessage id="ui-data-import.settings.fileExtensions.reset" />
+    </Button>
+  );
+
+  handleRestoreDefaultFileExtensions = menu => {
+    menu.onToggle();
+    this.showRestoreDefaultFileExtensionsModal();
   };
+
+  showRestoreDefaultFileExtensionsModal() {
+    this.setState({ isResetFileExtensionsModalOpen: true });
+  }
+
+  hideResetFileExtensionsToDefaultsModal = () => {
+    this.setState({
+      isResetFileExtensionsModalOpen: false,
+      areFileExtensionsResetting: false,
+    });
+  };
+
+  restoreDefaultFileExtensions = async () => {
+    const { areFileExtensionsResetting } = this.state;
+
+    if (areFileExtensionsResetting) {
+      return;
+    }
+
+    try {
+      const {
+        match: { path },
+        mutator: { restoreDefaultFileExtensions },
+      } = this.props;
+
+      this.setState({ areFileExtensionsResetting: true });
+      await restoreDefaultFileExtensions.POST({});
+
+      this.transitionToParams({
+        _path: `${path}/view`,
+        layer: null,
+      });
+
+      this.hideResetFileExtensionsToDefaultsModal();
+    } catch (error) {
+      this.hideResetFileExtensionsToDefaultsModal();
+
+      this.callout.sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-data-import.settings.fileExtension.reset.error.network" />,
+      });
+    }
+  };
+
+  createNewRecordContainerRef = ref => { this.newRecordContainer = ref; };
+
+  createCalloutRef = ref => { this.callout = ref; };
 
   render() {
     const {
@@ -155,6 +237,7 @@ class FileExtensions extends Component {
       label,
       showSingleResult,
     } = this.props;
+    const { isResetFileExtensionsModalOpen } = this.state;
 
     const newRecordInitialValues = {
       importBlocked: false,
@@ -181,6 +264,7 @@ class FileExtensions extends Component {
                 resultCountMessageKey="ui-data-import.settings.fileExtensions.count"
                 resultsLabel={label}
                 defaultSort="extension"
+                actionMenu={this.renderActionMenu}
                 resultsFormatter={resultsFormatter(intl)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
@@ -203,6 +287,16 @@ class FileExtensions extends Component {
             <div
               className={css.newRecordContainer}
               ref={this.createNewRecordContainerRef}
+            />
+            <ConfirmationModal
+              id="restore-default-file-extensions-modal"
+              open={isResetFileExtensionsModalOpen}
+              heading={<FormattedMessage id="ui-data-import.modal.fileExtensions.reset.header" />}
+              message={<FormattedMessage id="ui-data-import.modal.fileExtensions.reset.message" />}
+              confirmLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.reset.actionButton" />}
+              cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
+              onConfirm={this.restoreDefaultFileExtensions}
+              onCancel={this.hideResetFileExtensionsToDefaultsModal}
             />
             <Callout ref={this.createCalloutRef} />
           </Fragment>

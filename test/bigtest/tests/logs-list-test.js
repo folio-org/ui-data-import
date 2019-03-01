@@ -1,5 +1,9 @@
-import { describe, beforeEach, it } from '@bigtest/mocha';
 import { expect } from 'chai';
+import {
+  describe,
+  beforeEach,
+  it,
+} from '@bigtest/mocha';
 
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
@@ -88,6 +92,30 @@ describe('Logs list', () => {
           expect(getCellContent(0, 3)).to.equal('11/5/2018, 1:08 PM');
           expect(getCellContent(1, 3)).to.equal('11/5/2018, 2:21 PM');
           expect(getCellContent(2, 3)).to.equal('11/11/2018, 2:10 PM');
+        });
+      });
+    });
+
+    describe('compares by `runBy` field', () => {
+      beforeEach(async () => {
+        await logsList.headers(4).click();
+      });
+
+      it('ascending', () => {
+        expect(getCellContent(0, 4)).to.equal('Elliot Lane');
+        expect(getCellContent(1, 4)).to.equal('Jay Morrowitz');
+        expect(getCellContent(2, 4)).to.equal('Ozzy Campenshtorm');
+      });
+
+      describe('and', () => {
+        beforeEach(async () => {
+          await logsList.headers(4).click();
+        });
+
+        it('descending', () => {
+          expect(getCellContent(0, 4)).to.equal('Ozzy Campenshtorm');
+          expect(getCellContent(1, 4)).to.equal('Jay Morrowitz');
+          expect(getCellContent(2, 4)).to.equal('Elliot Lane');
         });
       });
     });

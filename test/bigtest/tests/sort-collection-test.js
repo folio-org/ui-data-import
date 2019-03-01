@@ -1,9 +1,9 @@
+import { expect } from 'chai';
+import { isEqual } from 'lodash';
 import {
   describe,
   it,
 } from '@bigtest/mocha';
-import { expect } from 'chai';
-import { isEqual } from 'lodash';
 
 import { sortCollection } from '../../../src/utils';
 import {
