@@ -95,5 +95,29 @@ describe('Logs list', () => {
         });
       });
     });
+
+    describe('compares by `runBy` field', () => {
+      beforeEach(async () => {
+        await logsList.headers(4).click();
+      });
+
+      it('ascending', () => {
+        expect(getCellContent(0, 4)).to.equal('Elliot Lane');
+        expect(getCellContent(1, 4)).to.equal('Jay Morrowitz');
+        expect(getCellContent(2, 4)).to.equal('Ozzy Campenshtorm');
+      });
+
+      describe('and', () => {
+        beforeEach(async () => {
+          await logsList.headers(4).click();
+        });
+
+        it('descending', () => {
+          expect(getCellContent(0, 4)).to.equal('Ozzy Campenshtorm');
+          expect(getCellContent(1, 4)).to.equal('Jay Morrowitz');
+          expect(getCellContent(2, 4)).to.equal('Elliot Lane');
+        });
+      });
+    });
   });
 });

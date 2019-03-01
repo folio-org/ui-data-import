@@ -146,6 +146,7 @@ class SearchAndSortComponent extends Component {
 
   componentWillReceiveProps(nextProps) {  // eslint-disable-line react/no-deprecated
     const { stripes: { logger } } = this.props;
+
     const oldState = makeConnectedSource(this.props, logger);
     const newState = makeConnectedSource(nextProps, logger);
 
@@ -162,10 +163,10 @@ class SearchAndSortComponent extends Component {
       );
     }
 
-    const shouldShowSingleResult = nextProps.showSingleResult &&
+    const showSingleResult = nextProps.showSingleResult &&
       newState.totalCount() === 1 && this.lastNonNullResultCount > 1;
 
-    if (shouldShowSingleResult) {
+    if (showSingleResult) {
       this.onSelectRow(null, newState.records()[0]);
     }
 

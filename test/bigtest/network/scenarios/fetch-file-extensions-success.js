@@ -1,11 +1,9 @@
-export default async server => {
+export default server => {
   server.create('file-extension');
   server.create('file-extension', { userInfo: { userName: 'System' } });
   server.create('file-extension', {
     dataTypes: [],
-    userInfo: {
-      lastName: 'Doe',
-    },
+    userInfo: { lastName: 'Doe' },
   });
 
   server.get('/data-import/fileExtensions');

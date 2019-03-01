@@ -43,6 +43,10 @@ export class ViewFileExtension extends Component {
         records: PropTypes.arrayOf(
           PropTypes.shape({
             extension: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            importBlocked: PropTypes.bool.isRequired,
+            dataTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+            metadata: PropTypes.object.isRequired,
           }),
         ),
       }),
@@ -155,13 +159,11 @@ export class ViewFileExtension extends Component {
               {record.extension}
             </Headline>
 
-            {record.metadata && (
-              <Row>
-                <Col xs={12}>
-                  <this.connectedViewMetaData metadata={record.metadata} />
-                </Col>
-              </Row>
-            )}
+            <Row>
+              <Col xs={12}>
+                <this.connectedViewMetaData metadata={record.metadata} />
+              </Col>
+            </Row>
 
             <Row>
               <Col xs={12}>

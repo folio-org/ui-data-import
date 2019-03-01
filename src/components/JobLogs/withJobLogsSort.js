@@ -41,7 +41,7 @@ const withJobLogsSortComponent = WrappedComponent => {
       this.sortColumns = {
         fileName: {
           sortFn: sortStrings,
-          useFormatterFn: true,
+          useFormatterFn: false,
         },
         jobProfileName: {
           sortFn: sortStrings,
@@ -95,10 +95,11 @@ const withJobLogsSortComponent = WrappedComponent => {
           useFormatterFn,
           sortFn,
         } = this.sortColumns[sort];
+        const useCellFormatter = useFormatterFn && cellFormatter;
 
-        return sortDir * (useFormatterFn && cellFormatter ?
-          sortFn(cellFormatter(a), cellFormatter(b)) :
-          sortFn(a[sort], b[sort]));
+        return sortDir * (useCellFormatter
+          ? sortFn(cellFormatter(a), cellFormatter(b))
+          : sortFn(a[sort], b[sort]));
       });
     }
 
