@@ -14,7 +14,7 @@ import css from './FileUploader.css';
 
 const cx = classNames.bind(css);
 
-const FileUploader = props => {
+export const FileUploader = props => {
   const {
     title,
     uploadBtnText,
@@ -120,5 +120,3 @@ FileUploader.propTypes = {
 FileUploader.defaultProps = {
   className: defaultStyles.defaultFileUploader,
 };
-
-export { FileUploader };

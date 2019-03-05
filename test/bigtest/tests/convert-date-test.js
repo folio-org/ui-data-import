@@ -31,13 +31,13 @@ describe('convertDate', () => {
   });
 
   describe('returns date argument value', () => {
-    it('if it is invalid date', () => {
+    it('when it is invalid date', () => {
       const invalidDate = 'first of April';
 
       expect(convertDate(invalidDate)).to.be.equal(invalidDate);
     });
 
-    it('if toType argument is invalid', () => {
+    it('when toType argument is invalid', () => {
       const date = 963427676538;
       const invalidType = 'STRING';
 

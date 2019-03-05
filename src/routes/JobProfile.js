@@ -7,6 +7,9 @@ import {
 } from '@folio/stripes/components';
 
 import { UploadingJobsDisplay } from '../components';
+import { isTestEnv } from '../utils';
+
+const timeoutBeforeFileDeletion = isTestEnv() ? 500 : 10000;
 
 export class JobProfile extends Component {
   render() {
@@ -16,7 +19,7 @@ export class JobProfile extends Component {
           defaultWidth="300px"
           paneTitle={<FormattedMessage id="ui-data-import.uploadingPaneTitle" />}
         >
-          <UploadingJobsDisplay timeoutBeforeFileDeletion={10000} />
+          <UploadingJobsDisplay timeoutBeforeFileDeletion={timeoutBeforeFileDeletion} />
         </Pane>
       </Paneset>
     );

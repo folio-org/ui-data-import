@@ -7,10 +7,11 @@ import { MultiColumnList } from '@folio/stripes/components';
 import { Preloader } from '../Preloader';
 import { withJobLogsCellsFormatter } from './withJobLogsCellsFormatter';
 import { withJobLogsSort } from './withJobLogsSort';
-import { compose } from '../../utils';
 import { jobLogPropTypes } from './jobLogPropTypes';
 
-class JobLogsComponent extends Component {
+@withJobLogsCellsFormatter
+@withJobLogsSort
+export class JobLogs extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     sortField: PropTypes.string.isRequired,
@@ -78,8 +79,3 @@ class JobLogsComponent extends Component {
     );
   }
 }
-
-export const JobLogs = compose(
-  withJobLogsCellsFormatter,
-  withJobLogsSort,
-)(JobLogsComponent);

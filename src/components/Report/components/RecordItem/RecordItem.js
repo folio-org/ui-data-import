@@ -25,7 +25,7 @@ const recordTypes = {
   },
 };
 
-const RecordItem = ({ record }) => {
+export const RecordItem = ({ record }) => {
   return (
     <a href="/" className={css.resultRecordItemLink}>
       <div className={css.resultRecordItem}>
@@ -55,5 +55,3 @@ RecordItem.propTypes = {
     type: PropTypes.string.isRequired,
   }),
 };
-
-export { RecordItem };

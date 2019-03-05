@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { isEqual } from 'lodash';
 import {
   describe,
   it,
@@ -139,24 +138,7 @@ describe('sortCollection', () => {
 });
 
 it('works with empty input', () => {
-  const output = sortCollection();
-  const isOutputCorrect = isEqual(output, []);
-
-  expect(isOutputCorrect).to.be.true;
-});
-
-it('works correctly with empty array', () => {
-  const output = sortCollection([]);
-  const isOutputCorrect = isEqual(output, []);
-
-  expect(isOutputCorrect).to.be.true;
-});
-
-it('works correctly with no arguments passed', () => {
-  const output = sortCollection();
-  const isOutputCorrect = isEqual(output, []);
-
-  expect(isOutputCorrect).to.be.true;
+  expect(sortCollection()).to.deep.equal([]);
 });
 
 it('sorts correctly', () => {
@@ -174,8 +156,6 @@ it('sorts correctly', () => {
     '-number',
     sortByDates,
   ];
-  const sortFunctionResult = sortCollection(collectionUnsorted, sortingOptions);
-  const isSortedCorrectly = isEqual(sortFunctionResult, collectionSorted);
 
-  expect(isSortedCorrectly).to.be.true;
+  expect(sortCollection(collectionUnsorted, sortingOptions)).to.deep.equal(collectionSorted);
 });

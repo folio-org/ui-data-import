@@ -19,6 +19,7 @@
 * Update API endpoints on UI due to changes on backend across the application (UIDATIMP-112, UIDATIMP-113, UIDATIMP-114)
 * Implement "Save the new file extension" feature (UIDATIMP-79)
 * Implement return to Choose Job Profile page functionality (UIDATIMP-103)
+* Write tests for return to Choose Job Profile page functionality (UIDATIMP-154)
 
 ## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
 

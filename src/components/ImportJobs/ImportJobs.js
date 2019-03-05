@@ -16,7 +16,8 @@ import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 
 import css from './components/FileUploader/FileUploader.css';
 
-class ImportJobsComponent extends Component {
+@withRouter
+export class ImportJobs extends Component {
   static propTypes = {
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
@@ -191,6 +192,7 @@ class ImportJobsComponent extends Component {
       >
         {openDialogWindow => (
           <ConfirmationModal
+            id="file-extensions-modal"
             open={filesExtensionsModalOpen}
             heading={<FormattedMessage id="ui-data-import.modal.fileExtensions.header" />}
             message={invalidFilesMessage}
@@ -204,5 +206,3 @@ class ImportJobsComponent extends Component {
     );
   }
 }
-
-export const ImportJobs = withRouter(ImportJobsComponent);

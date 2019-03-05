@@ -6,9 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Pane } from '@folio/stripes/components';
 
 export class MatchProfiles extends Component {
-  static propTypes = {
-    label: PropTypes.node.isRequired,
-  };
+  static propTypes = { label: PropTypes.node.isRequired };
 
   render() {
     const { label } = this.props;

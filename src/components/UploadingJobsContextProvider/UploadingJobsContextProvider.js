@@ -18,7 +18,8 @@ import {
 } from '../../utils';
 import { UploadingJobsContext } from '.';
 
-class UploadingJobsContextProviderComponent extends Component {
+@withStripes
+export class UploadingJobsContextProvider extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     children: PropTypes.oneOfType([
@@ -54,11 +55,11 @@ class UploadingJobsContextProviderComponent extends Component {
   updateUploadDefinition = async newUploadDefinition => {
     const uploadDefinition = newUploadDefinition || await this.getLatestUploadDefinition();
 
+    this.setState({ uploadDefinition });
+
     if (this.isUploadDefinitionFailed(uploadDefinition)) {
       return this.deleteUploadDefinition();
     }
-
-    this.setState({ uploadDefinition });
 
     return uploadDefinition;
   };
@@ -114,5 +115,3 @@ class UploadingJobsContextProviderComponent extends Component {
     );
   }
 }
-
-export const UploadingJobsContextProvider = withStripes(UploadingJobsContextProviderComponent);

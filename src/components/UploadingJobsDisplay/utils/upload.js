@@ -30,6 +30,10 @@ export const createUploadDefinition = async (files, url, headers) => {
       return [errors[0].message, responseJSON];
     }
 
+    if (!response.ok) {
+      return ['unable to create upload definition'];
+    }
+
     return [null, responseJSON];
   } catch (error) {
     return [error.message];
