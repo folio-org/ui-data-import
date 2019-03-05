@@ -105,5 +105,12 @@
     "error.network": "New record not created: Communication problem with server. Please try again",
     "waitingForUpload": "Waiting for upload",
     "edit": "Edit",
-    "endOfRecord": "End of record"
+    "endOfRecord": "End of record",
+    "settings.fileExtension.create.error.network": "New record not created: Communication problem with server. Please try again",
+    "settings.fileExtension.reset.error.network": "Reset was not successful: Communication problem with server. Please try again",
+    "settings.fileExtensions.reset": "Reset all extension mappings to system defaults",
+    "settings.fileExtensions.resetAll": "Reset all",
+    "modal.fileExtensions.reset.header": "Reset all file extension mappings",
+    "modal.fileExtensions.reset.message": "This will reset the file extension mappings to the system defaults",
+    "modal.fileExtensions.reset.actionButton": "Reset all"
 }
