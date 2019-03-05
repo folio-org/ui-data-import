@@ -13,7 +13,7 @@ import {
   Pane,
   PaneMenu,
   Icon,
-  IconButton,
+  PaneHeaderIconButton,
   Button,
   Headline,
   TextArea,
@@ -79,7 +79,7 @@ export class FileExtensionForm extends Component {
       <PaneMenu>
         <FormattedMessage id="ui-data-import.close">
           {ariaLabel => (
-            <IconButton
+            <PaneHeaderIconButton
               id="clickable-close-file-extension-dialog"
               ariaLabel={ariaLabel}
               icon="times"
