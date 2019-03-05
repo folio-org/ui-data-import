@@ -1,2 +1,2 @@
-export * from './jobExecutions';
-export * from './jobsLobs';
+export * from './job-executions';
+export * from './jobs-logs';

@@ -10,7 +10,7 @@ import { jobPropTypes } from '../Job/jobPropTypes';
 
 import css from './JobsList.css';
 
-const JobsList = props => {
+export const JobsList = props => {
   const {
     jobs,
     hasLoaded,
@@ -59,5 +59,3 @@ JobsList.propTypes = {
 JobsList.defaultProps = {
   isEmptyMessage: '',
 };
-
-export { JobsList };

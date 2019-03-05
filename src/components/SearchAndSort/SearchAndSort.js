@@ -37,7 +37,9 @@ import { SORT_TYPES } from '../../utils/constants';
 
 import css from './SearchAndSort.css';
 
-class SearchAndSortComponent extends Component {
+@withRouter
+@withStripes
+export class SearchAndSort extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     objectName: PropTypes.string.isRequired,
@@ -636,5 +638,3 @@ class SearchAndSortComponent extends Component {
     );
   }
 }
-
-export const SearchAndSort = withRouter(withStripes(SearchAndSortComponent));

@@ -4,6 +4,11 @@
   },
   "extends": "@folio/eslint-config-stripes",
   "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "legacyDecorators": true
+    }
+  },
   "root": true,
   "rules": {
     "key-spacing": [
@@ -16,9 +21,32 @@
     "import/prefer-default-export": false,
     "padding-line-between-statements": [
       "error",
-      { "blankLine": "always", "prev": ["const", "let"], "next": "*"},
-      { "blankLine": "any", "prev": ["const", "let"], "next": ["const", "let"]},
-      { "blankLine": "always", "prev": "*", "next": ["return"]}
+      {
+        "blankLine": "always",
+        "prev": [
+          "const",
+          "let"
+        ],
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": [
+          "const",
+          "let"
+        ],
+        "next": [
+          "const",
+          "let"
+        ]
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": [
+          "return"
+        ]
+      }
     ],
     "no-multiple-empty-lines": [
       "error",
@@ -31,8 +59,14 @@
       "error",
       "always-multiline"
     ],
-    "arrow-parens": ["error", "as-needed"],
-    "quote-props": ["error", "as-needed"],
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
+    "quote-props": [
+      "error",
+      "as-needed"
+    ],
     "prefer-template": "error",
     "no-else-return": "error",
     "newline-per-chained-call": "error"

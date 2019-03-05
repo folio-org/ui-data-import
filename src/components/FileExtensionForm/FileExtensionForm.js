@@ -30,7 +30,12 @@ import css from './FileExtensionForm.css';
 
 const formName = 'fileExtensionForm';
 
-class FileExtensionFormComponent extends Component {
+@stripesForm({
+  form: formName,
+  navigationCheck: true,
+  enableReinitialize: true,
+})
+export class FileExtensionForm extends Component {
   static propTypes = {
     pristine: PropTypes.bool.isRequired,
     submitting: PropTypes.bool.isRequired,
@@ -238,11 +243,3 @@ class FileExtensionFormComponent extends Component {
     );
   }
 }
-
-const FileExtensionForm = stripesForm({
-  form: formName,
-  navigationCheck: true,
-  enableReinitialize: true,
-})(FileExtensionFormComponent);
-
-export { FileExtensionForm };

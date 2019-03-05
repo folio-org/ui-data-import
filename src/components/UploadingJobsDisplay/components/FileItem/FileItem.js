@@ -81,7 +81,10 @@ export class FileItem extends PureComponent {
     });
 
     return (
-      <div className={classNames(css.fileItem, meta.fileWrapperClassName)}>
+      <div
+        data-test-file-item
+        className={classNames(css.fileItem, meta.fileWrapperClassName)}
+      >
         <div className={css.fileItemHeader}>
           <span className={css.fileIcon}>
             <Icon

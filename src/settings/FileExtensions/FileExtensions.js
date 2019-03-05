@@ -29,7 +29,7 @@ import css from './FileExtensions.css';
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
-class FileExtensions extends Component {
+export class FileExtensions extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
     query: {
@@ -305,5 +305,3 @@ class FileExtensions extends Component {
     );
   }
 }
-
-export { FileExtensions };
