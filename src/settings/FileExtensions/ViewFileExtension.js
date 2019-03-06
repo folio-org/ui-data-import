@@ -79,7 +79,7 @@ export class ViewFileExtension extends Component {
         dismissible
         onClose={onClose}
       >
-        <Preloader />
+        <Preloader/>
       </Pane>
     );
   }
@@ -108,8 +108,7 @@ export class ViewFileExtension extends Component {
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
         >
-          <Icon icon="edit" />&nbsp;
-          <FormattedMessage id="ui-data-import.edit" />
+          <FormattedMessage id="ui-data-import.edit"/>
         </Button>
       </PaneMenu>
     );
@@ -143,14 +142,14 @@ export class ViewFileExtension extends Component {
         defaultWidth="fill"
         fluidContentWidth
         paneTitle={paneTitle}
-        paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
+        paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title"/>}
         lastMenu={this.addEditMenu()}
         dismissible
         onClose={onClose}
       >
         {hasLoaded && (
           <Fragment>
-            <TitleManager record={record.extension} />
+            <TitleManager record={record.extension}/>
             <Headline
               data-test-headline
               size="xx-large"
@@ -161,13 +160,13 @@ export class ViewFileExtension extends Component {
 
             <Row>
               <Col xs={12}>
-                <this.connectedViewMetaData metadata={record.metadata} />
+                <this.connectedViewMetaData metadata={record.metadata}/>
               </Col>
             </Row>
 
             <Row>
               <Col xs={12}>
-                <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
+                <KeyValue label={<FormattedMessage id="ui-data-import.description"/>}>
                   <div data-test-description>{record.description || '-'}</div>
                 </KeyValue>
               </Col>
@@ -176,7 +175,12 @@ export class ViewFileExtension extends Component {
             {record.importBlocked && (
               <section>
                 <Row>
-                  <Col xs={12}>
+                  <Col xs={4}>
+                    <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.title"/>}>
+                      <div data-test-extension>{record.extension}</div>
+                    </KeyValue>
+                  </Col>
+                  <Col xs={4}>
                     <label htmlFor="import-blocked">
                       <input
                         id="import-blocked"
@@ -186,7 +190,7 @@ export class ViewFileExtension extends Component {
                         checked
                         disabled
                       />
-                      &nbsp;<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />
+                      &nbsp;<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport"/>
                     </label>
                   </Col>
                 </Row>
@@ -196,13 +200,20 @@ export class ViewFileExtension extends Component {
               <section>
                 <Row>
                   <Col xs={4}>
-                    <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}>
+                    <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.title"/>}>
                       <div data-test-extension>{record.extension}</div>
                     </KeyValue>
                   </Col>
                   <Col xs={4}>
-                    <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}>
-                      <div data-test-data-types>{record.dataTypes}</div>
+                    <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes"/>}>
+                      <div data-test-data-types>
+                        {record.dataTypes.map((type, i) =>
+                            <span key={i}>
+                              {i > 0 && ', '}
+                              {type}
+                        </span>,
+                        )}
+                      </div>
                     </KeyValue>
                   </Col>
                 </Row>
@@ -210,7 +221,7 @@ export class ViewFileExtension extends Component {
             )}
             <EndOfItem
               className={css.endOfRecord}
-              title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+              title={<FormattedMessage id="ui-data-import.endOfRecord"/>}
             />
           </Fragment>
         )}
