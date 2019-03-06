@@ -207,11 +207,7 @@ export class ViewFileExtension extends Component {
                   <Col xs={4}>
                     <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}>
                       <div data-test-data-types>
-                        {record.dataTypes.map((type, i) => <span key={i}>
-                          {i > 0 && ', '}
-                          {type}
-                          {/* eslint-disable-next-line */}
-                        </span>)}
+                        {record.dataTypes.join(', ')}
                       </div>
                     </KeyValue>
                   </Col>
