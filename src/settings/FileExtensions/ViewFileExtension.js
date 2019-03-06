@@ -211,7 +211,7 @@ export class ViewFileExtension extends Component {
                             <span key={i}>
                               {i > 0 && ', '}
                               {type}
-                        </span>,
+                        </span>
                         )}
                       </div>
                     </KeyValue>
