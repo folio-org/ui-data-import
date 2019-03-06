@@ -108,7 +108,6 @@ export class ViewFileExtension extends Component {
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
         >
-          <Icon icon="edit" />&nbsp;
           <FormattedMessage id="ui-data-import.edit" />
         </Button>
       </PaneMenu>
@@ -176,7 +175,12 @@ export class ViewFileExtension extends Component {
             {record.importBlocked && (
               <section>
                 <Row>
-                  <Col xs={12}>
+                  <Col xs={4}>
+                    <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}>
+                      <div data-test-extension>{record.extension}</div>
+                    </KeyValue>
+                  </Col>
+                  <Col xs={4}>
                     <label htmlFor="import-blocked">
                       <input
                         id="import-blocked"
@@ -202,7 +206,9 @@ export class ViewFileExtension extends Component {
                   </Col>
                   <Col xs={4}>
                     <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}>
-                      <div data-test-data-types>{record.dataTypes}</div>
+                      <div data-test-data-types>
+                        {record.dataTypes.join(', ')}
+                      </div>
                     </KeyValue>
                   </Col>
                 </Row>

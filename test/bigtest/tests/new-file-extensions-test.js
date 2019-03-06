@@ -164,7 +164,7 @@ describe('File extension form', () => {
     it('then file extension details renders the newly created file extension', () => {
       expect(fileExtensionDetails.headline.text).to.equal('.csv');
       expect(fileExtensionDetails.description.text).to.equal('-');
-      expect(fileExtensionDetails.extension.isPresent).to.be.false;
+      expect(fileExtensionDetails.extension.isPresent).to.be.true;
       expect(fileExtensionDetails.dataTypes.isPresent).to.be.false;
       expect(fileExtensionDetails.importBlocked.isPresent).to.be.true;
     });
