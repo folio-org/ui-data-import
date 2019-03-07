@@ -449,15 +449,13 @@ export class SearchAndSort extends Component {
     );
   }
 
-  renderNewRecordBtn() {
-    const { objectName } = this.props;
-
+  renderNewRecordButton() {
     return (
       <PaneMenu>
         <FormattedMessage id="stripes-smart-components.addNew">
           {ariaLabel => (
             <Button
-              id={`clickable-new${objectName}`}
+              data-test-new-file-extension-button
               href={this.craftLayerURL('create')}
               aria-label={ariaLabel}
               buttonStyle="primary"
@@ -642,7 +640,7 @@ export class SearchAndSort extends Component {
           actionMenu={actionMenu}
           paneTitle={resultsLabel}
           paneSub={paneSub}
-          lastMenu={this.renderNewRecordBtn()}
+          lastMenu={this.renderNewRecordButton()}
         >
           {this.renderSearch(source)}
           {this.renderSearchResults(source)}

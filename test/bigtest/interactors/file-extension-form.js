@@ -22,9 +22,9 @@ import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/inter
   extensionField = new TextFieldInteractor('[data-test-extension-field]');
   blockedField = new CheckboxInteractor('[data-test-blocked-field]');
   dataTypesField = new MultiSelectionInteractor('[data-test-types-field]');
-  submitFormBtn = new ButtonInteractor('#create-file-extension');
+  submitFormButton = new ButtonInteractor('[data-test-update-file-extension-button]');
   paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
-  paneHeaderCancelBtn = new ButtonInteractor('[data-test-cancel-form-action]');
+  paneHeaderCancelButton = new ButtonInteractor('[data-test-cancel-form-action]');
   callout = new CalloutInteractor();
 
   expandPaneHeaderDropdown() {
@@ -34,4 +34,4 @@ import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/inter
   }
 }
 
-export const newFileExtensionForm = new NewFileExtensionInteractor('[data-test-file-extension-form]');
+export const fileExtensionForm = new NewFileExtensionInteractor('[data-test-file-extension-form]');

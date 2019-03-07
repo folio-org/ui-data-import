@@ -9,6 +9,7 @@
       "legacyDecorators": true
     }
   },
+  "plugins": ["babel"],
   "root": true,
   "rules": {
     "key-spacing": [
@@ -48,6 +49,8 @@
         ]
       }
     ],
+    "semi": "off",
+    "babel/semi": "error",
     "no-multiple-empty-lines": [
       "error",
       {

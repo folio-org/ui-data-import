@@ -27,8 +27,8 @@ import css from '../../../src/components/ImportJobs/components/FileUploader/File
 
   title = text('[data-test-title]');
   errorMsg = text('[data-test-error-msg]');
-  deleteButtonClick = clickable('[class*="deleteBtn"]');
-  resumeButtonClick = clickable('[class*="submitBtn"]');
+  deleteButtonClick = clickable('[class*="deleteButton"]');
+  resumeButtonClick = clickable('[class*="submitButton"]');
 }
 
 export const importJobs = new ImportJobsInteractor('[class*="upload---"]');

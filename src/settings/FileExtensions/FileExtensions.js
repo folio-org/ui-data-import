@@ -182,7 +182,7 @@ export class FileExtensions extends Component {
 
   renderActionMenu = menu => (
     <Button
-      data-test-restore-default-file-extensions
+      data-test-restore-default-file-extensions-button
       buttonStyle="dropdownItem"
       onClick={() => this.handleRestoreDefaultFileExtensions(menu)}
     >

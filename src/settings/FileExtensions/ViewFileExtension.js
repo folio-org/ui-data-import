@@ -121,7 +121,7 @@ export class ViewFileExtension extends Component {
     return (
       <PaneMenu>
         <Button
-          id="clickable-edit-file-extension"
+          data-test-edit-file-extension-menu-button
           href={editLink}
           style={{ visibility: !record ? 'hidden' : 'visible' }}
           buttonStyle="primary paneHeaderNewButton"
@@ -137,12 +137,12 @@ export class ViewFileExtension extends Component {
   renderActionMenu = menu => {
     return (
       <Button
-        data-test-user-instance-edit-action
+        data-test-edit-file-extension-button
         buttonStyle="dropdownItem"
         onClick={() => this.handleOpenEdit(menu)}
       >
         <Icon icon="edit">
-          <FormattedMessage id="ui-users.edit" />
+          <FormattedMessage id="ui-data-import.edit" />
         </Icon>
       </Button>
     );
