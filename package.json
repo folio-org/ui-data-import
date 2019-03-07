@@ -117,6 +117,7 @@
           "settings.enabled",
           "data-import.fileExtensions.get",
           "data-import.fileExtensions.post",
+          "data-import.fileExtensions.put",
           "data-import.fileExtensions.default"
         ],
         "visible": true

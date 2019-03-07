@@ -159,17 +159,21 @@ export class FileExtensionForm extends Component {
       initialValues,
       handleSubmit,
     } = this.props;
-
     const { dataTypesRequired } = this.state;
 
     const isEditMode = Boolean(initialValues.id);
+
     const paneTitle = !isEditMode
       ? <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />
-      : 'Edit';
+      : (
+        <FormattedMessage id="ui-data-import.edit">
+          {txt => `${txt} ${initialValues.extension}`}
+        </FormattedMessage>
+      );
 
     const headLine = !isEditMode
       ? <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />
-      : 'Extension';
+      : initialValues.extension;
 
     return (
       <form
