@@ -13,7 +13,7 @@ import {
   JobProfile,
 } from './routes';
 import { DataImportSettings } from './settings';
-import { UploadingJobsContextProvider } from './components/UploadingJobsContextProvider';
+import { UploadingJobsContextProvider } from './components';
 
 class DataImport extends Component {
   static propTypes = {

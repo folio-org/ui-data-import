@@ -61,7 +61,7 @@ export class ReturnToAssignJobs extends Component {
     }
 
     this.setState({ deletingInProgress: false });
-  }
+  };
 
   render() {
     const { prohibitFilesUploading } = this.props;
@@ -89,13 +89,13 @@ export class ReturnToAssignJobs extends Component {
         <div className={css.buttonsContainer}>
           <Button
             buttonStyle="primary"
-            buttonClass={css.submitBtn}
+            buttonClass={css.submitButton}
             onClick={this.onResume}
           >
             <FormattedMessage id={this.getIntlId('resume')} />
           </Button>
           <Button
-            buttonClass={css.deleteBtn}
+            buttonClass={css.deleteButton}
             onClick={this.onDelete}
           >
             {deletingInProgress

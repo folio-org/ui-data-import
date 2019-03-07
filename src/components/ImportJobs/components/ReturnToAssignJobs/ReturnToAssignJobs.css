@@ -19,7 +19,7 @@
 .subMessage {
   margin-bottom: 40px;
   font-size: var(--font-size-x-large);
-  color: var(--color-text); 
+  color: var(--color-text);
 }
 
 .buttonsContainer {
@@ -28,8 +28,8 @@
   justify-content: stretch;
 }
 
-.submitBtn,
-.deleteBtn {
+.submitButton,
+.deleteButton {
   flex-shrink: 0;
   height: 40px;
   margin-left: 0 !important;

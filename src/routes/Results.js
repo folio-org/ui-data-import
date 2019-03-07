@@ -58,7 +58,6 @@ export class Results extends Component {
     return (
       <PaneMenu>
         <Button
-          id="clickable-new-12"
           href="#"
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0

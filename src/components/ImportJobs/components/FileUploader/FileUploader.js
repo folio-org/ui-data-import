@@ -17,7 +17,7 @@ const cx = classNames.bind(css);
 export const FileUploader = props => {
   const {
     title,
-    uploadBtnText,
+    uploadButtonText,
     errorMessage,
     accept,
     isDropZoneActive,
@@ -78,7 +78,7 @@ export const FileUploader = props => {
               buttonStyle="primary"
               onClick={open}
             >
-              {uploadBtnText}
+              {uploadButtonText}
             </Button>
           </div>
           <div hidden={isDropZoneActive}>
@@ -92,7 +92,7 @@ export const FileUploader = props => {
 
 FileUploader.propTypes = {
   title: PropTypes.node.isRequired,
-  uploadBtnText: PropTypes.node.isRequired,
+  uploadButtonText: PropTypes.node.isRequired,
   isDropZoneActive: PropTypes.bool.isRequired,
   onDrop: PropTypes.func.isRequired,
   onDragEnter: PropTypes.func,

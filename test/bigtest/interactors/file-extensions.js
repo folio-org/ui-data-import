@@ -12,7 +12,8 @@ import ConfirmationModalInteractor from '@folio/stripes-components/lib/Confirmat
   static defaultScope = '[data-test-file-extensions]';
 
   paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
-  restoreDefaultFileExtensionsBtn = new ButtonInteractor('[data-test-restore-default-file-extensions]');
+  restoreDefaultFileExtensionsButton = new ButtonInteractor('[data-test-restore-default-file-extensions-button]');
+  newFileExtensionButton = new ButtonInteractor('[data-test-new-file-extension-button]');
   list = new MultiColumnListInteractor('#file-extensions-list');
   confirmationModal = new ConfirmationModalInteractor('#restore-default-file-extensions-modal');
   callout = new CalloutInteractor();

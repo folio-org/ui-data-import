@@ -75,6 +75,7 @@ export class FileExtensions extends Component {
     mutator: PropTypes.shape({
       records: PropTypes.shape({
         POST: PropTypes.func.isRequired,
+        PUT: PropTypes.func.isRequired,
       }).isRequired,
       restoreDefaultFileExtensions: PropTypes.shape({
         POST: PropTypes.func.isRequired,
@@ -128,13 +129,24 @@ export class FileExtensions extends Component {
 
     return records.POST(record)
       .catch(error => {
-        this.showCreateRecordErrorMessage(error, record);
+        this.showUpdateRecordErrorMessage(error, record);
 
         throw error;
       });
   };
 
-  handleCreateRecordSuccess = (record, dispatch, props) => {
+  editRecord = record => {
+    const { mutator: { records } } = this.props;
+
+    return records.PUT(record)
+      .catch(error => {
+        this.showUpdateRecordErrorMessage(error, record, true);
+
+        throw error;
+      });
+  };
+
+  handleUpdateRecordSuccess = (record, dispatch, props) => {
     const { reset: resetForm } = props;
 
     resetForm();
@@ -147,13 +159,13 @@ export class FileExtensions extends Component {
     });
   };
 
-  async showCreateRecordErrorMessage(response, fileExtension) {
+  async showUpdateRecordErrorMessage(response, fileExtension, isEditMode = false) {
     const { extension } = fileExtension;
     const errorMsgIdEnding = await getXHRErrorMessage(response);
 
     const errorMsgId = errorMsgIdEnding
       ? `ui-data-import.validation.${errorMsgIdEnding}`
-      : 'ui-data-import.settings.fileExtension.create.error.network';
+      : `ui-data-import.settings.fileExtension.${isEditMode ? 'edit' : 'create'}.error.network`;
 
     const errorMessage = (
       <FormattedMessage
@@ -170,7 +182,7 @@ export class FileExtensions extends Component {
 
   renderActionMenu = menu => (
     <Button
-      data-test-restore-default-file-extensions
+      data-test-restore-default-file-extensions-button
       buttonStyle="dropdownItem"
       onClick={() => this.handleRestoreDefaultFileExtensions(menu)}
     >
@@ -226,7 +238,7 @@ export class FileExtensions extends Component {
     }
   };
 
-  createNewRecordContainerRef = ref => { this.newRecordContainer = ref; };
+  createFullWidthContainerRef = ref => { this.fullWidthContainer = ref; };
 
   createCalloutRef = ref => { this.callout = ref; };
 
@@ -275,18 +287,20 @@ export class FileExtensions extends Component {
                   updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
                 }}
                 columnWidths={this.columnWidths}
-                newRecordContainer={this.newRecordContainer}
+                fullWidthContainer={this.fullWidthContainer}
                 ViewRecordComponent={ViewFileExtension}
                 EditRecordComponent={FileExtensionForm}
                 newRecordInitialValues={newRecordInitialValues}
                 showSingleResult={showSingleResult}
                 onCreate={this.createRecord}
-                handleCreateSuccess={this.handleCreateRecordSuccess}
+                onEdit={this.editRecord}
+                handleCreateSuccess={this.handleUpdateRecordSuccess}
+                handleEditSuccess={this.handleUpdateRecordSuccess}
               />
             </div>
             <div
-              className={css.newRecordContainer}
-              ref={this.createNewRecordContainerRef}
+              className={css.fullWidthContainer}
+              ref={this.createFullWidthContainerRef}
             />
             <ConfirmationModal
               id="restore-default-file-extensions-modal"
