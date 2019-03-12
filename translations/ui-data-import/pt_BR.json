@@ -112,5 +112,6 @@
     "settings.fileExtensions.resetAll": "Reiniciar tudo",
     "modal.fileExtensions.reset.header": "Redefinir todos os mapeamentos de extensão de arquivo",
     "modal.fileExtensions.reset.message": "Isso redefinirá os mapeamentos de extensão de arquivo para os padrões do sistema",
-    "modal.fileExtensions.reset.actionButton": "Reiniciar tudo"
+    "modal.fileExtensions.reset.actionButton": "Reiniciar tudo",
+    "settings.fileExtension.edit.error.network": "Registro não foi atualizado: problema de comunicação com o servidor. Por favor, tente novamente"
 }
