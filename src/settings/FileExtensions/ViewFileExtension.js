@@ -24,6 +24,10 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import { Preloader } from '../../components/Preloader';
 import { EndOfItem } from '../../components/EndOfItem';
 import { FileExtensionForm } from '../../components/FileExtensionForm';
+import {
+  SYSTEM_USER_ID,
+  SYSTEM_USER_NAME,
+} from '../../utils/constants';
 
 import css from './FileExtensions.css';
 
@@ -182,8 +186,9 @@ export class ViewFileExtension extends Component {
         <Row>
           <Col xs={12}>
             <this.connectedViewMetaData
-              key={`${record.metadata.createdByUserId}${record.metadata.updatedByUserId}`}
               metadata={record.metadata}
+              systemId={SYSTEM_USER_ID}
+              systemUser={SYSTEM_USER_NAME}
             />
           </Col>
         </Row>

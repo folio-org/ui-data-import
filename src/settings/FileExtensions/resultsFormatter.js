@@ -4,6 +4,8 @@ import { FormattedDate } from 'react-intl';
 import { Icon } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
+import { SYSTEM_USER_NAME } from '../../utils/constants';
+
 import css from './FileExtensions.css';
 
 const formatUserName = userInfo => {
@@ -13,7 +15,7 @@ const formatUserName = userInfo => {
     userName = '',
   } = userInfo;
 
-  if (userName === 'System') {
+  if (userName === SYSTEM_USER_NAME) {
     return userName;
   }
 
