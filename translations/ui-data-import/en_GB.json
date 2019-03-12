@@ -112,5 +112,6 @@
     "settings.fileExtensions.resetAll": "Reset all",
     "modal.fileExtensions.reset.header": "Reset all file extension mappings",
     "modal.fileExtensions.reset.message": "This will reset the file extension mappings to the system defaults",
-    "modal.fileExtensions.reset.actionButton": "Reset all"
+    "modal.fileExtensions.reset.actionButton": "Reset all",
+    "settings.fileExtension.edit.error.network": "Record not updated: Communication problem with server. Please try again"
 }
