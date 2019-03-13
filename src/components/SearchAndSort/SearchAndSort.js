@@ -150,6 +150,10 @@ export class SearchAndSort extends Component {
     this.connectedViewRecord = stripes.connect(ViewRecordComponent);
   }
 
+  componentDidMount() {
+    this.setInitialSortQueryParam();
+  }
+
   componentWillReceiveProps(nextProps) {  // eslint-disable-line react/no-deprecated
     const { stripes: { logger } } = this.props;
 
@@ -198,6 +202,18 @@ export class SearchAndSort extends Component {
     const recordId = match && match[1];
 
     return { id: recordId };
+  }
+
+  setInitialSortQueryParam() {
+    const {
+      defaultSort,
+      location: { search },
+    } = this.props;
+
+    const queryParams = queryString.parse(search);
+    const sortOrder = queryParams.sort || defaultSort;
+
+    this.transitionToParams({ sort: sortOrder });
   }
 
   onChangeSearch = e => {
