@@ -196,7 +196,10 @@ class ImportJobsComponent extends Component {
             message={invalidFilesMessage}
             confirmLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.actionButton" />}
             cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
-            onConfirm={openDialogWindow}
+            onConfirm={() => {
+              this.hideFilesExtensionsModal();
+              openDialogWindow();
+            }}
             onCancel={this.hideFilesExtensionsModal}
           />
         )}
