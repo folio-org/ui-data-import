@@ -106,6 +106,7 @@ export class SearchAndSort extends Component {
     onComponentWillUnmount: PropTypes.func,
     onCreate: PropTypes.func,
     onEdit: PropTypes.func,
+    onDelete: PropTypes.func,
     handleCreateSuccess: PropTypes.func,
     onSelectRow: PropTypes.func,
     path: PropTypes.string,
@@ -128,6 +129,7 @@ export class SearchAndSort extends Component {
     onChangeIndex: noop,
     onCreate: noop,
     onEdit: noop,
+    onDelete: noop,
     handleCreateSuccess: noop,
     massageNewRecord: noop,
     defaultSort: '',
@@ -339,6 +341,12 @@ export class SearchAndSort extends Component {
     return onEdit(record);
   };
 
+  deleteRecord = record => {
+    const { onDelete } = this.props;
+
+    return onDelete(record);
+  };
+
   closeNewRecord = e => {
     if (e) {
       e.preventDefault();
@@ -455,6 +463,7 @@ export class SearchAndSort extends Component {
               onOpenEdit={this.onOpenEditRecord}
               onCloseEdit={this.onCloseEditRecord}
               onEdit={this.editRecord}
+              onDelete={this.deleteRecord}
               onEditSuccess={handleEditSuccess}
               {...props}
               {...detailProps}

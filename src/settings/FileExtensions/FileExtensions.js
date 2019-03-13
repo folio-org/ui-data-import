@@ -76,6 +76,7 @@ export class FileExtensions extends Component {
       records: PropTypes.shape({
         POST: PropTypes.func.isRequired,
         PUT: PropTypes.func.isRequired,
+        DELETE: PropTypes.func.isRequired,
       }).isRequired,
       restoreDefaultFileExtensions: PropTypes.shape({
         POST: PropTypes.func.isRequired,
@@ -144,6 +145,33 @@ export class FileExtensions extends Component {
 
         throw error;
       });
+  };
+
+  deleteRecord = record => {
+    const { mutator: { records } } = this.props;
+    const { showDeleteRecordMessage } = this;
+
+    return records.DELETE(record)
+      .then(() => {
+        showDeleteRecordMessage(record);
+      })
+      .catch(error => {
+        this.showUpdateRecordErrorMessage(error, record, true);
+        throw error;
+      });
+  };
+
+  showDeleteRecordMessage = record => {
+    const message = (
+      <FormattedMessage
+        id="ui-data-import.settings.fileExtension.delete.confirmation"
+        values={{ extension: record.extension }}
+      />
+    );
+
+    this.callout.sendCallout({
+      message,
+    });
   };
 
   handleUpdateRecordSuccess = (record, dispatch, props) => {
@@ -294,6 +322,7 @@ export class FileExtensions extends Component {
                 showSingleResult={showSingleResult}
                 onCreate={this.createRecord}
                 onEdit={this.editRecord}
+                onDelete={this.deleteRecord}
                 handleCreateSuccess={this.handleUpdateRecordSuccess}
                 handleEditSuccess={this.handleUpdateRecordSuccess}
               />

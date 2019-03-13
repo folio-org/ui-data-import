@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
@@ -14,6 +17,7 @@ import {
   Button,
   PaneMenu,
   Layer,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import {
   TitleManager,
@@ -74,6 +78,7 @@ export class ViewFileExtension extends Component {
     onOpenEdit: PropTypes.func.isRequired,
     onCloseEdit: PropTypes.func.isRequired,
     editContainer: PropTypes.instanceOf(Element),
+    onDelete: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -83,6 +88,10 @@ export class ViewFileExtension extends Component {
 
     this.connectedViewMetaData = stripes.connect(ViewMetaData);
   }
+
+  state = {
+    showDeleteConfirmation: false,
+  };
 
   get fileExtensionData() {
     const {
@@ -140,16 +149,35 @@ export class ViewFileExtension extends Component {
 
   renderActionMenu = menu => {
     return (
-      <Button
-        data-test-edit-file-extension-button
-        buttonStyle="dropdownItem"
-        onClick={() => this.handleOpenEdit(menu)}
-      >
-        <Icon icon="edit">
-          <FormattedMessage id="ui-data-import.edit" />
-        </Icon>
-      </Button>
+      <Fragment>
+        <Button
+          data-test-user-instance-edit-action
+          buttonStyle="dropdownItem"
+          onClick={() => this.handleOpenEdit(menu)}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-users.edit" />
+          </Icon>
+        </Button>
+        <Button
+          data-test-delete-user-form-action
+          buttonStyle="dropdownItem"
+          onClick={this.showDeleteExtensionModal}
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-data-import.delete" />
+          </Icon>
+        </Button>
+      </Fragment>
     );
+  };
+
+  showDeleteExtensionModal = () => {
+    this.setState({ showDeleteConfirmation: true });
+  };
+
+  hideDeleteExtensionModal = () => {
+    this.setState({ showDeleteConfirmation: false });
   };
 
   handleOpenEdit = menu => {
@@ -160,7 +188,16 @@ export class ViewFileExtension extends Component {
   };
 
   renderFileExtension(record) {
-    const { onClose } = this.props;
+    const {
+      onClose,
+      onDelete,
+    } = this.props;
+    const { showDeleteConfirmation } = this.state;
+
+    function deleteRow() {
+      onDelete(record);
+      this.hideDeleteExtensionModal();
+    }
 
     return (
       <Pane
@@ -233,6 +270,20 @@ export class ViewFileExtension extends Component {
         <EndOfItem
           className={css.endOfRecord}
           title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+        />
+        <ConfirmationModal
+          open={showDeleteConfirmation}
+          heading={
+            <FormattedMessage
+              id="ui-data-import.settings.modal.fileExtension.delete.title"
+              values={{ extension: record.extension }}
+            />
+          }
+          message={<FormattedMessage id="ui-data-import.settings.fileExtension.delete.promt" />}
+          confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.modal.cancel" />}
+          onConfirm={deleteRow}
+          onCancel={this.hideDeleteExtensionModal}
         />
       </Pane>
     );
