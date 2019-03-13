@@ -19,7 +19,10 @@ import css from './FileItem.css';
 const Loading = () => (
   <FormattedMessage id="ui-data-import.loading">
     {label => (
-      <span className={css.icon}>
+      <span
+        data-test-preloader
+        className={css.icon}
+      >
         <Icon
           icon="spinner-ellipsis"
           size="small"
@@ -55,7 +58,10 @@ export const getFileItemMeta = props => {
         ...defaultFileMeta,
         fileWrapperClassName: css.fileItemUploading,
         renderProgress: () => (
-          <div className={css.progressMessage}>
+          <div
+            data-test-progress
+            className={css.progressMessage}
+          >
             <FormattedMessage id="ui-data-import.waitingForUpload" />
           </div>
         ),
@@ -68,7 +74,10 @@ export const getFileItemMeta = props => {
         renderProgress: () => {
           if (isSnapshotMode) {
             return (
-              <div className={css.progressMessage}>
+              <div
+                data-test-progress
+                className={css.progressMessage}
+              >
                 <FormattedMessage id="ui-data-import.uploadingMessage" />
               </div>
             );
@@ -100,6 +109,7 @@ export const getFileItemMeta = props => {
             <FormattedMessage id="ui-data-import.delete">
               {label => (
                 <IconButton
+                  data-test-delete-button
                   icon="trash"
                   size="small"
                   ariaLabel={label}
@@ -124,7 +134,7 @@ export const getFileItemMeta = props => {
               <FormattedMessage id={`ui-data-import.${errorMsgTranslationID}`}>
                 {content => (
                   <Fragment>
-                    <Icon icon="exclamation-circle" /> {content}
+                    <Icon icon="exclamation-circle" /> <span data-test-error-msg>{content}</span>
                   </Fragment>
                 )}
               </FormattedMessage>
@@ -134,6 +144,7 @@ export const getFileItemMeta = props => {
                 <FormattedMessage id="ui-data-import.delete">
                   {label => (
                     <IconButton
+                      data-test-delete-button
                       icon="times"
                       size="small"
                       ariaLabel={label}
@@ -164,6 +175,7 @@ export const getFileItemMeta = props => {
             {!loading
               ? (
                 <button
+                  data-test-undo-button
                   type="button"
                   className={classNames(css.icon, css.undoIcon)}
                   onClick={undoDeleteFile}
@@ -177,6 +189,7 @@ export const getFileItemMeta = props => {
         ),
       };
     }
+    /* istanbul ignore next */
     default: {
       return defaultFileMeta;
     }

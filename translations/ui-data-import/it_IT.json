@@ -25,9 +25,9 @@
     "noPreviewsJobsMessage": "No previews to show",
     "noRunningJobsMessage": "No running jobs to show",
     "loading": "Loading",
-    "meta.title": "Data Import",
+    "meta.title": "Importazione dei dati",
     "today": "today",
-    "settings.index.paneTitle": "Data Import",
+    "settings.index.paneTitle": "Importazione dei dati",
     "settings.general": "General",
     "settings.general.message": "These are your general app settings.",
     "settings.some-feature": "Some Feature",
@@ -105,5 +105,13 @@
     "error.network": "New record not created: Communication problem with server. Please try again",
     "waitingForUpload": "Waiting for upload",
     "edit": "Edit",
-    "endOfRecord": "End of record"
+    "endOfRecord": "End of record",
+    "settings.fileExtension.create.error.network": "New record not created: Communication problem with server. Please try again",
+    "settings.fileExtension.reset.error.network": "Reset was not successful: Communication problem with server. Please try again",
+    "settings.fileExtensions.reset": "Reset all extension mappings to system defaults",
+    "settings.fileExtensions.resetAll": "Reset all",
+    "modal.fileExtensions.reset.header": "Reset all file extension mappings",
+    "modal.fileExtensions.reset.message": "This will reset the file extension mappings to the system defaults",
+    "modal.fileExtensions.reset.actionButton": "Reset all",
+    "settings.fileExtension.edit.error.network": "Record not updated: Communication problem with server. Please try again"
 }

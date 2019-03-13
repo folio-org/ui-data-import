@@ -16,7 +16,8 @@ import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 
 import css from './components/FileUploader/FileUploader.css';
 
-class ImportJobsComponent extends Component {
+@withRouter
+export class ImportJobs extends Component {
   static propTypes = {
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
@@ -161,7 +162,7 @@ class ImportJobsComponent extends Component {
 
     const titleMessageIdEnding = isDropZoneActive ? 'activeUploadTitle' : 'uploadTitle';
     const titleText = this.getMessageById(titleMessageIdEnding);
-    const uploadBtnText = this.getMessageById('uploadBtnText');
+    const uploadButtonText = this.getMessageById('uploadBtnText');
     const errorMessage = showErrorMessage && this.getMessageById('importJobs.errorMessage');
 
     const invalidFilesMessage = (
@@ -180,7 +181,7 @@ class ImportJobsComponent extends Component {
     return (
       <FileUploader
         title={titleText}
-        uploadBtnText={uploadBtnText}
+        uploadButtonText={uploadButtonText}
         errorMessage={errorMessage}
         isDropZoneActive={isDropZoneActive}
         className={css.upload}
@@ -191,6 +192,7 @@ class ImportJobsComponent extends Component {
       >
         {openDialogWindow => (
           <ConfirmationModal
+            id="file-extensions-modal"
             open={filesExtensionsModalOpen}
             heading={<FormattedMessage id="ui-data-import.modal.fileExtensions.header" />}
             message={invalidFilesMessage}
@@ -207,5 +209,3 @@ class ImportJobsComponent extends Component {
     );
   }
 }
-
-export const ImportJobs = withRouter(ImportJobsComponent);

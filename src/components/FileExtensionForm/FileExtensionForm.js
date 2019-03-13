@@ -30,7 +30,12 @@ import css from './FileExtensionForm.css';
 
 const formName = 'fileExtensionForm';
 
-class FileExtensionFormComponent extends Component {
+@stripesForm({
+  form: formName,
+  navigationCheck: true,
+  enableReinitialize: true,
+})
+export class FileExtensionForm extends Component {
   static propTypes = {
     pristine: PropTypes.bool.isRequired,
     submitting: PropTypes.bool.isRequired,
@@ -94,18 +99,18 @@ class FileExtensionFormComponent extends Component {
     } = this.props;
 
     const action = isEditMode ? 'save' : 'create';
-    const btnMessageIdEnding = action === 'create' ? 'settings.fileExtension.create' : action;
+    const buttonMessageIdEnding = action === 'create' ? 'settings.fileExtension.create' : action;
 
     return (
       <PaneMenu>
         <Button
-          id={`${action}-file-extension`}
+          data-test-update-file-extension-button
           type="submit"
           disabled={pristine || submitting}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
         >
-          <FormattedMessage id={`ui-data-import.${btnMessageIdEnding}`} />
+          <FormattedMessage id={`ui-data-import.${buttonMessageIdEnding}`} />
         </Button>
       </PaneMenu>
     );
@@ -154,17 +159,19 @@ class FileExtensionFormComponent extends Component {
       initialValues,
       handleSubmit,
     } = this.props;
-
     const { dataTypesRequired } = this.state;
 
     const isEditMode = Boolean(initialValues.id);
     const paneTitle = !isEditMode
       ? <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />
-      : 'Edit';
-
+      : (
+        <FormattedMessage id="ui-data-import.edit">
+          {txt => `${txt} ${initialValues.extension}`}
+        </FormattedMessage>
+      );
     const headLine = !isEditMode
       ? <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />
-      : 'Extension';
+      : initialValues.extension;
 
     return (
       <form
@@ -238,11 +245,3 @@ class FileExtensionFormComponent extends Component {
     );
   }
 }
-
-const FileExtensionForm = stripesForm({
-  form: formName,
-  navigationCheck: true,
-  enableReinitialize: true,
-})(FileExtensionFormComponent);
-
-export { FileExtensionForm };

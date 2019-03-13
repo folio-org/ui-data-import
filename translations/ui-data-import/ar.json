@@ -105,5 +105,13 @@
     "error.network": "لم يتم إنشاء التسجيلة الجديدة: توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة.",
     "waitingForUpload": "في انتظار التحميل",
     "edit": "تحرير",
-    "endOfRecord": "نهاية التسجيلة"
+    "endOfRecord": "نهاية التسجيلة",
+    "settings.fileExtension.create.error.network": "لم يتم إنشاء التسجيلة الجديدة: توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة.",
+    "settings.fileExtension.reset.error.network": "لم تنجح إعادة التعيين: توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة مرة أخرى.",
+    "settings.fileExtensions.reset": "إعادة تعيين كل تخطيطات الامتدادات إلى إعدادات النظام الافتراضية",
+    "settings.fileExtensions.resetAll": "إعادة تعيين الكل",
+    "modal.fileExtensions.reset.header": "إعادة تعيين كل تخطيطات امتداد الملف",
+    "modal.fileExtensions.reset.message": "سيؤدي ذلك إلى إعادة تعيين تخطيطات امتداد الملف إلى إعدادات النظام الافتراضية",
+    "modal.fileExtensions.reset.actionButton": "إعادة تعيين الكل",
+    "settings.fileExtension.edit.error.network": "لم يتم تحديث التسجيلة: توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة."
 }

@@ -1,6 +1,8 @@
+import { SYSTEM_USER_NAME } from '../../../../src/utils/constants';
+
 export default server => {
-  server.create('file-extension');
-  server.create('file-extension', { userInfo: { userName: 'System' } });
+  server.create('file-extension', { importBlocked: false });
+  server.create('file-extension', { userInfo: { userName: SYSTEM_USER_NAME } });
   server.create('file-extension', {
     dataTypes: [],
     userInfo: { lastName: 'Doe' },
@@ -13,5 +15,18 @@ export default server => {
     const record = server.create('file-extension', params);
 
     return record.attrs;
+  });
+
+  server.put('/data-import/fileExtensions/:id', (schema, request) => {
+    const {
+      params: { id },
+      requestBody,
+    } = request;
+    const fileExtensionModel = schema.fileExtensions.find(id);
+    const updatedFileExtension = JSON.parse(requestBody);
+
+    fileExtensionModel.update({ ...updatedFileExtension });
+
+    return fileExtensionModel.attrs;
   });
 };

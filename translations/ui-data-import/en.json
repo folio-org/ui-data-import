@@ -71,6 +71,7 @@
   "settings.fileExtension.newMapping": "New file extension mapping",
   "settings.fileExtension.create": "Create file extension",
   "settings.fileExtension.create.error.network": "New record not created: Communication problem with server. Please try again",
+  "settings.fileExtension.edit.error.network": "Record not updated: Communication problem with server. Please try again",
   "settings.fileExtension.reset.error.network": "Reset was not successful: Communication problem with server. Please try again",
   "settings.fileExtensions.title": "File extensions",
   "settings.fileExtensions.reset": "Reset all extension mappings to system defaults",

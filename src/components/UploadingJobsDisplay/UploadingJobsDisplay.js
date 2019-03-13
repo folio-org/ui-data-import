@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import {
   forEach,
   isEmpty,
+  reduce,
   map,
   omit,
   some,
@@ -25,7 +26,6 @@ import { Preloader } from '../Preloader';
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 import { FileItem } from './components';
 import {
-  compose,
   createUrl,
   createOkapiHeaders,
   xhrAddHeaders,
@@ -36,12 +36,15 @@ import {
 } from '../../utils/constants';
 import * as API from './utils/upload';
 
-class UploadingJobsDisplayComponent extends Component {
+@withRouter
+@withStripes
+export class UploadingJobsDisplay extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     history: PropTypes.shape({
       block: PropTypes.func.isRequired,
       push: PropTypes.func.isRequired,
+      replace: PropTypes.func.isRequired,
     }).isRequired,
     location: PropTypes.shape({
       state: PropTypes.shape({
@@ -60,26 +63,15 @@ class UploadingJobsDisplayComponent extends Component {
   static getUploadFilesErrorMessageID(msg) {
     const defaultErrorId = 'upload.invalid';
 
-    return UploadingJobsDisplayComponent.knownErrorsIDs.includes(msg) ? msg : defaultErrorId;
+    return UploadingJobsDisplay.knownErrorsIDs.includes(msg) ? msg : defaultErrorId;
   }
 
   constructor(props, context) {
     super(props, context);
 
-    const {
-      stripes: { okapi },
-      location: { state = {} },
-    } = this.props;
+    const { stripes: { okapi } } = this.props;
 
-    const { files } = state;
     const { url: host } = okapi;
-
-    this.state = {
-      hasLoaded: false,
-      renderLeaveModal: false,
-      files: this.prepareFiles(files),
-      isSnapshotMode: false,
-    };
 
     this.uploadDefinitionUrl = createUrl(`${host}/data-import/uploadDefinitions`);
     this.deleteFileTimeouts = {};
@@ -88,11 +80,17 @@ class UploadingJobsDisplayComponent extends Component {
       [FILE_STATUSES.ERROR]: this.deleteFileAPI,
       [FILE_STATUSES.ERROR_DEFINITION]: this.deleteFileFromState,
     };
+
+    this.state = {
+      hasLoaded: false,
+      renderLeaveModal: false,
+    };
   }
 
   async componentDidMount() {
     this.mounted = true;
 
+    this.mapFilesToState();
     this.uploadJobs();
     this.setPageLeaveHandler();
   }
@@ -108,6 +106,24 @@ class UploadingJobsDisplayComponent extends Component {
     return new Promise(resolve => {
       this.setState(state, resolve);
     });
+  }
+
+  mapFilesToState() {
+    const {
+      history,
+      location: { state = {} },
+    } = this.props;
+
+    const { files } = state;
+
+    // in snapshot mode component renders files from upload definition if any
+    // otherwise component renders files that are going to be uploaded
+    this.isSnapshotMode = isEmpty(files);
+
+    this.setState({ files: this.prepareFiles(files) });
+
+    // clear history state to prevent incorrect determination of snapshot mode
+    history.replace({ state: {} });
   }
 
   // prevent from leaving the page in case if uploading is in progress
@@ -164,10 +180,7 @@ class UploadingJobsDisplayComponent extends Component {
 
     const files = this.prepareFiles(fileDefinitions);
 
-    this.setState({
-      files,
-      isSnapshotMode: true,
-    });
+    this.setState({ files });
   }
 
   async fetchUploadDefinition() {
@@ -181,12 +194,6 @@ class UploadingJobsDisplayComponent extends Component {
       // eslint-disable-next-line no-console
       console.error(error);
     }
-  }
-
-  get isSnapshotMode() {
-    const { uploadDefinition } = this.context;
-
-    return !isEmpty(uploadDefinition);
   }
 
   async uploadJobs() {
@@ -297,7 +304,7 @@ class UploadingJobsDisplayComponent extends Component {
           const {
             status,
             readyState,
-            response,
+            responseText,
           } = this.currentFileUploadXhr;
 
           if (readyState !== 4) {
@@ -305,7 +312,7 @@ class UploadingJobsDisplayComponent extends Component {
           }
 
           try {
-            const parsedResponse = JSON.parse(response);
+            const parsedResponse = JSON.parse(responseText);
 
             if (status === 200) {
               resolve(parsedResponse);
@@ -485,36 +492,31 @@ class UploadingJobsDisplayComponent extends Component {
   };
 
   handleAllFilesUploadFail(errMsg) {
-    const errorMsgTranslationID = UploadingJobsDisplayComponent.getUploadFilesErrorMessageID(errMsg);
+    const errorMsgTranslationID = UploadingJobsDisplay.getUploadFilesErrorMessageID(errMsg);
 
     this.setState(state => {
-      const files = Object.keys(state.files)
-        .reduce((res, fileKey) => {
-          const updatedFile = {
-            ...state.files[fileKey],
-            status: FILE_STATUSES.ERROR_DEFINITION,
-            errorMsgTranslationID,
-          };
-
-          return {
-            ...res,
-            [fileKey]: updatedFile,
-          };
-        }, {});
+      const files = reduce(state.files, (result, file, fileKey) => ({
+        ...result,
+        [fileKey]: {
+          ...file,
+          status: FILE_STATUSES.ERROR_DEFINITION,
+          errorMsgTranslationID,
+        },
+      }), {});
 
       return { files };
     });
   }
 
   renderFiles() {
-    const {
-      files,
-      isSnapshotMode,
-    } = this.state;
+    const { files } = this.state;
 
     if (isEmpty(files)) {
       return (
-        <Layout className="textCentered">
+        <Layout
+          data-test-empty-msg
+          className="textCentered"
+        >
           <FormattedMessage id="ui-data-import.noUploadedFiles" />
         </Layout>
       );
@@ -533,7 +535,7 @@ class UploadingJobsDisplayComponent extends Component {
 
       return (
         <FileItem
-          isSnapshotMode={isSnapshotMode}
+          isSnapshotMode={this.isSnapshotMode}
           key={fileKey}
           uiKey={fileKey}
           status={status}
@@ -593,6 +595,7 @@ class UploadingJobsDisplayComponent extends Component {
         <EndOfItem />
         <Callout ref={this.createCalloutRef} />
         <ConfirmationModal
+          id="leave-page-modal"
           open={renderLeaveModal}
           heading={<FormattedMessage id="ui-data-import.modal.leavePage.header" />}
           message={leavePageMessage}
@@ -605,8 +608,3 @@ class UploadingJobsDisplayComponent extends Component {
     );
   }
 }
-
-export const UploadingJobsDisplay = compose(
-  withRouter,
-  withStripes,
-)(UploadingJobsDisplayComponent);

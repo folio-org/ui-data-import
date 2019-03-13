@@ -21,7 +21,8 @@ import { jobPropTypes } from './jobPropTypes';
 
 import css from './Job.css';
 
-class JobComponent extends Component {
+@injectIntl
+export class Job extends Component {
   static propTypes = {
     job: jobPropTypes.isRequired,
     intl: intlShape.isRequired,
@@ -133,5 +134,3 @@ class JobComponent extends Component {
     );
   }
 }
-
-export const Job = injectIntl(JobComponent);

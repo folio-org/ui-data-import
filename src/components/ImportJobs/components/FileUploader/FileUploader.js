@@ -14,10 +14,10 @@ import css from './FileUploader.css';
 
 const cx = classNames.bind(css);
 
-const FileUploader = props => {
+export const FileUploader = props => {
   const {
     title,
-    uploadBtnText,
+    uploadButtonText,
     errorMessage,
     accept,
     isDropZoneActive,
@@ -78,7 +78,7 @@ const FileUploader = props => {
               buttonStyle="primary"
               onClick={open}
             >
-              {uploadBtnText}
+              {uploadButtonText}
             </Button>
           </div>
           <div hidden={isDropZoneActive}>
@@ -92,7 +92,7 @@ const FileUploader = props => {
 
 FileUploader.propTypes = {
   title: PropTypes.node.isRequired,
-  uploadBtnText: PropTypes.node.isRequired,
+  uploadButtonText: PropTypes.node.isRequired,
   isDropZoneActive: PropTypes.bool.isRequired,
   onDrop: PropTypes.func.isRequired,
   onDragEnter: PropTypes.func,
@@ -120,5 +120,3 @@ FileUploader.propTypes = {
 FileUploader.defaultProps = {
   className: defaultStyles.defaultFileUploader,
 };
-
-export { FileUploader };

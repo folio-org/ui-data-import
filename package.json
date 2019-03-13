@@ -32,6 +32,7 @@
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
     "eslint": "^5.5.0",
+    "eslint-plugin-babel": "^5.3.0",
     "mocha": "^5.2.0",
     "query-string": "^5.0.0",
     "react": "^16.5.0",
@@ -117,6 +118,7 @@
           "settings.enabled",
           "data-import.fileExtensions.get",
           "data-import.fileExtensions.post",
+          "data-import.fileExtensions.put",
           "data-import.fileExtensions.default"
         ],
         "visible": true

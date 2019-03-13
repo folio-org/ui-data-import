@@ -52,7 +52,7 @@ describe('File extensions has restore default file extensions button which', () 
   });
 
   it('is not visible when pane dropdown is closed', () => {
-    expect(fileExtensions.restoreDefaultFileExtensionsBtn.isVisible).to.be.false;
+    expect(fileExtensions.restoreDefaultFileExtensionsButton.isVisible).to.be.false;
   });
 
   describe('is visible', () => {
@@ -61,7 +61,7 @@ describe('File extensions has restore default file extensions button which', () 
     });
 
     it('when pane dropdown is opened', () => {
-      expect(fileExtensions.restoreDefaultFileExtensionsBtn.isVisible).to.be.true;
+      expect(fileExtensions.restoreDefaultFileExtensionsButton.isVisible).to.be.true;
     });
   });
 });
@@ -80,7 +80,7 @@ describe('Restore default file extensions confirmation modal', () => {
   describe('is visible', () => {
     beforeEach(async function () {
       await fileExtensions.expandPaneHeaderDropdown();
-      await fileExtensions.restoreDefaultFileExtensionsBtn.click();
+      await fileExtensions.restoreDefaultFileExtensionsButton.click();
     });
 
     it('when restore default file extensions button is not clicked', () => {
@@ -91,7 +91,7 @@ describe('Restore default file extensions confirmation modal', () => {
   describe('disappears', () => {
     beforeEach(async function () {
       await fileExtensions.expandPaneHeaderDropdown();
-      await fileExtensions.restoreDefaultFileExtensionsBtn.click();
+      await fileExtensions.restoreDefaultFileExtensionsButton.click();
       await fileExtensions.confirmationModal.cancelButton.click();
     });
 
@@ -103,7 +103,7 @@ describe('Restore default file extensions confirmation modal', () => {
   describe('upon click on confirm button initiate the restoring process and in case of network error', () => {
     beforeEach(async function () {
       await fileExtensions.expandPaneHeaderDropdown();
-      await fileExtensions.restoreDefaultFileExtensionsBtn.click();
+      await fileExtensions.restoreDefaultFileExtensionsButton.click();
       await fileExtensions.confirmationModal.confirmButton.click();
     });
 
@@ -127,7 +127,7 @@ describe('Restore default file extension confirmation modal', () => {
   describe('upon click on confirm button initiate the restoring process and in case of success', () => {
     beforeEach(async function () {
       await fileExtensions.expandPaneHeaderDropdown();
-      await fileExtensions.restoreDefaultFileExtensionsBtn.click();
+      await fileExtensions.restoreDefaultFileExtensionsButton.click();
       await fileExtensions.confirmationModal.confirmButton.click();
     });
 
@@ -155,7 +155,7 @@ describe('Restore default file extensions confirmation modal', () => {
   describe('upon click on confirm button twice only initiate the restoring process once and in case of success', () => {
     beforeEach(async function () {
       await fileExtensions.expandPaneHeaderDropdown();
-      await fileExtensions.restoreDefaultFileExtensionsBtn.click();
+      await fileExtensions.restoreDefaultFileExtensionsButton.click();
       await fileExtensions.confirmationModal.confirmButton.click();
       await fileExtensions.confirmationModal.confirmButton.click();
     });

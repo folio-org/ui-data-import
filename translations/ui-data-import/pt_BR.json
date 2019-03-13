@@ -105,5 +105,13 @@
     "error.network": "Novo registro não foi criado: problema de comunicação com o servidor. Por favor, tente novamente",
     "waitingForUpload": "Aguardando pelo upload",
     "edit": "Editar",
-    "endOfRecord": "Fim do registro"
+    "endOfRecord": "Fim do registro",
+    "settings.fileExtension.create.error.network": "Novo registro não foi criado: problema de comunicação com o servidor. Por favor, tente novamente",
+    "settings.fileExtension.reset.error.network": "A reinicialização não foi bem-sucedida: problema de comunicação com o servidor. Por favor, tente novamente",
+    "settings.fileExtensions.reset": "Redefinir todos os mapeamentos de extensão para os padrões do sistema",
+    "settings.fileExtensions.resetAll": "Reiniciar tudo",
+    "modal.fileExtensions.reset.header": "Redefinir todos os mapeamentos de extensão de arquivo",
+    "modal.fileExtensions.reset.message": "Isso redefinirá os mapeamentos de extensão de arquivo para os padrões do sistema",
+    "modal.fileExtensions.reset.actionButton": "Reiniciar tudo",
+    "settings.fileExtension.edit.error.network": "Registro não foi atualizado: problema de comunicação com o servidor. Por favor, tente novamente"
 }

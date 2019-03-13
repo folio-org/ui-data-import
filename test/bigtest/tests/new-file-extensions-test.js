@@ -8,7 +8,8 @@ import {
 
 import { setupApplication } from '../helpers';
 import {
-  newFileExtensionForm,
+  fileExtensions,
+  fileExtensionForm,
   fileExtensionDetails,
 } from '../interactors';
 
@@ -20,20 +21,26 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
   } = responseData;
 
   server.post('/data-import/fileExtensions', () => new Response(status, headers, response));
-  await newFileExtensionForm.extensionField.fillAndBlur('.csv');
-  await newFileExtensionForm.blockedField.clickAndBlur();
-  await newFileExtensionForm.submitFormBtn.click();
+  await fileExtensionForm.extensionField.fillAndBlur('.csv');
+  await fileExtensionForm.blockedField.clickAndBlur();
+  await fileExtensionForm.submitFormButton.click();
 }
 
-describe('Create new file extension form', () => {
+describe('File extension form', () => {
   setupApplication();
 
   beforeEach(function () {
-    this.visit('/settings/data-import/file-extensions?layer=create');
+    this.visit('/settings/data-import/file-extensions');
   });
 
-  it('renders', () => {
-    expect(newFileExtensionForm.isPresent).to.be.true;
+  describe('appears', () => {
+    beforeEach(async function () {
+      await fileExtensions.newFileExtensionButton.click();
+    });
+
+    it('upon click on new file extension button', () => {
+      expect(fileExtensionForm.isPresent).to.be.true;
+    });
   });
 });
 
@@ -42,129 +49,129 @@ describe('File extension form', () => {
 
   beforeEach(async function () {
     this.visit('/settings/data-import/file-extensions?layer=create');
-    await newFileExtensionForm.whenLoaded();
+    await fileExtensionForm.whenLoaded();
   });
 
   describe('when file extension field', () => {
     describe('has leading or trailing spaces', () => {
       beforeEach(async function () {
-        await newFileExtensionForm.extensionField.fillAndBlur('  .csv  ');
-        await newFileExtensionForm.submitFormBtn.click();
+        await fileExtensionForm.extensionField.fillAndBlur('  .csv  ');
+        await fileExtensionForm.submitFormButton.click();
       });
 
       it('then the error message appears', () => {
-        expect(newFileExtensionForm.extensionField.inputError).to.be.true;
+        expect(fileExtensionForm.extensionField.inputError).to.be.true;
       });
     });
 
     describe('has not leading dot', () => {
       beforeEach(async function () {
-        await newFileExtensionForm.extensionField.fillAndBlur('csv');
-        await newFileExtensionForm.submitFormBtn.click();
+        await fileExtensionForm.extensionField.fillAndBlur('csv');
+        await fileExtensionForm.submitFormButton.click();
       });
 
       it('then the error message appears', () => {
-        expect(newFileExtensionForm.extensionField.inputError).to.be.true;
+        expect(fileExtensionForm.extensionField.inputError).to.be.true;
       });
     });
 
     describe('is valid', () => {
       beforeEach(async function () {
-        await newFileExtensionForm.extensionField.fillAndBlur('.csv');
-        await newFileExtensionForm.submitFormBtn.click();
+        await fileExtensionForm.extensionField.fillAndBlur('.csv');
+        await fileExtensionForm.submitFormButton.click();
       });
 
       it('then the error message does not appear', () => {
-        expect(newFileExtensionForm.extensionField.inputError).to.be.false;
+        expect(fileExtensionForm.extensionField.inputError).to.be.false;
       });
     });
   });
 
   describe('has cancel creation file extension button which', () => {
     it('is not visible when pane dropdown is closed', () => {
-      expect(newFileExtensionForm.paneHeaderCancelBtn.isVisible).to.be.false;
+      expect(fileExtensionForm.paneHeaderCancelButton.isVisible).to.be.false;
     });
 
     describe('is visible', () => {
       beforeEach(async function () {
-        await newFileExtensionForm.expandPaneHeaderDropdown();
+        await fileExtensionForm.expandPaneHeaderDropdown();
       });
 
       it('when pane dropdown is opened', () => {
-        expect(newFileExtensionForm.paneHeaderCancelBtn.isVisible).to.be.true;
+        expect(fileExtensionForm.paneHeaderCancelButton.isVisible).to.be.true;
       });
     });
 
     describe('cancels creation of file extension', () => {
       beforeEach(async function () {
-        await newFileExtensionForm.expandPaneHeaderDropdown();
-        await newFileExtensionForm.paneHeaderCancelBtn.click();
+        await fileExtensionForm.expandPaneHeaderDropdown();
+        await fileExtensionForm.paneHeaderCancelButton.click();
       });
 
       it('when clicked', () => {
-        expect(newFileExtensionForm.isPresent).to.be.false;
+        expect(fileExtensionForm.isPresent).to.be.false;
       });
     });
   });
 
   describe('when data types field has value', () => {
     beforeEach(async function () {
-      await newFileExtensionForm.dataTypesField.expandAndFilter('Del');
-      await newFileExtensionForm.dataTypesField.clickOption('1');
-      await newFileExtensionForm.dataTypesField.blur('input');
+      await fileExtensionForm.dataTypesField.expandAndFilter('Del');
+      await fileExtensionForm.dataTypesField.clickOption('1');
+      await fileExtensionForm.dataTypesField.blur('input');
     });
 
     it('then the error message does not appear', () => {
-      expect(newFileExtensionForm.dataTypesField.valueCount).to.equal(1);
+      expect(fileExtensionForm.dataTypesField.valueCount).to.equal(1);
     });
   });
 
   describe('when data types filter result is empty', () => {
     beforeEach(async function () {
-      await newFileExtensionForm.dataTypesField.expandAndFilter('NON EXISTING OPTION');
+      await fileExtensionForm.dataTypesField.expandAndFilter('NON EXISTING OPTION');
     });
 
     it('then the option list is empty', () => {
-      expect(newFileExtensionForm.dataTypesField.optionCount).to.equal(0);
+      expect(fileExtensionForm.dataTypesField.optionCount).to.equal(0);
     });
   });
 
   describe('when form is submitted and import is not blocked', () => {
     beforeEach(async function () {
-      await newFileExtensionForm.extensionField.fillAndBlur('.csv');
-      await newFileExtensionForm.submitFormBtn.click();
+      await fileExtensionForm.extensionField.fillAndBlur('.csv');
+      await fileExtensionForm.submitFormButton.click();
     });
 
     it('then data types field is required', () => {
-      expect(newFileExtensionForm.blockedField.inputValue).to.equal('false');
-      expect(newFileExtensionForm.dataTypesField.inputError).to.be.true;
+      expect(fileExtensionForm.blockedField.inputValue).to.equal('false');
+      expect(fileExtensionForm.dataTypesField.inputError).to.be.true;
     });
   });
 
   describe('when form is submitted and import is blocked', () => {
     beforeEach(async function () {
-      await newFileExtensionForm.extensionField.fillAndBlur('.csv');
-      await newFileExtensionForm.blockedField.clickAndBlur();
-      await newFileExtensionForm.submitFormBtn.click();
+      await fileExtensionForm.extensionField.fillAndBlur('.csv');
+      await fileExtensionForm.blockedField.clickAndBlur();
+      await fileExtensionForm.submitFormButton.click();
     });
 
     it('then data types field is not required', () => {
-      expect(newFileExtensionForm.blockedField.inputValue).to.equal('true');
-      expect(newFileExtensionForm.dataTypesField.inputError).to.be.false;
+      expect(fileExtensionForm.blockedField.inputValue).to.equal('true');
+      expect(fileExtensionForm.dataTypesField.inputError).to.be.false;
     });
   });
 
   describe('when form is submitted with blocked import', () => {
     beforeEach(async function () {
-      await newFileExtensionForm.extensionField.fillAndBlur('.csv');
-      await newFileExtensionForm.blockedField.clickAndBlur();
-      await newFileExtensionForm.submitFormBtn.click();
+      await fileExtensionForm.extensionField.fillAndBlur('.csv');
+      await fileExtensionForm.blockedField.clickAndBlur();
+      await fileExtensionForm.submitFormButton.click();
     });
 
     it('then file extension details renders the newly created file extension', () => {
       expect(fileExtensionDetails.headline.text).to.equal('.csv');
       expect(fileExtensionDetails.description.text).to.equal('-');
-      expect(fileExtensionDetails.extension.isPresent).to.be.false;
+      expect(fileExtensionDetails.extension.text).to.equal('.csv');
       expect(fileExtensionDetails.dataTypes.isPresent).to.be.false;
       expect(fileExtensionDetails.importBlocked.isPresent).to.be.true;
     });
@@ -172,11 +179,11 @@ describe('File extension form', () => {
 
   describe('when form is submitted with unblocked import', () => {
     beforeEach(async function () {
-      await newFileExtensionForm.descriptionField.fillAndBlur('Description');
-      await newFileExtensionForm.dataTypesField.expandAndFilter('Del');
-      await newFileExtensionForm.dataTypesField.clickOption('1');
-      await newFileExtensionForm.extensionField.fillAndBlur('.csv');
-      await newFileExtensionForm.submitFormBtn.click();
+      await fileExtensionForm.descriptionField.fillAndBlur('Description');
+      await fileExtensionForm.dataTypesField.expandAndFilter('Del');
+      await fileExtensionForm.dataTypesField.clickOption('1');
+      await fileExtensionForm.extensionField.fillAndBlur('.csv');
+      await fileExtensionForm.submitFormButton.click();
     });
 
     it('then file extension details renders the newly created file extension', () => {
@@ -194,7 +201,7 @@ describe('When file extension form', () => {
 
   beforeEach(async function () {
     this.visit('/settings/data-import/file-extensions?layer=create');
-    await newFileExtensionForm.whenLoaded();
+    await fileExtensionForm.whenLoaded();
   });
 
   describe('is submitted and the response contains', function () {
@@ -209,7 +216,7 @@ describe('When file extension form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(newFileExtensionForm.callout.errorCalloutIsPresent).to.be.true;
+        expect(fileExtensionForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
 
@@ -222,7 +229,7 @@ describe('When file extension form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(newFileExtensionForm.callout.errorCalloutIsPresent).to.be.true;
+        expect(fileExtensionForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
 
@@ -235,7 +242,7 @@ describe('When file extension form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(newFileExtensionForm.callout.errorCalloutIsPresent).to.be.true;
+        expect(fileExtensionForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
 
@@ -249,7 +256,7 @@ describe('When file extension form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(newFileExtensionForm.callout.errorCalloutIsPresent).to.be.true;
+        expect(fileExtensionForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
 
@@ -259,7 +266,7 @@ describe('When file extension form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(newFileExtensionForm.callout.errorCalloutIsPresent).to.be.true;
+        expect(fileExtensionForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
   });
