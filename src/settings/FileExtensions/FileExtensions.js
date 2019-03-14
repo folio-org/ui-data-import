@@ -147,29 +147,59 @@ export class FileExtensions extends Component {
       });
   };
 
-  deleteRecord = record => {
+  deleteRecord = async record => {
     const { mutator: { records } } = this.props;
-    const { showDeleteRecordMessage } = this;
 
-    return records.DELETE(record)
-      .then(() => {
-        showDeleteRecordMessage(record);
-      })
-      .catch(error => {
-        this.showUpdateRecordErrorMessage(error, record, true);
-        throw error;
+    try {
+      await records.DELETE(record);
+
+      const { match: { path } } = this.props;
+
+      this.transitionToParams({
+        _path: `${path}/view`,
+        layer: null,
       });
+      this.showDeleteRecordSuccessfulMessage(record);
+    } catch (error) {
+      this.showDeleteRecordErrorMessage(record);
+    }
   };
 
-  showDeleteRecordMessage = record => {
+  showDeleteRecordSuccessfulMessage = record => {
     const message = (
       <FormattedMessage
-        id="ui-data-import.settings.fileExtension.delete.confirmation"
-        values={{ extension: record.extension }}
+        id="ui-data-import.settings.fileExtension.action.success"
+        values={{
+          extension: record.extension,
+          action: (
+            <strong>
+              <FormattedMessage id="ui-data-import.deleted" />
+            </strong>
+          ),
+        }}
+      />
+    );
+
+    this.callout.sendCallout({ message });
+  };
+
+  showDeleteRecordErrorMessage = record => {
+    const message = (
+      <FormattedMessage
+        id="ui-data-import.settings.fileExtension.action.error"
+        values={{
+          extension: record.extension,
+          action: (
+            <strong>
+              <FormattedMessage id="ui-data-import.deleted" />
+            </strong>
+          ),
+        }}
       />
     );
 
     this.callout.sendCallout({
+      type: 'error',
       message,
     });
   };

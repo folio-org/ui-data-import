@@ -91,6 +91,7 @@ export class ViewFileExtension extends Component {
 
   state = {
     showDeleteConfirmation: false,
+    deletingInProgress: false,
   };
 
   get fileExtensionData() {
@@ -151,16 +152,16 @@ export class ViewFileExtension extends Component {
     return (
       <Fragment>
         <Button
-          data-test-user-instance-edit-action
+          data-test-edit-file-extension-button
           buttonStyle="dropdownItem"
           onClick={() => this.handleOpenEdit(menu)}
         >
           <Icon icon="edit">
-            <FormattedMessage id="ui-users.edit" />
+            <FormattedMessage id="ui-data-import.edit" />
           </Icon>
         </Button>
         <Button
-          data-test-delete-user-form-action
+          data-test-delete-file-extension-button
           buttonStyle="dropdownItem"
           onClick={this.showDeleteExtensionModal}
         >
@@ -177,7 +178,10 @@ export class ViewFileExtension extends Component {
   };
 
   hideDeleteExtensionModal = () => {
-    this.setState({ showDeleteConfirmation: false });
+    this.setState({
+      showDeleteConfirmation: false,
+      deletingInProgress: false,
+    });
   };
 
   handleOpenEdit = menu => {
@@ -187,17 +191,23 @@ export class ViewFileExtension extends Component {
     menu.onToggle();
   };
 
-  renderFileExtension(record) {
-    const {
-      onClose,
-      onDelete,
-    } = this.props;
-    const { showDeleteConfirmation } = this.state;
+  handleDeleteExtension = record => {
+    const { onDelete } = this.props;
+    const { deletingInProgress } = this.state;
 
-    function deleteRow() {
-      onDelete(record);
-      this.hideDeleteExtensionModal();
+    if (deletingInProgress) {
+      return;
     }
+
+    this.setState({ deletingInProgress: true }, async () => {
+      await onDelete(record);
+      this.hideDeleteExtensionModal();
+    });
+  };
+
+  renderFileExtension(record) {
+    const { onClose } = this.props;
+    const { showDeleteConfirmation } = this.state;
 
     return (
       <Pane
@@ -282,7 +292,7 @@ export class ViewFileExtension extends Component {
           message={<FormattedMessage id="ui-data-import.settings.fileExtension.delete.promt" />}
           confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
           cancelLabel={<FormattedMessage id="ui-data-import.modal.cancel" />}
-          onConfirm={deleteRow}
+          onConfirm={() => this.handleDeleteExtension(record)}
           onCancel={this.hideDeleteExtensionModal}
         />
       </Pane>
