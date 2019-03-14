@@ -95,12 +95,22 @@ describe('ImportJobs component', () => {
       expect(importJobs.fileExtensionsModal.isPresent).to.be.true;
     });
 
-    describe('closes modal', () => {
+    describe('when cancel button clicked', () => {
       beforeEach(async () => {
         await importJobs.fileExtensionsModal.cancelButton.click();
       });
 
-      it('correctly', () => {
+      it('closes modal', () => {
+        expect(importJobs.fileExtensionsModal.isPresent).to.be.false;
+      });
+    });
+
+    describe('when "Choose other files" button clicked', () => {
+      beforeEach(async () => {
+        await importJobs.fileExtensionsModal.confirmButton.click();
+      });
+
+      it('closes modal', () => {
         expect(importJobs.fileExtensionsModal.isPresent).to.be.false;
       });
     });
