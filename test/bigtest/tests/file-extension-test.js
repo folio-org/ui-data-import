@@ -46,13 +46,101 @@ describe('File extensions table', () => {
       expect(fileExtensionDetails.isPresent).to.be.true;
     });
 
-    describe('has edit button', () => {
+    describe('edit button', () => {
       beforeEach(async function () {
         await fileExtensionDetails.expandPaneHeaderDropdown();
       });
 
       it('when pane dropdown is opened', () => {
         expect(fileExtensionDetails.paneHeaderEditButton.isVisible).to.be.true;
+      });
+    });
+
+    describe('delete confirmation modal', () => {
+      it('is not visible when pane header dropdown is closed', () => {
+        expect(fileExtensionDetails.confirmationModal.isPresent).to.be.false;
+      });
+
+      describe('is visible', () => {
+        beforeEach(async function () {
+          await fileExtensionDetails.expandPaneHeaderDropdown();
+          await fileExtensionDetails.deleteButton.click();
+        });
+
+        it('when pane header dropdown is opened', () => {
+          expect(fileExtensionDetails.confirmationModal.isPresent).to.be.true;
+        });
+      });
+
+      describe('disappears', () => {
+        beforeEach(async function () {
+          await fileExtensionDetails.expandPaneHeaderDropdown();
+          await fileExtensionDetails.deleteButton.click();
+          await fileExtensionDetails.confirmationModal.cancelButton.click();
+        });
+
+        it('when cancel button is clicked', () => {
+          expect(fileExtensionDetails.confirmationModal.isPresent).to.be.false;
+        });
+      });
+
+      describe('upon click on confirm button initiates the deletion process of file extension and in case of success', () => {
+        beforeEach(async function () {
+          await fileExtensionDetails.expandPaneHeaderDropdown();
+          await fileExtensionDetails.deleteButton.click();
+          await fileExtensionDetails.confirmationModal.confirmButton.click();
+        });
+
+        it('disappears', () => {
+          expect(fileExtensions.confirmationModal.isPresent).to.be.false;
+        });
+
+        it('the successful toast appears', () => {
+          expect(fileExtensions.callout.successCalloutIsPresent).to.be.true;
+        });
+      });
+
+      describe('upon click on confirm button twice initiates the deletion process only once file extension and in case of success', () => {
+        beforeEach(async function () {
+          await fileExtensionDetails.expandPaneHeaderDropdown();
+          await fileExtensionDetails.deleteButton.click();
+          await fileExtensionDetails.confirmationModal.confirmButton.click();
+          await fileExtensionDetails.confirmationModal.confirmButton.click();
+        });
+
+        it('disappears', () => {
+          expect(fileExtensions.confirmationModal.isPresent).to.be.false;
+        });
+
+        it('the successful toast appears', () => {
+          expect(fileExtensions.callout.successCalloutIsPresent).to.be.true;
+        });
+
+        it('renders the correct number of rows without deleted one', () => {
+          expect(fileExtensions.list.rowCount).to.equal(2);
+        });
+      });
+
+      describe('upon click on confirm button twice initiates the deletion process only once file extension and in case of error', () => {
+        beforeEach(async function () {
+          this.server.delete('/data-import/fileExtensions/:id', () => new Response(500, {}));
+          await fileExtensionDetails.expandPaneHeaderDropdown();
+          await fileExtensionDetails.deleteButton.click();
+          await fileExtensionDetails.confirmationModal.confirmButton.click();
+          await fileExtensionDetails.confirmationModal.confirmButton.click();
+        });
+
+        it('disappears', () => {
+          expect(fileExtensions.confirmationModal.isPresent).to.be.false;
+        });
+
+        it('the error toast appears', () => {
+          expect(fileExtensions.callout.errorCalloutIsPresent).to.be.true;
+        });
+
+        it('renders the correct number including the one which tried to delete', () => {
+          expect(fileExtensions.list.rowCount).to.equal(3);
+        });
       });
     });
 

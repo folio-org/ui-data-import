@@ -83,7 +83,7 @@ describe('Restore default file extensions confirmation modal', () => {
       await fileExtensions.restoreDefaultFileExtensionsButton.click();
     });
 
-    it('when restore default file extensions button is not clicked', () => {
+    it('when restore default file extensions button is clicked', () => {
       expect(fileExtensions.confirmationModal.isPresent).to.be.true;
     });
   });
