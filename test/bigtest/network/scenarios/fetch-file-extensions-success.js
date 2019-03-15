@@ -1,3 +1,5 @@
+import { Response } from '@bigtest/mirage';
+
 import { SYSTEM_USER_NAME } from '../../../../src/utils/constants';
 
 export default server => {
@@ -28,5 +30,14 @@ export default server => {
     fileExtensionModel.update({ ...updatedFileExtension });
 
     return fileExtensionModel.attrs;
+  });
+
+  server.delete('/data-import/fileExtensions/:id', (schema, request) => {
+    const { params: { id } } = request;
+    const fileExtensionModel = schema.fileExtensions.find(id);
+
+    fileExtensionModel.destroy();
+
+    return new Response(200, {});
   });
 };

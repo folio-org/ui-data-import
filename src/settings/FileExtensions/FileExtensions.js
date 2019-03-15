@@ -76,6 +76,7 @@ export class FileExtensions extends Component {
       records: PropTypes.shape({
         POST: PropTypes.func.isRequired,
         PUT: PropTypes.func.isRequired,
+        DELETE: PropTypes.func.isRequired,
       }).isRequired,
       restoreDefaultFileExtensions: PropTypes.shape({
         POST: PropTypes.func.isRequired,
@@ -144,6 +145,63 @@ export class FileExtensions extends Component {
 
         throw error;
       });
+  };
+
+  deleteRecord = async record => {
+    const { mutator: { records } } = this.props;
+
+    try {
+      await records.DELETE(record);
+
+      const { match: { path } } = this.props;
+
+      this.transitionToParams({
+        _path: `${path}/view`,
+        layer: null,
+      });
+      this.showDeleteRecordSuccessfulMessage(record);
+    } catch (error) {
+      this.showDeleteRecordErrorMessage(record);
+    }
+  };
+
+  showDeleteRecordSuccessfulMessage = record => {
+    const message = (
+      <FormattedMessage
+        id="ui-data-import.settings.fileExtension.action.success"
+        values={{
+          extension: record.extension,
+          action: (
+            <strong>
+              <FormattedMessage id="ui-data-import.deleted" />
+            </strong>
+          ),
+        }}
+      />
+    );
+
+    this.callout.sendCallout({ message });
+  };
+
+  showDeleteRecordErrorMessage = record => {
+    const message = (
+      <FormattedMessage
+        id="ui-data-import.settings.fileExtension.action.error"
+        values={{
+          extension: record.extension,
+          action: (
+            <strong>
+              <FormattedMessage id="ui-data-import.deleted" />
+            </strong>
+          ),
+        }}
+      />
+    );
+
+    this.callout.sendCallout({
+      type: 'error',
+      message,
+    });
   };
 
   handleUpdateRecordSuccess = (record, dispatch, props) => {
@@ -294,6 +352,7 @@ export class FileExtensions extends Component {
                 showSingleResult={showSingleResult}
                 onCreate={this.createRecord}
                 onEdit={this.editRecord}
+                onDelete={this.deleteRecord}
                 handleCreateSuccess={this.handleUpdateRecordSuccess}
                 handleEditSuccess={this.handleUpdateRecordSuccess}
               />

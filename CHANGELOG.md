@@ -23,6 +23,7 @@
 * Implement file extension editing feature (UIDATIMP-84)
 * Fix file extensions order after adding/editing a file extension (UIDATIMP-159)
 * Close invalid files modal after clicking "Choose other files to upload" button (UIDATIMP-160)
+* Implement file extension deletion feature (UIDATIMP-69)
 
 ## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
 
