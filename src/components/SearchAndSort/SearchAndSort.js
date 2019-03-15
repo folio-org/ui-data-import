@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import queryString from 'query-string';
 import {
   debounce,
   get,
@@ -510,30 +510,45 @@ export class SearchAndSort extends Component {
 
     return (
       <form onSubmit={this.onSubmitSearch}>
-        <FormattedMessage id={searchLabelKey}>
-          {searchDetailsLabel => (
-            <FormattedMessage
-              id="stripes-smart-components.searchFieldLabel"
-              values={{ moduleName: searchDetailsLabel }}
-            >
-              {ariaLabel => (
-                <SearchField
-                  id={`input-${objectName}-search`}
-                  className={css.searchField}
-                  ariaLabel={ariaLabel}
-                  marginBottom0
-                  searchableIndexes={searchableIndexes}
-                  selectedIndex={selectedIndex}
-                  value={searchTerm}
-                  loading={source.pending()}
-                  onChangeIndex={onChangeIndex}
-                  onChange={this.onChangeSearch}
-                  onClear={this.onClearSearchQuery}
-                />
+        <div className={css.searchWrap}>
+          <div className={css.searchFiledWrap}>
+            <FormattedMessage id={searchLabelKey}>
+              {searchDetailsLabel => (
+                <FormattedMessage
+                  id="stripes-smart-components.searchFieldLabel"
+                  values={{ moduleName: searchDetailsLabel }}
+                >
+                  {ariaLabel => (
+                    <SearchField
+                      id={`input-${objectName}-search`}
+                      ariaLabel={ariaLabel}
+                      marginBottom0
+                      searchableIndexes={searchableIndexes}
+                      selectedIndex={selectedIndex}
+                      value={searchTerm}
+                      loading={source.pending()}
+                      onChangeIndex={onChangeIndex}
+                      onChange={this.onChangeSearch}
+                      onClear={this.onClearSearchQuery}
+                    />
+                  )}
+                </FormattedMessage>
               )}
             </FormattedMessage>
-          )}
-        </FormattedMessage>
+          </div>
+          <div className={css.searchButtonWrap}>
+            <Button
+              type="submit"
+              buttonStyle="primary"
+              fullWidth
+              marginBottom0
+              disabled={!searchTerm}
+              data-test-search-and-sort-submit
+            >
+              <FormattedMessage id="stripes-smart-components.search" />
+            </Button>
+          </div>
+        </div>
       </form>
     );
   }
@@ -612,7 +627,7 @@ export class SearchAndSort extends Component {
       return null;
     }
 
-    const urlQuery = queryString.parse(search || '');
+    const urlQuery = queryString.parse(search);
     const isLayerOpen = urlQuery.layer ? urlQuery.layer === 'create' : false;
 
     return (

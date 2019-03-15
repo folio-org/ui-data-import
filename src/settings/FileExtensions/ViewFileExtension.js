@@ -132,12 +132,14 @@ export class ViewFileExtension extends Component {
       editLink,
     } = this.props;
 
+    const editButtonVisibility = !record ? 'hidden' : 'visible';
+
     return (
       <PaneMenu>
         <Button
           data-test-edit-file-extension-menu-button
           href={editLink}
-          style={{ visibility: !record ? 'hidden' : 'visible' }}
+          style={{ visibility: editButtonVisibility }}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
           onClick={onOpenEdit}
@@ -337,7 +339,7 @@ export class ViewFileExtension extends Component {
   isLayerOpen = value => {
     const { location: { search } } = this.props;
 
-    const query = queryString.parse(search || '');
+    const query = queryString.parse(search);
 
     return query.layer === value;
   };
