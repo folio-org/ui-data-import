@@ -538,12 +538,12 @@ export class SearchAndSort extends Component {
           </div>
           <div className={css.searchButtonWrap}>
             <Button
+              data-test-search-and-sort-submit
               type="submit"
               buttonStyle="primary"
               fullWidth
               marginBottom0
               disabled={!searchTerm}
-              data-test-search-and-sort-submit
             >
               <FormattedMessage id="stripes-smart-components.search" />
             </Button>
