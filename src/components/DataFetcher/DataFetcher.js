@@ -89,23 +89,27 @@ export class DataFetcher extends Component {
 
   async componentDidMount() {
     this.mounted = true;
-    await this.getResourcesData(true);
+    await this.fetchResourcesData(true);
     this.updateResourcesData();
   }
 
   componentWillUnmount() {
     this.mounted = false;
-    clearInterval(this.intervalId);
+    clearTimeout(this.timeoutId);
   }
 
   updateResourcesData() {
     const { updateInterval } = this.props;
 
-    this.intervalId = setInterval(this.getResourcesData, updateInterval);
+    this.timeoutId = setTimeout(async () => {
+      await this.fetchResourcesData();
+
+      this.updateResourcesData();
+    }, updateInterval);
   }
 
   /** @param  {boolean} [initial] indicates initial data retrieval */
-  getResourcesData = async initial => {
+  fetchResourcesData = async initial => {
     /* istanbul ignore if  */
     if (!this.mounted) {
       return;
@@ -113,14 +117,12 @@ export class DataFetcher extends Component {
 
     const { mutator } = this.props;
 
-    const fetchResourcesPromises = Object.values(mutator)
-      .reduce((res, resourceMutator) => {
-        return res.concat(this.getResourceData(resourceMutator));
-      }, []);
+    const fetchResourcesPromises = Object
+      .values(mutator)
+      .reduce((res, resourceMutator) => res.concat(this.fetchResourceData(resourceMutator)), []);
 
     try {
       await Promise.all(fetchResourcesPromises);
-
       this.mapResourcesToState();
     } catch (error) {
       if (initial) {
@@ -131,7 +133,7 @@ export class DataFetcher extends Component {
     }
   };
 
-  async getResourceData({
+  async fetchResourceData({
     GET,
     reset,
   }) {

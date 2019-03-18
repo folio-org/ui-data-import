@@ -1,4 +1,5 @@
 import React from 'react';
+import HighLight from 'react-highlighter';
 import { FormattedDate } from 'react-intl';
 
 import { Icon } from '@folio/stripes/components';
@@ -24,7 +25,7 @@ const formatUserName = userInfo => {
   return `${firstName} ${lastName} ${formattedUserName}`;
 };
 
-export const resultsFormatter = intl => ({
+export const resultsFormatter = (intl, searchTerm) => ({
   importBlocked: record => {
     const { importBlocked } = record;
     const translationIdEnding = `fileExtension.${importBlocked ? 'block' : 'allow'}Import`;
@@ -32,10 +33,19 @@ export const resultsFormatter = intl => ({
 
     return intl.formatMessage({ id: fullTranslationId });
   },
+  extension: record => {
+    const { extension } = record;
+
+    return <HighLight search={searchTerm}>{extension}</HighLight>;
+  },
   dataTypes: record => {
     const { dataTypes } = record;
 
-    return dataTypes.length > 0 ? dataTypes.join(', ') : '-';
+    if (!dataTypes.length) {
+      return '-';
+    }
+
+    return <HighLight search={searchTerm}>{dataTypes.join(', ')}</HighLight>;
   },
   updated: record => {
     const { metadata: { updatedDate } } = record;
@@ -60,7 +70,7 @@ export const resultsFormatter = intl => ({
         iconKey="user"
         className={css.userColumn}
       >
-        {formatUserName(userInfo)}
+        <HighLight search={searchTerm}>{formatUserName(userInfo)}</HighLight>
       </AppIcon>
     );
   },

@@ -3,6 +3,7 @@ import React, {
   Fragment,
 } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
 
 import { IntlConsumer } from '@folio/stripes/core';
@@ -48,7 +49,7 @@ export class FileExtensions extends Component {
         params: {
           query: makeQueryFunction(
             'cql.allRecords=1',
-            '(extension="%{query.query}*")',
+            '(extension="%{query.query}*" or dataTypes="%{query.query}*")',
             {
               extension: 'extension',
               importBlocked: 'importBlocked',
@@ -110,6 +111,8 @@ export class FileExtensions extends Component {
   ];
 
   columnWidths = {
+    extension: 100,
+    dataTypes: 150,
     updated: 150,
     updatedBy: 250,
   };
@@ -303,12 +306,15 @@ export class FileExtensions extends Component {
   render() {
     const {
       resources,
+      location: { search },
       mutator,
       label,
       showSingleResult,
     } = this.props;
     const { isResetFileExtensionsModalOpen } = this.state;
 
+    const urlQuery = queryString.parse(search);
+    const searchTerm = (urlQuery.query || '').trim();
     const newRecordInitialValues = {
       importBlocked: false,
       description: '',
@@ -335,7 +341,7 @@ export class FileExtensions extends Component {
                 resultsLabel={label}
                 defaultSort="extension"
                 actionMenu={this.renderActionMenu}
-                resultsFormatter={resultsFormatter(intl)}
+                resultsFormatter={resultsFormatter(intl, searchTerm)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   extension: intl.formatMessage({ id: 'ui-data-import.settings.fileExtension.extension' }),

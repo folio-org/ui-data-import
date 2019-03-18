@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import qs from 'qs';
+import queryString from 'query-string';
 
 import {
   sortNums,
@@ -72,7 +72,7 @@ const withJobLogsSortComponent = WrappedComponent => {
       const {
         sort = 'completedDate',
         direction = SORT_TYPES.DESCENDING,
-      } = qs.parse(search.slice(1));
+      } = queryString.parse(search.slice(1));
 
       this.setState({
         sort,
@@ -129,7 +129,7 @@ const withJobLogsSortComponent = WrappedComponent => {
 
       history.push({
         pathname: location.pathname,
-        search: `?${qs.stringify(sortState)}`,
+        search: `?${queryString.stringify(sortState)}`,
       });
     };
 
