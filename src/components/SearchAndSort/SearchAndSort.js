@@ -682,8 +682,12 @@ export class SearchAndSort extends Component {
           paneSub={paneSub}
           lastMenu={this.renderNewRecordButton()}
         >
-          {this.renderSearch(source)}
-          {this.renderSearchResults(source)}
+          <div className={css.paneBody}>
+            {this.renderSearch(source)}
+            <div className={css.searchResults}>
+              {this.renderSearchResults(source)}
+            </div>
+          </div>
         </Pane>
         {this.renderDetailsPane(source)}
         {this.renderCreateRecordLayer(source)}

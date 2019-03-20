@@ -18,3 +18,13 @@
 .searchButtonWrap {
   flex-shrink: 0;
 }
+
+.paneBody {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.searchResults {
+  flex-grow: 1;
+}
