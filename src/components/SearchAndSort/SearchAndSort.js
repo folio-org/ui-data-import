@@ -341,10 +341,14 @@ export class SearchAndSort extends Component {
     return onEdit(record);
   };
 
-  deleteRecord = record => {
+  deleteRecord = async record => {
     const { onDelete } = this.props;
 
-    return onDelete(record);
+    const deleted = await onDelete(record);
+
+    if (deleted) {
+      this.setState({ selectedItem: null });
+    }
   };
 
   closeNewRecord = e => {

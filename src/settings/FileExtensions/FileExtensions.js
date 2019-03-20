@@ -163,8 +163,12 @@ export class FileExtensions extends Component {
         layer: null,
       });
       this.showDeleteRecordSuccessfulMessage(record);
+
+      return true;
     } catch (error) {
       this.showDeleteRecordErrorMessage(record);
+
+      return false;
     }
   };
 
