@@ -25,6 +25,7 @@
 * Close invalid files modal after clicking "Choose other files to upload" button (UIDATIMP-160)
 * Implement file extension deletion feature (UIDATIMP-69)
 * Implement search file extensions feature (UIDATIMP-157)
+* Handle horizontal scroll issue for the file extensions list (UIDATIMP-76)
 
 ## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
 
