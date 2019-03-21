@@ -113,5 +113,10 @@
     "modal.fileExtensions.reset.header": "إعادة تعيين كل تخطيطات امتداد الملف",
     "modal.fileExtensions.reset.message": "سيؤدي ذلك إلى إعادة تعيين تخطيطات امتداد الملف إلى إعدادات النظام الافتراضية",
     "modal.fileExtensions.reset.actionButton": "إعادة تعيين الكل",
-    "settings.fileExtension.edit.error.network": "لم يتم تحديث التسجيلة: توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة."
+    "settings.fileExtension.edit.error.network": "لم يتم تحديث التسجيلة: توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة.",
+    "deleted": "حذف",
+    "settings.fileExtension.action.success": "تم {action} امتداد الملف \"{extension}\" بنجاح",
+    "settings.fileExtension.action.error": "لم يتم {action} امتداد الملف \"{extension}\"",
+    "modal.fileExtension.delete.header": "حذف امتداد الملف \"{extension}\"؟",
+    "modal.fileExtension.delete.message": "حذف امتداد الملف؟"
 }
