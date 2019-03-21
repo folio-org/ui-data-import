@@ -2,9 +2,16 @@ import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { isEmpty } from 'lodash';
+import {
+  forEach,
+  isEmpty,
+} from 'lodash';
 
 import { ConfirmationModal } from '@folio/stripes/components';
+import {
+  withStripes,
+  stripesShape,
+} from '@folio/stripes/core';
 
 import {
   FileUploader,
@@ -13,12 +20,24 @@ import {
 import { Preloader } from '../Preloader';
 
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
+import {
+  createOkapiHeaders,
+  createUrl,
+} from '../../utils';
+import * as API from '../UploadingJobsDisplay/utils/upload';
+import {
+  checkForKnowErrorModalTypes,
+  getErrorModalMeta,
+  ERROR_MODAL_META_TYPES,
+} from './components/getErrorModalMeta';
 
 import css from './components/FileUploader/FileUploader.css';
 
 @withRouter
+@withStripes
 export class ImportJobs extends Component {
   static propTypes = {
+    stripes: stripesShape.isRequired,
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
     }).isRequired,
@@ -26,14 +45,25 @@ export class ImportJobs extends Component {
 
   static contextType = UploadingJobsContext;
 
-  state = {
-    isDropZoneActive: false,
-    filesExtensionsModalOpen: false,
-    redirect: false,
-    hasLoaded: false,
-    prohibitFilesUploading: false,
-    showErrorMessage: false,
-  };
+  constructor(props) {
+    super(props);
+
+    const { stripes: { okapi } } = this.props;
+
+    const { url: host } = okapi;
+
+    this.uploadDefinitionUrl = createUrl(`${host}/data-import/uploadDefinitions`);
+
+    this.state = {
+      isDropZoneActive: false,
+      filesExtensionsModalOpen: false,
+      filesExtensionsModalType: null,
+      redirect: false,
+      hasLoaded: false,
+      prohibitFilesUploading: false,
+      showErrorMessage: false,
+    };
+  }
 
   componentDidMount() {
     this.fetchUploadDefinition();
@@ -47,8 +77,7 @@ export class ImportJobs extends Component {
 
       this.setState({ hasLoaded: true });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
+      console.error(error); // eslint-disable-line no-console
     }
   }
 
@@ -82,18 +111,77 @@ export class ImportJobs extends Component {
       return;
     }
 
-    const isValidFileExtensions = this.validateFileExtensions(acceptedFiles);
+    const haveFilesSameExtension = this.checkFilesHaveSameExtension(acceptedFiles);
 
-    if (isValidFileExtensions) {
-      this.redirectToJobProfilePage(acceptedFiles);
+    if (!haveFilesSameExtension) {
+      this.showFilesExtensionsModal({ type: ERROR_MODAL_META_TYPES.INCONSISTENT });
 
       return;
     }
 
-    this.showFilesExtensionsModal();
+    const files = API.mapFilesToUI(acceptedFiles);
+
+    // post file upload definition with all files metadata as
+    // individual file upload should have upload definition id in the URL
+    const [errorMessage, response] = await API.createUploadDefinition(
+      files,
+      this.uploadDefinitionUrl,
+      this.createFilesDefinitionHeaders(),
+    );
+
+    if (!errorMessage) {
+      const fileDefinitions = this.updateFilesWithFileDefinitionMetadata(files, response.fileDefinitions);
+
+      this.redirectToJobProfilePage(fileDefinitions);
+    }
+
+    this.handleUploadDefinitionError(errorMessage);
   };
 
-  validateFileExtensions(files = []) {
+  handleUploadDefinitionError(errorMessage) {
+    const knownErrorModalType = checkForKnowErrorModalTypes(errorMessage);
+
+    if (knownErrorModalType) {
+      this.showFilesExtensionsModal({ type: knownErrorModalType });
+
+      return;
+    }
+
+    this.setState({ showErrorMessage: true });
+
+    console.error(errorMessage); // eslint-disable-line no-console
+  }
+
+  updateFilesWithFileDefinitionMetadata(files, fileDefinitions) {
+    const updatedFiles = { ...files };
+
+    forEach(fileDefinitions, definition => {
+      const {
+        uiKey,
+        id,
+        uploadDefinitionId,
+      } = definition;
+
+      updatedFiles[uiKey] = {
+        ...updatedFiles[uiKey],
+        id,
+        uploadDefinitionId,
+      };
+    });
+
+    return updatedFiles;
+  }
+
+  createFilesDefinitionHeaders() {
+    const { stripes: { okapi } } = this.props;
+
+    return {
+      ...createOkapiHeaders(okapi),
+      'Content-Type': 'application/json',
+    };
+  }
+
+  checkFilesHaveSameExtension(files = []) {
     const fileTypeRegex = /\.(\w+)$/;
     const filesTypes = files.map(({ name }) => (name.match(fileTypeRegex) || [])[1]);
     const baseFileType = filesTypes[0];
@@ -101,12 +189,18 @@ export class ImportJobs extends Component {
     return filesTypes.every(type => type === baseFileType);
   }
 
-  showFilesExtensionsModal() {
-    this.setState({ filesExtensionsModalOpen: true });
+  showFilesExtensionsModal(payload) {
+    this.setState({
+      filesExtensionsModalOpen: true,
+      filesExtensionsModalType: payload.type,
+    });
   }
 
   hideFilesExtensionsModal = () => {
-    this.setState({ filesExtensionsModalOpen: false });
+    this.setState({
+      filesExtensionsModalOpen: false,
+      filesExtensionsModalType: null,
+    });
   };
 
   getMessageById(idEnding, moduleName = 'ui-data-import') {
@@ -124,6 +218,7 @@ export class ImportJobs extends Component {
 
   render() {
     const { match: { path } } = this.props;
+    const { filesExtensionsModalType } = this.state;
     const { uploadDefinition } = this.context;
 
     const {
@@ -161,22 +256,10 @@ export class ImportJobs extends Component {
     }
 
     const titleMessageIdEnding = isDropZoneActive ? 'activeUploadTitle' : 'uploadTitle';
+    const modalMeta = getErrorModalMeta(filesExtensionsModalType);
     const titleText = this.getMessageById(titleMessageIdEnding);
     const uploadButtonText = this.getMessageById('uploadBtnText');
     const errorMessage = showErrorMessage && this.getMessageById('importJobs.errorMessage');
-
-    const invalidFilesMessage = (
-      <FormattedMessage
-        id="ui-data-import.modal.fileExtensions.message"
-        values={{
-          highlightedText: (
-            <strong>
-              <FormattedMessage id="ui-data-import.modal.fileExtensions.messageHighlightedText" />
-            </strong>
-          ),
-        }}
-      />
-    );
 
     return (
       <FileUploader
@@ -194,8 +277,8 @@ export class ImportJobs extends Component {
           <ConfirmationModal
             id="file-extensions-modal"
             open={filesExtensionsModalOpen}
-            heading={<FormattedMessage id="ui-data-import.modal.fileExtensions.header" />}
-            message={invalidFilesMessage}
+            heading={modalMeta.heading}
+            message={modalMeta.message}
             confirmLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.actionButton" />}
             cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
             onConfirm={() => {

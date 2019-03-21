@@ -104,8 +104,8 @@
         "subPermissions": [
           "metadata-provider.log.get",
           "metadata-provider.jobexecutions.get",
-          "data-import.uploaddefinitions.post",
           "data-import.uploaddefinitions.get",
+          "data-import.uploaddefinitions.post",
           "data-import.uploaddefinitions.delete",
           "data-import.uploaddefinitions.files.delete",
           "data-import.upload.file.post"

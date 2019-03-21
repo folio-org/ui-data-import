@@ -1,3 +1,5 @@
+import { FILE_STATUSES } from '../../../utils/constants';
+
 const convertBytesToKilobytes = size => Math.ceil(size / 1024);
 
 const generateUploadDefinitionBody = files => {
@@ -10,6 +12,35 @@ const generateUploadDefinitionBody = files => {
     }), []);
 
   return { fileDefinitions };
+};
+
+export const mapFilesToUI = (files = []) => {
+  return files.reduce((res, file) => {
+    // `uiKey` is needed in order to match the individual file on UI with
+    // the response from the backend since it returns the all files state
+    const uiKey = `${file.name}${file.lastModified}`;
+    // if file is already uploaded it has already the `uiKey` and if not it should be assigned
+    const key = file.uiKey || uiKey;
+    const status = file.status || FILE_STATUSES.UPLOADING;
+
+    const preparedFile = {
+      id: file.id,
+      uploadDefinitionId: file.uploadDefinitionId,
+      key,
+      name: file.name,
+      size: file.size,
+      loading: false,
+      uploadedDate: file.uploadedDate,
+      status,
+      uploadedValue: 0,
+      file,
+    };
+
+    return {
+      ...res,
+      [key]: preparedFile,
+    };
+  }, {});
 };
 
 export const createUploadDefinition = async (files, url, headers) => {
