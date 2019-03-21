@@ -113,5 +113,10 @@
     "modal.fileExtensions.reset.header": "Redefinir todos os mapeamentos de extensão de arquivo",
     "modal.fileExtensions.reset.message": "Isso redefinirá os mapeamentos de extensão de arquivo para os padrões do sistema",
     "modal.fileExtensions.reset.actionButton": "Reiniciar tudo",
-    "settings.fileExtension.edit.error.network": "Registro não foi atualizado: problema de comunicação com o servidor. Por favor, tente novamente"
+    "settings.fileExtension.edit.error.network": "Registro não foi atualizado: problema de comunicação com o servidor. Por favor, tente novamente",
+    "deleted": "excluído",
+    "settings.fileExtension.action.success": "A extensão de arquivo \"{extension}\" foi {action} com sucesso",
+    "settings.fileExtension.action.error": "A extensão de arquivo \"{extension}\" não foi {action}",
+    "modal.fileExtension.delete.header": "Excluir a extensão de arquivo \"{extension}\"?",
+    "modal.fileExtension.delete.message": "Excluir extensão de arquivo?"
 }

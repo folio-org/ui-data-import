@@ -113,5 +113,10 @@
     "modal.fileExtensions.reset.header": "Reset all file extension mappings",
     "modal.fileExtensions.reset.message": "This will reset the file extension mappings to the system defaults",
     "modal.fileExtensions.reset.actionButton": "Reset all",
-    "settings.fileExtension.edit.error.network": "Record not updated: Communication problem with server. Please try again"
+    "settings.fileExtension.edit.error.network": "Record not updated: Communication problem with server. Please try again",
+    "deleted": "deleted",
+    "settings.fileExtension.action.success": "The file extension \"{extension}\" was successfully {action}",
+    "settings.fileExtension.action.error": "The file extension \"{extension}\" was not {action}",
+    "modal.fileExtension.delete.header": "Delete \"{extension}\" file extension?",
+    "modal.fileExtension.delete.message": "Delete file extension?"
 }
