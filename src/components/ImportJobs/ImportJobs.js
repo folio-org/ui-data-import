@@ -277,7 +277,11 @@ export class ImportJobs extends Component {
           <ConfirmationModal
             id="file-extensions-modal"
             open={filesExtensionsModalOpen}
-            heading={modalMeta.heading}
+            heading={(
+              <span data-test-file-extensions-modal-header>
+                {modalMeta.heading}
+              </span>
+            )}
             message={modalMeta.message}
             confirmLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.actionButton" />}
             cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}

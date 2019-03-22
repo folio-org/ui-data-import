@@ -11,6 +11,7 @@ import { setupApplication } from '../helpers';
 import {
   importJobs,
   returnToAssignJobs,
+  fileExtensionsModal,
 } from '../interactors';
 
 describe('Import files with no previous draft jobs', () => {
@@ -38,7 +39,7 @@ describe('ImportJobs component', () => {
   });
 
   describe('onDrop', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await importJobs.triggerDrop({
         dataTransfer: {
           types: ['Files'],
@@ -84,7 +85,7 @@ describe('ImportJobs component', () => {
     });
   });
 
-  describe('when dropping files with invalid extensions', () => {
+  describe('when dropping files with different file extensions', () => {
     beforeEach(async function () {
       await importJobs.triggerDrop({
         dataTransfer: {
@@ -98,26 +99,30 @@ describe('ImportJobs component', () => {
     });
 
     it('renders modal', () => {
-      expect(importJobs.fileExtensionsModal.isPresent).to.be.true;
+      expect(fileExtensionsModal.isPresent).to.be.true;
+    });
+
+    it('modal has correct header', () => {
+      expect(fileExtensionsModal.header.text).to.be.equal(translation['modal.fileExtensions.inconsistent.header']);
     });
 
     describe('when cancel button clicked', () => {
       beforeEach(async () => {
-        await importJobs.fileExtensionsModal.cancelButton.click();
+        await fileExtensionsModal.cancelButton.click();
       });
 
       it('closes modal', () => {
-        expect(importJobs.fileExtensionsModal.isPresent).to.be.false;
+        expect(fileExtensionsModal.isPresent).to.be.false;
       });
     });
 
     describe('when "Choose other files" button clicked', () => {
       beforeEach(async () => {
-        await importJobs.fileExtensionsModal.confirmButton.click();
+        await fileExtensionsModal.confirmButton.click();
       });
 
       it('closes modal', () => {
-        expect(importJobs.fileExtensionsModal.isPresent).to.be.false;
+        expect(fileExtensionsModal.isPresent).to.be.false;
       });
     });
   });
@@ -201,26 +206,30 @@ describe('ImportJobs error handling:', () => {
     });
 
     it('renders modal', () => {
-      expect(importJobs.fileExtensionsModal.isPresent).to.be.true;
+      expect(fileExtensionsModal.isPresent).to.be.true;
+    });
+
+    it('modal has correct header', () => {
+      expect(fileExtensionsModal.header.text).to.be.equal(translation['modal.fileExtensions.memoryLimit.header']);
     });
 
     describe('when cancel button clicked', () => {
       beforeEach(async () => {
-        await importJobs.fileExtensionsModal.cancelButton.click();
+        await fileExtensionsModal.cancelButton.click();
       });
 
       it('closes modal', () => {
-        expect(importJobs.fileExtensionsModal.isPresent).to.be.false;
+        expect(fileExtensionsModal.isPresent).to.be.false;
       });
     });
 
     describe('when "Choose other files" button clicked', () => {
       beforeEach(async () => {
-        await importJobs.fileExtensionsModal.confirmButton.click();
+        await fileExtensionsModal.confirmButton.click();
       });
 
       it('closes modal', () => {
-        expect(importJobs.fileExtensionsModal.isPresent).to.be.false;
+        expect(fileExtensionsModal.isPresent).to.be.false;
       });
     });
   });
@@ -234,34 +243,38 @@ describe('ImportJobs error handling:', () => {
         dataTransfer: {
           types: ['Files'],
           files: [
-            new File([], 'TAMU-Gen_55.mrc'),
-            new File([], 'TAMU-Gen.mrc'),
+            new File([], 'TAMU-Gen_55.zip'),
+            new File([], 'TAMU-Gen.zip'),
           ],
         },
       });
     });
 
     it('renders modal', () => {
-      expect(importJobs.fileExtensionsModal.isPresent).to.be.true;
+      expect(fileExtensionsModal.isPresent).to.be.true;
+    });
+
+    it('modal has correct header', () => {
+      expect(fileExtensionsModal.header.text).to.be.equal(translation['modal.fileExtensions.blocked.header']);
     });
 
     describe('when cancel button clicked', () => {
       beforeEach(async () => {
-        await importJobs.fileExtensionsModal.cancelButton.click();
+        await fileExtensionsModal.cancelButton.click();
       });
 
       it('closes modal', () => {
-        expect(importJobs.fileExtensionsModal.isPresent).to.be.false;
+        expect(fileExtensionsModal.isPresent).to.be.false;
       });
     });
 
     describe('when "Choose other files" button clicked', () => {
       beforeEach(async () => {
-        await importJobs.fileExtensionsModal.confirmButton.click();
+        await fileExtensionsModal.confirmButton.click();
       });
 
       it('closes modal', () => {
-        expect(importJobs.fileExtensionsModal.isPresent).to.be.false;
+        expect(fileExtensionsModal.isPresent).to.be.false;
       });
     });
   });
