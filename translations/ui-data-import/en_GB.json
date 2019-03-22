@@ -118,5 +118,11 @@
     "settings.fileExtension.action.success": "The file extension \"{extension}\" was successfully {action}",
     "settings.fileExtension.action.error": "The file extension \"{extension}\" was not {action}",
     "modal.fileExtension.delete.header": "Delete \"{extension}\" file extension?",
-    "modal.fileExtension.delete.message": "Delete file extension?"
+    "modal.fileExtension.delete.message": "Delete file extension?",
+    "modal.fileExtensions.inconsistent.header": "Inconsistent file extensions",
+    "modal.fileExtensions.inconsistent.message": "You cannot upload files with {highlightedText}. Please upload files with the same extension",
+    "modal.fileExtensions.blocked.header": "Import blocked",
+    "modal.fileExtensions.blocked.message": "You cannot upload files with this file extension",
+    "modal.fileExtensions.memoryLimit.header": "Not enough space",
+    "modal.fileExtensions.memoryLimit.message": "Not enough space to store the files. Contact system administrator"
 }
