@@ -108,6 +108,7 @@ export class SearchAndSort extends Component {
     onEdit: PropTypes.func,
     onDelete: PropTypes.func,
     handleCreateSuccess: PropTypes.func,
+    handleEditSuccess: PropTypes.func,
     onSelectRow: PropTypes.func,
     path: PropTypes.string,
     searchableIndexes: PropTypes.arrayOf(PropTypes.object),
