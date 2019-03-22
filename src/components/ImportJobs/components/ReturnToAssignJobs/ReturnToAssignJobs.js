@@ -56,8 +56,7 @@ export class ReturnToAssignJobs extends Component {
     try {
       await deleteUploadDefinition();
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
+      console.error(error); // eslint-disable-line no-console
     }
 
     this.setState({ deletingInProgress: false });

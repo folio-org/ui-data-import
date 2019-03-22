@@ -239,7 +239,10 @@ describe('Uploading jobs display', () => {
       await importJobs.triggerDrop({
         dataTransfer: {
           types: ['Files'],
-          files: [new File([], 'TAMU-Gen_55.mrc'), new File([], 'TAMU-Gen.mrc')],
+          files: [
+            new File([], 'TAMU-Gen_55.mrc'),
+            new File([], 'TAMU-Gen.mrc'),
+          ],
         },
       });
     });
@@ -251,6 +254,7 @@ describe('Uploading jobs display', () => {
     describe('when navigating away inside application', () => {
       describe('and there are files uploading in progress', () => {
         beforeEach(async () => {
+          await new Promise(resolve => setTimeout(resolve, 100)); // wait for the uploading process to begin
           await landingPageLink.click();
         });
 
@@ -269,59 +273,6 @@ describe('Uploading jobs display', () => {
           expect(leavePageModal.isPresent).to.be.false;
           expect(location().pathname).to.equal('/data-import');
         });
-      });
-    });
-  });
-
-  describe('when unable to create upload definition', () => {
-    setupApplication({ scenarios: ['create-upload-definition-error'] });
-
-    beforeEach(async function () {
-      this.visit('/data-import');
-      await importJobs.triggerDrop({
-        dataTransfer: {
-          types: ['Files'],
-          files: [new File([], 'TAMU-Gen_55.mrc'), new File([], 'TAMU-Gen.mrc')],
-        },
-      });
-    });
-
-    it('renders files', () => {
-      expect(uploadingJobsDisplay.files().length).to.equal(2);
-    });
-
-    it('files are rendered with error message', () => {
-      const fileItems = uploadingJobsDisplay.files();
-
-      fileItems.forEach(fileItem => {
-        expect(fileItem.hasDangerClass).to.be.true;
-        expect(fileItem.hasFailedClass).to.be.true;
-        expect(fileItem.errorMsg).to.equal(translation['upload.invalid']);
-      });
-    });
-  });
-
-  describe('when there is not enough space to create upload definition on the server', () => {
-    setupApplication({ scenarios: ['create-upload-definition-not-enough-memory-error'] });
-
-    beforeEach(function () {
-      this.visit({
-        pathname: '/data-import/job-profile',
-        state: { files: [new File([], 'TAMU-Gen_55.mrc'), new File([], 'TAMU-Gen.mrc')] },
-      });
-    });
-
-    it('renders files', () => {
-      expect(uploadingJobsDisplay.files().length).to.equal(2);
-    });
-
-    it('files are rendered with error message', () => {
-      const fileItems = uploadingJobsDisplay.files();
-
-      fileItems.forEach(fileItem => {
-        expect(fileItem.hasDangerClass).to.be.true;
-        expect(fileItem.hasFailedClass).to.be.true;
-        expect(fileItem.errorMsg).to.equal(translation['upload.fileSize.invalid']);
       });
     });
   });

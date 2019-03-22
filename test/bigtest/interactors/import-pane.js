@@ -4,11 +4,16 @@ import {
   clickable,
   triggerable,
   hasClass,
+  Interactor,
 } from '@bigtest/interactor';
 
 import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
 
 import css from '../../../src/components/ImportJobs/components/FileUploader/FileUploader.css';
+
+class FileExtensionsModal extends ConfirmationModalInteractor {
+  header = new Interactor('[data-test-file-extensions-modal-header]');
+}
 
 @interactor class ImportJobsInteractor {
   static defaultScope = '#ModuleContainer';
@@ -18,7 +23,6 @@ import css from '../../../src/components/ImportJobs/components/FileUploader/File
   triggerDrop = triggerable('drop');
   triggerDragEnter = triggerable('dragenter');
   triggerDragLeave = triggerable('dragleave');
-  fileExtensionsModal = new ConfirmationModalInteractor('#file-extensions-modal');
   hasActiveClass = hasClass(css.activeUpload);
 }
 
@@ -33,3 +37,4 @@ import css from '../../../src/components/ImportJobs/components/FileUploader/File
 
 export const importJobs = new ImportJobsInteractor('[class*="upload---"]');
 export const returnToAssignJobs = new ReturnToAssignJobsInteraction('[data-test-return-to-assign-jobs]');
+export const fileExtensionsModal = new FileExtensionsModal('#file-extensions-modal');

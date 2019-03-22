@@ -11,6 +11,7 @@ import { setupApplication } from '../helpers';
 import {
   importJobs,
   returnToAssignJobs,
+  fileExtensionsModal,
 } from '../interactors';
 
 describe('Import files with no previous draft jobs', () => {
@@ -38,11 +39,14 @@ describe('ImportJobs component', () => {
   });
 
   describe('onDrop', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await importJobs.triggerDrop({
         dataTransfer: {
           types: ['Files'],
-          files: [new File([], 'file.js'), new File([], 'file2.js')],
+          files: [
+            new File([], 'file.js'),
+            new File([], 'file2.js'),
+          ],
         },
       });
     });
@@ -81,37 +85,44 @@ describe('ImportJobs component', () => {
     });
   });
 
-  describe('when dropping files with invalid extensions', () => {
+  describe('when dropping files with different file extensions', () => {
     beforeEach(async function () {
       await importJobs.triggerDrop({
         dataTransfer: {
           types: ['Files'],
-          files: [new File([], 'server.js'), new File([], 'index.html')],
+          files: [
+            new File([], 'server.js'),
+            new File([], 'index.html'),
+          ],
         },
       });
     });
 
     it('renders modal', () => {
-      expect(importJobs.fileExtensionsModal.isPresent).to.be.true;
+      expect(fileExtensionsModal.isPresent).to.be.true;
+    });
+
+    it('modal has correct header', () => {
+      expect(fileExtensionsModal.header.text).to.be.equal(translation['modal.fileExtensions.inconsistent.header']);
     });
 
     describe('when cancel button clicked', () => {
       beforeEach(async () => {
-        await importJobs.fileExtensionsModal.cancelButton.click();
+        await fileExtensionsModal.cancelButton.click();
       });
 
       it('closes modal', () => {
-        expect(importJobs.fileExtensionsModal.isPresent).to.be.false;
+        expect(fileExtensionsModal.isPresent).to.be.false;
       });
     });
 
     describe('when "Choose other files" button clicked', () => {
       beforeEach(async () => {
-        await importJobs.fileExtensionsModal.confirmButton.click();
+        await fileExtensionsModal.confirmButton.click();
       });
 
       it('closes modal', () => {
-        expect(importJobs.fileExtensionsModal.isPresent).to.be.false;
+        expect(fileExtensionsModal.isPresent).to.be.false;
       });
     });
   });
@@ -152,6 +163,119 @@ describe('Import files with previous draft jobs', () => {
 
     it('navigates to "Choose jobs profile" page', () => {
       expect(location().pathname).to.be.equal('/data-import/job-profile');
+    });
+  });
+});
+
+describe('ImportJobs error handling:', () => {
+  describe('when unable to create upload definition because of network error', () => {
+    setupApplication({ scenarios: ['create-upload-definition-error'] });
+
+    beforeEach(async function () {
+      this.visit('/data-import');
+      await importJobs.triggerDrop({
+        dataTransfer: {
+          types: ['Files'],
+          files: [
+            new File([], 'TAMU-Gen_55.mrc'),
+            new File([], 'TAMU-Gen.mrc'),
+          ],
+        },
+      });
+    });
+
+    it('error message is shown', () => {
+      expect(importJobs.errorMsg).to.exist;
+    });
+  });
+
+  describe('when there is not enough space to create upload definition on the server', () => {
+    setupApplication({ scenarios: ['create-upload-definition-not-enough-memory-error'] });
+
+    beforeEach(async function () {
+      this.visit('/data-import');
+      await importJobs.triggerDrop({
+        dataTransfer: {
+          types: ['Files'],
+          files: [
+            new File([], 'TAMU-Gen_55.mrc'),
+            new File([], 'TAMU-Gen.mrc'),
+          ],
+        },
+      });
+    });
+
+    it('renders modal', () => {
+      expect(fileExtensionsModal.isPresent).to.be.true;
+    });
+
+    it('modal has correct header', () => {
+      expect(fileExtensionsModal.header.text).to.be.equal(translation['modal.fileExtensions.memoryLimit.header']);
+    });
+
+    describe('when cancel button clicked', () => {
+      beforeEach(async () => {
+        await fileExtensionsModal.cancelButton.click();
+      });
+
+      it('closes modal', () => {
+        expect(fileExtensionsModal.isPresent).to.be.false;
+      });
+    });
+
+    describe('when "Choose other files" button clicked', () => {
+      beforeEach(async () => {
+        await fileExtensionsModal.confirmButton.click();
+      });
+
+      it('closes modal', () => {
+        expect(fileExtensionsModal.isPresent).to.be.false;
+      });
+    });
+  });
+
+  describe('when there is error due to blocked file extensions', () => {
+    setupApplication({ scenarios: ['create-upload-definition-blocked-imports-error'] });
+
+    beforeEach(async function () {
+      this.visit('/data-import');
+      await importJobs.triggerDrop({
+        dataTransfer: {
+          types: ['Files'],
+          files: [
+            new File([], 'TAMU-Gen_55.zip'),
+            new File([], 'TAMU-Gen.zip'),
+          ],
+        },
+      });
+    });
+
+    it('renders modal', () => {
+      expect(fileExtensionsModal.isPresent).to.be.true;
+    });
+
+    it('modal has correct header', () => {
+      expect(fileExtensionsModal.header.text).to.be.equal(translation['modal.fileExtensions.blocked.header']);
+    });
+
+    describe('when cancel button clicked', () => {
+      beforeEach(async () => {
+        await fileExtensionsModal.cancelButton.click();
+      });
+
+      it('closes modal', () => {
+        expect(fileExtensionsModal.isPresent).to.be.false;
+      });
+    });
+
+    describe('when "Choose other files" button clicked', () => {
+      beforeEach(async () => {
+        await fileExtensionsModal.confirmButton.click();
+      });
+
+      it('closes modal', () => {
+        expect(fileExtensionsModal.isPresent).to.be.false;
+      });
     });
   });
 });
