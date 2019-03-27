@@ -119,10 +119,10 @@
     "settings.fileExtension.action.error": "لم يتم {action} امتداد الملف \"{extension}\"",
     "modal.fileExtension.delete.header": "حذف امتداد الملف \"{extension}\"؟",
     "modal.fileExtension.delete.message": "حذف امتداد الملف؟",
-    "modal.fileExtensions.inconsistent.header": "Inconsistent file extensions",
-    "modal.fileExtensions.inconsistent.message": "You cannot upload files with {highlightedText}. Please upload files with the same extension",
-    "modal.fileExtensions.blocked.header": "Import blocked",
-    "modal.fileExtensions.blocked.message": "You cannot upload files with this file extension",
-    "modal.fileExtensions.memoryLimit.header": "Not enough space",
-    "modal.fileExtensions.memoryLimit.message": "Not enough space to store the files. Contact system administrator"
+    "modal.fileExtensions.inconsistent.header": "امتدادات ملفات غير متناسقة",
+    "modal.fileExtensions.inconsistent.message": "لا يمكنك تحميل الملفات بـ {highlightedText} . يرجى تحميل الملفات بنفس الامتداد.",
+    "modal.fileExtensions.blocked.header": "الاستيراد محظور",
+    "modal.fileExtensions.blocked.message": "لا يمكنك تحميل الملفات بهذا الامتداد",
+    "modal.fileExtensions.memoryLimit.header": "لا توجد مساحة كافية",
+    "modal.fileExtensions.memoryLimit.message": "لا توجد مساحة كافية لتخزين الملفات. يرجى الاتصال بمسؤول النظام"
 }
