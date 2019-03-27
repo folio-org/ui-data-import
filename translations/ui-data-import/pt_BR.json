@@ -74,7 +74,7 @@
     "modal.fileExtensions.cancel": "Cancelar",
     "modal.fileExtensions.actionButton": "Escolha outros arquivos para upload",
     "modal.leavePage.header": "Deixar a página",
-    "modal.leavePage.message": "Existem {highlightedText}. Se você quiser concluir todos os uploads, pressione o botão \"Manter upload\".",
+    "modal.leavePage.message": "Existem {highlightedText}. Se você quiser concluir todos os uploads, pressione o botão \"Manter upload\"",
     "modal.leavePage.messageHighlightedText": "uploads inacabados",
     "modal.leavePage.cancel": "Fechar e perder uploads parciais",
     "modal.leavePage.actionButton": "Continue fazendo o upload",
@@ -119,10 +119,10 @@
     "settings.fileExtension.action.error": "A extensão de arquivo \"{extension}\" não foi {action}",
     "modal.fileExtension.delete.header": "Excluir a extensão de arquivo \"{extension}\"?",
     "modal.fileExtension.delete.message": "Excluir extensão de arquivo?",
-    "modal.fileExtensions.inconsistent.header": "Inconsistent file extensions",
-    "modal.fileExtensions.inconsistent.message": "You cannot upload files with {highlightedText}. Please upload files with the same extension",
-    "modal.fileExtensions.blocked.header": "Import blocked",
-    "modal.fileExtensions.blocked.message": "You cannot upload files with this file extension",
-    "modal.fileExtensions.memoryLimit.header": "Not enough space",
-    "modal.fileExtensions.memoryLimit.message": "Not enough space to store the files. Contact system administrator"
+    "modal.fileExtensions.inconsistent.header": "Extensões de arquivos inconsistentes",
+    "modal.fileExtensions.inconsistent.message": "Você não pode fazer upload de arquivos com {highlightedText}. Por favor, envie arquivos com a mesma extensão",
+    "modal.fileExtensions.blocked.header": "Importação bloqueada",
+    "modal.fileExtensions.blocked.message": "Você não pode carregar arquivos com esta extensão",
+    "modal.fileExtensions.memoryLimit.header": "Espaço insuficiente",
+    "modal.fileExtensions.memoryLimit.message": "Não há espaço suficiente para armazenar o arquivo. Entre em contato com o administrador do sistema"
 }
