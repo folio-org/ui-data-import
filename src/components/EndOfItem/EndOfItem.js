@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Layout,
@@ -10,13 +10,11 @@ import {
 
 import css from './EndOfItem.css';
 
-export const EndOfItem = props => (
+export const EndOfItem = memo(props => (
   <Layout className={classnames('textCentered', css.endOfItem, props.className)}>
-    <Icon icon="end-mark">
-      {props.title}
-    </Icon>
+    <Icon icon="end-mark">{props.title}</Icon>
   </Layout>
-);
+));
 
 EndOfItem.propTypes = {
   title: PropTypes.node,

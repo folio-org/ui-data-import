@@ -86,7 +86,7 @@ describe('ImportJobs component', () => {
   });
 
   describe('when dropping files with different file extensions', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await importJobs.triggerDrop({
         dataTransfer: {
           types: ['Files'],

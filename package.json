@@ -25,9 +25,9 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/stripes": "^2.0.0",
+    "@folio/stripes": "^2.3.0",
     "@folio/stripes-cli": "^1.8.0",
-    "@folio/stripes-core": "^3.0.0",
+    "@folio/stripes-core": "^3.3.0",
     "babel-eslint": "^9.0.0",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
@@ -52,7 +52,7 @@
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^2.0.0",
+    "@folio/stripes": "^2.3.0",
     "react": "*"
   },
   "stripes": {
@@ -95,7 +95,8 @@
     ],
     "okapiInterfaces": {
       "data-import": "3.0",
-      "source-record-manager": "2.0"
+      "source-record-manager": "2.0",
+      "data-import-converter-storage": "1.0"
     },
     "permissionSets": [
       {
@@ -121,7 +122,8 @@
           "data-import.fileExtensions.post",
           "data-import.fileExtensions.put",
           "data-import.fileExtensions.delete",
-          "data-import.fileExtensions.default"
+          "data-import.fileExtensions.default",
+          "converter-storage.jobprofile.get"
         ],
         "visible": true
       }

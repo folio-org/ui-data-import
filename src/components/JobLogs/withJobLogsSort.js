@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import queryString from 'query-string';
+import { withRouter } from 'react-router';
+import { get } from 'lodash';
 
 import {
   sortNums,

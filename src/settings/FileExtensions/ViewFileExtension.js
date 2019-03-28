@@ -33,7 +33,7 @@ import {
   SYSTEM_USER_NAME,
 } from '../../utils/constants';
 
-import css from './FileExtensions.css';
+import css from './ViewFileExtension.css';
 
 export class ViewFileExtension extends Component {
   static manifest = Object.freeze({

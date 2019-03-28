@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { withRouter, Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import {
+  withRouter,
+  Redirect,
+} from 'react-router';
 import {
   forEach,
   isEmpty,
@@ -277,11 +280,7 @@ export class ImportJobs extends Component {
           <ConfirmationModal
             id="file-extensions-modal"
             open={filesExtensionsModalOpen}
-            heading={(
-              <span data-test-file-extensions-modal-header>
-                {modalMeta.heading}
-              </span>
-            )}
+            heading={<span data-test-file-extensions-modal-header>{modalMeta.heading}</span>}
             message={modalMeta.message}
             confirmLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.actionButton" />}
             cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}

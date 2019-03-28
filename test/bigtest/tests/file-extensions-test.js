@@ -51,7 +51,7 @@ describe('File extensions', () => {
     });
 
     describe('is visible', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensions.expandPaneHeaderDropdown();
       });
 
@@ -67,7 +67,7 @@ describe('File extensions', () => {
     });
 
     describe('is visible', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensions.expandPaneHeaderDropdown();
         await fileExtensions.restoreDefaultFileExtensionsButton.click();
       });
@@ -78,7 +78,7 @@ describe('File extensions', () => {
     });
 
     describe('disappears', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensions.expandPaneHeaderDropdown();
         await fileExtensions.restoreDefaultFileExtensionsButton.click();
         await fileExtensions.confirmationModal.cancelButton.click();
@@ -109,7 +109,7 @@ describe('File extensions', () => {
 
   describe('restore default file extension confirmation modal', () => {
     describe('upon click on confirm button initiate the restoring process and in case of success', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensions.expandPaneHeaderDropdown();
         await fileExtensions.restoreDefaultFileExtensionsButton.click();
         await fileExtensions.confirmationModal.confirmButton.click();
@@ -131,7 +131,7 @@ describe('File extensions', () => {
 
   describe('restore default file extensions confirmation modal', () => {
     describe('upon click on confirm button twice only initiate the restoring process once and in case of success', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensions.expandPaneHeaderDropdown();
         await fileExtensions.restoreDefaultFileExtensionsButton.click();
         await fileExtensions.confirmationModal.confirmButton.click();
@@ -154,7 +154,7 @@ describe('File extensions', () => {
     });
 
     describe('upon click on search button', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensions.searchFiled.fill('marc');
         await fileExtensions.searchFiled.fill('mar');
         await fileExtensions.searchSubmitButton.click();
