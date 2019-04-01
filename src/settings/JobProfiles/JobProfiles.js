@@ -118,6 +118,7 @@ export class JobProfiles extends Component {
                     <div // eslint-disable-line jsx-a11y/click-events-have-key-events
                       role="button"
                       tabIndex="0"
+                      className={sharedCss.selectableCellButton}
                       data-test-select-all
                       onClick={e => e.stopPropagation()}
                     >

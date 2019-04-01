@@ -18,6 +18,15 @@
 
 .selectableCellButton {
   & label {
+    &:before,
+    &:after {
+      content: none;
+    }
+
+    & input {
+      margin: 0;
+    }
+
     margin-bottom: 0;
   }
 }
