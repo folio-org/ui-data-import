@@ -195,7 +195,7 @@ describe('Uploading jobs display', () => {
 
     const fileItem = uploadingJobsDisplay.files(2);
 
-    beforeEach(async function () {
+    beforeEach(async () => {
       await fileItem.deleteButton.click();
       await new Promise(resolve => setTimeout(resolve, 600));
     });

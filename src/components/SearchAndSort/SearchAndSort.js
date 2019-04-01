@@ -120,6 +120,7 @@ export class SearchAndSort extends Component {
     columnWidths: PropTypes.object,
     resultsFormatter: PropTypes.shape({}),
     defaultSort: PropTypes.string,
+    finishedResourceName: PropTypes.string,
     fullWidthContainer: PropTypes.instanceOf(Element),
   };
 
@@ -134,6 +135,7 @@ export class SearchAndSort extends Component {
     handleCreateSuccess: noop,
     massageNewRecord: noop,
     defaultSort: '',
+    finishedResourceName: '',
   };
 
   constructor(props) {
@@ -158,10 +160,13 @@ export class SearchAndSort extends Component {
   }
 
   componentWillReceiveProps(nextProps) {  // eslint-disable-line react/no-deprecated
-    const { stripes: { logger } } = this.props;
+    const {
+      stripes: { logger },
+      finishedResourceName,
+    } = this.props;
 
-    const oldState = makeConnectedSource(this.props, logger);
-    const newState = makeConnectedSource(nextProps, logger);
+    const oldState = makeConnectedSource(this.props, logger, finishedResourceName);
+    const newState = makeConnectedSource(nextProps, logger, finishedResourceName);
 
     const isSearchComplete = oldState.pending() && !newState.pending();
 
@@ -265,13 +270,8 @@ export class SearchAndSort extends Component {
     this.transitionToParams({ layer: null });
   };
 
-  onNeedMore = () => {
-    const {
-      stripes: { logger },
-      resultCountIncrement,
-    } = this.props;
-
-    const source = makeConnectedSource(this.props, logger);
+  onNeedMore = source => {
+    const { resultCountIncrement } = this.props;
 
     source.fetchMore(resultCountIncrement);
   };
@@ -607,7 +607,7 @@ export class SearchAndSort extends Component {
             rowFormatter={this.anchoredRowFormatter}
             onRowClick={this.onSelectRow}
             onHeaderClick={this.onSort}
-            onNeedMoreData={this.onNeedMore}
+            onNeedMoreData={() => this.onNeedMore(source)}
           />
         )}
       </FormattedMessage>
@@ -662,9 +662,10 @@ export class SearchAndSort extends Component {
       actionMenu,
       resultCountMessageKey,
       resultsLabel,
+      finishedResourceName,
     } = this.props;
 
-    const source = makeConnectedSource(this.props, stripes.logger);
+    const source = makeConnectedSource(this.props, stripes.logger, finishedResourceName);
     const count = source.totalCount();
     const paneSub = (
       <FormattedMessage

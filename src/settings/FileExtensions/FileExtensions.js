@@ -25,7 +25,7 @@ import { ViewFileExtension } from './ViewFileExtension';
 import { resultsFormatter } from './resultsFormatter';
 import { getXHRErrorMessage } from '../../utils';
 
-import css from './FileExtensions.css';
+import sharedCss from '../../shared.css';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -33,11 +33,9 @@ const RESULT_COUNT_INCREMENT = 30;
 export class FileExtensions extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
-    query: {
-      initialValue: {},
-    },
+    query: { initialValue: {} },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
-    records: {
+    fileExtensions: {
       type: 'okapi',
       perRequest: RESULT_COUNT_INCREMENT,
       records: 'fileExtensions',
@@ -74,7 +72,7 @@ export class FileExtensions extends Component {
 
   static propTypes = {
     mutator: PropTypes.shape({
-      records: PropTypes.shape({
+      fileExtensions: PropTypes.shape({
         POST: PropTypes.func.isRequired,
         PUT: PropTypes.func.isRequired,
         DELETE: PropTypes.func.isRequired,
@@ -129,9 +127,9 @@ export class FileExtensions extends Component {
   };
 
   createRecord = record => {
-    const { mutator: { records } } = this.props;
+    const { mutator: { fileExtensions } } = this.props;
 
-    return records.POST(record)
+    return fileExtensions.POST(record)
       .catch(error => {
         this.showUpdateRecordErrorMessage(error, record);
 
@@ -140,9 +138,9 @@ export class FileExtensions extends Component {
   };
 
   editRecord = record => {
-    const { mutator: { records } } = this.props;
+    const { mutator: { fileExtensions } } = this.props;
 
-    return records.PUT(record)
+    return fileExtensions.PUT(record)
       .catch(error => {
         this.showUpdateRecordErrorMessage(error, record, true);
 
@@ -151,10 +149,10 @@ export class FileExtensions extends Component {
   };
 
   deleteRecord = async record => {
-    const { mutator: { records } } = this.props;
+    const { mutator: { fileExtensions } } = this.props;
 
     try {
-      await records.DELETE(record);
+      await fileExtensions.DELETE(record);
 
       const { match: { path } } = this.props;
 
@@ -331,11 +329,12 @@ export class FileExtensions extends Component {
         {intl => (
           <Fragment>
             <div
-              className={css.fileExtensionContainer}
+              className={sharedCss.container}
               data-test-file-extensions
             >
               <SearchAndSort
                 objectName="file-extensions"
+                finishedResourceName="fileExtensions"
                 parentResources={resources}
                 parentMutator={mutator}
                 initialResultCount={INITIAL_RESULT_COUNT}
@@ -368,7 +367,7 @@ export class FileExtensions extends Component {
               />
             </div>
             <div
-              className={css.fullWidthContainer}
+              className={sharedCss.fullWidthAndHeightContainer}
               ref={this.createFullWidthContainerRef}
             />
             <ConfirmationModal

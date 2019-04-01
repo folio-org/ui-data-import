@@ -1,0 +1,23 @@
+.container {
+  width: 100%;
+}
+
+.fullWidthAndHeightContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.baseline {
+  align-items: baseline;
+}
+
+.selectableCellButton {
+  & label {
+    margin-bottom: 0;
+  }
+}

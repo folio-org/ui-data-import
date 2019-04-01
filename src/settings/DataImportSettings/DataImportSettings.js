@@ -25,6 +25,7 @@ export class DataImportSettings extends Component {
     const { stripes } = this.props;
 
     const connectedFileExtensions = stripes.connect(FileExtensions);
+    const connectedJobProfiles = stripes.connect(JobProfiles);
 
     this.sections = [
       {
@@ -32,22 +33,22 @@ export class DataImportSettings extends Component {
         pages: [
           {
             route: 'job-profiles',
-            label: this.generateSettingsLabel('jobProfiles', 'jobProfiles'),
-            component: JobProfiles,
+            label: this.generateSettingsLabel('jobProfiles.title', 'jobProfiles'),
+            component: connectedJobProfiles,
           },
           {
             route: 'match-profiles',
-            label: this.generateSettingsLabel('matchProfiles', 'matchProfiles'),
+            label: this.generateSettingsLabel('matchProfiles.title', 'matchProfiles'),
             component: MatchProfiles,
           },
           {
             route: 'action-profiles',
-            label: this.generateSettingsLabel('actionProfiles', 'actionProfiles'),
+            label: this.generateSettingsLabel('actionProfiles.title', 'actionProfiles'),
             component: ActionProfiles,
           },
           {
             route: 'mapping-profiles',
-            label: this.generateSettingsLabel('fieldMappingProfiles', 'fieldMapping'),
+            label: this.generateSettingsLabel('fieldMappingProfiles.title', 'fieldMapping'),
             component: FieldMappingProfiles,
           },
         ],

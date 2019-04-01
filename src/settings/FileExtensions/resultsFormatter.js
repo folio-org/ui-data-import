@@ -1,29 +1,10 @@
 import React from 'react';
 import HighLight from 'react-highlighter';
-import { FormattedDate } from 'react-intl';
 
-import { Icon } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes/core';
-
-import { SYSTEM_USER_NAME } from '../../utils/constants';
-
-import css from './FileExtensions.css';
-
-const formatUserName = userInfo => {
-  const {
-    firstName = '',
-    lastName = '',
-    userName = '',
-  } = userInfo;
-
-  if (userName === SYSTEM_USER_NAME) {
-    return userName;
-  }
-
-  const formattedUserName = userName ? `(@${userName})` : userName;
-
-  return `${firstName} ${lastName} ${formattedUserName}`;
-};
+import {
+  DateFormatter,
+  UserNameFormatter,
+} from '../../components';
 
 export const resultsFormatter = (intl, searchTerm) => ({
   importBlocked: record => {
@@ -33,11 +14,7 @@ export const resultsFormatter = (intl, searchTerm) => ({
 
     return intl.formatMessage({ id: fullTranslationId });
   },
-  extension: record => {
-    const { extension } = record;
-
-    return <HighLight search={searchTerm}>{extension}</HighLight>;
-  },
+  extension: record => <HighLight search={searchTerm}>{record.extension}</HighLight>,
   dataTypes: record => {
     const { dataTypes } = record;
 
@@ -50,28 +27,7 @@ export const resultsFormatter = (intl, searchTerm) => ({
   updated: record => {
     const { metadata: { updatedDate } } = record;
 
-    return (
-      <Icon
-        iconClassName={css.editIcon}
-        icon="edit"
-        size="small"
-      >
-        <FormattedDate value={updatedDate} />
-      </Icon>
-    );
+    return <DateFormatter value={updatedDate} />;
   },
-  updatedBy: record => {
-    const { userInfo } = record;
-
-    return (
-      <AppIcon
-        size="small"
-        app="data-import"
-        iconKey="user"
-        className={css.userColumn}
-      >
-        <HighLight search={searchTerm}>{formatUserName(userInfo)}</HighLight>
-      </AppIcon>
-    );
-  },
+  updatedBy: record => <UserNameFormatter value={record.userInfo} />,
 });

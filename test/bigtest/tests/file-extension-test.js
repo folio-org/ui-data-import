@@ -6,6 +6,7 @@ import {
   it,
 } from '@bigtest/mocha';
 
+import translation from '../../../translations/ui-data-import/en';
 import { setupApplication } from '../helpers';
 import {
   fileExtensionForm,
@@ -33,12 +34,16 @@ describe('File extensions table', () => {
     this.visit('/settings/data-import/file-extensions');
   });
 
-  it('renders', () => {
-    expect(fileExtensions.list.isPresent).to.be.true;
+  it('has proper columns order', () => {
+    expect(fileExtensions.list.headers(0).text).to.equal(translation['settings.fileExtension.extension']);
+    expect(fileExtensions.list.headers(1).text).to.equal(translation['settings.fileExtension.blockImport']);
+    expect(fileExtensions.list.headers(2).text).to.equal(translation['settings.fileExtension.dataTypes']);
+    expect(fileExtensions.list.headers(3).text).to.equal(translation.updated);
+    expect(fileExtensions.list.headers(4).text).to.equal(translation.updatedBy);
   });
 
   describe('opens file extension details', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await fileExtensions.list.rows(0).click();
     });
 
@@ -47,7 +52,7 @@ describe('File extensions table', () => {
     });
 
     describe('edit button', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensionDetails.expandPaneHeaderDropdown();
       });
 
@@ -62,7 +67,7 @@ describe('File extensions table', () => {
       });
 
       describe('is visible', () => {
-        beforeEach(async function () {
+        beforeEach(async () => {
           await fileExtensionDetails.expandPaneHeaderDropdown();
           await fileExtensionDetails.deleteButton.click();
         });
@@ -73,7 +78,7 @@ describe('File extensions table', () => {
       });
 
       describe('disappears', () => {
-        beforeEach(async function () {
+        beforeEach(async () => {
           await fileExtensionDetails.expandPaneHeaderDropdown();
           await fileExtensionDetails.deleteButton.click();
           await fileExtensionDetails.confirmationModal.cancelButton.click();
@@ -85,7 +90,7 @@ describe('File extensions table', () => {
       });
 
       describe('upon click on confirm button initiates the deletion process of file extension and in case of success', () => {
-        beforeEach(async function () {
+        beforeEach(async () => {
           await fileExtensionDetails.expandPaneHeaderDropdown();
           await fileExtensionDetails.deleteButton.click();
           await fileExtensionDetails.confirmationModal.confirmButton.click();
@@ -101,7 +106,7 @@ describe('File extensions table', () => {
       });
 
       describe('upon click on confirm button twice initiates the deletion process only once file extension and in case of success', () => {
-        beforeEach(async function () {
+        beforeEach(async () => {
           await fileExtensionDetails.expandPaneHeaderDropdown();
           await fileExtensionDetails.deleteButton.click();
           await fileExtensionDetails.confirmationModal.confirmButton.click();
@@ -146,7 +151,7 @@ describe('File extensions table', () => {
 
     describe('file extension form', () => {
       describe('appears', () => {
-        beforeEach(async function () {
+        beforeEach(async () => {
           await fileExtensionDetails.expandPaneHeaderDropdown();
           await fileExtensionDetails.paneHeaderEditButton.click();
         });
@@ -157,7 +162,7 @@ describe('File extensions table', () => {
       });
 
       describe('appears', () => {
-        beforeEach(async function () {
+        beforeEach(async () => {
           await fileExtensionDetails.editButton.click();
         });
 
@@ -168,12 +173,12 @@ describe('File extensions table', () => {
     });
 
     describe('file extension form', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensionDetails.editButton.click();
       });
 
       describe('when form is submitted', () => {
-        beforeEach(async function () {
+        beforeEach(async () => {
           await fileExtensionForm.extensionField.fillAndBlur('.changed');
           await fileExtensionForm.blockedField.clickAndBlur();
           await fileExtensionForm.descriptionField.fillAndBlur('Changed');
@@ -192,7 +197,7 @@ describe('File extensions table', () => {
         });
       });
 
-      describe('is submitted and the response contains', function () {
+      describe('is submitted and the response contains', () => {
         describe('error message', () => {
           beforeEach(async function () {
             await setupFormSubmitErrorScenario(this.server, {

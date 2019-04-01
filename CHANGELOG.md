@@ -1,5 +1,9 @@
 # Change history for ui-data-import
 
+## 1.2.0 (IN-PROGRESS)
+
+* Create data import settings page's 3rd pane for Jobs Profiles (UIDATIMP-6)
+
 ## [1.1.0](https://github.com/folio-org/ui-data-import/tree/v1.1.0) (2019-03-22)
 
 * Add file extensions validation and `InvalidFilesModal` component for file upload (UIDATIMP-46)

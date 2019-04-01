@@ -34,7 +34,7 @@ describe('File extension form', () => {
   });
 
   describe('appears', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await fileExtensions.newFileExtensionButton.click();
     });
 
@@ -54,7 +54,7 @@ describe('File extension form', () => {
 
   describe('when file extension field', () => {
     describe('has leading or trailing spaces', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensionForm.extensionField.fillAndBlur('  .csv  ');
         await fileExtensionForm.submitFormButton.click();
       });
@@ -65,7 +65,7 @@ describe('File extension form', () => {
     });
 
     describe('has not leading dot', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensionForm.extensionField.fillAndBlur('csv');
         await fileExtensionForm.submitFormButton.click();
       });
@@ -76,7 +76,7 @@ describe('File extension form', () => {
     });
 
     describe('is valid', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensionForm.extensionField.fillAndBlur('.csv');
         await fileExtensionForm.submitFormButton.click();
       });
@@ -93,7 +93,7 @@ describe('File extension form', () => {
     });
 
     describe('is visible', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensionForm.expandPaneHeaderDropdown();
       });
 
@@ -103,7 +103,7 @@ describe('File extension form', () => {
     });
 
     describe('cancels creation of file extension', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await fileExtensionForm.expandPaneHeaderDropdown();
         await fileExtensionForm.paneHeaderCancelButton.click();
       });
@@ -115,7 +115,7 @@ describe('File extension form', () => {
   });
 
   describe('when data types field has value', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await fileExtensionForm.dataTypesField.expandAndFilter('Del');
       await fileExtensionForm.dataTypesField.clickOption('1');
       await fileExtensionForm.dataTypesField.blur('input');
@@ -127,7 +127,7 @@ describe('File extension form', () => {
   });
 
   describe('when data types filter result is empty', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await fileExtensionForm.dataTypesField.expandAndFilter('NON EXISTING OPTION');
     });
 
@@ -137,7 +137,7 @@ describe('File extension form', () => {
   });
 
   describe('when form is submitted and import is not blocked', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await fileExtensionForm.extensionField.fillAndBlur('.csv');
       await fileExtensionForm.submitFormButton.click();
     });
@@ -149,7 +149,7 @@ describe('File extension form', () => {
   });
 
   describe('when form is submitted and import is blocked', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await fileExtensionForm.extensionField.fillAndBlur('.csv');
       await fileExtensionForm.blockedField.clickAndBlur();
       await fileExtensionForm.submitFormButton.click();
@@ -162,7 +162,7 @@ describe('File extension form', () => {
   });
 
   describe('when form is submitted with blocked import', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await fileExtensionForm.extensionField.fillAndBlur('.csv');
       await fileExtensionForm.blockedField.clickAndBlur();
       await fileExtensionForm.submitFormButton.click();
@@ -178,7 +178,7 @@ describe('File extension form', () => {
   });
 
   describe('when form is submitted with unblocked import', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await fileExtensionForm.descriptionField.fillAndBlur('Description');
       await fileExtensionForm.dataTypesField.expandAndFilter('Del');
       await fileExtensionForm.dataTypesField.clickOption('1');
@@ -204,7 +204,7 @@ describe('When file extension form', () => {
     await fileExtensionForm.whenLoaded();
   });
 
-  describe('is submitted and the response contains', function () {
+  describe('is submitted and the response contains', () => {
     describe('error message', () => {
       beforeEach(async function () {
         await setupFormSubmitErrorScenario(this.server, {
