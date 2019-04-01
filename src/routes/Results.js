@@ -7,7 +7,7 @@ import {
   Pane,
   Paneset,
   PaneMenu,
-  IconButton,
+  PaneHeaderIconButton,
 } from '@folio/stripes/components';
 
 import { SearchPanel } from '../components/SearchPanel';
@@ -35,7 +35,7 @@ export class Results extends Component {
   addFirstMenu() {
     return (
       <PaneMenu>
-        <IconButton
+        <PaneHeaderIconButton
           icon="times"
           onClick={this.toggleFilterPane}
         />
@@ -46,7 +46,7 @@ export class Results extends Component {
   addResultsFirstMenu() {
     return (
       <PaneMenu>
-        <IconButton
+        <PaneHeaderIconButton
           icon="search"
           onClick={this.toggleFilterPane}
         />
@@ -71,7 +71,7 @@ export class Results extends Component {
   addRecordDetailsMenu() {
     return (
       <PaneMenu>
-        <IconButton
+        <PaneHeaderIconButton
           icon="times"
           onClick={this.toggleRecordDetailsPane}
         />
