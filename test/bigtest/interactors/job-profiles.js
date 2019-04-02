@@ -7,6 +7,7 @@ import {
   property,
 } from '@bigtest/interactor';
 
+import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
 @interactor class CheckboxInteractor {
@@ -28,6 +29,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   list = new MultiColumnListInteractor('#job-profiles-list');
   selectAllCheckBox = new CheckboxInteractor('[data-test-job-profiles] [data-test-select-all]');
   checkBoxes = collection('[data-test-job-profiles] [data-test-select-item]', CheckboxInteractor);
+  newJobProfileButton = new ButtonInteractor('[data-test-new-button]');
 }
 
 export const jobProfiles = new JobProfilesInteractor('[data-test-job-profiles]');

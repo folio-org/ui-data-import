@@ -14,7 +14,7 @@ import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/i
 
   paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
   restoreDefaultFileExtensionsButton = new ButtonInteractor('[data-test-restore-default-file-extensions-button]');
-  newFileExtensionButton = new ButtonInteractor('[data-test-new-file-extension-button]');
+  newFileExtensionButton = new ButtonInteractor('[data-test-new-button]');
   list = new MultiColumnListInteractor('#file-extensions-list');
   confirmationModal = new ConfirmationModalInteractor('#restore-default-file-extensions-modal');
   callout = new CalloutInteractor();

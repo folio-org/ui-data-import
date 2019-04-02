@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { stripesShape } from '@folio/stripes/core';
 import {
   Button,
   Pane,
@@ -16,16 +15,6 @@ import {
 } from '../components';
 
 export class Home extends Component {
-  static propTypes = { stripes: stripesShape.isRequired };
-
-  constructor(props) {
-    super(props);
-
-    const { stripes } = this.props;
-
-    this.connectedDataFetcher = stripes.connect(DataFetcher);
-  }
-
   handleManageJobs = () => {
     // TODO: to be implemented in further stories
   };
@@ -61,7 +50,7 @@ export class Home extends Component {
   render() {
     return (
       <Paneset>
-        <this.connectedDataFetcher>
+        <DataFetcher>
           <Pane
             data-test-jobs-pane
             defaultWidth="320px"
@@ -82,7 +71,7 @@ export class Home extends Component {
           >
             <JobLogs />
           </Pane>
-        </this.connectedDataFetcher>
+        </DataFetcher>
         <Pane
           defaultWidth="fill"
           paneTitle={<FormattedMessage id="ui-data-import.importPaneTitle" />}

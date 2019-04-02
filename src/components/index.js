@@ -1,4 +1,5 @@
 export * from './FileExtensionForm';
+export * from './JobProfilesForm';
 export * from './SearchAndSort';
 export * from './Jobs';
 export * from './JobLogs';
