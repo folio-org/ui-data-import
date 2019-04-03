@@ -18,7 +18,7 @@ export class ActionProfiles extends Component {
         paneTitle={label}
       >
         <div>
-          <FormattedMessage id="ui-data-import.settings.actionProfiles" />
+          <FormattedMessage id="ui-data-import.settings.actionProfiles.title" />
         </div>
       </Pane>
     );

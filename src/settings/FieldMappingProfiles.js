@@ -18,7 +18,7 @@ export class FieldMappingProfiles extends Component {
         paneTitle={label}
       >
         <div>
-          <FormattedMessage id="ui-data-import.settings.fieldMappingProfiles" />
+          <FormattedMessage id="ui-data-import.settings.fieldMappingProfiles.title" />
         </div>
       </Pane>
     );
