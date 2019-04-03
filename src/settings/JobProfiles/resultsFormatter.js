@@ -1,8 +1,14 @@
 import React from 'react';
-import { get } from 'lodash';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
 
 import { AppIcon } from '@folio/stripes/core';
-import { Checkbox } from '@folio/stripes/components';
+import {
+  Checkbox,
+  Icon,
+} from '@folio/stripes/components';
 
 import {
   DateFormatter,
@@ -10,6 +16,7 @@ import {
 } from '../../components';
 
 import sharedCss from '../../shared.css';
+import css from './JobProfiles.css';
 
 export const resultsFormatter = {
   selected: record => (
@@ -36,11 +43,20 @@ export const resultsFormatter = {
   tags: record => {
     const tags = get(record, 'tags.tagList', []);
 
-    if (!tags.length) {
+    if (isEmpty(tags)) {
       return '-';
     }
 
-    return tags.join(', ');
+    return (
+      <span className={css.tags}>
+        <Icon
+          size="small"
+          icon="tag"
+          iconClassName={css.tagsIcon}
+        />
+        <span>{tags.join(', ')}</span>
+      </span>
+    );
   },
   updated: record => {
     const { metadata: { updatedDate } } = record;

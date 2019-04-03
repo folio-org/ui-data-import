@@ -18,7 +18,7 @@ export class MatchProfiles extends Component {
         paneTitle={label}
       >
         <div>
-          <FormattedMessage id="ui-data-import.settings.matchProfiles" />
+          <FormattedMessage id="ui-data-import.settings.matchProfiles.title" />
         </div>
       </Pane>
     );

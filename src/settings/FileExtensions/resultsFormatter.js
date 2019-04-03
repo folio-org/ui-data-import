@@ -1,5 +1,6 @@
 import React from 'react';
 import HighLight from 'react-highlighter';
+import { isEmpty } from 'lodash';
 
 import {
   DateFormatter,
@@ -18,7 +19,7 @@ export const resultsFormatter = (intl, searchTerm) => ({
   dataTypes: record => {
     const { dataTypes } = record;
 
-    if (!dataTypes.length) {
+    if (isEmpty(dataTypes)) {
       return '-';
     }
 
