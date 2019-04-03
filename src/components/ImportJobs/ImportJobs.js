@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -10,7 +13,10 @@ import {
   isEmpty,
 } from 'lodash';
 
-import { ConfirmationModal } from '@folio/stripes/components';
+import {
+  ConfirmationModal,
+  Callout,
+} from '@folio/stripes/components';
 import {
   withStripes,
   stripesShape,
@@ -76,12 +82,54 @@ export class ImportJobs extends Component {
     try {
       const { updateUploadDefinition } = this.context;
 
-      await updateUploadDefinition();
+      const uploadDefinition = await updateUploadDefinition();
+
+      await this.deleteUploadDefinitionWithoutFiles(uploadDefinition);
 
       this.setState({ hasLoaded: true });
     } catch (error) {
       console.error(error); // eslint-disable-line no-console
     }
+  }
+
+  async deleteUploadDefinitionWithoutFiles(uploadDefinition) {
+    const { deleteUploadDefinition } = this.context;
+
+    const hasUploadDefinition = !isEmpty(uploadDefinition);
+
+    if (hasUploadDefinition) {
+      const hasUploadDefinitionFiles = !isEmpty(uploadDefinition.fileDefinitions);
+
+      if (!hasUploadDefinitionFiles) {
+        try {
+          await deleteUploadDefinition();
+        } catch (error) {
+          this.showDeleteUploadDefinitionErrorMessage();
+
+          console.error(error); // eslint-disable-line no-console
+        }
+      }
+    }
+  }
+
+  showDeleteUploadDefinitionErrorMessage() {
+    const errorMessage = (
+      <FormattedMessage
+        id="ui-data-import.fileDefinitionDeleteError"
+        values={{
+          button: (
+            <strong>
+              <FormattedMessage id="ui-data-import.returnToAssign.deleteFiles" />
+            </strong>
+          ),
+        }}
+      />
+    );
+
+    this.callout.sendCallout({
+      type: 'error',
+      message: errorMessage,
+    });
   }
 
   onDragEnter = () => {
@@ -219,7 +267,9 @@ export class ImportJobs extends Component {
     });
   };
 
-  render() {
+  createCalloutRef = ref => { this.callout = ref; };
+
+  renderImportJobs() {
     const { match: { path } } = this.props;
     const { filesExtensionsModalType } = this.state;
     const { uploadDefinition } = this.context;
@@ -292,6 +342,15 @@ export class ImportJobs extends Component {
           />
         )}
       </FileUploader>
+    );
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.renderImportJobs()}
+        <Callout ref={this.createCalloutRef} />
+      </Fragment>
     );
   }
 }

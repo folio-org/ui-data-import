@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
@@ -7,7 +7,7 @@ import { Icon } from '@folio/stripes/components';
 
 import css from './Preloader.css';
 
-export const Preloader = props => {
+export const Preloader = memo(props => {
   const {
     preloaderClassName,
     message,
@@ -23,7 +23,7 @@ export const Preloader = props => {
       />
     </div>
   );
-};
+});
 
 Preloader.propTypes = {
   preloaderClassName: PropTypes.string,

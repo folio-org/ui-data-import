@@ -45,10 +45,15 @@ export class UploadingJobsContextProvider extends Component {
     const { url: host } = okapi;
     const uploadDefinitionUrl = createUrl(`${host}/data-import/uploadDefinitions/${uploadDefinitionId}`);
 
-    await fetch(uploadDefinitionUrl, {
+    const response = await fetch(uploadDefinitionUrl, {
       method: 'DELETE',
       headers: createOkapiHeaders(okapi),
     });
+
+    if (!response.ok) {
+      throw response;
+    }
+
     await this.updateUploadDefinition();
   };
 

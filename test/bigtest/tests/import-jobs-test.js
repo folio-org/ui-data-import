@@ -167,6 +167,30 @@ describe('Import files with previous draft jobs', () => {
   });
 });
 
+describe('Import files with previous draft jobs without files', () => {
+  setupApplication({ scenarios: ['upload-definition-without-files'] });
+
+  beforeEach(function () {
+    this.visit('/data-import');
+  });
+
+  it('should automatically be deleted and the screen reset to initial state', () => {
+    expect(importJobs.isPresent).to.be.true;
+    expect(returnToAssignJobs.isPresent).to.be.false;
+  });
+
+  describe('should automatically be tried to be deleted', () => {
+    beforeEach(function () {
+      this.server.delete('/data-import/uploadDefinitions/:id', {}, 500);
+    });
+
+    it('and in case of error the error callout appears', () => {
+      expect(returnToAssignJobs.isPresent).to.be.true;
+      expect(returnToAssignJobs.callout.errorCalloutIsPresent).to.be.true;
+    });
+  });
+});
+
 describe('ImportJobs error handling:', () => {
   describe('when unable to create upload definition because of network error', () => {
     setupApplication({ scenarios: ['create-upload-definition-error'] });
