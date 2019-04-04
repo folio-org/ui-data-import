@@ -8,6 +8,7 @@ import {
 } from '@bigtest/interactor';
 
 import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
+import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 
 import css from '../../../src/components/ImportJobs/components/FileUploader/FileUploader.css';
 
@@ -33,6 +34,7 @@ class FileExtensionsModal extends ConfirmationModalInteractor {
   errorMsg = text('[data-test-error-msg]');
   deleteButtonClick = clickable('[class*="deleteButton"]');
   resumeButtonClick = clickable('[class*="submitButton"]');
+  callout = new CalloutInteractor();
 }
 
 export const importJobs = new ImportJobsInteractor('[class*="upload---"]');

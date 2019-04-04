@@ -44,6 +44,7 @@
   "upload.invalid": "Error: file upload",
   "upload.fileSize.invalid": "Error: not enough space to store the file. Contact system administrator",
   "fileDeleteError": "Error while deleting {name} file",
+  "fileDefinitionDeleteError": "Internal error. Press {button} button to try again",
   "noUploadedFiles": "No files to show",
   "jobProfileName": "Job profile",
   "jobExecutionHrId": "Import ID",
