@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -10,11 +10,6 @@ import {
 import { identity } from 'lodash';
 
 import {
-  Pane,
-  PaneMenu,
-  Icon,
-  PaneHeaderIconButton,
-  Button,
   Headline,
   TextArea,
   TextField,
@@ -24,45 +19,64 @@ import {
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
-import { validators } from './validators';
+import { FullScreenForm } from '../FullScreenForm';
+import {
+  validateDataTypes,
+  validateFileExtension,
+  validateRequiredField,
+} from '../../utils';
+import { DATA_TYPES } from '../../utils/constants';
 
 import css from './FileExtensionForm.css';
 
 const formName = 'fileExtensionForm';
 
-@stripesForm({
+const MultiSelectItem = ({ option, searchTerm }) => <OptionSegment searchTerm={searchTerm}>{option}</OptionSegment>;
+
+MultiSelectItem.propTypes = {
+  option: PropTypes.oneOfType([PropTypes.node, PropTypes.array]),
+  searchTerm: PropTypes.string,
+};
+
+export const FileExtensionForm = stripesForm({
   form: formName,
   navigationCheck: true,
   enableReinitialize: true,
-})
-export class FileExtensionForm extends Component {
-  static propTypes = {
-    pristine: PropTypes.bool.isRequired,
-    submitting: PropTypes.bool.isRequired,
-    initialValues: PropTypes.object.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    dispatch: PropTypes.func.isRequired,
+})(props => {
+  const {
+    pristine,
+    submitting,
+    initialValues,
+    handleSubmit,
+    onCancel,
+    dispatch,
+  } = props;
+
+  const [dataTypesRequired, setDataTypesRequired] = useState(true);
+
+  const importBlockedChange = (meta, value) => {
+    if (value) {
+      dispatch(change(formName, 'dataTypes', []));
+      dispatch(untouch(formName, 'dataTypes'));
+    }
+
+    setDataTypesRequired(!value);
   };
 
-  constructor(props) {
-    super(props);
+  const handleMultiSelectBlur = e => {
+    e.preventDefault();
 
-    this.closeButton = React.createRef();
-    this.dataTypes = [
-      'MARC',
-      'Delimited',
-      'EDIFACT',
-    ];
+    dispatch(touch(formName, 'dataTypes'));
+  };
 
-    this.state = { dataTypesRequired: true };
-  }
+  const getSubmitMessage = isEditMode => {
+    const action = isEditMode ? 'save' : 'create';
+    const buttonMessageIdEnding = action === 'create' ? 'settings.fileExtension.create' : action;
 
-  componentDidMount() {
-    this.closeButton.current.focus();
-  }
+    return <FormattedMessage id={`ui-data-import.${buttonMessageIdEnding}`} />;
+  };
 
-  filterMultiSelect = (filterText, list) => {
+  const filterMultiSelect = (filterText, list) => {
     const filterRegExp = new RegExp(`^${filterText}`, 'i');
     const renderedItems = filterText ? list.filter(item => item.search(filterRegExp) !== -1) : list;
     const exactMatch = filterText ? (renderedItems.filter(item => item === filterText).length === 1) : false;
@@ -70,178 +84,93 @@ export class FileExtensionForm extends Component {
     return { renderedItems, exactMatch };
   };
 
-  formatMultiSelect = ({ option, searchTerm }) => <OptionSegment searchTerm={searchTerm}>{option}</OptionSegment>;
+  const isSubmitDisabled = pristine || submitting;
 
-  getAddFirstMenu() {
-    const { onCancel } = this.props;
+  const isEditMode = Boolean(initialValues.id);
+  const paneTitle = isEditMode
+    ? (
+      <FormattedMessage id="ui-data-import.edit">
+        {txt => `${txt} ${initialValues.extension}`}
+      </FormattedMessage>
+    )
+    : <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />;
+  const headLine = isEditMode
+    ? initialValues.extension
+    : <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />;
 
-    return (
-      <PaneMenu>
-        <FormattedMessage id="ui-data-import.close">
-          {ariaLabel => (
-            <PaneHeaderIconButton
-              id="clickable-close-file-extension-dialog"
-              ariaLabel={ariaLabel}
-              icon="times"
-              ref={this.closeButton}
-              onClick={onCancel}
-            />
-          )}
-        </FormattedMessage>
-      </PaneMenu>
-    );
-  }
-
-  getLastMenu(isEditMode) {
-    const {
-      pristine,
-      submitting,
-    } = this.props;
-
-    const action = isEditMode ? 'save' : 'create';
-    const buttonMessageIdEnding = action === 'create' ? 'settings.fileExtension.create' : action;
-
-    return (
-      <PaneMenu>
-        <Button
-          data-test-update-file-extension-button
-          type="submit"
-          disabled={pristine || submitting}
-          buttonStyle="primary paneHeaderNewButton"
-          marginBottom0
-        >
-          <FormattedMessage id={`ui-data-import.${buttonMessageIdEnding}`} />
-        </Button>
-      </PaneMenu>
-    );
-  }
-
-  renderActionMenu = menu => (
-    <Button
-      data-test-cancel-form-action
-      buttonStyle="dropdownItem"
-      onClick={() => this.handleCancel(menu)}
+  return (
+    <FullScreenForm
+      id="file-extensions-form"
+      paneTitle={paneTitle}
+      submitMessage={getSubmitMessage(isEditMode)}
+      isSubmitDisabled={isSubmitDisabled}
+      onSubmit={handleSubmit}
+      onCancel={onCancel}
     >
-      <Icon icon="times-circle">
-        <FormattedMessage id="ui-data-import.cancel" />
-      </Icon>
-    </Button>
-  );
-
-  handleCancel = menu => {
-    const { onCancel } = this.props;
-
-    menu.onToggle();
-    onCancel();
-  };
-
-  importBlockedChange = (meta, value) => {
-    const { dispatch } = this.props;
-
-    if (value) {
-      dispatch(change(formName, 'dataTypes', []));
-      dispatch(untouch(formName, 'dataTypes'));
-    }
-
-    this.setState({ dataTypesRequired: !value });
-  };
-
-  handleMultiSelectBlur = e => {
-    e.preventDefault();
-
-    const { dispatch } = this.props;
-
-    dispatch(touch(formName, 'dataTypes'));
-  };
-
-  render() {
-    const {
-      initialValues,
-      handleSubmit,
-    } = this.props;
-    const { dataTypesRequired } = this.state;
-
-    const isEditMode = Boolean(initialValues.id);
-    const paneTitle = !isEditMode
-      ? <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />
-      : (
-        <FormattedMessage id="ui-data-import.edit">
-          {txt => `${txt} ${initialValues.extension}`}
-        </FormattedMessage>
-      );
-    const headLine = !isEditMode
-      ? <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />
-      : initialValues.extension;
-
-    return (
-      <form
-        id="form-file-extension"
-        data-test-file-extension-form
-        className={css.form}
-        onSubmit={handleSubmit}
+      <Headline
+        size="xx-large"
+        tag="h2"
+        data-test-header-title
       >
-        <Pane
-          defaultWidth="100%"
-          firstMenu={this.getAddFirstMenu()}
-          lastMenu={this.getLastMenu(isEditMode)}
-          paneTitle={paneTitle}
-          actionMenu={this.renderActionMenu}
-        >
-          <div className={css.formContent}>
-            <Headline
-              size="xx-large"
-              tag="h2"
-              data-test-header-title
-            >
-              {headLine}
-            </Headline>
-            <div data-test-description-field>
-              <Field
-                label={<FormattedMessage id="ui-data-import.description" />}
-                name="description"
-                component={TextArea}
-              />
-            </div>
-            <div data-test-extension-field>
-              <Field
-                label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
-                name="extension"
-                required
-                component={TextField}
-                validate={validators.fileExtension}
-              />
-            </div>
-            <div data-test-blocked-field>
-              <p className={css.checkBoxLabel}>
-                <FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />
-              </p>
-              <Field
-                label={<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />}
-                name="importBlocked"
-                type="checkbox"
-                component={Checkbox}
-                onChange={this.importBlockedChange}
-              />
-            </div>
-            <div data-test-types-field>
-              <Field
-                label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}
-                name="dataTypes"
-                component={MultiSelection}
-                dataOptions={this.dataTypes}
-                required={dataTypesRequired}
-                disabled={!dataTypesRequired}
-                validationEnabled
-                itemToString={identity}
-                validate={validators.dataTypes}
-                filter={this.filterMultiSelect}
-                formatter={this.formatMultiSelect}
-                onBlur={this.handleMultiSelectBlur}
-              />
-            </div>
-          </div>
-        </Pane>
-      </form>
-    );
-  }
-}
+        {headLine}
+      </Headline>
+      <div data-test-description-field>
+        <Field
+          label={<FormattedMessage id="ui-data-import.description" />}
+          name="description"
+          component={TextArea}
+        />
+      </div>
+      <div data-test-extension-field>
+        <Field
+          label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
+          name="extension"
+          required
+          component={TextField}
+          validate={[
+            validateRequiredField,
+            validateFileExtension,
+          ]}
+        />
+      </div>
+      <div data-test-blocked-field>
+        <p className={css.checkBoxLabel}>
+          <FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />
+        </p>
+        <Field
+          label={<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />}
+          name="importBlocked"
+          type="checkbox"
+          component={Checkbox}
+          onChange={importBlockedChange}
+        />
+      </div>
+      <div data-test-types-field>
+        <Field
+          label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}
+          name="dataTypes"
+          component={MultiSelection}
+          dataOptions={DATA_TYPES}
+          required={dataTypesRequired}
+          disabled={!dataTypesRequired}
+          validationEnabled
+          itemToString={identity}
+          validate={[validateDataTypes]}
+          filter={filterMultiSelect}
+          formatter={MultiSelectItem}
+          onBlur={handleMultiSelectBlur}
+        />
+      </div>
+    </FullScreenForm>
+  );
+});
+
+FileExtensionForm.propTypes = {
+  invalid: PropTypes.bool.isRequired,
+  pristine: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  initialValues: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};

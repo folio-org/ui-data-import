@@ -26,19 +26,6 @@ class DataImport extends Component {
 
   static defaultProps = { showSettings: false };
 
-  constructor(props) {
-    super(props);
-
-    const { stripes } = this.props;
-
-    this.connectedHome = stripes.connect(Home);
-  }
-
-  // wire up home page with stripes
-  renderConnectedHome = () => {
-    return <this.connectedHome {...this.props} />;
-  };
-
   render() {
     const {
       showSettings,
@@ -55,7 +42,7 @@ class DataImport extends Component {
           <Route
             path={path}
             exact
-            render={this.renderConnectedHome}
+            component={Home}
           />
           <Route
             path={`${path}/results`}

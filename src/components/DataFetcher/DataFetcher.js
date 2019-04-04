@@ -5,6 +5,8 @@ import {
   forEach,
 } from 'lodash';
 
+import { stripesConnect } from '@folio/stripes-core';
+
 import { jobPropTypes } from '../Jobs/components/Job/jobPropTypes';
 import { jobLogPropTypes } from '../JobLogs/jobLogPropTypes';
 import {
@@ -31,6 +33,7 @@ const logsUrl = createUrl('metadata-provider/logs', {
   limit: 25,
 });
 
+@stripesConnect
 export class DataFetcher extends Component {
   static manifest = Object.freeze({
     jobs: {

@@ -4,11 +4,17 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  stripesConnect,
+} from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 import { Checkbox } from '@folio/stripes/components';
 
-import { SearchAndSort } from '../../components';
+import {
+  SearchAndSort,
+  JobProfilesForm,
+} from '../../components';
 import { ViewJobProfile } from './ViewJobProfile';
 import { resultsFormatter } from './resultsFormatter';
 
@@ -17,6 +23,7 @@ import sharedCss from '../../shared.css';
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
+@stripesConnect
 export class JobProfiles extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -131,8 +138,9 @@ export class JobProfiles extends Component {
                   updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
                 }}
                 columnWidths={this.columnWidths}
-                ViewRecordComponent={ViewJobProfile}
                 fullWidthContainer={this.fullWidthContainer}
+                ViewRecordComponent={ViewJobProfile}
+                EditRecordComponent={JobProfilesForm}
                 showSingleResult={showSingleResult}
               />
             </div>
