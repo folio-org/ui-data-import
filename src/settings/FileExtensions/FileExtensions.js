@@ -6,7 +6,10 @@ import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
 
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  stripesConnect,
+} from '@folio/stripes/core';
 import {
   Callout,
   Button,
@@ -30,6 +33,7 @@ import sharedCss from '../../shared.css';
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
+@stripesConnect
 export class FileExtensions extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -228,7 +232,7 @@ export class FileExtensions extends Component {
 
     const errorMsgId = errorMsgIdEnding
       ? `ui-data-import.validation.${errorMsgIdEnding}`
-      : `ui-data-import.settings.fileExtension.${isEditMode ? 'edit' : 'create'}.error.network`;
+      : `ui-data-import.settings.${isEditMode ? 'edit' : 'create'}.error.network`;
 
     const errorMessage = (
       <FormattedMessage

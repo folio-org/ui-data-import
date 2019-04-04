@@ -1,0 +1,10 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.form {
+  height: 100%;
+}
+
+.formContent {
+  max-width: 50em;
+  margin: 0 auto;
+}

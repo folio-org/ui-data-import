@@ -159,7 +159,7 @@ export class SearchAndSort extends Component {
     this.setInitialSortQueryParam();
   }
 
-  componentWillReceiveProps(nextProps) {  // eslint-disable-line react/no-deprecated
+  componentWillReceiveProps(nextProps) { // eslint-disable-line react/no-deprecated
     const {
       stripes: { logger },
       finishedResourceName,
@@ -485,7 +485,7 @@ export class SearchAndSort extends Component {
         <FormattedMessage id="stripes-smart-components.addNew">
           {ariaLabel => (
             <Button
-              data-test-new-file-extension-button
+              data-test-new-button
               href={this.craftLayerURL('create')}
               aria-label={ariaLabel}
               buttonStyle="primary"

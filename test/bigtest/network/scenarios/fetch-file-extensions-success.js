@@ -20,7 +20,7 @@ export default server => {
   });
 
   server.get('/data-import/fileExtensions', (schema, request) => {
-    const { query } = request.queryParams;
+    const { query = '' } = request.queryParams;
     let [, searchTerm = ''] = query.match(/extension="(\w+)/) || [];
     const fileExtensions = schema.fileExtensions.all();
 

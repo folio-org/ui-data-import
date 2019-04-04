@@ -19,52 +19,43 @@ import css from './DataImportSettings.css';
 export class DataImportSettings extends Component {
   static propTypes = { stripes: stripesShape.isRequired };
 
-  constructor(props) {
-    super(props);
-
-    const { stripes } = this.props;
-
-    const connectedFileExtensions = stripes.connect(FileExtensions);
-    const connectedJobProfiles = stripes.connect(JobProfiles);
-
-    this.sections = [
-      {
-        label: this.renderProfilesLabel(),
-        pages: [
-          {
-            route: 'job-profiles',
-            label: this.generateSettingsLabel('jobProfiles.title', 'jobProfiles'),
-            component: connectedJobProfiles,
-          },
-          {
-            route: 'match-profiles',
-            label: this.generateSettingsLabel('matchProfiles.title', 'matchProfiles'),
-            component: MatchProfiles,
-          },
-          {
-            route: 'action-profiles',
-            label: this.generateSettingsLabel('actionProfiles.title', 'actionProfiles'),
-            component: ActionProfiles,
-          },
-          {
-            route: 'mapping-profiles',
-            label: this.generateSettingsLabel('fieldMappingProfiles.title', 'fieldMapping'),
-            component: FieldMappingProfiles,
-          },
-        ],
-      },
-      {
-        label: <FormattedMessage id="ui-data-import.settings.other" />,
-        pages: [
-          {
-            route: 'file-extensions',
-            label: <FormattedMessage id="ui-data-import.settings.fileExtensions.title" />,
-            component: connectedFileExtensions,
-          },
-        ],
-      },
-    ];
-  }
+  sections = [
+    {
+      label: this.renderProfilesLabel(),
+      pages: [
+        {
+          route: 'job-profiles',
+          label: this.generateSettingsLabel('jobProfiles.title', 'jobProfiles'),
+          component: JobProfiles,
+        },
+        {
+          route: 'match-profiles',
+          label: this.generateSettingsLabel('matchProfiles.title', 'matchProfiles'),
+          component: MatchProfiles,
+        },
+        {
+          route: 'action-profiles',
+          label: this.generateSettingsLabel('actionProfiles.title', 'actionProfiles'),
+          component: ActionProfiles,
+        },
+        {
+          route: 'mapping-profiles',
+          label: this.generateSettingsLabel('fieldMappingProfiles.title', 'fieldMapping'),
+          component: FieldMappingProfiles,
+        },
+      ],
+    },
+    {
+      label: <FormattedMessage id="ui-data-import.settings.other" />,
+      pages: [
+        {
+          route: 'file-extensions',
+          label: <FormattedMessage id="ui-data-import.settings.fileExtensions.title" />,
+          component: FileExtensions,
+        },
+      ],
+    },
+  ];
 
   renderProfilesLabel() {
     const profilesLink = 'https://wiki.folio.org/display/FOLIOtips/Creating+and+using+profiles';
