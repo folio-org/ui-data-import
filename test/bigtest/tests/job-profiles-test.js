@@ -31,6 +31,17 @@ describe('Job profiles', () => {
       expect(jobProfiles.list.headers(4).text).to.equal(translation.updatedBy);
     });
 
+    describe('upon search', () => {
+      beforeEach(async () => {
+        await jobProfiles.searchFiled.fill('acq');
+        await jobProfiles.searchSubmitButton.click();
+      });
+
+      it('renders proper amount of items', () => {
+        expect(jobProfiles.list.rowCount).to.equal(2);
+      });
+    });
+
     describe('can sort', () => {
       beforeEach(async () => {
         await jobProfiles.list.headers(0).click();

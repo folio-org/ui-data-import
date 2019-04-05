@@ -3,6 +3,7 @@ import React, {
   Fragment,
 } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 
 import {
   IntlConsumer,
@@ -43,7 +44,7 @@ export class JobProfiles extends Component {
         params: {
           query: makeQueryFunction(
             'cql.allRecords=1',
-            '(name="%{query.query}*")',
+            '(name="%{query.query}*" OR tags.tagList="%{query.query}*")',
             {
               name: 'name',
               updated: 'metadata.updatedDate',
@@ -62,6 +63,9 @@ export class JobProfiles extends Component {
     mutator: PropTypes.object.isRequired,
     resources: PropTypes.object.isRequired,
     label: PropTypes.node.isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string.isRequired,
+    }).isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -95,9 +99,13 @@ export class JobProfiles extends Component {
     const {
       resources,
       mutator,
+      location: { search },
       label,
       showSingleResult,
     } = this.props;
+
+    const urlQuery = queryString.parse(search);
+    const searchTerm = (urlQuery.query || '').trim();
 
     return (
       <IntlConsumer>
@@ -118,7 +126,7 @@ export class JobProfiles extends Component {
                 resultCountMessageKey="ui-data-import.settings.jobProfiles.count"
                 resultsLabel={label}
                 defaultSort="name"
-                resultsFormatter={resultsFormatter}
+                resultsFormatter={resultsFormatter(searchTerm)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   selected: (

@@ -16,12 +16,20 @@ describe('File extensions', () => {
   });
 
   describe('table', () => {
-    it('renders', () => {
-      expect(fileExtensions.list.isPresent).to.be.true;
-    });
-
     it('renders proper amount of items', () => {
       expect(fileExtensions.list.rowCount).to.equal(3);
+    });
+
+    describe('upon search', () => {
+      beforeEach(async () => {
+        await fileExtensions.searchFiled.fill('marc');
+        await fileExtensions.searchFiled.fill('mar');
+        await fileExtensions.searchSubmitButton.click();
+      });
+
+      it('renders proper amount of items', () => {
+        expect(fileExtensions.list.rowCount).to.equal(1);
+      });
     });
 
     describe('can sort', () => {
@@ -140,28 +148,6 @@ describe('File extensions', () => {
 
       it('list renders proper amount of items', () => {
         expect(fileExtensions.list.rowCount).to.equal(2);
-      });
-    });
-  });
-
-  describe('has', () => {
-    it('search filed', () => {
-      expect(fileExtensions.searchFiled.isPresent).to.be.true;
-    });
-
-    it('search button', () => {
-      expect(fileExtensions.searchSubmitButton.isPresent).to.be.true;
-    });
-
-    describe('upon click on search button', () => {
-      beforeEach(async () => {
-        await fileExtensions.searchFiled.fill('marc');
-        await fileExtensions.searchFiled.fill('mar');
-        await fileExtensions.searchSubmitButton.click();
-      });
-
-      it('initiates search', () => {
-        expect(fileExtensions.list.rowCount).to.equal(1);
       });
     });
   });

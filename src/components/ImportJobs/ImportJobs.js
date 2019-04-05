@@ -9,6 +9,8 @@ import {
   Redirect,
 } from 'react-router';
 import {
+  map,
+  every,
   forEach,
   isEmpty,
 } from 'lodash';
@@ -234,10 +236,10 @@ export class ImportJobs extends Component {
 
   checkFilesHaveSameExtension(files = []) {
     const fileTypeRegex = /\.(\w+)$/;
-    const filesTypes = files.map(({ name }) => (name.match(fileTypeRegex) || [])[1]);
+    const filesTypes = map(files, ({ name }) => (name.match(fileTypeRegex) || [])[1]);
     const baseFileType = filesTypes[0];
 
-    return filesTypes.every(type => type === baseFileType);
+    return every(filesTypes, type => type === baseFileType);
   }
 
   showFilesExtensionsModal(payload) {

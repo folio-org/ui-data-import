@@ -87,7 +87,9 @@ export class FileExtensions extends Component {
     }).isRequired,
     resources: PropTypes.object.isRequired,
     label: PropTypes.node.isRequired,
-    location: PropTypes.object.isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string.isRequired,
+    }).isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
