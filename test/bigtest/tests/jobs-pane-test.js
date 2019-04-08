@@ -20,10 +20,6 @@ describe('Jobs pane', () => {
     this.visit('/data-import');
   });
 
-  it('renders', () => {
-    expect(jobsPane.isPresent).to.be.true;
-  });
-
   it('has correct title', () => {
     expect(jobsPane.title).to.be.equal(translation.jobsPaneTitle);
   });

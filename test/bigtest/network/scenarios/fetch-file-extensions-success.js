@@ -1,6 +1,7 @@
 import { Response } from '@bigtest/mirage';
 
 import { SYSTEM_USER_NAME } from '../../../../src/utils/constants';
+import { searchEntityByQuery } from '../../helpers';
 
 export default server => {
   server.create('file-extension', {
@@ -21,28 +22,15 @@ export default server => {
 
   server.get('/data-import/fileExtensions', (schema, request) => {
     const { query = '' } = request.queryParams;
-    let [, searchTerm = ''] = query.match(/extension="(\w+)/) || [];
     const fileExtensions = schema.fileExtensions.all();
+    const searchPattern = /extension="(\w+)/;
 
-    searchTerm = searchTerm.trim();
-
-    if (!searchTerm) {
-      return fileExtensions;
-    }
-
-    fileExtensions.models = fileExtensions.models.filter(record => {
-      const {
-        extension,
-        dataTypes,
-      } = record.attrs;
-
-      const hasExtensionsMatch = extension.match(new RegExp(searchTerm, 'i'));
-      const hasDataTypesMatch = dataTypes.some(type => type.match(new RegExp(searchTerm, 'i')));
-
-      return hasExtensionsMatch || hasDataTypesMatch;
+    return searchEntityByQuery({
+      query,
+      entity: fileExtensions,
+      searchPattern,
+      fieldsToMatch: ['extension', 'dataTypes'],
     });
-
-    return fileExtensions;
   });
 
   server.get('/data-import/fileExtensions/:id');

@@ -9,6 +9,7 @@ import {
 
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
+import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
 
 @interactor class CheckboxInteractor {
   static defaultScope = '[class*=checkbox---]';
@@ -30,6 +31,8 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   selectAllCheckBox = new CheckboxInteractor('[data-test-job-profiles] [data-test-select-all]');
   checkBoxes = collection('[data-test-job-profiles] [data-test-select-item]', CheckboxInteractor);
   newJobProfileButton = new ButtonInteractor('[data-test-new-button]');
+  searchFiled = new TextFieldInteractor('#input-job-profiles-search');
+  searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
 }
 
 export const jobProfiles = new JobProfilesInteractor('[data-test-job-profiles]');

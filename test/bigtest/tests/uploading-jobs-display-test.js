@@ -24,10 +24,6 @@ describe('Uploading jobs display', () => {
       this.visit('/data-import/job-profile');
     });
 
-    it('renders', () => {
-      expect(uploadingJobsDisplay.isPresent).to.be.true;
-    });
-
     it('renders the correct number of files', () => {
       expect(uploadingJobsDisplay.files().length).to.equal(4);
     });
@@ -35,10 +31,6 @@ describe('Uploading jobs display', () => {
     describe('File item', () => {
       describe('with status NEW', () => {
         const fileItem = uploadingJobsDisplay.files(0);
-
-        it('renders', () => {
-          expect(fileItem.isPresent).to.be.true;
-        });
 
         it('has correct class', () => {
           expect(uploadingJobsDisplay.files(0).hasUploadingClass).to.be.true;
@@ -56,10 +48,6 @@ describe('Uploading jobs display', () => {
       describe('with status UPLOADING', () => {
         const fileItem = uploadingJobsDisplay.files(1);
 
-        it('renders', () => {
-          expect(fileItem.isPresent).to.be.true;
-        });
-
         it('has correct class', () => {
           expect(fileItem.hasUploadingClass).to.be.true;
         });
@@ -76,10 +64,6 @@ describe('Uploading jobs display', () => {
       describe('with status UPLOADED', () => {
         const fileItem = uploadingJobsDisplay.files(2);
 
-        it('renders', () => {
-          expect(fileItem.isPresent).to.be.true;
-        });
-
         it('has no progress', () => {
           expect(fileItem.progress.isPresent).to.be.false;
         });
@@ -91,10 +75,6 @@ describe('Uploading jobs display', () => {
 
       describe('with status ERROR', () => {
         const fileItem = uploadingJobsDisplay.files(3);
-
-        it('renders', () => {
-          expect(fileItem.isPresent).to.be.true;
-        });
 
         it('has correct classes', () => {
           expect(fileItem.hasDangerClass).to.be.true;
@@ -132,10 +112,6 @@ describe('Uploading jobs display', () => {
 
       describe('with status DELETING', () => {
         const fileItem = uploadingJobsDisplay.files(2);
-
-        it('renders', () => {
-          expect(fileItem.isPresent).to.be.true;
-        });
 
         it('has delete button', () => {
           expect(fileItem.deleteButton.isPresent).to.be.true;
@@ -220,14 +196,8 @@ describe('Uploading jobs display', () => {
       expect(uploadingJobsDisplay.files().length).to.equal(0);
     });
 
-    describe('empty message', () => {
-      it('renders', () => {
-        expect(uploadingJobsDisplay.emptyMsg.isPresent).to.be.true;
-      });
-
-      it('is correct', () => {
-        expect(uploadingJobsDisplay.emptyMsg.text).to.equal(translation.noUploadedFiles);
-      });
+    it('renders empty message with correct wording', () => {
+      expect(uploadingJobsDisplay.emptyMsg.text).to.equal(translation.noUploadedFiles);
     });
   });
 
@@ -247,7 +217,7 @@ describe('Uploading jobs display', () => {
       });
     });
 
-    it('renders files', () => {
+    it('renders proper amount of files', () => {
       expect(uploadingJobsDisplay.files().length).to.equal(2);
     });
 

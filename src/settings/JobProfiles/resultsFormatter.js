@@ -1,4 +1,5 @@
 import React from 'react';
+import HighLight from 'react-highlighter';
 import {
   get,
   isEmpty,
@@ -18,7 +19,7 @@ import {
 import sharedCss from '../../shared.css';
 import css from './JobProfiles.css';
 
-export const resultsFormatter = {
+export const resultsFormatter = searchTerm => ({
   selected: record => (
     <div // eslint-disable-line jsx-a11y/click-events-have-key-events
       tabIndex="0"
@@ -37,7 +38,7 @@ export const resultsFormatter = {
       iconKey="jobProfiles"
       className={sharedCss.baseline}
     >
-      {record.name}
+      <HighLight search={searchTerm}>{record.name}</HighLight>
     </AppIcon>
   ),
   tags: record => {
@@ -54,7 +55,7 @@ export const resultsFormatter = {
           icon="tag"
           iconClassName={css.tagsIcon}
         />
-        <span>{tags.join(', ')}</span>
+        <HighLight search={searchTerm}>{tags.join(', ')}</HighLight>
       </span>
     );
   },
@@ -64,4 +65,4 @@ export const resultsFormatter = {
     return <DateFormatter value={updatedDate} />;
   },
   updatedBy: record => <UserNameFormatter value={record.userInfo} />,
-};
+});

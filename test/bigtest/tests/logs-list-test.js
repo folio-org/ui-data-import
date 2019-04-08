@@ -19,10 +19,6 @@ describe('Logs list', () => {
     this.visit('/data-import');
   });
 
-  it('renders', () => {
-    expect(logsList.isPresent).to.be.true;
-  });
-
   it('renders the correct number of rows', () => {
     expect(logsList.rowCount).to.equal(3);
   });
