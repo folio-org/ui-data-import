@@ -6,6 +6,7 @@
 * Add job profile form (UIDATIMP-132)
 * Delete upload definition when it does not have files on the landing page so the user can start over new uploading process (UIDATIMP-110)
 * Implement search job profiles feature (UIDATIMP-164)
+* Implement save the new job profile feature (UIDATIMP-136)
 
 ## [1.1.0](https://github.com/folio-org/ui-data-import/tree/v1.1.0) (2019-03-22)
 

@@ -25,6 +25,7 @@ export const FullScreenForm = props => {
     isSubmitDisabled,
     submitMessage,
   } = props;
+
   const closeButton = useRef();
 
   useEffect(() => closeButton.current.focus(), []);

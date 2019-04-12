@@ -31,4 +31,11 @@ export default server => {
       fieldsToMatch: ['name', 'tags.tagList'],
     });
   });
+
+  server.post('/data-import-profiles/jobProfiles', (_, request) => {
+    const params = JSON.parse(request.requestBody);
+    const record = server.create('job-profile', params);
+
+    return record.attrs;
+  });
 };
