@@ -1,7 +1,4 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
@@ -11,8 +8,8 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 import {
-  Callout,
   Button,
+  Callout,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import {
@@ -21,12 +18,12 @@ import {
 } from '@folio/stripes/smart-components';
 
 import {
-  FileExtensionForm,
   SearchAndSort,
+  FileExtensionForm,
 } from '../../components';
 import { ViewFileExtension } from './ViewFileExtension';
+import { SettingPage } from '../SettingPage';
 import { resultsFormatter } from './resultsFormatter';
-import { getXHRErrorMessage } from '../../utils';
 
 import sharedCss from '../../shared.css';
 
@@ -132,123 +129,6 @@ export class FileExtensions extends Component {
     history.push(url);
   };
 
-  createRecord = record => {
-    const { mutator: { fileExtensions } } = this.props;
-
-    return fileExtensions.POST(record)
-      .catch(error => {
-        this.showUpdateRecordErrorMessage(error, record);
-
-        throw error;
-      });
-  };
-
-  editRecord = record => {
-    const { mutator: { fileExtensions } } = this.props;
-
-    return fileExtensions.PUT(record)
-      .catch(error => {
-        this.showUpdateRecordErrorMessage(error, record, true);
-
-        throw error;
-      });
-  };
-
-  deleteRecord = async record => {
-    const { mutator: { fileExtensions } } = this.props;
-
-    try {
-      await fileExtensions.DELETE(record);
-
-      const { match: { path } } = this.props;
-
-      this.transitionToParams({
-        _path: `${path}/view`,
-        layer: null,
-      });
-      this.showDeleteRecordSuccessfulMessage(record);
-
-      return true;
-    } catch (error) {
-      this.showDeleteRecordErrorMessage(record);
-
-      return false;
-    }
-  };
-
-  showDeleteRecordSuccessfulMessage = record => {
-    const message = (
-      <FormattedMessage
-        id="ui-data-import.settings.fileExtension.action.success"
-        values={{
-          extension: record.extension,
-          action: (
-            <strong>
-              <FormattedMessage id="ui-data-import.deleted" />
-            </strong>
-          ),
-        }}
-      />
-    );
-
-    this.callout.sendCallout({ message });
-  };
-
-  showDeleteRecordErrorMessage = record => {
-    const message = (
-      <FormattedMessage
-        id="ui-data-import.settings.fileExtension.action.error"
-        values={{
-          extension: record.extension,
-          action: (
-            <strong>
-              <FormattedMessage id="ui-data-import.deleted" />
-            </strong>
-          ),
-        }}
-      />
-    );
-
-    this.callout.sendCallout({
-      type: 'error',
-      message,
-    });
-  };
-
-  handleUpdateRecordSuccess = (record, dispatch, props) => {
-    const { reset: resetForm } = props;
-
-    resetForm();
-
-    const { match: { path } } = this.props;
-
-    this.transitionToParams({
-      _path: `${path}/view/${record.id}`,
-      layer: null,
-    });
-  };
-
-  async showUpdateRecordErrorMessage(response, fileExtension, isEditMode = false) {
-    const { extension } = fileExtension;
-    const errorMsgIdEnding = await getXHRErrorMessage(response);
-
-    const errorMsgId = errorMsgIdEnding
-      ? `ui-data-import.validation.${errorMsgIdEnding}`
-      : `ui-data-import.settings.${isEditMode ? 'edit' : 'create'}.error.network`;
-
-    const errorMessage = (
-      <FormattedMessage
-        id={errorMsgId}
-        values={{ value: extension }}
-      />
-    );
-
-    this.callout.sendCallout({
-      type: 'error',
-      message: errorMessage,
-    });
-  }
-
   renderActionMenu = menu => (
     <Button
       data-test-restore-default-file-extensions-button
@@ -300,28 +180,71 @@ export class FileExtensions extends Component {
     } catch (error) {
       this.hideResetFileExtensionsToDefaultsModal();
 
+      const message = (
+        <FormattedMessage
+          id="ui-data-import.settings.fileExtension.reset.error.network"
+          values={{ description: <FormattedMessage id="ui-data-import.communicationProblem" /> }}
+        />
+      );
+
       this.callout.sendCallout({
         type: 'error',
-        message: <FormattedMessage id="ui-data-import.settings.fileExtension.reset.error.network" />,
+        message,
       });
     }
   };
 
-  createFullWidthContainerRef = ref => { this.fullWidthContainer = ref; };
+  getDeleteRecordSuccessfulMessage(record) {
+    return (
+      <FormattedMessage
+        id="ui-data-import.settings.fileExtension.action.success"
+        values={{
+          extension: record.extension,
+          action: (
+            <strong>
+              <FormattedMessage id="ui-data-import.deleted" />
+            </strong>
+          ),
+        }}
+      />
+    );
+  }
+
+  getDeleteRecordErrorMessage(record) {
+    return (
+      <FormattedMessage
+        id="ui-data-import.settings.fileExtension.action.error"
+        values={{
+          extension: record.extension,
+          action: (
+            <strong>
+              <FormattedMessage id="ui-data-import.deleted" />
+            </strong>
+          ),
+        }}
+      />
+    );
+  }
+
+  getRecordName(record) {
+    return record.extension;
+  }
 
   createCalloutRef = ref => { this.callout = ref; };
 
   render() {
     const {
       resources,
-      location: { search },
+      location,
+      history,
+      match,
       mutator,
       label,
       showSingleResult,
     } = this.props;
     const { isResetFileExtensionsModalOpen } = this.state;
 
-    const urlQuery = queryString.parse(search);
+    const urlQuery = queryString.parse(location.search);
     const searchTerm = (urlQuery.query || '').trim();
     const newRecordInitialValues = {
       importBlocked: false,
@@ -333,49 +256,50 @@ export class FileExtensions extends Component {
     return (
       <IntlConsumer>
         {intl => (
-          <Fragment>
-            <div
-              className={sharedCss.container}
-              data-test-file-extensions
+          <div
+            className={sharedCss.container}
+            data-test-file-extensions
+          >
+            <SettingPage
+              finishedResourceName="fileExtensions"
+              parentMutator={mutator}
+              location={location}
+              history={history}
+              match={match}
+              getRecordName={this.getRecordName}
+              getDeleteRecordSuccessfulMessage={this.getDeleteRecordSuccessfulMessage}
+              getDeleteRecordErrorMessage={this.getDeleteRecordErrorMessage}
             >
-              <SearchAndSort
-                objectName="file-extensions"
-                finishedResourceName="fileExtensions"
-                parentResources={resources}
-                parentMutator={mutator}
-                initialResultCount={INITIAL_RESULT_COUNT}
-                resultCountIncrement={RESULT_COUNT_INCREMENT}
-                searchLabelKey="ui-data-import.settings.fileExtensions.title"
-                resultCountMessageKey="ui-data-import.settings.fileExtensions.count"
-                resultsLabel={label}
-                defaultSort="extension"
-                actionMenu={this.renderActionMenu}
-                resultsFormatter={resultsFormatter(intl, searchTerm)}
-                visibleColumns={this.visibleColumns}
-                columnMapping={{
-                  extension: intl.formatMessage({ id: 'ui-data-import.settings.fileExtension.extension' }),
-                  importBlocked: intl.formatMessage({ id: 'ui-data-import.settings.fileExtension.blockImport' }),
-                  dataTypes: intl.formatMessage({ id: 'ui-data-import.settings.fileExtension.dataTypes' }),
-                  updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-                  updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
-                }}
-                columnWidths={this.columnWidths}
-                fullWidthContainer={this.fullWidthContainer}
-                ViewRecordComponent={ViewFileExtension}
-                EditRecordComponent={FileExtensionForm}
-                newRecordInitialValues={newRecordInitialValues}
-                showSingleResult={showSingleResult}
-                onCreate={this.createRecord}
-                onEdit={this.editRecord}
-                onDelete={this.deleteRecord}
-                handleCreateSuccess={this.handleUpdateRecordSuccess}
-                handleEditSuccess={this.handleUpdateRecordSuccess}
-              />
-            </div>
-            <div
-              className={sharedCss.fullWidthAndHeightContainer}
-              ref={this.createFullWidthContainerRef}
-            />
+              {props => (
+                <SearchAndSort
+                  objectName="file-extensions"
+                  parentResources={resources}
+                  parentMutator={mutator}
+                  initialResultCount={INITIAL_RESULT_COUNT}
+                  resultCountIncrement={RESULT_COUNT_INCREMENT}
+                  searchLabelKey="ui-data-import.settings.fileExtensions.title"
+                  resultCountMessageKey="ui-data-import.settings.fileExtensions.count"
+                  resultsLabel={label}
+                  defaultSort="extension"
+                  actionMenu={this.renderActionMenu}
+                  resultsFormatter={resultsFormatter(intl, searchTerm)}
+                  visibleColumns={this.visibleColumns}
+                  columnMapping={{
+                    extension: intl.formatMessage({ id: 'ui-data-import.settings.fileExtension.extension' }),
+                    importBlocked: intl.formatMessage({ id: 'ui-data-import.settings.fileExtension.blockImport' }),
+                    dataTypes: intl.formatMessage({ id: 'ui-data-import.settings.fileExtension.dataTypes' }),
+                    updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
+                    updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
+                  }}
+                  columnWidths={this.columnWidths}
+                  ViewRecordComponent={ViewFileExtension}
+                  EditRecordComponent={FileExtensionForm}
+                  newRecordInitialValues={newRecordInitialValues}
+                  showSingleResult={showSingleResult}
+                  {...props}
+                />
+              )}
+            </SettingPage>
             <ConfirmationModal
               id="restore-default-file-extensions-modal"
               open={isResetFileExtensionsModalOpen}
@@ -387,7 +311,7 @@ export class FileExtensions extends Component {
               onCancel={this.hideResetFileExtensionsToDefaultsModal}
             />
             <Callout ref={this.createCalloutRef} />
-          </Fragment>
+          </div>
         )}
       </IntlConsumer>
     );

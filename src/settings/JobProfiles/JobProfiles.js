@@ -1,9 +1,7 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
+import { noop } from 'lodash';
 
 import {
   IntlConsumer,
@@ -13,10 +11,11 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import { Checkbox } from '@folio/stripes/components';
 
 import {
-  SearchAndSort,
   JobProfilesForm,
+  SearchAndSort,
 } from '../../components';
 import { ViewJobProfile } from './ViewJobProfile';
+import { SettingPage } from '../SettingPage';
 import { resultsFormatter } from './resultsFormatter';
 
 import sharedCss from '../../shared.css';
@@ -28,9 +27,7 @@ const RESULT_COUNT_INCREMENT = 30;
 export class JobProfiles extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
-    query: {
-      initialValue: {},
-    },
+    query: { initialValue: {} },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     jobProfiles: {
       type: 'okapi',
@@ -60,18 +57,22 @@ export class JobProfiles extends Component {
   });
 
   static propTypes = {
-    mutator: PropTypes.object.isRequired,
     resources: PropTypes.object.isRequired,
-    label: PropTypes.node.isRequired,
+    mutator: PropTypes.shape({
+      jobProfiles: PropTypes.shape({
+        POST: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
-    }).isRequired,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
     }).isRequired,
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
     }).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
+    label: PropTypes.node.isRequired,
     showSingleResult: PropTypes.bool,
   };
 
@@ -93,7 +94,9 @@ export class JobProfiles extends Component {
     updatedBy: 250,
   };
 
-  createFullWidthContainerRef = ref => { this.fullWidthContainer = ref; };
+  getRecordName(record) {
+    return record.name;
+  }
 
   render() {
     const {
@@ -102,6 +105,9 @@ export class JobProfiles extends Component {
       location: { search },
       label,
       showSingleResult,
+      location,
+      history,
+      match,
     } = this.props;
 
     const urlQuery = queryString.parse(search);
@@ -110,53 +116,59 @@ export class JobProfiles extends Component {
     return (
       <IntlConsumer>
         {intl => (
-          <Fragment>
-            <div
-              className={sharedCss.container}
-              data-test-job-profiles
+          <div
+            className={sharedCss.container}
+            data-test-job-profiles
+          >
+            <SettingPage
+              finishedResourceName="jobProfiles"
+              parentMutator={mutator}
+              location={location}
+              history={history}
+              match={match}
+              getRecordName={this.getRecordName}
+              getDeleteRecordSuccessfulMessage={noop}
+              getDeleteRecordErrorMessage={noop}
             >
-              <SearchAndSort
-                objectName="job-profiles"
-                finishedResourceName="jobProfiles"
-                parentResources={resources}
-                parentMutator={mutator}
-                initialResultCount={INITIAL_RESULT_COUNT}
-                resultCountIncrement={RESULT_COUNT_INCREMENT}
-                searchLabelKey="ui-data-import.settings.jobProfiles.title"
-                resultCountMessageKey="ui-data-import.settings.jobProfiles.count"
-                resultsLabel={label}
-                defaultSort="name"
-                resultsFormatter={resultsFormatter(searchTerm)}
-                visibleColumns={this.visibleColumns}
-                columnMapping={{
-                  selected: (
-                    <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-                      role="button"
-                      tabIndex="0"
-                      className={sharedCss.selectableCellButton}
-                      data-test-select-all
-                      onClick={e => e.stopPropagation()}
-                    >
-                      <Checkbox name="selected-all" />
-                    </div>
-                  ),
-                  name: intl.formatMessage({ id: 'ui-data-import.name' }),
-                  tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-                  updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-                  updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
-                }}
-                columnWidths={this.columnWidths}
-                fullWidthContainer={this.fullWidthContainer}
-                ViewRecordComponent={ViewJobProfile}
-                EditRecordComponent={JobProfilesForm}
-                showSingleResult={showSingleResult}
-              />
-            </div>
-            <div
-              className={sharedCss.fullWidthAndHeightContainer}
-              ref={this.createFullWidthContainerRef}
-            />
-          </Fragment>
+              {props => (
+                <SearchAndSort
+                  objectName="job-profiles"
+                  parentResources={resources}
+                  parentMutator={mutator}
+                  initialResultCount={INITIAL_RESULT_COUNT}
+                  resultCountIncrement={RESULT_COUNT_INCREMENT}
+                  searchLabelKey="ui-data-import.settings.jobProfiles.title"
+                  resultCountMessageKey="ui-data-import.settings.jobProfiles.count"
+                  resultsLabel={label}
+                  defaultSort="name"
+                  resultsFormatter={resultsFormatter(searchTerm)}
+                  visibleColumns={this.visibleColumns}
+                  columnMapping={{
+                    selected: (
+                      <div // eslint-disable-line jsx-a11y/click-events-have-key-events
+                        role="button"
+                        tabIndex="0"
+                        className={sharedCss.selectableCellButton}
+                        data-test-select-all
+                        onClick={e => e.stopPropagation()}
+                      >
+                        <Checkbox name="selected-all" />
+                      </div>
+                    ),
+                    name: intl.formatMessage({ id: 'ui-data-import.name' }),
+                    tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
+                    updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
+                    updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
+                  }}
+                  columnWidths={this.columnWidths}
+                  ViewRecordComponent={ViewJobProfile}
+                  EditRecordComponent={JobProfilesForm}
+                  showSingleResult={showSingleResult}
+                  {...props}
+                />
+              )}
+            </SettingPage>
+          </div>
         )}
       </IntlConsumer>
     );

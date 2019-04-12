@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
 import { identity } from 'lodash';
+import { Field } from 'redux-form';
 
 import {
   Headline,
@@ -24,11 +24,7 @@ const dataTypes = DATA_TYPES.map(dataType => ({
   label: dataType,
 }));
 
-export const JobProfilesForm = stripesForm({
-  form: formName,
-  navigationCheck: true,
-  enableReinitialize: true,
-})(props => {
+export const JobProfilesFormComponent = props => {
   const {
     pristine,
     submitting,
@@ -37,7 +33,6 @@ export const JobProfilesForm = stripesForm({
   } = props;
 
   const isSubmitDisabled = pristine || submitting;
-
   const title = <FormattedMessage id="ui-data-import.settings.jobProfiles.newJob" />;
 
   return (
@@ -75,7 +70,7 @@ export const JobProfilesForm = stripesForm({
               {placeholder => (
                 <Field
                   label={<FormattedMessage id="ui-data-import.settings.jobProfiles.acceptedDataType" />}
-                  name="acceptedDataTypes"
+                  name="dataType"
                   component={Select}
                   required
                   itemToString={identity}
@@ -98,17 +93,24 @@ export const JobProfilesForm = stripesForm({
           label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
           separator={false}
         >
-          {/* will be implemented in https://issues.folio.org/browse/UIDATIMP-152 */}
+          <div>
+            {/* will be implemented in https://issues.folio.org/browse/UIDATIMP-152 */}
+          </div>
         </Accordion>
       </AccordionSet>
     </FullScreenForm>
   );
-});
+};
 
-JobProfilesForm.propTypes = {
-  invalid: PropTypes.bool.isRequired,
+JobProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
 };
+
+export const JobProfilesForm = stripesForm({
+  form: formName,
+  navigationCheck: true,
+  enableReinitialize: true,
+})(JobProfilesFormComponent);

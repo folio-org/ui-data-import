@@ -38,11 +38,7 @@ MultiSelectItem.propTypes = {
   searchTerm: PropTypes.string,
 };
 
-export const FileExtensionForm = stripesForm({
-  form: formName,
-  navigationCheck: true,
-  enableReinitialize: true,
-})(props => {
+const FileExtensionFormComponent = props => {
   const {
     pristine,
     submitting,
@@ -52,9 +48,11 @@ export const FileExtensionForm = stripesForm({
     dispatch,
   } = props;
 
-  const [dataTypesRequired, setDataTypesRequired] = useState(true);
+  const isEditMode = Boolean(initialValues.id);
 
-  const importBlockedChange = (meta, value) => {
+  const [dataTypesRequired, setDataTypesRequired] = useState(isEditMode ? !initialValues.importBlocked : true);
+
+  const handleImportBlockedChange = (meta, value) => {
     if (value) {
       dispatch(change(formName, 'dataTypes', []));
       dispatch(untouch(formName, 'dataTypes'));
@@ -69,7 +67,7 @@ export const FileExtensionForm = stripesForm({
     dispatch(touch(formName, 'dataTypes'));
   };
 
-  const getSubmitMessage = isEditMode => {
+  const getSubmitMessage = () => {
     const action = isEditMode ? 'save' : 'create';
     const buttonMessageIdEnding = action === 'create' ? 'settings.fileExtension.create' : action;
 
@@ -86,7 +84,6 @@ export const FileExtensionForm = stripesForm({
 
   const isSubmitDisabled = pristine || submitting;
 
-  const isEditMode = Boolean(initialValues.id);
   const paneTitle = isEditMode
     ? (
       <FormattedMessage id="ui-data-import.edit">
@@ -102,7 +99,7 @@ export const FileExtensionForm = stripesForm({
     <FullScreenForm
       id="file-extensions-form"
       paneTitle={paneTitle}
-      submitMessage={getSubmitMessage(isEditMode)}
+      submitMessage={getSubmitMessage()}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={handleSubmit}
       onCancel={onCancel}
@@ -142,7 +139,7 @@ export const FileExtensionForm = stripesForm({
           name="importBlocked"
           type="checkbox"
           component={Checkbox}
-          onChange={importBlockedChange}
+          onChange={handleImportBlockedChange}
         />
       </div>
       <div data-test-types-field>
@@ -163,14 +160,19 @@ export const FileExtensionForm = stripesForm({
       </div>
     </FullScreenForm>
   );
-});
+};
 
-FileExtensionForm.propTypes = {
-  invalid: PropTypes.bool.isRequired,
+FileExtensionFormComponent.propTypes = {
+  initialValues: PropTypes.object.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
-  initialValues: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  dispatch: PropTypes.func.isRequired,
 };
+
+export const FileExtensionForm = stripesForm({
+  form: formName,
+  navigationCheck: true,
+  enableReinitialize: true,
+})(FileExtensionFormComponent);
