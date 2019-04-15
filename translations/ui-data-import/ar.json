@@ -108,5 +108,10 @@
     "settings.jobProfiles.acceptedDataType": "نوع البيانات المقبولة",
     "settings.jobProfiles.chooseAcceptedDataType": "اختر نوع البيانات المقبولة",
     "settings.jobProfiles.overview": "نظرة عامة",
-    "fileDefinitionDeleteError": "خطأ داخلي. قم بالضغط على {button} لإعادة المحاولة"
+    "fileDefinitionDeleteError": "خطأ داخلي. قم بالضغط على {button} لإعادة المحاولة",
+    "communicationProblem": "توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة.",
+    "settings.jobProfiles.action.success": "تم {action} ملف تعريف الوظيفة \"{name}\" بنجاح",
+    "settings.jobProfiles.action.error": "لم يتم {action} ملف تعريف الوظيفة \"{name}\"",
+    "validation.jobProfile.duplication.invalid": "\"{value}\" ملف تعريف الوظيفة موجودة بالفعل",
+    "validation.recordNotCreated": "لم يتم إنشاء التسجيلة الجديدة: {description}"
 }
