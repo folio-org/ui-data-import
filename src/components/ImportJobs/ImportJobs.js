@@ -1,6 +1,7 @@
 import React, {
   Component,
   Fragment,
+  createRef,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -74,6 +75,8 @@ export class ImportJobs extends Component {
       prohibitFilesUploading: false,
       showErrorMessage: false,
     };
+
+    this.calloutRef = createRef();
   }
 
   componentDidMount() {
@@ -128,7 +131,7 @@ export class ImportJobs extends Component {
       />
     );
 
-    this.callout.sendCallout({
+    this.calloutRef.current.sendCallout({
       type: 'error',
       message: errorMessage,
     });
@@ -269,8 +272,6 @@ export class ImportJobs extends Component {
     });
   };
 
-  createCalloutRef = ref => { this.callout = ref; };
-
   renderImportJobs() {
     const { match: { path } } = this.props;
     const { filesExtensionsModalType } = this.state;
@@ -351,7 +352,7 @@ export class ImportJobs extends Component {
     return (
       <Fragment>
         {this.renderImportJobs()}
-        <Callout ref={this.createCalloutRef} />
+        <Callout ref={this.calloutRef} />
       </Fragment>
     );
   }

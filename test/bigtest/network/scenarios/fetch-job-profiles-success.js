@@ -32,6 +32,8 @@ export default server => {
     });
   });
 
+  server.get('/data-import-profiles/jobProfiles/:id');
+
   server.post('/data-import-profiles/jobProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
     const record = server.create('job-profile', params);

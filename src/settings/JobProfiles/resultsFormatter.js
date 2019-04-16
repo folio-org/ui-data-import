@@ -38,7 +38,12 @@ export const resultsFormatter = searchTerm => ({
       iconKey="jobProfiles"
       className={sharedCss.baseline}
     >
-      <HighLight search={searchTerm}>{record.name}</HighLight>
+      <HighLight
+        search={searchTerm}
+        className={sharedCss.container}
+      >
+        {record.name}
+      </HighLight>
     </AppIcon>
   ),
   tags: record => {
@@ -55,7 +60,12 @@ export const resultsFormatter = searchTerm => ({
           icon="tag"
           iconClassName={css.tagsIcon}
         />
-        <HighLight search={searchTerm}>{tags.join(', ')}</HighLight>
+        <HighLight
+          search={searchTerm}
+          className={sharedCss.container}
+        >
+          {tags.join(', ')}
+        </HighLight>
       </span>
     );
   },

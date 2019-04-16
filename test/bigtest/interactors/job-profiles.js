@@ -28,11 +28,11 @@ import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/i
 
 @interactor class JobProfilesInteractor {
   list = new MultiColumnListInteractor('#job-profiles-list');
-  selectAllCheckBox = new CheckboxInteractor('[data-test-job-profiles] [data-test-select-all]');
-  checkBoxes = collection('[data-test-job-profiles] [data-test-select-item]', CheckboxInteractor);
+  selectAllCheckBox = new CheckboxInteractor('[data-test-select-all]');
+  checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);
   newJobProfileButton = new ButtonInteractor('[data-test-new-button]');
   searchFiled = new TextFieldInteractor('#input-job-profiles-search');
   searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
 }
 
-export const jobProfiles = new JobProfilesInteractor('[data-test-job-profiles]');
+export const jobProfiles = new JobProfilesInteractor();

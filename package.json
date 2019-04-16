@@ -43,7 +43,6 @@
     "classnames": "^2.2.5",
     "lodash": "^4.16.4",
     "prop-types": "^15.6.0",
-    "qs": "^6.5.1",
     "react-dropzone": "^7.0.1",
     "react-highlighter": "^0.4.3",
     "react-intl": "^2.3.0",
@@ -123,7 +122,9 @@
           "data-import.fileExtensions.put",
           "data-import.fileExtensions.delete",
           "data-import.fileExtensions.default",
-          "converter-storage.jobprofile.get"
+          "converter-storage.jobprofile.get",
+          "converter-storage.jobprofile.post",
+          "converter-storage.jobprofile.put"
         ],
         "visible": true
       }

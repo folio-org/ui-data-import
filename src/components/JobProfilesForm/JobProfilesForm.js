@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { identity } from 'lodash';
 import { Field } from 'redux-form';
+import { identity } from 'lodash';
 
 import {
   Headline,
@@ -28,18 +28,37 @@ export const JobProfilesFormComponent = props => {
   const {
     pristine,
     submitting,
+    initialValues,
     handleSubmit,
     onCancel,
   } = props;
 
+  const isEditMode = Boolean(initialValues.id);
   const isSubmitDisabled = pristine || submitting;
-  const title = <FormattedMessage id="ui-data-import.settings.jobProfiles.newJob" />;
+
+  const getSubmitMessage = () => {
+    const action = isEditMode ? 'save' : 'create';
+    const buttonMessageIdEnding = action === 'create' ? 'settings.jobProfiles.create' : action;
+
+    return <FormattedMessage id={`ui-data-import.${buttonMessageIdEnding}`} />;
+  };
+
+  const paneTitle = isEditMode
+    ? (
+      <FormattedMessage id="ui-data-import.edit">
+        {txt => `${txt} ${initialValues.name}`}
+      </FormattedMessage>
+    )
+    : <FormattedMessage id="ui-data-import.settings.jobProfiles.newJob" />;
+  const headLine = isEditMode
+    ? initialValues.name
+    : <FormattedMessage id="ui-data-import.settings.jobProfiles.newJob" />;
 
   return (
     <FullScreenForm
       id="job-profiles-form"
-      paneTitle={title}
-      submitMessage={<FormattedMessage id="ui-data-import.settings.jobProfiles.create" />}
+      paneTitle={paneTitle}
+      submitMessage={getSubmitMessage()}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={handleSubmit}
       onCancel={onCancel}
@@ -49,7 +68,7 @@ export const JobProfilesFormComponent = props => {
         tag="h2"
         data-test-header-title
       >
-        {title}
+        {headLine}
       </Headline>
       <AccordionSet>
         <Accordion
@@ -103,6 +122,7 @@ export const JobProfilesFormComponent = props => {
 };
 
 JobProfilesFormComponent.propTypes = {
+  initialValues: PropTypes.object.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,

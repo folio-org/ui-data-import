@@ -7,6 +7,8 @@ import {
   UserNameFormatter,
 } from '../../components';
 
+import sharedStyles from '../../shared.css';
+
 export const resultsFormatter = (intl, searchTerm) => ({
   importBlocked: record => {
     const { importBlocked } = record;
@@ -15,7 +17,14 @@ export const resultsFormatter = (intl, searchTerm) => ({
 
     return intl.formatMessage({ id: fullTranslationId });
   },
-  extension: record => <HighLight search={searchTerm}>{record.extension}</HighLight>,
+  extension: record => (
+    <HighLight
+      className={sharedStyles.container}
+      search={searchTerm}
+    >
+      {record.extension}
+    </HighLight>
+  ),
   dataTypes: record => {
     const { dataTypes } = record;
 
@@ -23,7 +32,14 @@ export const resultsFormatter = (intl, searchTerm) => ({
       return '-';
     }
 
-    return <HighLight search={searchTerm}>{dataTypes.join(', ')}</HighLight>;
+    return (
+      <HighLight
+        className={sharedStyles.container}
+        search={searchTerm}
+      >
+        {dataTypes.join(', ')}
+      </HighLight>
+    );
   },
   updated: record => {
     const { metadata: { updatedDate } } = record;
