@@ -65,7 +65,6 @@
     "settings.fileExtension.blockImport": "Bloquear importação",
     "settings.fileExtension.allowImport": "Permitir a importação",
     "settings.fileExtension.newMapping": "Novo mapeamento de extensão de arquivo",
-    "settings.fileExtension.create": "Criar extensão de arquivo",
     "settings.fileExtensions.title": "Extensões de arquivo",
     "settings.fileExtensions.count": "{count, number} arquivo {count, plural, one {extensão} other {extensões}}",
     "validation.enterValue": "Por favor, insira um valor",
@@ -99,9 +98,6 @@
     "settings.matchProfiles.title": "Perfis de correspondência",
     "settings.actionProfiles.title": "Perfis de ação",
     "settings.fieldMappingProfiles.title": "Perfis de mapeamento de campos",
-    "settings.create.error.network": "Novo registo não foi criado: {description}",
-    "settings.edit.error.network": "Registro não foi atualizado: {description}",
-    "settings.jobProfiles.create": "Criar perfil de trabalho",
     "settings.jobProfiles.newJob": "Novo perfil de trabalho",
     "settings.jobProfiles.summary": "Resumo",
     "settings.jobProfiles.name": "Nome",
@@ -113,5 +109,6 @@
     "settings.jobProfiles.action.success": "O perfil de trabalho \"{name}\" foi {action} com sucesso",
     "settings.jobProfiles.action.error": "O perfil de trabalho \"{name}\" não foi {action}",
     "validation.jobProfile.duplication.invalid": "O perfil de trabalho \"{value}\" já existe",
-    "validation.recordNotCreated": "Novo registo não foi criado: {description}"
+    "settings.jobProfile.title": "Job profile",
+    "settings.save.error.network": "Record not saved: {description}"
 }
