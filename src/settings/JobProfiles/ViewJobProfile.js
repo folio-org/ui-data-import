@@ -1,7 +1,4 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
@@ -13,6 +10,7 @@ import {
   Icon,
   Layer,
   PaneMenu,
+  Headline,
 } from '@folio/stripes/components';
 
 import { Preloader } from '../../components/Preloader';
@@ -94,17 +92,15 @@ export class ViewJobProfile extends Component {
 
   renderActionMenu = menu => {
     return (
-      <Fragment>
-        <Button
-          data-test-edit-job-profile-button
-          buttonStyle="dropdownItem"
-          onClick={() => this.handleOpenEdit(menu)}
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-data-import.edit" />
-          </Icon>
-        </Button>
-      </Fragment>
+      <Button
+        data-test-edit-job-profile-button
+        buttonStyle="dropdownItem"
+        onClick={() => this.handleOpenEdit(menu)}
+      >
+        <Icon icon="edit">
+          <FormattedMessage id="ui-data-import.edit" />
+        </Icon>
+      </Button>
     );
   };
 
@@ -184,7 +180,13 @@ export class ViewJobProfile extends Component {
         dismissible
         onClose={onClose}
       >
-        <div>{record.name}</div>
+        <Headline
+          data-test-headline
+          size="xx-large"
+          tag="h2"
+        >
+          {record.name}
+        </Headline>
       </Pane>
     );
   }

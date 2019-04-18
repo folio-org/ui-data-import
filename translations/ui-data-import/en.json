@@ -74,8 +74,7 @@
   "modal.fileExtensions.memoryLimit.message": "Not enough space to store the files. Contact system administrator",
   "modal.fileExtensions.messageHighlightedText": "different extensions",
   "modal.fileExtensions.actionButton": "Choose other files to upload",
-  "settings.create.error.network": "New record not created: {description}",
-  "settings.edit.error.network": "Record not updated: {description}",
+  "settings.save.error.network": "Record not saved: {description}",
   "settings.fileExtension.title": "File extension",
   "settings.fileExtension.action.success": "The file extension \"{extension}\" was successfully {action}",
   "settings.fileExtension.action.error": "The file extension \"{extension}\" was not {action}",
@@ -84,13 +83,11 @@
   "settings.fileExtension.blockImport": "Block import",
   "settings.fileExtension.allowImport": "Allow import",
   "settings.fileExtension.newMapping": "New file extension mapping",
-  "settings.fileExtension.create": "Create file extension",
   "settings.fileExtension.reset.error.network": "Reset was not successful: {description}",
   "settings.fileExtensions.title": "File extensions",
   "settings.fileExtensions.reset": "Reset all extension mappings to system defaults",
   "settings.fileExtensions.resetAll": "Reset all",
   "settings.fileExtensions.count": "{count, number} file {count, plural, one {extension} other {extensions}}",
-  "settings.jobProfiles.create": "Create job profile",
   "settings.jobProfiles.newJob": "New job profile",
   "settings.jobProfiles.summary": "Summary",
   "settings.jobProfiles.name": "Name",
@@ -113,6 +110,5 @@
   "validation.fileExtension": "Please enter a valid file extension (e.g. .marc)",
   "validation.fileExtension.extension.invalid": "File extension {value} is not a valid format",
   "validation.fileExtension.duplication.invalid": "File extension {value} already exists",
-  "validation.jobProfile.duplication.invalid": "Job profile \"{value}\" already exists",
-  "validation.recordNotCreated": "New record not created: {description}"
+  "validation.jobProfile.duplication.invalid": "Job profile \"{value}\" already exists"
 }

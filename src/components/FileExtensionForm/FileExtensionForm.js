@@ -67,13 +67,6 @@ const FileExtensionFormComponent = props => {
     dispatch(touch(formName, 'dataTypes'));
   };
 
-  const getSubmitMessage = () => {
-    const action = isEditMode ? 'save' : 'create';
-    const buttonMessageIdEnding = action === 'create' ? 'settings.fileExtension.create' : action;
-
-    return <FormattedMessage id={`ui-data-import.${buttonMessageIdEnding}`} />;
-  };
-
   const filterMultiSelect = (filterText, list) => {
     const filterRegExp = new RegExp(`^${filterText}`, 'i');
     const renderedItems = filterText ? list.filter(item => item.search(filterRegExp) !== -1) : list;
@@ -99,7 +92,7 @@ const FileExtensionFormComponent = props => {
     <FullScreenForm
       id="file-extensions-form"
       paneTitle={paneTitle}
-      submitMessage={getSubmitMessage()}
+      submitMessage={<FormattedMessage id="ui-data-import.save" />}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={handleSubmit}
       onCancel={onCancel}
