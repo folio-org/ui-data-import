@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  createRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
@@ -73,6 +76,8 @@ export class UploadingJobsDisplay extends Component {
       hasLoaded: false,
       renderLeaveModal: false,
     };
+
+    this.calloutRef = createRef();
   }
 
   async componentDidMount() {
@@ -350,7 +355,7 @@ export class UploadingJobsDisplay extends Component {
         />
       );
 
-      this.callout.sendCallout({
+      this.calloutRef.current.sendCallout({
         type: 'error',
         message: errorMessage,
       });
@@ -447,8 +452,6 @@ export class UploadingJobsDisplay extends Component {
     this.setState({ renderLeaveModal: false });
   };
 
-  createCalloutRef = ref => { this.callout = ref; };
-
   render() {
     const {
       hasLoaded,
@@ -476,7 +479,7 @@ export class UploadingJobsDisplay extends Component {
       <div data-test-uploading-jobs-display>
         {this.renderFiles()}
         <EndOfItem />
-        <Callout ref={this.createCalloutRef} />
+        <Callout ref={this.calloutRef} />
         <ConfirmationModal
           id="leave-page-modal"
           open={renderLeaveModal}

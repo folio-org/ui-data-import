@@ -185,7 +185,7 @@ describe('File extensions table', () => {
           await fileExtensionForm.submitFormButton.click();
         });
 
-        it('then file extension details renders the newly created file extension', () => {
+        it('then file extension details renders updated file extension', () => {
           expect(fileExtensionDetails.headline.text).to.equal('.changed');
           expect(fileExtensionDetails.description.text).to.equal('Changed');
           expect(fileExtensionDetails.extension.text).to.equal('.changed');

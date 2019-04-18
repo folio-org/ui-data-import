@@ -5,10 +5,12 @@ export default server => {
   server.create('job-profile', {
     name: 'Approval plan records',
     tags: { tagList: ['acq', 'cat', 'weekly'] },
+    dataType: ['MARC'],
   });
   server.create('job-profile', {
     name: 'Create orders from acquisitions',
     tags: { tagList: ['acq'] },
+    dataType: ['MARC'],
     userInfo: {
       userName: SYSTEM_USER_NAME,
     },
@@ -16,6 +18,7 @@ export default server => {
   server.create('job-profile', {
     name: 'DDA discovery records',
     tags: { tagList: [] },
+    dataType: ['MARC'],
     userInfo: { lastName: 'Doe' },
   });
 
@@ -37,5 +40,20 @@ export default server => {
     const record = server.create('job-profile', params);
 
     return record.attrs;
+  });
+
+  server.get('/data-import-profiles/jobProfiles/:id');
+
+  server.put('/data-import-profiles/jobProfiles/:id', (schema, request) => {
+    const {
+      params: { id },
+      requestBody,
+    } = request;
+    const jobProfileModel = schema.jobProfiles.find(id);
+    const updatedJobProfile = JSON.parse(requestBody);
+
+    jobProfileModel.update({ ...updatedJobProfile });
+
+    return jobProfileModel.attrs;
   });
 };

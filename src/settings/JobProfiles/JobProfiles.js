@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { noop } from 'lodash';
@@ -61,6 +64,7 @@ export class JobProfiles extends Component {
     mutator: PropTypes.shape({
       jobProfiles: PropTypes.shape({
         POST: PropTypes.func.isRequired,
+        PUT: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
     location: PropTypes.shape({
@@ -112,14 +116,12 @@ export class JobProfiles extends Component {
 
     const urlQuery = queryString.parse(search);
     const searchTerm = (urlQuery.query || '').trim();
+    const newRecordInitialValues = {};
 
     return (
       <IntlConsumer>
         {intl => (
-          <div
-            className={sharedCss.container}
-            data-test-job-profiles
-          >
+          <Fragment>
             <SettingPage
               finishedResourceName="jobProfiles"
               parentMutator={mutator}
@@ -164,11 +166,12 @@ export class JobProfiles extends Component {
                   ViewRecordComponent={ViewJobProfile}
                   EditRecordComponent={JobProfilesForm}
                   showSingleResult={showSingleResult}
+                  newRecordInitialValues={newRecordInitialValues}
                   {...props}
                 />
               )}
             </SettingPage>
-          </div>
+          </Fragment>
         )}
       </IntlConsumer>
     );

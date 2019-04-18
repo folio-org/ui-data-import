@@ -1,4 +1,8 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  Fragment,
+  createRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
@@ -24,8 +28,6 @@ import {
 import { ViewFileExtension } from './ViewFileExtension';
 import { SettingPage } from '../SettingPage';
 import { resultsFormatter } from './resultsFormatter';
-
-import sharedCss from '../../shared.css';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -102,6 +104,8 @@ export class FileExtensions extends Component {
     isResetFileExtensionsModalOpen: false,
     areFileExtensionsResetting: false,
   };
+
+  calloutRef = createRef();
 
   visibleColumns = [
     'extension',
@@ -187,7 +191,7 @@ export class FileExtensions extends Component {
         />
       );
 
-      this.callout.sendCallout({
+      this.calloutRef.current.sendCallout({
         type: 'error',
         message,
       });
@@ -230,8 +234,6 @@ export class FileExtensions extends Component {
     return record.extension;
   }
 
-  createCalloutRef = ref => { this.callout = ref; };
-
   render() {
     const {
       resources,
@@ -256,10 +258,7 @@ export class FileExtensions extends Component {
     return (
       <IntlConsumer>
         {intl => (
-          <div
-            className={sharedCss.container}
-            data-test-file-extensions
-          >
+          <Fragment>
             <SettingPage
               finishedResourceName="fileExtensions"
               parentMutator={mutator}
@@ -310,8 +309,8 @@ export class FileExtensions extends Component {
               onConfirm={this.restoreDefaultFileExtensions}
               onCancel={this.hideResetFileExtensionsToDefaultsModal}
             />
-            <Callout ref={this.createCalloutRef} />
-          </div>
+            <Callout ref={this.calloutRef} />
+          </Fragment>
         )}
       </IntlConsumer>
     );

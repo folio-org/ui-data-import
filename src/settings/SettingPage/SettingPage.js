@@ -34,32 +34,28 @@ export const SettingPage = props => {
     history.push(url);
   };
 
-  const showUpdateRecordErrorMessage = async (response, record, isEditMode = false) => {
+  const showUpdateRecordErrorMessage = async (response, record) => {
     const errorMsgIdEnding = await getXHRErrorMessage(response);
     let errorMessage;
 
     if (errorMsgIdEnding) {
       errorMessage = (
         <FormattedMessage
-          id="ui-data-import.validation.recordNotCreated"
+          id="ui-data-import.settings.save.error.network"
           values={{
             description: (
               <FormattedMessage
                 id={`ui-data-import.validation.${errorMsgIdEnding}`}
-                values={{ value: getRecordName(record) }}
+                values={{ value: <strong>{getRecordName(record)}</strong> }}
               />
             ),
           }}
         />
       );
     } else {
-      const messageId = isEditMode
-        ? 'ui-data-import.settings.edit.error.network'
-        : 'ui-data-import.settings.create.error.network';
-
       errorMessage = (
         <FormattedMessage
-          id={messageId}
+          id="ui-data-import.settings.save.error.network"
           values={{ description: <FormattedMessage id="ui-data-import.communicationProblem" /> }}
         />
       );
@@ -80,7 +76,7 @@ export const SettingPage = props => {
 
   const editRecord = record => resourceMutator.PUT(record)
     .catch(error => {
-      showUpdateRecordErrorMessage(error, record, true);
+      showUpdateRecordErrorMessage(error, record);
 
       throw error;
     });

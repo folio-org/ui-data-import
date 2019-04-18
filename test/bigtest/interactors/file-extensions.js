@@ -10,8 +10,6 @@ import ConfirmationModalInteractor from '@folio/stripes-components/lib/Confirmat
 import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
 
 @interactor class FileExtensionsInteractor {
-  static defaultScope = '[data-test-file-extensions]';
-
   paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
   restoreDefaultFileExtensionsButton = new ButtonInteractor('[data-test-restore-default-file-extensions-button]');
   newFileExtensionButton = new ButtonInteractor('[data-test-new-button]');

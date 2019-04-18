@@ -119,6 +119,7 @@ export class ViewFileExtension extends Component {
         fluidContentWidth
         paneTitle=""
         dismissible
+        lastMenu={this.renderDetailMenu()}
         onClose={onClose}
       >
         <Preloader />
