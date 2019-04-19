@@ -94,6 +94,8 @@
   "settings.jobProfiles.acceptedDataType": "Accepted data type",
   "settings.jobProfiles.chooseAcceptedDataType": "Choose accepted data type",
   "settings.jobProfiles.overview": "Overview",
+  "settings.jobProfiles.jobsUsingThisProfile": "Jobs using this profile",
+  "settings.jobProfiles.jobID": "Job ID",
   "settings.jobProfiles.action.success": "The job profile \"{name}\" was successfully {action}",
   "settings.jobProfiles.action.error": "The job profile \"{name}\" was not {action}",
   "modal.leavePage.header": "Leave the page",

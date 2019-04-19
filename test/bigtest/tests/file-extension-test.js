@@ -57,7 +57,7 @@ describe('File extensions table', () => {
       });
 
       it('when pane dropdown is opened', () => {
-        expect(fileExtensionDetails.paneHeaderEditButton.isVisible).to.be.true;
+        expect(fileExtensionDetails.dropdownEditButton.isVisible).to.be.true;
       });
     });
 
@@ -153,7 +153,7 @@ describe('File extensions table', () => {
       describe('appears', () => {
         beforeEach(async () => {
           await fileExtensionDetails.expandPaneHeaderDropdown();
-          await fileExtensionDetails.paneHeaderEditButton.click();
+          await fileExtensionDetails.dropdownEditButton.click();
         });
 
         it('upon click on pane header menu edit button', () => {

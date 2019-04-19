@@ -92,6 +92,7 @@ export class DataImportSettings extends Component {
     return (
       <Settings
         {...this.props}
+        navPaneWidth="15%"
         sections={this.sections}
         paneTitle={this.generateSettingsLabel('index.paneTitle')}
       />

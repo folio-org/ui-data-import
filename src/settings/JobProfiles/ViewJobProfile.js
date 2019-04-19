@@ -1,41 +1,75 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
-import { omit } from 'lodash';
+import { get } from 'lodash';
 
 import {
+  Icon,
   Pane,
   Button,
-  Icon,
-  Layer,
   PaneMenu,
   Headline,
+  KeyValue,
+  Accordion,
+  AccordionSet,
+  MultiColumnList,
 } from '@folio/stripes/components';
+import { ViewMetaData } from '@folio/stripes/smart-components';
+import {
+  AppIcon,
+  IntlConsumer,
+  TitleManager,
+  stripesShape,
+  stripesConnect,
+} from '@folio/stripes/core';
 
+import { EndOfItem } from '../../components/EndOfItem';
 import { Preloader } from '../../components/Preloader';
-import { JobProfilesForm } from '../../components/JobProfilesForm';
+import { withJobLogsCellsFormatter } from '../../components/JobLogs/withJobLogsCellsFormatter';
+import {
+  JOB_STATUSES,
+  SYSTEM_USER_ID,
+  SYSTEM_USER_NAME,
+} from '../../utils/constants';
+import { createUrl, sortCollection, sortDates } from '../../utils';
 
-// TODO: view component will be developed in UIDATIMP-133
+import css from './JobProfiles.css';
+
+@withJobLogsCellsFormatter
+@stripesConnect
 export class ViewJobProfile extends Component {
   static manifest = Object.freeze({
     jobProfile: {
       type: 'okapi',
       path: 'data-import-profiles/jobProfiles/:{id}',
-      throwErrors: false,
+      throwsErrors: false,
+    },
+    jobsUsingThisProfile: {
+      type: 'okapi',
+      // TODO: UIDATIMP-180 - fix query param
+      path: createUrl('metadata-provider/jobExecutions', {
+        // query: '(jobProfileInfo.id==":{id}") sortBy completedDate/sort.descending',
+        query: `(uiStatus=="${JOB_STATUSES.READY_FOR_PREVIEW}")`,
+        limit: 25,
+      }),
+      throwsErrors: false,
     },
   });
 
   static propTypes = {
+    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       jobProfile: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(
           PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            dataType: PropTypes.string.isRequired,
             metadata: PropTypes.shape({
               createdByUserId: PropTypes.string.isRequired,
               updatedByUserId: PropTypes.string.isRequired,
             }).isRequired,
+            description: PropTypes.string,
           }),
         ),
       }),
@@ -45,94 +79,61 @@ export class ViewJobProfile extends Component {
         id: PropTypes.string,
       }).isRequired,
     }).isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    onOpenEdit: PropTypes.func.isRequired,
-    onEdit: PropTypes.func.isRequired,
-    onEditSuccess: PropTypes.func.isRequired,
-    onCloseEdit: PropTypes.func.isRequired,
-    editContainer: PropTypes.instanceOf(Element),
     editLink: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
+    onOpenEdit: PropTypes.func.isRequired,
+    formatter: PropTypes.object,
   };
 
-  get jopProfileData() {
-    const {
-      resources,
-      match: { params },
-    } = this.props;
+  constructor(props) {
+    super(props);
+
+    const { stripes } = this.props;
+
+    this.connectedViewMetaData = stripes.connect(ViewMetaData);
+  }
+
+  get jobProfileData() {
+    const { resources } = this.props;
 
     const jobProfile = resources.jobProfile || {};
-    const records = jobProfile.records || [];
+    const [record] = jobProfile.records || [];
 
     return {
       hasLoaded: jobProfile.hasLoaded,
-      record: records.find(record => record.id === params.id),
+      record,
     };
   }
 
-  renderSpinner() {
-    const { onClose } = this.props;
+  get jobsUsingThisProfileData() {
+    const { resources } = this.props;
 
-    return (
-      <Pane
-        id="pane-job-profiles-details"
-        defaultWidth="fill"
-        fluidContentWidth
-        paneTitle=""
-        dismissible
-        lastMenu={this.renderDetailMenu()}
-        onClose={onClose}
-      >
-        <Preloader />
-      </Pane>
+    const jobsUsingThisProfile = resources.jobsUsingThisProfile || {};
+    const [{ jobExecutionDtos: jobsUsingThisProfileData } = {}] = jobsUsingThisProfile.records || [];
+
+    // TODO: UIDATIMP-180 - remove front-end sorting
+    const jobsUsingThisProfileDataSorted = sortCollection(
+      jobsUsingThisProfileData,
+      [(a, b) => sortDates(b.completedDate, a.completedDate)],
     );
+
+    return {
+      hasLoaded: jobsUsingThisProfile.hasLoaded,
+      jobsUsingThisProfileData: jobsUsingThisProfileDataSorted,
+    };
   }
 
-  renderActionMenu = menu => {
-    return (
-      <Button
-        data-test-edit-job-profile-button
-        buttonStyle="dropdownItem"
-        onClick={() => this.handleOpenEdit(menu)}
-      >
-        <Icon icon="edit">
-          <FormattedMessage id="ui-data-import.edit" />
-        </Icon>
-      </Button>
-    );
-  };
-
-  renderLayer(record) {
-    const {
-      editContainer,
-      onEdit,
-      onCloseEdit,
-      onEditSuccess,
-    } = this.props;
-
-    const isEditLayer = this.isLayerOpen('edit');
-
-    if (isEditLayer) {
-      return (
-        <Layer
-          isOpen={isEditLayer}
-          container={editContainer}
-        >
-          <JobProfilesForm
-            id="edit-job-profile-form"
-            initialValues={this.getFormData(record)}
-            onSubmit={onEdit}
-            onSubmitSuccess={onEditSuccess}
-            onCancel={onCloseEdit}
-          />
-        </Layer>
-      );
-    }
-
-    return null;
-  }
+  renderActionMenu = menu => (
+    <Button
+      data-test-edit-job-profile-menu-button
+      buttonStyle="dropdownItem"
+      onClick={() => this.handleOpenEdit(menu)}
+    >
+      <Icon icon="edit">
+        <FormattedMessage id="ui-data-import.edit" />
+      </Icon>
+    </Button>
+  );
 
   handleOpenEdit = menu => {
     const { onOpenEdit } = this.props;
@@ -141,7 +142,7 @@ export class ViewJobProfile extends Component {
     menu.onToggle();
   };
 
-  renderDetailMenu(record) {
+  renderLastMenu(record) {
     const {
       onOpenEdit,
       editLink,
@@ -152,7 +153,7 @@ export class ViewJobProfile extends Component {
     return (
       <PaneMenu>
         <Button
-          data-test-edit-job-profile-menu-button
+          data-test-edit-job-profile-button
           href={editLink}
           style={{ visibility: editButtonVisibility }}
           buttonStyle="primary paneHeaderNewButton"
@@ -165,21 +166,70 @@ export class ViewJobProfile extends Component {
     );
   }
 
-  renderJobProfile(record) {
-    const { onClose } = this.props;
+  render() {
+    const {
+      onClose,
+      formatter,
+    } = this.props;
+
+    const {
+      hasLoaded,
+      record,
+    } = this.jobProfileData;
+    const {
+      hasLoaded: jobsUsingThisProfileDataHasLoaded,
+      jobsUsingThisProfileData,
+    } = this.jobsUsingThisProfileData;
+
+    const renderSpinner = !record || !hasLoaded;
+
+    if (renderSpinner) {
+      return (
+        <Pane
+          id="pane-job-profile-details"
+          defaultWidth="fill"
+          fluidContentWidth
+          paneTitle=""
+          dismissible
+          onClose={onClose}
+        >
+          <Preloader />
+        </Pane>
+      );
+    }
+
+    // TODO: UIDATIMP-180 - use real IDs
+    const userId = get(this.props, ['stripes', 'okapi', 'currentUser', 'id'], '');
+
+    record.metadata = {
+      ...record.metadata,
+      createdByUserId: record.metadata.createdByUserId || userId,
+      updatedByUserId: record.metadata.updatedByUserId || userId,
+    };
+
+    const paneTitle = (
+      <AppIcon
+        size="small"
+        app="data-import"
+        iconKey="jobProfiles"
+      >
+        {record.name}
+      </AppIcon>
+    );
 
     return (
       <Pane
         id="pane-job-profile-details"
         defaultWidth="fill"
         fluidContentWidth
-        paneTitle={record.name}
-        paneSub={<FormattedMessage id="ui-data-import.settings.jobProfile.title" />}
+        paneTitle={paneTitle}
+        paneSub={<FormattedMessage id="ui-data-import.jobProfileName" />}
         actionMenu={this.renderActionMenu}
-        lastMenu={this.renderDetailMenu(record)}
+        lastMenu={this.renderLastMenu(record)}
         dismissible
         onClose={onClose}
       >
+        <TitleManager record={record.name} />
         <Headline
           data-test-headline
           size="xx-large"
@@ -187,32 +237,57 @@ export class ViewJobProfile extends Component {
         >
           {record.name}
         </Headline>
+        <AccordionSet>
+          <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.summary" />}>
+            <this.connectedViewMetaData
+              metadata={record.metadata}
+              systemId={SYSTEM_USER_ID}
+              systemUser={SYSTEM_USER_NAME}
+            />
+            <KeyValue label={<FormattedMessage id="ui-data-import.settings.jobProfiles.acceptedDataType" />}>
+              <div data-test-accepted-data-type>{record.dataType}</div>
+            </KeyValue>
+            <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
+              <div data-test-description>{record.description || '-'}</div>
+            </KeyValue>
+          </Accordion>
+          <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}>
+            <div style={{ height: 60 }}>{/* will be implemented in UIDATIMP-152 */}</div>
+          </Accordion>
+          <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.jobsUsingThisProfile" />}>
+            {jobsUsingThisProfileDataHasLoaded
+              ? (
+                <IntlConsumer>
+                  {intl => (
+                    <MultiColumnList
+                      id="jobs-using-this-profile"
+                      totalCount={jobsUsingThisProfileData.length}
+                      contentData={jobsUsingThisProfileData}
+                      columnMapping={{
+                        fileName: intl.formatMessage({ id: 'ui-data-import.fileName' }),
+                        hrId: intl.formatMessage({ id: 'ui-data-import.settings.jobProfiles.jobID' }),
+                        completedDate: intl.formatMessage({ id: 'ui-data-import.jobCompletedDate' }),
+                        runBy: intl.formatMessage({ id: 'ui-data-import.runBy' }),
+                      }}
+                      visibleColumns={[
+                        'fileName',
+                        'hrId',
+                        'completedDate',
+                        'runBy',
+                      ]}
+                      formatter={formatter}
+                    />
+                  )}
+                </IntlConsumer>
+              )
+              : <Preloader />}
+          </Accordion>
+        </AccordionSet>
+        <EndOfItem
+          className={css.endOfRecord}
+          title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+        />
       </Pane>
     );
-  }
-
-  getFormData(record) {
-    return omit(record, 'userInfo', 'metadata');
-  }
-
-  isLayerOpen = value => {
-    const { location: { search } } = this.props;
-
-    const query = queryString.parse(search);
-
-    return query.layer === value;
-  };
-
-  render() {
-    const {
-      hasLoaded,
-      record,
-    } = this.jopProfileData;
-
-    if (!record || !hasLoaded) {
-      return this.renderSpinner();
-    }
-
-    return this.renderLayer(record) || this.renderJobProfile(record);
   }
 }

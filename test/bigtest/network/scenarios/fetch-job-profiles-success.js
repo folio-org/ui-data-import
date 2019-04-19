@@ -35,6 +35,10 @@ export default server => {
     });
   });
 
+  server.createList('job-execution', 3);
+
+  server.get('/metadata-provider/jobExecutions', schema => schema.jobExecutions.all());
+
   server.post('/data-import-profiles/jobProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
     const record = server.create('job-profile', params);

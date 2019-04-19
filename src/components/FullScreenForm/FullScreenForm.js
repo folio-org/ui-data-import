@@ -26,9 +26,9 @@ export const FullScreenForm = props => {
     submitMessage,
   } = props;
 
-  const closeButton = useRef();
+  const closeButtonRef = useRef();
 
-  useEffect(() => closeButton.current.focus(), []);
+  useEffect(() => closeButtonRef.current.focus(), []);
 
   const firstMenu = (
     <PaneMenu>
@@ -38,7 +38,7 @@ export const FullScreenForm = props => {
             data-test-close-button
             ariaLabel={ariaLabel}
             icon="times"
-            ref={closeButton}
+            ref={closeButtonRef}
             onClick={onCancel}
           />
         )}

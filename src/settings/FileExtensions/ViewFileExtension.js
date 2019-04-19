@@ -3,9 +3,7 @@ import React, {
   Fragment,
 } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
-import { omit } from 'lodash';
 
 import {
   Pane,
@@ -16,18 +14,17 @@ import {
   Icon,
   Button,
   PaneMenu,
-  Layer,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import {
   TitleManager,
   stripesShape,
+  stripesConnect,
 } from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
-import { Preloader } from '../../components/Preloader';
 import { EndOfItem } from '../../components/EndOfItem';
-import { FileExtensionForm } from '../../components/FileExtensionForm';
+import { Preloader } from '../../components/Preloader';
 import {
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
@@ -35,6 +32,7 @@ import {
 
 import css from './ViewFileExtension.css';
 
+@stripesConnect
 export class ViewFileExtension extends Component {
   static manifest = Object.freeze({
     fileExtension: {
@@ -73,11 +71,7 @@ export class ViewFileExtension extends Component {
     }).isRequired,
     editLink: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
-    onEdit: PropTypes.func.isRequired,
-    onEditSuccess: PropTypes.func.isRequired,
     onOpenEdit: PropTypes.func.isRequired,
-    onCloseEdit: PropTypes.func.isRequired,
-    editContainer: PropTypes.instanceOf(Element),
     onDelete: PropTypes.func.isRequired,
   };
 
@@ -95,17 +89,14 @@ export class ViewFileExtension extends Component {
   };
 
   get fileExtensionData() {
-    const {
-      resources,
-      match: { params },
-    } = this.props;
+    const { resources } = this.props;
 
     const fileExtension = resources.fileExtension || {};
-    const records = fileExtension.records || [];
+    const [record] = fileExtension.records || [];
 
     return {
       hasLoaded: fileExtension.hasLoaded,
-      record: records.find(record => record.id === params.id),
+      record,
     };
   }
 
@@ -119,7 +110,7 @@ export class ViewFileExtension extends Component {
         fluidContentWidth
         paneTitle=""
         dismissible
-        lastMenu={this.renderDetailMenu()}
+        lastMenu={this.renderLastMenu()}
         onClose={onClose}
       >
         <Preloader />
@@ -127,7 +118,7 @@ export class ViewFileExtension extends Component {
     );
   }
 
-  renderDetailMenu(record) {
+  renderLastMenu(record) {
     const {
       onOpenEdit,
       editLink,
@@ -138,7 +129,7 @@ export class ViewFileExtension extends Component {
     return (
       <PaneMenu>
         <Button
-          data-test-edit-file-extension-menu-button
+          data-test-edit-file-extension-button
           href={editLink}
           style={{ visibility: editButtonVisibility }}
           buttonStyle="primary paneHeaderNewButton"
@@ -151,30 +142,28 @@ export class ViewFileExtension extends Component {
     );
   }
 
-  renderActionMenu = menu => {
-    return (
-      <Fragment>
-        <Button
-          data-test-edit-file-extension-button
-          buttonStyle="dropdownItem"
-          onClick={() => this.handleOpenEdit(menu)}
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-data-import.edit" />
-          </Icon>
-        </Button>
-        <Button
-          data-test-delete-file-extension-button
-          buttonStyle="dropdownItem"
-          onClick={this.showDeleteExtensionModal}
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-data-import.delete" />
-          </Icon>
-        </Button>
-      </Fragment>
-    );
-  };
+  renderActionMenu = menu => (
+    <Fragment>
+      <Button
+        data-test-edit-file-extension-menu-button
+        buttonStyle="dropdownItem"
+        onClick={() => this.handleOpenEdit(menu)}
+      >
+        <Icon icon="edit">
+          <FormattedMessage id="ui-data-import.edit" />
+        </Icon>
+      </Button>
+      <Button
+        data-test-delete-file-extension-button
+        buttonStyle="dropdownItem"
+        onClick={this.showDeleteExtensionModal}
+      >
+        <Icon icon="trash">
+          <FormattedMessage id="ui-data-import.delete" />
+        </Icon>
+      </Button>
+    </Fragment>
+  );
 
   showDeleteExtensionModal = () => {
     this.setState({ showDeleteConfirmation: true });
@@ -220,7 +209,7 @@ export class ViewFileExtension extends Component {
         paneTitle={record.extension}
         paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
         actionMenu={this.renderActionMenu}
-        lastMenu={this.renderDetailMenu(record)}
+        lastMenu={this.renderLastMenu(record)}
         dismissible
         onClose={onClose}
       >
@@ -303,58 +292,18 @@ export class ViewFileExtension extends Component {
     );
   }
 
-  renderLayer(record) {
-    const {
-      editContainer,
-      onCloseEdit,
-      onEdit,
-      onEditSuccess,
-    } = this.props;
-
-    const isEditLayer = this.isLayerOpen('edit');
-
-    if (isEditLayer) {
-      return (
-        <Layer
-          isOpen={isEditLayer}
-          container={editContainer}
-        >
-          <FileExtensionForm
-            id="edit-file-extension-form"
-            initialValues={this.getFormData(record)}
-            onSubmit={onEdit}
-            onSubmitSuccess={onEditSuccess}
-            onCancel={onCloseEdit}
-          />
-        </Layer>
-      );
-    }
-
-    return null;
-  }
-
-  getFormData(record) {
-    return omit(record, 'userInfo', 'metadata');
-  }
-
-  isLayerOpen = value => {
-    const { location: { search } } = this.props;
-
-    const query = queryString.parse(search);
-
-    return query.layer === value;
-  };
-
   render() {
     const {
       hasLoaded,
       record,
     } = this.fileExtensionData;
 
-    if (!record || !hasLoaded) {
+    const renderSpinner = !record || !hasLoaded;
+
+    if (renderSpinner) {
       return this.renderSpinner();
     }
 
-    return this.renderLayer(record) || this.renderFileExtension(record);
+    return this.renderFileExtension(record);
   }
 }

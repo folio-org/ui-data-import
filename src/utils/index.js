@@ -3,6 +3,7 @@ export * from './compose';
 export * from './createOkapiHeaders';
 export * from './createUrl';
 export * from './sortCollection';
+export * from './sort';
 export * from './formatUserName';
 export * from './xhr';
 export * from './isTestEnv';

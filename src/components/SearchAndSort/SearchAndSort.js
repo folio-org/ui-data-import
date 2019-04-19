@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  createRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { Route } from 'react-router-dom';
@@ -33,7 +36,10 @@ import {
 } from '@folio/stripes/smart-components';
 
 import { Preloader } from '../Preloader';
-import { SORT_TYPES } from '../../utils/constants';
+import {
+  SORT_TYPES,
+  LAYER_TYPES,
+} from '../../utils/constants';
 
 import css from './SearchAndSort.css';
 
@@ -98,6 +104,8 @@ export class SearchAndSort extends Component {
     massageNewRecord: PropTypes.func,
     maxSortKeys: PropTypes.number,
     newRecordInitialValues: PropTypes.object,
+    editRecordInitialValues: PropTypes.object,
+    editRecordInitialValuesAreLoaded: PropTypes.bool,
     nsParams: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object,
@@ -136,23 +144,18 @@ export class SearchAndSort extends Component {
     massageNewRecord: noop,
     defaultSort: '',
     finishedResourceName: '',
+    editRecordInitialValuesAreLoaded: true,
   };
 
   constructor(props) {
     super(props);
 
-    const {
-      stripes,
-      ViewRecordComponent,
-      match: { path: routePath },
-    } = this.props;
+    const { match: { path: routePath } } = this.props;
 
     this.state = { selectedItem: this.initiallySelectedRecord };
 
-    this.SRStatus = null;
     this.lastNonNullResultCount = undefined;
     this.initialQuery = queryString.parse(routePath);
-    this.connectedViewRecord = stripes.connect(ViewRecordComponent);
   }
 
   componentDidMount() {
@@ -173,7 +176,7 @@ export class SearchAndSort extends Component {
     if (isSearchComplete) {
       const count = newState.totalCount();
 
-      this.SRStatus.sendMessage(
+      this.SRStatusRef.current.sendMessage(
         <FormattedMessage
           id="stripes-smart-components.searchReturnedResults"
           values={{ count }}
@@ -259,7 +262,7 @@ export class SearchAndSort extends Component {
       e.preventDefault();
     }
 
-    this.transitionToParams({ layer: 'edit' });
+    this.transitionToParams({ layer: LAYER_TYPES.EDIT });
   };
 
   onCloseEditRecord = e => {
@@ -322,7 +325,7 @@ export class SearchAndSort extends Component {
       e.preventDefault();
     }
 
-    this.transitionToParams({ layer: 'create' });
+    this.transitionToParams({ layer: LAYER_TYPES.CREATE });
   };
 
   createNewRecord = record => {
@@ -449,6 +452,7 @@ export class SearchAndSort extends Component {
       match,
       fullWidthContainer,
       handleEditSuccess,
+      ViewRecordComponent,
     } = this.props;
 
     return (
@@ -456,14 +460,14 @@ export class SearchAndSort extends Component {
         path={`${match.path}/view/:id`}
         render={
           props => (
-            <this.connectedViewRecord
+            <ViewRecordComponent
               stripes={stripes}
               paneWidth="44%"
               editContainer={fullWidthContainer}
               parentResources={parentResources}
               connectedSource={source}
               parentMutator={parentMutator}
-              editLink={this.craftLayerURL('edit')}
+              editLink={this.craftLayerURL(LAYER_TYPES.EDIT)}
               onClose={this.collapseRecordDetails}
               onOpenEdit={this.onOpenEditRecord}
               onCloseEdit={this.onCloseEditRecord}
@@ -486,7 +490,7 @@ export class SearchAndSort extends Component {
           {ariaLabel => (
             <Button
               data-test-new-button
-              href={this.craftLayerURL('create')}
+              href={this.craftLayerURL(LAYER_TYPES.CREATE)}
               aria-label={ariaLabel}
               buttonStyle="primary"
               marginBottom0
@@ -614,26 +618,56 @@ export class SearchAndSort extends Component {
     );
   }
 
+  getLayerProps(layer) {
+    const {
+      newRecordInitialValues,
+      editRecordInitialValues,
+      handleCreateSuccess,
+      handleEditSuccess,
+    } = this.props;
+
+    switch (layer) {
+      case LAYER_TYPES.CREATE: {
+        return {
+          initialValues: newRecordInitialValues,
+          onSubmit: this.createNewRecord,
+          onSubmitSuccess: handleCreateSuccess,
+        };
+      }
+      case LAYER_TYPES.EDIT: {
+        return {
+          initialValues: editRecordInitialValues,
+          onSubmit: this.editRecord,
+          onSubmitSuccess: handleEditSuccess,
+        };
+      }
+      default: {
+        return {};
+      }
+    }
+  }
+
   renderCreateRecordLayer(source) {
     const {
       parentResources,
       objectName,
       detailProps,
       EditRecordComponent,
-      newRecordInitialValues,
+      editRecordInitialValuesAreLoaded,
       stripes,
       parentMutator,
       location: { search },
       fullWidthContainer,
-      handleCreateSuccess,
     } = this.props;
 
     if (!EditRecordComponent) {
       return null;
     }
 
-    const urlQuery = queryString.parse(search);
-    const isLayerOpen = urlQuery.layer ? urlQuery.layer === 'create' : false;
+    const { layer } = queryString.parse(search);
+    const isCreateLayerOpen = layer === LAYER_TYPES.CREATE;
+    const isEditLayerOpen = layer === LAYER_TYPES.EDIT && editRecordInitialValuesAreLoaded;
+    const isLayerOpen = isCreateLayerOpen || isEditLayerOpen;
 
     return (
       <Layer
@@ -643,18 +677,18 @@ export class SearchAndSort extends Component {
         <EditRecordComponent
           id={`${objectName}form-add${objectName}`}
           stripes={stripes}
-          initialValues={newRecordInitialValues}
           parentResources={parentResources}
           connectedSource={source}
           parentMutator={parentMutator}
-          onSubmit={this.createNewRecord}
-          onSubmitSuccess={handleCreateSuccess}
           onCancel={this.closeNewRecord}
           {...detailProps}
+          {...this.getLayerProps(layer)}
         />
       </Layer>
     );
   }
+
+  SRStatusRef = createRef();
 
   render() {
     const {
@@ -676,7 +710,7 @@ export class SearchAndSort extends Component {
 
     return (
       <Paneset>
-        <SRStatus ref={ref => { this.SRStatus = ref; }} />
+        <SRStatus ref={this.SRStatusRef} />
 
         <Pane
           id="pane-results"

@@ -10,9 +10,11 @@ import {
   PaneHeaderIconButton,
 } from '@folio/stripes/components';
 
-import { SearchPanel } from '../components/SearchPanel';
-import { ResultPanel } from '../components/ResultPanel';
-import { Report } from '../components/Report';
+import {
+  Report,
+  ResultPanel,
+  SearchPanel,
+} from '../components';
 
 export class Results extends Component {
   constructor(props) {

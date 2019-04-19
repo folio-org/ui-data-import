@@ -1,10 +1,12 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import { noop } from 'lodash';
+import { connect } from 'react-redux';
+import {
+  get,
+  omit,
+  noop,
+} from 'lodash';
 
 import {
   IntlConsumer,
@@ -26,7 +28,21 @@ import sharedCss from '../../shared.css';
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
+const mapStateToProps = state => {
+  const {
+    hasLoaded = false,
+    records: [record = {}] = [],
+  } = get(state, 'folio_data_import_job_profile', {});
+  const selectedJobProfile = {
+    hasLoaded,
+    record: omit(record, 'metadata', 'userInfo'),
+  };
+
+  return { selectedJobProfile };
+};
+
 @stripesConnect
+@connect(mapStateToProps)
 export class JobProfiles extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -77,6 +93,7 @@ export class JobProfiles extends Component {
       push: PropTypes.func.isRequired,
     }).isRequired,
     label: PropTypes.node.isRequired,
+    selectedJobProfile: PropTypes.object.isRequired,
     showSingleResult: PropTypes.bool,
   };
 
@@ -98,6 +115,12 @@ export class JobProfiles extends Component {
     updatedBy: 250,
   };
 
+  defaultNewRecordInitialValues = {
+    name: '',
+    description: '',
+    dataType: '',
+  };
+
   getRecordName(record) {
     return record.name;
   }
@@ -108,70 +131,70 @@ export class JobProfiles extends Component {
       mutator,
       location: { search },
       label,
-      showSingleResult,
       location,
       history,
       match,
+      showSingleResult,
+      selectedJobProfile,
     } = this.props;
 
     const urlQuery = queryString.parse(search);
     const searchTerm = (urlQuery.query || '').trim();
-    const newRecordInitialValues = {};
 
     return (
       <IntlConsumer>
         {intl => (
-          <Fragment>
-            <SettingPage
-              finishedResourceName="jobProfiles"
-              parentMutator={mutator}
-              location={location}
-              history={history}
-              match={match}
-              getRecordName={this.getRecordName}
-              getDeleteRecordSuccessfulMessage={noop}
-              getDeleteRecordErrorMessage={noop}
-            >
-              {props => (
-                <SearchAndSort
-                  objectName="job-profiles"
-                  parentResources={resources}
-                  parentMutator={mutator}
-                  initialResultCount={INITIAL_RESULT_COUNT}
-                  resultCountIncrement={RESULT_COUNT_INCREMENT}
-                  searchLabelKey="ui-data-import.settings.jobProfiles.title"
-                  resultCountMessageKey="ui-data-import.settings.jobProfiles.count"
-                  resultsLabel={label}
-                  defaultSort="name"
-                  resultsFormatter={resultsFormatter(searchTerm)}
-                  visibleColumns={this.visibleColumns}
-                  columnMapping={{
-                    selected: (
-                      <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-                        role="button"
-                        tabIndex="0"
-                        className={sharedCss.selectableCellButton}
-                        data-test-select-all
-                        onClick={e => e.stopPropagation()}
-                      >
-                        <Checkbox name="selected-all" />
-                      </div>
-                    ),
-                    name: intl.formatMessage({ id: 'ui-data-import.name' }),
-                    tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-                    updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-                    updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
-                  }}
-                  columnWidths={this.columnWidths}
-                  ViewRecordComponent={ViewJobProfile}
-                  EditRecordComponent={JobProfilesForm}
-                  showSingleResult={showSingleResult}
-                  newRecordInitialValues={newRecordInitialValues}
-                  {...props}
-                />
-              )}
-            </SettingPage>
-          </Fragment>
+          <SettingPage
+            finishedResourceName="jobProfiles"
+            parentMutator={mutator}
+            location={location}
+            history={history}
+            match={match}
+            getRecordName={this.getRecordName}
+            getDeleteRecordSuccessfulMessage={noop}
+            getDeleteRecordErrorMessage={noop}
+          >
+            {props => (
+              <SearchAndSort
+                objectName="job-profiles"
+                parentResources={resources}
+                parentMutator={mutator}
+                initialResultCount={INITIAL_RESULT_COUNT}
+                resultCountIncrement={RESULT_COUNT_INCREMENT}
+                searchLabelKey="ui-data-import.settings.jobProfiles.title"
+                resultCountMessageKey="ui-data-import.settings.jobProfiles.count"
+                resultsLabel={label}
+                defaultSort="name"
+                resultsFormatter={resultsFormatter(searchTerm)}
+                visibleColumns={this.visibleColumns}
+                columnMapping={{
+                  selected: (
+                    <div // eslint-disable-line jsx-a11y/click-events-have-key-events
+                      role="button"
+                      tabIndex="0"
+                      className={sharedCss.selectableCellButton}
+                      data-test-select-all
+                      onClick={e => e.stopPropagation()}
+                    >
+                      <Checkbox name="selected-all" />
+                    </div>
+                  ),
+                  name: intl.formatMessage({ id: 'ui-data-import.name' }),
+                  tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
+                  updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
+                  updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
+                }}
+                columnWidths={this.columnWidths}
+                ViewRecordComponent={ViewJobProfile}
+                EditRecordComponent={JobProfilesForm}
+                newRecordInitialValues={this.defaultNewRecordInitialValues}
+                editRecordInitialValues={selectedJobProfile.record}
+                editRecordInitialValuesAreLoaded={selectedJobProfile.hasLoaded}
+                showSingleResult={showSingleResult}
+                {...props}
+              />
+            )}
+          </SettingPage>
         )}
       </IntlConsumer>
     );

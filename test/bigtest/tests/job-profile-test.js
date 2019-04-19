@@ -41,13 +41,17 @@ describe('Job profiles table', () => {
       expect(jobProfileDetails.isPresent).to.be.true;
     });
 
+    it('jobs using this profile table has correct amount of items', () => {
+      expect(jobProfileDetails.jobsUsingThisProfile.rowCount).to.be.equal(3);
+    });
+
     describe('edit button', () => {
       beforeEach(async () => {
         await jobProfileDetails.expandPaneHeaderDropdown();
       });
 
       it('when pane dropdown is opened', () => {
-        expect(jobProfileDetails.paneHeaderEditButton.isVisible).to.be.true;
+        expect(jobProfileDetails.dropdownEditButton.isVisible).to.be.true;
       });
     });
 
@@ -55,7 +59,7 @@ describe('Job profiles table', () => {
       describe('appears', () => {
         beforeEach(async () => {
           await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.paneHeaderEditButton.click();
+          await jobProfileDetails.dropdownEditButton.click();
         });
 
         it('upon click on pane header menu edit button', () => {
@@ -81,12 +85,16 @@ describe('Job profiles table', () => {
 
       describe('when form is submitted', () => {
         beforeEach(async () => {
-          await jobProfileForm.nameFiled.fillAndBlur('Changed');
+          await jobProfileForm.nameFiled.fillAndBlur('Changed name');
+          await jobProfileForm.dataTypeField.selectAndBlur('MARC');
+          await jobProfileForm.descriptionField.fillAndBlur('Changed description');
           await jobProfileForm.submitFormButton.click();
         });
 
         it('then job profile details renders updated job profile', () => {
-          expect(jobProfileDetails.headline.text).to.equal('Changed');
+          expect(jobProfileDetails.headline.text).to.equal('Changed name');
+          expect(jobProfileDetails.acceptedDataType.text).to.equal('MARC');
+          expect(jobProfileDetails.description.text).to.equal('Changed description');
         });
       });
 
