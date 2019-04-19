@@ -29,3 +29,8 @@ export const DATA_TYPES = [
   'Delimited',
   'EDIFACT',
 ];
+
+export const LAYER_TYPES = {
+  CREATE: 'create',
+  EDIT: 'edit',
+};

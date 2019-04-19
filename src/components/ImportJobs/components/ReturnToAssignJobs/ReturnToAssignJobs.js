@@ -4,8 +4,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { Button } from '@folio/stripes/components';
 
-import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
 import { Preloader } from '../../../Preloader';
+import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
 import { FILE_STATUSES } from '../../../../utils/constants';
 
 import css from './ReturnToAssignJobs.css';

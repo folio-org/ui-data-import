@@ -6,6 +6,11 @@ import React, {
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import {
+  get,
+  omit,
+} from 'lodash';
 
 import {
   IntlConsumer,
@@ -21,10 +26,8 @@ import {
   buildUrl,
 } from '@folio/stripes/smart-components';
 
-import {
-  SearchAndSort,
-  FileExtensionForm,
-} from '../../components';
+import { SearchAndSort } from '../../components/SearchAndSort';
+import { FileExtensionForm } from '../../components/FileExtensionForm';
 import { ViewFileExtension } from './ViewFileExtension';
 import { SettingPage } from '../SettingPage';
 import { resultsFormatter } from './resultsFormatter';
@@ -32,7 +35,21 @@ import { resultsFormatter } from './resultsFormatter';
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
+const mapStateToProps = state => {
+  const {
+    hasLoaded = false,
+    records: [record = {}] = [],
+  } = get(state, 'folio_data_import_file_extension', {});
+  const selectedFileExtension = {
+    hasLoaded,
+    record: omit(record, 'metadata', 'userInfo'),
+  };
+
+  return { selectedFileExtension };
+};
+
 @stripesConnect
+@connect(mapStateToProps)
 export class FileExtensions extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -95,6 +112,7 @@ export class FileExtensions extends Component {
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
     }).isRequired,
+    selectedFileExtension: PropTypes.object.isRequired,
     showSingleResult: PropTypes.bool,
   };
 
@@ -121,6 +139,13 @@ export class FileExtensions extends Component {
     updated: 150,
     updatedBy: 250,
   };
+
+ defaultNewRecordInitialValues = {
+   importBlocked: false,
+   description: '',
+   extension: '',
+   dataTypes: [],
+ };
 
   transitionToParams = params => {
     const {
@@ -243,17 +268,12 @@ export class FileExtensions extends Component {
       mutator,
       label,
       showSingleResult,
+      selectedFileExtension,
     } = this.props;
     const { isResetFileExtensionsModalOpen } = this.state;
 
     const urlQuery = queryString.parse(location.search);
     const searchTerm = (urlQuery.query || '').trim();
-    const newRecordInitialValues = {
-      importBlocked: false,
-      description: '',
-      extension: '',
-      dataTypes: [],
-    };
 
     return (
       <IntlConsumer>
@@ -293,7 +313,9 @@ export class FileExtensions extends Component {
                   columnWidths={this.columnWidths}
                   ViewRecordComponent={ViewFileExtension}
                   EditRecordComponent={FileExtensionForm}
-                  newRecordInitialValues={newRecordInitialValues}
+                  newRecordInitialValues={this.defaultNewRecordInitialValues}
+                  editRecordInitialValues={selectedFileExtension.record}
+                  editRecordInitialValuesAreLoaded={selectedFileExtension.hasLoaded}
                   showSingleResult={showSingleResult}
                   {...props}
                 />

@@ -23,8 +23,8 @@ import {
   ConfirmationModal,
 } from '@folio/stripes/components';
 
-import { EndOfItem } from '../EndOfItem';
 import { Preloader } from '../Preloader';
+import { EndOfItem } from '../EndOfItem';
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 import { FileItem } from './components';
 import {
