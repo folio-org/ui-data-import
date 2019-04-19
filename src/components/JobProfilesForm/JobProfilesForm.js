@@ -36,13 +36,6 @@ export const JobProfilesFormComponent = props => {
   const isEditMode = Boolean(initialValues.id);
   const isSubmitDisabled = pristine || submitting;
 
-  const getSubmitMessage = () => {
-    const action = isEditMode ? 'save' : 'create';
-    const buttonMessageIdEnding = action === 'create' ? 'settings.jobProfiles.create' : action;
-
-    return <FormattedMessage id={`ui-data-import.${buttonMessageIdEnding}`} />;
-  };
-
   const paneTitle = isEditMode
     ? (
       <FormattedMessage id="ui-data-import.edit">
@@ -58,7 +51,7 @@ export const JobProfilesFormComponent = props => {
     <FullScreenForm
       id="job-profiles-form"
       paneTitle={paneTitle}
-      submitMessage={getSubmitMessage()}
+      submitMessage={<FormattedMessage id="ui-data-import.save" />}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={handleSubmit}
       onCancel={onCancel}
