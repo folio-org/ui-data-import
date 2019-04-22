@@ -65,7 +65,6 @@
     "settings.fileExtension.blockImport": "حظر الاستيراد",
     "settings.fileExtension.allowImport": "السماح بالاستيراد",
     "settings.fileExtension.newMapping": "تخطيط امتداد ملف جديد",
-    "settings.fileExtension.create": "إنشاء امتداد الملف",
     "settings.fileExtensions.title": "امتدادات الملفات",
     "settings.fileExtensions.count": "{count, number} الملف {count, plural, one {امتداد} other {امتدادات}}",
     "validation.enterValue": "يرجى إدخال قيمة",
@@ -99,9 +98,6 @@
     "settings.matchProfiles.title": "مطابقة الأوضاع",
     "settings.actionProfiles.title": "أوضاع الإجراءات",
     "settings.fieldMappingProfiles.title": "أوضاع تخطيط الحقل",
-    "settings.create.error.network": "لم يتم إنشاء التسجيلة الجديدة: توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة.",
-    "settings.edit.error.network": "لم يتم تحديث التسجيلة: توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة.",
-    "settings.jobProfiles.create": "إنشاء نبذة عن الوظيفة",
     "settings.jobProfiles.newJob": "نبذة وظيفية جديدة",
     "settings.jobProfiles.summary": "ملخص",
     "settings.jobProfiles.name": "الاسم",
@@ -113,5 +109,8 @@
     "settings.jobProfiles.action.success": "تم {action} ملف تعريف الوظيفة \"{name}\" بنجاح",
     "settings.jobProfiles.action.error": "لم يتم {action} ملف تعريف الوظيفة \"{name}\"",
     "validation.jobProfile.duplication.invalid": "\"{value}\" ملف تعريف الوظيفة موجودة بالفعل",
-    "validation.recordNotCreated": "لم يتم إنشاء التسجيلة الجديدة: {description}"
+    "settings.jobProfile.title": "نبذة عن الوظيفة",
+    "settings.save.error.network": "لم يتم حفظ التسجيلة: {description}",
+    "settings.jobProfiles.jobsUsingThisProfile": "وظائف باستخدام هذا البروفايل",
+    "settings.jobProfiles.jobID": "معرف الوظيفة"
 }
