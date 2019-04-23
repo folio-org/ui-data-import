@@ -16,6 +16,7 @@ import {
   Accordion,
   AccordionSet,
   MultiColumnList,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
@@ -86,11 +87,17 @@ export class ViewJobProfile extends Component {
     onClose: PropTypes.func.isRequired,
     onOpenEdit: PropTypes.func.isRequired,
     onDuplicate: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
     formatter: PropTypes.object,
   };
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      showDeleteConfirmation: false,
+      deletionInProgress: false,
+    };
 
     const { stripes } = this.props;
 
@@ -145,6 +152,15 @@ export class ViewJobProfile extends Component {
       >
         <Icon icon="duplicate">
           <FormattedMessage id="ui-data-import.duplicate" />
+        </Icon>
+      </Button>
+      <Button
+        data-test-delete-job-profile-menu-button
+        buttonStyle="dropdownItem"
+        onClick={() => this.showDeleteConfirmation()}
+      >
+        <Icon icon="delete">
+          <FormattedMessage id="ui-data-import.delete" />
         </Icon>
       </Button>
     </Fragment>
@@ -308,6 +324,21 @@ export class ViewJobProfile extends Component {
         <EndOfItem
           className={css.endOfRecord}
           title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+        />
+        <ConfirmationModal
+          id="delete-job-profile-modal"
+          open={this.state.showDeleteConfirmation}
+          heading={
+            <FormattedMessage
+              id="ui-data-import.modal.jobProfile.delete.header"
+              values={{ name: record.name }}
+            />
+          }
+          message={<FormattedMessage id="ui-data-import.modal.jobProfile.delete.message" />}
+          confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
+          onConfirm={() => this.handleDelete(record)}
+          onCancel={this.hideDeleteConfirmation}
         />
       </Pane>
     );
