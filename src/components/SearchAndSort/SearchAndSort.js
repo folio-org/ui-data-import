@@ -257,6 +257,14 @@ export class SearchAndSort extends Component {
     this.transitionToParams({ query: '' });
   };
 
+  onOpenDuplicateRecord = e => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    this.transitionToParams({ layer: LAYER_TYPES.DUPLICATE });
+  };
+
   onOpenEditRecord = e => {
     if (e) {
       e.preventDefault();
@@ -469,6 +477,7 @@ export class SearchAndSort extends Component {
               parentMutator={parentMutator}
               editLink={this.craftLayerURL(LAYER_TYPES.EDIT)}
               onClose={this.collapseRecordDetails}
+              onDuplicate={this.onOpenDuplicateRecord}
               onOpenEdit={this.onOpenEditRecord}
               onCloseEdit={this.onCloseEditRecord}
               onEdit={this.editRecord}
@@ -641,6 +650,13 @@ export class SearchAndSort extends Component {
           onSubmitSuccess: handleEditSuccess,
         };
       }
+      case LAYER_TYPES.DUPLICATE: {
+        return {
+          initialValues: editRecordInitialValues,
+          onSubmit: this.createNewRecord,
+          onSubmitSuccess: handleCreateSuccess,
+        };
+      }
       default: {
         return {};
       }
@@ -667,7 +683,8 @@ export class SearchAndSort extends Component {
     const { layer } = queryString.parse(search);
     const isCreateLayerOpen = layer === LAYER_TYPES.CREATE;
     const isEditLayerOpen = layer === LAYER_TYPES.EDIT && editRecordInitialValuesAreLoaded;
-    const isLayerOpen = isCreateLayerOpen || isEditLayerOpen;
+    const isDuplicateLayerOpen = layer === LAYER_TYPES.DUPLICATE && editRecordInitialValuesAreLoaded;
+    const isLayerOpen = isCreateLayerOpen || isEditLayerOpen || isDuplicateLayerOpen;
 
     return (
       <Layer

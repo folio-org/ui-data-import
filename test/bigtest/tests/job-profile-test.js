@@ -45,7 +45,7 @@ describe('Job profiles table', () => {
       expect(jobProfileDetails.jobsUsingThisProfile.rowCount).to.be.equal(3);
     });
 
-    describe('edit button', () => {
+    describe('paneHeaderDropdown button', () => {
       beforeEach(async () => {
         await jobProfileDetails.expandPaneHeaderDropdown();
       });
