@@ -108,6 +108,8 @@
     "communicationProblem": "Communication problem with server. Please try again",
     "settings.jobProfiles.action.success": "The job profile \"{name}\" was successfully {action}",
     "settings.jobProfiles.action.error": "The job profile \"{name}\" was not {action}",
+    "modal.jobProfile.delete.header": "Delete \"{name}\" job profile?",
+    "modal.jobProfile.delete.message": "Delete job profile?",
     "validation.jobProfile.duplication.invalid": "Job profile \"{value}\" already exists",
     "settings.jobProfile.title": "Job profile",
     "settings.save.error.network": "Record not saved: {description}",

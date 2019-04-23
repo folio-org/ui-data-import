@@ -13,6 +13,7 @@ import {
   Accordion,
   AccordionSet,
   MultiColumnList,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
@@ -82,11 +83,17 @@ export class ViewJobProfile extends Component {
     editLink: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
     onOpenEdit: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
     formatter: PropTypes.object,
   };
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      showDeleteConfirmation: false,
+      deletionInProgress: false,
+    };
 
     const { stripes } = this.props;
 
@@ -124,15 +131,26 @@ export class ViewJobProfile extends Component {
   }
 
   renderActionMenu = menu => (
-    <Button
-      data-test-edit-job-profile-menu-button
-      buttonStyle="dropdownItem"
-      onClick={() => this.handleOpenEdit(menu)}
-    >
-      <Icon icon="edit">
-        <FormattedMessage id="ui-data-import.edit" />
-      </Icon>
-    </Button>
+    <div>
+      <Button
+        data-test-edit-job-profile-menu-button
+        buttonStyle="dropdownItem"
+        onClick={() => this.handleOpenEdit(menu)}
+      >
+        <Icon icon="edit">
+          <FormattedMessage id="ui-data-import.edit" />
+        </Icon>
+      </Button>
+      <Button
+        data-test-edit-job-profile-menu-button
+        buttonStyle="dropdownItem"
+        onClick={() => this.showDeleteConfirmation()}
+      >
+        <Icon icon="delete">
+          <FormattedMessage id="ui-data-import.delete" />
+        </Icon>
+      </Button>
+    </div>
   );
 
   handleOpenEdit = menu => {
@@ -140,6 +158,31 @@ export class ViewJobProfile extends Component {
 
     onOpenEdit();
     menu.onToggle();
+  };
+
+  showDeleteConfirmation = () => {
+    this.setState({ showDeleteConfirmation: true });
+  };
+
+  hideDeleteConfirmation = () => {
+    this.setState({
+      showDeleteConfirmation: false,
+      deletionInProgress: false,
+    });
+  };
+
+  handleDelete = record => {
+    const { onDelete } = this.props;
+    const { deletionInProgress } = this.state;
+
+    if (deletionInProgress) {
+      return;
+    }
+
+    this.setState({ deletionInProgress: true }, async () => {
+      await onDelete(record);
+      // this.hideDeleteConfirmation();
+    });
   };
 
   renderLastMenu(record) {
@@ -286,6 +329,21 @@ export class ViewJobProfile extends Component {
         <EndOfItem
           className={css.endOfRecord}
           title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+        />
+        <ConfirmationModal
+          id="delete-job-profile-modal"
+          open={this.state.showDeleteConfirmation}
+          heading={
+            <FormattedMessage
+              id="ui-data-import.modal.jobProfile.delete.header"
+              values={{ name: record.name }}
+            />
+          }
+          message={<FormattedMessage id="ui-data-import.modal.jobProfile.delete.message" />}
+          confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
+          onConfirm={() => this.handleDelete(record)}
+          onCancel={this.hideDeleteConfirmation}
         />
       </Pane>
     );

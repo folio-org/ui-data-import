@@ -98,6 +98,8 @@
   "settings.jobProfiles.jobID": "Job ID",
   "settings.jobProfiles.action.success": "The job profile \"{name}\" was successfully {action}",
   "settings.jobProfiles.action.error": "The job profile \"{name}\" was not {action}",
+  "modal.jobProfile.delete.header": "Delete \"{name}\" job profile?",
+  "modal.jobProfile.delete.message": "Delete job profile?",
   "modal.leavePage.header": "Leave the page",
   "modal.leavePage.message": "There are {highlightedText}. If you would like to complete all uploads, press the \"Keep uploading\" button",
   "modal.leavePage.messageHighlightedText": "unfinished uploads",
