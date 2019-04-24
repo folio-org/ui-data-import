@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
@@ -131,7 +131,7 @@ export class ViewJobProfile extends Component {
   }
 
   renderActionMenu = menu => (
-    <div>
+    <Fragment>
       <Button
         data-test-edit-job-profile-menu-button
         buttonStyle="dropdownItem"
@@ -146,11 +146,11 @@ export class ViewJobProfile extends Component {
         buttonStyle="dropdownItem"
         onClick={() => this.showDeleteConfirmation()}
       >
-        <Icon icon="delete">
+        <Icon icon="trash">
           <FormattedMessage id="ui-data-import.delete" />
         </Icon>
       </Button>
-    </div>
+    </Fragment>
   );
 
   handleOpenEdit = menu => {
@@ -181,7 +181,7 @@ export class ViewJobProfile extends Component {
 
     this.setState({ deletionInProgress: true }, async () => {
       await onDelete(record);
-      // this.hideDeleteConfirmation();
+      this.hideDeleteConfirmation();
     });
   };
 
