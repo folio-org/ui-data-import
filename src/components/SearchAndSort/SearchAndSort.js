@@ -358,7 +358,6 @@ export class SearchAndSort extends Component {
     const deleted = await onDelete(record);
 
     if (deleted) {
-      this.collapseRecordDetails();
       this.setState({ selectedItem: null });
     }
   };

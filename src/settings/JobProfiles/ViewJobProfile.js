@@ -159,7 +159,7 @@ export class ViewJobProfile extends Component {
         buttonStyle="dropdownItem"
         onClick={() => this.showDeleteConfirmation()}
       >
-        <Icon icon="delete">
+        <Icon icon="trash">
           <FormattedMessage id="ui-data-import.delete" />
         </Icon>
       </Button>
@@ -178,6 +178,31 @@ export class ViewJobProfile extends Component {
 
     onDuplicate();
     menu.onToggle();
+  };
+
+  showDeleteConfirmation = () => {
+    this.setState({ showDeleteConfirmation: true });
+  };
+
+  hideDeleteConfirmation = () => {
+    this.setState({
+      showDeleteConfirmation: false,
+      deletionInProgress: false,
+    });
+  };
+
+  handleDelete = record => {
+    const { onDelete } = this.props;
+    const { deletionInProgress } = this.state;
+
+    if (deletionInProgress) {
+      return;
+    }
+
+    this.setState({ deletionInProgress: true }, async () => {
+      await onDelete(record);
+      this.hideDeleteConfirmation();
+    });
   };
 
   renderLastMenu(record) {
