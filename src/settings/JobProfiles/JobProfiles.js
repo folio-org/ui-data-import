@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   get,
@@ -121,6 +122,38 @@ export class JobProfiles extends Component {
     dataType: '',
   };
 
+  getDeleteRecordSuccessfulMessage(record) {
+    return (
+      <FormattedMessage
+        id="ui-data-import.settings.jobProfiles.action.success"
+        values={{
+          name: record.name,
+          action: (
+            <strong>
+              <FormattedMessage id="ui-data-import.deleted" />
+            </strong>
+          ),
+        }}
+      />
+    );
+  }
+
+  getDeleteRecordErrorMessage(record) {
+    return (
+      <FormattedMessage
+        id="ui-data-import.settings.jobProfiles.action.error"
+        values={{
+          name: record.name,
+          action: (
+            <strong>
+              <FormattedMessage id="ui-data-import.deleted" />
+            </strong>
+          ),
+        }}
+      />
+    );
+  }
+
   getRecordName(record) {
     return record.name;
   }
@@ -151,8 +184,8 @@ export class JobProfiles extends Component {
             history={history}
             match={match}
             getRecordName={this.getRecordName}
-            getDeleteRecordSuccessfulMessage={noop}
-            getDeleteRecordErrorMessage={noop}
+            getDeleteRecordSuccessfulMessage={this.getDeleteRecordSuccessfulMessage}
+            getDeleteRecordErrorMessage={this.getDeleteRecordErrorMessage}
           >
             {props => (
               <SearchAndSort

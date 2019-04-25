@@ -20,9 +20,7 @@ import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/i
   isChecked = property('input', 'checked');
 
   clickAndBlur() {
-    return this
-      .clickLabel()
-      .blurInput();
+    return this.clickLabel().blurInput();
   }
 }
 

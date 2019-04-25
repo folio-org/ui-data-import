@@ -16,9 +16,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   jobsUsingThisProfile = new MultiColumnListInteractor('#jobs-using-this-profile');
 
   expandPaneHeaderDropdown() {
-    return this
-      .paneHeaderDropdown
-      .click();
+    return this.paneHeaderDropdown.click();
   }
 }
 

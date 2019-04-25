@@ -43,7 +43,7 @@ export class ViewJobProfile extends Component {
     jobProfile: {
       type: 'okapi',
       path: 'data-import-profiles/jobProfiles/:{id}',
-      throwsErrors: false,
+      throwErrors: false,
     },
     jobsUsingThisProfile: {
       type: 'okapi',
@@ -53,7 +53,7 @@ export class ViewJobProfile extends Component {
         query: `(uiStatus=="${JOB_STATUSES.READY_FOR_PREVIEW}")`,
         limit: 25,
       }),
-      throwsErrors: false,
+      throwErrors: false,
     },
   });
 
@@ -181,7 +181,7 @@ export class ViewJobProfile extends Component {
 
     this.setState({ deletionInProgress: true }, async () => {
       await onDelete(record);
-      this.hideDeleteConfirmation();
+      // this.hideDeleteConfirmation();
     });
   };
 

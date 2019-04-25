@@ -25,14 +25,14 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
   await jobProfileForm.submitFormButton.click();
 }
 
-describe('Job profiles table', () => {
+describe('Job Profile View', () => {
   setupApplication({ scenarios: ['fetch-job-profiles-success'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/job-profiles');
   });
 
-  describe('opens file extension details', () => {
+  describe('opens Job Profile details', () => {
     beforeEach(async () => {
       await jobProfiles.list.rows(0).click();
     });
@@ -43,6 +43,94 @@ describe('Job profiles table', () => {
 
     it('jobs using this profile table has correct amount of items', () => {
       expect(jobProfileDetails.jobsUsingThisProfile.rowCount).to.be.equal(3);
+    });
+
+    describe('delete confirmation modal', () => {
+      it('is not visible when pane header dropdown is closed', () => {
+        expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
+      });
+
+      describe('is visible', () => {
+        beforeEach(async () => {
+          await jobProfileDetails.expandPaneHeaderDropdown();
+          await jobProfileDetails.deleteButton.click();
+        });
+
+        it('when pane header dropdown is opened', () => {
+          expect(jobProfileDetails.confirmationModal.isPresent).to.be.true;
+        });
+      });
+
+      describe('disappears', () => {
+        beforeEach(async () => {
+          await jobProfileDetails.expandPaneHeaderDropdown();
+          await jobProfileDetails.deleteButton.click();
+          await jobProfileDetails.confirmationModal.cancelButton.click();
+        });
+
+        it('when cancel button is clicked', () => {
+          expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
+        });
+      });
+
+      describe('upon click on confirm button initiates the deletion process of file extension and in case of success', () => {
+        beforeEach(async () => {
+          await jobProfileDetails.expandPaneHeaderDropdown();
+          await jobProfileDetails.deleteButton.click();
+          await jobProfileDetails.confirmationModal.confirmButton.click();
+        });
+
+        it('disappears', () => {
+          expect(jobProfiles.confirmationModal.isPresent).to.be.false;
+        });
+
+        it('the successful toast appears', () => {
+          expect(jobProfiles.callout.successCalloutIsPresent).to.be.true;
+        });
+      });
+
+      describe('upon click on confirm button twice initiates the deletion process only once file extension and in case of success', () => {
+        beforeEach(async () => {
+          await jobProfileDetails.expandPaneHeaderDropdown();
+          await jobProfileDetails.deleteButton.click();
+          await jobProfileDetails.confirmationModal.confirmButton.click();
+          await jobProfileDetails.confirmationModal.confirmButton.click();
+        });
+
+        it('disappears', () => {
+          expect(jobProfiles.confirmationModal.isPresent).to.be.false;
+        });
+
+        it('the successful toast appears', () => {
+          expect(jobProfiles.callout.successCalloutIsPresent).to.be.true;
+        });
+
+        it('renders the correct number of rows without deleted one', () => {
+          expect(jobProfiles.list.rowCount).to.equal(2);
+        });
+      });
+
+      describe('upon click on confirm button twice initiates the deletion process only once file extension and in case of error', () => {
+        beforeEach(async function () {
+          this.server.delete('/data-import/jobProfiles/:id', () => new Response(500, {}));
+          await jobProfileDetails.expandPaneHeaderDropdown();
+          await jobProfileDetails.deleteButton.click();
+          await jobProfileDetails.confirmationModal.confirmButton.click();
+          await jobProfileDetails.confirmationModal.confirmButton.click();
+        });
+
+        it('disappears', () => {
+          expect(jobProfiles.confirmationModal.isPresent).to.be.false;
+        });
+
+        it('the error toast appears', () => {
+          expect(jobProfiles.callout.errorCalloutIsPresent).to.be.true;
+        });
+
+        it('renders the correct number including the one which tried to delete', () => {
+          expect(jobProfiles.list.rowCount).to.equal(3);
+        });
+      });
     });
 
     describe('edit button', () => {
