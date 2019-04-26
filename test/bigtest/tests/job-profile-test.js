@@ -85,7 +85,7 @@ describe('Job Profile View', () => {
         });
 
         it('the successful toast appears', () => {
-          expect(jobProfileDetails.callout.successCalloutIsPresent).to.be.true;
+          expect(jobProfiles.callout.successCalloutIsPresent).to.be.true;
         });
       });
 
