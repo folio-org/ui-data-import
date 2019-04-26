@@ -18,7 +18,7 @@ import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/inter
   description = scoped('[data-test-description]');
   jobsUsingThisProfile = new MultiColumnListInteractor('#jobs-using-this-profile');
   confirmationModal = new ConfirmationModalInteractor('#delete-job-profile-modal');
-  // callout = new CalloutInteractor();
+  callout = new CalloutInteractor();
 
   expandPaneHeaderDropdown() {
     return this.paneHeaderDropdown.click();
