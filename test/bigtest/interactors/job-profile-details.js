@@ -5,6 +5,7 @@ import {
 
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
+import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
 
 @interactor class JobProfileDetailsInteractor {
   paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
@@ -14,6 +15,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   acceptedDataType = scoped('[data-test-accepted-data-type]');
   description = scoped('[data-test-description]');
   jobsUsingThisProfile = new MultiColumnListInteractor('#jobs-using-this-profile');
+  confirmationModal = new ConfirmationModalInteractor('#delete-job-profile-modal');
 
   expandPaneHeaderDropdown() {
     return this.paneHeaderDropdown.click();
