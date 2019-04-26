@@ -88,11 +88,11 @@ describe('Job Profile View', () => {
         });
 
         it('disappears', () => {
-          expect(jobProfiles.confirmationModal.isPresent).to.be.false;
+          expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
         });
 
         it('the successful toast appears', () => {
-          expect(jobProfiles.callout.successCalloutIsPresent).to.be.true;
+          expect(jobProfileDetails.callout.successCalloutIsPresent).to.be.true;
         });
       });
 
@@ -105,11 +105,11 @@ describe('Job Profile View', () => {
         });
 
         it('disappears', () => {
-          expect(jobProfiles.confirmationModal.isPresent).to.be.false;
+          expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
         });
 
         it('the successful toast appears', () => {
-          expect(jobProfiles.callout.successCalloutIsPresent).to.be.true;
+          expect(jobProfileDetails.callout.successCalloutIsPresent).to.be.true;
         });
 
         it('renders the correct number of rows without deleted one', () => {
