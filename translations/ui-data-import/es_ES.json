@@ -112,5 +112,6 @@
     "settings.jobProfile.title": "Perfil del puesto",
     "settings.save.error.network": "Registro no guardado: {descripción}",
     "settings.jobProfiles.jobsUsingThisProfile": "Hay procesos que están usando este perfil",
-    "settings.jobProfiles.jobID": "ID del proceso"
+    "settings.jobProfiles.jobID": "ID del proceso",
+    "duplicate": "Duplicate"
 }
