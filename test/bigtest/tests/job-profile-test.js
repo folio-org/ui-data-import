@@ -73,7 +73,7 @@ describe('Job Profile View', () => {
         });
       });
 
-      describe('upon click on confirm button initiates the deletion process of file extension and in case of success', () => {
+      describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
         beforeEach(async () => {
           await jobProfileDetails.expandPaneHeaderDropdown();
           await jobProfileDetails.dropdownDeleteButton.click();
@@ -85,11 +85,11 @@ describe('Job Profile View', () => {
         });
 
         it('the successful toast appears', () => {
-          expect(jobProfiles.callout.successCalloutIsPresent).to.be.true;
+          expect(jobProfileDetails.callout.successCalloutIsPresent).to.be.true;
         });
       });
 
-      describe('upon click on confirm button twice initiates the deletion process only once file extension and in case of success', () => {
+      describe('upon click on confirm button twice initiates the job profile deletion process only once and in case of success', () => {
         beforeEach(async () => {
           await jobProfileDetails.expandPaneHeaderDropdown();
           await jobProfileDetails.dropdownDeleteButton.click();
@@ -110,7 +110,7 @@ describe('Job Profile View', () => {
         });
       });
 
-      describe('upon click on confirm button twice initiates the deletion process only once file extension and in case of error', () => {
+      describe('upon click on confirm button twice initiates the job profile deletion process only once and in case of error', () => {
         beforeEach(async function () {
           this.server.delete('/data-import/jobProfiles/:id', () => new Response(500, {}));
           await jobProfileDetails.expandPaneHeaderDropdown();
@@ -120,11 +120,11 @@ describe('Job Profile View', () => {
         });
 
         it('disappears', () => {
-          expect(jobProfiles.confirmationModal.isPresent).to.be.false;
+          expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
         });
 
         it('the error toast appears', () => {
-          expect(jobProfiles.callout.errorCalloutIsPresent).to.be.true;
+          expect(jobProfileDetails.callout.errorCalloutIsPresent).to.be.true;
         });
 
         it('renders the correct number including the one which tried to delete', () => {
