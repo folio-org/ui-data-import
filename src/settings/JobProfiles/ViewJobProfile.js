@@ -142,7 +142,7 @@ export class ViewJobProfile extends Component {
         </Icon>
       </Button>
       <Button
-        data-test-edit-job-profile-menu-button
+        data-test-delete-job-profile-menu-button
         buttonStyle="dropdownItem"
         onClick={() => this.showDeleteConfirmation()}
       >
