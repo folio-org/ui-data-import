@@ -181,7 +181,7 @@ export class ViewJobProfile extends Component {
 
     this.setState({ deletionInProgress: true }, async () => {
       await onDelete(record);
-      // this.hideDeleteConfirmation();
+      this.hideDeleteConfirmation();
     });
   };
 
