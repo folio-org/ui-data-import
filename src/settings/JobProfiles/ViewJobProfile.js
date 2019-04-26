@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
@@ -82,6 +85,7 @@ export class ViewJobProfile extends Component {
     editLink: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
     onOpenEdit: PropTypes.func.isRequired,
+    onDuplicate: PropTypes.func.isRequired,
     formatter: PropTypes.object,
   };
 
@@ -124,21 +128,39 @@ export class ViewJobProfile extends Component {
   }
 
   renderActionMenu = menu => (
-    <Button
-      data-test-edit-job-profile-menu-button
-      buttonStyle="dropdownItem"
-      onClick={() => this.handleOpenEdit(menu)}
-    >
-      <Icon icon="edit">
-        <FormattedMessage id="ui-data-import.edit" />
-      </Icon>
-    </Button>
+    <Fragment>
+      <Button
+        data-test-edit-job-profile-menu-button
+        buttonStyle="dropdownItem"
+        onClick={() => this.handleOpenEdit(menu)}
+      >
+        <Icon icon="edit">
+          <FormattedMessage id="ui-data-import.edit" />
+        </Icon>
+      </Button>
+      <Button
+        data-test-duplicate-job-profile-menu-button
+        buttonStyle="dropdownItem"
+        onClick={() => this.handleOpenDuplicate(menu)}
+      >
+        <Icon icon="duplicate">
+          <FormattedMessage id="ui-data-import.duplicate" />
+        </Icon>
+      </Button>
+    </Fragment>
   );
 
   handleOpenEdit = menu => {
     const { onOpenEdit } = this.props;
 
     onOpenEdit();
+    menu.onToggle();
+  };
+
+  handleOpenDuplicate = menu => {
+    const { onDuplicate } = this.props;
+
+    onDuplicate();
     menu.onToggle();
   };
 
