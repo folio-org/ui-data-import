@@ -60,7 +60,7 @@ describe('Job Profile View', () => {
       describe('is visible', () => {
         beforeEach(async () => {
           await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.deleteButton.click();
+          await jobProfileDetails.dropdownDeleteButton.click();
         });
 
         it('when pane header dropdown is opened', () => {
@@ -71,7 +71,7 @@ describe('Job Profile View', () => {
       describe('disappears', () => {
         beforeEach(async () => {
           await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.deleteButton.click();
+          await jobProfileDetails.dropdownDeleteButton.click();
           await jobProfileDetails.confirmationModal.cancelButton.click();
         });
 
@@ -83,7 +83,7 @@ describe('Job Profile View', () => {
       describe('upon click on confirm button initiates the deletion process of file extension and in case of success', () => {
         beforeEach(async () => {
           await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.deleteButton.click();
+          await jobProfileDetails.dropdownDeleteButton.click();
           await jobProfileDetails.confirmationModal.confirmButton.click();
         });
 
@@ -99,7 +99,7 @@ describe('Job Profile View', () => {
       describe('upon click on confirm button twice initiates the deletion process only once file extension and in case of success', () => {
         beforeEach(async () => {
           await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.deleteButton.click();
+          await jobProfileDetails.dropdownDeleteButton.click();
           await jobProfileDetails.confirmationModal.confirmButton.click();
           await jobProfileDetails.confirmationModal.confirmButton.click();
         });
@@ -121,7 +121,7 @@ describe('Job Profile View', () => {
         beforeEach(async function () {
           this.server.delete('/data-import/jobProfiles/:id', () => new Response(500, {}));
           await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.deleteButton.click();
+          await jobProfileDetails.dropdownDeleteButton.click();
           await jobProfileDetails.confirmationModal.confirmButton.click();
           await jobProfileDetails.confirmationModal.confirmButton.click();
         });
