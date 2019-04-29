@@ -113,5 +113,5 @@
     "settings.save.error.network": "Registro não foi salvo: {description}",
     "settings.jobProfiles.jobsUsingThisProfile": "Trabalhos usando este perfil",
     "settings.jobProfiles.jobID": "ID do trabalho",
-    "duplicate": "Duplicate"
+    "duplicate": "Duplicar"
 }
