@@ -113,5 +113,5 @@
     "settings.save.error.network": "Record not saved: {description}",
     "settings.jobProfiles.jobsUsingThisProfile": "Jobs using this profile",
     "settings.jobProfiles.jobID": "Job ID",
-    "duplicate": "Duplicate"
+    "duplicate": "Duplicar"
 }

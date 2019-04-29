@@ -113,5 +113,5 @@
     "settings.save.error.network": "لم يتم حفظ التسجيلة: {description}",
     "settings.jobProfiles.jobsUsingThisProfile": "وظائف باستخدام هذا البروفايل",
     "settings.jobProfiles.jobID": "معرف الوظيفة",
-    "duplicate": "Duplicate"
+    "duplicate": "تكرار"
 }
