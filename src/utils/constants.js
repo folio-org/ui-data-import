@@ -33,4 +33,5 @@ export const DATA_TYPES = [
 export const LAYER_TYPES = {
   CREATE: 'create',
   EDIT: 'edit',
+  DUPLICATE: 'duplicate',
 };

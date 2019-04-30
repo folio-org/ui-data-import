@@ -84,6 +84,7 @@ export class ViewJobProfile extends Component {
     onClose: PropTypes.func.isRequired,
     onOpenEdit: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    onDuplicate: PropTypes.func.isRequired,
     formatter: PropTypes.object,
   };
 
@@ -142,6 +143,15 @@ export class ViewJobProfile extends Component {
         </Icon>
       </Button>
       <Button
+        data-test-duplicate-job-profile-menu-button
+        buttonStyle="dropdownItem"
+        onClick={() => this.handleOpenDuplicate(menu)}
+      >
+        <Icon icon="duplicate">
+          <FormattedMessage id="ui-data-import.duplicate" />
+        </Icon>
+      </Button>
+      <Button
         data-test-delete-job-profile-menu-button
         buttonStyle="dropdownItem"
         onClick={() => this.showDeleteConfirmation()}
@@ -169,6 +179,13 @@ export class ViewJobProfile extends Component {
       showDeleteConfirmation: false,
       deletionInProgress: false,
     });
+  };
+
+  handleOpenDuplicate = menu => {
+    const { onDuplicate } = this.props;
+
+    onDuplicate();
+    menu.onToggle();
   };
 
   handleDelete = record => {
