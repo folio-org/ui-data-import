@@ -112,7 +112,7 @@ describe('Job Profile View', () => {
 
       describe('upon click on confirm button twice initiates the job profile deletion process only once and in case of error', () => {
         beforeEach(async function () {
-          this.server.delete('/data-import/jobProfiles/:id', () => new Response(500, {}));
+          this.server.delete('/data-import-profiles/jobProfiles/:id', () => new Response(500, {}));
           await jobProfileDetails.expandPaneHeaderDropdown();
           await jobProfileDetails.dropdownDeleteButton.click();
           await jobProfileDetails.confirmationModal.confirmButton.click();
