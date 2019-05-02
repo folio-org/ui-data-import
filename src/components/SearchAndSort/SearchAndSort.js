@@ -12,6 +12,7 @@ import {
   get,
   upperFirst,
   noop,
+  omit,
 } from 'lodash';
 
 import {
@@ -652,7 +653,7 @@ export class SearchAndSort extends Component {
       }
       case LAYER_TYPES.DUPLICATE: {
         return {
-          initialValues: editRecordInitialValues,
+          initialValues: omit(editRecordInitialValues, 'id'),
           onSubmit: this.createNewRecord,
           onSubmitSuccess: handleCreateSuccess,
         };
