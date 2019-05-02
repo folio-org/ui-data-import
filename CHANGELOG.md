@@ -8,6 +8,7 @@
 * Implement search job profiles feature (UIDATIMP-164)
 * Implement save the new job profile feature (UIDATIMP-136)
 * Implement job profile editing feature (UIDATIMP-137)
+* Handle text wrapping issue in columns of the job profile results list (UIDATIMP-190)
 
 ## [1.1.0](https://github.com/folio-org/ui-data-import/tree/v1.1.0) (2019-03-22)
 

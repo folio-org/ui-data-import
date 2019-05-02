@@ -12,7 +12,7 @@ export const UserNameFormatter = memo(props => (
     size="small"
     app="data-import"
     iconKey="user"
-    className={sharedCss.baseline}
+    className={sharedCss.cellAppIcon}
   >
     {formatUserName(props.value)}
   </AppIcon>

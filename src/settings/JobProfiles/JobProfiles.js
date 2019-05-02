@@ -202,15 +202,14 @@ export class JobProfiles extends Component {
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   selected: (
-                    <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-                      role="button"
-                      tabIndex="0"
+                    <button
+                      type="button"
                       className={sharedCss.selectableCellButton}
                       data-test-select-all
                       onClick={e => e.stopPropagation()}
                     >
                       <Checkbox name="selected-all" />
-                    </div>
+                    </button>
                   ),
                   name: intl.formatMessage({ id: 'ui-data-import.name' }),
                   tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
