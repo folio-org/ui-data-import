@@ -635,6 +635,8 @@ export class SearchAndSort extends Component {
       handleEditSuccess,
     } = this.props;
 
+    const duplicateRecordInitialValues = { ...editRecordInitialValues, id: '' };
+
     switch (layer) {
       case LAYER_TYPES.CREATE: {
         return {
@@ -652,7 +654,7 @@ export class SearchAndSort extends Component {
       }
       case LAYER_TYPES.DUPLICATE: {
         return {
-          initialValues: editRecordInitialValues,
+          initialValues: duplicateRecordInitialValues,
           onSubmit: this.createNewRecord,
           onSubmitSuccess: handleCreateSuccess,
         };
