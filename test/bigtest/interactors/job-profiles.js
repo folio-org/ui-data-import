@@ -10,6 +10,7 @@ import {
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
+import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 
 @interactor class CheckboxInteractor {
   static defaultScope = '[class*=checkbox---]';
@@ -20,9 +21,7 @@ import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/i
   isChecked = property('input', 'checked');
 
   clickAndBlur() {
-    return this
-      .clickLabel()
-      .blurInput();
+    return this.clickLabel().blurInput();
   }
 }
 
@@ -33,6 +32,7 @@ import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/i
   newJobProfileButton = new ButtonInteractor('[data-test-new-button]');
   searchFiled = new TextFieldInteractor('#input-job-profiles-search');
   searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
+  callout = new CalloutInteractor();
 }
 
 export const jobProfiles = new JobProfilesInteractor();

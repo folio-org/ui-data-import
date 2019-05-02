@@ -80,13 +80,12 @@ export class ViewFileExtension extends Component {
 
     const { stripes } = this.props;
 
+    this.state = {
+      showDeleteConfirmation: false,
+      deletingInProgress: false,
+    };
     this.connectedViewMetaData = stripes.connect(ViewMetaData);
   }
-
-  state = {
-    showDeleteConfirmation: false,
-    deletingInProgress: false,
-  };
 
   get fileExtensionData() {
     const { resources } = this.props;

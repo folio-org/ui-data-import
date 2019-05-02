@@ -1,3 +1,5 @@
+import { Response } from '@bigtest/mirage';
+
 import { SYSTEM_USER_NAME } from '../../../../src/utils/constants';
 import { searchEntityByQuery } from '../../helpers';
 
@@ -59,5 +61,14 @@ export default server => {
     jobProfileModel.update({ ...updatedJobProfile });
 
     return jobProfileModel.attrs;
+  });
+
+  server.delete('/data-import-profiles/jobProfiles/:id', (schema, request) => {
+    const { params: { id } } = request;
+    const jobProfileModel = schema.jobProfiles.find(id);
+
+    jobProfileModel.destroy();
+
+    return new Response(200, {});
   });
 };
