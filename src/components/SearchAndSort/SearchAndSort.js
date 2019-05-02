@@ -634,7 +634,6 @@ export class SearchAndSort extends Component {
       handleCreateSuccess,
       handleEditSuccess,
     } = this.props;
-
     const duplicateRecordInitialValues = { ...editRecordInitialValues, id: '' };
 
     switch (layer) {
