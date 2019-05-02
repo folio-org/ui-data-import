@@ -355,6 +355,7 @@ export class SearchAndSort extends Component {
 
   deleteRecord = async record => {
     const { onDelete } = this.props;
+
     const deleted = await onDelete(record);
 
     if (deleted) {
