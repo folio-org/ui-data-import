@@ -12,8 +12,8 @@ import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/inter
   paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
   dropdownEditButton = new ButtonInteractor('[data-test-edit-job-profile-menu-button]');
   dropdownDuplicateButton = new ButtonInteractor('[data-test-duplicate-job-profile-menu-button]');
+  dropdownDeleteButton = new ButtonInteractor('[data-test-delete-job-profile-menu-button]');
   editButton = new ButtonInteractor('[data-test-edit-job-profile-button]');
-  deleteButton = new ButtonInteractor('[data-test-delete-job-profile-button]');
   headline = scoped('[data-test-headline]');
   acceptedDataType = scoped('[data-test-accepted-data-type]');
   description = scoped('[data-test-description]');

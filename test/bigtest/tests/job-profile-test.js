@@ -52,102 +52,74 @@ describe('Job Profile View', () => {
       expect(jobProfileDetails.jobsUsingThisProfile.rowCount).to.be.equal(3);
     });
 
-    describe('delete confirmation modal', () => {
-      it('is not visible when pane header dropdown is closed', () => {
-        expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
-      });
-
-      describe('is visible', () => {
+    describe('edit job profile form', () => {
+      describe('appears', () => {
         beforeEach(async () => {
           await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownDeleteButton.click();
+          await jobProfileDetails.dropdownEditButton.click();
         });
 
-        it('when pane header dropdown is opened', () => {
-          expect(jobProfileDetails.confirmationModal.isPresent).to.be.true;
+        it('upon click on pane header menu edit button', () => {
+          expect(jobProfileForm.isPresent).to.be.true;
         });
       });
 
-      describe('disappears', () => {
+      describe('appears', () => {
         beforeEach(async () => {
-          await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownDeleteButton.click();
-          await jobProfileDetails.confirmationModal.cancelButton.click();
+          await jobProfileDetails.editButton.click();
         });
 
-        it('when cancel button is clicked', () => {
-          expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
-        });
-      });
-
-      describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
-        beforeEach(async () => {
-          await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownDeleteButton.click();
-          await jobProfileDetails.confirmationModal.confirmButton.click();
-        });
-
-        it('disappears', () => {
-          expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
-        });
-
-        it('the successful toast appears', () => {
-          expect(jobProfileDetails.callout.successCalloutIsPresent).to.be.true;
-        });
-      });
-
-      describe('upon click on confirm button twice initiates the job profile deletion process only once and in case of success', () => {
-        beforeEach(async () => {
-          await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownDeleteButton.click();
-          await jobProfileDetails.confirmationModal.confirmButton.click();
-          await jobProfileDetails.confirmationModal.confirmButton.click();
-        });
-
-        it('disappears', () => {
-          expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
-        });
-
-        it('the successful toast appears', () => {
-          expect(jobProfileDetails.callout.successCalloutIsPresent).to.be.true;
-        });
-
-        it('renders the correct number of rows without deleted one', () => {
-          expect(jobProfiles.list.rowCount).to.equal(2);
-        });
-      });
-
-      describe('upon click on confirm button twice initiates the job profile deletion process only once and in case of error', () => {
-        beforeEach(async function () {
-          this.server.delete('/data-import-profiles/jobProfiles/:id', () => new Response(500, {}));
-          await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownDeleteButton.click();
-          await jobProfileDetails.confirmationModal.confirmButton.click();
-          await jobProfileDetails.confirmationModal.confirmButton.click();
-        });
-
-        it('disappears', () => {
-          expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
-        });
-
-        it('the error toast appears', () => {
-          expect(jobProfileDetails.callout.errorCalloutIsPresent).to.be.true;
-        });
-
-        it('renders the correct number including the one which tried to delete', () => {
-          expect(jobProfiles.list.rowCount).to.equal(3);
+        it('upon click on edit button', () => {
+          expect(jobProfileForm.isPresent).to.be.true;
         });
       });
     });
 
-    describe('edit button', () => {
+    describe('edit job profile form', () => {
       beforeEach(async () => {
-        await jobProfileDetails.expandPaneHeaderDropdown();
+        await jobProfileDetails.editButton.click();
       });
 
-      it('when pane dropdown is opened', () => {
-        expect(jobProfileDetails.dropdownEditButton.isVisible).to.be.true;
-        expect(jobProfileDetails.dropdownDuplicateButton.isVisible).to.be.true;
+      describe('when form is submitted', () => {
+        beforeEach(async () => {
+          await jobProfileForm.nameFiled.fillAndBlur('Changed name');
+          await jobProfileForm.dataTypeField.selectAndBlur('MARC');
+          await jobProfileForm.descriptionField.fillAndBlur('Changed description');
+          await jobProfileForm.submitFormButton.click();
+        });
+
+        it('then job profile details renders updated job profile', () => {
+          expect(jobProfileDetails.headline.text).to.equal('Changed name');
+          expect(jobProfileDetails.acceptedDataType.text).to.equal('MARC');
+          expect(jobProfileDetails.description.text).to.equal('Changed description');
+        });
+      });
+
+      describe('is submitted and the response contains', () => {
+        describe('error message', () => {
+          beforeEach(async function () {
+            await setupFormSubmitErrorScenario('put', this.server, {
+              response: {
+                errors: [{ message: 'jobProfile.duplication.invalid' }],
+              },
+              status: 422,
+            });
+          });
+
+          it('then error callout appears', () => {
+            expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          });
+        });
+
+        describe('network error', () => {
+          beforeEach(async function () {
+            await setupFormSubmitErrorScenario('put', this.server);
+          });
+
+          it('then error callout appears', () => {
+            expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          });
+        });
       });
     });
 
@@ -239,73 +211,90 @@ describe('Job Profile View', () => {
       });
     });
 
-    describe('edit job profile form', () => {
-      describe('appears', () => {
+    describe('delete confirmation modal', () => {
+      it('is not visible when pane header dropdown is closed', () => {
+        expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
+      });
+
+      describe('is visible', () => {
         beforeEach(async () => {
           await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownEditButton.click();
+          await jobProfileDetails.dropdownDeleteButton.click();
         });
 
-        it('upon click on pane header menu edit button', () => {
-          expect(jobProfileForm.isPresent).to.be.true;
+        it('when pane header dropdown is opened', () => {
+          expect(jobProfileDetails.confirmationModal.isPresent).to.be.true;
         });
       });
 
-      describe('appears', () => {
+      describe('disappears', () => {
         beforeEach(async () => {
-          await jobProfileDetails.editButton.click();
+          await jobProfileDetails.expandPaneHeaderDropdown();
+          await jobProfileDetails.dropdownDeleteButton.click();
+          await jobProfileDetails.confirmationModal.cancelButton.click();
         });
 
-        it('upon click on edit button', () => {
-          expect(jobProfileForm.isPresent).to.be.true;
+        it('when cancel button is clicked', () => {
+          expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
         });
       });
-    });
 
-    describe('edit job profile form', () => {
-      beforeEach(async () => {
-        await jobProfileDetails.editButton.click();
-      });
-
-      describe('when form is submitted', () => {
+      describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
         beforeEach(async () => {
-          await jobProfileForm.nameFiled.fillAndBlur('Changed name');
-          await jobProfileForm.dataTypeField.selectAndBlur('MARC');
-          await jobProfileForm.descriptionField.fillAndBlur('Changed description');
-          await jobProfileForm.submitFormButton.click();
+          await jobProfileDetails.expandPaneHeaderDropdown();
+          await jobProfileDetails.dropdownDeleteButton.click();
+          await jobProfileDetails.confirmationModal.confirmButton.click();
         });
 
-        it('then job profile details renders updated job profile', () => {
-          expect(jobProfileDetails.headline.text).to.equal('Changed name');
-          expect(jobProfileDetails.acceptedDataType.text).to.equal('MARC');
-          expect(jobProfileDetails.description.text).to.equal('Changed description');
+        it('disappears', () => {
+          expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
+        });
+
+        it('the successful toast appears', () => {
+          expect(jobProfileDetails.callout.successCalloutIsPresent).to.be.true;
         });
       });
 
-      describe('is submitted and the response contains', () => {
-        describe('error message', () => {
-          beforeEach(async function () {
-            await setupFormSubmitErrorScenario('put', this.server, {
-              response: {
-                errors: [{ message: 'jobProfile.duplication.invalid' }],
-              },
-              status: 422,
-            });
-          });
-
-          it('then error callout appears', () => {
-            expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true;
-          });
+      describe('upon click on confirm button twice initiates the job profile deletion process only once and in case of success', () => {
+        beforeEach(async () => {
+          await jobProfileDetails.expandPaneHeaderDropdown();
+          await jobProfileDetails.dropdownDeleteButton.click();
+          await jobProfileDetails.confirmationModal.confirmButton.click();
+          await jobProfileDetails.confirmationModal.confirmButton.click();
         });
 
-        describe('network error', () => {
-          beforeEach(async function () {
-            await setupFormSubmitErrorScenario('put', this.server);
-          });
+        it('disappears', () => {
+          expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
+        });
 
-          it('then error callout appears', () => {
-            expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true;
-          });
+        it('the successful toast appears', () => {
+          expect(jobProfileDetails.callout.successCalloutIsPresent).to.be.true;
+        });
+
+        it('renders the correct number of rows without deleted one', () => {
+          expect(jobProfiles.list.rowCount).to.equal(2);
+        });
+      });
+
+      describe('upon click on confirm button twice initiates the job profile deletion process only once and in case of error', () => {
+        beforeEach(async function () {
+          this.server.delete('/data-import-profiles/jobProfiles/:id', () => new Response(500, {}));
+          await jobProfileDetails.expandPaneHeaderDropdown();
+          await jobProfileDetails.dropdownDeleteButton.click();
+          await jobProfileDetails.confirmationModal.confirmButton.click();
+          await jobProfileDetails.confirmationModal.confirmButton.click();
+        });
+
+        it('disappears', () => {
+          expect(jobProfileDetails.confirmationModal.isPresent).to.be.false;
+        });
+
+        it('the error toast appears', () => {
+          expect(jobProfileDetails.callout.errorCalloutIsPresent).to.be.true;
+        });
+
+        it('renders the correct number including the one which tried to delete', () => {
+          expect(jobProfiles.list.rowCount).to.equal(3);
         });
       });
     });
