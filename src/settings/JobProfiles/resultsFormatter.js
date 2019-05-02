@@ -21,22 +21,21 @@ import css from './JobProfiles.css';
 
 export const resultsFormatter = searchTerm => ({
   selected: record => (
-    <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-      tabIndex="0"
-      role="button"
+    <button
+      type="button"
       className={sharedCss.selectableCellButton}
       data-test-select-item
       onClick={e => e.stopPropagation()}
     >
       <Checkbox name={`selected-${record.id}`} />
-    </div>
+    </button>
   ),
   name: record => (
     <AppIcon
       size="small"
       app="data-import"
       iconKey="jobProfiles"
-      className={sharedCss.baseline}
+      className={sharedCss.cellAppIcon}
     >
       <HighLight
         search={searchTerm}

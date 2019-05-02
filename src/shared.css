@@ -14,8 +14,9 @@
   }
 }
 
-.baseline {
+.cellAppIcon {
   align-items: baseline;
+  flex-shrink: initial;
 }
 
 .selectableCellButton {
