@@ -41,6 +41,7 @@ import {
   SORT_TYPES,
   LAYER_TYPES,
 } from '../../utils/constants';
+import { createLayerURL } from '../../utils';
 
 import css from './SearchAndSort.css';
 
@@ -116,6 +117,7 @@ export class SearchAndSort extends Component {
     onCreate: PropTypes.func,
     onEdit: PropTypes.func,
     onDelete: PropTypes.func,
+    onSubmitSearch: PropTypes.func,
     handleCreateSuccess: PropTypes.func,
     handleEditSuccess: PropTypes.func,
     onSelectRow: PropTypes.func,
@@ -141,6 +143,7 @@ export class SearchAndSort extends Component {
     onCreate: noop,
     onEdit: noop,
     onDelete: noop,
+    onSubmitSearch: noop,
     handleCreateSuccess: noop,
     massageNewRecord: noop,
     defaultSort: '',
@@ -235,12 +238,13 @@ export class SearchAndSort extends Component {
   };
 
   onSubmitSearch = e => {
-    e.preventDefault();
-    e.stopPropagation();
-
+    const { onSubmitSearch } = this.props;
     const { locallyChangedSearchTerm } = this.state;
 
+    e.preventDefault();
+    e.stopPropagation();
     this.performSearch(locallyChangedSearchTerm);
+    onSubmitSearch(e, locallyChangedSearchTerm);
   };
 
   performSearch = debounce(query => {
@@ -254,24 +258,11 @@ export class SearchAndSort extends Component {
   }, 350);
 
   onClearSearchQuery = () => {
+    const { onSubmitSearch } = this.props;
+
     this.setState({ locallyChangedSearchTerm: '' });
     this.transitionToParams({ query: '' });
-  };
-
-  onOpenDuplicateRecord = e => {
-    if (e) {
-      e.preventDefault();
-    }
-
-    this.transitionToParams({ layer: LAYER_TYPES.DUPLICATE });
-  };
-
-  onOpenEditRecord = e => {
-    if (e) {
-      e.preventDefault();
-    }
-
-    this.transitionToParams({ layer: LAYER_TYPES.EDIT });
+    onSubmitSearch(null, '');
   };
 
   onCloseEditRecord = e => {
@@ -430,19 +421,6 @@ export class SearchAndSort extends Component {
     return get(query, nsKey);
   }
 
-  craftLayerURL(mode) {
-    const {
-      location: {
-        pathname,
-        search,
-      },
-    } = this.props;
-
-    const url = `${pathname}${search}`;
-
-    return `${url}${url.includes('?') ? '&' : '?'}layer=${mode}`;
-  }
-
   getRowURL(id) {
     const {
       match: { path },
@@ -476,10 +454,7 @@ export class SearchAndSort extends Component {
               parentResources={parentResources}
               connectedSource={source}
               parentMutator={parentMutator}
-              editLink={this.craftLayerURL(LAYER_TYPES.EDIT)}
               onClose={this.collapseRecordDetails}
-              onDuplicate={this.onOpenDuplicateRecord}
-              onOpenEdit={this.onOpenEditRecord}
               onCloseEdit={this.onCloseEditRecord}
               onEdit={this.editRecord}
               onDelete={this.deleteRecord}
@@ -494,13 +469,15 @@ export class SearchAndSort extends Component {
   }
 
   renderNewRecordButton() {
+    const { location } = this.props;
+
     return (
       <PaneMenu>
         <FormattedMessage id="stripes-smart-components.addNew">
           {ariaLabel => (
             <Button
               data-test-new-button
-              href={this.craftLayerURL(LAYER_TYPES.CREATE)}
+              href={createLayerURL(location, LAYER_TYPES.CREATE)}
               aria-label={ariaLabel}
               buttonStyle="primary"
               marginBottom0
@@ -540,6 +517,7 @@ export class SearchAndSort extends Component {
                   {ariaLabel => (
                     <SearchField
                       id={`input-${objectName}-search`}
+                      clearSearchId={`input-${objectName}-clear-search-button`}
                       ariaLabel={ariaLabel}
                       marginBottom0
                       searchableIndexes={searchableIndexes}

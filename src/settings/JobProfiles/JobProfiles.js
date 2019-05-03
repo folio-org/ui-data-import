@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
@@ -6,7 +9,6 @@ import { connect } from 'react-redux';
 import {
   get,
   omit,
-  noop,
 } from 'lodash';
 
 import {
@@ -14,7 +16,11 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
-import { Checkbox } from '@folio/stripes/components';
+import {
+  Icon,
+  Button,
+  Checkbox,
+} from '@folio/stripes/components';
 
 import {
   JobProfilesForm,
@@ -23,11 +29,14 @@ import {
 import { ViewJobProfile } from './ViewJobProfile';
 import { SettingPage } from '../SettingPage';
 import { resultsFormatter } from './resultsFormatter';
+import { LAYER_TYPES } from '../../utils/constants';
+import { createLayerURL } from '../../utils';
 
 import sharedCss from '../../shared.css';
 
-const INITIAL_RESULT_COUNT = 30;
-const RESULT_COUNT_INCREMENT = 30;
+// big numbers to get rid of infinite scroll
+const INITIAL_RESULT_COUNT = 5000;
+const RESULT_COUNT_INCREMENT = 5000;
 
 const mapStateToProps = state => {
   const {
@@ -100,6 +109,8 @@ export class JobProfiles extends Component {
 
   static defaultProps = { showSingleResult: true };
 
+  state = { selectedRecords: new Set() };
+
   visibleColumns = [
     'selected',
     'name',
@@ -154,8 +165,112 @@ export class JobProfiles extends Component {
     );
   }
 
+  renderActionMenu = menu => {
+    const { location } = this.props;
+    const { selectedRecords: { size: selectedRecordsSize } } = this.state;
+
+    return (
+      <Fragment>
+        <Button
+          data-test-new-job-profile-menu-button
+          to={createLayerURL(location, LAYER_TYPES.CREATE)}
+          buttonStyle="dropdownItem"
+          buttonClass={sharedCss.linkButton}
+          onClick={menu.onToggle}
+        >
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-data-import.settings.jobProfiles.newJob" />
+          </Icon>
+        </Button>
+        <Button
+          data-test-export-selected-job-profiles-menu-button
+          buttonStyle="dropdownItem"
+          disabled={!selectedRecordsSize}
+          onClick={menu.onToggle}
+        >
+          <Icon icon="arrow-down">
+            <FormattedMessage id="ui-data-import.exportSelected" />
+            {!!selectedRecordsSize && (
+            <Fragment>
+              {' '}
+              <FormattedMessage
+                id="ui-data-import.itemsCount"
+                values={{ count: selectedRecordsSize }}
+              />
+            </Fragment>
+            )}
+          </Icon>
+        </Button>
+        <Button
+          data-test-select-all-job-profiles-menu-button
+          buttonStyle="dropdownItem"
+          onClick={() => this.handleSelectAllButton(menu)}
+        >
+          <Icon icon="select-all">
+            <FormattedMessage id="ui-data-import.selectAll" />
+          </Icon>
+        </Button>
+        <Button
+          data-test-deselect-all-job-profiles-menu-button
+          buttonStyle="dropdownItem"
+          onClick={() => this.handleDeselectAllButton(menu)}
+        >
+          <Icon icon="deselect-all">
+            <FormattedMessage id="ui-data-import.deselectAll" />
+          </Icon>
+        </Button>
+      </Fragment>
+    );
+  };
+
   getRecordName(record) {
     return record.name;
+  }
+
+  selectRecord = recordId => {
+    this.setState(state => {
+      const isRecordSelected = state.selectedRecords.has(recordId);
+
+      if (isRecordSelected) {
+        state.selectedRecords.delete(recordId);
+      } else {
+        state.selectedRecords.add(recordId);
+      }
+
+      return { selectedRecords: state.selectedRecords };
+    });
+  };
+
+  handleSelectAllButton = menu => {
+    menu.onToggle();
+    this.selectAllRecords();
+  };
+
+  handleDeselectAllButton = menu => {
+    menu.onToggle();
+    this.deselectAllRecords();
+  };
+
+  selectAllRecords = () => {
+    const selectedRecords = new Set(this.jobProfiles.map(({ id }) => id));
+
+    this.setState({ selectedRecords });
+  };
+
+  deselectAllRecords = () => this.setState({ selectedRecords: new Set() });
+
+  handleSelectAllCheckbox = e => {
+    if (e.target.checked) {
+      this.selectAllRecords();
+    } else {
+      this.deselectAllRecords();
+    }
+  };
+
+  get jobProfiles() {
+    const { resources } = this.props;
+
+    return get(resources, ['jobProfiles', 'records'], []);
   }
 
   render() {
@@ -170,9 +285,11 @@ export class JobProfiles extends Component {
       showSingleResult,
       selectedJobProfile,
     } = this.props;
+    const { selectedRecords } = this.state;
 
     const urlQuery = queryString.parse(search);
     const searchTerm = (urlQuery.query || '').trim();
+    const isSelectAllChecked = selectedRecords.size === this.jobProfiles.length;
 
     return (
       <IntlConsumer>
@@ -198,17 +315,22 @@ export class JobProfiles extends Component {
                 resultCountMessageKey="ui-data-import.settings.jobProfiles.count"
                 resultsLabel={label}
                 defaultSort="name"
-                resultsFormatter={resultsFormatter(searchTerm)}
+                actionMenu={this.renderActionMenu}
+                resultsFormatter={resultsFormatter(searchTerm, this.selectRecord, selectedRecords)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   selected: (
                     <button
                       type="button"
                       className={sharedCss.selectableCellButton}
-                      data-test-select-all
+                      data-test-select-all-checkbox
                       onClick={e => e.stopPropagation()}
                     >
-                      <Checkbox name="selected-all" />
+                      <Checkbox
+                        name="selected-all"
+                        checked={isSelectAllChecked}
+                        onChange={this.handleSelectAllCheckbox}
+                      />
                     </button>
                   ),
                   name: intl.formatMessage({ id: 'ui-data-import.name' }),
@@ -223,6 +345,7 @@ export class JobProfiles extends Component {
                 editRecordInitialValues={selectedJobProfile.record}
                 editRecordInitialValuesAreLoaded={selectedJobProfile.hasLoaded}
                 showSingleResult={showSingleResult}
+                onSubmitSearch={this.deselectAllRecords}
                 {...props}
               />
             )}

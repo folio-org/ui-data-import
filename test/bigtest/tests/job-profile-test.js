@@ -33,7 +33,7 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
 }
 
 describe('Job Profile View', () => {
-  setupApplication({ scenarios: ['fetch-job-profiles-success'] });
+  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/job-profiles');

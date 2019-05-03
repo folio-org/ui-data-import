@@ -9,7 +9,7 @@ import { fileExtensions } from '../interactors';
 import { setupApplication } from '../helpers';
 
 describe('File extensions', () => {
-  setupApplication({ scenarios: ['fetch-file-extensions-success', 'restore-default-file-extensions-success'] });
+  setupApplication({ scenarios: ['fetch-file-extensions-success', 'restore-default-file-extensions-success', 'fetch-users'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/file-extensions');

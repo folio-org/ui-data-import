@@ -26,12 +26,12 @@ const {
 const jobsUrl = createUrl('metadata-provider/jobExecutions', {
   query: `(uiStatus==("${PREPARING_FOR_PREVIEW}" OR "${READY_FOR_PREVIEW}" OR "${RUNNING}"))`,
   limit: 50,
-});
+}, false);
 
 const logsUrl = createUrl('metadata-provider/logs', {
   landingPage: true,
   limit: 25,
-});
+}, false);
 
 @stripesConnect
 export class DataFetcher extends Component {

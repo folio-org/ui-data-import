@@ -45,7 +45,7 @@ describe('File extension form', () => {
 });
 
 describe('File extension form', () => {
-  setupApplication({ scenarios: ['fetch-file-extensions-success'] });
+  setupApplication({ scenarios: ['fetch-file-extensions-success', 'fetch-users'] });
 
   beforeEach(async function () {
     this.visit('/settings/data-import/file-extensions?layer=create');

@@ -34,3 +34,11 @@
     margin-bottom: 0;
   }
 }
+
+/* disable styles for visited links created by react-router-dom Link */
+.linkButton,
+.linkButton:visited,
+.linkButton:hover,
+.linkButton:active {
+  color: inherit;
+}

@@ -9,11 +9,12 @@ import translation from '../../../translations/ui-data-import/en';
 import { setupApplication } from '../helpers';
 import {
   jobProfiles,
+  jobProfileForm,
   jobProfileDetails,
 } from '../interactors';
 
 describe('Job profiles', () => {
-  setupApplication({ scenarios: ['fetch-job-profiles-success'] });
+  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/job-profiles');
@@ -89,6 +90,110 @@ describe('Job profiles', () => {
 
       it('upon click changes its state', () => {
         expect(jobProfiles.checkBoxes(0).isChecked).to.be.true;
+      });
+    });
+
+    describe('select all checkbox', () => {
+      beforeEach(async () => {
+        await jobProfiles.selectAllCheckBox.clickAndBlur();
+      });
+
+      it('selects all items', () => {
+        jobProfiles.checkBoxes().forEach(checkBox => {
+          expect(checkBox.isChecked).to.be.true;
+        });
+      });
+
+      describe('when not all records are selected', () => {
+        beforeEach(async () => {
+          await jobProfiles.checkBoxes(0).clickAndBlur();
+        });
+
+        it('becomes unchecked', () => {
+          expect(jobProfiles.selectAllCheckBox.isChecked).to.be.false;
+        });
+      });
+
+      describe('when clocked again', () => {
+        beforeEach(async () => {
+          await jobProfiles.selectAllCheckBox.clickAndBlur();
+        });
+
+        it('all items become unchecked', () => {
+          jobProfiles.checkBoxes().forEach(checkBox => {
+            expect(checkBox.isChecked).to.be.false;
+          });
+        });
+      });
+    });
+
+    describe('select all button', () => {
+      beforeEach(async () => {
+        await jobProfiles.paneHeaderDropdown.click();
+        await jobProfiles.paneHeaderDropdown.selectAllButton.click();
+      });
+
+      it('selects all items', () => {
+        jobProfiles.checkBoxes().forEach(checkBox => {
+          expect(checkBox.isChecked).to.be.true;
+        });
+      });
+    });
+
+    describe('deselect all button', () => {
+      beforeEach(async () => {
+        await jobProfiles.checkBoxes(0).clickAndBlur();
+        await jobProfiles.checkBoxes(1).clickAndBlur();
+        await jobProfiles.paneHeaderDropdown.click();
+        await jobProfiles.paneHeaderDropdown.deselectAllButton.click();
+      });
+
+      it('deselects all items', () => {
+        jobProfiles.checkBoxes().forEach(checkBox => {
+          expect(checkBox.isChecked).to.be.false;
+        });
+      });
+    });
+
+    describe('new job profile dropdown button', () => {
+      beforeEach(async () => {
+        await jobProfiles.paneHeaderDropdown.click();
+        await jobProfiles.paneHeaderDropdown.newJobProfileButton.click();
+      });
+
+      it('opens new job profile form', () => {
+        expect(jobProfileForm.isPresent).to.be.true;
+      });
+    });
+
+    describe('when using search', () => {
+      beforeEach(async () => {
+        await jobProfiles.checkBoxes(0).clickAndBlur();
+        await jobProfiles.checkBoxes(1).clickAndBlur();
+        await jobProfiles.searchFiled.fill('acq');
+        await jobProfiles.searchSubmitButton.click();
+      });
+
+      it('deselects all items', () => {
+        jobProfiles.checkBoxes().forEach(checkBox => {
+          expect(checkBox.isChecked).to.be.false;
+        });
+      });
+    });
+
+    describe('when clearing search', () => {
+      beforeEach(async () => {
+        await jobProfiles.searchFiled.fill('acq');
+        await jobProfiles.searchSubmitButton.click();
+        await jobProfiles.checkBoxes(0).clickAndBlur();
+        await jobProfiles.checkBoxes(1).clickAndBlur();
+        await jobProfiles.clearSearchButtonClick();
+      });
+
+      it('deselects all items', () => {
+        jobProfiles.checkBoxes().forEach(checkBox => {
+          expect(checkBox.isChecked).to.be.false;
+        });
       });
     });
 

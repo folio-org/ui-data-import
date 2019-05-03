@@ -31,13 +31,17 @@ import { EndOfItem } from '../../components/EndOfItem';
 import { Preloader } from '../../components/Preloader';
 import { withJobLogsCellsFormatter } from '../../components/JobLogs/withJobLogsCellsFormatter';
 import {
-  JOB_STATUSES,
+  LAYER_TYPES,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
 } from '../../utils/constants';
-import { createUrl, sortCollection, sortDates } from '../../utils';
+import {
+  createUrl,
+  createLayerURL,
+} from '../../utils';
 
 import css from './JobProfiles.css';
+import sharedCss from '../../shared.css';
 
 @withJobLogsCellsFormatter
 @stripesConnect
@@ -50,12 +54,10 @@ export class ViewJobProfile extends Component {
     },
     jobsUsingThisProfile: {
       type: 'okapi',
-      // TODO: UIDATIMP-180 - fix query param
       path: createUrl('metadata-provider/jobExecutions', {
-        // query: '(jobProfileInfo.id==":{id}") sortBy completedDate/sort.descending',
-        query: `(uiStatus=="${JOB_STATUSES.READY_FOR_PREVIEW}")`,
+        query: '(jobProfileInfo.id==":{id}") sortBy completedDate/sort.descending',
         limit: 25,
-      }),
+      }, false),
       throwErrors: false,
     },
   });
@@ -83,10 +85,8 @@ export class ViewJobProfile extends Component {
         id: PropTypes.string,
       }).isRequired,
     }).isRequired,
-    editLink: PropTypes.string.isRequired,
+    location: PropTypes.object.isRequired,
     onClose: PropTypes.func.isRequired,
-    onOpenEdit: PropTypes.func.isRequired,
-    onDuplicate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     formatter: PropTypes.object,
   };
@@ -122,62 +122,50 @@ export class ViewJobProfile extends Component {
     const jobsUsingThisProfile = resources.jobsUsingThisProfile || {};
     const [{ jobExecutionDtos: jobsUsingThisProfileData } = {}] = jobsUsingThisProfile.records || [];
 
-    // TODO: UIDATIMP-180 - remove front-end sorting
-    const jobsUsingThisProfileDataSorted = sortCollection(
-      jobsUsingThisProfileData,
-      [(a, b) => sortDates(b.completedDate, a.completedDate)],
-    );
-
     return {
       hasLoaded: jobsUsingThisProfile.hasLoaded,
-      jobsUsingThisProfileData: jobsUsingThisProfileDataSorted,
+      jobsUsingThisProfileData,
     };
   }
 
-  renderActionMenu = menu => (
-    <Fragment>
-      <Button
-        data-test-edit-job-profile-menu-button
-        buttonStyle="dropdownItem"
-        onClick={() => this.handleOpenEdit(menu)}
-      >
-        <Icon icon="edit">
-          <FormattedMessage id="ui-data-import.edit" />
-        </Icon>
-      </Button>
-      <Button
-        data-test-duplicate-job-profile-menu-button
-        buttonStyle="dropdownItem"
-        onClick={() => this.handleOpenDuplicate(menu)}
-      >
-        <Icon icon="duplicate">
-          <FormattedMessage id="ui-data-import.duplicate" />
-        </Icon>
-      </Button>
-      <Button
-        data-test-delete-job-profile-menu-button
-        buttonStyle="dropdownItem"
-        onClick={() => this.showDeleteConfirmation()}
-      >
-        <Icon icon="trash">
-          <FormattedMessage id="ui-data-import.delete" />
-        </Icon>
-      </Button>
-    </Fragment>
-  );
+  renderActionMenu = menu => {
+    const { location } = this.props;
 
-  handleOpenEdit = menu => {
-    const { onOpenEdit } = this.props;
-
-    onOpenEdit();
-    menu.onToggle();
-  };
-
-  handleOpenDuplicate = menu => {
-    const { onDuplicate } = this.props;
-
-    onDuplicate();
-    menu.onToggle();
+    return (
+      <Fragment>
+        <Button
+          data-test-edit-job-profile-menu-button
+          buttonStyle="dropdownItem"
+          buttonClass={sharedCss.linkButton}
+          to={createLayerURL(location, LAYER_TYPES.EDIT)}
+          onClick={menu.onToggle}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-data-import.edit" />
+          </Icon>
+        </Button>
+        <Button
+          data-test-duplicate-job-profile-menu-button
+          buttonStyle="dropdownItem"
+          buttonClass={sharedCss.linkButton}
+          to={createLayerURL(location, LAYER_TYPES.DUPLICATE)}
+          onClick={menu.onToggle}
+        >
+          <Icon icon="duplicate">
+            <FormattedMessage id="ui-data-import.duplicate" />
+          </Icon>
+        </Button>
+        <Button
+          data-test-delete-job-profile-menu-button
+          buttonStyle="dropdownItem"
+          onClick={() => this.showDeleteConfirmation()}
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-data-import.delete" />
+          </Icon>
+        </Button>
+      </Fragment>
+    );
   };
 
   showDeleteConfirmation = () => {
@@ -206,10 +194,7 @@ export class ViewJobProfile extends Component {
   };
 
   renderLastMenu(record) {
-    const {
-      onOpenEdit,
-      editLink,
-    } = this.props;
+    const { location } = this.props;
 
     const editButtonVisibility = !record ? 'hidden' : 'visible';
 
@@ -217,11 +202,10 @@ export class ViewJobProfile extends Component {
       <PaneMenu>
         <Button
           data-test-edit-job-profile-button
-          href={editLink}
+          to={createLayerURL(location, LAYER_TYPES.EDIT)}
           style={{ visibility: editButtonVisibility }}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
-          onClick={onOpenEdit}
         >
           <FormattedMessage id="ui-data-import.edit" />
         </Button>
@@ -261,7 +245,10 @@ export class ViewJobProfile extends Component {
       );
     }
 
-    // TODO: UIDATIMP-180 - use real IDs
+    // start
+    // JobProfiles sample data does not contain user Ids because of back-end limitations
+    // and therefore it is required to add it manually on UI side
+    // TODO: use real IDs when sample data will be removed (remove code from start to end)
     const userId = get(this.props, ['stripes', 'okapi', 'currentUser', 'id'], '');
 
     record.metadata = {
@@ -269,6 +256,7 @@ export class ViewJobProfile extends Component {
       createdByUserId: record.metadata.createdByUserId || userId,
       updatedByUserId: record.metadata.updatedByUserId || userId,
     };
+    // end
 
     const paneTitle = (
       <AppIcon
