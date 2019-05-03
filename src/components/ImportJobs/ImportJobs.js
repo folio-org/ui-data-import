@@ -32,11 +32,8 @@ import {
 import { Preloader } from '../Preloader';
 
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
-import {
-  createOkapiHeaders,
-  createUrl,
-} from '../../utils';
-import * as API from '../UploadingJobsDisplay/utils/upload';
+import { createUrl } from '../../utils';
+import * as API from '../../utils/upload';
 import {
   checkForKnowErrorModalTypes,
   getErrorModalMeta,
@@ -59,12 +56,6 @@ export class ImportJobs extends Component {
 
   constructor(props) {
     super(props);
-
-    const { stripes: { okapi } } = this.props;
-
-    const { url: host } = okapi;
-
-    this.uploadDefinitionUrl = createUrl(`${host}/data-import/uploadDefinitions`);
 
     this.state = {
       isDropZoneActive: false,
@@ -117,6 +108,13 @@ export class ImportJobs extends Component {
     }
   }
 
+  showCreateUploadDefinitionErrorMessage() {
+    this.calloutRef.current.sendCallout({
+      type: 'error',
+      message: <FormattedMessage id="ui-data-import.communicationProblem" />,
+    });
+  }
+
   showDeleteUploadDefinitionErrorMessage() {
     const errorMessage = (
       <FormattedMessage
@@ -146,7 +144,10 @@ export class ImportJobs extends Component {
   };
 
   onDrop = async acceptedFiles => {
+    const { stripes: { okapi } } = this.props;
     const { updateUploadDefinition } = this.context;
+
+    const { url: host } = okapi;
 
     this.setState({
       isDropZoneActive: false,
@@ -177,21 +178,27 @@ export class ImportJobs extends Component {
 
     const files = API.mapFilesToUI(acceptedFiles);
 
-    // post file upload definition with all files metadata as
-    // individual file upload should have upload definition id in the URL
-    const [errorMessage, response] = await API.createUploadDefinition(
-      files,
-      this.uploadDefinitionUrl,
-      this.createFilesDefinitionHeaders(),
-    );
+    try {
+      // post file upload definition with all files metadata as
+      // individual file upload should have upload definition id in the URL
+      const [errorMessage, response] = await API.createUploadDefinition({
+        files,
+        url: createUrl(`${host}/data-import/uploadDefinitions`),
+        okapi,
+      });
 
-    if (!errorMessage) {
-      const fileDefinitions = this.updateFilesWithFileDefinitionMetadata(files, response.fileDefinitions);
+      if (!errorMessage) {
+        const fileDefinitions = this.updateFilesWithFileDefinitionMetadata(files, response.fileDefinitions);
 
-      this.redirectToJobProfilePage(fileDefinitions);
+        this.redirectToJobProfilePage(fileDefinitions);
+      }
+
+      this.handleUploadDefinitionError(errorMessage);
+    } catch (error) {
+      this.showCreateUploadDefinitionErrorMessage();
+
+      console.error(error); // eslint-disable-line no-console
     }
-
-    this.handleUploadDefinitionError(errorMessage);
   };
 
   handleUploadDefinitionError(errorMessage) {
@@ -200,12 +207,8 @@ export class ImportJobs extends Component {
     if (knownErrorModalType) {
       this.showFilesExtensionsModal({ type: knownErrorModalType });
 
-      return;
+      this.setState({ showErrorMessage: true });
     }
-
-    this.setState({ showErrorMessage: true });
-
-    console.error(errorMessage); // eslint-disable-line no-console
   }
 
   updateFilesWithFileDefinitionMetadata(files, fileDefinitions) {
@@ -226,15 +229,6 @@ export class ImportJobs extends Component {
     });
 
     return updatedFiles;
-  }
-
-  createFilesDefinitionHeaders() {
-    const { stripes: { okapi } } = this.props;
-
-    return {
-      ...createOkapiHeaders(okapi),
-      'Content-Type': 'application/json',
-    };
   }
 
   checkFilesHaveSameExtension(files = []) {

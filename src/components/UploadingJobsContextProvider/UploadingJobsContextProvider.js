@@ -12,10 +12,8 @@ import {
 } from '@folio/stripes/core';
 
 import { FILE_STATUSES } from '../../utils/constants';
-import {
-  createUrl,
-  createOkapiHeaders,
-} from '../../utils';
+import * as API from '../../utils/upload';
+import { createUrl } from '../../utils';
 import { UploadingJobsContext } from '.';
 
 @withStripes
@@ -43,16 +41,11 @@ export class UploadingJobsContextProvider extends Component {
     const { uploadDefinition: { id: uploadDefinitionId } } = this.state;
 
     const { url: host } = okapi;
-    const uploadDefinitionUrl = createUrl(`${host}/data-import/uploadDefinitions/${uploadDefinitionId}`);
 
-    const response = await fetch(uploadDefinitionUrl, {
-      method: 'DELETE',
-      headers: createOkapiHeaders(okapi),
+    await API.deleteUploadDefinition({
+      url: createUrl(`${host}/data-import/uploadDefinitions/${uploadDefinitionId}`),
+      okapi,
     });
-
-    if (!response.ok) {
-      throw response;
-    }
 
     await this.updateUploadDefinition();
   };
@@ -87,27 +80,15 @@ export class UploadingJobsContextProvider extends Component {
     return isErrorStatus || areAllFilesFailed;
   }
 
-  getLatestUploadDefinition = async () => {
+  getLatestUploadDefinition = () => {
     const { stripes: { okapi } } = this.props;
 
     const { url: host } = okapi;
-    const statuses = {
-      NEW: 'NEW',
-      IN_PROGRESS: 'IN_PROGRESS',
-      LOADED: 'LOADED',
-    };
-    const draftJobsUrl = createUrl(`${host}/data-import/uploadDefinitions`, {
-      query: `(status==("${statuses.NEW}" OR "${statuses.IN_PROGRESS}" OR "${statuses.LOADED}")) sortBy createdDate/sort.descending`,
-      limit: 1,
-    });
 
-    const response = await fetch(draftJobsUrl, {
-      method: 'GET',
-      headers: createOkapiHeaders(okapi),
+    return API.getLatestUploadDefinition({
+      url: `${host}/data-import/uploadDefinitions`,
+      okapi,
     });
-    const { uploadDefinitions: [latestUploadDefinition = {}] } = await response.json();
-
-    return latestUploadDefinition;
   };
 
   render() {

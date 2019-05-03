@@ -124,7 +124,8 @@
           "data-import.fileExtensions.default",
           "converter-storage.jobprofile.get",
           "converter-storage.jobprofile.post",
-          "converter-storage.jobprofile.put"
+          "converter-storage.jobprofile.put",
+          "converter-storage.jobprofile.delete"
         ],
         "visible": true
       }

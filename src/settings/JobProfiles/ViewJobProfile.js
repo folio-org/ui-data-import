@@ -327,6 +327,7 @@ export class ViewJobProfile extends Component {
                         'runBy',
                       ]}
                       formatter={formatter}
+                      width="100%"
                     />
                   )}
                 </IntlConsumer>

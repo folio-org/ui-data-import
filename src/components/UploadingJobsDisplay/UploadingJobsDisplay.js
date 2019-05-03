@@ -36,7 +36,7 @@ import {
   DEFAULT_TIMEOUT_BEFORE_FILE_DELETION,
   FILE_STATUSES,
 } from '../../utils/constants';
-import * as API from './utils/upload';
+import * as API from '../../utils/upload';
 
 @withRouter
 @withStripes
@@ -50,7 +50,7 @@ export class UploadingJobsDisplay extends Component {
     }).isRequired,
     location: PropTypes.shape({
       state: PropTypes.shape({
-        files: PropTypes.array,
+        files: PropTypes.object,
       }),
     }).isRequired,
     timeoutBeforeFileDeletion: PropTypes.number, // milliseconds
