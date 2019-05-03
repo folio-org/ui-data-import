@@ -21,8 +21,9 @@ import css from './JobProfiles.css';
 
 export const resultsFormatter = (searchTerm, selectRecord, selectedRecords) => ({
   selected: record => (
-    <button
-      type="button"
+    <div // eslint-disable-line jsx-a11y/click-events-have-key-events
+      tabIndex="0"
+      role="button"
       className={sharedCss.selectableCellButton}
       data-test-select-item
       onClick={e => e.stopPropagation()}
@@ -32,7 +33,7 @@ export const resultsFormatter = (searchTerm, selectRecord, selectedRecords) => (
         checked={selectedRecords.has(record.id)}
         onChange={() => selectRecord(record.id)}
       />
-    </button>
+    </div>
   ),
   name: record => (
     <AppIcon
