@@ -88,14 +88,12 @@ export class DataImportSettings extends Component {
     );
   }
 
-  render() {
-    return (
-      <Settings
-        {...this.props}
-        navPaneWidth="15%"
-        sections={this.sections}
-        paneTitle={this.generateSettingsLabel('index.paneTitle')}
-      />
-    );
-  }
+  render = () => (
+    <Settings
+      {...this.props}
+      navPaneWidth="15%"
+      sections={this.sections}
+      paneTitle={this.generateSettingsLabel('index.paneTitle')}
+    />
+  );
 }
