@@ -6,6 +6,12 @@ export const SORT_TYPES = {
   DESCENDING: 'descending',
 };
 
+export const UPLOAD_DEFINTION_STATUSES = {
+  NEW: 'NEW',
+  IN_PROGRESS: 'IN_PROGRESS',
+  LOADED: 'LOADED',
+};
+
 export const FILE_STATUSES = {
   NEW: 'NEW',
   UPLOADING: 'UPLOADING',

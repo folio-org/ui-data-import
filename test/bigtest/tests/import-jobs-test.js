@@ -208,8 +208,8 @@ describe('ImportJobs error handling:', () => {
       });
     });
 
-    it('error message is shown', () => {
-      expect(importJobs.errorMsg).to.exist;
+    it('the error callout appears', () => {
+      expect(importJobs.callout.errorCalloutIsPresent).to.be.true;
     });
   });
 

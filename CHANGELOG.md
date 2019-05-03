@@ -11,6 +11,8 @@
 * Implement job profile duplication feature (UIDATIMP-134)
 * Implement job profile deletion feature (UIDATIMP-173)
 * Handle text wrapping issue in columns of the job profile results list (UIDATIMP-190)
+* Implement caret actions and items selection for job profiles (UIDATIMP-12)
+* Add status check for failed backend responses on the UI (UIDATIMP-189)
 
 ## [1.1.0](https://github.com/folio-org/ui-data-import/tree/v1.1.0) (2019-03-22)
 

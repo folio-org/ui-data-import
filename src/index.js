@@ -9,7 +9,6 @@ import { stripesShape } from '@folio/stripes/core';
 
 import {
   Home,
-  Results,
   JobProfile,
 } from './routes';
 import { DataImportSettings } from './settings';
@@ -43,11 +42,6 @@ class DataImport extends Component {
             path={path}
             exact
             component={Home}
-          />
-          <Route
-            path={`${path}/results`}
-            exact
-            component={Results}
           />
           <Route
             path={`${path}/job-profile`}

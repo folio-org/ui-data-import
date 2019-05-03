@@ -25,6 +25,7 @@ class FileExtensionsModal extends ConfirmationModalInteractor {
   triggerDragEnter = triggerable('dragenter');
   triggerDragLeave = triggerable('dragleave');
   hasActiveClass = hasClass(css.activeUpload);
+  callout = new CalloutInteractor();
 }
 
 @interactor class ReturnToAssignJobsInteraction {
