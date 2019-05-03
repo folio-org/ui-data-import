@@ -26,11 +26,14 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import { EndOfItem } from '../../components/EndOfItem';
 import { Preloader } from '../../components/Preloader';
 import {
+  LAYER_TYPES,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
 } from '../../utils/constants';
+import { createLayerURL } from '../../utils';
 
 import css from './ViewFileExtension.css';
+import sharedCss from '../../shared.css';
 
 @stripesConnect
 export class ViewFileExtension extends Component {
@@ -69,9 +72,7 @@ export class ViewFileExtension extends Component {
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
-    editLink: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
-    onOpenEdit: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
   };
 
@@ -118,10 +119,7 @@ export class ViewFileExtension extends Component {
   }
 
   renderLastMenu(record) {
-    const {
-      onOpenEdit,
-      editLink,
-    } = this.props;
+    const { location } = this.props;
 
     const editButtonVisibility = !record ? 'hidden' : 'visible';
 
@@ -129,11 +127,10 @@ export class ViewFileExtension extends Component {
       <PaneMenu>
         <Button
           data-test-edit-file-extension-button
-          href={editLink}
+          to={createLayerURL(location, LAYER_TYPES.EDIT)}
           style={{ visibility: editButtonVisibility }}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
-          onClick={onOpenEdit}
         >
           <FormattedMessage id="ui-data-import.edit" />
         </Button>
@@ -141,28 +138,34 @@ export class ViewFileExtension extends Component {
     );
   }
 
-  renderActionMenu = menu => (
-    <Fragment>
-      <Button
-        data-test-edit-file-extension-menu-button
-        buttonStyle="dropdownItem"
-        onClick={() => this.handleOpenEdit(menu)}
-      >
-        <Icon icon="edit">
-          <FormattedMessage id="ui-data-import.edit" />
-        </Icon>
-      </Button>
-      <Button
-        data-test-delete-file-extension-button
-        buttonStyle="dropdownItem"
-        onClick={this.showDeleteExtensionModal}
-      >
-        <Icon icon="trash">
-          <FormattedMessage id="ui-data-import.delete" />
-        </Icon>
-      </Button>
-    </Fragment>
-  );
+  renderActionMenu = menu => {
+    const { location } = this.props;
+
+    return (
+      <Fragment>
+        <Button
+          data-test-edit-file-extension-menu-button
+          to={createLayerURL(location, LAYER_TYPES.EDIT)}
+          buttonStyle="dropdownItem"
+          buttonClass={sharedCss.linkButton}
+          onClick={menu.onToggle}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-data-import.edit" />
+          </Icon>
+        </Button>
+        <Button
+          data-test-delete-file-extension-button
+          buttonStyle="dropdownItem"
+          onClick={this.showDeleteExtensionModal}
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-data-import.delete" />
+          </Icon>
+        </Button>
+      </Fragment>
+    );
+  };
 
   showDeleteExtensionModal = () => {
     this.setState({ showDeleteConfirmation: true });
@@ -173,13 +176,6 @@ export class ViewFileExtension extends Component {
       showDeleteConfirmation: false,
       deletingInProgress: false,
     });
-  };
-
-  handleOpenEdit = menu => {
-    const { onOpenEdit } = this.props;
-
-    onOpenEdit();
-    menu.onToggle();
   };
 
   handleDeleteExtension = record => {

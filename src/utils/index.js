@@ -8,3 +8,4 @@ export * from './formatUserName';
 export * from './xhr';
 export * from './isTestEnv';
 export * from './formValidators';
+export * from './craftLayerURL';

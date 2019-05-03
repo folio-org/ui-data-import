@@ -19,7 +19,7 @@ import {
 import sharedCss from '../../shared.css';
 import css from './JobProfiles.css';
 
-export const resultsFormatter = searchTerm => ({
+export const resultsFormatter = (searchTerm, selectRecord, selectedRecords) => ({
   selected: record => (
     <button
       type="button"
@@ -27,7 +27,11 @@ export const resultsFormatter = searchTerm => ({
       data-test-select-item
       onClick={e => e.stopPropagation()}
     >
-      <Checkbox name={`selected-${record.id}`} />
+      <Checkbox
+        name={`selected-${record.id}`}
+        checked={selectedRecords.has(record.id)}
+        onChange={() => selectRecord(record.id)}
+      />
     </button>
   ),
   name: record => (

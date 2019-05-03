@@ -25,7 +25,7 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
 }
 
 describe('Job profile form', () => {
-  setupApplication({ scenarios: ['fetch-job-profiles-success'] });
+  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users'] });
 
   describe('appears', () => {
     beforeEach(async function () {

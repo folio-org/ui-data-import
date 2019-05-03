@@ -28,7 +28,7 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
 }
 
 describe('File extensions table', () => {
-  setupApplication({ scenarios: ['fetch-file-extensions-success'] });
+  setupApplication({ scenarios: ['fetch-file-extensions-success', 'fetch-users'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/file-extensions');

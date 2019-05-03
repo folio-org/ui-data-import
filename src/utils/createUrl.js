@@ -1,7 +1,12 @@
-import { map } from 'lodash';
+import {
+  map,
+  identity,
+} from 'lodash';
 
-const generateQueryParams = params => {
-  const queryParamsString = map(params, (value, key) => [key, value].map(encodeURIComponent).join('='))
+const generateQueryParams = (params, encode) => {
+  const encodeCallback = encode ? encodeURIComponent : identity;
+
+  const queryParamsString = map(params, (value, key) => [key, value].map(encodeCallback).join('='))
     .join('&');
 
   return `${(queryParamsString.length ? '?' : '')}${queryParamsString}`;
@@ -9,11 +14,12 @@ const generateQueryParams = params => {
 
 /**
  * Creates url with query parameters
- * @param  {string} url
- * @param  {object} [queryParams]
+ * @param {string} url
+ * @param {object} [queryParams]
+ * @param {boolean} [encode] - disables encoding (required when using with manifest)
  */
-export const createUrl = (url, queryParams = {}) => {
-  const paramsString = generateQueryParams(queryParams);
+export const createUrl = (url, queryParams = {}, encode = true) => {
+  const paramsString = generateQueryParams(queryParams, encode);
 
   return `${url.endsWith('?') ? url.slice(0, -1) : url}${paramsString}`;
 };
