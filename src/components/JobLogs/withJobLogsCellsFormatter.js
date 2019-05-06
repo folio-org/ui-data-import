@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
+  FormattedMessage,
   injectIntl,
   intlShape,
 } from 'react-intl';
+
+import { Button } from '@folio/stripes/components';
+
 import { compose } from '../../utils';
 
 const withJobLogsCellsFormatterComponent = WrappedComponent => {
@@ -22,6 +26,7 @@ const withJobLogsCellsFormatterComponent = WrappedComponent => {
         ...props.formatter,
         runBy: this.formatUser,
         completedDate: this.formatEndedRunningDate,
+        log: this.createLogButton,
       };
     }
 
@@ -47,6 +52,17 @@ const withJobLogsCellsFormatterComponent = WrappedComponent => {
         year: 'numeric',
       });
     };
+
+    createLogButton = record => (
+      <Button
+        buttonStyle="primary"
+        marginBottom0
+        to={`/data-import/log/${record.jobExecutionId}`}
+        target="_blank"
+      >
+        <FormattedMessage id="ui-data-import.log" />
+      </Button>
+    );
 
     render() {
       return (

@@ -10,6 +10,7 @@ import { stripesShape } from '@folio/stripes/core';
 import {
   Home,
   JobProfile,
+  ViewJobLog,
 } from './routes';
 import { DataImportSettings } from './settings';
 import { UploadingJobsContextProvider } from './components';
@@ -47,6 +48,11 @@ class DataImport extends Component {
             path={`${path}/job-profile`}
             exact
             component={JobProfile}
+          />
+          <Route
+            path={`${path}/log/:id`}
+            exact
+            component={ViewJobLog}
           />
         </Switch>
       </UploadingJobsContextProvider>
