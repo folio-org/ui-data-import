@@ -1,10 +1,10 @@
 import { expect } from 'chai';
+import { location } from '@bigtest/react';
 import {
   describe,
   beforeEach,
   it,
 } from '@bigtest/mocha';
-import { location } from '@bigtest/react';
 
 import { setupApplication } from '../helpers';
 
@@ -243,6 +243,62 @@ describe('Uploading jobs display', () => {
           expect(leavePageModal.isPresent).to.be.false;
           expect(location().pathname).to.equal('/data-import');
         });
+      });
+    });
+  });
+
+  describe('when marc records exist', () => {
+    setupApplication({ scenarios: ['load-records'] });
+
+    beforeEach(function () {
+      this.visit('/data-import/job-profile');
+    });
+
+    describe('when load records button is clicked and the API response is successful', () => {
+      beforeEach(async () => {
+        await uploadingJobsDisplay.paneHeaderDropdown.click();
+        await uploadingJobsDisplay.loadRecordsButton.click();
+      });
+
+      it.always('error callout does not appear', () => {
+        expect(uploadingJobsDisplay.callout.errorCalloutIsPresent).to.be.false;
+      });
+    });
+
+    describe('when load records button is clicked twice and the API response is successful', () => {
+      beforeEach(async () => {
+        await uploadingJobsDisplay.paneHeaderDropdown.click();
+        await uploadingJobsDisplay.loadRecordsButton.click();
+        await uploadingJobsDisplay.loadRecordsButton.click();
+      });
+
+      it.always('app works correctly and error callout does not appear', () => {
+        expect(uploadingJobsDisplay.callout.errorCalloutIsPresent).to.be.false;
+      });
+    });
+
+    describe('when load records button is clicked and the API response is not successful', () => {
+      beforeEach(async function () {
+        this.server.get('/data-import/uploadDefinitions/:id', {}, 500);
+        this.server.get('/data-import-profiles/jobProfiles/:id', {}, 500);
+        await uploadingJobsDisplay.paneHeaderDropdown.click();
+        await uploadingJobsDisplay.loadRecordsButton.click();
+      });
+
+      it('error callout appears', () => {
+        expect(uploadingJobsDisplay.callout.errorCalloutIsPresent).to.be.true;
+      });
+    });
+
+    describe('when load records button is clicked and the API response is not successful', () => {
+      beforeEach(async function () {
+        this.server.post('/data-import/uploadDefinitions/:id/processFiles', {}, 500);
+        await uploadingJobsDisplay.paneHeaderDropdown.click();
+        await uploadingJobsDisplay.loadRecordsButton.click();
+      });
+
+      it('error callout appears', () => {
+        expect(uploadingJobsDisplay.callout.errorCalloutIsPresent).to.be.true;
       });
     });
   });

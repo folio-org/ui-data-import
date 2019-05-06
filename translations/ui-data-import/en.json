@@ -63,6 +63,7 @@
   "returnToAssign.subMessage": "{filesAmount, plural, one {# file} other {# files}} uploaded",
   "returnToAssign.resume": "Resume",
   "returnToAssign.deleteFiles": "Delete files",
+  "loadMarcRecords": "Load MARC bibliographic records",
   "settings.index.paneTitle": "Data Import",
   "settings.profiles": "Profiles",
   "settings.learnMore": "Learn more",
