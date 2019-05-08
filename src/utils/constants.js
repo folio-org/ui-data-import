@@ -1,6 +1,12 @@
 export const DEFAULT_FETCHER_UPDATE_INTERVAL = 5000;
 export const DEFAULT_TIMEOUT_BEFORE_FILE_DELETION = 0;
 
+export const STRING_CAPITALIZATION_MODES = {
+  ALL: 0,
+  FIRST: 1,
+  WORDS: 2,
+};
+
 export const SORT_TYPES = {
   ASCENDING: 'ascending',
   DESCENDING: 'descending',
@@ -40,4 +46,43 @@ export const LAYER_TYPES = {
   CREATE: 'create',
   EDIT: 'edit',
   DUPLICATE: 'duplicate',
+};
+
+export const ENTITY_CONFIGS = {
+  MATCH_PROFILES: {
+    RECORD_TYPES: {
+      ORDER: {
+        caption: 'Order',
+        icon: 'orders',
+      },
+      INVOICE: {
+        caption: 'Invoice',
+        icon: 'invoices',
+      },
+      ITEM: {
+        caption: 'Item',
+        icon: 'items',
+      },
+      INSTANCE: {
+        caption: 'Instance',
+        icon: 'instances',
+      },
+      HOLDINGS: {
+        caption: 'Holdings',
+        icon: 'holdings',
+      },
+      MARC_BIBLIOGRAPHIC: {
+        caption: 'MARC Bibliographic',
+        icon: 'marcBibs',
+      },
+      MARC_AUTHORITY: {
+        caption: 'MARC Authority',
+        icon: 'marcAuthorities',
+      },
+      MARC_HOLDINGS: {
+        caption: 'MARC Holdings',
+        icon: 'marcHoldings',
+      },
+    },
+  },
 };

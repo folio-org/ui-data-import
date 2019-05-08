@@ -33,12 +33,12 @@ const mapStateToProps = state => {
     hasLoaded = false,
     records: [record = {}] = [],
   } = get(state, 'folio_data_import_match_profile', {});
-  const selectedJobProfile = {
+  const selectedMatchProfile = {
     hasLoaded,
     record: omit(record, 'metadata', 'userInfo'),
   };
 
-  return { selectedJobProfile };
+  return { selectedMatchProfile };
 };
 
 @stripesConnect
@@ -102,6 +102,7 @@ export class MatchProfiles extends Component {
   visibleColumns = [
     'selected',
     'name',
+    'match',
     'tags',
     'updated',
     'updatedBy',
@@ -110,6 +111,7 @@ export class MatchProfiles extends Component {
   columnWidths = {
     selected: 40,
     name: 200,
+    match: 350,
     tags: 150,
     updated: 150,
     updatedBy: 250,
@@ -211,13 +213,14 @@ export class MatchProfiles extends Component {
                     </button>
                   ),
                   name: intl.formatMessage({ id: 'ui-data-import.name' }),
+                  match: intl.formatMessage({ id: 'ui-data-import.match' }),
                   tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
                   updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
                   updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
                 }}
                 columnWidths={this.columnWidths}
-                ViewRecordComponent={ViewMatchProfile}
-                EditRecordComponent={MatchProfilesForm}
+                // ViewRecordComponent={ViewMatchProfile}
+                // EditRecordComponent={MatchProfilesForm}
                 newRecordInitialValues={this.defaultNewRecordInitialValues}
                 editRecordInitialValues={selectedMatchProfile.record}
                 editRecordInitialValuesAreLoaded={selectedMatchProfile.hasLoaded}

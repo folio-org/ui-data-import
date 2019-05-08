@@ -1,4 +1,7 @@
-import React from 'react';
+import {
+  React,
+  Fragment,
+} from 'react';
 import HighLight from 'react-highlighter';
 import {
   get,
@@ -10,6 +13,9 @@ import {
   Checkbox,
   Icon,
 } from '@folio/stripes/components';
+
+import { capitalize } from '../../utils';
+import { ENTITY_CONFIGS, STRING_CAPITALIZATION_MODES } from '../../utils/constants';
 
 import {
   DateFormatter,
@@ -45,6 +51,76 @@ export const resultsFormatter = searchTerm => ({
       </HighLight>
     </AppIcon>
   ),
+  match: record => {
+    const {
+      existingRecordType,
+      existingStaticValueType,
+      field,
+      fieldMarc,
+      fieldNonMarc,
+    } = record;
+    const { RECORD_TYPES } = ENTITY_CONFIGS.MATCH_PROFILES;
+
+    const fieldMatched = (fieldMarc || fieldNonMarc || existingStaticValueType).replace('_', ' ');
+
+    return (
+      <AppIcon
+        size="small"
+        app="data-import"
+        iconKey={RECORD_TYPES[existingRecordType].icon}
+        className={sharedCss.cellAppIcon}
+      >
+        {document.dir === 'ltr' &&
+          <Fragment>
+            <HighLight
+              search={searchTerm}
+              className={sharedCss.container}
+            >
+              {RECORD_TYPES[existingRecordType].caption}
+            </HighLight>
+            &middot;
+            <HighLight
+              search={searchTerm}
+              className={sharedCss.container}
+            >
+              {field || existingRecordType}
+            </HighLight>
+            &rarr;
+            <HighLight
+              search={searchTerm}
+              className={sharedCss.container}
+            >
+              {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS)}
+            </HighLight>
+          </Fragment>
+        }
+        {document.dir === 'rtl' &&
+          <Fragment>
+            <HighLight
+              search={searchTerm}
+              className={sharedCss.container}
+            >
+              {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS)}
+            </HighLight>
+            &larr;
+            <HighLight
+              search={searchTerm}
+              className={sharedCss.container}
+            >
+              {field || existingRecordType}
+            </HighLight>
+            &middot;
+            <HighLight
+              search={searchTerm}
+              className={sharedCss.container}
+            >
+              {RECORD_TYPES[existingRecordType].caption}
+            </HighLight>
+          </Fragment>
+        }
+      </AppIcon>
+    );
+  },
   tags: record => {
     const tags = get(record, 'tags.tagList', []);
 

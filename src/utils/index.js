@@ -1,5 +1,6 @@
 export * from './calculatePercentage';
 export * from './compose';
+export * from './capitalize';
 export * from './createOkapiHeaders';
 export * from './createUrl';
 export * from './sortCollection';
