@@ -13,6 +13,7 @@
 * Handle text wrapping issue in columns of the job profile results list (UIDATIMP-190)
 * Implement caret actions and items selection for job profiles (UIDATIMP-12)
 * Add status check for failed backend responses on the UI (UIDATIMP-189)
+* Create Log button in the jobs log list for showing the resulting SRS JSON document (UIDATIMP-187)
 
 ## [1.1.0](https://github.com/folio-org/ui-data-import/tree/v1.1.0) (2019-03-22)
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { intlShape } from 'react-intl';
+import PropTypes from 'prop-types';
 
 import { MultiColumnList } from '@folio/stripes/components';
 
@@ -20,6 +20,9 @@ export class JobLogs extends Component {
     onSort: PropTypes.func.isRequired,
     hasLoaded: PropTypes.bool,
     contentData: PropTypes.arrayOf(jobLogPropTypes),
+    match: PropTypes.shape({
+      path: PropTypes.string.isRequired,
+    }).isRequired,
   };
 
   static defaultProps = {
@@ -34,6 +37,7 @@ export class JobLogs extends Component {
 
     this.columnMapping = {
       fileName: formatMessage({ id: 'ui-data-import.fileName' }),
+      log: '',
       jobProfileName: formatMessage({ id: 'ui-data-import.jobProfileName' }),
       jobExecutionHrId: formatMessage({ id: 'ui-data-import.jobExecutionHrId' }),
       completedDate: formatMessage({ id: 'ui-data-import.jobCompletedDate' }),
@@ -42,11 +46,14 @@ export class JobLogs extends Component {
 
     this.visibleColumns = [
       'fileName',
+      'log',
       'jobProfileName',
       'jobExecutionHrId',
       'completedDate',
       'runBy',
     ];
+
+    this.columnWidths = { log: 80 };
   }
 
   render() {
@@ -75,6 +82,7 @@ export class JobLogs extends Component {
         sortDirection={sortDirection}
         autosize
         onHeaderClick={onSort}
+        columnWidths={this.columnWidths}
       />
     );
   }
