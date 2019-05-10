@@ -324,7 +324,7 @@ export class JobProfiles extends Component {
                       role="button"
                       tabIndex="0"
                       className={sharedCss.selectableCellButton}
-                      data-test-select-all
+                      data-test-select-all-checkbox
                       onClick={e => e.stopPropagation()}
                     >
                       <Checkbox
