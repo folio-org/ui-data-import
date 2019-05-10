@@ -120,6 +120,6 @@
     "itemsCount": "({count, number} {count, plural, one {مادة} other {مادة}})",
     "selectAll": "تحديد الكل",
     "deselectAll": "إلغاء تحديد الكل",
-    "log": "Log",
+    "log": "سِجل",
     "totalRecords": "Total records:"
 }
