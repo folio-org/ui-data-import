@@ -1,7 +1,4 @@
-import {
-  React,
-  Fragment,
-} from 'react';
+import React, { Fragment } from 'react';
 import HighLight from 'react-highlighter';
 import {
   get,
@@ -15,7 +12,12 @@ import {
 } from '@folio/stripes/components';
 
 import { capitalize } from '../../utils';
-import { ENTITY_CONFIGS, STRING_CAPITALIZATION_MODES } from '../../utils/constants';
+import {
+  HTML_LANG_DIRECTIONS,
+  ENTITY_CONFIGS,
+  STRING_CAPITALIZATION_MODES,
+  STRING_CAPITALIZATION_EXCLUSIONS,
+} from '../../utils/constants';
 
 import {
   DateFormatter,
@@ -61,7 +63,8 @@ export const resultsFormatter = searchTerm => ({
     } = record;
     const { RECORD_TYPES } = ENTITY_CONFIGS.MATCH_PROFILES;
 
-    const fieldMatched = (fieldMarc || fieldNonMarc || existingStaticValueType).replace('_', ' ');
+    const fieldSource = (field || existingRecordType).replace(/_/g, ' ');
+    const fieldMatched = (fieldMarc || fieldNonMarc || existingStaticValueType).replace(/_/g, ' ');
 
     return (
       <AppIcon
@@ -70,7 +73,7 @@ export const resultsFormatter = searchTerm => ({
         iconKey={RECORD_TYPES[existingRecordType].icon}
         className={sharedCss.cellAppIcon}
       >
-        {document.dir === 'ltr' &&
+        {document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT &&
           <Fragment>
             <HighLight
               search={searchTerm}
@@ -78,38 +81,38 @@ export const resultsFormatter = searchTerm => ({
             >
               {RECORD_TYPES[existingRecordType].caption}
             </HighLight>
-            &middot;
+            &nbsp;&middot;&nbsp;
             <HighLight
               search={searchTerm}
               className={sharedCss.container}
             >
-              {field || existingRecordType}
+              {capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
             </HighLight>
-            &rarr;
+            &nbsp;&rarr;&nbsp;
             <HighLight
               search={searchTerm}
               className={sharedCss.container}
             >
-              {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS)}
+              {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
             </HighLight>
           </Fragment>
         }
-        {document.dir === 'rtl' &&
+        {document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT &&
           <Fragment>
             <HighLight
               search={searchTerm}
               className={sharedCss.container}
             >
-              {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS)}
+              {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
             </HighLight>
-            &larr;
+            &nbsp;&larr;&nbsp;
             <HighLight
               search={searchTerm}
               className={sharedCss.container}
             >
-              {field || existingRecordType}
+              {capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
             </HighLight>
-            &middot;
+            &nbsp;&middot;&nbsp;
             <HighLight
               search={searchTerm}
               className={sharedCss.container}

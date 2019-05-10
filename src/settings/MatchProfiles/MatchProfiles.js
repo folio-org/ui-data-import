@@ -63,8 +63,9 @@ export class MatchProfiles extends Component {
             '(name="%{query.query}*" OR tags.tagList="%{query.query}*")',
             {
               name: 'name',
-              updated: 'metadata.updatedDate',
+              match: 'existingRecordType field fieldMarc fieldNonMarc existingStaticValueType',
               tags: 'tags.tagList',
+              updated: 'metadata.updatedDate',
               updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
             },
             [],
@@ -219,8 +220,8 @@ export class MatchProfiles extends Component {
                   updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
                 }}
                 columnWidths={this.columnWidths}
-                // ViewRecordComponent={ViewMatchProfile}
-                // EditRecordComponent={MatchProfilesForm}
+                ViewRecordComponent={ViewMatchProfile}
+                EditRecordComponent={MatchProfilesForm}
                 newRecordInitialValues={this.defaultNewRecordInitialValues}
                 editRecordInitialValues={selectedMatchProfile.record}
                 editRecordInitialValuesAreLoaded={selectedMatchProfile.hasLoaded}

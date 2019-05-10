@@ -62,9 +62,49 @@
     "hasSettings": true,
     "icons": [
       {
+        "name": "holdings",
+        "alt": "eHoldings",
+        "title": "eHoldings"
+      },
+      {
+        "name": "orders",
+        "alt": "Orders",
+        "title": "Orders"
+      },
+      {
+        "name": "invoices",
+        "alt": "Invoices",
+        "title": "Invoices"
+      },
+      {
+        "name": "instances",
+        "alt": "Instances",
+        "title": "Instances"
+      },
+      {
+        "name": "items",
+        "alt": "Items",
+        "title": "Items"
+      },
+      {
         "name": "jobProfiles",
         "alt": "Job Profiles",
         "title": "Job Profiles"
+      },
+      {
+        "name": "marcAuthorities",
+        "alt": "MARC Authorities",
+        "title": "MARC Authorities"
+      },
+      {
+        "name": "marcBibs",
+        "alt": "MARC Bibliographics",
+        "title": "MARC Bibliographics"
+      },
+      {
+        "name": "marcHoldings",
+        "alt": "MARC Holdings",
+        "title": "MARC Holdings"
       },
       {
         "name": "matchProfiles",

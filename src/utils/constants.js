@@ -7,6 +7,15 @@ export const STRING_CAPITALIZATION_MODES = {
   WORDS: 2,
 };
 
+export const STRING_CAPITALIZATION_EXCLUSIONS = [
+  'ID', 'HRID', 'MARC', 'ISBN', 'PO', 'TBD',
+];
+
+export const HTML_LANG_DIRECTIONS = {
+  LEFT_TO_RIGHT: 'ltr',
+  RIGHT_TO_LEFT: 'rtl',
+};
+
 export const SORT_TYPES = {
   ASCENDING: 'ascending',
   DESCENDING: 'descending',
