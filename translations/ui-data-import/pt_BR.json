@@ -113,5 +113,13 @@
     "settings.save.error.network": "Registro não foi salvo: {description}",
     "settings.jobProfiles.jobsUsingThisProfile": "Trabalhos usando este perfil",
     "settings.jobProfiles.jobID": "ID do trabalho",
-    "duplicate": "Duplicar"
+    "duplicate": "Duplicar",
+    "modal.jobProfile.delete.header": "Excluir o perfil do trabalho \"{name}\"?",
+    "modal.jobProfile.delete.message": "Excluir perfil do trabalho?",
+    "exportSelected": "Exportar selecionados",
+    "itemsCount": "({count, number} {count, plural, one {item} other {itens}})",
+    "selectAll": "Selecionar tudo",
+    "deselectAll": "Desmarcar todos",
+    "log": "Log",
+    "totalRecords": "Total de registros:"
 }

@@ -113,5 +113,13 @@
     "settings.save.error.network": "Record not saved: {description}",
     "settings.jobProfiles.jobsUsingThisProfile": "Jobs using this profile",
     "settings.jobProfiles.jobID": "Job ID",
-    "duplicate": "Duplicate"
+    "duplicate": "Duplicate",
+    "modal.jobProfile.delete.header": "Delete \"{name}\" job profile?",
+    "modal.jobProfile.delete.message": "Delete job profile?",
+    "exportSelected": "Export selected",
+    "itemsCount": "({count, number} {count, plural, one {item} other {items}})",
+    "selectAll": "Select all",
+    "deselectAll": "Deselect all",
+    "log": "Log",
+    "totalRecords": "Total records:"
 }
