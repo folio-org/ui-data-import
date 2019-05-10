@@ -1,6 +1,8 @@
 # Change history for ui-data-import
 
-## 1.2.0 (IN-PROGRESS)
+## 1.3.0 (IN-PROGRESS)
+
+## [1.2.0](https://github.com/folio-org/ui-data-import/tree/v1.2.0) (2019-05-10)
 
 * Create data import settings page's 3rd pane for Jobs Profiles (UIDATIMP-6)
 * Add job profile form (UIDATIMP-132)
@@ -8,7 +10,10 @@
 * Implement search job profiles feature (UIDATIMP-164)
 * Implement save the new job profile feature (UIDATIMP-136)
 * Implement job profile editing feature (UIDATIMP-137)
+* Implement details view for job profiles feature (UIDATIMP-133)
+* Align wording for the create new job profile submit button (UIDATIMP-179)
 * Implement job profile duplication feature (UIDATIMP-134)
+* Handle text wrapping issue in columns of the job profile results list (UIDATIMP-190)
 * Implement job profile deletion feature (UIDATIMP-173)
 * Handle text wrapping issue in columns of the job profile results list (UIDATIMP-190)
 * Implement caret actions and items selection for job profiles (UIDATIMP-12)

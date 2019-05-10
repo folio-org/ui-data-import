@@ -1,4 +1,7 @@
-import { FILE_STATUSES, UPLOAD_DEFINTION_STATUSES } from './constants';
+import {
+  FILE_STATUSES,
+  UPLOAD_DEFINITION_STATUSES,
+} from './constants';
 import {
   createOkapiHeaders,
   createUrl,
@@ -91,7 +94,7 @@ export const deleteFile = async (url, headers) => {
 
 export const getLatestUploadDefinition = async ({ url, okapi }) => {
   const draftJobsUrl = createUrl(url, {
-    query: `(status==("${UPLOAD_DEFINTION_STATUSES.NEW}" OR "${UPLOAD_DEFINTION_STATUSES.IN_PROGRESS}" OR "${UPLOAD_DEFINTION_STATUSES.LOADED}")) sortBy createdDate/sort.descending`,
+    query: `(status==("${UPLOAD_DEFINITION_STATUSES.NEW}" OR "${UPLOAD_DEFINITION_STATUSES.IN_PROGRESS}" OR "${UPLOAD_DEFINITION_STATUSES.LOADED}")) sortBy createdDate/sort.descending`,
     limit: 1,
   });
 
