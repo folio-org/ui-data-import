@@ -113,5 +113,13 @@
     "settings.save.error.network": "Registro no guardado: {descripción}",
     "settings.jobProfiles.jobsUsingThisProfile": "Hay procesos que están usando este perfil",
     "settings.jobProfiles.jobID": "ID del proceso",
-    "duplicate": "Duplicar"
+    "duplicate": "Duplicar",
+    "modal.jobProfile.delete.header": "Delete \"{name}\" job profile?",
+    "modal.jobProfile.delete.message": "Delete job profile?",
+    "exportSelected": "Export selected",
+    "itemsCount": "({count, number} {count, plural, one {item} other {items}})",
+    "selectAll": "Select all",
+    "deselectAll": "Deselect all",
+    "log": "Log",
+    "totalRecords": "Total records:"
 }
