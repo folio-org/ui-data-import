@@ -68,7 +68,7 @@ export class ViewJobLog extends Component {
     return (
       <div id="view-job-log-test">
         <div id="view-total-records-test">
-          <FormattedMessage id="ui-data-import.totalRecords" /> {totalRecords}
+          <FormattedMessage id="ui-data-import.totalRecords" />: {totalRecords}
         </div>
         <pre id="job-log-json">
           {this.formatSourceRecords(sourceRecords)}

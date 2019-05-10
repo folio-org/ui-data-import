@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -95,7 +95,7 @@
     "okapiInterfaces": {
       "data-import": "3.0",
       "source-record-manager": "2.0",
-      "data-import-converter-storage": "1.0"
+      "data-import-converter-storage": "1.1"
     },
     "permissionSets": [
       {
@@ -108,7 +108,8 @@
           "data-import.uploaddefinitions.post",
           "data-import.uploaddefinitions.delete",
           "data-import.uploaddefinitions.files.delete",
-          "data-import.upload.file.post"
+          "data-import.upload.file.post",
+          "source-storage.sourceRecords.get"
         ],
         "visible": true
       },
