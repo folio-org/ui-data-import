@@ -29,14 +29,15 @@ import css from './MatchProfiles.css';
 
 export const resultsFormatter = searchTerm => ({
   selected: record => (
-    <button
-      type="button"
+    <div // eslint-disable-line jsx-a11y/click-events-have-key-events
+      tabIndex="0"
+      role="button"
       className={sharedCss.selectableCellButton}
       data-test-select-item
       onClick={e => e.stopPropagation()}
     >
       <Checkbox name={`selected-${record.id}`} />
-    </button>
+    </div>
   ),
   name: record => (
     <AppIcon

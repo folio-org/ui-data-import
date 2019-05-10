@@ -204,14 +204,15 @@ export class MatchProfiles extends Component {
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   selected: (
-                    <button
-                      type="button"
+                    <div // eslint-disable-line jsx-a11y/click-events-have-key-events
+                      role="button"
+                      tabIndex="0"
                       className={sharedCss.selectableCellButton}
-                      data-test-select-all
+                      data-test-select-all-checkbox
                       onClick={e => e.stopPropagation()}
                     >
                       <Checkbox name="selected-all" />
-                    </button>
+                    </div>
                   ),
                   name: intl.formatMessage({ id: 'ui-data-import.name' }),
                   match: intl.formatMessage({ id: 'ui-data-import.match' }),

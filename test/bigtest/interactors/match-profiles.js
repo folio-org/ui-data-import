@@ -26,8 +26,8 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 
 @interactor class MatchProfilesInteractor {
   list = new MultiColumnListInteractor('#match-profiles-list');
-  selectAllCheckBox = new CheckboxInteractor('[data-test-match-profiles] [data-test-select-all]');
-  checkBoxes = collection('[data-test-match-profiles] [data-test-select-item]', CheckboxInteractor);
+  selectAllCheckBox = new CheckboxInteractor('[data-test-select-all-checkbox]');
+  checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);
 }
 
-export const matchProfiles = new MatchProfilesInteractor('[data-test-job-profiles]');
+export const matchProfiles = new MatchProfilesInteractor();
