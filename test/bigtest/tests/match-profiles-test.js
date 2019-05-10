@@ -81,7 +81,7 @@ describe('Match profiles', () => {
         expect(matchProfiles.checkBoxes(0).isChecked).to.be.true;
       });
     });
-    
+
     describe('has correctly built Match column', () => {
       describe('when current language is LTR', () => {
         beforeEach(async () => {
@@ -89,75 +89,75 @@ describe('Match profiles', () => {
         });
 
         it('for record #1', () => {
-          expect(matchProfiles.list.rows(0).cells(2).content).to.equal('Order · 990 → PO Line Number');  
+          expect(matchProfiles.list.rows(0).cells(2).content).to.equal('Order&nbsp;&middot;&nbsp;990&nbsp;&rarr;&nbsp;PO Line Number');
         });
-        
+
         it('for record #2', () => {
-          expect(matchProfiles.list.rows(1).cells(2).content).to.equal('Instance · 020 → ISBN');  
+          expect(matchProfiles.list.rows(1).cells(2).content).to.equal('Instance&nbsp;&middot;&nbsp;020&nbsp;&rarr;&nbsp;ISBN');
         });
-        
+
         it('for record #3', () => {
-          expect(matchProfiles.list.rows(2).cells(2).content).to.equal('MARC Bibliographic · 935 → 035');  
+          expect(matchProfiles.list.rows(2).cells(2).content).to.equal('MARC Bibliographic&nbsp;&middot;&nbsp;935&nbsp;&rarr;&nbsp;035');
         });
-        
+
         it('for record #4', () => {
-          expect(matchProfiles.list.rows(3).cells(2).content).to.equal('Instance · 001 → Instance HRID');
+          expect(matchProfiles.list.rows(3).cells(2).content).to.equal('Instance&nbsp;&middot;&nbsp;001&nbsp;&rarr;&nbsp;Instance HRID');
         });
-        
+
         it('for record #5', () => {
-          expect(matchProfiles.list.rows(4).cells(2).content).to.equal('Holdings · Holdings → Location Code');
+          expect(matchProfiles.list.rows(4).cells(2).content).to.equal('Holdings&nbsp;&middot;&nbsp;Holdings&nbsp;&rarr;&nbsp;Location Code');
         });
-        
+
         it('for record #6', () => {
-          expect(matchProfiles.list.rows(5).cells(2).content).to.equal('MARC Authority · 010 → 010');
+          expect(matchProfiles.list.rows(5).cells(2).content).to.equal('MARC Authority&nbsp;&middot;&nbsp;010&nbsp;&rarr;&nbsp;010');
         });
-        
+
         it('for record #7', () => {
-          expect(matchProfiles.list.rows(6).cells(2).content).to.equal('MARC Bibliographic · 035 → 035');
+          expect(matchProfiles.list.rows(6).cells(2).content).to.equal('MARC Bibliographic&nbsp;&middot;&nbsp;035&nbsp;&rarr;&nbsp;035');
         });
-        
+
         it('for record #8', () => {
-          expect(matchProfiles.list.rows(7).cells(2).content).to.equal('Order · TBD → PO Line Number');
+          expect(matchProfiles.list.rows(7).cells(2).content).to.equal('Order&nbsp;&middot;&nbsp;TBD&nbsp;&rarr;&nbsp;PO Line Number');
         });
-      })
-      
+      });
+
       describe('when current language is RTL', () => {
         beforeEach(async () => {
           document.dir = 'rtl';
         });
 
         it('for record #1', () => {
-          expect(matchProfiles.list.rows(0).cells(2).content).to.equal('PO Line Number ← 990 · Order');  
+          expect(matchProfiles.list.rows(0).cells(2).content).to.equal('PO Line Number&nbsp;&larr;&nbsp;990&nbsp;&middot;&nbsp;Order');
         });
-        
+
         it('for record #2', () => {
-          expect(matchProfiles.list.rows(1).cells(2).content).to.equal('ISBN ← 020 · Instance');    
+          expect(matchProfiles.list.rows(1).cells(2).content).to.equal('ISBN&nbsp;&larr;&nbsp;020&nbsp;&middot;&nbsp;Instance');
         });
-        
+
         it('for record #3', () => {
-          expect(matchProfiles.list.rows(2).cells(2).content).to.equal('035 ← 935 · MARC Bibliographic');  
+          expect(matchProfiles.list.rows(2).cells(2).content).to.equal('035&nbsp;&larr;&nbsp;935&nbsp;&middot;&nbsp;MARC Bibliographic');
         });
-        
+
         it('for record #4', () => {
-          expect(matchProfiles.list.rows(3).cells(2).content).to.equal('Instance HRID ← 001 · Instance');
+          expect(matchProfiles.list.rows(3).cells(2).content).to.equal('Instance HRID&nbsp;&larr;&nbsp;001&nbsp;&middot;&nbsp;Instance');
         });
-        
+
         it('for record #5', () => {
-          expect(matchProfiles.list.rows(4).cells(2).content).to.equal('Location Code ← Holdings · Holdings');
+          expect(matchProfiles.list.rows(4).cells(2).content).to.equal('Location Code&nbsp;&larr;&nbsp;Holdings&nbsp;&middot;&nbsp;Holdings');
         });
-        
+
         it('for record #6', () => {
-          expect(matchProfiles.list.rows(5).cells(2).content).to.equal('010 ← 010 · MARC Authority');
+          expect(matchProfiles.list.rows(5).cells(2).content).to.equal('010&nbsp;&larr;&nbsp;010&nbsp;&middot;&nbsp;MARC Authority');
         });
-        
+
         it('for record #7', () => {
-          expect(matchProfiles.list.rows(6).cells(2).content).to.equal('035 ← 035 · MARC Bibliographic');
+          expect(matchProfiles.list.rows(6).cells(2).content).to.equal('035&nbsp;&larr;&nbsp;035&nbsp;&middot;&nbsp;MARC Bibliographic');
         });
-        
+
         it('for record #8', () => {
-          expect(matchProfiles.list.rows(7).cells(2).content).to.equal('PO Line Number ← TBD · Order');
+          expect(matchProfiles.list.rows(7).cells(2).content).to.equal('PO Line Number&nbsp;&larr;&nbsp;TBD&nbsp;&middot;&nbsp;Order');
         });
-      })
+      });
     });
 
     describe('opens job profile details', () => {

@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { Response } from '@bigtest/mirage';
 import {
   describe,
   beforeEach,
@@ -8,29 +7,9 @@ import {
 
 import { setupApplication } from '../helpers';
 import {
-  matchProfileForm,
   matchProfileDetails,
   matchProfiles,
 } from '../interactors';
-
-async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
-  const {
-    response = {},
-    status = 500,
-    headers = {},
-  } = responseData;
-
-  const url = `/data-import-profiles/matchProfiles${
-    method === 'put'
-      ? '/:id'
-      : ''
-  }`;
-
-  server[method](url, () => new Response(status, headers, response));
-  await matchProfileForm.nameFiled.fillAndBlur('Changed title');
-  await matchProfileForm.matchField.selectAndBlur('Field');
-  await matchProfileForm.submitFormButton.click();
-}
 
 describe('Match Profile View', () => {
   setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users'] });

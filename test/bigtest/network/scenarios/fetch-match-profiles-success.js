@@ -1,4 +1,3 @@
-import { SYSTEM_USER_NAME } from '../../../../src/utils/constants';
 
 export default server => {
   server.create('match-profile', {
