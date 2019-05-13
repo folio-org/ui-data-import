@@ -6,7 +6,7 @@ const {
   FIRST,
 } = STRING_CAPITALIZATION_MODES;
 
-export const capitalize = (str, mode, exclude, splitter = ' ') => {
+export const capitalize = (str, mode, excluded = [], splitter = ' ') => {
   switch (mode) {
     case FIRST:
       return `${str.charAt(0).toLocaleUpperCase()}${str.substr(1).toLocaleLowerCase()}`;
@@ -14,7 +14,7 @@ export const capitalize = (str, mode, exclude, splitter = ' ') => {
       return str
         .split(splitter)
         .map(s => {
-          if (exclude && exclude.length && exclude.indexOf(s) >= 0) {
+          if (excluded.includes(s)) {
             return s;
           }
 

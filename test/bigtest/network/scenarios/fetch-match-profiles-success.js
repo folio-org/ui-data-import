@@ -18,7 +18,7 @@ export default server => {
     name: 'MARC Identifiers',
     description: 'Try to match on ISBN, else create new record',
     tags: {
-      tagList: ['isbn'],
+      tagList: [],
     },
     existingRecordType: 'INSTANCE',
     incomingDataValueType: 'VALUE_FROM_INCOMING_RECORD',
