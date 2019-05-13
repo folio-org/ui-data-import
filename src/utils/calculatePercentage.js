@@ -1,3 +1,10 @@
+/**
+ * Calculates number percentage between 2Numbers
+ *
+ * @param {number} current
+ * @param {number} total
+ * @returns {number}
+ */
 export function calculatePercentage(current, total) {
   return Math.floor((current / total) * 100);
 }

@@ -6,6 +6,17 @@ const {
   FIRST,
 } = STRING_CAPITALIZATION_MODES;
 
+/**
+ * Capitalizes strings in several modes.
+ * Recognizes words in the string using splitter char(s).
+ * Omits string's words processing listed in excluded list.
+ *
+ * @param {string} str
+ * @param {number} mode
+ * @param {array} excluded
+ * @param {string} splitter
+ * @returns {string}
+ */
 export const capitalize = (str, mode, excluded = [], splitter = ' ') => {
   switch (mode) {
     case FIRST:
