@@ -11,6 +11,7 @@ import {
   matchProfiles,
   matchProfileDetails,
 } from '../interactors';
+import { htmlDecode } from '../../../src/utils';
 
 describe('Match profiles', () => {
   setupApplication({ scenarios: ['fetch-match-profiles-success'] });
@@ -89,35 +90,35 @@ describe('Match profiles', () => {
         });
 
         it('for record #1', () => {
-          expect(matchProfiles.list.rows(0).cells(2).content).to.equal(JSON.parse('Order&nbsp;&middot;&nbsp;990&nbsp;&rarr;&nbsp;PO Line Number'));
+          expect(matchProfiles.list.rows(0).cells(2).content).to.equal(htmlDecode('Order&nbsp;&middot;&nbsp;990&nbsp;&rarr;&nbsp;PO Line Number'));
         });
 
         it('for record #2', () => {
-          expect(matchProfiles.list.rows(1).cells(2).content).to.equal(JSON.parse('Instance&nbsp;&middot;&nbsp;020&nbsp;&rarr;&nbsp;ISBN'));
+          expect(matchProfiles.list.rows(1).cells(2).content).to.equal(htmlDecode('Instance&nbsp;&middot;&nbsp;020&nbsp;&rarr;&nbsp;ISBN'));
         });
 
         it('for record #3', () => {
-          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(JSON.parse('MARC Bibliographic&nbsp;&middot;&nbsp;935&nbsp;&rarr;&nbsp;035'));
+          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('MARC Bibliographic&nbsp;&middot;&nbsp;935&nbsp;&rarr;&nbsp;035'));
         });
 
         it('for record #4', () => {
-          expect(matchProfiles.list.rows(3).cells(2).content).to.equal(JSON.parse('Instance&nbsp;&middot;&nbsp;001&nbsp;&rarr;&nbsp;Instance HRID'));
+          expect(matchProfiles.list.rows(3).cells(2).content).to.equal(htmlDecode('Instance&nbsp;&middot;&nbsp;001&nbsp;&rarr;&nbsp;Instance HRID'));
         });
 
         it('for record #5', () => {
-          expect(matchProfiles.list.rows(4).cells(2).content).to.equal(JSON.parse('Holdings&nbsp;&middot;&nbsp;Holdings&nbsp;&rarr;&nbsp;Location Code'));
+          expect(matchProfiles.list.rows(4).cells(2).content).to.equal(htmlDecode('Holdings&nbsp;&middot;&nbsp;Holdings&nbsp;&rarr;&nbsp;Location Code'));
         });
 
         it('for record #6', () => {
-          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(JSON.parse('MARC Authority&nbsp;&middot;&nbsp;010&nbsp;&rarr;&nbsp;010'));
+          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(htmlDecode('MARC Authority&nbsp;&middot;&nbsp;010&nbsp;&rarr;&nbsp;010'));
         });
 
         it('for record #7', () => {
-          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(JSON.parse('MARC Bibliographic&nbsp;&middot;&nbsp;035&nbsp;&rarr;&nbsp;035'));
+          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('MARC Bibliographic&nbsp;&middot;&nbsp;035&nbsp;&rarr;&nbsp;035'));
         });
 
         it('for record #8', () => {
-          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(JSON.parse('Order&nbsp;&middot;&nbsp;TBD&nbsp;&rarr;&nbsp;PO Line Number'));
+          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(htmlDecode('Order&nbsp;&middot;&nbsp;TBD&nbsp;&rarr;&nbsp;PO Line Number'));
         });
       });
 
@@ -127,35 +128,35 @@ describe('Match profiles', () => {
         });
 
         it('for record #1', () => {
-          expect(matchProfiles.list.rows(0).cells(2).content).to.equal(JSON.parse('PO Line Number&nbsp;&larr;&nbsp;990&nbsp;&middot;&nbsp;Order'));
+          expect(matchProfiles.list.rows(0).cells(2).content).to.equal(htmlDecode('PO Line Number&nbsp;&larr;&nbsp;990&nbsp;&middot;&nbsp;Order'));
         });
 
         it('for record #2', () => {
-          expect(matchProfiles.list.rows(1).cells(2).content).to.equal(JSON.parse('ISBN&nbsp;&larr;&nbsp;020&nbsp;&middot;&nbsp;Instance'));
+          expect(matchProfiles.list.rows(1).cells(2).content).to.equal(htmlDecode('ISBN&nbsp;&larr;&nbsp;020&nbsp;&middot;&nbsp;Instance'));
         });
 
         it('for record #3', () => {
-          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(JSON.parse('035&nbsp;&larr;&nbsp;935&nbsp;&middot;&nbsp;MARC Bibliographic'));
+          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('035&nbsp;&larr;&nbsp;935&nbsp;&middot;&nbsp;MARC Bibliographic'));
         });
 
         it('for record #4', () => {
-          expect(matchProfiles.list.rows(3).cells(2).content).to.equal(JSON.parse('Instance HRID&nbsp;&larr;&nbsp;001&nbsp;&middot;&nbsp;Instance'));
+          expect(matchProfiles.list.rows(3).cells(2).content).to.equal(htmlDecode('Instance HRID&nbsp;&larr;&nbsp;001&nbsp;&middot;&nbsp;Instance'));
         });
 
         it('for record #5', () => {
-          expect(matchProfiles.list.rows(4).cells(2).content).to.equal(JSON.parse('Location Code&nbsp;&larr;&nbsp;Holdings&nbsp;&middot;&nbsp;Holdings'));
+          expect(matchProfiles.list.rows(4).cells(2).content).to.equal(htmlDecode('Location Code&nbsp;&larr;&nbsp;Holdings&nbsp;&middot;&nbsp;Holdings'));
         });
 
         it('for record #6', () => {
-          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(JSON.parse('010&nbsp;&larr;&nbsp;010&nbsp;&middot;&nbsp;MARC Authority'));
+          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(htmlDecode('010&nbsp;&larr;&nbsp;010&nbsp;&middot;&nbsp;MARC Authority'));
         });
 
         it('for record #7', () => {
-          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(JSON.parse('035&nbsp;&larr;&nbsp;035&nbsp;&middot;&nbsp;MARC Bibliographic'));
+          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('035&nbsp;&larr;&nbsp;035&nbsp;&middot;&nbsp;MARC Bibliographic'));
         });
 
         it('for record #8', () => {
-          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(JSON.parse('PO Line Number&nbsp;&larr;&nbsp;TBD&nbsp;&middot;&nbsp;Order'));
+          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(htmlDecode('PO Line Number&nbsp;&larr;&nbsp;TBD&nbsp;&middot;&nbsp;Order'));
         });
       });
     });
