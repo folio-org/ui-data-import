@@ -112,8 +112,8 @@ export default server => {
     field: 'TBD',
     incomingStaticValueType: '',
     fieldMarc: '',
-    fieldNonMarc: 'PO_LINE_NUMBER',
-    existingStaticValueType: '',
+    fieldNonMarc: '',
+    existingStaticValueType: 'PO_LINE_NUMBER',
   });
 
   server.get('/data-import-profiles/matchProfiles');
