@@ -5,7 +5,10 @@ import {
   isEmpty,
 } from 'lodash';
 
-import { AppIcon } from '@folio/stripes/core';
+import {
+  AppIcon,
+  IntlConsumer,
+} from '@folio/stripes/core';
 import {
   Checkbox,
   Icon,
@@ -68,61 +71,65 @@ export const resultsFormatter = searchTerm => ({
     const fieldMatched = (fieldMarc || fieldNonMarc || existingStaticValueType).replace(/_/g, ' ');
 
     return (
-      <AppIcon
-        size="small"
-        app="data-import"
-        iconKey={RECORD_TYPES[existingRecordType].icon}
-        className={sharedCss.cellAppIcon}
-      >
-        {document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT &&
-          <Fragment>
-            <HighLight
-              search={searchTerm}
-              className={sharedCss.container}
-            >
-              {RECORD_TYPES[existingRecordType].caption}
-            </HighLight>
-            &nbsp;&middot;&nbsp;
-            <HighLight
-              search={searchTerm}
-              className={sharedCss.container}
-            >
-              {capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
-            </HighLight>
-            &nbsp;&rarr;&nbsp;
-            <HighLight
-              search={searchTerm}
-              className={sharedCss.container}
-            >
-              {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
-            </HighLight>
-          </Fragment>
-        }
-        {document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT &&
-          <Fragment>
-            <HighLight
-              search={searchTerm}
-              className={sharedCss.container}
-            >
-              {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
-            </HighLight>
-            &nbsp;&larr;&nbsp;
-            <HighLight
-              search={searchTerm}
-              className={sharedCss.container}
-            >
-              {capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
-            </HighLight>
-            &nbsp;&middot;&nbsp;
-            <HighLight
-              search={searchTerm}
-              className={sharedCss.container}
-            >
-              {RECORD_TYPES[existingRecordType].caption}
-            </HighLight>
-          </Fragment>
-        }
-      </AppIcon>
+      <IntlConsumer>
+        {intl => (
+          <AppIcon
+            size="small"
+            app="data-import"
+            iconKey={RECORD_TYPES[existingRecordType].icon}
+            className={sharedCss.cellAppIcon}
+          >
+            {document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT &&
+              <Fragment>
+                <HighLight
+                  search={searchTerm}
+                  className={sharedCss.container}
+                >
+                  {intl.formatMessage({ id: RECORD_TYPES[existingRecordType].caption })}
+                </HighLight>
+                &nbsp;&middot;&nbsp;
+                <HighLight
+                  search={searchTerm}
+                  className={sharedCss.container}
+                >
+                  {capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
+                </HighLight>
+                &nbsp;&rarr;&nbsp;
+                <HighLight
+                  search={searchTerm}
+                  className={sharedCss.container}
+                >
+                  {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
+                </HighLight>
+              </Fragment>
+            }
+            {document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT &&
+              <Fragment>
+                <HighLight
+                  search={searchTerm}
+                  className={sharedCss.container}
+                >
+                  {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
+                </HighLight>
+                &nbsp;&larr;&nbsp;
+                <HighLight
+                  search={searchTerm}
+                  className={sharedCss.container}
+                >
+                  {capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
+                </HighLight>
+                &nbsp;&middot;&nbsp;
+                <HighLight
+                  search={searchTerm}
+                  className={sharedCss.container}
+                >
+                  {intl.formatMessage({ id: RECORD_TYPES[existingRecordType].caption })}
+                </HighLight>
+              </Fragment>
+            }
+          </AppIcon>
+        )}
+      </IntlConsumer>
     );
   },
   tags: record => {

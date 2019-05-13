@@ -20,10 +20,4 @@ export default function config() {
     uploadDefinitions: [],
     totalRecords: 0,
   });
-  /*
-  this.get('/data-import/matchProfiles', {
-    matchProfiles: [],
-    totalRecords: 0,
-  });
-  */
 }

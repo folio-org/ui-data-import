@@ -61,35 +61,35 @@ export const ENTITY_CONFIGS = {
   MATCH_PROFILES: {
     RECORD_TYPES: {
       ORDER: {
-        caption: 'Order',
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.order',
         icon: 'orders',
       },
       INVOICE: {
-        caption: 'Invoice',
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.invoice',
         icon: 'invoices',
       },
       ITEM: {
-        caption: 'Item',
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.item',
         icon: 'items',
       },
       INSTANCE: {
-        caption: 'Instance',
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.instance',
         icon: 'instances',
       },
       HOLDINGS: {
-        caption: 'Holdings',
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.holding',
         icon: 'holdings',
       },
       MARC_BIBLIOGRAPHIC: {
-        caption: 'MARC Bibliographic',
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.marc-bib',
         icon: 'marcBibs',
       },
       MARC_AUTHORITY: {
-        caption: 'MARC Authority',
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.marc-auth',
         icon: 'marcAuthorities',
       },
       MARC_HOLDINGS: {
-        caption: 'MARC Holdings',
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.marc-hold',
         icon: 'marcHoldings',
       },
     },

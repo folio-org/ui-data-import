@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   get,
@@ -15,10 +14,7 @@ import {
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 import { Checkbox } from '@folio/stripes/components';
 
-import {
-  MatchProfilesForm,
-  SearchAndSort,
-} from '../../components';
+import { SearchAndSort } from '../../components';
 import { ViewMatchProfile } from './ViewMatchProfile';
 import { SettingPage } from '../SettingPage';
 import { resultsFormatter } from './resultsFormatter';
@@ -121,44 +117,7 @@ export class MatchProfiles extends Component {
   defaultNewRecordInitialValues = {
     name: '',
     description: '',
-    dataType: '',
   };
-
-  getDeleteRecordSuccessfulMessage(record) {
-    return (
-      <FormattedMessage
-        id="ui-data-import.settings.matchProfiles.action.success"
-        values={{
-          name: record.name,
-          action: (
-            <strong>
-              <FormattedMessage id="ui-data-import.deleted" />
-            </strong>
-          ),
-        }}
-      />
-    );
-  }
-
-  getDeleteRecordErrorMessage(record) {
-    return (
-      <FormattedMessage
-        id="ui-data-import.settings.matchProfiles.action.error"
-        values={{
-          name: record.name,
-          action: (
-            <strong>
-              <FormattedMessage id="ui-data-import.deleted" />
-            </strong>
-          ),
-        }}
-      />
-    );
-  }
-
-  getRecordName(record) {
-    return record.name;
-  }
 
   render() {
     const {
@@ -222,7 +181,7 @@ export class MatchProfiles extends Component {
                 }}
                 columnWidths={this.columnWidths}
                 ViewRecordComponent={ViewMatchProfile}
-                EditRecordComponent={MatchProfilesForm}
+                // EditRecordComponent={MatchProfilesForm}
                 newRecordInitialValues={this.defaultNewRecordInitialValues}
                 editRecordInitialValues={selectedMatchProfile.record}
                 editRecordInitialValuesAreLoaded={selectedMatchProfile.hasLoaded}
