@@ -1,3 +1,4 @@
+export * from './checkbox-interactor';
 export * from './file-extensions';
 export * from './file-extension-details';
 export * from './full-screen-form';

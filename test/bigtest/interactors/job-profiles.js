@@ -1,10 +1,6 @@
 import {
   interactor,
   collection,
-  clickable,
-  blurrable,
-  value,
-  property,
   scoped,
 } from '@bigtest/interactor';
 
@@ -13,20 +9,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 
-@interactor class CheckboxInteractor {
-  static defaultScope = '[class*=checkbox---]';
-
-  clickLabel = clickable('label');
-  blurInput = blurrable('input');
-  inputValue = value('input');
-  isChecked = property('input', 'checked');
-
-  clickAndBlur() {
-    return this
-      .clickLabel()
-      .blurInput();
-  }
-}
+import { CheckboxInteractor } from './checkbox-interactor';
 
 @interactor class Dropdown {
   newJobProfileButton = new ButtonInteractor('[data-test-new-job-profile-menu-button]');

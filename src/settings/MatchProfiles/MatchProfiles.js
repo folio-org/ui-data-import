@@ -181,7 +181,6 @@ export class MatchProfiles extends Component {
                 }}
                 columnWidths={this.columnWidths}
                 ViewRecordComponent={ViewMatchProfile}
-                // EditRecordComponent={MatchProfilesForm}
                 newRecordInitialValues={this.defaultNewRecordInitialValues}
                 editRecordInitialValues={selectedMatchProfile.record}
                 editRecordInitialValuesAreLoaded={selectedMatchProfile.hasLoaded}

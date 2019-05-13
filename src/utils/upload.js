@@ -16,7 +16,7 @@ import {
 const convertBytesToKilobytes = size => Math.ceil(size / 1024);
 
 /**
- * Generates Upload Definitions body data.
+ * Generates Upload Definitions body data
  *
  * @param {array} files
  * @return {{fileDefinitions: Array}}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Pane } from '@folio/stripes/components';
 
-// TODO: view component will be developed in UIDATIMP-138
+// TODO: view component will be developed in UIDATIMP-140
 export class ViewMatchProfile extends Component {
   static manifest = Object.freeze({});
   static propTypes = { onClose: PropTypes.func.isRequired };

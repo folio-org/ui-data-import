@@ -1,6 +1,6 @@
 /**
- * Sorts 2 strings
- * Works as a sorter callback in sort() function
+ * Sorts 2 strings.
+ * Works as a sorter callback in sort() function.
  *
  * @param {string} a
  * @param {string} b
@@ -23,7 +23,7 @@ export function sortStrings(a, b) {
 
 /**
  * Sorts 2 dates.
- * Works as a sorter callback in sort() function
+ * Works as a sorter callback in sort() function.
  *
  * @param {string} a
  * @param {string} b
@@ -38,7 +38,7 @@ export function sortDates(a, b) {
 
 /**
  * Sorts 2 numbers.
- * Works as a sorter callback in sort() function
+ * Works as a sorter callback in sort() function.
  *
  * @param {number} a
  * @param {number} b

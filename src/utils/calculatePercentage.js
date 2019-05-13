@@ -1,5 +1,5 @@
 /**
- * Calculates number percentage between 2Numbers
+ * Calculates number percentage between 2 Numbers
  *
  * @param {number} current
  * @param {number} total

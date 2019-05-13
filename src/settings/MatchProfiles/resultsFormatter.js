@@ -1,18 +1,11 @@
 import React, { Fragment } from 'react';
 import HighLight from 'react-highlighter';
-import {
-  get,
-  isEmpty,
-} from 'lodash';
 
 import {
   AppIcon,
   IntlConsumer,
 } from '@folio/stripes/core';
-import {
-  Checkbox,
-  Icon,
-} from '@folio/stripes/components';
+import { Checkbox } from '@folio/stripes/components';
 
 import { capitalize } from '../../utils';
 import {
@@ -23,12 +16,12 @@ import {
 } from '../../utils/constants';
 
 import {
+  TagsFormatter,
   DateFormatter,
   UserNameFormatter,
 } from '../../components';
 
 import sharedCss from '../../shared.css';
-import css from './MatchProfiles.css';
 
 export const resultsFormatter = searchTerm => ({
   selected: record => (
@@ -132,29 +125,7 @@ export const resultsFormatter = searchTerm => ({
       </IntlConsumer>
     );
   },
-  tags: record => {
-    const tags = get(record, 'tags.tagList', []);
-
-    if (isEmpty(tags)) {
-      return '-';
-    }
-
-    return (
-      <span className={css.tags}>
-        <Icon
-          size="small"
-          icon="tag"
-          iconClassName={css.tagsIcon}
-        />
-        <HighLight
-          search={searchTerm}
-          className={sharedCss.container}
-        >
-          {tags.join(', ')}
-        </HighLight>
-      </span>
-    );
-  },
+  tags: record => <TagsFormatter record={record} searchTerm={searchTerm} />,
   updated: record => {
     const { metadata: { updatedDate } } = record;
 

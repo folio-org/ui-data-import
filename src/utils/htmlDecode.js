@@ -1,5 +1,5 @@
 /**
- * Decodes and unescapes HTML special characters in the given string.
+ * Decodes and unescapes HTML special characters in the given string
  *
  * @param {string} input Input string
  * @return {string} Input string with HTML chars decoded

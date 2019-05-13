@@ -1,5 +1,5 @@
 /**
- * Finds out if execution context is in test environment or not.
+ * Finds out if execution context is in test environment or not
  *
  * @return {boolean}
  */
