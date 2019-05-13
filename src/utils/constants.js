@@ -1,6 +1,21 @@
 export const DEFAULT_FETCHER_UPDATE_INTERVAL = 5000;
 export const DEFAULT_TIMEOUT_BEFORE_FILE_DELETION = 0;
 
+export const STRING_CAPITALIZATION_MODES = {
+  ALL: 0,
+  FIRST: 1,
+  WORDS: 2,
+};
+
+export const STRING_CAPITALIZATION_EXCLUSIONS = [
+  'ID', 'HRID', 'MARC', 'ISBN', 'PO', 'TBD',
+];
+
+export const HTML_LANG_DIRECTIONS = {
+  LEFT_TO_RIGHT: 'ltr',
+  RIGHT_TO_LEFT: 'rtl',
+};
+
 export const SORT_TYPES = {
   ASCENDING: 'ascending',
   DESCENDING: 'descending',
@@ -40,4 +55,43 @@ export const LAYER_TYPES = {
   CREATE: 'create',
   EDIT: 'edit',
   DUPLICATE: 'duplicate',
+};
+
+export const ENTITY_CONFIGS = {
+  MATCH_PROFILES: {
+    RECORD_TYPES: {
+      ORDER: {
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.order',
+        icon: 'orders',
+      },
+      INVOICE: {
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.invoice',
+        icon: 'invoices',
+      },
+      ITEM: {
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.item',
+        icon: 'items',
+      },
+      INSTANCE: {
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.instance',
+        icon: 'instances',
+      },
+      HOLDINGS: {
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.holding',
+        icon: 'holdings',
+      },
+      MARC_BIBLIOGRAPHIC: {
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.marc-bib',
+        icon: 'marcBibs',
+      },
+      MARC_AUTHORITY: {
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.marc-auth',
+        icon: 'marcAuthorities',
+      },
+      MARC_HOLDINGS: {
+        caption: 'ui-data-import.settings.matchProfiles.recordTypes.marc-hold',
+        icon: 'marcHoldings',
+      },
+    },
+  },
 };

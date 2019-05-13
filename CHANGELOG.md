@@ -1,6 +1,7 @@
 # Change history for ui-data-import
 
 ## 1.3.0 (IN-PROGRESS)
+* Create data import settings page's 3rd pane for Match Profiles. Add string capitalization (capitalize) and HTML special chars decoding (htmlDecode) utils (UIDATIMP-6)
 
 ## [1.2.0](https://github.com/folio-org/ui-data-import/tree/v1.2.0) (2019-05-10)
 

@@ -1,0 +1,11 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.tags {
+	display: inline-flex;
+}
+
+.tagsIcon {
+	align-self: baseline;
+	margin-top: 0.3rem;
+	margin-right: 0.3rem;
+}

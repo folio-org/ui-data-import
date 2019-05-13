@@ -7,8 +7,20 @@ import {
   createUrl,
 } from '.';
 
+/**
+ * Converts bytes to kilobytes
+ *
+ * @param {number|string} size
+ * @return {number}
+ */
 const convertBytesToKilobytes = size => Math.ceil(size / 1024);
 
+/**
+ * Generates Upload Definitions body data
+ *
+ * @param {array} files
+ * @return {{fileDefinitions: Array}}
+ */
 const generateUploadDefinitionBody = files => {
   const fileDefinitions = Object
     .keys(files)
@@ -21,6 +33,12 @@ const generateUploadDefinitionBody = files => {
   return { fileDefinitions };
 };
 
+/**
+ * Description: TBD
+ *
+ * @param {array} files
+ * @return {*}
+ */
 export const mapFilesToUI = (files = []) => {
   return files.reduce((res, file) => {
     // `uiKey` is needed in order to match the individual file on UI with
@@ -50,6 +68,14 @@ export const mapFilesToUI = (files = []) => {
   }, {});
 };
 
+/**
+ * Creates Upload Definition data sets
+ *
+ * @param {array} files
+ * @param {string} url
+ * @param {Object|okapi} okapi
+ * @return {Promise<*[]>}
+ */
 export const createUploadDefinition = async ({ files, url, okapi }) => {
   const filesDefinition = generateUploadDefinitionBody(files);
   const config = {
@@ -77,6 +103,13 @@ export const createUploadDefinition = async ({ files, url, okapi }) => {
   return [null, responseJSON];
 };
 
+/**
+ * Creates and calls file deletion request
+ *
+ * @param {string} url
+ * @param {array} headers
+ * @return {Promise<Response>}
+ */
 export const deleteFile = async (url, headers) => {
   const config = {
     method: 'DELETE',
@@ -92,6 +125,13 @@ export const deleteFile = async (url, headers) => {
   return response;
 };
 
+/**
+ * Creates and calls Upload Definitions retrieval request
+ *
+ * @param {string} url
+ * @param {Object|okapi} okapi
+ * @return {Promise<void>}
+ */
 export const getLatestUploadDefinition = async ({ url, okapi }) => {
   const draftJobsUrl = createUrl(url, {
     query: `(status==("${UPLOAD_DEFINITION_STATUSES.NEW}" OR "${UPLOAD_DEFINITION_STATUSES.IN_PROGRESS}" OR "${UPLOAD_DEFINITION_STATUSES.LOADED}")) sortBy createdDate/sort.descending`,
@@ -111,6 +151,13 @@ export const getLatestUploadDefinition = async ({ url, okapi }) => {
   return latestUploadDefinition;
 };
 
+/**
+ * Creates and calls Upload Definition deletion request
+ *
+ * @param {string} url
+ * @param {Object|okapi} okapi
+ * @return {Promise<Response>}
+ */
 export const deleteUploadDefinition = async ({ url, okapi }) => {
   const response = await fetch(url, {
     method: 'DELETE',

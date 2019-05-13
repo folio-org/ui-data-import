@@ -3,17 +3,23 @@ import {
   identity,
 } from 'lodash';
 
+/**
+ * Description: TBD
+ *
+ * @param {array} params
+ * @param {boolean} encode
+ * @return {string} [encode]
+ */
 const generateQueryParams = (params, encode) => {
   const encodeCallback = encode ? encodeURIComponent : identity;
-
-  const queryParamsString = map(params, (value, key) => [key, value].map(encodeCallback).join('='))
-    .join('&');
+  const queryParamsString = map(params, (value, key) => [key, value].map(encodeCallback).join('=')).join('&');
 
   return `${(queryParamsString.length ? '?' : '')}${queryParamsString}`;
 };
 
 /**
  * Creates url with query parameters
+ *
  * @param {string} url
  * @param {object} [queryParams]
  * @param {boolean} [encode] - disables encoding (required when using with manifest)
