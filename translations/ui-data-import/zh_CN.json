@@ -120,6 +120,6 @@
     "itemsCount": "({count, number} {count, plural, one {item} other {items}})",
     "selectAll": "Select all",
     "deselectAll": "Deselect all",
-    "log": "Log",
-    "totalRecords": "Total records:"
+    "log": "日志",
+    "totalRecords": "全部记录"
 }
