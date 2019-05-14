@@ -3,6 +3,9 @@
 ## 1.3.0 (IN-PROGRESS)
 * Create data import settings page's 3rd pane for Match Profiles. Add string capitalization (capitalize) and HTML special chars decoding (htmlDecode) utils (UIDATIMP-6)
 
+## [1.2.1](https://github.com/folio-org/ui-data-import/tree/v1.2.1) (2019-05-14)
+* Downgrade okapi interface version in order to have data-import-converter-storage API endpoints work (UIDATIMP-195)
+
 ## [1.2.0](https://github.com/folio-org/ui-data-import/tree/v1.2.0) (2019-05-10)
 
 * Create data import settings page's 3rd pane for Jobs Profiles (UIDATIMP-6)
