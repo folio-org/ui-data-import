@@ -2,6 +2,8 @@
 
 ## 1.3.0 (IN-PROGRESS)
 
+## [1.2.1](https://github.com/folio-org/ui-data-import/tree/v1.2.1) (2019-05-14)
+
 ## [1.2.0](https://github.com/folio-org/ui-data-import/tree/v1.2.0) (2019-05-10)
 
 * Create data import settings page's 3rd pane for Jobs Profiles (UIDATIMP-6)
