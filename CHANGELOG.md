@@ -2,6 +2,7 @@
 
 ## 1.3.0 (IN-PROGRESS)
 * Create data import settings page's 3rd pane for Match Profiles. Add string capitalization (capitalize) and HTML special chars decoding (htmlDecode) utils (UIDATIMP-6)
+* Create temporary MARC Bib files load option on Choose jobs pane (UIDATIMP-185)
 
 ## [1.2.1](https://github.com/folio-org/ui-data-import/tree/v1.2.1) (2019-05-14)
 * Downgrade okapi interface version in order to have data-import-converter-storage API endpoints work (UIDATIMP-195)
@@ -35,7 +36,7 @@
 * Setup BigTest and write tests for Jobs pane (UIDATIMP-75)
 * Implement deleting failed files from server feature (UIDATIMP-72)
 * Handle file name issue with file upload definition (UIDATIMP-97)
-* Show error message on UI when there is not enough server space for uploaded file(s) on uploading jop profiles (UIDATIMP-86)
+* Show error message on UI when there is not enough server space for uploaded file(s) on uploading job profiles (UIDATIMP-86)
 * Create data import settings page's 3rd pane for File Extensions (UIDATIMP-47)
 * Show modal on Leaving Choose Job Profile page (UIDATIMP-104)
 * Prohibit file upload when there is a draft job in progress (UIDATIMP-106)

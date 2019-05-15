@@ -11,6 +11,7 @@ import {
   map,
   omit,
   some,
+  every,
 } from 'lodash';
 
 import {
@@ -18,9 +19,12 @@ import {
   stripesShape,
 } from '@folio/stripes/core';
 import {
+  Paneset,
+  Pane,
   Layout,
   Callout,
   ConfirmationModal,
+  Button,
 } from '@folio/stripes/components';
 
 import { Preloader } from '../Preloader';
@@ -37,6 +41,7 @@ import {
   FILE_STATUSES,
 } from '../../utils/constants';
 import * as API from '../../utils/upload';
+import { loadMarcRecords } from '../../utils/loadRecords';
 
 @withRouter
 @withStripes
@@ -75,6 +80,7 @@ export class UploadingJobsDisplay extends Component {
     this.state = {
       hasLoaded: false,
       renderLeaveModal: false,
+      recordsLoadingInProgress: false,
     };
 
     this.calloutRef = createRef();
@@ -452,6 +458,69 @@ export class UploadingJobsDisplay extends Component {
     this.setState({ renderLeaveModal: false });
   };
 
+  // TODO: this is temporary way (will be changed/removed) to initiate loading of MARC BIB files (UIDATIMP-185)
+  loadMarcRecords = async menu => {
+    const { stripes: { okapi } } = this.props;
+    const { uploadDefinition } = this.context;
+
+    try {
+      await loadMarcRecords({
+        uploadDefinitionId: uploadDefinition.id,
+        // jobProfileId for now is hardcoded to point to the default job profile (MODSOURMAN-113)
+        // later jobProfileId will be picked through UI
+        jobProfileId: '22fafcc3-f582-493d-88b0-3c538480cd83',
+        okapi,
+      });
+    } catch (error) {
+      menu.onToggle();
+      this.calloutRef.current.sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-data-import.communicationProblem" />,
+      });
+
+      this.setState({ recordsLoadingInProgress: false });
+      console.error(error); // eslint-disable-line no-console
+    }
+  };
+
+  // TODO: this is temporary way (will be changed/removed) of deciding whether to allow to initiate
+  // the process of loading MARC BIB files (UIDATIMP-185)
+  // later the button and logic for showing will be removed
+  renderLoadMarcButton = menu => {
+    const {
+      files = [],
+      recordsLoadingInProgress,
+    } = this.state;
+
+    const areMarcFiles = every(files, file => file.name.match(/\.(marc|mrc)$/, 'i'));
+
+    if (!areMarcFiles) {
+      return null;
+    }
+
+    const handleLoadRecordsButtonClick = () => {
+      this.setState({ recordsLoadingInProgress: true });
+
+      if (recordsLoadingInProgress) {
+        return;
+      }
+
+      this.loadMarcRecords(menu);
+    };
+
+    return (
+      <Button
+        data-test-load-records
+        buttonStyle="dropdownItem"
+        onClick={handleLoadRecordsButtonClick}
+      >
+        <FormattedMessage id="ui-data-import.loadMarcRecords" />
+      </Button>
+    );
+  };
+
+  renderActionMenu = menu => this.renderLoadMarcButton(menu);
+
   render() {
     const {
       hasLoaded,
@@ -476,21 +545,29 @@ export class UploadingJobsDisplay extends Component {
     );
 
     return (
-      <div data-test-uploading-jobs-display>
-        {this.renderFiles()}
-        <EndOfItem />
-        <Callout ref={this.calloutRef} />
-        <ConfirmationModal
-          id="leave-page-modal"
-          open={renderLeaveModal}
-          heading={<FormattedMessage id="ui-data-import.modal.leavePage.header" />}
-          message={leavePageMessage}
-          confirmLabel={<FormattedMessage id="ui-data-import.modal.leavePage.actionButton" />}
-          cancelLabel={<FormattedMessage id="ui-data-import.modal.leavePage.cancel" />}
-          onConfirm={this.closeModal}
-          onCancel={this.continue}
-        />
-      </div>
+      <Paneset>
+        <Pane
+          defaultWidth="300px"
+          paneTitle={<FormattedMessage id="ui-data-import.uploadingPaneTitle" />}
+          actionMenu={this.renderActionMenu}
+        >
+          <div data-test-uploading-jobs-display>
+            {this.renderFiles()}
+            <EndOfItem />
+            <Callout ref={this.calloutRef} />
+            <ConfirmationModal
+              id="leave-page-modal"
+              open={renderLeaveModal}
+              heading={<FormattedMessage id="ui-data-import.modal.leavePage.header" />}
+              message={leavePageMessage}
+              confirmLabel={<FormattedMessage id="ui-data-import.modal.leavePage.actionButton" />}
+              cancelLabel={<FormattedMessage id="ui-data-import.modal.leavePage.cancel" />}
+              onConfirm={this.closeModal}
+              onCancel={this.continue}
+            />
+          </div>
+        </Pane>
+      </Paneset>
     );
   }
 }

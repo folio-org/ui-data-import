@@ -28,10 +28,7 @@ const jobsUrl = createUrl('metadata-provider/jobExecutions', {
   limit: 50,
 }, false);
 
-const logsUrl = createUrl('metadata-provider/logs', {
-  landingPage: true,
-  limit: 25,
-}, false);
+const logsUrl = createUrl('metadata-provider/logs', { landingPage: true }, false);
 
 @stripesConnect
 export class DataFetcher extends Component {
