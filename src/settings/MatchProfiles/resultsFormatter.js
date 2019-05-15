@@ -125,7 +125,12 @@ export const resultsFormatter = searchTerm => ({
       </IntlConsumer>
     );
   },
-  tags: record => <TagsFormatter record={record} searchTerm={searchTerm} />,
+  tags: record => (
+    <TagsFormatter
+      record={record}
+      searchTerm={searchTerm}
+    />
+  ),
   updated: record => {
     const { metadata: { updatedDate } } = record;
 

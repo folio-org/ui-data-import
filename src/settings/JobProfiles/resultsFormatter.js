@@ -2,10 +2,7 @@ import React from 'react';
 import HighLight from 'react-highlighter';
 
 import { AppIcon } from '@folio/stripes/core';
-import {
-  Checkbox,
-  Icon,
-} from '@folio/stripes/components';
+import { Checkbox } from '@folio/stripes/components';
 
 import {
   TagsFormatter,
@@ -46,7 +43,12 @@ export const resultsFormatter = (searchTerm, selectRecord, selectedRecords) => (
       </HighLight>
     </AppIcon>
   ),
-  tags: record => <TagsFormatter record={record} searchTerm={searchTerm} />,
+  tags: record => (
+    <TagsFormatter
+      record={record}
+      searchTerm={searchTerm}
+    />
+  ),
   updated: record => {
     const { metadata: { updatedDate } } = record;
 
