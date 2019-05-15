@@ -23,7 +23,7 @@ import {
 
 import sharedCss from '../../shared.css';
 
-export const resultsFormatter = searchTerm => ({
+export const resultsFormatter = (searchTerm, selectRecord, selectedRecords) => ({
   selected: record => (
     <div // eslint-disable-line jsx-a11y/click-events-have-key-events
       tabIndex="0"
@@ -32,7 +32,11 @@ export const resultsFormatter = searchTerm => ({
       data-test-select-item
       onClick={e => e.stopPropagation()}
     >
-      <Checkbox name={`selected-${record.id}`} />
+      <Checkbox
+        name={`selected-${record.id}`}
+        checked={selectedRecords.has(record.id)}
+        onChange={() => selectRecord(record.id)}
+      />
     </div>
   ),
   name: record => (

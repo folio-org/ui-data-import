@@ -1,7 +1,4 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
@@ -16,24 +13,17 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
-import {
-  Icon,
-  Button,
-  Checkbox,
-} from '@folio/stripes/components';
+import { Checkbox } from '@folio/stripes/components';
 
 import {
+  ActionMenu,
   JobProfilesForm,
   SearchAndSort,
 } from '../../components';
 import { ViewJobProfile } from './ViewJobProfile';
 import { SettingPage } from '../SettingPage';
 import { resultsFormatter } from './resultsFormatter';
-import { LAYER_TYPES } from '../../utils/constants';
-import {
-  createLayerURL,
-  trimSearchTerm,
-} from '../../utils';
+import { trimSearchTerm } from '../../utils';
 
 import sharedCss from '../../shared.css';
 
@@ -166,58 +156,31 @@ export class JobProfiles extends Component {
     const { location } = this.props;
     const { selectedRecords: { size: selectedRecordsSize } } = this.state;
 
-    return (
-      <Fragment>
-        <Button
-          data-test-new-job-profile-menu-button
-          to={createLayerURL(location, LAYER_TYPES.CREATE)}
-          buttonStyle="dropdownItem"
-          buttonClass={sharedCss.linkButton}
-          onClick={menu.onToggle}
-        >
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-data-import.settings.jobProfiles.newJob" />
-          </Icon>
-        </Button>
-        <Button
-          data-test-export-selected-job-profiles-menu-button
-          buttonStyle="dropdownItem"
-          disabled={!selectedRecordsSize}
-          onClick={menu.onToggle}
-        >
-          <Icon icon="arrow-down">
-            <FormattedMessage id="ui-data-import.exportSelected" />
-            {!!selectedRecordsSize && (
-            <Fragment>
-              {' '}
-              <FormattedMessage
-                id="ui-data-import.itemsCount"
-                values={{ count: selectedRecordsSize }}
-              />
-            </Fragment>
-            )}
-          </Icon>
-        </Button>
-        <Button
-          data-test-select-all-job-profiles-menu-button
-          buttonStyle="dropdownItem"
-          onClick={() => this.handleSelectAllButton(menu)}
-        >
-          <Icon icon="select-all">
-            <FormattedMessage id="ui-data-import.selectAll" />
-          </Icon>
-        </Button>
-        <Button
-          data-test-deselect-all-job-profiles-menu-button
-          buttonStyle="dropdownItem"
-          onClick={() => this.handleDeselectAllButton(menu)}
-        >
-          <Icon icon="deselect-all">
-            <FormattedMessage id="ui-data-import.deselectAll" />
-          </Icon>
-        </Button>
-      </Fragment>
-    );
+    const config = {
+      items: [{
+        control: 'AddNew',
+        menu,
+        location,
+      }, {
+        control: 'ExportSelected',
+        menu,
+        selectedCount: selectedRecordsSize,
+      }, {
+        control: 'Default',
+        caption: 'ui-data-import.selectAll',
+        icon: 'check-circle',
+        onClick: () => this.handleSelectAllButton(menu),
+        dataAttributes: { 'data-test-select-all-job-profiles-menu-button': '' },
+      }, {
+        control: 'Default',
+        caption: 'ui-data-import.deselectAll',
+        icon: 'times-circle',
+        onClick: () => this.handleDeselectAllButton(menu),
+        dataAttributes: { 'data-test-deselect-all-job-profiles-menu-button': '' },
+      }],
+    };
+
+    return (<ActionMenu config={config} />);
   };
 
   getRecordName(record) {
@@ -265,9 +228,7 @@ export class JobProfiles extends Component {
   };
 
   get jobProfiles() {
-    const { resources } = this.props;
-
-    return get(resources, ['jobProfiles', 'records'], []);
+    return get(this.props.resources, ['jobProfiles', 'records'], []);
   }
 
   render() {
