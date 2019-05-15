@@ -1,6 +1,7 @@
 import {
   interactor,
   collection,
+  scoped,
   property,
 } from '@bigtest/interactor';
 
@@ -9,8 +10,10 @@ import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/i
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 
 import { CheckboxInteractor } from './checkbox-interactor';
+import { ActionMenuInteractor } from './action-menu-interactor';
 
 @interactor class MatchProfilesInteractor {
+  actionMenu = scoped('#pane-results', ActionMenuInteractor, 'match-profile');
   list = new MultiColumnListInteractor('#match-profiles-list');
   selectAllCheckBox = new CheckboxInteractor('[data-test-select-all-checkbox]');
   checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);

@@ -10,16 +10,10 @@ import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/i
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 
 import { CheckboxInteractor } from './checkbox-interactor';
-
-@interactor class Dropdown {
-  newJobProfileButton = new ButtonInteractor('[data-test-new-job-profile-menu-button]');
-  exportSelectedButton = new ButtonInteractor('[data-test-export-selected-job-profiles-menu-button]');
-  selectAllButton = new ButtonInteractor('[data-test-select-all-job-profiles-menu-button]');
-  deselectAllButton = new ButtonInteractor('[data-test-deselect-all-job-profiles-menu-button]');
-}
+import { ActionMenuInteractor } from './action-menu-interactor';
 
 @interactor class JobProfilesInteractor {
-  paneHeaderDropdown = scoped('#pane-results', Dropdown);
+  actionMenu = scoped('#pane-results', ActionMenuInteractor, 'job-profile');
   list = new MultiColumnListInteractor('#job-profiles-list');
   selectAllCheckBox = new CheckboxInteractor('[data-test-select-all-checkbox]');
   checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);

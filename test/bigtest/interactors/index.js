@@ -1,3 +1,4 @@
+export * from './action-menu-interactor';
 export * from './checkbox-interactor';
 export * from './file-extensions';
 export * from './file-extension-details';

@@ -137,6 +137,7 @@ export class MatchProfiles extends Component {
     const config = {
       items: [{
         control: 'AddNew',
+        caption: 'ui-data-import.settings.matchProfiles.newProfile',
         menu,
         location,
       }, {
@@ -148,13 +149,13 @@ export class MatchProfiles extends Component {
         caption: 'ui-data-import.selectAll',
         icon: 'check-circle',
         onClick: () => this.handleSelectAllButton(menu),
-        dataAttributes: { 'data-test-select-all-match-profiles-menu-button': '' },
+        dataAttributes: { 'data-test-select-all-items-menu-button': '' },
       }, {
         control: 'Default',
         caption: 'ui-data-import.deselectAll',
         icon: 'times-circle',
         onClick: () => this.handleDeselectAllButton(menu),
-        dataAttributes: { 'data-test-deselect-all-match-profiles-menu-button': '' },
+        dataAttributes: { 'data-test-deselect-all-items-menu-button': '' },
       }],
     };
 

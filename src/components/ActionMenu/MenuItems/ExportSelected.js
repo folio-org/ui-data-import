@@ -12,7 +12,7 @@ export const ExportSelected = memo(props => {
 
   return (
     <Button
-      data-test-export-selected-job-profiles-menu-button
+      data-test-export-selected-items-menu-button
       buttonStyle="dropdownItem"
       disabled={!selectedCount}
       onClick={menu.onToggle}

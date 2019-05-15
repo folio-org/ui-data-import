@@ -11,24 +11,25 @@ import { createLayerURL } from '../../../utils';
 import { LAYER_TYPES } from '../../../utils/constants';
 
 export const AddNew = memo(props => {
-  const { menu, location } = props;
+  const { caption, menu, location } = props;
 
   return (
     <Button
-      data-test-new-job-profile-menu-button
+      data-test-new-item-menu-button
       to={createLayerURL(location, LAYER_TYPES.CREATE)}
       buttonStyle="dropdownItem"
       buttonClass={sharedCss.linkButton}
       onClick={menu.onToggle}
     >
       <Icon icon="plus-sign">
-        <FormattedMessage id="ui-data-import.settings.jobProfiles.newJob" />
+        <FormattedMessage id={caption} />
       </Icon>
     </Button>
   );
 });
 
 AddNew.propTypes = {
+  caption: PropTypes.string.isRequired,
   menu: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
