@@ -5,6 +5,7 @@
 * Create temporary MARC Bib files load option on Choose jobs pane (UIDATIMP-185)
 * Add Search box for 3rd pane of Match Profiles (UIDATIMP-166)
 * Implement landing page changes when temporary MARC Bib Load option button pushed (UIDATIMP-186)
+* Create the form for a new match profile creation (UIDATIMP-138)
 
 ## [1.2.1](https://github.com/folio-org/ui-data-import/tree/v1.2.1) (2019-05-14)
 * Downgrade okapi interface version in order to have data-import-converter-storage API endpoints work (UIDATIMP-195)

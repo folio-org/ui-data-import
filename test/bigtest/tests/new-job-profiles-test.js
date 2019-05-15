@@ -19,7 +19,7 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
   } = responseData;
 
   server.post('/data-import-profiles/jobProfiles', () => new Response(status, headers, response));
-  await jobProfileForm.nameFiled.fillAndBlur('Valid name');
+  await jobProfileForm.nameField.fillAndBlur('Valid name');
   await jobProfileForm.dataTypeField.selectAndBlur('MARC');
   await jobProfileForm.submitFormButton.click();
 }
@@ -49,7 +49,7 @@ describe('Job profile form', () => {
 
     describe('when filled correctly', () => {
       beforeEach(async () => {
-        await jobProfileForm.nameFiled.fillAndBlur('Valid name');
+        await jobProfileForm.nameField.fillAndBlur('Valid name');
         await jobProfileForm.dataTypeField.selectAndBlur('MARC');
         await jobProfileForm.descriptionField.fillAndBlur('Valid description');
       });

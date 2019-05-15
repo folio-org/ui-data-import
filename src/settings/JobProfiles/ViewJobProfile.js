@@ -290,7 +290,7 @@ export class ViewJobProfile extends Component {
           {record.name}
         </Headline>
         <AccordionSet>
-          <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.summary" />}>
+          <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
             <this.connectedViewMetaData
               metadata={record.metadata}
               systemId={SYSTEM_USER_ID}
