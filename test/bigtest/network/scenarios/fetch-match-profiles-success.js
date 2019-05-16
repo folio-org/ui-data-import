@@ -4,9 +4,7 @@ export default server => {
   server.create('match-profile', {
     name: 'POL-MARC',
     description: 'Use for POL in 990 $p',
-    tags: {
-      tagList: ['pol'],
-    },
+    tags: { tagList: ['pol'] },
     existingRecordType: 'ORDER',
     incomingDataValueType: 'VALUE_FROM_INCOMING_RECORD',
     field: '990',
@@ -18,9 +16,7 @@ export default server => {
   server.create('match-profile', {
     name: 'MARC Identifiers',
     description: 'Try to match on ISBN, else create new record',
-    tags: {
-      tagList: [],
-    },
+    tags: { tagList: [] },
     existingRecordType: 'INSTANCE',
     incomingDataValueType: 'VALUE_FROM_INCOMING_RECORD',
     field: '020',
@@ -32,9 +28,7 @@ export default server => {
   server.create('match-profile', {
     name: 'KB ID in 935',
     description: 'KB identifier in 935 $a',
-    tags: {
-      tagList: ['kb'],
-    },
+    tags: { tagList: ['kb'] },
     existingRecordType: 'MARC_BIBLIOGRAPHIC',
     incomingDataValueType: 'VALUE_FROM_INCOMING_RECORD',
     field: '935',
@@ -46,9 +40,7 @@ export default server => {
   server.create('match-profile', {
     name: '001 to Instance HRID',
     description: 'MARC 001 to Instance ID (numerics only)',
-    tags: {
-      tagList: ['hrid'],
-    },
+    tags: { tagList: ['hrid'] },
     existingRecordType: 'INSTANCE',
     incomingDataValueType: 'VALUE_FROM_INCOMING_RECORD',
     field: '001',
@@ -77,9 +69,7 @@ export default server => {
   server.create('match-profile', {
     name: 'MARC 010',
     description: 'LCCN match',
-    tags: {
-      tagList: ['lccn'],
-    },
+    tags: { tagList: ['lccn'] },
     existingRecordType: 'MARC_AUTHORITY',
     incomingDataValueType: 'VALUE_FROM_INCOMING_RECORD',
     field: '010',
@@ -91,9 +81,7 @@ export default server => {
   server.create('match-profile', {
     name: 'OCLC 035 DDA',
     description: 'OCLC number match',
-    tags: {
-      tagList: ['oclc'],
-    },
+    tags: { tagList: ['oclc'] },
     existingRecordType: 'MARC_BIBLIOGRAPHIC',
     incomingDataValueType: 'VALUE_FROM_INCOMING_RECORD',
     field: '035',
@@ -105,9 +93,7 @@ export default server => {
   server.create('match-profile', {
     name: 'EDI regular',
     description: 'EDIFACT POL',
-    tags: {
-      tagList: ['pol'],
-    },
+    tags: { tagList: ['pol'] },
     existingRecordType: 'ORDER',
     incomingDataValueType: 'VALUE_FROM_INCOMING_RECORD',
     field: 'TBD',

@@ -12,7 +12,10 @@ import css from './TagsFormatter.css';
 import sharedCss from '../../../shared.css';
 
 export const TagsFormatter = memo(props => {
-  const { record, searchTerm } = props;
+  const {
+    record,
+    searchTerm,
+  } = props;
   const tags = get(record, 'tags.tagList', []);
 
   if (isEmpty(tags)) {

@@ -71,9 +71,7 @@ export class SearchAndSort extends Component {
         replace: PropTypes.func.isRequired,
         update: PropTypes.func.isRequired,
       }),
-      resultCount: PropTypes.shape({
-        replace: PropTypes.func.isRequired,
-      }).isRequired,
+      resultCount: PropTypes.shape({ replace: PropTypes.func.isRequired }).isRequired,
     }).isRequired,
     parentResources: PropTypes.shape({
       query: PropTypes.shape({
@@ -86,12 +84,10 @@ export class SearchAndSort extends Component {
       records: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
         isPending: PropTypes.bool,
-        other: PropTypes.shape({
-          totalRecords: PropTypes.number.isRequired,
-        }),
+        other: PropTypes.shape({ totalRecords: PropTypes.number.isRequired }),
         successfulMutations: PropTypes.arrayOf(
           PropTypes.shape({
-            record: PropTypes.shape({
+            record: PropTypes.shape({ // eslint-disable-line object-curly-newline
               id: PropTypes.string.isRequired,
             }).isRequired,
           }),

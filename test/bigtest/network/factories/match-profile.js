@@ -13,12 +13,8 @@ export default Factory.extend({
   fieldMarc: i => `FieldMARC ${i}`,
   fieldNonMarc: i => `FieldNonMARC ${i}`,
   existingStaticValueType: i => `ExistingStaticValueType ${i}`,
-  tags: {
-    tagList: [faker.random.arrayElement(['tag1', 'tag2', 'tag3'])],
-  },
-  metadata: {
-    updatedDate: faker.date.past(0.1, faker.date.past(0.1)).toString(),
-  },
+  tags: { tagList: [faker.random.arrayElement(['tag1', 'tag2', 'tag3'])] },
+  metadata: { updatedDate: faker.date.past(0.1, faker.date.past(0.1)).toString() },
   userInfo: {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),

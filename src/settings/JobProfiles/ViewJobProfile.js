@@ -81,7 +81,7 @@ export class ViewJobProfile extends Component {
       }),
     }).isRequired,
     match: PropTypes.shape({
-      params: PropTypes.shape({
+      params: PropTypes.shape({ // eslint-disable-line object-curly-newline
         id: PropTypes.string,
       }).isRequired,
     }).isRequired,

@@ -76,7 +76,11 @@ export const mapFilesToUI = (files = []) => {
  * @param {Object|okapi} okapi
  * @return {Promise<*[]>}
  */
-export const createUploadDefinition = async ({ files, url, okapi }) => {
+export const createUploadDefinition = async ({
+  files,
+  url,
+  okapi,
+}) => {
   const filesDefinition = generateUploadDefinitionBody(files);
   const config = {
     method: 'POST',
@@ -132,7 +136,10 @@ export const deleteFile = async (url, headers) => {
  * @param {Object|okapi} okapi
  * @return {Promise<void>}
  */
-export const getLatestUploadDefinition = async ({ url, okapi }) => {
+export const getLatestUploadDefinition = async ({
+  url,
+  okapi,
+}) => {
   const draftJobsUrl = createUrl(url, {
     query: `(status==("${UPLOAD_DEFINITION_STATUSES.NEW}" OR "${UPLOAD_DEFINITION_STATUSES.IN_PROGRESS}" OR "${UPLOAD_DEFINITION_STATUSES.LOADED}")) sortBy createdDate/sort.descending`,
     limit: 1,
@@ -158,7 +165,10 @@ export const getLatestUploadDefinition = async ({ url, okapi }) => {
  * @param {Object|okapi} okapi
  * @return {Promise<Response>}
  */
-export const deleteUploadDefinition = async ({ url, okapi }) => {
+export const deleteUploadDefinition = async ({
+  url,
+  okapi,
+}) => {
   const response = await fetch(url, {
     method: 'DELETE',
     headers: createOkapiHeaders(okapi),

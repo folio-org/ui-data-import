@@ -56,6 +56,4 @@ JobsList.propTypes = {
   isEmptyMessage: PropTypes.node,
 };
 
-JobsList.defaultProps = {
-  isEmptyMessage: '',
-};
+JobsList.defaultProps = { isEmptyMessage: '' };

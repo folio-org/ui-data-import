@@ -42,9 +42,7 @@ const generateSortConfigs = iteratees => iteratees
     }
 
     if (isFunction(iteratee)) {
-      return {
-        compareFunction: iteratee,
-      };
+      return { compareFunction: iteratee };
     }
 
     if (isPlainObject(iteratee)) {

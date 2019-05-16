@@ -47,9 +47,7 @@ import css from './components/FileUploader/FileUploader.css';
 export class ImportJobs extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
-    match: PropTypes.shape({
-      path: PropTypes.string.isRequired,
-    }).isRequired,
+    match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   };
 
   static contextType = UploadingJobsContext;

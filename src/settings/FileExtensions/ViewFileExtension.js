@@ -65,13 +65,11 @@ export class ViewFileExtension extends Component {
       }),
     }).isRequired,
     match: PropTypes.shape({
-      params: PropTypes.shape({
+      params: PropTypes.shape({ // eslint-disable-line object-curly-newline
         id: PropTypes.string,
       }).isRequired,
     }).isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
+    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
   };

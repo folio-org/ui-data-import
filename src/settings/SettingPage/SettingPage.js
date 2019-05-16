@@ -152,12 +152,8 @@ SettingPage.propTypes = {
   finishedResourceName: PropTypes.string.isRequired,
   parentMutator: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  match: PropTypes.shape({
-    path: PropTypes.string.isRequired,
-  }).isRequired,
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+  match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   getDeleteRecordSuccessfulMessage: PropTypes.func.isRequired,
   getDeleteRecordErrorMessage: PropTypes.func.isRequired,
   getRecordName: PropTypes.func.isRequired,

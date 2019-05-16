@@ -8,9 +8,7 @@ export default Factory.extend({
   importBlocked: () => faker.random.boolean(),
   dataTypes: () => [faker.random.arrayElement(['Delimited', 'MARC'])],
   extension: i => `.marc${i}`,
-  metadata: {
-    updatedDate: faker.date.past(0.1, faker.date.past(0.1)).toString(),
-  },
+  metadata: { updatedDate: faker.date.past(0.1, faker.date.past(0.1)).toString() },
   userInfo: {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),

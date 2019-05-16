@@ -20,9 +20,7 @@ export class JobLogs extends Component {
     onSort: PropTypes.func.isRequired,
     hasLoaded: PropTypes.bool,
     contentData: PropTypes.arrayOf(jobLogPropTypes),
-    match: PropTypes.shape({
-      path: PropTypes.string.isRequired,
-    }).isRequired,
+    match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   };
 
   static defaultProps = {

@@ -161,9 +161,7 @@ describe('When file extension form', () => {
     describe('error message', () => {
       beforeEach(async function () {
         await setupFormSubmitErrorScenario(this.server, {
-          response: {
-            errors: [{ message: 'fileExtension.duplication.invalid' }],
-          },
+          response: { errors: [{ message: 'fileExtension.duplication.invalid' }] },
           status: 422,
         });
       });

@@ -96,15 +96,9 @@ export class JobProfiles extends Component {
         PUT: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      path: PropTypes.string.isRequired,
-    }).isRequired,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
+    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+    match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
+    history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,
     selectedJobProfile: PropTypes.object.isRequired,
     showSingleResult: PropTypes.bool,

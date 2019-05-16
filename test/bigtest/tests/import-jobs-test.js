@@ -1,10 +1,10 @@
 import { expect } from 'chai';
+import { location } from '@bigtest/react';
 import {
   describe,
   beforeEach,
   it,
 } from '@bigtest/mocha';
-import { location } from '@bigtest/react';
 
 import translation from '../../../translations/ui-data-import/en';
 import { setupApplication } from '../helpers';

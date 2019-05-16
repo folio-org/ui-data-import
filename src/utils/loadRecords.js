@@ -1,12 +1,18 @@
 import { createOkapiHeaders } from './createOkapiHeaders';
 
-export const fetchUploadDefinition = ({ okapi, id }) => {
+export const fetchUploadDefinition = ({
+  okapi,
+  id,
+}) => {
   const { url: host } = okapi;
 
   return fetch(`${host}/data-import/uploadDefinitions/${id}`, { headers: createOkapiHeaders(okapi) });
 };
 
-export const fetchJobProfile = ({ okapi, id }) => {
+export const fetchJobProfile = ({
+  okapi,
+  id,
+}) => {
   const { url: host } = okapi;
 
   return fetch(`${host}/data-import-profiles/jobProfiles/${id}`, { headers: createOkapiHeaders(okapi) });
