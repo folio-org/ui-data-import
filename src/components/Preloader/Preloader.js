@@ -30,6 +30,4 @@ Preloader.propTypes = {
   message: PropTypes.node,
 };
 
-Preloader.defaultProps = {
-  message: <FormattedMessage id="ui-data-import.loading" />,
-};
+Preloader.defaultProps = { message: <FormattedMessage id="ui-data-import.loading" /> };

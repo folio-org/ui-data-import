@@ -13,9 +13,7 @@ export default server => {
     name: 'Create orders from acquisitions',
     tags: { tagList: ['acq'] },
     dataType: ['MARC'],
-    userInfo: {
-      userName: SYSTEM_USER_NAME,
-    },
+    userInfo: { userName: SYSTEM_USER_NAME },
   });
   server.create('job-profile', {
     name: 'DDA discovery records',

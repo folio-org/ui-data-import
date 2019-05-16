@@ -99,9 +99,7 @@ describe('Job Profile View', () => {
         describe('error message', () => {
           beforeEach(async function () {
             await setupFormSubmitErrorScenario('put', this.server, {
-              response: {
-                errors: [{ message: 'jobProfile.duplication.invalid' }],
-              },
+              response: { errors: [{ message: 'jobProfile.duplication.invalid' }] },
               status: 422,
             });
           });
@@ -160,9 +158,7 @@ describe('Job Profile View', () => {
           describe('error message', () => {
             beforeEach(async function () {
               await setupFormSubmitErrorScenario('post', this.server, {
-                response: {
-                  errors: [{ message: 'jobProfile.duplication.invalid' }],
-                },
+                response: { errors: [{ message: 'jobProfile.duplication.invalid' }] },
                 status: 422,
               });
             });

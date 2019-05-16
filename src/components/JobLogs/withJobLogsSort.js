@@ -16,9 +16,7 @@ import { DataFetcherContext } from '../DataFetcher';
 const withJobLogsSortComponent = WrappedComponent => {
   return class extends Component {
     static propTypes = {
-      history: PropTypes.shape({
-        push: PropTypes.func.isRequired,
-      }).isRequired,
+      history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
       location: PropTypes.shape({
         search: PropTypes.string.isRequired,
         pathname: PropTypes.string.isRequired,

@@ -53,26 +53,18 @@ export class DataFetcher extends Component {
       PropTypes.node,
     ]).isRequired,
     mutator: PropTypes.shape({
-      jobs: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-      }).isRequired,
-      logs: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-      }).isRequired,
+      jobs: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
+      logs: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
       jobs: PropTypes.shape({
         records: PropTypes.arrayOf(
-          PropTypes.shape({
-            jobExecutionDtos: PropTypes.arrayOf(jobPropTypes).isRequired,
-          }),
+          PropTypes.shape({ jobExecutionDtos: PropTypes.arrayOf(jobPropTypes).isRequired }),
         ).isRequired,
       }),
       logs: PropTypes.shape({
         records: PropTypes.arrayOf(
-          PropTypes.shape({
-            logDtos: PropTypes.arrayOf(jobLogPropTypes).isRequired,
-          }),
+          PropTypes.shape({ logDtos: PropTypes.arrayOf(jobLogPropTypes).isRequired }),
         ).isRequired,
       }),
     }).isRequired,
@@ -82,7 +74,7 @@ export class DataFetcher extends Component {
   static defaultProps = { updateInterval: DEFAULT_FETCHER_UPDATE_INTERVAL };
 
   state = {
-    contextData: {
+    contextData: { // eslint-disable-line object-curly-newline
       hasLoaded: false,
     },
   };

@@ -72,9 +72,7 @@ describe('When job profile form', () => {
     describe('error message', () => {
       beforeEach(async function () {
         await setupFormSubmitErrorScenario(this.server, {
-          response: {
-            errors: [{ message: 'jobProfile.duplication.invalid' }],
-          },
+          response: { errors: [{ message: 'jobProfile.duplication.invalid' }] },
           status: 422,
         });
       });

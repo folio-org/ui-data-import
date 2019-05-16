@@ -51,6 +51,10 @@
     ],
     "semi": "off",
     "babel/semi": "error",
+    "object-curly-newline": ["error", {
+      "multiline": true,
+      "minProperties": 2
+    }],
     "no-multiple-empty-lines": [
       "error",
       {

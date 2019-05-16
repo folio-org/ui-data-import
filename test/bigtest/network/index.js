@@ -17,9 +17,7 @@ const modules = req.keys().reduce((acc, modulePath) => {
   }
 
   if (modulePath === './config.js') {
-    return Object.assign(acc, {
-      baseConfig: req(modulePath).default,
-    });
+    return Object.assign(acc, { baseConfig: req(modulePath).default });
   }
 
   return acc;

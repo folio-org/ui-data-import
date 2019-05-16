@@ -31,7 +31,10 @@ import css from './FileExtensionForm.css';
 
 const formName = 'fileExtensionForm';
 
-const MultiSelectItem = ({ option, searchTerm }) => <OptionSegment searchTerm={searchTerm}>{option}</OptionSegment>;
+const MultiSelectItem = ({
+  option,
+  searchTerm,
+}) => <OptionSegment searchTerm={searchTerm}>{option}</OptionSegment>;
 
 MultiSelectItem.propTypes = {
   option: PropTypes.oneOfType([PropTypes.node, PropTypes.array]),
@@ -72,7 +75,10 @@ const FileExtensionFormComponent = props => {
     const renderedItems = filterText ? list.filter(item => item.search(filterRegExp) !== -1) : list;
     const exactMatch = filterText ? (renderedItems.filter(item => item === filterText).length === 1) : false;
 
-    return { renderedItems, exactMatch };
+    return {
+      renderedItems,
+      exactMatch,
+    };
   };
 
   const isSubmitDisabled = pristine || submitting;
@@ -162,9 +168,7 @@ FileExtensionFormComponent.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  location: PropTypes.shape({
-    search: PropTypes.string.isRequired,
-  }).isRequired,
+  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
 };
 
 export const FileExtensionForm = stripesForm({

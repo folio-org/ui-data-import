@@ -18,9 +18,7 @@ import { UploadingJobsContextProvider } from './components';
 class DataImport extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
-    match: PropTypes.shape({
-      path: PropTypes.string.isRequired,
-    }).isRequired,
+    match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     showSettings: PropTypes.bool,
   };
 

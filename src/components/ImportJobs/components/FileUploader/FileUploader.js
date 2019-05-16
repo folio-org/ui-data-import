@@ -117,6 +117,4 @@ FileUploader.propTypes = {
   ]),
 };
 
-FileUploader.defaultProps = {
-  className: defaultStyles.defaultFileUploader,
-};
+FileUploader.defaultProps = { className: defaultStyles.defaultFileUploader };

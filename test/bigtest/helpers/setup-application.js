@@ -9,8 +9,6 @@ export function setupApplication({
   setupStripesCore({
     mirageOptions,
     scenarios,
-    stripesConfig: {
-      hasAllPerms,
-    },
+    stripesConfig: { hasAllPerms },
   });
 }
