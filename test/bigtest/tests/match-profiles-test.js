@@ -20,6 +20,34 @@ describe('Match profiles', () => {
     this.visit('/settings/data-import/match-profiles');
   });
 
+  describe('search form', () => {
+    it('renders search button', () => {
+      expect(matchProfiles.searchSubmitButton.isPresent).to.be.true;
+      expect(matchProfiles.searchSubmitButton.text).to.equal('Search');
+      expect(matchProfiles.searchSubmitButtonDisabled).to.be.true;
+    });
+
+    describe('after enter data in search field', () => {
+      beforeEach(async () => {
+        await matchProfiles.searchField.fill('rde');
+      });
+
+      it('search button is active', () => {
+        expect(matchProfiles.searchSubmitButtonDisabled).to.be.false;
+      });
+
+      describe('and after click on search button', () => {
+        beforeEach(async () => {
+          await matchProfiles.searchSubmitButton.click();
+        });
+
+        it('renders proper amount of items', () => {
+          expect(matchProfiles.list.rowCount).to.equal(2);
+        });
+      });
+    });
+  });
+
   describe('table', () => {
     it('renders proper amount of items', () => {
       expect(matchProfiles.list.rowCount).to.equal(8);

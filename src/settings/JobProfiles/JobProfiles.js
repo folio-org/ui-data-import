@@ -30,7 +30,10 @@ import { ViewJobProfile } from './ViewJobProfile';
 import { SettingPage } from '../SettingPage';
 import { resultsFormatter } from './resultsFormatter';
 import { LAYER_TYPES } from '../../utils/constants';
-import { createLayerURL } from '../../utils';
+import {
+  createLayerURL,
+  trimSearchTerm,
+} from '../../utils';
 
 import sharedCss from '../../shared.css';
 
@@ -288,7 +291,7 @@ export class JobProfiles extends Component {
     const { selectedRecords } = this.state;
 
     const urlQuery = queryString.parse(search);
-    const searchTerm = (urlQuery.query || '').trim();
+    const searchTerm = trimSearchTerm(urlQuery.query);
     const isSelectAllChecked = selectedRecords.size === this.jobProfiles.length;
 
     return (

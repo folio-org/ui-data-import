@@ -12,3 +12,4 @@ export * from './isTestEnv';
 export * from './formValidators';
 export * from './craftLayerURL';
 export * from './loadRecords';
+export * from './trimSearchTerm';

@@ -1,3 +1,4 @@
+import { searchEntityByQuery } from '../../helpers';
 
 export default server => {
   server.create('match-profile', {
@@ -116,5 +117,25 @@ export default server => {
     existingStaticValueType: 'PO_LINE_NUMBER',
   });
 
-  server.get('/data-import-profiles/matchProfiles');
+  server.get('/data-import-profiles/matchProfiles', (schema, request) => {
+    const { query = '' } = request.queryParams;
+    const matchProfiles = schema.matchProfiles.all();
+
+    const searchPattern = /name="(\w+)/;
+
+    return searchEntityByQuery({
+      query,
+      entity: matchProfiles,
+      searchPattern,
+      fieldsToMatch: [
+        'name',
+        'existingRecordType',
+        'field',
+        'fieldMarc',
+        'fieldNonMarc',
+        'existingStaticValueType',
+        'tags.tagList',
+      ],
+    });
+  });
 };
