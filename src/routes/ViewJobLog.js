@@ -11,9 +11,7 @@ export class ViewJobLog extends Component {
   static manifest = Object.freeze({
     jobLog: {
       type: 'okapi',
-      // TODO: should be changed to URL with real snapshotId after completion of UIDATIMP-186
-      // path: 'source-storage/sourceRecords?query=snapshotId=:{id}&limit=1000',
-      path: 'source-storage/sourceRecords?query=snapshotId=00000000-0000-0000-0000-000000000000&limit=1000',
+      path: 'source-storage/sourceRecords?query=snapshotId=:{id}&limit=1000',
       throwsErrors: false,
     },
   });
@@ -68,7 +66,10 @@ export class ViewJobLog extends Component {
     return (
       <div id="view-job-log-test">
         <div id="view-total-records-test">
-          <FormattedMessage id="ui-data-import.totalRecords" />: {totalRecords}
+          <FormattedMessage
+            id="ui-data-import.recordsCount"
+            values={{ count: totalRecords }}
+          />
         </div>
         <pre id="job-log-json">
           {this.formatSourceRecords(sourceRecords)}

@@ -260,6 +260,10 @@ describe('Uploading jobs display', () => {
         await uploadingJobsDisplay.loadRecordsButton.click();
       });
 
+      it('navigates to landing page', () => {
+        expect(location().pathname).to.be.equal('/data-import');
+      });
+
       it.always('error callout does not appear', () => {
         expect(uploadingJobsDisplay.callout.errorCalloutIsPresent).to.be.false;
       });

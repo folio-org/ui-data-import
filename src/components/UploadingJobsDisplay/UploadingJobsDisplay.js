@@ -54,7 +54,7 @@ export class UploadingJobsDisplay extends Component {
       replace: PropTypes.func.isRequired,
     }).isRequired,
     location: PropTypes.shape({
-      state: PropTypes.shape({
+      state: PropTypes.shape({ // eslint-disable-line object-curly-newline
         files: PropTypes.object,
       }),
     }).isRequired,
@@ -460,7 +460,10 @@ export class UploadingJobsDisplay extends Component {
 
   // TODO: this is temporary way (will be changed/removed) to initiate loading of MARC BIB files (UIDATIMP-185)
   loadMarcRecords = async menu => {
-    const { stripes: { okapi } } = this.props;
+    const {
+      stripes: { okapi },
+      history,
+    } = this.props;
     const { uploadDefinition } = this.context;
 
     try {
@@ -471,6 +474,8 @@ export class UploadingJobsDisplay extends Component {
         jobProfileId: '22fafcc3-f582-493d-88b0-3c538480cd83',
         okapi,
       });
+
+      history.push('/data-import');
     } catch (error) {
       menu.onToggle();
       this.calloutRef.current.sendCallout({
@@ -485,7 +490,6 @@ export class UploadingJobsDisplay extends Component {
 
   // TODO: this is temporary way (will be changed/removed) of deciding whether to allow to initiate
   // the process of loading MARC BIB files (UIDATIMP-185)
-  // later the button and logic for showing will be removed
   renderLoadMarcButton = menu => {
     const {
       files = [],
