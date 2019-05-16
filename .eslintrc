@@ -86,6 +86,10 @@
     ],
     "prefer-template": "error",
     "no-else-return": "error",
-    "newline-per-chained-call": "error"
+    "newline-per-chained-call": "error",
+    "linebreak-style": [
+      "error",
+      "unix"
+    ]
   }
 }

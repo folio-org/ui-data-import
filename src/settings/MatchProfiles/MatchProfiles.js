@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {
   get,
   omit,
+  noop,
 } from 'lodash';
 
 import {
@@ -15,7 +16,11 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import { Checkbox } from '@folio/stripes/components';
 
 import { trimSearchTerm } from '../../utils';
-import { SearchAndSort } from '../../components';
+import {
+  ActionMenu,
+  ACTION_MENU_CONTROLS,
+  SearchAndSort,
+} from '../../components';
 import { ViewMatchProfile } from './ViewMatchProfile';
 import { SettingPage } from '../SettingPage';
 import { resultsFormatter } from './resultsFormatter';
@@ -102,6 +107,8 @@ export class MatchProfiles extends Component {
 
   static defaultProps = { showSingleResult: true };
 
+  state = { selectedRecords: new Set() };
+
   visibleColumns = [
     'selected',
     'name',
@@ -125,6 +132,82 @@ export class MatchProfiles extends Component {
     description: '',
   };
 
+  renderActionMenu = menu => {
+    const { location } = this.props;
+    const { selectedRecords: { size: selectedRecordsSize } } = this.state;
+
+    const config = {
+      items: [{
+        control: ACTION_MENU_CONTROLS.ADD_NEW,
+        caption: 'ui-data-import.settings.matchProfiles.newProfile',
+        menu,
+        location,
+      }, {
+        control: ACTION_MENU_CONTROLS.EXPORT_SELECTED,
+        menu,
+        selectedCount: selectedRecordsSize,
+      }, {
+        control: ACTION_MENU_CONTROLS.DEFAULT,
+        caption: 'ui-data-import.selectAll',
+        icon: 'check-circle',
+        onClick: () => this.handleSelectAllButton(menu),
+        dataAttributes: { 'data-test-select-all-items-menu-button': '' },
+      }, {
+        control: ACTION_MENU_CONTROLS.DEFAULT,
+        caption: 'ui-data-import.deselectAll',
+        icon: 'times-circle',
+        onClick: () => this.handleDeselectAllButton(menu),
+        dataAttributes: { 'data-test-deselect-all-items-menu-button': '' },
+      }],
+    };
+
+    return <ActionMenu config={config} />;
+  };
+
+  selectRecord = recordId => {
+    this.setState(state => {
+      const isRecordSelected = state.selectedRecords.has(recordId);
+
+      if (isRecordSelected) {
+        state.selectedRecords.delete(recordId);
+      } else {
+        state.selectedRecords.add(recordId);
+      }
+
+      return { selectedRecords: state.selectedRecords };
+    });
+  };
+
+  handleSelectAllButton = menu => {
+    menu.onToggle();
+    this.selectAllRecords();
+  };
+
+  handleDeselectAllButton = menu => {
+    menu.onToggle();
+    this.deselectAllRecords();
+  };
+
+  selectAllRecords = () => {
+    const selectedRecords = new Set(this.matchProfiles.map(({ id }) => id));
+
+    this.setState({ selectedRecords });
+  };
+
+  deselectAllRecords = () => this.setState({ selectedRecords: new Set() });
+
+  handleSelectAllCheckbox = e => {
+    if (e.target.checked) {
+      this.selectAllRecords();
+    } else {
+      this.deselectAllRecords();
+    }
+  };
+
+  get matchProfiles() {
+    return get(this.props.resources, ['matchProfiles', 'records'], []);
+  }
+
   render() {
     const {
       resources,
@@ -138,8 +221,11 @@ export class MatchProfiles extends Component {
       selectedMatchProfile,
     } = this.props;
 
+    const { selectedRecords } = this.state;
+
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
+    const isSelectAllChecked = selectedRecords.size === this.matchProfiles.length;
 
     return (
       <IntlConsumer>
@@ -150,7 +236,7 @@ export class MatchProfiles extends Component {
             location={location}
             history={history}
             match={match}
-            getRecordName={this.getRecordName}
+            getRecordName={noop}
             getDeleteRecordSuccessfulMessage={this.getDeleteRecordSuccessfulMessage}
             getDeleteRecordErrorMessage={this.getDeleteRecordErrorMessage}
           >
@@ -165,7 +251,8 @@ export class MatchProfiles extends Component {
                 resultCountMessageKey="ui-data-import.settings.matchProfiles.count"
                 resultsLabel={label}
                 defaultSort="name"
-                resultsFormatter={resultsFormatter(searchTerm)}
+                actionMenu={this.renderActionMenu}
+                resultsFormatter={resultsFormatter(searchTerm, this.selectRecord, selectedRecords)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   selected: (
@@ -174,9 +261,13 @@ export class MatchProfiles extends Component {
                       tabIndex="0"
                       className={sharedCss.selectableCellButton}
                       data-test-select-all-checkbox
-                      onClick={e => e.stopPropagation()}
+                      onChange={this.handleSelectAllCheckbox}
                     >
-                      <Checkbox name="selected-all" />
+                      <Checkbox
+                        name="selected-all"
+                        checked={isSelectAllChecked}
+                        onChange={this.handleSelectAllCheckbox}
+                      />
                     </div>
                   ),
                   name: intl.formatMessage({ id: 'ui-data-import.name' }),

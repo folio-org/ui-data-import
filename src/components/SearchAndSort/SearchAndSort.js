@@ -125,7 +125,7 @@ export class SearchAndSort extends Component {
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
     columnMapping: PropTypes.object,
     columnWidths: PropTypes.object,
-    resultsFormatter: PropTypes.shape({}),
+    resultsFormatter: PropTypes.object,
     defaultSort: PropTypes.string,
     finishedResourceName: PropTypes.string,
     fullWidthContainer: PropTypes.instanceOf(Element),

@@ -296,4 +296,3 @@ describe('Job Profile View', () => {
     });
   });
 });
-

@@ -111,6 +111,68 @@ describe('Match profiles', () => {
       });
     });
 
+    describe('select all checkbox', () => {
+      beforeEach(async () => {
+        await matchProfiles.selectAllCheckBox.clickAndBlur();
+      });
+
+      it('selects all items', () => {
+        matchProfiles.checkBoxes().forEach(checkBox => {
+          expect(checkBox.isChecked).to.be.true;
+        });
+      });
+
+      describe('when not all records are selected', () => {
+        beforeEach(async () => {
+          await matchProfiles.checkBoxes(0).clickAndBlur();
+        });
+
+        it('becomes unchecked', () => {
+          expect(matchProfiles.selectAllCheckBox.isChecked).to.be.false;
+        });
+      });
+
+      describe('when clocked again', () => {
+        beforeEach(async () => {
+          await matchProfiles.selectAllCheckBox.clickAndBlur();
+        });
+
+        it('all items become unchecked', () => {
+          matchProfiles.checkBoxes().forEach(checkBox => {
+            expect(checkBox.isChecked).to.be.false;
+          });
+        });
+      });
+    });
+
+    describe('select all button', () => {
+      beforeEach(async () => {
+        await matchProfiles.actionMenu.click();
+        await matchProfiles.actionMenu.selectAllButton.click();
+      });
+
+      it('selects all items', () => {
+        matchProfiles.checkBoxes().forEach(checkBox => {
+          expect(checkBox.isChecked).to.be.true;
+        });
+      });
+    });
+
+    describe('deselect all button', () => {
+      beforeEach(async () => {
+        await matchProfiles.checkBoxes(0).clickAndBlur();
+        await matchProfiles.checkBoxes(1).clickAndBlur();
+        await matchProfiles.actionMenu.click();
+        await matchProfiles.actionMenu.deselectAllButton.click();
+      });
+
+      it('deselects all items', () => {
+        matchProfiles.checkBoxes().forEach(checkBox => {
+          expect(checkBox.isChecked).to.be.false;
+        });
+      });
+    });
+
     describe('has correctly built Match column', () => {
       describe('when current language is LTR', () => {
         beforeEach(async () => {

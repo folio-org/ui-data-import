@@ -129,8 +129,8 @@ describe('Job profiles', () => {
 
     describe('select all button', () => {
       beforeEach(async () => {
-        await jobProfiles.paneHeaderDropdown.click();
-        await jobProfiles.paneHeaderDropdown.selectAllButton.click();
+        await jobProfiles.actionMenu.click();
+        await jobProfiles.actionMenu.selectAllButton.click();
       });
 
       it('selects all items', () => {
@@ -144,8 +144,8 @@ describe('Job profiles', () => {
       beforeEach(async () => {
         await jobProfiles.checkBoxes(0).clickAndBlur();
         await jobProfiles.checkBoxes(1).clickAndBlur();
-        await jobProfiles.paneHeaderDropdown.click();
-        await jobProfiles.paneHeaderDropdown.deselectAllButton.click();
+        await jobProfiles.actionMenu.click();
+        await jobProfiles.actionMenu.deselectAllButton.click();
       });
 
       it('deselects all items', () => {
@@ -157,8 +157,8 @@ describe('Job profiles', () => {
 
     describe('new job profile dropdown button', () => {
       beforeEach(async () => {
-        await jobProfiles.paneHeaderDropdown.click();
-        await jobProfiles.paneHeaderDropdown.newJobProfileButton.click();
+        await jobProfiles.actionMenu.click();
+        await jobProfiles.actionMenu.newJobProfileButton.click();
       });
 
       it('opens new job profile form', () => {
