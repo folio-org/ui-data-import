@@ -26,6 +26,7 @@ import {
   buildUrl,
 } from '@folio/stripes/smart-components';
 
+import { trimSearchTerm } from '../../utils';
 import { SearchAndSort } from '../../components/SearchAndSort';
 import { FileExtensionForm } from '../../components/FileExtensionForm';
 import { ViewFileExtension } from './ViewFileExtension';
@@ -273,7 +274,7 @@ export class FileExtensions extends Component {
     const { isResetFileExtensionsModalOpen } = this.state;
 
     const urlQuery = queryString.parse(location.search);
-    const searchTerm = (urlQuery.query || '').trim();
+    const searchTerm = trimSearchTerm(urlQuery.query);
 
     return (
       <IntlConsumer>

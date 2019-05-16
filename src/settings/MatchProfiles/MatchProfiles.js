@@ -14,6 +14,7 @@ import {
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 import { Checkbox } from '@folio/stripes/components';
 
+import { trimSearchTerm } from '../../utils';
 import { SearchAndSort } from '../../components';
 import { ViewMatchProfile } from './ViewMatchProfile';
 import { SettingPage } from '../SettingPage';
@@ -23,6 +24,17 @@ import sharedCss from '../../shared.css';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
+
+const findAllQueryParameter = 'cql.allRecords=1';
+const queryTemplate = `(
+  name="%{query.query}*" OR
+  existingRecordType="%{query.query}*" OR
+  field="%{query.query}*" OR
+  fieldMarc="%{query.query}*" OR
+  fieldNonMarc="%{query.query}*" OR
+  existingStaticValueType="%{query.query}*" OR
+  tags.tagList="%{query.query}*"
+)`;
 
 const mapStateToProps = state => {
   const {
@@ -55,8 +67,8 @@ export class MatchProfiles extends Component {
       GET: {
         params: {
           query: makeQueryFunction(
-            'cql.allRecords=1',
-            '(name="%{query.query}*" OR tags.tagList="%{query.query}*")',
+            findAllQueryParameter,
+            queryTemplate,
             {
               name: 'name',
               match: 'existingRecordType field fieldMarc fieldNonMarc existingStaticValueType',
@@ -133,7 +145,7 @@ export class MatchProfiles extends Component {
     } = this.props;
 
     const urlQuery = queryString.parse(search);
-    const searchTerm = (urlQuery.query || '').trim();
+    const searchTerm = trimSearchTerm(urlQuery.query);
 
     return (
       <IntlConsumer>

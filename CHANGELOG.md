@@ -3,6 +3,7 @@
 ## 1.3.0 (IN-PROGRESS)
 * Create data import settings page's 3rd pane for Match Profiles. Add string capitalization (capitalize) and HTML special chars decoding (htmlDecode) utils (UIDATIMP-6)
 * Create temporary MARC Bib files load option on Choose jobs pane (UIDATIMP-185)
+* Add Search box for 3rd pane of Match Profiles (UIDATIMP-166)
 
 ## [1.2.1](https://github.com/folio-org/ui-data-import/tree/v1.2.1) (2019-05-14)
 * Downgrade okapi interface version in order to have data-import-converter-storage API endpoints work (UIDATIMP-195)
