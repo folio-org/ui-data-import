@@ -2,7 +2,10 @@ import React, { memo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { Icon, Button } from '@folio/stripes/components';
+import {
+  Icon,
+  Button,
+} from '@folio/stripes/components';
 
 export const Default = memo(props => {
   const {
@@ -29,5 +32,5 @@ Default.propTypes = {
   caption: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  dataAttributes: PropTypes.shape({}).isRequired,
+  dataAttributes: PropTypes.object.isRequired,
 };

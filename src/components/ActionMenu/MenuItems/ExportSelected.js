@@ -5,7 +5,10 @@ import React, {
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { Icon, Button } from '@folio/stripes/components';
+import {
+  Icon,
+  Button,
+} from '@folio/stripes/components';
 
 export const ExportSelected = memo(props => {
   const {
@@ -37,6 +40,6 @@ export const ExportSelected = memo(props => {
 });
 
 ExportSelected.propTypes = {
-  menu: PropTypes.shape({}).isRequired,
+  menu: PropTypes.object.isRequired,
   selectedCount: PropTypes.number.isRequired,
 };

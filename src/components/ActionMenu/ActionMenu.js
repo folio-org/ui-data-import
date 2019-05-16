@@ -26,5 +26,5 @@ export const ActionMenu = memo(props => {
 });
 
 ActionMenu.propTypes = {
-  config: PropTypes.shape({}).isRequired,
+  config: PropTypes.object.isRequired,
 };

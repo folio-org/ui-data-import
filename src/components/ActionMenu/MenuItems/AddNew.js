@@ -1,14 +1,16 @@
-import React, {
-  memo,
-} from 'react';
+import React, { memo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { Icon, Button } from '@folio/stripes/components';
+import {
+  Icon,
+  Button,
+} from '@folio/stripes/components';
 
-import sharedCss from '../../../shared.css';
 import { createLayerURL } from '../../../utils';
 import { LAYER_TYPES } from '../../../utils/constants';
+
+import sharedCss from '../../../shared.css';
 
 export const AddNew = memo(props => {
   const {
@@ -34,7 +36,7 @@ export const AddNew = memo(props => {
 
 AddNew.propTypes = {
   caption: PropTypes.string.isRequired,
-  menu: PropTypes.shape({}).isRequired,
+  menu: PropTypes.object.isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
   }).isRequired,

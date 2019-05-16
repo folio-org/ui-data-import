@@ -18,6 +18,7 @@ import { Checkbox } from '@folio/stripes/components';
 import { trimSearchTerm } from '../../utils';
 import {
   ActionMenu,
+  ACTION_MENU_CONTROLS,
   SearchAndSort,
 } from '../../components';
 import { ViewMatchProfile } from './ViewMatchProfile';
@@ -137,22 +138,22 @@ export class MatchProfiles extends Component {
 
     const config = {
       items: [{
-        control: 'AddNew',
+        control: ACTION_MENU_CONTROLS.ADD_NEW,
         caption: 'ui-data-import.settings.matchProfiles.newProfile',
         menu,
         location,
       }, {
-        control: 'ExportSelected',
+        control: ACTION_MENU_CONTROLS.EXPORT_SELECTED,
         menu,
         selectedCount: selectedRecordsSize,
       }, {
-        control: 'Default',
+        control: ACTION_MENU_CONTROLS.DEFAULT,
         caption: 'ui-data-import.selectAll',
         icon: 'check-circle',
         onClick: () => this.handleSelectAllButton(menu),
         dataAttributes: { 'data-test-select-all-items-menu-button': '' },
       }, {
-        control: 'Default',
+        control: ACTION_MENU_CONTROLS.DEFAULT,
         caption: 'ui-data-import.deselectAll',
         icon: 'times-circle',
         onClick: () => this.handleDeselectAllButton(menu),
@@ -160,7 +161,7 @@ export class MatchProfiles extends Component {
       }],
     };
 
-    return (<ActionMenu config={config} />);
+    return <ActionMenu config={config} />;
   };
 
   selectRecord = recordId => {
