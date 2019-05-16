@@ -5,7 +5,12 @@ import PropTypes from 'prop-types';
 import { Icon, Button } from '@folio/stripes/components';
 
 export const Default = memo(props => {
-  const { caption, icon, onClick, dataAttributes } = props;
+  const {
+    caption,
+    icon,
+    onClick,
+    dataAttributes,
+  } = props;
 
   return (
     <Button

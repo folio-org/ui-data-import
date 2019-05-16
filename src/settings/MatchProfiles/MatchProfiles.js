@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {
   get,
   omit,
+  noop,
 } from 'lodash';
 
 import {
@@ -162,10 +163,6 @@ export class MatchProfiles extends Component {
     return (<ActionMenu config={config} />);
   };
 
-  getRecordName(record) {
-    return record.name;
-  }
-
   selectRecord = recordId => {
     this.setState(state => {
       const isRecordSelected = state.selectedRecords.has(recordId);
@@ -238,7 +235,7 @@ export class MatchProfiles extends Component {
             location={location}
             history={history}
             match={match}
-            getRecordName={this.getRecordName}
+            getRecordName={noop}
             getDeleteRecordSuccessfulMessage={this.getDeleteRecordSuccessfulMessage}
             getDeleteRecordErrorMessage={this.getDeleteRecordErrorMessage}
           >

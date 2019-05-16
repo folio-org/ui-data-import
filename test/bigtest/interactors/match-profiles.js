@@ -13,7 +13,7 @@ import { CheckboxInteractor } from './checkbox-interactor';
 import { ActionMenuInteractor } from './action-menu-interactor';
 
 @interactor class MatchProfilesInteractor {
-  actionMenu = scoped('#pane-results', ActionMenuInteractor, 'match-profile');
+  actionMenu = scoped('#pane-results', ActionMenuInteractor);
   list = new MultiColumnListInteractor('#match-profiles-list');
   selectAllCheckBox = new CheckboxInteractor('[data-test-select-all-checkbox]');
   checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);

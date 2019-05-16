@@ -14,7 +14,12 @@ export const ActionMenu = memo(props => {
       {items && items.length && items.map((cfg, i) => {
         const Control = Actions[cfg.control];
 
-        return (<Control key={`menu-item-${i}`} {...cfg} />);
+        return (
+          <Control
+            key={`menu-item-${i}`}
+            {...cfg}
+          />
+        );
       })}
     </Fragment>
   );

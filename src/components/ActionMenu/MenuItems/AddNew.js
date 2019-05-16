@@ -11,7 +11,11 @@ import { createLayerURL } from '../../../utils';
 import { LAYER_TYPES } from '../../../utils/constants';
 
 export const AddNew = memo(props => {
-  const { caption, menu, location } = props;
+  const {
+    caption,
+    menu,
+    location,
+  } = props;
 
   return (
     <Button

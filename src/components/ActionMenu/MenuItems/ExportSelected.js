@@ -8,7 +8,10 @@ import PropTypes from 'prop-types';
 import { Icon, Button } from '@folio/stripes/components';
 
 export const ExportSelected = memo(props => {
-  const { menu, selectedCount } = props;
+  const {
+    menu,
+    selectedCount,
+  } = props;
 
   return (
     <Button
