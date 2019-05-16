@@ -51,13 +51,6 @@
     ],
     "semi": "off",
     "babel/semi": "error",
-    "object-curly-newline": [
-      "error",
-      {
-        "multiline": true,
-        "minProperties": 2
-      }
-    ],
     "no-multiple-empty-lines": [
       "error",
       {
@@ -86,6 +79,10 @@
     ],
     "prefer-template": "error",
     "no-else-return": "error",
-    "newline-per-chained-call": "error"
+    "newline-per-chained-call": "error",
+    "linebreak-style": [
+      "error",
+      "unix"
+    ]
   }
 }

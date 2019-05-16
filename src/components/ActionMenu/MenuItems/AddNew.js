@@ -37,7 +37,5 @@ export const AddNew = memo(props => {
 AddNew.propTypes = {
   caption: PropTypes.string.isRequired,
   menu: PropTypes.object.isRequired,
-  location: PropTypes.shape({
-    search: PropTypes.string.isRequired,
-  }).isRequired,
+  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
 };
