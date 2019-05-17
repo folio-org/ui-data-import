@@ -4,7 +4,7 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import { createUrl } from '../../../src/utils';
+import { createUrl } from '../../../../src/utils';
 
 describe('createUrl function', () => {
   it('creates correct url', () => {

@@ -43,9 +43,7 @@ export class Job extends Component {
     const timePart = <FormattedTime value={dateStr} />;
     const todayPart = isToday && <FormattedMessage id="ui-data-import.today" />;
 
-    return (
-      <span>{datePart} {timePart} {todayPart}</span>
-    );
+    return <span>{datePart} {timePart} {todayPart}</span>;
   }
 
   render() {
@@ -83,51 +81,53 @@ export class Job extends Component {
 
         <div className={css.delimiter}>
           <span>{hrId}</span>
-          <span>
-            <FormattedMessage id="ui-data-import.triggeredBy" /> <span>{firstName} {lastName}</span>
-          </span>
+          <FormattedMessage
+            id="ui-data-import.triggeredBy"
+            values={{ userName: `${firstName} ${lastName}` }}
+            tagName="span"
+          />
         </div>
 
         <div className={css.delimiter}>
           {jobMeta && (
-            <span>
-              <FormattedMessage
-                id="ui-data-import.recordsCount"
-                values={{ count: total }}
-              />
-            </span>
+            <FormattedMessage
+              id="ui-data-import.recordsCount"
+              values={{ count: total }}
+              tagName="span"
+            />
           )}
-          <span>
-            <span data-test-date-label><FormattedMessage id={dateLabelId} /></span> {this.formatTime(jobMeta.date)}
+          <span data-test-date-label>
+            <FormattedMessage
+              id={dateLabelId}
+              values={{ time: this.formatTime(jobMeta.date) }}
+            />
           </span>
         </div>
 
         {jobMeta.showProgress && (
           <Fragment>
-            <div>
-              <FormattedMessage id="ui-data-import.progressRunning" />
-            </div>
-            <div data-test-progress-bar>
-              <Progress
-                current={current}
-                total={total}
-              />
-            </div>
+            <FormattedMessage
+              id="ui-data-import.progressRunning"
+              tagName="div"
+            />
+            <Progress
+              current={current}
+              total={total}
+            />
           </Fragment>
         )}
 
         {jobMeta.showPreview && (
           <div className={css.jobPreview}>
             <FormattedMessage id="ui-data-import.readyForPreview" />
-            <div data-test-preview-now-button>
-              <Button
-                buttonStyle="primary"
-                marginBottom0
-                onClick={handlePreview}
-              >
-                <FormattedMessage id="ui-data-import.previewNow" />
-              </Button>
-            </div>
+            <Button
+              data-test-preview-now-button
+              buttonStyle="primary"
+              marginBottom0
+              onClick={handlePreview}
+            >
+              <FormattedMessage id="ui-data-import.previewNow" />
+            </Button>
           </div>
         )}
       </div>

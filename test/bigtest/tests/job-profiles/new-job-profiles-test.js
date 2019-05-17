@@ -5,11 +5,11 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import { setupApplication } from '../helpers';
+import { setupApplication } from '../../helpers';
 import {
   jobProfiles,
   jobProfileForm,
-} from '../interactors';
+} from '../../interactors';
 
 async function setupFormSubmitErrorScenario(server, responseData = {}) {
   const {

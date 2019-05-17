@@ -269,12 +269,12 @@ export class ViewFileExtension extends Component {
         <ConfirmationModal
           id="delete-file-extension-modal"
           open={showDeleteConfirmation}
-          heading={
+          heading={(
             <FormattedMessage
               id="ui-data-import.modal.fileExtension.delete.header"
               values={{ extension: record.extension }}
             />
-          }
+          )}
           message={<FormattedMessage id="ui-data-import.modal.fileExtension.delete.message" />}
           confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
           cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}

@@ -5,11 +5,11 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import { setupApplication } from '../helpers';
+import { setupApplication } from '../../helpers';
 import {
   matchProfileDetails,
   matchProfiles,
-} from '../interactors';
+} from '../../interactors';
 
 describe('Match Profile View', () => {
   setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users'] });

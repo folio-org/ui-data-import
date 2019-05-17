@@ -6,12 +6,12 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import { setupApplication } from '../helpers';
+import { setupApplication } from '../../helpers';
 import {
   jobProfileForm,
   jobProfileDetails,
   jobProfiles,
-} from '../interactors';
+} from '../../interactors';
 
 async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
   const {

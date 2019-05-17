@@ -7,7 +7,7 @@ import {
 import {
   convertDate,
   DATE_TYPES,
-} from '../../../src/components/Jobs/utils';
+} from '../../../../src/components/Jobs/utils';
 
 describe('convertDate', () => {
   describe('converts', () => {

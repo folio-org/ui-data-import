@@ -53,9 +53,7 @@ export class ViewJobLog extends Component {
     const renderSpinner = !record || !hasLoaded;
 
     if (renderSpinner) {
-      return (
-        <Preloader />
-      );
+      return <Preloader />;
     }
 
     const {

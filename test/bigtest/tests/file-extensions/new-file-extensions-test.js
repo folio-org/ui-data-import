@@ -6,12 +6,12 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import { setupApplication } from '../helpers';
+import { setupApplication } from '../../helpers';
 import {
   fileExtensions,
   fileExtensionForm,
   fileExtensionDetails,
-} from '../interactors';
+} from '../../interactors';
 
 async function setupFormSubmitErrorScenario(server, responseData = {}) {
   const {

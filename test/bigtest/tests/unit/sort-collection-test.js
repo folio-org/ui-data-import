@@ -4,11 +4,11 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import { sortCollection } from '../../../src/utils';
+import { sortCollection } from '../../../../src/utils';
 import {
   convertDate,
   DATE_TYPES,
-} from '../../../src/components/Jobs/utils';
+} from '../../../../src/components/Jobs/utils';
 
 const statuses = {
   FIRST_STATUS: 'FIRST_STATUS',

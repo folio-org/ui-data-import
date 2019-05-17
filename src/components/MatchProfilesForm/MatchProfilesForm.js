@@ -90,4 +90,3 @@ export const MatchProfilesForm = stripesForm({
   navigationCheck: true,
   enableReinitialize: true,
 })(MatchProfilesFormComponent);
-

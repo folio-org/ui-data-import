@@ -4,7 +4,7 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import { htmlDecode } from '../../../src/utils';
+import { htmlDecode } from '../../../../src/utils';
 
 describe('htmlDecode function', () => {
   it('decodes HTML special chars in the given string', () => {

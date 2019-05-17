@@ -5,13 +5,13 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import translation from '../../../translations/ui-data-import/en';
-import { setupApplication } from '../helpers';
+import translation from '../../../../translations/ui-data-import/en';
+import { setupApplication } from '../../helpers';
 import {
   matchProfiles,
   matchProfileDetails,
-} from '../interactors';
-import { htmlDecode } from '../../../src/utils';
+} from '../../interactors';
+import { htmlDecode } from '../../../../src/utils';
 
 describe('Match profiles', () => {
   setupApplication({ scenarios: ['fetch-match-profiles-success'] });

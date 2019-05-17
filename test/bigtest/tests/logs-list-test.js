@@ -23,14 +23,6 @@ describe('Logs list', () => {
     expect(logsList.rowCount).to.equal(3);
   });
 
-  describe('Log buttons', () => {
-    it('appear in second column', () => {
-      expect(getCellContent(0, 1)).to.equal('Log');
-      expect(getCellContent(1, 1)).to.equal('Log');
-      expect(getCellContent(2, 1)).to.equal('Log');
-    });
-  });
-
   describe('sorting', () => {
     describe('compares fields as strings', () => {
       beforeEach(async () => {
@@ -58,13 +50,33 @@ describe('Logs list', () => {
 
     describe('compares fields as numbers', () => {
       beforeEach(async () => {
-        await logsList.headers(3).click();
+        await logsList.headers(2).click();
       });
 
       it('ascending', () => {
-        expect(getCellContent(0, 3)).to.equal('01');
-        expect(getCellContent(1, 3)).to.equal('02');
-        expect(getCellContent(2, 3)).to.equal('03');
+        expect(getCellContent(0, 2)).to.equal('01');
+        expect(getCellContent(1, 2)).to.equal('02');
+        expect(getCellContent(2, 2)).to.equal('03');
+      });
+
+      describe('and', () => {
+        beforeEach(async () => {
+          await logsList.headers(2).click();
+        });
+
+        it('descending', () => {
+          expect(getCellContent(0, 2)).to.equal('03');
+          expect(getCellContent(1, 2)).to.equal('02');
+          expect(getCellContent(2, 2)).to.equal('01');
+        });
+      });
+    });
+
+    describe('compares fields as dates', () => {
+      it('descending', () => {
+        expect(getCellContent(0, 3)).to.equal('11/11/2018, 2:10 PM');
+        expect(getCellContent(1, 3)).to.equal('11/5/2018, 2:21 PM');
+        expect(getCellContent(2, 3)).to.equal('11/5/2018, 1:08 PM');
       });
 
       describe('and', () => {
@@ -72,19 +84,23 @@ describe('Logs list', () => {
           await logsList.headers(3).click();
         });
 
-        it('descending', () => {
-          expect(getCellContent(0, 3)).to.equal('03');
-          expect(getCellContent(1, 3)).to.equal('02');
-          expect(getCellContent(2, 3)).to.equal('01');
+        it('ascending', () => {
+          expect(getCellContent(0, 3)).to.equal('11/5/2018, 1:08 PM');
+          expect(getCellContent(1, 3)).to.equal('11/5/2018, 2:21 PM');
+          expect(getCellContent(2, 3)).to.equal('11/11/2018, 2:10 PM');
         });
       });
     });
 
-    describe('compares fields as dates', () => {
-      it('descending', () => {
-        expect(getCellContent(0, 4)).to.equal('11/11/2018, 2:10 PM');
-        expect(getCellContent(1, 4)).to.equal('11/5/2018, 2:21 PM');
-        expect(getCellContent(2, 4)).to.equal('11/5/2018, 1:08 PM');
+    describe('compares by `runBy` field', () => {
+      beforeEach(async () => {
+        await logsList.headers(4).click();
+      });
+
+      it('ascending', () => {
+        expect(getCellContent(0, 4)).to.equal('Elliot Lane');
+        expect(getCellContent(1, 4)).to.equal('Jay Morrowitz');
+        expect(getCellContent(2, 4)).to.equal('Ozzy Campenshtorm');
       });
 
       describe('and', () => {
@@ -92,34 +108,10 @@ describe('Logs list', () => {
           await logsList.headers(4).click();
         });
 
-        it('ascending', () => {
-          expect(getCellContent(0, 4)).to.equal('11/5/2018, 1:08 PM');
-          expect(getCellContent(1, 4)).to.equal('11/5/2018, 2:21 PM');
-          expect(getCellContent(2, 4)).to.equal('11/11/2018, 2:10 PM');
-        });
-      });
-    });
-
-    describe('compares by `runBy` field', () => {
-      beforeEach(async () => {
-        await logsList.headers(5).click();
-      });
-
-      it('ascending', () => {
-        expect(getCellContent(0, 5)).to.equal('Elliot Lane');
-        expect(getCellContent(1, 5)).to.equal('Jay Morrowitz');
-        expect(getCellContent(2, 5)).to.equal('Ozzy Campenshtorm');
-      });
-
-      describe('and', () => {
-        beforeEach(async () => {
-          await logsList.headers(5).click();
-        });
-
         it('descending', () => {
-          expect(getCellContent(0, 5)).to.equal('Ozzy Campenshtorm');
-          expect(getCellContent(1, 5)).to.equal('Jay Morrowitz');
-          expect(getCellContent(2, 5)).to.equal('Elliot Lane');
+          expect(getCellContent(0, 4)).to.equal('Ozzy Campenshtorm');
+          expect(getCellContent(1, 4)).to.equal('Jay Morrowitz');
+          expect(getCellContent(2, 4)).to.equal('Elliot Lane');
         });
       });
     });

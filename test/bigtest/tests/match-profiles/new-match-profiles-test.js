@@ -5,12 +5,12 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import { setupApplication } from '../helpers';
+import { setupApplication } from '../../helpers';
 
 import {
   matchProfiles,
   matchProfileForm,
-} from '../interactors';
+} from '../../interactors';
 
 describe('Match profile form', () => {
   setupApplication();
