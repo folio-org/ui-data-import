@@ -51,7 +51,10 @@ export const Progress = props => {
   const progressInfo = progressInfoFormatters[progressInfoType](current, total, payload);
 
   return (
-    <div className={progressClassName}>
+    <div
+      className={progressClassName}
+      data-test-progress-bar
+    >
       <div className={progressWrapperClassName}>
         <div
           className={progressCurrentClassName}

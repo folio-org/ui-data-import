@@ -67,6 +67,7 @@
       }
     ],
     "react/jsx-one-expression-per-line": false,
+    "react/jsx-wrap-multilines": ["error"],
     "react/jsx-max-props-per-line": [
       "error",
       {

@@ -343,12 +343,12 @@ export class ViewJobProfile extends Component {
         <ConfirmationModal
           id="delete-job-profile-modal"
           open={this.state.showDeleteConfirmation}
-          heading={
+          heading={(
             <FormattedMessage
               id="ui-data-import.modal.jobProfile.delete.header"
               values={{ name: record.name }}
             />
-          }
+          )}
           message={<FormattedMessage id="ui-data-import.modal.jobProfile.delete.message" />}
           confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
           cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}

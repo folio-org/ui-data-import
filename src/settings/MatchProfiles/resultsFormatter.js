@@ -76,7 +76,7 @@ export const resultsFormatter = (searchTerm, selectRecord, selectedRecords) => (
             iconKey={RECORD_TYPES[existingRecordType].icon}
             className={sharedCss.cellAppIcon}
           >
-            {document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT &&
+            {document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT && (
               <Fragment>
                 <HighLight
                   search={searchTerm}
@@ -99,8 +99,8 @@ export const resultsFormatter = (searchTerm, selectRecord, selectedRecords) => (
                   {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
                 </HighLight>
               </Fragment>
-            }
-            {document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT &&
+            )}
+            {document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT && (
               <Fragment>
                 <HighLight
                   search={searchTerm}
@@ -123,7 +123,7 @@ export const resultsFormatter = (searchTerm, selectRecord, selectedRecords) => (
                   {intl.formatMessage({ id: RECORD_TYPES[existingRecordType].caption })}
                 </HighLight>
               </Fragment>
-            }
+            )}
           </AppIcon>
         )}
       </IntlConsumer>

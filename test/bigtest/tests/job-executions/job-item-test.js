@@ -5,7 +5,6 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import translation from '../../../../translations/ui-data-import/en';
 import { setupApplication } from '../../helpers';
 import { jobsPane } from '../../interactors';
 
@@ -22,7 +21,7 @@ describe('Job item', () => {
     });
 
     it('has correct date label', () => {
-      expect(jobsPane.previewJobs.jobItems(0).dateLabelText).to.be.equal(translation.endedRunning);
+      expect(jobsPane.previewJobs.jobItems(0).dateLabelText).contains('Ended');
     });
   });
 
@@ -32,7 +31,7 @@ describe('Job item', () => {
     });
 
     it('has correct date label', () => {
-      expect(jobsPane.previewJobs.jobItems(4).dateLabelText).to.be.equal(translation.beganRunning);
+      expect(jobsPane.previewJobs.jobItems(4).dateLabelText).contains('Began');
     });
   });
 
@@ -42,7 +41,7 @@ describe('Job item', () => {
     });
 
     it('has correct date label', () => {
-      expect(jobsPane.runningJobs.jobItems(0).dateLabelText).to.be.equal(translation.beganRunning);
+      expect(jobsPane.runningJobs.jobItems(0).dateLabelText).contains('Began');
     });
   });
 });
