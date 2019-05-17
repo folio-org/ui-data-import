@@ -5,13 +5,13 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import translation from '../../../translations/ui-data-import/en';
-import { setupApplication } from '../helpers';
+import translation from '../../../../translations/ui-data-import/en';
+import { setupApplication } from '../../helpers';
 import {
   jobProfiles,
   jobProfileForm,
   jobProfileDetails,
-} from '../interactors';
+} from '../../interactors';
 
 describe('Job profiles', () => {
   setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users'] });

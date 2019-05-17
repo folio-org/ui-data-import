@@ -5,9 +5,9 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import translation from '../../../translations/ui-data-import/en';
-import { setupApplication } from '../helpers';
-import { jobsPane } from '../interactors';
+import translation from '../../../../translations/ui-data-import/en';
+import { setupApplication } from '../../helpers';
+import { jobsPane } from '../../interactors';
 
 describe('Job item', () => {
   setupApplication({ scenarios: ['fetch-jobs-data-success'] });

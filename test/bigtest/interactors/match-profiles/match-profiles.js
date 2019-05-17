@@ -9,8 +9,8 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 
-import { CheckboxInteractor } from './checkbox-interactor';
-import { ActionMenuInteractor } from './action-menu-interactor';
+import { CheckboxInteractor } from '../checkbox-interactor';
+import { ActionMenuInteractor } from '../action-menu-interactor';
 
 @interactor class MatchProfilesInteractor {
   actionMenu = scoped('#pane-results', ActionMenuInteractor);

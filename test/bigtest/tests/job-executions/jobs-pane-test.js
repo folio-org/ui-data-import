@@ -8,10 +8,10 @@ import {
 import {
   PREVIEW_JOBS_LENGTH,
   RUNNING_JOBS_LENGTH,
-} from '../mocks/job-executions';
-import translation from '../../../translations/ui-data-import/en';
-import { setupApplication } from '../helpers';
-import { jobsPane } from '../interactors';
+} from '../../mocks/job-executions';
+import translation from '../../../../translations/ui-data-import/en';
+import { setupApplication } from '../../helpers';
+import { jobsPane } from '../../interactors';
 
 describe('Jobs pane', () => {
   setupApplication();

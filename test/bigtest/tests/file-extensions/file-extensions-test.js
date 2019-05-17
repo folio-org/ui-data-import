@@ -5,8 +5,8 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import { fileExtensions } from '../interactors';
-import { setupApplication } from '../helpers';
+import { fileExtensions } from '../../interactors';
+import { setupApplication } from '../../helpers';
 
 describe('File extensions', () => {
   setupApplication({ scenarios: ['fetch-file-extensions-success', 'restore-default-file-extensions-success', 'fetch-users'] });

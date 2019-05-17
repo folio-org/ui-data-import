@@ -8,7 +8,7 @@ import TextAreaInteractor from '@folio/stripes-components/lib/TextArea/tests/int
 import CheckboxInteractor from '@folio/stripes-components/lib/Checkbox/tests/interactor';
 import MultiSelectionInteractor from '@folio/stripes-components/lib/MultiSelection/tests/interactor';
 
-import { FullScreenFormInteractor } from '.';
+import { FullScreenFormInteractor } from '../full-screen-form';
 
 class NewFileExtensionInteractor extends FullScreenFormInteractor {
   isLoaded = isPresent('[name="description"]');

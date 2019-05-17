@@ -5,9 +5,9 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import { sortPreviewJobs } from '../../../src/components/Jobs/components/PreviewsJobs/sortPreviewJobs';
-import { sortRunningJobs } from '../../../src/components/Jobs/components/RunningJobs/sortRunningJobs';
-import { JOB_STATUSES } from '../../../src/utils/constants';
+import { sortPreviewJobs } from '../../../../src/components/Jobs/components/PreviewsJobs/sortPreviewJobs';
+import { sortRunningJobs } from '../../../../src/components/Jobs/components/RunningJobs/sortRunningJobs';
+import { JOB_STATUSES } from '../../../../src/utils/constants';
 
 const {
   READY_FOR_PREVIEW,

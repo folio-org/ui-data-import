@@ -6,13 +6,13 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import translation from '../../../translations/ui-data-import/en';
-import { setupApplication } from '../helpers';
+import translation from '../../../../translations/ui-data-import/en';
+import { setupApplication } from '../../helpers';
 import {
   fileExtensionForm,
   fileExtensionDetails,
   fileExtensions,
-} from '../interactors';
+} from '../../interactors';
 
 async function setupFormSubmitErrorScenario(server, responseData = {}) {
   const {
