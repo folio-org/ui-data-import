@@ -5,7 +5,7 @@ import SelectInteractor from '@folio/stripes-components/lib/Select/tests/interac
 import { FullScreenFormInteractor } from '.';
 
 class NewJobProfileInteractor extends FullScreenFormInteractor {
-  nameFiled = new TextFieldInteractor('[data-test-name-field]');
+  nameField = new TextFieldInteractor('[data-test-name-field]');
   dataTypeField = new SelectInteractor('[data-test-accepted-data-types-field]');
   descriptionField = new TextAreaInteractor('[data-test-description-field]');
 }

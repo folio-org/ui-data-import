@@ -20,6 +20,7 @@ import {
   ActionMenu,
   ACTION_MENU_CONTROLS,
   SearchAndSort,
+  MatchProfilesForm,
 } from '../../components';
 import { ViewMatchProfile } from './ViewMatchProfile';
 import { SettingPage } from '../SettingPage';
@@ -278,6 +279,7 @@ export class MatchProfiles extends Component {
                 }}
                 columnWidths={this.columnWidths}
                 ViewRecordComponent={ViewMatchProfile}
+                EditRecordComponent={MatchProfilesForm}
                 newRecordInitialValues={this.defaultNewRecordInitialValues}
                 editRecordInitialValues={selectedMatchProfile.record}
                 editRecordInitialValuesAreLoaded={selectedMatchProfile.hasLoaded}

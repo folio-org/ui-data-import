@@ -27,7 +27,7 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
   }`;
 
   server[method](url, () => new Response(status, headers, response));
-  await jobProfileForm.nameFiled.fillAndBlur('Changed title');
+  await jobProfileForm.nameField.fillAndBlur('Changed title');
   await jobProfileForm.dataTypeField.selectAndBlur('MARC');
   await jobProfileForm.submitFormButton.click();
 }
@@ -82,7 +82,7 @@ describe('Job Profile View', () => {
 
       describe('when form is submitted', () => {
         beforeEach(async () => {
-          await jobProfileForm.nameFiled.fillAndBlur('Changed name');
+          await jobProfileForm.nameField.fillAndBlur('Changed name');
           await jobProfileForm.dataTypeField.selectAndBlur('MARC');
           await jobProfileForm.descriptionField.fillAndBlur('Changed description');
           await jobProfileForm.submitFormButton.click();
@@ -141,7 +141,7 @@ describe('Job Profile View', () => {
 
         describe('when form is submitted', () => {
           beforeEach(async () => {
-            await jobProfileForm.nameFiled.fillAndBlur('My new name');
+            await jobProfileForm.nameField.fillAndBlur('My new name');
             await jobProfileForm.dataTypeField.selectAndBlur('MARC');
             await jobProfileForm.descriptionField.fillAndBlur('My new description');
             await jobProfileForm.submitFormButton.click();
