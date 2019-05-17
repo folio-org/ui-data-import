@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  FormattedMessage,
   injectIntl,
   intlShape,
 } from 'react-intl';
@@ -26,7 +25,7 @@ const withJobLogsCellsFormatterComponent = WrappedComponent => {
         ...props.formatter,
         runBy: this.formatUser,
         completedDate: this.formatEndedRunningDate,
-        log: this.createLogButton,
+        fileName: this.formatFileName,
       };
     }
 
@@ -53,14 +52,19 @@ const withJobLogsCellsFormatterComponent = WrappedComponent => {
       });
     };
 
-    createLogButton = record => (
+    formatFileName = record => (
       <Button
-        buttonStyle="primary"
+        buttonStyle="link"
         marginBottom0
         to={`/data-import/log/${record.jobExecutionId}`}
+        style={{
+          marginTop: '5px',
+          marginBottom: '5px',
+          color: 'inherit',
+        }}
         target="_blank"
       >
-        <FormattedMessage id="ui-data-import.log" />
+        {record.fileName}
       </Button>
     );
 

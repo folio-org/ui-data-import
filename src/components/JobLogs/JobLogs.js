@@ -35,7 +35,6 @@ export class JobLogs extends Component {
 
     this.columnMapping = {
       fileName: formatMessage({ id: 'ui-data-import.fileName' }),
-      log: '',
       jobProfileName: formatMessage({ id: 'ui-data-import.jobProfileName' }),
       jobExecutionHrId: formatMessage({ id: 'ui-data-import.jobExecutionHrId' }),
       completedDate: formatMessage({ id: 'ui-data-import.jobCompletedDate' }),
@@ -44,14 +43,13 @@ export class JobLogs extends Component {
 
     this.visibleColumns = [
       'fileName',
-      'log',
       'jobProfileName',
       'jobExecutionHrId',
       'completedDate',
       'runBy',
     ];
 
-    this.columnWidths = { log: 80 };
+    this.columnWidths = { fileName: 230 };
   }
 
   render() {
