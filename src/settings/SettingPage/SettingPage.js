@@ -69,7 +69,7 @@ export const SettingPage = props => {
     });
   };
 
-  const createRecord = async record => resourceMutator.POST(record)
+  const createRecord = record => resourceMutator.POST(record)
     .catch(error => {
       showUpdateRecordErrorMessage(error, record);
 

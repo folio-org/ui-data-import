@@ -21,16 +21,29 @@ export const MatchProfilesFormComponent = props => {
   const {
     pristine,
     submitting,
+    initialValues,
     handleSubmit,
     onCancel,
   } = props;
 
+  const isEditMode = Boolean(initialValues.id);
   const isSubmitDisabled = pristine || submitting;
+
+  const paneTitle = isEditMode
+    ? (
+      <FormattedMessage id="ui-data-import.edit">
+        {txt => `${txt} ${initialValues.name}`}
+      </FormattedMessage>
+    )
+    : <FormattedMessage id="ui-data-import.settings.matchProfiles.newProfile" />;
+  const headLine = isEditMode
+    ? initialValues.name
+    : <FormattedMessage id="ui-data-import.settings.matchProfiles.newProfile" />;
 
   return (
     <FullScreenForm
       id="match-profiles-form"
-      paneTitle={<FormattedMessage id="ui-data-import.settings.matchProfiles.newProfile" />}
+      paneTitle={paneTitle}
       submitMessage={<FormattedMessage id="ui-data-import.save" />}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={handleSubmit}
@@ -41,7 +54,7 @@ export const MatchProfilesFormComponent = props => {
         tag="h2"
         data-test-header-title
       >
-        <FormattedMessage id="ui-data-import.settings.matchProfiles.newProfile" />
+        {headLine}
       </Headline>
       <AccordionSet>
         <Accordion
@@ -79,6 +92,7 @@ export const MatchProfilesFormComponent = props => {
 };
 
 MatchProfilesFormComponent.propTypes = {
+  initialValues: PropTypes.object.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,

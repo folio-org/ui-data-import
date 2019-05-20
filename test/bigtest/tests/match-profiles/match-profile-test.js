@@ -7,8 +7,9 @@ import {
 
 import { setupApplication } from '../../helpers';
 import {
-  matchProfileDetails,
   matchProfiles,
+  matchProfileForm,
+  matchProfileDetails,
 } from '../../interactors';
 
 describe('Match Profile View', () => {
@@ -81,6 +82,29 @@ describe('Match Profile View', () => {
 
       it('upon click changes its state', () => {
         expect(matchProfileDetails.associatedJobProfiles.checkBoxes(0).isChecked).to.be.true;
+      });
+    });
+  });
+
+  describe('edit match profile form', () => {
+    describe('appears', () => {
+      beforeEach(async () => {
+        await matchProfileDetails.expandPaneHeaderDropdown();
+        await matchProfileDetails.dropdownEditButton.click();
+      });
+
+      it('upon click on pane header menu edit button', () => {
+        expect(matchProfileForm.isPresent).to.be.true;
+      });
+    });
+
+    describe('appears', () => {
+      beforeEach(async () => {
+        await matchProfileDetails.editButton.click();
+      });
+
+      it('upon click on edit button', () => {
+        expect(matchProfileForm.isPresent).to.be.true;
       });
     });
   });

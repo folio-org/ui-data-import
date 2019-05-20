@@ -498,7 +498,7 @@ export class UploadingJobsDisplay extends Component {
 
     const areMarcFiles = every(files, file => file.name.match(/\.(marc|mrc)$/, 'i'));
 
-    if (!areMarcFiles) {
+    if (!areMarcFiles || isEmpty(files)) {
       return null;
     }
 

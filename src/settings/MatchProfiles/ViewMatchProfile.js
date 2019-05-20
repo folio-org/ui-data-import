@@ -36,10 +36,12 @@ import { resultsFormatter } from '../JobProfiles';
 import {
   createUrl,
   sortStrings,
+  createLayerURL,
   withCheckboxList,
   checkboxListShape,
 } from '../../utils';
 import {
+  LAYER_TYPES,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
 } from '../../utils/constants';
@@ -143,47 +145,55 @@ export class ViewMatchProfile extends Component {
     };
   }
 
-  renderActionMenu = menu => (
-    <Fragment>
-      <Button
-        data-test-edit-match-profile-menu-button
-        buttonStyle="dropdownItem"
-        buttonClass={sharedCss.linkButton}
-        onClick={menu.onToggle}
-      >
-        <Icon icon="edit">
-          <FormattedMessage id="ui-data-import.edit" />
-        </Icon>
-      </Button>
-      <Button
-        data-test-duplicate-match-profile-menu-button
-        buttonStyle="dropdownItem"
-        buttonClass={sharedCss.linkButton}
-        onClick={menu.onToggle}
-      >
-        <Icon icon="duplicate">
-          <FormattedMessage id="ui-data-import.duplicate" />
-        </Icon>
-      </Button>
-      <Button
-        data-test-delete-match-profile-menu-button
-        buttonStyle="dropdownItem"
-        onClick={menu.onToggle}
-      >
-        <Icon icon="trash">
-          <FormattedMessage id="ui-data-import.delete" />
-        </Icon>
-      </Button>
-    </Fragment>
-  );
+  renderActionMenu = menu => {
+    const { location } = this.props;
+
+    return (
+      <Fragment>
+        <Button
+          data-test-edit-match-profile-menu-button
+          buttonStyle="dropdownItem"
+          to={createLayerURL(location, LAYER_TYPES.EDIT)}
+          buttonClass={sharedCss.linkButton}
+          onClick={menu.onToggle}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-data-import.edit" />
+          </Icon>
+        </Button>
+        <Button
+          data-test-duplicate-match-profile-menu-button
+          buttonStyle="dropdownItem"
+          buttonClass={sharedCss.linkButton}
+          onClick={menu.onToggle}
+        >
+          <Icon icon="duplicate">
+            <FormattedMessage id="ui-data-import.duplicate" />
+          </Icon>
+        </Button>
+        <Button
+          data-test-delete-match-profile-menu-button
+          buttonStyle="dropdownItem"
+          onClick={menu.onToggle}
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-data-import.delete" />
+          </Icon>
+        </Button>
+      </Fragment>
+    );
+  };
 
   renderLastMenu(record) {
+    const { location } = this.props;
+
     const editButtonVisibility = !record ? 'hidden' : 'visible';
 
     return (
       <PaneMenu>
         <Button
           data-test-edit-match-profile-button
+          to={createLayerURL(location, LAYER_TYPES.EDIT)}
           style={{ visibility: editButtonVisibility }}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
