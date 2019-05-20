@@ -8,6 +8,7 @@
 * Create the form for a new match profile creation (UIDATIMP-138)
 * Reorganize testing folder structure and code improvements (UIDATIMP-200)
 * Implement details view for match profiles (UIDATIMP-140)
+* Save the new match profile (UIDATIMP-139)
 
 ## [1.2.1](https://github.com/folio-org/ui-data-import/tree/v1.2.1) (2019-05-14)
 * Downgrade okapi interface version in order to have data-import-converter-storage API endpoints work (UIDATIMP-195)

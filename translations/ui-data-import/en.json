@@ -134,5 +134,6 @@
   "validation.fileExtension": "Please enter a valid file extension (e.g. .marc)",
   "validation.fileExtension.extension.invalid": "File extension {value} is not a valid format",
   "validation.fileExtension.duplication.invalid": "File extension {value} already exists",
-  "validation.jobProfile.duplication.invalid": "Job profile \"{value}\" already exists"
+  "validation.jobProfile.duplication.invalid": "Job profile \"{value}\" already exists",
+  "validation.matchProfile.duplication.invalid": "Match profile \"{value}\" already exists"
 }
