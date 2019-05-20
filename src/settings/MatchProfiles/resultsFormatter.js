@@ -64,8 +64,8 @@ export const resultsFormatter = (searchTerm, selectRecord, selectedRecords) => (
     } = record;
     const { RECORD_TYPES } = ENTITY_CONFIGS.MATCH_PROFILES;
 
-    const fieldSource = (field || existingRecordType).replace(/_/g, ' ');
-    const fieldMatched = (fieldMarc || fieldNonMarc || existingStaticValueType).replace(/_/g, ' ');
+    const fieldSource = (field || existingRecordType || '').replace(/_/g, ' ');
+    const fieldMatched = (fieldMarc || fieldNonMarc || existingStaticValueType || '').replace(/_/g, ' ');
 
     return (
       <IntlConsumer>
