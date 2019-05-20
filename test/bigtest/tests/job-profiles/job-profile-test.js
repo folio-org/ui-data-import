@@ -20,11 +20,7 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
     headers = {},
   } = responseData;
 
-  const url = `/data-import-profiles/jobProfiles${
-    method === 'put'
-      ? '/:id'
-      : ''
-  }`;
+  const url = `/data-import-profiles/jobProfiles${method === 'put' ? '/:id' : ''}`;
 
   server[method](url, () => new Response(status, headers, response));
   await jobProfileForm.nameField.fillAndBlur('Changed title');

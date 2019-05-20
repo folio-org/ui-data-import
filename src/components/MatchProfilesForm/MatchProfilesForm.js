@@ -66,7 +66,7 @@ export const MatchProfilesFormComponent = props => {
           </div>
         </Accordion>
         <Accordion
-          label={<FormattedMessage id="ui-data-import.settings.matchProfiles.details" />}
+          label={<FormattedMessage id="ui-data-import.details" />}
           separator={false}
         >
           <div>

@@ -15,7 +15,11 @@ import {
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 import { Checkbox } from '@folio/stripes/components';
 
-import { trimSearchTerm } from '../../utils';
+import {
+  trimSearchTerm,
+  withCheckboxList,
+  checkboxListShape,
+} from '../../utils';
 import {
   ActionMenu,
   ACTION_MENU_CONTROLS,
@@ -55,6 +59,7 @@ const mapStateToProps = state => {
   return { selectedMatchProfile };
 };
 
+@withCheckboxList
 @stripesConnect
 @connect(mapStateToProps)
 export class MatchProfiles extends Component {
@@ -103,12 +108,30 @@ export class MatchProfiles extends Component {
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,
     selectedMatchProfile: PropTypes.object.isRequired,
+    checkboxList: checkboxListShape.isRequired,
+    setList: PropTypes.func.isRequired,
     showSingleResult: PropTypes.bool,
   };
 
   static defaultProps = { showSingleResult: true };
 
-  state = { selectedRecords: new Set() };
+  componentDidMount() {
+    this.setList();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { resources } = this.props;
+
+    if (prevProps.resources !== resources) {
+      this.setList();
+    }
+  }
+
+  setList() {
+    const { setList } = this.props;
+
+    setList(this.matchProfiles);
+  }
 
   visibleColumns = [
     'selected',
@@ -134,8 +157,10 @@ export class MatchProfiles extends Component {
   };
 
   renderActionMenu = menu => {
-    const { location } = this.props;
-    const { selectedRecords: { size: selectedRecordsSize } } = this.state;
+    const {
+      location,
+      checkboxList: { selectedRecords: { size: selectedRecordsSize } },
+    } = this.props;
 
     const config = {
       items: [{
@@ -165,44 +190,18 @@ export class MatchProfiles extends Component {
     return <ActionMenu config={config} />;
   };
 
-  selectRecord = recordId => {
-    this.setState(state => {
-      const isRecordSelected = state.selectedRecords.has(recordId);
-
-      if (isRecordSelected) {
-        state.selectedRecords.delete(recordId);
-      } else {
-        state.selectedRecords.add(recordId);
-      }
-
-      return { selectedRecords: state.selectedRecords };
-    });
-  };
-
   handleSelectAllButton = menu => {
+    const { checkboxList: { selectAll } } = this.props;
+
     menu.onToggle();
-    this.selectAllRecords();
+    selectAll();
   };
 
   handleDeselectAllButton = menu => {
+    const { checkboxList: { deselectAll } } = this.props;
+
     menu.onToggle();
-    this.deselectAllRecords();
-  };
-
-  selectAllRecords = () => {
-    const selectedRecords = new Set(this.matchProfiles.map(({ id }) => id));
-
-    this.setState({ selectedRecords });
-  };
-
-  deselectAllRecords = () => this.setState({ selectedRecords: new Set() });
-
-  handleSelectAllCheckbox = e => {
-    if (e.target.checked) {
-      this.selectAllRecords();
-    } else {
-      this.deselectAllRecords();
-    }
+    deselectAll();
   };
 
   get matchProfiles() {
@@ -220,13 +219,17 @@ export class MatchProfiles extends Component {
       match,
       showSingleResult,
       selectedMatchProfile,
+      checkboxList: {
+        selectedRecords,
+        isAllSelected,
+        selectRecord,
+        deselectAll,
+        handleSelectAllCheckbox,
+      },
     } = this.props;
-
-    const { selectedRecords } = this.state;
 
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
-    const isSelectAllChecked = selectedRecords.size === this.matchProfiles.length;
 
     return (
       <IntlConsumer>
@@ -238,8 +241,9 @@ export class MatchProfiles extends Component {
             history={history}
             match={match}
             getRecordName={noop}
-            getDeleteRecordSuccessfulMessage={this.getDeleteRecordSuccessfulMessage}
-            getDeleteRecordErrorMessage={this.getDeleteRecordErrorMessage}
+            getDeleteRecordSuccessfulMessage={noop}
+            getDeleteRecordErrorMessage={noop}
+            onDelete={({ id }) => selectRecord(id)}
           >
             {props => (
               <SearchAndSort
@@ -253,7 +257,7 @@ export class MatchProfiles extends Component {
                 resultsLabel={label}
                 defaultSort="name"
                 actionMenu={this.renderActionMenu}
-                resultsFormatter={resultsFormatter(searchTerm, this.selectRecord, selectedRecords)}
+                resultsFormatter={resultsFormatter(searchTerm, selectRecord, selectedRecords)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   selected: (
@@ -262,12 +266,12 @@ export class MatchProfiles extends Component {
                       tabIndex="0"
                       className={sharedCss.selectableCellButton}
                       data-test-select-all-checkbox
-                      onChange={this.handleSelectAllCheckbox}
+                      onClick={e => e.stopPropagation()}
                     >
                       <Checkbox
                         name="selected-all"
-                        checked={isSelectAllChecked}
-                        onChange={this.handleSelectAllCheckbox}
+                        checked={isAllSelected}
+                        onChange={handleSelectAllCheckbox}
                       />
                     </div>
                   ),
@@ -284,6 +288,7 @@ export class MatchProfiles extends Component {
                 editRecordInitialValues={selectedMatchProfile.record}
                 editRecordInitialValuesAreLoaded={selectedMatchProfile.hasLoaded}
                 showSingleResult={showSingleResult}
+                onSubmitSearch={deselectAll}
                 {...props}
               />
             )}

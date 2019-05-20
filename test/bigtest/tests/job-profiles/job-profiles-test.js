@@ -83,16 +83,6 @@ describe('Job profiles', () => {
       });
     });
 
-    describe('has select individual item checkbox', () => {
-      beforeEach(async () => {
-        await jobProfiles.checkBoxes(0).clickAndBlur();
-      });
-
-      it('upon click changes its state', () => {
-        expect(jobProfiles.checkBoxes(0).isChecked).to.be.true;
-      });
-    });
-
     describe('select all checkbox', () => {
       beforeEach(async () => {
         await jobProfiles.selectAllCheckBox.clickAndBlur();

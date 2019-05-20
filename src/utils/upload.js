@@ -10,7 +10,7 @@ import {
 /**
  * Converts bytes to kilobytes
  *
- * @param {number|string} size
+ * @param {number} size
  * @return {number}
  */
 const convertBytesToKilobytes = size => Math.ceil(size / 1024);
@@ -18,8 +18,8 @@ const convertBytesToKilobytes = size => Math.ceil(size / 1024);
 /**
  * Generates Upload Definitions body data
  *
- * @param {array} files
- * @return {{fileDefinitions: Array}}
+ * @param {Array} files
+ * @return {{ fileDefinitions: Array }}
  */
 const generateUploadDefinitionBody = files => {
   const fileDefinitions = Object
@@ -36,8 +36,8 @@ const generateUploadDefinitionBody = files => {
 /**
  * Description: TBD
  *
- * @param {array} files
- * @return {*}
+ * @param {Array} files
+ * @return {any}
  */
 export const mapFilesToUI = (files = []) => {
   return files.reduce((res, file) => {
@@ -71,10 +71,10 @@ export const mapFilesToUI = (files = []) => {
 /**
  * Creates Upload Definition data sets
  *
- * @param {array} files
+ * @param {Array} files
  * @param {string} url
- * @param {Object|okapi} okapi
- * @return {Promise<*[]>}
+ * @param {Object} okapi
+ * @return {Promise<Array>}
  */
 export const createUploadDefinition = async ({
   files,
@@ -82,16 +82,15 @@ export const createUploadDefinition = async ({
   okapi,
 }) => {
   const filesDefinition = generateUploadDefinitionBody(files);
-  const config = {
+
+  const response = await fetch(url, {
     method: 'POST',
     headers: {
       ...createOkapiHeaders(okapi),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(filesDefinition),
-  };
-
-  const response = await fetch(url, config);
+  });
   const responseJSON = await response.json();
   const { errors } = responseJSON;
   const hasAPIErrors = errors && errors.length > 0;
@@ -111,19 +110,17 @@ export const createUploadDefinition = async ({
  * Creates and calls file deletion request
  *
  * @param {string} url
- * @param {array} headers
+ * @param {Array} headers
  * @return {Promise<Response>}
  */
 export const deleteFile = async (url, headers) => {
-  const config = {
+  const response = await fetch(url, {
     method: 'DELETE',
     headers,
-  };
-
-  const response = await fetch(url, config);
+  });
 
   if (!response.ok) {
-    throw new Error(response);
+    throw response;
   }
 
   return response;
@@ -133,8 +130,8 @@ export const deleteFile = async (url, headers) => {
  * Creates and calls Upload Definitions retrieval request
  *
  * @param {string} url
- * @param {Object|okapi} okapi
- * @return {Promise<void>}
+ * @param {Object} okapi
+ * @return {Promise<Object>}
  */
 export const getLatestUploadDefinition = async ({
   url,
@@ -149,11 +146,12 @@ export const getLatestUploadDefinition = async ({
     method: 'GET',
     headers: createOkapiHeaders(okapi),
   });
-  const { uploadDefinitions: [latestUploadDefinition = {}] } = await response.json();
 
   if (!response.ok) {
     throw response;
   }
+
+  const { uploadDefinitions: [latestUploadDefinition = {}] } = await response.json();
 
   return latestUploadDefinition;
 };
@@ -162,7 +160,7 @@ export const getLatestUploadDefinition = async ({
  * Creates and calls Upload Definition deletion request
  *
  * @param {string} url
- * @param {Object|okapi} okapi
+ * @param {Object} okapi
  * @return {Promise<Response>}
  */
 export const deleteUploadDefinition = async ({

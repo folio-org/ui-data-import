@@ -1,4 +1,5 @@
 import { searchEntityByQuery } from '../../helpers';
+import { associatedJobProfiles } from '../../mocks';
 
 export default server => {
   server.create('match-profile', {
@@ -124,4 +125,8 @@ export default server => {
       ],
     });
   });
+
+  server.get('/data-import-profiles/matchProfiles/:id');
+
+  server.get('/data-import-profiles/profileAssociations/:id/masters', associatedJobProfiles);
 };
