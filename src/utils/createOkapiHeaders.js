@@ -1,8 +1,8 @@
 /**
  * Builds OKAPI headers set
  *
- * @param {Object|okapi} okapi
- * @return {{'X-Okapi-Token': *, 'X-Okapi-Tenant': *}}
+ * @param {Object} okapi
+ * @return {{ 'X-Okapi-Token': any, 'X-Okapi-Tenant': any }}
  */
 export const createOkapiHeaders = okapi => {
   const {

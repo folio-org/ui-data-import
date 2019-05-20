@@ -9,7 +9,9 @@
       "legacyDecorators": true
     }
   },
-  "plugins": ["babel"],
+  "plugins": [
+    "babel"
+  ],
   "root": true,
   "rules": {
     "key-spacing": [
@@ -56,6 +58,12 @@
       {
         "multiline": true,
         "minProperties": 2
+      }
+    ],
+    "object-property-newline": [
+      "error",
+      {
+        "allowMultiplePropertiesPerLine": false
       }
     ],
     "no-multiple-empty-lines": [

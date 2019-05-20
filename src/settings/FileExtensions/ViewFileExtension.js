@@ -32,7 +32,6 @@ import {
 } from '../../utils/constants';
 import { createLayerURL } from '../../utils';
 
-import css from './ViewFileExtension.css';
 import sharedCss from '../../shared.css';
 
 @stripesConnect
@@ -244,7 +243,7 @@ export class ViewFileExtension extends Component {
               <label htmlFor="import-blocked">
                 <input
                   id="import-blocked"
-                  className={css.checkbox}
+                  className={sharedCss.checkbox}
                   data-test-import-blocked
                   type="checkbox"
                   checked
@@ -263,7 +262,7 @@ export class ViewFileExtension extends Component {
           )}
         </Row>
         <EndOfItem
-          className={css.endOfRecord}
+          className={sharedCss.endOfRecord}
           title={<FormattedMessage id="ui-data-import.endOfRecord" />}
         />
         <ConfirmationModal

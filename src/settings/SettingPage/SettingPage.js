@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { noop } from 'lodash';
 
 import { Callout } from '@folio/stripes/components';
 import { buildUrl } from '@folio/stripes/smart-components';
@@ -23,6 +24,7 @@ export const SettingPage = props => {
     getDeleteRecordSuccessfulMessage,
     getDeleteRecordErrorMessage,
     getRecordName,
+    onDelete,
   } = props;
 
   const fullWidthContainerRef = useRef();
@@ -105,6 +107,7 @@ export const SettingPage = props => {
         layer: null,
       });
       showDeleteRecordSuccessfulMessage(record);
+      onDelete(record);
 
       return true;
     } catch (error) {
@@ -157,4 +160,7 @@ SettingPage.propTypes = {
   getDeleteRecordSuccessfulMessage: PropTypes.func.isRequired,
   getDeleteRecordErrorMessage: PropTypes.func.isRequired,
   getRecordName: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
 };
+
+SettingPage.defaultProps = { onDelete: noop };

@@ -40,7 +40,6 @@ import {
   createLayerURL,
 } from '../../utils';
 
-import css from './JobProfiles.css';
 import sharedCss from '../../shared.css';
 
 @withJobLogsCellsFormatter
@@ -337,7 +336,7 @@ export class ViewJobProfile extends Component {
           </Accordion>
         </AccordionSet>
         <EndOfItem
-          className={css.endOfRecord}
+          className={sharedCss.endOfRecord}
           title={<FormattedMessage id="ui-data-import.endOfRecord" />}
         />
         <ConfirmationModal

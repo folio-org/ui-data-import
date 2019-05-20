@@ -42,3 +42,13 @@
 .linkButton:active {
   color: inherit;
 }
+
+.endOfRecord {
+  text-align: left;
+}
+
+.checkbox {
+  &:disabled {
+    margin: 0;
+  }
+}

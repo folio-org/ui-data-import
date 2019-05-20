@@ -24,7 +24,11 @@ import {
 import { ViewJobProfile } from './ViewJobProfile';
 import { SettingPage } from '../SettingPage';
 import { resultsFormatter } from './resultsFormatter';
-import { trimSearchTerm } from '../../utils';
+import {
+  trimSearchTerm,
+  withCheckboxList,
+  checkboxListShape,
+} from '../../utils';
 
 import sharedCss from '../../shared.css';
 
@@ -45,8 +49,9 @@ const mapStateToProps = state => {
   return { selectedJobProfile };
 };
 
-@stripesConnect
+@withCheckboxList
 @connect(mapStateToProps)
+@stripesConnect
 export class JobProfiles extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -92,12 +97,32 @@ export class JobProfiles extends Component {
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,
     selectedJobProfile: PropTypes.object.isRequired,
+    checkboxList: checkboxListShape.isRequired,
+    setList: PropTypes.func.isRequired,
     showSingleResult: PropTypes.bool,
   };
 
   static defaultProps = { showSingleResult: true };
 
   state = { selectedRecords: new Set() };
+
+  componentDidMount() {
+    this.setList();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { resources } = this.props;
+
+    if (prevProps.resources !== resources) {
+      this.setList();
+    }
+  }
+
+  setList() {
+    const { setList } = this.props;
+
+    setList(this.jobProfiles);
+  }
 
   visibleColumns = [
     'selected',
@@ -189,44 +214,18 @@ export class JobProfiles extends Component {
     return record.name;
   }
 
-  selectRecord = recordId => {
-    this.setState(state => {
-      const isRecordSelected = state.selectedRecords.has(recordId);
-
-      if (isRecordSelected) {
-        state.selectedRecords.delete(recordId);
-      } else {
-        state.selectedRecords.add(recordId);
-      }
-
-      return { selectedRecords: state.selectedRecords };
-    });
-  };
-
   handleSelectAllButton = menu => {
+    const { checkboxList: { selectAll } } = this.props;
+
     menu.onToggle();
-    this.selectAllRecords();
+    selectAll();
   };
 
   handleDeselectAllButton = menu => {
+    const { checkboxList: { deselectAll } } = this.props;
+
     menu.onToggle();
-    this.deselectAllRecords();
-  };
-
-  selectAllRecords = () => {
-    const selectedRecords = new Set(this.jobProfiles.map(({ id }) => id));
-
-    this.setState({ selectedRecords });
-  };
-
-  deselectAllRecords = () => this.setState({ selectedRecords: new Set() });
-
-  handleSelectAllCheckbox = e => {
-    if (e.target.checked) {
-      this.selectAllRecords();
-    } else {
-      this.deselectAllRecords();
-    }
+    deselectAll();
   };
 
   get jobProfiles() {
@@ -244,12 +243,17 @@ export class JobProfiles extends Component {
       match,
       showSingleResult,
       selectedJobProfile,
+      checkboxList: {
+        selectedRecords,
+        isAllSelected,
+        selectRecord,
+        deselectAll,
+        handleSelectAllCheckbox,
+      },
     } = this.props;
-    const { selectedRecords } = this.state;
 
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
-    const isSelectAllChecked = selectedRecords.size === this.jobProfiles.length;
 
     return (
       <IntlConsumer>
@@ -263,6 +267,7 @@ export class JobProfiles extends Component {
             getRecordName={this.getRecordName}
             getDeleteRecordSuccessfulMessage={this.getDeleteRecordSuccessfulMessage}
             getDeleteRecordErrorMessage={this.getDeleteRecordErrorMessage}
+            onDelete={({ id }) => selectRecord(id)}
           >
             {props => (
               <SearchAndSort
@@ -276,7 +281,7 @@ export class JobProfiles extends Component {
                 resultsLabel={label}
                 defaultSort="name"
                 actionMenu={this.renderActionMenu}
-                resultsFormatter={resultsFormatter(searchTerm, this.selectRecord, selectedRecords)}
+                resultsFormatter={resultsFormatter(searchTerm, selectRecord, selectedRecords)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   selected: (
@@ -289,8 +294,8 @@ export class JobProfiles extends Component {
                     >
                       <Checkbox
                         name="selected-all"
-                        checked={isSelectAllChecked}
-                        onChange={this.handleSelectAllCheckbox}
+                        checked={isAllSelected}
+                        onChange={handleSelectAllCheckbox}
                       />
                     </div>
                   ),
@@ -306,7 +311,7 @@ export class JobProfiles extends Component {
                 editRecordInitialValues={selectedJobProfile.record}
                 editRecordInitialValuesAreLoaded={selectedJobProfile.hasLoaded}
                 showSingleResult={showSingleResult}
-                onSubmitSearch={this.deselectAllRecords}
+                onSubmitSearch={deselectAll}
                 {...props}
               />
             )}

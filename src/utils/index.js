@@ -13,3 +13,4 @@ export * from './formValidators';
 export * from './craftLayerURL';
 export * from './loadRecords';
 export * from './trimSearchTerm';
+export * from './checkboxList';
