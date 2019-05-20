@@ -8,9 +8,9 @@
     "runningJobs": "Executando",
     "readyForPreview": "Pronto para pré-visualização",
     "previewNow": "Pré-visualizar agora",
-    "triggeredBy": "Desencadeado por",
-    "beganRunning": "Começou",
-    "endedRunning": "Terminou",
+    "triggeredBy": "Acionado por {userName}",
+    "beganRunning": "Começou {time}",
+    "endedRunning": "Terminou {time}",
     "progressRunning": "Em andamento",
     "uploadTitle": "Arraste e solte para iniciar uma nova importação de dados",
     "activeUploadTitle": "Solte para iniciar a importação",
@@ -131,5 +131,9 @@
     "settings.jobProfiles.newProfile": "Novo perfil de trabalho",
     "settings.matchProfiles.newProfile": "Novo perfil de correspondência",
     "summary": "Resumo",
-    "settings.matchProfiles.details": "Detalhes"
+    "details": "Detalhes",
+    "options": "Opções",
+    "matchProfileName": "Perfil de correspondência",
+    "settings.matchProfiles.associatedJobProfiles": "Perfis de trabalho associados",
+    "validation.matchProfile.duplication.invalid": "Perfil de correspondência \"{value}\" já existe"
 }
