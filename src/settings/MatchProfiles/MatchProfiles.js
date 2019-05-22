@@ -212,6 +212,10 @@ export class MatchProfiles extends Component {
     return get(this.props.resources, ['matchProfiles', 'records'], []);
   }
 
+  getRecordName(record) {
+    return record.name;
+  }
+
   render() {
     const {
       resources,
@@ -244,7 +248,7 @@ export class MatchProfiles extends Component {
             location={location}
             history={history}
             match={match}
-            getRecordName={noop}
+            getRecordName={this.getRecordName}
             getDeleteRecordSuccessfulMessage={noop}
             getDeleteRecordErrorMessage={noop}
             onDelete={({ id }) => selectRecord(id)}
