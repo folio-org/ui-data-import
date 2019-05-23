@@ -135,5 +135,8 @@
     "options": "Options",
     "matchProfileName": "Match profile",
     "settings.matchProfiles.associatedJobProfiles": "Associated job profiles",
-    "validation.matchProfile.duplication.invalid": "Match profile \"{value}\" already exists"
+    "validation.matchProfile.duplication.invalid": "Match profile \"{value}\" already exists",
+    "confirm": "Confirm",
+    "settings.matchProfiles.confirmEditModal.heading": "Confirm match profile changes",
+    "settings.matchProfiles.confirmEditModal.message": "These match profile edit will affect {amount, number} associated job {amount, plural, one {profile} other {profiles}}. Please confirm."
 }
