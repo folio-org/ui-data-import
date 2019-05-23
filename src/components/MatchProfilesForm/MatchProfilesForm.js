@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
+import { connect } from 'react-redux';
+import { get } from 'lodash';
 
 import {
   Headline,
@@ -9,11 +11,15 @@ import {
   TextField,
   Accordion,
   AccordionSet,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
 import { FullScreenForm } from '../FullScreenForm';
-import { validateRequiredField } from '../../utils';
+import {
+  compose,
+  validateRequiredField,
+} from '../../utils';
 
 const formName = 'matchProfilesForm';
 
@@ -24,7 +30,9 @@ export const MatchProfilesFormComponent = props => {
     initialValues,
     handleSubmit,
     onCancel,
+    associatedJobProfilesAmount,
   } = props;
+  const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   const isEditMode = Boolean(initialValues.id);
   const isSubmitDisabled = pristine || submitting;
@@ -40,13 +48,24 @@ export const MatchProfilesFormComponent = props => {
     ? initialValues.name
     : <FormattedMessage id="ui-data-import.settings.matchProfiles.newProfile" />;
 
+  const editWithModal = isEditMode && associatedJobProfilesAmount;
+
+  const onSubmit = e => {
+    if (editWithModal) {
+      e.preventDefault();
+      setConfirmModalOpen(true);
+    } else {
+      handleSubmit(e);
+    }
+  };
+
   return (
     <FullScreenForm
       id="match-profiles-form"
       paneTitle={paneTitle}
       submitMessage={<FormattedMessage id="ui-data-import.save" />}
       isSubmitDisabled={isSubmitDisabled}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       onCancel={onCancel}
     >
       <Headline
@@ -87,6 +106,23 @@ export const MatchProfilesFormComponent = props => {
           </div>
         </Accordion>
       </AccordionSet>
+      <ConfirmationModal
+        id="confirm-edit-match-profile-modal"
+        open={isConfirmEditModalOpen}
+        heading={<FormattedMessage id="ui-data-import.settings.matchProfiles.confirmEditModal.heading" />}
+        message={(
+          <FormattedMessage
+            id="ui-data-import.settings.matchProfiles.confirmEditModal.message"
+            values={{ amount: associatedJobProfilesAmount }}
+          />
+        )}
+        confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
+        onConfirm={() => {
+          handleSubmit();
+          setConfirmModalOpen(false);
+        }}
+        onCancel={() => setConfirmModalOpen(false)}
+      />
     </FullScreenForm>
   );
 };
@@ -96,11 +132,25 @@ MatchProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  associatedJobProfilesAmount: PropTypes.number.isRequired,
   onCancel: PropTypes.func.isRequired,
 };
 
-export const MatchProfilesForm = stripesForm({
-  form: formName,
-  navigationCheck: true,
-  enableReinitialize: true,
-})(MatchProfilesFormComponent);
+const mapStateToProps = state => {
+  const { length: associatedJobProfilesAmount } = get(
+    state,
+    ['folio_data_import_associated_job_profiles', 'records', 0, 'childSnapshotWrappers'],
+    [],
+  );
+
+  return { associatedJobProfilesAmount };
+};
+
+export const MatchProfilesForm = compose(
+  stripesForm({
+    form: formName,
+    navigationCheck: true,
+    enableReinitialize: true,
+  }),
+  connect(mapStateToProps),
+)(MatchProfilesFormComponent);
