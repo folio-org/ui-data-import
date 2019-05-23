@@ -12,6 +12,23 @@ import {
   matchProfileDetails,
 } from '../../interactors';
 
+async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
+  const {
+    response = {},
+    status = 500,
+    headers = {},
+  } = responseData;
+
+  const url = `/data-import-profiles/matchProfiles${method === 'put' ? '/:id' : ''}`;
+
+  server[method](url, () => new Response(status, headers, response));
+  await matchProfileForm.nameField.fillAndBlur('Changed title');
+  await matchProfileForm.submitFormButton.click();
+  if (await matchProfileForm.confirmEditModal.isPresent) {
+    await matchProfileForm.confirmEditModal.confirmButton.click();
+  }
+}
+
 describe('Match Profile View', () => {
   setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users'] });
 
@@ -107,5 +124,95 @@ describe('Match Profile View', () => {
         expect(matchProfileForm.isPresent).to.be.true;
       });
     });
+  });
+
+  describe('edit match profile form', () => {
+    beforeEach(async () => {
+      await matchProfileDetails.editButton.click();
+    });
+
+    describe('when form is submitted', () => {
+      beforeEach(async () => {
+        await matchProfileForm.nameField.fillAndBlur('Changed name');
+        await matchProfileForm.descriptionField.fillAndBlur('Changed description');
+        await matchProfileForm.submitFormButton.click();
+      });
+
+      describe('and there are associated job profiles', () => {
+        it('confirmation modal appears', () => {
+          expect(matchProfileForm.confirmEditModal.isPresent).to.be.true;
+        });
+
+        describe('and "Confirm" button is clicked', () => {
+          beforeEach(async () => {
+            await matchProfileForm.confirmEditModal.confirmButton.click();
+          });
+
+          it('then match profile details renders updated match profile', () => {
+            expect(matchProfileDetails.headline.text).to.equal('Changed name');
+            expect(matchProfileDetails.description.text).to.equal('Changed description');
+          });
+        });
+
+        describe('and "Cancel" button is clicked', () => {
+          beforeEach(async () => {
+            await matchProfileForm.confirmEditModal.cancelButton.click();
+          });
+
+          it('closes modal and stay on edit screen', () => {
+            expect(matchProfileForm.confirmEditModal.isPresent).to.be.false;
+            expect(matchProfileForm.isPresent).to.be.true;
+          });
+        });
+      });
+    });
+
+    describe('is submitted and the response contains', () => {
+      describe('error message', () => {
+        beforeEach(async function () {
+          await setupFormSubmitErrorScenario('put', this.server, {
+            response: { errors: [{ message: 'matchProfile.duplication.invalid' }] },
+            status: 422,
+          });
+        });
+
+        it('then error callout appears', () => {
+          expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true;
+        });
+      });
+
+      describe('network error', () => {
+        beforeEach(async function () {
+          await setupFormSubmitErrorScenario('put', this.server);
+        });
+
+        it('then error callout appears', () => {
+          expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true;
+        });
+      });
+    });
+  });
+});
+
+describe('when match profile is edited and there is no associated job profiles', () => {
+  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users'] });
+
+  beforeEach(async function () {
+    this.server.get('/data-import-profiles/profileAssociations/:id/masters', {});
+    this.visit('/settings/data-import/match-profiles');
+    await matchProfiles.list.rows(0).click();
+    await matchProfileDetails.editButton.click();
+    await matchProfileForm.nameField.fillAndBlur('Changed name');
+    await matchProfileForm.descriptionField.fillAndBlur('Changed description');
+    await matchProfileForm.submitFormButton.click();
+  });
+
+  it('confirmation modal does not appear', () => {
+    expect(matchProfileForm.confirmEditModal.isPresent).to.be.false;
+  });
+
+  it('and job profile details renders updated job profile', () => {
+    expect(matchProfileDetails.headline.text).to.equal('Changed name');
+    expect(matchProfileDetails.description.text).to.equal('Changed description');
   });
 });

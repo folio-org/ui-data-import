@@ -135,27 +135,27 @@ describe('sortCollection', () => {
       });
     });
   });
-});
 
-it('works with empty input', () => {
-  expect(sortCollection()).to.deep.equal([]);
-});
+  it('works with empty input', () => {
+    expect(sortCollection()).to.deep.equal([]);
+  });
 
-it('sorts correctly', () => {
-  const sortByDates = (
-    { date: dateA },
-    { date: dateB },
-  ) => {
-    return convertDate(dateB, DATE_TYPES.number) - convertDate(dateA, DATE_TYPES.number);
-  };
-  const sortingOptions = [
-    {
-      propertyName: 'status',
-      sequence: [statuses.FIRST_STATUS, statuses.SECOND_STATUS, statuses.THIRD_STATUS],
-    },
-    '-number',
-    sortByDates,
-  ];
+  it('sorts correctly', () => {
+    const sortByDates = (
+      { date: dateA },
+      { date: dateB },
+    ) => {
+      return convertDate(dateB, DATE_TYPES.number) - convertDate(dateA, DATE_TYPES.number);
+    };
+    const sortingOptions = [
+      {
+        propertyName: 'status',
+        sequence: [statuses.FIRST_STATUS, statuses.SECOND_STATUS, statuses.THIRD_STATUS],
+      },
+      '-number',
+      sortByDates,
+    ];
 
-  expect(sortCollection(collectionUnsorted, sortingOptions)).to.deep.equal(collectionSorted);
+    expect(sortCollection(collectionUnsorted, sortingOptions)).to.deep.equal(collectionSorted);
+  });
 });

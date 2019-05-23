@@ -168,7 +168,11 @@
           "converter-storage.jobprofile.post",
           "converter-storage.jobprofile.put",
           "converter-storage.jobprofile.delete",
-          "converter-storage.matchprofile.get"
+          "converter-storage.matchprofile.get",
+          "converter-storage.matchprofile.post",
+          "converter-storage.matchprofile.put",
+          "converter-storage.jobprofile.delete",
+          "converter-storage.profileassociation.get"
         ],
         "visible": true
       }

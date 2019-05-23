@@ -135,4 +135,16 @@ export default server => {
 
     return record.attrs;
   });
+  server.put('/data-import-profiles/matchProfiles/:id', (schema, request) => {
+    const {
+      params: { id },
+      requestBody,
+    } = request;
+    const matchProfileModel = schema.matchProfiles.find(id);
+    const updatedMatchProfile = JSON.parse(requestBody);
+
+    matchProfileModel.update({ ...updatedMatchProfile });
+
+    return matchProfileModel.attrs;
+  });
 };
