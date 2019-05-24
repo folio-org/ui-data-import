@@ -30,9 +30,11 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 
-import { Preloader } from '../../components/Preloader';
-import { EndOfItem } from '../../components/EndOfItem';
-import { resultsFormatter } from '../JobProfiles';
+import {
+  Preloader,
+  EndOfItem,
+  listTemplate,
+} from '../../components';
 import {
   createUrl,
   sortStrings,
@@ -369,7 +371,7 @@ export class ViewMatchProfile extends Component {
                             updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
                           }}
                           columnWidths={this.columnWidths}
-                          formatter={resultsFormatter(searchValue.query, selectRecord, selectedRecords)}
+                          formatter={listTemplate('jobProfiles', searchValue.query, selectRecord, selectedRecords)}
                         />
                       )}
                     </IntlConsumer>
