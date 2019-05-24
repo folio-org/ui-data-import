@@ -18,12 +18,12 @@ import { Checkbox } from '@folio/stripes/components';
 import {
   ActionMenu,
   ACTION_MENU_CONTROLS,
+  listTemplate,
   JobProfilesForm,
   SearchAndSort,
 } from '../../components';
 import { ViewJobProfile } from './ViewJobProfile';
 import { SettingPage } from '../SettingPage';
-import { resultsFormatter } from './resultsFormatter';
 import {
   trimSearchTerm,
   withCheckboxList,
@@ -281,7 +281,7 @@ export class JobProfiles extends Component {
                 resultsLabel={label}
                 defaultSort="name"
                 actionMenu={this.renderActionMenu}
-                resultsFormatter={resultsFormatter(searchTerm, selectRecord, selectedRecords)}
+                resultsFormatter={listTemplate('jobProfiles', searchTerm, selectRecord, selectedRecords)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   selected: (

@@ -27,11 +27,13 @@ import {
 } from '@folio/stripes/smart-components';
 
 import { trimSearchTerm } from '../../utils';
-import { SearchAndSort } from '../../components/SearchAndSort';
-import { FileExtensionForm } from '../../components/FileExtensionForm';
+import {
+  SearchAndSort,
+  listTemplate,
+  FileExtensionForm,
+} from '../../components';
 import { ViewFileExtension } from './ViewFileExtension';
 import { SettingPage } from '../SettingPage';
-import { resultsFormatter } from './resultsFormatter';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -294,7 +296,7 @@ export class FileExtensions extends Component {
                   resultsLabel={label}
                   defaultSort="extension"
                   actionMenu={this.renderActionMenu}
-                  resultsFormatter={resultsFormatter(intl, searchTerm)}
+                  resultsFormatter={listTemplate('matchProfiles', searchTerm)}
                   visibleColumns={this.visibleColumns}
                   columnMapping={{
                     extension: intl.formatMessage({ id: 'ui-data-import.settings.fileExtension.extension' }),

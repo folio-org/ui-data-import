@@ -25,10 +25,10 @@ import {
   ACTION_MENU_CONTROLS,
   SearchAndSort,
   MatchProfilesForm,
+  listTemplate,
 } from '../../components';
 import { ViewMatchProfile } from './ViewMatchProfile';
 import { SettingPage } from '../SettingPage';
-import { resultsFormatter } from './resultsFormatter';
 
 import sharedCss from '../../shared.css';
 
@@ -265,7 +265,7 @@ export class MatchProfiles extends Component {
                 resultsLabel={label}
                 defaultSort="name"
                 actionMenu={this.renderActionMenu}
-                resultsFormatter={resultsFormatter(searchTerm, selectRecord, selectedRecords)}
+                resultsFormatter={listTemplate('matchProfiles', searchTerm, selectRecord, selectedRecords)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   selected: (
