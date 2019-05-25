@@ -15,7 +15,7 @@ export const DefaultColumn = memo(props => {
   } = props;
 
   const recordContent = () => {
-    if (searchTerm) {
+    if (!searchTerm) {
       return value;
     }
 

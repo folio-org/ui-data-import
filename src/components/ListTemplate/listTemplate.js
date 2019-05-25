@@ -45,7 +45,7 @@ export const listTemplate = (entityKey, searchTerm, selectRecord, selectedRecord
     const { dataTypes } = record;
 
     return (
-      <DefaultColumn value={!Array.isArray(dataTypes) || !dataTypes.length ? '-' : dataTypes.join(', ')} />
+      <DefaultColumn value={Array.isArray(dataTypes) && dataTypes.length ? dataTypes.join(', ') : ''} />
     );
   },
   importBlocked: record => {

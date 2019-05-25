@@ -1,6 +1,8 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
+import { noop } from 'lodash';
+
 import { Checkbox } from '@folio/stripes/components';
 
 import sharedCss from '../../../../shared.css';
@@ -31,6 +33,11 @@ export const CheckboxColumn = memo(props => {
 
 CheckboxColumn.propTypes = {
   value: PropTypes.string.isRequired,
-  checked: PropTypes.boolean,
+  checked: PropTypes.bool,
   onChange: PropTypes.func,
+};
+
+CheckboxColumn.defaultProps = {
+  checked: false,
+  onChange: noop,
 };
