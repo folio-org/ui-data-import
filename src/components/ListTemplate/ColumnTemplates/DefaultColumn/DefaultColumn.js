@@ -22,7 +22,7 @@ export const DefaultColumn = memo(props => {
       {value}
     </HighLight>
   ) : value;
-  console.log('Value: ', content, searchTerm);
+
   if (!iconKey) {
     return content;
   }
