@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
-
 import { Checkbox } from '@folio/stripes/components';
 
 import sharedCss from '../../../../shared.css';

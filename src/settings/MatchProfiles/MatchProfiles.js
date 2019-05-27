@@ -20,6 +20,7 @@ import {
   withCheckboxList,
   checkboxListShape,
 } from '../../utils';
+import { ENTITY_CONFIGS } from '../../utils/constants';
 import {
   ActionMenu,
   ACTION_MENU_CONTROLS,
@@ -238,6 +239,7 @@ export class MatchProfiles extends Component {
 
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
+    const { ENTITY_KEY } = ENTITY_CONFIGS.MATCH_PROFILES;
 
     return (
       <IntlConsumer>
@@ -265,7 +267,7 @@ export class MatchProfiles extends Component {
                 resultsLabel={label}
                 defaultSort="name"
                 actionMenu={this.renderActionMenu}
-                resultsFormatter={listTemplate('matchProfiles', searchTerm, selectRecord, selectedRecords)}
+                resultsFormatter={listTemplate(ENTITY_KEY, searchTerm, selectRecord, selectedRecords)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   selected: (

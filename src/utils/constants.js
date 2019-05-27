@@ -58,7 +58,10 @@ export const LAYER_TYPES = {
 };
 
 export const ENTITY_CONFIGS = {
+  FILE_EXTENSIONS: { ENTITY_KEY: 'fileExtensions' },
+  JOB_PROFILES: { ENTITY_KEY: 'jobProfiles' },
   MATCH_PROFILES: {
+    ENTITY_KEY: 'matchProfiles',
     RECORD_TYPES: {
       ORDER: {
         caption: 'ui-data-import.settings.matchProfiles.recordTypes.order',
@@ -94,4 +97,6 @@ export const ENTITY_CONFIGS = {
       },
     },
   },
+  ACTION_PROFILES: { ENTITY_KEY: 'actionProfiles' },
+  MAPPING_PROFILES: { ENTITY_KEY: 'mappingProfiles' },
 };

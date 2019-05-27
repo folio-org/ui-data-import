@@ -34,6 +34,7 @@ import {
 } from '../../components';
 import { ViewFileExtension } from './ViewFileExtension';
 import { SettingPage } from '../SettingPage';
+import { ENTITY_CONFIGS } from '../../utils/constants';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -269,6 +270,7 @@ export class FileExtensions extends Component {
 
     const urlQuery = queryString.parse(location.search);
     const searchTerm = trimSearchTerm(urlQuery.query);
+    const { ENTITY_KEY } = ENTITY_CONFIGS.FILE_EXTENSIONS;
 
     return (
       <IntlConsumer>
@@ -296,7 +298,7 @@ export class FileExtensions extends Component {
                   resultsLabel={label}
                   defaultSort="extension"
                   actionMenu={this.renderActionMenu}
-                  resultsFormatter={listTemplate('matchProfiles', searchTerm)}
+                  resultsFormatter={listTemplate(ENTITY_KEY, searchTerm)}
                   visibleColumns={this.visibleColumns}
                   columnMapping={{
                     extension: intl.formatMessage({ id: 'ui-data-import.settings.fileExtension.extension' }),

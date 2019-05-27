@@ -14,23 +14,17 @@ export const DefaultColumn = memo(props => {
     searchTerm,
   } = props;
 
-  const recordContent = () => {
-    if (!searchTerm) {
-      return value;
-    }
-
-    return (
-      <HighLight
-        search={searchTerm}
-        className={sharedCss.container}
-      >
-        {value}
-      </HighLight>
-    );
-  };
-
+  const content = searchTerm ? (
+    <HighLight
+      search={searchTerm}
+      className={sharedCss.container}
+    >
+      {value}
+    </HighLight>
+  ) : value;
+  console.log('Value: ', content, searchTerm);
   if (!iconKey) {
-    return recordContent();
+    return content;
   }
 
   return (
@@ -40,7 +34,7 @@ export const DefaultColumn = memo(props => {
       iconKey={iconKey}
       className={className || sharedCss.cellAppIcon}
     >
-      {recordContent()}
+      {content}
     </AppIcon>
   );
 });
@@ -51,3 +45,5 @@ DefaultColumn.propTypes = {
   className: PropTypes.string,
   searchTerm: PropTypes.string,
 };
+
+DefaultColumn.defaultTypes = { className: sharedCss.cellAppIcon };

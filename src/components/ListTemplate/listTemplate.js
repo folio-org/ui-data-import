@@ -41,11 +41,20 @@ export const listTemplate = (entityKey, searchTerm, selectRecord, selectedRecord
       searchTerm={searchTerm}
     />
   ),
+  extension: record => (
+    <DefaultColumn
+      value={record.extension}
+      searchTerm={searchTerm}
+    />
+  ),
   dataTypes: record => {
     const { dataTypes } = record;
 
     return (
-      <DefaultColumn value={Array.isArray(dataTypes) && dataTypes.length ? dataTypes.join(', ') : ''} />
+      <DefaultColumn
+        value={Array.isArray(dataTypes) ? dataTypes.join(', ') : ''}
+        searchTerm={searchTerm}
+      />
     );
   },
   importBlocked: record => {
