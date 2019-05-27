@@ -168,6 +168,7 @@ export class ViewMatchProfile extends Component {
           data-test-duplicate-match-profile-menu-button
           buttonStyle="dropdownItem"
           buttonClass={sharedCss.linkButton}
+          to={createLayerURL(location, LAYER_TYPES.DUPLICATE)}
           onClick={menu.onToggle}
         >
           <Icon icon="duplicate">

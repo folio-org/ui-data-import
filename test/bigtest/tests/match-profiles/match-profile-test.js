@@ -203,6 +203,81 @@ describe('Match Profile View', () => {
       });
     });
   });
+
+  describe('duplicate match profile form', () => {
+    beforeEach(async () => {
+      await matchProfileDetails.expandPaneHeaderDropdown();
+      await matchProfileDetails.dropdownDuplicateButton.click();
+    });
+
+    it('appears upon click on pane header menu duplicate button', () => {
+      expect(matchProfileForm.isPresent).to.be.true;
+    });
+
+    describe('when form is submitted', () => {
+      beforeEach(async () => {
+        await matchProfileForm.nameField.fillAndBlur('Changed name');
+        await matchProfileForm.descriptionField.fillAndBlur('Changed description');
+        await matchProfileForm.submitFormButton.click();
+      });
+
+      it('then match profile details renders duplicated match profile', () => {
+        expect(matchProfileDetails.headline.text).to.equal('Changed name');
+        expect(matchProfileDetails.description.text).to.equal('Changed description');
+      });
+    });
+
+    describe('when form is submitted and the response contains', () => {
+      describe('error message', () => {
+        beforeEach(async function () {
+          await setupFormSubmitErrorScenario('post', this.server, {
+            response: { errors: [{ message: 'matchProfile.duplication.invalid' }] },
+            status: 422,
+          });
+        });
+
+        it('then error callout appears', () => {
+          expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true;
+        });
+      });
+
+      describe('network error', () => {
+        beforeEach(async function () {
+          await setupFormSubmitErrorScenario('post', this.server);
+        });
+
+        it('then error callout appears', () => {
+          expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true;
+        });
+      });
+
+      describe('unparsed data', () => {
+        beforeEach(async function () {
+          await setupFormSubmitErrorScenario('post', this.server, {
+            response: '',
+            status: 422,
+          });
+        });
+
+        it('then error callout appears', () => {
+          expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true;
+        });
+      });
+
+      describe('error without body', () => {
+        beforeEach(async function () {
+          await setupFormSubmitErrorScenario('post', this.server, {
+            response: null,
+            status: 422,
+          });
+        });
+
+        it('then error callout appears', () => {
+          expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true;
+        });
+      });
+    });
+  });
 });
 
 describe('when match profile is edited and there is no associated job profiles', () => {
@@ -222,7 +297,7 @@ describe('when match profile is edited and there is no associated job profiles',
     expect(matchProfileForm.confirmEditModal.isPresent).to.be.false;
   });
 
-  it('and job profile details renders updated job profile', () => {
+  it('and match profile details renders updated match profile', () => {
     expect(matchProfileDetails.headline.text).to.equal('Changed name');
     expect(matchProfileDetails.description.text).to.equal('Changed description');
   });

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { connect } from 'react-redux';
@@ -20,6 +21,7 @@ import {
   compose,
   validateRequiredField,
 } from '../../utils';
+import { LAYER_TYPES } from '../../utils/constants';
 
 const formName = 'matchProfilesForm';
 
@@ -29,12 +31,14 @@ export const MatchProfilesFormComponent = props => {
     submitting,
     initialValues,
     handleSubmit,
-    onCancel,
+    location: { search },
     associatedJobProfilesAmount,
+    onCancel,
   } = props;
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
-  const isEditMode = Boolean(initialValues.id);
+  const { layer } = queryString.parse(search);
+  const isEditMode = layer === LAYER_TYPES.EDIT;
   const isSubmitDisabled = pristine || submitting;
 
   const paneTitle = isEditMode
@@ -132,6 +136,7 @@ MatchProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
   associatedJobProfilesAmount: PropTypes.number.isRequired,
   onCancel: PropTypes.func.isRequired,
 };
