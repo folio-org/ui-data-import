@@ -44,6 +44,7 @@ import {
 } from '../../utils';
 import {
   LAYER_TYPES,
+  ENTITY_CONFIGS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
 } from '../../utils/constants';
@@ -206,15 +207,50 @@ export class ViewMatchProfile extends Component {
     );
   }
 
+  createFormatter(searchTerm) {
+    const {
+      checkboxList: {
+        selectRecord,
+        selectedRecords,
+      },
+    } = this.props;
+
+    const { ENTITY_KEY: JOB_PROFILE_ENTITY_KEY } = ENTITY_CONFIGS.JOB_PROFILES;
+    const formatter = listTemplate({
+      entityKey: JOB_PROFILE_ENTITY_KEY,
+      searchTerm,
+      selectRecord,
+      selectedRecords,
+    });
+
+    return {
+      ...formatter,
+      name: record => (
+        <Button
+          data-test-job-profile-link
+          buttonStyle="link"
+          marginBottom0
+          to={`/settings/data-import/job-profiles/view/${record.id}`}
+          buttonClass={sharedCss.cellLink}
+        >
+          {formatter.name(record)}
+        </Button>
+      ),
+    };
+  }
+
   render() {
     const {
       onClose,
-      checkboxList,
+      checkboxList: {
+        isAllSelected,
+        handleSelectAllCheckbox,
+      },
     } = this.props;
 
     const {
       hasLoaded,
-      record,
+      record: matchProfile,
     } = this.matchProfileData;
 
     const {
@@ -222,14 +258,7 @@ export class ViewMatchProfile extends Component {
       associatedJobProfiles,
     } = this.associatedJobProfilesData;
 
-    const {
-      selectedRecords,
-      isAllSelected,
-      selectRecord,
-      handleSelectAllCheckbox,
-    } = checkboxList;
-
-    const renderSpinner = !record || !hasLoaded;
+    const renderSpinner = !matchProfile || !hasLoaded;
 
     if (renderSpinner) {
       return (
@@ -253,12 +282,9 @@ export class ViewMatchProfile extends Component {
         app="data-import"
         iconKey="matchProfiles"
       >
-        {record.name}
+        {matchProfile.name}
       </AppIcon>
     );
-
-    // const urlQuery = queryString.parse(search);
-    // const searchTerm = (urlQuery.query || '').trim();
 
     // start
     // MatchProfiles sample data does not contain user Ids because of back-end limitations
@@ -266,10 +292,10 @@ export class ViewMatchProfile extends Component {
     // TODO: use real IDs when sample data will be removed (remove code from start to end)
     const userId = get(this.props, ['stripes', 'okapi', 'currentUser', 'id'], '');
 
-    record.metadata = {
-      ...record.metadata,
-      createdByUserId: record.metadata.createdByUserId || userId,
-      updatedByUserId: record.metadata.updatedByUserId || userId,
+    matchProfile.metadata = {
+      ...matchProfile.metadata,
+      createdByUserId: matchProfile.metadata.createdByUserId || userId,
+      updatedByUserId: matchProfile.metadata.updatedByUserId || userId,
     };
     // end
 
@@ -281,27 +307,27 @@ export class ViewMatchProfile extends Component {
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.matchProfileName" />}
         actionMenu={this.renderActionMenu}
-        lastMenu={this.renderLastMenu(record)}
+        lastMenu={this.renderLastMenu(matchProfile)}
         dismissible
         onClose={onClose}
       >
-        <TitleManager record={record.name} />
+        <TitleManager record={matchProfile.name} />
         <Headline
           data-test-headline
           size="xx-large"
           tag="h2"
         >
-          {record.name}
+          {matchProfile.name}
         </Headline>
         <AccordionSet>
           <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
             <ViewMetaData
-              metadata={record.metadata}
+              metadata={matchProfile.metadata}
               systemId={SYSTEM_USER_ID}
               systemUser={SYSTEM_USER_NAME}
             />
             <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
-              <div data-test-description>{record.description || '-'}</div>
+              <div data-test-description>{matchProfile.description || '-'}</div>
             </KeyValue>
           </Accordion>
           <Accordion label={<FormattedMessage id="ui-data-import.details" />}>
@@ -371,7 +397,7 @@ export class ViewMatchProfile extends Component {
                             updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
                           }}
                           columnWidths={this.columnWidths}
-                          formatter={listTemplate('jobProfiles', searchValue.query, selectRecord, selectedRecords)}
+                          formatter={this.createFormatter(searchValue.query)}
                         />
                       )}
                     </IntlConsumer>

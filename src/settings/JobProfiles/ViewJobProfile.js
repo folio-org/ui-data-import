@@ -3,7 +3,11 @@ import React, {
   Fragment,
 } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  intlShape,
+  injectIntl,
+  FormattedMessage,
+} from 'react-intl';
 import { get } from 'lodash';
 
 import {
@@ -21,15 +25,14 @@ import {
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   AppIcon,
-  IntlConsumer,
   TitleManager,
   stripesShape,
   stripesConnect,
 } from '@folio/stripes/core';
 
+import { listTemplate } from '../../components/ListTemplate';
 import { EndOfItem } from '../../components/EndOfItem';
 import { Preloader } from '../../components/Preloader';
-import { withJobLogsCellsFormatter } from '../../components/JobLogs/withJobLogsCellsFormatter';
 import {
   LAYER_TYPES,
   SYSTEM_USER_ID,
@@ -42,8 +45,8 @@ import {
 
 import sharedCss from '../../shared.css';
 
-@withJobLogsCellsFormatter
 @stripesConnect
+@injectIntl
 export class ViewJobProfile extends Component {
   static manifest = Object.freeze({
     jobProfile: {
@@ -62,6 +65,7 @@ export class ViewJobProfile extends Component {
   });
 
   static propTypes = {
+    intl: intlShape.isRequired,
     stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       jobProfile: PropTypes.shape({
@@ -87,7 +91,6 @@ export class ViewJobProfile extends Component {
     location: PropTypes.object.isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
-    formatter: PropTypes.object,
   };
 
   constructor(props) {
@@ -214,8 +217,8 @@ export class ViewJobProfile extends Component {
 
   render() {
     const {
+      intl,
       onClose,
-      formatter,
     } = this.props;
 
     const {
@@ -267,6 +270,7 @@ export class ViewJobProfile extends Component {
         {record.name}
       </AppIcon>
     );
+    const formatter = listTemplate({ intl });
 
     return (
       <Pane
@@ -308,29 +312,25 @@ export class ViewJobProfile extends Component {
           <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.jobsUsingThisProfile" />}>
             {jobsUsingThisProfileDataHasLoaded
               ? (
-                <IntlConsumer>
-                  {intl => (
-                    <MultiColumnList
-                      id="jobs-using-this-profile"
-                      totalCount={jobsUsingThisProfileData.length}
-                      contentData={jobsUsingThisProfileData}
-                      columnMapping={{
-                        fileName: intl.formatMessage({ id: 'ui-data-import.fileName' }),
-                        hrId: intl.formatMessage({ id: 'ui-data-import.settings.jobProfiles.jobID' }),
-                        completedDate: intl.formatMessage({ id: 'ui-data-import.jobCompletedDate' }),
-                        runBy: intl.formatMessage({ id: 'ui-data-import.runBy' }),
-                      }}
-                      visibleColumns={[
-                        'fileName',
-                        'hrId',
-                        'completedDate',
-                        'runBy',
-                      ]}
-                      formatter={formatter}
-                      width="100%"
-                    />
-                  )}
-                </IntlConsumer>
+                <MultiColumnList
+                  id="jobs-using-this-profile"
+                  totalCount={jobsUsingThisProfileData.length}
+                  contentData={jobsUsingThisProfileData}
+                  columnMapping={{
+                    fileName: intl.formatMessage({ id: 'ui-data-import.fileName' }),
+                    hrId: intl.formatMessage({ id: 'ui-data-import.settings.jobProfiles.jobID' }),
+                    completedDate: intl.formatMessage({ id: 'ui-data-import.jobCompletedDate' }),
+                    runBy: intl.formatMessage({ id: 'ui-data-import.runBy' }),
+                  }}
+                  visibleColumns={[
+                    'fileName',
+                    'hrId',
+                    'completedDate',
+                    'runBy',
+                  ]}
+                  formatter={formatter}
+                  width="100%"
+                />
               )
               : <Preloader />}
           </Accordion>

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { IntlConsumer } from '@folio/stripes/core';
-
 import {
   CheckboxColumn,
   DefaultColumn,
@@ -14,13 +12,22 @@ import { formatUserName } from '../../utils';
 /**
  * Retrieves and returns list of Column Templates renderProps
  *
- * @param {string} entityKey
- * @param {string} searchTerm
- * @param {object} [selectRecord]
- * @param {array} [selectedRecords]
- * @return {object} templates list
+ * @param {{
+ *   intl?: object, // comes from IntlConsumer
+ *   entityKey?: string,
+ *   searchTerm?: string,
+ *   selectRecord?: (id: string) => void,
+ *   selectedRecords?: Set<string>,
+ * }} config
+ * Note: check which params are required based on used columns
  */
-export const listTemplate = (entityKey, searchTerm, selectRecord, selectedRecords) => ({
+export const listTemplate = ({
+  intl,
+  entityKey,
+  searchTerm,
+  selectRecord,
+  selectedRecords,
+}) => ({
   selected: record => (
     <CheckboxColumn
       value={record.id}
@@ -62,11 +69,7 @@ export const listTemplate = (entityKey, searchTerm, selectRecord, selectedRecord
     const translationIdEnding = `fileExtension.${importBlocked ? 'block' : 'allow'}Import`;
     const fullTranslationId = `ui-data-import.settings.${translationIdEnding}`;
 
-    return (
-      <IntlConsumer>
-        {intl => intl.formatMessage({ id: fullTranslationId })}
-      </IntlConsumer>
-    );
+    return intl.formatMessage({ id: fullTranslationId });
   },
   tags: record => (
     <TagsColumn
@@ -85,4 +88,24 @@ export const listTemplate = (entityKey, searchTerm, selectRecord, selectedRecord
       iconKey="user"
     />
   ),
+  runBy: record => {
+    const {
+      runBy: {
+        firstName,
+        lastName,
+      },
+    } = record;
+
+    return `${firstName} ${lastName}`;
+  },
+  completedDate: record => {
+    const { completedDate } = record;
+
+    return intl.formatTime(completedDate, {
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+    });
+  },
+  fileName: record => record.fileName,
 });

@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
-import { intlShape } from 'react-intl';
+import {
+  intlShape,
+  injectIntl,
+} from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { MultiColumnList } from '@folio/stripes/components';
 
 import { Preloader } from '../Preloader';
-import { withJobLogsCellsFormatter } from './withJobLogsCellsFormatter';
 import { withJobLogsSort } from './withJobLogsSort';
+import { withJobLogsCellsFormatter } from './withJobLogsCellsFormatter';
 import { jobLogPropTypes } from './jobLogPropTypes';
 
 @withJobLogsCellsFormatter
 @withJobLogsSort
+@injectIntl
 export class JobLogs extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
+    formatter: PropTypes.object.isRequired,
     sortField: PropTypes.string.isRequired,
     sortDirection: PropTypes.string.isRequired,
-    formatter: PropTypes.object.isRequired,
     onSort: PropTypes.func.isRequired,
     hasLoaded: PropTypes.bool,
     contentData: PropTypes.arrayOf(jobLogPropTypes),

@@ -11,6 +11,7 @@
 * Save the new match profile (UIDATIMP-139)
 * Create edit match profile form (UIDATIMP-143)
 * Implement saving of edited match profile (UIDATIMP-182)
+* Make job profile name a hotlink in match profile details (UIDATIMP-184)
 
 ## [1.2.1](https://github.com/folio-org/ui-data-import/tree/v1.2.1) (2019-05-14)
 * Downgrade okapi interface version in order to have data-import-converter-storage API endpoints work (UIDATIMP-195)

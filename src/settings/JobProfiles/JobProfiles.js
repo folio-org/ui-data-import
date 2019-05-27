@@ -283,7 +283,12 @@ export class JobProfiles extends Component {
                 resultsLabel={label}
                 defaultSort="name"
                 actionMenu={this.renderActionMenu}
-                resultsFormatter={listTemplate(ENTITY_KEY, searchTerm, selectRecord, selectedRecords)}
+                resultsFormatter={listTemplate({
+                  entityKey: ENTITY_KEY,
+                  searchTerm,
+                  selectRecord,
+                  selectedRecords,
+                })}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   selected: (
