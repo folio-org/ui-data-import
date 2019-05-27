@@ -7,10 +7,12 @@ import {
 
 import { Button } from '@folio/stripes/components';
 
-import { compose } from '../../utils';
+import { listTemplate } from '../ListTemplate';
 
-const withJobLogsCellsFormatterComponent = WrappedComponent => {
-  return class extends Component {
+import sharedCss from '../../shared.css';
+
+export const withJobLogsCellsFormatter = WrappedComponent => {
+  return injectIntl(class extends Component {
     static propTypes = {
       intl: intlShape.isRequired,
       formatter: PropTypes.object,
@@ -18,68 +20,34 @@ const withJobLogsCellsFormatterComponent = WrappedComponent => {
 
     static defaultProps = { formatter: {} };
 
-    constructor(props) {
-      super(props);
-
-      this.cellFormatters = {
-        ...props.formatter,
-        runBy: this.formatUser,
-        completedDate: this.formatEndedRunningDate,
-        fileName: this.formatFileName,
-      };
-    }
-
-    formatUser(record) {
-      const {
-        runBy: {
-          firstName,
-          lastName,
-        },
-      } = record;
-
-      return `${firstName} ${lastName}`;
-    }
-
-    formatEndedRunningDate = record => {
-      const { intl: { formatTime } } = this.props;
-
-      const { completedDate } = record;
-
-      return formatTime(completedDate, {
-        day: 'numeric',
-        month: 'numeric',
-        year: 'numeric',
-      });
-    };
-
-    formatFileName = record => (
-      <Button
-        buttonStyle="link"
-        marginBottom0
-        to={`/data-import/log/${record.jobExecutionId}`}
-        style={{
-          marginTop: '5px',
-          marginBottom: '5px',
-          color: 'inherit',
-        }}
-        target="_blank"
-      >
-        {record.fileName}
-      </Button>
-    );
-
     render() {
+      const {
+        intl,
+        formatter: externalFormatter,
+      } = this.props;
+
+      const formatter = {
+        ...externalFormatter,
+        ...listTemplate({ intl }),
+        fileName: record => (
+          <Button
+            buttonStyle="link"
+            marginBottom0
+            to={`/data-import/log/${record.jobExecutionId}`}
+            buttonClass={sharedCss.cellLink}
+            target="_blank"
+          >
+            {record.fileName}
+          </Button>
+        ),
+      };
+
       return (
         <WrappedComponent
           {...this.props}
-          formatter={this.cellFormatters}
+          formatter={formatter}
         />
       );
     }
-  };
+  });
 };
-
-export const withJobLogsCellsFormatter = compose(
-  injectIntl,
-  withJobLogsCellsFormatterComponent,
-);
