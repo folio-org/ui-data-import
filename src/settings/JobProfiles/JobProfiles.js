@@ -18,17 +18,18 @@ import { Checkbox } from '@folio/stripes/components';
 import {
   ActionMenu,
   ACTION_MENU_CONTROLS,
+  listTemplate,
   JobProfilesForm,
   SearchAndSort,
 } from '../../components';
 import { ViewJobProfile } from './ViewJobProfile';
 import { SettingPage } from '../SettingPage';
-import { resultsFormatter } from './resultsFormatter';
 import {
   trimSearchTerm,
   withCheckboxList,
   checkboxListShape,
 } from '../../utils';
+import { ENTITY_CONFIGS } from '../../utils/constants';
 
 import sharedCss from '../../shared.css';
 
@@ -254,6 +255,7 @@ export class JobProfiles extends Component {
 
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
+    const { ENTITY_KEY } = ENTITY_CONFIGS.JOB_PROFILES;
 
     return (
       <IntlConsumer>
@@ -281,7 +283,7 @@ export class JobProfiles extends Component {
                 resultsLabel={label}
                 defaultSort="name"
                 actionMenu={this.renderActionMenu}
-                resultsFormatter={resultsFormatter(searchTerm, selectRecord, selectedRecords)}
+                resultsFormatter={listTemplate(ENTITY_KEY, searchTerm, selectRecord, selectedRecords)}
                 visibleColumns={this.visibleColumns}
                 columnMapping={{
                   selected: (

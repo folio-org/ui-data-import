@@ -8,10 +8,10 @@ import {
 
 import { Icon } from '@folio/stripes/components';
 
-import css from './TagsFormatter.css';
-import sharedCss from '../../../shared.css';
+import css from './TagsColumn.css';
+import sharedCss from '../../../../shared.css';
 
-export const TagsFormatter = memo(props => {
+export const TagsColumn = memo(props => {
   const {
     record,
     searchTerm,
@@ -39,7 +39,7 @@ export const TagsFormatter = memo(props => {
   );
 });
 
-TagsFormatter.propTypes = {
+TagsColumn.propTypes = {
   record: PropTypes.shape.isRequired,
   searchTerm: PropTypes.string.isRequired,
 };

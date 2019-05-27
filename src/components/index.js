@@ -1,4 +1,5 @@
 export * from './ActionMenu';
+export * from './ListTemplate';
 export * from './DataFetcher';
 export * from './EndOfItem';
 export * from './FileExtensionForm';
@@ -8,7 +9,6 @@ export * from './JobLogs';
 export * from './JobProfilesForm';
 export * from './MatchProfilesForm';
 export * from './Jobs';
-export * from './ListColumnFormatters';
 export * from './Preloader';
 export * from './Progress';
 export * from './SearchAndSort';
