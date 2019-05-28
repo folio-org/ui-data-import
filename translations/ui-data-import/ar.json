@@ -133,10 +133,10 @@
     "summary": "ملخص",
     "details": "التفاصيل",
     "options": "الخيارات",
-    "matchProfileName": "Match profile",
-    "settings.matchProfiles.associatedJobProfiles": "Associated job profiles",
-    "validation.matchProfile.duplication.invalid": "Match profile \"{value}\" already exists",
-    "confirm": "Confirm",
-    "settings.matchProfiles.confirmEditModal.heading": "Confirm match profile changes",
-    "settings.matchProfiles.confirmEditModal.message": "These match profile edit will affect {amount, number} associated job {amount, plural, one {profile} other {profiles}}. Please confirm"
+    "matchProfileName": "مطابقة الملف التعريفي",
+    "settings.matchProfiles.associatedJobProfiles": "ملفات تعريف الوظائف المرتبطة",
+    "validation.matchProfile.duplication.invalid": "\"{value}\" مطابقة الملف الشخصي موجودة بالفعل",
+    "confirm": "تأكيد",
+    "settings.matchProfiles.confirmEditModal.heading": "تأكيد التغييرات على مطابقة االملفات التعريفية",
+    "settings.matchProfiles.confirmEditModal.message": "سوف تؤثر هذه التعديلات على مطابقة الملف التعريفي على {amount, number} وظيفة ذات صلة {amount, plural, one {ملفًا تعريفيًا} other {ملفًا تعريفيًا}}. يرجى التأكيد"
 }
