@@ -136,7 +136,7 @@
     "matchProfileName": "Match profile",
     "settings.matchProfiles.associatedJobProfiles": "Associated job profiles",
     "validation.matchProfile.duplication.invalid": "Match profile \"{value}\" already exists",
-    "confirm": "Confirm",
-    "settings.matchProfiles.confirmEditModal.heading": "Confirm match profile changes",
-    "settings.matchProfiles.confirmEditModal.message": "These match profile edit will affect {amount, number} associated job {amount, plural, one {profile} other {profiles}}. Please confirm"
+    "confirm": "Confirmar",
+    "settings.matchProfiles.confirmEditModal.heading": "Confirmar los cambios en el perfil de coincidencia",
+    "settings.matchProfiles.confirmEditModal.message": "Esta edición del perfil de coincidencia afectará a {amount, number} trabajo asociado {amount, plural, one { perfil } other { perfiles }} . Por favor confirmar"
 }
