@@ -4,25 +4,25 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import * as Actions from './MenuItems';
+import { menuTemplate } from './menuTemplate';
 
 export const ActionMenu = memo(props => {
-  const { config: { items } } = props;
+  const {
+    entity,
+    menu,
+  } = props;
+  const { actionMenuItems: items } = entity;
+
+  const templates = menuTemplate(entity, menu);
 
   return (
     <Fragment>
-      {items && items.length && items.map((cfg, i) => {
-        const Control = Actions[cfg.control];
-
-        return (
-          <Control
-            key={`menu-item-${i}`}
-            {...cfg}
-          />
-        );
-      })}
+      {Array.isArray(items) && items.map((item, i) => templates[item](`list-menu-item-${i}`))}
     </Fragment>
   );
 });
 
-ActionMenu.propTypes = { config: PropTypes.object.isRequired };
+ActionMenu.propTypes = {
+  entity: PropTypes.object.isRequired,
+  menu: PropTypes.object.isRequired,
+};

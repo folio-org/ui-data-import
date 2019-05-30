@@ -27,10 +27,11 @@ import {
 } from '@folio/stripes/smart-components';
 
 import { trimSearchTerm } from '../../utils';
+import { ENTITY_CONFIGS } from '../../utils/constants';
 import {
   SearchAndSort,
   listTemplate,
-  FileExtensionForm,
+  FileExtensionForm, ActionMenu,
 } from '../../components';
 import { ViewFileExtension } from './ViewFileExtension';
 import { SettingPage } from '../SettingPage';
@@ -120,6 +121,12 @@ export class FileExtensions extends Component {
 
   calloutRef = createRef();
 
+  entityKey = ENTITY_CONFIGS.JOB_PROFILES.ENTITY_KEY;
+
+  actionMenuItems = [
+    'restoreDefault',
+  ];
+
   visibleColumns = [
     'extension',
     'importBlocked',
@@ -154,19 +161,11 @@ export class FileExtensions extends Component {
   };
 
   renderActionMenu = menu => (
-    <Button
-      data-test-restore-default-file-extensions-button
-      buttonStyle="dropdownItem"
-      onClick={() => this.handleRestoreDefaultFileExtensions(menu)}
-    >
-      <FormattedMessage id="ui-data-import.settings.fileExtensions.reset" />
-    </Button>
+    <ActionMenu
+      entity={this}
+      menu={menu}
+    />
   );
-
-  handleRestoreDefaultFileExtensions = menu => {
-    menu.onToggle();
-    this.showRestoreDefaultFileExtensionsModal();
-  };
 
   showRestoreDefaultFileExtensionsModal() {
     this.setState({ isResetFileExtensionsModalOpen: true });

@@ -1,36 +1,36 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import {
+  TitleManager,
+  stripesShape,
+  stripesConnect,
+} from '@folio/stripes/core';
 import {
   Pane,
   Headline,
   Row,
   Col,
   KeyValue,
-  Icon,
-  Button,
-  PaneMenu,
   ConfirmationModal,
 } from '@folio/stripes/components';
-import {
-  TitleManager,
-  stripesShape,
-  stripesConnect,
-} from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
-import { EndOfItem } from '../../components/EndOfItem';
-import { Preloader } from '../../components/Preloader';
 import {
   LAYER_TYPES,
+  ENTITY_CONFIGS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
 } from '../../utils/constants';
 import { createLayerURL } from '../../utils';
+import {
+  ActionMenu,
+  EndOfItem,
+  Preloader,
+  Spinner,
+} from '../../components';
+import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
 
@@ -76,12 +76,17 @@ export class ViewFileExtension extends Component {
   constructor(props) {
     super(props);
 
-    const { stripes } = this.props;
-
+    this.props = {
+      ...props,
+      paneId: 'pane-file-extension-details',
+    };
     this.state = {
       showDeleteConfirmation: false,
       deletingInProgress: false,
     };
+
+    const { stripes } = this.props;
+
     this.connectedViewMetaData = stripes.connect(ViewMetaData);
   }
 
@@ -97,72 +102,12 @@ export class ViewFileExtension extends Component {
     };
   }
 
-  renderSpinner() {
-    const { onClose } = this.props;
+  entityKey = ENTITY_CONFIGS.FILE_EXTENSIONS.ENTITY_KEY;
 
-    return (
-      <Pane
-        id="pane-file-extension-details"
-        defaultWidth="fill"
-        fluidContentWidth
-        paneTitle=""
-        dismissible
-        lastMenu={this.renderLastMenu()}
-        onClose={onClose}
-      >
-        <Preloader />
-      </Pane>
-    );
-  }
-
-  renderLastMenu(record) {
-    const { location } = this.props;
-
-    const editButtonVisibility = !record ? 'hidden' : 'visible';
-
-    return (
-      <PaneMenu>
-        <Button
-          data-test-edit-file-extension-button
-          to={createLayerURL(location, LAYER_TYPES.EDIT)}
-          style={{ visibility: editButtonVisibility }}
-          buttonStyle="primary paneHeaderNewButton"
-          marginBottom0
-        >
-          <FormattedMessage id="ui-data-import.edit" />
-        </Button>
-      </PaneMenu>
-    );
-  }
-
-  renderActionMenu = menu => {
-    const { location } = this.props;
-
-    return (
-      <Fragment>
-        <Button
-          data-test-edit-file-extension-menu-button
-          to={createLayerURL(location, LAYER_TYPES.EDIT)}
-          buttonStyle="dropdownItem"
-          buttonClass={sharedCss.linkButton}
-          onClick={menu.onToggle}
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-data-import.edit" />
-          </Icon>
-        </Button>
-        <Button
-          data-test-delete-file-extension-button
-          buttonStyle="dropdownItem"
-          onClick={this.showDeleteExtensionModal}
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-data-import.delete" />
-          </Icon>
-        </Button>
-      </Fragment>
-    );
-  };
+  actionMenuItems = [
+    'edit',
+    'delete',
+  ];
 
   showDeleteExtensionModal = () => {
     this.setState({ showDeleteConfirmation: true });
@@ -189,6 +134,22 @@ export class ViewFileExtension extends Component {
     });
   };
 
+  renderActionMenu = menu => (
+    <ActionMenu
+      entity={this}
+      menu={menu}
+    />
+  );
+
+  renderLastMenu = record => (
+    <LastMenu
+      caption="ui-data-import.edit"
+      location={createLayerURL(this.props.location, LAYER_TYPES.EDIT)}
+      style={{ visibility: !record ? 'hidden' : 'visible' }}
+      dataAttributes={{ 'data-test-edit-file-extension-button': '' }}
+    />
+  );
+
   renderFileExtension(record) {
     const { onClose } = this.props;
     const { showDeleteConfirmation } = this.state;
@@ -213,7 +174,6 @@ export class ViewFileExtension extends Component {
         >
           {record.extension}
         </Headline>
-
         <Row>
           <Col xs={12}>
             <this.connectedViewMetaData
@@ -223,7 +183,6 @@ export class ViewFileExtension extends Component {
             />
           </Col>
         </Row>
-
         <Row>
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
@@ -290,10 +249,8 @@ export class ViewFileExtension extends Component {
       record,
     } = this.fileExtensionData;
 
-    const renderSpinner = !record || !hasLoaded;
-
-    if (renderSpinner) {
-      return this.renderSpinner();
+    if (!record || !hasLoaded) {
+      return <Spinner entity={this} />;
     }
 
     return this.renderFileExtension(record);

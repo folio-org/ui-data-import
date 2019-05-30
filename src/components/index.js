@@ -11,6 +11,7 @@ export * from './MatchProfilesForm';
 export * from './Jobs';
 export * from './Preloader';
 export * from './Progress';
+export * from './Spinner';
 export * from './SearchAndSort';
 export * from './UploadingJobsContextProvider';
 export * from './UploadingJobsDisplay';

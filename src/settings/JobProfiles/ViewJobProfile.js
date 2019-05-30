@@ -1,7 +1,4 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   intlShape,
@@ -11,10 +8,7 @@ import {
 import { get } from 'lodash';
 
 import {
-  Icon,
   Pane,
-  Button,
-  PaneMenu,
   Headline,
   KeyValue,
   Accordion,
@@ -30,11 +24,9 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 
-import { listTemplate } from '../../components/ListTemplate';
-import { EndOfItem } from '../../components/EndOfItem';
-import { Preloader } from '../../components/Preloader';
 import {
   LAYER_TYPES,
+  ENTITY_CONFIGS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
 } from '../../utils/constants';
@@ -42,6 +34,14 @@ import {
   createUrl,
   createLayerURL,
 } from '../../utils';
+import {
+  listTemplate,
+  ActionMenu,
+  EndOfItem,
+  Preloader,
+  Spinner,
+} from '../../components';
+import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
 
@@ -96,6 +96,10 @@ export class ViewJobProfile extends Component {
   constructor(props) {
     super(props);
 
+    this.props = {
+      ...props,
+      paneId: 'pane-job-profile-details',
+    };
     this.state = {
       showDeleteConfirmation: false,
       deletionInProgress: false,
@@ -130,45 +134,13 @@ export class ViewJobProfile extends Component {
     };
   }
 
-  renderActionMenu = menu => {
-    const { location } = this.props;
+  entityKey = ENTITY_CONFIGS.JOB_PROFILES.ENTITY_KEY;
 
-    return (
-      <Fragment>
-        <Button
-          data-test-edit-job-profile-menu-button
-          buttonStyle="dropdownItem"
-          buttonClass={sharedCss.linkButton}
-          to={createLayerURL(location, LAYER_TYPES.EDIT)}
-          onClick={menu.onToggle}
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-data-import.edit" />
-          </Icon>
-        </Button>
-        <Button
-          data-test-duplicate-job-profile-menu-button
-          buttonStyle="dropdownItem"
-          buttonClass={sharedCss.linkButton}
-          to={createLayerURL(location, LAYER_TYPES.DUPLICATE)}
-          onClick={menu.onToggle}
-        >
-          <Icon icon="duplicate">
-            <FormattedMessage id="ui-data-import.duplicate" />
-          </Icon>
-        </Button>
-        <Button
-          data-test-delete-job-profile-menu-button
-          buttonStyle="dropdownItem"
-          onClick={() => this.showDeleteConfirmation()}
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-data-import.delete" />
-          </Icon>
-        </Button>
-      </Fragment>
-    );
-  };
+  actionMenuItems = [
+    'edit',
+    'duplicate',
+    'delete',
+  ];
 
   showDeleteConfirmation = () => {
     this.setState({ showDeleteConfirmation: true });
@@ -195,25 +167,21 @@ export class ViewJobProfile extends Component {
     });
   };
 
-  renderLastMenu(record) {
-    const { location } = this.props;
+  renderActionMenu = menu => (
+    <ActionMenu
+      entity={this}
+      menu={menu}
+    />
+  );
 
-    const editButtonVisibility = !record ? 'hidden' : 'visible';
-
-    return (
-      <PaneMenu>
-        <Button
-          data-test-edit-job-profile-button
-          to={createLayerURL(location, LAYER_TYPES.EDIT)}
-          style={{ visibility: editButtonVisibility }}
-          buttonStyle="primary paneHeaderNewButton"
-          marginBottom0
-        >
-          <FormattedMessage id="ui-data-import.edit" />
-        </Button>
-      </PaneMenu>
-    );
-  }
+  renderLastMenu = record => (
+    <LastMenu
+      caption="ui-data-import.edit"
+      location={createLayerURL(this.props.location, LAYER_TYPES.EDIT)}
+      style={{ visibility: !record ? 'hidden' : 'visible' }}
+      dataAttributes={{ 'data-test-edit-job-profile-button': '' }}
+    />
+  );
 
   render() {
     const {
@@ -230,22 +198,8 @@ export class ViewJobProfile extends Component {
       jobsUsingThisProfileData,
     } = this.jobsUsingThisProfileData;
 
-    const renderSpinner = !record || !hasLoaded;
-
-    if (renderSpinner) {
-      return (
-        <Pane
-          id="pane-job-profile-details"
-          defaultWidth="fill"
-          fluidContentWidth
-          paneTitle=""
-          dismissible
-          lastMenu={this.renderLastMenu()}
-          onClose={onClose}
-        >
-          <Preloader />
-        </Pane>
-      );
+    if (!record || !hasLoaded) {
+      return <Spinner entity={this} />;
     }
 
     // start

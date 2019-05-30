@@ -7,11 +7,15 @@ import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
 import {
-  Icon,
+  AppIcon,
+  IntlConsumer,
+  TitleManager,
+  stripesConnect,
+} from '@folio/stripes/core';
+import {
   Pane,
   Button,
   Checkbox,
-  PaneMenu,
   Headline,
   KeyValue,
   Accordion,
@@ -23,18 +27,7 @@ import {
   ViewMetaData,
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
-import {
-  AppIcon,
-  IntlConsumer,
-  TitleManager,
-  stripesConnect,
-} from '@folio/stripes/core';
 
-import {
-  Preloader,
-  EndOfItem,
-  listTemplate,
-} from '../../components';
 import {
   createUrl,
   sortStrings,
@@ -48,6 +41,13 @@ import {
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
 } from '../../utils/constants';
+import {
+  Spinner,
+  EndOfItem,
+  ActionMenu,
+  listTemplate,
+} from '../../components';
+import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import searchAndSortCss from '../../components/SearchAndSort/SearchAndSort.css';
 import sharedCss from '../../shared.css';
@@ -82,6 +82,15 @@ export class ViewMatchProfile extends Component {
     onClose: PropTypes.func.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.props = {
+      ...props,
+      paneId: 'pane-match-profile-details',
+    };
+  }
+
   componentDidMount() {
     this.setList();
   }
@@ -94,13 +103,13 @@ export class ViewMatchProfile extends Component {
     }
   }
 
-  setList() {
-    const { setList } = this.props;
+  entityKey = ENTITY_CONFIGS.MATCH_PROFILES.ENTITY_KEY;
 
-    const { associatedJobProfiles } = this.associatedJobProfilesData;
-
-    setList(associatedJobProfiles);
-  }
+  actionMenuItems = [
+    'edit',
+    'duplicate',
+    'delete',
+  ];
 
   visibleColumns = [
     'selected',
@@ -148,65 +157,29 @@ export class ViewMatchProfile extends Component {
     };
   }
 
-  renderActionMenu = menu => {
-    const { location } = this.props;
+  setList() {
+    const { setList } = this.props;
 
-    return (
-      <Fragment>
-        <Button
-          data-test-edit-match-profile-menu-button
-          buttonStyle="dropdownItem"
-          to={createLayerURL(location, LAYER_TYPES.EDIT)}
-          buttonClass={sharedCss.linkButton}
-          onClick={menu.onToggle}
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-data-import.edit" />
-          </Icon>
-        </Button>
-        <Button
-          data-test-duplicate-match-profile-menu-button
-          buttonStyle="dropdownItem"
-          buttonClass={sharedCss.linkButton}
-          to={createLayerURL(location, LAYER_TYPES.DUPLICATE)}
-          onClick={menu.onToggle}
-        >
-          <Icon icon="duplicate">
-            <FormattedMessage id="ui-data-import.duplicate" />
-          </Icon>
-        </Button>
-        <Button
-          data-test-delete-match-profile-menu-button
-          buttonStyle="dropdownItem"
-          onClick={menu.onToggle}
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-data-import.delete" />
-          </Icon>
-        </Button>
-      </Fragment>
-    );
-  };
+    const { associatedJobProfiles } = this.associatedJobProfilesData;
 
-  renderLastMenu(record) {
-    const { location } = this.props;
-
-    const editButtonVisibility = !record ? 'hidden' : 'visible';
-
-    return (
-      <PaneMenu>
-        <Button
-          data-test-edit-match-profile-button
-          to={createLayerURL(location, LAYER_TYPES.EDIT)}
-          style={{ visibility: editButtonVisibility }}
-          buttonStyle="primary paneHeaderNewButton"
-          marginBottom0
-        >
-          <FormattedMessage id="ui-data-import.edit" />
-        </Button>
-      </PaneMenu>
-    );
+    setList(associatedJobProfiles);
   }
+
+  renderActionMenu = menu => (
+    <ActionMenu
+      entity={this}
+      menu={menu}
+    />
+  );
+
+  renderLastMenu = record => (
+    <LastMenu
+      caption="ui-data-import.edit"
+      location={createLayerURL(this.props.location, LAYER_TYPES.EDIT)}
+      style={{ visibility: !record ? 'hidden' : 'visible' }}
+      dataAttributes={{ 'data-test-edit-match-profile-button': '' }}
+    />
+  );
 
   createFormatter(searchTerm) {
     const {
@@ -259,22 +232,8 @@ export class ViewMatchProfile extends Component {
       associatedJobProfiles,
     } = this.associatedJobProfilesData;
 
-    const renderSpinner = !matchProfile || !hasLoaded;
-
-    if (renderSpinner) {
-      return (
-        <Pane
-          id="pane-match-profile-details"
-          defaultWidth="fill"
-          fluidContentWidth
-          paneTitle=""
-          dismissible
-          lastMenu={this.renderLastMenu()}
-          onClose={onClose}
-        >
-          <Preloader />
-        </Pane>
-      );
+    if (!matchProfile || !hasLoaded) {
+      return <Spinner entity={this} />;
     }
 
     const paneTitle = (

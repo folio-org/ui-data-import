@@ -7,35 +7,36 @@ import {
   Button,
 } from '@folio/stripes/components';
 
-import { createLayerURL } from '../../../utils';
-import { LAYER_TYPES } from '../../../utils/constants';
-
 import sharedCss from '../../../shared.css';
 
-export const AddNew = memo(props => {
+export const LinkTo = memo(props => {
   const {
     caption,
+    icon,
     menu,
     location,
+    dataAttributes,
   } = props;
 
   return (
     <Button
-      data-test-new-item-menu-button
-      to={createLayerURL(location, LAYER_TYPES.CREATE)}
+      to={location}
       buttonStyle="dropdownItem"
       buttonClass={sharedCss.linkButton}
       onClick={menu.onToggle}
+      {...dataAttributes}
     >
-      <Icon icon="plus-sign">
+      <Icon icon={icon}>
         <FormattedMessage id={caption} />
       </Icon>
     </Button>
   );
 });
 
-AddNew.propTypes = {
+LinkTo.propTypes = {
   caption: PropTypes.string.isRequired,
+  icon: PropTypes.string,
   menu: PropTypes.object.isRequired,
   location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+  dataAttributes: PropTypes.object,
 };
