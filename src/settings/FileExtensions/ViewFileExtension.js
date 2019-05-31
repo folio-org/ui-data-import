@@ -27,7 +27,6 @@ import { createLayerURL } from '../../utils';
 import {
   ActionMenu,
   EndOfItem,
-  Preloader,
   Spinner,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
@@ -71,15 +70,14 @@ export class ViewFileExtension extends Component {
     location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    paneId: PropTypes.string, // eslint-disable-line
   };
+
+  static defaultProps = { paneId: 'pane-file-extension-details' };
 
   constructor(props) {
     super(props);
 
-    this.props = {
-      ...props,
-      paneId: 'pane-file-extension-details',
-    };
     this.state = {
       showDeleteConfirmation: false,
       deletingInProgress: false,

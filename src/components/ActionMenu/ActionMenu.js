@@ -23,6 +23,6 @@ export const ActionMenu = memo(props => {
 });
 
 ActionMenu.propTypes = {
-  entity: PropTypes.object.isRequired,
+  entity: PropTypes.shape({ actionMenuItems: PropTypes.arrayOf(PropTypes.string).isRequired }).isRequired,
   menu: PropTypes.object.isRequired,
 };

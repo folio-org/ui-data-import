@@ -91,7 +91,10 @@ export class ViewJobProfile extends Component {
     location: PropTypes.object.isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    paneId: PropTypes.string, // eslint-disable-line
   };
+
+  static defaultProps = { paneId: 'pane-job-profile-details' };
 
   constructor(props) {
     super(props);

@@ -17,7 +17,6 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 import {
-  Button,
   Callout,
   ConfirmationModal,
 } from '@folio/stripes/components';
@@ -29,9 +28,10 @@ import {
 import { trimSearchTerm } from '../../utils';
 import { ENTITY_CONFIGS } from '../../utils/constants';
 import {
-  SearchAndSort,
+  ActionMenu,
   listTemplate,
-  FileExtensionForm, ActionMenu,
+  SearchAndSort,
+  FileExtensionForm,
 } from '../../components';
 import { ViewFileExtension } from './ViewFileExtension';
 import { SettingPage } from '../SettingPage';

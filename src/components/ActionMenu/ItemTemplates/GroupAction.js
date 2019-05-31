@@ -45,7 +45,7 @@ export const GroupAction = memo(props => {
 GroupAction.propTypes = {
   menu: PropTypes.object.isRequired,
   caption: PropTypes.string.isRequired,
-  icon: PropTypes.string,
+  icon: PropTypes.string.isRequired,
   selectedCount: PropTypes.number.isRequired,
   dataAttributes: PropTypes.object,
 };

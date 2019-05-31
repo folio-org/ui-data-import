@@ -36,3 +36,5 @@ LastMenu.propTypes = {
   style: PropTypes.object,
   dataAttributes: PropTypes.object,
 };
+
+LastMenu.defaultProps = { dataAttributes: {} };

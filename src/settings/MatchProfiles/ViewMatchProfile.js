@@ -80,16 +80,10 @@ export class ViewMatchProfile extends Component {
     checkboxList: checkboxListShape.isRequired,
     setList: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    paneId: PropTypes.string, // eslint-disable-line
   };
 
-  constructor(props) {
-    super(props);
-
-    this.props = {
-      ...props,
-      paneId: 'pane-match-profile-details',
-    };
-  }
+  static defaultProps = { paneId: 'pane-match-profile-details' };
 
   componentDidMount() {
     this.setList();

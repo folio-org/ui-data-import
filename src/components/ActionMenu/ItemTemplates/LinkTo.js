@@ -40,3 +40,5 @@ LinkTo.propTypes = {
   location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
   dataAttributes: PropTypes.object,
 };
+
+LinkTo.defaultProps = { dataAttributes: {} };

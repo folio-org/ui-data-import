@@ -83,8 +83,8 @@ export const menuTemplate = (entity, menu) => {
           key={key}
           caption="ui-data-import.selectAll"
           icon="select-all"
-          onClick={handleSelectAllButton}
           dataAttributes={{ 'data-test-select-all-items-menu-button': '' }}
+          onClick={handleSelectAllButton}
         />
       );
     },
@@ -101,8 +101,8 @@ export const menuTemplate = (entity, menu) => {
           key={key}
           caption="ui-data-import.deselectAll"
           icon="deselect-all"
-          onClick={handleDeselectAllButton}
           dataAttributes={{ 'data-test-deselect-all-items-menu-button': '' }}
+          onClick={handleDeselectAllButton}
         />
       );
     },
@@ -117,8 +117,8 @@ export const menuTemplate = (entity, menu) => {
           key={key}
           caption="ui-data-import.delete"
           icon="trash"
-          onClick={handleDelete}
           dataAttributes={{ 'data-test-delete-item-menu-button': '' }}
+          onClick={handleDelete}
         />
       );
     },
@@ -133,8 +133,8 @@ export const menuTemplate = (entity, menu) => {
           key={key}
           caption="ui-data-import.settings.fileExtensions.reset"
           icon="replace"
-          onClick={handleRestoreDefaultFileExtensions}
           dataAttributes={{ 'data-test-restore-default-file-extensions-button': '' }}
+          onClick={handleRestoreDefaultFileExtensions}
         />
       );
     },
