@@ -99,10 +99,6 @@ export class ViewJobProfile extends Component {
   constructor(props) {
     super(props);
 
-    this.props = {
-      ...props,
-      paneId: 'pane-job-profile-details',
-    };
     this.state = {
       showDeleteConfirmation: false,
       deletionInProgress: false,
