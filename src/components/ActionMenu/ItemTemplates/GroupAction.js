@@ -10,24 +10,27 @@ import {
   Button,
 } from '@folio/stripes/components';
 
-export const ExportSelected = memo(props => {
+export const GroupAction = memo(props => {
   const {
     menu,
+    caption,
+    icon,
     selectedCount,
+    dataAttributes,
   } = props;
 
   return (
     <Button
-      data-test-export-selected-items-menu-button
       buttonStyle="dropdownItem"
       disabled={!selectedCount}
       onClick={menu.onToggle}
+      {...dataAttributes}
     >
-      <Icon icon="arrow-down">
-        <FormattedMessage id="ui-data-import.exportSelected" />
+      <Icon icon={icon}>
+        <FormattedMessage id={caption} />
         {!!selectedCount && (
           <Fragment>
-            {' '}
+            &nbsp;
             <FormattedMessage
               id="ui-data-import.itemsCount"
               values={{ count: selectedCount }}
@@ -39,7 +42,10 @@ export const ExportSelected = memo(props => {
   );
 });
 
-ExportSelected.propTypes = {
+GroupAction.propTypes = {
   menu: PropTypes.object.isRequired,
+  caption: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
   selectedCount: PropTypes.number.isRequired,
+  dataAttributes: PropTypes.object,
 };

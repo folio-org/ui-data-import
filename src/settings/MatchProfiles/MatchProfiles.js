@@ -23,7 +23,6 @@ import {
 import { ENTITY_CONFIGS } from '../../utils/constants';
 import {
   ActionMenu,
-  ACTION_MENU_CONTROLS,
   SearchAndSort,
   MatchProfilesForm,
   listTemplate,
@@ -128,11 +127,14 @@ export class MatchProfiles extends Component {
     }
   }
 
-  setList() {
-    const { setList } = this.props;
+  entityKey = ENTITY_CONFIGS.MATCH_PROFILES.ENTITY_KEY;
 
-    setList(this.matchProfiles);
-  }
+  actionMenuItems = [
+    'addNew',
+    'exportSelected',
+    'selectAll',
+    'deselectAll',
+  ];
 
   visibleColumns = [
     'selected',
@@ -161,39 +163,19 @@ export class MatchProfiles extends Component {
     incomingDataValueType: 'STATIC_VALUE',
   };
 
-  renderActionMenu = menu => {
-    const {
-      location,
-      checkboxList: { selectedRecords: { size: selectedRecordsSize } },
-    } = this.props;
+  get matchProfiles() {
+    return get(this.props.resources, ['matchProfiles', 'records'], []);
+  }
 
-    const config = {
-      items: [{
-        control: ACTION_MENU_CONTROLS.ADD_NEW,
-        caption: 'ui-data-import.settings.matchProfiles.newProfile',
-        menu,
-        location,
-      }, {
-        control: ACTION_MENU_CONTROLS.EXPORT_SELECTED,
-        menu,
-        selectedCount: selectedRecordsSize,
-      }, {
-        control: ACTION_MENU_CONTROLS.DEFAULT,
-        caption: 'ui-data-import.selectAll',
-        icon: 'check-circle',
-        onClick: () => this.handleSelectAllButton(menu),
-        dataAttributes: { 'data-test-select-all-items-menu-button': '' },
-      }, {
-        control: ACTION_MENU_CONTROLS.DEFAULT,
-        caption: 'ui-data-import.deselectAll',
-        icon: 'times-circle',
-        onClick: () => this.handleDeselectAllButton(menu),
-        dataAttributes: { 'data-test-deselect-all-items-menu-button': '' },
-      }],
-    };
+  getRecordName(record) {
+    return record.name;
+  }
 
-    return <ActionMenu config={config} />;
-  };
+  setList() {
+    const { setList } = this.props;
+
+    setList(this.matchProfiles);
+  }
 
   handleSelectAllButton = menu => {
     const { checkboxList: { selectAll } } = this.props;
@@ -209,13 +191,12 @@ export class MatchProfiles extends Component {
     deselectAll();
   };
 
-  get matchProfiles() {
-    return get(this.props.resources, ['matchProfiles', 'records'], []);
-  }
-
-  getRecordName(record) {
-    return record.name;
-  }
+  renderActionMenu = menu => (
+    <ActionMenu
+      entity={this}
+      menu={menu}
+    />
+  );
 
   render() {
     const {
@@ -239,7 +220,6 @@ export class MatchProfiles extends Component {
 
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
-    const { ENTITY_KEY } = ENTITY_CONFIGS.MATCH_PROFILES;
 
     return (
       <IntlConsumer>
@@ -268,7 +248,7 @@ export class MatchProfiles extends Component {
                 defaultSort="name"
                 actionMenu={this.renderActionMenu}
                 resultsFormatter={listTemplate({
-                  entityKey: ENTITY_KEY,
+                  entityKey: this.entityKey,
                   searchTerm,
                   selectRecord,
                   selectedRecords,

@@ -20,14 +20,7 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   newJobProfileButton = new ButtonInteractor('[data-test-new-button]');
   searchFiled = new TextFieldInteractor('#input-job-profiles-search');
   searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
-  clearSearchButton = new ButtonInteractor('#input-job-profiles-clear-search-button');
   callout = new CalloutInteractor();
-
-  async clearSearchButtonClick() {
-    await this.searchFiled.focus();
-
-    return this.clearSearchButton.click();
-  }
 }
 
 export const jobProfiles = new JobProfilesInteractor();

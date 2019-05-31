@@ -32,5 +32,5 @@ Default.propTypes = {
   caption: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  dataAttributes: PropTypes.object.isRequired,
+  dataAttributes: PropTypes.object,
 };

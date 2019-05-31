@@ -47,10 +47,10 @@ export const MatchProfilesFormComponent = props => {
         {txt => `${txt} ${initialValues.name}`}
       </FormattedMessage>
     )
-    : <FormattedMessage id="ui-data-import.settings.matchProfiles.newProfile" />;
+    : <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
   const headLine = isEditMode
     ? initialValues.name
-    : <FormattedMessage id="ui-data-import.settings.matchProfiles.newProfile" />;
+    : <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
 
   const editWithModal = isEditMode && associatedJobProfilesAmount;
 

@@ -17,7 +17,6 @@ import { Checkbox } from '@folio/stripes/components';
 
 import {
   ActionMenu,
-  ACTION_MENU_CONTROLS,
   listTemplate,
   JobProfilesForm,
   SearchAndSort,
@@ -105,8 +104,6 @@ export class JobProfiles extends Component {
 
   static defaultProps = { showSingleResult: true };
 
-  state = { selectedRecords: new Set() };
-
   componentDidMount() {
     this.setList();
   }
@@ -124,6 +121,15 @@ export class JobProfiles extends Component {
 
     setList(this.jobProfiles);
   }
+
+  entityKey = ENTITY_CONFIGS.JOB_PROFILES.ENTITY_KEY;
+
+  actionMenuItems = [
+    'addNew',
+    'exportSelected',
+    'selectAll',
+    'deselectAll',
+  ];
 
   visibleColumns = [
     'selected',
@@ -179,37 +185,12 @@ export class JobProfiles extends Component {
     );
   }
 
-  renderActionMenu = menu => {
-    const { location } = this.props;
-    const { selectedRecords: { size: selectedRecordsSize } } = this.state;
-
-    const config = {
-      items: [{
-        control: ACTION_MENU_CONTROLS.ADD_NEW,
-        caption: 'ui-data-import.settings.jobProfiles.newProfile',
-        menu,
-        location,
-      }, {
-        control: ACTION_MENU_CONTROLS.EXPORT_SELECTED,
-        menu,
-        selectedCount: selectedRecordsSize,
-      }, {
-        control: ACTION_MENU_CONTROLS.DEFAULT,
-        caption: 'ui-data-import.selectAll',
-        icon: 'check-circle',
-        onClick: () => this.handleSelectAllButton(menu),
-        dataAttributes: { 'data-test-select-all-items-menu-button': '' },
-      }, {
-        control: ACTION_MENU_CONTROLS.DEFAULT,
-        caption: 'ui-data-import.deselectAll',
-        icon: 'times-circle',
-        onClick: () => this.handleDeselectAllButton(menu),
-        dataAttributes: { 'data-test-deselect-all-items-menu-button': '' },
-      }],
-    };
-
-    return <ActionMenu config={config} />;
-  };
+  renderActionMenu = menu => (
+    <ActionMenu
+      entity={this}
+      menu={menu}
+    />
+  );
 
   getRecordName(record) {
     return record.name;
@@ -255,7 +236,6 @@ export class JobProfiles extends Component {
 
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
-    const { ENTITY_KEY } = ENTITY_CONFIGS.JOB_PROFILES;
 
     return (
       <IntlConsumer>
@@ -284,7 +264,7 @@ export class JobProfiles extends Component {
                 defaultSort="name"
                 actionMenu={this.renderActionMenu}
                 resultsFormatter={listTemplate({
-                  entityKey: ENTITY_KEY,
+                  entityKey: this.entityKey,
                   searchTerm,
                   selectRecord,
                   selectedRecords,

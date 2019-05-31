@@ -13,20 +13,21 @@ import { formatUserName } from '../../utils';
  * Retrieves and returns list of Column Templates renderProps
  *
  * @param {{
- *   intl?: object, // comes from IntlConsumer
- *   entityKey?: string,
+ *   entityKey?: string, // A valid entity identifier
  *   searchTerm?: string,
  *   selectRecord?: (id: string) => void,
  *   selectedRecords?: Set<string>,
+ *   intl?: object, // comes from IntlConsumer
  * }} config
+ * @returns {{Component}}
  * Note: check which params are required based on used columns
  */
 export const listTemplate = ({
-  intl,
   entityKey,
   searchTerm,
   selectRecord,
   selectedRecords,
+  intl,
 }) => ({
   selected: record => (
     <CheckboxColumn
