@@ -13,6 +13,11 @@
 * Implement saving of edited match profile (UIDATIMP-182)
 * Make job profile name a hotlink in match profile details (UIDATIMP-184)
 * Implement match profile duplication feature (UIDATIMP-142)
+* Implement match profile deletion feature (UIDATIMP-144)
+* Refactor all the profile list views to generalise them and move common parts to separate components (UIDATIMP-201)
+* Create ListTemplate and ColumnTemplate components for declarative definition of EntityList (UIDATIMP-201)
+* Create MenuTemplate and ItemTemplate  components for declarative definition of ActionMenu, create ActionMenu component (UIDATIMP-201)
+* Create Spinner and LastMenu components (UIDATIMP-201)
 
 ## [1.2.1](https://github.com/folio-org/ui-data-import/tree/v1.2.1) (2019-05-14)
 * Downgrade okapi interface version in order to have data-import-converter-storage API endpoints work (UIDATIMP-195)
