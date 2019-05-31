@@ -10,14 +10,14 @@ import {
 export class CheckboxInteractor {
   static defaultScope = '[class*=checkbox---]';
 
-  clickLabel = clickable('label');
+  clickInput = clickable('input');
   blurInput = blurrable('input');
   inputValue = value('input');
   isChecked = property('input', 'checked');
 
   clickAndBlur() {
     return this
-      .clickLabel()
+      .clickInput()
       .blurInput();
   }
 }
