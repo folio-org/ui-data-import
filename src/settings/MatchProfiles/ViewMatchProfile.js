@@ -177,7 +177,7 @@ export class ViewMatchProfile extends Component {
       caption="ui-data-import.edit"
       location={createLayerURL(this.props.location, LAYER_TYPES.EDIT)}
       style={{ visibility: !record ? 'hidden' : 'visible' }}
-      dataAttributes={{ 'data-test-edit-match-profile-button': '' }}
+      dataAttributes={{ 'data-test-edit-item-button': '' }}
     />
   );
 

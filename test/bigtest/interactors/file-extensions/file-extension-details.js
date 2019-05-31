@@ -8,9 +8,9 @@ import ConfirmationModalInteractor from '@folio/stripes-components/lib/Confirmat
 
 @interactor class FileExtensionDetailsInteractor {
   paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
-  dropdownEditButton = new ButtonInteractor('[data-test-edit-file-extension-menu-button]');
-  editButton = new ButtonInteractor('[data-test-edit-file-extension-button]');
-  deleteButton = new ButtonInteractor('[data-test-delete-file-extension-button]');
+  dropdownEditButton = new ButtonInteractor('[data-test-edit-item-menu-button]');
+  editButton = new ButtonInteractor('[data-test-edit-item-button]');
+  deleteButton = new ButtonInteractor('[data-test-delete-item-menu-button]');
   headline = scoped('[data-test-headline]');
   extension = scoped('[data-test-extension]');
   description = scoped('[data-test-description]');

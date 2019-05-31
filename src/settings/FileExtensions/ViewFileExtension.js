@@ -109,11 +109,11 @@ export class ViewFileExtension extends Component {
     'delete',
   ];
 
-  showDeleteExtensionModal = () => {
+  showDeleteConfirmation = () => {
     this.setState({ showDeleteConfirmation: true });
   };
 
-  hideDeleteExtensionModal = () => {
+  hideDeleteConfirmation = () => {
     this.setState({
       showDeleteConfirmation: false,
       deletingInProgress: false,
@@ -130,7 +130,7 @@ export class ViewFileExtension extends Component {
 
     this.setState({ deletingInProgress: true }, async () => {
       await onDelete(record);
-      this.hideDeleteExtensionModal();
+      this.hideDeleteConfirmation();
     });
   };
 
@@ -146,7 +146,7 @@ export class ViewFileExtension extends Component {
       caption="ui-data-import.edit"
       location={createLayerURL(this.props.location, LAYER_TYPES.EDIT)}
       style={{ visibility: !record ? 'hidden' : 'visible' }}
-      dataAttributes={{ 'data-test-edit-file-extension-button': '' }}
+      dataAttributes={{ 'data-test-edit-item-button': '' }}
     />
   );
 
@@ -237,7 +237,7 @@ export class ViewFileExtension extends Component {
           confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
           cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
           onConfirm={() => this.handleDeleteExtension(record)}
-          onCancel={this.hideDeleteExtensionModal}
+          onCancel={this.hideDeleteConfirmation}
         />
       </Pane>
     );
