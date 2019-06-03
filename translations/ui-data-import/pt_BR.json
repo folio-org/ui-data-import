@@ -128,8 +128,6 @@
     "settings.matchProfiles.recordTypes.marc-auth": "MARC Autoridade",
     "settings.matchProfiles.recordTypes.marc-hold": "MARC Holdings",
     "loadMarcRecords": "Carregar registros bibliográficos MARC",
-    "settings.jobProfiles.newProfile": "Novo perfil de trabalho",
-    "settings.matchProfiles.newProfile": "Novo perfil de correspondência",
     "summary": "Resumo",
     "details": "Detalhes",
     "options": "Opções",
@@ -138,5 +136,7 @@
     "validation.matchProfile.duplication.invalid": "Perfil de correspondência \"{value}\" já existe",
     "confirm": "Confirmar",
     "settings.matchProfiles.confirmEditModal.heading": "Confirme as alterações do perfil de correspondência",
-    "settings.matchProfiles.confirmEditModal.message": "Essa edição do perfil de correspondência afetará {amount, number} trabalho associado {amount, plural, one {perfil} other {perfis}} . Por favor confirme"
+    "settings.matchProfiles.confirmEditModal.message": "Essa edição do perfil de correspondência afetará {amount, number} trabalho associado {amount, plural, one {perfil} other {perfis}} . Por favor confirme",
+    "settings.jobProfiles.new": "Novo perfil do job",
+    "settings.matchProfiles.new": "Novo perfil de correspondência"
 }

@@ -128,8 +128,6 @@
     "settings.matchProfiles.recordTypes.marc-auth": "MARC Authority",
     "settings.matchProfiles.recordTypes.marc-hold": "MARC Holdings",
     "loadMarcRecords": "Load MARC bibliographic records",
-    "settings.jobProfiles.newProfile": "New job profile",
-    "settings.matchProfiles.newProfile": "New match profile",
     "summary": "Summary",
     "details": "Details",
     "options": "Options",
@@ -138,5 +136,7 @@
     "validation.matchProfile.duplication.invalid": "Match profile \"{value}\" already exists",
     "confirm": "Confirmar",
     "settings.matchProfiles.confirmEditModal.heading": "Confirmar los cambios en el perfil de coincidencia",
-    "settings.matchProfiles.confirmEditModal.message": "Esta edición del perfil de coincidencia afectará a {amount, number} trabajo asociado {amount, plural, one { perfil } other { perfiles }} . Por favor confirmar"
+    "settings.matchProfiles.confirmEditModal.message": "Esta edición del perfil de coincidencia afectará a {amount, number} trabajo asociado {amount, plural, one { perfil } other { perfiles }} . Por favor confirmar",
+    "settings.jobProfiles.new": "New job profile",
+    "settings.matchProfiles.new": "New match profile"
 }

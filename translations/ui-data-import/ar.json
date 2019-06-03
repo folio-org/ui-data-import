@@ -128,8 +128,6 @@
     "settings.matchProfiles.recordTypes.marc-auth": "استناد مارك",
     "settings.matchProfiles.recordTypes.marc-hold": "مقتنيات مارك",
     "loadMarcRecords": "تحميل تسجيلات مارك البيبلوغرافية",
-    "settings.jobProfiles.newProfile": "نبذة وظيفية جديدة",
-    "settings.matchProfiles.newProfile": "وضع مطابقة جديد",
     "summary": "ملخص",
     "details": "التفاصيل",
     "options": "الخيارات",
@@ -138,5 +136,7 @@
     "validation.matchProfile.duplication.invalid": "\"{value}\" مطابقة الملف الشخصي موجودة بالفعل",
     "confirm": "تأكيد",
     "settings.matchProfiles.confirmEditModal.heading": "تأكيد التغييرات على مطابقة االملفات التعريفية",
-    "settings.matchProfiles.confirmEditModal.message": "سوف تؤثر هذه التعديلات على مطابقة الملف التعريفي على {amount, number} وظيفة ذات صلة {amount, plural, one {ملفًا تعريفيًا} other {ملفًا تعريفيًا}}. يرجى التأكيد"
+    "settings.matchProfiles.confirmEditModal.message": "سوف تؤثر هذه التعديلات على مطابقة الملف التعريفي على {amount, number} وظيفة ذات صلة {amount, plural, one {ملفًا تعريفيًا} other {ملفًا تعريفيًا}}. يرجى التأكيد",
+    "settings.jobProfiles.new": "نبذة وظيفية جديدة",
+    "settings.matchProfiles.new": "وضع مطابقة جديد"
 }
