@@ -128,8 +128,6 @@
     "settings.matchProfiles.recordTypes.marc-auth": "MARC Authority",
     "settings.matchProfiles.recordTypes.marc-hold": "MARC Holdings",
     "loadMarcRecords": "Load MARC bibliographic records",
-    "settings.jobProfiles.newProfile": "新的任务配置文件",
-    "settings.matchProfiles.newProfile": "新的匹配配置文件",
     "summary": "Summary",
     "details": "Details",
     "options": "Options",
@@ -138,5 +136,7 @@
     "validation.matchProfile.duplication.invalid": "Match profile \"{value}\" already exists",
     "confirm": "Confirm",
     "settings.matchProfiles.confirmEditModal.heading": "Confirm match profile changes",
-    "settings.matchProfiles.confirmEditModal.message": "These match profile edit will affect {amount, number} associated job {amount, plural, one {profile} other {profiles}}. Please confirm"
+    "settings.matchProfiles.confirmEditModal.message": "These match profile edit will affect {amount, number} associated job {amount, plural, one {profile} other {profiles}}. Please confirm",
+    "settings.jobProfiles.new": "New job profile",
+    "settings.matchProfiles.new": "New match profile"
 }
