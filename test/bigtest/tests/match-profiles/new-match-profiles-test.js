@@ -26,7 +26,7 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
 }
 
 describe('Match profile form', () => {
-  setupApplication({ scenarios: ['fetch-match-profiles-success'] });
+  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags'] });
 
   describe('appears', () => {
     beforeEach(async function () {

@@ -29,7 +29,7 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
 }
 
 describe('Job Profile View', () => {
-  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users'] });
+  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/job-profiles');
@@ -46,6 +46,10 @@ describe('Job Profile View', () => {
 
     it('jobs using this profile table has correct amount of items', () => {
       expect(jobProfileDetails.jobsUsingThisProfile.rowCount).to.be.equal(3);
+    });
+
+    it('display tags accordion', () => {
+      expect(jobProfileDetails.isTagsPresent).to.be.true;
     });
 
     describe('edit job profile form', () => {
@@ -290,5 +294,18 @@ describe('Job Profile View', () => {
         });
       });
     });
+  });
+});
+
+describe('Job Profile View', () => {
+  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users', 'fetch-tags', 'tags-disabled'] });
+
+  beforeEach(async function () {
+    this.visit('/settings/data-import/job-profiles');
+    await jobProfiles.list.rows(0).click();
+  });
+
+  it('does not display tags accordion', () => {
+    expect(jobProfileDetails.isTagsPresent).to.be.false;
   });
 });
