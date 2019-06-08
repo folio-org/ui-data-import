@@ -177,20 +177,6 @@ export class MatchProfiles extends Component {
     setList(this.matchProfiles);
   }
 
-  handleSelectAllButton = menu => {
-    const { checkboxList: { selectAll } } = this.props;
-
-    menu.onToggle();
-    selectAll();
-  };
-
-  handleDeselectAllButton = menu => {
-    const { checkboxList: { deselectAll } } = this.props;
-
-    menu.onToggle();
-    deselectAll();
-  };
-
   renderActionMenu = menu => (
     <ActionMenu
       entity={this}

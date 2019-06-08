@@ -31,7 +31,7 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
 }
 
 describe('Match Profile View', () => {
-  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users'] });
+  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags'] });
 
   beforeEach(async function () {
     this.visit('/settings/data-import/match-profiles');
@@ -281,7 +281,7 @@ describe('Match Profile View', () => {
 });
 
 describe('when match profile is edited and there is no associated job profiles', () => {
-  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users'] });
+  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags'] });
 
   beforeEach(async function () {
     this.server.get('/data-import-profiles/profileAssociations/:id/masters', {});

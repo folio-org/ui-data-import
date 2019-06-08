@@ -14,7 +14,6 @@ import {
  *
  * @param {Component} entity
  * @param {object} menu
- * @returns {{(function() *)}}
  */
 export const menuTemplate = (entity, menu) => {
   const {

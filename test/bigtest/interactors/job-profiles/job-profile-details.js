@@ -1,6 +1,7 @@
 import {
   interactor,
   scoped,
+  isPresent,
 } from '@bigtest/interactor';
 
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
@@ -17,6 +18,7 @@ import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/inter
   headline = scoped('[data-test-headline]');
   acceptedDataType = scoped('[data-test-accepted-data-type]');
   description = scoped('[data-test-description]');
+  isTagsPresent = isPresent('[data-test-tags-accordion]');
   jobsUsingThisProfile = new MultiColumnListInteractor('#jobs-using-this-profile');
   confirmationModal = new ConfirmationModalInteractor('#delete-job-profile-modal');
   callout = new CalloutInteractor();

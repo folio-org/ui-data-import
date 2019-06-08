@@ -16,11 +16,14 @@ import {
   MultiColumnList,
   ConfirmationModal,
 } from '@folio/stripes/components';
-import { ViewMetaData } from '@folio/stripes/smart-components';
+import {
+  withTags,
+  ViewMetaData,
+  TagsAccordion,
+} from '@folio/stripes/smart-components';
 import {
   AppIcon,
   TitleManager,
-  stripesShape,
   stripesConnect,
 } from '@folio/stripes/core';
 
@@ -45,8 +48,11 @@ import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
 
+const ConnectedViewMetaData = stripesConnect(ViewMetaData);
+
 @stripesConnect
 @injectIntl
+@withTags
 export class ViewJobProfile extends Component {
   static manifest = Object.freeze({
     jobProfile: {
@@ -66,7 +72,6 @@ export class ViewJobProfile extends Component {
 
   static propTypes = {
     intl: intlShape.isRequired,
-    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       jobProfile: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -89,6 +94,7 @@ export class ViewJobProfile extends Component {
       }).isRequired,
     }).isRequired,
     location: PropTypes.object.isRequired,
+    tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string, // eslint-disable-line
@@ -96,18 +102,10 @@ export class ViewJobProfile extends Component {
 
   static defaultProps = { paneId: 'pane-job-profile-details' };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      showDeleteConfirmation: false,
-      deletionInProgress: false,
-    };
-
-    const { stripes } = this.props;
-
-    this.connectedViewMetaData = stripes.connect(ViewMetaData);
-  }
+  state = {
+    showDeleteConfirmation: false,
+    deletionInProgress: false,
+  };
 
   get jobProfileData() {
     const { resources } = this.props;
@@ -152,7 +150,7 @@ export class ViewJobProfile extends Component {
     });
   };
 
-  handleDelete = record => {
+  handleDelete(record) {
     const { onDelete } = this.props;
     const { deletionInProgress } = this.state;
 
@@ -164,7 +162,7 @@ export class ViewJobProfile extends Component {
       await onDelete(record);
       this.hideDeleteConfirmation();
     });
-  };
+  }
 
   renderActionMenu = menu => (
     <ActionMenu
@@ -173,19 +171,22 @@ export class ViewJobProfile extends Component {
     />
   );
 
-  renderLastMenu = record => (
-    <LastMenu
-      caption="ui-data-import.edit"
-      location={createLayerURL(this.props.location, LAYER_TYPES.EDIT)}
-      style={{ visibility: !record ? 'hidden' : 'visible' }}
-      dataAttributes={{ 'data-test-edit-item-button': '' }}
-    />
-  );
+  renderLastMenu(record) {
+    return (
+      <LastMenu
+        caption="ui-data-import.edit"
+        location={createLayerURL(this.props.location, LAYER_TYPES.EDIT)}
+        style={{ visibility: record ? 'visible' : 'hidden' }}
+        dataAttributes={{ 'data-test-edit-item-button': '' }}
+      />
+    );
+  }
 
   render() {
     const {
       intl,
       onClose,
+      tagsEnabled,
     } = this.props;
 
     const {
@@ -225,6 +226,8 @@ export class ViewJobProfile extends Component {
     );
     const formatter = listTemplate({ intl });
 
+    const tagsEntityLink = `data-import-profiles/jobProfiles/${record.id}`;
+
     return (
       <Pane
         id="pane-job-profile-details"
@@ -247,7 +250,7 @@ export class ViewJobProfile extends Component {
         </Headline>
         <AccordionSet>
           <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
-            <this.connectedViewMetaData
+            <ConnectedViewMetaData
               metadata={record.metadata}
               systemId={SYSTEM_USER_ID}
               systemUser={SYSTEM_USER_NAME}
@@ -259,6 +262,11 @@ export class ViewJobProfile extends Component {
               <div data-test-description>{record.description || '-'}</div>
             </KeyValue>
           </Accordion>
+          {tagsEnabled && (
+            <div data-test-tags-accordion>
+              <TagsAccordion link={tagsEntityLink} />
+            </div>
+          )}
           <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}>
             <div style={{ height: 60 }}>{/* will be implemented in UIDATIMP-152 */}</div>
           </Accordion>
@@ -285,7 +293,8 @@ export class ViewJobProfile extends Component {
                   width="100%"
                 />
               )
-              : <Preloader />}
+              : <Preloader />
+            }
           </Accordion>
         </AccordionSet>
         <EndOfItem

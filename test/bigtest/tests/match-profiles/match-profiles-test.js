@@ -14,7 +14,7 @@ import {
 import { htmlDecode } from '../../../../src/utils';
 
 describe('Match profiles', () => {
-  setupApplication({ scenarios: ['fetch-match-profiles-success'] });
+  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/match-profiles');

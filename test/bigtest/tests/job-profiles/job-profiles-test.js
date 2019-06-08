@@ -14,7 +14,7 @@ import {
 } from '../../interactors';
 
 describe('Job profiles', () => {
-  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users'] });
+  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users', 'fetch-tags'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/job-profiles');
@@ -162,6 +162,22 @@ describe('Job profiles', () => {
         await jobProfiles.checkBoxes(1).clickAndBlur();
         await jobProfiles.searchFiled.fill('acq');
         await jobProfiles.searchSubmitButton.click();
+      });
+
+      it('deselects all items', () => {
+        jobProfiles.checkBoxes().forEach(checkBox => {
+          expect(checkBox.isChecked).to.be.false;
+        });
+      });
+    });
+
+    describe('when clearing search', () => {
+      beforeEach(async () => {
+        await jobProfiles.searchFiled.fill('acq');
+        await jobProfiles.searchSubmitButton.click();
+        await jobProfiles.checkBoxes(0).clickAndBlur();
+        await jobProfiles.checkBoxes(1).clickAndBlur();
+        await jobProfiles.clearSearchButtonClick();
       });
 
       it('deselects all items', () => {

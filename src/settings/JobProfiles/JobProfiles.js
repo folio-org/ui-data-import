@@ -196,20 +196,6 @@ export class JobProfiles extends Component {
     return record.name;
   }
 
-  handleSelectAllButton = menu => {
-    const { checkboxList: { selectAll } } = this.props;
-
-    menu.onToggle();
-    selectAll();
-  };
-
-  handleDeselectAllButton = menu => {
-    const { checkboxList: { deselectAll } } = this.props;
-
-    menu.onToggle();
-    deselectAll();
-  };
-
   get jobProfiles() {
     return get(this.props.resources, ['jobProfiles', 'records'], []);
   }
