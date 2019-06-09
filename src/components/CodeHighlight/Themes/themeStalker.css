@@ -1,0 +1,17 @@
+@define-mixin stalker {
+  code {
+    background-color: #d9edf7;
+    &.error {
+      background-color: rgba(255, 65, 54, 0.4);
+      & .header {
+        background: #a61e37;
+        color: #ffffff;
+      }
+    }
+    & .string { color: green; }
+    & .number { color: darkorange; }
+    & .boolean { color: blue; }
+    & .null { color: magenta; }
+    & .key { color: red; }
+  }
+}

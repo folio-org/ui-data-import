@@ -5,13 +5,14 @@ import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 
 import { Preloader } from '../components/Preloader';
+import { CodeHighlight } from '../components/CodeHighlight';
 
 @stripesConnect
 export class ViewJobLog extends Component {
   static manifest = Object.freeze({
     jobLog: {
       type: 'okapi',
-      path: 'source-storage/sourceRecords?query=snapshotId=:{id}&limit=1000',
+      path: 'source-storage/records?query=snapshotId=:{id}&limit=1000',
       throwsErrors: false,
     },
   });
@@ -43,21 +44,18 @@ export class ViewJobLog extends Component {
     };
   }
 
-  formatSourceRecords = sourceRecords => JSON.stringify(sourceRecords, null, 2);
-
   render() {
     const {
       hasLoaded,
       record,
     } = this.jobLogData;
-    const renderSpinner = !record || !hasLoaded;
 
-    if (renderSpinner) {
+    if (!record || !hasLoaded) {
       return <Preloader />;
     }
 
     const {
-      sourceRecords,
+      records,
       totalRecords,
     } = record;
 
@@ -69,9 +67,11 @@ export class ViewJobLog extends Component {
             values={{ count: totalRecords }}
           />
         </div>
-        <pre id="job-log-json">
-          {this.formatSourceRecords(sourceRecords)}
-        </pre>
+        <CodeHighlight
+          code={records}
+          language="langJSON"
+          theme="coy"
+        />
       </div>
     );
   }
