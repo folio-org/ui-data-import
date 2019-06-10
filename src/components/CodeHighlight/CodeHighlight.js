@@ -7,10 +7,13 @@ import PropTypes from 'prop-types';
 import * as Languages from './Languages';
 import * as Themes from './Themes';
 
-import './code-highlight.css';
+import css from './code-highlight.css';
 
 const { LANGUAGES } = Languages;
-const { THEMES } = Themes;
+const { 
+  THEMES, 
+  themes, 
+} = Themes;
 
 export const CodeHighlight = memo(props => {
   const {
@@ -26,19 +29,20 @@ export const CodeHighlight = memo(props => {
   };
 
   const codePortion = Array.isArray(code) ? code : [code];
+  const hlTheme = themes[theme];
 
   return (
     <Fragment>
-      {toolbar.visible && <div className="highlight-toolbar">Toolbar is here:</div>}
-      <pre className={`highlight ${theme}`}>
+      {toolbar.visible && <div className={css.highlightToolbar}>Toolbar is here:</div>}
+      <pre className={hlTheme[theme]}>
         {codePortion.map((item, i) => {
           const codeString = JSON.stringify(item, null, 2);
 
           return (
             <code
               key={`snippet-${i}`}
-              className={codeString.contains('error') ? 'error' : ''}
-              dangerouslySetInnerHTML={markup(renderer(codeString))}
+              className={codeString.includes('error') ? hlTheme.error : hlTheme.success}
+              dangerouslySetInnerHTML={markup(renderer(codeString, themes[theme]))}
             />
           );
         })}
@@ -57,6 +61,6 @@ CodeHighlight.propTypes = {
 CodeHighlight.defaultProps = {
   code: '',
   language: LANGUAGES.RAW,
-  theme: THEMES.COY,
+  theme: THEMES.STALKER,
   toolbar: { visible: true },
 };

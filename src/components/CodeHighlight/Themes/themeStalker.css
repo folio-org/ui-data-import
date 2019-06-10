@@ -1,17 +1,22 @@
-@define-mixin stalker {
-  code {
-    background-color: #d9edf7;
+pre {
+  & code {
+    &.success {
+      background-color: #232b2b;
+      color: #ffffff;  
+    }
     &.error {
-      background-color: rgba(255, 65, 54, 0.4);
+      outline: 1px solid #bf0000;  
+      background-color: #400000;
+      color: #ffffff;
       & .header {
         background: #a61e37;
         color: #ffffff;
       }
     }
-    & .string { color: green; }
-    & .number { color: darkorange; }
-    & .boolean { color: blue; }
+    & .key { color: #ffbf00; }
+    & .string { color: #a0d6b4; }
+    & .number { color: #ff6f69; }
+    & .boolean { color: #66ccff; }
     & .null { color: magenta; }
-    & .key { color: red; }
-  }
+  }  
 }

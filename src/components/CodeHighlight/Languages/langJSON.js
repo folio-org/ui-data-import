@@ -1,8 +1,8 @@
-export const langJSON = code => {
+export const langJSON = (code, styles) => {
   const codeString = typeof code === 'string' ? code : JSON.stringify(code, null, 2);
   const json = codeString.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const re = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g;
-
+  
   return json.replace(re, match => {
     let cls = 'number';
 
@@ -14,6 +14,6 @@ export const langJSON = code => {
       cls = 'null';
     }
 
-    return `<span class="${cls}">${match}</span>`;
+    return `<span class="${styles[cls]}">${match}</span>`;
   });
 };

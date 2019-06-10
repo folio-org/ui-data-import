@@ -1,17 +1,23 @@
-@define-mixin coy {
-  code {
-    background-color: #d9edf7;
+pre {
+  & code {  
+    &.success {
+      background-color: #f5f8f6;
+      color: #000000;  
+    }
     &.error {
-      background-color: rgba(255, 65, 54, 0.4);
+      outline: 1px solid #bf0000;  
+      background-color: #e7cdcd;
+      color: #000000;
       & .header {
         background: #a61e37;
         color: #ffffff;
-      }
+      }  
     }
-    & .string { color: green; }
-    & .number { color: darkorange; }
-    & .boolean { color: blue; }
-    & .null { color: magenta; }
-    & .key { color: red; }
+    & .key { color: #dc6900; }
+    & .string { color: #41533b; }
+    & .number { color: #bf0000; }
+    & .boolean { color: #005b96; }
+    & .null { color: 	#800080; }
   }
 }
+  
