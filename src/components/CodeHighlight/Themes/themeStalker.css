@@ -1,11 +1,11 @@
 pre {
   & code {
-    &.success {
+    &.info {
       background-color: #232b2b;
-      color: #ffffff;  
+      color: #ffffff;
     }
     &.error {
-      outline: 1px solid #bf0000;  
+      outline: 1px solid #bf0000;
       background-color: #400000;
       color: #ffffff;
       & .header {
@@ -18,5 +18,5 @@ pre {
     & .number { color: #ff6f69; }
     & .boolean { color: #66ccff; }
     & .null { color: magenta; }
-  }  
+  }
 }

@@ -1,0 +1,69 @@
+.toolbar {
+  position:sticky;
+  left:0;
+  top:5px;
+  display:flex;
+  width:auto;
+  height:35px;
+  margin: 5px;
+  background-color: #ffffff;
+  outline: 1px solid #242725;
+  & .header, & .filter, & .themes {
+    display:flex;
+    margin:5px;
+    padding:2px;
+    align-items: center;
+  }
+  & .header {
+    min-width:250px;
+    & .recordId {
+      color:#145A32
+    }
+    & .header__entries {
+      font-weight:bold;
+      color: #005b96;
+    }
+    & .header__errors {
+      font-weight:bold;
+      color: #bf0000;
+    }
+  }
+  & .filter {
+    min-width:200px;
+    & .filter__label {
+      margin-right:5px;
+      font-weight:bold;
+    }
+    & [class*=buttonGroup---] {
+      & button {
+        min-width:100px;
+      }
+    }
+  }
+  & .themes {
+    min-width:150px;
+    & .themes__label {
+      margin-right:5px;
+      font-weight:bold;
+    }
+    & [class*=inputGroup---] {
+      min-width:100px!important;
+    }
+  }
+}
+
+pre {
+  display: inline-block;
+  width: auto;
+  overflow: visible;
+  margin:0;
+  & code {
+    display: block;
+    width: auto;
+    overflow: auto;
+    margin: 5px;
+    padding: 5px;
+    outline: 1px solid #cccccc;
+    font-size: 12px;
+  }
+}

@@ -5,7 +5,11 @@ import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 
 import { Preloader } from '../components/Preloader';
-import { CodeHighlight } from '../components/CodeHighlight';
+import { LogColorizer } from '../components/CodeHighlight';
+import { LANGUAGES } from '../components/CodeHighlight/Languages';
+import { THEMES } from '../components/CodeHighlight/Themes';
+
+import css from '../components/CodeHighlight/LogColorizer.css';
 
 @stripesConnect
 export class ViewJobLog extends Component {
@@ -54,23 +58,32 @@ export class ViewJobLog extends Component {
       return <Preloader />;
     }
 
-    const {
-      records,
-      totalRecords,
-    } = record;
+    const { records } = record;
+
+    const jobId = document.location.href.split('/').slice(-1)[0];
+
+    const toolbar = {
+      visible: true,
+      message: (
+        <span>
+          <strong>
+            <FormattedMessage id="ui-data-import.import-log" />
+          </strong>
+          <strong>&#123;</strong>
+          <span className={css.recordId}>{jobId}</span>
+          <strong>&#125;</strong>:
+        </span>
+      ),
+      showThemes: true,
+    };
 
     return (
       <div id="view-job-log-test">
-        <div id="view-total-records-test">
-          <FormattedMessage
-            id="ui-data-import.recordsCount"
-            values={{ count: totalRecords }}
-          />
-        </div>
-        <CodeHighlight
+        <LogColorizer
           code={records}
-          language="langJSON"
-          theme="coy"
+          language={LANGUAGES.JSON}
+          theme={THEMES.COY}
+          toolbar={toolbar}
         />
       </div>
     );
