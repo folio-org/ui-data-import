@@ -15,7 +15,9 @@
   "beganRunning": "Began {time}",
   "endedRunning": "Ended {time}",
   "progressRunning": "In progress",
+  "import-log": "Import Log for Job ",
   "recordsCount": "{count, plural, one {# record} other {# records}}",
+  "errorsCount": "{count, plural, one {# error} other {# errors}}",
   "today": "today",
   "loading": "Loading",
   "undo": "Undo",
@@ -138,5 +140,10 @@
   "modal.leavePage.messageHighlightedText": "unfinished uploads",
   "modal.leavePage.cancel": "Close & lose partial uploads",
   "modal.leavePage.actionButton": "Keep uploading",
-  "validation.enterValue": "Please enter a value"
+  "validation.enterValue": "Please enter a value",
+  "logColorizer.filter.label": "Show",
+  "logColorizer.filter.all": "All",
+  "logColorizer.filter.info": "Info",
+  "logColorizer.filter.errors": "Errors",
+  "logColorizer.themes.label": "Use theme"
 }

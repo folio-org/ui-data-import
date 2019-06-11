@@ -100,3 +100,13 @@ export const ENTITY_CONFIGS = {
   ACTION_PROFILES: { ENTITY_KEY: 'actionProfiles' },
   MAPPING_PROFILES: { ENTITY_KEY: 'mappingProfiles' },
 };
+
+export const LOG_COLORIZER = {
+  FILTER: {
+    OPTIONS: {
+      ALL: 0,
+      INFO: 1,
+      ERRORS: 2,
+    },
+  },
+};
