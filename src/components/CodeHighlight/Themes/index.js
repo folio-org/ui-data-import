@@ -5,8 +5,8 @@ import coy from './themeCoy.css';
 import stalker from './themeStalker.css';
 
 export const themes = {
-  coy, 
-  stalker,  
+  coy,
+  stalker,
 };
 
 export const THEMES = {
