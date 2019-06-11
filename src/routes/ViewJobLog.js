@@ -78,7 +78,7 @@ export class ViewJobLog extends Component {
     };
 
     return (
-      <div id="view-job-log-test">
+      <div id="job-log-colorizer">
         <LogColorizer
           code={records}
           language={LANGUAGES.JSON}

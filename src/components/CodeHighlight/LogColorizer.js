@@ -101,7 +101,7 @@ export const LogColorizer = memo(props => {
               <FormattedMessage id="ui-data-import.logColorizer.filter.label" />:
             </span>
             <ButtonGroup
-              data-test-search-form-type-switcher
+              data-test-logs-filter
               fullWidth
               role="tablist"
             >
@@ -113,7 +113,7 @@ export const LogColorizer = memo(props => {
                   key={`option-${option.id}`}
                   buttonStyle={currentFilter === option.id ? 'primary' : 'default'}
                   className={css.filter__button}
-                  data-test-search-type-button={option.id}
+                  data-test-logs-filter-option={option.id}
                   marginBottom0
                   onClick={() => setCurrentFilter(option.id)}
                 >
@@ -145,7 +145,10 @@ export const LogColorizer = memo(props => {
           )}
         </div>
       )}
-      <pre className={currentTheme}>
+      <pre
+        id="logs-pane"
+        className={currentTheme}
+      >
         {codePortion.map((item, i) => {
           const codeString = JSON.stringify(item, null, 2);
           const hasError = codeString.includes('error');
