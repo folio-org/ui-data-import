@@ -18,6 +18,9 @@
 * Create ListTemplate and ColumnTemplate components for declarative definition of EntityList (UIDATIMP-201)
 * Create MenuTemplate and ItemTemplate  components for declarative definition of ActionMenu, create ActionMenu component (UIDATIMP-201)
 * Create Spinner and LastMenu components (UIDATIMP-201)
+* Create LogColorizer and modular CodeHighlight componens among with modular language definitions (langJSON and langRAW for now) and 2 highlight themes (light - Coy and dark - Stalker) (UIDATIMP-209)
+* Refine ViewJobLog page component with a new endpoint to show all the log including error ones through LogColorizer component (UIDATIMP-209)
+* Add missing icons for Match Profiles record types (UIDATIMP-194)
 
 ## [1.2.1](https://github.com/folio-org/ui-data-import/tree/v1.2.1) (2019-05-14)
 * Downgrade okapi interface version in order to have data-import-converter-storage API endpoints work (UIDATIMP-195)
