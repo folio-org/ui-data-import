@@ -138,5 +138,18 @@
     "settings.matchProfiles.confirmEditModal.heading": "تأكيد التغييرات على مطابقة االملفات التعريفية",
     "settings.matchProfiles.confirmEditModal.message": "سوف تؤثر هذه التعديلات على مطابقة الملف التعريفي على {amount, number} وظيفة ذات صلة {amount, plural, one {ملفًا تعريفيًا} other {ملفًا تعريفيًا}}. يرجى التأكيد",
     "settings.jobProfiles.new": "نبذة وظيفية جديدة",
-    "settings.matchProfiles.new": "وضع مطابقة جديد"
+    "settings.matchProfiles.new": "وضع مطابقة جديد",
+    "import-log": "Import Log for Job ",
+    "errorsCount": "{count, plural, one {# error} other {# errors}}",
+    "logColorizer.filter.label": "Show",
+    "logColorizer.filter.all": "All",
+    "logColorizer.filter.info": "Info",
+    "logColorizer.filter.errors": "Errors",
+    "logColorizer.themes.label": "Use theme",
+    "modal.matchProfile.delete.header": "Delete \"{name}\" match profile?",
+    "modal.matchProfile.delete.message": "Delete match profile?",
+    "settings.matchProfiles.exceptionModal.label": "Cannot delete match profile",
+    "settings.matchProfiles.exceptionModal.message": "This match profile cannot be deleted, as it is in use by one or more job profiles.",
+    "settings.matchProfiles.action.success": "The match profile \"{name}\" was successfully {action}",
+    "settings.matchProfiles.action.error": "The match profile \"{name}\" was not {action}"
 }

@@ -138,5 +138,18 @@
     "settings.matchProfiles.confirmEditModal.heading": "Confirmar los cambios en el perfil de coincidencia",
     "settings.matchProfiles.confirmEditModal.message": "Esta edición del perfil de coincidencia afectará a {amount, number} trabajo asociado {amount, plural, one { perfil } other { perfiles }} . Por favor confirmar",
     "settings.jobProfiles.new": "Nuevo perfil de trabajo",
-    "settings.matchProfiles.new": "Nuevo perfil de coincidencia"
+    "settings.matchProfiles.new": "Nuevo perfil de coincidencia",
+    "import-log": "Import Log for Job ",
+    "errorsCount": "{count, plural, one {# error} other {# errors}}",
+    "logColorizer.filter.label": "Show",
+    "logColorizer.filter.all": "All",
+    "logColorizer.filter.info": "Info",
+    "logColorizer.filter.errors": "Errors",
+    "logColorizer.themes.label": "Use theme",
+    "modal.matchProfile.delete.header": "Delete \"{name}\" match profile?",
+    "modal.matchProfile.delete.message": "Delete match profile?",
+    "settings.matchProfiles.exceptionModal.label": "Cannot delete match profile",
+    "settings.matchProfiles.exceptionModal.message": "This match profile cannot be deleted, as it is in use by one or more job profiles.",
+    "settings.matchProfiles.action.success": "The match profile \"{name}\" was successfully {action}",
+    "settings.matchProfiles.action.error": "The match profile \"{name}\" was not {action}"
 }
