@@ -202,18 +202,18 @@ export class ViewJobProfile extends Component {
       return <Spinner entity={this} />;
     }
 
-    // start
     // JobProfiles sample data does not contain user Ids because of back-end limitations
     // and therefore it is required to add it manually on UI side
-    // TODO: use real IDs when sample data will be removed (remove code from start to end)
-    const userId = get(this.props, ['stripes', 'okapi', 'currentUser', 'id'], '');
+    // TODO: use real IDs when sample data will be removed (remove the block of code below)
+    {
+      const userId = get(this.props, ['stripes', 'okapi', 'currentUser', 'id'], '');
 
-    record.metadata = {
-      ...record.metadata,
-      createdByUserId: record.metadata.createdByUserId || userId,
-      updatedByUserId: record.metadata.updatedByUserId || userId,
-    };
-    // end
+      record.metadata = {
+        ...record.metadata,
+        createdByUserId: record.metadata.createdByUserId || userId,
+        updatedByUserId: record.metadata.updatedByUserId || userId,
+      };
+    }
 
     const paneTitle = (
       <AppIcon

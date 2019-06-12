@@ -37,7 +37,7 @@ const generateUploadDefinitionBody = files => {
  * Description: TBD
  *
  * @param {Array} files
- * @return {any}
+ * @returns {{ [key: string]: object }}
  */
 export const mapFilesToUI = (files = []) => {
   return files.reduce((res, file) => {
@@ -71,9 +71,11 @@ export const mapFilesToUI = (files = []) => {
 /**
  * Creates Upload Definition data sets
  *
- * @param {Array} files
- * @param {string} url
- * @param {Object} okapi
+ * @param {{
+ *   files: Array;
+ *   url: string;
+ *   okapi: object;
+ * }}
  * @return {Promise<Array>}
  */
 export const createUploadDefinition = async ({
@@ -110,8 +112,7 @@ export const createUploadDefinition = async ({
  * Creates and calls file deletion request
  *
  * @param {string} url
- * @param {Array} headers
- * @return {Promise<Response>}
+ * @param {{ [key: string]: string }} headers
  */
 export const deleteFile = async (url, headers) => {
   const response = await fetch(url, {
@@ -160,7 +161,7 @@ export const getLatestUploadDefinition = async ({
  * Creates and calls Upload Definition deletion request
  *
  * @param {string} url
- * @param {Object} okapi
+ * @param {object} okapi
  * @return {Promise<Response>}
  */
 export const deleteUploadDefinition = async ({

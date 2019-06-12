@@ -540,9 +540,10 @@ export class UploadingJobsDisplay extends Component {
         id="ui-data-import.modal.leavePage.message"
         values={{
           highlightedText: (
-            <strong>
-              <FormattedMessage id="ui-data-import.modal.leavePage.messageHighlightedText" />
-            </strong>
+            <FormattedMessage
+              tagName="strong"
+              id="ui-data-import.modal.leavePage.messageHighlightedText"
+            />
           ),
         }}
       />

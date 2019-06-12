@@ -4,10 +4,10 @@ import {
 } from 'lodash';
 
 /**
- * Composes XHR headers set
+ * Composes XMLHttpRequest headers set
  *
- * @param {Object|XMLHttpRequest} xhr
- * @param {array} headers
+ * @param {XMLHttpRequest} xhr
+ * @param {{ [key: string]: string }} headers
  */
 export const xhrAddHeaders = (xhr, headers) => {
   forEach(headers, (value, key) => {
@@ -16,12 +16,11 @@ export const xhrAddHeaders = (xhr, headers) => {
 };
 
 /**
- * Gets formats and returns XMLHTTPRequest responses
+ * Gets formats and returns XMLHttpRequest responses
  *
- * @param {*} response
- * @return {*}
+ * @param {Response} response
  */
-export const getXHRResponse = response => {
+export const getXHRResponse = async response => {
   const contentType = response.headers.get('Content-Type') || '';
 
   if (contentType.startsWith('application/json')) {
@@ -32,16 +31,16 @@ export const getXHRResponse = response => {
 };
 
 /**
- * Gets formats and returns XMLHTTPRequest errors
+ * Gets formats and returns XMLHttpRequest errors
  *
- * @param {*} response
- * @return {Promise<null|*>}
+ * @param {Response} response
+ * @return {Promise<string | null>}
  */
 export const getXHRErrorMessage = async response => {
   try {
     const json = await getXHRResponse(response);
 
-    return get(json, 'errors.0.message');
+    return get(json, 'errors.0.message', null);
   } catch (error) {
     return null;
   }

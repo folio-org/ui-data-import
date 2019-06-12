@@ -128,6 +128,8 @@ export default server => {
 
   server.get('/data-import-profiles/matchProfiles/:id');
 
+  server.delete('/data-import-profiles/matchProfiles/:id', {}, 409);
+
   server.get('/data-import-profiles/profileAssociations/:id/masters', associatedJobProfiles);
   server.post('/data-import-profiles/matchProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);

@@ -8,6 +8,7 @@ import {
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
+import ModalInteractor from '@folio/stripes-components/lib/Modal/tests/interactor';
 
 import { CheckboxInteractor } from '../checkbox-interactor';
 import { ActionMenuInteractor } from '../action-menu-interactor';
@@ -21,6 +22,8 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
   searchSubmitButtonDisabled = property('[data-test-search-and-sort-submit]', 'disabled');
   newMatchProfileButton = new ButtonInteractor('[data-test-new-button]');
+  exceptionModal = new ModalInteractor('#delete-match-profile-exception-modal');
+  exceptionModalCloseButton = new ButtonInteractor('[data-test-exception-modal-close-button]');
 }
 
 export const matchProfiles = new MatchProfilesInteractor();

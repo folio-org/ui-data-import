@@ -171,6 +171,7 @@
           "converter-storage.matchprofile.get",
           "converter-storage.matchprofile.post",
           "converter-storage.matchprofile.put",
+          "converter-storage.matchprofile.delete",
           "converter-storage.jobprofile.delete",
           "converter-storage.profileassociation.get"
         ],
