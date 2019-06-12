@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## 1.3.0 (IN-PROGRESS)
+## [1.3.0](https://github.com/folio-org/ui-data-import/tree/v1.3.0) (2019-06-12)
 * Create data import settings page's 3rd pane for Match Profiles. Add string capitalization (capitalize) and HTML special chars decoding (htmlDecode) utils (UIDATIMP-6)
 * Create temporary MARC Bib files load option on Choose jobs pane (UIDATIMP-185)
 * Add Search box for 3rd pane of Match Profiles (UIDATIMP-166)
