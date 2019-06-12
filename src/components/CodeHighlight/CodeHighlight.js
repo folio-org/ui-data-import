@@ -10,9 +10,7 @@ const {
   themes,
 } = Themes;
 
-const markup = val => {
-  return { __html: val };
-};
+const markup = val => ({ __html: val });
 
 export const CodeHighlight = memo(props => {
   const {
@@ -23,25 +21,23 @@ export const CodeHighlight = memo(props => {
     className,
   } = props;
 
-  const hlTheme = themes[theme];
+  const themeModule = themes[theme];
+  const codeBlock = (
+    <code
+      className={className}
+      dangerouslySetInnerHTML={markup(Languages[language](code, themeModule))}
+    />
+  );
 
   if (usePre) {
     return (
       <pre className={theme}>
-        <code
-          className={className}
-          dangerouslySetInnerHTML={markup(Languages[language](code, hlTheme))}
-        />
+        {codeBlock}
       </pre>
     );
   }
 
-  return (
-    <code
-      className={className}
-      dangerouslySetInnerHTML={markup(Languages[language](code, hlTheme))}
-    />
-  );
+  return codeBlock;
 });
 
 CodeHighlight.propTypes = {

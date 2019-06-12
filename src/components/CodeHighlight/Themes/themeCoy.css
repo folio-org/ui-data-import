@@ -17,7 +17,7 @@ pre {
     & .string { color: #145A32  ; }
     & .number { color: #bf0000; }
     & .boolean { color: #005b96; }
-    & .null { color: 	#800080; }
+    & .null { color: #800080; }
   }
 }
 

@@ -7,7 +7,6 @@ import {
 
 import { setupApplication } from '../helpers';
 import { jobLog } from '../interactors';
-// import { jobLog as jobLogMock } from '../mocks';
 
 describe('Job log view', () => {
   setupApplication({ scenarios: ['fetch-job-log-success'] });
@@ -23,6 +22,5 @@ describe('Job log view', () => {
     expect(jobLog.errorsTotal.isPresent).to.be.true;
     expect(jobLog.errorsTotal.text).contains('1');
     expect(jobLog.logsPane.isPresent).to.be.true;
-    // expect(jobLog.logJson.text.replace(/\s/g, '')).contains(JSON.stringify(jobLogMock));
   });
 });

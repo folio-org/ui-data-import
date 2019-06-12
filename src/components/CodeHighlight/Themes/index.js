@@ -1,6 +1,3 @@
-// export * from './themeCoy.css';
-// export * from './themeStalker.css';
-
 import coy from './themeCoy.css';
 import stalker from './themeStalker.css';
 

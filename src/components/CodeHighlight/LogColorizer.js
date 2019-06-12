@@ -64,7 +64,7 @@ export const LogColorizer = memo(props => {
   const [currentTheme, setCurrentTheme] = useState(theme);
 
   const codePortion = Array.isArray(code) ? code : [code];
-  const hlTheme = themes[currentTheme];
+  const themeModule = themes[currentTheme];
 
   const recordsCount = codePortion.length;
   const errorsCount = codePortion.filter(item => JSON.stringify(item).includes('error')).length;
@@ -77,7 +77,6 @@ export const LogColorizer = memo(props => {
       />
     </span>
   );
-
   const errors = (
     <span>
       &#40;
@@ -162,7 +161,7 @@ export const LogColorizer = memo(props => {
               code={codeString}
               language={language}
               theme={currentTheme}
-              className={hasError ? hlTheme.error : hlTheme.info}
+              className={hasError ? themeModule.error : themeModule.info}
             />
           );
         })}
