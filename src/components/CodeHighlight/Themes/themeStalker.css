@@ -1,0 +1,22 @@
+pre {
+  & code {
+    &.info {
+      background-color: #232b2b;
+      color: #ffffff;
+    }
+    &.error {
+      outline: 1px solid #bf0000;
+      background-color: #400000;
+      color: #ffffff;
+      & .header {
+        background: #a61e37;
+        color: #ffffff;
+      }
+    }
+    & .key { color: #ffbf00; }
+    & .string { color: #a0d6b4; }
+    & .number { color: #ff6f69; }
+    & .boolean { color: #66ccff; }
+    & .null { color: magenta; }
+  }
+}

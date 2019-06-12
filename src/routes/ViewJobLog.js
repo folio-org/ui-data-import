@@ -5,13 +5,18 @@ import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 
 import { Preloader } from '../components/Preloader';
+import { LogColorizer } from '../components/CodeHighlight';
+import { LANGUAGES } from '../components/CodeHighlight/Languages';
+import { THEMES } from '../components/CodeHighlight/Themes';
+
+import css from '../components/CodeHighlight/LogColorizer.css';
 
 @stripesConnect
 export class ViewJobLog extends Component {
   static manifest = Object.freeze({
     jobLog: {
       type: 'okapi',
-      path: 'source-storage/sourceRecords?query=snapshotId=:{id}&limit=1000',
+      path: 'source-storage/records?query=snapshotId=:{id}&limit=1000',
       throwsErrors: false,
     },
   });
@@ -43,35 +48,45 @@ export class ViewJobLog extends Component {
     };
   }
 
-  formatSourceRecords = sourceRecords => JSON.stringify(sourceRecords, null, 2);
-
   render() {
     const {
       hasLoaded,
       record,
     } = this.jobLogData;
-    const renderSpinner = !record || !hasLoaded;
 
-    if (renderSpinner) {
+    if (!record || !hasLoaded) {
       return <Preloader />;
     }
 
-    const {
-      sourceRecords,
-      totalRecords,
-    } = record;
+    const { records } = record;
+
+    // @TODO: Make Location object retrieval from props
+    const jobId = document.location.href.split('/').slice(-1)[0];
+
+    const toolbar = {
+      visible: true,
+      message: (
+        <span>
+          <strong>
+            <FormattedMessage id="ui-data-import.import-log" />
+          </strong>
+          <strong>&#123;</strong>
+          <span className={css.recordId}>{jobId}</span>
+          <strong>&#125;</strong>:
+        </span>
+      ),
+      showThemes: true,
+    };
 
     return (
-      <div id="view-job-log-test">
-        <div id="view-total-records-test">
-          <FormattedMessage
-            id="ui-data-import.recordsCount"
-            values={{ count: totalRecords }}
-          />
-        </div>
-        <pre id="job-log-json">
-          {this.formatSourceRecords(sourceRecords)}
-        </pre>
+      <div id="job-log-colorizer">
+        <LogColorizer
+          code={records}
+          language={LANGUAGES.JSON}
+          theme={THEMES.COY}
+          toolbar={toolbar}
+          errorDetector={entry => !!entry.errorRecord}
+        />
       </div>
     );
   }

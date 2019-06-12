@@ -7,7 +7,6 @@ import {
 
 import { setupApplication } from '../helpers';
 import { jobLog } from '../interactors';
-import { jobLog as jobLogMock } from '../mocks';
 
 describe('Job log view', () => {
   setupApplication({ scenarios: ['fetch-job-log-success'] });
@@ -18,9 +17,10 @@ describe('Job log view', () => {
 
   it('is visible', () => {
     expect(jobLog.isPresent).to.be.true;
-    expect(jobLog.total.isPresent).to.be.true;
-    expect(jobLog.total.text).contains('3');
-    expect(jobLog.logJson.isPresent).to.be.true;
-    expect(jobLog.logJson.text.replace(/\s/g, '')).contains(JSON.stringify(jobLogMock));
+    expect(jobLog.entriesTotal.isPresent).to.be.true;
+    expect(jobLog.entriesTotal.text).contains('3');
+    expect(jobLog.errorsTotal.isPresent).to.be.true;
+    expect(jobLog.errorsTotal.text).contains('1');
+    expect(jobLog.logsPane.isPresent).to.be.true;
   });
 });

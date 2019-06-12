@@ -5,8 +5,9 @@ import {
 
 @interactor
 class JobLogInteractor {
-  total = scoped('#view-total-records-test');
-  logJson = scoped('#job-log-json');
+  entriesTotal = scoped('[class*=header__entries---]');
+  errorsTotal = scoped('[class*=header__errors---]');
+  logsPane = scoped('#logs-pane');
 }
 
-export const jobLog = new JobLogInteractor('#view-job-log-test');
+export const jobLog = new JobLogInteractor('#job-log-colorizer');

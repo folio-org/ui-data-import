@@ -1,4 +1,5 @@
 export * from './ActionMenu';
+export * from './CodeHighlight';
 export * from './ListTemplate';
 export * from './DataFetcher';
 export * from './EndOfItem';

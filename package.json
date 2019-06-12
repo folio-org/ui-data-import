@@ -149,7 +149,7 @@
           "data-import.uploaddefinitions.delete",
           "data-import.uploaddefinitions.files.delete",
           "data-import.upload.file.post",
-          "source-storage.sourceRecords.get",
+          "source-storage.records.get",
           "data-import.uploaddefinitions.files.post"
         ],
         "visible": true
