@@ -2,13 +2,12 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import * as Languages from './Languages';
-import * as Themes from './Themes';
-
-const { LANGUAGES } = Languages;
-const {
+import {
   THEMES,
   themes,
-} = Themes;
+} from './Themes';
+
+const { LANGUAGES } = Languages;
 
 const markup = val => ({ __html: val });
 
@@ -51,7 +50,7 @@ CodeHighlight.propTypes = {
 CodeHighlight.defaultProps = {
   code: '',
   language: LANGUAGES.RAW,
-  theme: THEMES.STALKER,
+  theme: THEMES.COY,
   usePre: false,
   className: '',
 };

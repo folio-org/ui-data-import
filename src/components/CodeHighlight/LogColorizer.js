@@ -14,16 +14,14 @@ import {
 
 import { LOG_COLORIZER } from '../../utils/constants';
 import { CodeHighlight } from './CodeHighlight';
-import * as Languages from './Languages';
-import * as Themes from './Themes';
+import { LANGUAGES } from './Languages';
+import {
+  THEMES,
+  themes,
+} from './Themes';
 
 import css from './LogColorizer.css';
 
-const { LANGUAGES } = Languages;
-const {
-  THEMES,
-  themes,
-} = Themes;
 const { FILTER: { OPTIONS } } = LOG_COLORIZER;
 
 const filterOptions = [
@@ -53,6 +51,7 @@ export const LogColorizer = memo(props => {
     code,
     language,
     theme,
+    errorDetector,
     toolbar: {
       visible,
       message,
@@ -67,7 +66,7 @@ export const LogColorizer = memo(props => {
   const themeModule = themes[currentTheme];
 
   const recordsCount = codePortion.length;
-  const errorsCount = codePortion.filter(item => JSON.stringify(item).includes('error')).length;
+  const errorsCount = codePortion.filter(item => errorDetector(item)).length;
 
   const entries = (
     <span className={css.header__entries}>
@@ -148,16 +147,16 @@ export const LogColorizer = memo(props => {
         id="logs-pane"
         className={currentTheme}
       >
-        {codePortion.map((item, i) => {
+        {codePortion.map(item => {
           const codeString = JSON.stringify(item, null, 2);
-          const hasError = codeString.includes('error');
+          const hasError = errorDetector(item);
           const showErrors = hasError && OPTIONS.ERRORS === currentFilter;
           const showInfo = !hasError && OPTIONS.INFO === currentFilter;
           const showAll = OPTIONS.ALL === currentFilter;
 
           return (showAll || showErrors || showInfo) && (
             <CodeHighlight
-              key={`snippet-${i}`}
+              key={`snippet-${item.id}`}
               code={codeString}
               language={language}
               theme={currentTheme}
@@ -171,9 +170,10 @@ export const LogColorizer = memo(props => {
 });
 
 LogColorizer.propTypes = {
-  code: PropTypes.any,
+  code: PropTypes.any, // Accepts code in any format
   language: PropTypes.string,
   theme: PropTypes.string,
+  errorDetector: PropTypes.func.isRequired,
   toolbar: PropTypes.shape({
     visible: PropTypes.bool,
     message: PropTypes.any,
@@ -184,7 +184,7 @@ LogColorizer.propTypes = {
 LogColorizer.defaultProps = {
   code: '',
   language: LANGUAGES.RAW,
-  theme: THEMES.STALKER,
+  theme: THEMES.COY,
   toolbar: {
     visible: true,
     message: '',

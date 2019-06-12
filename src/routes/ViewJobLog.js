@@ -60,6 +60,7 @@ export class ViewJobLog extends Component {
 
     const { records } = record;
 
+    // @TODO: Make Location object retrieval from props
     const jobId = document.location.href.split('/').slice(-1)[0];
 
     const toolbar = {
@@ -84,6 +85,7 @@ export class ViewJobLog extends Component {
           language={LANGUAGES.JSON}
           theme={THEMES.COY}
           toolbar={toolbar}
+          errorDetector={entry => !!entry.errorRecord}
         />
       </div>
     );
