@@ -34,10 +34,15 @@ import {
   FileExtensionForm,
 } from '../../components';
 import { ViewFileExtension } from './ViewFileExtension';
-import { SettingPage } from '../SettingPage';
+import {
+  createDeleteCallout,
+  createUpdateRecordErrorMessage,
+  SettingPage,
+} from '../SettingPage';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
+const finishedResourceName = 'fileExtensions';
 
 const mapStateToProps = state => {
   const {
@@ -120,6 +125,8 @@ export class FileExtensions extends Component {
   };
 
   calloutRef = createRef();
+
+  fullWidthContainerRef = createRef();
 
   entityKey = ENTITY_CONFIGS.JOB_PROFILES.ENTITY_KEY;
 
@@ -224,9 +231,10 @@ export class FileExtensions extends Component {
         values={{
           extension: record.extension,
           action: (
-            <strong>
-              <FormattedMessage id="ui-data-import.deleted" />
-            </strong>
+            <FormattedMessage
+              id="ui-data-import.deleted"
+              tagName="strong"
+            />
           ),
         }}
       />
@@ -240,9 +248,10 @@ export class FileExtensions extends Component {
         values={{
           extension: record.extension,
           action: (
-            <strong>
-              <FormattedMessage id="ui-data-import.deleted" />
-            </strong>
+            <FormattedMessage
+              id="ui-data-import.deleted"
+              tagName="strong"
+            />
           ),
         }}
       />
@@ -252,6 +261,22 @@ export class FileExtensions extends Component {
   getRecordName(record) {
     return record.extension;
   }
+
+  onUpdateRecordError = createUpdateRecordErrorMessage({
+    getRecordName: this.getRecordName,
+    calloutRef: this.calloutRef,
+  });
+
+  onDeleteSuccess = createDeleteCallout({
+    getMessage: this.getDeleteRecordSuccessfulMessage,
+    calloutRef: this.calloutRef,
+  });
+
+  onDeleteError = createDeleteCallout({
+    getMessage: this.getDeleteRecordErrorMessage,
+    calloutRef: this.calloutRef,
+    type: 'error',
+  });
 
   render() {
     const {
@@ -274,18 +299,19 @@ export class FileExtensions extends Component {
         {intl => (
           <Fragment>
             <SettingPage
-              finishedResourceName="fileExtensions"
-              parentMutator={mutator}
+              finishedResourceName={finishedResourceName}
+              mutator={mutator}
               location={location}
               history={history}
               match={match}
-              getRecordName={this.getRecordName}
-              getDeleteRecordSuccessfulMessage={this.getDeleteRecordSuccessfulMessage}
-              getDeleteRecordErrorMessage={this.getDeleteRecordErrorMessage}
+              onUpdateRecordError={this.onUpdateRecordError}
+              onDeleteSuccess={this.onDeleteSuccess}
+              onDeleteError={this.onDeleteError}
             >
               {props => (
                 <SearchAndSort
                   objectName="file-extensions"
+                  finishedResourceName={finishedResourceName}
                   parentResources={resources}
                   parentMutator={mutator}
                   initialResultCount={INITIAL_RESULT_COUNT}

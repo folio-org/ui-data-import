@@ -302,3 +302,112 @@ describe('when match profile is edited and there is no associated job profiles',
     expect(matchProfileDetails.description.text).to.equal('Changed description');
   });
 });
+
+describe('delete confirmation modal', () => {
+  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags'] });
+
+  beforeEach(async function () {
+    this.visit('/settings/data-import/match-profiles');
+    await matchProfiles.list.rows(0).click();
+  });
+
+  it('is not visible when pane header dropdown is closed', () => {
+    expect(matchProfileDetails.confirmationModal.isPresent).to.be.false;
+  });
+
+  describe('is visible', () => {
+    beforeEach(async () => {
+      await matchProfileDetails.expandPaneHeaderDropdown();
+      await matchProfileDetails.dropdownDeleteButton.click();
+    });
+
+    it('when pane header dropdown is opened', () => {
+      expect(matchProfileDetails.isPresent).to.be.true;
+    });
+  });
+
+  describe('disappears', () => {
+    beforeEach(async () => {
+      await matchProfileDetails.expandPaneHeaderDropdown();
+      await matchProfileDetails.dropdownDeleteButton.click();
+      await matchProfileDetails.confirmationModal.cancelButton.click();
+    });
+
+    it('when cancel button is clicked', () => {
+      expect(matchProfileDetails.confirmationModal.isPresent).to.be.false;
+    });
+  });
+
+  describe('upon click on confirm button initiates the match profile deletion process and in case of error', () => {
+    beforeEach(async function () {
+      this.server.delete('/data-import-profiles/matchProfiles/:id', () => new Response(500, {}));
+      await matchProfileDetails.expandPaneHeaderDropdown();
+      await matchProfileDetails.dropdownDeleteButton.click();
+      await matchProfileDetails.confirmationModal.confirmButton.click();
+    });
+
+    it('disappears', () => {
+      expect(matchProfileDetails.confirmationModal.isPresent).to.be.false;
+    });
+
+    it('the error toast appears', () => {
+      expect(matchProfileDetails.callout.errorCalloutIsPresent).to.be.true;
+    });
+
+    it('renders the correct number including the one which tried to delete', () => {
+      expect(matchProfiles.list.rowCount).to.equal(8);
+    });
+  });
+
+  describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
+    describe('exception modal', () => {
+      beforeEach(async () => {
+        await matchProfileDetails.expandPaneHeaderDropdown();
+        await matchProfileDetails.dropdownDeleteButton.click();
+        await matchProfileDetails.confirmationModal.confirmButton.click();
+        await matchProfileDetails.confirmationModal.confirmButton.click();
+      });
+
+      it('disappears', () => {
+        expect(matchProfileDetails.confirmationModal.isPresent).to.be.false;
+      });
+
+      describe('when there are associated job profiles', () => {
+        it('appears', () => {
+          expect(matchProfiles.exceptionModal.isPresent).to.be.true;
+        });
+
+        describe('and clicking on close button', () => {
+          beforeEach(async () => {
+            await matchProfiles.exceptionModalCloseButton.click();
+          });
+
+          it('closes the modal', () => {
+            expect(matchProfiles.exceptionModal.isPresent).to.be.false;
+          });
+
+          it('renders the correct number including the one which tried to delete', () => {
+            expect(matchProfiles.list.rowCount).to.equal(8);
+          });
+        });
+      });
+    });
+
+    describe('when there are no associated job profiles', () => {
+      beforeEach(async function () {
+        this.server.delete('/data-import-profiles/matchProfiles/:id');
+        await matchProfileDetails.expandPaneHeaderDropdown();
+        await matchProfileDetails.dropdownDeleteButton.click();
+        await matchProfileDetails.confirmationModal.confirmButton.click();
+      });
+
+      it('does not appear', () => {
+        expect(matchProfiles.exceptionModal.isPresent).to.be.false;
+      });
+
+      it('renders the correct number of rows without deleted one', () => {
+        expect(matchProfiles.list.rowCount).to.equal(7);
+      });
+    });
+  });
+});

@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  createRef,
+  Fragment,
+} from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { connect } from 'react-redux';
 import {
   get,
   omit,
-  noop,
 } from 'lodash';
 
 import {
@@ -13,7 +17,10 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
-import { Checkbox } from '@folio/stripes/components';
+import {
+  Checkbox,
+  Callout,
+} from '@folio/stripes/components';
 
 import {
   trimSearchTerm,
@@ -28,12 +35,18 @@ import {
   listTemplate,
 } from '../../components';
 import { ViewMatchProfile } from './ViewMatchProfile';
-import { SettingPage } from '../SettingPage';
+import {
+  createDeleteCallout,
+  createUpdateRecordErrorMessage,
+  SettingPage,
+} from '../SettingPage';
+import { ExceptionModal } from './ExceptionModal';
 
 import sharedCss from '../../shared.css';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
+const finishedResourceName = 'matchProfiles';
 
 const findAllQueryParameter = 'cql.allRecords=1';
 const queryTemplate = `(
@@ -115,6 +128,8 @@ export class MatchProfiles extends Component {
 
   static defaultProps = { showSingleResult: true };
 
+  state = { showExceptionModal: false };
+
   componentDidMount() {
     this.setList();
   }
@@ -126,6 +141,8 @@ export class MatchProfiles extends Component {
       this.setList();
     }
   }
+
+  calloutRef = createRef();
 
   entityKey = ENTITY_CONFIGS.MATCH_PROFILES.ENTITY_KEY;
 
@@ -167,10 +184,6 @@ export class MatchProfiles extends Component {
     return get(this.props.resources, ['matchProfiles', 'records'], []);
   }
 
-  getRecordName(record) {
-    return record.name;
-  }
-
   setList() {
     const { setList } = this.props;
 
@@ -184,13 +197,86 @@ export class MatchProfiles extends Component {
     />
   );
 
+  getDeleteRecordSuccessfulMessage(record) {
+    return (
+      <FormattedMessage
+        id="ui-data-import.settings.matchProfiles.action.success"
+        values={{
+          name: record.name,
+          action: (
+            <FormattedMessage
+              id="ui-data-import.deleted"
+              tagName="strong"
+            />
+          ),
+        }}
+      />
+    );
+  }
+
+  getDeleteRecordErrorMessage(record) {
+    return (
+      <FormattedMessage
+        id="ui-data-import.settings.matchProfiles.action.error"
+        values={{
+          name: record.name,
+          action: (
+            <FormattedMessage
+              id="ui-data-import.deleted"
+              tagName="strong"
+            />
+          ),
+        }}
+      />
+    );
+  }
+
+  getRecordName(record) {
+    return record.name;
+  }
+
+  onUpdateRecordError = createUpdateRecordErrorMessage({
+    getRecordName: this.getRecordName,
+    calloutRef: this.calloutRef,
+  });
+
+  onDeleteSuccessCallout = createDeleteCallout({
+    getMessage: this.getDeleteRecordSuccessfulMessage,
+    calloutRef: this.calloutRef,
+  });
+
+  onDeleteSuccess = record => {
+    const { checkboxList: { selectRecord } } = this.props;
+
+    this.onDeleteSuccessCallout(record);
+    selectRecord(record.id);
+  };
+
+  onDeleteErrorCallout = createDeleteCallout({
+    getMessage: this.getDeleteRecordErrorMessage,
+    calloutRef: this.calloutRef,
+    type: 'error',
+  });
+
+  onDeleteError = (record, error) => {
+    if (error.status === 409) {
+      this.setState({ showExceptionModal: true });
+
+      return;
+    }
+
+    this.onDeleteErrorCallout(record);
+  };
+
+  handleCloseExceptionModal = () => this.setState({ showExceptionModal: false });
+
   render() {
     const {
       resources,
       mutator,
+      location,
       location: { search },
       label,
-      location,
       history,
       match,
       showSingleResult,
@@ -203,6 +289,7 @@ export class MatchProfiles extends Component {
         handleSelectAllCheckbox,
       },
     } = this.props;
+    const { showExceptionModal } = this.state;
 
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
@@ -211,67 +298,75 @@ export class MatchProfiles extends Component {
       <IntlConsumer>
         {intl => (
           <SettingPage
-            finishedResourceName="matchProfiles"
-            parentMutator={mutator}
+            finishedResourceName={finishedResourceName}
+            mutator={mutator}
             location={location}
             history={history}
             match={match}
-            getRecordName={this.getRecordName}
-            getDeleteRecordSuccessfulMessage={noop}
-            getDeleteRecordErrorMessage={noop}
-            onDelete={({ id }) => selectRecord(id)}
+            onUpdateRecordError={this.onUpdateRecordError}
+            onDeleteSuccess={this.onDeleteSuccess}
+            onDeleteError={this.onDeleteError}
           >
             {props => (
-              <SearchAndSort
-                objectName="match-profiles"
-                parentResources={resources}
-                parentMutator={mutator}
-                initialResultCount={INITIAL_RESULT_COUNT}
-                resultCountIncrement={RESULT_COUNT_INCREMENT}
-                searchLabelKey="ui-data-import.settings.matchProfiles.title"
-                resultCountMessageKey="ui-data-import.settings.matchProfiles.count"
-                resultsLabel={label}
-                defaultSort="name"
-                actionMenu={this.renderActionMenu}
-                resultsFormatter={listTemplate({
-                  entityKey: this.entityKey,
-                  searchTerm,
-                  selectRecord,
-                  selectedRecords,
-                })}
-                visibleColumns={this.visibleColumns}
-                columnMapping={{
-                  selected: (
-                    <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-                      role="button"
-                      tabIndex="0"
-                      className={sharedCss.selectableCellButton}
-                      data-test-select-all-checkbox
-                      onClick={e => e.stopPropagation()}
-                    >
-                      <Checkbox
-                        name="selected-all"
-                        checked={isAllSelected}
-                        onChange={handleSelectAllCheckbox}
-                      />
-                    </div>
-                  ),
-                  name: intl.formatMessage({ id: 'ui-data-import.name' }),
-                  match: intl.formatMessage({ id: 'ui-data-import.match' }),
-                  tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-                  updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-                  updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
-                }}
-                columnWidths={this.columnWidths}
-                ViewRecordComponent={ViewMatchProfile}
-                EditRecordComponent={MatchProfilesForm}
-                newRecordInitialValues={this.defaultNewRecordInitialValues}
-                editRecordInitialValues={selectedMatchProfile.record}
-                editRecordInitialValuesAreLoaded={selectedMatchProfile.hasLoaded}
-                showSingleResult={showSingleResult}
-                onSubmitSearch={deselectAll}
-                {...props}
-              />
+              <Fragment>
+                <SearchAndSort
+                  objectName="match-profiles"
+                  finishedResourceName={finishedResourceName}
+                  parentResources={resources}
+                  parentMutator={mutator}
+                  initialResultCount={INITIAL_RESULT_COUNT}
+                  resultCountIncrement={RESULT_COUNT_INCREMENT}
+                  searchLabelKey="ui-data-import.settings.matchProfiles.title"
+                  resultCountMessageKey="ui-data-import.settings.matchProfiles.count"
+                  resultsLabel={label}
+                  defaultSort="name"
+                  actionMenu={this.renderActionMenu}
+                  resultsFormatter={listTemplate({
+                    entityKey: this.entityKey,
+                    searchTerm,
+                    selectRecord,
+                    selectedRecords,
+                  })}
+                  visibleColumns={this.visibleColumns}
+                  columnMapping={{
+                    selected: (
+                      <div // eslint-disable-line jsx-a11y/click-events-have-key-events
+                        role="button"
+                        tabIndex="0"
+                        className={sharedCss.selectableCellButton}
+                        data-test-select-all-checkbox
+                        onClick={e => e.stopPropagation()}
+                      >
+                        <Checkbox
+                          name="selected-all"
+                          checked={isAllSelected}
+                          onChange={handleSelectAllCheckbox}
+                        />
+                      </div>
+                    ),
+                    name: intl.formatMessage({ id: 'ui-data-import.name' }),
+                    match: intl.formatMessage({ id: 'ui-data-import.match' }),
+                    tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
+                    updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
+                    updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
+                  }}
+                  columnWidths={this.columnWidths}
+                  ViewRecordComponent={ViewMatchProfile}
+                  EditRecordComponent={MatchProfilesForm}
+                  newRecordInitialValues={this.defaultNewRecordInitialValues}
+                  editRecordInitialValues={selectedMatchProfile.record}
+                  editRecordInitialValuesAreLoaded={selectedMatchProfile.hasLoaded}
+                  showSingleResult={showSingleResult}
+                  onSubmitSearch={deselectAll}
+                  {...props}
+                />
+                <ExceptionModal
+                  id="delete-match-profile-exception-modal"
+                  showExceptionModal={showExceptionModal}
+                  onClose={this.handleCloseExceptionModal}
+                />
+                <Callout ref={this.calloutRef} />
+              </Fragment>
             )}
           </SettingPage>
         )}

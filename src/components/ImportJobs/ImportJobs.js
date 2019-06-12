@@ -119,9 +119,10 @@ export class ImportJobs extends Component {
         id="ui-data-import.fileDefinitionDeleteError"
         values={{
           button: (
-            <strong>
-              <FormattedMessage id="ui-data-import.returnToAssign.deleteFiles" />
-            </strong>
+            <FormattedMessage
+              id="ui-data-import.returnToAssign.deleteFiles"
+              tagName="strong"
+            />
           ),
         }}
       />

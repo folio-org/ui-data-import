@@ -35,9 +35,10 @@ const errorModalMetaTypes = {
         id="ui-data-import.modal.fileExtensions.inconsistent.message"
         values={{
           highlightedText: (
-            <strong>
-              <FormattedMessage id="ui-data-import.modal.fileExtensions.messageHighlightedText" />
-            </strong>
+            <FormattedMessage
+              id="ui-data-import.modal.fileExtensions.messageHighlightedText"
+              tagName="strong"
+            />
           ),
         }}
       />

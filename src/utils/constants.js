@@ -57,11 +57,19 @@ export const LAYER_TYPES = {
   DUPLICATE: 'duplicate',
 };
 
+export const ENTITY_KEYS = {
+  FILE_EXTENSIONS: 'fileExtensions',
+  JOB_PROFILES: 'jobProfiles',
+  MATCH_PROFILES: 'matchProfiles',
+  ACTION_PROFILES: 'actionProfiles',
+  MAPPING_PROFILES: 'mappingProfiles',
+};
+
 export const ENTITY_CONFIGS = {
-  FILE_EXTENSIONS: { ENTITY_KEY: 'fileExtensions' },
-  JOB_PROFILES: { ENTITY_KEY: 'jobProfiles' },
+  FILE_EXTENSIONS: { ENTITY_KEY: ENTITY_KEYS.FILE_EXTENSIONS },
+  JOB_PROFILES: { ENTITY_KEY: ENTITY_KEYS.JOB_PROFILES },
   MATCH_PROFILES: {
-    ENTITY_KEY: 'matchProfiles',
+    ENTITY_KEY: ENTITY_KEYS.MATCH_PROFILES,
     RECORD_TYPES: {
       ORDER: {
         caption: 'ui-data-import.settings.matchProfiles.recordTypes.order',
@@ -97,8 +105,8 @@ export const ENTITY_CONFIGS = {
       },
     },
   },
-  ACTION_PROFILES: { ENTITY_KEY: 'actionProfiles' },
-  MAPPING_PROFILES: { ENTITY_KEY: 'mappingProfiles' },
+  ACTION_PROFILES: { ENTITY_KEY: ENTITY_KEYS.ACTION_PROFILES },
+  MAPPING_PROFILES: { ENTITY_KEY: ENTITY_KEYS.MAPPING_PROFILES },
 };
 
 export const LOG_COLORIZER = {

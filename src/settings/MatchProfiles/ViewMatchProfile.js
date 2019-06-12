@@ -22,6 +22,7 @@ import {
   SearchField,
   AccordionSet,
   MultiColumnList,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -80,10 +81,16 @@ export class ViewMatchProfile extends Component {
     checkboxList: checkboxListShape.isRequired,
     setList: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string, // eslint-disable-line
   };
 
   static defaultProps = { paneId: 'pane-match-profile-details' };
+
+  state = {
+    deletionInProgress: false,
+    showDeleteConfirmation: false,
+  };
 
   componentDidMount() {
     this.setList();
@@ -159,6 +166,31 @@ export class ViewMatchProfile extends Component {
     setList(associatedJobProfiles);
   }
 
+  showDeleteConfirmation = () => {
+    this.setState({ showDeleteConfirmation: true });
+  };
+
+  hideDeleteConfirmation = () => {
+    this.setState({
+      showDeleteConfirmation: false,
+      deletionInProgress: false,
+    });
+  };
+
+  handleDelete(record) {
+    const { onDelete } = this.props;
+    const { deletionInProgress } = this.state;
+
+    if (deletionInProgress) {
+      return;
+    }
+
+    this.setState({ deletionInProgress: true }, async () => {
+      await onDelete(record);
+      this.hideDeleteConfirmation();
+    });
+  }
+
   renderActionMenu = menu => (
     <ActionMenu
       entity={this}
@@ -215,6 +247,7 @@ export class ViewMatchProfile extends Component {
         handleSelectAllCheckbox,
       },
     } = this.props;
+    const { showDeleteConfirmation } = this.state;
 
     const {
       hasLoaded,
@@ -240,18 +273,18 @@ export class ViewMatchProfile extends Component {
       </AppIcon>
     );
 
-    // start
     // MatchProfiles sample data does not contain user Ids because of back-end limitations
     // and therefore it is required to add it manually on UI side
-    // TODO: use real IDs when sample data will be removed (remove code from start to end)
-    const userId = get(this.props, ['stripes', 'okapi', 'currentUser', 'id'], '');
+    // TODO: use real IDs when sample data will be removed (remove the block of code below)
+    {
+      const userId = get(this.props, ['stripes', 'okapi', 'currentUser', 'id'], '');
 
-    matchProfile.metadata = {
-      ...matchProfile.metadata,
-      createdByUserId: matchProfile.metadata.createdByUserId || userId,
-      updatedByUserId: matchProfile.metadata.updatedByUserId || userId,
-    };
-    // end
+      matchProfile.metadata = {
+        ...matchProfile.metadata,
+        createdByUserId: matchProfile.metadata.createdByUserId || userId,
+        updatedByUserId: matchProfile.metadata.updatedByUserId || userId,
+      };
+    }
 
     return (
       <Pane
@@ -364,6 +397,21 @@ export class ViewMatchProfile extends Component {
         <EndOfItem
           className={sharedCss.endOfRecord}
           title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+        />
+        <ConfirmationModal
+          id="delete-match-profile-modal"
+          open={showDeleteConfirmation}
+          heading={(
+            <FormattedMessage
+              id="ui-data-import.modal.matchProfile.delete.header"
+              values={{ name: matchProfile.name }}
+            />
+          )}
+          message={<FormattedMessage id="ui-data-import.modal.matchProfile.delete.message" />}
+          confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
+          onConfirm={() => this.handleDelete(matchProfile)}
+          onCancel={this.hideDeleteConfirmation}
         />
       </Pane>
     );
