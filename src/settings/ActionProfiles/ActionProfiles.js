@@ -16,6 +16,7 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import { Checkbox } from '@folio/stripes/components';
 
 import {
+  ActionMenu,
   listTemplate,
   SearchAndSort,
 } from '../../components';
@@ -109,6 +110,13 @@ export class ActionProfiles extends Component {
 
   entityKey = ENTITY_KEYS.ACTION_PROFILES;
 
+  actionMenuItems = [
+    'addNew',
+    'exportSelected',
+    'selectAll',
+    'deselectAll',
+  ];
+
   visibleColumns = [
     'selected',
     'name',
@@ -132,6 +140,13 @@ export class ActionProfiles extends Component {
   get actionProfiles() {
     return get(this.props, ['resources', 'actionProfiles', 'records'], []);
   }
+
+  renderActionMenu = menu => (
+    <ActionMenu
+      entity={this}
+      menu={menu}
+    />
+  );
 
   render() {
     const {
@@ -176,7 +191,7 @@ export class ActionProfiles extends Component {
                   resultCountMessageKey="ui-data-import.settings.actionProfiles.count"
                   resultsLabel={label}
                   defaultSort="name"
-                  actionMenu={noop}
+                  actionMenu={this.renderActionMenu}
                   resultsFormatter={listTemplate({
                     entityKey: this.entityKey,
                     selectRecord,
