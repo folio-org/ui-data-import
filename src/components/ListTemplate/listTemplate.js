@@ -3,11 +3,13 @@ import React from 'react';
 import {
   CheckboxColumn,
   DefaultColumn,
+  ActionColumn,
   MatchColumn,
   TagsColumn,
   DateColumn,
 } from './ColumnTemplates';
 import { formatUserName } from '../../utils';
+import { ENTITY_KEYS } from '../../utils/constants';
 
 /**
  * Retrieves and returns list of Column Templates renderProps
@@ -18,8 +20,7 @@ import { formatUserName } from '../../utils';
  *   selectRecord?: (id: string) => void,
  *   selectedRecords?: Set<string>,
  *   intl?: object, // comes from IntlConsumer
- * }} config
- * @returns {{Component}}
+ * }}
  * Note: check which params are required based on used columns
  */
 export const listTemplate = ({
@@ -53,6 +54,13 @@ export const listTemplate = ({
     <DefaultColumn
       value={record.extension}
       searchTerm={searchTerm}
+    />
+  ),
+  action: record => <ActionColumn record={record} />,
+  mapping: record => (
+    <DefaultColumn
+      iconKey={ENTITY_KEYS.MAPPING_PROFILES}
+      value={record.mapping || ''}
     />
   ),
   dataTypes: record => {

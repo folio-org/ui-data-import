@@ -40,7 +40,7 @@ export class DataImportSettings extends Component {
         },
         {
           route: 'mapping-profiles',
-          label: this.generateSettingsLabel('fieldMappingProfiles.title', 'fieldMapping'),
+          label: this.generateSettingsLabel('mappingProfiles.title', 'mappingProfiles'),
           component: FieldMappingProfiles,
         },
       ],

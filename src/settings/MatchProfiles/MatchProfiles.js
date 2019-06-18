@@ -27,7 +27,7 @@ import {
   withCheckboxList,
   checkboxListShape,
 } from '../../utils';
-import { ENTITY_CONFIGS } from '../../utils/constants';
+import { ENTITY_KEYS } from '../../utils/constants';
 import {
   ActionMenu,
   SearchAndSort,
@@ -144,7 +144,7 @@ export class MatchProfiles extends Component {
 
   calloutRef = createRef();
 
-  entityKey = ENTITY_CONFIGS.MATCH_PROFILES.ENTITY_KEY;
+  entityKey = ENTITY_KEYS.MATCH_PROFILES;
 
   actionMenuItems = [
     'addNew',
@@ -276,9 +276,9 @@ export class MatchProfiles extends Component {
       mutator,
       location,
       location: { search },
-      label,
       history,
       match,
+      label,
       showSingleResult,
       selectedMatchProfile,
       checkboxList: {

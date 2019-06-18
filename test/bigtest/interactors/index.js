@@ -8,3 +8,4 @@ export * from './jobs-pane';
 export * from './import-pane';
 export * from './uploading-jobs-display';
 export * from './job-log';
+export * from './action-profiles';

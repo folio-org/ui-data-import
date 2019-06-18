@@ -62,6 +62,21 @@
     "hasSettings": true,
     "icons": [
       {
+        "name": "combine",
+        "alt": "Combine",
+        "title": "Combine"
+      },
+      {
+        "name": "create",
+        "alt": "Create",
+        "title": "Create"
+      },
+      {
+        "name": "replace",
+        "alt": "Replace",
+        "title": "Replace"
+      },
+      {
         "name": "holdings",
         "alt": "eHoldings",
         "title": "eHoldings"
@@ -117,7 +132,7 @@
         "title": "Action Profiles"
       },
       {
-        "name": "fieldMapping",
+        "name": "mappingProfiles",
         "alt": "Field Mapping Profiles",
         "title": "Field Mapping Profiles"
       },
@@ -173,6 +188,10 @@
           "converter-storage.matchprofile.put",
           "converter-storage.matchprofile.delete",
           "converter-storage.jobprofile.delete",
+          "converter-storage.actionprofile.get",
+          "converter-storage.actionprofile.post",
+          "converter-storage.actionprofile.put",
+          "converter-storage.actionprofile.delete",
           "converter-storage.profileassociation.get"
         ],
         "visible": true

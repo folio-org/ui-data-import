@@ -65,50 +65,6 @@ export const ENTITY_KEYS = {
   MAPPING_PROFILES: 'mappingProfiles',
 };
 
-export const ENTITY_CONFIGS = {
-  FILE_EXTENSIONS: { ENTITY_KEY: ENTITY_KEYS.FILE_EXTENSIONS },
-  JOB_PROFILES: { ENTITY_KEY: ENTITY_KEYS.JOB_PROFILES },
-  MATCH_PROFILES: {
-    ENTITY_KEY: ENTITY_KEYS.MATCH_PROFILES,
-    RECORD_TYPES: {
-      ORDER: {
-        caption: 'ui-data-import.settings.matchProfiles.recordTypes.order',
-        icon: 'orders',
-      },
-      INVOICE: {
-        caption: 'ui-data-import.settings.matchProfiles.recordTypes.invoice',
-        icon: 'invoices',
-      },
-      ITEM: {
-        caption: 'ui-data-import.settings.matchProfiles.recordTypes.item',
-        icon: 'items',
-      },
-      INSTANCE: {
-        caption: 'ui-data-import.settings.matchProfiles.recordTypes.instance',
-        icon: 'instances',
-      },
-      HOLDINGS: {
-        caption: 'ui-data-import.settings.matchProfiles.recordTypes.holding',
-        icon: 'holdings',
-      },
-      MARC_BIBLIOGRAPHIC: {
-        caption: 'ui-data-import.settings.matchProfiles.recordTypes.marc-bib',
-        icon: 'marcBibs',
-      },
-      MARC_AUTHORITY: {
-        caption: 'ui-data-import.settings.matchProfiles.recordTypes.marc-auth',
-        icon: 'marcAuthorities',
-      },
-      MARC_HOLDINGS: {
-        caption: 'ui-data-import.settings.matchProfiles.recordTypes.marc-hold',
-        icon: 'marcHoldings',
-      },
-    },
-  },
-  ACTION_PROFILES: { ENTITY_KEY: ENTITY_KEYS.ACTION_PROFILES },
-  MAPPING_PROFILES: { ENTITY_KEY: ENTITY_KEYS.MAPPING_PROFILES },
-};
-
 export const LOG_COLORIZER = {
   FILTER: {
     OPTIONS: {

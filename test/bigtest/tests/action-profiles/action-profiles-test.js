@@ -1,0 +1,66 @@
+import { expect } from 'chai';
+import {
+  describe,
+  beforeEach,
+  it,
+} from '@bigtest/mocha';
+
+import translation from '../../../../translations/ui-data-import/en';
+import { setupApplication } from '../../helpers';
+import {
+  actionProfiles,
+  actionProfileDetails,
+} from '../../interactors';
+
+describe('Action profiles', () => {
+  setupApplication({ scenarios: ['fetch-action-profiles-success'] });
+
+  beforeEach(function () {
+    this.visit('/settings/data-import/action-profiles');
+  });
+
+  describe('table', () => {
+    it('renders proper amount of items', () => {
+      expect(actionProfiles.list.rowCount).to.equal(8);
+    });
+
+    it('has proper columns order', () => {
+      expect(actionProfiles.list.headers(1).text).to.equal(translation.name);
+      expect(actionProfiles.list.headers(2).text).to.equal(translation.action);
+      expect(actionProfiles.list.headers(3).text).to.equal(translation.mapping);
+      expect(actionProfiles.list.headers(4).text).to.equal(translation.tags);
+      expect(actionProfiles.list.headers(5).text).to.equal(translation.updated);
+      expect(actionProfiles.list.headers(6).text).to.equal(translation.updatedBy);
+    });
+
+    describe('has select all checkbox', () => {
+      beforeEach(async () => {
+        await actionProfiles.selectAllCheckBox.clickAndBlur();
+      });
+
+      it('upon click changes its state', () => {
+        expect(actionProfiles.selectAllCheckBox.isChecked).to.be.true;
+      });
+    });
+
+    describe('has select individual item checkbox', () => {
+      beforeEach(async () => {
+        await actionProfiles.checkBoxes(0).clickAndBlur();
+      });
+
+      it('upon click changes its state', () => {
+        expect(actionProfiles.checkBoxes(0).isChecked).to.be.true;
+      });
+    });
+
+    describe('opens job profile details', () => {
+      beforeEach(async () => {
+        await actionProfiles.list.rows(0).click();
+      });
+
+      it('upon click on row', () => {
+        expect(actionProfileDetails.isPresent).to.be.true;
+      });
+    });
+  });
+});

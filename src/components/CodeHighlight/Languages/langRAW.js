@@ -6,6 +6,7 @@
  * @param {object} themeModule A CSS module object to take styles from
  * @returns {string} A code string marked up for highlighting
  */
+// eslint-disable-next-line no-unused-vars
 export const langRAW = (code, themeModule) => {
   return code;
 };
