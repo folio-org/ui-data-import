@@ -67,9 +67,10 @@ export class ViewJobLog extends Component {
       visible: true,
       message: (
         <span>
-          <strong>
-            <FormattedMessage id="ui-data-import.import-log" />
-          </strong>
+          <FormattedMessage
+            id="ui-data-import.import-log"
+            tagName="strong"
+          />
           <strong>&#123;</strong>
           <span className={css.recordId}>{jobId}</span>
           <strong>&#125;</strong>:

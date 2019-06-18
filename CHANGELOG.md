@@ -1,5 +1,8 @@
 # Change history for ui-data-import
 
+## 1.4.0 (IN-PROGRESS)
+* Create data import settings page's 3rd pane for Action Profiles (UIDATIMP-8)
+
 ## [1.3.0](https://github.com/folio-org/ui-data-import/tree/v1.3.0) (2019-06-12)
 * Create data import settings page's 3rd pane for Match Profiles. Add string capitalization (capitalize) and HTML special chars decoding (htmlDecode) utils (UIDATIMP-6)
 * Create temporary MARC Bib files load option on Choose jobs pane (UIDATIMP-185)
@@ -27,7 +30,6 @@
 * Downgrade okapi interface version in order to have data-import-converter-storage API endpoints work (UIDATIMP-195)
 
 ## [1.2.0](https://github.com/folio-org/ui-data-import/tree/v1.2.0) (2019-05-10)
-
 * Create data import settings page's 3rd pane for Jobs Profiles (UIDATIMP-6)
 * Add job profile form (UIDATIMP-132)
 * Delete upload definition when it does not have files on the landing page so the user can start over new uploading process (UIDATIMP-110)
@@ -45,7 +47,6 @@
 * Create Log button in the jobs log list for showing the resulting SRS JSON document (UIDATIMP-187)
 
 ## [1.1.0](https://github.com/folio-org/ui-data-import/tree/v1.1.0) (2019-03-22)
-
 * Add file extensions validation and `InvalidFilesModal` component for file upload (UIDATIMP-46)
 * Hide popover when user clicks on the link button (UIDATIMP-71)
 * Write documentation for `FileUploader` component and some code refactor (UIDATIMP-65)
@@ -76,7 +77,6 @@
 * Hook up file upload behavior to file extension settings when uploads for certain extensions are forbidden (UIDATIMP-117)
 
 ## [1.0.0](https://github.com/folio-org/ui-data-import/tree/v1.0.0) (2018-11-10)
-
 * New app created with stripes-cli
 * Adjust skeleton application (UIDATIMP-2)
 * Add app icon (UIDATIMP-19)

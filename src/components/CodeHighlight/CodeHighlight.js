@@ -24,7 +24,7 @@ export const CodeHighlight = memo(props => {
   const codeBlock = (
     <code
       className={className}
-      dangerouslySetInnerHTML={markup(Languages[language](code, themeModule))}
+      dangerouslySetInnerHTML={markup(Languages[language](code, themeModule))} // eslint-disable-line react/no-danger
     />
   );
 
@@ -40,7 +40,7 @@ export const CodeHighlight = memo(props => {
 });
 
 CodeHighlight.propTypes = {
-  code: PropTypes.any,
+  code: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   language: PropTypes.string,
   theme: PropTypes.string,
   usePre: PropTypes.bool,

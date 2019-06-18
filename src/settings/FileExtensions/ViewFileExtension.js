@@ -19,7 +19,7 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import {
   LAYER_TYPES,
-  ENTITY_CONFIGS,
+  ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
 } from '../../utils/constants';
@@ -100,7 +100,7 @@ export class ViewFileExtension extends Component {
     };
   }
 
-  entityKey = ENTITY_CONFIGS.FILE_EXTENSIONS.ENTITY_KEY;
+  entityKey = ENTITY_KEYS.FILE_EXTENSIONS;
 
   actionMenuItems = [
     'edit',

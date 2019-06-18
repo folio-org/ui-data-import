@@ -29,7 +29,7 @@ import {
 
 import {
   LAYER_TYPES,
-  ENTITY_CONFIGS,
+  ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
 } from '../../utils/constants';
@@ -131,7 +131,7 @@ export class ViewJobProfile extends Component {
     };
   }
 
-  entityKey = ENTITY_CONFIGS.JOB_PROFILES.ENTITY_KEY;
+  entityKey = ENTITY_KEYS.JOB_PROFILES;
 
   actionMenuItems = [
     'edit',

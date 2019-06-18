@@ -58,3 +58,7 @@
   margin-bottom: 0.25rem !important;
   color: inherit !important;
 }
+
+.actionButton {
+  border-radius: 50%;
+}

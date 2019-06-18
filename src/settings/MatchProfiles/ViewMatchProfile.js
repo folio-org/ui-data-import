@@ -38,7 +38,7 @@ import {
 } from '../../utils';
 import {
   LAYER_TYPES,
-  ENTITY_CONFIGS,
+  ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
 } from '../../utils/constants';
@@ -104,7 +104,7 @@ export class ViewMatchProfile extends Component {
     }
   }
 
-  entityKey = ENTITY_CONFIGS.MATCH_PROFILES.ENTITY_KEY;
+  entityKey = ENTITY_KEYS.MATCH_PROFILES;
 
   actionMenuItems = [
     'edit',
@@ -215,9 +215,8 @@ export class ViewMatchProfile extends Component {
       },
     } = this.props;
 
-    const { ENTITY_KEY: JOB_PROFILE_ENTITY_KEY } = ENTITY_CONFIGS.JOB_PROFILES;
     const formatter = listTemplate({
-      entityKey: JOB_PROFILE_ENTITY_KEY,
+      entityKey: ENTITY_KEYS.JOB_PROFILES,
       searchTerm,
       selectRecord,
       selectedRecords,

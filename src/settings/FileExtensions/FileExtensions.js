@@ -26,7 +26,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import { trimSearchTerm } from '../../utils';
-import { ENTITY_CONFIGS } from '../../utils/constants';
+import { ENTITY_KEYS } from '../../utils/constants';
 import {
   ActionMenu,
   listTemplate,
@@ -128,7 +128,7 @@ export class FileExtensions extends Component {
 
   fullWidthContainerRef = createRef();
 
-  entityKey = ENTITY_CONFIGS.JOB_PROFILES.ENTITY_KEY;
+  entityKey = ENTITY_KEYS.JOB_PROFILES;
 
   actionMenuItems = [
     'restoreDefault',

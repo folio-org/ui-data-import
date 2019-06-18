@@ -170,7 +170,7 @@ export const LogColorizer = memo(props => {
 });
 
 LogColorizer.propTypes = {
-  code: PropTypes.any, // Accepts code in any format
+  code: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
   language: PropTypes.string,
   theme: PropTypes.string,
   errorDetector: PropTypes.func.isRequired,
