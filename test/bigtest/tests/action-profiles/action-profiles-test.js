@@ -62,5 +62,33 @@ describe('Action profiles', () => {
         expect(actionProfileDetails.isPresent).to.be.true;
       });
     });
+
+    describe('select all button', () => {
+      beforeEach(async () => {
+        await actionProfiles.actionMenu.click();
+        await actionProfiles.actionMenu.selectAllButton.click();
+      });
+
+      it('selects all items', () => {
+        actionProfiles.checkBoxes().forEach(checkBox => {
+          expect(checkBox.isChecked).to.be.true;
+        });
+      });
+    });
+
+    describe('deselect all button', () => {
+      beforeEach(async () => {
+        await actionProfiles.checkBoxes(0).clickAndBlur();
+        await actionProfiles.checkBoxes(1).clickAndBlur();
+        await actionProfiles.actionMenu.click();
+        await actionProfiles.actionMenu.deselectAllButton.click();
+      });
+
+      it('deselects all items', () => {
+        actionProfiles.checkBoxes().forEach(checkBox => {
+          expect(checkBox.isChecked).to.be.false;
+        });
+      });
+    });
   });
 });
