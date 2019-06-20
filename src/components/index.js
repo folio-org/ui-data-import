@@ -16,3 +16,4 @@ export * from './Spinner';
 export * from './SearchAndSort';
 export * from './UploadingJobsContextProvider';
 export * from './UploadingJobsDisplay';
+export * from './ActionProfilesForm';

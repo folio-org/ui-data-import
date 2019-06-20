@@ -1,6 +1,7 @@
 import React, {
   Component,
   Fragment,
+  createRef,
 } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -13,15 +14,22 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
-import { Checkbox } from '@folio/stripes/components';
+import {
+  Checkbox,
+  Callout,
+} from '@folio/stripes/components';
 
 import {
   ActionMenu,
+  ActionProfilesForm,
   listTemplate,
   SearchAndSort,
 } from '../../components';
 import { ViewActionProfile } from './ViewActionProfile';
-import { SettingPage } from '../SettingPage';
+import {
+  SettingPage,
+  createUpdateRecordErrorMessage,
+} from '../SettingPage';
 import {
   withCheckboxList,
   checkboxListShape,
@@ -137,6 +145,26 @@ export class ActionProfiles extends Component {
     updatedBy: 250,
   };
 
+  calloutRef = createRef();
+
+  getRecordName(record) {
+    return record.name;
+  }
+
+  onUpdateRecordError = createUpdateRecordErrorMessage({
+    getRecordName: this.getRecordName,
+    calloutRef: this.calloutRef,
+  });
+
+  defaultNewRecordInitialValues = {
+    name: '',
+    description: '',
+    // TODO: remove hardcoded `folioRecord` and `action` fields
+    // when https://issues.folio.org/browse/UIDATIMP-207 is done
+    folioRecord: 'MARC_BIBLIOGRAPHIC',
+    action: 'CREATE',
+  };
+
   get actionProfiles() {
     return get(this.props, ['resources', 'actionProfiles', 'records'], []);
   }
@@ -174,7 +202,7 @@ export class ActionProfiles extends Component {
             location={location}
             history={history}
             match={match}
-            onUpdateRecordError={noop}
+            onUpdateRecordError={this.onUpdateRecordError}
             onDeleteSuccess={noop}
             onDeleteError={noop}
           >
@@ -223,9 +251,12 @@ export class ActionProfiles extends Component {
                   }}
                   columnWidths={this.columnWidths}
                   ViewRecordComponent={ViewActionProfile}
+                  EditRecordComponent={ActionProfilesForm}
+                  newRecordInitialValues={this.defaultNewRecordInitialValues}
                   showSingleResult={showSingleResult}
                   {...props}
                 />
+                <Callout ref={this.calloutRef} />
               </Fragment>
             )}
           </SettingPage>

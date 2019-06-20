@@ -33,4 +33,10 @@ export default server => {
   });
 
   server.get('/data-import-profiles/actionProfiles');
+  server.post('/data-import-profiles/actionProfiles', (_, request) => {
+    const params = JSON.parse(request.requestBody);
+    const record = server.create('match-profile', params);
+
+    return record.attrs;
+  });
 };
