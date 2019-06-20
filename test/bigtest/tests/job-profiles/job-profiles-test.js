@@ -148,7 +148,7 @@ describe('Job profiles', () => {
     describe('new job profile dropdown button', () => {
       beforeEach(async () => {
         await jobProfiles.actionMenu.click();
-        await jobProfiles.actionMenu.newJobProfileButton.click();
+        await jobProfiles.actionMenu.newProfileButton.click();
       });
 
       it('opens new job profile form', () => {

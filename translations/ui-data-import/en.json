@@ -148,6 +148,7 @@
   "settings.actionProfiles.title": "Action profiles",
   "settings.actionProfiles.count": "{count, number} action {count, plural, one {profile} other {profiles}}",
   "settings.actionProfiles.new": "New action profile",
+  "settings.actionProfiles.associatedMappingProfile": "Associated field mapping profile",
   "settings.mappingProfiles.title": "Field mapping profiles",
   "modal.leavePage.header": "Leave the page",
   "modal.leavePage.message": "There are {highlightedText}. If you would like to complete all uploads, press the \"Keep uploading\" button",

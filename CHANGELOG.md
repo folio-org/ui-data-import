@@ -1,7 +1,10 @@
 # Change history for ui-data-import
 
 ## 1.4.0 (IN-PROGRESS)
-* Create data import settings page's 3rd pane for Action Profiles (UIDATIMP-8)
+* Create data import settings page's 3rd pane for action profiles (UIDATIMP-8)
+* Implement header caret actions for action profiles (UIDATIMP-14)
+* Add form for new action profile action (UIDATIMP-144)
+* Implement save the new action profile feature (UIDATIMP-145)
 
 ## [1.3.0](https://github.com/folio-org/ui-data-import/tree/v1.3.0) (2019-06-12)
 * Create data import settings page's 3rd pane for Match Profiles. Add string capitalization (capitalize) and HTML special chars decoding (htmlDecode) utils (UIDATIMP-6)
