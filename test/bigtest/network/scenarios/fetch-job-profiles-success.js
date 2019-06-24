@@ -1,7 +1,7 @@
 import { Response } from '@bigtest/mirage';
 
 import { SYSTEM_USER_NAME } from '../../../../src/utils/constants';
-import { searchEntityByQuery } from '../../helpers';
+import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
 
 export default server => {
   server.create('job-profile', {

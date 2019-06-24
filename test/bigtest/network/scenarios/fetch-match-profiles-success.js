@@ -1,4 +1,4 @@
-import { searchEntityByQuery } from '../../helpers';
+import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
 import { associatedJobProfiles } from '../../mocks';
 
 export default server => {
