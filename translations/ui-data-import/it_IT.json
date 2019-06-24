@@ -158,5 +158,7 @@
     "recordTypes.marc-auth": "MARC Authority",
     "recordTypes.marc-hold": "MARC Holdings",
     "settings.actionProfiles.count": "{count, number} action {count, plural, one {profile} other {profiles}}",
-    "settings.mappingProfiles.title": "Field mapping profiles"
+    "settings.mappingProfiles.title": "Field mapping profiles",
+    "settings.actionProfiles.new": "New action profile",
+    "settings.actionProfiles.associatedMappingProfile": "Associated field mapping profile"
 }
