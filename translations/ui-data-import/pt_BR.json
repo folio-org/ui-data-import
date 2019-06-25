@@ -160,5 +160,5 @@
     "settings.actionProfiles.count": "{count, number} ação {count, plural, one {perfil} other {perfis}}",
     "settings.mappingProfiles.title": "Perfis de mapeamento de campo",
     "settings.actionProfiles.new": "Novo perfil de ação",
-    "settings.actionProfiles.associatedMappingProfile": "Associated field mapping profile"
+    "settings.actionProfiles.associatedMappingProfile": "Perfil de mapeamento de campo associado"
 }
