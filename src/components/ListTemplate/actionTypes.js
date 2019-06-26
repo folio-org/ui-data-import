@@ -33,12 +33,14 @@ export const ACTION_TYPES = {
   },
   MODIFY: {
     icon: ({ label } = {}) => (
-      <Icon
-        size="small"
-        icon="edit"
-      >
-        {label}
-      </Icon>
+      <div className={sharedCss.modifyActionContainer}>
+        <Icon
+          size="small"
+          icon="edit"
+          iconClassName={sharedCss.modifyActionIcon}
+        />
+        <span className={sharedCss.modifyActionIconLabel}>{label}</span>
+      </div>
     ),
   },
   REPLACE: {

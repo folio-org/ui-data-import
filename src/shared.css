@@ -62,3 +62,18 @@
 .actionButton {
   border-radius: 50%;
 }
+
+.modifyActionContainer {
+  display: inline-flex;
+  align-items: center;
+}
+
+.modifyActionIcon {
+  width: 14px;
+  min-width: 14px;
+  height: 14px;
+}
+
+.modifyActionIconLabel {
+  margin: 0 0 0 0.35em;
+}
