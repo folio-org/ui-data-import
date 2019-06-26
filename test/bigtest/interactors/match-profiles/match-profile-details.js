@@ -1,22 +1,13 @@
 import {
   interactor,
-  collection,
   scoped,
 } from '@bigtest/interactor';
 
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
-import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 
-import { CheckboxInteractor } from '../checkbox-interactor';
-
-@interactor class AssociatedJobProfiles {
-  list = new MultiColumnListInteractor('#associated-job-profiles-list');
-  selectAllCheckBox = new CheckboxInteractor('[data-test-select-all-associated-job-profiles-checkbox]');
-  checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);
-  jobProfilesLinks = collection('[data-test-job-profile-link]', ButtonInteractor);
-}
+import { AssociatedJobProfiles } from '../associated-job-profiles';
 
 @interactor class MatchProfileDetailsInteractor {
   paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');

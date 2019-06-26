@@ -31,7 +31,6 @@ import {
 
 import {
   createUrl,
-  sortStrings,
   createLayerURL,
   withCheckboxList,
   checkboxListShape,
@@ -64,7 +63,15 @@ export class ViewMatchProfile extends Component {
     },
     associatedJobProfiles: {
       type: 'okapi',
-      path: createUrl('data-import-profiles/profileAssociations/:{id}/masters', { detailType: 'MATCH_PROFILE' }, false),
+      path: createUrl(
+        'data-import-profiles/profileAssociations/:{id}/masters',
+        {
+          detailType: 'MATCH_PROFILE',
+          masterType: 'JOB_PROFILE',
+          query: 'cql.allRecords=1 sortBy name/ascending',
+        },
+        false
+      ),
       throwErrors: false,
     },
   });
@@ -75,6 +82,10 @@ export class ViewMatchProfile extends Component {
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      associatedJobProfiles: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
     }).isRequired,
     location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
     match: PropTypes.shape({ params: PropTypes.shape({ id: PropTypes.string }).isRequired }).isRequired,
@@ -82,7 +93,7 @@ export class ViewMatchProfile extends Component {
     setList: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
-    paneId: PropTypes.string, // eslint-disable-line
+    paneId: PropTypes.string,
   };
 
   static defaultProps = { paneId: 'pane-match-profile-details' };
@@ -140,20 +151,19 @@ export class ViewMatchProfile extends Component {
     };
   }
 
-  /** TODO: apply required changes after MODDICONV-55 (https://issues.folio.org/browse/MODDICONV-55) will be done */
   get associatedJobProfilesData() {
     const { resources } = this.props;
 
-    const associatedJobProfileResource = resources.associatedJobProfiles || {};
-    const [{ childSnapshotWrappers = [] } = {}] = associatedJobProfileResource.records || [];
+    const associatedJobProfilesResource = resources.associatedJobProfiles || {};
 
-    const associatedJobProfiles = childSnapshotWrappers
-      .filter(({ contentType }) => contentType === 'JOB_PROFILE')
-      .map(({ content }) => content)
-      .sort((a, b) => sortStrings(a.name, b.name));
+    const associatedJobProfiles = get(
+      associatedJobProfilesResource,
+      ['records', 0, 'childSnapshotWrappers'],
+      []
+    ).map(({ content }) => content);
 
     return {
-      hasLoaded: associatedJobProfileResource.hasLoaded,
+      hasLoaded: associatedJobProfilesResource.hasLoaded,
       associatedJobProfiles,
     };
   }
@@ -241,6 +251,7 @@ export class ViewMatchProfile extends Component {
   render() {
     const {
       onClose,
+      paneId,
       checkboxList: {
         isAllSelected,
         handleSelectAllCheckbox,
@@ -287,7 +298,7 @@ export class ViewMatchProfile extends Component {
 
     return (
       <Pane
-        id="pane-match-profile-details"
+        id={paneId}
         defaultWidth="fill"
         fluidContentWidth
         paneTitle={paneTitle}
@@ -320,7 +331,7 @@ export class ViewMatchProfile extends Component {
             <div style={{ height: 60 }}>{/* will be implemented in future stories */}</div>
           </Accordion>
           <Accordion
-            label={<FormattedMessage id="ui-data-import.settings.matchProfiles.associatedJobProfiles" />}
+            label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
             displayWhenOpen={(
               <Button>
                 <FormattedMessage id="ui-data-import.options" />
