@@ -43,22 +43,24 @@ export const loadMarcRecords = async ({
   });
 
   const [uploadDefinition, jobProfile] = await Promise.all(responses.map(response => response.json()));
-
+  const jobProfileInfo = {
+    id: jobProfile.id,
+    name: jobProfile.name,
+    dataType: jobProfile.dataType,
+  };
   const { url: host } = okapi;
 
-  const response = await fetch(
-    `${host}/data-import/uploadDefinitions/${uploadDefinitionId}/processFiles`, {
-      method: 'POST',
-      headers: {
-        ...createOkapiHeaders(okapi),
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        uploadDefinition,
-        jobProfileInfo: jobProfile,
-      }),
-    }
-  );
+  const response = await fetch(`${host}/data-import/uploadDefinitions/${uploadDefinitionId}/processFiles`, {
+    method: 'POST',
+    headers: {
+      ...createOkapiHeaders(okapi),
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      uploadDefinition,
+      jobProfileInfo,
+    }),
+  });
 
   if (!response.ok) {
     throw response;
