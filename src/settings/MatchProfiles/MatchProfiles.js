@@ -47,8 +47,6 @@ import sharedCss from '../../shared.css';
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 const finishedResourceName = 'matchProfiles';
-
-const findAllQueryParameter = 'cql.allRecords=1';
 const queryTemplate = `(
   name="%{query.query}*" OR
   existingRecordType="%{query.query}*" OR
@@ -91,7 +89,7 @@ export class MatchProfiles extends Component {
       GET: {
         params: {
           query: makeQueryFunction(
-            findAllQueryParameter,
+            'cql.allRecords=1',
             queryTemplate,
             {
               name: 'name',

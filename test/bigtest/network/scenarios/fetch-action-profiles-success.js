@@ -1,4 +1,5 @@
 import { associatedJobProfiles } from '../../mocks';
+import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
 
 export default server => {
   server.create('action-profile', {
@@ -34,7 +35,25 @@ export default server => {
     folioRecord: 'MARC_HOLDINGS',
   });
 
-  server.get('/data-import-profiles/actionProfiles');
+  server.get('/data-import-profiles/actionProfiles', (schema, request) => {
+    const { query = '' } = request.queryParams;
+    const actionProfiles = schema.actionProfiles.all();
+
+    const searchPattern = /name="(\w+)/;
+
+    return searchEntityByQuery({
+      query,
+      entity: actionProfiles,
+      searchPattern,
+      fieldsToMatch: [
+        'name',
+        'action',
+        'folioRecord',
+        'mapping',
+        'tags.tagList',
+      ],
+    });
+  });
   server.get('/data-import-profiles/actionProfiles/:id');
   server.get('/data-import-profiles/profileAssociations/:id/masters', associatedJobProfiles);
   server.post('/data-import-profiles/actionProfiles', (_, request) => {
