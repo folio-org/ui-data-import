@@ -56,11 +56,17 @@ export const listTemplate = ({
       searchTerm={searchTerm}
     />
   ),
-  action: record => <ActionColumn record={record} />,
+  action: record => (
+    <ActionColumn
+      record={record}
+      searchTerm={searchTerm}
+    />
+  ),
   mapping: record => (
     <DefaultColumn
       iconKey={ENTITY_KEYS.MAPPING_PROFILES}
       value={record.mapping || ''}
+      searchTerm={searchTerm}
     />
   ),
   dataTypes: record => {

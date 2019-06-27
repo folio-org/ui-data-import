@@ -19,6 +19,26 @@ describe('Action profiles', () => {
     this.visit('/settings/data-import/action-profiles');
   });
 
+  describe('search form after enter data in search field', () => {
+    beforeEach(async () => {
+      await actionProfiles.searchField.fill('rde');
+    });
+
+    it('search button is active', () => {
+      expect(actionProfiles.searchSubmitButtonDisabled).to.be.false;
+    });
+
+    describe('and after click on search button', () => {
+      beforeEach(async () => {
+        await actionProfiles.searchSubmitButton.click();
+      });
+
+      it('renders proper amount of items', () => {
+        expect(actionProfiles.list.rowCount).to.equal(1);
+      });
+    });
+  });
+
   describe('table', () => {
     it('renders proper amount of items', () => {
       expect(actionProfiles.list.rowCount).to.equal(8);

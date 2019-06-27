@@ -4,6 +4,7 @@ import React, {
   createRef,
 } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import {
   get,
   noop,
@@ -31,6 +32,7 @@ import {
   createUpdateRecordErrorMessage,
 } from '../SettingPage';
 import {
+  trimSearchTerm,
   withCheckboxList,
   checkboxListShape,
 } from '../../utils';
@@ -42,6 +44,13 @@ import sharedCss from '../../shared.css';
 const INITIAL_RESULT_COUNT = 5000;
 const RESULT_COUNT_INCREMENT = 5000;
 const finishedResourceName = 'actionProfiles';
+const queryTemplate = `(
+  name="%{query.query}*" OR
+  action="%{query.query}*" OR
+  folioRecord="%{query.query}*" OR
+  mapping="%{query.query}*" OR
+  tags.tagList="%{query.query}*"
+)`;
 
 @withCheckboxList
 @stripesConnect
@@ -62,7 +71,7 @@ export class ActionProfiles extends Component {
         params: {
           query: makeQueryFunction(
             'cql.allRecords=1',
-            '',
+            queryTemplate,
             {
               name: 'name',
               action: 'action folioRecord',
@@ -182,6 +191,7 @@ export class ActionProfiles extends Component {
       mutator,
       label,
       location,
+      location: { search },
       history,
       match,
       showSingleResult,
@@ -192,6 +202,9 @@ export class ActionProfiles extends Component {
         handleSelectAllCheckbox,
       },
     } = this.props;
+
+    const urlQuery = queryString.parse(search);
+    const searchTerm = trimSearchTerm(urlQuery.query);
 
     return (
       <IntlConsumer>
@@ -222,6 +235,7 @@ export class ActionProfiles extends Component {
                   actionMenu={this.renderActionMenu}
                   resultsFormatter={listTemplate({
                     entityKey: this.entityKey,
+                    searchTerm,
                     selectRecord,
                     selectedRecords,
                   })}
