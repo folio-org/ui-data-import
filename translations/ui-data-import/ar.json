@@ -123,7 +123,6 @@
     "details": "التفاصيل",
     "options": "الخيارات",
     "matchProfileName": "وضع المطابقة",
-    "settings.matchProfiles.associatedJobProfiles": "أوضاع الوظائف المرتبطة",
     "validation.matchProfile.duplication.invalid": "\"{value}\" وضع المطابقة موجودة بالفعل",
     "confirm": "تأكيد",
     "settings.matchProfiles.confirmEditModal.heading": "تأكيد تغييرات وضع المطابقة",
@@ -160,5 +159,10 @@
     "settings.actionProfiles.count": "{count, number} الإجراء {count, plural, one {وضعًا} other {وضعًا}}",
     "settings.mappingProfiles.title": "أوضاع تخطيط الحقل",
     "settings.actionProfiles.new": "وضع إجراء جديد",
-    "settings.actionProfiles.associatedMappingProfile": "وضع تخطيط الحقل المرتبط"
+    "settings.actionProfiles.associatedMappingProfile": "وضع تخطيط الحقل المرتبط",
+    "none": "لا شيء",
+    "actionProfileName": "وضع الإجراءات",
+    "settings.associatedJobProfiles": "أوضاع الوظائف المرتبطة",
+    "settings.associatedMappingProfile": "وضع تخطيط الحقل المرتبط",
+    "validation.actionProfile.duplication.invalid": "\"{value}\" وضع الإجراء موجودة بالفعل"
 }

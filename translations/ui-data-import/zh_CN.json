@@ -123,7 +123,6 @@
     "details": "Details",
     "options": "Options",
     "matchProfileName": "Match profile",
-    "settings.matchProfiles.associatedJobProfiles": "Associated job profiles",
     "validation.matchProfile.duplication.invalid": "Match profile \"{value}\" already exists",
     "confirm": "Confirm",
     "settings.matchProfiles.confirmEditModal.heading": "Confirm match profile changes",
@@ -160,5 +159,10 @@
     "settings.actionProfiles.count": "{count, number} action {count, plural, one {profile} other {profiles}}",
     "settings.mappingProfiles.title": "Field mapping profiles",
     "settings.actionProfiles.new": "New action profile",
-    "settings.actionProfiles.associatedMappingProfile": "Associated field mapping profile"
+    "settings.actionProfiles.associatedMappingProfile": "Associated field mapping profile",
+    "none": "None",
+    "actionProfileName": "Action profile",
+    "settings.associatedJobProfiles": "Associated job profiles",
+    "settings.associatedMappingProfile": "Associated field mapping profile",
+    "validation.actionProfile.duplication.invalid": "Action profile \"{value}\" already exists"
 }

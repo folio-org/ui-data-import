@@ -123,7 +123,6 @@
     "details": "Detalhes",
     "options": "Opções",
     "matchProfileName": "Perfil de correspondência",
-    "settings.matchProfiles.associatedJobProfiles": "Perfis de trabalho associados",
     "validation.matchProfile.duplication.invalid": "Perfil de correspondência \"{value}\" já existe",
     "confirm": "Confirmar",
     "settings.matchProfiles.confirmEditModal.heading": "Confirme as alterações do perfil de correspondência",
@@ -160,5 +159,10 @@
     "settings.actionProfiles.count": "{count, number} ação {count, plural, one {perfil} other {perfis}}",
     "settings.mappingProfiles.title": "Perfis de mapeamento de campo",
     "settings.actionProfiles.new": "Novo perfil de ação",
-    "settings.actionProfiles.associatedMappingProfile": "Perfil de mapeamento de campo associado"
+    "settings.actionProfiles.associatedMappingProfile": "Perfil de mapeamento de campo associado",
+    "none": "Nenhum",
+    "actionProfileName": "Perfil de ação",
+    "settings.associatedJobProfiles": "Perfis de job associados",
+    "settings.associatedMappingProfile": "Perfil de mapeamento de campo associado",
+    "validation.actionProfile.duplication.invalid": "O perfil de ação \"{value}\" já existe"
 }
