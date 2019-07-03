@@ -43,8 +43,17 @@ describe('Action profile form', () => {
       this.visit('/settings/data-import/action-profiles?layer=create');
     });
 
-    it('when not filled when the submit button is disabled', () => {
+    it('when not filled the submit button is disabled', () => {
       expect(actionProfileForm.submitFormButtonDisabled).to.be.true;
+    });
+
+    it('and form fields are empty and not pre-filled', () => {
+      expect(actionProfileForm.nameField.val).to.be.equal('');
+      expect(actionProfileForm.descriptionField.val).to.be.equal('');
+    });
+
+    it('have an associated mapping profile accordion', () => {
+      expect(actionProfileForm.associatedMappingProfileAccordion.isPresent).to.be.true;
     });
 
     describe('when filled correctly', () => {

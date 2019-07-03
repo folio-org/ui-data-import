@@ -8,6 +8,7 @@ import {
 import { setupApplication } from '../../helpers';
 import {
   actionProfiles,
+  actionProfileForm,
   actionProfileDetails,
 } from '../../interactors';
 import {
@@ -109,6 +110,42 @@ describe('Action Profile View', () => {
 
         it('upon click changes its state', () => {
           expect(actionProfileDetails.associatedJobProfiles.checkBoxes(0).isChecked).to.be.true;
+        });
+      });
+    });
+
+    describe('edit match profile form', () => {
+      beforeEach(async () => {
+        await actionProfiles.list.rows(0).click();
+      });
+
+      describe('appears', () => {
+        beforeEach(async () => {
+          await actionProfileDetails.expandPaneHeaderDropdown();
+          await actionProfileDetails.dropdownEditButton.click();
+        });
+
+        it('upon click on pane header menu edit button', () => {
+          expect(actionProfileForm.isPresent).to.be.true;
+        });
+      });
+
+      describe('appears', () => {
+        beforeEach(async () => {
+          await actionProfileDetails.editButton.click();
+        });
+
+        it('and form fields are pre-filled with current data', () => {
+          expect(actionProfileForm.nameField.val).to.be.equal('Name 0');
+          expect(actionProfileForm.descriptionField.val).to.be.equal('Description 0');
+        });
+
+        it('and does not have associated mapping profile accordion', () => {
+          expect(actionProfileForm.associatedMappingProfileAccordion.isPresent).to.be.false;
+        });
+
+        it('upon click on edit button', () => {
+          expect(actionProfileForm.isPresent).to.be.true;
         });
       });
     });

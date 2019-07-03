@@ -5,9 +5,11 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
+import { connect } from 'react-redux';
 import {
   get,
   noop,
+  omit,
 } from 'lodash';
 
 import {
@@ -52,8 +54,22 @@ const queryTemplate = `(
   tags.tagList="%{query.query}*"
 )`;
 
+const mapStateToProps = state => {
+  const {
+    hasLoaded = false,
+    records: [record = {}] = [],
+  } = get(state, 'folio_data_import_action_profile', {});
+  const selectedActionProfile = {
+    hasLoaded,
+    record: omit(record, 'metadata', 'userInfo'),
+  };
+
+  return { selectedActionProfile };
+};
+
 @withCheckboxList
 @stripesConnect
+@connect(mapStateToProps)
 export class ActionProfiles extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -100,6 +116,7 @@ export class ActionProfiles extends Component {
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,
+    selectedActionProfile: PropTypes.object.isRequired,
     checkboxList: checkboxListShape.isRequired,
     setList: PropTypes.func.isRequired,
     showSingleResult: PropTypes.bool,
@@ -195,6 +212,7 @@ export class ActionProfiles extends Component {
       history,
       match,
       showSingleResult,
+      selectedActionProfile,
       checkboxList: {
         selectedRecords,
         isAllSelected,
@@ -267,6 +285,8 @@ export class ActionProfiles extends Component {
                   ViewRecordComponent={ViewActionProfile}
                   EditRecordComponent={ActionProfilesForm}
                   newRecordInitialValues={this.defaultNewRecordInitialValues}
+                  editRecordInitialValues={selectedActionProfile.record}
+                  editRecordInitialValuesAreLoaded={selectedActionProfile.hasLoaded}
                   showSingleResult={showSingleResult}
                   {...props}
                 />
