@@ -62,21 +62,6 @@
     "hasSettings": true,
     "icons": [
       {
-        "name": "combine",
-        "alt": "Combine",
-        "title": "Combine"
-      },
-      {
-        "name": "create",
-        "alt": "Create",
-        "title": "Create"
-      },
-      {
-        "name": "replace",
-        "alt": "Replace",
-        "title": "Replace"
-      },
-      {
         "name": "holdings",
         "alt": "eHoldings",
         "title": "eHoldings"
