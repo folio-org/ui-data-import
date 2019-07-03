@@ -1,58 +1,48 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
-
-import { AppIcon } from '@folio/stripes/core';
 import { Icon } from '@folio/stripes/components';
-
-import sharedCss from '../../shared.css';
 
 export const ACTION_TYPES = {
   CREATE: {
     icon: ({ label } = {}) => (
-      <AppIcon
+      <Icon
         size="small"
-        app="data-import"
-        iconKey="create"
-        className={sharedCss.actionButton}
+        icon="plus-sign"
+        iconStyle="action"
       >
         {label}
-      </AppIcon>
+      </Icon>
     ),
   },
   COMBINE: {
     icon: ({ label } = {}) => (
-      <AppIcon
+      <Icon
         size="small"
-        app="data-import"
-        iconKey="combine"
-        className={sharedCss.actionButton}
+        icon="combine"
+        iconStyle="action"
       >
         {label}
-      </AppIcon>
+      </Icon>
     ),
   },
   MODIFY: {
     icon: ({ label } = {}) => (
-      <div className={sharedCss.modifyActionContainer}>
-        <Icon
-          size="small"
-          icon="edit"
-          iconClassName={sharedCss.modifyActionIcon}
-        />
-        <span className={sharedCss.modifyActionIconLabel}>{label}</span>
-      </div>
+      <Icon
+        size="small"
+        icon="edit"
+      >
+        {label}
+      </Icon>
     ),
   },
   REPLACE: {
     icon: ({ label } = {}) => (
-      <AppIcon
+      <Icon
         size="small"
-        app="data-import"
-        iconKey="replace"
-        className={sharedCss.actionButton}
+        icon="replace"
+        iconStyle="action"
       >
         {label}
-      </AppIcon>
+      </Icon>
     ),
   },
 };
