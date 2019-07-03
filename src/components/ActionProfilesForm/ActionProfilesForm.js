@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
+import { connect } from 'react-redux';
+import { get } from 'lodash';
 
 import {
   Headline,
@@ -10,11 +12,15 @@ import {
   TextField,
   Accordion,
   AccordionSet,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
 import { FullScreenForm } from '../FullScreenForm';
-import { validateRequiredField } from '../../utils';
+import {
+  compose,
+  validateRequiredField,
+} from '../../utils';
 import { LAYER_TYPES } from '../../utils/constants';
 
 const formName = 'actionProfilesForm';
@@ -26,8 +32,10 @@ export const ActionProfilesFormComponent = props => {
     initialValues,
     handleSubmit,
     location: { search },
+    associatedJobProfilesAmount,
     onCancel,
   } = props;
+  const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   const { layer } = queryString.parse(search);
   const isEditMode = layer === LAYER_TYPES.EDIT;
@@ -44,9 +52,12 @@ export const ActionProfilesFormComponent = props => {
     ? initialValues.name
     : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
 
+  const editWithModal = isEditMode && associatedJobProfilesAmount;
+
   const onSubmit = e => {
-    if (isEditMode) {
+    if (editWithModal) {
       e.preventDefault();
+      setConfirmModalOpen(true);
     } else {
       handleSubmit(e);
     }
@@ -110,6 +121,23 @@ export const ActionProfilesFormComponent = props => {
           </Accordion>
         )}
       </AccordionSet>
+      <ConfirmationModal
+        id="confirm-edit-action-profile-modal"
+        open={isConfirmEditModalOpen}
+        heading={<FormattedMessage id="ui-data-import.settings.actionProfiles.confirmEditModal.heading" />}
+        message={(
+          <FormattedMessage
+            id="ui-data-import.settings.actionProfiles.confirmEditModal.message"
+            values={{ amount: associatedJobProfilesAmount }}
+          />
+        )}
+        confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
+        onConfirm={() => {
+          handleSubmit();
+          setConfirmModalOpen(false);
+        }}
+        onCancel={() => setConfirmModalOpen(false)}
+      />
     </FullScreenForm>
   );
 };
@@ -120,11 +148,25 @@ ActionProfilesFormComponent.propTypes = {
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+  associatedJobProfilesAmount: PropTypes.number.isRequired,
   onCancel: PropTypes.func.isRequired,
 };
 
-export const ActionProfilesForm = stripesForm({
-  form: formName,
-  navigationCheck: true,
-  enableReinitialize: true,
-})(ActionProfilesFormComponent);
+const mapStateToProps = state => {
+  const { length: associatedJobProfilesAmount } = get(
+    state,
+    ['folio_data_import_associated_job_profiles', 'records', 0, 'childSnapshotWrappers'],
+    [],
+  );
+
+  return { associatedJobProfilesAmount };
+};
+
+export const ActionProfilesForm = compose(
+  stripesForm({
+    form: formName,
+    navigationCheck: true,
+    enableReinitialize: true,
+  }),
+  connect(mapStateToProps),
+)(ActionProfilesFormComponent);

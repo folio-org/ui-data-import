@@ -8,6 +8,7 @@
 * Implement details view for action profiles (UIDATIMP-146)
 * Add search box for 3rd pane of action profiles (UIDATIMP-167)
 * Create edit action profile form (UIDATIMP-149)
+* Add saving of edited action profile feature (UIDATIMP-220)
 
 ## [1.3.0](https://github.com/folio-org/ui-data-import/tree/v1.3.0) (2019-06-12)
 * Create data import settings page's 3rd pane for Match Profiles. Add string capitalization (capitalize) and HTML special chars decoding (htmlDecode) utils (UIDATIMP-6)

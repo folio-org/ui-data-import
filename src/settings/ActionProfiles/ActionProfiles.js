@@ -217,6 +217,7 @@ export class ActionProfiles extends Component {
         selectedRecords,
         isAllSelected,
         selectRecord,
+        deselectAll,
         handleSelectAllCheckbox,
       },
     } = this.props;
@@ -288,6 +289,7 @@ export class ActionProfiles extends Component {
                   editRecordInitialValues={selectedActionProfile.record}
                   editRecordInitialValuesAreLoaded={selectedActionProfile.hasLoaded}
                   showSingleResult={showSingleResult}
+                  onSubmitSearch={deselectAll}
                   {...props}
                 />
                 <Callout ref={this.calloutRef} />

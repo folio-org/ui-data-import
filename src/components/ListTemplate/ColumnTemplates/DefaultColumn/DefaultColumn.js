@@ -14,6 +14,10 @@ export const DefaultColumn = memo(props => {
     searchTerm,
   } = props;
 
+  if (!value) {
+    return '-';
+  }
+
   const content = searchTerm
     ? (
       <HighLight
