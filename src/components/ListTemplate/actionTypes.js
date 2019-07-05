@@ -1,48 +1,59 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Icon } from '@folio/stripes/components';
+
+import sharedCss from '../../shared.css';
+
+const ActionIcon = ({
+  label,
+  icon,
+}) => (
+  <div className={sharedCss.modifyActionContainer}>
+    <Icon
+      size="small"
+      icon={icon}
+      iconStyle="action"
+    />
+    <span className={sharedCss.modifyActionIconLabel}>{label}</span>
+  </div>
+);
+
+ActionIcon.propTypes = {
+  label: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
+};
 
 export const ACTION_TYPES = {
   CREATE: {
     icon: ({ label } = {}) => (
-      <Icon
-        size="small"
+      <ActionIcon
+        label={label}
         icon="plus-sign"
-        iconStyle="action"
-      >
-        {label}
-      </Icon>
+      />
     ),
   },
   COMBINE: {
     icon: ({ label } = {}) => (
-      <Icon
-        size="small"
+      <ActionIcon
+        label={label}
         icon="combine"
-        iconStyle="action"
-      >
-        {label}
-      </Icon>
+      />
     ),
   },
   MODIFY: {
     icon: ({ label } = {}) => (
-      <Icon
-        size="small"
+      <ActionIcon
+        label={label}
         icon="edit"
-      >
-        {label}
-      </Icon>
+      />
     ),
   },
   REPLACE: {
     icon: ({ label } = {}) => (
-      <Icon
-        size="small"
+      <ActionIcon
+        label={label}
         icon="replace"
-        iconStyle="action"
-      >
-        {label}
-      </Icon>
+      />
     ),
   },
 };

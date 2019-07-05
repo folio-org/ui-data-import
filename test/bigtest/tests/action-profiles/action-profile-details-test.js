@@ -16,6 +16,23 @@ import {
   noAssociatedMappingProfile,
 } from '../../mocks';
 
+async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
+  const {
+    response = {},
+    status = 500,
+    headers = {},
+  } = responseData;
+
+  const url = `/data-import-profiles/actionProfiles${method === 'put' ? '/:id' : ''}`;
+
+  server[method](url, () => new Response(status, headers, response));
+  await actionProfileForm.nameField.fillAndBlur('Changed title');
+  await actionProfileForm.submitFormButton.click();
+  if (await actionProfileForm.confirmEditModal.isPresent) {
+    await actionProfileForm.confirmEditModal.confirmButton.click();
+  }
+}
+
 describe('Action Profile View', () => {
   setupApplication({ scenarios: ['fetch-action-profiles-success', 'fetch-users', 'fetch-tags'] });
 
@@ -148,6 +165,96 @@ describe('Action Profile View', () => {
           expect(actionProfileForm.isPresent).to.be.true;
         });
       });
+    });
+
+    describe('edit action profile form', () => {
+      beforeEach(async () => {
+        await actionProfileDetails.editButton.click();
+      });
+
+      describe('when form is submitted', () => {
+        beforeEach(async () => {
+          await actionProfileForm.nameField.fillAndBlur('Changed name');
+          await actionProfileForm.descriptionField.fillAndBlur('Changed description');
+          await actionProfileForm.submitFormButton.click();
+        });
+
+        describe('and there are associated job profiles', () => {
+          it('confirmation modal appears', () => {
+            expect(actionProfileForm.confirmEditModal.isPresent).to.be.true;
+          });
+
+          describe('and "Confirm" button is clicked', () => {
+            beforeEach(async () => {
+              await actionProfileForm.confirmEditModal.confirmButton.click();
+            });
+
+            it('then action profile details renders updated action profile', () => {
+              expect(actionProfileDetails.headline.text).to.equal('Changed name');
+              expect(actionProfileDetails.description.text).to.equal('Changed description');
+            });
+          });
+
+          describe('and "Cancel" button is clicked', () => {
+            beforeEach(async () => {
+              await actionProfileForm.confirmEditModal.cancelButton.click();
+            });
+
+            it('closes modal and stay on edit screen', () => {
+              expect(actionProfileForm.confirmEditModal.isPresent).to.be.false;
+              expect(actionProfileForm.isPresent).to.be.true;
+            });
+          });
+        });
+      });
+
+      describe('is submitted and the response contains', () => {
+        describe('error message', () => {
+          beforeEach(async function () {
+            await setupFormSubmitErrorScenario('put', this.server, {
+              response: { errors: [{ message: 'actionProfile.duplication.invalid' }] },
+              status: 422,
+            });
+          });
+
+          it('then error callout appears', () => {
+            expect(actionProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          });
+        });
+
+        describe('network error', () => {
+          beforeEach(async function () {
+            await setupFormSubmitErrorScenario('put', this.server);
+          });
+
+          it('then error callout appears', () => {
+            expect(actionProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          });
+        });
+      });
+    });
+  });
+
+  describe('when action profile is edited and there is no associated job profiles', () => {
+    setupApplication({ scenarios: ['fetch-action-profiles-success', 'fetch-users'] });
+
+    beforeEach(async function () {
+      this.server.get('/data-import-profiles/profileAssociations/:id/masters', {});
+      this.visit('/settings/data-import/action-profiles');
+      await actionProfiles.list.rows(0).click();
+      await actionProfileDetails.editButton.click();
+      await actionProfileForm.nameField.fillAndBlur('Changed name');
+      await actionProfileForm.descriptionField.fillAndBlur('Changed description');
+      await actionProfileForm.submitFormButton.click();
+    });
+
+    it('confirmation modal does not appear', () => {
+      expect(actionProfileForm.confirmEditModal.isPresent).to.be.false;
+    });
+
+    it('and action profile details renders updated action profile', () => {
+      expect(actionProfileDetails.headline.text).to.equal('Changed name');
+      expect(actionProfileDetails.description.text).to.equal('Changed description');
     });
   });
 });

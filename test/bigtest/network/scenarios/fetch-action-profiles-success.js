@@ -62,4 +62,16 @@ export default server => {
 
     return record.attrs;
   });
+  server.put('/data-import-profiles/actionProfiles/:id', (schema, request) => {
+    const {
+      params: { id },
+      requestBody,
+    } = request;
+    const actionProfileModel = schema.actionProfiles.find(id);
+    const updatedActionProfile = JSON.parse(requestBody);
+
+    actionProfileModel.update({ ...updatedActionProfile });
+
+    return actionProfileModel.attrs;
+  });
 };
