@@ -33,6 +33,7 @@ import {
   SearchAndSort,
   MatchProfilesForm,
   listTemplate,
+  ExceptionModal,
 } from '../../components';
 import { ViewMatchProfile } from './ViewMatchProfile';
 import {
@@ -40,7 +41,6 @@ import {
   createUpdateRecordErrorMessage,
   SettingPage,
 } from '../SettingPage';
-import { ExceptionModal } from './ExceptionModal';
 
 import sharedCss from '../../shared.css';
 
@@ -360,6 +360,8 @@ export class MatchProfiles extends Component {
                 />
                 <ExceptionModal
                   id="delete-match-profile-exception-modal"
+                  label={<FormattedMessage id="ui-data-import.settings.matchProfiles.exceptionModal.label" />}
+                  message={<FormattedMessage id="ui-data-import.settings.matchProfiles.exceptionModal.message" />}
                   showExceptionModal={showExceptionModal}
                   onClose={this.handleCloseExceptionModal}
                 />
