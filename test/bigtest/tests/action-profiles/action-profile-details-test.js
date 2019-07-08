@@ -131,7 +131,7 @@ describe('Action Profile View', () => {
       });
     });
 
-    describe('edit match profile form', () => {
+    describe('edit action profile form', () => {
       beforeEach(async () => {
         await actionProfiles.list.rows(0).click();
       });
@@ -229,6 +229,108 @@ describe('Action Profile View', () => {
 
           it('then error callout appears', () => {
             expect(actionProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          });
+        });
+      });
+    });
+
+    describe('delete confirmation modal', () => {
+      it('is not visible when pane header dropdown is closed', () => {
+        expect(actionProfileDetails.confirmationModal.isPresent).to.be.false;
+      });
+
+      describe('is visible', () => {
+        beforeEach(async () => {
+          await actionProfileDetails.expandPaneHeaderDropdown();
+          await actionProfileDetails.dropdownDeleteButton.click();
+        });
+
+        it('when pane header dropdown is opened', () => {
+          expect(actionProfileDetails.isPresent).to.be.true;
+        });
+      });
+
+      describe('disappears', () => {
+        beforeEach(async () => {
+          await actionProfileDetails.expandPaneHeaderDropdown();
+          await actionProfileDetails.dropdownDeleteButton.click();
+          await actionProfileDetails.confirmationModal.cancelButton.click();
+        });
+
+        it('when cancel button is clicked', () => {
+          expect(actionProfileDetails.confirmationModal.isPresent).to.be.false;
+        });
+      });
+
+      describe('upon click on confirm button initiates the action profile deletion process and in case of error', () => {
+        beforeEach(async function () {
+          this.server.delete('/data-import-profiles/actionProfiles/:id', () => new Response(500, {}));
+          await actionProfileDetails.expandPaneHeaderDropdown();
+          await actionProfileDetails.dropdownDeleteButton.click();
+          await actionProfileDetails.confirmationModal.confirmButton.click();
+        });
+
+        it('disappears', () => {
+          expect(actionProfileDetails.confirmationModal.isPresent).to.be.false;
+        });
+
+        it('the error toast appears', () => {
+          expect(actionProfileDetails.callout.errorCalloutIsPresent).to.be.true;
+        });
+
+        it('renders the correct number including the one which tried to delete', () => {
+          expect(actionProfiles.list.rowCount).to.equal(8);
+        });
+      });
+
+      describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
+        describe('exception modal', () => {
+          beforeEach(async () => {
+            await actionProfileDetails.expandPaneHeaderDropdown();
+            await actionProfileDetails.dropdownDeleteButton.click();
+            await actionProfileDetails.confirmationModal.confirmButton.click();
+            await actionProfileDetails.confirmationModal.confirmButton.click();
+          });
+
+          it('disappears', () => {
+            expect(actionProfileDetails.confirmationModal.isPresent).to.be.false;
+          });
+
+          describe('when there are associated job profiles', () => {
+            it('appears', () => {
+              expect(actionProfiles.exceptionModal.isPresent).to.be.true;
+            });
+
+            describe('and clicking on close button', () => {
+              beforeEach(async () => {
+                await actionProfiles.exceptionModalCloseButton.click();
+              });
+
+              it('closes the modal', () => {
+                expect(actionProfiles.exceptionModal.isPresent).to.be.false;
+              });
+
+              it('renders the correct number including the one which tried to delete', () => {
+                expect(actionProfiles.list.rowCount).to.equal(8);
+              });
+            });
+          });
+        });
+
+        describe('when there are no associated job profiles', () => {
+          beforeEach(async function () {
+            this.server.delete('/data-import-profiles/actionProfiles/:id');
+            await actionProfileDetails.expandPaneHeaderDropdown();
+            await actionProfileDetails.dropdownDeleteButton.click();
+            await actionProfileDetails.confirmationModal.confirmButton.click();
+          });
+
+          it('does not appear', () => {
+            expect(actionProfiles.exceptionModal.isPresent).to.be.false;
+          });
+
+          it('renders the correct number of rows without deleted one', () => {
+            expect(actionProfiles.list.rowCount).to.equal(7);
           });
         });
       });

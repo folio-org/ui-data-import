@@ -8,15 +8,17 @@ import {
 } from '@folio/stripes/components';
 
 export const ExceptionModal = memo(({
-  id,
+  label,
+  message,
   showExceptionModal,
   onClose,
+  id,
 }) => (
   <Modal
     id={id}
     closeOnBackgroundClick
     open={showExceptionModal}
-    label={<FormattedMessage id="ui-data-import.settings.matchProfiles.exceptionModal.label" />}
+    label={label}
     footer={(
       <Button
         data-test-exception-modal-close-button
@@ -28,12 +30,14 @@ export const ExceptionModal = memo(({
       </Button>
     )}
   >
-    <FormattedMessage id="ui-data-import.settings.matchProfiles.exceptionModal.message" />
+    {message}
   </Modal>
 ));
 
 ExceptionModal.propTypes = {
-  id: PropTypes.string,
+  label: PropTypes.node.isRequired,
+  message: PropTypes.node.isRequired,
   showExceptionModal: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  id: PropTypes.string,
 };

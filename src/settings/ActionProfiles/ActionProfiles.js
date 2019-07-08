@@ -5,10 +5,10 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   get,
-  noop,
   omit,
 } from 'lodash';
 
@@ -27,11 +27,13 @@ import {
   ActionProfilesForm,
   listTemplate,
   SearchAndSort,
+  ExceptionModal,
 } from '../../components';
 import { ViewActionProfile } from './ViewActionProfile';
 import {
   SettingPage,
   createUpdateRecordErrorMessage,
+  createDeleteCallout,
 } from '../SettingPage';
 import {
   trimSearchTerm,
@@ -124,6 +126,8 @@ export class ActionProfiles extends Component {
 
   static defaultProps = { showSingleResult: true };
 
+  state = { showExceptionModal: false };
+
   componentDidMount() {
     this.setList();
   }
@@ -173,6 +177,40 @@ export class ActionProfiles extends Component {
 
   calloutRef = createRef();
 
+  getDeleteRecordSuccessfulMessage(record) {
+    return (
+      <FormattedMessage
+        id="ui-data-import.settings.actionProfiles.action.success"
+        values={{
+          name: record.name,
+          action: (
+            <FormattedMessage
+              id="ui-data-import.deleted"
+              tagName="strong"
+            />
+          ),
+        }}
+      />
+    );
+  }
+
+  getDeleteRecordErrorMessage(record) {
+    return (
+      <FormattedMessage
+        id="ui-data-import.settings.actionProfiles.action.error"
+        values={{
+          name: record.name,
+          action: (
+            <FormattedMessage
+              id="ui-data-import.deleted"
+              tagName="strong"
+            />
+          ),
+        }}
+      />
+    );
+  }
+
   getRecordName(record) {
     return record.name;
   }
@@ -181,6 +219,36 @@ export class ActionProfiles extends Component {
     getRecordName: this.getRecordName,
     calloutRef: this.calloutRef,
   });
+
+  onDeleteSuccessCallout = createDeleteCallout({
+    getMessage: this.getDeleteRecordSuccessfulMessage,
+    calloutRef: this.calloutRef,
+  });
+
+  onDeleteSuccess = record => {
+    const { checkboxList: { selectRecord } } = this.props;
+
+    this.onDeleteSuccessCallout(record);
+    selectRecord(record.id);
+  };
+
+  onDeleteErrorCallout = createDeleteCallout({
+    getMessage: this.getDeleteRecordErrorMessage,
+    calloutRef: this.calloutRef,
+    type: 'error',
+  });
+
+  onDeleteError = (record, error) => {
+    if (error.status === 409) {
+      this.setState({ showExceptionModal: true });
+
+      return;
+    }
+
+    this.onDeleteErrorCallout(record);
+  };
+
+  handleCloseExceptionModal = () => this.setState({ showExceptionModal: false });
 
   defaultNewRecordInitialValues = {
     name: '',
@@ -221,6 +289,7 @@ export class ActionProfiles extends Component {
         handleSelectAllCheckbox,
       },
     } = this.props;
+    const { showExceptionModal } = this.state;
 
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
@@ -235,8 +304,8 @@ export class ActionProfiles extends Component {
             history={history}
             match={match}
             onUpdateRecordError={this.onUpdateRecordError}
-            onDeleteSuccess={noop}
-            onDeleteError={noop}
+            onDeleteSuccess={this.onDeleteSuccess}
+            onDeleteError={this.onDeleteError}
           >
             {props => (
               <Fragment>
@@ -291,6 +360,13 @@ export class ActionProfiles extends Component {
                   showSingleResult={showSingleResult}
                   onSubmitSearch={deselectAll}
                   {...props}
+                />
+                <ExceptionModal
+                  id="delete-action-profile-exception-modal"
+                  label={<FormattedMessage id="ui-data-import.settings.actionProfiles.exceptionModal.label" />}
+                  message={<FormattedMessage id="ui-data-import.settings.actionProfiles.exceptionModal.message" />}
+                  showExceptionModal={showExceptionModal}
+                  onClose={this.handleCloseExceptionModal}
                 />
                 <Callout ref={this.calloutRef} />
               </Fragment>

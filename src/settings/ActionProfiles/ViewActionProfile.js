@@ -22,6 +22,7 @@ import {
   SearchField,
   AccordionSet,
   MultiColumnList,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -107,10 +108,16 @@ export class ViewActionProfile extends Component {
     checkboxList: checkboxListShape.isRequired,
     setList: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string,
   };
 
   static defaultProps = { paneId: 'pane-action-profile-details' };
+
+  state = {
+    deletionInProgress: false,
+    showDeleteConfirmation: false,
+  };
 
   componentDidMount() {
     this.setList();
@@ -202,6 +209,31 @@ export class ViewActionProfile extends Component {
     setList(associatedJobProfiles);
   }
 
+  showDeleteConfirmation = () => {
+    this.setState({ showDeleteConfirmation: true });
+  };
+
+  hideDeleteConfirmation = () => {
+    this.setState({
+      showDeleteConfirmation: false,
+      deletionInProgress: false,
+    });
+  };
+
+  handleDelete(record) {
+    const { onDelete } = this.props;
+    const { deletionInProgress } = this.state;
+
+    if (deletionInProgress) {
+      return;
+    }
+
+    this.setState({ deletionInProgress: true }, async () => {
+      await onDelete(record);
+      this.hideDeleteConfirmation();
+    });
+  }
+
   renderActionMenu = menu => (
     <ActionMenu
       entity={this}
@@ -229,6 +261,7 @@ export class ViewActionProfile extends Component {
         selectedRecords,
       },
     } = this.props;
+    const { showDeleteConfirmation } = this.state;
 
     const {
       hasLoaded,
@@ -407,6 +440,21 @@ export class ViewActionProfile extends Component {
         <EndOfItem
           className={sharedCss.endOfRecord}
           title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+        />
+        <ConfirmationModal
+          id="delete-action-profile-modal"
+          open={showDeleteConfirmation}
+          heading={(
+            <FormattedMessage
+              id="ui-data-import.modal.actionProfile.delete.header"
+              values={{ name: actionProfile.name }}
+            />
+          )}
+          message={<FormattedMessage id="ui-data-import.modal.actionProfile.delete.message" />}
+          confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
+          onConfirm={() => this.handleDelete(actionProfile)}
+          onCancel={this.hideDeleteConfirmation}
         />
       </Pane>
     );

@@ -55,6 +55,7 @@ export default server => {
     });
   });
   server.get('/data-import-profiles/actionProfiles/:id');
+  server.delete('/data-import-profiles/actionProfiles/:id', {}, 409);
   server.get('/data-import-profiles/profileAssociations/:id/masters', associatedJobProfiles);
   server.post('/data-import-profiles/actionProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
