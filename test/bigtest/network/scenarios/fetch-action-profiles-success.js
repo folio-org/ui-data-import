@@ -59,7 +59,7 @@ export default server => {
   server.get('/data-import-profiles/profileAssociations/:id/masters', associatedJobProfiles);
   server.post('/data-import-profiles/actionProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
-    const record = server.create('match-profile', params);
+    const record = server.create('action-profile', params);
 
     return record.attrs;
   });
