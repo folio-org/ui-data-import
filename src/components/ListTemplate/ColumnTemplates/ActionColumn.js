@@ -47,6 +47,6 @@ export const ActionColumn = memo(({
 });
 
 ActionColumn.propTypes = {
-  record: PropTypes.shape.isRequired,
+  record: PropTypes.object.isRequired,
   searchTerm: PropTypes.string.isRequired,
 };

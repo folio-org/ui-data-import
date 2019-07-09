@@ -224,7 +224,7 @@ export class ViewJobProfile extends Component {
         {record.name}
       </AppIcon>
     );
-    const formatter = listTemplate({ intl });
+    const jobsUsingThisProfileFormatter = listTemplate({ intl });
 
     const tagsEntityLink = `data-import-profiles/jobProfiles/${record.id}`;
 
@@ -289,7 +289,7 @@ export class ViewJobProfile extends Component {
                     'completedDate',
                     'runBy',
                   ]}
-                  formatter={formatter}
+                  formatter={jobsUsingThisProfileFormatter}
                   width="100%"
                 />
               )

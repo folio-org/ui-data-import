@@ -46,6 +46,7 @@ import {
   EndOfItem,
   ActionMenu,
   listTemplate,
+  createAssociatedJobProfilesFormatter,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
@@ -368,7 +369,7 @@ export class ViewActionProfile extends Component {
           >
             <div data-test-associated-job-profiles>
               <SearchAndSortQuery initialSearchState={{ query: '' }}>
-                {({ searchTerm }) => (
+                {({ searchValue }) => (
                   <Fragment>
                     <form onSubmit={e => e.preventDefault()}>
                       <div className={searchAndSortCss.searchWrap}>
@@ -422,9 +423,8 @@ export class ViewActionProfile extends Component {
                             updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
                           }}
                           columnWidths={this.columnWidths}
-                          formatter={listTemplate({
-                            entityKey: ENTITY_KEYS.JOB_PROFILES,
-                            searchTerm,
+                          formatter={createAssociatedJobProfilesFormatter({
+                            searchTerm: searchValue.query,
                             selectRecord,
                             selectedRecords,
                           })}
