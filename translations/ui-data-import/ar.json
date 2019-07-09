@@ -164,5 +164,13 @@
     "actionProfileName": "وضع الإجراءات",
     "settings.associatedJobProfiles": "أوضاع الوظائف المرتبطة",
     "settings.associatedMappingProfile": "وضع تخطيط الحقل المرتبط",
-    "validation.actionProfile.duplication.invalid": "\"{value}\" وضع الإجراء موجودة بالفعل"
+    "validation.actionProfile.duplication.invalid": "\"{value}\" وضع الإجراء موجودة بالفعل",
+    "settings.actionProfiles.confirmEditModal.heading": "تأكيد تغييرات وضع الإجراءات",
+    "settings.actionProfiles.confirmEditModal.message": "ستؤثر تعديلات وضع الإجراء على {amount, number} وظيفة مرتبطة  {amount, plural, one {وضعًا} other {وضعًا}}. يرجى التأكيد",
+    "modal.actionProfile.delete.header": "حذف وضع الإجراء \"{name}\"؟",
+    "modal.actionProfile.delete.message": "حذف وضع الإجراء؟",
+    "settings.actionProfiles.exceptionModal.label": "لا يمكن حذف وضع الإجراء",
+    "settings.actionProfiles.action.success": "تم {action} وضع الإجراء \"{name}\"  بنجاح",
+    "settings.actionProfiles.action.error": "لم يتم {action} وضع الإجراء \"{name}\"",
+    "settings.actionProfiles.exceptionModal.message": "لا يمكن حذف وضع الأجراء لأنه قيد استخدام أحد أوضاع الوظائف أو التخطيط أو أكثر."
 }
