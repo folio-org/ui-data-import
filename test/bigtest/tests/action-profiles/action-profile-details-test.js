@@ -335,6 +335,81 @@ describe('Action Profile View', () => {
         });
       });
     });
+
+    describe('duplicate action profile form', () => {
+      beforeEach(async () => {
+        await actionProfileDetails.expandPaneHeaderDropdown();
+        await actionProfileDetails.dropdownDuplicateButton.click();
+      });
+
+      it('appears upon click on pane header menu duplicate button', () => {
+        expect(actionProfileForm.isPresent).to.be.true;
+      });
+
+      describe('when form is submitted', () => {
+        beforeEach(async () => {
+          await actionProfileForm.nameField.fillAndBlur('Changed name');
+          await actionProfileForm.descriptionField.fillAndBlur('Changed description');
+          await actionProfileForm.submitFormButton.click();
+        });
+
+        it('then action profile details renders duplicated action profile', () => {
+          expect(actionProfileDetails.headline.text).to.equal('Changed name');
+          expect(actionProfileDetails.description.text).to.equal('Changed description');
+        });
+      });
+
+      describe('when form is submitted and the response contains', () => {
+        describe('error message', () => {
+          beforeEach(async function () {
+            await setupFormSubmitErrorScenario('post', this.server, {
+              response: { errors: [{ message: 'actionProfile.duplication.invalid' }] },
+              status: 422,
+            });
+          });
+
+          it('then error callout appears', () => {
+            expect(actionProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          });
+        });
+
+        describe('network error', () => {
+          beforeEach(async function () {
+            await setupFormSubmitErrorScenario('post', this.server);
+          });
+
+          it('then error callout appears', () => {
+            expect(actionProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          });
+        });
+
+        describe('unparsed data', () => {
+          beforeEach(async function () {
+            await setupFormSubmitErrorScenario('post', this.server, {
+              response: '',
+              status: 422,
+            });
+          });
+
+          it('then error callout appears', () => {
+            expect(actionProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          });
+        });
+
+        describe('error without body', () => {
+          beforeEach(async function () {
+            await setupFormSubmitErrorScenario('post', this.server, {
+              response: null,
+              status: 422,
+            });
+          });
+
+          it('then error callout appears', () => {
+            expect(actionProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          });
+        });
+      });
+    });
   });
 
   describe('when action profile is edited and there is no associated job profiles', () => {
