@@ -164,5 +164,13 @@
     "actionProfileName": "Perfil de ação",
     "settings.associatedJobProfiles": "Perfis de job associados",
     "settings.associatedMappingProfile": "Perfil de mapeamento de campo associado",
-    "validation.actionProfile.duplication.invalid": "O perfil de ação \"{value}\" já existe"
+    "validation.actionProfile.duplication.invalid": "O perfil de ação \"{value}\" já existe",
+    "settings.actionProfiles.confirmEditModal.heading": "Confirme as alterações do perfil de ação",
+    "settings.actionProfiles.confirmEditModal.message": "A edição desse perfil de ação afetará {amount, number} o {amount, plural, one {perfil} other {perfis}} de job associado. Por favor confirme",
+    "modal.actionProfile.delete.header": "Delete \"{name}\" action profile?",
+    "modal.actionProfile.delete.message": "Delete action profile?",
+    "settings.actionProfiles.exceptionModal.label": "Cannot delete action profile",
+    "settings.actionProfiles.action.success": "The action profile \"{name}\" was successfully {action}",
+    "settings.actionProfiles.action.error": "The action profile \"{name}\" was not {action}",
+    "settings.actionProfiles.exceptionModal.message": "This action profile cannot be deleted, as it is in use by one or more job or field mapping profiles"
 }
