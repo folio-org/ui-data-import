@@ -46,6 +46,7 @@ import {
   EndOfItem,
   ActionMenu,
   listTemplate,
+  createAssociatedJobProfilesFormatter,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
@@ -255,6 +256,8 @@ export class ViewMatchProfile extends Component {
       checkboxList: {
         isAllSelected,
         handleSelectAllCheckbox,
+        selectRecord,
+        selectedRecords,
       },
     } = this.props;
     const { showDeleteConfirmation } = this.state;
@@ -394,7 +397,11 @@ export class ViewMatchProfile extends Component {
                             updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
                           }}
                           columnWidths={this.columnWidths}
-                          formatter={this.createFormatter(searchValue.query)}
+                          formatter={createAssociatedJobProfilesFormatter({
+                            searchTerm: searchValue.query,
+                            selectRecord,
+                            selectedRecords,
+                          })}
                         />
                       )}
                     </IntlConsumer>

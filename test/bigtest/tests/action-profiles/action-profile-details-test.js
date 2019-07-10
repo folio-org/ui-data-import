@@ -10,6 +10,7 @@ import {
   actionProfiles,
   actionProfileForm,
   actionProfileDetails,
+  jobProfileDetails,
 } from '../../interactors';
 import {
   associatedMappingProfile,
@@ -127,6 +128,16 @@ describe('Action Profile View', () => {
 
         it('upon click changes its state', () => {
           expect(actionProfileDetails.associatedJobProfiles.checkBoxes(0).isChecked).to.be.true;
+        });
+      });
+
+      describe('when job profile name is clicked', () => {
+        beforeEach(async () => {
+          await actionProfileDetails.associatedJobProfiles.jobProfilesLinks(0).click();
+        });
+
+        it('redirects to job profile details', () => {
+          expect(jobProfileDetails.isPresent).to.be.true;
         });
       });
     });

@@ -95,6 +95,6 @@ export const MatchColumn = memo(props => {
 });
 
 MatchColumn.propTypes = {
-  record: PropTypes.shape.isRequired,
+  record: PropTypes.object.isRequired,
   searchTerm: PropTypes.string,
 };

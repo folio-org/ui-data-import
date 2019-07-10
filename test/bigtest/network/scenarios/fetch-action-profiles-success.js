@@ -75,4 +75,6 @@ export default server => {
 
     return actionProfileModel.attrs;
   });
+
+  server.get('/data-import-profiles/jobProfiles/:id', associatedJobProfiles.childSnapshotWrappers[0].content);
 };

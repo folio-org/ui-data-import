@@ -19,7 +19,7 @@ const ActionIcon = ({
 );
 
 ActionIcon.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
   icon: PropTypes.string.isRequired,
 };
 

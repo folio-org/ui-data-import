@@ -40,6 +40,6 @@ export const TagsColumn = memo(props => {
 });
 
 TagsColumn.propTypes = {
-  record: PropTypes.shape.isRequired,
+  record: PropTypes.object.isRequired,
   searchTerm: PropTypes.string.isRequired,
 };
