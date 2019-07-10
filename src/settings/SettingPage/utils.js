@@ -42,3 +42,15 @@ export const createDeleteCallout = ({
     type,
   });
 };
+
+export const deselectOnDelete = ({
+  recordId,
+  selectRecord,
+  selectedRecords,
+}) => {
+  const isRecordSelected = selectedRecords.has(recordId);
+
+  if (isRecordSelected) {
+    selectRecord(recordId);
+  }
+};

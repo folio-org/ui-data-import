@@ -35,7 +35,7 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
 }
 
 describe('Action Profile View', () => {
-  setupApplication({ scenarios: ['fetch-action-profiles-success', 'fetch-users', 'fetch-tags'] });
+  setupApplication({ scenarios: ['fetch-action-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/action-profiles');
@@ -76,6 +76,10 @@ describe('Action Profile View', () => {
 
     it('has correct description', () => {
       expect(actionProfileDetails.description.text).to.be.equal('Description 0');
+    });
+
+    it('display tags accordion', () => {
+      expect(actionProfileDetails.isTagsPresent).to.be.true;
     });
 
     describe('associated job profiles', () => {
@@ -444,5 +448,18 @@ describe('Action Profile View', () => {
       expect(actionProfileDetails.headline.text).to.equal('Changed name');
       expect(actionProfileDetails.description.text).to.equal('Changed description');
     });
+  });
+});
+
+describe('Action Profile View', () => {
+  setupApplication({ scenarios: ['fetch-action-profiles-success', 'fetch-users', 'fetch-tags', 'tags-disabled'] });
+
+  beforeEach(async function () {
+    this.visit('/settings/data-import/action-profiles');
+    await actionProfiles.list.rows(0).click();
+  });
+
+  it('does not display tags accordion', () => {
+    expect(actionProfileDetails.isTagsPresent).to.be.false;
   });
 });

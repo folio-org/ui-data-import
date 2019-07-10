@@ -31,7 +31,7 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
 }
 
 describe('Match Profile View', () => {
-  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags'] });
+  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
   beforeEach(async function () {
     this.visit('/settings/data-import/match-profiles');
@@ -44,6 +44,10 @@ describe('Match Profile View', () => {
 
   it('has correct description', () => {
     expect(matchProfileDetails.description.text).to.be.equal('Use for POL in 990 $p');
+  });
+
+  it('display tags accordion', () => {
+    expect(matchProfileDetails.isTagsPresent).to.be.true;
   });
 
   it('upon click on row', () => {
@@ -409,5 +413,18 @@ describe('delete confirmation modal', () => {
         expect(matchProfiles.list.rowCount).to.equal(7);
       });
     });
+  });
+});
+
+describe('Match Profile View', () => {
+  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags', 'tags-disabled'] });
+
+  beforeEach(async function () {
+    this.visit('/settings/data-import/match-profiles');
+    await matchProfiles.list.rows(0).click();
+  });
+
+  it('does not display tags accordion', () => {
+    expect(matchProfileDetails.isTagsPresent).to.be.false;
   });
 });

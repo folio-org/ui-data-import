@@ -1,6 +1,7 @@
 import {
   interactor,
   scoped,
+  isPresent,
 } from '@bigtest/interactor';
 
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
@@ -18,6 +19,7 @@ import { AssociatedJobProfiles } from '../associated-job-profiles';
   editButton = new ButtonInteractor('[data-test-edit-item-button]');
   headline = scoped('[data-test-headline]');
   description = scoped('[data-test-description]');
+  isTagsPresent = isPresent('[data-test-tags-accordion]');
   associatedJobProfiles = new AssociatedJobProfiles('[data-test-associated-job-profiles]');
   associatedMappingProfile = new MultiColumnListInteractor('[data-test-associated-mapping-profile]');
   confirmationModal = new ConfirmationModalInteractor('#delete-action-profile-modal');

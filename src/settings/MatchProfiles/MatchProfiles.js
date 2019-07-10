@@ -40,6 +40,7 @@ import {
   createDeleteCallout,
   createUpdateRecordErrorMessage,
   SettingPage,
+  deselectOnDelete,
 } from '../SettingPage';
 
 import sharedCss from '../../shared.css';
@@ -244,10 +245,19 @@ export class MatchProfiles extends Component {
   });
 
   onDeleteSuccess = record => {
-    const { checkboxList: { selectRecord } } = this.props;
+    const {
+      checkboxList: {
+        selectRecord,
+        selectedRecords,
+      },
+    } = this.props;
 
     this.onDeleteSuccessCallout(record);
-    selectRecord(record.id);
+    deselectOnDelete({
+      recordId: record.id,
+      selectRecord,
+      selectedRecords,
+    });
   };
 
   onDeleteErrorCallout = createDeleteCallout({

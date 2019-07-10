@@ -12,6 +12,8 @@
 * Implement action profile deletion feature (UIDATIMP-215)
 * Implement action profile duplication feature (UIDATIMP-148)
 * Make job profile name a hotlink in action profile details (UIDATIMP-213)
+* Add tags accordion for match profiles (UIDATIMP-16)
+* Add tags accordion for action profiles (UIDATIMP-17)
 
 ## [1.3.0](https://github.com/folio-org/ui-data-import/tree/v1.3.0) (2019-06-12)
 * Create data import settings page's 3rd pane for Match Profiles. Add string capitalization (capitalize) and HTML special chars decoding (htmlDecode) utils (UIDATIMP-6)
