@@ -27,6 +27,8 @@ import {
 import {
   ViewMetaData,
   SearchAndSortQuery,
+  withTags,
+  TagsAccordion,
 } from '@folio/stripes/smart-components';
 
 import {
@@ -55,6 +57,7 @@ import sharedCss from '../../shared.css';
 
 @withCheckboxList
 @stripesConnect
+@withTags
 export class ViewActionProfile extends Component {
   static manifest = Object.freeze({
     actionProfile: {
@@ -106,6 +109,7 @@ export class ViewActionProfile extends Component {
       }),
     }).isRequired,
     location: PropTypes.object.isRequired,
+    tagsEnabled: PropTypes.bool,
     checkboxList: checkboxListShape.isRequired,
     setList: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
@@ -261,6 +265,7 @@ export class ViewActionProfile extends Component {
         selectRecord,
         selectedRecords,
       },
+      tagsEnabled,
     } = this.props;
     const { showDeleteConfirmation } = this.state;
 
@@ -303,6 +308,8 @@ export class ViewActionProfile extends Component {
       };
     }
 
+    const tagsEntityLink = `data-import-profiles/actionProfiles/${actionProfile.id}`;
+
     return (
       <Pane
         id={paneId}
@@ -334,6 +341,11 @@ export class ViewActionProfile extends Component {
               <div data-test-description>{actionProfile.description || '-'}</div>
             </KeyValue>
           </Accordion>
+          {tagsEnabled && (
+            <div data-test-tags-accordion>
+              <TagsAccordion link={tagsEntityLink} />
+            </div>
+          )}
           <Accordion label={<FormattedMessage id="ui-data-import.details" />}>
             <div style={{ height: 60 }}>{/* will be implemented in future stories */}</div>
           </Accordion>

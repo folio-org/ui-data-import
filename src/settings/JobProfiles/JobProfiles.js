@@ -33,6 +33,7 @@ import {
   createDeleteCallout,
   createUpdateRecordErrorMessage,
   SettingPage,
+  deselectOnDelete,
 } from '../SettingPage';
 import {
   trimSearchTerm,
@@ -227,10 +228,19 @@ export class JobProfiles extends Component {
   });
 
   onDeleteSuccess = record => {
-    const { checkboxList: { selectRecord } } = this.props;
+    const {
+      checkboxList: {
+        selectRecord,
+        selectedRecords,
+      },
+    } = this.props;
 
     this.onDeleteSuccessCallout(record);
-    selectRecord(record.id);
+    deselectOnDelete({
+      recordId: record.id,
+      selectRecord,
+      selectedRecords,
+    });
   };
 
   onDeleteError = createDeleteCallout({
