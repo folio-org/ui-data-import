@@ -167,10 +167,10 @@
     "validation.actionProfile.duplication.invalid": "O perfil de ação \"{value}\" já existe",
     "settings.actionProfiles.confirmEditModal.heading": "Confirme as alterações do perfil de ação",
     "settings.actionProfiles.confirmEditModal.message": "A edição desse perfil de ação afetará {amount, number} o {amount, plural, one {perfil} other {perfis}} de job associado. Por favor confirme",
-    "modal.actionProfile.delete.header": "Delete \"{name}\" action profile?",
-    "modal.actionProfile.delete.message": "Delete action profile?",
-    "settings.actionProfiles.exceptionModal.label": "Cannot delete action profile",
-    "settings.actionProfiles.action.success": "The action profile \"{name}\" was successfully {action}",
-    "settings.actionProfiles.action.error": "The action profile \"{name}\" was not {action}",
-    "settings.actionProfiles.exceptionModal.message": "This action profile cannot be deleted, as it is in use by one or more job or field mapping profiles"
+    "modal.actionProfile.delete.header": "Excluir o perfil de ação \"{name}\"?",
+    "modal.actionProfile.delete.message": "Excluir perfil de ação?",
+    "settings.actionProfiles.exceptionModal.label": "Não é possível excluir o perfil de ação",
+    "settings.actionProfiles.action.success": "O perfil de ação \"{name}\" foi com êxito {action}",
+    "settings.actionProfiles.action.error": "O perfil de ação \"{name}\" não foi {action}",
+    "settings.actionProfiles.exceptionModal.message": "Este perfil de ação não pode ser excluído, pois está em uso por um ou mais perfis de mapeamento de trabalho ou campo"
 }
