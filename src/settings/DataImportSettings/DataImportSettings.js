@@ -11,7 +11,7 @@ import {
 import { JobProfiles } from '../JobProfiles';
 import { MatchProfiles } from '../MatchProfiles';
 import { ActionProfiles } from '../ActionProfiles';
-import { FieldMappingProfiles } from '../FieldMappingProfiles';
+import { MappingProfiles } from '../MappingProfiles';
 import { FileExtensions } from '../FileExtensions';
 
 import css from './DataImportSettings.css';
@@ -41,7 +41,7 @@ export class DataImportSettings extends Component {
         {
           route: 'mapping-profiles',
           label: this.generateSettingsLabel('mappingProfiles.title', 'mappingProfiles'),
-          component: FieldMappingProfiles,
+          component: MappingProfiles,
         },
       ],
     },

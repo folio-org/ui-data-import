@@ -177,6 +177,10 @@
           "converter-storage.actionprofile.post",
           "converter-storage.actionprofile.put",
           "converter-storage.actionprofile.delete",
+          "converter-storage.mappingprofile.get",
+          "converter-storage.mappingprofile.post",
+          "converter-storage.mappingprofile.put",
+          "converter-storage.mappingprofile.delete",
           "converter-storage.profileassociation.get"
         ],
         "visible": true
