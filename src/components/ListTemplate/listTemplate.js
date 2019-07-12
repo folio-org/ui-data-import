@@ -3,6 +3,7 @@ import React from 'react';
 import {
   CheckboxColumn,
   DefaultColumn,
+  MappedColumn,
   ActionColumn,
   MatchColumn,
   TagsColumn,
@@ -66,6 +67,12 @@ export const listTemplate = ({
     <DefaultColumn
       iconKey={ENTITY_KEYS.MAPPING_PROFILES}
       value={record.mapping || ''}
+      searchTerm={searchTerm}
+    />
+  ),
+  mapped: record => (
+    <MappedColumn
+      record={record}
       searchTerm={searchTerm}
     />
   ),

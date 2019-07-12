@@ -10,3 +10,4 @@ export * from './uploading-jobs-display';
 export * from './job-log';
 export * from './action-profiles';
 export * from './associated-job-profiles';
+export * from './mapping-profiles';
