@@ -71,9 +71,18 @@ export class ViewFileExtension extends Component {
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string, // eslint-disable-line
+    ENTITY_KEY: PropTypes.string, // eslint-disable-line
+    actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   };
 
-  static defaultProps = { paneId: 'pane-file-extension-details' };
+  static defaultProps = {
+    paneId: 'pane-file-extension-details',
+    ENTITY_KEY: ENTITY_KEYS.FILE_EXTENSIONS,
+    actionMenuItems: [
+      'edit',
+      'delete',
+    ],
+  };
 
   constructor(props) {
     super(props);
@@ -99,13 +108,6 @@ export class ViewFileExtension extends Component {
       record,
     };
   }
-
-  entityKey = ENTITY_KEYS.FILE_EXTENSIONS;
-
-  actionMenuItems = [
-    'edit',
-    'delete',
-  ];
 
   showDeleteConfirmation = () => {
     this.setState({ showDeleteConfirmation: true });

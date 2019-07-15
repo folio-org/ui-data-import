@@ -14,7 +14,7 @@ import {
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
-import { FullScreenForm } from '../FullScreenForm';
+import { FullScreenForm } from '../../components/FullScreenForm';
 import { validateRequiredField } from '../../utils';
 import { DATA_TYPES } from '../../utils/constants';
 

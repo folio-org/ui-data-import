@@ -4,39 +4,37 @@ import PropTypes from 'prop-types';
 import { noop } from 'lodash';
 import { Checkbox } from '@folio/stripes/components';
 
-import sharedCss from '../../../../shared.css';
+import sharedCss from '../../../shared.css';
 
-export const CheckboxColumn = memo(props => {
+export const CheckboxHeader = memo(props => {
   const {
-    value,
     checked,
     onChange,
   } = props;
 
   return (
     <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-      tabIndex="0"
       role="button"
+      tabIndex="0"
       className={sharedCss.selectableCellButton}
-      data-test-select-item
+      data-test-select-all-checkbox
       onClick={e => e.stopPropagation()}
     >
       <Checkbox
-        name={`selected-${value}`}
+        name="selected-all"
         checked={checked}
-        onChange={() => onChange(value)}
+        onChange={onChange}
       />
     </div>
   );
 });
 
-CheckboxColumn.propTypes = {
-  value: PropTypes.string.isRequired,
+CheckboxHeader.propTypes = {
   checked: PropTypes.bool,
   onChange: PropTypes.func,
 };
 
-CheckboxColumn.defaultProps = {
+CheckboxHeader.defaultProps = {
   checked: false,
   onChange: noop,
 };

@@ -23,7 +23,7 @@ class ActionProfilesInteractor {
   searchField = new TextFieldInteractor('#input-action-profiles-search');
   searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
   searchSubmitButtonDisabled = property('[data-test-search-and-sort-submit]', 'disabled');
-  exceptionModal = new ModalInteractor('#delete-action-profile-exception-modal');
+  exceptionModal = new ModalInteractor('#delete-actionProfiles-exception-modal');
   exceptionModalCloseButton = new ButtonInteractor('[data-test-exception-modal-close-button]');
 }
 

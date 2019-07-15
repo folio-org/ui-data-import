@@ -1,54 +1,27 @@
-import React, {
-  Component,
-  Fragment,
-  createRef,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   get,
   omit,
 } from 'lodash';
 
-import {
-  IntlConsumer,
-  stripesConnect,
-} from '@folio/stripes/core';
+import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
-import {
-  Checkbox,
-  Callout,
-} from '@folio/stripes/components';
 
 import {
-  ActionMenu,
-  ActionProfilesForm,
-  listTemplate,
-  SearchAndSort,
-  ExceptionModal,
-} from '../../components';
-import { ViewActionProfile } from './ViewActionProfile';
-import {
-  SettingPage,
-  createUpdateRecordErrorMessage,
-  createDeleteCallout,
-  deselectOnDelete,
-} from '../SettingPage';
-import {
-  trimSearchTerm,
   withCheckboxList,
   checkboxListShape,
 } from '../../utils';
 import { ENTITY_KEYS } from '../../utils/constants';
-
-import sharedCss from '../../shared.css';
+import { ListView } from '../../components';
+import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
+import { ViewActionProfile } from './ViewActionProfile';
+import { ActionProfilesForm } from './ActionProfilesForm';
 
 // big numbers to get rid of infinite scroll
 const INITIAL_RESULT_COUNT = 5000;
 const RESULT_COUNT_INCREMENT = 5000;
-const finishedResourceName = 'actionProfiles';
 const queryTemplate = `(
   name="%{query.query}*" OR
   action="%{query.query}*" OR
@@ -62,12 +35,12 @@ const mapStateToProps = state => {
     hasLoaded = false,
     records: [record = {}] = [],
   } = get(state, 'folio_data_import_action_profile', {});
-  const selectedActionProfile = {
+  const selectedRecord = {
     hasLoaded,
     record: omit(record, 'metadata', 'userInfo'),
   };
 
-  return { selectedActionProfile };
+  return { selectedRecord };
 };
 
 @withCheckboxList
@@ -119,271 +92,90 @@ export class ActionProfiles extends Component {
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,
-    selectedActionProfile: PropTypes.object.isRequired,
+    selectedRecord: PropTypes.object.isRequired,
     checkboxList: checkboxListShape.isRequired,
     setList: PropTypes.func.isRequired,
     showSingleResult: PropTypes.bool,
+    objectName: PropTypes.string,
+    ENTITY_KEY: PropTypes.string,
+    RecordView: PropTypes.func,
+    RecordForm: PropTypes.func,
+    INITIAL_RESULT_COUNT: PropTypes.number,
+    RESULT_COUNT_INCREMENT: PropTypes.number,
+    actionMenuItems: PropTypes.arrayOf(PropTypes.string),
+    visibleColumns: PropTypes.arrayOf(PropTypes.string),
+    columnWidths: PropTypes.object,
+    initialValues: PropTypes.object,
   };
 
-  static defaultProps = { showSingleResult: true };
-
-  state = { showExceptionModal: false };
-
-  componentDidMount() {
-    this.setList();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { resources } = this.props;
-
-    if (prevProps.resources !== resources) {
-      this.setList();
-    }
-  }
-
-  setList() {
-    const { setList } = this.props;
-
-    setList(this.actionProfiles);
-  }
-
-  entityKey = ENTITY_KEYS.ACTION_PROFILES;
-
-  actionMenuItems = [
-    'addNew',
-    'exportSelected',
-    'selectAll',
-    'deselectAll',
-  ];
-
-  visibleColumns = [
-    'selected',
-    'name',
-    'action',
-    'mapping',
-    'tags',
-    'updated',
-    'updatedBy',
-  ];
-
-  columnWidths = {
-    selected: 40,
-    name: 200,
-    action: 200,
-    mapping: 150,
-    tags: 150,
-    updated: 150,
-    updatedBy: 250,
+  static defaultProps = {
+    showSingleResult: true,
+    objectName: 'action-profiles',
+    ENTITY_KEY: ENTITY_KEYS.ACTION_PROFILES,
+    INITIAL_RESULT_COUNT,
+    RESULT_COUNT_INCREMENT,
+    actionMenuItems: [
+      'addNew',
+      'exportSelected',
+      'selectAll',
+      'deselectAll',
+    ],
+    visibleColumns: [
+      'selected',
+      'name',
+      'action',
+      'mapping',
+      'tags',
+      'updated',
+      'updatedBy',
+    ],
+    columnWidths: {
+      selected: 40,
+      name: 200,
+      action: 200,
+      mapping: 150,
+      tags: 150,
+      updated: 150,
+      updatedBy: 250,
+    },
+    initialValues: {
+      name: '',
+      description: '',
+    },
+    RecordView: ViewActionProfile,
+    RecordForm: ActionProfilesForm,
   };
 
-  calloutRef = createRef();
-
-  getDeleteRecordSuccessfulMessage(record) {
-    return (
-      <FormattedMessage
-        id="ui-data-import.settings.actionProfiles.action.success"
-        values={{
-          name: record.name,
-          action: (
-            <FormattedMessage
-              id="ui-data-import.deleted"
-              tagName="strong"
-            />
-          ),
-        }}
-      />
-    );
-  }
-
-  getDeleteRecordErrorMessage(record) {
-    return (
-      <FormattedMessage
-        id="ui-data-import.settings.actionProfiles.action.error"
-        values={{
-          name: record.name,
-          action: (
-            <FormattedMessage
-              id="ui-data-import.deleted"
-              tagName="strong"
-            />
-          ),
-        }}
-      />
-    );
-  }
-
-  getRecordName(record) {
-    return record.name;
-  }
-
-  onUpdateRecordError = createUpdateRecordErrorMessage({
-    getRecordName: this.getRecordName,
-    calloutRef: this.calloutRef,
-  });
-
-  onDeleteSuccessCallout = createDeleteCallout({
-    getMessage: this.getDeleteRecordSuccessfulMessage,
-    calloutRef: this.calloutRef,
-  });
-
-  onDeleteSuccess = record => {
+  renderHeaders = intl => {
     const {
       checkboxList: {
-        selectRecord,
-        selectedRecords,
-      },
-    } = this.props;
-
-    this.onDeleteSuccessCallout(record);
-    deselectOnDelete({
-      recordId: record.id,
-      selectRecord,
-      selectedRecords,
-    });
-  };
-
-  onDeleteErrorCallout = createDeleteCallout({
-    getMessage: this.getDeleteRecordErrorMessage,
-    calloutRef: this.calloutRef,
-    type: 'error',
-  });
-
-  onDeleteError = (record, error) => {
-    if (error.status === 409) {
-      this.setState({ showExceptionModal: true });
-
-      return;
-    }
-
-    this.onDeleteErrorCallout(record);
-  };
-
-  handleCloseExceptionModal = () => this.setState({ showExceptionModal: false });
-
-  defaultNewRecordInitialValues = {
-    name: '',
-    description: '',
-    // TODO: remove hardcoded `folioRecord` and `action` fields
-    // when https://issues.folio.org/browse/UIDATIMP-207 is done
-    folioRecord: 'MARC_BIBLIOGRAPHIC',
-    action: 'CREATE',
-  };
-
-  get actionProfiles() {
-    return get(this.props, ['resources', 'actionProfiles', 'records'], []);
-  }
-
-  renderActionMenu = menu => (
-    <ActionMenu
-      entity={this}
-      menu={menu}
-    />
-  );
-
-  render() {
-    const {
-      resources,
-      mutator,
-      label,
-      location,
-      location: { search },
-      history,
-      match,
-      showSingleResult,
-      selectedActionProfile,
-      checkboxList: {
-        selectedRecords,
         isAllSelected,
-        selectRecord,
-        deselectAll,
         handleSelectAllCheckbox,
       },
     } = this.props;
-    const { showExceptionModal } = this.state;
 
-    const urlQuery = queryString.parse(search);
-    const searchTerm = trimSearchTerm(urlQuery.query);
+    return ({
+      selected: (
+        <CheckboxHeader
+          checked={isAllSelected}
+          onChange={handleSelectAllCheckbox}
+        />
+      ),
+      name: intl.formatMessage({ id: 'ui-data-import.name' }),
+      action: intl.formatMessage({ id: 'ui-data-import.action' }),
+      mapping: intl.formatMessage({ id: 'ui-data-import.mapping' }),
+      tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
+      updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
+      updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
+    });
+  };
 
-    return (
-      <IntlConsumer>
-        {intl => (
-          <SettingPage
-            finishedResourceName={finishedResourceName}
-            mutator={mutator}
-            location={location}
-            history={history}
-            match={match}
-            onUpdateRecordError={this.onUpdateRecordError}
-            onDeleteSuccess={this.onDeleteSuccess}
-            onDeleteError={this.onDeleteError}
-          >
-            {props => (
-              <Fragment>
-                <SearchAndSort
-                  objectName="action-profiles"
-                  finishedResourceName={finishedResourceName}
-                  parentResources={resources}
-                  parentMutator={mutator}
-                  initialResultCount={INITIAL_RESULT_COUNT}
-                  resultCountIncrement={RESULT_COUNT_INCREMENT}
-                  searchLabelKey="ui-data-import.settings.actionProfiles.title"
-                  resultCountMessageKey="ui-data-import.settings.actionProfiles.count"
-                  resultsLabel={label}
-                  defaultSort="name"
-                  actionMenu={this.renderActionMenu}
-                  resultsFormatter={listTemplate({
-                    entityKey: this.entityKey,
-                    searchTerm,
-                    selectRecord,
-                    selectedRecords,
-                  })}
-                  visibleColumns={this.visibleColumns}
-                  columnMapping={{
-                    selected: (
-                      <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-                        role="button"
-                        tabIndex="0"
-                        className={sharedCss.selectableCellButton}
-                        data-test-select-all-checkbox
-                        onClick={e => e.stopPropagation()}
-                      >
-                        <Checkbox
-                          name="selected-all"
-                          checked={isAllSelected}
-                          onChange={handleSelectAllCheckbox}
-                        />
-                      </div>
-                    ),
-                    name: intl.formatMessage({ id: 'ui-data-import.name' }),
-                    action: intl.formatMessage({ id: 'ui-data-import.action' }),
-                    mapping: intl.formatMessage({ id: 'ui-data-import.mapping' }),
-                    tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-                    updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-                    updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
-                  }}
-                  columnWidths={this.columnWidths}
-                  ViewRecordComponent={ViewActionProfile}
-                  EditRecordComponent={ActionProfilesForm}
-                  newRecordInitialValues={this.defaultNewRecordInitialValues}
-                  editRecordInitialValues={selectedActionProfile.record}
-                  editRecordInitialValuesAreLoaded={selectedActionProfile.hasLoaded}
-                  showSingleResult={showSingleResult}
-                  onSubmitSearch={deselectAll}
-                  {...props}
-                />
-                <ExceptionModal
-                  id="delete-action-profile-exception-modal"
-                  label={<FormattedMessage id="ui-data-import.settings.actionProfiles.exceptionModal.label" />}
-                  message={<FormattedMessage id="ui-data-import.settings.actionProfiles.exceptionModal.message" />}
-                  showExceptionModal={showExceptionModal}
-                  onClose={this.handleCloseExceptionModal}
-                />
-                <Callout ref={this.calloutRef} />
-              </Fragment>
-            )}
-          </SettingPage>
-        )}
-      </IntlConsumer>
-    );
+  render() {
+    const resultedProps = {
+      ...this.props,
+      renderHeaders: this.renderHeaders,
+    };
+
+    return <ListView {...resultedProps} />;
   }
 }

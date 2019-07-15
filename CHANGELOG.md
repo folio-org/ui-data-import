@@ -34,8 +34,8 @@
 * Create ListTemplate and ColumnTemplate components for declarative definition of EntityList (UIDATIMP-201)
 * Create MenuTemplate and ItemTemplate  components for declarative definition of ActionMenu, create ActionMenu component (UIDATIMP-201)
 * Create Spinner and LastMenu components (UIDATIMP-201)
-* Create LogColorizer and modular CodeHighlight components among with modular language definitions (langJSON and langRAW for now) and 2 highlight themes (light - Coy and dark - Stalker) (UIDATIMP-209)
-* Refine ViewJobLog page component with a new endpoint to show all the log including error ones through LogColorizer component (UIDATIMP-209)
+* Create LogViewer and modular CodeHighlight components among with modular language definitions (langJSON and langRAW for now) and 2 highlight themes (light - Coy and dark - Stalker) (UIDATIMP-209)
+* Refine ViewJobLog page component with a new endpoint to show all the log including error ones through LogViewer component (UIDATIMP-209)
 * Add missing icons for Match Profiles record types (UIDATIMP-194)
 * Implement match profile deletion feature (UIDATIMP-176)
 

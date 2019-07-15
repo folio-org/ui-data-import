@@ -113,9 +113,14 @@ export class SearchAndSort extends Component {
     onCreate: PropTypes.func,
     onEdit: PropTypes.func,
     onDelete: PropTypes.func,
+    onRestoreDefaults: PropTypes.func,
     onSubmitSearch: PropTypes.func,
     handleCreateSuccess: PropTypes.func,
     handleEditSuccess: PropTypes.func,
+    handleDeleteSuccess: PropTypes.func,
+    handleDeleteError: PropTypes.func,
+    handleRestoreSuccess: PropTypes.func,
+    handleRestoreError: PropTypes.func,
     onSelectRow: PropTypes.func,
     path: PropTypes.string,
     searchableIndexes: PropTypes.arrayOf(PropTypes.object),
@@ -139,8 +144,14 @@ export class SearchAndSort extends Component {
     onCreate: noop,
     onEdit: noop,
     onDelete: noop,
+    onRestoreDefaults: noop,
     onSubmitSearch: noop,
     handleCreateSuccess: noop,
+    handleEditSuccess: noop,
+    handleDeleteSuccess: noop,
+    handleDeleteError: noop,
+    handleRestoreSuccess: noop,
+    handleRestoreError: noop,
     massageNewRecord: noop,
     defaultSort: '',
     finishedResourceName: '',
@@ -342,12 +353,38 @@ export class SearchAndSort extends Component {
   };
 
   deleteRecord = async record => {
-    const { onDelete } = this.props;
+    const {
+      onDelete,
+      handleDeleteSuccess,
+      handleDeleteError,
+    } = this.props;
 
-    const deleted = await onDelete(record);
+    const response = await onDelete(record);
 
-    if (deleted) {
+    console.log('Delete Response: ', response);
+
+    if (response.ok) {
       this.setState({ selectedItem: null });
+      handleDeleteSuccess(record);
+    } else {
+      handleDeleteError(record, response);
+    }
+  };
+
+  restoreDefaults = async record => {
+    const {
+      onRestoreDefaults,
+      handleRestoreSuccess,
+      handleRestoreError,
+    } = this.props;
+
+    const response = await onRestoreDefaults(record);
+
+    if (response.ok) {
+      this.setState({ selectedItem: null });
+      handleRestoreSuccess(record);
+    } else {
+      handleRestoreError(record, response);
     }
   };
 

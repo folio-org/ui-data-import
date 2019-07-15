@@ -11,12 +11,12 @@ import {
   HTML_LANG_DIRECTIONS,
   STRING_CAPITALIZATION_EXCLUSIONS,
   STRING_CAPITALIZATION_MODES,
-} from '../../../../utils/constants';
-import { capitalize } from '../../../../utils';
+} from '../../../utils/constants';
+import { capitalize } from '../../../utils';
 
-import { RECORD_TYPES } from '../../recordTypes';
+import { RECORD_TYPES } from '../recordTypes';
 
-import sharedCss from '../../../../shared.css';
+import sharedCss from '../../../shared.css';
 
 export const MatchColumn = memo(props => {
   const {

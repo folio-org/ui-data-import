@@ -9,9 +9,9 @@ import { menuTemplate } from './menuTemplate';
 export const ActionMenu = memo(props => {
   const {
     entity,
+    entity: { props: { actionMenuItems: items } },
     menu,
   } = props;
-  const { actionMenuItems: items } = entity;
 
   const templates = menuTemplate(entity, menu);
 
@@ -23,6 +23,6 @@ export const ActionMenu = memo(props => {
 });
 
 ActionMenu.propTypes = {
-  entity: PropTypes.shape({ actionMenuItems: PropTypes.arrayOf(PropTypes.string).isRequired }).isRequired,
+  entity: PropTypes.shape({ props: PropTypes.shape({ actionMenuItems: PropTypes.arrayOf(PropTypes.string).isRequired }) }).isRequired,
   menu: PropTypes.object.isRequired,
 };

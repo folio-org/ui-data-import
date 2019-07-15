@@ -12,28 +12,28 @@ import {
   Select,
 } from '@folio/stripes/components';
 
-import { LOG_COLORIZER } from '../../utils/constants';
-import { CodeHighlight } from './CodeHighlight';
-import { LANGUAGES } from './Languages';
+import { LOG_VIEWER } from '../../utils/constants';
+import { CodeHighlight } from '../CodeHighlight';
+import { LANGUAGES } from '../CodeHighlight/Languages';
 import {
   THEMES,
   themes,
-} from './Themes';
+} from '../CodeHighlight/Themes';
 
-import css from './LogColorizer.css';
+import css from './LogViewer.css';
 
-const { FILTER: { OPTIONS } } = LOG_COLORIZER;
+const { FILTER: { OPTIONS } } = LOG_VIEWER;
 
 const filterOptions = [
   {
     id: OPTIONS.ALL,
-    caption: 'ui-data-import.logColorizer.filter.all',
+    caption: 'ui-data-import.logViewer.filter.all',
   }, {
     id: OPTIONS.INFO,
-    caption: 'ui-data-import.logColorizer.filter.info',
+    caption: 'ui-data-import.logViewer.filter.info',
   }, {
     id: OPTIONS.ERRORS,
-    caption: 'ui-data-import.logColorizer.filter.errors',
+    caption: 'ui-data-import.logViewer.filter.errors',
   },
 ];
 const themesPresent = [
@@ -46,7 +46,7 @@ const themesPresent = [
   },
 ];
 
-export const LogColorizer = memo(props => {
+export const LogViewer = memo(props => {
   const {
     code,
     language,
@@ -96,7 +96,7 @@ export const LogColorizer = memo(props => {
           <div className={css.header}>{message}&nbsp;{entries}&nbsp;{(errorsCount > 0) && errors}</div>
           <div className={css.filter}>
             <span className={css.filter__label}>
-              <FormattedMessage id="ui-data-import.logColorizer.filter.label" />:
+              <FormattedMessage id="ui-data-import.logViewer.filter.label" />:
             </span>
             <ButtonGroup
               data-test-logs-filter
@@ -123,7 +123,7 @@ export const LogColorizer = memo(props => {
           {showThemes && (
             <div className={css.themes}>
               <span className={css.themes__label}>
-                <FormattedMessage id="ui-data-import.logColorizer.themes.label" />:
+                <FormattedMessage id="ui-data-import.logViewer.themes.label" />:
               </span>
               <Select
                 onChange={e => setCurrentTheme(e.target.value)}
@@ -169,7 +169,7 @@ export const LogColorizer = memo(props => {
   );
 });
 
-LogColorizer.propTypes = {
+LogViewer.propTypes = {
   code: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
   language: PropTypes.string,
   theme: PropTypes.string,
@@ -181,7 +181,7 @@ LogColorizer.propTypes = {
   }),
 };
 
-LogColorizer.defaultProps = {
+LogViewer.defaultProps = {
   code: '',
   language: LANGUAGES.RAW,
   theme: THEMES.COY,
