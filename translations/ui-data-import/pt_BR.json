@@ -172,5 +172,7 @@
     "settings.actionProfiles.exceptionModal.label": "Não é possível excluir o perfil de ação",
     "settings.actionProfiles.action.success": "O perfil de ação \"{name}\" foi com êxito {action}",
     "settings.actionProfiles.action.error": "O perfil de ação \"{name}\" não foi {action}",
-    "settings.actionProfiles.exceptionModal.message": "Este perfil de ação não pode ser excluído, pois está em uso por um ou mais perfis de mapeamento de trabalho ou campo"
+    "settings.actionProfiles.exceptionModal.message": "Este perfil de ação não pode ser excluído, pois está em uso por um ou mais perfis de mapeamento de trabalho ou campo",
+    "mapped": "Mapeado",
+    "settings.mappingProfiles.count": "{count, number} mapeamento {count, plural, one {perfil} other {perfis}}"
 }

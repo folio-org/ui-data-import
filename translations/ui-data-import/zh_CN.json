@@ -172,5 +172,7 @@
     "settings.actionProfiles.exceptionModal.label": "Cannot delete action profile",
     "settings.actionProfiles.action.success": "The action profile \"{name}\" was successfully {action}",
     "settings.actionProfiles.action.error": "The action profile \"{name}\" was not {action}",
-    "settings.actionProfiles.exceptionModal.message": "This action profile cannot be deleted, as it is in use by one or more job or field mapping profiles"
+    "settings.actionProfiles.exceptionModal.message": "This action profile cannot be deleted, as it is in use by one or more job or field mapping profiles",
+    "mapped": "Mapped",
+    "settings.mappingProfiles.count": "{count, number} mapping {count, plural, one {profile} other {profiles}}"
 }

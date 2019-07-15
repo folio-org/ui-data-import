@@ -172,5 +172,7 @@
     "settings.actionProfiles.exceptionModal.label": "لا يمكن حذف وضع الإجراء",
     "settings.actionProfiles.action.success": "تم {action} وضع الإجراء \"{name}\"  بنجاح",
     "settings.actionProfiles.action.error": "لم يتم {action} وضع الإجراء \"{name}\"",
-    "settings.actionProfiles.exceptionModal.message": "لا يمكن حذف وضع الأجراء لأنه قيد استخدام أحد أوضاع الوظائف أو التخطيط أو أكثر."
+    "settings.actionProfiles.exceptionModal.message": "لا يمكن حذف وضع الأجراء لأنه قيد استخدام أحد أوضاع الوظائف أو التخطيط أو أكثر.",
+    "mapped": "تخطيط",
+    "settings.mappingProfiles.count": "{count, number} تخطيط {count, plural, one {وضعًا} other {وضعًا}}"
 }
