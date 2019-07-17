@@ -14,15 +14,13 @@ import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/i
   restoreDefaultFileExtensionsButton = new ButtonInteractor('[data-test-restore-default-file-extensions-button]');
   newFileExtensionButton = new ButtonInteractor('[data-test-new-button]');
   list = new MultiColumnListInteractor('#file-extensions-list');
-  confirmationModal = new ConfirmationModalInteractor('#restore-default-file-extensions-modal');
+  confirmationModal = new ConfirmationModalInteractor('#restore-default-records-modal');
   callout = new CalloutInteractor();
   searchFiled = new TextFieldInteractor('#input-file-extensions-search');
   searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
 
   expandPaneHeaderDropdown() {
-    return this
-      .paneHeaderDropdown
-      .click();
+    return this.paneHeaderDropdown.click();
   }
 }
 

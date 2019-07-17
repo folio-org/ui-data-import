@@ -17,8 +17,8 @@ import {
  */
 export const menuTemplate = (entity, menu) => {
   const {
-    entityKey,
     props: {
+      ENTITY_KEY,
       checkboxList,
       location,
     },
@@ -28,7 +28,7 @@ export const menuTemplate = (entity, menu) => {
     addNew: key => (
       <LinkTo
         key={key}
-        caption={`ui-data-import.settings.${entityKey}.new`}
+        caption={`ui-data-import.settings.${ENTITY_KEY}.new`}
         icon="plus-sign"
         menu={menu}
         location={createLayerURL(location, LAYER_TYPES.CREATE)}
@@ -121,10 +121,10 @@ export const menuTemplate = (entity, menu) => {
         />
       );
     },
-    restoreDefault: key => {
-      const handleRestoreDefaultFileExtensions = () => {
+    restoreDefaults: key => {
+      const handleRestoreDefaults = () => {
         menu.onToggle();
-        entity.showRestoreDefaultFileExtensionsModal();
+        entity.showRestoreConfirmation();
       };
 
       return (
@@ -133,7 +133,7 @@ export const menuTemplate = (entity, menu) => {
           caption="ui-data-import.settings.fileExtensions.reset"
           icon="replace"
           dataAttributes={{ 'data-test-restore-default-file-extensions-button': '' }}
-          onClick={handleRestoreDefaultFileExtensions}
+          onClick={handleRestoreDefaults}
         />
       );
     },

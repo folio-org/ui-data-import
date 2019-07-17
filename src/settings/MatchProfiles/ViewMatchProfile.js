@@ -99,9 +99,19 @@ export class ViewMatchProfile extends Component {
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string,
+    ENTITY_KEY: PropTypes.string, // eslint-disable-line
+    actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   };
 
-  static defaultProps = { paneId: 'pane-match-profile-details' };
+  static defaultProps = {
+    paneId: 'pane-match-profile-details',
+    ENTITY_KEY: ENTITY_KEYS.MATCH_PROFILES,
+    actionMenuItems: [
+      'edit',
+      'duplicate',
+      'delete',
+    ],
+  };
 
   state = {
     deletionInProgress: false,
@@ -119,14 +129,6 @@ export class ViewMatchProfile extends Component {
       this.setList();
     }
   }
-
-  entityKey = ENTITY_KEYS.MATCH_PROFILES;
-
-  actionMenuItems = [
-    'edit',
-    'duplicate',
-    'delete',
-  ];
 
   visibleColumns = [
     'selected',

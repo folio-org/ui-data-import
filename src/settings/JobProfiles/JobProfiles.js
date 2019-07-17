@@ -1,65 +1,40 @@
-import React, {
-  Component,
-  Fragment,
-  createRef,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   get,
   omit,
 } from 'lodash';
 
-import {
-  IntlConsumer,
-  stripesConnect,
-} from '@folio/stripes/core';
+import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
-import {
-  Checkbox,
-  Callout,
-} from '@folio/stripes/components';
 
 import {
-  ActionMenu,
-  listTemplate,
-  JobProfilesForm,
-  SearchAndSort,
-} from '../../components';
-import { ViewJobProfile } from './ViewJobProfile';
-import {
-  createDeleteCallout,
-  createUpdateRecordErrorMessage,
-  SettingPage,
-  deselectOnDelete,
-} from '../SettingPage';
-import {
-  trimSearchTerm,
   withCheckboxList,
   checkboxListShape,
 } from '../../utils';
 import { ENTITY_KEYS } from '../../utils/constants';
+import { ListView } from '../../components/ListView';
+import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
 
-import sharedCss from '../../shared.css';
+import { ViewJobProfile } from './ViewJobProfile';
+import { JobProfilesForm } from './JobProfilesForm';
 
 // big numbers to get rid of infinite scroll
 const INITIAL_RESULT_COUNT = 5000;
 const RESULT_COUNT_INCREMENT = 5000;
-const finishedResourceName = 'jobProfiles';
 
 const mapStateToProps = state => {
   const {
     hasLoaded = false,
     records: [record = {}] = [],
   } = get(state, 'folio_data_import_job_profile', {});
-  const selectedJobProfile = {
+  const selectedRecord = {
     hasLoaded,
     record: omit(record, 'metadata', 'userInfo'),
   };
 
-  return { selectedJobProfile };
+  return { selectedRecord };
 };
 
 @withCheckboxList
@@ -109,240 +84,85 @@ export class JobProfiles extends Component {
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,
-    selectedJobProfile: PropTypes.object.isRequired,
+    selectedRecord: PropTypes.object.isRequired,
     checkboxList: checkboxListShape.isRequired,
     setList: PropTypes.func.isRequired,
     showSingleResult: PropTypes.bool,
+    objectName: PropTypes.string,
+    ENTITY_KEY: PropTypes.string,
+    RecordView: PropTypes.func,
+    RecordForm: PropTypes.func,
+    INITIAL_RESULT_COUNT: PropTypes.number,
+    RESULT_COUNT_INCREMENT: PropTypes.number,
+    actionMenuItems: PropTypes.arrayOf(PropTypes.string),
+    visibleColumns: PropTypes.arrayOf(PropTypes.string),
+    columnWidths: PropTypes.object,
+    initialValues: PropTypes.object,
   };
 
-  static defaultProps = { showSingleResult: true };
-
-  componentDidMount() {
-    this.setList();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { resources } = this.props;
-
-    if (prevProps.resources !== resources) {
-      this.setList();
-    }
-  }
-
-  calloutRef = createRef();
-
-  setList() {
-    const { setList } = this.props;
-
-    setList(this.jobProfiles);
-  }
-
-  entityKey = ENTITY_KEYS.JOB_PROFILES;
-
-  actionMenuItems = [
-    'addNew',
-    'exportSelected',
-    'selectAll',
-    'deselectAll',
-  ];
-
-  visibleColumns = [
-    'selected',
-    'name',
-    'tags',
-    'updated',
-    'updatedBy',
-  ];
-
-  columnWidths = {
-    selected: 40,
-    name: 200,
-    tags: 150,
-    updated: 150,
-    updatedBy: 250,
+  static defaultProps = {
+    showSingleResult: true,
+    objectName: 'job-profiles',
+    ENTITY_KEY: ENTITY_KEYS.JOB_PROFILES,
+    INITIAL_RESULT_COUNT,
+    RESULT_COUNT_INCREMENT,
+    actionMenuItems: [
+      'addNew',
+      'exportSelected',
+      'selectAll',
+      'deselectAll',
+    ],
+    visibleColumns: [
+      'selected',
+      'name',
+      'tags',
+      'updated',
+      'updatedBy',
+    ],
+    columnWidths: {
+      selected: 40,
+      name: 200,
+      tags: 150,
+      updated: 150,
+      updatedBy: 250,
+    },
+    initialValues: {
+      name: '',
+      description: '',
+      dataType: '',
+    },
+    RecordView: ViewJobProfile,
+    RecordForm: JobProfilesForm,
   };
 
-  defaultNewRecordInitialValues = {
-    name: '',
-    description: '',
-    dataType: '',
-  };
-
-  getDeleteRecordSuccessfulMessage(record) {
-    return (
-      <FormattedMessage
-        id="ui-data-import.settings.jobProfiles.action.success"
-        values={{
-          name: record.name,
-          action: (
-            <FormattedMessage
-              tagName="strong"
-              id="ui-data-import.deleted"
-            />
-          ),
-        }}
-      />
-    );
-  }
-
-  getDeleteRecordErrorMessage(record) {
-    return (
-      <FormattedMessage
-        id="ui-data-import.settings.jobProfiles.action.error"
-        values={{
-          name: record.name,
-          action: (
-            <FormattedMessage
-              tagName="strong"
-              id="ui-data-import.deleted"
-            />
-          ),
-        }}
-      />
-    );
-  }
-
-  getRecordName(record) {
-    return record.name;
-  }
-
-  renderActionMenu = menu => (
-    <ActionMenu
-      entity={this}
-      menu={menu}
-    />
-  );
-
-  get jobProfiles() {
-    return get(this.props.resources, ['jobProfiles', 'records'], []);
-  }
-
-  onUpdateRecordError = createUpdateRecordErrorMessage({
-    getRecordName: this.getRecordName,
-    calloutRef: this.calloutRef,
-  });
-
-  onDeleteSuccessCallout = createDeleteCallout({
-    getMessage: this.getDeleteRecordSuccessfulMessage,
-    calloutRef: this.calloutRef,
-  });
-
-  onDeleteSuccess = record => {
+  renderHeaders = intl => {
     const {
       checkboxList: {
-        selectRecord,
-        selectedRecords,
-      },
-    } = this.props;
-
-    this.onDeleteSuccessCallout(record);
-    deselectOnDelete({
-      recordId: record.id,
-      selectRecord,
-      selectedRecords,
-    });
-  };
-
-  onDeleteError = createDeleteCallout({
-    getMessage: this.getDeleteRecordErrorMessage,
-    calloutRef: this.calloutRef,
-    type: 'error',
-  });
-
-  render() {
-    const {
-      resources,
-      mutator,
-      location: { search },
-      label,
-      location,
-      history,
-      match,
-      showSingleResult,
-      selectedJobProfile,
-      checkboxList: {
-        selectedRecords,
         isAllSelected,
-        selectRecord,
-        deselectAll,
         handleSelectAllCheckbox,
       },
     } = this.props;
 
-    const urlQuery = queryString.parse(search);
-    const searchTerm = trimSearchTerm(urlQuery.query);
+    return ({
+      selected: (
+        <CheckboxHeader
+          checked={isAllSelected}
+          onChange={handleSelectAllCheckbox}
+        />
+      ),
+      name: intl.formatMessage({ id: 'ui-data-import.name' }),
+      tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
+      updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
+      updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
+    });
+  };
 
-    return (
-      <IntlConsumer>
-        {intl => (
-          <SettingPage
-            finishedResourceName={finishedResourceName}
-            mutator={mutator}
-            location={location}
-            history={history}
-            match={match}
-            onUpdateRecordError={this.onUpdateRecordError}
-            onDeleteSuccess={this.onDeleteSuccess}
-            onDeleteError={this.onDeleteError}
-          >
-            {props => (
-              <Fragment>
-                <SearchAndSort
-                  objectName="job-profiles"
-                  finishedResourceName={finishedResourceName}
-                  parentResources={resources}
-                  parentMutator={mutator}
-                  initialResultCount={INITIAL_RESULT_COUNT}
-                  resultCountIncrement={RESULT_COUNT_INCREMENT}
-                  searchLabelKey="ui-data-import.settings.jobProfiles.title"
-                  resultCountMessageKey="ui-data-import.settings.jobProfiles.count"
-                  resultsLabel={label}
-                  defaultSort="name"
-                  actionMenu={this.renderActionMenu}
-                  resultsFormatter={listTemplate({
-                    entityKey: this.entityKey,
-                    searchTerm,
-                    selectRecord,
-                    selectedRecords,
-                  })}
-                  visibleColumns={this.visibleColumns}
-                  columnMapping={{
-                    selected: (
-                      <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-                        role="button"
-                        tabIndex="0"
-                        className={sharedCss.selectableCellButton}
-                        data-test-select-all-checkbox
-                        onClick={e => e.stopPropagation()}
-                      >
-                        <Checkbox
-                          name="selected-all"
-                          checked={isAllSelected}
-                          onChange={handleSelectAllCheckbox}
-                        />
-                      </div>
-                    ),
-                    name: intl.formatMessage({ id: 'ui-data-import.name' }),
-                    tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-                    updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-                    updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
-                  }}
-                  columnWidths={this.columnWidths}
-                  ViewRecordComponent={ViewJobProfile}
-                  EditRecordComponent={JobProfilesForm}
-                  newRecordInitialValues={this.defaultNewRecordInitialValues}
-                  editRecordInitialValues={selectedJobProfile.record}
-                  editRecordInitialValuesAreLoaded={selectedJobProfile.hasLoaded}
-                  showSingleResult={showSingleResult}
-                  onSubmitSearch={deselectAll}
-                  {...props}
-                />
-                <Callout ref={this.calloutRef} />
-              </Fragment>
-            )}
-          </SettingPage>
-        )}
-      </IntlConsumer>
-    );
+  render() {
+    const resultedProps = {
+      ...this.props,
+      renderHeaders: this.renderHeaders,
+    };
+
+    return <ListView {...resultedProps} />;
   }
 }

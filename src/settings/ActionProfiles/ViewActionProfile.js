@@ -115,9 +115,19 @@ export class ViewActionProfile extends Component {
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string,
+    ENTITY_KEY: PropTypes.string, // eslint-disable-line
+    actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   };
 
-  static defaultProps = { paneId: 'pane-action-profile-details' };
+  static defaultProps = {
+    paneId: 'pane-action-profile-details',
+    ENTITY_KEY: ENTITY_KEYS.ACTION_PROFILES,
+    actionMenuItems: [
+      'edit',
+      'duplicate',
+      'delete',
+    ],
+  };
 
   state = {
     deletionInProgress: false,
@@ -135,14 +145,6 @@ export class ViewActionProfile extends Component {
       this.setList();
     }
   }
-
-  entityKey = ENTITY_KEYS.ACTION_PROFILES;
-
-  actionMenuItems = [
-    'edit',
-    'duplicate',
-    'delete',
-  ];
 
   associatedJobProfilesVisibleColumns = [
     'selected',

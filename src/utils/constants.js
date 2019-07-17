@@ -65,7 +65,7 @@ export const ENTITY_KEYS = {
   MAPPING_PROFILES: 'mappingProfiles',
 };
 
-export const LOG_COLORIZER = {
+export const LOG_VIEWER = {
   FILTER: {
     OPTIONS: {
       ALL: 0,

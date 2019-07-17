@@ -22,7 +22,7 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
   searchSubmitButtonDisabled = property('[data-test-search-and-sort-submit]', 'disabled');
   newMatchProfileButton = new ButtonInteractor('[data-test-new-button]');
-  exceptionModal = new ModalInteractor('#delete-match-profile-exception-modal');
+  exceptionModal = new ModalInteractor('#delete-matchProfiles-exception-modal');
   exceptionModalCloseButton = new ButtonInteractor('[data-test-exception-modal-close-button]');
 }
 

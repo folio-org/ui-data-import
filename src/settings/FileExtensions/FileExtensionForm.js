@@ -19,7 +19,7 @@ import {
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
-import { FullScreenForm } from '../FullScreenForm';
+import { FullScreenForm } from '../../components/FullScreenForm';
 import {
   validateDataTypes,
   validateFileExtension,

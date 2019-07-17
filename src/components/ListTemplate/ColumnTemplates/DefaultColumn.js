@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { AppIcon } from '@folio/stripes/core';
 
-import sharedCss from '../../../../shared.css';
+import sharedCss from '../../../shared.css';
 
 export const DefaultColumn = memo(props => {
   const {

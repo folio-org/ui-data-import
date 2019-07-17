@@ -1,45 +1,44 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import {
   get,
-  noop,
+  omit,
 } from 'lodash';
 
-import {
-  IntlConsumer,
-  stripesConnect,
-} from '@folio/stripes/core';
+import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
-import { Checkbox } from '@folio/stripes/components';
 
 import {
-  listTemplate,
-  SearchAndSort,
-} from '../../components';
-import { ViewMappingProfile } from './ViewMappingProfile';
-import { SettingPage } from '../SettingPage';
-import {
-  trimSearchTerm,
   withCheckboxList,
   checkboxListShape,
 } from '../../utils';
 import { ENTITY_KEYS } from '../../utils/constants';
-
-import sharedCss from '../../shared.css';
+import { ListView } from '../../components';
+import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
+import { ViewMappingProfile } from './ViewMappingProfile';
+// import { MappingProfilesForm } from 'MappingProfilesForm';
 
 // big numbers to get rid of infinite scroll
 const INITIAL_RESULT_COUNT = 5000;
 const RESULT_COUNT_INCREMENT = 5000;
-const finishedResourceName = 'mappingProfiles';
 const queryTemplate = `(
   name="%{query.query}*" OR
   mapped="%{query.query}*" OR
   tags.tagList="%{query.query}*"
 )`;
+
+const mapStateToProps = state => {
+  const {
+    hasLoaded = false,
+    records: [record = {}] = [],
+  } = get(state, 'folio_data_import_mapping_profile', {});
+  const selectedRecord = {
+    hasLoaded,
+    record: omit(record, 'metadata', 'userInfo'),
+  };
+
+  return { selectedRecord };
+};
 
 @withCheckboxList
 @stripesConnect
@@ -88,142 +87,87 @@ export class MappingProfiles extends Component {
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,
+    selectedRecord: PropTypes.object.isRequired,
     checkboxList: checkboxListShape.isRequired,
     setList: PropTypes.func.isRequired,
     showSingleResult: PropTypes.bool,
+    objectName: PropTypes.string,
+    ENTITY_KEY: PropTypes.string,
+    RecordView: PropTypes.func,
+    RecordForm: PropTypes.func,
+    INITIAL_RESULT_COUNT: PropTypes.number,
+    RESULT_COUNT_INCREMENT: PropTypes.number,
+    actionMenuItems: PropTypes.arrayOf(PropTypes.string),
+    visibleColumns: PropTypes.arrayOf(PropTypes.string),
+    columnWidths: PropTypes.object,
+    initialValues: PropTypes.object,
   };
 
-  static defaultProps = { showSingleResult: true };
-
-  componentDidMount() {
-    this.setList();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { resources } = this.props;
-
-    if (prevProps.resources !== resources) {
-      this.setList();
-    }
-  }
-
-  setList() {
-    const { setList } = this.props;
-
-    setList(this.mappingProfiles);
-  }
-
-  entityKey = ENTITY_KEYS.MAPPING_PROFILES;
-
-  visibleColumns = [
-    'selected',
-    'name',
-    'mapped',
-    'tags',
-    'updated',
-    'updatedBy',
-  ];
-
-  columnWidths = {
-    selected: 40,
-    name: 200,
-    mapped: 100,
-    tags: 150,
-    updated: 150,
-    updatedBy: 250,
+  static defaultProps = {
+    showSingleResult: true,
+    objectName: 'mapping-profiles',
+    ENTITY_KEY: ENTITY_KEYS.MAPPING_PROFILES,
+    INITIAL_RESULT_COUNT,
+    RESULT_COUNT_INCREMENT,
+    actionMenuItems: [
+      'addNew',
+      'exportSelected',
+      'selectAll',
+      'deselectAll',
+    ],
+    visibleColumns: [
+      'selected',
+      'name',
+      'mapped',
+      'tags',
+      'updated',
+      'updatedBy',
+    ],
+    columnWidths: {
+      selected: 40,
+      name: 200,
+      mapped: 100,
+      tags: 150,
+      updated: 150,
+      updatedBy: 250,
+    },
+    initialValues: {
+      name: '',
+      description: '',
+    },
+    RecordView: ViewMappingProfile,
+    // RecordForm: ActionProfilesForm,
   };
 
-  get mappingProfiles() {
-    return get(this.props, ['resources', 'mappingProfiles', 'records'], []);
-  }
-
-  render() {
+  renderHeaders = intl => {
     const {
-      resources,
-      mutator,
-      label,
-      location,
-      location: { search },
-      history,
-      match,
-      showSingleResult,
       checkboxList: {
-        selectedRecords,
         isAllSelected,
-        selectRecord,
         handleSelectAllCheckbox,
       },
     } = this.props;
 
-    const urlQuery = queryString.parse(search);
-    const searchTerm = trimSearchTerm(urlQuery.query);
+    return ({
+      selected: (
+        <CheckboxHeader
+          checked={isAllSelected}
+          onChange={handleSelectAllCheckbox}
+        />
+      ),
+      name: intl.formatMessage({ id: 'ui-data-import.name' }),
+      mapped: intl.formatMessage({ id: 'ui-data-import.mapped' }),
+      tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
+      updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
+      updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
+    });
+  };
 
-    return (
-      <IntlConsumer>
-        {intl => (
-          <SettingPage
-            finishedResourceName={finishedResourceName}
-            mutator={mutator}
-            location={location}
-            history={history}
-            match={match}
-            onUpdateRecordError={noop}
-            onDeleteSuccess={noop}
-            onDeleteError={noop}
-          >
-            {props => (
-              <Fragment>
-                <SearchAndSort
-                  objectName="mapping-profiles"
-                  finishedResourceName={finishedResourceName}
-                  parentResources={resources}
-                  parentMutator={mutator}
-                  initialResultCount={INITIAL_RESULT_COUNT}
-                  resultCountIncrement={RESULT_COUNT_INCREMENT}
-                  searchLabelKey="ui-data-import.settings.mappingProfiles.title"
-                  resultCountMessageKey="ui-data-import.settings.mappingProfiles.count"
-                  resultsLabel={label}
-                  defaultSort="name"
-                  actionMenu={noop}
-                  resultsFormatter={listTemplate({
-                    entityKey: this.entityKey,
-                    searchTerm,
-                    selectRecord,
-                    selectedRecords,
-                  })}
-                  visibleColumns={this.visibleColumns}
-                  columnMapping={{
-                    selected: (
-                      <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-                        role="button"
-                        tabIndex="0"
-                        className={sharedCss.selectableCellButton}
-                        data-test-select-all-checkbox
-                        onClick={e => e.stopPropagation()}
-                      >
-                        <Checkbox
-                          name="selected-all"
-                          checked={isAllSelected}
-                          onChange={handleSelectAllCheckbox}
-                        />
-                      </div>
-                    ),
-                    name: intl.formatMessage({ id: 'ui-data-import.name' }),
-                    mapped: intl.formatMessage({ id: 'ui-data-import.mapped' }),
-                    tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-                    updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-                    updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
-                  }}
-                  columnWidths={this.columnWidths}
-                  ViewRecordComponent={ViewMappingProfile}
-                  showSingleResult={showSingleResult}
-                  {...props}
-                />
-              </Fragment>
-            )}
-          </SettingPage>
-        )}
-      </IntlConsumer>
-    );
+  render() {
+    const resultedProps = {
+      ...this.props,
+      renderHeaders: this.renderHeaders,
+    };
+
+    return <ListView {...resultedProps} />;
   }
 }

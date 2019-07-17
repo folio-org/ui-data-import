@@ -98,9 +98,19 @@ export class ViewJobProfile extends Component {
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string, // eslint-disable-line
+    ENTITY_KEY: PropTypes.string, // eslint-disable-line
+    actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   };
 
-  static defaultProps = { paneId: 'pane-job-profile-details' };
+  static defaultProps = {
+    paneId: 'pane-job-profile-details',
+    ENTITY_KEY: ENTITY_KEYS.JOB_PROFILES,
+    actionMenuItems: [
+      'edit',
+      'duplicate',
+      'delete',
+    ],
+  };
 
   state = {
     showDeleteConfirmation: false,
@@ -130,14 +140,6 @@ export class ViewJobProfile extends Component {
       jobsUsingThisProfileData,
     };
   }
-
-  entityKey = ENTITY_KEYS.JOB_PROFILES;
-
-  actionMenuItems = [
-    'edit',
-    'duplicate',
-    'delete',
-  ];
 
   showDeleteConfirmation = () => {
     this.setState({ showDeleteConfirmation: true });

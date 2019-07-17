@@ -5,11 +5,11 @@ import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 
 import { Preloader } from '../components/Preloader';
-import { LogColorizer } from '../components/CodeHighlight';
+import { LogViewer } from '../components/LogViewer';
 import { LANGUAGES } from '../components/CodeHighlight/Languages';
 import { THEMES } from '../components/CodeHighlight/Themes';
 
-import css from '../components/CodeHighlight/LogColorizer.css';
+import css from '../components/LogViewer/LogViewer.css';
 
 @stripesConnect
 export class ViewJobLog extends Component {
@@ -81,7 +81,7 @@ export class ViewJobLog extends Component {
 
     return (
       <div id="job-log-colorizer">
-        <LogColorizer
+        <LogViewer
           code={records}
           language={LANGUAGES.JSON}
           theme={THEMES.COY}
