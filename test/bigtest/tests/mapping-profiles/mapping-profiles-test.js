@@ -46,7 +46,7 @@ describe('Mapping profiles', () => {
 
     it('has proper columns order', () => {
       expect(mappingProfiles.list.headers(1).text).to.equal(translation.name);
-      expect(mappingProfiles.list.headers(2).text).to.equal(translation.mapped);
+      expect(mappingProfiles.list.headers(2).text).to.equal(translation.folioRecordType);
       expect(mappingProfiles.list.headers(3).text).to.equal(translation.tags);
       expect(mappingProfiles.list.headers(4).text).to.equal(translation.updated);
       expect(mappingProfiles.list.headers(5).text).to.equal(translation.updatedBy);

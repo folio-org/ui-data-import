@@ -42,6 +42,7 @@ import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
+  PROFILE_TYPES,
 } from '../../utils/constants';
 import {
   Spinner,
@@ -70,8 +71,8 @@ export class ViewActionProfile extends Component {
       path: createUrl(
         'data-import-profiles/profileAssociations/:{id}/details',
         {
-          detailType: 'MAPPING_PROFILE',
-          masterType: 'ACTION_PROFILE',
+          detailType: PROFILE_TYPES.MAPPING_PROFILE,
+          masterType: PROFILE_TYPES.ACTION_PROFILE,
           limit: 1,
         },
         false,
@@ -83,8 +84,8 @@ export class ViewActionProfile extends Component {
       path: createUrl(
         'data-import-profiles/profileAssociations/:{id}/masters',
         {
-          detailType: 'ACTION_PROFILE',
-          masterType: 'JOB_PROFILE',
+          detailType: PROFILE_TYPES.ACTION_PROFILE,
+          masterType: PROFILE_TYPES.JOB_PROFILE,
           query: 'cql.allRecords=1 sortBy name/ascending',
         },
         false,

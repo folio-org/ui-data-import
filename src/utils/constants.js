@@ -65,6 +65,13 @@ export const ENTITY_KEYS = {
   MAPPING_PROFILES: 'mappingProfiles',
 };
 
+export const PROFILE_TYPES = {
+  JOB_PROFILE: 'JOB_PROFILE',
+  MATCH_PROFILE: 'MATCH_PROFILE',
+  ACTION_PROFILE: 'ACTION_PROFILE',
+  MAPPING_PROFILE: 'MAPPING_PROFILE',
+};
+
 export const LOG_VIEWER = {
   FILTER: {
     OPTIONS: {

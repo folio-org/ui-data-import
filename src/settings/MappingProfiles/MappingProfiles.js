@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   get,
   omit,
@@ -16,14 +17,13 @@ import { ENTITY_KEYS } from '../../utils/constants';
 import { ListView } from '../../components';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
 import { ViewMappingProfile } from './ViewMappingProfile';
-// import { MappingProfilesForm } from 'MappingProfilesForm';
 
 // big numbers to get rid of infinite scroll
 const INITIAL_RESULT_COUNT = 5000;
 const RESULT_COUNT_INCREMENT = 5000;
 const queryTemplate = `(
   name="%{query.query}*" OR
-  mapped="%{query.query}*" OR
+  folioRecord="%{query.query}*" OR
   tags.tagList="%{query.query}*"
 )`;
 
@@ -42,6 +42,7 @@ const mapStateToProps = state => {
 
 @withCheckboxList
 @stripesConnect
+@connect(mapStateToProps)
 export class MappingProfiles extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -62,7 +63,7 @@ export class MappingProfiles extends Component {
             queryTemplate,
             {
               name: 'name',
-              mapped: 'mapped',
+              folioRecord: 'folioRecord',
               tags: 'tags.tagList',
               updated: 'metadata.updatedDate',
               updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
@@ -118,7 +119,7 @@ export class MappingProfiles extends Component {
     visibleColumns: [
       'selected',
       'name',
-      'mapped',
+      'folioRecord',
       'tags',
       'updated',
       'updatedBy',
@@ -126,7 +127,7 @@ export class MappingProfiles extends Component {
     columnWidths: {
       selected: 40,
       name: 200,
-      mapped: 100,
+      folioRecord: 150,
       tags: 150,
       updated: 150,
       updatedBy: 250,
@@ -136,7 +137,6 @@ export class MappingProfiles extends Component {
       description: '',
     },
     RecordView: ViewMappingProfile,
-    // RecordForm: ActionProfilesForm,
   };
 
   renderHeaders = intl => {
@@ -155,7 +155,7 @@ export class MappingProfiles extends Component {
         />
       ),
       name: intl.formatMessage({ id: 'ui-data-import.name' }),
-      mapped: intl.formatMessage({ id: 'ui-data-import.mapped' }),
+      folioRecord: intl.formatMessage({ id: 'ui-data-import.folioRecordType' }),
       tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
       updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
       updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
