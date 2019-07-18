@@ -40,7 +40,7 @@ export class ListView extends Component {
     showSingleResult: PropTypes.bool,
     objectName: PropTypes.string,
     RecordView: PropTypes.func.isRequired,
-    RecordForm: PropTypes.func.isRequired,
+    RecordForm: PropTypes.func,
     INITIAL_RESULT_COUNT: PropTypes.number,
     RESULT_COUNT_INCREMENT: PropTypes.number,
     ENTITY_KEY: PropTypes.string,

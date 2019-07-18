@@ -70,7 +70,7 @@ export const listTemplate = ({
       searchTerm={searchTerm}
     />
   ),
-  mapped: record => (
+  folioRecord: record => (
     <MappedColumn
       record={record}
       searchTerm={searchTerm}
