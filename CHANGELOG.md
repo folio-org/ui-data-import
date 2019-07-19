@@ -16,6 +16,7 @@
 * Add tags accordion for action profiles (UIDATIMP-17)
 * Create data import settings page's 3rd pane for Field Mapping Profiles (UIDATIMP-9)
 * Implement details view for mapping profiles (UIDATIMP-219)
+* Implement create mapping profile feature (UIDATIMP-227)
 
 ## [1.3.0](https://github.com/folio-org/ui-data-import/tree/v1.3.0) (2019-06-12)
 * Create data import settings page's 3rd pane for Match Profiles. Add string capitalization (capitalize) and HTML special chars decoding (htmlDecode) utils (UIDATIMP-6)

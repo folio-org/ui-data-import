@@ -17,6 +17,7 @@ import { ENTITY_KEYS } from '../../utils/constants';
 import { ListView } from '../../components';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
 import { ViewMappingProfile } from './ViewMappingProfile';
+import { MappingProfilesForm } from './MappingProfilesForm';
 
 // big numbers to get rid of infinite scroll
 const INITIAL_RESULT_COUNT = 5000;
@@ -137,6 +138,7 @@ export class MappingProfiles extends Component {
       description: '',
     },
     RecordView: ViewMappingProfile,
+    RecordForm: MappingProfilesForm,
   };
 
   renderHeaders = intl => {

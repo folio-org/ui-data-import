@@ -335,7 +335,7 @@ export class SearchAndSort extends Component {
     this.transitionToParams({ layer: LAYER_TYPES.CREATE });
   };
 
-  createNewRecord = record => {
+  createNewRecord = async record => {
     const {
       massageNewRecord,
       onCreate,
@@ -343,7 +343,11 @@ export class SearchAndSort extends Component {
 
     massageNewRecord(record);
 
-    return onCreate(record);
+    const response = await onCreate(record);
+
+    this.setState({ selectedItem: { id: response.id } });
+
+    return response;
   };
 
   editRecord = record => {
@@ -360,8 +364,6 @@ export class SearchAndSort extends Component {
     } = this.props;
 
     const response = await onDelete(record);
-
-    console.log('Delete Response: ', response);
 
     if (response.ok) {
       this.setState({ selectedItem: null });
