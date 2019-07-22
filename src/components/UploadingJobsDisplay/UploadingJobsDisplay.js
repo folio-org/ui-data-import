@@ -469,9 +469,6 @@ export class UploadingJobsDisplay extends Component {
     try {
       await loadMarcRecords({
         uploadDefinitionId: uploadDefinition.id,
-        // jobProfileId for now is hardcoded to point to the default job profile (MODSOURMAN-113)
-        // later jobProfileId will be picked through UI
-        jobProfileId: '22fafcc3-f582-493d-88b0-3c538480cd83',
         okapi,
       });
 
