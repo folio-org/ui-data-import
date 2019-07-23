@@ -16,6 +16,7 @@ import {
   Accordion,
   AccordionSet,
   MultiColumnList,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
@@ -80,6 +81,7 @@ export class ViewMappingProfile extends Component {
     }).isRequired,
     location: PropTypes.object.isRequired,
     onClose: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
@@ -93,6 +95,11 @@ export class ViewMappingProfile extends Component {
       'duplicate',
       'delete',
     ],
+  };
+
+  state = {
+    deletionInProgress: false,
+    showDeleteConfirmation: false,
   };
 
   associatedActionProfilesVisibleColumns = [
@@ -134,6 +141,31 @@ export class ViewMappingProfile extends Component {
     return { associatedActionProfiles };
   }
 
+  showDeleteConfirmation = () => {
+    this.setState({ showDeleteConfirmation: true });
+  };
+
+  hideDeleteConfirmation = () => {
+    this.setState({
+      showDeleteConfirmation: false,
+      deletionInProgress: false,
+    });
+  };
+
+  handleDelete(record) {
+    const { onDelete } = this.props;
+    const { deletionInProgress } = this.state;
+
+    if (deletionInProgress) {
+      return;
+    }
+
+    this.setState({ deletionInProgress: true }, async () => {
+      await onDelete(record);
+      this.hideDeleteConfirmation();
+    });
+  }
+
   renderActionMenu = menu => (
     <ActionMenu
       entity={this}
@@ -155,6 +187,7 @@ export class ViewMappingProfile extends Component {
       onClose,
       paneId,
     } = this.props;
+    const { showDeleteConfirmation } = this.state;
 
     const {
       hasLoaded,
@@ -261,6 +294,21 @@ export class ViewMappingProfile extends Component {
         <EndOfItem
           className={sharedCss.endOfRecord}
           title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+        />
+        <ConfirmationModal
+          id="delete-mapping-profile-modal"
+          open={showDeleteConfirmation}
+          heading={(
+            <FormattedMessage
+              id="ui-data-import.modal.mappingProfile.delete.header"
+              values={{ name: mappingProfile.name }}
+            />
+          )}
+          message={<FormattedMessage id="ui-data-import.modal.mappingProfile.delete.message" />}
+          confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
+          onConfirm={() => this.handleDelete(mappingProfile)}
+          onCancel={this.hideDeleteConfirmation}
         />
       </Pane>
     );

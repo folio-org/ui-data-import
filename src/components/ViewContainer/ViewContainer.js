@@ -57,11 +57,11 @@ export const ViewContainer = memo(props => {
     });
   };
 
-  const deselectOnDelete = (recordId, selectItem, itemsSelected) => {
-    const isRecordSelected = itemsSelected.has(recordId);
+  const deselectOnDelete = recordId => {
+    const isRecordSelected = selectedRecords.has(recordId);
 
     if (isRecordSelected) {
-      selectItem(recordId);
+      selectRecord(recordId);
     }
   };
 
@@ -70,11 +70,7 @@ export const ViewContainer = memo(props => {
       _path: `${path}/view`,
       layer: null,
     });
-    deselectOnDelete({
-      recordId: record.id,
-      selectRecord,
-      selectedRecords,
-    });
+    deselectOnDelete(record.id);
   };
 
   const handleDeleteError = (record, error) => {
