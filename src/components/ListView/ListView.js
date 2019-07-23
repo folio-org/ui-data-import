@@ -34,7 +34,7 @@ export class ListView extends Component {
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,
-    selectedRecord: PropTypes.object.isRequired,
+    selectedRecord: PropTypes.object,
     checkboxList: checkboxListShape,
     setList: PropTypes.func.isRequired,
     showSingleResult: PropTypes.bool,
@@ -56,6 +56,10 @@ export class ListView extends Component {
     INITIAL_RESULT_COUNT: 5000,
     RESULT_COUNT_INCREMENT: 5000,
     ENTITY_KEY: '',
+    selectedRecord: {
+      record: null,
+      hasLoaded: false,
+    },
   };
 
   constructor(props) {
@@ -230,8 +234,8 @@ export class ListView extends Component {
                   ViewRecordComponent={RecordView}
                   EditRecordComponent={RecordForm}
                   newRecordInitialValues={initialValues}
-                  editRecordInitialValues={selectedRecord ? selectedRecord.record : null}
-                  editRecordInitialValuesAreLoaded={selectedRecord ? selectedRecord.hasLoaded : false}
+                  editRecordInitialValues={selectedRecord.record}
+                  editRecordInitialValuesAreLoaded={selectedRecord.hasLoaded}
                   showSingleResult={showSingleResult}
                   onSubmitSearch={deselectAll}
                   {...props}

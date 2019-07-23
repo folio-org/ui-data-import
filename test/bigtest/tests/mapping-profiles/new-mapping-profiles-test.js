@@ -26,8 +26,8 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
   await mappingProfileForm.submitFormButton.click();
 }
 
-describe.only('Mapping profile form', () => {
-  setupApplication({ scenarios: ['fetch-mapping-profiles-success'] });
+describe('Mapping profile form', () => {
+  setupApplication({ scenarios: ['fetch-mapping-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
   describe('appears', () => {
     beforeEach(async function () {
@@ -64,7 +64,7 @@ describe.only('Mapping profile form', () => {
   });
 });
 
-describe.only('When mapping profile form', () => {
+describe('When mapping profile form', () => {
   setupApplication();
 
   beforeEach(async function () {

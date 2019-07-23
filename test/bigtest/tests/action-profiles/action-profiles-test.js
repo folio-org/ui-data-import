@@ -13,7 +13,7 @@ import {
 } from '../../interactors';
 
 describe('Action profiles', () => {
-  setupApplication({ scenarios: ['fetch-action-profiles-success'] });
+  setupApplication({ scenarios: ['fetch-action-profiles-success', 'fetch-users', 'fetch-tags'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/action-profiles');

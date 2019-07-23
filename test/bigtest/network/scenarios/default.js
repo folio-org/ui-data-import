@@ -3,6 +3,7 @@ import restoreDefaultFileExtensions from './restore-default-file-extensions-succ
 import jobProfiles from './fetch-job-profiles-success';
 import matchProfiles from './fetch-match-profiles-success';
 import actionProfiles from './fetch-action-profiles-success';
+import mappingProfiles from './fetch-mapping-profiles-success';
 import deleteFile from './delete-file-success';
 import uploadingFiles from './uploading-files';
 import tagsEnabled from './tags-enabled';
@@ -18,6 +19,7 @@ export default function defaultScenario(server) {
   jobProfiles(server);
   matchProfiles(server);
   actionProfiles(server);
+  mappingProfiles(server);
   deleteFile(server);
   uploadingFiles(server);
   tagsEnabled(server);

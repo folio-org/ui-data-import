@@ -13,7 +13,7 @@ import {
 } from '../../interactors';
 
 describe('Mapping profiles', () => {
-  setupApplication({ scenarios: ['fetch-mapping-profiles-success'] });
+  setupApplication({ scenarios: ['fetch-mapping-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/mapping-profiles');
