@@ -1,4 +1,7 @@
-import { associatedJobProfiles } from '../../mocks';
+import {
+  associatedJobProfiles,
+  associatedMappingProfile,
+} from '../../mocks';
 import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
 
 export default server => {
@@ -57,6 +60,7 @@ export default server => {
   server.get('/data-import-profiles/actionProfiles/:id');
   server.delete('/data-import-profiles/actionProfiles/:id', {}, 409);
   server.get('/data-import-profiles/profileAssociations/:id/masters', associatedJobProfiles);
+  server.get('/data-import-profiles/profileAssociations/:id/details', associatedMappingProfile);
   server.post('/data-import-profiles/actionProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
     const record = server.create('action-profile', params);
