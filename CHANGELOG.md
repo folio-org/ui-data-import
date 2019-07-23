@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## 1.4.0 (IN-PROGRESS)
+## [1.3.1](https://github.com/folio-org/ui-data-import/tree/v1.3.1) (2019-07-23)
 * Create data import settings page's 3rd pane for action profiles (UIDATIMP-8)
 * Implement header caret actions for action profiles (UIDATIMP-14)
 * Add form for new action profile action (UIDATIMP-144)
@@ -18,6 +18,8 @@
 * Implement details view for mapping profiles (UIDATIMP-219)
 * Implement create mapping profile feature (UIDATIMP-227)
 * Implement edit mapping profile feature (UIDATIMP-230)
+* Generalize and modularize Modals and Toasts templates, create common Callout rederer (UIDATIMP-210)
+* Generalize and modularize Entity List View templates, create common ListView component (UIDATIMP-211)
 * Implement mapping profile duplication feature (UIDATIMP-228)
 * Implement mapping profile deletion feature (UIDATIMP-229)
 
