@@ -10,7 +10,8 @@
     }
   },
   "plugins": [
-    "babel"
+    "babel",
+    "no-only-tests",
   ],
   "root": true,
   "rules": {
@@ -103,6 +104,19 @@
     "linebreak-style": [
       "error",
       "unix"
+    ],
+    "no-only-tests/no-only-tests": [
+      "warn",
+      {
+        "block": [
+          "describe",
+          "it"
+        ],
+        "focus": [
+          "only",
+          "skip"
+        ]
+      }
     ]
   }
 }

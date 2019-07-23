@@ -1,5 +1,9 @@
-import React, { useMemo } from 'react';
+import React, {
+  useMemo,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import {
   FormattedMessage,
   injectIntl,
@@ -27,6 +31,7 @@ import {
   INCOMING_RECORD_TYPES,
   FullScreenForm,
 } from '../../components';
+import { LAYER_TYPES } from '../../utils/constants';
 
 const formName = 'mappingProfilesForm';
 
@@ -34,6 +39,8 @@ export const MappingProfilesFormComponent = ({
   intl: { formatMessage },
   pristine,
   submitting,
+  initialValues,
+  location: { search },
   handleSubmit,
   onCancel,
 }) => {
@@ -51,13 +58,24 @@ export const MappingProfilesFormComponent = ({
 
   const incomingRecordTypesDataOptions = useMemo(getIncomingRecordTypesDataOptions, []);
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, []);
+  const { layer } = queryString.parse(search);
+  const isEditMode = layer === LAYER_TYPES.EDIT;
   const isSubmitDisabled = pristine || submitting;
-  const title = <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
+  const paneTitle = isEditMode
+    ? (
+      <FormattedMessage id="ui-data-import.edit">
+        {txt => `${txt} ${initialValues.name}`}
+      </FormattedMessage>
+    )
+    : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
+  const headLine = isEditMode
+    ? initialValues.name
+    : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
 
   return (
     <FullScreenForm
       id="mapping-profiles-form"
-      paneTitle={title}
+      paneTitle={paneTitle}
       submitMessage={<FormattedMessage id="ui-data-import.save" />}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={handleSubmit}
@@ -68,7 +86,7 @@ export const MappingProfilesFormComponent = ({
         tag="h2"
         data-test-header-title
       >
-        {title}
+        {headLine}
       </Headline>
       <AccordionSet>
         <Accordion
@@ -84,38 +102,42 @@ export const MappingProfilesFormComponent = ({
               validate={[validateRequiredField]}
             />
           </div>
-          <div data-test-incoming-record-type-field>
-            <FormattedMessage id="ui-data-import.chooseIncomingRecordType">
-              {placeholder => (
-                <Field
-                  label={<FormattedMessage id="ui-data-import.incomingRecordType" />}
-                  name="incomingRecordType"
-                  component={Select}
-                  required
-                  itemToString={identity}
-                  validate={[validateRequiredField]}
-                  dataOptions={incomingRecordTypesDataOptions}
-                  placeholder={placeholder}
-                />
-              )}
-            </FormattedMessage>
-          </div>
-          <div data-test-folio-record-type-field>
-            <FormattedMessage id="ui-data-import.chooseFolioRecordType">
-              {placeholder => (
-                <Field
-                  label={<FormattedMessage id="ui-data-import.folioRecordType" />}
-                  name="folioRecord"
-                  component={Select}
-                  required
-                  itemToString={identity}
-                  validate={[validateRequiredField]}
-                  dataOptions={folioRecordTypesDataOptions}
-                  placeholder={placeholder}
-                />
-              )}
-            </FormattedMessage>
-          </div>
+          {isEditMode || (
+            <Fragment>
+              <div data-test-incoming-record-type-field>
+                <FormattedMessage id="ui-data-import.chooseIncomingRecordType">
+                  {placeholder => (
+                    <Field
+                      label={<FormattedMessage id="ui-data-import.incomingRecordType" />}
+                      name="incomingRecordType"
+                      component={Select}
+                      required
+                      itemToString={identity}
+                      validate={[validateRequiredField]}
+                      dataOptions={incomingRecordTypesDataOptions}
+                      placeholder={placeholder}
+                    />
+                  )}
+                </FormattedMessage>
+              </div>
+              <div data-test-folio-record-type-field>
+                <FormattedMessage id="ui-data-import.chooseFolioRecordType">
+                  {placeholder => (
+                    <Field
+                      label={<FormattedMessage id="ui-data-import.folioRecordType" />}
+                      name="folioRecord"
+                      component={Select}
+                      required
+                      itemToString={identity}
+                      validate={[validateRequiredField]}
+                      dataOptions={folioRecordTypesDataOptions}
+                      placeholder={placeholder}
+                    />
+                  )}
+                </FormattedMessage>
+              </div>
+            </Fragment>
+          )}
           <div data-test-description-field>
             <Field
               label={<FormattedMessage id="ui-data-import.description" />}
@@ -132,21 +154,23 @@ export const MappingProfilesFormComponent = ({
             {/* will be implemented in the future */}
           </div>
         </Accordion>
-        <Accordion
-          label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
-          separator={false}
-        >
-          <div>
-            {/* will be implemented in the future */}
-          </div>
-        </Accordion>
+        {isEditMode || (
+          <Accordion
+            id="associatedActionProfilesAccordion"
+            label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
+            separator={false}
+          >
+            <div>
+              {/* will be implemented in the future */}
+            </div>
+          </Accordion>
+        )}
       </AccordionSet>
     </FullScreenForm>
   );
 };
 
 MappingProfilesFormComponent.propTypes = {
-  // eslint-disable-next-line react/no-unused-prop-types
   initialValues: PropTypes.object.isRequired,
   intl: intlShape.isRequired,
   pristine: PropTypes.bool.isRequired,

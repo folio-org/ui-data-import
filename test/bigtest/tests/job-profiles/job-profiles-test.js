@@ -14,7 +14,7 @@ import {
 } from '../../interactors';
 
 describe('Job profiles', () => {
-  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users', 'fetch-tags'] });
+  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/job-profiles');
