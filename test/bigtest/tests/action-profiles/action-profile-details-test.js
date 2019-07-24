@@ -11,6 +11,7 @@ import {
   actionProfileForm,
   actionProfileDetails,
   jobProfileDetails,
+  mappingProfileDetails,
 } from '../../interactors';
 import {
   associatedMappingProfile,
@@ -35,7 +36,16 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
 }
 
 describe('Action Profile View', () => {
-  setupApplication({ scenarios: ['fetch-action-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
+  setupApplication({
+    scenarios: [
+      'fetch-action-profiles-success',
+      'fetch-job-profiles-success',
+      'fetch-mapping-profiles-success',
+      'fetch-users',
+      'fetch-tags',
+      'tags-enabled',
+    ],
+  });
 
   beforeEach(function () {
     this.visit('/settings/data-import/action-profiles');
@@ -80,6 +90,22 @@ describe('Action Profile View', () => {
 
     it('display tags accordion', () => {
       expect(actionProfileDetails.isTagsPresent).to.be.true;
+    });
+
+    describe('associated mapping profile', () => {
+      it('has only one item', () => {
+        expect(actionProfileDetails.associatedMappingProfile.rowCount).to.be.equal(1);
+      });
+
+      describe('when mapping profile is clicked', () => {
+        beforeEach(async () => {
+          await actionProfileDetails.associatedMappingProfile.rows(0).click();
+        });
+
+        it('redirects to mapping profile details', () => {
+          expect(mappingProfileDetails.isPresent).to.be.true;
+        });
+      });
     });
 
     describe('associated job profiles', () => {
