@@ -160,4 +160,186 @@ describe('Mapping Profile View', () => {
       });
     });
   });
+
+  describe('duplicate mapping profile form', () => {
+    beforeEach(async () => {
+      await mappingProfiles.list.rows(0).click();
+      await mappingProfileDetails.expandPaneHeaderDropdown();
+      await mappingProfileDetails.dropdownDuplicateButton.click();
+    });
+
+    it('appears upon click on pane header menu duplicate button', () => {
+      expect(mappingProfileForm.isPresent).to.be.true;
+    });
+
+    describe('when form is submitted', () => {
+      beforeEach(async () => {
+        await mappingProfileForm.nameField.fillAndBlur('Valid name');
+        await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC Bibliographic');
+        await mappingProfileForm.folioRecordTypeField.selectAndBlur('Order');
+        await mappingProfileForm.descriptionField.fillAndBlur('Valid description');
+        await mappingProfileForm.submitFormButton.click();
+      });
+
+      it('then mapping profile details renders duplicated mapping profile', () => {
+        expect(mappingProfileDetails.headline.text).to.equal('Valid name');
+        expect(mappingProfileDetails.incomingRecordType.text).to.equal('MARC Bibliographic');
+        expect(mappingProfileDetails.folioRecordType.text).to.equal('Order');
+        expect(mappingProfileDetails.description.text).to.equal('Valid description');
+      });
+    });
+
+    describe('when form is submitted and the response contains', () => {
+      describe('error message', () => {
+        beforeEach(async function () {
+          await setupFormSubmitErrorScenario('post', this.server, {
+            response: { errors: [{ message: 'mappingProfile.duplication.invalid' }] },
+            status: 422,
+          });
+        });
+
+        it('then error callout appears', () => {
+          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
+        });
+      });
+
+      describe('network error', () => {
+        beforeEach(async function () {
+          await setupFormSubmitErrorScenario('post', this.server);
+        });
+
+        it('then error callout appears', () => {
+          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
+        });
+      });
+
+      describe('unparsed data', () => {
+        beforeEach(async function () {
+          await setupFormSubmitErrorScenario('post', this.server, {
+            response: '',
+            status: 422,
+          });
+        });
+
+        it('then error callout appears', () => {
+          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
+        });
+      });
+
+      describe('error without body', () => {
+        beforeEach(async function () {
+          await setupFormSubmitErrorScenario('post', this.server, {
+            response: null,
+            status: 422,
+          });
+        });
+
+        it('then error callout appears', () => {
+          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
+        });
+      });
+    });
+  });
+
+  describe('delete confirmation modal', () => {
+    beforeEach(async () => {
+      await mappingProfiles.list.rows(0).click();
+    });
+
+    describe('is visible', () => {
+      beforeEach(async () => {
+        await mappingProfileDetails.expandPaneHeaderDropdown();
+        await mappingProfileDetails.dropdownDeleteButton.click();
+      });
+
+      it('when pane header dropdown is opened', () => {
+        expect(mappingProfileDetails.isPresent).to.be.true;
+      });
+    });
+
+    describe('disappears', () => {
+      beforeEach(async () => {
+        await mappingProfileDetails.expandPaneHeaderDropdown();
+        await mappingProfileDetails.dropdownDeleteButton.click();
+        await mappingProfileDetails.confirmationModal.cancelButton.click();
+      });
+
+      it('when cancel button is clicked', () => {
+        expect(mappingProfileDetails.confirmationModal.isPresent).to.be.false;
+      });
+    });
+
+    describe('upon click on confirm button initiates the mapping profile deletion process and in case of error', () => {
+      beforeEach(async function () {
+        this.server.delete('/data-import-profiles/mappingProfiles/:id', () => new Response(500, {}));
+        await mappingProfileDetails.expandPaneHeaderDropdown();
+        await mappingProfileDetails.dropdownDeleteButton.click();
+        await mappingProfileDetails.confirmationModal.confirmButton.click();
+      });
+
+      it('disappears', () => {
+        expect(mappingProfileDetails.confirmationModal.isPresent).to.be.false;
+      });
+
+      it('the error toast appears', () => {
+        expect(mappingProfileDetails.callout.errorCalloutIsPresent).to.be.true;
+      });
+
+      it('renders the correct number including the one which tried to delete', () => {
+        expect(mappingProfiles.list.rowCount).to.equal(3);
+      });
+    });
+
+    describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
+      describe('exception modal', () => {
+        beforeEach(async () => {
+          await mappingProfileDetails.expandPaneHeaderDropdown();
+          await mappingProfileDetails.dropdownDeleteButton.click();
+          await mappingProfileDetails.confirmationModal.confirmButton.click();
+          await mappingProfileDetails.confirmationModal.confirmButton.click();
+        });
+
+        it('disappears', () => {
+          expect(mappingProfileDetails.confirmationModal.isPresent).to.be.false;
+        });
+
+        describe('when there are associated job profiles', () => {
+          it('appears', () => {
+            expect(mappingProfiles.exceptionModal.isPresent).to.be.true;
+          });
+
+          describe('and clicking on close button', () => {
+            beforeEach(async () => {
+              await mappingProfiles.exceptionModalCloseButton.click();
+            });
+
+            it('closes the modal', () => {
+              expect(mappingProfiles.exceptionModal.isPresent).to.be.false;
+            });
+
+            it('renders the correct number including the one which tried to delete', () => {
+              expect(mappingProfiles.list.rowCount).to.equal(3);
+            });
+          });
+        });
+      });
+
+      describe('when there are no associated job profiles', () => {
+        beforeEach(async function () {
+          this.server.delete('/data-import-profiles/mappingProfiles/:id');
+          await mappingProfileDetails.expandPaneHeaderDropdown();
+          await mappingProfileDetails.dropdownDeleteButton.click();
+          await mappingProfileDetails.confirmationModal.confirmButton.click();
+        });
+
+        it('does not appear', () => {
+          expect(mappingProfiles.exceptionModal.isPresent).to.be.false;
+        });
+
+        it('renders the correct number of rows without deleted one', () => {
+          expect(mappingProfiles.list.rowCount).to.equal(2);
+        });
+      });
+    });
+  });
 });

@@ -206,6 +206,7 @@ export class ListView extends Component {
             history={history}
             match={match}
             selectRecord={selectRecord}
+            selectedRecords={selectedRecords}
           >
             {props => (
               <Fragment>

@@ -22,6 +22,7 @@ export default server => {
     });
   });
   server.get('/data-import-profiles/mappingProfiles/:id');
+  server.delete('/data-import-profiles/mappingProfiles/:id', {}, 409);
   server.get('/data-import-profiles/profileAssociations/:id/masters', associatedActionProfiles);
   server.post('/data-import-profiles/mappingProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
