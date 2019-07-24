@@ -7,26 +7,22 @@ import {
   Button,
 } from '@folio/stripes/components';
 
-export const Default = memo(props => {
-  const {
-    caption,
-    icon,
-    onClick,
-    dataAttributes,
-  } = props;
-
-  return (
-    <Button
-      buttonStyle="dropdownItem"
-      onClick={onClick}
-      {...dataAttributes}
-    >
-      <Icon icon={icon}>
-        <FormattedMessage id={caption} />
-      </Icon>
-    </Button>
-  );
-});
+export const Default = memo(({
+  caption,
+  icon,
+  onClick,
+  dataAttributes,
+}) => (
+  <Button
+    buttonStyle="dropdownItem"
+    onClick={onClick}
+    {...dataAttributes}
+  >
+    <Icon icon={icon}>
+      <FormattedMessage id={caption} />
+    </Icon>
+  </Button>
+));
 
 Default.propTypes = {
   caption: PropTypes.string.isRequired,

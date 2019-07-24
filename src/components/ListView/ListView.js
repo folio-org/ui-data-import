@@ -62,15 +62,16 @@ export class ListView extends Component {
     },
   };
 
-  constructor(props) {
+  state = {
+    showRestoreModal: false,
+    restoreInProgress: false,
+  };
+
+  componentDidMount() {
     const {
       ENTITY_KEY,
       mutator,
-    } = props;
-
-    super(props);
-
-    this.calloutRef = createRef();
+    } = this.props;
 
     this.CRUDActions = getCRUDActions({
       ENTITY_KEY,
@@ -78,14 +79,6 @@ export class ListView extends Component {
       onSuccess: networkMessage('success', ENTITY_KEY, this.calloutRef),
       onError: networkMessage('error', ENTITY_KEY, this.calloutRef),
     });
-
-    this.state = {
-      showRestoreModal: false,
-      restoreInProgress: false,
-    };
-  }
-
-  componentDidMount() {
     this.setList();
   }
 
@@ -96,6 +89,8 @@ export class ListView extends Component {
       this.setList();
     }
   }
+
+  calloutRef = createRef();
 
   get entityList() {
     const { ENTITY_KEY } = this.props;

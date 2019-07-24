@@ -19,18 +19,16 @@ import {
 
 import sharedCss from '../../shared.css';
 
-export const ViewContainer = memo(props => {
-  const {
-    entityKey,
-    children,
-    mutator,
-    location,
-    history,
-    match: { path },
-    selectedRecords,
-    selectRecord,
-  } = props;
-
+export const ViewContainer = memo(({
+  entityKey,
+  children,
+  mutator,
+  location,
+  history,
+  match: { path },
+  selectedRecords,
+  selectRecord = noop,
+}) => {
   const fullWidthContainerRef = useRef();
   const calloutRef = useRef();
 
@@ -116,5 +114,3 @@ ViewContainer.propTypes = {
   selectRecord: PropTypes.func,
   selectedRecords: PropTypes.instanceOf(Set),
 };
-
-ViewContainer.defaultProps = { selectRecord: noop };

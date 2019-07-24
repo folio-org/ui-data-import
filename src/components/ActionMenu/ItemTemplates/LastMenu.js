@@ -7,28 +7,24 @@ import {
   Button,
 } from '@folio/stripes/components';
 
-export const LastMenu = memo(props => {
-  const {
-    caption,
-    location,
-    style,
-    dataAttributes,
-  } = props;
-
-  return (
-    <PaneMenu>
-      <Button
-        to={location}
-        style={style}
-        buttonStyle="primary paneHeaderNewButton"
-        marginBottom0
-        {...dataAttributes}
-      >
-        <FormattedMessage id={caption} />
-      </Button>
-    </PaneMenu>
-  );
-});
+export const LastMenu = memo(({
+  caption,
+  location,
+  style,
+  dataAttributes = {},
+}) => (
+  <PaneMenu>
+    <Button
+      to={location}
+      style={style}
+      buttonStyle="primary paneHeaderNewButton"
+      marginBottom0
+      {...dataAttributes}
+    >
+      <FormattedMessage id={caption} />
+    </Button>
+  </PaneMenu>
+));
 
 LastMenu.propTypes = {
   caption: PropTypes.string.isRequired,
@@ -36,5 +32,3 @@ LastMenu.propTypes = {
   style: PropTypes.object,
   dataAttributes: PropTypes.object,
 };
-
-LastMenu.defaultProps = { dataAttributes: {} };

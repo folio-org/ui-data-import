@@ -67,27 +67,19 @@ export class UploadingJobsDisplay extends Component {
 
   static knownErrorsIDs = ['upload.fileSize.invalid'];
 
-  constructor(props, context) {
-    super(props, context);
+  state = {
+    hasLoaded: false,
+    renderLeaveModal: false,
+    recordsLoadingInProgress: false,
+  };
 
-    this.deleteFileTimeouts = {};
+  async componentDidMount() {
+    this.mounted = true;
     this.fileRemovalMap = {
       [FILE_STATUSES.UPLOADED]: this.handleDeleteSuccessfullyUploadedFile,
       [FILE_STATUSES.ERROR]: this.deleteFileAPI,
       [FILE_STATUSES.ERROR_DEFINITION]: this.deleteFileFromState,
     };
-
-    this.state = {
-      hasLoaded: false,
-      renderLeaveModal: false,
-      recordsLoadingInProgress: false,
-    };
-
-    this.calloutRef = createRef();
-  }
-
-  async componentDidMount() {
-    this.mounted = true;
 
     this.mapFilesToState();
     this.uploadJobs();
@@ -100,6 +92,10 @@ export class UploadingJobsDisplay extends Component {
     this.cancelFileRemovals();
     this.resetPageLeaveHandler();
   }
+
+  calloutRef = createRef();
+
+  deleteFileTimeouts = {};
 
   mapFilesToState() {
     const {

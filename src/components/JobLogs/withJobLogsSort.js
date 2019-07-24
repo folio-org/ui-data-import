@@ -28,41 +28,37 @@ const withJobLogsSortComponent = WrappedComponent => {
 
     static contextType = DataFetcherContext;
 
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        sort: 'completedDate',
-        direction: SORT_TYPES.DESCENDING,
-      };
-
-      this.sortColumns = {
-        fileName: {
-          sortFn: sortStrings,
-          useFormatterFn: false,
-        },
-        jobProfileName: {
-          sortFn: sortStrings,
-          useFormatterFn: false,
-        },
-        jobExecutionHrId: {
-          sortFn: sortNums,
-          useFormatterFn: false,
-        },
-        runBy: {
-          sortFn: sortStrings,
-          useFormatterFn: true,
-        },
-        completedDate: {
-          sortFn: sortDates,
-          useFormatterFn: false,
-        },
-      };
-    }
+    state = {
+      sort: 'completedDate',
+      direction: SORT_TYPES.DESCENDING,
+    };
 
     componentDidMount() {
       this.setLogsSort();
     }
+
+    sortColumns = {
+      fileName: {
+        sortFn: sortStrings,
+        useFormatterFn: false,
+      },
+      jobProfileName: {
+        sortFn: sortStrings,
+        useFormatterFn: false,
+      },
+      jobExecutionHrId: {
+        sortFn: sortNums,
+        useFormatterFn: false,
+      },
+      runBy: {
+        sortFn: sortStrings,
+        useFormatterFn: true,
+      },
+      completedDate: {
+        sortFn: sortDates,
+        useFormatterFn: false,
+      },
+    };
 
     setLogsSort() {
       const { location: { search } } = this.props;

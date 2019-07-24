@@ -14,7 +14,7 @@ export const ActionColumn = memo(({
     action,
     folioRecord,
   },
-  searchTerm,
+  searchTerm = '',
 }) => {
   const createLabel = ({ formatMessage }) => {
     const actionString = formatMessage({ id: `ui-data-import.${action.toLowerCase()}` });
@@ -48,5 +48,5 @@ export const ActionColumn = memo(({
 
 ActionColumn.propTypes = {
   record: PropTypes.object.isRequired,
-  searchTerm: PropTypes.string.isRequired,
+  searchTerm: PropTypes.string,
 };

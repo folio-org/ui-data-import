@@ -1,4 +1,7 @@
-import React, { Fragment } from 'react';
+import React, {
+  Fragment,
+  memo,
+} from 'react';
 import PropTypes from 'prop-types';
 
 import { calculatePercentage } from '../../utils';
@@ -35,18 +38,16 @@ const progressInfoFormatters = {
   ,
 };
 
-export const Progress = props => {
-  const {
-    current,
-    total,
-    progressInfoType,
-    payload,
-    progressClassName,
-    progressWrapperClassName,
-    progressInfoClassName,
-    progressCurrentClassName,
-  } = props;
-
+export const Progress = memo(({
+  current,
+  total,
+  progressInfoType = 'percentage',
+  payload = {},
+  progressClassName = css.progress,
+  progressWrapperClassName = css.progressWrapper,
+  progressInfoClassName = css.progressInfo,
+  progressCurrentClassName = css.progressCurrent,
+}) => {
   const progressValue = calculatePercentage(current, total);
   const progressInfo = progressInfoFormatters[progressInfoType](current, total, payload);
 
@@ -64,7 +65,7 @@ export const Progress = props => {
       <div className={progressInfoClassName}>{progressInfo}</div>
     </div>
   );
-};
+});
 
 Progress.propTypes = {
   current: PropTypes.number.isRequired,
@@ -75,13 +76,4 @@ Progress.propTypes = {
   progressClassName: PropTypes.string,
   progressCurrentClassName: PropTypes.string,
   progressInfoClassName: PropTypes.string,
-};
-
-Progress.defaultProps = {
-  progressInfoType: 'percentage',
-  payload: {},
-  progressWrapperClassName: css.progressWrapper,
-  progressClassName: css.progress,
-  progressCurrentClassName: css.progressCurrent,
-  progressInfoClassName: css.progressInfo,
 };
