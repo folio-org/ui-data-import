@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import HighLight from 'react-highlighter';
 import {
   get,
   isEmpty,
@@ -8,14 +7,14 @@ import {
 
 import { Icon } from '@folio/stripes/components';
 
-import css from './TagsColumn.css';
-import sharedCss from '../../../../shared.css';
+import { DefaultColumn } from '..';
 
-export const TagsColumn = memo(props => {
-  const {
-    record,
-    searchTerm,
-  } = props;
+import css from './TagsColumn.css';
+
+export const TagsColumn = memo(({
+  record,
+  searchTerm,
+}) => {
   const tags = get(record, 'tags.tagList', []);
 
   if (isEmpty(tags)) {
@@ -29,17 +28,15 @@ export const TagsColumn = memo(props => {
         icon="tag"
         iconClassName={css.tagsIcon}
       />
-      <HighLight
-        search={searchTerm}
-        className={sharedCss.container}
-      >
-        {tags.join(', ')}
-      </HighLight>
+      <DefaultColumn
+        value={tags.join(', ')}
+        searchTerm={searchTerm}
+      />
     </span>
   );
 });
 
 TagsColumn.propTypes = {
   record: PropTypes.object.isRequired,
-  searchTerm: PropTypes.string.isRequired,
+  searchTerm: PropTypes.string,
 };

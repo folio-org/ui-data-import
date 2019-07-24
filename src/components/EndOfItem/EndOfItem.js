@@ -10,9 +10,12 @@ import {
 
 import css from './EndOfItem.css';
 
-export const EndOfItem = memo(props => (
-  <Layout className={classnames('textCentered', css.endOfItem, props.className)}>
-    <Icon icon="end-mark">{props.title}</Icon>
+export const EndOfItem = memo(({
+  title = <FormattedMessage id="stripes-components.endOfList" />,
+  className,
+}) => (
+  <Layout className={classnames('textCentered', css.endOfItem, className)}>
+    <Icon icon="end-mark">{title}</Icon>
   </Layout>
 ));
 
@@ -20,5 +23,3 @@ EndOfItem.propTypes = {
   title: PropTypes.node,
   className: PropTypes.string,
 };
-
-EndOfItem.defaultProps = { title: <FormattedMessage id="stripes-components.endOfList" /> };

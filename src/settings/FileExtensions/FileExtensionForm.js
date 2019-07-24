@@ -41,16 +41,14 @@ MultiSelectItem.propTypes = {
   searchTerm: PropTypes.string,
 };
 
-const FileExtensionFormComponent = props => {
-  const {
-    pristine,
-    submitting,
-    initialValues,
-    handleSubmit,
-    onCancel,
-    dispatch,
-  } = props;
-
+const FileExtensionFormComponent = ({
+  pristine,
+  submitting,
+  initialValues,
+  handleSubmit,
+  onCancel,
+  dispatch,
+}) => {
   const isEditMode = Boolean(initialValues.id);
 
   const [dataTypesRequired, setDataTypesRequired] = useState(isEditMode ? !initialValues.importBlocked : true);

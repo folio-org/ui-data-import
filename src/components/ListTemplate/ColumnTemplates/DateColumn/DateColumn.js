@@ -6,18 +6,14 @@ import { Icon } from '@folio/stripes/components';
 
 import css from './DateColumn.css';
 
-export const DateColumn = memo(props => {
-  const { value } = props;
-
-  return (
-    <Icon
-      icon="edit"
-      size="small"
-      iconClassName={css.editIcon}
-    >
-      <FormattedDate value={value} />
-    </Icon>
-  );
-});
+export const DateColumn = memo(({ value }) => (
+  <Icon
+    icon="edit"
+    size="small"
+    iconClassName={css.editIcon}
+  >
+    <FormattedDate value={value} />
+  </Icon>
+));
 
 DateColumn.propTypes = { value: PropTypes.string.isRequired };

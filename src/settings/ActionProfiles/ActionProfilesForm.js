@@ -25,16 +25,15 @@ import { LAYER_TYPES } from '../../utils/constants';
 
 const formName = 'actionProfilesForm';
 
-export const ActionProfilesFormComponent = props => {
-  const {
-    pristine,
-    submitting,
-    initialValues,
-    handleSubmit,
-    location: { search },
-    associatedJobProfilesAmount,
-    onCancel,
-  } = props;
+export const ActionProfilesFormComponent = ({
+  pristine,
+  submitting,
+  initialValues,
+  handleSubmit,
+  location: { search },
+  associatedJobProfilesAmount,
+  onCancel,
+}) => {
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   const { layer } = queryString.parse(search);

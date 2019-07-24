@@ -39,8 +39,6 @@ describe('Action Profile View', () => {
   setupApplication({
     scenarios: [
       'fetch-action-profiles-success',
-      'fetch-job-profiles-success',
-      'fetch-mapping-profiles-success',
       'fetch-users',
       'fetch-tags',
       'tags-enabled',

@@ -18,11 +18,10 @@ import { RECORD_TYPES } from '../recordTypes';
 
 import sharedCss from '../../../shared.css';
 
-export const MatchColumn = memo(props => {
-  const {
-    record,
-    searchTerm,
-  } = props;
+export const MatchColumn = memo(({
+  record,
+  searchTerm,
+}) => {
   const {
     existingRecordType,
     existingStaticValueType,
