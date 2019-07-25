@@ -54,6 +54,10 @@ describe('Mapping Profile View', () => {
     it('has correct description', () => {
       expect(mappingProfileDetails.description.text).to.be.equal('Description 0');
     });
+
+    it('display tags accordion', () => {
+      expect(mappingProfileDetails.isTagsPresent).to.be.true;
+    });
   });
 
   describe('associated action profiles', () => {
@@ -341,5 +345,18 @@ describe('Mapping Profile View', () => {
         });
       });
     });
+  });
+});
+
+describe('Mapping Profile View', () => {
+  setupApplication({ scenarios: ['fetch-mapping-profiles-success', 'fetch-users', 'fetch-tags', 'tags-disabled'] });
+
+  beforeEach(async function () {
+    this.visit('/settings/data-import/mapping-profiles');
+    await mappingProfiles.list.rows(0).click();
+  });
+
+  it('does not display tags accordion', () => {
+    expect(mappingProfileDetails.isTagsPresent).to.be.false;
   });
 });

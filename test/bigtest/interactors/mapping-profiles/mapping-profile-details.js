@@ -1,6 +1,7 @@
 import {
   interactor,
   scoped,
+  isPresent,
 } from '@bigtest/interactor';
 
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
@@ -19,6 +20,7 @@ class MappingProfileDetailsInteractor {
   description = scoped('[data-test-description]');
   incomingRecordType = scoped('[data-test-incoming-record-type]');
   folioRecordType = scoped('[data-test-folio-record-type]');
+  isTagsPresent = isPresent('[data-test-tags-accordion]');
   associatedActionProfiles = new MultiColumnListInteractor('[data-test-associated-action-profiles]');
   confirmationModal = new ConfirmationModalInteractor('#delete-mapping-profile-modal');
   callout = new CalloutInteractor();

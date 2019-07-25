@@ -24,7 +24,7 @@ import { SearchAndSort } from '../SearchAndSort';
 import { ViewContainer } from '../ViewContainer';
 import { listTemplate } from '../ListTemplate';
 import { ActionMenu } from '../ActionMenu';
-import { networkMessage } from '../Callout';
+import { createNetworkMessage } from '../Callout';
 
 export class ListView extends Component {
   static propTypes = {
@@ -76,8 +76,8 @@ export class ListView extends Component {
     this.CRUDActions = getCRUDActions({
       ENTITY_KEY,
       mutator,
-      onSuccess: networkMessage('success', ENTITY_KEY, this.calloutRef),
-      onError: networkMessage('error', ENTITY_KEY, this.calloutRef),
+      onSuccess: createNetworkMessage('success', ENTITY_KEY, this.calloutRef),
+      onError: createNetworkMessage('error', ENTITY_KEY, this.calloutRef),
     });
     this.setList();
   }

@@ -14,7 +14,7 @@ import { buildUrl } from '@folio/stripes/smart-components';
 import { getCRUDActions } from './getCRUDActions';
 import {
   ExceptionModal,
-  networkMessage,
+  createNetworkMessage,
 } from '../index';
 
 import sharedCss from '../../shared.css';
@@ -37,8 +37,8 @@ export const ViewContainer = memo(({
   const CRUDActions = getCRUDActions({
     entityKey,
     mutator,
-    onSuccess: networkMessage('success', entityKey, calloutRef),
-    onError: networkMessage('error', entityKey, calloutRef),
+    onSuccess: createNetworkMessage('success', entityKey, calloutRef),
+    onError: createNetworkMessage('error', entityKey, calloutRef),
   });
 
   const transitionToParams = params => {

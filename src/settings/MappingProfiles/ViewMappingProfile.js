@@ -18,7 +18,11 @@ import {
   MultiColumnList,
   ConfirmationModal,
 } from '@folio/stripes/components';
-import { ViewMetaData } from '@folio/stripes/smart-components';
+import {
+  ViewMetaData,
+  withTags,
+  TagsAccordion,
+} from '@folio/stripes/smart-components';
 
 import {
   createUrl,
@@ -46,6 +50,7 @@ import {
 import sharedCss from '../../shared.css';
 
 @stripesConnect
+@withTags
 export class ViewMappingProfile extends Component {
   static manifest = Object.freeze({
     mappingProfile: {
@@ -80,6 +85,7 @@ export class ViewMappingProfile extends Component {
       }),
     }).isRequired,
     location: PropTypes.object.isRequired,
+    tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string,
@@ -186,6 +192,7 @@ export class ViewMappingProfile extends Component {
     const {
       onClose,
       paneId,
+      tagsEnabled,
     } = this.props;
     const { showDeleteConfirmation } = this.state;
 
@@ -222,6 +229,8 @@ export class ViewMappingProfile extends Component {
         updatedByUserId: mappingProfile.metadata.updatedByUserId || userId,
       };
     }
+
+    const tagsEntityLink = `data-import-profiles/mappingProfiles/${mappingProfile.id}`;
 
     return (
       <Pane
@@ -264,6 +273,11 @@ export class ViewMappingProfile extends Component {
               <div data-test-description>{mappingProfile.description || '-'}</div>
             </KeyValue>
           </Accordion>
+          {tagsEnabled && (
+            <div data-test-tags-accordion>
+              <TagsAccordion link={tagsEntityLink} />
+            </div>
+          )}
           <Accordion label={<FormattedMessage id="ui-data-import.details" />}>
             <div style={{ height: 60 }}>{/* will be implemented in future stories */}</div>
           </Accordion>
