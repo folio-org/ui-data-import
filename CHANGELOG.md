@@ -4,6 +4,7 @@
 * Implement mapping profile duplication feature (UIDATIMP-228)
 * Implement mapping profile deletion feature (UIDATIMP-229)
 * Make mapping profile name a hotlink in action profile details (UIDATIMP-214)
+* Add tags accordion for match profiles (UIDATIMP-18)
 
 ## [1.3.1](https://github.com/folio-org/ui-data-import/tree/v1.3.1) (2019-07-23)
 * Create data import settings page's 3rd pane for action profiles (UIDATIMP-8)

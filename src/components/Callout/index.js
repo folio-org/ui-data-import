@@ -1,2 +1,2 @@
 export * from './Callout';
-export * from './Templates';
+export * from './NetworkMessage';

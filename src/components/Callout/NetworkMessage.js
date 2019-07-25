@@ -13,21 +13,24 @@ export const NetworkMessage = memo(({
       id={`ui-data-import.settings.${action}.${type}`}
       tagName="strong"
     />
-    {(type === 'error' && !messageId) ? (
-      <FormattedMessage
-        id="ui-data-import.communicationProblem"
-        tagName="p"
-      />
-    ) : (
-      <FormattedMessage
-        id={`ui-data-import.${type}.${messageId}`}
-        tagName="p"
-        values={{
-          name: recordName,
-          action: <FormattedMessage id={`ui-data-import.action.${action}`} />,
-        }}
-      />
-    )}
+    {(type === 'error' && !messageId)
+      ? (
+        <FormattedMessage
+          id="ui-data-import.communicationProblem"
+          tagName="p"
+        />
+      )
+      : (
+        <FormattedMessage
+          id={`ui-data-import.${type}.${messageId}`}
+          tagName="p"
+          values={{
+            name: recordName,
+            action: <FormattedMessage id={`ui-data-import.action.${action}`} />,
+          }}
+        />
+      )
+    }
   </div>
 ));
 
