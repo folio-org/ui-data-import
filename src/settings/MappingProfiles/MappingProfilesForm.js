@@ -1,7 +1,4 @@
-import React, {
-  useMemo,
-  Fragment,
-} from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import {
@@ -102,42 +99,38 @@ export const MappingProfilesFormComponent = ({
               validate={[validateRequiredField]}
             />
           </div>
-          {isEditMode || (
-            <Fragment>
-              <div data-test-incoming-record-type-field>
-                <FormattedMessage id="ui-data-import.chooseIncomingRecordType">
-                  {placeholder => (
-                    <Field
-                      label={<FormattedMessage id="ui-data-import.incomingRecordType" />}
-                      name="incomingRecordType"
-                      component={Select}
-                      required
-                      itemToString={identity}
-                      validate={[validateRequiredField]}
-                      dataOptions={incomingRecordTypesDataOptions}
-                      placeholder={placeholder}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-              <div data-test-folio-record-type-field>
-                <FormattedMessage id="ui-data-import.chooseFolioRecordType">
-                  {placeholder => (
-                    <Field
-                      label={<FormattedMessage id="ui-data-import.folioRecordType" />}
-                      name="folioRecord"
-                      component={Select}
-                      required
-                      itemToString={identity}
-                      validate={[validateRequiredField]}
-                      dataOptions={folioRecordTypesDataOptions}
-                      placeholder={placeholder}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-            </Fragment>
-          )}
+          <div data-test-incoming-record-type-field>
+            <FormattedMessage id="ui-data-import.chooseIncomingRecordType">
+              {placeholder => (
+                <Field
+                  label={<FormattedMessage id="ui-data-import.incomingRecordType" />}
+                  name="incomingRecordType"
+                  component={Select}
+                  required
+                  itemToString={identity}
+                  validate={[validateRequiredField]}
+                  dataOptions={incomingRecordTypesDataOptions}
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
+          </div>
+          <div data-test-folio-record-type-field>
+            <FormattedMessage id="ui-data-import.chooseFolioRecordType">
+              {placeholder => (
+                <Field
+                  label={<FormattedMessage id="ui-data-import.folioRecordType" />}
+                  name="folioRecord"
+                  component={Select}
+                  required
+                  itemToString={identity}
+                  validate={[validateRequiredField]}
+                  dataOptions={folioRecordTypesDataOptions}
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
+          </div>
           <div data-test-description-field>
             <Field
               label={<FormattedMessage id="ui-data-import.description" />}

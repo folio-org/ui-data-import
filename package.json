@@ -94,18 +94,18 @@
       },
       {
         "name": "marcAuthorities",
-        "alt": "MARC Authorities",
-        "title": "MARC Authorities"
+        "alt": "MARC authorities",
+        "title": "MARC authorities"
       },
       {
         "name": "marcBibs",
-        "alt": "MARC Bibliographics",
-        "title": "MARC Bibliographics"
+        "alt": "MARC bibliographics",
+        "title": "MARC bibliographics"
       },
       {
         "name": "marcHoldings",
-        "alt": "MARC Holdings",
-        "title": "MARC Holdings"
+        "alt": "MARC holdings",
+        "title": "MARC holdings"
       },
       {
         "name": "matchProfiles",
