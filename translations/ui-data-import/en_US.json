@@ -154,7 +154,7 @@
     "modal.actionProfile.delete.message": "Delete action profile?",
     "settings.actionProfiles.exceptionModal.label": "Cannot delete action profile",
     "settings.actionProfiles.exceptionModal.message": "This action profile cannot be deleted, as it is in use by one or more job or field mapping profiles.",
-    "settings.mappingProfiles.count": "{count, number} mapping {count, plural, one {profile} other {profiles}}",
+    "settings.mappingProfiles.count": "{count, number} field mapping {count, plural, one {profile} other {profiles}}",
     "action.create": "created",
     "action.update": "updated",
     "action.delete": "deleted",
@@ -185,11 +185,11 @@
     "logViewer.filter.info": "Info",
     "logViewer.filter.errors": "Errors",
     "logViewer.themes.label": "Use theme",
-    "mappingProfileName": "Mapping profile",
+    "mappingProfileName": "Field mapping profile",
     "incomingRecordType": "Incoming record type",
     "folioRecordType": "FOLIO record type",
     "settings.associatedActionProfiles": "Associated action profiles",
     "incomingRecordTypes.edifact-invoice": "EDIFACT invoice",
     "incomingRecordTypes.delimited": "Delimited",
-    "settings.mappingProfiles.new": "New mapping profile"
+    "settings.mappingProfiles.new": "New field mapping profile"
 }
