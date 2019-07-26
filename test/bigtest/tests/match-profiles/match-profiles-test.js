@@ -188,7 +188,7 @@ describe('Match profiles', () => {
         });
 
         it('for record #3', () => {
-          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('MARC Bibliographic&nbsp;&middot;&nbsp;935&nbsp;&rarr;&nbsp;035'));
+          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('MARC bibliographic&nbsp;&middot;&nbsp;935&nbsp;&rarr;&nbsp;035'));
         });
 
         it('for record #4', () => {
@@ -200,11 +200,11 @@ describe('Match profiles', () => {
         });
 
         it('for record #6', () => {
-          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(htmlDecode('MARC Authority&nbsp;&middot;&nbsp;010&nbsp;&rarr;&nbsp;010'));
+          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(htmlDecode('MARC authority&nbsp;&middot;&nbsp;010&nbsp;&rarr;&nbsp;010'));
         });
 
         it('for record #7', () => {
-          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('MARC Bibliographic&nbsp;&middot;&nbsp;035&nbsp;&rarr;&nbsp;035'));
+          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('MARC bibliographic&nbsp;&middot;&nbsp;035&nbsp;&rarr;&nbsp;035'));
         });
 
         it('for record #8', () => {
@@ -226,7 +226,7 @@ describe('Match profiles', () => {
         });
 
         it('for record #3', () => {
-          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('035&nbsp;&larr;&nbsp;935&nbsp;&middot;&nbsp;MARC Bibliographic'));
+          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('035&nbsp;&larr;&nbsp;935&nbsp;&middot;&nbsp;MARC bibliographic'));
         });
 
         it('for record #4', () => {
@@ -238,11 +238,11 @@ describe('Match profiles', () => {
         });
 
         it('for record #6', () => {
-          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(htmlDecode('010&nbsp;&larr;&nbsp;010&nbsp;&middot;&nbsp;MARC Authority'));
+          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(htmlDecode('010&nbsp;&larr;&nbsp;010&nbsp;&middot;&nbsp;MARC authority'));
         });
 
         it('for record #7', () => {
-          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('035&nbsp;&larr;&nbsp;035&nbsp;&middot;&nbsp;MARC Bibliographic'));
+          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('035&nbsp;&larr;&nbsp;035&nbsp;&middot;&nbsp;MARC bibliographic'));
         });
 
         it('for record #8', () => {

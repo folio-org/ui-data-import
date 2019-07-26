@@ -44,7 +44,7 @@ describe('Mapping Profile View', () => {
     });
 
     it('has correct incoming record type', () => {
-      expect(mappingProfileDetails.incomingRecordType.text).to.be.equal('MARC Bibliographic');
+      expect(mappingProfileDetails.incomingRecordType.text).to.be.equal('MARC bibliographic');
     });
 
     it('has correct FOLIO record type', () => {
@@ -106,12 +106,9 @@ describe('Mapping Profile View', () => {
 
       it('and form fields are pre-filled with current data', () => {
         expect(mappingProfileForm.nameField.val).to.be.equal('Name 0');
+        expect(mappingProfileForm.incomingRecordTypeField.val).to.be.equal('MARC_BIBLIOGRAPHIC');
+        expect(mappingProfileForm.folioRecordTypeField.val).to.be.equal('INSTANCE');
         expect(mappingProfileForm.descriptionField.val).to.be.equal('Description 0');
-      });
-
-      it('does not have Incoming record type and FOLIO record type fields', () => {
-        expect(mappingProfileForm.incomingRecordTypeField.isPresent).to.be.false;
-        expect(mappingProfileForm.folioRecordTypeField.isPresent).to.be.false;
       });
 
       it('and does not have associated action profiles accordion', () => {
@@ -129,12 +126,16 @@ describe('Mapping Profile View', () => {
     describe('when form is submitted', () => {
       beforeEach(async () => {
         await mappingProfileForm.nameField.fillAndBlur('Changed name');
+        await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC holdings');
+        await mappingProfileForm.folioRecordTypeField.selectAndBlur('Invoice');
         await mappingProfileForm.descriptionField.fillAndBlur('Changed description');
         await mappingProfileForm.submitFormButton.click();
       });
 
       it('then mapping profile details renders updated mapping profile', () => {
         expect(mappingProfileDetails.headline.text).to.equal('Changed name');
+        expect(mappingProfileDetails.incomingRecordType.text).to.equal('MARC holdings');
+        expect(mappingProfileDetails.folioRecordType.text).to.equal('Invoice');
         expect(mappingProfileDetails.description.text).to.equal('Changed description');
       });
     });
@@ -179,7 +180,7 @@ describe('Mapping Profile View', () => {
     describe('when form is submitted', () => {
       beforeEach(async () => {
         await mappingProfileForm.nameField.fillAndBlur('Valid name');
-        await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC Bibliographic');
+        await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC bibliographic');
         await mappingProfileForm.folioRecordTypeField.selectAndBlur('Order');
         await mappingProfileForm.descriptionField.fillAndBlur('Valid description');
         await mappingProfileForm.submitFormButton.click();
@@ -187,7 +188,7 @@ describe('Mapping Profile View', () => {
 
       it('then mapping profile details renders duplicated mapping profile', () => {
         expect(mappingProfileDetails.headline.text).to.equal('Valid name');
-        expect(mappingProfileDetails.incomingRecordType.text).to.equal('MARC Bibliographic');
+        expect(mappingProfileDetails.incomingRecordType.text).to.equal('MARC bibliographic');
         expect(mappingProfileDetails.folioRecordType.text).to.equal('Order');
         expect(mappingProfileDetails.description.text).to.equal('Valid description');
       });
