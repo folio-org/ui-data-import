@@ -191,5 +191,13 @@
     "settings.associatedActionProfiles": "Associated action profiles",
     "incomingRecordTypes.edifact-invoice": "EDIFACT invoice",
     "incomingRecordTypes.delimited": "Delimited",
-    "settings.mappingProfiles.new": "New field mapping profile"
+    "settings.mappingProfiles.new": "New field mapping profile",
+    "chooseIncomingRecordType": "Choose incoming record type",
+    "chooseFolioRecordType": "Choose FOLIO record type",
+    "settings.mappingProfiles.exceptionModal.label": "Cannot delete filed mapping profile",
+    "settings.mappingProfiles.exceptionModal.message": "This field mapping profile cannot be deleted, as it is in use by one or more action profiles.",
+    "modal.mappingProfile.delete.header": "Delete \"{name}\" field mapping profile?",
+    "modal.mappingProfile.delete.message": "Delete field mapping profile?",
+    "success.mappingProfiles.action": "The field mapping profile \"{name}\" was successfully {action}",
+    "error.mappingProfiles.action": "The field mapping profile \"{name}\" was not {action}"
 }
