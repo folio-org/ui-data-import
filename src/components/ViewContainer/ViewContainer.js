@@ -14,23 +14,21 @@ import { buildUrl } from '@folio/stripes/smart-components';
 import { getCRUDActions } from './getCRUDActions';
 import {
   ExceptionModal,
-  networkMessage,
+  createNetworkMessage,
 } from '../index';
 
 import sharedCss from '../../shared.css';
 
-export const ViewContainer = memo(props => {
-  const {
-    entityKey,
-    children,
-    mutator,
-    location,
-    history,
-    match: { path },
-    selectedRecords,
-    selectRecord,
-  } = props;
-
+export const ViewContainer = memo(({
+  entityKey,
+  children,
+  mutator,
+  location,
+  history,
+  match: { path },
+  selectedRecords,
+  selectRecord = noop,
+}) => {
   const fullWidthContainerRef = useRef();
   const calloutRef = useRef();
 
@@ -39,8 +37,8 @@ export const ViewContainer = memo(props => {
   const CRUDActions = getCRUDActions({
     entityKey,
     mutator,
-    onSuccess: networkMessage('success', entityKey, calloutRef),
-    onError: networkMessage('error', entityKey, calloutRef),
+    onSuccess: createNetworkMessage('success', entityKey, calloutRef),
+    onError: createNetworkMessage('error', entityKey, calloutRef),
   });
 
   const transitionToParams = params => {
@@ -57,11 +55,11 @@ export const ViewContainer = memo(props => {
     });
   };
 
-  const deselectOnDelete = (recordId, selectItem, itemsSelected) => {
-    const isRecordSelected = itemsSelected.has(recordId);
+  const deselectOnDelete = recordId => {
+    const isRecordSelected = selectedRecords.has(recordId);
 
     if (isRecordSelected) {
-      selectItem(recordId);
+      selectRecord(recordId);
     }
   };
 
@@ -70,11 +68,7 @@ export const ViewContainer = memo(props => {
       _path: `${path}/view`,
       layer: null,
     });
-    deselectOnDelete({
-      recordId: record.id,
-      selectRecord,
-      selectedRecords,
-    });
+    deselectOnDelete(record.id);
   };
 
   const handleDeleteError = (record, error) => {
@@ -120,5 +114,3 @@ ViewContainer.propTypes = {
   selectRecord: PropTypes.func,
   selectedRecords: PropTypes.instanceOf(Set),
 };
-
-ViewContainer.defaultProps = { selectRecord: noop };

@@ -10,12 +10,11 @@ import { jobPropTypes } from '../Job/jobPropTypes';
 
 import css from './JobsList.css';
 
-export const JobsList = props => {
-  const {
-    jobs,
-    hasLoaded,
-    isEmptyMessage,
-  } = props;
+export const JobsList = ({
+  jobs,
+  hasLoaded,
+  isEmptyMessage = '',
+}) => {
   const itemFormatter = job => (
     <Job
       key={job.hrId}
@@ -55,5 +54,3 @@ JobsList.propTypes = {
   hasLoaded: PropTypes.bool.isRequired,
   isEmptyMessage: PropTypes.node,
 };
-
-JobsList.defaultProps = { isEmptyMessage: '' };

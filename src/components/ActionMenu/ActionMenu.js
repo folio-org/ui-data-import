@@ -6,13 +6,11 @@ import PropTypes from 'prop-types';
 
 import { menuTemplate } from './menuTemplate';
 
-export const ActionMenu = memo(props => {
-  const {
-    entity,
-    entity: { props: { actionMenuItems: items } },
-    menu,
-  } = props;
-
+export const ActionMenu = memo(({
+  entity,
+  entity: { props: { actionMenuItems: items } },
+  menu,
+}) => {
   const templates = menuTemplate(entity, menu);
 
   return (

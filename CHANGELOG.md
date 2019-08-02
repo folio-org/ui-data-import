@@ -1,5 +1,11 @@
 # Change history for ui-data-import
 
+## 1.5.0 (IN-PROGRESS)
+* Implement mapping profile duplication feature (UIDATIMP-228)
+* Implement mapping profile deletion feature (UIDATIMP-229)
+* Make mapping profile name a hotlink in action profile details (UIDATIMP-214)
+* Add tags accordion for match profiles (UIDATIMP-18)
+
 ## [1.4.0](https://github.com/folio-org/ui-data-import/tree/v1.4.0) (2019-08-02)
 * Create data import settings page's 3rd pane for action profiles (UIDATIMP-8)
 * Implement header caret actions for action profiles (UIDATIMP-14)
@@ -20,6 +26,7 @@
 * Implement edit mapping profile feature (UIDATIMP-230)
 * Generalize and modularize Modals and Toasts templates, create common Callout renderer (UIDATIMP-210)
 * Generalize and modularize Entity List View templates, create common ListView component (UIDATIMP-211)
+* Add fields to edit mapping profile screen (UIDATIMP-247)
 
 ## [1.3.0](https://github.com/folio-org/ui-data-import/tree/v1.3.0) (2019-06-12)
 * Create data import settings page's 3rd pane for Match Profiles. Add string capitalization (capitalize) and HTML special chars decoding (htmlDecode) utils (UIDATIMP-6)

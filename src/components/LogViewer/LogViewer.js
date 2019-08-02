@@ -46,19 +46,17 @@ const themesPresent = [
   },
 ];
 
-export const LogViewer = memo(props => {
-  const {
-    code,
-    language,
-    theme,
-    errorDetector,
-    toolbar: {
-      visible,
-      message,
-      showThemes,
-    },
-  } = props;
-
+export const LogViewer = memo(({
+  code = '',
+  language = LANGUAGES.RAW,
+  theme = THEMES.COY,
+  errorDetector,
+  toolbar: {
+    visible = true,
+    message = '',
+    showThemes = true,
+  } = {},
+}) => {
   const [currentFilter, setCurrentFilter] = useState(OPTIONS.ALL);
   const [currentTheme, setCurrentTheme] = useState(theme);
 
@@ -179,15 +177,4 @@ LogViewer.propTypes = {
     message: PropTypes.any,
     showThemes: PropTypes.bool,
   }),
-};
-
-LogViewer.defaultProps = {
-  code: '',
-  language: LANGUAGES.RAW,
-  theme: THEMES.COY,
-  toolbar: {
-    visible: true,
-    message: '',
-    showThemes: true,
-  },
 };

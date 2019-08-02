@@ -3,6 +3,7 @@ import React, {
   Fragment,
 } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
@@ -59,6 +60,7 @@ import sharedCss from '../../shared.css';
 @withCheckboxList
 @stripesConnect
 @withTags
+@withRouter
 export class ViewActionProfile extends Component {
   static manifest = Object.freeze({
     actionProfile: {
@@ -110,6 +112,7 @@ export class ViewActionProfile extends Component {
       }),
     }).isRequired,
     location: PropTypes.object.isRequired,
+    history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     tagsEnabled: PropTypes.bool,
     checkboxList: checkboxListShape.isRequired,
     setList: PropTypes.func.isRequired,
@@ -258,6 +261,12 @@ export class ViewActionProfile extends Component {
     />
   );
 
+  navigateToMappingProfile = (e, record) => {
+    const { history } = this.props;
+
+    history.push(`/settings/data-import/mapping-profiles/view/${record.id}`);
+  };
+
   render() {
     const {
       onClose,
@@ -369,6 +378,7 @@ export class ViewActionProfile extends Component {
                     columnWidths={this.columnWidths}
                     isEmptyMessage={<FormattedMessage id="ui-data-import.none" />}
                     formatter={listTemplate({ entityKey: ENTITY_KEYS.MAPPING_PROFILES })}
+                    onRowClick={this.navigateToMappingProfile}
                   />
                 )}
               </IntlConsumer>

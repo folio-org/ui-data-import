@@ -9,29 +9,25 @@ import {
 
 import sharedCss from '../../../shared.css';
 
-export const LinkTo = memo(props => {
-  const {
-    caption,
-    icon,
-    menu,
-    location,
-    dataAttributes,
-  } = props;
-
-  return (
-    <Button
-      to={location}
-      buttonStyle="dropdownItem"
-      buttonClass={sharedCss.linkButton}
-      onClick={menu.onToggle}
-      {...dataAttributes}
-    >
-      <Icon icon={icon}>
-        <FormattedMessage id={caption} />
-      </Icon>
-    </Button>
-  );
-});
+export const LinkTo = memo(({
+  caption,
+  icon,
+  menu,
+  location,
+  dataAttributes = {},
+}) => (
+  <Button
+    to={location}
+    buttonStyle="dropdownItem"
+    buttonClass={sharedCss.linkButton}
+    onClick={menu.onToggle}
+    {...dataAttributes}
+  >
+    <Icon icon={icon}>
+      <FormattedMessage id={caption} />
+    </Icon>
+  </Button>
+));
 
 LinkTo.propTypes = {
   caption: PropTypes.string.isRequired,
@@ -40,5 +36,3 @@ LinkTo.propTypes = {
   location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
   dataAttributes: PropTypes.object,
 };
-
-LinkTo.defaultProps = { dataAttributes: {} };

@@ -10,7 +10,7 @@ import sharedCss from '../../../shared.css';
 
 export const MappedColumn = memo(({
   record: { folioRecord },
-  searchTerm,
+  searchTerm = '',
 }) => (
   <IntlConsumer>
     {({ formatMessage }) => {
@@ -30,5 +30,5 @@ export const MappedColumn = memo(({
 
 MappedColumn.propTypes = {
   record: PropTypes.object.isRequired,
-  searchTerm: PropTypes.string.isRequired,
+  searchTerm: PropTypes.string,
 };

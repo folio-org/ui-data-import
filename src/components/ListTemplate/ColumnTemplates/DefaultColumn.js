@@ -6,14 +6,12 @@ import { AppIcon } from '@folio/stripes/core';
 
 import sharedCss from '../../../shared.css';
 
-export const DefaultColumn = memo(props => {
-  const {
-    value,
-    className,
-    iconKey,
-    searchTerm,
-  } = props;
-
+export const DefaultColumn = memo(({
+  value,
+  className = sharedCss.cellAppIcon,
+  iconKey,
+  searchTerm,
+}) => {
   if (!value) {
     return '-';
   }
@@ -51,5 +49,3 @@ DefaultColumn.propTypes = {
   className: PropTypes.string,
   searchTerm: PropTypes.string,
 };
-
-DefaultColumn.defaultProps = { className: sharedCss.cellAppIcon };

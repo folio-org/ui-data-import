@@ -24,15 +24,13 @@ const dataTypes = DATA_TYPES.map(dataType => ({
   label: dataType,
 }));
 
-export const JobProfilesFormComponent = props => {
-  const {
-    pristine,
-    submitting,
-    initialValues,
-    handleSubmit,
-    onCancel,
-  } = props;
-
+export const JobProfilesFormComponent = ({
+  pristine,
+  submitting,
+  initialValues,
+  handleSubmit,
+  onCancel,
+}) => {
   const isEditMode = Boolean(initialValues.id);
   const isSubmitDisabled = pristine || submitting;
 

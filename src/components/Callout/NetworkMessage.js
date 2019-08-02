@@ -2,26 +2,25 @@ import React, { memo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-export const NetworkMessage = memo(props => {
-  const {
-    messageId,
-    action,
-    type,
-    record: { name: recordName },
-  } = props;
-
-  return (
-    <div>
-      <FormattedMessage
-        id={`ui-data-import.settings.${action}.${type}`}
-        tagName="strong"
-      />
-      {(type === 'error' && !messageId) ? (
+export const NetworkMessage = memo(({
+  messageId,
+  action,
+  type,
+  record: { name: recordName },
+}) => (
+  <div>
+    <FormattedMessage
+      id={`ui-data-import.settings.${action}.${type}`}
+      tagName="strong"
+    />
+    {(type === 'error' && !messageId)
+      ? (
         <FormattedMessage
           id="ui-data-import.communicationProblem"
           tagName="p"
         />
-      ) : (
+      )
+      : (
         <FormattedMessage
           id={`ui-data-import.${type}.${messageId}`}
           tagName="p"
@@ -30,10 +29,10 @@ export const NetworkMessage = memo(props => {
             action: <FormattedMessage id={`ui-data-import.action.${action}`} />,
           }}
         />
-      )}
-    </div>
-  );
-});
+      )
+    }
+  </div>
+));
 
 NetworkMessage.propTypes = {
   action: PropTypes.string.isRequired,

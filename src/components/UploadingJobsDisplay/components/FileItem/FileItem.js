@@ -10,21 +10,19 @@ import { getFileItemMeta } from './getFileItemMeta';
 
 import css from './FileItem.css';
 
-export const FileItem = memo(props => {
-  const {
-    uiKey,
-    status,
-    onDelete,
-    onUndoDelete,
-    name,
-    isSnapshotMode,
-    size,
-    uploadedValue,
-    errorMsgTranslationID,
-    uploadedDate,
-    loading,
-  } = props;
-
+export const FileItem = memo(({
+  uiKey,
+  status = FILE_STATUSES.UPLOADING,
+  onDelete = noop,
+  onUndoDelete = noop,
+  name,
+  isSnapshotMode = false,
+  size,
+  uploadedValue = 0,
+  errorMsgTranslationID = 'upload.invalid',
+  uploadedDate = null,
+  loading = false,
+}) => {
   const deleteFile = () => onDelete(uiKey, status);
   const undoDeleteFile = () => onUndoDelete(uiKey);
 
@@ -73,15 +71,4 @@ FileItem.propTypes = {
   loading: PropTypes.bool,
   onDelete: PropTypes.func,
   onUndoDelete: PropTypes.func,
-};
-
-FileItem.defaultProps = {
-  isSnapshotMode: false,
-  status: FILE_STATUSES.UPLOADING,
-  uploadedValue: 0,
-  errorMsgTranslationID: 'upload.invalid',
-  uploadedDate: null,
-  loading: false,
-  onDelete: noop,
-  onUndoDelete: noop,
 };

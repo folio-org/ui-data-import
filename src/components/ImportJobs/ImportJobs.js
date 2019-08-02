@@ -52,25 +52,21 @@ export class ImportJobs extends Component {
 
   static contextType = UploadingJobsContext;
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isDropZoneActive: false,
-      filesExtensionsModalOpen: false,
-      filesExtensionsModalType: null,
-      redirect: false,
-      hasLoaded: false,
-      prohibitFilesUploading: false,
-      showErrorMessage: false,
-    };
-
-    this.calloutRef = createRef();
-  }
+  state = {
+    isDropZoneActive: false,
+    filesExtensionsModalOpen: false,
+    filesExtensionsModalType: null,
+    redirect: false,
+    hasLoaded: false,
+    prohibitFilesUploading: false,
+    showErrorMessage: false,
+  };
 
   componentDidMount() {
     this.fetchUploadDefinition();
   }
+
+  calloutRef = createRef();
 
   async fetchUploadDefinition() {
     try {

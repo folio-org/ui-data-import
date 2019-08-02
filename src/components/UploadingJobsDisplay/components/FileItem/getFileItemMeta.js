@@ -33,20 +33,18 @@ const Loading = () => (
   </FormattedMessage>
 );
 
-export const getFileItemMeta = props => {
-  const {
-    isSnapshotMode,
-    size,
-    uploadedValue,
-    status,
-    name,
-    errorMsgTranslationID,
-    uploadedDate,
-    loading,
-    deleteFile,
-    undoDeleteFile,
-  } = props;
-
+export const getFileItemMeta = ({
+  isSnapshotMode,
+  size,
+  uploadedValue,
+  status,
+  name,
+  errorMsgTranslationID,
+  uploadedDate,
+  loading,
+  deleteFile,
+  undoDeleteFile,
+}) => {
   const defaultFileMeta = {
     renderProgress: noop,
     renderHeading: () => <span className={css.fileItemHeaderName}>{name}</span>,

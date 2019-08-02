@@ -24,7 +24,7 @@ import { SearchAndSort } from '../SearchAndSort';
 import { ViewContainer } from '../ViewContainer';
 import { listTemplate } from '../ListTemplate';
 import { ActionMenu } from '../ActionMenu';
-import { networkMessage } from '../Callout';
+import { createNetworkMessage } from '../Callout';
 
 export class ListView extends Component {
   static propTypes = {
@@ -62,30 +62,23 @@ export class ListView extends Component {
     },
   };
 
-  constructor(props) {
+  state = {
+    showRestoreModal: false,
+    restoreInProgress: false,
+  };
+
+  componentDidMount() {
     const {
       ENTITY_KEY,
       mutator,
-    } = props;
-
-    super(props);
-
-    this.calloutRef = createRef();
+    } = this.props;
 
     this.CRUDActions = getCRUDActions({
       ENTITY_KEY,
       mutator,
-      onSuccess: networkMessage('success', ENTITY_KEY, this.calloutRef),
-      onError: networkMessage('error', ENTITY_KEY, this.calloutRef),
+      onSuccess: createNetworkMessage('success', ENTITY_KEY, this.calloutRef),
+      onError: createNetworkMessage('error', ENTITY_KEY, this.calloutRef),
     });
-
-    this.state = {
-      showRestoreModal: false,
-      restoreInProgress: false,
-    };
-  }
-
-  componentDidMount() {
     this.setList();
   }
 
@@ -96,6 +89,8 @@ export class ListView extends Component {
       this.setList();
     }
   }
+
+  calloutRef = createRef();
 
   get entityList() {
     const { ENTITY_KEY } = this.props;
@@ -206,6 +201,7 @@ export class ListView extends Component {
             history={history}
             match={match}
             selectRecord={selectRecord}
+            selectedRecords={selectedRecords}
           >
             {props => (
               <Fragment>

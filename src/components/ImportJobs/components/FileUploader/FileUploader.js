@@ -14,26 +14,25 @@ import css from './FileUploader.css';
 
 const cx = classNames.bind(css);
 
-export const FileUploader = props => {
-  const {
-    title,
-    uploadButtonText,
-    errorMessage,
-    accept,
-    isDropZoneActive,
-    className,
-    acceptClassName,
-    activeClassName,
-    rejectClassName,
-    disabledClassName,
-    maxSize,
-    children,
-    style,
-    getDataTransferItems,
-    onDrop,
-    onDragEnter,
-    onDragLeave,
-  } = props;
+export const FileUploader = ({
+  title,
+  uploadButtonText,
+  errorMessage,
+  accept,
+  isDropZoneActive,
+  className = defaultStyles.defaultFileUploader,
+  acceptClassName,
+  activeClassName,
+  rejectClassName,
+  disabledClassName,
+  maxSize,
+  children,
+  style,
+  getDataTransferItems,
+  onDrop,
+  onDragEnter,
+  onDragLeave,
+}) => {
   const titleClassName = cx({
     uploadTitle: true,
     activeUploadTitle: isDropZoneActive,
@@ -116,5 +115,3 @@ FileUploader.propTypes = {
     PropTypes.func,
   ]),
 };
-
-FileUploader.defaultProps = { className: defaultStyles.defaultFileUploader };

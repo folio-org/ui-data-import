@@ -191,5 +191,13 @@
     "settings.associatedActionProfiles": "Perfis de ação associados",
     "incomingRecordTypes.edifact-invoice": "Fatura EDIFACT",
     "incomingRecordTypes.delimited": "Delimitado",
-    "settings.mappingProfiles.new": "Novo perfil de mapeamento"
+    "settings.mappingProfiles.new": "Novo perfil de mapeamento",
+    "chooseIncomingRecordType": "Escolha o tipo de registro de entrada",
+    "chooseFolioRecordType": "Escolha o tipo de registro FOLIO",
+    "settings.mappingProfiles.exceptionModal.label": "Não é possível excluir o perfil de mapeamento",
+    "settings.mappingProfiles.exceptionModal.message": "Este perfil de mapeamento de campo não pode ser excluído, pois está em uso por um ou mais perfis de ação.",
+    "modal.mappingProfile.delete.header": "Excluir o perfil de mapeamento \"{name}\"?",
+    "modal.mappingProfile.delete.message": "Excluir o perfil de mapeamento?",
+    "success.mappingProfiles.action": "O perfil de mapeamento \"{name}\" foi {action} com sucesso",
+    "error.mappingProfiles.action": "O perfil de mapeamento \"{name}\" não foi {action}"
 }

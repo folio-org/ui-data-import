@@ -11,15 +11,13 @@ const { LANGUAGES } = Languages;
 
 const markup = val => ({ __html: val });
 
-export const CodeHighlight = memo(props => {
-  const {
-    code,
-    language,
-    theme,
-    usePre,
-    className,
-  } = props;
-
+export const CodeHighlight = memo(({
+  code = '',
+  language = LANGUAGES.RAW,
+  theme = THEMES.COY,
+  usePre = false,
+  className,
+}) => {
   const themeModule = themes[theme];
   const codeBlock = (
     <code
@@ -45,12 +43,4 @@ CodeHighlight.propTypes = {
   theme: PropTypes.string,
   usePre: PropTypes.bool,
   className: PropTypes.string,
-};
-
-CodeHighlight.defaultProps = {
-  code: '',
-  language: LANGUAGES.RAW,
-  theme: THEMES.COY,
-  usePre: false,
-  className: '',
 };

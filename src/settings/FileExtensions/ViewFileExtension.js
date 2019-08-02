@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   TitleManager,
-  stripesShape,
   stripesConnect,
 } from '@folio/stripes/core';
 import {
@@ -44,7 +43,6 @@ export class ViewFileExtension extends Component {
   });
 
   static propTypes = {
-    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       fileExtension: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -84,18 +82,10 @@ export class ViewFileExtension extends Component {
     ],
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      showDeleteConfirmation: false,
-      deletingInProgress: false,
-    };
-
-    const { stripes } = this.props;
-
-    this.connectedViewMetaData = stripes.connect(ViewMetaData);
-  }
+  state = {
+    showDeleteConfirmation: false,
+    deletingInProgress: false,
+  };
 
   get fileExtensionData() {
     const { resources } = this.props;
@@ -176,7 +166,7 @@ export class ViewFileExtension extends Component {
         </Headline>
         <Row>
           <Col xs={12}>
-            <this.connectedViewMetaData
+            <ViewMetaData
               metadata={record.metadata}
               systemId={SYSTEM_USER_ID}
               systemUser={SYSTEM_USER_NAME}

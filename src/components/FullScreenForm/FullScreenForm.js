@@ -15,17 +15,15 @@ import {
 
 import css from './FullScreenForm.css';
 
-export const FullScreenForm = props => {
-  const {
-    id,
-    children,
-    onSubmit,
-    paneTitle,
-    onCancel,
-    isSubmitDisabled,
-    submitMessage,
-  } = props;
-
+export const FullScreenForm = ({
+  id,
+  children,
+  onSubmit,
+  paneTitle,
+  onCancel,
+  isSubmitDisabled = false,
+  submitMessage,
+}) => {
   const closeButtonRef = useRef();
 
   useEffect(() => closeButtonRef.current.focus(), []);
@@ -111,5 +109,3 @@ FullScreenForm.propTypes = {
   ]),
   isSubmitDisabled: PropTypes.bool,
 };
-
-FullScreenForm.defaultProps = { isSubmitDisabled: false };

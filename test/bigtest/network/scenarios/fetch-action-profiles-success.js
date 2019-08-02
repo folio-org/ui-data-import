@@ -81,4 +81,5 @@ export default server => {
   });
 
   server.get('/data-import-profiles/jobProfiles/:id', associatedJobProfiles.childSnapshotWrappers[0].content);
+  server.get('/data-import-profiles/mappingProfiles/:id', associatedMappingProfile.childSnapshotWrappers[0].content);
 };
