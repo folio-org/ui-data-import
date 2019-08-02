@@ -1,12 +1,13 @@
 # Change history for ui-data-import
 
-## 1.4.0 (IN-PROGRESS)
+## 1.5.0 (IN-PROGRESS)
 * Implement mapping profile duplication feature (UIDATIMP-228)
 * Implement mapping profile deletion feature (UIDATIMP-229)
 * Make mapping profile name a hotlink in action profile details (UIDATIMP-214)
 * Add tags accordion for match profiles (UIDATIMP-18)
 
-## [1.3.1](https://github.com/folio-org/ui-data-import/tree/v1.3.1) (2019-07-23)
+
+## [1.4.0](https://github.com/folio-org/ui-data-import/tree/v1.4.0) (2019-08-02)
 * Create data import settings page's 3rd pane for action profiles (UIDATIMP-8)
 * Implement header caret actions for action profiles (UIDATIMP-14)
 * Add form for new action profile action (UIDATIMP-144)
