@@ -50,7 +50,7 @@
     "modal.leavePage.actionButton": "استمر في التحميل",
     "importJobs.errorMessage": "فشل الطلب. حاول مرة أخرى",
     "returnToAssign.messageWhenProhibited": "جار تحميل الملف بالفعل",
-    "recordsCount": "{count, plural, zero {} one {# تسجيلة} two {} few {} many {} other {#تسجيلات}}",
+    "recordsCount": "{count, plural, zero {} one {# تسجيلة} two {} few {} many {} other {#تسجيلة}}",
     "fileName": "اسم الملف",
     "updated": "محدّث",
     "updatedBy": "تم تحديثه بواسطة",
