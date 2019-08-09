@@ -199,5 +199,8 @@
     "modal.mappingProfile.delete.header": "Excluir o perfil de mapeamento \"{name}\"?",
     "modal.mappingProfile.delete.message": "Excluir o perfil de mapeamento?",
     "success.mappingProfiles.action": "O perfil de mapeamento \"{name}\" foi {action} com sucesso",
-    "error.mappingProfiles.action": "O perfil de mapeamento \"{name}\" não foi {action}"
+    "error.mappingProfiles.action": "O perfil de mapeamento \"{name}\" não foi {action}",
+    "recordTypes.orderLine": "Pedido e linha de pedido",
+    "recordTypesSelect.compareExisting": "Qual tipo de registro existente você gostaria de comparar com o registro de tipo {type}?",
+    "marc": "MARC"
 }

@@ -199,5 +199,8 @@
     "modal.mappingProfile.delete.header": "Delete \"{name}\" field mapping profile?",
     "modal.mappingProfile.delete.message": "Delete field mapping profile?",
     "success.mappingProfiles.action": "The field mapping profile \"{name}\" was successfully {action}",
-    "error.mappingProfiles.action": "The field mapping profile \"{name}\" was not {action}"
+    "error.mappingProfiles.action": "The field mapping profile \"{name}\" was not {action}",
+    "recordTypes.orderLine": "Order & order line",
+    "recordTypesSelect.compareExisting": "Which type of existing record would you like to compare to the incoming {type} record?",
+    "marc": "MARC"
 }
