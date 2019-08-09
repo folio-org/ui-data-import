@@ -24,7 +24,7 @@ import {
   compose,
 } from '../../utils';
 import {
-  RECORD_TYPES,
+  FOLIO_RECORD_TYPES,
   INCOMING_RECORD_TYPES,
   FullScreenForm,
 } from '../../components';
@@ -47,7 +47,7 @@ export const MappingProfilesFormComponent = ({
       label: formatMessage({ id: captionId }),
     }));
 
-  const getFolioRecordTypesDataOptions = () => Object.entries(RECORD_TYPES)
+  const getFolioRecordTypesDataOptions = () => Object.entries(FOLIO_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
       value: recordType,
       label: formatMessage({ id: captionId }),

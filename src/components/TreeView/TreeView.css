@@ -1,0 +1,14 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.list {
+  margin-bottom: 0;
+}
+
+.rootList {
+  position: relative;
+  padding-left: 0;
+}
+
+.listItem {
+  list-style-type: none;
+}

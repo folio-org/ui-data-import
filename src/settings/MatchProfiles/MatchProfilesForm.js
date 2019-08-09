@@ -16,7 +16,10 @@ import {
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
-import { FullScreenForm } from '../../components/FullScreenForm';
+import {
+  FullScreenForm,
+  RecordTypesSelect,
+} from '../../components';
 import {
   compose,
   validateRequiredField,
@@ -104,8 +107,8 @@ export const MatchProfilesFormComponent = ({
           label={<FormattedMessage id="ui-data-import.details" />}
           separator={false}
         >
-          <div>
-            {/* will be implemented in https://issues.folio.org/browse/UIDATIMP-175 */}
+          <div data-test-record-types-select-field>
+            <RecordTypesSelect />
           </div>
         </Accordion>
       </AccordionSet>

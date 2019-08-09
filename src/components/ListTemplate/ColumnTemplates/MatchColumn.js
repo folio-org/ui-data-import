@@ -5,7 +5,10 @@ import React, {
 import PropTypes from 'prop-types';
 import HighLight from 'react-highlighter';
 
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  AppIcon,
+} from '@folio/stripes/core';
 
 import {
   HTML_LANG_DIRECTIONS,
@@ -14,7 +17,7 @@ import {
 } from '../../../utils/constants';
 import { capitalize } from '../../../utils';
 
-import { RECORD_TYPES } from '../recordTypes';
+import { FOLIO_RECORD_TYPES } from '../folioRecordTypes';
 
 import sharedCss from '../../../shared.css';
 
@@ -35,8 +38,12 @@ export const MatchColumn = memo(({
 
   return (
     <IntlConsumer>
-      {intl => RECORD_TYPES[existingRecordType].icon({
-        label: (
+      {({ formatMessage }) => (
+        <AppIcon
+          size="small"
+          app="data-import"
+          iconKey={FOLIO_RECORD_TYPES[existingRecordType].iconKey}
+        >
           <Fragment>
             {document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT && (
               <Fragment>
@@ -44,7 +51,7 @@ export const MatchColumn = memo(({
                   search={searchTerm}
                   className={sharedCss.container}
                 >
-                  {intl.formatMessage({ id: RECORD_TYPES[existingRecordType].captionId })}
+                  {formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
                 </HighLight>
                 &nbsp;&middot;&nbsp;
                 <HighLight
@@ -82,13 +89,13 @@ export const MatchColumn = memo(({
                   search={searchTerm}
                   className={sharedCss.container}
                 >
-                  {intl.formatMessage({ id: RECORD_TYPES[existingRecordType].captionId })}
+                  {formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
                 </HighLight>
               </Fragment>
             )}
           </Fragment>
-        ),
-      })}
+        </AppIcon>
+      )}
     </IntlConsumer>
   );
 });

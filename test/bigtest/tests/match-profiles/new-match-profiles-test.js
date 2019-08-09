@@ -58,6 +58,12 @@ describe('Match profile form', () => {
         expect(matchProfileForm.submitFormButtonDisabled).to.be.false;
       });
     });
+
+    describe('details accordion', () => {
+      it('incoming record select has correct amount of items', () => {
+        expect(matchProfileForm.recordTypesSelect.items().length).to.be.equal(8);
+      });
+    });
   });
 });
 

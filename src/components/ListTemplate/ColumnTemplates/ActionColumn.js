@@ -2,12 +2,16 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import HighLight from 'react-highlighter';
 
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  AppIcon,
+} from '@folio/stripes/core';
 
-import { RECORD_TYPES } from '../recordTypes';
+import { FOLIO_RECORD_TYPES } from '../folioRecordTypes';
 import { ACTION_TYPES } from '../actionTypes';
 
 import sharedCss from '../../../shared.css';
+import { ActionIcon } from '../ActionIcon';
 
 export const ActionColumn = memo(({
   record: {
@@ -18,8 +22,8 @@ export const ActionColumn = memo(({
 }) => {
   const createLabel = ({ formatMessage }) => {
     const actionString = formatMessage({ id: `ui-data-import.${action.toLowerCase()}` });
-    /** Record type should be in lower case except "MARC" is always all-caps */
-    const recordTypeString = formatMessage({ id: RECORD_TYPES[folioRecord].captionId })
+    // record type should be in lower case except "MARC" is always all-caps
+    const recordTypeString = formatMessage({ id: FOLIO_RECORD_TYPES[folioRecord].captionId })
       .toLowerCase()
       .replace('marc', 'MARC');
 
@@ -37,10 +41,21 @@ export const ActionColumn = memo(({
             {createLabel(intl)}
           </HighLight>
         );
-        const actionIcon = ACTION_TYPES[action].icon({ label });
-        const recordTypeIcon = RECORD_TYPES[folioRecord].icon({ label: actionIcon });
+        const actionIcon = (
+          <ActionIcon icon={ACTION_TYPES[action].iconKey}>
+            {label}
+          </ActionIcon>
+        );
 
-        return recordTypeIcon;
+        return (
+          <AppIcon
+            size="small"
+            app="data-import"
+            iconKey={FOLIO_RECORD_TYPES[folioRecord].iconKey}
+          >
+            {actionIcon}
+          </AppIcon>
+        );
       }}
     </IntlConsumer>
   );
