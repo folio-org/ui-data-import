@@ -155,6 +155,7 @@
   "settings.matchProfiles.exceptionModal.label": "Cannot delete match profile",
   "settings.matchProfiles.exceptionModal.message": "This match profile cannot be deleted, as it is in use by one or more job profiles.",
   "recordTypes.order": "Order",
+  "recordTypes.orderLine": "Order & order line",
   "recordTypes.invoice": "Invoice",
   "recordTypes.item": "Item",
   "recordTypes.instance": "Instance",
@@ -199,5 +200,7 @@
   "logViewer.filter.all": "All",
   "logViewer.filter.info": "Info",
   "logViewer.filter.errors": "Errors",
-  "logViewer.themes.label": "Use theme"
+  "logViewer.themes.label": "Use theme",
+  "recordTypesSelect.compareExisting": "Which type of existing record would you like to compare to the incoming {type} record?",
+  "marc": "MARC"
 }

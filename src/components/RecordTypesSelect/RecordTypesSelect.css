@@ -1,0 +1,32 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.container {
+  border-radius: 1rem;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-fill);
+  padding: 1rem 3rem;
+}
+
+.heading {
+  color: var(--color-text-p2);
+  text-align: center;
+}
+
+.treeView {
+  padding-right: 20px;
+}
+
+.item {
+  outline: none;
+  cursor: pointer;
+  border-radius: .5rem;
+  padding: .5rem;
+  background-color: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: .8rem;
+
+  &:hover {
+    background-color: color(var(--primary) whiteness(40%))
+  }
+}

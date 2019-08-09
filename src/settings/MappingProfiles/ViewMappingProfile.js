@@ -40,12 +40,10 @@ import {
   EndOfItem,
   ActionMenu,
   listTemplate,
+  INCOMING_RECORD_TYPES,
+  FOLIO_RECORD_TYPES,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
-import {
-  INCOMING_RECORD_TYPES,
-  RECORD_TYPES,
-} from '../../components/ListTemplate/recordTypes';
 
 import sharedCss from '../../shared.css';
 
@@ -266,7 +264,7 @@ export class ViewMappingProfile extends Component {
             </KeyValue>
             <KeyValue label={<FormattedMessage id="ui-data-import.folioRecordType" />}>
               <div data-test-folio-record-type>
-                <FormattedMessage id={RECORD_TYPES[mappingProfile.folioRecord].captionId} />
+                <FormattedMessage id={FOLIO_RECORD_TYPES[mappingProfile.folioRecord].captionId} />
               </div>
             </KeyValue>
             <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>

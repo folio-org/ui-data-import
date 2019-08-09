@@ -16,3 +16,5 @@ export * from './SearchAndSort';
 export * from './UploadingJobsContextProvider';
 export * from './UploadingJobsDisplay';
 export * from './ExceptionModal';
+export * from './TreeView';
+export * from './RecordTypesSelect';

@@ -2,9 +2,12 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import HighLight from 'react-highlighter';
 
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  AppIcon,
+} from '@folio/stripes/core';
 
-import { RECORD_TYPES } from '../recordTypes';
+import { FOLIO_RECORD_TYPES } from '../folioRecordTypes';
 
 import sharedCss from '../../../shared.css';
 
@@ -13,18 +16,20 @@ export const MappedColumn = memo(({
   searchTerm = '',
 }) => (
   <IntlConsumer>
-    {({ formatMessage }) => {
-      const label = (
+    {({ formatMessage }) => (
+      <AppIcon
+        size="small"
+        app="data-import"
+        iconKey={FOLIO_RECORD_TYPES[folioRecord].iconKey}
+      >
         <HighLight
           search={searchTerm}
           className={sharedCss.container}
         >
-          {formatMessage({ id: RECORD_TYPES[folioRecord].captionId })}
+          {formatMessage({ id: FOLIO_RECORD_TYPES[folioRecord].captionId })}
         </HighLight>
-      );
-
-      return RECORD_TYPES[folioRecord].icon({ label });
-    }}
+      </AppIcon>
+    )}
   </IntlConsumer>
 ));
 
