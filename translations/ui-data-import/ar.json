@@ -200,7 +200,7 @@
     "modal.mappingProfile.delete.message": "حذف وضع التخطيط؟",
     "success.mappingProfiles.action": "تم {action} وضع التخطيط \"{name}\" بنجاح",
     "error.mappingProfiles.action": "لم يتم {action} وضع التخطيط \"{name}\"",
-    "recordTypes.orderLine": "Order & order line",
-    "recordTypesSelect.compareExisting": "Which type of existing record would you like to compare to the incoming {type} record?",
-    "marc": "MARC"
+    "recordTypes.orderLine": "الطلبية وخط الطلبية",
+    "recordTypesSelect.compareExisting": "ما نوع التسجيلة الحالية الذي ترغب في مقارنته بالتسجيلة {type} الواردة؟",
+    "marc": "مارك"
 }
