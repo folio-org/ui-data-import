@@ -131,7 +131,7 @@ export class MatchProfiles extends Component {
     columnWidths: {
       selected: 40,
       name: 200,
-      match: 350,
+      match: 375,
       tags: 150,
       updated: 150,
       updatedBy: 250,

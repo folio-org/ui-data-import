@@ -20,7 +20,7 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
 
   server.post('/data-import-profiles/mappingProfiles', () => new Response(status, headers, response));
   await mappingProfileForm.nameField.fillAndBlur('Valid name');
-  await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC bibliographic');
+  await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC Bibliographic');
   await mappingProfileForm.folioRecordTypeField.selectAndBlur('Order');
   await mappingProfileForm.descriptionField.fillAndBlur('Valid description');
   await mappingProfileForm.submitFormButton.click();
@@ -52,7 +52,7 @@ describe('Mapping profile form', () => {
     describe('when filled correctly', () => {
       beforeEach(async () => {
         await mappingProfileForm.nameField.fillAndBlur('Valid name');
-        await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC bibliographic');
+        await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC Bibliographic');
         await mappingProfileForm.folioRecordTypeField.selectAndBlur('Order');
         await mappingProfileForm.descriptionField.fillAndBlur('Valid description');
       });
