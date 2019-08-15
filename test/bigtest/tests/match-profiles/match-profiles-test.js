@@ -42,7 +42,7 @@ describe('Match profiles', () => {
         });
 
         it('renders proper amount of items', () => {
-          expect(matchProfiles.list.rowCount).to.equal(2);
+          expect(matchProfiles.list.rowCount).to.equal(1);
         });
       });
     });
@@ -180,35 +180,35 @@ describe('Match profiles', () => {
         });
 
         it('for record #1', () => {
-          expect(matchProfiles.list.rows(0).cells(2).content).to.equal(htmlDecode('Order&nbsp;&middot;&nbsp;990&nbsp;&rarr;&nbsp;PO Line Number'));
+          expect(matchProfiles.list.rows(0).cells(2).content).to.equal(htmlDecode('Instance&nbsp;&middot;&nbsp;Instance&nbsp;&rarr;&nbsp;Instance HRID'));
         });
 
         it('for record #2', () => {
-          expect(matchProfiles.list.rows(1).cells(2).content).to.equal(htmlDecode('Instance&nbsp;&middot;&nbsp;020&nbsp;&rarr;&nbsp;ISBN'));
+          expect(matchProfiles.list.rows(1).cells(2).content).to.equal(htmlDecode('Order&nbsp;&middot;&nbsp;Order&nbsp;&rarr;&nbsp;PO Line Number'));
         });
 
         it('for record #3', () => {
-          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('MARC bibliographic&nbsp;&middot;&nbsp;935&nbsp;&rarr;&nbsp;035'));
+          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('Invoice&nbsp;&middot;&nbsp;Invoice&nbsp;&rarr;&nbsp;Vendor Invoice Number'));
         });
 
         it('for record #4', () => {
-          expect(matchProfiles.list.rows(3).cells(2).content).to.equal(htmlDecode('Instance&nbsp;&middot;&nbsp;001&nbsp;&rarr;&nbsp;Instance HRID'));
+          expect(matchProfiles.list.rows(3).cells(2).content).to.equal(htmlDecode('Item&nbsp;&middot;&nbsp;Item&nbsp;&rarr;&nbsp;Item Barcode'));
         });
 
         it('for record #5', () => {
-          expect(matchProfiles.list.rows(4).cells(2).content).to.equal(htmlDecode('Holdings&nbsp;&middot;&nbsp;Holdings&nbsp;&rarr;&nbsp;Location Code'));
+          expect(matchProfiles.list.rows(4).cells(2).content).to.equal(htmlDecode('MARC Bibliographic&nbsp;&middot;&nbsp;MARC Bibliographic&nbsp;&rarr;&nbsp;035. . .a'));
         });
 
         it('for record #6', () => {
-          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(htmlDecode('MARC authority&nbsp;&middot;&nbsp;010&nbsp;&rarr;&nbsp;010'));
+          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(htmlDecode('MARC Authority&nbsp;&middot;&nbsp;MARC Authority&nbsp;&rarr;&nbsp;010. . .a'));
         });
 
         it('for record #7', () => {
-          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('MARC bibliographic&nbsp;&middot;&nbsp;035&nbsp;&rarr;&nbsp;035'));
+          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('Instance&nbsp;&middot;&nbsp;Instance&nbsp;&rarr;&nbsp;ISBN'));
         });
 
         it('for record #8', () => {
-          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(htmlDecode('Order&nbsp;&middot;&nbsp;TBD&nbsp;&rarr;&nbsp;PO Line Number'));
+          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(htmlDecode('MARC Bibliographic&nbsp;&middot;&nbsp;MARC Bibliographic&nbsp;&rarr;&nbsp;035. . .a'));
         });
       });
 
@@ -218,35 +218,35 @@ describe('Match profiles', () => {
         });
 
         it('for record #1', () => {
-          expect(matchProfiles.list.rows(0).cells(2).content).to.equal(htmlDecode('PO Line Number&nbsp;&larr;&nbsp;990&nbsp;&middot;&nbsp;Order'));
+          expect(matchProfiles.list.rows(0).cells(2).content).to.equal(htmlDecode('Instance HRID&nbsp;&larr;&nbsp;Instance&nbsp;&middot;&nbsp;Instance'));
         });
 
         it('for record #2', () => {
-          expect(matchProfiles.list.rows(1).cells(2).content).to.equal(htmlDecode('ISBN&nbsp;&larr;&nbsp;020&nbsp;&middot;&nbsp;Instance'));
+          expect(matchProfiles.list.rows(1).cells(2).content).to.equal(htmlDecode('PO Line Number&nbsp;&larr;&nbsp;Order&nbsp;&middot;&nbsp;Order'));
         });
 
         it('for record #3', () => {
-          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('035&nbsp;&larr;&nbsp;935&nbsp;&middot;&nbsp;MARC bibliographic'));
+          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('Vendor Invoice Number&nbsp;&larr;&nbsp;Invoice&nbsp;&middot;&nbsp;Invoice'));
         });
 
         it('for record #4', () => {
-          expect(matchProfiles.list.rows(3).cells(2).content).to.equal(htmlDecode('Instance HRID&nbsp;&larr;&nbsp;001&nbsp;&middot;&nbsp;Instance'));
+          expect(matchProfiles.list.rows(3).cells(2).content).to.equal(htmlDecode('Item Barcode&nbsp;&larr;&nbsp;Item&nbsp;&middot;&nbsp;Item'));
         });
 
         it('for record #5', () => {
-          expect(matchProfiles.list.rows(4).cells(2).content).to.equal(htmlDecode('Location Code&nbsp;&larr;&nbsp;Holdings&nbsp;&middot;&nbsp;Holdings'));
+          expect(matchProfiles.list.rows(4).cells(2).content).to.equal(htmlDecode('A. . .035&nbsp;&larr;&nbsp;MARC Bibliographic&nbsp;&middot;&nbsp;MARC Bibliographic'));
         });
 
         it('for record #6', () => {
-          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(htmlDecode('010&nbsp;&larr;&nbsp;010&nbsp;&middot;&nbsp;MARC authority'));
+          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(htmlDecode('A. . .010&nbsp;&larr;&nbsp;MARC Authority&nbsp;&middot;&nbsp;MARC Authority'));
         });
 
         it('for record #7', () => {
-          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('035&nbsp;&larr;&nbsp;035&nbsp;&middot;&nbsp;MARC bibliographic'));
+          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('ISBN&nbsp;&larr;&nbsp;Instance&nbsp;&middot;&nbsp;Instance'));
         });
 
         it('for record #8', () => {
-          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(htmlDecode('PO Line Number&nbsp;&larr;&nbsp;TBD&nbsp;&middot;&nbsp;Order'));
+          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(htmlDecode('A. . .035&nbsp;&larr;&nbsp;MARC Bibliographic&nbsp;&middot;&nbsp;MARC Bibliographic'));
         });
       });
     });

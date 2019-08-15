@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import HighLight from 'react-highlighter';
-
+import { get } from 'lodash';
 import {
   IntlConsumer,
   AppIcon,
@@ -27,14 +27,19 @@ export const MatchColumn = memo(({
 }) => {
   const {
     existingRecordType,
-    existingStaticValueType,
     field,
-    fieldMarc,
-    fieldNonMarc,
   } = record;
 
+  console.log('Record: ', record);
+
   const fieldSource = (field || existingRecordType || '').replace(/_/g, ' ');
-  const fieldMatched = (fieldMarc || fieldNonMarc || existingStaticValueType || '').replace(/_/g, ' ');
+  const fieldsMatched = get(record, 'matchDetails[0].existingMatchExpression.fields', []).map(item => item.value || '');
+
+  if (document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT) {
+    fieldsMatched.reverse();
+  }
+
+  const fieldMatched = fieldsMatched.join('.').replace(/_/g, ' ');
 
   return (
     <IntlConsumer>

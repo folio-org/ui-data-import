@@ -39,11 +39,11 @@ describe('Match Profile View', () => {
   });
 
   it('has correct name', () => {
-    expect(matchProfileDetails.headline.text).to.be.equal('POL-MARC');
+    expect(matchProfileDetails.headline.text).to.be.equal('001 to Instance HRID');
   });
 
   it('has correct description', () => {
-    expect(matchProfileDetails.description.text).to.be.equal('Use for POL in 990 $p');
+    expect(matchProfileDetails.description.text).to.be.equal('MARC 001 to Instance ID (numerics only)');
   });
 
   it('display tags accordion', () => {

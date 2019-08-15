@@ -44,7 +44,7 @@ describe('Mapping Profile View', () => {
     });
 
     it('has correct incoming record type', () => {
-      expect(mappingProfileDetails.incomingRecordType.text).to.be.equal('MARC bibliographic');
+      expect(mappingProfileDetails.incomingRecordType.text).to.be.equal('MARC Bibliographic');
     });
 
     it('has correct FOLIO record type', () => {
@@ -126,7 +126,7 @@ describe('Mapping Profile View', () => {
     describe('when form is submitted', () => {
       beforeEach(async () => {
         await mappingProfileForm.nameField.fillAndBlur('Changed name');
-        await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC holdings');
+        await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC Holdings');
         await mappingProfileForm.folioRecordTypeField.selectAndBlur('Invoice');
         await mappingProfileForm.descriptionField.fillAndBlur('Changed description');
         await mappingProfileForm.submitFormButton.click();
@@ -134,7 +134,7 @@ describe('Mapping Profile View', () => {
 
       it('then mapping profile details renders updated mapping profile', () => {
         expect(mappingProfileDetails.headline.text).to.equal('Changed name');
-        expect(mappingProfileDetails.incomingRecordType.text).to.equal('MARC holdings');
+        expect(mappingProfileDetails.incomingRecordType.text).to.equal('MARC Holdings');
         expect(mappingProfileDetails.folioRecordType.text).to.equal('Invoice');
         expect(mappingProfileDetails.description.text).to.equal('Changed description');
       });
@@ -180,7 +180,7 @@ describe('Mapping Profile View', () => {
     describe('when form is submitted', () => {
       beforeEach(async () => {
         await mappingProfileForm.nameField.fillAndBlur('Valid name');
-        await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC bibliographic');
+        await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC Bibliographic');
         await mappingProfileForm.folioRecordTypeField.selectAndBlur('Order');
         await mappingProfileForm.descriptionField.fillAndBlur('Valid description');
         await mappingProfileForm.submitFormButton.click();
@@ -188,7 +188,7 @@ describe('Mapping Profile View', () => {
 
       it('then mapping profile details renders duplicated mapping profile', () => {
         expect(mappingProfileDetails.headline.text).to.equal('Valid name');
-        expect(mappingProfileDetails.incomingRecordType.text).to.equal('MARC bibliographic');
+        expect(mappingProfileDetails.incomingRecordType.text).to.equal('MARC Bibliographic');
         expect(mappingProfileDetails.folioRecordType.text).to.equal('Order');
         expect(mappingProfileDetails.description.text).to.equal('Valid description');
       });
