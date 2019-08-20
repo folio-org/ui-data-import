@@ -624,7 +624,6 @@ export class UploadingJobsDisplay extends Component {
                 withEditRecordButton: false,
               }}
               RecordForm={null}
-              RecordView={() => null}
             />
           )
           : (

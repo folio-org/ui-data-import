@@ -14,6 +14,7 @@ import {
   landingPageLink,
   importJobs,
   jobProfiles,
+  jobProfileDetails,
 } from '../interactors';
 import translation from '../../../translations/ui-data-import/en';
 
@@ -225,6 +226,24 @@ describe('Uploading jobs display', () => {
 
       it('does not have new button', () => {
         expect(jobProfiles.newJobProfileButton.isPresent).to.be.false;
+      });
+    });
+
+    describe('job profile details pane', () => {
+      beforeEach(async () => {
+        await jobProfiles.list.rows(0).click();
+      });
+
+      it('opens upon click on row', () => {
+        expect(jobProfileDetails.isPresent).to.be.true;
+      });
+
+      it('does not have caret actions', () => {
+        expect(jobProfileDetails.paneHeaderDropdown.isPresent).to.be.false;
+      });
+
+      it('does not have edit button', () => {
+        expect(jobProfileDetails.editButton.isPresent).to.be.false;
       });
     });
   });

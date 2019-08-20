@@ -48,8 +48,6 @@ import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
 
-const ConnectedViewMetaData = stripesConnect(ViewMetaData);
-
 @stripesConnect
 @injectIntl
 @withTags
@@ -100,6 +98,7 @@ export class ViewJobProfile extends Component {
     paneId: PropTypes.string, // eslint-disable-line
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
+    withEditRecordButton: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -110,6 +109,7 @@ export class ViewJobProfile extends Component {
       'duplicate',
       'delete',
     ],
+    withEditRecordButton: true,
   };
 
   state = {
@@ -174,6 +174,12 @@ export class ViewJobProfile extends Component {
   );
 
   renderLastMenu(record) {
+    const { withEditRecordButton } = this.props;
+
+    if (!withEditRecordButton) {
+      return null;
+    }
+
     return (
       <LastMenu
         caption="ui-data-import.edit"
@@ -189,6 +195,7 @@ export class ViewJobProfile extends Component {
       intl,
       onClose,
       tagsEnabled,
+      actionMenuItems,
     } = this.props;
 
     const {
@@ -230,6 +237,10 @@ export class ViewJobProfile extends Component {
 
     const tagsEntityLink = `data-import-profiles/jobProfiles/${record.id}`;
 
+    const actionMenu = Array.isArray(actionMenuItems) && !!actionMenuItems.length
+      ? this.renderActionMenu
+      : null;
+
     return (
       <Pane
         id="pane-job-profile-details"
@@ -237,7 +248,7 @@ export class ViewJobProfile extends Component {
         fluidContentWidth
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.jobProfileName" />}
-        actionMenu={this.renderActionMenu}
+        actionMenu={actionMenu}
         lastMenu={this.renderLastMenu(record)}
         dismissible
         onClose={onClose}
@@ -252,7 +263,7 @@ export class ViewJobProfile extends Component {
         </Headline>
         <AccordionSet>
           <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
-            <ConnectedViewMetaData
+            <ViewMetaData
               metadata={record.metadata}
               systemId={SYSTEM_USER_ID}
               systemUser={SYSTEM_USER_NAME}
