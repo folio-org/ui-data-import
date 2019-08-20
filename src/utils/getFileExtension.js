@@ -2,9 +2,9 @@
 export const getFileExtension = file => {
   if (file && file.name) {
     const fileExtensionRegExp = /\.(\w+)$/;
-    const [extension] = (file.name.match(fileExtensionRegExp) || []);
+    const [extension = null] = (file.name.match(fileExtensionRegExp) || []);
 
-    return extension;
+    return extension && extension.toLowerCase();
   }
 
   return null;

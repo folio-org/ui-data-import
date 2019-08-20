@@ -110,7 +110,7 @@ export class UploadingJobsDisplay extends Component {
       location,
     } = this.props;
 
-    const { state: { files } = {} } = location;
+    const files = get(location, ['state', 'files']);
 
     // in snapshot mode component renders files from upload definition if any
     // otherwise component renders files that are going to be uploaded
@@ -152,6 +152,7 @@ export class UploadingJobsDisplay extends Component {
 
   handleNavigation = nextLocation => {
     const { location } = this.props;
+
     const locationHasChanged = location.pathname !== nextLocation.pathname;
     const shouldPrompt = this.filesUploading && locationHasChanged;
 
@@ -377,7 +378,7 @@ export class UploadingJobsDisplay extends Component {
       console.error(error); // eslint-disable-line no-console
     }
 
-    const lastFileDeleted = Object.values(get(this.state, ['files'], {})).length === 0;
+    const lastFileDeleted = isEmpty(get(this.state, ['files'], {}));
 
     if (lastFileDeleted) {
       await this.updateJobProfilesComponent();

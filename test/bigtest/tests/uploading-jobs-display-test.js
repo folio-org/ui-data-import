@@ -258,7 +258,7 @@ describe('Uploading jobs display', () => {
           types: ['Files'],
           files: [
             new File([], 'TAMU-Gen_55.mrc'),
-            new File([], 'TAMU-Gen.mrc'),
+            new File([], 'TAMU-Gen.MRC'),
           ],
         },
       });

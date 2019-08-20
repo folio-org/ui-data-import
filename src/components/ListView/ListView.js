@@ -6,7 +6,10 @@ import React, {
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import { get } from 'lodash';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
 
 import { IntlConsumer } from '@folio/stripes/core';
 import {
@@ -196,10 +199,7 @@ export class ListView extends Component {
 
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
-
-    const actionMenu = Array.isArray(actionMenuItems) && !!actionMenuItems.length
-      ? this.renderActionMenu
-      : null;
+    const actionMenu = isEmpty(actionMenuItems) ? null : this.renderActionMenu;
 
     return (
       <IntlConsumer>
