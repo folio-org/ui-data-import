@@ -3,16 +3,14 @@ import { FormattedMessage } from 'react-intl';
 
 import { Settings } from '@folio/stripes/smart-components';
 import { InfoPopover } from '@folio/stripes/components';
-import {
-  AppIcon,
-  stripesShape,
-} from '@folio/stripes/core';
+import { stripesShape } from '@folio/stripes/core';
 
-import { JobProfiles } from '../JobProfiles';
+import { createJobProfiles } from '../JobProfiles';
 import { MatchProfiles } from '../MatchProfiles';
 import { ActionProfiles } from '../ActionProfiles';
 import { MappingProfiles } from '../MappingProfiles';
 import { FileExtensions } from '../FileExtensions';
+import { generateSettingsLabel } from '../../utils';
 
 import css from './DataImportSettings.css';
 
@@ -25,22 +23,22 @@ export class DataImportSettings extends Component {
       pages: [
         {
           route: 'job-profiles',
-          label: this.generateSettingsLabel('jobProfiles.title', 'jobProfiles'),
-          component: JobProfiles,
+          label: generateSettingsLabel('jobProfiles.title', 'jobProfiles'),
+          component: createJobProfiles(),
         },
         {
           route: 'match-profiles',
-          label: this.generateSettingsLabel('matchProfiles.title', 'matchProfiles'),
+          label: generateSettingsLabel('matchProfiles.title', 'matchProfiles'),
           component: MatchProfiles,
         },
         {
           route: 'action-profiles',
-          label: this.generateSettingsLabel('actionProfiles.title', 'actionProfiles'),
+          label: generateSettingsLabel('actionProfiles.title', 'actionProfiles'),
           component: ActionProfiles,
         },
         {
           route: 'mapping-profiles',
-          label: this.generateSettingsLabel('mappingProfiles.title', 'mappingProfiles'),
+          label: generateSettingsLabel('mappingProfiles.title', 'mappingProfiles'),
           component: MappingProfiles,
         },
       ],
@@ -76,25 +74,13 @@ export class DataImportSettings extends Component {
     );
   }
 
-  generateSettingsLabel(labelId, iconKey) {
-    return (
-      <AppIcon
-        size="small"
-        app="data-import"
-        iconKey={iconKey}
-      >
-        <FormattedMessage id={`ui-data-import.settings.${labelId}`} />
-      </AppIcon>
-    );
-  }
-
   render() {
     return (
       <Settings
         {...this.props}
         navPaneWidth="15%"
         sections={this.sections}
-        paneTitle={this.generateSettingsLabel('index.paneTitle')}
+        paneTitle={generateSettingsLabel('index.paneTitle')}
       />
     );
   }

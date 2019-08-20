@@ -12,6 +12,7 @@
   "plugins": [
     "babel",
     "no-only-tests",
+    "react-hooks"
   ],
   "root": true,
   "rules": {
@@ -117,6 +118,8 @@
           "skip"
         ]
       }
-    ]
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }

@@ -6,7 +6,10 @@ import React, {
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import { get } from 'lodash';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
 
 import { IntlConsumer } from '@folio/stripes/core';
 import {
@@ -44,7 +47,9 @@ export class ListView extends Component {
     INITIAL_RESULT_COUNT: PropTypes.number,
     RESULT_COUNT_INCREMENT: PropTypes.number,
     ENTITY_KEY: PropTypes.string,
-    actionMenuItems: PropTypes.arrayOf(PropTypes.string).isRequired,
+    detailProps: PropTypes.object,
+    withNewRecordButton: PropTypes.bool,
+    actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
     columnWidths: PropTypes.PropTypes.object.isRequired,
     initialValues: PropTypes.object.isRequired,
@@ -56,6 +61,7 @@ export class ListView extends Component {
     INITIAL_RESULT_COUNT: 5000,
     RESULT_COUNT_INCREMENT: 5000,
     ENTITY_KEY: '',
+    withNewRecordButton: true,
     selectedRecord: {
       record: null,
       hasLoaded: false,
@@ -180,16 +186,20 @@ export class ListView extends Component {
       RESULT_COUNT_INCREMENT,
       initialValues,
       ENTITY_KEY,
+      withNewRecordButton,
+      detailProps,
       visibleColumns,
       columnWidths,
       RecordView,
       RecordForm,
       renderHeaders,
+      actionMenuItems,
     } = this.props;
     const { showRestoreModal } = this.state;
 
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
+    const actionMenu = isEmpty(actionMenuItems) ? null : this.renderActionMenu;
 
     return (
       <IntlConsumer>
@@ -216,7 +226,7 @@ export class ListView extends Component {
                   resultCountMessageKey={`ui-data-import.settings.${ENTITY_KEY}.count`}
                   resultsLabel={label}
                   defaultSort="name"
-                  actionMenu={this.renderActionMenu}
+                  actionMenu={actionMenu}
                   visibleColumns={visibleColumns}
                   columnWidths={columnWidths}
                   columnMapping={renderHeaders(intl)}
@@ -227,8 +237,10 @@ export class ListView extends Component {
                     selectRecord,
                     selectedRecords,
                   })}
+                  withNewRecordButton={withNewRecordButton}
                   ViewRecordComponent={RecordView}
                   EditRecordComponent={RecordForm}
+                  detailProps={detailProps}
                   newRecordInitialValues={initialValues}
                   editRecordInitialValues={selectedRecord.record}
                   editRecordInitialValuesAreLoaded={selectedRecord.hasLoaded}

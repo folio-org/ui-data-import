@@ -95,6 +95,7 @@ export class SearchAndSort extends Component {
       }),
       resultCount: PropTypes.number,
     }).isRequired,
+    withNewRecordButton: PropTypes.bool,
     ViewRecordComponent: PropTypes.func.isRequired,
     EditRecordComponent: PropTypes.func,
     actionMenu: PropTypes.func, // parameter properties provided by caller
@@ -137,6 +138,7 @@ export class SearchAndSort extends Component {
   };
 
   static defaultProps = {
+    withNewRecordButton: true,
     showSingleResult: false,
     maxSortKeys: 2,
     onComponentWillUnmount: noop,
@@ -465,6 +467,12 @@ export class SearchAndSort extends Component {
     return `${path}/view/${id}${search}`;
   }
 
+  closeDetails = () => {
+    const { match: { path } } = this.props;
+
+    this.transitionToParams({ _path: path });
+  };
+
   renderDetailsPane(source) {
     const {
       detailProps,
@@ -504,7 +512,14 @@ export class SearchAndSort extends Component {
   }
 
   renderNewRecordButton() {
-    const { location } = this.props;
+    const {
+      location,
+      withNewRecordButton,
+    } = this.props;
+
+    if (!withNewRecordButton) {
+      return null;
+    }
 
     return (
       <PaneMenu>

@@ -5,9 +5,9 @@ import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
 
 export default server => {
   server.create('file-extension', {
-    extension: '.marc',
+    extension: '.mrc',
     importBlocked: false,
-    dataTypes: ['Marc'],
+    dataTypes: ['MARC'],
   });
   server.create('file-extension', {
     extension: '.csv',

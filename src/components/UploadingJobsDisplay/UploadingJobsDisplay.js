@@ -12,6 +12,7 @@ import {
   omit,
   some,
   every,
+  get,
 } from 'lodash';
 
 import {
@@ -35,6 +36,8 @@ import {
   createUrl,
   createOkapiHeaders,
   xhrAddHeaders,
+  getFileExtension,
+  generateSettingsLabel,
 } from '../../utils';
 import {
   DEFAULT_TIMEOUT_BEFORE_FILE_DELETION,
@@ -42,6 +45,7 @@ import {
 } from '../../utils/constants';
 import * as API from '../../utils/upload';
 import { loadMarcRecords } from '../../utils/loadRecords';
+import { createJobProfiles } from '../../settings/JobProfiles';
 
 @withRouter
 @withStripes
@@ -68,9 +72,11 @@ export class UploadingJobsDisplay extends Component {
   static knownErrorsIDs = ['upload.fileSize.invalid'];
 
   state = {
+    files: {},
     hasLoaded: false,
     renderLeaveModal: false,
     recordsLoadingInProgress: false,
+    JobProfilesComponent: null,
   };
 
   async componentDidMount() {
@@ -81,9 +87,10 @@ export class UploadingJobsDisplay extends Component {
       [FILE_STATUSES.ERROR_DEFINITION]: this.deleteFileFromState,
     };
 
-    this.mapFilesToState();
-    this.uploadJobs();
     this.setPageLeaveHandler();
+    this.mapFilesToState();
+    await this.uploadJobs();
+    this.updateJobProfilesComponent();
   }
 
   componentWillUnmount() {
@@ -100,10 +107,10 @@ export class UploadingJobsDisplay extends Component {
   mapFilesToState() {
     const {
       history,
-      location: { state = {} },
+      location,
     } = this.props;
 
-    const { files } = state;
+    const files = get(location, ['state', 'files']);
 
     // in snapshot mode component renders files from upload definition if any
     // otherwise component renders files that are going to be uploaded
@@ -112,7 +119,10 @@ export class UploadingJobsDisplay extends Component {
     this.setState({ files });
 
     // clear history state to prevent incorrect determination of snapshot mode
-    history.replace({ state: {} });
+    history.replace({
+      ...location,
+      state: {},
+    });
   }
 
   // prevent from leaving the page in case if uploading is in progress
@@ -141,7 +151,10 @@ export class UploadingJobsDisplay extends Component {
   };
 
   handleNavigation = nextLocation => {
-    const shouldPrompt = this.filesUploading;
+    const { location } = this.props;
+
+    const locationHasChanged = location.pathname !== nextLocation.pathname;
+    const shouldPrompt = this.filesUploading && locationHasChanged;
 
     if (shouldPrompt) {
       this.setState({
@@ -343,7 +356,7 @@ export class UploadingJobsDisplay extends Component {
         this.createDeleteFileHeaders(),
       );
 
-      this.deleteFileFromState(fileKey);
+      await this.deleteFileFromState(fileKey);
     } catch (error) {
       this.updateFileState(fileKey, {
         status: fileStatus,
@@ -364,6 +377,12 @@ export class UploadingJobsDisplay extends Component {
 
       console.error(error); // eslint-disable-line no-console
     }
+
+    const lastFileDeleted = isEmpty(get(this.state, ['files'], {}));
+
+    if (lastFileDeleted) {
+      await this.updateJobProfilesComponent();
+    }
   };
 
   createFileUrl = file => {
@@ -380,13 +399,13 @@ export class UploadingJobsDisplay extends Component {
     return createOkapiHeaders(okapi);
   }
 
-  deleteFileFromState = fileKey => {
+  deleteFileFromState = fileKey => new Promise(resolve => {
     this.setState(state => {
       const updatedFiles = omit(state.files, fileKey);
 
       return { files: updatedFiles };
-    });
-  };
+    }, resolve);
+  });
 
   handleDeleteSuccessfullyUploadedFile = (fileKey, fileStatus) => {
     const { timeoutBeforeFileDeletion } = this.props;
@@ -481,6 +500,33 @@ export class UploadingJobsDisplay extends Component {
     }
   };
 
+  /** @returns {Promise<string[]>} */
+  async getDataTypes() {
+    const { stripes: { okapi } } = this.props;
+    const [firstFile] = Object.values(get(this.state, ['files'], {}));
+    const fileExtension = getFileExtension(firstFile);
+
+    const { url: host } = okapi;
+
+    const response = await fetch(
+      createUrl(`${host}/data-import/fileExtensions`, { query: `extension=="${fileExtension}"` }, false),
+      { headers: { ...createOkapiHeaders(okapi) } },
+    );
+
+    const body = await response.json();
+
+    return get(body, ['fileExtensions', 0, 'dataTypes'], []);
+  }
+
+  async updateJobProfilesComponent() {
+    const dataTypes = await this.getDataTypes();
+    const dataTypeQuery = dataTypes.length > 0
+      ? `(${dataTypes.map(dataType => `"${dataType}"`).join(' OR ')})`
+      : '';
+
+    this.setState({ JobProfilesComponent: createJobProfiles(true, dataTypeQuery) });
+  }
+
   // TODO: this is temporary way (will be changed/removed) of deciding whether to allow to initiate
   // the process of loading MARC BIB files (UIDATIMP-185)
   renderLoadMarcButton = menu => {
@@ -522,11 +568,14 @@ export class UploadingJobsDisplay extends Component {
     const {
       hasLoaded,
       renderLeaveModal,
+      JobProfilesComponent,
     } = this.state;
 
     if (!hasLoaded) {
       return <Preloader />;
     }
+
+    const jobProfilesLabel = generateSettingsLabel('jobProfiles.title', 'jobProfiles');
 
     const leavePageMessage = (
       <FormattedMessage
@@ -565,6 +614,28 @@ export class UploadingJobsDisplay extends Component {
             />
           </div>
         </Pane>
+        {JobProfilesComponent
+          ? (
+            <JobProfilesComponent
+              label={jobProfilesLabel}
+              actionMenuItems={null}
+              withNewRecordButton={false}
+              detailProps={{
+                actionMenuItems: null,
+                withEditRecordButton: false,
+              }}
+              RecordForm={null}
+            />
+          )
+          : (
+            <Pane
+              paneTitle={jobProfilesLabel}
+              defaultWidth="fill"
+            >
+              <Preloader />
+            </Pane>
+          )
+        }
       </Paneset>
     );
   }

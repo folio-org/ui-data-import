@@ -1,4 +1,8 @@
-import React, { Fragment } from 'react';
+import React, {
+  Fragment,
+  useState,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { isNil } from 'lodash';
 
@@ -34,6 +38,10 @@ export const LineBetween = props => {
     toAnchorOffset = '',
     orientation = ORIENTATIONS.VERTICAL,
   } = props;
+  const [, forceUpdate] = useState(false);
+
+  // re-render to access DOM nodes
+  useEffect(() => forceUpdate(true), []);
 
   const fromElement = getElement(from);
   const toElement = getElement(to);

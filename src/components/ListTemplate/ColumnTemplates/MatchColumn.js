@@ -30,8 +30,6 @@ export const MatchColumn = memo(({
     field,
   } = record;
 
-  console.log('Record: ', record);
-
   const fieldSource = (field || existingRecordType || '').replace(/_/g, ' ');
   const fieldsMatched = get(record, 'matchDetails[0].existingMatchExpression.fields', []).map(item => item.value || '');
 
