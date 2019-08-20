@@ -10,8 +10,6 @@ import {
   Redirect,
 } from 'react-router';
 import {
-  map,
-  every,
   forEach,
   isEmpty,
 } from 'lodash';
@@ -32,7 +30,10 @@ import {
 import { Preloader } from '../Preloader';
 
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
-import { createUrl } from '../../utils';
+import {
+  createUrl,
+  getFileExtension,
+} from '../../utils';
 import * as API from '../../utils/upload';
 import {
   checkForKnowErrorModalTypes,
@@ -227,11 +228,10 @@ export class ImportJobs extends Component {
   }
 
   checkFilesHaveSameExtension(files = []) {
-    const fileTypeRegex = /\.(\w+)$/;
-    const filesTypes = map(files, ({ name }) => (name.match(fileTypeRegex) || [])[1]);
-    const baseFileType = filesTypes[0];
+    const fileExtensions = files.map(getFileExtension);
+    const baseFileExtension = fileExtensions[0];
 
-    return every(filesTypes, type => type === baseFileType);
+    return fileExtensions.every(fileExtension => fileExtension === baseFileExtension);
   }
 
   showFilesExtensionsModal(payload) {

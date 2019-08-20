@@ -14,3 +14,5 @@ export * from './craftLayerURL';
 export * from './loadRecords';
 export * from './trimSearchTerm';
 export * from './checkboxList';
+export * from './getFileExtension';
+export * from './generateSettingsLabel';

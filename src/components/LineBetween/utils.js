@@ -17,16 +17,18 @@ export const getElement = selector => {
   }
 };
 
-/** @param {Element} parentElem */
-export const usePortal = parentElem => {
+/** @param {Element} parentElement */
+export const usePortal = parentElement => {
   const [rootElem] = useState(document.createElement('div'));
   const targetRef = useRef(rootElem);
 
   useEffect(() => {
-    parentElem.appendChild(targetRef.current);
+    const targetElement = targetRef.current;
 
-    return () => targetRef.current.remove();
-  }, []);
+    parentElement.appendChild(targetElement);
+
+    return () => targetElement.remove();
+  }, [parentElement]);
 
   return targetRef.current;
 };

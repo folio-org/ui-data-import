@@ -6,6 +6,7 @@
 * Make mapping profile name a hotlink in action profile details (UIDATIMP-214)
 * Add tags accordion for match profiles (UIDATIMP-18)
 * Create TreeView component (UIDATIMP-243)
+* Add choose jobs screen 2nd pane (UIDATIMP-257)
 
 ## [1.4.0](https://github.com/folio-org/ui-data-import/tree/v1.4.0) (2019-08-02)
 * Create data import settings page's 3rd pane for action profiles (UIDATIMP-8)

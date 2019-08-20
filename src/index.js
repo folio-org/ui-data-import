@@ -44,7 +44,6 @@ class DataImport extends Component {
           />
           <Route
             path={`${path}/job-profile`}
-            exact
             component={JobProfile}
           />
           <Route

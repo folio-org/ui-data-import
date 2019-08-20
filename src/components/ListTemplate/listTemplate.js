@@ -45,6 +45,12 @@ export const listTemplate = ({
       searchTerm={searchTerm}
     />
   ),
+  description: record => (
+    <DefaultColumn
+      value={record.description}
+      searchTerm={searchTerm}
+    />
+  ),
   match: record => (
     <MatchColumn
       record={record}

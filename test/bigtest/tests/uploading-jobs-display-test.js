@@ -13,6 +13,7 @@ import {
   leavePageModal,
   landingPageLink,
   importJobs,
+  jobProfiles,
 } from '../interactors';
 import translation from '../../../translations/ui-data-import/en';
 
@@ -186,7 +187,16 @@ describe('Uploading jobs display', () => {
   });
 
   describe('when there is no upload definition in progress', () => {
-    setupApplication({ scenarios: ['no-upload-definition-in-progress'] });
+    setupApplication({
+      scenarios: [
+        'no-upload-definition-in-progress',
+        'fetch-file-extensions-success',
+        'fetch-job-profiles-success',
+        'fetch-users',
+        'fetch-tags',
+        'tags-enabled',
+      ],
+    });
 
     beforeEach(function () {
       this.visit('/data-import/job-profile');
@@ -198,6 +208,24 @@ describe('Uploading jobs display', () => {
 
     it('renders empty message with correct wording', () => {
       expect(uploadingJobsDisplay.emptyMsg.text).to.equal(translation.noUploadedFiles);
+    });
+
+    describe('job profiles list', () => {
+      it('renders all available job profiles', () => {
+        expect(jobProfiles.list.rowCount).to.be.equal(3);
+      });
+
+      it('has description column', () => {
+        expect(jobProfiles.list.headers(1).text).to.be.equal(translation.description);
+      });
+
+      it('does not have caret actions', () => {
+        expect(jobProfiles.actionMenu.isPresent).to.be.false;
+      });
+
+      it('does not have new button', () => {
+        expect(jobProfiles.newJobProfileButton.isPresent).to.be.false;
+      });
     });
   });
 
