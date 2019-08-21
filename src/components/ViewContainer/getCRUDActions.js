@@ -36,7 +36,9 @@ export const getCRUDActions = ({
       return response || { ok: true };
     })
     .catch(error => {
-      onError('delete', record, error);
+      if (error.status !== 409) {
+        onError('delete', record, error);
+      }
 
       return error;
     });

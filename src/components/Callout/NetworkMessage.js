@@ -6,7 +6,10 @@ export const NetworkMessage = memo(({
   messageId,
   action,
   type,
-  record: { name: recordName },
+  record: {
+    name: recordName,
+    extension,
+  },
 }) => (
   <div>
     <FormattedMessage
@@ -25,7 +28,7 @@ export const NetworkMessage = memo(({
           id={`ui-data-import.${type}.${messageId}`}
           tagName="p"
           values={{
-            name: recordName,
+            name: recordName || extension,
             action: <FormattedMessage id={`ui-data-import.action.${action}`} />,
           }}
         />
