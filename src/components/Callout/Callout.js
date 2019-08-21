@@ -10,7 +10,7 @@ export const createNetworkMessage = (type, entityKey, calloutRef) => async (acti
   let messageId = await getXHRErrorMessage(response);
 
   if (!messageId) {
-    messageId = `${entityKey}.action`;
+    messageId = type === 'error' ? '' : `${entityKey}.action`;
   }
 
   current.sendCallout({
