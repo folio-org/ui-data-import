@@ -531,11 +531,11 @@ export class UploadingJobsDisplay extends Component {
   // the process of loading MARC BIB files (UIDATIMP-185)
   renderLoadMarcButton = menu => {
     const {
-      files = [],
+      files = {},
       recordsLoadingInProgress,
     } = this.state;
 
-    const areMarcFiles = every(files, file => file.name.match(/\.(marc|mrc)$/, 'i'));
+    const areMarcFiles = every(files, file => file.name.match(/\.(marc|mrc)$/i));
 
     if (!areMarcFiles || isEmpty(files)) {
       return null;
