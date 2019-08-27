@@ -195,6 +195,7 @@
   "success.actionProfiles.action": "The action profile \"{name}\" was successfully {action}",
   "error.mappingProfiles.action": "The field mapping profile \"{name}\" was not {action}",
   "success.mappingProfiles.action": "The field mapping profile \"{name}\" was successfully {action}",
+  "error.mappingProfile.duplication.invalid": "The field mapping profile \"{name}\" already exists",
   "validation.enterValue": "Please enter a value",
   "logViewer.filter.label": "Show",
   "logViewer.filter.all": "All",
