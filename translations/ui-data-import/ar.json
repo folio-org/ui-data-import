@@ -195,12 +195,13 @@
     "modal.mappingProfile.delete.message": "حذف وضع التخطيط؟",
     "success.mappingProfiles.action": "تم {action} وضع التخطيط \"{name}\" بنجاح",
     "error.mappingProfiles.action": "لم يتم {action} وضع التخطيط \"{name}\"",
-    "recordTypes.orderLine": "الطلبية وخط الطلبية",
+    "recordTypes.orderLine": "الطلبية وسطر الطلبية",
     "recordTypesSelect.compareExisting": "ما نوع التسجيلة الحالية الذي ترغب في مقارنته بالتسجيلة {type} الواردة؟",
     "marc": "مارك",
     "error.fileExtension.extension.invalid": "امتداد الملف {name} تنسيق غير صالح",
     "error.fileExtension.duplication.invalid": "امتداد الملف {name} موجود بالفعل",
     "error.jobProfile.duplication.invalid": "وضع الوظيفة  \"{name}\" موجود بالفعل",
     "error.matchProfile.duplication.invalid": "وضع المطابقة \"{name}\" موجود بالفعل",
-    "error.actionProfile.duplication.invalid": "وضع الإجراء  \"{name}\" موجود بالفعل"
+    "error.actionProfile.duplication.invalid": "وضع الإجراء  \"{name}\" موجود بالفعل",
+    "error.mappingProfile.duplication.invalid": "وضع تخطيط الحقل \"{name}\" موجود بالفعل"
 }
