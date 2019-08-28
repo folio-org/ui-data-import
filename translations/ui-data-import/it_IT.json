@@ -126,7 +126,7 @@
     "modal.matchProfile.delete.message": "Delete match profile?",
     "settings.matchProfiles.exceptionModal.label": "Cannot delete match profile",
     "settings.matchProfiles.exceptionModal.message": "This match profile cannot be deleted, as it is in use by one or more job profiles.",
-    "action": "Action",
+    "action": "Azione",
     "mapping": "Mapping",
     "combine": "Combine",
     "create": "Create",
@@ -155,9 +155,9 @@
     "settings.actionProfiles.exceptionModal.label": "Cannot delete action profile",
     "settings.actionProfiles.exceptionModal.message": "This action profile cannot be deleted, as it is in use by one or more job or field mapping profiles",
     "settings.mappingProfiles.count": "{count, number} mappatura dei campi {count, plural, one { profilo } other { profili }}",
-    "action.create": "created",
+    "action.create": "creato",
     "action.update": "updated",
-    "action.delete": "deleted",
+    "action.delete": "eliminato",
     "action.reset": "reset",
     "settings.create.success": "Nuovo record creato:",
     "settings.create.error": "Nuovo record non creato:",
@@ -202,5 +202,6 @@
     "error.fileExtension.duplication.invalid": "File extension {name} already exists",
     "error.jobProfile.duplication.invalid": "Job profile \"{name}\" already exists",
     "error.matchProfile.duplication.invalid": "Match profile \"{name}\" already exists",
-    "error.actionProfile.duplication.invalid": "Action profile \"{name}\" already exists"
+    "error.actionProfile.duplication.invalid": "Action profile \"{name}\" already exists",
+    "error.mappingProfile.duplication.invalid": "The field mapping profile \"{name}\" already exists"
 }

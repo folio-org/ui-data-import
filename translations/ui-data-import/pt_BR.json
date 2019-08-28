@@ -202,5 +202,6 @@
     "error.fileExtension.duplication.invalid": "Extensão de arquivo {name} já existe",
     "error.jobProfile.duplication.invalid": "O perfil de trabalho \"{name}\" já existe",
     "error.matchProfile.duplication.invalid": "O perfil de correspondência \"{name}\" já existe",
-    "error.actionProfile.duplication.invalid": "O perfil de ação \"{name}\" já existe"
+    "error.actionProfile.duplication.invalid": "O perfil de ação \"{name}\" já existe",
+    "error.mappingProfile.duplication.invalid": "The field mapping profile \"{name}\" already exists"
 }
