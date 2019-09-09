@@ -87,6 +87,7 @@
         "when": "always"
       }
     ],
+    "no-void": "off",
     "comma-dangle": [
       "error",
       "always-multiline"

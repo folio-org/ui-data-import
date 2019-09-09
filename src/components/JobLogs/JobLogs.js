@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {
-  intlShape,
-  injectIntl,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { MultiColumnList } from '@folio/stripes/components';
@@ -14,10 +11,8 @@ import { jobLogPropTypes } from './jobLogPropTypes';
 
 @withJobLogsCellsFormatter
 @withJobLogsSort
-@injectIntl
 export class JobLogs extends Component {
   static propTypes = {
-    intl: intlShape.isRequired,
     formatter: PropTypes.object.isRequired,
     sortField: PropTypes.string.isRequired,
     sortDirection: PropTypes.string.isRequired,
@@ -32,29 +27,21 @@ export class JobLogs extends Component {
     hasLoaded: false,
   };
 
-  constructor(props) {
-    super(props);
+  columnMapping = {
+    fileName: <FormattedMessage id="ui-data-import.fileName" />,
+    jobProfileName: <FormattedMessage id="ui-data-import.jobProfileName" />,
+    jobExecutionHrId: <FormattedMessage id="ui-data-import.jobExecutionHrId" />,
+    completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
+    runBy: <FormattedMessage id="ui-data-import.runBy" />,
+  };
 
-    const { intl: { formatMessage } } = this.props;
-
-    this.columnMapping = {
-      fileName: formatMessage({ id: 'ui-data-import.fileName' }),
-      jobProfileName: formatMessage({ id: 'ui-data-import.jobProfileName' }),
-      jobExecutionHrId: formatMessage({ id: 'ui-data-import.jobExecutionHrId' }),
-      completedDate: formatMessage({ id: 'ui-data-import.jobCompletedDate' }),
-      runBy: formatMessage({ id: 'ui-data-import.runBy' }),
-    };
-
-    this.visibleColumns = [
-      'fileName',
-      'jobProfileName',
-      'jobExecutionHrId',
-      'completedDate',
-      'runBy',
-    ];
-
-    this.columnWidths = { fileName: 230 };
-  }
+  visibleColumns = [
+    'fileName',
+    'jobProfileName',
+    'jobExecutionHrId',
+    'completedDate',
+    'runBy',
+  ];
 
   render() {
     const {
@@ -82,7 +69,6 @@ export class JobLogs extends Component {
         sortDirection={sortDirection}
         autosize
         onHeaderClick={onSort}
-        columnWidths={this.columnWidths}
       />
     );
   }

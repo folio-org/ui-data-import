@@ -8,7 +8,6 @@ import { get } from 'lodash';
 
 import {
   AppIcon,
-  IntlConsumer,
   TitleManager,
   stripesConnect,
 } from '@folio/stripes/core';
@@ -139,13 +138,7 @@ export class ViewMatchProfile extends Component {
     'updatedBy',
   ];
 
-  columnWidths = {
-    selected: 40,
-    name: 200,
-    tags: 150,
-    updated: 150,
-    updatedBy: 250,
-  };
+  columnWidths = { selected: 40 };
 
   get matchProfileData() {
     const { resources } = this.props;
@@ -384,42 +377,38 @@ export class ViewMatchProfile extends Component {
                         </div>
                       </div>
                     </form>
-                    <IntlConsumer>
-                      {intl => (
-                        <MultiColumnList
-                          id="associated-job-profiles-list"
-                          visibleColumns={this.visibleColumns}
-                          contentData={associatedJobProfiles}
-                          columnMapping={{
-                            selected: (
-                              <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-                                role="button"
-                                tabIndex="0"
-                                className={sharedCss.selectableCellButton}
-                                data-test-select-all-associated-job-profiles-checkbox
-                                onClick={e => e.stopPropagation()}
-                              >
-                                <Checkbox
-                                  name="selected-all"
-                                  checked={isAllSelected}
-                                  onChange={handleSelectAllCheckbox}
-                                />
-                              </div>
-                            ),
-                            name: intl.formatMessage({ id: 'ui-data-import.name' }),
-                            tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-                            updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-                            updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
-                          }}
-                          columnWidths={this.columnWidths}
-                          formatter={createAssociatedJobProfilesFormatter({
-                            searchTerm: searchValue.query,
-                            selectRecord,
-                            selectedRecords,
-                          })}
-                        />
-                      )}
-                    </IntlConsumer>
+                    <MultiColumnList
+                      id="associated-job-profiles-list"
+                      visibleColumns={this.visibleColumns}
+                      contentData={associatedJobProfiles}
+                      columnMapping={{
+                        selected: (
+                          <div // eslint-disable-line jsx-a11y/click-events-have-key-events
+                            role="button"
+                            tabIndex="0"
+                            className={sharedCss.selectableCellButton}
+                            data-test-select-all-associated-job-profiles-checkbox
+                            onClick={e => e.stopPropagation()}
+                          >
+                            <Checkbox
+                              name="selected-all"
+                              checked={isAllSelected}
+                              onChange={handleSelectAllCheckbox}
+                            />
+                          </div>
+                        ),
+                        name: <FormattedMessage id="ui-data-import.name" />,
+                        tags: <FormattedMessage id="ui-data-import.tags" />,
+                        updated: <FormattedMessage id="ui-data-import.updated" />,
+                        updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
+                      }}
+                      columnWidths={this.columnWidths}
+                      formatter={createAssociatedJobProfilesFormatter({
+                        searchTerm: searchValue.query,
+                        selectRecord,
+                        selectedRecords,
+                      })}
+                    />
                   </Fragment>
                 )}
               </SearchAndSortQuery>

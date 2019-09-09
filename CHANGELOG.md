@@ -9,6 +9,7 @@
 * Add choose jobs screen 2nd pane (UIDATIMP-257)
 * Add job profile details pane on choose job profile page (UIDATIMP-258)
 * Fix file extension validation by making it case insensitive (UIDATIMP-252)
+* Add associated job profiles search on action profile details pane (UIDATIMP-217)
 
 ## [1.4.0](https://github.com/folio-org/ui-data-import/tree/v1.4.0) (2019-08-02)
 * Create data import settings page's 3rd pane for action profiles (UIDATIMP-8)

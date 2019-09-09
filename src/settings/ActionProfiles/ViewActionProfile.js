@@ -1,7 +1,4 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
@@ -9,25 +6,21 @@ import { get } from 'lodash';
 
 import {
   AppIcon,
-  IntlConsumer,
   TitleManager,
   stripesConnect,
 } from '@folio/stripes/core';
 import {
   Pane,
   Button,
-  Checkbox,
   Headline,
   KeyValue,
   Accordion,
-  SearchField,
   AccordionSet,
   MultiColumnList,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
-  SearchAndSortQuery,
   withTags,
   TagsAccordion,
 } from '@folio/stripes/smart-components';
@@ -35,8 +28,6 @@ import {
 import {
   createUrl,
   createLayerURL,
-  withCheckboxList,
-  checkboxListShape,
 } from '../../utils';
 import {
   LAYER_TYPES,
@@ -50,14 +41,12 @@ import {
   EndOfItem,
   ActionMenu,
   listTemplate,
-  createAssociatedJobProfilesFormatter,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
+import { AssociatedJobProfiles } from './AssociatedJobProfiles';
 
-import searchAndSortCss from '../../components/SearchAndSort/SearchAndSort.css';
 import sharedCss from '../../shared.css';
 
-@withCheckboxList
 @stripesConnect
 @withTags
 @withRouter
@@ -76,19 +65,6 @@ export class ViewActionProfile extends Component {
           detailType: PROFILE_TYPES.MAPPING_PROFILE,
           masterType: PROFILE_TYPES.ACTION_PROFILE,
           limit: 1,
-        },
-        false,
-      ),
-      throwErrors: false,
-    },
-    associatedJobProfiles: {
-      type: 'okapi',
-      path: createUrl(
-        'data-import-profiles/profileAssociations/:{id}/masters',
-        {
-          detailType: PROFILE_TYPES.ACTION_PROFILE,
-          masterType: PROFILE_TYPES.JOB_PROFILE,
-          query: 'cql.allRecords=1 sortBy name/ascending',
         },
         false,
       ),
@@ -114,8 +90,6 @@ export class ViewActionProfile extends Component {
     location: PropTypes.object.isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     tagsEnabled: PropTypes.bool,
-    checkboxList: checkboxListShape.isRequired,
-    setList: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string,
@@ -138,26 +112,6 @@ export class ViewActionProfile extends Component {
     showDeleteConfirmation: false,
   };
 
-  componentDidMount() {
-    this.setList();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { resources } = this.props;
-
-    if (prevProps.resources !== resources) {
-      this.setList();
-    }
-  }
-
-  associatedJobProfilesVisibleColumns = [
-    'selected',
-    'name',
-    'tags',
-    'updated',
-    'updatedBy',
-  ];
-
   associatedMappingProfileVisibleColumns = [
     'name',
     'tags',
@@ -165,13 +119,7 @@ export class ViewActionProfile extends Component {
     'updatedBy',
   ];
 
-  columnWidths = {
-    selected: 40,
-    name: 200,
-    tags: 150,
-    updated: 150,
-    updatedBy: 250,
-  };
+  columnWidths = { selected: 40 };
 
   get actionProfileData() {
     const { resources } = this.props;
@@ -193,31 +141,6 @@ export class ViewActionProfile extends Component {
     ).map(({ content }) => content);
 
     return { associatedMappingProfile };
-  }
-
-  get associatedJobProfilesData() {
-    const { resources } = this.props;
-
-    const associatedJobProfilesResource = resources.associatedJobProfiles || {};
-
-    const associatedJobProfiles = get(
-      associatedJobProfilesResource,
-      ['records', 0, 'childSnapshotWrappers'],
-      []
-    ).map(({ content }) => content);
-
-    return {
-      hasLoaded: associatedJobProfilesResource.hasLoaded,
-      associatedJobProfiles,
-    };
-  }
-
-  setList() {
-    const { setList } = this.props;
-
-    const { associatedJobProfiles } = this.associatedJobProfilesData;
-
-    setList(associatedJobProfiles);
   }
 
   showDeleteConfirmation = () => {
@@ -271,12 +194,6 @@ export class ViewActionProfile extends Component {
     const {
       onClose,
       paneId,
-      checkboxList: {
-        isAllSelected,
-        handleSelectAllCheckbox,
-        selectRecord,
-        selectedRecords,
-      },
       tagsEnabled,
     } = this.props;
     const { showDeleteConfirmation } = this.state;
@@ -285,11 +202,6 @@ export class ViewActionProfile extends Component {
       hasLoaded,
       record: actionProfile,
     } = this.actionProfileData;
-
-    const {
-      hasLoaded: associatedJobProfilesDataHasLoaded,
-      associatedJobProfiles,
-    } = this.associatedJobProfilesData;
 
     const { associatedMappingProfile } = this.associatedMappingProfileData;
 
@@ -363,25 +275,21 @@ export class ViewActionProfile extends Component {
           </Accordion>
           <Accordion label={<FormattedMessage id="ui-data-import.settings.associatedMappingProfile" />}>
             <div data-test-associated-mapping-profile>
-              <IntlConsumer>
-                {intl => (
-                  <MultiColumnList
-                    id="associated-mapping-profile"
-                    visibleColumns={this.associatedMappingProfileVisibleColumns}
-                    contentData={associatedMappingProfile}
-                    columnMapping={{
-                      name: intl.formatMessage({ id: 'ui-data-import.name' }),
-                      tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-                      updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-                      updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
-                    }}
-                    columnWidths={this.columnWidths}
-                    isEmptyMessage={<FormattedMessage id="ui-data-import.none" />}
-                    formatter={listTemplate({ entityKey: ENTITY_KEYS.MAPPING_PROFILES })}
-                    onRowClick={this.navigateToMappingProfile}
-                  />
-                )}
-              </IntlConsumer>
+              <MultiColumnList
+                id="associated-mapping-profile"
+                visibleColumns={this.associatedMappingProfileVisibleColumns}
+                contentData={associatedMappingProfile}
+                columnMapping={{
+                  name: <FormattedMessage id="ui-data-import.name" />,
+                  tags: <FormattedMessage id="ui-data-import.tags" />,
+                  updated: <FormattedMessage id="ui-data-import.updated" />,
+                  updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
+                }}
+                columnWidths={this.columnWidths}
+                isEmptyMessage={<FormattedMessage id="ui-data-import.none" />}
+                formatter={listTemplate({ entityKey: ENTITY_KEYS.MAPPING_PROFILES })}
+                onRowClick={this.navigateToMappingProfile}
+              />
             </div>
           </Accordion>
           <Accordion
@@ -392,74 +300,7 @@ export class ViewActionProfile extends Component {
               </Button>
             )}
           >
-            <div data-test-associated-job-profiles>
-              <SearchAndSortQuery initialSearchState={{ query: '' }}>
-                {({ searchValue }) => (
-                  <Fragment>
-                    <form onSubmit={e => e.preventDefault()}>
-                      <div className={searchAndSortCss.searchWrap}>
-                        <div className={searchAndSortCss.searchFiledWrap}>
-                          <SearchField
-                            id="input-associated-job-profiles-search"
-                            clearSearchId="input-associated-job-profiles-clear-search-button"
-                            loading={!associatedJobProfilesDataHasLoaded}
-                            value=""
-                            marginBottom0
-                          />
-                        </div>
-                        <div className={searchAndSortCss.searchButtonWrap}>
-                          <Button
-                            data-test-search-and-sort-submit
-                            type="submit"
-                            buttonStyle="primary"
-                            fullWidth
-                            marginBottom0
-                          >
-                            <FormattedMessage id="stripes-smart-components.search" />
-                          </Button>
-                        </div>
-                      </div>
-                    </form>
-                    <IntlConsumer>
-                      {intl => (
-                        <MultiColumnList
-                          id="associated-job-profiles-list"
-                          visibleColumns={this.associatedJobProfilesVisibleColumns}
-                          contentData={associatedJobProfiles}
-                          columnMapping={{
-                            selected: (
-                              <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-                                role="button"
-                                tabIndex="0"
-                                className={sharedCss.selectableCellButton}
-                                data-test-select-all-associated-job-profiles-checkbox
-                                onClick={e => e.stopPropagation()}
-                              >
-                                <Checkbox
-                                  name="selected-all"
-                                  checked={isAllSelected}
-                                  onChange={handleSelectAllCheckbox}
-                                />
-                              </div>
-                            ),
-                            name: intl.formatMessage({ id: 'ui-data-import.name' }),
-                            tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-                            updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-                            updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
-                          }}
-                          columnWidths={this.columnWidths}
-                          formatter={createAssociatedJobProfilesFormatter({
-                            searchTerm: searchValue.query,
-                            selectRecord,
-                            selectedRecords,
-                          })}
-                        />
-                      )}
-                    </IntlConsumer>
-                  </Fragment>
-                )}
-              </SearchAndSortQuery>
-            </div>
+            <AssociatedJobProfiles />
           </Accordion>
         </AccordionSet>
         <EndOfItem

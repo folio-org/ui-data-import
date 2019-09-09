@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   get,
@@ -128,14 +129,7 @@ export class MatchProfiles extends Component {
       'updated',
       'updatedBy',
     ],
-    columnWidths: {
-      selected: 40,
-      name: 200,
-      match: 375,
-      tags: 150,
-      updated: 150,
-      updatedBy: 250,
-    },
+    columnWidths: { selected: 40 },
     initialValues: {
       name: '',
       description: '',
@@ -148,7 +142,7 @@ export class MatchProfiles extends Component {
     RecordForm: MatchProfilesForm,
   };
 
-  renderHeaders = intl => {
+  renderHeaders = () => {
     const {
       checkboxList: {
         isAllSelected,
@@ -163,11 +157,11 @@ export class MatchProfiles extends Component {
           onChange={handleSelectAllCheckbox}
         />
       ),
-      name: intl.formatMessage({ id: 'ui-data-import.name' }),
-      match: intl.formatMessage({ id: 'ui-data-import.match' }),
-      tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-      updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-      updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
+      name: <FormattedMessage id="ui-data-import.name" />,
+      match: <FormattedMessage id="ui-data-import.match" />,
+      tags: <FormattedMessage id="ui-data-import.tags" />,
+      updated: <FormattedMessage id="ui-data-import.updated" />,
+      updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
     });
   };
 

@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
  *   handleSelectAllCheckbox: (e: Event) => void,
  * }}
  */
-const useCheckboxList = (list = []) => {
+export const useCheckboxList = (list = []) => {
   const [selectedRecords, setSelectedRecords] = useState(new Set());
 
   const isAllSelected = selectedRecords.size === list.length;

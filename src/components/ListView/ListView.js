@@ -51,7 +51,7 @@ export class ListView extends Component {
     withNewRecordButton: PropTypes.bool,
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
-    columnWidths: PropTypes.PropTypes.object.isRequired,
+    columnWidths: PropTypes.object.isRequired,
     initialValues: PropTypes.object.isRequired,
     renderHeaders: PropTypes.func.isRequired,
   };
@@ -229,7 +229,7 @@ export class ListView extends Component {
                   actionMenu={actionMenu}
                   visibleColumns={visibleColumns}
                   columnWidths={columnWidths}
-                  columnMapping={renderHeaders(intl)}
+                  columnMapping={renderHeaders()}
                   resultsFormatter={listTemplate({
                     intl,
                     entityKey: ENTITY_KEY,

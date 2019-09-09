@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   get,
@@ -125,14 +126,7 @@ export class MappingProfiles extends Component {
       'updated',
       'updatedBy',
     ],
-    columnWidths: {
-      selected: 40,
-      name: 200,
-      folioRecord: 150,
-      tags: 150,
-      updated: 150,
-      updatedBy: 250,
-    },
+    columnWidths: { selected: 40 },
     initialValues: {
       name: '',
       description: '',
@@ -141,7 +135,7 @@ export class MappingProfiles extends Component {
     RecordForm: MappingProfilesForm,
   };
 
-  renderHeaders = intl => {
+  renderHeaders = () => {
     const {
       checkboxList: {
         isAllSelected,
@@ -156,11 +150,11 @@ export class MappingProfiles extends Component {
           onChange={handleSelectAllCheckbox}
         />
       ),
-      name: intl.formatMessage({ id: 'ui-data-import.name' }),
-      folioRecord: intl.formatMessage({ id: 'ui-data-import.folioRecordType' }),
-      tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-      updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-      updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
+      name: <FormattedMessage id="ui-data-import.name" />,
+      folioRecord: <FormattedMessage id="ui-data-import.folioRecordType" />,
+      tags: <FormattedMessage id="ui-data-import.tags" />,
+      updated: <FormattedMessage id="ui-data-import.updated" />,
+      updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
     });
   };
 
