@@ -203,5 +203,5 @@
     "error.jobProfile.duplication.invalid": "Job profile \"{name}\" already exists",
     "error.matchProfile.duplication.invalid": "Match profile \"{name}\" already exists",
     "error.actionProfile.duplication.invalid": "Action profile \"{name}\" already exists",
-    "error.mappingProfile.duplication.invalid": "The field mapping profile \"{name}\" already exists"
+    "error.mappingProfile.duplication.invalid": "El perfil de mapeo de campo \" {name} \" ya existe"
 }
