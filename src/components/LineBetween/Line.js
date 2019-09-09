@@ -2,10 +2,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 
-import {
-  getElement,
-  usePortal,
-} from './utils';
+import { getElement } from './utils';
 
 export const Line = ({
   x0,
@@ -19,9 +16,7 @@ export const Line = ({
   borderColor = 'gray',
   zIndex = 1,
 }) => {
-  const containerElement = getElement(container);
-
-  const target = usePortal(containerElement);
+  const target = getElement(container);
 
   const dy = y1 - y0;
   const dx = x1 - x0;

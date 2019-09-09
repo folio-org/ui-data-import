@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import {
   get,
@@ -55,17 +56,10 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '') 
       'updated',
       'updatedBy',
     ];
-  const columnWidths = {
-    selected: 40,
-    name: 200,
-    tags: 150,
-    updated: 150,
-    updatedBy: 250,
-  };
+  const columnWidths = { selected: 40 };
 
   if (chooseJobProfile) {
     sortMap.description = 'description';
-    columnWidths.description = 300;
   }
 
   const mapStateToProps = state => {
@@ -166,7 +160,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '') 
       RecordForm: JobProfilesForm,
     };
 
-    renderHeaders = intl => {
+    renderHeaders = () => {
       const {
         checkboxList: {
           isAllSelected,
@@ -181,11 +175,11 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '') 
             onChange={handleSelectAllCheckbox}
           />
         ),
-        name: intl.formatMessage({ id: 'ui-data-import.name' }),
-        description: intl.formatMessage({ id: 'ui-data-import.description' }),
-        tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-        updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-        updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
+        name: <FormattedMessage id="ui-data-import.name" />,
+        description: <FormattedMessage id="ui-data-import.description" />,
+        tags: <FormattedMessage id="ui-data-import.tags" />,
+        updated: <FormattedMessage id="ui-data-import.updated" />,
+        updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
       };
 
       return headers;

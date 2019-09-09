@@ -291,10 +291,10 @@ export class ViewJobProfile extends Component {
                   totalCount={jobsUsingThisProfileData.length}
                   contentData={jobsUsingThisProfileData}
                   columnMapping={{
-                    fileName: intl.formatMessage({ id: 'ui-data-import.fileName' }),
-                    hrId: intl.formatMessage({ id: 'ui-data-import.settings.jobProfiles.jobID' }),
-                    completedDate: intl.formatMessage({ id: 'ui-data-import.jobCompletedDate' }),
-                    runBy: intl.formatMessage({ id: 'ui-data-import.runBy' }),
+                    fileName: <FormattedMessage id="ui-data-import.fileName" />,
+                    hrId: <FormattedMessage id="ui-data-import.settings.jobProfiles.jobID" />,
+                    completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
+                    runBy: <FormattedMessage id="ui-data-import.runBy" />,
                   }}
                   visibleColumns={[
                     'fileName',

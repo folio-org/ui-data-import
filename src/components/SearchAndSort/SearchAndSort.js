@@ -483,6 +483,7 @@ export class SearchAndSort extends Component {
       fullWidthContainer,
       handleEditSuccess,
       ViewRecordComponent,
+      location: { pathname },
     } = this.props;
 
     return (
@@ -491,6 +492,7 @@ export class SearchAndSort extends Component {
         render={
           props => (
             <ViewRecordComponent
+              key={pathname}
               stripes={stripes}
               paneWidth="44%"
               editContainer={fullWidthContainer}

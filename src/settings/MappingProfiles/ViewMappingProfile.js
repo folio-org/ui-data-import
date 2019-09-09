@@ -5,7 +5,6 @@ import { get } from 'lodash';
 
 import {
   AppIcon,
-  IntlConsumer,
   TitleManager,
   stripesConnect,
 } from '@folio/stripes/core';
@@ -114,14 +113,7 @@ export class ViewMappingProfile extends Component {
     'updatedBy',
   ];
 
-  associatedActionProfilesColumnWidths = {
-    selected: 40,
-    name: 200,
-    action: 200,
-    tags: 150,
-    updated: 150,
-    updatedBy: 250,
-  };
+  associatedActionProfilesColumnWidths = { selected: 40 };
 
   get mappingProfileData() {
     const { resources } = this.props;
@@ -281,25 +273,21 @@ export class ViewMappingProfile extends Component {
           </Accordion>
           <Accordion label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}>
             <div data-test-associated-action-profiles>
-              <IntlConsumer>
-                {intl => (
-                  <MultiColumnList
-                    id="associated-action-profiles"
-                    visibleColumns={this.associatedActionProfilesVisibleColumns}
-                    contentData={associatedActionProfiles}
-                    columnMapping={{
-                      name: intl.formatMessage({ id: 'ui-data-import.name' }),
-                      action: intl.formatMessage({ id: 'ui-data-import.action' }),
-                      tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-                      updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-                      updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
-                    }}
-                    columnWidths={this.associatedActionProfilesColumnWidths}
-                    isEmptyMessage={<FormattedMessage id="ui-data-import.none" />}
-                    formatter={listTemplate({ entityKey: ENTITY_KEYS.ACTION_PROFILES })}
-                  />
-                )}
-              </IntlConsumer>
+              <MultiColumnList
+                id="associated-action-profiles"
+                visibleColumns={this.associatedActionProfilesVisibleColumns}
+                contentData={associatedActionProfiles}
+                columnMapping={{
+                  name: <FormattedMessage id="ui-data-import.name" />,
+                  action: <FormattedMessage id="ui-data-import.action" />,
+                  tags: <FormattedMessage id="ui-data-import.tags" />,
+                  updated: <FormattedMessage id="ui-data-import.updated" />,
+                  updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
+                }}
+                columnWidths={this.associatedActionProfilesColumnWidths}
+                isEmptyMessage={<FormattedMessage id="ui-data-import.none" />}
+                formatter={listTemplate({ entityKey: ENTITY_KEYS.ACTION_PROFILES })}
+              />
             </div>
           </Accordion>
         </AccordionSet>

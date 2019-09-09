@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   get,
@@ -102,7 +103,6 @@ export class FileExtensions extends Component {
     RESULT_COUNT_INCREMENT: PropTypes.number,
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
-    columnWidths: PropTypes.object,
     initialValues: PropTypes.object,
   };
 
@@ -120,12 +120,6 @@ export class FileExtensions extends Component {
       'updated',
       'updatedBy',
     ],
-    columnWidths: {
-      extension: 100,
-      dataTypes: 150,
-      updated: 150,
-      updatedBy: 250,
-    },
     initialValues: {
       importBlocked: false,
       description: '',
@@ -136,12 +130,12 @@ export class FileExtensions extends Component {
     RecordForm: FileExtensionForm,
   };
 
-  renderHeaders = intl => ({
-    extension: intl.formatMessage({ id: 'ui-data-import.settings.fileExtension.extension' }),
-    importBlocked: intl.formatMessage({ id: 'ui-data-import.settings.fileExtension.blockImport' }),
-    dataTypes: intl.formatMessage({ id: 'ui-data-import.settings.fileExtension.dataTypes' }),
-    updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-    updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
+  renderHeaders = () => ({
+    extension: <FormattedMessage id="ui-data-import.settings.fileExtension.extension" />,
+    importBlocked: <FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />,
+    dataTypes: <FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />,
+    updated: <FormattedMessage id="ui-data-import.updated" />,
+    updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
   });
 
   render() {

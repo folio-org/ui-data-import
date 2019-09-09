@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   get,
@@ -129,15 +130,7 @@ export class ActionProfiles extends Component {
       'updated',
       'updatedBy',
     ],
-    columnWidths: {
-      selected: 40,
-      name: 200,
-      action: 200,
-      mapping: 150,
-      tags: 150,
-      updated: 150,
-      updatedBy: 250,
-    },
+    columnWidths: { selected: 40 },
     initialValues: {
       name: '',
       description: '',
@@ -148,7 +141,7 @@ export class ActionProfiles extends Component {
     RecordForm: ActionProfilesForm,
   };
 
-  renderHeaders = intl => {
+  renderHeaders = () => {
     const {
       checkboxList: {
         isAllSelected,
@@ -156,20 +149,20 @@ export class ActionProfiles extends Component {
       },
     } = this.props;
 
-    return ({
+    return {
       selected: (
         <CheckboxHeader
           checked={isAllSelected}
           onChange={handleSelectAllCheckbox}
         />
       ),
-      name: intl.formatMessage({ id: 'ui-data-import.name' }),
-      action: intl.formatMessage({ id: 'ui-data-import.action' }),
-      mapping: intl.formatMessage({ id: 'ui-data-import.mapping' }),
-      tags: intl.formatMessage({ id: 'ui-data-import.tags' }),
-      updated: intl.formatMessage({ id: 'ui-data-import.updated' }),
-      updatedBy: intl.formatMessage({ id: 'ui-data-import.updatedBy' }),
-    });
+      name: <FormattedMessage id="ui-data-import.name" />,
+      action: <FormattedMessage id="ui-data-import.action" />,
+      mapping: <FormattedMessage id="ui-data-import.mapping" />,
+      tags: <FormattedMessage id="ui-data-import.tags" />,
+      updated: <FormattedMessage id="ui-data-import.updated" />,
+      updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
+    };
   };
 
   render() {
