@@ -59,9 +59,7 @@ describe('Match Profile View', () => {
       expect(matchProfileDetails.associatedJobProfiles.list.rowCount).to.be.equal(3);
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('has select all checkbox', () => {
+    describe('has select all checkbox', () => {
       beforeEach(async () => {
         await matchProfileDetails.associatedJobProfiles.selectAllCheckBox.clickAndBlur();
       });
@@ -99,9 +97,7 @@ describe('Match Profile View', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('has select individual item checkbox', () => {
+    describe('has select individual item checkbox', () => {
       beforeEach(async () => {
         await matchProfileDetails.associatedJobProfiles.checkBoxes(0).clickAndBlur();
       });

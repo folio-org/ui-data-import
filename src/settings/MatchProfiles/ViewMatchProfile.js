@@ -249,6 +249,12 @@ export class ViewMatchProfile extends Component {
     };
   }
 
+  rowUpdater = ({ id }) => {
+    const { checkboxList: { selectedRecords } } = this.props;
+
+    return selectedRecords.has(id);
+  };
+
   render() {
     const {
       onClose,
@@ -408,6 +414,7 @@ export class ViewMatchProfile extends Component {
                         selectRecord,
                         selectedRecords,
                       })}
+                      rowUpdater={this.rowUpdater}
                     />
                   </Fragment>
                 )}
