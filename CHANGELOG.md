@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## 1.5.0 (IN-PROGRESS)
+## [1.5.0](https://github.com/folio-org/ui-data-import/tree/v1.5.0) (2019-09-10)
 * Implement mapping profile duplication feature (UIDATIMP-228)
 * Implement mapping profile deletion feature (UIDATIMP-229)
 * Make mapping profile name a hotlink in action profile details (UIDATIMP-214)
