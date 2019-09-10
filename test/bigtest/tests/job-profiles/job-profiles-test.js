@@ -63,9 +63,7 @@ describe('Job profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('has select all checkbox', () => {
+    describe('has select all checkbox', () => {
       beforeEach(async () => {
         await jobProfiles.selectAllCheckBox.clickAndBlur();
       });
@@ -75,9 +73,7 @@ describe('Job profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('has select individual item checkbox', () => {
+    describe('has select individual item checkbox', () => {
       beforeEach(async () => {
         await jobProfiles.checkBoxes(0).clickAndBlur();
       });
@@ -87,9 +83,7 @@ describe('Job profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('select all checkbox', () => {
+    describe('select all checkbox', () => {
       beforeEach(async () => {
         await jobProfiles.selectAllCheckBox.clickAndBlur();
       });
@@ -123,9 +117,7 @@ describe('Job profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('select all button', () => {
+    describe('select all button', () => {
       beforeEach(async () => {
         await jobProfiles.actionMenu.click();
         await jobProfiles.actionMenu.selectAllButton.click();
@@ -138,9 +130,7 @@ describe('Job profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('deselect all button', () => {
+    describe('deselect all button', () => {
       beforeEach(async () => {
         await jobProfiles.checkBoxes(0).clickAndBlur();
         await jobProfiles.checkBoxes(1).clickAndBlur();
@@ -166,9 +156,7 @@ describe('Job profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('when using search', () => {
+    describe('when using search', () => {
       beforeEach(async () => {
         await jobProfiles.checkBoxes(0).clickAndBlur();
         await jobProfiles.checkBoxes(1).clickAndBlur();
@@ -183,9 +171,7 @@ describe('Job profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('when clearing search', () => {
+    describe('when clearing search', () => {
       beforeEach(async () => {
         await jobProfiles.searchFiled.fill('acq');
         await jobProfiles.searchSubmitButton.click();

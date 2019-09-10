@@ -135,6 +135,7 @@ export class SearchAndSort extends Component {
     defaultSort: PropTypes.string,
     finishedResourceName: PropTypes.string,
     fullWidthContainer: PropTypes.instanceOf(Element),
+    rowUpdater: PropTypes.func,
   };
 
   static defaultProps = {
@@ -616,6 +617,7 @@ export class SearchAndSort extends Component {
       visibleColumns,
       objectName,
       defaultSort,
+      rowUpdater,
     } = this.props;
     const { selectedItem } = this.state;
 
@@ -639,6 +641,7 @@ export class SearchAndSort extends Component {
             contentData={records}
             selectedRow={selectedItem}
             formatter={resultsFormatter}
+            rowUpdater={rowUpdater}
             visibleColumns={visibleColumns}
             sortOrder={sortOrder}
             sortDirection={sortDirection}

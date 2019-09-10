@@ -88,6 +88,8 @@ const AssociatedJobProfilesComponent = ({
     selectedRecords,
   });
 
+  const rowUpdater = ({ id }) => selectedRecords.has(id);
+
   return (
     <div data-test-associated-job-profiles>
       <SearchAndSortQuery
@@ -169,6 +171,7 @@ const AssociatedJobProfilesComponent = ({
                 }}
                 columnWidths={columnWidths}
                 formatter={associatedJobProfilesFormatter}
+                rowUpdater={rowUpdater}
                 sortOrder={sortOrder}
                 sortDirection={sortDirection}
                 onHeaderClick={onSort}

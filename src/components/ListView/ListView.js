@@ -66,6 +66,7 @@ export class ListView extends Component {
       record: null,
       hasLoaded: false,
     },
+    checkboxList: {},
   };
 
   state = {
@@ -165,6 +166,12 @@ export class ListView extends Component {
     />
   );
 
+  rowUpdater = ({ id }) => {
+    const { checkboxList: { selectedRecords } } = this.props;
+
+    return selectedRecords.has(id);
+  };
+
   render() {
     const {
       resources,
@@ -200,6 +207,7 @@ export class ListView extends Component {
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
     const actionMenu = isEmpty(actionMenuItems) ? null : this.renderActionMenu;
+    const rowUpdater = selectedRecords ? this.rowUpdater : undefined;
 
     return (
       <IntlConsumer>
@@ -246,6 +254,7 @@ export class ListView extends Component {
                   editRecordInitialValuesAreLoaded={selectedRecord.hasLoaded}
                   showSingleResult={showSingleResult}
                   onSubmitSearch={deselectAll}
+                  rowUpdater={rowUpdater}
                   {...props}
                 />
                 <ConfirmationModal

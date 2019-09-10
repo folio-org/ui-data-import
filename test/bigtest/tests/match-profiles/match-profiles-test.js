@@ -81,9 +81,7 @@ describe('Match profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('has select all checkbox', () => {
+    describe('has select all checkbox', () => {
       beforeEach(async () => {
         await matchProfiles.selectAllCheckBox.clickAndBlur();
       });
@@ -93,9 +91,7 @@ describe('Match profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('has select individual item checkbox', () => {
+    describe('has select individual item checkbox', () => {
       beforeEach(async () => {
         await matchProfiles.checkBoxes(0).clickAndBlur();
       });
@@ -105,9 +101,7 @@ describe('Match profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('has select individual item checkbox', () => {
+    describe('has select individual item checkbox', () => {
       beforeEach(async () => {
         await matchProfiles.checkBoxes(0).clickAndBlur();
       });
@@ -117,9 +111,7 @@ describe('Match profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('select all checkbox', () => {
+    describe('select all checkbox', () => {
       beforeEach(async () => {
         await matchProfiles.selectAllCheckBox.clickAndBlur();
       });
@@ -153,9 +145,7 @@ describe('Match profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('select all button', () => {
+    describe('select all button', () => {
       beforeEach(async () => {
         await matchProfiles.actionMenu.click();
         await matchProfiles.actionMenu.selectAllButton.click();
@@ -168,9 +158,7 @@ describe('Match profiles', () => {
       });
     });
 
-    // TODO: remove `.skip` from checkbox tests when MCL component is fixed
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.skip('deselect all button', () => {
+    describe('deselect all button', () => {
       beforeEach(async () => {
         await matchProfiles.checkBoxes(0).clickAndBlur();
         await matchProfiles.checkBoxes(1).clickAndBlur();
