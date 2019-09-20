@@ -38,13 +38,13 @@ export const LineBetween = props => {
     toAnchorOffset = '',
     orientation = ORIENTATIONS.VERTICAL,
   } = props;
-  const [, forceUpdate] = useState(false);
+  const [fromElement, setFromElement] = useState();
+  const [toElement, setToElement] = useState();
 
-  // re-render to access DOM nodes
-  useEffect(() => forceUpdate(true), []);
-
-  const fromElement = getElement(from);
-  const toElement = getElement(to);
+  useEffect(() => {
+    setFromElement(getElement(from, container));
+    setToElement(getElement(to, container));
+  }, [container, from, to]);
 
   if (!fromElement || !toElement) {
     return null;

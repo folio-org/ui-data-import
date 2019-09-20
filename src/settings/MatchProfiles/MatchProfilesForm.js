@@ -107,9 +107,7 @@ export const MatchProfilesFormComponent = ({
           label={<FormattedMessage id="ui-data-import.details" />}
           separator={false}
         >
-          <div data-test-record-types-select-field>
-            <RecordTypesSelect />
-          </div>
+          <RecordTypesSelect />
         </Accordion>
       </AccordionSet>
       <ConfirmationModal

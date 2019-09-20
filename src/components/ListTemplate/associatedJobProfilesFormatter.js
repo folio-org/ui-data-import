@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button } from '@folio/stripes-components';
+import { Button } from '@folio/stripes/components';
 
 import { listTemplate } from '.';
 import { ENTITY_KEYS } from '../../utils/constants';

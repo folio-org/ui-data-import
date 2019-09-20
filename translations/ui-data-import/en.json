@@ -203,5 +203,9 @@
   "logViewer.filter.errors": "Errors",
   "logViewer.themes.label": "Use theme",
   "recordTypesSelect.compareExisting": "Which type of existing record would you like to compare to the incoming {type} record?",
-  "marc": "MARC"
+  "marc": "MARC",
+  "incomingMarc": "Incoming MARC",
+  "existingRecords": "Existing records",
+  "compare": "Compare",
+  "compareHint": "You are comparing\nto this record"
 }

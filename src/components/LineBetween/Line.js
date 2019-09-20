@@ -1,22 +1,25 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { getElement } from './utils';
+
+import css from './Line.css';
 
 export const Line = ({
   x0,
   y0,
   x1,
   y1,
-  container = document.body,
+  container,
   className,
-  borderWidth = 1,
-  borderStyle = 'solid',
-  borderColor = 'gray',
-  zIndex = 1,
+  borderWidth,
+  borderStyle,
+  borderColor,
+  zIndex,
 }) => {
-  const target = getElement(container);
+  const target = getElement(container) || document.body;
 
   const dy = y1 - y0;
   const dx = x1 - x0;
@@ -39,7 +42,7 @@ export const Line = ({
 
   return createPortal(
     <div
-      className={className}
+      className={classNames(css.line, className)}
       style={style}
     />,
     target,
