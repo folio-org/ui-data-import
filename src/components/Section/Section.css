@@ -1,0 +1,12 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.container {
+  border-radius: 1rem;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-fill);
+  padding: 1.4rem;
+}
+
+.container > :nth-child(n+2) {
+    margin-top: 1.4rem; 
+}

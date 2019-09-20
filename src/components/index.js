@@ -18,3 +18,4 @@ export * from './UploadingJobsDisplay';
 export * from './ExceptionModal';
 export * from './TreeView';
 export * from './RecordTypesSelect';
+export * from './Section';
