@@ -76,6 +76,12 @@
         "maxBOF": 0
       }
     ],
+    "react/prop-types": [
+      "error",
+      {
+        "skipUndeclared": true
+      }
+    ],
     "react/jsx-one-expression-per-line": false,
     "react/jsx-wrap-multilines": [
       "error"

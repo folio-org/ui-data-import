@@ -11,6 +11,8 @@
 * Fix file extension validation by making it case insensitive (UIDATIMP-252)
 * Add associated job profiles search on action profile details pane (UIDATIMP-217)
 * Integrate updated MultiColumnList component (UIDATIMP-276)
+* Create Section component (UIDATIMP-278)
+* Create and integrate RecordTypesSelect component (UIDATIMP-244)
 
 ## [1.4.0](https://github.com/folio-org/ui-data-import/tree/v1.4.0) (2019-08-02)
 * Create data import settings page's 3rd pane for action profiles (UIDATIMP-8)

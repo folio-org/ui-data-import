@@ -61,7 +61,18 @@ describe('Match profile form', () => {
 
     describe('details accordion', () => {
       it('incoming record select has correct amount of items', () => {
-        expect(matchProfileForm.recordTypesSelect.items().length).to.be.equal(8);
+        expect(matchProfileForm.recordTypesSelect.chooseIncomingRecord.items().length).to.be.equal(8);
+      });
+
+      describe('when incoming record is selected', () => {
+        beforeEach(async () => {
+          await matchProfileForm.recordTypesSelect.chooseIncomingRecord.select('ITEM');
+          await new Promise(resolve => setTimeout(resolve, 4000));
+        });
+
+        it('then choose record to compare screen appears', () => {
+          expect(matchProfileForm.recordTypesSelect.chooseExistingRecord.isPresent).to.be.true;
+        });
       });
     });
   });

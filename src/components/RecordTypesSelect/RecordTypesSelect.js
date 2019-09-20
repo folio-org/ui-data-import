@@ -1,96 +1,46 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, {
+  useState,
+  useEffect,
+} from 'react';
+import { debounce } from 'lodash';
 
-import { AppIcon } from '@folio/stripes-core';
-
+import { IncomingRecordSelect } from './components/IncomingRecordSelect';
+import { ExistingRecordSelect } from './components/ExistingRecordSelect';
 import { FOLIO_RECORD_TYPES } from '../ListTemplate';
-import { TreeView } from '../TreeView';
 
-import css from './RecordTypesSelect.css';
-import { rootList } from '../TreeView/TreeView.css';
-import { LineBetween } from '../LineBetween';
+const useForceUpdate = () => useState()[1];
 
-const treeData = {
-  connections: [
-    FOLIO_RECORD_TYPES.INSTANCE.type,
-    FOLIO_RECORD_TYPES.HOLDINGS.type,
-    FOLIO_RECORD_TYPES.ITEM.type,
-    FOLIO_RECORD_TYPES.ORDER.type,
-    FOLIO_RECORD_TYPES.INVOICE.type,
-  ].map(id => `#${id}`),
-  children: [
-    {
-      itemMeta: FOLIO_RECORD_TYPES.INSTANCE,
-      children: [
-        {
-          itemMeta: FOLIO_RECORD_TYPES.HOLDINGS,
-          children: [{ itemMeta: FOLIO_RECORD_TYPES.MARC_HOLDINGS }, { itemMeta: FOLIO_RECORD_TYPES.ITEM }],
-        },
-        { itemMeta: FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC },
-      ],
-    },
-    {
-      itemMeta: {
-        ...FOLIO_RECORD_TYPES.ORDER,
-        captionId: 'ui-data-import.recordTypes.orderLine',
-      },
-    },
-    { itemMeta: FOLIO_RECORD_TYPES.INVOICE },
-    { itemMeta: FOLIO_RECORD_TYPES.MARC_AUTHORITY },
-  ],
+const useUpdateOnResize = () => {
+  // forceUpdate is used to re-render elements that are depending on DOM such as LineBetween
+  const forceUpdate = useForceUpdate();
+
+  useEffect(() => {
+    const handleResize = debounce(forceUpdate);
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, [forceUpdate]);
 };
 
-// TODO: RecordTypesSelect component will be rewritten in UIDATIMP-244
 export const RecordTypesSelect = () => {
-  // eslint-disable-next-line no-console
-  const onItemClick = console.log;
-
-  const renderItem = item => {
-    const itemKey = item.itemMeta.type;
-
-    return (
-      <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-        tabIndex="0"
-        role="button"
-        id={itemKey}
-        className={css.item}
-        onClick={() => onItemClick(item.itemMeta.type)}
-      >
-        <AppIcon
-          size="medium"
-          app="data-import"
-          iconKey={item.itemMeta.iconKey}
-        >
-          <FormattedMessage id={item.itemMeta.captionId} />
-        </AppIcon>
-      </div>
-    );
-  };
+  useUpdateOnResize();
+  const [incomingRecord, setIncomingRecord] = useState();
+  const [existingRecord, setExistingRecord] = useState(FOLIO_RECORD_TYPES.INSTANCE);
 
   return (
-    <section className={css.container}>
-      <h3 className={css.heading}>
-        <FormattedMessage
-          id="ui-data-import.recordTypesSelect.compareExisting"
-          values={{ type: <FormattedMessage id="ui-data-import.marc" /> }}
-        />
-      </h3>
-      <TreeView
-        data={treeData}
-        className={css.treeView}
-        renderItem={renderItem}
-      />
-      {treeData.connections.map(element => (
-        <LineBetween
-          key={element}
-          from={element}
-          to={treeData.connections[0]}
-          fromAnchor="right"
-          toAnchor="right"
-          toAnchorOffset="20px"
-          container={`.${rootList}`}
-        />
-      ))}
-    </section>
+    <div data-test-record-types-select>
+      {incomingRecord
+        ? (
+          <ExistingRecordSelect
+            incomingRecord={incomingRecord}
+            existingRecord={existingRecord}
+            setIncomingRecord={setIncomingRecord}
+            setExistingRecord={setExistingRecord}
+          />
+        )
+        : <IncomingRecordSelect onItemSelect={setIncomingRecord} />
+      }
+    </div>
   );
 };

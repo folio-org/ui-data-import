@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { noop } from 'lodash';
 
 import { LineBetween } from '../LineBetween';
 
@@ -9,8 +10,10 @@ import css from './TreeView.css';
 export const TreeView = ({
   data,
   indentation = 40,
+  spacing = '1rem',
+  container = `.${css.rootList}`,
   className,
-  renderItem,
+  renderItem = noop,
 }) => {
   const renderList = ({
     items,
@@ -21,21 +24,23 @@ export const TreeView = ({
       className={classNames(css.list, { [css.rootList]: root })}
       style={root ? null : { paddingLeft: indentation }}
     >
-      {items.map(item => {
+      {items.map((item, index) => {
         const itemKey = item.itemMeta.type;
         const itemSelector = `#${itemKey}`;
+        const isFirstItem = root && index === 0;
 
         return (
           <li
             key={itemKey}
             className={classNames(css.listItem)}
+            style={{ marginTop: isFirstItem ? 0 : spacing }}
           >
             {renderItem(item)}
             {parent && (
               <LineBetween
                 from={parent}
                 to={itemSelector}
-                container={`.${css.rootList}`}
+                container={container}
                 fromAnchor="left bottom"
                 toAnchor="left"
                 fromAnchorOffset={`${indentation / 2}px`}
@@ -68,6 +73,8 @@ TreeView.propTypes = {
     children: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   indentation: PropTypes.number, // in pixels
+  spacing: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  container: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Element)]),
   className: PropTypes.string,
   renderItem: PropTypes.func,
 };
