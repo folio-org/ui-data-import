@@ -14,14 +14,13 @@ import css from './Section.css';
 export const Section = memo(({
   headerCaption,
   isOptional,
-  id,
   children,
 }) => {
   const [isChecked, setChecked] = useState(true);
 
   const headline = (
     <Headline
-      size="1.17rem"
+      size="large"
       margin="none"
       tag="h3"
     >
@@ -33,23 +32,21 @@ export const Section = memo(({
     <Checkbox
       fullWidth
       label={headline}
-      id={id}
       checked={isChecked}
       onChange={() => setChecked(!isChecked)}
     />
   );
 
   return (
-    <div className={css.container}>
+    <section className={css.container}>
       {isOptional ? optionalHeadline : headline}
       {isChecked && children}
-    </div>
+    </section>
   );
 });
 
 Section.propTypes = {
   headerCaption: PropTypes.node.isRequired,
   isOptional: PropTypes.bool,
-  id: PropTypes.string,
   children: PropTypes.node,
 };
