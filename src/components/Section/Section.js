@@ -4,58 +4,52 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
+import {
+  Checkbox,
+  Headline,
+} from '@folio/stripes/components';
+
 import css from './Section.css';
 
 export const Section = memo(({
   headerCaption,
   isOptional,
-  sectionId,
+  id,
   children,
 }) => {
   const [isChecked, setChecked] = useState(true);
 
-  const optionalHeader = caption => {
-    return (
-      <div>
-        <label
-          className={css.heading}
-          htmlFor={sectionId}
-        >
-          <input
-            className={css.optionalCheckbox}
-            id={sectionId}
-            type="checkbox"
-            checked={isChecked}
-            onChange={() => setChecked(!isChecked)}
-          />
-          {caption}
-        </label>
-      </div>
-    );
-  };
+  const headline = (
+    <Headline
+      size="1.17rem"
+      margin="none"
+      tag="h3"
+    >
+      {headerCaption}
+    </Headline>
+  );
 
-  const renderHeader = caption => {
-    return (
-      <header>
-        {isOptional
-          ? optionalHeader(caption)
-          : (<h3 className={css.heading}>{caption}</h3>)
-        }
-      </header>
-    );
-  };
+  const optionalHeadline = (
+    <Checkbox
+      fullWidth
+      label={headline}
+      id={id}
+      checked={isChecked}
+      onChange={() => setChecked(!isChecked)}
+    />
+  );
 
   return (
     <div className={css.container}>
-      {renderHeader(headerCaption)}
+      {isOptional ? optionalHeadline : headline}
       {isChecked && children}
     </div>
   );
 });
 
 Section.propTypes = {
-  headerCaption: PropTypes.string.isRequired,
+  headerCaption: PropTypes.node.isRequired,
   isOptional: PropTypes.bool,
-  sectionId: PropTypes.string,
+  id: PropTypes.string,
   children: PropTypes.node,
 };
