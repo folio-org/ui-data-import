@@ -136,7 +136,6 @@ export class MatchProfiles extends Component {
       /* TODO: these values are hardcoded now and will need to be changed in future (https://issues.folio.org/browse/UIDATIMP-175) */
       incomingRecordType: 'MARC',
       existingRecordType: 'HOLDINGS',
-      incomingDataValueType: 'STATIC_VALUE',
     },
     RecordView: ViewMatchProfile,
     RecordForm: MatchProfilesForm,
