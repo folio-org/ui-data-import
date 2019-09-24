@@ -4,6 +4,7 @@ const jobsLogsData = [
     jobExecutionHrId: '02',
     jobProfileName: 'Multilingual support check',
     fileName: 'import_28.mrc',
+    totalRecords: 9,
     runBy: {
       firstName: 'Ozzy',
       lastName: 'Campenshtorm',
@@ -17,6 +18,7 @@ const jobsLogsData = [
     jobExecutionHrId: '03',
     jobProfileName: 'Standard BIB profile',
     fileName: 'import_22.mrc',
+    totalRecords: 7,
     runBy: {
       firstName: 'Elliot',
       lastName: 'Lane',
@@ -30,6 +32,7 @@ const jobsLogsData = [
     jobExecutionHrId: '01',
     jobProfileName: 'BIB profile with customized Holdings',
     fileName: 'import_22.mrc',
+    totalRecords: 46,
     runBy: {
       firstName: 'Jay',
       lastName: 'Morrowitz',

@@ -29,19 +29,26 @@ export class JobLogs extends Component {
 
   columnMapping = {
     fileName: <FormattedMessage id="ui-data-import.fileName" />,
-    jobProfileName: <FormattedMessage id="ui-data-import.jobProfileName" />,
     jobExecutionHrId: <FormattedMessage id="ui-data-import.jobExecutionHrId" />,
+    jobProfileName: <FormattedMessage id="ui-data-import.jobProfileName" />,
+    totalRecords: <FormattedMessage id="ui-data-import.records" />,
     completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
     runBy: <FormattedMessage id="ui-data-import.runBy" />,
   };
 
   visibleColumns = [
     'fileName',
-    'jobProfileName',
     'jobExecutionHrId',
+    'jobProfileName',
+    'totalRecords',
     'completedDate',
     'runBy',
   ];
+
+  columnWidths = {
+    jobExecutionHrId: 60,
+    totalRecords: 80,
+  };
 
   render() {
     const {
@@ -64,6 +71,7 @@ export class JobLogs extends Component {
         contentData={contentData}
         columnMapping={this.columnMapping}
         visibleColumns={this.visibleColumns}
+        columnWidths={this.columnWidths}
         formatter={formatter}
         sortOrder={sortField}
         sortDirection={sortDirection}
