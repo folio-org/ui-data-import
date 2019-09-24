@@ -42,11 +42,15 @@ const withJobLogsSortComponent = WrappedComponent => {
         sortFn: sortStrings,
         useFormatterFn: false,
       },
+      jobExecutionHrId: {
+        sortFn: sortNums,
+        useFormatterFn: false,
+      },
       jobProfileName: {
         sortFn: sortStrings,
         useFormatterFn: false,
       },
-      jobExecutionHrId: {
+      totalRecords: {
         sortFn: sortNums,
         useFormatterFn: false,
       },

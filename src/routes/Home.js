@@ -73,7 +73,7 @@ export class Home extends Component {
           </Pane>
         </DataFetcher>
         <Pane
-          defaultWidth="fill"
+          defaultWidth="25%"
           paneTitle={<FormattedMessage id="ui-data-import.importPaneTitle" />}
         >
           <ImportJobs />
