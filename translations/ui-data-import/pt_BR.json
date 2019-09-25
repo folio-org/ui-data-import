@@ -203,5 +203,10 @@
     "error.jobProfile.duplication.invalid": "O perfil de trabalho \"{name}\" já existe",
     "error.matchProfile.duplication.invalid": "O perfil de correspondência \"{name}\" já existe",
     "error.actionProfile.duplication.invalid": "O perfil de ação \"{name}\" já existe",
-    "error.mappingProfile.duplication.invalid": "O perfil de mapeamento de campo \"{name}\" já existe"
+    "error.mappingProfile.duplication.invalid": "O perfil de mapeamento de campo \"{name}\" já existe",
+    "incomingMarc": "Incoming MARC",
+    "existingRecords": "Existing records",
+    "compare": "Compare",
+    "compareHint": "You are comparing\nto this record",
+    "records": "Records"
 }

@@ -203,5 +203,10 @@
     "error.jobProfile.duplication.invalid": "وضع الوظيفة  \"{name}\" موجود بالفعل",
     "error.matchProfile.duplication.invalid": "وضع المطابقة \"{name}\" موجود بالفعل",
     "error.actionProfile.duplication.invalid": "وضع الإجراء  \"{name}\" موجود بالفعل",
-    "error.mappingProfile.duplication.invalid": "وضع تخطيط الحقل \"{name}\" موجود بالفعل"
+    "error.mappingProfile.duplication.invalid": "وضع تخطيط الحقل \"{name}\" موجود بالفعل",
+    "incomingMarc": "مارك الواردة",
+    "existingRecords": "تسجيلات حالية",
+    "compare": "قارن",
+    "compareHint": "أنت تقارن بهذه التسجيلة",
+    "records": "Records"
 }
