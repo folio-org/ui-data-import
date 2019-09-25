@@ -16,7 +16,7 @@
     "activeUploadTitle": "Drop to start import",
     "uploadBtnText": "or choose files",
     "jobProfileName": "Job profile",
-    "jobExecutionHrId": "Import ID",
+    "jobExecutionHrId": "ID",
     "jobCompletedDate": "Ended running",
     "noPreviewsJobsMessage": "No previews to show",
     "noRunningJobsMessage": "No running jobs to show",
@@ -203,5 +203,10 @@
     "error.jobProfile.duplication.invalid": "Job profile \"{name}\" already exists",
     "error.matchProfile.duplication.invalid": "Match profile \"{name}\" already exists",
     "error.actionProfile.duplication.invalid": "Action profile \"{name}\" already exists",
-    "error.mappingProfile.duplication.invalid": "El perfil de mapeo de campo \" {name} \" ya existe"
+    "error.mappingProfile.duplication.invalid": "El perfil de mapeo de campo \" {name} \" ya existe",
+    "incomingMarc": "MARC entrante",
+    "existingRecords": "Registros existentes",
+    "compare": "Comparar",
+    "compareHint": "Estás comparando\na este registro",
+    "records": "Records"
 }
