@@ -1,5 +1,11 @@
 # Change history for ui-data-import
 
+## [1.5.1](https://github.com/folio-org/ui-data-import/tree/v1.5.1) (2019-09-25)
+* Create Section component (UIDATIMP-278)
+* Create and integrate RecordTypesSelect component (UIDATIMP-244)
+* Add a Records column to a job logs table, rename Import ID column to ID, swap columns and change width of panes (UIDATIMP-260)
+* Fix save match profile (UIDATIMP-282)
+
 ## [1.5.0](https://github.com/folio-org/ui-data-import/tree/v1.5.0) (2019-09-10)
 * Implement mapping profile duplication feature (UIDATIMP-228)
 * Implement mapping profile deletion feature (UIDATIMP-229)
@@ -11,10 +17,6 @@
 * Fix file extension validation by making it case insensitive (UIDATIMP-252)
 * Add associated job profiles search on action profile details pane (UIDATIMP-217)
 * Integrate updated MultiColumnList component (UIDATIMP-276)
-* Create Section component (UIDATIMP-278)
-* Create and integrate RecordTypesSelect component (UIDATIMP-244)
-* Add a Records column to a job logs table, rename Import ID column to ID, swap columns and change width of panes (UIDATIMP-260)
-* Fix save match profile (UIDATIMP-282)
 
 ## [1.4.0](https://github.com/folio-org/ui-data-import/tree/v1.4.0) (2019-08-02)
 * Create data import settings page's 3rd pane for action profiles (UIDATIMP-8)
