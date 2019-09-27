@@ -134,8 +134,6 @@ export class ActionProfiles extends Component {
     initialValues: {
       name: '',
       description: '',
-      action: 'CREATE',
-      folioRecord: 'ITEM',
     },
     RecordView: ViewActionProfile,
     RecordForm: ActionProfilesForm,

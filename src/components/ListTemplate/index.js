@@ -5,3 +5,4 @@ export * from './associatedJobProfilesFormatter';
 export * from './folioRecordTypes';
 export * from './incomingRecordTypes';
 export * from './actionTypes';
+export * from './actionProfilesFormFolioRecordTypes';

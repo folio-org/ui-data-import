@@ -1,5 +1,8 @@
 # Change history for ui-data-import
 
+## 1.6.0 (IN PROGRESS)
+* Add details section on create/edit action profile form (UIDATIMP-207)
+
 ## [1.5.1](https://github.com/folio-org/ui-data-import/tree/v1.5.1) (2019-09-25)
 * Create Section component (UIDATIMP-278)
 * Create and integrate RecordTypesSelect component (UIDATIMP-244)

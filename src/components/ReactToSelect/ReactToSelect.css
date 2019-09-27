@@ -1,0 +1,19 @@
+.select {
+  margin-bottom: 1rem;
+
+  &.hasFeedback {
+    margin-bottom: 0.4rem;
+  }
+}
+
+.error {
+  composes: feedbackError from '@folio/stripes-components/lib/sharedStyles/form.css';
+}
+
+.warning {
+  composes: feedbackWarning from '@folio/stripes-components/lib/sharedStyles/form.css';
+}
+
+.hidden {
+  display: none;
+}
