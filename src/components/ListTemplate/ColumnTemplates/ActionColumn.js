@@ -21,7 +21,7 @@ export const ActionColumn = memo(({
   searchTerm = '',
 }) => {
   const createLabel = ({ formatMessage }) => {
-    const actionString = formatMessage({ id: `ui-data-import.${action.toLowerCase()}` });
+    const actionString = formatMessage({ id: ACTION_TYPES[action].captionId });
     // record type should be in lower case except "MARC" is always all-caps
     const recordTypeString = formatMessage({ id: FOLIO_RECORD_TYPES[folioRecord].captionId })
       .toLowerCase()

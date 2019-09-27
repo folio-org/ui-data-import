@@ -11,13 +11,9 @@ import {
   Select,
 } from '@folio/stripes/components';
 import formField from '@folio/stripes-components/lib/FormField';
+import { REACT_TO } from '../../settings/ActionProfiles/reactTo';
 
 import css from './ReactToSelect.css';
-
-const REACT_TO = {
-  MATCH: 'MATCH',
-  NON_MATCH: 'NON-MATCH',
-};
 
 const ReactToSelectComponent = props => {
   const {

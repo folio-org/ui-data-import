@@ -41,7 +41,7 @@ import { LAYER_TYPES } from '../../utils/constants';
 import {
   FolioRecordTypeSelect,
   ReactToSelect,
-  ACTION_TYPES,
+  ACTION_TYPES_SELECT,
   ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES,
 } from '../../components';
 
@@ -64,28 +64,28 @@ export const ActionProfilesFormComponent = ({
   const getFilteredActions = () => {
     switch (folioRecord) {
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type: {
-        return pick(ACTION_TYPES, ACTION_TYPES.CREATE.type);
+        return pick(ACTION_TYPES_SELECT, ACTION_TYPES_SELECT.CREATE.type);
       }
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INVOICE.type: {
-        return pick(ACTION_TYPES, [
-          ACTION_TYPES.CREATE.type,
-          ACTION_TYPES.COMBINE.type,
+        return pick(ACTION_TYPES_SELECT, [
+          ACTION_TYPES_SELECT.CREATE.type,
+          ACTION_TYPES_SELECT.COMBINE.type,
         ]);
       }
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INSTANCE.type:
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.HOLDINGS.type:
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ITEM.type: {
-        return pick(ACTION_TYPES, [
-          ACTION_TYPES.CREATE.type,
-          ACTION_TYPES.COMBINE.type,
-          ACTION_TYPES.REPLACE.type,
+        return pick(ACTION_TYPES_SELECT, [
+          ACTION_TYPES_SELECT.CREATE.type,
+          ACTION_TYPES_SELECT.COMBINE.type,
+          ACTION_TYPES_SELECT.REPLACE.type,
         ]);
       }
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type:
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type:
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type:
       default: {
-        return ACTION_TYPES;
+        return ACTION_TYPES_SELECT;
       }
     }
   };
@@ -98,23 +98,23 @@ export const ActionProfilesFormComponent = ({
 
   const getFilteredFolioRecordTypes = () => {
     switch (action) {
-      case ACTION_TYPES.COMBINE.type: {
+      case ACTION_TYPES_SELECT.COMBINE.type: {
         return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type);
       }
-      case ACTION_TYPES.MODIFY.type: {
+      case ACTION_TYPES_SELECT.MODIFY.type: {
         return pick(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type,
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type,
         ]);
       }
-      case ACTION_TYPES.REPLACE.type: {
+      case ACTION_TYPES_SELECT.REPLACE.type: {
         return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type,
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INVOICE.type,
         ]);
       }
-      case ACTION_TYPES.CREATE.type:
+      case ACTION_TYPES_SELECT.CREATE.type:
       default: {
         return ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES;
       }
