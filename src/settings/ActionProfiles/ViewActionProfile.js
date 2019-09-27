@@ -41,9 +41,12 @@ import {
   EndOfItem,
   ActionMenu,
   listTemplate,
+  FOLIO_RECORD_TYPES,
+  ACTION_TYPES,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 import { AssociatedJobProfiles } from './AssociatedJobProfiles';
+import { REACT_TO_META } from './reactTo';
 
 import sharedCss from '../../shared.css';
 
@@ -271,7 +274,21 @@ export class ViewActionProfile extends Component {
             </div>
           )}
           <Accordion label={<FormattedMessage id="ui-data-import.details" />}>
-            <div style={{ height: 60 }}>{/* will be implemented in future stories */}</div>
+            <KeyValue label={<FormattedMessage id="ui-data-import.reactTo" />}>
+              <div data-test-react-to>
+                <FormattedMessage id={REACT_TO_META[actionProfile.reactTo].captionId} />
+              </div>
+            </KeyValue>
+            <KeyValue label={<FormattedMessage id="ui-data-import.action" />}>
+              <div data-test-action>
+                <FormattedMessage id={ACTION_TYPES[actionProfile.action].captionId} />
+              </div>
+            </KeyValue>
+            <KeyValue label={<FormattedMessage id="ui-data-import.folioRecordType" />}>
+              <div data-test-folio-record>
+                <FormattedMessage id={FOLIO_RECORD_TYPES[actionProfile.folioRecord].captionId} />
+              </div>
+            </KeyValue>
           </Accordion>
           <Accordion label={<FormattedMessage id="ui-data-import.settings.associatedMappingProfile" />}>
             <div data-test-associated-mapping-profile>

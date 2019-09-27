@@ -29,6 +29,9 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
 
   server[method](url, () => new Response(status, headers, response));
   await actionProfileForm.nameField.fillAndBlur('Changed title');
+  await actionProfileForm.reactToField.selectAndBlur('Non-matches');
+  await actionProfileForm.actionField.select.selectAndBlur('Create (all record types)');
+  await actionProfileForm.folioRecordTypeField.select.selectAndBlur('Invoice');
   await actionProfileForm.submitFormButton.click();
   if (await actionProfileForm.confirmEditModal.isPresent) {
     await actionProfileForm.confirmEditModal.confirmButton.click();
@@ -195,6 +198,9 @@ describe('Action Profile View', () => {
         it('and form fields are pre-filled with current data', () => {
           expect(actionProfileForm.nameField.val).to.be.equal('Name 0');
           expect(actionProfileForm.descriptionField.val).to.be.equal('Description 0');
+          expect(actionProfileForm.reactToField.val).to.be.equal('NON-MATCH');
+          expect(actionProfileForm.actionField.select.val).to.be.equal('CREATE');
+          expect(actionProfileForm.folioRecordTypeField.select.val).to.be.equal('ORDER');
         });
 
         it('and does not have associated mapping profile accordion', () => {
@@ -216,6 +222,9 @@ describe('Action Profile View', () => {
         beforeEach(async () => {
           await actionProfileForm.nameField.fillAndBlur('Changed name');
           await actionProfileForm.descriptionField.fillAndBlur('Changed description');
+          await actionProfileForm.reactToField.selectAndBlur('Non-matches');
+          await actionProfileForm.actionField.select.selectAndBlur('Create (all record types)');
+          await actionProfileForm.folioRecordTypeField.select.selectAndBlur('Invoice');
           await actionProfileForm.submitFormButton.click();
         });
 
@@ -232,6 +241,9 @@ describe('Action Profile View', () => {
             it('then action profile details renders updated action profile', () => {
               expect(actionProfileDetails.headline.text).to.equal('Changed name');
               expect(actionProfileDetails.description.text).to.equal('Changed description');
+              expect(actionProfileDetails.reactTo.text).to.equal('Non-matches');
+              expect(actionProfileDetails.action.text).to.equal('Create');
+              expect(actionProfileDetails.folioRecord.text).to.equal('Invoice');
             });
           });
 
@@ -390,12 +402,18 @@ describe('Action Profile View', () => {
         beforeEach(async () => {
           await actionProfileForm.nameField.fillAndBlur('Changed name');
           await actionProfileForm.descriptionField.fillAndBlur('Changed description');
+          await actionProfileForm.reactToField.selectAndBlur('Matches');
+          await actionProfileForm.actionField.select.selectAndBlur('Create (all record types)');
+          await actionProfileForm.folioRecordTypeField.select.selectAndBlur('MARC Authority [will affect SRS and MARCcat]');
           await actionProfileForm.submitFormButton.click();
         });
 
         it('then action profile details renders duplicated action profile', () => {
           expect(actionProfileDetails.headline.text).to.equal('Changed name');
           expect(actionProfileDetails.description.text).to.equal('Changed description');
+          expect(actionProfileDetails.reactTo.text).to.equal('Matches');
+          expect(actionProfileDetails.action.text).to.equal('Create');
+          expect(actionProfileDetails.folioRecord.text).to.equal('MARC Authority');
         });
       });
 
