@@ -208,5 +208,16 @@
     "existingRecords": "Existing records",
     "compare": "Compare",
     "compareHint": "You are comparing\nto this record",
-    "records": "Records"
+    "records": "Records",
+    "actionSelect.create": "Create (all record types)",
+    "actionSelect.combine": "Combine (all record types except Orders)",
+    "actionSelect.modify": "Modify (MARC record types only)",
+    "actionSelect.replace": "Replace (all record types except Orders, Invoices)",
+    "actionProfilesForm.recordTypes.marc-bib": "MARC Bibliographic [will affect SRS and MARCcat]",
+    "actionProfilesForm.recordTypes.marc-auth": "MARC Authority [will affect SRS and MARCcat]",
+    "actionProfilesForm.recordTypes.marc-hold": "MARC Holdings [will affect SRS and MARCcat]",
+    "matches": "Matches",
+    "nonMatches": "Non-matches",
+    "reactTo": "React to",
+    "selectAction": "Select action"
 }
