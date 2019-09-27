@@ -19,3 +19,5 @@ export * from './ExceptionModal';
 export * from './TreeView';
 export * from './RecordTypesSelect';
 export * from './Section';
+export * from './FolioRecordTypeSelect';
+export * from './ReactToSelect';

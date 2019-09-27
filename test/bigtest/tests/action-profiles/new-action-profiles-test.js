@@ -21,6 +21,9 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
   server.post('/data-import-profiles/actionProfiles', () => new Response(status, headers, response));
   await actionProfileForm.nameField.fillAndBlur('Valid name');
   await actionProfileForm.descriptionField.fillAndBlur('Valid description');
+  await actionProfileForm.reactToField.selectAndBlur('Matches');
+  await actionProfileForm.actionField.select.selectAndBlur('Create (all record types)');
+  await actionProfileForm.folioRecordTypeField.select.selectAndBlur('Item');
   await actionProfileForm.submitFormButton.click();
 }
 
@@ -50,6 +53,9 @@ describe('Action profile form', () => {
     it('and form fields are empty and not pre-filled', () => {
       expect(actionProfileForm.nameField.val).to.be.equal('');
       expect(actionProfileForm.descriptionField.val).to.be.equal('');
+      expect(actionProfileForm.reactToField.val).to.be.equal('');
+      expect(actionProfileForm.actionField.select.val).to.be.equal('');
+      expect(actionProfileForm.folioRecordTypeField.select.val).to.be.equal('');
     });
 
     it('have an associated mapping profile accordion', () => {
@@ -64,6 +70,54 @@ describe('Action profile form', () => {
 
       it('the submit button is not disabled', () => {
         expect(actionProfileForm.submitFormButtonDisabled).to.be.false;
+      });
+    });
+
+    describe('when action field is selected', () => {
+      describe('with value "Create"', () => {
+        beforeEach(async () => {
+          await actionProfileForm.actionField.select.selectAndBlur('Create (all record types)');
+        });
+
+        it('the FOLIO record type field has all records', () => {
+          expect(actionProfileForm.folioRecordTypeField.options().length).to.be.equal(9);
+        });
+      });
+
+      describe('with value "Modify"', () => {
+        beforeEach(async () => {
+          await actionProfileForm.actionField.select.selectAndBlur('Modify (MARC record types only)');
+        });
+
+        it('the FOLIO record type field has only MARC records', () => {
+          expect(actionProfileForm.folioRecordTypeField.options().length).to.be.equal(4);
+        });
+      });
+    });
+
+    describe('when FOLIO record type field is selected', () => {
+      describe('with value "Order"', () => {
+        beforeEach(async () => {
+          await actionProfileForm.folioRecordTypeField.select.selectAndBlur('Order');
+        });
+
+        it('the action field has only option "Create"', () => {
+          expect(actionProfileForm.actionField.options().length).to.be.equal(2);
+          expect(actionProfileForm.actionField.options(1).text).to.be.equal('Create (all record types)');
+        });
+      });
+
+      describe('with value "Item"', () => {
+        beforeEach(async () => {
+          await actionProfileForm.folioRecordTypeField.select.selectAndBlur('Item');
+        });
+
+        it('the action field has options "Create", "Combine" and "Replace"', () => {
+          expect(actionProfileForm.actionField.options().length).to.be.equal(4);
+          expect(actionProfileForm.actionField.options(1).text).to.be.equal('Create (all record types)');
+          expect(actionProfileForm.actionField.options(2).text).to.be.equal('Combine (all record types except Orders)');
+          expect(actionProfileForm.actionField.options(3).text).to.be.equal('Replace (all record types except Orders, Invoices)');
+        });
       });
     });
   });

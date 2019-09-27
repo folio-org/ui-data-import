@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl';
+import {
+  Field,
+  formValueSelector,
+} from 'redux-form';
 import { connect } from 'react-redux';
-import { get } from 'lodash';
+import {
+  get,
+  identity,
+  omit,
+  pick,
+} from 'lodash';
 
 import {
   Headline,
@@ -13,6 +28,7 @@ import {
   Accordion,
   AccordionSet,
   ConfirmationModal,
+  Select,
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
@@ -22,10 +38,17 @@ import {
   validateRequiredField,
 } from '../../utils';
 import { LAYER_TYPES } from '../../utils/constants';
+import {
+  FolioRecordTypeSelect,
+  ReactToSelect,
+  ACTION_TYPES,
+  ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES,
+} from '../../components';
 
 const formName = 'actionProfilesForm';
 
 export const ActionProfilesFormComponent = ({
+  intl: { formatMessage },
   pristine,
   submitting,
   initialValues,
@@ -33,9 +56,78 @@ export const ActionProfilesFormComponent = ({
   location: { search },
   associatedJobProfilesAmount,
   onCancel,
+  action,
+  folioRecord,
 }) => {
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
+  const getFilteredActions = () => {
+    switch (folioRecord) {
+      case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type: {
+        return pick(ACTION_TYPES, ACTION_TYPES.CREATE.type);
+      }
+      case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INVOICE.type: {
+        return pick(ACTION_TYPES, [
+          ACTION_TYPES.CREATE.type,
+          ACTION_TYPES.COMBINE.type,
+        ]);
+      }
+      case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INSTANCE.type:
+      case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.HOLDINGS.type:
+      case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ITEM.type: {
+        return pick(ACTION_TYPES, [
+          ACTION_TYPES.CREATE.type,
+          ACTION_TYPES.COMBINE.type,
+          ACTION_TYPES.REPLACE.type,
+        ]);
+      }
+      case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type:
+      case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type:
+      case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type:
+      default: {
+        return ACTION_TYPES;
+      }
+    }
+  };
+
+  const getActionsDataOptions = () => Object.entries(getFilteredActions())
+    .map(([recordType, { captionId }]) => ({
+      value: recordType,
+      label: formatMessage({ id: captionId }),
+    }));
+
+  const getFilteredFolioRecordTypes = () => {
+    switch (action) {
+      case ACTION_TYPES.COMBINE.type: {
+        return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type);
+      }
+      case ACTION_TYPES.MODIFY.type: {
+        return pick(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
+          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
+          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type,
+          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type,
+        ]);
+      }
+      case ACTION_TYPES.REPLACE.type: {
+        return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
+          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type,
+          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INVOICE.type,
+        ]);
+      }
+      case ACTION_TYPES.CREATE.type:
+      default: {
+        return ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES;
+      }
+    }
+  };
+
+  const getFolioRecordTypesDataOptions = () => Object.entries(getFilteredFolioRecordTypes())
+    .map(([recordType, { captionId }]) => ({
+      value: recordType,
+      label: formatMessage({ id: captionId }),
+    }));
+  const actionsDataOptions = useMemo(getActionsDataOptions, [folioRecord]);
+  const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, [action]);
   const { layer } = queryString.parse(search);
   const isEditMode = layer === LAYER_TYPES.EDIT;
   const isSubmitDisabled = pristine || submitting;
@@ -104,9 +196,32 @@ export const ActionProfilesFormComponent = ({
           label={<FormattedMessage id="ui-data-import.details" />}
           separator={false}
         >
-          <div>
-            {/* will be implemented in https://issues.folio.org/browse/UIDATIMP-207 */}
+          <div data-test-react-to-field>
+            <Field
+              label={<FormattedMessage id="ui-data-import.reactTo" />}
+              name="reactTo"
+              required
+              validate={[validateRequiredField]}
+              component={ReactToSelect}
+            />
           </div>
+          <div data-test-action-field>
+            <FormattedMessage id="ui-data-import.selectAction">
+              {placeholder => (
+                <Field
+                  label={<FormattedMessage id="ui-data-import.action" />}
+                  name="action"
+                  component={Select}
+                  required
+                  itemToString={identity}
+                  validate={[validateRequiredField]}
+                  dataOptions={actionsDataOptions}
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
+          </div>
+          <FolioRecordTypeSelect dataOptions={folioRecordTypesDataOptions} />
         </Accordion>
         {isEditMode || (
           <Accordion
@@ -142,14 +257,19 @@ export const ActionProfilesFormComponent = ({
 };
 
 ActionProfilesFormComponent.propTypes = {
+  intl: intlShape.isRequired,
   initialValues: PropTypes.object.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
   associatedJobProfilesAmount: PropTypes.number.isRequired,
+  action: PropTypes.string,
+  folioRecord: PropTypes.string,
   onCancel: PropTypes.func.isRequired,
 };
+
+const selector = formValueSelector(formName);
 
 const mapStateToProps = state => {
   const { length: associatedJobProfilesAmount } = get(
@@ -157,11 +277,18 @@ const mapStateToProps = state => {
     ['folio_data_import_associated_job_profiles', 'records', 0, 'childSnapshotWrappers'],
     [],
   );
+  const action = selector(state, 'action');
+  const folioRecord = selector(state, 'folioRecord');
 
-  return { associatedJobProfilesAmount };
+  return {
+    associatedJobProfilesAmount,
+    action,
+    folioRecord,
+  };
 };
 
 export const ActionProfilesForm = compose(
+  injectIntl,
   stripesForm({
     form: formName,
     navigationCheck: true,

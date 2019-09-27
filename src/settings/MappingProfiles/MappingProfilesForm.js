@@ -24,9 +24,10 @@ import {
   compose,
 } from '../../utils';
 import {
-  FOLIO_RECORD_TYPES,
-  INCOMING_RECORD_TYPES,
   FullScreenForm,
+  FolioRecordTypeSelect,
+  INCOMING_RECORD_TYPES,
+  FOLIO_RECORD_TYPES,
 } from '../../components';
 import { LAYER_TYPES } from '../../utils/constants';
 
@@ -46,15 +47,14 @@ export const MappingProfilesFormComponent = ({
       value: recordType,
       label: formatMessage({ id: captionId }),
     }));
-
   const getFolioRecordTypesDataOptions = () => Object.entries(FOLIO_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
       value: recordType,
       label: formatMessage({ id: captionId }),
     }));
 
-  const incomingRecordTypesDataOptions = useMemo(getIncomingRecordTypesDataOptions, []);
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, []);
+  const incomingRecordTypesDataOptions = useMemo(getIncomingRecordTypesDataOptions, []);
   const { layer } = queryString.parse(search);
   const isEditMode = layer === LAYER_TYPES.EDIT;
   const isSubmitDisabled = pristine || submitting;
@@ -115,22 +115,7 @@ export const MappingProfilesFormComponent = ({
               )}
             </FormattedMessage>
           </div>
-          <div data-test-folio-record-type-field>
-            <FormattedMessage id="ui-data-import.chooseFolioRecordType">
-              {placeholder => (
-                <Field
-                  label={<FormattedMessage id="ui-data-import.folioRecordType" />}
-                  name="folioRecord"
-                  component={Select}
-                  required
-                  itemToString={identity}
-                  validate={[validateRequiredField]}
-                  dataOptions={folioRecordTypesDataOptions}
-                  placeholder={placeholder}
-                />
-              )}
-            </FormattedMessage>
-          </div>
+          <FolioRecordTypeSelect dataOptions={folioRecordTypesDataOptions} />
           <div data-test-description-field>
             <Field
               label={<FormattedMessage id="ui-data-import.description" />}
