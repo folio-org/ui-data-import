@@ -208,5 +208,16 @@
     "existingRecords": "تسجيلات حالية",
     "compare": "قارن",
     "compareHint": "أنت تقارن بهذه التسجيلة",
-    "records": "Records"
+    "records": "تسجيلات",
+    "actionSelect.create": "إنشاء (كل أنواع التسجيلات)",
+    "actionSelect.combine": "تجميع (كل أنواع التسجيلات ما عدا الطلبيات)",
+    "actionSelect.modify": "تعديل (أنواع تسجيلات مارك فقط)",
+    "actionSelect.replace": "استبدال (كل أنواع التسجيلات باستنثاء الطلبيات والفواتير)",
+    "actionProfilesForm.recordTypes.marc-bib": "مارك البيبلوغرافي [سيؤثر على SRS وMARCcat]",
+    "actionProfilesForm.recordTypes.marc-auth": "استناد مارك [سيؤثر على SRS وMARCcat]",
+    "actionProfilesForm.recordTypes.marc-hold": "مقتنيات مارك [سيؤثر على SRS وMARCcat]",
+    "matches": "مطابقات",
+    "nonMatches": "عدم-مطابقات",
+    "reactTo": "تفاعل مع",
+    "selectAction": "اختر إجراء"
 }
