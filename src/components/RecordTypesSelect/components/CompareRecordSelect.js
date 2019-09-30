@@ -28,10 +28,9 @@ const hintTriangleSize = 8;
 const hintMargin = 8 + 4;
 const compareElemMargin = 4;
 
-export const ExistingRecordSelect = ({
+export const CompareRecordSelect = ({
   incomingRecord,
   existingRecord,
-  setIncomingRecord,
   setExistingRecord,
 }) => {
   const [top, setTop] = useState();
@@ -67,10 +66,7 @@ export const ExistingRecordSelect = ({
     : defaultSpacing;
 
   return (
-    <section
-      className={css.container}
-      data-test-choose-existing-record
-    >
+    <section className={css.container}>
       <Row>
         <Col
           xs={4}
@@ -133,7 +129,6 @@ export const ExistingRecordSelect = ({
             item={incomingRecord}
             className={css.incomingRecord}
             style={{ height }}
-            onClick={() => setIncomingRecord(null)}
           />
           <div
             ref={compareElemRef}
@@ -167,9 +162,8 @@ export const ExistingRecordSelect = ({
   );
 };
 
-ExistingRecordSelect.propTypes = {
+CompareRecordSelect.propTypes = {
   incomingRecord: PropTypes.object.isRequired,
   existingRecord: PropTypes.object.isRequired,
-  setIncomingRecord: PropTypes.func.isRequired,
   setExistingRecord: PropTypes.func.isRequired,
 };
