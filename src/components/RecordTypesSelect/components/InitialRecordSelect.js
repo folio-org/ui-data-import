@@ -9,12 +9,9 @@ import { RecordSelect } from './RecordSelect';
 
 import css from '../RecordTypesSelect.css';
 
-export const IncomingRecordSelect = ({ onItemSelect }) => {
+export const InitialRecordSelect = ({ onItemSelect }) => {
   return (
-    <section
-      className={classNames(css.container, css.chooseIncomingRecordContainer)}
-      data-test-choose-incoming-record
-    >
+    <section className={classNames(css.container, css.chooseRecordContainer)}>
       <Headline
         className={css.message}
         size="large"
@@ -31,4 +28,4 @@ export const IncomingRecordSelect = ({ onItemSelect }) => {
   );
 };
 
-IncomingRecordSelect.propTypes = { onItemSelect: PropTypes.func };
+InitialRecordSelect.propTypes = { onItemSelect: PropTypes.func };

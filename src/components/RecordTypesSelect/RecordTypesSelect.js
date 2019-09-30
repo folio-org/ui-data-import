@@ -4,8 +4,8 @@ import React, {
 } from 'react';
 import { debounce } from 'lodash';
 
-import { IncomingRecordSelect } from './components/IncomingRecordSelect';
-import { ExistingRecordSelect } from './components/ExistingRecordSelect';
+import { InitialRecordSelect } from './components/InitialRecordSelect';
+import { CompareRecordSelect } from './components/CompareRecordSelect';
 import { FOLIO_RECORD_TYPES } from '../ListTemplate';
 
 const useForceUpdate = () => useState()[1];
@@ -23,23 +23,23 @@ const useUpdateOnResize = () => {
   }, [forceUpdate]);
 };
 
+const incomingRecord = FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC;
+
 export const RecordTypesSelect = () => {
   useUpdateOnResize();
-  const [incomingRecord, setIncomingRecord] = useState();
-  const [existingRecord, setExistingRecord] = useState(FOLIO_RECORD_TYPES.INSTANCE);
+  const [existingRecord, setExistingRecord] = useState();
 
   return (
-    <div data-test-record-types-select>
-      {incomingRecord
+    <div data-test-choose-existing-record>
+      {existingRecord
         ? (
-          <ExistingRecordSelect
+          <CompareRecordSelect
             incomingRecord={incomingRecord}
             existingRecord={existingRecord}
-            setIncomingRecord={setIncomingRecord}
             setExistingRecord={setExistingRecord}
           />
         )
-        : <IncomingRecordSelect onItemSelect={setIncomingRecord} />
+        : <InitialRecordSelect onItemSelect={setExistingRecord} />
       }
     </div>
   );

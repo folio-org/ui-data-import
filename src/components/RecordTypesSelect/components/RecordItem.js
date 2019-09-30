@@ -30,7 +30,7 @@ export const RecordItem = memo(({
       tabIndex="0"
       role="button"
       id={type}
-      className={classNames(css.item, className)}
+      className={classNames(css.item, { [css.clickableItem]: onClick !== noop }, className)}
       style={style}
       ref={ref}
       onClick={() => onClick(item)}

@@ -19,7 +19,7 @@
   background-color: var(--color-fill);
 }
 
-.chooseIncomingRecordContainer {
+.chooseRecordContainer {
   padding: 1rem 3rem;
 }
 
@@ -41,10 +41,10 @@
   background-color: var(--primary);
   color: #fff;
   font-weight: 700;
+}
 
-  &:hover {
-    background-color: color(var(--primary) whiteness(30%))
-  }
+.clickableItem:hover {
+  background-color: color(var(--primary) whiteness(30%))
 }
 
 .headingCell {
