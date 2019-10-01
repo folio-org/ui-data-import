@@ -96,7 +96,7 @@ const FileExtensionFormComponent = ({
     <FullScreenForm
       id="file-extensions-form"
       paneTitle={paneTitle}
-      submitMessage={<FormattedMessage id="ui-data-import.save" />}
+      submitMessage={<FormattedMessage id="ui-data-import.saveAsFileExtension" />}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={handleSubmit}
       onCancel={onCancel}

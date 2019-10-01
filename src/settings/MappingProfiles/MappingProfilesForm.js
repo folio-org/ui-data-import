@@ -73,7 +73,7 @@ export const MappingProfilesFormComponent = ({
     <FullScreenForm
       id="mapping-profiles-form"
       paneTitle={paneTitle}
-      submitMessage={<FormattedMessage id="ui-data-import.save" />}
+      submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={handleSubmit}
       onCancel={onCancel}
