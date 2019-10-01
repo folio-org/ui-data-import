@@ -1,6 +1,5 @@
 import {
   interactor,
-  scoped,
   property,
 } from '@bigtest/interactor';
 
@@ -12,15 +11,8 @@ export class FullScreenFormInteractor {
   submitFormButton = new ButtonInteractor('[data-test-submit-button]');
   submitFormButtonDisabled = property('[data-test-submit-button]', 'disabled');
   closeButton = new ButtonInteractor('[data-test-close-button]');
-  paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
-  paneHeaderCancelButton = new ButtonInteractor('[data-test-cancel-button]');
+  paneHeaderCloseButton = new ButtonInteractor('[data-test-header-close-button]');
   callout = new CalloutInteractor();
-
-  expandPaneHeaderDropdown() {
-    return this
-      .paneHeaderDropdown
-      .click();
-  }
 }
 
 export const fullScreenForm = new FullScreenFormInteractor('[data-test-full-screen-form]');

@@ -158,7 +158,7 @@ export const ActionProfilesFormComponent = ({
     <FullScreenForm
       id="action-profiles-form"
       paneTitle={paneTitle}
-      submitMessage={<FormattedMessage id="ui-data-import.save" />}
+      submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={onSubmit}
       onCancel={onCancel}

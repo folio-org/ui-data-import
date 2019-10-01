@@ -49,7 +49,7 @@ export const JobProfilesFormComponent = ({
     <FullScreenForm
       id="job-profiles-form"
       paneTitle={paneTitle}
-      submitMessage={<FormattedMessage id="ui-data-import.save" />}
+      submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={handleSubmit}
       onCancel={onCancel}

@@ -15,30 +15,23 @@ describe('Full screen form', () => {
     this.visit('/settings/data-import/file-extensions?layer=create');
   });
 
-  describe('has cancel button which', () => {
-    it('is not visible when pane dropdown is closed', () => {
-      expect(fullScreenForm.paneHeaderCancelButton.isVisible).to.be.false;
+  describe('header has close button which closes the form', () => {
+    beforeEach(async () => {
+      await fullScreenForm.paneHeaderCloseButton.click();
     });
 
-    describe('is visible', () => {
-      beforeEach(async () => {
-        await fullScreenForm.expandPaneHeaderDropdown();
-      });
+    it('when clicked', () => {
+      expect(fullScreenForm.isPresent).to.be.false;
+    });
+  });
 
-      it('when pane dropdown is opened', () => {
-        expect(fullScreenForm.paneHeaderCancelButton.isVisible).to.be.true;
-      });
+  describe('footer has close button which closes the form', () => {
+    beforeEach(async () => {
+      await fullScreenForm.closeButton.click();
     });
 
-    describe('cancels creation of file extension', () => {
-      beforeEach(async () => {
-        await fullScreenForm.expandPaneHeaderDropdown();
-        await fullScreenForm.paneHeaderCancelButton.click();
-      });
-
-      it('when clicked', () => {
-        expect(fullScreenForm.isPresent).to.be.false;
-      });
+    it('when clicked', () => {
+      expect(fullScreenForm.isPresent).to.be.false;
     });
   });
 });

@@ -8,9 +8,9 @@ import { FormattedMessage } from 'react-intl';
 import {
   Pane,
   PaneMenu,
-  Icon,
   IconButton,
   Button,
+  PaneFooter,
 } from '@folio/stripes/components';
 
 import css from './FullScreenForm.css';
@@ -24,19 +24,19 @@ export const FullScreenForm = ({
   isSubmitDisabled = false,
   submitMessage,
 }) => {
-  const closeButtonRef = useRef();
+  const headerCloseButtonRef = useRef();
 
-  useEffect(() => closeButtonRef.current.focus(), []);
+  useEffect(() => headerCloseButtonRef.current.focus(), []);
 
   const firstMenu = (
     <PaneMenu>
       <FormattedMessage id="ui-data-import.close">
         {ariaLabel => (
           <IconButton
-            data-test-close-button
+            data-test-header-close-button
             ariaLabel={ariaLabel}
             icon="times"
-            ref={closeButtonRef}
+            ref={headerCloseButtonRef}
             onClick={onCancel}
           />
         )}
@@ -44,35 +44,34 @@ export const FullScreenForm = ({
     </PaneMenu>
   );
 
-  const lastMenu = (
-    <PaneMenu>
-      <Button
-        data-test-submit-button
-        type="submit"
-        disabled={isSubmitDisabled}
-        buttonStyle="primary paneHeaderNewButton"
-        marginBottom0
-      >
-        {submitMessage}
-      </Button>
-    </PaneMenu>
+  const closeButton = (
+    <Button
+      data-test-close-button
+      marginBottom0
+      buttonStyle="default mega"
+      onClick={onCancel}
+    >
+      <FormattedMessage id="ui-data-import.close" />
+    </Button>
   );
 
-  const handleCancel = menu => {
-    menu.onToggle();
-    onCancel();
-  };
-
-  const renderActionMenu = menu => (
+  const submitButton = (
     <Button
-      data-test-cancel-button
-      buttonStyle="dropdownItem"
-      onClick={() => handleCancel(menu)}
+      data-test-submit-button
+      type="submit"
+      disabled={isSubmitDisabled}
+      buttonStyle="primary mega"
+      marginBottom0
     >
-      <Icon icon="times-circle">
-        <FormattedMessage id="ui-data-import.cancel" />
-      </Icon>
+      {submitMessage}
     </Button>
+  );
+
+  const footer = (
+    <PaneFooter
+      renderStart={closeButton}
+      renderEnd={submitButton}
+    />
   );
 
   return (
@@ -84,10 +83,9 @@ export const FullScreenForm = ({
     >
       <Pane
         defaultWidth="100%"
-        actionMenu={renderActionMenu}
-        firstMenu={firstMenu}
-        lastMenu={lastMenu}
         paneTitle={paneTitle}
+        firstMenu={firstMenu}
+        footer={footer}
       >
         <div className={css.formContent}>
           {children}
