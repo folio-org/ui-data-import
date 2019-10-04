@@ -55,7 +55,6 @@
     "updated": "Updated",
     "updatedBy": "Updated by",
     "runBy": "Run by",
-    "save": "Save",
     "cancel": "Cancel",
     "close": "Close",
     "description": "Description",
@@ -92,7 +91,7 @@
     "settings.matchProfiles.title": "Match profiles",
     "settings.actionProfiles.title": "Action profiles",
     "settings.jobProfiles.acceptedDataType": "Accepted data type",
-    "settings.jobProfiles.chooseAcceptedDataType": "Choose accepted data type",
+    "settings.jobProfiles.chooseAcceptedDataType": "Select accepted data type",
     "settings.jobProfiles.overview": "Overview",
     "fileDefinitionDeleteError": "Internal error. Press {button} button to try again",
     "communicationProblem": "Server communication problem. Please try again",
@@ -187,8 +186,8 @@
     "incomingRecordTypes.edifact-invoice": "EDIFACT invoice",
     "incomingRecordTypes.delimited": "Delimited",
     "settings.mappingProfiles.new": "New field mapping profile",
-    "chooseIncomingRecordType": "Choose incoming record type",
-    "chooseFolioRecordType": "Choose FOLIO record type",
+    "chooseIncomingRecordType": "Select incoming record type",
+    "chooseFolioRecordType": "Select FOLIO record type",
     "settings.mappingProfiles.exceptionModal.label": "Cannot delete filed mapping profile",
     "settings.mappingProfiles.exceptionModal.message": "This field mapping profile cannot be deleted, as it is in use by one or more action profiles.",
     "modal.mappingProfile.delete.header": "Delete \"{name}\" field mapping profile?",
@@ -219,5 +218,7 @@
     "matches": "Matches",
     "nonMatches": "Non-matches",
     "reactTo": "React to",
-    "selectAction": "Select action"
+    "selectAction": "Select action",
+    "saveAsProfile": "Save as profile & Close",
+    "saveAsFileExtension": "Save as file extension & Close"
 }
