@@ -23,15 +23,15 @@ import {
 import {
   useCheckboxList,
   compose,
-} from '../../utils';
+} from '../utils';
 import {
   PROFILE_TYPES,
   SORT_TYPES,
-} from '../../utils/constants';
-import { createAssociatedJobProfilesFormatter } from '../../components';
+} from '../utils/constants';
+import { createAssociatedJobProfilesFormatter } from '.';
 
-import searchAndSortCss from '../../components/SearchAndSort/SearchAndSort.css';
-import sharedCss from '../../shared.css';
+import searchAndSortCss from './SearchAndSort/SearchAndSort.css';
+import sharedCss from '../shared.css';
 
 const associatedJobProfilesNsParams = 'AJP';
 const nsSort = getNsKey('sort', associatedJobProfilesNsParams);
@@ -49,10 +49,12 @@ const associatedJobProfilesVisibleColumns = [
 ];
 const columnWidths = { selected: 40 };
 
-const AssociatedJobProfilesComponent = ({
-  resources,
-  mutator,
-}) => {
+const AssociatedJobProfilesComponent = props => {
+  const {
+    resources,
+    mutator,
+  } = props;
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => void mutator.query.update(initialQuery), []);
 
@@ -107,11 +109,12 @@ const AssociatedJobProfilesComponent = ({
           onSort,
           resetAll,
         }) => {
+          const searchButtonDisabled = !searchValue.query;
+
           const onSubmit = event => {
             onSubmitSearch(event);
             deselectAll();
           };
-          const searchButtonDisabled = !searchValue.query;
 
           return (
             <Fragment>
@@ -193,7 +196,7 @@ AssociatedJobProfilesComponent.manifest = Object.freeze({
     throwErrors: false,
     GET: {
       params: {
-        detailType: PROFILE_TYPES.ACTION_PROFILE,
+        detailType: '!{detailType}',
         masterType: PROFILE_TYPES.JOB_PROFILE,
         query: makeQueryFunction(
           'cql.allRecords=1',
@@ -215,6 +218,8 @@ AssociatedJobProfilesComponent.manifest = Object.freeze({
 });
 
 AssociatedJobProfilesComponent.propTypes = {
+  // eslint-disable-next-line react/no-unused-prop-types
+  detailType: PropTypes.oneOf(Object.values(PROFILE_TYPES)).isRequired,
   resources: PropTypes.shape({
     query: PropTypes.object.isRequired,
     associatedJobProfiles: PropTypes.shape({

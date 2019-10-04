@@ -43,9 +43,9 @@ import {
   listTemplate,
   FOLIO_RECORD_TYPES,
   ACTION_TYPES,
+  AssociatedJobProfiles,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
-import { AssociatedJobProfiles } from './AssociatedJobProfiles';
 import { REACT_TO_META } from './reactTo';
 
 import sharedCss from '../../shared.css';
@@ -317,7 +317,7 @@ export class ViewActionProfile extends Component {
               </Button>
             )}
           >
-            <AssociatedJobProfiles />
+            <AssociatedJobProfiles detailType={PROFILE_TYPES.ACTION_PROFILE} />
           </Accordion>
         </AccordionSet>
         <EndOfItem

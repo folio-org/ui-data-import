@@ -4,6 +4,7 @@
 * Add details section on create/edit action profile form (UIDATIMP-207)
 * Add details section of action profile details pane (UIDATIMP-280)
 * Update format of settings cancel/save options (UIDATIMP-238)
+* Add associated job profiles search on match profile details pane (UIDATIMP-178)
 
 ## [1.5.1](https://github.com/folio-org/ui-data-import/tree/v1.5.1) (2019-09-25)
 * Create Section component (UIDATIMP-278)
