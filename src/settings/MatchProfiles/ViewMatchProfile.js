@@ -1,7 +1,4 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
@@ -14,28 +11,19 @@ import {
 import {
   Pane,
   Button,
-  Checkbox,
   Headline,
   KeyValue,
   Accordion,
-  SearchField,
   AccordionSet,
-  MultiColumnList,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
-  SearchAndSortQuery,
   withTags,
   TagsAccordion,
 } from '@folio/stripes/smart-components';
 
-import {
-  createUrl,
-  createLayerURL,
-  withCheckboxList,
-  checkboxListShape,
-} from '../../utils';
+import { createLayerURL } from '../../utils';
 import {
   LAYER_TYPES,
   ENTITY_KEYS,
@@ -47,15 +35,12 @@ import {
   Spinner,
   EndOfItem,
   ActionMenu,
-  listTemplate,
-  createAssociatedJobProfilesFormatter,
+  AssociatedJobProfiles,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
-import searchAndSortCss from '../../components/SearchAndSort/SearchAndSort.css';
 import sharedCss from '../../shared.css';
 
-@withCheckboxList
 @stripesConnect
 @withTags
 export class ViewMatchProfile extends Component {
@@ -63,19 +48,6 @@ export class ViewMatchProfile extends Component {
     matchProfile: {
       type: 'okapi',
       path: 'data-import-profiles/matchProfiles/:{id}',
-      throwErrors: false,
-    },
-    associatedJobProfiles: {
-      type: 'okapi',
-      path: createUrl(
-        'data-import-profiles/profileAssociations/:{id}/masters',
-        {
-          detailType: PROFILE_TYPES.MATCH_PROFILE,
-          masterType: PROFILE_TYPES.JOB_PROFILE,
-          query: 'cql.allRecords=1 sortBy name/ascending',
-        },
-        false
-      ),
       throwErrors: false,
     },
   });
@@ -86,16 +58,10 @@ export class ViewMatchProfile extends Component {
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      associatedJobProfiles: PropTypes.shape({
-        hasLoaded: PropTypes.bool.isRequired,
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
     }).isRequired,
     location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
     match: PropTypes.shape({ params: PropTypes.shape({ id: PropTypes.string }).isRequired }).isRequired,
     tagsEnabled: PropTypes.bool,
-    checkboxList: checkboxListShape.isRequired,
-    setList: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string,
@@ -118,28 +84,6 @@ export class ViewMatchProfile extends Component {
     showDeleteConfirmation: false,
   };
 
-  componentDidMount() {
-    this.setList();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { resources } = this.props;
-
-    if (prevProps.resources !== resources) {
-      this.setList();
-    }
-  }
-
-  visibleColumns = [
-    'selected',
-    'name',
-    'tags',
-    'updated',
-    'updatedBy',
-  ];
-
-  columnWidths = { selected: 40 };
-
   get matchProfileData() {
     const { resources } = this.props;
 
@@ -150,31 +94,6 @@ export class ViewMatchProfile extends Component {
       hasLoaded: matchProfile.hasLoaded,
       record,
     };
-  }
-
-  get associatedJobProfilesData() {
-    const { resources } = this.props;
-
-    const associatedJobProfilesResource = resources.associatedJobProfiles || {};
-
-    const associatedJobProfiles = get(
-      associatedJobProfilesResource,
-      ['records', 0, 'childSnapshotWrappers'],
-      []
-    ).map(({ content }) => content);
-
-    return {
-      hasLoaded: associatedJobProfilesResource.hasLoaded,
-      associatedJobProfiles,
-    };
-  }
-
-  setList() {
-    const { setList } = this.props;
-
-    const { associatedJobProfiles } = this.associatedJobProfilesData;
-
-    setList(associatedJobProfiles);
   }
 
   showDeleteConfirmation = () => {
@@ -218,53 +137,10 @@ export class ViewMatchProfile extends Component {
     />
   );
 
-  createFormatter(searchTerm) {
-    const {
-      checkboxList: {
-        selectRecord,
-        selectedRecords,
-      },
-    } = this.props;
-
-    const formatter = listTemplate({
-      entityKey: ENTITY_KEYS.JOB_PROFILES,
-      searchTerm,
-      selectRecord,
-      selectedRecords,
-    });
-
-    return {
-      ...formatter,
-      name: record => (
-        <Button
-          data-test-job-profile-link
-          buttonStyle="link"
-          marginBottom0
-          to={`/settings/data-import/job-profiles/view/${record.id}`}
-          buttonClass={sharedCss.cellLink}
-        >
-          {formatter.name(record)}
-        </Button>
-      ),
-    };
-  }
-
-  rowUpdater = ({ id }) => {
-    const { checkboxList: { selectedRecords } } = this.props;
-
-    return selectedRecords.has(id);
-  };
-
   render() {
     const {
       onClose,
       paneId,
-      checkboxList: {
-        isAllSelected,
-        handleSelectAllCheckbox,
-        selectRecord,
-        selectedRecords,
-      },
       tagsEnabled,
     } = this.props;
     const { showDeleteConfirmation } = this.state;
@@ -273,11 +149,6 @@ export class ViewMatchProfile extends Component {
       hasLoaded,
       record: matchProfile,
     } = this.matchProfileData;
-
-    const {
-      hasLoaded: associatedJobProfilesDataHasLoaded,
-      associatedJobProfiles,
-    } = this.associatedJobProfilesData;
 
     if (!matchProfile || !hasLoaded) {
       return <Spinner entity={this} />;
@@ -355,71 +226,7 @@ export class ViewMatchProfile extends Component {
               </Button>
             )}
           >
-            <div data-test-associated-job-profiles>
-              <SearchAndSortQuery initialSearchState={{ query: '' }}>
-                {({ searchValue }) => (
-                  <Fragment>
-                    <form onSubmit={e => e.preventDefault()}>
-                      <div className={searchAndSortCss.searchWrap}>
-                        <div className={searchAndSortCss.searchFiledWrap}>
-                          <SearchField
-                            id="input-associated-job-profiles-search"
-                            clearSearchId="input-associated-job-profiles-clear-search-button"
-                            loading={!associatedJobProfilesDataHasLoaded}
-                            value=""
-                            marginBottom0
-                          />
-                        </div>
-                        <div className={searchAndSortCss.searchButtonWrap}>
-                          <Button
-                            data-test-search-and-sort-submit
-                            type="submit"
-                            buttonStyle="primary"
-                            fullWidth
-                            marginBottom0
-                          >
-                            <FormattedMessage id="stripes-smart-components.search" />
-                          </Button>
-                        </div>
-                      </div>
-                    </form>
-                    <MultiColumnList
-                      id="associated-job-profiles-list"
-                      visibleColumns={this.visibleColumns}
-                      contentData={associatedJobProfiles}
-                      columnMapping={{
-                        selected: (
-                          <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-                            role="button"
-                            tabIndex="0"
-                            className={sharedCss.selectableCellButton}
-                            data-test-select-all-associated-job-profiles-checkbox
-                            onClick={e => e.stopPropagation()}
-                          >
-                            <Checkbox
-                              name="selected-all"
-                              checked={isAllSelected}
-                              onChange={handleSelectAllCheckbox}
-                            />
-                          </div>
-                        ),
-                        name: <FormattedMessage id="ui-data-import.name" />,
-                        tags: <FormattedMessage id="ui-data-import.tags" />,
-                        updated: <FormattedMessage id="ui-data-import.updated" />,
-                        updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
-                      }}
-                      columnWidths={this.columnWidths}
-                      formatter={createAssociatedJobProfilesFormatter({
-                        searchTerm: searchValue.query,
-                        selectRecord,
-                        selectedRecords,
-                      })}
-                      rowUpdater={this.rowUpdater}
-                    />
-                  </Fragment>
-                )}
-              </SearchAndSortQuery>
-            </div>
+            <AssociatedJobProfiles detailType={PROFILE_TYPES.MATCH_PROFILE} />
           </Accordion>
         </AccordionSet>
         <EndOfItem

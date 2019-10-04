@@ -84,7 +84,7 @@ describe('Match Profile View', () => {
         });
       });
 
-      describe('when clocked again', () => {
+      describe('when clicked again', () => {
         beforeEach(async () => {
           await matchProfileDetails.associatedJobProfiles.selectAllCheckBox.clickAndBlur();
         });
