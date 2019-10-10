@@ -132,17 +132,12 @@ export const ActionProfilesFormComponent = ({
   const isEditMode = layer === LAYER_TYPES.EDIT;
   const isSubmitDisabled = pristine || submitting;
 
-  const paneTitle = isEditMode
-    ? (
-      <FormattedMessage id="ui-data-import.edit">
-        {txt => `${txt} ${initialValues.name}`}
-      </FormattedMessage>
-    )
-    : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
-  const headLine = isEditMode
-    ? initialValues.name
-    : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
-
+  const paneTitle = isEditMode ? (
+    <FormattedMessage id="ui-data-import.edit">
+      {txt => `${txt} ${initialValues.name}`}
+    </FormattedMessage>
+  ) : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
+  const headLine = isEditMode ? initialValues.name : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
   const editWithModal = isEditMode && associatedJobProfilesAmount;
 
   const onSubmit = e => {

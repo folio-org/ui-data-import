@@ -11,7 +11,6 @@ import {
   isEmpty,
 } from 'lodash';
 
-import { IntlConsumer } from '@folio/stripes/core';
 import {
   Callout,
   ConfirmationModal,
@@ -210,69 +209,64 @@ export class ListView extends Component {
     const rowUpdater = selectedRecords ? this.rowUpdater : undefined;
 
     return (
-      <IntlConsumer>
-        {intl => (
-          <ViewContainer
-            entityKey={ENTITY_KEY}
-            mutator={mutator}
-            location={location}
-            history={history}
-            match={match}
-            selectRecord={selectRecord}
-            selectedRecords={selectedRecords}
-          >
-            {props => (
-              <Fragment>
-                <SearchAndSort
-                  objectName={objectName}
-                  finishedResourceName={ENTITY_KEY}
-                  parentResources={resources}
-                  parentMutator={mutator}
-                  initialResultCount={INITIAL_RESULT_COUNT}
-                  resultCountIncrement={RESULT_COUNT_INCREMENT}
-                  searchLabelKey={`ui-data-import.settings.${ENTITY_KEY}.title`}
-                  resultCountMessageKey={`ui-data-import.settings.${ENTITY_KEY}.count`}
-                  resultsLabel={label}
-                  defaultSort="name"
-                  actionMenu={actionMenu}
-                  visibleColumns={visibleColumns}
-                  columnWidths={columnWidths}
-                  columnMapping={renderHeaders()}
-                  resultsFormatter={listTemplate({
-                    intl,
-                    entityKey: ENTITY_KEY,
-                    searchTerm,
-                    selectRecord,
-                    selectedRecords,
-                  })}
-                  withNewRecordButton={withNewRecordButton}
-                  ViewRecordComponent={RecordView}
-                  EditRecordComponent={RecordForm}
-                  detailProps={detailProps}
-                  newRecordInitialValues={initialValues}
-                  editRecordInitialValues={selectedRecord.record}
-                  editRecordInitialValuesAreLoaded={selectedRecord.hasLoaded}
-                  showSingleResult={showSingleResult}
-                  onSubmitSearch={deselectAll}
-                  rowUpdater={rowUpdater}
-                  {...props}
-                />
-                <ConfirmationModal
-                  id="restore-default-records-modal"
-                  open={showRestoreModal}
-                  heading={<FormattedMessage id="ui-data-import.modal.fileExtensions.reset.header" />}
-                  message={<FormattedMessage id="ui-data-import.modal.fileExtensions.reset.message" />}
-                  confirmLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.reset.actionButton" />}
-                  cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
-                  onConfirm={this.restoreDefaults}
-                  onCancel={this.handleHideRestoreModal}
-                />
-                <Callout ref={this.calloutRef} />
-              </Fragment>
-            )}
-          </ViewContainer>
+      <ViewContainer
+        entityKey={ENTITY_KEY}
+        mutator={mutator}
+        location={location}
+        history={history}
+        match={match}
+        selectRecord={selectRecord}
+        selectedRecords={selectedRecords}
+      >
+        {props => (
+          <Fragment>
+            <SearchAndSort
+              objectName={objectName}
+              finishedResourceName={ENTITY_KEY}
+              parentResources={resources}
+              parentMutator={mutator}
+              initialResultCount={INITIAL_RESULT_COUNT}
+              resultCountIncrement={RESULT_COUNT_INCREMENT}
+              searchLabelKey={`ui-data-import.settings.${ENTITY_KEY}.title`}
+              resultCountMessageKey={`ui-data-import.settings.${ENTITY_KEY}.count`}
+              resultsLabel={label}
+              defaultSort="name"
+              actionMenu={actionMenu}
+              visibleColumns={visibleColumns}
+              columnWidths={columnWidths}
+              columnMapping={renderHeaders()}
+              resultsFormatter={listTemplate({
+                entityKey: ENTITY_KEY,
+                searchTerm,
+                selectRecord,
+                selectedRecords,
+              })}
+              withNewRecordButton={withNewRecordButton}
+              ViewRecordComponent={RecordView}
+              EditRecordComponent={RecordForm}
+              detailProps={detailProps}
+              newRecordInitialValues={initialValues}
+              editRecordInitialValues={selectedRecord.record}
+              editRecordInitialValuesAreLoaded={selectedRecord.hasLoaded}
+              showSingleResult={showSingleResult}
+              onSubmitSearch={deselectAll}
+              rowUpdater={rowUpdater}
+              {...props}
+            />
+            <ConfirmationModal
+              id="restore-default-records-modal"
+              open={showRestoreModal}
+              heading={<FormattedMessage id="ui-data-import.modal.fileExtensions.reset.header" />}
+              message={<FormattedMessage id="ui-data-import.modal.fileExtensions.reset.message" />}
+              confirmLabel={<FormattedMessage id="ui-data-import.modal.fileExtensions.reset.actionButton" />}
+              cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
+              onConfirm={this.restoreDefaults}
+              onCancel={this.handleHideRestoreModal}
+            />
+            <Callout ref={this.calloutRef} />
+          </Fragment>
         )}
-      </IntlConsumer>
+      </ViewContainer>
     );
   }
 }

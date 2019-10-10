@@ -1,12 +1,19 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
+import {
+  get,
+  noop,
+} from 'lodash';
 
 import {
   AppIcon,
   TitleManager,
   stripesConnect,
+  Pluggable,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -16,6 +23,7 @@ import {
   AccordionSet,
   MultiColumnList,
   ConfirmationModal,
+  Button,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -271,7 +279,14 @@ export class ViewMappingProfile extends Component {
           <Accordion label={<FormattedMessage id="ui-data-import.details" />}>
             <div style={{ height: 60 }}>{/* will be implemented in future stories */}</div>
           </Accordion>
-          <Accordion label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}>
+          <Accordion
+            label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
+            displayWhenOpen={(
+              <Button>
+                <FormattedMessage id="ui-data-import.options" />
+              </Button>
+            )}
+          >
             <div data-test-associated-action-profiles>
               <MultiColumnList
                 id="associated-action-profiles"

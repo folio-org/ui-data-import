@@ -1,13 +1,20 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
+import {
+  get,
+  noop,
+} from 'lodash';
 
 import {
   AppIcon,
   TitleManager,
   stripesConnect,
+  Pluggable,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -290,7 +297,14 @@ export class ViewActionProfile extends Component {
               </div>
             </KeyValue>
           </Accordion>
-          <Accordion label={<FormattedMessage id="ui-data-import.settings.associatedMappingProfile" />}>
+          <Accordion
+            label={<FormattedMessage id="ui-data-import.settings.associatedMappingProfile" />}
+            displayWhenOpen={(
+              <Button>
+                <FormattedMessage id="ui-data-import.options" />
+              </Button>
+            )}
+          >
             <div data-test-associated-mapping-profile>
               <MultiColumnList
                 id="associated-mapping-profile"

@@ -26,6 +26,85 @@ import { JobProfilesForm } from './JobProfilesForm';
 const INITIAL_RESULT_COUNT = 5000;
 const RESULT_COUNT_INCREMENT = 5000;
 
+export const jobProfilesShape = {
+  INITIAL_RESULT_COUNT,
+  RESULT_COUNT_INCREMENT,
+  manifest: {
+    initializedFilterConfig: { initialValue: false },
+    query: { initialValue: {} },
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    records: {
+      type: 'okapi',
+      perRequest: RESULT_COUNT_INCREMENT,
+      records: ENTITY_KEYS.JOB_PROFILES,
+      recordsRequired: '%{resultCount}',
+      path: 'data-import-profiles/jobProfiles',
+      clientGeneratePk: false,
+      throwErrors: true,
+      GET: {
+        params: {
+          query: makeQueryFunction(
+            'cql.allRecords=1',
+            '(name="%{query.query}*" OR tags.tagList="%{query.query}*")',
+            {
+              name: 'name',
+              tags: 'tags.tagList',
+              updated: 'metadata.updatedDate',
+              updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
+            },
+            [],
+          ),
+        },
+        staticFallback: { params: {} },
+      },
+    },
+  },
+  visibleColumns: [
+    'name',
+    'description',
+    'tags',
+    'updated',
+    'updatedBy',
+  ],
+  columnWidths: {
+    isChecked: '35px',
+    name: '300px',
+    tags: '150px',
+    updated: '100px',
+    updatedBy: '250px',
+  },
+  renderHeaders: props => {
+    let headers = {
+      name: <FormattedMessage id="ui-data-import.name" />,
+      description: <FormattedMessage id="ui-data-import.description" />,
+      tags: <FormattedMessage id="ui-data-import.tags" />,
+      updated: <FormattedMessage id="ui-data-import.updated" />,
+      updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
+    };
+
+    if (props && props.checkboxList) {
+      const {
+        checkboxList: {
+          isAllSelected,
+          handleSelectAllCheckbox,
+        },
+      } = props;
+
+      headers = {
+        ...headers,
+        selected: (
+          <CheckboxHeader
+            checked={isAllSelected}
+            onChange={handleSelectAllCheckbox}
+          />
+        ),
+      };
+    }
+
+    return headers;
+  },
+};
+
 // TODO: this code could possibly be rewritten when https://issues.folio.org/browse/STCON-86 is done
 export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '') => {
   const findAll = (chooseJobProfile && dataTypeQuery !== '')
@@ -42,14 +121,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '') 
     updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
   };
   const visibleColumns = chooseJobProfile
-    ? [
-      'name',
-      'description',
-      'tags',
-      'updated',
-      'updatedBy',
-    ]
-    : [
+    ? jobProfilesShape.visibleColumns : [
       'selected',
       'name',
       'tags',
@@ -160,30 +232,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '') 
       RecordForm: JobProfilesForm,
     };
 
-    renderHeaders = () => {
-      const {
-        checkboxList: {
-          isAllSelected,
-          handleSelectAllCheckbox,
-        },
-      } = this.props;
-
-      const headers = {
-        selected: (
-          <CheckboxHeader
-            checked={isAllSelected}
-            onChange={handleSelectAllCheckbox}
-          />
-        ),
-        name: <FormattedMessage id="ui-data-import.name" />,
-        description: <FormattedMessage id="ui-data-import.description" />,
-        tags: <FormattedMessage id="ui-data-import.tags" />,
-        updated: <FormattedMessage id="ui-data-import.updated" />,
-        updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
-      };
-
-      return headers;
-    };
+    renderHeaders = () => jobProfilesShape.renderHeaders(this.props);
 
     render() {
       const resultedProps = {
