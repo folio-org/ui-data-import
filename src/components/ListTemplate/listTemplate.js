@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  FormattedMessage,
+  FormattedTime,
+} from 'react-intl';
 
 import {
   CheckboxColumn,
@@ -20,7 +24,6 @@ import { ENTITY_KEYS } from '../../utils/constants';
  *   searchTerm?: string,
  *   selectRecord?: (id: string) => void,
  *   selectedRecords?: Set<string>,
- *   intl?: object, // comes from IntlConsumer
  * }}
  * Note: check which params are required based on used columns
  */
@@ -29,7 +32,6 @@ export const listTemplate = ({
   searchTerm,
   selectRecord,
   selectedRecords,
-  intl,
 }) => ({
   selected: record => (
     <CheckboxColumn
@@ -97,7 +99,7 @@ export const listTemplate = ({
     const translationIdEnding = `fileExtension.${importBlocked ? 'block' : 'allow'}Import`;
     const fullTranslationId = `ui-data-import.settings.${translationIdEnding}`;
 
-    return intl.formatMessage({ id: fullTranslationId });
+    return <FormattedMessage id={fullTranslationId} />;
   },
   tags: record => (
     <TagsColumn
@@ -129,11 +131,14 @@ export const listTemplate = ({
   completedDate: record => {
     const { completedDate } = record;
 
-    return intl.formatTime(completedDate, {
-      day: 'numeric',
-      month: 'numeric',
-      year: 'numeric',
-    });
+    return (
+      <FormattedTime
+        value={completedDate}
+        day="numeric"
+        month="numeric"
+        year="numeric"
+      />
+    );
   },
   fileName: record => record.fileName,
 });

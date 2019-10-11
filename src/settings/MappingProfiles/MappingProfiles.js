@@ -29,6 +29,87 @@ const queryTemplate = `(
   tags.tagList="%{query.query}*"
 )`;
 
+export const mappingProfilesShape = {
+  INITIAL_RESULT_COUNT,
+  RESULT_COUNT_INCREMENT,
+  manifest: {
+    initializedFilterConfig: { initialValue: false },
+    query: { initialValue: {} },
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    records: {
+      type: 'okapi',
+      perRequest: RESULT_COUNT_INCREMENT,
+      records: ENTITY_KEYS.MAPPING_PROFILES,
+      recordsRequired: '%{resultCount}',
+      path: 'data-import-profiles/mappingProfiles',
+      clientGeneratePk: false,
+      throwErrors: true,
+      GET: {
+        params: {
+          query: makeQueryFunction(
+            'cql.allRecords=1',
+            queryTemplate,
+            {
+              name: 'name',
+              folioRecord: 'folioRecord',
+              tags: 'tags.tagList',
+              updated: 'metadata.updatedDate',
+              updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
+            },
+            [],
+          ),
+        },
+        staticFallback: { params: {} },
+      },
+    },
+  },
+  visibleColumns: [
+    'name',
+    'folioRecord',
+    'tags',
+    'updated',
+    'updatedBy',
+  ],
+  columnWidths: {
+    isChecked: '35px',
+    name: '300px',
+    folioRecord: '150px',
+    tags: '150px',
+    updated: '100px',
+    updatedBy: '250px',
+  },
+  renderHeaders: props => {
+    let headers = {
+      name: <FormattedMessage id="ui-data-import.name" />,
+      folioRecord: <FormattedMessage id="ui-data-import.folioRecordType" />,
+      tags: <FormattedMessage id="ui-data-import.tags" />,
+      updated: <FormattedMessage id="ui-data-import.updated" />,
+      updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
+    };
+
+    if (props && props.checkboxList) {
+      const {
+        checkboxList: {
+          isAllSelected,
+          handleSelectAllCheckbox,
+        },
+      } = props;
+
+      headers = {
+        ...headers,
+        selected: (
+          <CheckboxHeader
+            checked={isAllSelected}
+            onChange={handleSelectAllCheckbox}
+          />
+        ),
+      };
+    }
+
+    return headers;
+  },
+};
+
 const mapStateToProps = state => {
   const {
     hasLoaded = false,
@@ -118,14 +199,7 @@ export class MappingProfiles extends Component {
       'selectAll',
       'deselectAll',
     ],
-    visibleColumns: [
-      'selected',
-      'name',
-      'folioRecord',
-      'tags',
-      'updated',
-      'updatedBy',
-    ],
+    visibleColumns: ['selected', ...mappingProfilesShape.visibleColumns],
     columnWidths: { selected: 40 },
     initialValues: {
       name: '',
@@ -135,28 +209,7 @@ export class MappingProfiles extends Component {
     RecordForm: MappingProfilesForm,
   };
 
-  renderHeaders = () => {
-    const {
-      checkboxList: {
-        isAllSelected,
-        handleSelectAllCheckbox,
-      },
-    } = this.props;
-
-    return ({
-      selected: (
-        <CheckboxHeader
-          checked={isAllSelected}
-          onChange={handleSelectAllCheckbox}
-        />
-      ),
-      name: <FormattedMessage id="ui-data-import.name" />,
-      folioRecord: <FormattedMessage id="ui-data-import.folioRecordType" />,
-      tags: <FormattedMessage id="ui-data-import.tags" />,
-      updated: <FormattedMessage id="ui-data-import.updated" />,
-      updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
-    });
-  };
+  renderHeaders = () => mappingProfilesShape.renderHeaders(this.props);
 
   render() {
     const resultedProps = {

@@ -26,4 +26,4 @@ export const FolioRecordTypeSelect = ({ dataOptions }) => (
   </div>
 );
 
-FolioRecordTypeSelect.propTypes = { dataOptions: PropTypes.object.isRequired };
+FolioRecordTypeSelect.propTypes = { dataOptions: PropTypes.arrayOf(PropTypes.object) };

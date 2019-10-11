@@ -1,12 +1,19 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
+import {
+  get,
+  noop,
+} from 'lodash';
 
 import {
   AppIcon,
   TitleManager,
   stripesConnect,
+  Pluggable,
 } from '@folio/stripes/core';
 import {
   Pane,

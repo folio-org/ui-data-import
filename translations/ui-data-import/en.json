@@ -151,6 +151,8 @@
   "settings.matchProfiles.title": "Match profiles",
   "modal.matchProfile.delete.header": "Delete \"{name}\" match profile?",
   "modal.matchProfile.delete.message": "Delete match profile?",
+  "settings.associateProfile": "Pick Profile",
+  "find-import-profile-plugin-unavailable": "Find Import Profile Plugin is not available now",
   "settings.associatedJobProfiles": "Associated job profiles",
   "settings.associatedMappingProfile": "Associated field mapping profile",
   "settings.associatedActionProfiles": "Associated action profiles",
