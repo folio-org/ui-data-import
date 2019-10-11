@@ -28,7 +28,10 @@ const jobsUrl = createUrl('metadata-provider/jobExecutions', {
   limit: 50,
 }, false);
 
-const logsUrl = createUrl('metadata-provider/logs', { landingPage: true }, false);
+const logsUrl = createUrl('metadata-provider/logs', {
+  landingPage: true,
+  query: 'cql.allRecords=1 sortBy completedDate/sort.descending',
+}, false);
 
 @stripesConnect
 export class DataFetcher extends Component {
