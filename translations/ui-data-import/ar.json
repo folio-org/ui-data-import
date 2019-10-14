@@ -220,5 +220,7 @@
     "reactTo": "تفاعل مع",
     "selectAction": "اختر إجراء",
     "saveAsProfile": "حفظ كملف تعريفي وإغلاق",
-    "saveAsFileExtension": "حفظ باسم امتداد الملف وإغلاق"
+    "saveAsFileExtension": "حفظ باسم امتداد الملف وإغلاق",
+    "settings.associateProfile": "اختر الملف التعريفي",
+    "find-import-profile-plugin-unavailable": "برنامج باحث استيراد الملف التعريفي المساعد غير متاح الآن"
 }

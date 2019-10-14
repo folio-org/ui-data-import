@@ -220,5 +220,7 @@
     "reactTo": "React to",
     "selectAction": "Select action",
     "saveAsProfile": "Save as profile & Close",
-    "saveAsFileExtension": "Save as file extension & Close"
+    "saveAsFileExtension": "Save as file extension & Close",
+    "settings.associateProfile": "Pick Profile",
+    "find-import-profile-plugin-unavailable": "Find Import Profile Plugin is not available now"
 }
