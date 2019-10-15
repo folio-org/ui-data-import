@@ -42,17 +42,17 @@ const withJobLogsSortComponent = WrappedComponent => {
         sortFn: sortStrings,
         useFormatterFn: false,
       },
-      jobExecutionHrId: {
+      hrId: {
         sortFn: sortNums,
         useFormatterFn: false,
       },
       jobProfileName: {
         sortFn: sortStrings,
-        useFormatterFn: false,
+        useFormatterFn: true,
       },
       totalRecords: {
         sortFn: sortNums,
-        useFormatterFn: false,
+        useFormatterFn: true,
       },
       runBy: {
         sortFn: sortStrings,
@@ -84,7 +84,7 @@ const withJobLogsSortComponent = WrappedComponent => {
         direction,
       } = this.state;
 
-      const logs = get(this.context, ['logs', 'logDtos'], []);
+      const logs = get(this.context, ['logs'], []);
 
       return logs.sort((a, b) => {
         const cellFormatter = this.props.formatter[sort];

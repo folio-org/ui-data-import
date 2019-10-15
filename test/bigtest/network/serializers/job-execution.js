@@ -5,7 +5,7 @@ export default RestSerializer.extend({
     const { jobExecutions } = RestSerializer.prototype.serialize.apply(this, args);
 
     return {
-      jobExecutionDtos: jobExecutions,
+      jobExecutions,
       totalRecords: jobExecutions.length,
     };
   },

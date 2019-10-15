@@ -6,6 +6,7 @@
 * Update format of settings cancel/save options (UIDATIMP-238)
 * Add associated job profiles search on match profile details pane (UIDATIMP-178)
 * Add sortBy order to the query when retrieving logs (UIDATIMP-301)
+* Update requests for retrieving logs and jobExecutions (UIDATIMP-304)
 
 ## [1.5.1](https://github.com/folio-org/ui-data-import/tree/v1.5.1) (2019-09-25)
 * Create Section component (UIDATIMP-278)

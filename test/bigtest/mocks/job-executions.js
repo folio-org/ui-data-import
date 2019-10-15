@@ -10,7 +10,7 @@ const previewJobs = [
   {
     id: '469eba83-41d1-4161-bd1a-0f46d8764c6a',
     hrId: '199482989',
-    jobProfileName: 'Main bib jobs (MARC)',
+    jobProfileInfo: { name: 'Main bib jobs (MARC)' },
     fileName: 'import_1.mrc',
     runBy: {
       firstName: 'Marie',
@@ -26,7 +26,7 @@ const previewJobs = [
   {
     id: '469eba83-41d1-4161-bd1a-0f46d876477t',
     hrId: '182982110',
-    jobProfileName: 'Library indexing',
+    jobProfileInfo: { name: 'Library indexing' },
     fileName: 'import_1.mrc',
     runBy: {
       firstName: 'Marie',
@@ -42,7 +42,7 @@ const previewJobs = [
   {
     id: '469eba83-41d1-4161-bd1a-0f46d342177e',
     hrId: '182982111',
-    jobProfileName: 'Indexing',
+    jobProfileInfo: { name: 'Indexing' },
     fileName: 'import_1.mrc',
     runBy: {
       firstName: 'Marie',
@@ -58,7 +58,7 @@ const previewJobs = [
   {
     id: '469eba83-41d1-4161-bd1a-0f46d866177d',
     hrId: '182982930',
-    jobProfileName: 'Library indexing',
+    jobProfileInfo: { name: 'Library indexing' },
     fileName: 'import_1.mrc',
     runBy: {
       firstName: 'Oliver',
@@ -75,7 +75,7 @@ const previewJobs = [
   {
     id: '469eba83-41d1-4161-bd1a-0f46d86999pd',
     hrId: '182982220',
-    jobProfileName: 'BIB Import from Boston',
+    jobProfileInfo: { name: 'BIB Import from Boston' },
     fileName: 'import_1.mrc',
     runBy: {
       firstName: 'Taylor',
@@ -95,7 +95,7 @@ const runningJobs = [
   {
     id: '469eba83-41d1-4161-bd1a-0f46d5554c6a',
     hrId: '182982989',
-    jobProfileName: 'Main bib jobs',
+    jobProfileInfo: { name: 'Main bib jobs' },
     fileName: 'import_1.mrc',
     runBy: {
       firstName: 'Mark',
@@ -111,7 +111,7 @@ const runningJobs = [
   {
     id: '469eba83-41d1-4161-bd1a-0f46d555499u',
     hrId: '182983328',
-    jobProfileName: 'Main bib indexing',
+    jobProfileInfo: { name: 'Main bib indexing' },
     fileName: 'import_1.mrc',
     runBy: {
       firstName: 'Mark',
@@ -127,7 +127,7 @@ const runningJobs = [
   {
     id: '469eba83-41d1-4161-bd1a-0f46d555112p',
     hrId: '182983990',
-    jobProfileName: 'Authority updates',
+    jobProfileInfo: { name: 'Authority updates' },
     fileName: 'import_1.mrc',
     runBy: {
       firstName: 'Mark',

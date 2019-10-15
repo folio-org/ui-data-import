@@ -6,7 +6,7 @@ import { List } from '@folio/stripes/components';
 import { Preloader } from '../../../Preloader';
 import { EndOfItem } from '../../../EndOfItem';
 import { Job } from '../Job';
-import { jobPropTypes } from '../Job/jobPropTypes';
+import { jobExecutionPropTypes } from '../Job/jobExecutionPropTypes';
 
 import css from './JobsList.css';
 
@@ -50,7 +50,7 @@ export const JobsList = ({
 };
 
 JobsList.propTypes = {
-  jobs: PropTypes.arrayOf(jobPropTypes).isRequired,
+  jobs: PropTypes.arrayOf(jobExecutionPropTypes).isRequired,
   hasLoaded: PropTypes.bool.isRequired,
   isEmptyMessage: PropTypes.node,
 };

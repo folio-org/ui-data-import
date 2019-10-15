@@ -7,11 +7,11 @@ import {
 
 import { stripesConnect } from '@folio/stripes-core';
 
-import { jobPropTypes } from '../Jobs/components/Job/jobPropTypes';
-import { jobLogPropTypes } from '../JobLogs/jobLogPropTypes';
+import { jobExecutionPropTypes } from '../Jobs/components/Job/jobExecutionPropTypes';
 import {
   DEFAULT_FETCHER_UPDATE_INTERVAL,
   JOB_STATUSES,
+  FILE_STATUSES,
 } from '../../utils/constants';
 import { createUrl } from '../../utils';
 
@@ -23,14 +23,20 @@ const {
   PREPARING_FOR_PREVIEW,
 } = JOB_STATUSES;
 
+const {
+  COMMITTED,
+  ERROR,
+  DISCARDED,
+} = FILE_STATUSES;
+
 const jobsUrl = createUrl('metadata-provider/jobExecutions', {
-  query: `(uiStatus==("${PREPARING_FOR_PREVIEW}" OR "${READY_FOR_PREVIEW}" OR "${RUNNING}"))`,
+  query: `(status="" NOT status=${DISCARDED}) AND (uiStatus==("${PREPARING_FOR_PREVIEW}" OR "${READY_FOR_PREVIEW}" OR "${RUNNING}"))`,
   limit: 50,
 }, false);
 
-const logsUrl = createUrl('metadata-provider/logs', {
-  landingPage: true,
-  query: 'cql.allRecords=1 sortBy completedDate/sort.descending',
+const logsUrl = createUrl('metadata-provider/jobExecutions', {
+  query: `(status any "${COMMITTED} ${ERROR}") sortBy completedDate/sort.descending`,
+  limit: 25,
 }, false);
 
 @stripesConnect
@@ -62,12 +68,12 @@ export class DataFetcher extends Component {
     resources: PropTypes.shape({
       jobs: PropTypes.shape({
         records: PropTypes.arrayOf(
-          PropTypes.shape({ jobExecutionDtos: PropTypes.arrayOf(jobPropTypes).isRequired }),
+          PropTypes.shape({ jobExecutions: PropTypes.arrayOf(jobExecutionPropTypes).isRequired }),
         ).isRequired,
       }),
       logs: PropTypes.shape({
         records: PropTypes.arrayOf(
-          PropTypes.shape({ logDtos: PropTypes.arrayOf(jobLogPropTypes).isRequired }),
+          PropTypes.shape({ jobExecutions: PropTypes.arrayOf(jobExecutionPropTypes).isRequired }),
         ).isRequired,
       }),
     }).isRequired,
@@ -145,7 +151,7 @@ export class DataFetcher extends Component {
     const contextData = { hasLoaded: true };
 
     forEach(resources, (resourceValue, resourceName) => {
-      contextData[resourceName] = isEmpty ? {} : get(resourceValue, ['records', 0], {});
+      contextData[resourceName] = isEmpty ? {} : get(resourceValue, ['records', 0, 'jobExecutions'], {});
     });
 
     this.setState({ contextData });
