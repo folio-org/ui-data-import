@@ -33,7 +33,7 @@ export const withJobLogsCellsFormatter = WrappedComponent => {
           <Button
             buttonStyle="link"
             marginBottom0
-            to={`/data-import/log/${record.jobExecutionId}`}
+            to={`/data-import/log/${record.id}`}
             buttonClass={sharedCss.cellLink}
             target="_blank"
           >
