@@ -53,7 +53,7 @@ export class Job extends Component {
     } = this.props;
 
     const {
-      jobProfileName,
+      jobProfileInfo: { name },
       fileName,
       uiStatus,
       hrId,
@@ -75,7 +75,7 @@ export class Job extends Component {
         className={css.job}
       >
         <div className={classNames(css.delimiter, css.jobHeader)}>
-          <span>{jobProfileName}</span>
+          <span>{name}</span>
           <span>{fileName}</span>
         </div>
 
