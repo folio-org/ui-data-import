@@ -94,7 +94,6 @@ describe('Job Profile View', () => {
           expect(jobProfileDetails.description.text).to.equal('Changed description');
         });
       });
-
       describe('is submitted and the response contains', () => {
         describe('error message', () => {
           beforeEach(async function () {
