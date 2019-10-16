@@ -7,7 +7,7 @@ import { MultiColumnList } from '@folio/stripes/components';
 import { Preloader } from '../Preloader';
 import { withJobLogsSort } from './withJobLogsSort';
 import { withJobLogsCellsFormatter } from './withJobLogsCellsFormatter';
-import { jobLogPropTypes } from './jobLogPropTypes';
+import { jobExecutionPropTypes } from '../Jobs/components/Job/jobExecutionPropTypes';
 
 @withJobLogsCellsFormatter
 @withJobLogsSort
@@ -18,7 +18,7 @@ export class JobLogs extends Component {
     sortDirection: PropTypes.string.isRequired,
     onSort: PropTypes.func.isRequired,
     hasLoaded: PropTypes.bool,
-    contentData: PropTypes.arrayOf(jobLogPropTypes),
+    contentData: PropTypes.arrayOf(jobExecutionPropTypes),
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   };
 
@@ -29,7 +29,7 @@ export class JobLogs extends Component {
 
   columnMapping = {
     fileName: <FormattedMessage id="ui-data-import.fileName" />,
-    jobExecutionHrId: <FormattedMessage id="ui-data-import.jobExecutionHrId" />,
+    hrId: <FormattedMessage id="ui-data-import.jobExecutionHrId" />,
     jobProfileName: <FormattedMessage id="ui-data-import.jobProfileName" />,
     totalRecords: <FormattedMessage id="ui-data-import.records" />,
     completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
@@ -38,7 +38,7 @@ export class JobLogs extends Component {
 
   visibleColumns = [
     'fileName',
-    'jobExecutionHrId',
+    'hrId',
     'jobProfileName',
     'totalRecords',
     'completedDate',
@@ -46,7 +46,7 @@ export class JobLogs extends Component {
   ];
 
   columnWidths = {
-    jobExecutionHrId: 60,
+    hrId: 60,
     totalRecords: 80,
   };
 

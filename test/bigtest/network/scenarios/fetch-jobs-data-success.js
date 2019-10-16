@@ -1,8 +1,8 @@
-import { jobExecutions as jobExecutionDtos } from '../../mocks';
+import { jobExecutions } from '../../mocks';
 
 export default server => {
   server.get('/metadata-provider/jobExecutions', {
-    jobExecutionDtos,
-    totalRecords: jobExecutionDtos.length,
+    jobExecutions,
+    totalRecords: jobExecutions.length,
   });
 };

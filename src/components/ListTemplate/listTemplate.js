@@ -140,5 +140,15 @@ export const listTemplate = ({
       />
     );
   },
+  jobProfileName: record => {
+    const { jobProfileInfo: { name } } = record;
+
+    return name;
+  },
+  totalRecords: record => {
+    const { progress: { total } } = record;
+
+    return total;
+  },
   fileName: record => record.fileName,
 });

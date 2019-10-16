@@ -17,14 +17,14 @@ import { Button } from '@folio/stripes/components';
 
 import { Progress } from '../../../Progress';
 import { jobMetaTypes } from './jobMetaTypes';
-import { jobPropTypes } from './jobPropTypes';
+import { jobExecutionPropTypes } from './jobExecutionPropTypes';
 
 import css from './Job.css';
 
 @injectIntl
 export class Job extends Component {
   static propTypes = {
-    job: jobPropTypes.isRequired,
+    job: jobExecutionPropTypes.isRequired,
     intl: intlShape.isRequired,
     handlePreview: PropTypes.func,
   };

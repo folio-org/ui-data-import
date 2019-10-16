@@ -1,10 +1,13 @@
 const jobsLogsData = [
   {
-    jobExecutionId: '3d790a2a-86de-46f9-a9ae-c9109bba746b',
-    jobExecutionHrId: '02',
-    jobProfileName: 'Multilingual support check',
+    id: '67dfac11-1caf-4470-9ad1-d533f6360bdd',
+    hrId: '02',
+    jobProfileInfo: { name: 'Multilingual support check' },
     fileName: 'import_28.mrc',
-    totalRecords: 9,
+    progress: {
+      jobExecutionId: '3d790a2a-86de-46f9-a9ae-c9109bba746b',
+      total: 9,
+    },
     runBy: {
       firstName: 'Ozzy',
       lastName: 'Campenshtorm',
@@ -14,11 +17,14 @@ const jobsLogsData = [
     uiStatus: 'ERROR',
   },
   {
-    jobExecutionId: '2e149aef-bb77-45aa-8a28-e139674b55e1',
-    jobExecutionHrId: '03',
-    jobProfileName: 'Standard BIB profile',
+    id: '2e149aef-bb77-45aa-8a28-e139674b55e1',
+    hrId: '03',
+    jobProfileInfo: { name: 'Standard BIB profile' },
     fileName: 'import_22.mrc',
-    totalRecords: 7,
+    progress: {
+      jobExecutionId: '2e149aef-bb77-45aa-8a28-e139674b55e1',
+      total: 7,
+    },
     runBy: {
       firstName: 'Elliot',
       lastName: 'Lane',
@@ -28,11 +34,14 @@ const jobsLogsData = [
     uiStatus: 'RUNNING_COMPLETE',
   },
   {
-    jobExecutionId: '4aa3f7f9-3fe5-4a29-a149-72f7b08879da',
-    jobExecutionHrId: '01',
-    jobProfileName: 'BIB profile with customized Holdings',
+    id: '4aa3f7f9-3fe5-4a29-a149-72f7b08879da',
+    hrId: '01',
+    jobProfileInfo: { name: 'BIB profile with customized Holdings' },
     fileName: 'import_22.mrc',
-    totalRecords: 46,
+    progress: {
+      jobExecutionId: '2e149aef-bb77-45aa-8a28-e139674b55e1',
+      total: 46,
+    },
     runBy: {
       firstName: 'Jay',
       lastName: 'Morrowitz',
