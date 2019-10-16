@@ -16,7 +16,7 @@ export class ViewJobLog extends Component {
   static manifest = Object.freeze({
     jobLog: {
       type: 'okapi',
-      path: 'source-storage/records?query=snapshotId=:{id}&sortBy=order&limit=1000',
+      path: 'source-storage/records?query=snapshotId=:{id} sortBy order&limit=1000',
       throwsErrors: false,
     },
   });
