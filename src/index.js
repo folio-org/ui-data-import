@@ -12,6 +12,7 @@ import {
   JobProfile,
   ViewJobLog,
 } from './routes';
+import ViewAllLogs from './routes/ViewAllLogs';
 import { DataImportSettings } from './settings';
 import { UploadingJobsContextProvider } from './components';
 
@@ -50,6 +51,10 @@ class DataImport extends Component {
             path={`${path}/log/:id`}
             exact
             component={ViewJobLog}
+          />
+          <Route
+            path={`${path}/job-logs`}
+            component={ViewAllLogs}
           />
         </Switch>
       </UploadingJobsContextProvider>
