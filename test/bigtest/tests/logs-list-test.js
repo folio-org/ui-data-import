@@ -34,13 +34,14 @@ describe('Logs list', () => {
   });
 
   it('renders the correct number of rows', () => {
-    expect(logsList.rowCount).to.equal(3);
+    expect(logsList.rowCount).to.equal(4);
   });
 
   it('sorted default by "completedDate" descending', () => {
     expect(getCellContent(0, 4)).to.equal('11/11/2018, 2:10 PM');
-    expect(getCellContent(1, 4)).to.equal('11/5/2018, 2:21 PM');
-    expect(getCellContent(2, 4)).to.equal('11/5/2018, 1:08 PM');
+    expect(getCellContent(1, 4)).to.equal('11/5/2018, 2:22 PM');
+    expect(getCellContent(2, 4)).to.equal('11/5/2018, 2:21 PM');
+    expect(getCellContent(3, 4)).to.equal('11/5/2018, 1:08 PM');
   });
 
   describe('sorting', () => {
@@ -50,9 +51,10 @@ describe('Logs list', () => {
       });
 
       it('ascending', () => {
-        expect(getCellContent(0, 0)).to.equal('import_22.mrc');
+        expect(getCellContent(0, 0)).to.equal('import_21.mrc');
         expect(getCellContent(1, 0)).to.equal('import_22.mrc');
-        expect(getCellContent(2, 0)).to.equal('import_28.mrc');
+        expect(getCellContent(2, 0)).to.equal('import_22.mrc');
+        expect(getCellContent(3, 0)).to.equal('import_28.mrc');
       });
 
       describe('and', () => {
@@ -64,6 +66,7 @@ describe('Logs list', () => {
           expect(getCellContent(0, 0)).to.equal('import_28.mrc');
           expect(getCellContent(1, 0)).to.equal('import_22.mrc');
           expect(getCellContent(2, 0)).to.equal('import_22.mrc');
+          expect(getCellContent(3, 0)).to.equal('import_21.mrc');
         });
       });
     });
@@ -77,6 +80,7 @@ describe('Logs list', () => {
         expect(getCellContent(0, 1)).to.equal('01');
         expect(getCellContent(1, 1)).to.equal('02');
         expect(getCellContent(2, 1)).to.equal('03');
+        expect(getCellContent(3, 1)).to.equal('03');
       });
 
       describe('and', () => {
@@ -86,8 +90,9 @@ describe('Logs list', () => {
 
         it('descending', () => {
           expect(getCellContent(0, 1)).to.equal('03');
-          expect(getCellContent(1, 1)).to.equal('02');
-          expect(getCellContent(2, 1)).to.equal('01');
+          expect(getCellContent(1, 1)).to.equal('03');
+          expect(getCellContent(2, 1)).to.equal('02');
+          expect(getCellContent(3, 1)).to.equal('01');
         });
       });
     });
@@ -95,8 +100,9 @@ describe('Logs list', () => {
     describe('compares fields as dates', () => {
       it('descending', () => {
         expect(getCellContent(0, 4)).to.equal('11/11/2018, 2:10 PM');
-        expect(getCellContent(1, 4)).to.equal('11/5/2018, 2:21 PM');
-        expect(getCellContent(2, 4)).to.equal('11/5/2018, 1:08 PM');
+        expect(getCellContent(1, 4)).to.equal('11/5/2018, 2:22 PM');
+        expect(getCellContent(2, 4)).to.equal('11/5/2018, 2:21 PM');
+        expect(getCellContent(3, 4)).to.equal('11/5/2018, 1:08 PM');
       });
 
       describe('and', () => {
@@ -107,7 +113,8 @@ describe('Logs list', () => {
         it('ascending', () => {
           expect(getCellContent(0, 4)).to.equal('11/5/2018, 1:08 PM');
           expect(getCellContent(1, 4)).to.equal('11/5/2018, 2:21 PM');
-          expect(getCellContent(2, 4)).to.equal('11/11/2018, 2:10 PM');
+          expect(getCellContent(2, 4)).to.equal('11/5/2018, 2:22 PM');
+          expect(getCellContent(3, 4)).to.equal('11/11/2018, 2:10 PM');
         });
       });
     });
@@ -119,8 +126,9 @@ describe('Logs list', () => {
 
       it('ascending', () => {
         expect(getCellContent(0, 5)).to.equal('Elliot Lane');
-        expect(getCellContent(1, 5)).to.equal('Jay Morrowitz');
-        expect(getCellContent(2, 5)).to.equal('Ozzy Campenshtorm');
+        expect(getCellContent(1, 5)).to.equal('Elliot Lane');
+        expect(getCellContent(2, 5)).to.equal('Jay Morrowitz');
+        expect(getCellContent(3, 5)).to.equal('Ozzy Campenshtorm');
       });
 
       describe('and', () => {
@@ -132,6 +140,7 @@ describe('Logs list', () => {
           expect(getCellContent(0, 5)).to.equal('Ozzy Campenshtorm');
           expect(getCellContent(1, 5)).to.equal('Jay Morrowitz');
           expect(getCellContent(2, 5)).to.equal('Elliot Lane');
+          expect(getCellContent(3, 5)).to.equal('Elliot Lane');
         });
       });
     });
@@ -143,7 +152,8 @@ describe('Logs list', () => {
       it('ascending', () => {
         expect(getCellContent(0, 3)).to.equal('7');
         expect(getCellContent(1, 3)).to.equal('9');
-        expect(getCellContent(2, 3)).to.equal('46');
+        expect(getCellContent(2, 3)).to.equal('10');
+        expect(getCellContent(3, 3)).to.equal('46');
       });
 
       describe('and', () => {
@@ -153,8 +163,9 @@ describe('Logs list', () => {
 
         it('descending', () => {
           expect(getCellContent(0, 3)).to.equal('46');
-          expect(getCellContent(1, 3)).to.equal('9');
-          expect(getCellContent(2, 3)).to.equal('7');
+          expect(getCellContent(1, 3)).to.equal('10');
+          expect(getCellContent(2, 3)).to.equal('9');
+          expect(getCellContent(3, 3)).to.equal('7');
         });
       });
     });
@@ -167,6 +178,7 @@ describe('Logs list', () => {
         expect(getCellContent(0, 2)).to.equal('BIB profile with customized Holdings');
         expect(getCellContent(1, 2)).to.equal('Multilingual support check');
         expect(getCellContent(2, 2)).to.equal('Standard BIB profile');
+        expect(getCellContent(3, 2)).to.equal('Standard BIB profile');
       });
 
       describe('and', () => {
@@ -176,8 +188,9 @@ describe('Logs list', () => {
 
         it('descending', () => {
           expect(getCellContent(0, 2)).to.equal('Standard BIB profile');
-          expect(getCellContent(1, 2)).to.equal('Multilingual support check');
-          expect(getCellContent(2, 2)).to.equal('BIB profile with customized Holdings');
+          expect(getCellContent(1, 2)).to.equal('Standard BIB profile');
+          expect(getCellContent(2, 2)).to.equal('Multilingual support check');
+          expect(getCellContent(3, 2)).to.equal('BIB profile with customized Holdings');
         });
       });
     });
