@@ -80,6 +80,8 @@
   "folioRecordType": "FOLIO record type",
   "chooseFolioRecordType": "Select FOLIO record type",
   "jobExecutionHrId": "ID",
+  "hridOrUuid": "HRID or UUID",
+  "keyword": "Keyword (File name, HRID, UUID)",
   "records": "Records",
   "jobCompletedDate": "Ended running",
   "communicationProblem": "Server communication problem. Please try again",

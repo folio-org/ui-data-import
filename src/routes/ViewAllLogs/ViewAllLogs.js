@@ -5,6 +5,7 @@ import {
   FormattedMessage,
   FormattedTime,
   injectIntl,
+  intlShape,
 } from 'react-intl';
 
 import {
@@ -19,11 +20,16 @@ import {
 
 import packageInfo from '@folio/data-import/package';
 import { stripesConnect } from '@folio/stripes-core';
+import { get } from 'lodash';
+import { Button } from '@folio/stripes-components';
 import { FILE_STATUSES } from '../../utils/constants';
 import { Job } from '../../components/Jobs/components/Job';
 import { filterConfig } from './ViewAllLogsFilterConfig';
-import { logsSearchTemplate } from './ViewAllLogsSearchConfig';
-import { createUrl } from '../../utils';
+import {
+  logsSearchTemplate,
+  searchableIndexes,
+} from './ViewAllLogsSearchConfig';
+import sharedCss from '../../shared.css';
 
 const {
   COMMITTED,
@@ -62,6 +68,7 @@ class ViewAllLogs extends Component {
     showSingleResult: PropTypes.bool,
     browseOnly: PropTypes.bool,
     packageInfo: PropTypes.object,
+    intl: intlShape.isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }),
   };
 
@@ -121,6 +128,19 @@ class ViewAllLogs extends Component {
     this.props.history.push(`${packageInfo.stripes.route}/log/${meta.id}`);
   }
 
+  getTranslateSearchableIndexes() {
+    const { intl: { formatMessage } } = this.props;
+
+    return searchableIndexes.map(index => {
+      const label = formatMessage({ id: `ui-data-import.${index.label}` });
+
+      return {
+        ...index,
+        label,
+      };
+    });
+  }
+
   render() {
     const {
       browseOnly,
@@ -132,7 +152,16 @@ class ViewAllLogs extends Component {
     } = this.props;
 
     const resultsFormatter = {
-      fileName: record => record.fileName,
+      fileName: record => (
+        <Button
+          buttonStyle="link"
+          marginBottom0
+          buttonClass={sharedCss.cellLink}
+          target="_blank"
+        >
+          {record.fileName}
+        </Button>
+      ),
       runBy: record => {
         const {
           runBy: {
@@ -187,6 +216,8 @@ class ViewAllLogs extends Component {
           disableRecordCreation={disableRecordCreation}
           browseOnly={browseOnly}
           showSingleResult={showSingleResult}
+          searchableIndexes={this.getTranslateSearchableIndexes()}
+          selectedIndex={get(resources.query, 'qindex')}
           renderFilters={this.renderFilters}
           filterConfig={filterConfig}
           onFilterChange={this.handleFilterChange}
