@@ -10,16 +10,16 @@ import {
 import {
   makeQueryFunction,
   SearchAndSort,
-} from '@folio/stripes-smart-components';
+} from '@folio/stripes/smart-components';
 import {
   changeSearchIndex,
   getActiveFilters,
   handleFilterChange,
 } from '@folio/stripes-acq-components';
 
-import packageInfo from '@folio/data-import/package';
 import { stripesConnect } from '@folio/stripes-core';
 import { Button } from '@folio/stripes-components';
+import packageInfo from '../../../package';
 import { FILE_STATUSES } from '../../utils/constants';
 import { Job } from '../../components/Jobs/components/Job';
 import { filterConfig } from './ViewAllLogsFilterConfig';
