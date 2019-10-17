@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { get } from 'lodash';
 import {
   FormattedMessage,
   injectIntl,
@@ -23,8 +23,12 @@ import { Button } from '@folio/stripes-components';
 import { FILE_STATUSES } from '../../utils/constants';
 import { Job } from '../../components/Jobs/components/Job';
 import { filterConfig } from './ViewAllLogsFilterConfig';
-import { logsSearchTemplate } from './ViewAllLogsSearchConfig';
+import {
+  logsSearchTemplate,
+  searchableIndexes,
+} from './ViewAllLogsSearchConfig';
 import sharedCss from '../../shared.css';
+import { listTemplate } from '../../components/ListTemplate';
 
 const {
   COMMITTED,
@@ -52,7 +56,6 @@ const visibleColumns = [
 const INITIAL_RESULT_COUNT = 25;
 const RESULT_COUNT_INCREMENT = 25;
 
-@withRouter
 @stripesConnect
 class ViewAllLogs extends Component {
   static propTypes = {
@@ -123,6 +126,19 @@ class ViewAllLogs extends Component {
     const path = `/data-import/log/${meta.id}`;
 
     window.open(path, '_blank').focus();
+  }
+
+  getTranslateSearchableIndexes() {
+    const { intl: { formatMessage } } = this.props;
+
+    return searchableIndexes.map(index => {
+      const label = formatMessage({ id: `ui-data-import.${index.label}` });
+
+      return {
+        ...index,
+        label,
+      };
+    });
   }
 
   render() {
