@@ -84,7 +84,7 @@ const withJobLogsSortComponent = WrappedComponent => {
         direction,
       } = this.state;
 
-      const logs = get(this.context, ['logs'], []);
+      const logs = [...get(this.context, ['logs'], [])];
 
       return logs.sort((a, b) => {
         const cellFormatter = this.props.formatter[sort];

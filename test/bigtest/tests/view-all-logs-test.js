@@ -14,7 +14,7 @@ const getCellContent = (row, cell) => logsList.rows(row).cells(cell).content;
 
 const LOGS_COUNT = 3;
 
-describe.only('View all logs', () => {
+describe('View all logs', () => {
   setupApplication({ scenarios: ['fetch-jobs-logs-success'] });
 
   beforeEach(function () {

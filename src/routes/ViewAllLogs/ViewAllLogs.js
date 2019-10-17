@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
   FormattedMessage,
-  FormattedTime,
   injectIntl,
   intlShape,
 } from 'react-intl';
@@ -11,7 +10,7 @@ import {
 import {
   makeQueryFunction,
   SearchAndSort,
-} from '@folio/stripes-smart-components';
+} from '@folio/stripes/smart-components';
 import {
   changeSearchIndex,
   getActiveFilters,
@@ -20,15 +19,11 @@ import {
 
 import packageInfo from '@folio/data-import/package';
 import { stripesConnect } from '@folio/stripes-core';
-import { get } from 'lodash';
 import { Button } from '@folio/stripes-components';
 import { FILE_STATUSES } from '../../utils/constants';
 import { Job } from '../../components/Jobs/components/Job';
 import { filterConfig } from './ViewAllLogsFilterConfig';
-import {
-  logsSearchTemplate,
-  searchableIndexes,
-} from './ViewAllLogsSearchConfig';
+import { logsSearchTemplate } from './ViewAllLogsSearchConfig';
 import sharedCss from '../../shared.css';
 
 const {
@@ -68,8 +63,8 @@ class ViewAllLogs extends Component {
     showSingleResult: PropTypes.bool,
     browseOnly: PropTypes.bool,
     packageInfo: PropTypes.object,
-    intl: intlShape.isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }),
+    intl: intlShape.isRequired,
   };
 
   static defaultProps = {
@@ -125,20 +120,9 @@ class ViewAllLogs extends Component {
   }
 
   onRowClick(e, meta) {
-    this.props.history.push(`${packageInfo.stripes.route}/log/${meta.id}`);
-  }
+    const path = `/data-import/log/${meta.id}`;
 
-  getTranslateSearchableIndexes() {
-    const { intl: { formatMessage } } = this.props;
-
-    return searchableIndexes.map(index => {
-      const label = formatMessage({ id: `ui-data-import.${index.label}` });
-
-      return {
-        ...index,
-        label,
-      };
-    });
+    window.open(path, '_blank').focus();
   }
 
   render() {
@@ -149,6 +133,7 @@ class ViewAllLogs extends Component {
       resources,
       showSingleResult,
       stripes,
+      intl,
     } = this.props;
 
     const resultsFormatter = {
@@ -162,38 +147,10 @@ class ViewAllLogs extends Component {
           {record.fileName}
         </Button>
       ),
-      runBy: record => {
-        const {
-          runBy: {
-            firstName,
-            lastName,
-          },
-        } = record;
-
-        return `${firstName} ${lastName}`;
-      },
-      completedDate: record => {
-        const { completedDate } = record;
-
-        return (
-          <FormattedTime
-            value={completedDate}
-            day="numeric"
-            month="numeric"
-            year="numeric"
-          />
-        );
-      },
-      jobProfileName: record => {
-        const { jobProfileInfo: { name } } = record;
-
-        return name;
-      },
-      totalRecords: record => {
-        const { progress: { total } } = record;
-
-        return total;
-      },
+      runBy: listTemplate({ intl }).runBy,
+      completedDate: listTemplate({ intl }).completedDate,
+      jobProfileName: listTemplate({ intl }).jobProfileName,
+      totalRecords: listTemplate({ intl }).totalRecords,
     };
 
     return (
