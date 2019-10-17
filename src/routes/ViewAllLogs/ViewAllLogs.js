@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
   FormattedMessage,
-  FormattedTime,
-  injectIntl,
+  injectIntl, intlShape,
 } from 'react-intl';
 
 import {
@@ -25,6 +24,7 @@ import { Job } from '../../components/Jobs/components/Job';
 import { filterConfig } from './ViewAllLogsFilterConfig';
 import { logsSearchTemplate } from './ViewAllLogsSearchConfig';
 import sharedCss from '../../shared.css';
+import { listTemplate } from '../../components/ListTemplate';
 
 const {
   COMMITTED,
@@ -64,6 +64,7 @@ class ViewAllLogs extends Component {
     browseOnly: PropTypes.bool,
     packageInfo: PropTypes.object,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }),
+    intl: intlShape.isRequired,
   };
 
   static defaultProps = {
@@ -132,6 +133,7 @@ class ViewAllLogs extends Component {
       resources,
       showSingleResult,
       stripes,
+      intl,
     } = this.props;
 
     const resultsFormatter = {
@@ -145,38 +147,10 @@ class ViewAllLogs extends Component {
           {record.fileName}
         </Button>
       ),
-      runBy: record => {
-        const {
-          runBy: {
-            firstName,
-            lastName,
-          },
-        } = record;
-
-        return `${firstName} ${lastName}`;
-      },
-      completedDate: record => {
-        const { completedDate } = record;
-
-        return (
-          <FormattedTime
-            value={completedDate}
-            day="numeric"
-            month="numeric"
-            year="numeric"
-          />
-        );
-      },
-      jobProfileName: record => {
-        const { jobProfileInfo: { name } } = record;
-
-        return name;
-      },
-      totalRecords: record => {
-        const { progress: { total } } = record;
-
-        return total;
-      },
+      runBy: listTemplate({ intl }).runBy,
+      completedDate: listTemplate({ intl }).completedDate,
+      jobProfileName: listTemplate({ intl }).jobProfileName,
+      totalRecords: listTemplate({ intl }).totalRecords,
     };
 
     return (
