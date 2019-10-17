@@ -12,7 +12,7 @@ export class RunningJobs extends PureComponent {
 
   prepareJobsData() {
     const jobStatuses = [JOB_STATUSES.RUNNING];
-    const jobs = get(this.context, ['jobs'], [])
+    const jobs = [...get(this.context, ['jobs'], [])]
       .filter(({ uiStatus }) => jobStatuses.includes(uiStatus));
 
     return sortRunningJobs(jobs);

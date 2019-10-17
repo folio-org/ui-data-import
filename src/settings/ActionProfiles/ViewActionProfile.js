@@ -1,20 +1,13 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import {
-  get,
-  noop,
-} from 'lodash';
+import { get } from 'lodash';
 
 import {
   AppIcon,
   TitleManager,
   stripesConnect,
-  Pluggable,
 } from '@folio/stripes/core';
 import {
   Pane,

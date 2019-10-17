@@ -133,7 +133,7 @@ export class ViewJobProfile extends Component {
     const { resources } = this.props;
 
     const jobsUsingThisProfile = resources.jobsUsingThisProfile || {};
-    const [{ jobExecutionDtos: jobsUsingThisProfileData } = {}] = jobsUsingThisProfile.records || [];
+    const [{ jobExecutions: jobsUsingThisProfileData } = {}] = jobsUsingThisProfile.records || [];
 
     return {
       hasLoaded: jobsUsingThisProfile.hasLoaded,
