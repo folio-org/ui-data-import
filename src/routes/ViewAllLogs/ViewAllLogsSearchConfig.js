@@ -4,8 +4,12 @@ const indexes = [
     value: 'fileName',
   },
   {
-    label: 'hridOrUuid',
+    label: 'hrId',
     value: 'hrId',
+  },
+  {
+    label: 'uuId',
+    value: 'id',
   },
 ];
 

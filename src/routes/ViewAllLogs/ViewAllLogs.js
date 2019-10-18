@@ -63,17 +63,13 @@ class ViewAllLogs extends Component {
     resources: PropTypes.object.isRequired,
     stripes: PropTypes.object,
     disableRecordCreation: PropTypes.bool,
-    showSingleResult: PropTypes.bool,
     browseOnly: PropTypes.bool,
     packageInfo: PropTypes.object,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }),
     intl: intlShape.isRequired,
   };
 
-  static defaultProps = {
-    showSingleResult: true,
-    browseOnly: false,
-  };
+  static defaultProps = { browseOnly: false };
 
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -147,7 +143,6 @@ class ViewAllLogs extends Component {
       disableRecordCreation,
       mutator,
       resources,
-      showSingleResult,
       stripes,
       intl,
     } = this.props;
@@ -188,7 +183,7 @@ class ViewAllLogs extends Component {
           stripes={stripes}
           disableRecordCreation={disableRecordCreation}
           browseOnly={browseOnly}
-          showSingleResult={showSingleResult}
+          showSingleResult={false}
           searchableIndexes={this.getTranslateSearchableIndexes()}
           selectedIndex={get(resources.query, 'qindex')}
           renderFilters={this.renderFilters}
