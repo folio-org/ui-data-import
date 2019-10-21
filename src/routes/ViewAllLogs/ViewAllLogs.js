@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import {
   FormattedMessage,
   injectIntl,
@@ -17,12 +16,14 @@ import {
   handleFilterChange,
 } from '@folio/stripes-acq-components';
 
-import packageInfo from '@folio/data-import/package';
 import { stripesConnect } from '@folio/stripes-core';
 import { Button } from '@folio/stripes-components';
+import { get } from 'lodash';
+import packageInfo from '../../../package';
 import { FILE_STATUSES } from '../../utils/constants';
 import { Job } from '../../components/Jobs/components/Job';
 import { filterConfig } from './ViewAllLogsFilterConfig';
+import ViewAllLogsFilters from './ViewAllLogsFilters';
 import {
   logsSearchTemplate,
   searchableIndexes,
@@ -137,6 +138,31 @@ class ViewAllLogs extends Component {
     });
   }
 
+  renderFilters = onChange => {
+    const { resources } = this.props;
+
+    const jobProfiles = get(resources, ['records', 'records'], [])
+      .map(item => item.jobProfileInfo);
+    const users = get(resources, ['records', 'records'], [])
+      .map(item => ({
+        userId: item.userId,
+        firstName: item.runBy.firstName,
+        lastName: item.runBy.lastName,
+      }));
+
+    return resources.query
+      ? (
+        <ViewAllLogsFilters
+          activeFilters={this.getActiveFilters()}
+          onChange={onChange}
+          queryMutator={this.props.mutator.query}
+          jobProfiles={jobProfiles}
+          users={users}
+        />
+      )
+      : null;
+  };
+
   render() {
     const {
       browseOnly,
@@ -187,7 +213,6 @@ class ViewAllLogs extends Component {
           searchableIndexes={this.getTranslateSearchableIndexes()}
           selectedIndex={get(resources.query, 'qindex')}
           renderFilters={this.renderFilters}
-          filterConfig={filterConfig}
           onFilterChange={this.handleFilterChange}
           onChangeIndex={this.changeSearchIndex}
           title={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
