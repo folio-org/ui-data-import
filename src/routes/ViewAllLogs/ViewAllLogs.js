@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import {
   FormattedMessage,
-  injectIntl, intlShape,
+  injectIntl,
+  intlShape,
 } from 'react-intl';
 
 import {
@@ -18,10 +18,12 @@ import {
 
 import { stripesConnect } from '@folio/stripes-core';
 import { Button } from '@folio/stripes-components';
+import { get } from 'lodash';
 import packageInfo from '../../../package';
 import { FILE_STATUSES } from '../../utils/constants';
 import { Job } from '../../components/Jobs/components/Job';
 import { filterConfig } from './ViewAllLogsFilterConfig';
+import ViewAllLogsFilters from './ViewAllLogsFilters';
 import { logsSearchTemplate } from './ViewAllLogsSearchConfig';
 import sharedCss from '../../shared.css';
 import { listTemplate } from '../../components/ListTemplate';
@@ -52,7 +54,6 @@ const visibleColumns = [
 const INITIAL_RESULT_COUNT = 25;
 const RESULT_COUNT_INCREMENT = 25;
 
-@withRouter
 @stripesConnect
 class ViewAllLogs extends Component {
   static propTypes = {
@@ -60,17 +61,13 @@ class ViewAllLogs extends Component {
     resources: PropTypes.object.isRequired,
     stripes: PropTypes.object,
     disableRecordCreation: PropTypes.bool,
-    showSingleResult: PropTypes.bool,
     browseOnly: PropTypes.bool,
     packageInfo: PropTypes.object,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }),
     intl: intlShape.isRequired,
   };
 
-  static defaultProps = {
-    showSingleResult: true,
-    browseOnly: false,
-  };
+  static defaultProps = { browseOnly: false };
 
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -125,13 +122,37 @@ class ViewAllLogs extends Component {
     window.open(path, '_blank').focus();
   }
 
+  renderFilters = onChange => {
+    const { resources } = this.props;
+
+    const jobProfiles = get(resources, ['records', 'records'], [])
+      .map(item => item.jobProfileInfo);
+    const users = get(resources, ['records', 'records'], [])
+      .map(item => ({
+        userId: item.userId,
+        firstName: item.runBy.firstName,
+        lastName: item.runBy.lastName,
+      }));
+
+    return resources.query
+      ? (
+        <ViewAllLogsFilters
+          activeFilters={this.getActiveFilters()}
+          onChange={onChange}
+          queryMutator={this.props.mutator.query}
+          jobProfiles={jobProfiles}
+          users={users}
+        />
+      )
+      : null;
+  };
+
   render() {
     const {
       browseOnly,
       disableRecordCreation,
       mutator,
       resources,
-      showSingleResult,
       stripes,
       intl,
     } = this.props;
@@ -172,9 +193,8 @@ class ViewAllLogs extends Component {
           stripes={stripes}
           disableRecordCreation={disableRecordCreation}
           browseOnly={browseOnly}
-          showSingleResult={showSingleResult}
+          showSingleResult={false}
           renderFilters={this.renderFilters}
-          filterConfig={filterConfig}
           onFilterChange={this.handleFilterChange}
           onChangeIndex={this.changeSearchIndex}
           title={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
