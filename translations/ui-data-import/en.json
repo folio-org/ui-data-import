@@ -82,7 +82,7 @@
   "jobExecutionHrId": "ID",
   "hrId": "HRID",
   "uuId": "UUID",
-  "keyword": "Keyword (File name, HRID, UUID)",
+  "keyword": "Keyword (ID, File name)",
   "records": "Records",
   "jobCompletedDate": "Ended running",
   "communicationProblem": "Server communication problem. Please try again",

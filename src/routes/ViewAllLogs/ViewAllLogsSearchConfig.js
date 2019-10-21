@@ -1,15 +1,13 @@
+import { LOGS_FILTER } from './constants';
+
 const indexes = [
   {
+    label: 'jobExecutionHrId',
+    value: `${LOGS_FILTER} AND hrId`,
+  },
+  {
     label: 'fileName',
-    value: 'fileName',
-  },
-  {
-    label: 'hrId',
-    value: 'hrId',
-  },
-  {
-    label: 'uuId',
-    value: 'id',
+    value: `${LOGS_FILTER} AND fileName`,
   },
 ];
 
@@ -26,5 +24,4 @@ export const searchableIndexes = [
 export const logsSearchTemplate = `
 (status any "COMMITTED ERROR ") AND
 (hrId="%{query.query}*" OR 
-fileName="%{query.query}*" OR 
-id="%{query.query}*")`;
+fileName="%{query.query}*")`;

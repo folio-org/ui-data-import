@@ -9,6 +9,7 @@
 * Update requests for retrieving logs and jobExecutions (UIDATIMP-304)
 * Fix unstable message for job profiles (UIDATIMP-305)
 * Create "view all" log screen (UIDATIMP-285)
+* Add search details for the "view all" log screen (UIDATIMP-286)
 * Add filter details for the "view all" log screen (UIDATIMP-287)
 
 ## [1.5.1](https://github.com/folio-org/ui-data-import/tree/v1.5.1) (2019-09-25)

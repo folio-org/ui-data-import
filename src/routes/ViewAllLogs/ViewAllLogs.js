@@ -18,10 +18,12 @@ import {
 
 import { stripesConnect } from '@folio/stripes-core';
 import { Button } from '@folio/stripes-components';
-import { get } from 'lodash';
+import {
+  get,
+  noop,
+} from 'lodash';
 import packageInfo from '../../../package';
 import { FILE_STATUSES } from '../../utils/constants';
-import { Job } from '../../components/Jobs/components/Job';
 import { filterConfig } from './ViewAllLogsFilterConfig';
 import ViewAllLogsFilters from './ViewAllLogsFilters';
 import {
@@ -125,7 +127,7 @@ class ViewAllLogs extends Component {
     window.open(path, '_blank').focus();
   }
 
-  getTranslateSearchableIndexes() {
+  getSearchableIndexes() {
     const { intl: { formatMessage } } = this.props;
 
     return searchableIndexes.map(index => {
@@ -201,7 +203,7 @@ class ViewAllLogs extends Component {
           visibleColumns={visibleColumns}
           columnMapping={columnMapping}
           resultsFormatter={resultsFormatter}
-          viewRecordComponent={Job}
+          viewRecordComponent={noop}
           onSelectRow={this.onRowClick}
           viewRecordPerms="metadata-provider.jobexecutions.get"
           parentResources={resources}
@@ -210,7 +212,7 @@ class ViewAllLogs extends Component {
           disableRecordCreation={disableRecordCreation}
           browseOnly={browseOnly}
           showSingleResult={false}
-          searchableIndexes={this.getTranslateSearchableIndexes()}
+          searchableIndexes={this.getSearchableIndexes()}
           selectedIndex={get(resources.query, 'qindex')}
           renderFilters={this.renderFilters}
           onFilterChange={this.handleFilterChange}

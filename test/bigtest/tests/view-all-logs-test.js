@@ -54,13 +54,16 @@ describe('View all logs', () => {
       expect(searchAndSort.resetButton.isDisabled).to.be.true;
     });
 
-    describe('fill search input', () => {
-      beforeEach(async () => {
-        await searchAndSort.searchInput.fillInput('Valid name');
-      });
+    describe('Search pane', () => {
+      describe('fill search input', () => {
+        beforeEach(async () => {
+          await searchAndSort.searchField.selectIndex('File name');
+          await searchAndSort.searchField.fillInput('Valid name');
+        });
 
-      it('resetAll button is active', () => {
-        expect(searchAndSort.resetButton.isDisabled).to.be.false;
+        it('resetAll button is active', () => {
+          expect(searchAndSort.resetButton.isDisabled).to.be.false;
+        });
       });
     });
 
@@ -69,40 +72,51 @@ describe('View all logs', () => {
         expect(searchAndSort.filters.isPresent).to.be.true;
       });
 
+      it('"Errors in import" section is opened by default', () => {
+        expect(searchAndSort.filters.items(0).isOpen).to.be.true;
+      });
+
       it('renders name of filters correct', () => {
-        expect(searchAndSort.filters.labels(0).text).to.equal(translation['filter.errors']);
-        expect(searchAndSort.filters.labels(1).text).to.equal(translation['filter.date']);
-        expect(searchAndSort.filters.labels(2).text).to.equal(translation['filter.jobProfile']);
-        expect(searchAndSort.filters.labels(3).text).to.equal(translation['filter.user']);
+        expect(searchAndSort.filters.items(0).label).to.equal(translation['filter.errors']);
+        expect(searchAndSort.filters.items(1).label).to.equal(translation['filter.date']);
+        expect(searchAndSort.filters.items(2).label).to.equal(translation['filter.jobProfile']);
+        expect(searchAndSort.filters.items(3).label).to.equal(translation['filter.user']);
       });
 
-      describe('enter valid value to date field', () => {
+      describe('"Date" section', () => {
         beforeEach(async function () {
-          await searchAndSort.filters.fillDateOrderedStart('2019-01-01');
-          await searchAndSort.filters.fillDateOrderedEnd('2019-08-01');
-          await searchAndSort.filters.applyDateOrdered.click();
+          await searchAndSort.filters.items(1).clickHeader();
         });
 
-        it('should load list without errors', () => {
-          expect(logsList.rowCount).to.equal(LOGS_COUNT);
-          expect(searchAndSort.filters.hasErrorMessage).to.be.false;
+        describe('enter valid value to date fields', () => {
+          beforeEach(async function () {
+            await searchAndSort.filters.fillStartDate('2019-01-01');
+            await searchAndSort.filters.fillEndDate('2019-08-01');
+            await searchAndSort.filters.applyDateButton.click();
+          });
+
+          it('should load list without errors', () => {
+            expect(logsList.rowCount).to.equal(LOGS_COUNT);
+            expect(searchAndSort.filters.hasErrorMessage).to.be.false;
+          });
+        });
+
+        describe('enter invalid value to date field', () => {
+          beforeEach(async function () {
+            await searchAndSort.filters.fillStartDate('2019-54-01');
+            await searchAndSort.filters.fillEndDate('2019-87-01');
+            await searchAndSort.filters.applyDateButton.click();
+          });
+
+          it('error message should appear', () => {
+            expect(searchAndSort.filters.hasErrorMessage).to.be.true;
+          });
         });
       });
 
-      describe('enter invalid value to date field', () => {
+      describe('"Job profiles" selection', () => {
         beforeEach(async function () {
-          await searchAndSort.filters.fillDateOrderedStart('2019-54-01');
-          await searchAndSort.filters.fillDateOrderedEnd('2019-87-01');
-          await searchAndSort.filters.applyDateOrdered.click();
-        });
-
-        it('error message should appear', () => {
-          expect(searchAndSort.filters.hasErrorMessage).to.be.true;
-        });
-      });
-
-      describe('"Job profiles" selection field', () => {
-        beforeEach(async function () {
+          await searchAndSort.filters.items(2).clickHeader();
           await searchAndSort.filters.jobProfile.clickControl();
         });
 
@@ -115,8 +129,9 @@ describe('View all logs', () => {
         });
       });
 
-      describe('"Users" selection field', () => {
+      describe('"Users" selection', () => {
         beforeEach(async function () {
+          await searchAndSort.filters.items(3).clickHeader();
           await searchAndSort.filters.users.clickControl();
         });
 

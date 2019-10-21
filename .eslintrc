@@ -111,7 +111,7 @@
     "newline-per-chained-call": "error",
     "linebreak-style": [
       "error",
-      "windows"
+      "unix"
     ],
     "no-only-tests/no-only-tests": [
       "warn",
