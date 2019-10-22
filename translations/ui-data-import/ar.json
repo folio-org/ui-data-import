@@ -220,5 +220,14 @@
     "reactTo": "تفاعل مع",
     "selectAction": "اختر إجراء",
     "saveAsProfile": "حفظ كملف تعريفي وإغلاق",
-    "saveAsFileExtension": "حفظ باسم امتداد الملف وإغلاق"
+    "saveAsFileExtension": "حفظ باسم امتداد الملف وإغلاق",
+    "settings.associateProfile": "اختر الملف التعريفي",
+    "find-import-profile-plugin-unavailable": "برنامج باحث استيراد الملف التعريفي المساعد غير متاح الآن",
+    "filter.errors": "Errors in import",
+    "filter.date": "Date",
+    "filter.jobProfile": "Job profile",
+    "filter.user": "User",
+    "hrId": "HRID",
+    "uuId": "UUID",
+    "keyword": "Keyword (ID, File name)"
 }
