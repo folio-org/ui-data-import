@@ -6,6 +6,9 @@
 * Update format of settings cancel/save options (UIDATIMP-238)
 * Add associated job profiles search on match profile details pane (UIDATIMP-178)
 * Update requests for retrieving logs and jobExecutions (UIDATIMP-304)
+* Fix unstable message for job profiles (UIDATIMP-305)
+* Create "view all" log screen (UIDATIMP-285)
+* Add filter details for the "view all" log screen (UIDATIMP-287)
 
 ## [1.5.1](https://github.com/folio-org/ui-data-import/tree/v1.5.1) (2019-09-25)
 * Create Section component (UIDATIMP-278)

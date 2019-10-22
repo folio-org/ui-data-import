@@ -19,10 +19,6 @@ export class Home extends Component {
     // TODO: to be implemented in further stories
   };
 
-  handleViewAllLogs = () => {
-    // TODO: to be implemented in further stories
-  };
-
   addManageJobs() {
     return (
       <Button
@@ -40,7 +36,7 @@ export class Home extends Component {
       <Button
         buttonStyle="primary paneHeaderNewButton"
         marginBottom0
-        onClick={this.handleViewAllLogs}
+        to="/data-import/job-logs"
       >
         <FormattedMessage id="ui-data-import.viewAllLogs" />
       </Button>

@@ -12,7 +12,7 @@ export class PreviewsJobs extends PureComponent {
 
   prepareJobsData() {
     const jobStatuses = [JOB_STATUSES.READY_FOR_PREVIEW, JOB_STATUSES.PREPARING_FOR_PREVIEW];
-    const jobs = get(this.context, ['jobs'], [])
+    const jobs = [...get(this.context, ['jobs'], [])]
       .filter(({ uiStatus }) => jobStatuses.includes(uiStatus));
 
     return sortPreviewJobs(jobs);
