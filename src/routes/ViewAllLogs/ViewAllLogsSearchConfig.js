@@ -1,5 +1,27 @@
-import { generateQueryTemplate } from '@folio/stripes-acq-components';
+import { LOGS_FILTER } from './constants';
 
-const indexes = [];
+const indexes = [
+  {
+    label: 'jobExecutionHrId',
+    value: `${LOGS_FILTER} AND hrId`,
+  },
+  {
+    label: 'fileName',
+    value: `${LOGS_FILTER} AND fileName`,
+  },
+];
 
-export const logsSearchTemplate = generateQueryTemplate(indexes);
+const keywordIndex = {
+  label: 'keyword',
+  value: '',
+};
+
+export const searchableIndexes = [
+  keywordIndex,
+  ...indexes,
+];
+
+export const logsSearchTemplate = `
+(status any "COMMITTED ERROR ") AND
+(hrId="%{query.query}*" OR 
+fileName="%{query.query}*")`;
