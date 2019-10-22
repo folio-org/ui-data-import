@@ -5,7 +5,6 @@
 * Add details section of action profile details pane (UIDATIMP-280)
 * Update format of settings cancel/save options (UIDATIMP-238)
 * Add associated job profiles search on match profile details pane (UIDATIMP-178)
-* Add sortBy order to the query when retrieving logs (UIDATIMP-301)
 * Update requests for retrieving logs and jobExecutions (UIDATIMP-304)
 * Fix unstable message for job profiles (UIDATIMP-305)
 * Create "view all" log screen (UIDATIMP-285)
