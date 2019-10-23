@@ -229,5 +229,5 @@
     "filter.user": "Usuário",
     "hrId": "HRID",
     "uuId": "UUID",
-    "keyword": "Keyword (ID, File name)"
+    "keyword": "Palavra-chave (ID, nome do arquivo)"
 }
