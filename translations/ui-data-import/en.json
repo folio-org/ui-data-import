@@ -85,6 +85,8 @@
   "keyword": "Keyword (ID, File name)",
   "records": "Records",
   "jobCompletedDate": "Ended running",
+  "placeholder.jobExecutionHrId": "Search for ID",
+  "placeholder.fileName": "Search for File name",
   "communicationProblem": "Server communication problem. Please try again",
   "exportSelected": "Export selected",
   "itemsCount": "({count, number} {count, plural, one {item} other {items}})",

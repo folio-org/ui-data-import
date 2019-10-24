@@ -36,7 +36,7 @@ export class Home extends Component {
       <Button
         buttonStyle="primary paneHeaderNewButton"
         marginBottom0
-        to="/data-import/job-logs"
+        to="/data-import/job-logs?sort=-completedDate"
       >
         <FormattedMessage id="ui-data-import.viewAllLogs" />
       </Button>

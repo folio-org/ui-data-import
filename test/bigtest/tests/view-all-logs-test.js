@@ -20,7 +20,7 @@ describe('View all logs', () => {
   setupApplication({ scenarios: ['fetch-jobs-logs-success'] });
 
   beforeEach(function () {
-    this.visit('/data-import/job-logs');
+    this.visit('/data-import/job-logs?sort=-completedDate');
   });
 
   it('should render logs list', () => {
