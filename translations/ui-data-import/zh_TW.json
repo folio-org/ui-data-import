@@ -225,9 +225,9 @@
     "find-import-profile-plugin-unavailable": "Find Import Profile Plugin is not available now",
     "filter.errors": "Errors in import",
     "filter.date": "Date",
-    "filter.jobProfile": "Job profile",
-    "filter.user": "User",
+    "filter.jobProfile": "工作簡介",
+    "filter.user": "讀者",
     "hrId": "HRID",
     "uuId": "UUID",
-    "keyword": "Keyword (ID, File name)"
+    "keyword": "關鍵字（ID，文件名）"
 }
