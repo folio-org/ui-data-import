@@ -223,11 +223,11 @@
     "saveAsFileExtension": "حفظ باسم امتداد الملف وإغلاق",
     "settings.associateProfile": "اختر الملف التعريفي",
     "find-import-profile-plugin-unavailable": "برنامج باحث استيراد الملف التعريفي المساعد غير متاح الآن",
-    "filter.errors": "Errors in import",
-    "filter.date": "Date",
-    "filter.jobProfile": "Job profile",
-    "filter.user": "User",
-    "hrId": "HRID",
+    "filter.errors": "أخطاء في الاستيراد",
+    "filter.date": "التاريخ",
+    "filter.jobProfile": "وضع الوظيفة",
+    "filter.user": "المستخدم",
+    "hrId": "رقم التعريف القابل للقراءة بشريًا",
     "uuId": "UUID",
-    "keyword": "Keyword (ID, File name)"
+    "keyword": "كلمة رئيسية (معرف، اسم الملف)"
 }
