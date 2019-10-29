@@ -99,9 +99,9 @@ class ViewAllLogs extends Component {
             logsSearchTemplate,
             {
               fileName: 'fileName',
-              hrId: 'hrId',
+              hrId: 'hrId/sort.number',
               jobProfileName: 'jobProfileInfo.name',
-              totalRecords: 'progress.total',
+              totalRecords: 'progress.total/sort.number',
               completedDate: 'completedDate',
               runBy: 'runBy.firstName runBy.lastName',
             },
@@ -132,10 +132,12 @@ class ViewAllLogs extends Component {
 
     return searchableIndexes.map(index => {
       const label = formatMessage({ id: `ui-data-import.${index.label}` });
+      const placeholder = formatMessage({ id: `ui-data-import.placeholder.${index.placeholder}` });
 
       return {
         ...index,
         label,
+        placeholder,
       };
     });
   }

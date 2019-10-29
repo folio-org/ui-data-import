@@ -4,10 +4,12 @@ const indexes = [
   {
     label: 'jobExecutionHrId',
     value: `${LOGS_FILTER} AND hrId`,
+    placeholder: 'jobExecutionHrId',
   },
   {
     label: 'fileName',
     value: `${LOGS_FILTER} AND fileName`,
+    placeholder: 'fileName',
   },
 ];
 
