@@ -10,6 +10,7 @@
 * Create "view all" log screen (UIDATIMP-285)
 * Add search details for the "view all" log screen (UIDATIMP-286)
 * Add filter details for the "view all" log screen (UIDATIMP-287)
+* Update query for sorting by numeric field (UIDATIMP-310)
 * Update dependency on source-record-manager (UIDATIMP-318)
 
 ## [1.5.1](https://github.com/folio-org/ui-data-import/tree/v1.5.1) (2019-09-25)
