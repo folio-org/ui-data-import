@@ -229,5 +229,7 @@
     "filter.user": "المستخدم",
     "hrId": "رقم التعريف القابل للقراءة بشريًا",
     "uuId": "UUID",
-    "keyword": "كلمة رئيسية (معرف، اسم الملف)"
+    "keyword": "كلمة رئيسية (معرف، اسم الملف)",
+    "placeholder.jobExecutionHrId": "بحث عن معرف",
+    "placeholder.fileName": "البحث عن اسم الملف"
 }

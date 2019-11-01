@@ -229,5 +229,7 @@
     "filter.user": "Usuário",
     "hrId": "HRID",
     "uuId": "UUID",
-    "keyword": "Palavra-chave (ID, nome do arquivo)"
+    "keyword": "Palavra-chave (ID, nome do arquivo)",
+    "placeholder.jobExecutionHrId": "Pesquisar por ID",
+    "placeholder.fileName": "Pesquisar por nome do arquivo"
 }
