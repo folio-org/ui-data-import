@@ -229,5 +229,7 @@
     "filter.user": "讀者",
     "hrId": "HRID",
     "uuId": "UUID",
-    "keyword": "關鍵字（ID，文件名）"
+    "keyword": "關鍵字（ID，文件名）",
+    "placeholder.jobExecutionHrId": "Search for ID",
+    "placeholder.fileName": "Search for File name"
 }
