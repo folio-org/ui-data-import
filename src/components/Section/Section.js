@@ -12,41 +12,66 @@ import {
 import css from './Section.css';
 
 export const Section = memo(({
-  headerCaption,
-  isOptional,
+  label,
+  optional,
+  enabled,
+  className,
   children,
 }) => {
-  const [isChecked, setChecked] = useState(true);
+  const [isChecked, setChecked] = useState(optional ? enabled : true);
 
-  const headline = (
-    <Headline
-      size="large"
-      margin="none"
-      tag="h3"
-    >
-      {headerCaption}
-    </Headline>
-  );
+  const headline = ({ styles = '' }) => {
+    if (!label) {
+      return '';
+    }
 
-  const optionalHeadline = (
-    <Checkbox
-      fullWidth
-      label={headline}
-      checked={isChecked}
-      onChange={() => setChecked(!isChecked)}
-    />
-  );
+    return (
+      <Headline
+        size="large"
+        margin="none"
+        tag="h3"
+        className={styles}
+      >
+        {label}
+      </Headline>
+    );
+  };
+
+  const optionalHeadline = () => {
+    if (!label) {
+      return '';
+    }
+
+    return (
+      <Checkbox
+        fullWidth
+        label={headline({})}
+        className={css.label}
+        checked={isChecked}
+        onChange={() => setChecked(!isChecked)}
+      />
+    );
+  };
 
   return (
-    <section className={css.container}>
-      {isOptional ? optionalHeadline : headline}
-      {isChecked && children}
+    <section className={`${css.container} ${className}`}>
+      {optional ? optionalHeadline() : headline({ styles: css.label })}
+      {isChecked && (<div className={`${css.content} ${label ? '' : css['no-label']}`}>{children}</div>)}
     </section>
   );
 });
 
 Section.propTypes = {
-  headerCaption: PropTypes.node.isRequired,
-  isOptional: PropTypes.bool,
-  children: PropTypes.node,
+  label: PropTypes.node,
+  optional: PropTypes.bool,
+  enabled: PropTypes.bool,
+  className: PropTypes.string,
+  children: PropTypes.arrayOf(PropTypes.node),
+};
+
+Section.defaultProps = {
+  label: null,
+  optional: false,
+  enabled: false,
+  children: [],
 };

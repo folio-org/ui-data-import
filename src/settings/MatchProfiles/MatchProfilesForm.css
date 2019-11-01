@@ -1,0 +1,73 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.match-criteria {
+  background-color: #616161;
+  & > :last-child > section > :last-child {
+    margin-bottom: 0;
+  }
+  & .match-criterion {
+    padding:0;
+    border:none;
+    border-radius:0;
+    & .input-container {
+      background-color: #e5e5e5;
+      & input, & select {
+        background-color: #ffffff;
+      }
+      & > div:last-child:not(:first-child) {
+        display: inline-flex;
+        justify-content: left;
+        align-items: center;
+        & > :nth-child(n+2) {
+          margin: 0 0 0 1rem;
+        }
+      }
+    }
+    & .qualifier > div:last-child:not(:first-child) {
+      & > :first-child {
+        width: 16rem;
+      }
+      & > :last-child {
+        width: 26rem;
+      }
+    }
+    & .part > div:last-child:not(:first-child) {
+      & > :first-child {
+        width: 16rem;
+      }
+    }
+    & .incoming {
+      background-color: #b2b2b2;
+      & .field > div:last-child:not(:first-child) {
+        & > :first-child {
+          width: 8rem;
+        }
+        & > :nth-child(2) {
+          width: 3rem;
+        }
+        & > :nth-child(3) {
+          width: 3rem;
+        }
+        & > :last-child {
+          width: 26rem;
+        }
+      }
+    }
+    & .criterion {
+      background-color: #b2b2b2;
+      & > div:last-child:not(:first-child) {
+        & > :first-child {
+          width: 45rem;
+        }
+      }
+    }
+    & .existing {
+      background-color: #b2b2b2;
+      & .field > div:last-child:not(:first-child) {
+        & > :first-child, & > :last-child {
+          width: 16rem;
+        }
+      }
+    }
+  }
+}

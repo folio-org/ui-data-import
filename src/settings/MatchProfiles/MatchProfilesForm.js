@@ -15,6 +15,8 @@ import {
 import { LAYER_TYPES } from '../../utils/constants';
 import { formConfigSamples } from '../../../test/bigtest/mocks';
 
+import styles from './MatchProfilesForm.css';
+
 const formName = 'matchProfilesForm';
 
 export const MatchProfilesFormComponent = ({
@@ -23,6 +25,7 @@ export const MatchProfilesFormComponent = ({
   initialValues,
   handleSubmit,
   location: { search },
+  connectedSource: { props: { editRecordInitialValues } },
   associatedJobProfilesAmount,
   onCancel,
 }) => {
@@ -126,8 +129,17 @@ export const MatchProfilesFormComponent = ({
       component="FullScreenForm"
       id="match-profiles-form"
       config={formConfig}
+      styles={styles}
       paneTitle={paneTitle}
+      headLine={headLine}
+      referenceTables={{ matchDetails: editRecordInitialValues.matchDetails }}
       submitMessage={<FormattedMessage id="ui-data-import.save" />}
+      confirmationMessage={(
+        <FormattedMessage
+          id="ui-data-import.settings.matchProfiles.confirmEditModal.message"
+          values={{ amount: associatedJobProfilesAmount }}
+        />
+      )}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={onSubmit}
       onCancel={onCancel}

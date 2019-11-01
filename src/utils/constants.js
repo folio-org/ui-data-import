@@ -101,3 +101,37 @@ export const LOG_VIEWER = {
     },
   },
 };
+
+export const FORMS_SETTINGS = {
+  [ENTITY_KEYS.MATCH_PROFILES]: {
+    MATCHING: {
+      QUALIFIER_TYPES: [
+        'BEGINS_WITH',
+        'ENDS_WITH',
+        'CONTAINS',
+      ],
+      COMPARISON_PARTS: [
+        'NUMERICS_ONLY',
+        'ALPHANUMERICS_ONLY',
+      ],
+      CRITERION_TYPES: [
+        'EXACTLY_MATCHES',
+        'EXISTING_VALUE_CONTAINS_INCOMING_VALUE',
+        'INCOMING_VALUE_CONTAINS_EXISTING_VALUE',
+        'EXISTING_VALUE_BEGINS_WITH_INCOMING_VALUE',
+        'INCOMING_VALUE_BEGINS_WITH_EXISTING_VALUE',
+        'EXISTING_VALUE_ENDS_WITH_INCOMING_VALUE',
+        'INCOMING_VALUE_ENDS_WITH_EXISTING_VALUE',
+      ],
+      VALUE_TYPES: [
+        'VALUE_FROM_RECORD',
+        'STATIC_VALUE',
+      ],
+      STATIC_VALUE_TYPES: [
+        'TEXT',
+        'NUMBER',
+        'DATE',
+      ],
+    },
+  },
+};
