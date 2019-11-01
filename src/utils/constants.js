@@ -74,6 +74,24 @@ export const PROFILE_TYPES = {
   MAPPING_PROFILE: 'MAPPING_PROFILE',
 };
 
+export const ASSOCIATION_TYPES = {
+  jobProfiles: 'JOB_PROFILE',
+  matchProfiles: 'MATCH_PROFILE',
+  actionProfiles: 'ACTION_PROFILE',
+  mappingProfiles: 'MAPPING_PROFILE',
+};
+
+export const PROFILE_NAMES = {
+  jobProfiles: 'job profile',
+  matchProfiles: 'match profile',
+  actionProfiles: 'action profile',
+  mappingProfiles: 'field mapping profile',
+  JOB_PROFILE: 'job profile',
+  MATCH_PROFILE: 'match profile',
+  ACTION_PROFILE: 'action profile',
+  MAPPING_PROFILE: 'field mapping profile',
+};
+
 export const LOG_VIEWER = {
   FILTER: {
     OPTIONS: {
