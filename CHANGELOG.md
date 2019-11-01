@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## 1.6.0 (IN PROGRESS)
+## [1.6.0](https://github.com/folio-org/ui-data-import/tree/v1.6.0) (2019-11-01)
 * Add details section on create/edit action profile form (UIDATIMP-207)
 * Add details section of action profile details pane (UIDATIMP-280)
 * Update format of settings cancel/save options (UIDATIMP-238)
