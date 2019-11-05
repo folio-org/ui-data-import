@@ -77,6 +77,7 @@ export class UploadingJobsDisplay extends Component {
     renderLeaveModal: false,
     recordsLoadingInProgress: false,
     JobProfilesComponent: null,
+    actionMenuItems: ['run', 'editJobProfile'],
   };
 
   async componentDidMount() {
@@ -569,6 +570,7 @@ export class UploadingJobsDisplay extends Component {
       hasLoaded,
       renderLeaveModal,
       JobProfilesComponent,
+      actionMenuItems,
     } = this.state;
 
     if (!hasLoaded) {
@@ -621,10 +623,10 @@ export class UploadingJobsDisplay extends Component {
               actionMenuItems={null}
               withNewRecordButton={false}
               detailProps={{
-                actionMenuItems: null,
+                actionMenuItems,
                 withEditRecordButton: false,
+                withRunRecordButton: true,
               }}
-              RecordForm={null}
             />
           )
           : (

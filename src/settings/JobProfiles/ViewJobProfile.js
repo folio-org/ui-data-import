@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  createRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
   intlShape,
@@ -15,6 +18,9 @@ import {
   AccordionSet,
   MultiColumnList,
   ConfirmationModal,
+  Button,
+  PaneMenu,
+  Callout,
 } from '@folio/stripes/components';
 import {
   withTags,
@@ -26,6 +32,7 @@ import {
   TitleManager,
   stripesConnect,
 } from '@folio/stripes/core';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import {
   LAYER_TYPES,
@@ -37,12 +44,14 @@ import {
   createUrl,
   createLayerURL,
 } from '../../utils';
+import { loadRecords } from '../../utils/loadRecords';
 import {
   listTemplate,
   ActionMenu,
   EndOfItem,
   Preloader,
   Spinner,
+  UploadingJobsContext,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
@@ -99,6 +108,7 @@ export class ViewJobProfile extends Component {
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
     withEditRecordButton: PropTypes.bool,
+    withRunRecordButton: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -110,12 +120,19 @@ export class ViewJobProfile extends Component {
       'delete',
     ],
     withEditRecordButton: true,
+    withRunRecordButton: false,
   };
+
+  static contextType = UploadingJobsContext;
 
   state = {
     showDeleteConfirmation: false,
+    showRunConfirmation: false,
     deletionInProgress: false,
+    recordsLoadingInProgress: false,
   };
+
+  calloutRef = createRef();
 
   get jobProfileData() {
     const { resources } = this.props;
@@ -145,10 +162,21 @@ export class ViewJobProfile extends Component {
     this.setState({ showDeleteConfirmation: true });
   };
 
+  showRunConfirmation = () => {
+    this.setState({ showRunConfirmation: true });
+  };
+
   hideDeleteConfirmation = () => {
     this.setState({
       showDeleteConfirmation: false,
       deletionInProgress: false,
+    });
+  };
+
+  hideRunConfirmation = () => {
+    this.setState({
+      showRunConfirmation: false,
+      recordsLoadingInProgress: false,
     });
   };
 
@@ -166,6 +194,48 @@ export class ViewJobProfile extends Component {
     });
   }
 
+  loadRecords = async record => {
+    const {
+      stripes: { okapi },
+      history,
+    } = this.props;
+    const { uploadDefinition } = this.context;
+    const jobProfileInfo = {
+      id: record.id,
+      name: record.name,
+      dataType: record.dataType,
+    };
+
+    try {
+      await loadRecords({
+        okapi,
+        uploadDefinitionId: uploadDefinition.id,
+        jobProfileInfo,
+      });
+
+      history.push('/data-import');
+    } catch (error) {
+      this.hideRunConfirmation();
+      this.calloutRef.current.sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-data-import.communicationProblem" />,
+      });
+
+      this.setState({ recordsLoadingInProgress: false });
+      console.error(error); // eslint-disable-line no-console
+    }
+  };
+
+  handleRun(record) {
+    const { recordsLoadingInProgress } = this.state;
+
+    if (recordsLoadingInProgress) {
+      return;
+    }
+
+    this.loadRecords(record);
+  }
+
   renderActionMenu = menu => (
     <ActionMenu
       entity={this}
@@ -173,13 +243,7 @@ export class ViewJobProfile extends Component {
     />
   );
 
-  renderLastMenu(record) {
-    const { withEditRecordButton } = this.props;
-
-    if (!withEditRecordButton) {
-      return null;
-    }
-
+  getEditButton(record) {
     return (
       <LastMenu
         caption="ui-data-import.edit"
@@ -188,6 +252,34 @@ export class ViewJobProfile extends Component {
         dataAttributes={{ 'data-test-edit-item-button': '' }}
       />
     );
+  }
+
+  getRunButton() {
+    return (
+      <PaneMenu>
+        <Button
+          data-test-run-item-button
+          buttonStyle="primary paneHeaderNewButton"
+          marginBottom0
+          onClick={() => this.showRunConfirmation()}
+        >
+          <FormattedMessage id="ui-data-import.run" />
+        </Button>
+      </PaneMenu>
+    );
+  }
+
+  renderLastMenu(record) {
+    const {
+      withEditRecordButton,
+      withRunRecordButton,
+    } = this.props;
+
+    if (!withEditRecordButton && !withRunRecordButton) {
+      return null;
+    }
+
+    return withEditRecordButton ? this.getEditButton(record) : this.getRunButton();
   }
 
   render() {
@@ -329,6 +421,21 @@ export class ViewJobProfile extends Component {
           onConfirm={() => this.handleDelete(record)}
           onCancel={this.hideDeleteConfirmation}
         />
+        <ConfirmationModal
+          id="run-job-profile-modal"
+          open={this.state.showRunConfirmation}
+          heading={<FormattedMessage id="ui-data-import.modal.jobProfile.run.header" />}
+          message={(
+            <SafeHTMLMessage
+              id="ui-data-import.modal.jobProfile.run.message"
+              values={{ name: record.name }}
+            />
+          )}
+          confirmLabel={<FormattedMessage id="ui-data-import.run" />}
+          onCancel={() => this.setState({ showRunConfirmation: false })}
+          onConfirm={() => this.handleRun(record)}
+        />
+        <Callout ref={this.calloutRef} />
       </Pane>
     );
   }
