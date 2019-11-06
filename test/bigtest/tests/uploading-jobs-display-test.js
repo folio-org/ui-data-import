@@ -428,5 +428,39 @@ describe('Uploading jobs display', () => {
         expect(uploadingJobsDisplay.callout.errorCalloutIsPresent).to.be.true;
       });
     });
+
+    describe('when run button is clicked and the API response is not successful', () => {
+      beforeEach(async function () {
+        this.server.get('/data-import/uploadDefinitions/:id', {}, 500);
+        await jobProfiles.list.rows(0).click();
+        await jobProfileDetails.runButton.click();
+        await jobProfileDetails.runConfirmationModal.confirmButton.click();
+      });
+
+      it('confirmation modal disappears', () => {
+        expect(jobProfileDetails.runConfirmationModal.isPresent).to.be.false;
+      });
+
+      it('error callout appears', () => {
+        expect(uploadingJobsDisplay.callout.errorCalloutIsPresent).to.be.true;
+      });
+    });
+
+    describe('when run button is clicked and the API response is not successful', () => {
+      beforeEach(async function () {
+        this.server.post('/data-import/uploadDefinitions/:id/processFiles', {}, 500);
+        await jobProfiles.list.rows(0).click();
+        await jobProfileDetails.runButton.click();
+        await jobProfileDetails.runConfirmationModal.confirmButton.click();
+      });
+
+      it('confirmation modal disappears', () => {
+        expect(jobProfileDetails.runConfirmationModal.isPresent).to.be.false;
+      });
+
+      it('error callout appears', () => {
+        expect(uploadingJobsDisplay.callout.errorCalloutIsPresent).to.be.true;
+      });
+    });
   });
 });

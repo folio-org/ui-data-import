@@ -33,6 +33,7 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { stripesShape } from '@folio/stripes-core';
 
 import {
   LAYER_TYPES,
@@ -78,6 +79,12 @@ export class ViewJobProfile extends Component {
   });
 
   static propTypes = {
+    stripes: stripesShape.isRequired,
+    history: PropTypes.shape({
+      block: PropTypes.func.isRequired,
+      push: PropTypes.func.isRequired,
+      replace: PropTypes.func.isRequired,
+    }).isRequired,
     intl: intlShape.isRequired,
     resources: PropTypes.shape({
       jobProfile: PropTypes.shape({
