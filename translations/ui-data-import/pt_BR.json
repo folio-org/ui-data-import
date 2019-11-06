@@ -119,7 +119,7 @@
     "settings.matchProfiles.confirmEditModal.message": "Essa edição do perfil de correspondência afetará {amount, number} trabalho associado {amount, plural, one {perfil} other {perfis}} . Por favor confirme",
     "settings.jobProfiles.new": "Novo perfil do job",
     "settings.matchProfiles.new": "Novo perfil de correspondência",
-    "import-log": "Importar log para o job",
+    "import-log": "Importar log para o job ",
     "errorsCount": "{count, plural, one {# erro} other {# erros}}",
     "modal.matchProfile.delete.header": "Excluir o perfil de correspondência \"{name}\"?",
     "modal.matchProfile.delete.message": "Excluir perfil de correspondência?",
