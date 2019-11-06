@@ -45,6 +45,16 @@ export const menuTemplate = (entity, menu) => {
         dataAttributes={{ 'data-test-edit-item-menu-button': '' }}
       />
     ),
+    editJobProfile: key => (
+      <LinkTo
+        key={key}
+        caption="ui-data-import.editJobProfile"
+        icon="edit"
+        menu={menu}
+        location={createLayerURL(location, LAYER_TYPES.EDIT)}
+        dataAttributes={{ 'data-test-edit-item-menu-button': '' }}
+      />
+    ),
     duplicate: key => (
       <LinkTo
         key={key}
@@ -55,6 +65,22 @@ export const menuTemplate = (entity, menu) => {
         dataAttributes={{ 'data-test-duplicate-item-menu-button': '' }}
       />
     ),
+    run: key => {
+      const handleRun = () => {
+        menu.onToggle();
+        entity.showRunConfirmation();
+      };
+
+      return (
+        <Default
+          key={key}
+          caption="ui-data-import.run"
+          icon="play"
+          dataAttributes={{ 'data-test-run-item-menu-button': '' }}
+          onClick={handleRun}
+        />
+      );
+    },
     exportSelected: key => {
       const { selectedRecords: { size: selectedCount } } = checkboxList;
 

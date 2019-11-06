@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 export const jobExecutionPropTypes = PropTypes.shape({
   id: PropTypes.string.isRequired,
-  hrId: PropTypes.string.isRequired,
+  hrId: PropTypes.number.isRequired,
   jobProfileInfo: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,

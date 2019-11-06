@@ -14,13 +14,16 @@ import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/inter
   dropdownEditButton = new ButtonInteractor('[data-test-edit-item-menu-button]');
   dropdownDuplicateButton = new ButtonInteractor('[data-test-duplicate-item-menu-button]');
   dropdownDeleteButton = new ButtonInteractor('[data-test-delete-item-menu-button]');
+  dropdownRunButton = new ButtonInteractor('[data-test-run-item-menu-button]');
   editButton = new ButtonInteractor('[data-test-edit-item-button]');
+  runButton = new ButtonInteractor('[data-test-run-item-button]');
   headline = scoped('[data-test-headline]');
   acceptedDataType = scoped('[data-test-accepted-data-type]');
   description = scoped('[data-test-description]');
   isTagsPresent = isPresent('[data-test-tags-accordion]');
   jobsUsingThisProfile = new MultiColumnListInteractor('#jobs-using-this-profile');
   confirmationModal = new ConfirmationModalInteractor('#delete-job-profile-modal');
+  runConfirmationModal = new ConfirmationModalInteractor('#run-job-profile-modal');
   callout = new CalloutInteractor();
 
   expandPaneHeaderDropdown() {
