@@ -11,7 +11,10 @@ import css from '../RecordTypesSelect.css';
 
 export const InitialRecordSelect = ({ onItemSelect }) => {
   return (
-    <section className={classNames(css.container, css.chooseRecordContainer)}>
+    <section
+      data-test-initial-record
+      className={classNames(css.container, css.chooseRecordContainer)}
+    >
       <Headline
         className={css.message}
         size="large"

@@ -2,7 +2,11 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { debounce } from 'lodash';
+import PropTypes from 'prop-types';
+import {
+  debounce,
+  isEmpty,
+} from 'lodash';
 
 import { InitialRecordSelect } from './components/InitialRecordSelect';
 import { CompareRecordSelect } from './components/CompareRecordSelect';
@@ -25,18 +29,20 @@ const useUpdateOnResize = () => {
 
 const incomingRecord = FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC;
 
-export const RecordTypesSelect = () => {
+export const RecordTypesSelect = ({ record }) => {
   useUpdateOnResize();
   const [existingRecord, setExistingRecord] = useState();
+  const isEditable = isEmpty(record);
 
   return (
     <div data-test-choose-existing-record>
-      {existingRecord
+      {existingRecord || !isEditable
         ? (
           <CompareRecordSelect
             incomingRecord={incomingRecord}
-            existingRecord={existingRecord}
+            existingRecord={isEditable ? existingRecord : record}
             setExistingRecord={setExistingRecord}
+            isEditable={isEditable}
           />
         )
         : <InitialRecordSelect onItemSelect={setExistingRecord} />
@@ -44,3 +50,7 @@ export const RecordTypesSelect = () => {
     </div>
   );
 };
+
+RecordTypesSelect.propTypes = { record: PropTypes.object };
+
+RecordTypesSelect.defaultProps = { record: {} };

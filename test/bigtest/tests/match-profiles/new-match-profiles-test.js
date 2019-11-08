@@ -60,6 +60,10 @@ describe('Match profile form', () => {
     });
 
     describe('details accordion', () => {
+      it('show initial record select view', () => {
+        expect(matchProfileForm.recordTypesSelect.initialRecord).to.be.true;
+      });
+
       it('incoming record select has correct amount of items', () => {
         expect(matchProfileForm.recordTypesSelect.items().length).to.be.equal(8);
       });
@@ -67,6 +71,11 @@ describe('Match profile form', () => {
       describe('when incoming record is selected', () => {
         beforeEach(async () => {
           await matchProfileForm.recordTypesSelect.select('ITEM');
+        });
+
+        it('show compare record select view', () => {
+          expect(matchProfileForm.recordTypesSelect.initialRecord).to.be.false;
+          expect(matchProfileForm.recordTypesSelect.compareRecord).to.be.true;
         });
 
         it('then choose record to compare screen appears', () => {

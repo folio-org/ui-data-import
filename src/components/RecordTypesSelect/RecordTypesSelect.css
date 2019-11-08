@@ -35,12 +35,15 @@
 .item {
   overflow: hidden;
   outline: none;
-  cursor: pointer;
   border-radius: .5rem;
   padding: .5rem;
   background-color: var(--primary);
   color: #fff;
   font-weight: 700;
+}
+
+.clickableItem {
+  cursor: pointer;
 }
 
 .clickableItem:hover {
