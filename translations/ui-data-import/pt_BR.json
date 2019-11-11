@@ -231,5 +231,9 @@
     "uuId": "UUID",
     "keyword": "Palavra-chave (ID, nome do arquivo)",
     "placeholder.jobExecutionHrId": "Pesquisar por ID",
-    "placeholder.fileName": "Pesquisar por nome do arquivo"
+    "placeholder.fileName": "Pesquisar por nome do arquivo",
+    "editJobProfile": "Editar perfil do job",
+    "run": "Executar",
+    "modal.jobProfile.run.header": "Tem certeza de que deseja executar este job?",
+    "modal.jobProfile.run.message": "Você selecionou o <b>\"{name}\"</b> perfil do job para <b>executar</b> os arquivos enviados"
 }
