@@ -15,4 +15,34 @@ export default function config() {
     uploadDefinitions: [],
     totalRecords: 0,
   });
+
+  this.get('/data-import-profiles/jobProfiles', {
+    jobProfiles: [],
+    totalRecords: 0,
+  });
+
+  this.get('/metadata-provider/jobExecutions', {
+    jobExecutions: [],
+    totalRecords: 0,
+  });
+
+  this.get('/data-import-profiles/profileAssociations/:id/masters', {
+    profileAssociations: [],
+    totalRecords: 0,
+  });
+
+  this.get('/data-import-profiles/profileAssociations/:id/details', {
+    profileAssociations: [],
+    totalRecords: 0,
+  });
+
+  this.get('/tags', {
+    tags: [],
+    totalRecords: 0,
+  });
+
+  this.get('/users', {
+    users: [],
+    totalRecords: 0,
+  });
 }
