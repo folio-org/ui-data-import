@@ -15,6 +15,7 @@ import {
   importJobs,
   jobProfiles,
   jobProfileDetails,
+  jobProfileForm,
 } from '../interactors';
 import translation from '../../../translations/ui-data-import/en';
 
@@ -238,12 +239,75 @@ describe('Uploading jobs display', () => {
         expect(jobProfileDetails.isPresent).to.be.true;
       });
 
-      it('does not have caret actions', () => {
-        expect(jobProfileDetails.paneHeaderDropdown.isPresent).to.be.false;
+      it('has caret actions', () => {
+        expect(jobProfileDetails.paneHeaderDropdown.isPresent).to.be.true;
       });
 
       it('does not have edit button', () => {
         expect(jobProfileDetails.editButton.isPresent).to.be.false;
+      });
+
+      it('has run button', () => {
+        expect(jobProfileDetails.runButton.isPresent).to.be.true;
+      });
+
+      describe('caret actions', () => {
+        beforeEach(async () => {
+          await jobProfileDetails.expandPaneHeaderDropdown();
+        });
+
+        it('has "Run" option', () => {
+          expect(jobProfileDetails.dropdownRunButton.isPresent).to.be.true;
+        });
+
+        it('has "Edit job profile" option', () => {
+          expect(jobProfileDetails.dropdownEditButton.isPresent).to.be.true;
+        });
+
+        describe('edit job profile form', () => {
+          describe('appears', () => {
+            beforeEach(async () => {
+              await jobProfileDetails.dropdownEditButton.click();
+            });
+
+            it('upon click on pane header menu edit button', () => {
+              expect(jobProfileForm.isPresent).to.be.true;
+            });
+          });
+        });
+
+        describe('run confirmation modal', () => {
+          describe('appears', () => {
+            beforeEach(async () => {
+              await jobProfileDetails.dropdownRunButton.click();
+            });
+
+            it('upon click on pane header menu run button', () => {
+              expect(jobProfileDetails.runConfirmationModal.isPresent).to.be.true;
+            });
+          });
+
+          describe('appears', () => {
+            beforeEach(async () => {
+              await jobProfileDetails.runButton.click();
+            });
+
+            it('upon click on run button', () => {
+              expect(jobProfileDetails.runConfirmationModal.isPresent).to.be.true;
+            });
+          });
+
+          describe('disappears', () => {
+            beforeEach(async () => {
+              await jobProfileDetails.runButton.click();
+              await jobProfileDetails.runConfirmationModal.cancelButton.click();
+            });
+
+            it('when cancel button is clicked', () => {
+              expect(jobProfileDetails.runConfirmationModal.isPresent).to.be.false;
+            });
+          });
+        });
       });
     });
   });
@@ -328,6 +392,18 @@ describe('Uploading jobs display', () => {
       });
     });
 
+    describe('when run button is clicked and the API response is successful', () => {
+      beforeEach(async () => {
+        await jobProfiles.list.rows(0).click();
+        await jobProfileDetails.runButton.click();
+        await jobProfileDetails.runConfirmationModal.confirmButton.click();
+      });
+
+      it('navigates to landing page', () => {
+        expect(location().pathname).to.be.equal('/data-import');
+      });
+    });
+
     describe('when load records button is clicked and the API response is not successful', () => {
       beforeEach(async function () {
         this.server.get('/data-import/uploadDefinitions/:id', {}, 500);
@@ -346,6 +422,40 @@ describe('Uploading jobs display', () => {
         this.server.post('/data-import/uploadDefinitions/:id/processFiles', {}, 500);
         await uploadingJobsDisplay.paneHeaderDropdown.click();
         await uploadingJobsDisplay.loadRecordsButton.click();
+      });
+
+      it('error callout appears', () => {
+        expect(uploadingJobsDisplay.callout.errorCalloutIsPresent).to.be.true;
+      });
+    });
+
+    describe('when run button is clicked and the API response is not successful', () => {
+      beforeEach(async function () {
+        this.server.get('/data-import/uploadDefinitions/:id', {}, 500);
+        await jobProfiles.list.rows(0).click();
+        await jobProfileDetails.runButton.click();
+        await jobProfileDetails.runConfirmationModal.confirmButton.click();
+      });
+
+      it('confirmation modal disappears', () => {
+        expect(jobProfileDetails.runConfirmationModal.isPresent).to.be.false;
+      });
+
+      it('error callout appears', () => {
+        expect(uploadingJobsDisplay.callout.errorCalloutIsPresent).to.be.true;
+      });
+    });
+
+    describe('when run button is clicked and the API response is not successful', () => {
+      beforeEach(async function () {
+        this.server.post('/data-import/uploadDefinitions/:id/processFiles', {}, 500);
+        await jobProfiles.list.rows(0).click();
+        await jobProfileDetails.runButton.click();
+        await jobProfileDetails.runConfirmationModal.confirmButton.click();
+      });
+
+      it('confirmation modal disappears', () => {
+        expect(jobProfileDetails.runConfirmationModal.isPresent).to.be.false;
       });
 
       it('error callout appears', () => {
