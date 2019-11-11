@@ -26,7 +26,6 @@ class FolioRecordTypeFieldInteractor {
 class ActionProfileFormInteractor extends FullScreenFormInteractor {
   nameField = new TextFieldInteractor('[data-test-name-field]');
   descriptionField = new TextAreaInteractor('[data-test-description-field]');
-  reactToField = new SelectInteractor('[data-test-react-to-field]');
   actionField = new ActionFieldInteractor();
   folioRecordTypeField = new FolioRecordTypeFieldInteractor();
   associatedMappingProfileAccordion = new AccordionInteractor('#actionProfileFormAssociatedMappingProfileAccordion');

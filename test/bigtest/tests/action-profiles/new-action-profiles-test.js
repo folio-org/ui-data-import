@@ -21,7 +21,6 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
   server.post('/data-import-profiles/actionProfiles', () => new Response(status, headers, response));
   await actionProfileForm.nameField.fillAndBlur('Valid name');
   await actionProfileForm.descriptionField.fillAndBlur('Valid description');
-  await actionProfileForm.reactToField.selectAndBlur('Matches');
   await actionProfileForm.actionField.select.selectAndBlur('Create (all record types)');
   await actionProfileForm.folioRecordTypeField.select.selectAndBlur('Item');
   await actionProfileForm.submitFormButton.click();
@@ -53,7 +52,6 @@ describe('Action profile form', () => {
     it('and form fields are empty and not pre-filled', () => {
       expect(actionProfileForm.nameField.val).to.be.equal('');
       expect(actionProfileForm.descriptionField.val).to.be.equal('');
-      expect(actionProfileForm.reactToField.val).to.be.equal('');
       expect(actionProfileForm.actionField.select.val).to.be.equal('');
       expect(actionProfileForm.folioRecordTypeField.select.val).to.be.equal('');
     });
