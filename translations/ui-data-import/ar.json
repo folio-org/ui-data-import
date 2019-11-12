@@ -231,5 +231,9 @@
     "uuId": "UUID",
     "keyword": "كلمة رئيسية (معرف، اسم الملف)",
     "placeholder.jobExecutionHrId": "بحث عن معرف",
-    "placeholder.fileName": "البحث عن اسم الملف"
+    "placeholder.fileName": "البحث عن اسم الملف",
+    "editJobProfile": "تحرير وضع الوظيفة",
+    "run": "تشغيل",
+    "modal.jobProfile.run.header": "هل أنت متأكد من أنك تريد تشغيل هذه الوظيفة؟",
+    "modal.jobProfile.run.message": "لقد قمت بتحديد وضع الوظيفة <b>\"{name}\"</b> ل<b>تشغيل</b> الملفات المرفوعة"
 }
