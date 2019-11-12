@@ -46,7 +46,6 @@ import {
   AssociatedJobProfiles,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
-import { REACT_TO_META } from './reactTo';
 
 import sharedCss from '../../shared.css';
 
@@ -274,11 +273,6 @@ export class ViewActionProfile extends Component {
             </div>
           )}
           <Accordion label={<FormattedMessage id="ui-data-import.details" />}>
-            <KeyValue label={<FormattedMessage id="ui-data-import.reactTo" />}>
-              <div data-test-react-to>
-                <FormattedMessage id={REACT_TO_META[actionProfile.reactTo].captionId} />
-              </div>
-            </KeyValue>
             <KeyValue label={<FormattedMessage id="ui-data-import.action" />}>
               <div data-test-action>
                 <FormattedMessage id={ACTION_TYPES[actionProfile.action].captionId} />

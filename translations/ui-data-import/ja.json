@@ -231,5 +231,9 @@
     "uuId": "UUID",
     "keyword": "キーワード（ID、ファイル名）",
     "placeholder.jobExecutionHrId": "Search for ID",
-    "placeholder.fileName": "Search for File name"
+    "placeholder.fileName": "Search for File name",
+    "editJobProfile": "Edit job profile",
+    "run": "Run",
+    "modal.jobProfile.run.header": "Are you sure you want to run this job?",
+    "modal.jobProfile.run.message": "You have selected the <b>\"{name}\"</b> job profile to <b>Run</b> the uploaded files"
 }

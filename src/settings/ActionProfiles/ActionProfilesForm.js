@@ -40,7 +40,6 @@ import {
 import { LAYER_TYPES } from '../../utils/constants';
 import {
   FolioRecordTypeSelect,
-  ReactToSelect,
   ACTION_TYPES_SELECT,
   ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES,
 } from '../../components';
@@ -191,15 +190,6 @@ export const ActionProfilesFormComponent = ({
           label={<FormattedMessage id="ui-data-import.details" />}
           separator={false}
         >
-          <div data-test-react-to-field>
-            <Field
-              label={<FormattedMessage id="ui-data-import.reactTo" />}
-              name="reactTo"
-              required
-              validate={[validateRequiredField]}
-              component={ReactToSelect}
-            />
-          </div>
           <div data-test-action-field>
             <FormattedMessage id="ui-data-import.selectAction">
               {placeholder => (
