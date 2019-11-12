@@ -6,7 +6,10 @@ import React, {
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import { isNumber } from 'lodash';
+import {
+  isNumber,
+  noop,
+} from 'lodash';
 
 import {
   Row,
@@ -32,6 +35,7 @@ export const CompareRecordSelect = ({
   incomingRecord,
   existingRecord,
   setExistingRecord,
+  isEditable,
 }) => {
   const [top, setTop] = useState();
   const [height, setHeight] = useState();
@@ -66,7 +70,10 @@ export const CompareRecordSelect = ({
     : defaultSpacing;
 
   return (
-    <section className={css.container}>
+    <section
+      data-test-compare-record
+      className={css.container}
+    >
       <Row>
         <Col
           xs={4}
@@ -154,7 +161,7 @@ export const CompareRecordSelect = ({
           }}
         >
           <div ref={existingRecordsElemRef}>
-            {compareElemWidth && <RecordSelect onSelect={setExistingRecord} />}
+            {compareElemWidth && <RecordSelect onSelect={isEditable ? setExistingRecord : noop} />}
           </div>
         </Col>
       </Row>
@@ -166,4 +173,5 @@ CompareRecordSelect.propTypes = {
   incomingRecord: PropTypes.object.isRequired,
   existingRecord: PropTypes.object.isRequired,
   setExistingRecord: PropTypes.func.isRequired,
+  isEditable: PropTypes.bool,
 };

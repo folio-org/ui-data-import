@@ -24,16 +24,18 @@ export const RecordItem = memo(({
   } = item;
   const ref = useRef();
 
+  const isClickable = onClick !== noop;
+
   return (
     <div // eslint-disable-line jsx-a11y/click-events-have-key-events
       data-test-record-item
       tabIndex="0"
       role="button"
       id={type}
-      className={classNames(css.item, { [css.clickableItem]: onClick !== noop }, className)}
+      className={classNames(css.item, { [css.clickableItem]: isClickable }, className)}
       style={style}
       ref={ref}
-      onClick={() => onClick(item)}
+      onClick={() => (isClickable ? onClick(item) : noop)}
     >
       <AppIcon
         size="medium"
