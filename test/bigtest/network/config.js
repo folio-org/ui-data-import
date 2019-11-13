@@ -16,8 +16,23 @@ export default function config() {
     totalRecords: 0,
   });
 
+  this.get('/data-import-profiles/actionProfiles', {
+    actionProfiles: [],
+    totalRecords: 0,
+  });
+
   this.get('/data-import-profiles/jobProfiles', {
     jobProfiles: [],
+    totalRecords: 0,
+  });
+
+  this.get('/data-import-profiles/mappingProfiles', {
+    mappingProfiles: [],
+    totalRecords: 0,
+  });
+
+  this.get('/data-import-profiles/matchProfiles', {
+    matchProfiles: [],
     totalRecords: 0,
   });
 
