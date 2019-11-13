@@ -42,9 +42,9 @@ export const matchProfilesShape = {
     records: {
       type: 'okapi',
       perRequest: RESULT_COUNT_INCREMENT,
-      records: ENTITY_KEYS.JOB_PROFILES,
+      records: ENTITY_KEYS.MATCH_PROFILES,
       recordsRequired: '%{resultCount}',
-      path: 'data-import-profiles/jobProfiles',
+      path: 'data-import-profiles/matchProfiles',
       clientGeneratePk: false,
       throwErrors: true,
       GET: {
