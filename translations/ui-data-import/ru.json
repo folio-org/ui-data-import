@@ -40,7 +40,7 @@
     "returnToAssign.message": "File upload already in progress",
     "returnToAssign.subMessage": "{filesAmount, plural, one {# file} other {# files}} uploaded",
     "returnToAssign.resume": "Resume",
-    "returnToAssign.deleteFiles": "Delete files",
+    "returnToAssign.deleteFiles": "Удалить файлы",
     "modal.fileExtensions.messageHighlightedText": "different extensions",
     "modal.fileExtensions.actionButton": "Choose other files to upload",
     "modal.leavePage.header": "Leave the page",
