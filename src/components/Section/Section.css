@@ -4,9 +4,17 @@
   border-radius: 1rem;
   border: 1px solid var(--color-border);
   background-color: var(--color-fill);
-  padding: 1.4rem;
-}
-
-.container > :nth-child(n+2) {
-    margin-top: 1.4rem; 
+  padding: 1rem;
+  & .content {
+    margin-top: 1rem;
+    &.no-label {
+      margin-top: 0;
+    }
+    & > :nth-child(n+2) {
+      margin-top: 1rem;
+    }
+    & > :last-child {
+      margin-bottom: 0;
+    }
+  }
 }

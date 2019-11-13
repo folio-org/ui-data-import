@@ -5,6 +5,7 @@ export * from './ListView';
 export * from './ListTemplate';
 export * from './DataFetcher';
 export * from './EndOfItem';
+export * from './FlexibleForm';
 export * from './FullScreenForm';
 export * from './ImportJobs';
 export * from './JobLogs';
