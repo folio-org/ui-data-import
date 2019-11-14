@@ -102,6 +102,75 @@ export const LOG_VIEWER = {
   },
 };
 
+export const COMPARISON_PARTS = [
+  {
+    value: 'NUMERICS_ONLY',
+    label: 'ui-data-import.match.comparison-part.numerics-only',
+  }, {
+    value: 'ALPHANUMERICS_ONLY',
+    label: 'ui-data-import.match.comparison-part.alpha-numerics-only',
+  },
+];
+
+export const QUALIFIER_TYPES = [
+  {
+    value: 'BEGINS_WITH',
+    label: 'ui-data-import.match.qualifier.begins-with',
+  }, {
+    value: 'ENDS_WITH',
+    label: 'ui-data-import.match.qualifier.ends-with',
+  }, {
+    value: 'CONTAINS',
+    label: 'ui-data-import.match.qualifier.contains',
+  },
+];
+
+export const CRITERION_TYPES = [
+  {
+    value: 'EXACTLY_MATCHES',
+    label: 'ui-data-import.match.criterion-type.exactly-matches',
+  }, {
+    value: 'EXISTING_VALUE_CONTAINS_INCOMING_VALUE',
+    label: 'ui-data-import.match.criterion-type.existing-contains-incoming',
+  }, {
+    value: 'INCOMING_VALUE_CONTAINS_EXISTING_VALUE',
+    label: 'ui-data-import.match.criterion-type.incoming-contains-existing',
+  }, {
+    value: 'EXISTING_VALUE_BEGINS_WITH_INCOMING_VALUE',
+    label: 'ui-data-import.match.criterion-type.existing-begins-with-incoming',
+  }, {
+    value: 'INCOMING_VALUE_BEGINS_WITH_EXISTING_VALUE',
+    label: 'ui-data-import.match.criterion-type.incoming-begins-with-existing',
+  }, {
+    value: 'EXISTING_VALUE_ENDS_WITH_INCOMING_VALUE',
+    label: 'ui-data-import.match.criterion-type.existing-ends-with-incoming',
+  }, {
+    value: 'INCOMING_VALUE_ENDS_WITH_EXISTING_VALUE',
+    label: 'ui-data-import.match.criterion-type.incoming-ends-with-existing',
+  },
+];
+
+export const VALUE_TYPES = [
+  {
+    value: 'VALUE_FROM_RECORD',
+    label: 'ui-data-import.match.value-type.value-from-record',
+  }, {
+    value: 'STATIC_VALUE',
+    label: 'ui-data-import.match.value-type.static-value',
+  },
+];
+
+export const RECORD_TYPES = {
+  INSTANCE: 'instance',
+  HOLDINGS: 'holdings',
+  ITEM: 'item',
+  ORDER: 'order',
+  INVOICE: 'invoice',
+  MARC_BIBLIOGRAPHIC: 'MARC Bibliographic',
+  MARC_HOLDINGS: 'MARC Holdings',
+  MARC_AUTHORITY: 'MARC Authority',
+};
+
 export const FORMS_SETTINGS = {
   [ENTITY_KEYS.MATCH_PROFILES]: {
     MATCHING: {

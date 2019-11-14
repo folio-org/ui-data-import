@@ -2,20 +2,29 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
+import { Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 
+import {
+  Headline,
+  TextArea,
+  TextField,
+  Accordion,
+  AccordionSet,
+  ConfirmationModal,
+} from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
-import { FlexibleForm } from '../../components';
+import {
+  FullScreenForm,
+  RecordTypesSelect,
+} from '../../components';
 import {
   compose,
   validateRequiredField,
 } from '../../utils';
 import { LAYER_TYPES } from '../../utils/constants';
-import { formConfigSamples } from '../../../test/bigtest/mocks';
-
-import styles from './MatchProfilesForm.css';
 
 const formName = 'matchProfilesForm';
 
@@ -25,7 +34,6 @@ export const MatchProfilesFormComponent = ({
   initialValues,
   handleSubmit,
   location: { search },
-  connectedSource: { props: { editRecordInitialValues } },
   associatedJobProfilesAmount,
   onCancel,
 }) => {
@@ -47,7 +55,6 @@ export const MatchProfilesFormComponent = ({
     : <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
 
   const editWithModal = isEditMode && associatedJobProfilesAmount;
-  const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
 
   const onSubmit = e => {
     if (editWithModal) {
@@ -58,7 +65,6 @@ export const MatchProfilesFormComponent = ({
     }
   };
 
-  /*
   return (
     <FullScreenForm
       id="match-profiles-form"
@@ -122,28 +128,6 @@ export const MatchProfilesFormComponent = ({
         onCancel={() => setConfirmModalOpen(false)}
       />
     </FullScreenForm>
-  );
-  */
-  return (
-    <FlexibleForm
-      component="FullScreenForm"
-      id="match-profiles-form"
-      config={formConfig}
-      styles={styles}
-      paneTitle={paneTitle}
-      headLine={headLine}
-      referenceTables={{ matchDetails: editRecordInitialValues.matchDetails }}
-      submitMessage={<FormattedMessage id="ui-data-import.save" />}
-      confirmationMessage={(
-        <FormattedMessage
-          id="ui-data-import.settings.matchProfiles.confirmEditModal.message"
-          values={{ amount: associatedJobProfilesAmount }}
-        />
-      )}
-      isSubmitDisabled={isSubmitDisabled}
-      onSubmit={onSubmit}
-      onCancel={onCancel}
-    />
   );
 };
 

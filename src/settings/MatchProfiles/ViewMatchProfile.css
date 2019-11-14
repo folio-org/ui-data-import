@@ -1,0 +1,57 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.details {
+  & > :last-child > :last-child section:nth-child(n+2) {
+    margin-top: 1rem;
+
+    & > :first-child {
+      border-top: none;
+    }
+  }
+}
+
+.match-criteria {
+  composes: match-criteria from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
+}
+
+.match-criterion {
+  composes: match-criterion from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
+}
+
+.input-container {
+  composes: input-container from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
+}
+
+.incoming {
+  composes: incoming from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
+}
+
+.existing {
+  composes: existing from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
+}
+
+.field {
+  composes: field from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
+}
+
+.match-criteria {
+  & > :last-child > :last-child > :first-child {
+    border-top: none;
+
+    & button {
+      & span {
+        color: #b2b2b2;
+      }
+
+      & div {
+        color: var(--bg);
+      }
+    }
+  }
+
+  & .input-container > div:last-child:not(:first-child) {
+    & > :first-child {
+      margin-bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.match-criteria {
+  background-color: #616161;
+
+  & > :last-child > :last-child {
+    margin-top: 0;
+  }
+
+  & .match-criterion {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+
+    & .input-container {
+      background-color: #e5e5e5;
+
+      & input, & select {
+        background-color: #ffffff;
+      }
+
+      & > div:last-child:not(:first-child) {
+        display: inline-flex;
+        justify-content: left;
+        align-items: center;
+
+        & > :nth-child(n+2) {
+          margin: 0 0 0 1rem;
+        }
+      }
+    }
+
+    & .incoming {
+      background-color: #b2b2b2;
+
+      & label :not(:first-child) {
+        color: #616161;
+      }
+
+      & .field > :first-child {
+        color: #616161;
+      }
+    }
+
+    & .existing {
+      background-color: #b2b2b2;
+
+      & label {
+        color: #616161;
+      }
+
+      & .field > :first-child {
+        color: #616161;
+      }
+    }
+  }
+}
