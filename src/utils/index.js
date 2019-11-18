@@ -16,3 +16,4 @@ export * from './trimSearchTerm';
 export * from './checkboxList';
 export * from './getFileExtension';
 export * from './generateSettingsLabel';
+export * from './stringToWords';

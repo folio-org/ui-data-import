@@ -82,6 +82,7 @@ export const actionProfilesShape = {
     updated: '100px',
     updatedBy: '250px',
   },
+
   renderHeaders: props => {
     let headers = {
       name: <FormattedMessage id="ui-data-import.name" />,
