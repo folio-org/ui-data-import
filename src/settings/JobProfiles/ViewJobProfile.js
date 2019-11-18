@@ -101,6 +101,20 @@ export class ViewJobProfile extends Component {
           }),
         ),
       }),
+      jobsUsingThisProfile: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            dataType: PropTypes.string.isRequired,
+            metadata: PropTypes.shape({
+              createdByUserId: PropTypes.string.isRequired,
+              updatedByUserId: PropTypes.string.isRequired,
+            }).isRequired,
+            description: PropTypes.string,
+          }),
+        ),
+      }),
     }).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({ // eslint-disable-line object-curly-newline
