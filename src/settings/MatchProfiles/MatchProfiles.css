@@ -42,6 +42,10 @@
       }
     }
 
+    & .criterion {
+      background-color: #b2b2b2;
+    }
+
     & .existing {
       background-color: #b2b2b2;
 
