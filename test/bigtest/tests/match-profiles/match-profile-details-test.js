@@ -118,6 +118,50 @@ describe('Match Profile View', () => {
     });
   });
 
+  describe('details section', () => {
+    it('renders', () => {
+      expect(matchProfileDetails.detailsAccordion.isPresent).to.be.true;
+    });
+
+    it('is open by default', () => {
+      expect(matchProfileDetails.detailsAccordion.isOpen).to.be.true;
+    });
+
+    it('has "Record type select" component', () => {
+      expect(matchProfileDetails.recordTypesSelect.isPresent).to.be.true;
+    });
+
+    it('has "Match criteria" component', () => {
+      expect(matchProfileDetails.matchCriteria.isPresent).to.be.true;
+    });
+
+    describe('"Match criteria" component', () => {
+      it('is open by default', () => {
+        expect(matchProfileDetails.matchCriteria.isOpen).to.be.true;
+      });
+
+      it('has correct main field value', () => {
+        expect(matchProfileDetails.matchCriteria.fieldMain.value.text).to.be.equal('001');
+      });
+
+      it('has empty In1 field value', () => {
+        expect(matchProfileDetails.matchCriteria.fieldIn1.value.text).to.be.equal('-');
+      });
+
+      it('has empty In2 field value', () => {
+        expect(matchProfileDetails.matchCriteria.fieldIn2.value.text).to.be.equal('-');
+      });
+
+      it('has empty subfield field value', () => {
+        expect(matchProfileDetails.matchCriteria.fieldSubfield.value.text).to.be.equal('-');
+      });
+
+      it('has correct match criterion field value', () => {
+        expect(matchProfileDetails.matchCriteria.matchCriterionField.value.text).to.be.equal('Exactly matches');
+      });
+    });
+  });
+
   describe('edit match profile form', () => {
     describe('appears', () => {
       beforeEach(async () => {
