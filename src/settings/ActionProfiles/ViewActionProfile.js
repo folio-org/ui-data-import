@@ -21,7 +21,7 @@ import {
 import {
   ViewMetaData,
   withTags,
-  TagsAccordion, getNsKey,
+  TagsAccordion,
 } from '@folio/stripes/smart-components';
 
 import { createLayerURL } from '../../utils';

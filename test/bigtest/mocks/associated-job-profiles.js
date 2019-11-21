@@ -72,3 +72,8 @@ export const associatedJobProfiles = {
     },
   ],
 };
+
+export const noAssociatedJobProfiles = {
+  contentType: 'MATCH_PROFILE',
+  childSnapshotWrappers: [],
+};

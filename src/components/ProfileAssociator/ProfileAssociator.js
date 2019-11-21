@@ -51,6 +51,7 @@ export const createProfileAssociator = props => {
         }),
       }).isRequired,
       mutator: PropTypes.shape({ query: PropTypes.object.isRequired }).isRequired,
+      history: PropTypes.shape({ push: PropTypes.func.isRequired }),
     };
 
     static defaultProps = {
@@ -107,6 +108,7 @@ export const createProfileAssociator = props => {
         isMultiSelect,
         isMultiLink,
         dataAttributes,
+        history,
       } = this.props;
 
       return (
@@ -122,6 +124,7 @@ export const createProfileAssociator = props => {
               contentData={this.profiles}
               hasLoaded={this.profilesLoaded}
               dataAttributes={dataAttributes}
+              history={history}
             />
           ) : (
             <AssociatorEditable

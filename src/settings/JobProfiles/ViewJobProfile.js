@@ -52,8 +52,10 @@ import {
   EndOfItem,
   Preloader,
   Spinner,
-  UploadingJobsContext,
 } from '../../components';
+
+import { UploadingJobsContext } from '../../components/UploadingJobsContextProvider';
+
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';

@@ -5,7 +5,11 @@ import React, {
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import { noop } from 'lodash';
+import {
+  omit,
+  noop,
+  without,
+} from 'lodash';
 
 import {
   SearchAndSortQuery,
@@ -54,6 +58,7 @@ const AssociatorStaticComponent = ({
   dataAttributes,
   contentData,
   hasLoaded,
+  history,
 }) => {
   const nsSort = getNsKey('sort', namespaceKey);
   const nsQuery = getNsKey('query', namespaceKey);
@@ -89,9 +94,14 @@ const AssociatorStaticComponent = ({
     searchTerm,
     selectRecord,
     selectedRecords,
+    isMultiSelect,
   });
   const entityName = stringToWords(entityKey).map(word => word.toLocaleLowerCase()).join('-');
   const dataAttrs = dataAttributes || { [`data-test-associated-${entityName}`]: true };
+
+  const navigateTo = ({ id }) => {
+    history.push(`/settings/data-import/${entityName}/view/${id}`);
+  };
 
   const RenderSearch = ({
     searchValue,
@@ -142,20 +152,25 @@ const AssociatorStaticComponent = ({
       visibleColumns,
       renderHeaders,
     } = profiles[entityKey];
-    const columns = isMultiSelect ? ['selected', ...visibleColumns] : visibleColumns;
+
+    const headers = omit(renderHeaders({ checkboxList }), 'description');
+
+    const cols = without(visibleColumns, 'description');
+    const columns = isMultiSelect ? ['selected', ...cols] : cols;
 
     return (
       <MultiColumnList
         id={`associated-${entityKey}-list`}
         visibleColumns={columns}
         columnWidths={columnWidths}
-        columnMapping={renderHeaders({ checkboxList })}
+        columnMapping={headers}
         contentData={contentData}
         formatter={columnTemplates}
         rowUpdater={rowUpdater}
         sortOrder={sortOrder}
         sortDirection={sortDirection}
         onHeaderClick={onSort}
+        onRowClick={navigateTo}
       />
     );
   };
@@ -177,16 +192,16 @@ const AssociatorStaticComponent = ({
             onSubmitSearch,
             onSort,
             resetAll,
-            }) => (
-              <Fragment>
-                <RenderSearch
-                  onSubmitSearch={onSubmitSearch}
-                  searchValue={searchValue}
-                  resetAll={resetAll}
-                  getSearchHandlers={getSearchHandlers}
-                />
-                <RenderTable onSort={onSort} />
-              </Fragment>
+          }) => (
+            <Fragment>
+              <RenderSearch
+                onSubmitSearch={onSubmitSearch}
+                searchValue={searchValue}
+                resetAll={resetAll}
+                getSearchHandlers={getSearchHandlers}
+              />
+              <RenderTable onSort={onSort} />
+            </Fragment>
           )}
         </SearchAndSortQuery>
       </div>
@@ -209,6 +224,7 @@ AssociatorStaticComponent.propTypes = {
   dataAttributes: PropTypes.shape(PropTypes.object),
   contentData: PropTypes.arrayOf(PropTypes.object),
   hasLoaded: PropTypes.bool,
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }),
 };
 
 AssociatorStaticComponent.defaultProps = {

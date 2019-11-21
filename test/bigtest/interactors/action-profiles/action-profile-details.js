@@ -24,7 +24,7 @@ import { AssociatedJobProfiles } from '../associated-job-profiles';
   action = scoped('[data-test-action]');
   folioRecord = scoped('[data-test-folio-record]');
   associatedJobProfiles = new AssociatedJobProfiles('[data-test-associated-job-profiles]');
-  associatedMappingProfile = new MultiColumnListInteractor('[data-test-associated-mapping-profile]');
+  associatedMappingProfile = new MultiColumnListInteractor('[data-test-associated-mapping-profiles]');
   confirmationModal = new ConfirmationModalInteractor('#delete-action-profile-modal');
   callout = new CalloutInteractor();
 
