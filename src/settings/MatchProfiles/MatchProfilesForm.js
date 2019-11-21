@@ -133,7 +133,7 @@ MatchProfilesFormComponent.propTypes = {
 const mapStateToProps = state => {
   const { length: associatedJobProfilesAmount } = get(
     state,
-    ['folio_data_import_associated_job_profiles', 'records', 0, 'childSnapshotWrappers'],
+    ['folio_data_import_associated_jobprofiles', 'records', 0, 'childSnapshotWrappers'],
     [],
   );
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Button } from '@folio/stripes/components';
 
@@ -12,6 +13,7 @@ export const associatedProfilesColumns = ({
   searchTerm,
   selectRecord,
   selectedRecords,
+  isMultiSelect,
 }) => {
   const formatter = listTemplate({
     entityKey,
@@ -20,6 +22,8 @@ export const associatedProfilesColumns = ({
     selectedRecords,
   });
   const entityName = stringToWords(entityKey).map(word => word.toLocaleLowerCase()).join('-');
+
+  if (!isMultiSelect) return { ...formatter };
 
   return {
     ...formatter,
@@ -35,4 +39,12 @@ export const associatedProfilesColumns = ({
       </Button>
     ),
   };
+};
+
+associatedProfilesColumns.propTypes = {
+  entityKey: PropTypes.string.isRequired,
+  searchTerm: PropTypes.string.isRequired,
+  selectRecord: PropTypes.func.isRequired,
+  selectedRecords: PropTypes.instanceOf(Set).isRequired,
+  isMultiSelect: PropTypes.bool,
 };

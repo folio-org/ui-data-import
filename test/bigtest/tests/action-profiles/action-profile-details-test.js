@@ -16,6 +16,7 @@ import {
 import {
   associatedMappingProfile,
   noAssociatedMappingProfile,
+  noAssociatedJobProfiles,
 } from '../../mocks';
 
 async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
@@ -71,6 +72,29 @@ describe('Action Profile View', () => {
 
       it('renders empty message', () => {
         expect(actionProfileDetails.associatedMappingProfile.displaysEmptyMessage).to.be.true;
+      });
+    });
+  });
+
+  describe('associated job profiles', () => {
+    describe('when there are associated profiles', () => {
+      beforeEach(async function () {
+        await actionProfiles.list.rows(0).click();
+      });
+
+      it('renders job profiles', () => {
+        expect(actionProfileDetails.associatedJobProfiles.list.rowCount).to.be.equal(3);
+      });
+    });
+
+    describe('when there are no associated profiles', () => {
+      beforeEach(async function () {
+        this.server.get('/data-import-profiles/profileAssociations/:id/masters', noAssociatedJobProfiles);
+        await actionProfiles.list.rows(0).click();
+      });
+
+      it('renders empty message', () => {
+        expect(actionProfileDetails.associatedJobProfiles.list.displaysEmptyMessage).to.be.true;
       });
     });
   });

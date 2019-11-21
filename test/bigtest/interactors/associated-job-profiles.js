@@ -11,7 +11,7 @@ import { CheckboxInteractor } from './checkbox-interactor';
 @interactor
 export class AssociatedJobProfiles {
   list = new MultiColumnListInteractor('[data-test-associated-job-profiles]');
-  selectAllCheckBox = new CheckboxInteractor('[data-test-select-all-associated-job-profiles-checkbox]');
+  selectAllCheckBox = new CheckboxInteractor('[data-test-associated-job-profiles] [data-test-select-all-checkbox]');
   checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);
   jobProfilesLinks = collection('[data-test-job-profile-link]', ButtonInteractor);
 }

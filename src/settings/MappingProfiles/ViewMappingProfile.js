@@ -63,6 +63,7 @@ export class ViewMappingProfile extends Component {
       }),
     }).isRequired,
     location: PropTypes.object.isRequired,
+    history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,

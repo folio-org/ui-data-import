@@ -1,4 +1,7 @@
-import React, { memo } from 'react';
+import React, {
+  memo,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import HighLight from 'react-highlighter';
 
@@ -15,22 +18,26 @@ export const MappedColumn = memo(({
   record: { folioRecord },
   searchTerm = '',
 }) => (
-  <IntlConsumer>
-    {({ formatMessage }) => (
-      <AppIcon
-        size="small"
-        app="data-import"
-        iconKey={FOLIO_RECORD_TYPES[folioRecord].iconKey}
-      >
-        <HighLight
-          search={searchTerm}
-          className={sharedCss.container}
-        >
-          {formatMessage({ id: FOLIO_RECORD_TYPES[folioRecord].captionId })}
-        </HighLight>
-      </AppIcon>
+  <Fragment>
+    {folioRecord && (
+      <IntlConsumer>
+        {({ formatMessage }) => (
+          <AppIcon
+            size="small"
+            app="data-import"
+            iconKey={FOLIO_RECORD_TYPES[folioRecord].iconKey}
+          >
+            <HighLight
+              search={searchTerm}
+              className={sharedCss.container}
+            >
+              {formatMessage({ id: FOLIO_RECORD_TYPES[folioRecord].captionId })}
+            </HighLight>
+          </AppIcon>
+        )}
+      </IntlConsumer>
     )}
-  </IntlConsumer>
+  </Fragment>
 ));
 
 MappedColumn.propTypes = {
