@@ -30,6 +30,7 @@ export const AssociatorStatic = ({
   dataAttributes,
   contentData,
   hasLoaded,
+  history,
 }) => {
   const columnWidths = { selected: 40 };
   const checkboxList = useCheckboxList(contentData);
@@ -40,6 +41,10 @@ export const AssociatorStatic = ({
 
   const entityName = stringToWords(entityKey).map(word => word.toLocaleLowerCase()).join('-');
   const dataAttrs = dataAttributes || { [`data-test-associated-${entityName}`]: true };
+
+  const navigateTo = ({ id }) => {
+    history.push(`/settings/data-import/${entityName}/view/${id}`);
+  };
 
   const RenderSearch = ({
     searchValue,
