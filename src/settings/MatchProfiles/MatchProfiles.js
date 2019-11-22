@@ -208,6 +208,28 @@ export class MatchProfiles extends Component {
       /* TODO: these values are hardcoded now and will need to be changed in future (https://issues.folio.org/browse/UIDATIMP-175) */
       incomingRecordType: 'MARC',
       existingRecordType: 'HOLDINGS',
+      matchDetails: [{
+        incomingRecordType: 'MARC',
+        existingRecordType: 'HOLDINGS',
+        incomingMatchExpression: {
+          fields: [{
+            label: 'field',
+            value: '',
+          }, {
+            label: 'indicator1',
+            value: '',
+          }, {
+            label: 'indicator2',
+            value: '',
+          }, {
+            label: 'recordSubfield',
+            value: '',
+          }],
+          dataValueType: 'VALUE_FROM_RECORD',
+        },
+        existingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
+        matchCriterion: 'EXACTLY_MATCHES',
+      }],
     },
     RecordView: ViewMatchProfile,
     RecordForm: MatchProfilesForm,

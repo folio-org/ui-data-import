@@ -11,3 +11,5 @@ export * from './job-log';
 export * from './action-profiles';
 export * from './associated-job-profiles';
 export * from './mapping-profiles';
+export * from './input-interactor';
+export * from './textarea-interactor';

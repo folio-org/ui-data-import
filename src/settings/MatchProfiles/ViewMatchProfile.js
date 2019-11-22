@@ -46,6 +46,7 @@ import {
   AssociatedJobProfiles,
   FlexibleForm,
 } from '../../components';
+import { FOLIO_RECORD_TYPES } from '../../components/ListTemplate';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
@@ -153,13 +154,13 @@ export class ViewMatchProfile extends Component {
   getValue = (fields, label) => {
     const field = fields.find(item => item.label === label);
 
-    return (!isEmpty(field) && !!field.value.trim()) ? field.value : '-';
+    return (!isEmpty(field) && !!field.value.trim()) ? field.value : undefined;
   };
 
   getLabel = (elements, label) => {
     const element = elements.find(item => item.value === label);
 
-    return !isEmpty(element) ? <FormattedMessage id={element.label} /> : '-';
+    return !isEmpty(element) ? <FormattedMessage id={element.label} /> : undefined;
   };
 
   render() {
@@ -206,48 +207,75 @@ export class ViewMatchProfile extends Component {
 
     // Here is mocked config file with mocked values, it should be replaced/rewritten once BE will be ready
     const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
-    const matchDetails = matchProfile.matchDetails[0];
+    const matchDetails = get(matchProfile, 'matchDetails[0]', []);
     const {
       incomingMatchExpression,
       existingMatchExpression,
     } = matchDetails;
 
+    const record = {
+      ...matchProfile,
+      matchDetails: [{
+        incomingMatchExpression: {
+          fields: [
+            {
+              label: 'field',
+              value: this.getValue(get(incomingMatchExpression, 'fields', []), 'field') || '-',
+            }, {
+              label: 'indicator1',
+              value: this.getValue(get(incomingMatchExpression, 'fields', []), 'indicator1') || '-',
+            }, {
+              label: 'indicator2',
+              value: this.getValue(get(incomingMatchExpression, 'fields', []), 'indicator2') || '-',
+            }, {
+              label: 'recordSubfield',
+              value: this.getValue(get(incomingMatchExpression, 'fields', []), 'recordSubfield') || '-',
+            },
+          ],
+          qualifier: {
+            qualifierType: this.getLabel(QUALIFIER_TYPES, get(incomingMatchExpression, ['qualifier', 'qualifierType'])),
+            qualifierValue: get(incomingMatchExpression, ['qualifier', 'qualifierValue']),
+            comparisonPart: this.getLabel(COMPARISON_PARTS, get(incomingMatchExpression, ['qualifier', 'comparisonPart'])),
+          },
+        },
+        incomingRecordType: this.getLabel(RECORD_TYPES, get(matchDetails, 'incomingRecordType', '')),
+        matchCriterion: this.getLabel(CRITERION_TYPES, get(matchDetails, 'matchCriterion', '')) || '-',
+        existingMatchExpression: {
+          dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', '')) || '-',
+          qualifier: {
+            qualifierType: this.getLabel(QUALIFIER_TYPES, get(existingMatchExpression, ['qualifier', 'qualifierType'])),
+            qualifierValue: get(existingMatchExpression, ['qualifier', 'qualifierValue']),
+            comparisonPart: this.getLabel(COMPARISON_PARTS, get(existingMatchExpression, ['qualifier', 'comparisonPart'])),
+          },
+        },
+        existingRecordType: this.getLabel(RECORD_TYPES, get(matchDetails, 'existingRecordType', '')),
+      }],
+    };
+
     const componentsProps = {
-      existingType: {
+      'panel-existing': {
         record: {
-          captionId: 'ui-data-import.recordTypes.instance',
-          iconKey: 'instance',
-          type: 'INSTANCE',
+          captionId: FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId,
+          iconKey: FOLIO_RECORD_TYPES[matchProfile.existingRecordType].iconKey,
+          type: FOLIO_RECORD_TYPES[matchProfile.existingRecordType].type,
         },
       },
-      existingRecordSection: {
+      'existing-record-section': {
         label: (
           <FormattedMessage
             id="ui-data-import.match.existing.record"
-            values={{ recordType: RECORD_TYPES[matchDetails.existingRecordType] }}
+            values={{ recordType: RECORD_TYPES.find(type => type.value === matchProfile.existingRecordType).type }}
           />
         ),
       },
-      existingRecordField: {
+      'existing-record-field': {
         label: (
           <FormattedMessage
             id="ui-data-import.match.existing.record.field"
-            values={{ recordType: RECORD_TYPES[matchDetails.existingRecordType] }}
+            values={{ recordType: RECORD_TYPES.find(type => type.value === matchProfile.existingRecordType).type }}
           />
         ),
       },
-      marcRecordFieldMain: { value: this.getValue(incomingMatchExpression.fields, 'field') },
-      marcRecordFieldIn1: { value: this.getValue(incomingMatchExpression.fields, 'indicator1') },
-      marcRecordFieldIn2: { value: this.getValue(incomingMatchExpression.fields, 'indicator2') },
-      marcRecordFieldSubfield: { value: this.getValue(incomingMatchExpression.fields, 'recordSubfield') },
-      criterionIncomingQualifierTerm: { value: this.getLabel(QUALIFIER_TYPES, get(incomingMatchExpression, ['qualifier', 'qualifierType'])) },
-      criterionIncomingQualifierValue: { value: get(incomingMatchExpression, ['qualifier', 'qualifierValue'], '-') },
-      criterionIncomingValuePart: { value: this.getLabel(COMPARISON_PARTS, get(incomingMatchExpression, ['qualifier', 'comparisonPart'])) },
-      criterionType: { value: this.getLabel(CRITERION_TYPES, matchDetails.matchCriterion) },
-      valueType: { value: this.getLabel(VALUE_TYPES, existingMatchExpression.dataValueType) },
-      criterionExistingQualifierTerm: { value: this.getLabel(QUALIFIER_TYPES, get(existingMatchExpression, ['qualifier', 'qualifierType'])) },
-      criterionExistingQualifierValue: { value: get(existingMatchExpression, ['qualifier', 'qualifierValue'], '-') },
-      criterionExistingValuePart: { value: this.getLabel(COMPARISON_PARTS, get(existingMatchExpression, ['qualifier', 'comparisonPart'])) },
     };
 
     return (
@@ -288,12 +316,10 @@ export class ViewMatchProfile extends Component {
           )}
           <div className={styles.details}>
             <FlexibleForm
-              component="Accordion"
-              id="match-profiles-view"
-              label={<FormattedMessage id="ui-data-import.details" />}
+              component="Fragment"
               config={formConfig}
               styles={styles}
-              record={matchProfile}
+              record={record}
               componentsProps={componentsProps}
             />
           </div>
