@@ -29,28 +29,43 @@ const useUpdateOnResize = () => {
 
 const incomingRecord = FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC;
 
-export const RecordTypesSelect = ({ record }) => {
+export const RecordTypesSelect = ({
+  record,
+  id,
+}) => {
   useUpdateOnResize();
   const [existingRecord, setExistingRecord] = useState();
   const isEditable = isEmpty(record);
 
   return (
-    <div data-test-choose-existing-record>
+    <div
+      data-test-choose-existing-record
+      id={id}
+    >
       {existingRecord || !isEditable
         ? (
           <CompareRecordSelect
+            id={id}
             incomingRecord={incomingRecord}
             existingRecord={isEditable ? existingRecord : record}
             setExistingRecord={setExistingRecord}
             isEditable={isEditable}
           />
         )
-        : <InitialRecordSelect onItemSelect={setExistingRecord} />
+        : (
+          <InitialRecordSelect
+            id={id}
+            onItemSelect={setExistingRecord}
+          />
+        )
       }
     </div>
   );
 };
 
-RecordTypesSelect.propTypes = { record: PropTypes.object };
+RecordTypesSelect.propTypes = {
+  record: PropTypes.object,
+  id: PropTypes.string,
+};
 
 RecordTypesSelect.defaultProps = { record: {} };

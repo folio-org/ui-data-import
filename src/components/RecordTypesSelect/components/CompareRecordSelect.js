@@ -32,6 +32,7 @@ const hintMargin = 8 + 4;
 const compareElemMargin = 4;
 
 export const CompareRecordSelect = ({
+  id,
   incomingRecord,
   existingRecord,
   setExistingRecord,
@@ -161,7 +162,12 @@ export const CompareRecordSelect = ({
           }}
         >
           <div ref={existingRecordsElemRef}>
-            {compareElemWidth && <RecordSelect onSelect={isEditable ? setExistingRecord : noop} />}
+            {compareElemWidth && (
+              <RecordSelect
+                id={id}
+                onSelect={isEditable ? setExistingRecord : noop}
+              />
+            )}
           </div>
         </Col>
       </Row>
@@ -170,6 +176,7 @@ export const CompareRecordSelect = ({
 };
 
 CompareRecordSelect.propTypes = {
+  id: PropTypes.string,
   incomingRecord: PropTypes.object.isRequired,
   existingRecord: PropTypes.object.isRequired,
   setExistingRecord: PropTypes.func.isRequired,

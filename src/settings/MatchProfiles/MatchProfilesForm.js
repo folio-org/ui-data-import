@@ -59,6 +59,7 @@ export const MatchProfilesFormComponent = ({
 
   const componentsProps = {
     'profile-headline': { children: headLine },
+    'panel-existing': { id: 'panel-existing-edit' },
     'existing-record-section': {
       label: (
         <FormattedMessage
