@@ -25,7 +25,7 @@ const ORIENTATIONS = {
   HORIZONTAL: 'horizontal',
   VERTICAL: 'vertical',
 };
-const zIndex = 20;
+const zIndex = -1;
 
 export const LineBetween = props => {
   const {
