@@ -22,7 +22,7 @@ import { MatchCriteriaInteractor } from '../match-criteria-interactor';
   headline = scoped('[data-test-headline]');
   description = scoped('[data-test-description]');
   isTagsPresent = isPresent('[data-test-tags-accordion]');
-  detailsAccordion = new AccordionInteractor('#match-profiles-view');
+  detailsAccordion = new AccordionInteractor('#match-profile-details');
   recordTypesSelect = new RecordSelectInteractor('[data-test-choose-existing-record]');
   matchCriteria = new MatchCriteriaInteractor('#match-criteria');
   associatedJobProfiles = new AssociatedJobProfiles('[data-test-associated-job-profiles]');

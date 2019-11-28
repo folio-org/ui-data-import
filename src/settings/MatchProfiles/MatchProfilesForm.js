@@ -2,29 +2,20 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 
-import {
-  Headline,
-  TextArea,
-  TextField,
-  Accordion,
-  AccordionSet,
-  ConfirmationModal,
-} from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
 import {
-  FullScreenForm,
-  RecordTypesSelect,
+  FlexibleForm,
+  FOLIO_RECORD_TYPES,
 } from '../../components';
-import {
-  compose,
-  validateRequiredField,
-} from '../../utils';
+import { compose } from '../../utils';
 import { LAYER_TYPES } from '../../utils/constants';
+import { formConfigSamples } from '../../../test/bigtest/mocks';
+
+import styles from './MatchProfilesForm.css';
 
 const formName = 'matchProfilesForm';
 
@@ -55,6 +46,7 @@ export const MatchProfilesFormComponent = ({
     : <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
 
   const editWithModal = isEditMode && associatedJobProfilesAmount;
+  const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
 
   const onSubmit = e => {
     if (editWithModal) {
@@ -65,69 +57,65 @@ export const MatchProfilesFormComponent = ({
     }
   };
 
+  const componentsProps = {
+    'profile-headline': { children: headLine },
+    'existing-record-section': {
+      label: (
+        <FormattedMessage
+          id="ui-data-import.match.existing.record"
+          values={{
+            recordType: isEditMode
+              ? <FormattedMessage id={FOLIO_RECORD_TYPES[initialValues.existingRecordType].captionId} />
+              : '',
+          }}
+        />
+      ),
+    },
+    'existing-record-field': {
+      label: (
+        <FormattedMessage
+          id="ui-data-import.match.existing.record.field"
+          values={{
+            recordType: isEditMode
+              ? <FormattedMessage id={FOLIO_RECORD_TYPES[initialValues.existingRecordType].captionId} />
+              : '',
+          }}
+        />
+      ),
+    },
+    'confirm-edit-match-profile-modal': {
+      open: isConfirmEditModalOpen,
+      heading: <FormattedMessage id="ui-data-import.settings.matchProfiles.confirmEditModal.heading" />,
+      message: (
+        <FormattedMessage
+          id="ui-data-import.settings.matchProfiles.confirmEditModal.message"
+          values={{ amount: associatedJobProfilesAmount }}
+        />
+      ),
+      confirmLabel: <FormattedMessage id="ui-data-import.confirm" />,
+      onConfirm: () => {
+        handleSubmit();
+        setConfirmModalOpen(false);
+      },
+      onCancel: () => setConfirmModalOpen(false),
+    },
+  };
+
   return (
-    <FullScreenForm
+    <FlexibleForm
+      component="FullScreenForm"
       id="match-profiles-form"
+      config={formConfig}
+      styles={styles}
       paneTitle={paneTitle}
+      headLine={headLine}
+      componentsProps={componentsProps}
+      referenceTables={{ matchDetails: initialValues.matchDetails }}
       submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={onSubmit}
       onCancel={onCancel}
-    >
-      <Headline
-        size="xx-large"
-        tag="h2"
-        data-test-header-title
-      >
-        {headLine}
-      </Headline>
-      <AccordionSet>
-        <Accordion
-          label={<FormattedMessage id="ui-data-import.summary" />}
-          separator={false}
-        >
-          <div data-test-name-field>
-            <Field
-              label={<FormattedMessage id="ui-data-import.name" />}
-              name="name"
-              required
-              component={TextField}
-              validate={[validateRequiredField]}
-            />
-          </div>
-          <div data-test-description-field>
-            <Field
-              label={<FormattedMessage id="ui-data-import.description" />}
-              name="description"
-              component={TextArea}
-            />
-          </div>
-        </Accordion>
-        <Accordion
-          label={<FormattedMessage id="ui-data-import.details" />}
-          separator={false}
-        >
-          <RecordTypesSelect />
-        </Accordion>
-      </AccordionSet>
-      <ConfirmationModal
-        id="confirm-edit-match-profile-modal"
-        open={isConfirmEditModalOpen}
-        heading={<FormattedMessage id="ui-data-import.settings.matchProfiles.confirmEditModal.heading" />}
-        message={(
-          <FormattedMessage
-            id="ui-data-import.settings.matchProfiles.confirmEditModal.message"
-            values={{ amount: associatedJobProfilesAmount }}
-          />
-        )}
-        confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
-        onConfirm={() => {
-          handleSubmit();
-          setConfirmModalOpen(false);
-        }}
-        onCancel={() => setConfirmModalOpen(false)}
-      />
-    </FullScreenForm>
+    />
   );
 };
 

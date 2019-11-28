@@ -4,6 +4,7 @@
 * Add action options to choose jobs screen (UIDATIMP-268)
 * Add non-editable mode feature for RecordTypesSelect component (UIDATIMP-323)
 * Add match details to the View match profile details pane (UIDATIMP-239)
+* Create Match Profiles Form renderer (UIDATIMP-325)
 
 ## [1.6.0](https://github.com/folio-org/ui-data-import/tree/v1.6.0) (2019-11-01)
 * Add details section on create/edit action profile form (UIDATIMP-207)

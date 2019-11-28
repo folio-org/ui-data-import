@@ -3,6 +3,7 @@ import React, {
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 
 import {
   Checkbox,
@@ -56,7 +57,7 @@ export const Section = memo(({
   return (
     <section className={`${css.container} ${className}`}>
       {optional ? optionalHeadline() : headline({ styles: css.label })}
-      {isChecked && (<div className={`${css.content} ${label ? '' : css['no-label']}`}>{children}</div>)}
+      {isChecked && !isEmpty(children) && (<div className={`${css.content} ${label ? '' : css['no-label']}`}>{children}</div>)}
     </section>
   );
 });

@@ -50,3 +50,30 @@ export const validateFileExtension = value => {
 
   return <FormattedMessage id="ui-data-import.validation.fileExtension" />;
 };
+
+export const validateValueType = value => {
+  const pattern = /^[a-zA-Z0-9]*$/;
+
+  if (!value || value.match(pattern)) {
+    return null;
+  }
+
+  return <FormattedMessage id="ui-data-import.validation.valueType" />;
+};
+
+export const validateValueLength = (value, maxLength) => {
+  if (!value || value.length <= maxLength) {
+    return null;
+  }
+
+  return (
+    <FormattedMessage
+      id="ui-data-import.validation.maxLength"
+      values={{ maxLength }}
+    />
+  );
+};
+
+export const validateValueLength1 = value => validateValueLength(value, 1);
+
+export const validateValueLength3 = value => validateValueLength(value, 3);

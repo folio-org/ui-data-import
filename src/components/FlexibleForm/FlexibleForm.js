@@ -1,4 +1,7 @@
-import React, { memo } from 'react';
+import React, {
+  memo,
+  Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
@@ -8,18 +11,19 @@ import * as components from '..';
 import { Control } from './Control';
 
 const controls = {
+  Fragment,
   Field,
   ...stripesComponents,
 };
 
 const getControl = controlType => components[controlType] || controls[controlType];
-const hasChildren = cfg => cfg.children && cfg.children.length;
+const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
 
 export const FlexibleForm = memo(props => {
   const {
     component,
     config,
-    config: { children },
+    config: { childControls },
     styles,
     record,
     componentsProps,
@@ -37,7 +41,7 @@ export const FlexibleForm = memo(props => {
     <IntlConsumer>
       {intl => (
         <Ctrl {...attrs}>
-          {hasChildren(config) && children.map((cfg, i) => {
+          {hasChildren(config) && childControls.map((cfg, i) => {
             return (
               <Control
                 key={`control-${i}`}
@@ -60,7 +64,7 @@ FlexibleForm.propTypes = {
   component: PropTypes.string.isRequired,
   config: PropTypes.object.isRequired,
   styles: PropTypes.shape(PropTypes.string),
-  children: PropTypes.arrayOf(Node),
+  childControls: PropTypes.arrayOf(Node),
   dataAttributes: PropTypes.object,
   referenceTables: PropTypes.object,
   record: PropTypes.object,

@@ -160,17 +160,6 @@ export const VALUE_TYPES = [
   },
 ];
 
-export const RECORD_TYPES = {
-  INSTANCE: 'instance',
-  HOLDINGS: 'holdings',
-  ITEM: 'item',
-  ORDER: 'order',
-  INVOICE: 'invoice',
-  MARC_BIBLIOGRAPHIC: 'MARC Bibliographic',
-  MARC_HOLDINGS: 'MARC Holdings',
-  MARC_AUTHORITY: 'MARC Authority',
-};
-
 export const FORMS_SETTINGS = {
   [ENTITY_KEYS.MATCH_PROFILES]: {
     MATCHING: {

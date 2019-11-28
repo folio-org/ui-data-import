@@ -11,67 +11,120 @@ import { Field } from 'redux-form';
 
 import * as stripesComponents from '@folio/stripes/components';
 import * as components from '..';
-import { isEmpty } from 'lodash';
+import {
+  isEmpty,
+  get,
+} from 'lodash';
+import * as validators from '../../utils/formValidators';
 
 const controls = {
+  Fragment,
   Field,
   ...stripesComponents,
 };
 
 const getControl = controlType => components[controlType] || controls[controlType];
-const hasChildren = cfg => cfg.children && cfg.children.length;
+const getValidation = validation => validation.map(val => validators[val]);
+const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
+const hasContent = (children, record) => children
+  .map(child => get(record, child.name))
+  .some(child => child !== undefined);
 
 export const Control = memo(props => {
   const {
     controlType,
     staticControlType,
     component,
-    intl,
     label,
+    intl,
     styles,
-    componentsProps,
-    record,
-    name,
     classNames,
     dataOptions,
-    referenceTables,
     repeatable,
-    children,
+    childControls,
     dataAttributes,
+    componentsProps,
+    record,
+    id,
+    optional,
+    referenceTables,
     ...attributes
   } = props;
 
-  const getOptions = () => {
-    return dataOptions.map(option => ({
+  const isEditable = isEmpty(record);
+  const classes = styles && classNames ? classNames.map(className => styles[className]).join(' ') : undefined;
+  const children = optional && !isEditable && !hasContent(childControls, record) ? [] : childControls;
+  const isFragment = (isEditable && controlType === 'Fragment') || (!isEditable && staticControlType === 'Fragment');
+
+  const getOptions = options => {
+    return options.map(option => ({
       value: option.value,
       label: intl.formatMessage({ id: option.label }),
     }));
   };
 
-  let attrs = {
-    label: label ? (<FormattedMessage id={label} />) : label,
-    component: component ? getControl(component) : null,
-    ...attributes,
-    ...dataAttributes,
+  const getAttributes = () => {
+    const {
+      name,
+      validate,
+    } = props;
+
+    let attrs = {
+      label: label ? (<FormattedMessage id={label} />) : label,
+      component: component ? getControl(component) : null,
+      id,
+      optional,
+      ...attributes,
+      ...dataAttributes,
+    };
+
+    if (dataOptions && dataOptions.length) {
+      attrs = {
+        ...attrs,
+        dataOptions: getOptions(dataOptions),
+      };
+    }
+
+    if (record && get(record, name)) {
+      attrs = {
+        ...attrs,
+        value: get(record, name, '-'),
+      };
+    }
+
+    if (validate && validate.length) {
+      attrs = {
+        ...attrs,
+        validate: getValidation(validate),
+      };
+    }
+
+    if (optional) {
+      attrs = {
+        ...attrs,
+        optional: !!isEditable,
+        enabled: !!(isEditable && hasContent(children, referenceTables)),
+      };
+    }
+
+    if (componentsProps[id]) {
+      attrs = {
+        ...attrs,
+        ...componentsProps[id],
+      };
+    }
+
+    return attrs;
   };
-  const classes = styles && classNames ? classNames.map(className => styles[className]).join(' ') : undefined;
 
-  if (dataOptions && dataOptions.length) {
-    attrs = {
-      ...attrs,
-      dataOptions: getOptions(),
-    };
-  }
-
-  if (componentsProps[name]) {
-    attrs = {
-      ...attrs,
-      ...componentsProps[name],
-    };
-  }
+  const attrs = getAttributes();
 
   const renderDefault = () => {
-    const Cmp = (!isEmpty(record) && staticControlType) ? getControl(staticControlType) : getControl(controlType);
+    const Cmp = !isEditable ? getControl(staticControlType) : getControl(controlType);
+
+    if (isFragment) {
+      return <Cmp />;
+    }
 
     if (hasChildren(props)) {
       return (
@@ -109,6 +162,10 @@ export const Control = memo(props => {
     const Cmp = getControl(controlType);
     const Repeatable = getControl('RepeatableField');
 
+    if (isFragment) {
+      return <Cmp />;
+    }
+
     return (
       <Cmp
         className={classes}
@@ -128,6 +185,7 @@ export const Control = memo(props => {
                   intl={intl}
                   styles={styles}
                   referenceTables={referenceTables}
+                  componentsProps={componentsProps}
                   record={record}
                   {...cfg}
                 />
@@ -139,12 +197,12 @@ export const Control = memo(props => {
     );
   };
 
-  return (repeatable && isEmpty(componentsProps)) ? renderRepeatable() : renderDefault();
+  return (repeatable && isEditable) ? renderRepeatable() : renderDefault();
 });
 
 Control.propTypes = {
   controlType: PropTypes.string.isRequired,
-  staticControlType: PropTypes.string,
+  staticControlType: PropTypes.string.isRequired,
   component: PropTypes.string,
   label: PropTypes.string || Node,
   intl: intlShape,
@@ -152,10 +210,13 @@ Control.propTypes = {
   classNames: PropTypes.arrayOf(PropTypes.string),
   dataOptions: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   repeatable: PropTypes.bool,
-  children: PropTypes.arrayOf(Node),
+  childControls: PropTypes.arrayOf(Node),
   dataAttributes: PropTypes.object,
   componentsProps: PropTypes.object,
   record: PropTypes.object,
+  id: PropTypes.string,
+  optional: PropTypes.bool,
   name: PropTypes.string,
+  validate: PropTypes.arrayOf(PropTypes.string),
   referenceTables: PropTypes.object,
 };
