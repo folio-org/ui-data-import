@@ -160,49 +160,6 @@ export const VALUE_TYPES = [
   },
 ];
 
-export const RECORD_TYPES = [
-  {
-    value: 'INSTANCE',
-    label: 'ui-data-import.recordTypes.instance',
-    type: 'Instance',
-  },
-  {
-    value: 'HOLDINGS',
-    label: 'ui-data-import.recordTypes.holdings',
-    type: 'Holdings',
-  },
-  {
-    value: 'ITEM',
-    label: 'ui-data-import.recordTypes.item',
-    type: 'Item',
-  },
-  {
-    value: 'ORDER',
-    label: 'ui-data-import.recordTypes.order',
-    type: 'Order',
-  },
-  {
-    value: 'INVOICE',
-    label: 'ui-data-import.recordTypes.invoice',
-    type: 'Invoice',
-  },
-  {
-    value: 'MARC_BIBLIOGRAPHIC',
-    label: 'ui-data-import.recordTypes.marc-bib',
-    type: 'MARC Bibliographic',
-  },
-  {
-    value: 'MARC_HOLDINGS',
-    label: 'ui-data-import.recordTypes.marc-hold',
-    type: 'MARC Holdings',
-  },
-  {
-    value: 'MARC_AUTHORITY',
-    label: 'ui-data-import.recordTypes.marc-auth',
-    type: 'MARC Authority',
-  },
-];
-
 export const FORMS_SETTINGS = {
   [ENTITY_KEYS.MATCH_PROFILES]: {
     MATCHING: {

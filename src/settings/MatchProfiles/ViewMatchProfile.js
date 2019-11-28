@@ -37,7 +37,6 @@ import {
   QUALIFIER_TYPES,
   CRITERION_TYPES,
   VALUE_TYPES,
-  RECORD_TYPES,
 } from '../../utils/constants';
 import {
   Spinner,
@@ -238,7 +237,7 @@ export class ViewMatchProfile extends Component {
             comparisonPart: this.getLabel(COMPARISON_PARTS, get(incomingMatchExpression, ['qualifier', 'comparisonPart'])),
           },
         },
-        incomingRecordType: this.getLabel(RECORD_TYPES, get(matchDetails, 'incomingRecordType', '')),
+        incomingRecordType: get(matchDetails, 'incomingRecordType', ''),
         matchCriterion: this.getLabel(CRITERION_TYPES, get(matchDetails, 'matchCriterion', '')) || '-',
         existingMatchExpression: {
           dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', '')) || '-',
@@ -248,7 +247,7 @@ export class ViewMatchProfile extends Component {
             comparisonPart: this.getLabel(COMPARISON_PARTS, get(existingMatchExpression, ['qualifier', 'comparisonPart'])),
           },
         },
-        existingRecordType: this.getLabel(RECORD_TYPES, get(matchDetails, 'existingRecordType', '')),
+        existingRecordType: get(matchDetails, 'existingRecordType', ''),
       }],
     };
 
@@ -264,7 +263,7 @@ export class ViewMatchProfile extends Component {
         label: (
           <FormattedMessage
             id="ui-data-import.match.existing.record"
-            values={{ recordType: RECORD_TYPES.find(type => type.value === matchProfile.existingRecordType).type }}
+            values={{ recordType: <FormattedMessage id={FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId} /> }}
           />
         ),
       },
@@ -272,7 +271,7 @@ export class ViewMatchProfile extends Component {
         label: (
           <FormattedMessage
             id="ui-data-import.match.existing.record.field"
-            values={{ recordType: RECORD_TYPES.find(type => type.value === matchProfile.existingRecordType).type }}
+            values={{ recordType: <FormattedMessage id={FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId} /> }}
           />
         ),
       },
@@ -281,7 +280,7 @@ export class ViewMatchProfile extends Component {
     return (
       <Pane
         id={paneId}
-        defaultWidth="fill"
+        defaultWidth="600px"
         fluidContentWidth
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.matchProfileName" />}

@@ -7,12 +7,12 @@ import { get } from 'lodash';
 
 import stripesForm from '@folio/stripes/form';
 
-import { FlexibleForm } from '../../components';
-import { compose } from '../../utils';
 import {
-  LAYER_TYPES,
-  RECORD_TYPES,
-} from '../../utils/constants';
+  FlexibleForm,
+  FOLIO_RECORD_TYPES,
+} from '../../components';
+import { compose } from '../../utils';
+import { LAYER_TYPES } from '../../utils/constants';
 import { formConfigSamples } from '../../../test/bigtest/mocks';
 
 import styles from './MatchProfilesForm.css';
@@ -65,7 +65,7 @@ export const MatchProfilesFormComponent = ({
           id="ui-data-import.match.existing.record"
           values={{
             recordType: isEditMode
-              ? RECORD_TYPES.find(type => type.value === initialValues.existingRecordType).type
+              ? <FormattedMessage id={FOLIO_RECORD_TYPES[initialValues.existingRecordType].captionId} />
               : '',
           }}
         />
@@ -77,7 +77,7 @@ export const MatchProfilesFormComponent = ({
           id="ui-data-import.match.existing.record.field"
           values={{
             recordType: isEditMode
-              ? RECORD_TYPES.find(type => type.value === initialValues.existingRecordType).type
+              ? <FormattedMessage id={FOLIO_RECORD_TYPES[initialValues.existingRecordType].captionId} />
               : '',
           }}
         />
