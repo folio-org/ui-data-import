@@ -28,7 +28,7 @@ const getValidation = validation => validation.map(val => validators[val]);
 const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
 const hasContent = (children, record) => children
   .map(child => get(record, child.name))
-  .some(child => child !== undefined);
+  .some(child => child !== undefined && child !== '-');
 
 export const Control = memo(props => {
   const {

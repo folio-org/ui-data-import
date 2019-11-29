@@ -212,6 +212,8 @@ export class ViewMatchProfile extends Component {
       existingMatchExpression,
     } = matchDetails;
 
+    const incomingFields = get(incomingMatchExpression, 'fields', []);
+
     const record = {
       ...matchProfile,
       matchDetails: [{
@@ -219,21 +221,21 @@ export class ViewMatchProfile extends Component {
           fields: [
             {
               label: 'field',
-              value: this.getValue(get(incomingMatchExpression, 'fields', []), 'field') || '-',
+              value: this.getValue(incomingFields, 'field') || '-',
             }, {
               label: 'indicator1',
-              value: this.getValue(get(incomingMatchExpression, 'fields', []), 'indicator1') || '-',
+              value: this.getValue(incomingFields, 'indicator1') || '-',
             }, {
               label: 'indicator2',
-              value: this.getValue(get(incomingMatchExpression, 'fields', []), 'indicator2') || '-',
+              value: this.getValue(incomingFields, 'indicator2') || '-',
             }, {
               label: 'recordSubfield',
-              value: this.getValue(get(incomingMatchExpression, 'fields', []), 'recordSubfield') || '-',
+              value: this.getValue(incomingFields, 'recordSubfield') || '-',
             },
           ],
           qualifier: {
             qualifierType: this.getLabel(QUALIFIER_TYPES, get(incomingMatchExpression, ['qualifier', 'qualifierType'])),
-            qualifierValue: get(incomingMatchExpression, ['qualifier', 'qualifierValue']),
+            qualifierValue: get(incomingMatchExpression, ['qualifier', 'qualifierValue']) || '-',
             comparisonPart: this.getLabel(COMPARISON_PARTS, get(incomingMatchExpression, ['qualifier', 'comparisonPart'])),
           },
         },
@@ -258,6 +260,7 @@ export class ViewMatchProfile extends Component {
           iconKey: FOLIO_RECORD_TYPES[matchProfile.existingRecordType].iconKey,
           type: FOLIO_RECORD_TYPES[matchProfile.existingRecordType].type,
         },
+        id: 'panel-existing-view',
       },
       'existing-record-section': {
         label: (

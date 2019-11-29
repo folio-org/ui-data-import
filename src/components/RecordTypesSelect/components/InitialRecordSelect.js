@@ -9,7 +9,10 @@ import { RecordSelect } from './RecordSelect';
 
 import css from '../RecordTypesSelect.css';
 
-export const InitialRecordSelect = ({ onItemSelect }) => {
+export const InitialRecordSelect = ({
+  id,
+  onItemSelect,
+}) => {
   return (
     <section
       data-test-initial-record
@@ -26,9 +29,15 @@ export const InitialRecordSelect = ({ onItemSelect }) => {
           values={{ type: <FormattedMessage id="ui-data-import.marc" /> }}
         />
       </Headline>
-      <RecordSelect onSelect={onItemSelect} />
+      <RecordSelect
+        id={id}
+        onSelect={onItemSelect}
+      />
     </section>
   );
 };
 
-InitialRecordSelect.propTypes = { onItemSelect: PropTypes.func };
+InitialRecordSelect.propTypes = {
+  id: PropTypes.string,
+  onItemSelect: PropTypes.func,
+};

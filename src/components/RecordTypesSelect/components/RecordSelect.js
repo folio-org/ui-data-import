@@ -41,8 +41,9 @@ const recordsData = {
 };
 
 export const RecordSelect = ({
+  id,
   onSelect = noop,
-  container = `.${rootList}`,
+  container = `#${id} .${rootList}`,
   treeData = recordsData,
 }) => (
   <Fragment>
@@ -72,6 +73,7 @@ export const RecordSelect = ({
 );
 
 RecordSelect.propTypes = {
+  id: PropTypes.string,
   onSelect: PropTypes.func,
   container: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Element)]),
   treeData: PropTypes.object,
