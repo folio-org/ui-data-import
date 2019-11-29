@@ -140,24 +140,114 @@ describe('Match Profile View', () => {
         expect(matchProfileDetails.matchCriteria.isOpen).to.be.true;
       });
 
-      it('has correct main field value', () => {
-        expect(matchProfileDetails.matchCriteria.fieldMain.value.text).to.be.equal('001');
+      describe('"Incoming MARC record" section', () => {
+        it('has correct label', () => {
+          expect(matchProfileDetails.matchCriteria.incomingMarcRecord.label).to.be.equal('Incoming MARC record');
+        });
+
+        it('has correct length of sections', () => {
+          expect(matchProfileDetails.matchCriteria.incomingMarcRecordSections.children().length).to.be.equal(3);
+        });
+
+        it('sections are not optional', () => {
+          matchProfileDetails.matchCriteria.incomingMarcRecordSections.children().forEach(section => {
+            expect(section.hasCheckbox).to.be.false;
+          });
+        });
+
+        describe('"MARC field in incoming record" section', () => {
+          it('has correct label', () => {
+            expect(matchProfileDetails.matchCriteria.incomingMarcRecordSections.children(0).label).to.be.equal('MARC field in incoming record');
+          });
+
+          it('has correct main field value', () => {
+            expect(matchProfileDetails.matchCriteria.fieldMain.value.text).to.be.equal('001');
+          });
+
+          it('has empty In1 field value', () => {
+            expect(matchProfileDetails.matchCriteria.fieldIn1.value.text).to.be.equal('-');
+          });
+
+          it('has empty In2 field value', () => {
+            expect(matchProfileDetails.matchCriteria.fieldIn2.value.text).to.be.equal('-');
+          });
+
+          it('has empty subfield field value', () => {
+            expect(matchProfileDetails.matchCriteria.fieldSubfield.value.text).to.be.equal('-');
+          });
+        });
+
+        describe('"Use a qualifier" section', () => {
+          it('has correct label', () => {
+            expect(matchProfileDetails.matchCriteria.incomingMarcRecordSections.children(1).label).to.be.equal('Use a qualifier');
+          });
+
+          it('content is hidden', () => {
+            expect(matchProfileDetails.matchCriteria.incomingMarcRecordSections.children(1).hasContent).to.be.false;
+          });
+        });
+
+        describe('"Only compare part of the value" section', () => {
+          it('has correct label', () => {
+            expect(matchProfileDetails.matchCriteria.incomingMarcRecordSections.children(2).label).to.be.equal('Only compare part of the value');
+          });
+
+          it('content is visible', () => {
+            expect(matchProfileDetails.matchCriteria.incomingMarcRecordSections.children(2).hasContent).to.be.true;
+          });
+        });
       });
 
-      it('has empty In1 field value', () => {
-        expect(matchProfileDetails.matchCriteria.fieldIn1.value.text).to.be.equal('-');
+      describe('"Match criterion" section', () => {
+        it('has correct label', () => {
+          expect(matchProfileDetails.matchCriteria.matchCriterion.label).to.be.equal('Match criterion');
+        });
+
+        it('has correct match criterion field value', () => {
+          expect(matchProfileDetails.matchCriteria.matchCriterionField.value.text).to.be.equal('Exactly matches');
+        });
       });
 
-      it('has empty In2 field value', () => {
-        expect(matchProfileDetails.matchCriteria.fieldIn2.value.text).to.be.equal('-');
-      });
+      describe('"Existing instance record" section', () => {
+        it('has correct label', () => {
+          expect(matchProfileDetails.matchCriteria.existingRecord.label).to.be.equal('Existing Instance record');
+        });
 
-      it('has empty subfield field value', () => {
-        expect(matchProfileDetails.matchCriteria.fieldSubfield.value.text).to.be.equal('-');
-      });
+        it('has correct length of sections', () => {
+          expect(matchProfileDetails.matchCriteria.existingRecordSections.children().length).to.be.equal(3);
+        });
 
-      it('has correct match criterion field value', () => {
-        expect(matchProfileDetails.matchCriteria.matchCriterionField.value.text).to.be.equal('Exactly matches');
+        it('sections are not optional', () => {
+          matchProfileDetails.matchCriteria.existingRecordSections.children().forEach(section => {
+            expect(section.hasCheckbox).to.be.false;
+          });
+        });
+
+        describe('"Existing instance record field" section', () => {
+          it('has correct label', () => {
+            expect(matchProfileDetails.matchCriteria.existingRecordSections.children(0).label).to.be.equal('Existing Instance record field');
+          });
+        });
+
+        describe('"Use a qualifier section" section', () => {
+          it('has correct label', () => {
+            expect(matchProfileDetails.matchCriteria.existingRecordSections.children(1).label).to.be.equal('Use a qualifier');
+          });
+
+          it('content is hidden', () => {
+            expect(matchProfileDetails.matchCriteria.existingRecordSections.children(1).hasContent).to.be.false;
+          });
+        });
+
+        describe('"Only compare part of the value"', () => {
+          it('has correct label', () => {
+            expect(matchProfileDetails.matchCriteria.existingRecordSections.children(2).label).to.be.equal('Only compare part of the value');
+          });
+
+          it('content is visible', () => {
+            expect(matchProfileDetails.matchCriteria.existingRecordSections.children(2).hasContent).to.be.true;
+          });
+        });
       });
     });
   });
