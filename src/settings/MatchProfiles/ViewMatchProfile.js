@@ -280,7 +280,7 @@ export class ViewMatchProfile extends Component {
     return (
       <Pane
         id={paneId}
-        defaultWidth="600px"
+        defaultWidth="620px"
         fluidContentWidth
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.matchProfileName" />}
