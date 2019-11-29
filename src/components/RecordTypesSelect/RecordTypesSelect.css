@@ -106,6 +106,10 @@
 
 .incomingRecord {
   composes: display-flex flex-align-items-center from "@folio/stripes-components/lib/Layout/Layout.css";
+
+  & > :first-child {
+    width: 100%;
+  }
 }
 
 .compare {
