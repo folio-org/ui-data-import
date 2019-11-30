@@ -87,6 +87,13 @@ export const mappingProfilesShape = {
       updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
     };
 
+    if (props && props.unlink) {
+      headers = {
+        unlink: <FormattedMessage id="ui-data-import.unlink" />,
+        ...headers,
+      };
+    }
+
     if (props && props.checkboxList) {
       const {
         checkboxList: {

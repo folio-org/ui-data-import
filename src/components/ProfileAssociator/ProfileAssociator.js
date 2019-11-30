@@ -91,6 +91,10 @@ export const createProfileAssociator = props => {
       },
     });
 
+    componentDidMount() {
+      this.props.mutator.query.update(initialQuery);
+    }
+
     get profiles() {
       return get(this.props, ['resources', entity, 'records', 0, 'childSnapshotWrappers'], [])
         .map(({ content }) => content);
@@ -120,6 +124,9 @@ export const createProfileAssociator = props => {
               record={record}
               isMultiSelect={isMultiSelect}
               mutator={mutator}
+              nsSort={nsSort}
+              nsQuery={nsQuery}
+              initialQuery={initialQuery}
               query={query}
               contentData={this.profiles}
               hasLoaded={this.profilesLoaded}
@@ -131,6 +138,10 @@ export const createProfileAssociator = props => {
               entityKey={entityKey}
               isMultiSelect={isMultiSelect}
               isMultiLink={isMultiLink}
+              nsSort={nsSort}
+              nsQuery={nsQuery}
+              initialQuery={initialQuery}
+              query={query}
               contentData={this.profiles}
               hasLoaded={this.profilesLoaded}
               dataAttributes={dataAttributes}
