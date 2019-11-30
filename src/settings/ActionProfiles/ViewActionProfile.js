@@ -95,7 +95,7 @@ export class ViewActionProfile extends Component {
       detailType: PROFILE_TYPES.MAPPING_PROFILE,
     }),
     JobsAssociator: createProfileAssociator({
-      namespaceKey: 'AMP',
+      namespaceKey: 'AJP',
       entityKey: ENTITY_KEYS.JOB_PROFILES,
       parentType: PROFILE_TYPES.ACTION_PROFILE,
       masterType: PROFILE_TYPES.JOB_PROFILE,
