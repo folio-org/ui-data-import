@@ -32,6 +32,7 @@ describe('Match profile form', () => {
     beforeEach(async function () {
       this.visit('/settings/data-import/match-profiles');
       await matchProfiles.newMatchProfileButton.click();
+      await matchProfileForm.whenLoaded();
     });
 
     it('upon click on new match profile button', () => {
@@ -40,8 +41,9 @@ describe('Match profile form', () => {
   });
 
   describe('when open', () => {
-    beforeEach(function () {
+    beforeEach(async function () {
       this.visit('/settings/data-import/match-profiles?layer=create');
+      await matchProfileForm.whenLoaded();
     });
 
     it('when not filled then the submit button is disabled', () => {
@@ -133,6 +135,7 @@ describe('When match profile form', () => {
 
   beforeEach(async function () {
     this.visit('/settings/data-import/match-profiles?layer=create');
+    await matchProfileForm.whenLoaded();
   });
 
   describe('is submitted and the response contains', () => {

@@ -122,7 +122,6 @@ export const createProfileAssociator = props => {
               entityKey={entityKey}
               namespaceKey={namespaceKey}
               record={record}
-              isMultiSelect={isMultiSelect}
               mutator={mutator}
               nsSort={nsSort}
               nsQuery={nsQuery}
@@ -132,6 +131,7 @@ export const createProfileAssociator = props => {
               hasLoaded={this.profilesLoaded}
               dataAttributes={dataAttributes}
               history={history}
+              isMultiSelect={isMultiSelect}
             />
           ) : (
             <AssociatorEditable

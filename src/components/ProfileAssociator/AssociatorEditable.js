@@ -23,7 +23,6 @@ export const AssociatorEditable = memo(({
   initialQuery,
   query,
   contentData,
-  hasLoaded,
   dataAttributes,
   isMultiSelect,
   isMultiLink,
@@ -35,13 +34,17 @@ export const AssociatorEditable = memo(({
     tags: 150,
     unlink: 65,
   };
-  const pluginDisabled = !hasLoaded || (!isMultiSelect && contentData && contentData.length);
   const [data, setData] = useState(contentData);
+  const isPluginDisabled = curData => !isMultiSelect && curData && curData.length > 0;
+  const [pluginDisabled, setPluginDisabled] = useState(isPluginDisabled(data));
   const [current, setCurrent] = useState(null);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
 
   const onLinesAdd = lines => {
-    setData([...data, ...lines]);
+    const newData = [...data, ...lines];
+
+    setData(newData);
+    setPluginDisabled(isPluginDisabled(newData));
   };
 
   const remove = row => {
@@ -49,6 +52,7 @@ export const AssociatorEditable = memo(({
 
     data.splice(index, 1);
     setData(data);
+    setPluginDisabled(isPluginDisabled(data));
   };
 
   return (
@@ -82,7 +86,7 @@ export const AssociatorEditable = memo(({
         entityKey={entityKey}
         dataKey={entityKey}
         disabled={pluginDisabled}
-        isMultiselect={isMultiSelect}
+        isSingleSelect={!isMultiSelect}
         isMultiLink={isMultiLink}
         marginTop0
         data-test-plugin-find-record-button
@@ -119,7 +123,6 @@ AssociatorEditable.propTypes = {
   initialQuery: PropTypes.string.isRequired,
   query: PropTypes.object.isRequired,
   contentData: PropTypes.arrayOf(PropTypes.object),
-  hasLoaded: PropTypes.bool,
   isMultiSelect: PropTypes.bool,
   isMultiLink: PropTypes.bool,
   dataAttributes: PropTypes.shape(PropTypes.object),
@@ -127,7 +130,6 @@ AssociatorEditable.propTypes = {
 
 AssociatorEditable.defaultProps = {
   contentData: [],
-  hasLoaded: false,
   isMultiSelect: true,
   isMultiLink: true,
   dataAttributes: null,

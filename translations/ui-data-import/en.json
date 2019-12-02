@@ -183,7 +183,7 @@
   "success.fileExtensions.action": "The file extension \"{name}\" was successfully {action}",
   "settings.profile.select": "Select Profile",
   "settings.profile.unlink": "Unlink this profile",
-  "modal.profile.unlink.heading": "Warning! You are about to unlink a Profile!",
+  "modal.profile.unlink.heading": "Are you sure?",
   "modal.profile.unlink.message": "Are you sure you want to unlink \"{name}\" Profile?",
   "settings.jobProfiles.title": "Job profiles",
   "settings.jobProfiles.count": "{count, number} job {count, plural, one {profile} other {profiles}}",

@@ -118,7 +118,7 @@ AssociatedList.propTypes = {
 };
 
 AssociatedList.defaultProps = {
-  isMultiSelect: true,
+  isMultiSelect: false,
   isStatic: true,
   dataAttributes: null,
   contentData: null,

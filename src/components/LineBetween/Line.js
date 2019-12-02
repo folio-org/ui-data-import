@@ -24,8 +24,8 @@ export const Line = ({
   const dy = y1 - y0;
   const dx = x1 - x0;
 
-  const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-  const length = Math.sqrt(dx * dx + dy * dy);
+  const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+  const length = Math.sqrt((dx * dx) + (dy * dy));
 
   const style = {
     borderTopColor: borderColor,

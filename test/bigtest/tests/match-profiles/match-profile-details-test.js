@@ -37,6 +37,7 @@ describe('Match Profile View', () => {
   beforeEach(async function () {
     this.visit('/settings/data-import/match-profiles');
     await matchProfiles.list.rows(0).click();
+    await matchProfileForm.whenLoaded();
   });
 
   it('has correct name', () => {
@@ -59,7 +60,7 @@ describe('Match Profile View', () => {
     describe('when there are associated profiles', () => {
       it('has correct amount of items', () => {
         expect(matchProfileDetails.associatedJobProfiles.list.rowCount).to.be.equal(3);
-      });
+      }).timeout(5000);
 
       describe('has select all checkbox', () => {
         beforeEach(async () => {
@@ -202,6 +203,7 @@ describe('Match Profile View', () => {
   describe('edit match profile form', () => {
     beforeEach(async () => {
       await matchProfileDetails.editButton.click();
+      await matchProfileForm.whenLoaded();
     });
 
     describe('when form is submitted', () => {
@@ -270,6 +272,7 @@ describe('Match Profile View', () => {
     beforeEach(async () => {
       await matchProfileDetails.expandPaneHeaderDropdown();
       await matchProfileDetails.dropdownDuplicateButton.click();
+      await matchProfileForm.whenLoaded();
     });
 
     it('appears upon click on pane header menu duplicate button', () => {
