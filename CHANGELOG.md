@@ -6,6 +6,9 @@
 * Add match details to the View match profile details pane (UIDATIMP-239)
 * Create Match Profiles Form renderer (UIDATIMP-325)
 * Increase the width of the View details pane for Match profiles (UIDATIMP-332)
+* Create Associator Component (UIDATIMP-275)
+* Attach a field mapping profile to an action profile that does not have one (UIDATIMP-269)
+* Attach one or more action profiles to a field mapping profile (UIDATIMP-279)
 
 ## [1.6.0](https://github.com/folio-org/ui-data-import/tree/v1.6.0) (2019-11-01)
 * Add details section on create/edit action profile form (UIDATIMP-207)

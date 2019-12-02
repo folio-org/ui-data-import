@@ -67,7 +67,7 @@ export const CompareRecordSelect = ({
   const renderSelectedLine = isNumber(top);
   const spaceForHintElement = isNumber(hintElemWidth) && hintElemWidth + hintMargin + hintTriangleSize;
   const spaceForCompareElem = isNumber(compareElemWidth)
-    ? Math.min(compareElemWidth / 2 + compareElemMargin, maxCompareElemWidth)
+    ? Math.min((compareElemWidth / 2) + compareElemMargin, maxCompareElemWidth)
     : defaultSpacing;
 
   return (

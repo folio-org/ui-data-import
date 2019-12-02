@@ -1,11 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  omit,
-  noop,
-  without,
-} from 'lodash';
+import { noop } from 'lodash';
 
 import { SearchAndSortQuery } from '@folio/stripes/smart-components';
 import {
@@ -34,7 +30,6 @@ export const AssociatorStatic = ({
   dataAttributes,
   contentData,
   hasLoaded,
-  history,
 }) => {
   const columnWidths = { selected: 40 };
   const checkboxList = useCheckboxList(contentData);
@@ -45,10 +40,6 @@ export const AssociatorStatic = ({
 
   const entityName = stringToWords(entityKey).map(word => word.toLocaleLowerCase()).join('-');
   const dataAttrs = dataAttributes || { [`data-test-associated-${entityName}`]: true };
-
-  const navigateTo = ({ id }) => {
-    history.push(`/settings/data-import/${entityName}/view/${id}`);
-  };
 
   const RenderSearch = ({
     searchValue,
@@ -111,27 +102,27 @@ export const AssociatorStatic = ({
             onSubmitSearch,
             onSort,
             resetAll,
-            }) => (
-              <Fragment>
-                <RenderSearch
-                  onSubmitSearch={onSubmitSearch}
-                  searchValue={searchValue}
-                  resetAll={resetAll}
-                  getSearchHandlers={getSearchHandlers}
-                />
-                <AssociatedList
-                  entityKey={entityKey}
-                  checkboxList={checkboxList}
-                  columnWidths={columnWidths}
-                  nsSort={nsSort}
-                  nsQuery={nsQuery}
-                  initialQuery={initialQuery}
-                  query={query}
-                  contentData={contentData}
-                  onSort={onSort}
-                  isMultiSelect
-                />
-              </Fragment>
+          }) => (
+            <Fragment>
+              <RenderSearch
+                onSubmitSearch={onSubmitSearch}
+                searchValue={searchValue}
+                resetAll={resetAll}
+                getSearchHandlers={getSearchHandlers}
+              />
+              <AssociatedList
+                entityKey={entityKey}
+                checkboxList={checkboxList}
+                columnWidths={columnWidths}
+                nsSort={nsSort}
+                nsQuery={nsQuery}
+                initialQuery={initialQuery}
+                query={query}
+                contentData={contentData}
+                onSort={onSort}
+                isMultiSelect
+              />
+            </Fragment>
           )}
         </SearchAndSortQuery>
       </div>

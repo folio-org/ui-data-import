@@ -9,9 +9,9 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 import { CheckboxInteractor } from './checkbox-interactor';
 
 @interactor
-export class AssociatedJobProfiles {
-  list = new MultiColumnListInteractor('[data-test-associated-job-profiles]');
-  selectAllCheckBox = new CheckboxInteractor('[data-test-associated-job-profiles] [data-test-select-all-checkbox]');
+export class AssociatedActionProfiles {
+  list = new MultiColumnListInteractor('[data-test-associated-action-profiles]');
+  selectAllCheckBox = new CheckboxInteractor('[data-test-associated-action-profiles] [data-test-select-all-checkbox]');
   checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);
-  jobProfilesLinks = collection('[data-test-profile-link]', ButtonInteractor);
+  actionProfilesLinks = collection('[data-test-profile-link]', ButtonInteractor);
 }
