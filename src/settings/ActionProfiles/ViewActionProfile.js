@@ -16,7 +16,6 @@ import {
   KeyValue,
   Accordion,
   AccordionSet,
-  MultiColumnList,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import {
@@ -25,10 +24,7 @@ import {
   TagsAccordion,
 } from '@folio/stripes/smart-components';
 
-import {
-  createUrl,
-  createLayerURL,
-} from '../../utils';
+import { createLayerURL } from '../../utils';
 import {
   LAYER_TYPES,
   ENTITY_KEYS,
@@ -40,10 +36,9 @@ import {
   Spinner,
   EndOfItem,
   ActionMenu,
-  listTemplate,
   FOLIO_RECORD_TYPES,
   ACTION_TYPES,
-  AssociatedJobProfiles,
+  createProfileAssociator,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
@@ -54,22 +49,10 @@ import sharedCss from '../../shared.css';
 @withRouter
 export class ViewActionProfile extends Component {
   static manifest = Object.freeze({
+    initializedFilterConfig: { initialValue: false },
     actionProfile: {
       type: 'okapi',
       path: 'data-import-profiles/actionProfiles/:{id}',
-      throwErrors: false,
-    },
-    associatedMappingProfile: {
-      type: 'okapi',
-      path: createUrl(
-        'data-import-profiles/profileAssociations/:{id}/details',
-        {
-          detailType: PROFILE_TYPES.MAPPING_PROFILE,
-          masterType: PROFILE_TYPES.ACTION_PROFILE,
-          limit: 1,
-        },
-        false,
-      ),
       throwErrors: false,
     },
   });
@@ -77,14 +60,6 @@ export class ViewActionProfile extends Component {
   static propTypes = {
     resources: PropTypes.shape({
       actionProfile: PropTypes.shape({
-        hasLoaded: PropTypes.bool.isRequired,
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      associatedMappingProfile: PropTypes.shape({
-        hasLoaded: PropTypes.bool.isRequired,
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      associatedJobProfiles: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -112,16 +87,21 @@ export class ViewActionProfile extends Component {
   state = {
     deletionInProgress: false,
     showDeleteConfirmation: false,
+    MappingAssociator: createProfileAssociator({
+      namespaceKey: 'AMP',
+      entityKey: ENTITY_KEYS.MAPPING_PROFILES,
+      parentType: PROFILE_TYPES.ACTION_PROFILE,
+      masterType: PROFILE_TYPES.ACTION_PROFILE,
+      detailType: PROFILE_TYPES.MAPPING_PROFILE,
+    }),
+    JobsAssociator: createProfileAssociator({
+      namespaceKey: 'AJP',
+      entityKey: ENTITY_KEYS.JOB_PROFILES,
+      parentType: PROFILE_TYPES.ACTION_PROFILE,
+      masterType: PROFILE_TYPES.JOB_PROFILE,
+      detailType: PROFILE_TYPES.ACTION_PROFILE,
+    }),
   };
-
-  associatedMappingProfileVisibleColumns = [
-    'name',
-    'tags',
-    'updated',
-    'updatedBy',
-  ];
-
-  columnWidths = { selected: 40 };
 
   get actionProfileData() {
     const { resources } = this.props;
@@ -133,16 +113,6 @@ export class ViewActionProfile extends Component {
       hasLoaded: actionProfile.hasLoaded,
       record,
     };
-  }
-
-  get associatedMappingProfileData() {
-    const associatedMappingProfile = get(
-      this.props,
-      ['resources', 'associatedMappingProfile', 'records', 0, 'childSnapshotWrappers'],
-      []
-    ).map(({ content }) => content);
-
-    return { associatedMappingProfile };
   }
 
   showDeleteConfirmation = () => {
@@ -186,26 +156,21 @@ export class ViewActionProfile extends Component {
     />
   );
 
-  navigateToMappingProfile = (e, record) => {
-    const { history } = this.props;
-
-    history.push(`/settings/data-import/mapping-profiles/view/${record.id}`);
-  };
-
   render() {
     const {
       onClose,
       paneId,
       tagsEnabled,
     } = this.props;
-    const { showDeleteConfirmation } = this.state;
-
+    const {
+      showDeleteConfirmation,
+      MappingAssociator,
+      JobsAssociator,
+    } = this.state;
     const {
       hasLoaded,
       record: actionProfile,
     } = this.actionProfileData;
-
-    const { associatedMappingProfile } = this.associatedMappingProfileData;
 
     if (!actionProfile || !hasLoaded) {
       return <Spinner entity={this} />;
@@ -292,23 +257,11 @@ export class ViewActionProfile extends Component {
               </Button>
             )}
           >
-            <div data-test-associated-mapping-profile>
-              <MultiColumnList
-                id="associated-mapping-profile"
-                visibleColumns={this.associatedMappingProfileVisibleColumns}
-                contentData={associatedMappingProfile}
-                columnMapping={{
-                  name: <FormattedMessage id="ui-data-import.name" />,
-                  tags: <FormattedMessage id="ui-data-import.tags" />,
-                  updated: <FormattedMessage id="ui-data-import.updated" />,
-                  updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
-                }}
-                columnWidths={this.columnWidths}
-                isEmptyMessage={<FormattedMessage id="ui-data-import.none" />}
-                formatter={listTemplate({ entityKey: ENTITY_KEYS.MAPPING_PROFILES })}
-                onRowClick={this.navigateToMappingProfile}
-              />
-            </div>
+            <MappingAssociator
+              record={actionProfile}
+              isMultiSelect={false}
+              isMultiLink
+            />
           </Accordion>
           <Accordion
             label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
@@ -318,7 +271,11 @@ export class ViewActionProfile extends Component {
               </Button>
             )}
           >
-            <AssociatedJobProfiles detailType={PROFILE_TYPES.ACTION_PROFILE} />
+            <JobsAssociator
+              record={actionProfile}
+              isMultiSelect
+              isMultiLink
+            />
           </Accordion>
         </AccordionSet>
         <EndOfItem

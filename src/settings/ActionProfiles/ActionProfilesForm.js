@@ -38,11 +38,16 @@ import {
   compose,
   validateRequiredField,
 } from '../../utils';
-import { LAYER_TYPES } from '../../utils/constants';
+import {
+  ENTITY_KEYS,
+  LAYER_TYPES,
+  PROFILE_TYPES,
+} from '../../utils/constants';
 import {
   FolioRecordTypeSelect,
   ACTION_TYPES_SELECT,
   ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES,
+  createProfileAssociator,
 } from '../../components';
 
 const formName = 'actionProfilesForm';

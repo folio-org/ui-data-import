@@ -12,6 +12,7 @@ import {
   jobProfileDetails,
   matchProfileDetails,
 } from '../../interactors';
+import { noAssociatedJobProfiles } from '../../mocks';
 
 async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
   const {
@@ -55,65 +56,78 @@ describe('Match Profile View', () => {
   });
 
   describe('associated job profiles', () => {
-    it('has correct amount of items', () => {
-      expect(matchProfileDetails.associatedJobProfiles.list.rowCount).to.be.equal(3);
-    });
-
-    describe('has select all checkbox', () => {
-      beforeEach(async () => {
-        await matchProfileDetails.associatedJobProfiles.selectAllCheckBox.clickAndBlur();
+    describe('when there are associated profiles', () => {
+      it('has correct amount of items', () => {
+        expect(matchProfileDetails.associatedJobProfiles.list.rowCount).to.be.equal(3);
       });
 
-      it('upon click changes its state', () => {
-        expect(matchProfileDetails.associatedJobProfiles.selectAllCheckBox.isChecked).to.be.true;
-      });
-
-      it('selects all items', () => {
-        matchProfileDetails.associatedJobProfiles.checkBoxes().forEach(checkBox => {
-          expect(checkBox.isChecked).to.be.true;
-        });
-      });
-
-      describe('when not all records are selected', () => {
-        beforeEach(async () => {
-          await matchProfileDetails.associatedJobProfiles.checkBoxes(0).clickAndBlur();
-        });
-
-        it('becomes unchecked', () => {
-          expect(matchProfileDetails.associatedJobProfiles.selectAllCheckBox.isChecked).to.be.false;
-        });
-      });
-
-      describe('when clicked again', () => {
+      describe('has select all checkbox', () => {
         beforeEach(async () => {
           await matchProfileDetails.associatedJobProfiles.selectAllCheckBox.clickAndBlur();
         });
 
-        it('all items become unchecked', () => {
+        it('upon click changes its state', () => {
+          expect(matchProfileDetails.associatedJobProfiles.selectAllCheckBox.isChecked).to.be.true;
+        });
+
+        it('selects all items', () => {
           matchProfileDetails.associatedJobProfiles.checkBoxes().forEach(checkBox => {
-            expect(checkBox.isChecked).to.be.false;
+            expect(checkBox.isChecked).to.be.true;
           });
+        });
+
+        describe('when not all records are selected', () => {
+          beforeEach(async () => {
+            await matchProfileDetails.associatedJobProfiles.checkBoxes(0).clickAndBlur();
+          });
+
+          it('becomes unchecked', () => {
+            expect(matchProfileDetails.associatedJobProfiles.selectAllCheckBox.isChecked).to.be.false;
+          });
+        });
+
+        describe('when clicked again', () => {
+          beforeEach(async () => {
+            await matchProfileDetails.associatedJobProfiles.selectAllCheckBox.clickAndBlur();
+          });
+
+          it('all items become unchecked', () => {
+            matchProfileDetails.associatedJobProfiles.checkBoxes().forEach(checkBox => {
+              expect(checkBox.isChecked).to.be.false;
+            });
+          });
+        });
+      });
+
+      describe('has select individual item checkbox', () => {
+        beforeEach(async () => {
+          await matchProfileDetails.associatedJobProfiles.checkBoxes(0).clickAndBlur();
+        });
+
+        it('upon click changes its state', () => {
+          expect(matchProfileDetails.associatedJobProfiles.checkBoxes(0).isChecked).to.be.true;
+        });
+      });
+
+      describe('when job profile name is clicked', () => {
+        beforeEach(async () => {
+          await matchProfileDetails.associatedJobProfiles.jobProfilesLinks(0).click();
+        });
+
+        it('redirects to job profile details', () => {
+          expect(jobProfileDetails.isPresent).to.be.true;
         });
       });
     });
 
-    describe('has select individual item checkbox', () => {
-      beforeEach(async () => {
-        await matchProfileDetails.associatedJobProfiles.checkBoxes(0).clickAndBlur();
+    describe('when there are no associated profiles', () => {
+      beforeEach(async function () {
+        this.server.get('/data-import-profiles/profileAssociations/:id/masters', noAssociatedJobProfiles);
+        await matchProfiles.list.rows(0).click();
       });
 
-      it('upon click changes its state', () => {
-        expect(matchProfileDetails.associatedJobProfiles.checkBoxes(0).isChecked).to.be.true;
-      });
-    });
-
-    describe('when job profile name is clicked', () => {
-      beforeEach(async () => {
-        await matchProfileDetails.associatedJobProfiles.jobProfilesLinks(0).click();
-      });
-
-      it('redirects to job profile details', () => {
-        expect(jobProfileDetails.isPresent).to.be.true;
+      it('renders empty message', () => {
+        expect(matchProfileDetails.associatedJobProfiles.list.displaysEmptyMessage).to.be.true;
       });
     });
   });
