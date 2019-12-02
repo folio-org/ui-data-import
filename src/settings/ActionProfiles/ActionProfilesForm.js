@@ -1,5 +1,6 @@
 import React, {
   useState,
+  useRef,
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -58,6 +59,21 @@ export const ActionProfilesFormComponent = ({
   action,
   folioRecord,
 }) => {
+  const MappingAssociator = useRef(createProfileAssociator({
+    namespaceKey: 'AMP',
+    entityKey: ENTITY_KEYS.MAPPING_PROFILES,
+    parentType: PROFILE_TYPES.ACTION_PROFILE,
+    masterType: PROFILE_TYPES.ACTION_PROFILE,
+    detailType: PROFILE_TYPES.MAPPING_PROFILE,
+  }));
+  const JobsAssociator = useRef(createProfileAssociator({
+    namespaceKey: 'AJP',
+    entityKey: ENTITY_KEYS.JOB_PROFILES,
+    parentType: PROFILE_TYPES.ACTION_PROFILE,
+    masterType: PROFILE_TYPES.JOB_PROFILE,
+    detailType: PROFILE_TYPES.ACTION_PROFILE,
+  }));
+
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   const getFilteredActions = () => {
@@ -208,17 +224,26 @@ export const ActionProfilesFormComponent = ({
           </div>
           <FolioRecordTypeSelect dataOptions={folioRecordTypesDataOptions} />
         </Accordion>
-        {isEditMode || (
-          <Accordion
-            id="actionProfileFormAssociatedMappingProfileAccordion"
-            label={<FormattedMessage id="ui-data-import.settings.actionProfiles.associatedMappingProfile" />}
-            separator={false}
-          >
-            <div>
-              {/* will be implemented in https://issues.folio.org/browse/UIDATIMP-208 */}
-            </div>
-          </Accordion>
-        )}
+        <Accordion
+          id="actionProfileFormAssociatedMappingProfileAccordion"
+          label={<FormattedMessage id="ui-data-import.settings.associatedMappingProfile" />}
+          separator={false}
+        >
+          <MappingAssociator.current
+            isMultiSelect={false}
+            isMultiLink={false}
+          />
+        </Accordion>
+        <Accordion
+          id="actionProfileFormAssociatedJobProfileAccordion"
+          label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
+          separator={false}
+        >
+          <JobsAssociator.current
+            isMultiSelect
+            isMultiLink
+          />
+        </Accordion>
       </AccordionSet>
       <ConfirmationModal
         id="confirm-edit-action-profile-modal"
@@ -259,7 +284,7 @@ const selector = formValueSelector(formName);
 const mapStateToProps = state => {
   const { length: associatedJobProfilesAmount } = get(
     state,
-    ['folio_data_import_associated_job_profiles', 'records', 0, 'childSnapshotWrappers'],
+    ['folio_data_import_associated_jobprofiles', 'records', 0, 'childSnapshotWrappers'],
     [],
   );
   const action = selector(state, 'action');
