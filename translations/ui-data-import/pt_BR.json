@@ -268,5 +268,7 @@
     "match.value-type.static-value": "Valor estático",
     "match.static-value-type.text": "Texto",
     "match.static-value-type.number": "Número",
-    "match.static-value-type.date": "Data"
+    "match.static-value-type.date": "Data",
+    "validation.valueType": "Por favor, insira um valor alfanumérico",
+    "validation.maxLength": "Valor inválido. São permitidos no máximo {maxLength} caracteres"
 }
