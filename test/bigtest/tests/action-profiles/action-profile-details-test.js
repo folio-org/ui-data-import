@@ -118,7 +118,7 @@ describe('Action Profile View', () => {
 
       it('renders empty message', () => {
         expect(actionProfileDetails.associatedJobProfiles.list.displaysEmptyMessage).to.be.true;
-      });
+      }).timeout(5000);
     });
   });
 
