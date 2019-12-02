@@ -9,12 +9,14 @@ import {
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import * as stripesComponents from '@folio/stripes/components';
-import * as components from '..';
 import {
   isEmpty,
   get,
 } from 'lodash';
+
+import * as stripesComponents from '@folio/stripes/components';
+
+import * as components from '..';
 import * as validators from '../../utils/formValidators';
 
 const controls = {
