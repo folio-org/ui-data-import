@@ -268,5 +268,7 @@
     "match.value-type.static-value": "قيمة ثابتة",
     "match.static-value-type.text": "نص",
     "match.static-value-type.number": "رقم",
-    "match.static-value-type.date": "تاريخ"
+    "match.static-value-type.date": "تاريخ",
+    "validation.valueType": "يرجى إدخال قيمة أبجدية عددية",
+    "validation.maxLength": "قيمة غير صالحة. الحد الأقصى المسموح به هو {maxLength} حرفًا."
 }
