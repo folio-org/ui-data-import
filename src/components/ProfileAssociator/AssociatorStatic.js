@@ -102,29 +102,28 @@ export const AssociatorStatic = ({
             onSubmitSearch,
             onSort,
             resetAll,
-            }) => (
-              <Fragment>
-                <RenderSearch
-                  onSubmitSearch={onSubmitSearch}
-                  searchValue={searchValue}
-                  resetAll={resetAll}
-                  getSearchHandlers={getSearchHandlers}
-                />
-                <AssociatedList
-                  entityKey={entityKey}
-                  checkboxList={checkboxList}
-                  columnWidths={columnWidths}
-                  nsSort={nsSort}
-                  nsQuery={nsQuery}
-                  initialQuery={initialQuery}
-                  query={query}
-                  contentData={contentData}
-                  onSort={onSort}
-                  isMultiSelect
-                />
-              </Fragment>
-            )
-          }
+          }) => (
+            <Fragment>
+              <RenderSearch
+                onSubmitSearch={onSubmitSearch}
+                searchValue={searchValue}
+                resetAll={resetAll}
+                getSearchHandlers={getSearchHandlers}
+              />
+              <AssociatedList
+                entityKey={entityKey}
+                checkboxList={checkboxList}
+                columnWidths={columnWidths}
+                nsSort={nsSort}
+                nsQuery={nsQuery}
+                initialQuery={initialQuery}
+                query={query}
+                contentData={contentData}
+                onSort={onSort}
+                isMultiSelect
+              />
+            </Fragment>
+          )}
         </SearchAndSortQuery>
       </div>
     );
