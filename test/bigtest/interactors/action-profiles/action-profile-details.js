@@ -7,9 +7,9 @@ import {
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
-import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
 import { AssociatedJobProfiles } from '../associated-job-profiles';
+import { AssociatedMappingProfiles } from '../associated-mapping-profiles';
 
 @interactor class ActionProfileDetailsInteractor {
   paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
@@ -24,7 +24,7 @@ import { AssociatedJobProfiles } from '../associated-job-profiles';
   action = scoped('[data-test-action]');
   folioRecord = scoped('[data-test-folio-record]');
   associatedJobProfiles = new AssociatedJobProfiles('[data-test-associated-job-profiles]');
-  associatedMappingProfile = new MultiColumnListInteractor('[data-test-associated-mapping-profiles]');
+  associatedMappingProfile = new AssociatedMappingProfiles('[data-test-associated-mapping-profiles]');
   confirmationModal = new ConfirmationModalInteractor('#delete-action-profile-modal');
   callout = new CalloutInteractor();
 
