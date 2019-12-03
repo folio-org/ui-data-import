@@ -7,6 +7,7 @@ import { Field } from 'redux-form';
 
 import { IntlConsumer } from '@folio/stripes/core';
 import * as stripesComponents from '@folio/stripes/components';
+
 import * as components from '..';
 import { Control } from './Control';
 
