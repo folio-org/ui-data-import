@@ -7,6 +7,7 @@ import {
 
 import { setupApplication } from '../../helpers';
 import {
+  actionProfileDetails,
   mappingProfiles,
   mappingProfileForm,
   mappingProfileDetails,
@@ -58,6 +59,23 @@ describe('Mapping Profile View', () => {
     it('display tags accordion', () => {
       expect(mappingProfileDetails.isTagsPresent).to.be.true;
     });
+
+    describe('associated action profile', () => {
+      it('has correct count of items', () => {
+        expect(mappingProfileDetails.associatedActionProfiles.list.rowCount).to.be.equal(2);
+      });
+
+      describe('when action profile is clicked', () => {
+        beforeEach(async function () {
+          this.server.get('/data-import-profiles/profileAssociations/:id/masters', {});
+          await mappingProfileDetails.associatedActionProfiles.actionProfilesLinks(0).click();
+        });
+
+        it('redirects to action profile details', () => {
+          expect(actionProfileDetails.isPresent).to.be.true;
+        });
+      });
+    });
   });
 
   describe('associated action profiles', () => {
@@ -67,7 +85,7 @@ describe('Mapping Profile View', () => {
       });
 
       it('renders mapping profile', () => {
-        expect(mappingProfileDetails.associatedActionProfiles.rowCount).to.be.equal(2);
+        expect(mappingProfileDetails.associatedActionProfiles.list.rowCount).to.be.equal(2);
       });
     });
 
@@ -78,7 +96,7 @@ describe('Mapping Profile View', () => {
       });
 
       it('renders empty message', () => {
-        expect(mappingProfileDetails.associatedActionProfiles.displaysEmptyMessage).to.be.true;
+        expect(mappingProfileDetails.associatedActionProfiles.list.displaysEmptyMessage).to.be.true;
       });
     });
   });

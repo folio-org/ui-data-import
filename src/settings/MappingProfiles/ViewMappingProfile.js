@@ -14,7 +14,6 @@ import {
   KeyValue,
   Accordion,
   AccordionSet,
-  MultiColumnList,
   ConfirmationModal,
   Button,
 } from '@folio/stripes/components';
@@ -24,10 +23,7 @@ import {
   TagsAccordion,
 } from '@folio/stripes/smart-components';
 
-import {
-  createUrl,
-  createLayerURL,
-} from '../../utils';
+import { createLayerURL } from '../../utils';
 import {
   LAYER_TYPES,
   ENTITY_KEYS,
@@ -39,9 +35,9 @@ import {
   Spinner,
   EndOfItem,
   ActionMenu,
-  listTemplate,
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
+  createProfileAssociator,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
@@ -51,22 +47,10 @@ import sharedCss from '../../shared.css';
 @withTags
 export class ViewMappingProfile extends Component {
   static manifest = Object.freeze({
+    initializedFilterConfig: { initialValue: false },
     mappingProfile: {
       type: 'okapi',
       path: 'data-import-profiles/mappingProfiles/:{id}',
-      throwErrors: false,
-    },
-    associatedActionProfiles: {
-      type: 'okapi',
-      path: createUrl(
-        'data-import-profiles/profileAssociations/:{id}/masters',
-        {
-          detailType: PROFILE_TYPES.MAPPING_PROFILE,
-          masterType: PROFILE_TYPES.ACTION_PROFILE,
-          query: 'cql.allRecords=1 sortBy name/ascending',
-        },
-        false,
-      ),
       throwErrors: false,
     },
   });
@@ -77,12 +61,9 @@ export class ViewMappingProfile extends Component {
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      associatedActionProfiles: PropTypes.shape({
-        hasLoaded: PropTypes.bool.isRequired,
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
     }).isRequired,
     location: PropTypes.object.isRequired,
+    history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
@@ -104,17 +85,14 @@ export class ViewMappingProfile extends Component {
   state = {
     deletionInProgress: false,
     showDeleteConfirmation: false,
+    ActionsAssociator: createProfileAssociator({
+      namespaceKey: 'AAP',
+      entityKey: ENTITY_KEYS.ACTION_PROFILES,
+      parentType: PROFILE_TYPES.MAPPING_PROFILE,
+      masterType: PROFILE_TYPES.ACTION_PROFILE,
+      detailType: PROFILE_TYPES.MAPPING_PROFILE,
+    }),
   };
-
-  associatedActionProfilesVisibleColumns = [
-    'name',
-    'action',
-    'tags',
-    'updated',
-    'updatedBy',
-  ];
-
-  associatedActionProfilesColumnWidths = { selected: 40 };
 
   get mappingProfileData() {
     const { resources } = this.props;
@@ -126,16 +104,6 @@ export class ViewMappingProfile extends Component {
       hasLoaded: mappingProfile.hasLoaded,
       record,
     };
-  }
-
-  get associatedActionProfilesData() {
-    const associatedActionProfiles = get(
-      this.props,
-      ['resources', 'associatedActionProfiles', 'records', 0, 'childSnapshotWrappers'],
-      []
-    ).map(({ content }) => content);
-
-    return { associatedActionProfiles };
   }
 
   showDeleteConfirmation = () => {
@@ -185,14 +153,15 @@ export class ViewMappingProfile extends Component {
       paneId,
       tagsEnabled,
     } = this.props;
-    const { showDeleteConfirmation } = this.state;
+    const {
+      showDeleteConfirmation,
+      ActionsAssociator,
+    } = this.state;
 
     const {
       hasLoaded,
       record: mappingProfile,
     } = this.mappingProfileData;
-
-    const { associatedActionProfiles } = this.associatedActionProfilesData;
 
     if (!mappingProfile || !hasLoaded) {
       return <Spinner entity={this} />;
@@ -280,23 +249,11 @@ export class ViewMappingProfile extends Component {
               </Button>
             )}
           >
-            <div data-test-associated-action-profiles>
-              <MultiColumnList
-                id="associated-action-profiles"
-                visibleColumns={this.associatedActionProfilesVisibleColumns}
-                contentData={associatedActionProfiles}
-                columnMapping={{
-                  name: <FormattedMessage id="ui-data-import.name" />,
-                  action: <FormattedMessage id="ui-data-import.action" />,
-                  tags: <FormattedMessage id="ui-data-import.tags" />,
-                  updated: <FormattedMessage id="ui-data-import.updated" />,
-                  updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
-                }}
-                columnWidths={this.associatedActionProfilesColumnWidths}
-                isEmptyMessage={<FormattedMessage id="ui-data-import.none" />}
-                formatter={listTemplate({ entityKey: ENTITY_KEYS.ACTION_PROFILES })}
-              />
-            </div>
+            <ActionsAssociator
+              record={mappingProfile}
+              isMultiSelect={false}
+              isMultiLink
+            />
           </Accordion>
         </AccordionSet>
         <EndOfItem

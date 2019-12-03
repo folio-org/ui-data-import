@@ -1,0 +1,19 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.list-editable {
+  margin-bottom: 1rem;
+}
+
+.button-unlink {
+  padding: 2px 10px;
+  & span[class|=icon] {
+    background: transparent!important;
+    border: none;
+    border-radius: 0;
+    & img, &::after {
+      box-shadow: none;
+      border: none;
+      border-radius: 0;
+    }
+  }
+}

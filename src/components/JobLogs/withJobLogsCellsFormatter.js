@@ -20,6 +20,9 @@ export const withJobLogsCellsFormatter = WrappedComponent => {
 
     static defaultProps = { formatter: {} };
 
+    /**
+     * @returns {*}
+     */
     render() {
       const {
         intl,
