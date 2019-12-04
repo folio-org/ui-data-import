@@ -28,7 +28,7 @@ export const LastMenu = memo(({
 
 LastMenu.propTypes = {
   caption: PropTypes.string.isRequired,
-  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
   style: PropTypes.object,
   dataAttributes: PropTypes.object,
 };

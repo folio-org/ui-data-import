@@ -105,7 +105,7 @@ AssociatedList.propTypes = {
   isMultiSelect: PropTypes.bool,
   nsSort: PropTypes.string.isRequired,
   nsQuery: PropTypes.string.isRequired,
-  initialQuery: PropTypes.string.isRequired,
+  initialQuery: PropTypes.object.isRequired,
   query: PropTypes.object.isRequired,
   dataAttributes: PropTypes.shape(PropTypes.object),
   contentData: PropTypes.arrayOf(PropTypes.object),

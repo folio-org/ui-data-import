@@ -59,7 +59,7 @@ export class SearchAndSort extends Component {
     location: PropTypes.shape({ // provided by withRouter
       pathname: PropTypes.string.isRequired,
       search: PropTypes.string.isRequired,
-    }).isRequired,
+    }).isRequired || PropTypes.string.isRequired,
     history: PropTypes.shape({ // provided by withRouter
       push: PropTypes.func.isRequired,
     }).isRequired,

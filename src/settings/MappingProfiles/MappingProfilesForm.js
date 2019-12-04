@@ -169,7 +169,7 @@ MappingProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired,
 };
 

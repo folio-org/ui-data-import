@@ -20,7 +20,7 @@ const withJobLogsSortComponent = WrappedComponent => {
       location: PropTypes.shape({
         search: PropTypes.string.isRequired,
         pathname: PropTypes.string.isRequired,
-      }).isRequired,
+      }).isRequired || PropTypes.string.isRequired,
       formatter: PropTypes.object,
     };
 
