@@ -120,7 +120,7 @@ AssociatorEditable.propTypes = {
   entityKey: PropTypes.string.isRequired,
   nsSort: PropTypes.string.isRequired,
   nsQuery: PropTypes.string.isRequired,
-  initialQuery: PropTypes.string.isRequired,
+  initialQuery: PropTypes.object.isRequired,
   query: PropTypes.object.isRequired,
   contentData: PropTypes.arrayOf(PropTypes.object),
   isMultiSelect: PropTypes.bool,

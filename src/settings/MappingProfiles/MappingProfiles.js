@@ -174,7 +174,7 @@ export class MappingProfiles extends Component {
         PUT: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
-    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,

@@ -89,7 +89,7 @@ export class FileExtensions extends Component {
     }).isRequired,
     resources: PropTypes.object.isRequired,
     label: PropTypes.node.isRequired,
-    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     selectedRecord: PropTypes.object.isRequired,

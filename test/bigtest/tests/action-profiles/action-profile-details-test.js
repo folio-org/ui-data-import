@@ -99,6 +99,29 @@ describe('Action Profile View', () => {
     });
   });
 
+  describe('associated job profiles', () => {
+    describe('when there are associated profiles', () => {
+      beforeEach(async function () {
+        await actionProfiles.list.rows(0).click();
+      });
+
+      it('renders job profiles', () => {
+        expect(actionProfileDetails.associatedJobProfiles.list.rowCount).to.be.equal(3);
+      });
+    });
+
+    describe('when there are no associated profiles', () => {
+      beforeEach(async function () {
+        this.server.get('/data-import-profiles/profileAssociations/:id/masters', noAssociatedJobProfiles);
+        await actionProfiles.list.rows(0).click();
+      });
+
+      it('renders empty message', () => {
+        expect(actionProfileDetails.associatedJobProfiles.list.displaysEmptyMessage).to.be.true;
+      }).timeout(5000);
+    });
+  });
+
   describe('details pane', () => {
     beforeEach(async () => {
       await actionProfiles.list.rows(0).click();
