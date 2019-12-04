@@ -142,7 +142,6 @@
     "settings.actionProfiles.count": "{count, number} action {count, plural, one {profile} other {profiles}}",
     "settings.mappingProfiles.title": "Field mapping profiles",
     "settings.actionProfiles.new": "New action profile",
-    "settings.actionProfiles.associatedMappingProfile": "Associated field mapping profile",
     "none": "None",
     "actionProfileName": "Action profile",
     "settings.associatedJobProfiles": "Associated job profiles",
@@ -221,7 +220,6 @@
     "selectAction": "Select action",
     "saveAsProfile": "Save as profile & Close",
     "saveAsFileExtension": "Save as file extension & Close",
-    "settings.associateProfile": "Pick Profile",
     "find-import-profile-plugin-unavailable": "Find Import Profile Plugin is not available now",
     "filter.errors": "Errors in import",
     "filter.date": "Date",
@@ -270,5 +268,10 @@
     "match.static-value-type.number": "Número",
     "match.static-value-type.date": "Fecha",
     "validation.valueType": "Please enter an alphanumeric value",
-    "validation.maxLength": "Invalid value. Maximum {maxLength} character(s) allowed"
+    "validation.maxLength": "Invalid value. Maximum {maxLength} character(s) allowed",
+    "unlink": "Unlink",
+    "settings.profile.select": "Select Profile",
+    "settings.profile.unlink": "Unlink this profile",
+    "modal.profile.unlink.heading": "Are you sure?",
+    "modal.profile.unlink.message": "Are you sure you want to unlink \"{name}\" Profile?"
 }

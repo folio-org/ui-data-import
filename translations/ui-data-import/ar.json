@@ -142,7 +142,6 @@
     "settings.actionProfiles.count": "{count, number} الإجراء {count, plural, one {وضعًا} other {وضعًا}}",
     "settings.mappingProfiles.title": "أوضاع تخطيط الحقل",
     "settings.actionProfiles.new": "وضع إجراء جديد",
-    "settings.actionProfiles.associatedMappingProfile": "وضع تخطيط الحقل المرتبط",
     "none": "لا شيء",
     "actionProfileName": "وضع الإجراءات",
     "settings.associatedJobProfiles": "أوضاع الوظائف المرتبطة",
@@ -221,7 +220,6 @@
     "selectAction": "اختر إجراء",
     "saveAsProfile": "حفظ كملف تعريفي وإغلاق",
     "saveAsFileExtension": "حفظ باسم امتداد الملف وإغلاق",
-    "settings.associateProfile": "اختر الملف التعريفي",
     "find-import-profile-plugin-unavailable": "برنامج باحث استيراد الملف التعريفي المساعد غير متاح الآن",
     "filter.errors": "أخطاء في الاستيراد",
     "filter.date": "التاريخ",
@@ -270,5 +268,10 @@
     "match.static-value-type.number": "رقم",
     "match.static-value-type.date": "تاريخ",
     "validation.valueType": "يرجى إدخال قيمة أبجدية عددية",
-    "validation.maxLength": "قيمة غير صالحة. الحد الأقصى المسموح به هو {maxLength} حرفًا."
+    "validation.maxLength": "قيمة غير صالحة. الحد الأقصى المسموح به هو {maxLength} حرفًا.",
+    "unlink": "إلغاء ربط",
+    "settings.profile.select": "اختر ملف تعريفي",
+    "settings.profile.unlink": "إلغاء ربط هذا الملف التعريفي",
+    "modal.profile.unlink.heading": "هل أنت متأكد؟",
+    "modal.profile.unlink.message": "هل أنت متأكد من أنك تريد إلغاء ربط الملف التعريفي \"{name}\"؟"
 }
