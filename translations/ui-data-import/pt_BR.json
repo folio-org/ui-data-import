@@ -142,7 +142,6 @@
     "settings.actionProfiles.count": "{count, number} ação {count, plural, one {perfil} other {perfis}}",
     "settings.mappingProfiles.title": "Perfis de mapeamento de campo",
     "settings.actionProfiles.new": "Novo perfil de ação",
-    "settings.actionProfiles.associatedMappingProfile": "Perfil de mapeamento de campo associado",
     "none": "Nenhum",
     "actionProfileName": "Perfil de ação",
     "settings.associatedJobProfiles": "Perfis de job associados",
@@ -221,7 +220,6 @@
     "selectAction": "Selecionar ação",
     "saveAsProfile": "Salvar como perfil e fechar",
     "saveAsFileExtension": "Salvar como extensão de arquivo e fechar",
-    "settings.associateProfile": "Escolha o perfil",
     "find-import-profile-plugin-unavailable": "Localizar o Plugin do Perfil de Importação não está disponível agora",
     "filter.errors": "Erros na importação",
     "filter.date": "Data",
@@ -270,5 +268,10 @@
     "match.static-value-type.number": "Número",
     "match.static-value-type.date": "Data",
     "validation.valueType": "Por favor, insira um valor alfanumérico",
-    "validation.maxLength": "Valor inválido. São permitidos no máximo {maxLength} caracteres"
+    "validation.maxLength": "Valor inválido. São permitidos no máximo {maxLength} caracteres",
+    "unlink": "Desvincular",
+    "settings.profile.select": "Selecione o perfil",
+    "settings.profile.unlink": "Desvincular este perfil",
+    "modal.profile.unlink.heading": "Você tem certeza?",
+    "modal.profile.unlink.message": "Tem certeza de que deseja desvincular o perfil \"{name}\"?"
 }
