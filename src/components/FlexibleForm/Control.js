@@ -9,12 +9,14 @@ import {
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import * as stripesComponents from '@folio/stripes/components';
-import * as components from '..';
 import {
   isEmpty,
   get,
 } from 'lodash';
+
+import * as stripesComponents from '@folio/stripes/components';
+
+import * as components from '..';
 import * as validators from '../../utils/formValidators';
 
 const controls = {
@@ -117,7 +119,7 @@ export const Control = memo(props => {
     return attrs;
   };
 
-  const attrs = getAttributes();
+  const attribs = getAttributes();
 
   const renderDefault = () => {
     const Cmp = !isEditable ? getControl(staticControlType) : getControl(controlType);
@@ -130,7 +132,7 @@ export const Control = memo(props => {
       return (
         <Cmp
           className={classes}
-          {...attrs}
+          {...attribs}
         >
           {children.map((cfg, i) => (
             <Control
@@ -147,7 +149,7 @@ export const Control = memo(props => {
       );
     }
 
-    return <Cmp {...attrs} />;
+    return <Cmp {...attribs} />;
   };
 
   const renderRepeatable = () => {
@@ -169,7 +171,7 @@ export const Control = memo(props => {
     return (
       <Cmp
         className={classes}
-        {...attrs}
+        {...attribs}
       >
         <Repeatable
           legend={legend}

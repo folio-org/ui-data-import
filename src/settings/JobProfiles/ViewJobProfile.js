@@ -52,8 +52,10 @@ import {
   EndOfItem,
   Preloader,
   Spinner,
-  UploadingJobsContext,
 } from '../../components';
+
+import { UploadingJobsContext } from '../../components/UploadingJobsContextProvider';
+
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
@@ -88,6 +90,20 @@ export class ViewJobProfile extends Component {
     intl: intlShape.isRequired,
     resources: PropTypes.shape({
       jobProfile: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            dataType: PropTypes.string.isRequired,
+            metadata: PropTypes.shape({
+              createdByUserId: PropTypes.string.isRequired,
+              updatedByUserId: PropTypes.string.isRequired,
+            }).isRequired,
+            description: PropTypes.string,
+          }),
+        ),
+      }),
+      jobsUsingThisProfile: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(
           PropTypes.shape({

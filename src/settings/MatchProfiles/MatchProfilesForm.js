@@ -125,7 +125,7 @@ MatchProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
   associatedJobProfilesAmount: PropTypes.number.isRequired,
   onCancel: PropTypes.func.isRequired,
 };
@@ -133,7 +133,7 @@ MatchProfilesFormComponent.propTypes = {
 const mapStateToProps = state => {
   const { length: associatedJobProfilesAmount } = get(
     state,
-    ['folio_data_import_associated_job_profiles', 'records', 0, 'childSnapshotWrappers'],
+    ['folio_data_import_associated_jobprofiles', 'records', 0, 'childSnapshotWrappers'],
     [],
   );
 

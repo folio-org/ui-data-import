@@ -58,9 +58,10 @@ export class UploadingJobsDisplay extends Component {
       replace: PropTypes.func.isRequired,
     }).isRequired,
     location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
       state: PropTypes.shape({ // eslint-disable-line object-curly-newline
         files: PropTypes.object,
-      }),
+      }) || PropTypes.string.isRequired,
     }).isRequired,
     timeoutBeforeFileDeletion: PropTypes.number, // milliseconds
   };

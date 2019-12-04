@@ -1,4 +1,7 @@
-import React, { useMemo } from 'react';
+import React, {
+  useMemo,
+  useRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import {
@@ -24,12 +27,17 @@ import {
   compose,
 } from '../../utils';
 import {
+  ENTITY_KEYS,
+  LAYER_TYPES,
+  PROFILE_TYPES,
+} from '../../utils/constants';
+import {
   FullScreenForm,
   FolioRecordTypeSelect,
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
+  createProfileAssociator,
 } from '../../components';
-import { LAYER_TYPES } from '../../utils/constants';
 
 const formName = 'mappingProfilesForm';
 
@@ -42,6 +50,14 @@ export const MappingProfilesFormComponent = ({
   handleSubmit,
   onCancel,
 }) => {
+  const ActionsAssociator = useRef(createProfileAssociator({
+    namespaceKey: 'AAP',
+    entityKey: ENTITY_KEYS.ACTION_PROFILES,
+    parentType: PROFILE_TYPES.MAPPING_PROFILE,
+    masterType: PROFILE_TYPES.ACTION_PROFILE,
+    detailType: PROFILE_TYPES.MAPPING_PROFILE,
+  }));
+
   const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
       value: recordType,
@@ -132,17 +148,16 @@ export const MappingProfilesFormComponent = ({
             {/* will be implemented in the future */}
           </div>
         </Accordion>
-        {isEditMode || (
-          <Accordion
-            id="associatedActionProfilesAccordion"
-            label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
-            separator={false}
-          >
-            <div>
-              {/* will be implemented in the future */}
-            </div>
-          </Accordion>
-        )}
+        <Accordion
+          id="mappingProfileFormAssociatedActionProfileAccordion"
+          label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
+          separator={false}
+        >
+          <ActionsAssociator.current
+            isMultiSelect
+            isMultiLink
+          />
+        </Accordion>
       </AccordionSet>
     </FullScreenForm>
   );
@@ -154,7 +169,7 @@ MappingProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired,
 };
 

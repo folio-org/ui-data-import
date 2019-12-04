@@ -88,6 +88,13 @@ export const matchProfilesShape = {
       updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
     };
 
+    if (props && props.unlink) {
+      headers = {
+        unlink: <FormattedMessage id="ui-data-import.unlink" />,
+        ...headers,
+      };
+    }
+
     if (props && props.checkboxList) {
       const {
         checkboxList: {
@@ -168,7 +175,7 @@ export class MatchProfiles extends Component {
         PUT: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
-    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,

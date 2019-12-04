@@ -82,6 +82,7 @@ export const actionProfilesShape = {
     updated: '100px',
     updatedBy: '250px',
   },
+
   renderHeaders: props => {
     let headers = {
       name: <FormattedMessage id="ui-data-import.name" />,
@@ -91,6 +92,13 @@ export const actionProfilesShape = {
       updated: <FormattedMessage id="ui-data-import.updated" />,
       updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,
     };
+
+    if (props && props.unlink) {
+      headers = {
+        unlink: <FormattedMessage id="ui-data-import.unlink" />,
+        ...headers,
+      };
+    }
 
     if (props && props.checkboxList) {
       const {
@@ -173,7 +181,7 @@ export class ActionProfiles extends Component {
         PUT: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
-    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,

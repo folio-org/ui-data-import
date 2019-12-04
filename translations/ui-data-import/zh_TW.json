@@ -142,7 +142,6 @@
     "settings.actionProfiles.count": "{count, number} 操作 {count, plural, one { 配置文件 } other { 配置文件 }}",
     "settings.mappingProfiles.title": "字段映射配置文件",
     "settings.actionProfiles.new": "新操作配置文件",
-    "settings.actionProfiles.associatedMappingProfile": "关联的字段映射配置文件",
     "none": "无",
     "actionProfileName": "操作配置文件",
     "settings.associatedJobProfiles": "关联的任务配置文件",
@@ -221,7 +220,6 @@
     "selectAction": "Select action",
     "saveAsProfile": "Save as profile & Close",
     "saveAsFileExtension": "Save as file extension & Close",
-    "settings.associateProfile": "Pick Profile",
     "find-import-profile-plugin-unavailable": "Find Import Profile Plugin is not available now",
     "filter.errors": "Errors in import",
     "filter.date": "Date",
@@ -270,5 +268,10 @@
     "match.static-value-type.number": "Number",
     "match.static-value-type.date": "Date",
     "validation.valueType": "Please enter an alphanumeric value",
-    "validation.maxLength": "Invalid value. Maximum {maxLength} character(s) allowed"
+    "validation.maxLength": "Invalid value. Maximum {maxLength} character(s) allowed",
+    "unlink": "Unlink",
+    "settings.profile.select": "Select Profile",
+    "settings.profile.unlink": "Unlink this profile",
+    "modal.profile.unlink.heading": "Are you sure?",
+    "modal.profile.unlink.message": "Are you sure you want to unlink \"{name}\" Profile?"
 }

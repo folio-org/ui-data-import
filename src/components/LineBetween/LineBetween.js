@@ -132,10 +132,10 @@ export const LineBetween = props => {
       offsetY -= containerElementDimensions.top + (window.pageYOffset || document.documentElement.scrollTop);
     }
 
-    const x0 = fromElementDimensions.left + fromElementDimensions.width * fromAnchorCoordinates.x + offsetX + fromAnchorOffsetValue.x;
-    const y0 = fromElementDimensions.top + fromElementDimensions.height * fromAnchorCoordinates.y + offsetY + fromAnchorOffsetValue.y;
-    const x1 = toElementDimensions.left + toElementDimensions.width * toAnchorCoordinates.x + offsetX + toAnchorOffsetValue.x;
-    const y1 = toElementDimensions.top + toElementDimensions.height * toAnchorCoordinates.y + offsetY + toAnchorOffsetValue.y;
+    const x0 = fromElementDimensions.left + (fromElementDimensions.width * fromAnchorCoordinates.x) + offsetX + fromAnchorOffsetValue.x;
+    const y0 = fromElementDimensions.top + (fromElementDimensions.height * fromAnchorCoordinates.y) + offsetY + fromAnchorOffsetValue.y;
+    const x1 = toElementDimensions.left + (toElementDimensions.width * toAnchorCoordinates.x) + offsetX + toAnchorOffsetValue.x;
+    const y1 = toElementDimensions.top + (toElementDimensions.height * toAnchorCoordinates.y) + offsetY + toAnchorOffsetValue.y;
 
     return {
       x0,

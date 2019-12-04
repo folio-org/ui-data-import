@@ -65,7 +65,7 @@ export class ViewFileExtension extends Component {
         id: PropTypes.string,
       }).isRequired,
     }).isRequired,
-    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string, // eslint-disable-line

@@ -42,8 +42,8 @@ import {
   Spinner,
   EndOfItem,
   ActionMenu,
-  AssociatedJobProfiles,
   FlexibleForm,
+  createProfileAssociator,
 } from '../../components';
 import { FOLIO_RECORD_TYPES } from '../../components/ListTemplate';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
@@ -58,6 +58,7 @@ const formName = 'matchProfilesForm';
 @withTags
 export class ViewMatchProfile extends Component {
   static manifest = Object.freeze({
+    initializedFilterConfig: { initialValue: false },
     matchProfile: {
       type: 'okapi',
       path: 'data-import-profiles/matchProfiles/:{id}',
@@ -72,7 +73,7 @@ export class ViewMatchProfile extends Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }).isRequired,
-    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
+    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
     match: PropTypes.shape({ params: PropTypes.shape({ id: PropTypes.string }).isRequired }).isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
@@ -95,6 +96,13 @@ export class ViewMatchProfile extends Component {
   state = {
     deletionInProgress: false,
     showDeleteConfirmation: false,
+    JobsAssociator: createProfileAssociator({
+      namespaceKey: 'AMP',
+      entityKey: ENTITY_KEYS.JOB_PROFILES,
+      parentType: PROFILE_TYPES.MATCH_PROFILE,
+      masterType: PROFILE_TYPES.JOB_PROFILE,
+      detailType: PROFILE_TYPES.MATCH_PROFILE,
+    }),
   };
 
   get matchProfileData() {
@@ -168,7 +176,10 @@ export class ViewMatchProfile extends Component {
       paneId,
       tagsEnabled,
     } = this.props;
-    const { showDeleteConfirmation } = this.state;
+    const {
+      showDeleteConfirmation,
+      JobsAssociator,
+    } = this.state;
 
     const {
       hasLoaded,
@@ -333,7 +344,11 @@ export class ViewMatchProfile extends Component {
               </Button>
             )}
           >
-            <AssociatedJobProfiles detailType={PROFILE_TYPES.MATCH_PROFILE} />
+            <JobsAssociator
+              record={matchProfile}
+              isMultiSelect
+              isMultiLink
+            />
           </Accordion>
         </AccordionSet>
         <EndOfItem

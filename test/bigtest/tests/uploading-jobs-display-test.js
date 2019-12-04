@@ -41,7 +41,7 @@ describe('Uploading jobs display', () => {
 
         it('has correct progress', () => {
           expect(uploadingJobsDisplay.files(0).progress.text).to.equal(translation.waitingForUpload);
-        });
+        }).timeout(5000);
 
         it('has not delete button', () => {
           expect(fileItem.deleteButton.isPresent).to.be.false;
@@ -57,7 +57,7 @@ describe('Uploading jobs display', () => {
 
         it('has correct progress', () => {
           expect(fileItem.progress.text).to.equal(translation.uploadingMessage);
-        });
+        }).timeout(5000);
 
         it('has not delete button', () => {
           expect(fileItem.deleteButton.isPresent).to.be.false;
@@ -200,8 +200,9 @@ describe('Uploading jobs display', () => {
       ],
     });
 
-    beforeEach(function () {
+    beforeEach(async function () {
       this.visit('/data-import/job-profile');
+      await jobProfileForm.whenLoaded();
     });
 
     it('does not have files', () => {
