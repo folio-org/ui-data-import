@@ -18,6 +18,7 @@ import css from './ProfileAssociator.css';
 
 export const AssociatorEditable = memo(({
   entityKey,
+  parentType,
   nsSort,
   nsQuery,
   initialQuery,
@@ -84,6 +85,7 @@ export const AssociatorEditable = memo(({
         searchButtonStyle="default"
         addLines={onLinesAdd}
         entityKey={entityKey}
+        parentType={parentType}
         dataKey={entityKey}
         disabled={pluginDisabled}
         isSingleSelect={!isMultiSelect}
@@ -118,6 +120,7 @@ export const AssociatorEditable = memo(({
 
 AssociatorEditable.propTypes = {
   entityKey: PropTypes.string.isRequired,
+  parentType: PropTypes.string.isRequired,
   nsSort: PropTypes.string.isRequired,
   nsQuery: PropTypes.string.isRequired,
   initialQuery: PropTypes.string.isRequired,

@@ -136,6 +136,7 @@ export const createProfileAssociator = props => {
           ) : (
             <AssociatorEditable
               entityKey={entityKey}
+              parentType={parentType}
               isMultiSelect={isMultiSelect}
               isMultiLink={isMultiLink}
               nsSort={nsSort}
