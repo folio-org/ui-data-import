@@ -251,7 +251,7 @@ export class ViewMappingProfile extends Component {
           >
             <ActionsAssociator
               record={mappingProfile}
-              isMultiSelect={false}
+              isMultiSelect
               isMultiLink
             />
           </Accordion>

@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## 1.7.0 (IN PROGRESS)
+## [1.7.0](https://github.com/folio-org/ui-data-import/tree/v1.7.0) (2019-12-04)
 * Add action options to choose jobs screen (UIDATIMP-268)
 * Add non-editable mode feature for RecordTypesSelect component (UIDATIMP-323)
 * Add match details to the View match profile details pane (UIDATIMP-239)
