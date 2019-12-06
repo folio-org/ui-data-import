@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
 
-import { Pluggable } from '@folio/stripes-core';
+import { Pluggable } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
 
 import { useCheckboxList } from '../../utils';

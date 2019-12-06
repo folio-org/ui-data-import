@@ -16,8 +16,8 @@ import {
   handleFilterChange,
 } from '@folio/stripes-acq-components';
 
-import { stripesConnect } from '@folio/stripes-core';
-import { Button } from '@folio/stripes-components';
+import { stripesConnect } from '@folio/stripes/core';
+import { Button } from '@folio/stripes/components';
 import {
   get,
   noop,

@@ -28,7 +28,7 @@ import {
 import {
   withStripes,
   stripesShape,
-} from '@folio/stripes-core';
+} from '@folio/stripes/core';
 import {
   mapNsKeys,
   getNsKey,

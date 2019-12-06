@@ -31,9 +31,9 @@ import {
   AppIcon,
   TitleManager,
   stripesConnect,
+  stripesShape,
 } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { stripesShape } from '@folio/stripes-core';
 
 import {
   LAYER_TYPES,

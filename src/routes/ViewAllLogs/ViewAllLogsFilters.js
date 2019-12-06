@@ -9,7 +9,7 @@ import {
   Accordion,
   FilterAccordionHeader,
   Selection,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 import {
   createClearFilterHandler,
   DATE_FORMAT,
@@ -17,7 +17,7 @@ import {
 import {
   CheckboxFilter,
   DateRangeFilter,
-} from '@folio/stripes-smart-components';
+} from '@folio/stripes/smart-components';
 
 import {
   FILTERS,

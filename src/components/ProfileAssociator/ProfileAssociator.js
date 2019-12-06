@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 
 import { get } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes-core';
+import { stripesConnect } from '@folio/stripes/core';
 import {
   getNsKey,
   makeQueryFunction,
-} from '@folio/stripes-smart-components';
+} from '@folio/stripes/smart-components';
 
 import { STRING_CAPITALIZATION_MODES } from '../../utils/constants';
 import { capitalize } from '../../utils';
