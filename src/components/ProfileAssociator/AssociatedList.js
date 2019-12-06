@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
 
-import { MultiColumnList } from '@folio/stripes-components';
+import { MultiColumnList } from '@folio/stripes/components';
 
 import { checkboxListShape } from '../../utils';
 import {

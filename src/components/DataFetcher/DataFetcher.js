@@ -5,7 +5,7 @@ import {
   forEach,
 } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes-core';
+import { stripesConnect } from '@folio/stripes/core';
 
 import { jobExecutionPropTypes } from '../Jobs/components/Job/jobExecutionPropTypes';
 import {

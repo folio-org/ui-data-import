@@ -33,7 +33,7 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { stripesShape } from '@folio/stripes-core';
+import { stripesShape } from '@folio/stripes/core';
 
 import {
   LAYER_TYPES,
