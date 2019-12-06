@@ -15,6 +15,13 @@ import {
   checkboxListShape,
 } from '../../utils';
 import { ENTITY_KEYS } from '../../utils/constants';
+import {
+  INSTANCE_SCHEMA,
+  HOLDINGS_SCHEMA,
+  ITEM_SCHEMA,
+  ORDER_SCHEMA,
+  INVOICE_SCHEMA,
+} from '../../utils/resources';
 import { ListView } from '../../components';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
 import { ViewMatchProfile } from './ViewMatchProfile';
@@ -165,6 +172,26 @@ export class MatchProfiles extends Component {
         staticFallback: { params: {} },
       },
     },
+    instanceSchema: INSTANCE_SCHEMA.INSTANCE,
+    holdingsSchema: HOLDINGS_SCHEMA.HOLDINGS,
+    itemSchema: ITEM_SCHEMA.ITEM,
+    poPurchaseOrderSchema: ORDER_SCHEMA.PURCHASE_ORDER,
+    poRenewalSchema: ORDER_SCHEMA.RENEWAL,
+    poLineSchema: ORDER_SCHEMA.PO_LINE,
+    poDetailsSchema: ORDER_SCHEMA.DETAILS,
+    poContributorSchema: ORDER_SCHEMA.CONTRIBUTOR,
+    poReceivingHistorySchema: ORDER_SCHEMA.RECEIVING_HISTORY,
+    poCostSchema: ORDER_SCHEMA.COST_DETAILS,
+    poFundDistributionSchema: ORDER_SCHEMA.FUND_DISTRIBUTION,
+    poLocationSchema: ORDER_SCHEMA.LOCATION,
+    poPhysicalResourceSchema: ORDER_SCHEMA.PHYSICAL,
+    poEResourceSchema: ORDER_SCHEMA.E_RESOURCE,
+    poVendorSchema: ORDER_SCHEMA.VENDOR,
+    invoiceSchema: INVOICE_SCHEMA.INVOICE,
+    invoiceAdjustmentsSchema: INVOICE_SCHEMA.ADJUSTMENTS,
+    invoiceDocumentMetadataSchema: INVOICE_SCHEMA.DOCUMENT_METADATA,
+    invoiceLineSchema: INVOICE_SCHEMA.INVOICE_LINE,
+    invoiceFundDistributionSchema: INVOICE_SCHEMA.FUND_DISTRIBUTION,
   });
 
   static propTypes = {
@@ -234,7 +261,13 @@ export class MatchProfiles extends Component {
           }],
           dataValueType: 'VALUE_FROM_RECORD',
         },
-        existingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
+        existingMatchExpression: {
+          fields: [{
+            label: 'field',
+            value: '',
+          }],
+          dataValueType: 'VALUE_FROM_RECORD',
+        },
         matchCriterion: 'EXACTLY_MATCHES',
       }],
     },

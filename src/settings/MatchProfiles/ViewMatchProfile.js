@@ -26,7 +26,10 @@ import {
   TagsAccordion,
 } from '@folio/stripes/smart-components';
 
-import { createLayerURL } from '../../utils';
+import {
+  capitalize,
+  createLayerURL,
+} from '../../utils';
 import {
   LAYER_TYPES,
   ENTITY_KEYS,
@@ -37,6 +40,8 @@ import {
   QUALIFIER_TYPES,
   CRITERION_TYPES,
   VALUE_TYPES,
+  STRING_CAPITALIZATION_MODES,
+  STRING_CAPITALIZATION_EXCLUSIONS,
 } from '../../utils/constants';
 import {
   Spinner,
@@ -224,6 +229,8 @@ export class ViewMatchProfile extends Component {
     } = matchDetails;
 
     const incomingFields = get(incomingMatchExpression, 'fields', []);
+    const existingFields = get(existingMatchExpression, 'fields', []);
+    const existingField = this.getValue(existingFields, 'field').replace(/_/g, ' ');
 
     const record = {
       ...matchProfile,
@@ -253,6 +260,12 @@ export class ViewMatchProfile extends Component {
         incomingRecordType: get(matchDetails, 'incomingRecordType', ''),
         matchCriterion: this.getLabel(CRITERION_TYPES, get(matchDetails, 'matchCriterion', '')) || '-',
         existingMatchExpression: {
+          fields: [
+            {
+              label: 'field',
+              value: capitalize(existingField, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS) || '-',
+            },
+          ],
           dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', '')) || '-',
           qualifier: {
             qualifierType: this.getLabel(QUALIFIER_TYPES, get(existingMatchExpression, ['qualifier', 'qualifierType'])),
