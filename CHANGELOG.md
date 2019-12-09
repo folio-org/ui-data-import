@@ -9,6 +9,7 @@
 * Create Associator Component (UIDATIMP-275)
 * Attach a field mapping profile to an action profile that does not have one (UIDATIMP-269)
 * Attach one or more action profiles to a field mapping profile (UIDATIMP-279)
+* Fix sentence case for Qualifier field dropdowns in Create/View match profile details (UIDATIMP-340)
 
 ## [1.6.0](https://github.com/folio-org/ui-data-import/tree/v1.6.0) (2019-11-01)
 * Add details section on create/edit action profile form (UIDATIMP-207)
