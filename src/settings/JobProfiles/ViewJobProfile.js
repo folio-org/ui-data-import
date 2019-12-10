@@ -70,6 +70,11 @@ export class ViewJobProfile extends Component {
       path: 'data-import-profiles/jobProfiles/:{id}',
       throwErrors: false,
     },
+    childWrappers: {
+      type: 'okapi',
+      path: 'data-import-profiles/jobProfileSnapshots/:{id}',
+      throwErrors: false,
+    },
     jobsUsingThisProfile: {
       type: 'okapi',
       path: createUrl('metadata-provider/jobExecutions', {
@@ -98,6 +103,24 @@ export class ViewJobProfile extends Component {
             metadata: PropTypes.shape({
               createdByUserId: PropTypes.string.isRequired,
               updatedByUserId: PropTypes.string.isRequired,
+            }).isRequired,
+            description: PropTypes.string,
+          }),
+        ),
+      }),
+      childWrappers: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            profileId: PropTypes.string.isRequired,
+            contentType: PropTypes.string.isRequired,
+            content: PropTypes.shape({
+              id: PropTypes.string.isRequired,
+              name: PropTypes.string.isRequired,
+              description: PropTypes.string.isRequired,
+              tags: PropTypes.shape({ tagList: PropTypes.arrayOf(PropTypes.string) }),
+              match: PropTypes.string.isRequired,
             }).isRequired,
             description: PropTypes.string,
           }),

@@ -14,9 +14,10 @@ import {
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
-import { FullScreenForm } from '../../components/FullScreenForm';
 import { validateRequiredField } from '../../utils';
 import { DATA_TYPES } from '../../utils/constants';
+import { FullScreenForm } from '../../components/FullScreenForm';
+import { ProfileTree } from '../../components/ProfileTree';
 
 const formName = 'jobProfilesForm';
 const dataTypes = DATA_TYPES.map(dataType => ({
@@ -104,7 +105,10 @@ export const JobProfilesFormComponent = ({
           separator={false}
         >
           <div>
-            {/* will be implemented in https://issues.folio.org/browse/UIDATIMP-152 */}
+            <ProfileTree
+              linkingRules={{}}
+              contentData={[]}
+            />
           </div>
         </Accordion>
       </AccordionSet>
