@@ -12,7 +12,10 @@ import {
   mappingProfileForm,
   mappingProfileDetails,
 } from '../../interactors';
-import { noAssociatedActionProfiles } from '../../mocks';
+import {
+  associatedActionProfiles,
+  noAssociatedActionProfiles,
+} from '../../mocks';
 
 async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
   const {
@@ -68,11 +71,142 @@ describe('Mapping Profile View', () => {
       describe('when action profile is clicked', () => {
         beforeEach(async function () {
           this.server.get('/data-import-profiles/profileAssociations/:id/masters', {});
-          await mappingProfileDetails.associatedActionProfiles.actionProfilesLinks(0).click();
+          await mappingProfileDetails.associatedActionProfiles.links(0).click();
         });
 
         it('redirects to action profile details', () => {
           expect(actionProfileDetails.isPresent).to.be.true;
+        });
+      });
+    });
+
+    describe('edit mapping profile form', () => {
+      beforeEach(async function () {
+        await mappingProfiles.list.rows(0).click();
+      });
+
+      describe('appears', () => {
+        beforeEach(async () => {
+          await mappingProfileDetails.expandPaneHeaderDropdown();
+          await mappingProfileDetails.dropdownEditButton.click();
+        });
+
+        it('upon click on pane header menu edit button', () => {
+          expect(mappingProfileForm.isPresent).to.be.true;
+        });
+      });
+
+      describe('appears', () => {
+        beforeEach(async () => {
+          await mappingProfileDetails.editButton.click();
+        });
+
+        it('and form fields are pre-filled with current data', () => {
+          expect(mappingProfileForm.nameField.val).to.be.equal('Name 0');
+          expect(mappingProfileForm.incomingRecordTypeField.val).to.be.equal('MARC_BIBLIOGRAPHIC');
+          expect(mappingProfileForm.folioRecordTypeField.val).to.be.equal('INSTANCE');
+          expect(mappingProfileForm.descriptionField.val).to.be.equal('Description 0');
+        });
+
+        describe('associated action profiles', () => {
+          it('have associated action profile accordion', () => {
+            expect(mappingProfileForm.associatedActionProfilesAccordion.isPresent).to.be.true;
+          });
+
+          it('have list of associated action profiles', () => {
+            expect(mappingProfileForm.associatedActionProfiles.editList.isPresent).to.be.true;
+          });
+
+          it('it has correct length of items', () => {
+            expect(mappingProfileForm.associatedActionProfiles.editList.rowCount).to.be.equal(2);
+          });
+
+          describe('click unlink button', () => {
+            beforeEach(async () => {
+              await mappingProfileForm.associatedActionProfiles.unlinkButtons(0).click();
+            });
+
+            it('shows modal window', () => {
+              expect(mappingProfileForm.confirmEditModal.isPresent).to.be.true;
+            });
+
+            describe('click "Confirm"', () => {
+              beforeEach(async () => {
+                await mappingProfileForm.confirmEditModal.confirmButton.click();
+              });
+
+              it('modal window should be closed', () => {
+                expect(mappingProfileForm.confirmEditModal.isPresent).to.be.false;
+              });
+
+              it('associated action profiles list has no items', () => {
+                expect(mappingProfileForm.associatedActionProfiles.editList.rowCount).to.be.equal(1);
+              });
+            });
+
+            describe('click "Cancel"', () => {
+              beforeEach(async () => {
+                await mappingProfileForm.confirmEditModal.cancelButton.click();
+              });
+
+              it('modal window should be closed', () => {
+                expect(mappingProfileForm.confirmEditModal.isPresent).to.be.false;
+              });
+
+              it('associated action profiles list does not change', () => {
+                expect(mappingProfileForm.associatedActionProfiles.editList.rowCount).to.be.equal(2);
+              });
+            });
+          });
+        });
+      });
+    });
+
+    describe('edit mapping profile form', () => {
+      beforeEach(async () => {
+        await mappingProfiles.list.rows(0).click();
+        await mappingProfileDetails.editButton.click();
+      });
+
+      describe('when form is submitted', () => {
+        beforeEach(async () => {
+          await mappingProfileForm.nameField.fillAndBlur('Changed name');
+          await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC Holdings');
+          await mappingProfileForm.folioRecordTypeField.selectAndBlur('Invoice');
+          await mappingProfileForm.descriptionField.fillAndBlur('Changed description');
+          await mappingProfileForm.submitFormButton.click();
+        });
+
+        it('then mapping profile details renders updated mapping profile', () => {
+          expect(mappingProfileDetails.headline.text).to.equal('Changed name');
+          expect(mappingProfileDetails.incomingRecordType.text).to.equal('MARC Holdings');
+          expect(mappingProfileDetails.folioRecordType.text).to.equal('Invoice');
+          expect(mappingProfileDetails.description.text).to.equal('Changed description');
+        });
+      });
+
+      describe('is submitted and the response contains', () => {
+        describe('error message', () => {
+          beforeEach(async function () {
+            await setupFormSubmitErrorScenario('put', this.server, {
+              response: { errors: [{ message: 'mappingProfile.duplication.invalid' }] },
+              status: 422,
+            });
+          });
+
+          it('then error callout appears', () => {
+            expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          });
+        });
+
+        describe('network error', () => {
+          beforeEach(async function () {
+            await setupFormSubmitErrorScenario('put', this.server);
+          });
+
+          it('then error callout appears', () => {
+            expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          });
         });
       });
     });
@@ -97,89 +231,6 @@ describe('Mapping Profile View', () => {
 
       it('renders empty message', () => {
         expect(mappingProfileDetails.associatedActionProfiles.list.displaysEmptyMessage).to.be.true;
-      });
-    });
-  });
-
-  describe('edit mapping profile form', () => {
-    beforeEach(async () => {
-      await mappingProfiles.list.rows(0).click();
-    });
-
-    describe('appears', () => {
-      beforeEach(async () => {
-        await mappingProfileDetails.expandPaneHeaderDropdown();
-        await mappingProfileDetails.dropdownEditButton.click();
-      });
-
-      it('upon click on pane header menu edit button', () => {
-        expect(mappingProfileForm.isPresent).to.be.true;
-      });
-    });
-
-    describe('appears', () => {
-      beforeEach(async () => {
-        await mappingProfileDetails.editButton.click();
-      });
-
-      it('and form fields are pre-filled with current data', () => {
-        expect(mappingProfileForm.nameField.val).to.be.equal('Name 0');
-        expect(mappingProfileForm.incomingRecordTypeField.val).to.be.equal('MARC_BIBLIOGRAPHIC');
-        expect(mappingProfileForm.folioRecordTypeField.val).to.be.equal('INSTANCE');
-        expect(mappingProfileForm.descriptionField.val).to.be.equal('Description 0');
-      });
-
-      it('and does not have associated action profiles accordion', () => {
-        expect(mappingProfileForm.associatedActionProfilesAccordion.isPresent).to.be.false;
-      });
-    });
-  });
-
-  describe('edit mapping profile form', () => {
-    beforeEach(async () => {
-      await mappingProfiles.list.rows(0).click();
-      await mappingProfileDetails.editButton.click();
-    });
-
-    describe('when form is submitted', () => {
-      beforeEach(async () => {
-        await mappingProfileForm.nameField.fillAndBlur('Changed name');
-        await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC Holdings');
-        await mappingProfileForm.folioRecordTypeField.selectAndBlur('Invoice');
-        await mappingProfileForm.descriptionField.fillAndBlur('Changed description');
-        await mappingProfileForm.submitFormButton.click();
-      });
-
-      it('then mapping profile details renders updated mapping profile', () => {
-        expect(mappingProfileDetails.headline.text).to.equal('Changed name');
-        expect(mappingProfileDetails.incomingRecordType.text).to.equal('MARC Holdings');
-        expect(mappingProfileDetails.folioRecordType.text).to.equal('Invoice');
-        expect(mappingProfileDetails.description.text).to.equal('Changed description');
-      });
-    });
-
-    describe('is submitted and the response contains', () => {
-      describe('error message', () => {
-        beforeEach(async function () {
-          await setupFormSubmitErrorScenario('put', this.server, {
-            response: { errors: [{ message: 'mappingProfile.duplication.invalid' }] },
-            status: 422,
-          });
-        });
-
-        it('then error callout appears', () => {
-          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
-        });
-      });
-
-      describe('network error', () => {
-        beforeEach(async function () {
-          await setupFormSubmitErrorScenario('put', this.server);
-        });
-
-        it('then error callout appears', () => {
-          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
-        });
       });
     });
   });
