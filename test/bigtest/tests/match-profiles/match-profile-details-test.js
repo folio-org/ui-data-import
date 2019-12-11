@@ -112,7 +112,7 @@ describe('Match Profile View', () => {
 
       describe('when job profile name is clicked', () => {
         beforeEach(async () => {
-          await matchProfileDetails.associatedJobProfiles.jobProfilesLinks(0).click();
+          await matchProfileDetails.associatedJobProfiles.links(0).click();
         });
 
         it('redirects to job profile details', () => {
