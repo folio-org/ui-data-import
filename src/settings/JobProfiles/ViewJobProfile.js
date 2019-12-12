@@ -40,6 +40,7 @@ import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
+  PROFILE_LINKING_RULES,
 } from '../../utils/constants';
 import {
   createUrl,
@@ -52,6 +53,7 @@ import {
   EndOfItem,
   Preloader,
   Spinner,
+  ProfileTree,
 } from '../../components';
 
 import { UploadingJobsContext } from '../../components/UploadingJobsContextProvider';
@@ -59,6 +61,9 @@ import { UploadingJobsContext } from '../../components/UploadingJobsContextProvi
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
+
+// @TODO: Remove this during backend unmocking task implementation
+import { snapshotWrappers } from '../../../test/bigtest/mocks';
 
 @stripesConnect
 @injectIntl
@@ -68,6 +73,11 @@ export class ViewJobProfile extends Component {
     jobProfile: {
       type: 'okapi',
       path: 'data-import-profiles/jobProfiles/:{id}',
+      throwErrors: false,
+    },
+    childWrappers: {
+      type: 'okapi',
+      path: 'data-import-profiles/jobProfileSnapshots/:{id}',
       throwErrors: false,
     },
     jobsUsingThisProfile: {
@@ -103,16 +113,34 @@ export class ViewJobProfile extends Component {
           }),
         ),
       }),
+      childWrappers: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            profileId: PropTypes.string.isRequired,
+            contentType: PropTypes.string.isRequired,
+            content: PropTypes.shape({
+              id: PropTypes.string.isRequired,
+              name: PropTypes.string.isRequired,
+              description: PropTypes.string.isRequired,
+              tags: PropTypes.shape({ tagList: PropTypes.arrayOf(PropTypes.string) }),
+              match: PropTypes.string.isRequired,
+            }).isRequired,
+            description: PropTypes.string,
+          }),
+        ),
+      }),
       jobsUsingThisProfile: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(
           PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            dataType: PropTypes.string.isRequired,
+            name: PropTypes.string,
+            dataType: PropTypes.string,
             metadata: PropTypes.shape({
-              createdByUserId: PropTypes.string.isRequired,
-              updatedByUserId: PropTypes.string.isRequired,
-            }).isRequired,
+              createdByUserId: PropTypes.string,
+              updatedByUserId: PropTypes.string,
+            }),
             description: PropTypes.string,
           }),
         ),
@@ -123,7 +151,7 @@ export class ViewJobProfile extends Component {
         id: PropTypes.string,
       }).isRequired,
     }).isRequired,
-    location: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired || PropTypes.string.isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
@@ -164,8 +192,19 @@ export class ViewJobProfile extends Component {
     const [record] = jobProfile.records || [];
 
     return {
-      hasLoaded: jobProfile.hasLoaded,
       record,
+      hasLoaded: jobProfile.hasLoaded,
+    };
+  }
+
+  get ProfileChildWrappers() {
+    const { resources } = this.props;
+
+    const childWrappers = resources.childWrappers || snapshotWrappers;
+
+    return {
+      childWrappers,
+      hasLoaded: childWrappers.hasLoaded,
     };
   }
 
@@ -180,6 +219,9 @@ export class ViewJobProfile extends Component {
       jobsUsingThisProfileData,
     };
   }
+
+  // @TODO: Remove this during backend unmocking task implementation
+  getCurrentWrapper = record => snapshotWrappers.find(item => item.id === record.id);
 
   showDeleteConfirmation = () => {
     this.setState({ showDeleteConfirmation: true });
@@ -396,7 +438,11 @@ export class ViewJobProfile extends Component {
             </div>
           )}
           <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}>
-            <div style={{ height: 60 }}>{/* will be implemented in UIDATIMP-152 */}</div>
+            <ProfileTree
+              record={record}
+              linkingRules={PROFILE_LINKING_RULES}
+              contentData={get(this.getCurrentWrapper(record), 'childSnapshotWrappers', [])}
+            />
           </Accordion>
           <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.jobsUsingThisProfile" />}>
             {jobsUsingThisProfileDataHasLoaded

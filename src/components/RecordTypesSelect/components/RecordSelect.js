@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
 
-import { LineBetween } from '../../LineBetween';
+import { TreeLine } from '../../TreeLine';
 import { TreeView } from '../../TreeView';
 import { RecordItem } from './RecordItem';
 import { FOLIO_RECORD_TYPES } from '../../ListTemplate';
@@ -59,7 +59,7 @@ export const RecordSelect = ({
       )}
     />
     {treeData.connections.map(element => (
-      <LineBetween
+      <TreeLine
         key={element}
         from={element}
         to={treeData.connections[0]}

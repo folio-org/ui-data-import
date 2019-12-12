@@ -3,6 +3,7 @@
  *
  * Assumptions and simplifications made for this POC:
  *
+ * @type {*[]}
  */
 export const formConfigSamples = [{
   id: 'form-match-profiles',

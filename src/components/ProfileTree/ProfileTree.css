@@ -1,0 +1,53 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.linker-caption {}
+.linker-button {
+  & [class|=button] {
+    margin: 0;
+    padding: 0 3px;
+  }
+}
+.profile-label {
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+  height: 35px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  & .record-container {padding: 7px;}
+  & .buttons-container {
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    padding: 4px 7px;
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    & button {height:25px;}
+  }
+}
+.profile-branch {
+  position: relative;
+  &:not(:last-child) {margin-bottom: 10px;}
+  & .branch-container {
+    margin: 10px 0 10px 35px;
+    & [class|=accordion] {
+      &:not(:last-child) {margin-bottom: 10px;}
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+    & [aria-expanded|=true] {border-bottom: 1px solid rgba(0, 0, 0, 0.2);}
+    & [class|=defaultCollapseButton] {
+      padding: 5px 10px;
+      font-size: 1rem;
+    }
+    & [class|=content] {
+      margin: 0;
+      padding: 10px;
+    }
+    & .branch-tree-container {margin-bottom: 10px;}
+  }
+}
+.profile-tree {
+  & [class|=overlay] {transform: translate3d(0, 24px, 0px)!important;}
+  & [class|=DropdownMenu] {min-width: 20vw;}
+  & .profile-tree-container {margin-bottom: 10px;}
+}
