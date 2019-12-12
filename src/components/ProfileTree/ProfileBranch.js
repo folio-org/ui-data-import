@@ -1,6 +1,7 @@
 import React, {
   memo,
   useState,
+  useEffect,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -36,6 +37,8 @@ export const ProfileBranch = memo(({
   const childrenSectionAllowed = childrenAllowed.findIndex(item => item === entityKey) >= 0;
 
   const [currentType, setCurrentType] = useState(null);
+  const [matchSectionOpen, setMatchSectionOpen] = useState(true);
+  const [nonMatchSectionOpen, setNonMatchSectionOpen] = useState(true);
   const [matchData, setMatchData] = useState(contentData);
   const [nonMatchData, setNonMatchData] = useState(contentData);
 
@@ -80,6 +83,8 @@ export const ProfileBranch = memo(({
             id={matchSectionId}
             label={<FormattedMessage id="ui-data-import.settings.profiles.linking.forMatches" />}
             separator={false}
+            open={matchSectionOpen}
+            onToggle={() => setMatchSectionOpen(!matchSectionOpen)}
           >
             <div className={css['branch-tree-container']}>
               {matchData && matchData.length ?
@@ -104,7 +109,7 @@ export const ProfileBranch = memo(({
             </div>
             <TreeLine
               from={`#branch-${record ? 'editable' : 'static'}-${recordData.id}`}
-              to={`#${matchSectionId}`}
+              to={`#${matchSectionId} > :first-child`}
               container={`#${containerId}`}
               fromAnchor="left bottom"
               toAnchor="left"
@@ -124,6 +129,8 @@ export const ProfileBranch = memo(({
             id={nonMatchSectionId}
             label={<FormattedMessage id="ui-data-import.settings.profiles.linking.forNonMatches" />}
             separator={false}
+            open={nonMatchSectionOpen}
+            onToggle={() => setNonMatchSectionOpen(!nonMatchSectionOpen)}
           >
             <div className={css['branch-tree-container']}>
               {nonMatchData && nonMatchData.length ?
@@ -148,7 +155,7 @@ export const ProfileBranch = memo(({
             </div>
             <TreeLine
               from={`#branch-${record ? 'editable' : 'static'}-${recordData.id}`}
-              to={`#${nonMatchSectionId}`}
+              to={`#${nonMatchSectionId} > :first-child`}
               container={`#${containerId}`}
               fromAnchor="left bottom"
               toAnchor="left"
