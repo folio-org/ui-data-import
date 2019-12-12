@@ -28,7 +28,7 @@ export const MappedColumn = memo(({
             iconKey={FOLIO_RECORD_TYPES[folioRecord].iconKey}
           >
             <HighLight
-              search={searchTerm}
+              search={searchTerm || ''}
               className={sharedCss.container}
             >
               {formatMessage({ id: FOLIO_RECORD_TYPES[folioRecord].captionId })}

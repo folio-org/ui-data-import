@@ -19,7 +19,7 @@ export const DefaultColumn = memo(({
   const content = searchTerm
     ? (
       <HighLight
-        search={searchTerm}
+        search={searchTerm || ''}
         className={sharedCss.container}
       >
         {value}

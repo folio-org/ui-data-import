@@ -1,11 +1,15 @@
-import React, { memo } from 'react';
+import React, {
+  memo,
+  useState,
+} from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
-  Layout,
-  Icon,
-} from '@folio/stripes/components';
+  camelCase,
+  snakeCase,
+} from 'lodash';
+import classNames from 'classnames';
 
 import {
   ProfileBranch,
@@ -15,22 +19,60 @@ import {
 import css from './ProfileTree.css';
 
 export const ProfileTree = memo(({
+  record,
   contentData,
   linkingRules,
-  record,
   className,
   dataAttributes,
 }) => {
-  const onLink = profiles => {
+  const [currentType, setCurrentType] = useState(null);
+  const [data, setData] = useState(contentData);
 
+  const getLines = (lines, reactTo) => lines.map(item => ({
+    id: item.id,
+    contentType: snakeCase(currentType).slice(0, -1).toLocaleUpperCase(),
+    reactTo,
+    content: item,
+    childSnapshotWrappers: [],
+  }));
+
+  const onLink = lines => {
+    const newData = [...data, ...getLines(lines)];
+
+    setData(newData);
   };
 
   return (
-    <div className={className}>
-      <ProfileLinker
-        linkingRules={linkingRules}
-        onLinkCallback={onLink}
-      />
+    <div className={classNames(css['profile-tree'], className)}>
+      <div className={css['profile-tree-container']}>
+        {data && data.length ? (
+          data.map(item => (
+            <ProfileBranch
+              key={`profile-branch-${item.id}`}
+              entityKey={`${camelCase(item.contentType)}s`}
+              recordData={item.content}
+              contentData={item.childSnapshotWrappers}
+              record={record}
+              linkingRules={linkingRules}
+            />
+          ))
+        ) : (
+          <div>
+            <FormattedMessage
+              id="ui-data-import.emptyMessage"
+              values={{ type: <FormattedMessage id="ui-data-import.list" /> }}
+            />
+          </div>
+        )}
+      </div>
+      {!record && (
+        <ProfileLinker
+          linkingRules={linkingRules}
+          onTypeSelected={setCurrentType}
+          onLinkCallback={onLink}
+          {...dataAttributes}
+        />
+      )}
     </div>
   );
 });

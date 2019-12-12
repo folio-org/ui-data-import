@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
-import { identity } from 'lodash';
+import {
+  get,
+  identity,
+} from 'lodash';
 
 import {
   Headline,
@@ -15,9 +18,15 @@ import {
 import stripesForm from '@folio/stripes/form';
 
 import { validateRequiredField } from '../../utils';
-import { DATA_TYPES } from '../../utils/constants';
+import {
+  DATA_TYPES,
+  PROFILE_LINKING_RULES,
+} from '../../utils/constants';
 import { FullScreenForm } from '../../components/FullScreenForm';
 import { ProfileTree } from '../../components/ProfileTree';
+
+// @TODO: Remove this during backend unmocking task implementation
+import { snapshotWrappers } from '../../../test/bigtest/mocks';
 
 const formName = 'jobProfilesForm';
 const dataTypes = DATA_TYPES.map(dataType => ({
@@ -34,6 +43,8 @@ export const JobProfilesFormComponent = ({
 }) => {
   const isEditMode = Boolean(initialValues.id);
   const isSubmitDisabled = pristine || submitting;
+  // @TODO: Remove this during backend unmocking task implementation
+  const currentWrapper = snapshotWrappers.find(item => item.id === initialValues.id);
 
   const paneTitle = isEditMode
     ? (
@@ -104,12 +115,10 @@ export const JobProfilesFormComponent = ({
           label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
           separator={false}
         >
-          <div>
-            <ProfileTree
-              linkingRules={{}}
-              contentData={[]}
-            />
-          </div>
+          <ProfileTree
+            linkingRules={PROFILE_LINKING_RULES}
+            contentData={get(currentWrapper, 'childSnapshotWrappers', [])}
+          />
         </Accordion>
       </AccordionSet>
     </FullScreenForm>

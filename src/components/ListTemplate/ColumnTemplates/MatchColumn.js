@@ -51,21 +51,21 @@ export const MatchColumn = memo(({
             {document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT && (
               <Fragment>
                 <HighLight
-                  search={searchTerm}
+                  search={searchTerm || ''}
                   className={sharedCss.container}
                 >
                   {formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
                 </HighLight>
                 &nbsp;&middot;&nbsp;
                 <HighLight
-                  search={searchTerm}
+                  search={searchTerm || ''}
                   className={sharedCss.container}
                 >
                   {capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
                 </HighLight>
                 &nbsp;&rarr;&nbsp;
                 <HighLight
-                  search={searchTerm}
+                  search={searchTerm || ''}
                   className={sharedCss.container}
                 >
                   {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
@@ -75,21 +75,21 @@ export const MatchColumn = memo(({
             {document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT && (
               <Fragment>
                 <HighLight
-                  search={searchTerm}
+                  search={searchTerm || ''}
                   className={sharedCss.container}
                 >
                   {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
                 </HighLight>
                 &nbsp;&larr;&nbsp;
                 <HighLight
-                  search={searchTerm}
+                  search={searchTerm || ''}
                   className={sharedCss.container}
                 >
                   {capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
                 </HighLight>
                 &nbsp;&middot;&nbsp;
                 <HighLight
-                  search={searchTerm}
+                  search={searchTerm || ''}
                   className={sharedCss.container}
                 >
                   {formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { noop } from 'lodash';
 
-import { LineBetween } from '../LineBetween';
+import { TreeLine } from '../TreeLine';
 
 import css from './TreeView.css';
 
@@ -37,7 +37,7 @@ export const TreeView = ({
           >
             {renderItem(item)}
             {parent && (
-              <LineBetween
+              <TreeLine
                 from={parent}
                 to={itemSelector}
                 container={container}

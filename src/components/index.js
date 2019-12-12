@@ -20,6 +20,7 @@ export * from './UploadingJobsContextProvider';
 export * from './UploadingJobsDisplay';
 export * from './ExceptionModal';
 export * from './TreeView';
+export * from './TreeLine';
 export * from './RecordTypesSelect';
 export * from './Section';
 export * from './FolioRecordTypeSelect';
