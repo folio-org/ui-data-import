@@ -10,6 +10,8 @@ import ConfirmationModalInteractor from '@folio/stripes-components/lib/Confirmat
 import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tests/interactor';
 
 import { FullScreenFormInteractor } from '../full-screen-form';
+import { AssociatedJobProfiles } from '../associated-job-profiles';
+import { AssociatedMappingProfiles } from '../associated-mapping-profiles';
 
 @interactor
 class ActionFieldInteractor {
@@ -29,7 +31,10 @@ class ActionProfileFormInteractor extends FullScreenFormInteractor {
   actionField = new ActionFieldInteractor();
   folioRecordTypeField = new FolioRecordTypeFieldInteractor();
   associatedMappingProfileAccordion = new AccordionInteractor('#actionProfileFormAssociatedMappingProfileAccordion');
+  associatedJobProfilesAccordion = new AccordionInteractor('#actionProfileFormAssociatedJobProfileAccordion');
   confirmEditModal = new ConfirmationModalInteractor('#confirm-edit-action-profile-modal');
+  associatedJobProfiles = new AssociatedJobProfiles('[data-test-full-screen-form] #associated-jobProfiles-list');
+  associatedMappingProfile = new AssociatedMappingProfiles('[data-test-full-screen-form] #associated-mappingProfiles-list');
 }
 
 export const actionProfileForm = new ActionProfileFormInteractor('[data-test-full-screen-form]');

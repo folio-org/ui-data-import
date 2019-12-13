@@ -28,7 +28,7 @@ import {
 import {
   withStripes,
   stripesShape,
-} from '@folio/stripes-core';
+} from '@folio/stripes/core';
 import {
   mapNsKeys,
   getNsKey,
@@ -59,7 +59,7 @@ export class SearchAndSort extends Component {
     location: PropTypes.shape({ // provided by withRouter
       pathname: PropTypes.string.isRequired,
       search: PropTypes.string.isRequired,
-    }).isRequired,
+    }).isRequired || PropTypes.string.isRequired,
     history: PropTypes.shape({ // provided by withRouter
       push: PropTypes.func.isRequired,
     }).isRequired,

@@ -3,6 +3,7 @@
  *
  * Assumptions and simplifications made for this POC:
  *
+ * @type {*[]}
  */
 export const formConfigSamples = [{
   id: 'form-match-profiles',
@@ -161,7 +162,7 @@ export const formConfigSamples = [{
                     id: 'criterion1-incoming.qualifier.term',
                     name: 'matchDetails[0].incomingMatchExpression.qualifier.qualifierType',
                     component: 'Select',
-                    placeholder: '',
+                    placeholder: 'Select qualifier type',
                     dataOptions: [{
                       value: 'BEGINS_WITH',
                       label: 'ui-data-import.match.qualifier.begins-with',
@@ -199,7 +200,7 @@ export const formConfigSamples = [{
                     name: 'matchDetails[0].incomingMatchExpression.qualifier.comparisonPart',
                     label: '',
                     component: 'Select',
-                    placeholder: '',
+                    placeholder: 'Select comparison type',
                     dataOptions: [{
                       value: 'NUMERICS_ONLY',
                       label: 'ui-data-import.match.comparison-part.numerics-only',
@@ -296,7 +297,7 @@ export const formConfigSamples = [{
                     name: 'matchDetails[0].existingMatchExpression.qualifier.qualifierType',
                     label: '',
                     component: 'Select',
-                    placeholder: '',
+                    placeholder: 'Select qualifier type',
                     dataOptions: [{
                       value: 'BEGINS_WITH',
                       label: 'ui-data-import.match.qualifier.begins-with',
@@ -335,7 +336,7 @@ export const formConfigSamples = [{
                     name: 'matchDetails[0].existingMatchExpression.qualifier.comparisonPart',
                     label: '',
                     component: 'Select',
-                    placeholder: '',
+                    placeholder: 'Select comparison type',
                     dataOptions: [{
                       value: 'NUMERICS_ONLY',
                       label: 'ui-data-import.match.comparison-part.numerics-only',

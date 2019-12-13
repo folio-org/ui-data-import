@@ -27,7 +27,7 @@ const ORIENTATIONS = {
 };
 const zIndex = -1;
 
-export const LineBetween = props => {
+export const TreeLine = props => {
   const {
     from,
     to,
@@ -38,8 +38,8 @@ export const LineBetween = props => {
     toAnchorOffset = '',
     orientation = ORIENTATIONS.VERTICAL,
   } = props;
-  const [fromElement, setFromElement] = useState();
-  const [toElement, setToElement] = useState();
+  const [fromElement, setFromElement] = useState(undefined);
+  const [toElement, setToElement] = useState(undefined);
 
   useEffect(() => {
     setFromElement(getElement(from, container));
@@ -208,7 +208,7 @@ export const LineBetween = props => {
   );
 };
 
-LineBetween.propTypes = {
+TreeLine.propTypes = {
   from: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Element)]).isRequired,
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Element)]).isRequired,
   container: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Element)]),

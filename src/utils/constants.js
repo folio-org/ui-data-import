@@ -193,3 +193,26 @@ export const FORMS_SETTINGS = {
     },
   },
 };
+
+export const PROFILE_LINKING_RULES = {
+  allowDelete: true,
+  deleteRecursive: false,
+  allowUnlink: true,
+  unlinkRecursive: false,
+  profilesAllowed: [
+    ENTITY_KEYS.MATCH_PROFILES,
+    ENTITY_KEYS.ACTION_PROFILES,
+  ],
+  columnsAllowed: {
+    [ENTITY_KEYS.MATCH_PROFILES]: [
+      'name',
+      'match',
+    ],
+    [ENTITY_KEYS.ACTION_PROFILES]: [
+      'name',
+      'action',
+      'mapping',
+    ],
+  },
+  childrenAllowed: [ENTITY_KEYS.MATCH_PROFILES],
+};

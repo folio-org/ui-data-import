@@ -1,7 +1,4 @@
-import React, {
-  memo,
-  Fragment,
-} from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import { menuTemplate } from './menuTemplate';
@@ -14,9 +11,9 @@ export const ActionMenu = memo(({
   const templates = menuTemplate(entity, menu);
 
   return (
-    <Fragment>
+    <React.Fragment>
       {Array.isArray(items) && items.map((item, i) => templates[item](`list-menu-item-${i}`))}
-    </Fragment>
+    </React.Fragment>
   );
 });
 

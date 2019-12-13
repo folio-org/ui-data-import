@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { AppIcon } from '@folio/stripes-core';
+import { AppIcon } from '@folio/stripes/core';
 
 export const generateSettingsLabel = (labelId, iconKey) => (
   <AppIcon

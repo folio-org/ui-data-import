@@ -35,7 +35,7 @@ export const ActionColumn = memo(({
       {intl => {
         const label = (
           <HighLight
-            search={searchTerm}
+            search={searchTerm || ''}
             className={sharedCss.container}
           >
             {createLabel(intl)}

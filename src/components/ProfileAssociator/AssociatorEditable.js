@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
 
-import { Pluggable } from '@folio/stripes-core';
+import { Pluggable } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
 
 import { useCheckboxList } from '../../utils';
@@ -120,7 +120,7 @@ AssociatorEditable.propTypes = {
   entityKey: PropTypes.string.isRequired,
   nsSort: PropTypes.string.isRequired,
   nsQuery: PropTypes.string.isRequired,
-  initialQuery: PropTypes.string.isRequired,
+  initialQuery: PropTypes.object.isRequired,
   query: PropTypes.object.isRequired,
   contentData: PropTypes.arrayOf(PropTypes.object),
   isMultiSelect: PropTypes.bool,

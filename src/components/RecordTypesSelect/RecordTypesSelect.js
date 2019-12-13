@@ -15,7 +15,7 @@ import { FOLIO_RECORD_TYPES } from '../ListTemplate';
 const useForceUpdate = () => useState()[1];
 
 const useUpdateOnResize = () => {
-  // forceUpdate is used to re-render elements that are depending on DOM such as LineBetween
+  // forceUpdate is used to re-render elements that are depending on DOM such as TreeLine
   const forceUpdate = useForceUpdate();
 
   useEffect(() => {

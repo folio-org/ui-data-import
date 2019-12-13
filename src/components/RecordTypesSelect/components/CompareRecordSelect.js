@@ -20,7 +20,7 @@ import {
 import { Triangle } from './Triangle';
 import { RecordItem } from './RecordItem';
 import { RecordSelect } from './RecordSelect';
-import { getElement } from '../../LineBetween/utils';
+import { getElement } from '../../TreeLine/utils';
 
 import css from '../RecordTypesSelect.css';
 

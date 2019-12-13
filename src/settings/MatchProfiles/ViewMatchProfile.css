@@ -34,7 +34,9 @@
   composes: existing from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
 }
 
-.field {
+.field,
+.qualifier,
+.part {
   composes: field from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
 }
 

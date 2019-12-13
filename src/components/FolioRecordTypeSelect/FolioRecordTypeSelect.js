@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { identity } from 'lodash';
 
-import { Select } from '@folio/stripes-components';
+import { Select } from '@folio/stripes/components';
 import { validateRequiredField } from '../../utils';
 
 export const FolioRecordTypeSelect = ({ dataOptions }) => (

@@ -99,6 +99,29 @@ describe('Action Profile View', () => {
     });
   });
 
+  describe('associated job profiles', () => {
+    describe('when there are associated profiles', () => {
+      beforeEach(async function () {
+        await actionProfiles.list.rows(0).click();
+      });
+
+      it('renders job profiles', () => {
+        expect(actionProfileDetails.associatedJobProfiles.list.rowCount).to.be.equal(3);
+      });
+    });
+
+    describe('when there are no associated profiles', () => {
+      beforeEach(async function () {
+        this.server.get('/data-import-profiles/profileAssociations/:id/masters', noAssociatedJobProfiles);
+        await actionProfiles.list.rows(0).click();
+      });
+
+      it('renders empty message', () => {
+        expect(actionProfileDetails.associatedJobProfiles.list.displaysEmptyMessage).to.be.true;
+      }).timeout(5000);
+    });
+  });
+
   describe('details pane', () => {
     beforeEach(async () => {
       await actionProfiles.list.rows(0).click();
@@ -124,7 +147,7 @@ describe('Action Profile View', () => {
       describe('when mapping profile is clicked', () => {
         beforeEach(async function () {
           this.server.get('/data-import-profiles/profileAssociations/:id/masters', {});
-          await actionProfileDetails.associatedMappingProfile.mappingProfilesLinks(0).click();
+          await actionProfileDetails.associatedMappingProfile.links(0).click();
         });
 
         it('redirects to mapping profile details', () => {
@@ -188,7 +211,7 @@ describe('Action Profile View', () => {
 
       describe('when job profile name is clicked', () => {
         beforeEach(async () => {
-          await actionProfileDetails.associatedJobProfiles.jobProfilesLinks(0).click();
+          await actionProfileDetails.associatedJobProfiles.links(0).click();
         });
 
         it('redirects to job profile details', () => {
@@ -225,11 +248,109 @@ describe('Action Profile View', () => {
           expect(actionProfileForm.folioRecordTypeField.select.val).to.be.equal('ORDER');
         });
 
-        /*
-        it('and does not have associated mapping profile accordion', () => {
-          expect(actionProfileForm.associatedMappingProfileAccordion.isPresent).to.be.false;
+        describe('associated mapping profiles', () => {
+          it('have associated mapping profile accordion', () => {
+            expect(actionProfileForm.associatedMappingProfileAccordion.isPresent).to.be.true;
+          });
+
+          it('have list of associated mapping profiles', () => {
+            expect(actionProfileForm.associatedMappingProfile.editList.isPresent).to.be.true;
+          });
+
+          it('it has correct length of items', () => {
+            expect(actionProfileForm.associatedMappingProfile.editList.rowCount).to.be.equal(1);
+          });
+
+          describe('click unlink button', () => {
+            beforeEach(async () => {
+              await actionProfileForm.associatedMappingProfile.unlinkButtons(0).click();
+            });
+
+            it('shows modal window', () => {
+              expect(actionProfileForm.confirmEditModal.isPresent).to.be.true;
+            });
+
+            describe('click "Confirm"', () => {
+              beforeEach(async () => {
+                await actionProfileForm.confirmEditModal.confirmButton.click();
+              });
+
+              it('modal window should be closed', () => {
+                expect(actionProfileForm.confirmEditModal.isPresent).to.be.false;
+              });
+
+              it('associated mapping profiles list has no items', () => {
+                expect(actionProfileForm.associatedMappingProfile.editList.isPresent).to.be.false;
+              });
+            });
+
+            describe('click "Cancel"', () => {
+              beforeEach(async () => {
+                await actionProfileForm.confirmEditModal.cancelButton.click();
+              });
+
+              it('modal window should be closed', () => {
+                expect(actionProfileForm.confirmEditModal.isPresent).to.be.false;
+              });
+
+              it('associated mapping profiles list does not change', () => {
+                expect(actionProfileForm.associatedMappingProfile.editList.rowCount).to.be.equal(1);
+              });
+            });
+          });
         });
-        */
+
+        describe('associated job profiles', () => {
+          it('have associated job profiles accordion', () => {
+            expect(actionProfileForm.associatedJobProfilesAccordion.isPresent).to.be.true;
+          });
+
+          it('have list of associated jop profiles', () => {
+            expect(actionProfileForm.associatedJobProfiles.editList.isPresent).to.be.true;
+          });
+
+          it('it has correct length of items', () => {
+            expect(actionProfileForm.associatedJobProfiles.editList.rowCount).to.be.equal(3);
+          });
+
+          describe('click unlink button', () => {
+            beforeEach(async () => {
+              await actionProfileForm.associatedJobProfiles.unlinkButtons(0).click();
+            });
+
+            it('shows modal window', () => {
+              expect(actionProfileForm.confirmEditModal.isPresent).to.be.true;
+            });
+
+            describe('click "Confirm"', () => {
+              beforeEach(async () => {
+                await actionProfileForm.confirmEditModal.confirmButton.click();
+              });
+
+              it('modal window should be closed', () => {
+                expect(actionProfileForm.confirmEditModal.isPresent).to.be.false;
+              });
+
+              it('associated job profiles list has 2 items', () => {
+                expect(actionProfileForm.associatedJobProfiles.editList.rowCount).to.be.equal(2);
+              });
+            });
+
+            describe('click "Cancel"', () => {
+              beforeEach(async () => {
+                await actionProfileForm.confirmEditModal.cancelButton.click();
+              });
+
+              it('modal window should be closed', () => {
+                expect(actionProfileForm.confirmEditModal.isPresent).to.be.false;
+              });
+
+              it('associated job profiles list does not change', () => {
+                expect(actionProfileForm.associatedJobProfiles.editList.rowCount).to.be.equal(3);
+              });
+            });
+          });
+        });
 
         it('upon click on edit button', () => {
           expect(actionProfileForm.isPresent).to.be.true;
