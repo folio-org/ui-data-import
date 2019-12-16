@@ -6,6 +6,7 @@ import React, {
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
+import { noop } from 'lodash';
 import classNames from 'classnames';
 
 import {
@@ -23,6 +24,8 @@ export const ProfileLabel = memo(({
   linkingRules,
   record,
   className,
+  onUnlink,
+  onDelete,
   dataAttributes,
 }) => {
   const {
@@ -39,10 +42,12 @@ export const ProfileLabel = memo(({
 
   const handleUnlink = recordId => {
     setUnlinkConfirmationOpen(false);
+    onUnlink(recordId);
   };
 
   const handleDelete = recordId => {
     setDeleteConfirmationOpen(false);
+    onDelete(recordId);
   };
 
   return (
@@ -129,6 +134,8 @@ ProfileLabel.propTypes = {
   linkingRules: PropTypes.object.isRequired,
   record: PropTypes.object,
   className: PropTypes.string,
+  onUnlink: PropTypes.func,
+  onDelete: PropTypes.func,
   dataAttributes: PropTypes.object,
 };
 
@@ -136,4 +143,6 @@ ProfileLabel.defaultProps = {
   record: null,
   className: null,
   dataAttributes: null,
+  onUnlink: noop,
+  onDelete: noop,
 };

@@ -13,6 +13,7 @@ import { Button } from '@folio/stripes-components';
 import css from './ProfileTree.css';
 
 export const LinkerButton = memo(({
+  id,
   entityKey,
   searchLabel,
   className,
@@ -22,7 +23,7 @@ export const LinkerButton = memo(({
 }) => (
   <Pluggable
     type="find-import-profile"
-    id="clickable-find-import-profile"
+    id={`${id}-clickable-find-import-profile`}
     addLines={onLinkCallback}
     entityKey={entityKey}
     dataKey={entityKey}
@@ -34,31 +35,38 @@ export const LinkerButton = memo(({
       ref,
       onClick,
       ...rest
-    }) => (
-      <Button
-        aria-haspopup="true"
-        buttonRef={ref}
-        buttonStyle="dropdownItem"
-        id="clickable-find-import-profile"
-        buttonClass={classNames(css['linker-button'], className)}
-        marginTop0
-        marginBottom0
-        data-test-plugin-find-record-button
-        {...rest}
-        onClick={() => {
-          onClick();
-          onTypeSelected(entityKey);
-        }}
-      >
-        <AppIcon
-          size="small"
-          app="data-import"
-          iconKey={entityKey}
+    }) => {
+      const restOptions = {
+        ...rest,
+        id: `${id}-find-record-trigger`,
+      };
+
+      return (
+        <Button
+          aria-haspopup="true"
+          buttonRef={ref}
+          buttonStyle="dropdownItem"
+          id={`${id}-button-find-import-profile`}
+          buttonClass={classNames(css['linker-button'], className)}
+          marginTop0
+          marginBottom0
+          data-test-plugin-find-record-button
+          {...restOptions}
+          onClick={() => {
+            onClick();
+            onTypeSelected(entityKey);
+          }}
         >
-          {searchLabel || <FormattedMessage id={`ui-data-import.settings.profiles.select.${entityKey}`} />}
-        </AppIcon>
-      </Button>
-    )}
+          <AppIcon
+            size="small"
+            app="data-import"
+            iconKey={entityKey}
+          >
+            {searchLabel || <FormattedMessage id={`ui-data-import.settings.profiles.select.${entityKey}`} />}
+          </AppIcon>
+        </Button>
+      );
+    }}
   >
     <span data-test-no-plugin-available>
       <FormattedMessage id="ui-data-import.find-import-profile-plugin-unavailable" />
@@ -67,6 +75,7 @@ export const LinkerButton = memo(({
 ));
 
 LinkerButton.propTypes = {
+  id: PropTypes.string.isRequired,
   entityKey: PropTypes.string.isRequired,
   onTypeSelected: PropTypes.func.isRequired,
   onLinkCallback: PropTypes.func.isRequired,

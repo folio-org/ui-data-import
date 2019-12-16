@@ -1,12 +1,12 @@
 import React, {
   memo,
   useState,
-  useEffect,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
+  noop,
   camelCase,
   snakeCase,
 } from 'lodash';
@@ -30,17 +30,33 @@ export const ProfileBranch = memo(({
   linkingRules,
   record,
   className,
+  onChange,
+  onLink,
+  onUnlink,
   dataAttributes,
 }) => {
   const { childrenAllowed } = linkingRules;
 
   const childrenSectionAllowed = childrenAllowed.findIndex(item => item === entityKey) >= 0;
+  const sectionKey = `jobProfiles.${record ? record.id : 'current'}.${recordData ? recordData.id : 'root'}`;
+
+  const getSectionStatus = section => {
+    const res = JSON.parse(sessionStorage.getItem(`${sectionKey}.sectionStatus.${section}`));
+
+    return res === null || res === true;
+  };
+
+  const getSectionData = section => {
+    const res = JSON.parse(sessionStorage.getItem(`${sectionKey}.data.${section}`));
+
+    return res || contentData;
+  };
 
   const [currentType, setCurrentType] = useState(null);
-  const [matchSectionOpen, setMatchSectionOpen] = useState(true);
-  const [nonMatchSectionOpen, setNonMatchSectionOpen] = useState(true);
-  const [matchData, setMatchData] = useState(contentData);
-  const [nonMatchData, setNonMatchData] = useState(contentData);
+  const [matchSectionOpen, setMatchSectionOpen] = useState(getSectionStatus('match'));
+  const [nonMatchSectionOpen, setNonMatchSectionOpen] = useState(getSectionStatus('nonMatch'));
+  const [matchData, setMatchData] = useState(getSectionData('match'));
+  const [nonMatchData, setNonMatchData] = useState(getSectionData('nonMatch'));
 
   const getLines = (lines, reactTo) => lines.map(item => ({
     id: item.id,
@@ -50,16 +66,46 @@ export const ProfileBranch = memo(({
     childSnapshotWrappers: [],
   }));
 
+  const handleToggle = (section, togglerValue, togglerSetter) => {
+    sessionStorage.setItem(`${sectionKey}.sectionStatus.${section}`, JSON.stringify(!togglerValue));
+    togglerSetter(!togglerValue);
+    onChange(prev => prev + 1);
+  };
+
   const onMatchLink = lines => {
     const newData = [...matchData, ...getLines(lines, 'MATCH')];
 
+    sessionStorage.setItem(`${sectionKey}.data.match`, JSON.stringify(newData));
     setMatchData(newData);
+    onLink();
+  };
+
+  const onMatchUnlink = recordId => {
+    const index = matchData.findIndex(item => item.id === recordId);
+    const newData = matchData;
+
+    newData.splice(index, 0);
+    sessionStorage.setItem(`${sectionKey}.data.match`, JSON.stringify(newData));
+    setMatchData(newData);
+    onUnlink();
   };
 
   const onNonMatchLink = lines => {
     const newData = [...nonMatchData, ...getLines(lines, 'NON_MATCH')];
 
+    sessionStorage.setItem(`${sectionKey}.data.nonMatch`, JSON.stringify(newData));
     setNonMatchData(newData);
+    onLink();
+  };
+
+  const onNonMatchUnlink = recordId => {
+    const index = nonMatchData.findIndex(item => item.id === recordId);
+    const newData = nonMatchData;
+
+    newData.splice(index, 0);
+    sessionStorage.setItem(`${sectionKey}.data.nonMatch`, JSON.stringify(newData));
+    setNonMatchData(newData);
+    onUnlink();
   };
 
   const containerId = `container-${record ? 'editable' : 'static'}-${recordData.id}`;
@@ -76,6 +122,8 @@ export const ProfileBranch = memo(({
         recordData={recordData}
         record={record}
         linkingRules={linkingRules}
+        onUnlink={noop}
+        onDelete={noop}
       />
       {childrenSectionAllowed && (
         <div className={css['branch-container']}>
@@ -84,7 +132,7 @@ export const ProfileBranch = memo(({
             label={<FormattedMessage id="ui-data-import.settings.profiles.linking.forMatches" />}
             separator={false}
             open={matchSectionOpen}
-            onToggle={() => setMatchSectionOpen(!matchSectionOpen)}
+            onToggle={() => handleToggle('match', matchSectionOpen, setMatchSectionOpen)}
           >
             <div className={css['branch-tree-container']}>
               {matchData && matchData.length ?
@@ -96,6 +144,9 @@ export const ProfileBranch = memo(({
                     contentData={item.childSnapshotWrappers}
                     record={record}
                     linkingRules={linkingRules}
+                    onChange={onChange}
+                    onLink={onLink}
+                    onUnlink={onUnlink}
                   />
                 )) : (
                   <div>
@@ -118,6 +169,7 @@ export const ProfileBranch = memo(({
             />
             {!record && (
               <ProfileLinker
+                id={`${recordData.id}-match`}
                 linkingRules={linkingRules}
                 onTypeSelected={setCurrentType}
                 onLinkCallback={onMatchLink}
@@ -130,7 +182,7 @@ export const ProfileBranch = memo(({
             label={<FormattedMessage id="ui-data-import.settings.profiles.linking.forNonMatches" />}
             separator={false}
             open={nonMatchSectionOpen}
-            onToggle={() => setNonMatchSectionOpen(!nonMatchSectionOpen)}
+            onToggle={() => handleToggle('nonMatch', nonMatchSectionOpen, setNonMatchSectionOpen)}
           >
             <div className={css['branch-tree-container']}>
               {nonMatchData && nonMatchData.length ?
@@ -142,6 +194,9 @@ export const ProfileBranch = memo(({
                     contentData={item.childSnapshotWrappers}
                     record={record}
                     linkingRules={linkingRules}
+                    onChange={onChange}
+                    onLink={onLink}
+                    onUnlink={onUnlink}
                   />
                 )) : (
                   <div>
@@ -164,6 +219,7 @@ export const ProfileBranch = memo(({
             />
             {!record && (
               <ProfileLinker
+                id={`${recordData.id}-non-match`}
                 linkingRules={linkingRules}
                 onTypeSelected={setCurrentType}
                 onLinkCallback={onNonMatchLink}
@@ -184,11 +240,17 @@ ProfileBranch.propTypes = {
   linkingRules: PropTypes.object.isRequired,
   record: PropTypes.object,
   className: PropTypes.string,
+  onChange: PropTypes.func,
+  onLink: PropTypes.func,
+  onUnlink: PropTypes.func,
   dataAttributes: PropTypes.object,
 };
 
 ProfileBranch.defaultProps = {
   record: null,
   className: null,
+  onChange: noop,
+  onLink: noop,
+  onUnlink: noop,
   dataAttributes: null,
 };
