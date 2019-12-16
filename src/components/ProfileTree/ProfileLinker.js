@@ -24,6 +24,7 @@ import { LinkerButton } from '.';
 import css from './ProfileTree.css';
 
 export const ProfileLinker = memo(({
+  id,
   title,
   linkingRules,
   className,
@@ -76,11 +77,12 @@ export const ProfileLinker = memo(({
       onKeyDown={keyHandler}
     >
       <MenuSection
-        id="menu-actions"
+        id={`menu-actions-${id}`}
         label={<FormattedMessage id="ui-data-import.settings.action.add" />}
         labelTag="h3"
       >
         <LinkerButton
+          id={`menu-link-match-${id}`}
           entityKey={ENTITY_KEYS.MATCH_PROFILES}
           onTypeSelected={onTypeSelected}
           onLinkCallback={lines => {
@@ -89,6 +91,7 @@ export const ProfileLinker = memo(({
           }}
         />
         <LinkerButton
+          id={`menu-link-action-${id}`}
           entityKey={ENTITY_KEYS.ACTION_PROFILES}
           onTypeSelected={onTypeSelected}
           onLinkCallback={lines => {
@@ -114,9 +117,15 @@ export const ProfileLinker = memo(({
 });
 
 ProfileLinker.propTypes = {
+  id: PropTypes.string.isRequired,
   onTypeSelected: PropTypes.func.isRequired,
   onLinkCallback: PropTypes.func.isRequired,
   linkingRules: PropTypes.object.isRequired,
   title: PropTypes.node || PropTypes.string,
   className: PropTypes.string,
+};
+
+ProfileLinker.defaultProps = {
+  title: '',
+  className: '',
 };
