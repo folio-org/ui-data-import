@@ -270,8 +270,20 @@
     "validation.valueType": "Please enter an alphanumeric value",
     "validation.maxLength": "Invalid value. Maximum {maxLength} character(s) allowed",
     "unlink": "Unlink",
-    "settings.profile.select": "Select Profile",
+    "settings.profile.select": "Link Profile",
     "settings.profile.unlink": "Unlink this profile",
     "modal.profile.unlink.heading": "Are you sure?",
-    "modal.profile.unlink.message": "Are you sure you want to unlink \"{name}\" Profile?"
+    "modal.profile.unlink.message": "Are you sure you want to unlink \"{name}\" Profile?",
+    "emptyMessage": "This {type} contains no items",
+    "list": "list",
+    "section": "section",
+    "settings.action.add": "Add",
+    "settings.getStarted": "Click here to get started",
+    "settings.profiles.select.actionProfiles": "Action",
+    "settings.profiles.select.jobProfiles": "Job",
+    "settings.profiles.select.matchProfiles": "Match",
+    "settings.profiles.select.mappingProfiles": "Field mapping",
+    "settings.profiles.linking.forMatches": "For matches",
+    "settings.profiles.linking.forNonMatches": "For non-matches",
+    "modal.profile.delete.message": "Are you sure you want to delete \"{name}\" Profile?"
 }
