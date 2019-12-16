@@ -270,8 +270,20 @@
     "validation.valueType": "Por favor, insira um valor alfanumérico",
     "validation.maxLength": "Valor inválido. São permitidos no máximo {maxLength} caracteres",
     "unlink": "Desvincular",
-    "settings.profile.select": "Selecione o perfil",
+    "settings.profile.select": "Relacionar perfil",
     "settings.profile.unlink": "Desvincular este perfil",
     "modal.profile.unlink.heading": "Você tem certeza?",
-    "modal.profile.unlink.message": "Tem certeza de que deseja desvincular o perfil \"{name}\"?"
+    "modal.profile.unlink.message": "Tem certeza de que deseja desvincular o perfil \"{name}\"?",
+    "emptyMessage": "Este {type} não contém itens",
+    "list": "lista",
+    "section": "seção",
+    "settings.action.add": "Adicionar",
+    "settings.getStarted": "Clique aqui para começar",
+    "settings.profiles.select.actionProfiles": "Ação",
+    "settings.profiles.select.jobProfiles": "Job",
+    "settings.profiles.select.matchProfiles": "Correspondência",
+    "settings.profiles.select.mappingProfiles": "Mapeamento de campo",
+    "settings.profiles.linking.forMatches": "Para correspondências",
+    "settings.profiles.linking.forNonMatches": "Para não correspondências",
+    "modal.profile.delete.message": "Tem certeza de que deseja excluir o perfil \"{name}\"?"
 }
