@@ -1,745 +1,920 @@
 export const fieldsConfig = [
-  { // Instance Admin data
-    id: 'metadata.updatedDate',
-    label: 'ui-inventory.updatedDateAndTime',
+  /* Instance Admin data */
+  {
+    id: 'updatedDate',
+    label: 'updatedDateAndTime',
     categoryId: 'admin-data',
+    value: 'UPDATED_DATE_AND_TIME',
     recordType: 'INSTANCE',
   }, {
-    id: '',
-    label: 'ui-inventory.updatedSource',
+    id: 'updatedByUsername',
+    label: 'updatedSource',
     categoryId: 'admin-data',
+    value: 'UPDATED_SOURCE',
     recordType: 'INSTANCE',
   }, {
-    id: 'metadata.createdDate',
-    label: 'ui-inventory.createdDateAndTime',
+    id: 'createdDate',
+    label: 'createdDateAndTime',
     categoryId: 'admin-data',
+    value: 'CREATED_DATE_AND_TIME',
     recordType: 'INSTANCE',
   }, {
-    id: '',
-    label: 'ui-inventory.createdSource',
+    id: 'createdByUsername',
+    label: 'createdSource',
     categoryId: 'admin-data',
+    value: 'CREATED_SOURCE',
     recordType: 'INSTANCE',
   }, {
     id: 'discoverySuppress',
-    label: 'ui-inventory.discoverySuppress',
+    label: 'discoverySuppress',
     categoryId: 'admin-data',
+    value: 'SUPPRESS_FROM_DISCOVERY',
     recordType: 'INSTANCE',
   }, {
     id: 'staffSuppress',
-    label: 'ui-inventory.staffSuppress',
+    label: 'staffSuppress',
     categoryId: 'admin-data',
+    value: 'STAFF_SUPPRESS',
     recordType: 'INSTANCE',
   }, {
     id: 'previouslyHeld',
-    label: 'ui-inventory.previouslyHeld',
+    label: 'previouslyHeld',
     categoryId: 'admin-data',
+    value: 'PREVIOUSLY_HELD',
     recordType: 'INSTANCE',
   }, {
     id: 'hrid',
-    label: 'ui-inventory.instanceHrid',
+    label: 'instanceHrid',
     categoryId: 'admin-data',
+    value: 'INSTANCE_HRID',
     recordType: 'INSTANCE',
   }, {
     id: 'source',
-    label: 'ui-inventory.metadataSource',
+    label: 'metadataSource',
     categoryId: 'admin-data',
+    value: 'METADATA_SOURCE',
     recordType: 'INSTANCE',
   }, {
     id: 'catalogedDate',
-    label: 'ui-inventory.catalogedDate',
+    label: 'catalogedDate',
     categoryId: 'admin-data',
+    value: 'CATALOGED_DATE',
     recordType: 'INSTANCE',
   }, {
-    id: 'statusId', // ?????????????
-    label: 'ui-inventory.instanceStatusTerm',
+    id: 'statusId',
+    label: 'instanceStatusTerm',
     categoryId: 'admin-data',
+    value: 'INSTANCE_STATUS_TERM',
     recordType: 'INSTANCE',
   }, {
     id: 'statusUpdatedDate',
-    label: 'ui-inventory.instanceStatusUpdatedDate',
+    label: 'instanceStatusUpdatedDate',
     categoryId: 'admin-data',
+    value: 'STATUS_UPDATED_DATE',
     recordType: 'INSTANCE',
   }, {
-    id: 'modeOfIssuanceId', // ?????????
-    label: 'ui-inventory.modeOfIssuance',
+    id: 'modeOfIssuanceId',
+    label: 'modeOfIssuance',
     categoryId: 'admin-data',
+    value: 'MODE_OF_ISSUANCE',
     recordType: 'INSTANCE',
   }, {
-    id: 'statisticalCodeIds', // ?????????
-    label: 'ui-inventory.statisticalCode',
+    id: 'statisticalCodeIds',
+    label: 'statisticalCode',
     categoryId: 'admin-data',
+    value: 'STATISTICAL_CODE',
     recordType: 'INSTANCE',
-  }, { // Instance Title data
+  },
+  /* Instance Title data */
+  {
     id: 'title',
-    label: 'ui-inventory.resourceTitle',
+    label: 'resourceTitle',
     categoryId: 'title-data',
+    value: 'RESOURCE_TITLE',
     recordType: 'INSTANCE',
   }, {
-    id: 'alternativeTitles.alternativeTitle',
-    label: 'ui-inventory.alternativeTitle',
+    id: 'alternativeTitles.items.properties.alternativeTitleTypeId',
+    label: 'alternativeTitleType',
     categoryId: 'title-data',
+    value: 'ALTERNATIVE_TITLE_TYPE',
     recordType: 'INSTANCE',
   }, {
-    id: 'alternativeTitles.alternativeTitleTypeId', // ?????
-    label: 'ui-inventory.alternativeTitleType',
+    id: 'alternativeTitles.items.properties.alternativeTitle',
+    label: 'alternativeTitle',
     categoryId: 'title-data',
+    value: 'ALTERNATIVE_TITLE',
     recordType: 'INSTANCE',
   }, {
     id: 'indexTitle',
-    label: 'ui-inventory.indexTitle',
+    label: 'indexTitle',
     categoryId: 'title-data',
+    value: 'INDEX_TITLE',
     recordType: 'INSTANCE',
   }, {
     id: 'series',
-    label: 'ui-inventory.seriesStatement',
+    label: 'seriesStatement',
     categoryId: 'title-data',
+    value: 'SERIES_STATEMENT',
     recordType: 'INSTANCE',
   }, {
-    id: '',
-    label: 'ui-inventory.precedingTitle',
+    id: 'parentInstances.items.properties.superInstanceId',
+    label: 'precedingTitle',
     categoryId: 'title-data',
+    value: 'PRECEDING_TITLE',
     recordType: 'INSTANCE',
   }, {
-    id: '',
-    label: 'ui-inventory.succeedingTitle',
+    id: 'childInstances.items.properties.subInstanceId',
+    label: 'succeedingTitle',
     categoryId: 'title-data',
+    value: 'SUCCEEDING_TITLE',
     recordType: 'INSTANCE',
-  }, { // Instance Identifier
-    id: 'identifiers.items.identifierTypeId',
-    label: 'ui-inventory.identifierType',
+  },
+  /* Instance Identifier */
+  {
+    id: 'identifiers.items.properties.identifierTypeId',
+    label: 'identifierType',
     categoryId: 'identifier',
+    value: 'IDENTIFIER_TYPE',
     recordType: 'INSTANCE',
   }, {
-    id: 'identifiers.items',
-    label: 'ui-inventory.identifier',
+    id: 'identifiers.items.properties.value',
+    label: 'identifier',
     categoryId: 'identifier',
+    value: 'IDENTIFIER',
     recordType: 'INSTANCE',
-  }, { // Instance Contributor
-    id: 'contributors.items.name',
-    label: 'ui-inventory.name',
+  },
+  /* Instance Contributor */
+  {
+    id: 'contributors.items.properties.name',
+    label: 'name',
     categoryId: 'contributor',
+    value: 'NAME',
     recordType: 'INSTANCE',
   }, {
-    id: 'contributors.items.contributorNameTypeId', // ????
-    label: 'ui-inventory.nameType',
+    id: 'contributors.items.properties.contributorNameTypeId',
+    label: 'nameType',
     categoryId: 'contributor',
+    value: 'NAME_TYPE',
     recordType: 'INSTANCE',
   }, {
-    id: 'contributors.items.contributorTypeId', // ????
-    label: 'ui-inventory.type',
+    id: 'contributors.items.properties.contributorTypeId',
+    label: 'type',
     categoryId: 'contributor',
+    value: 'TYPE',
     recordType: 'INSTANCE',
   }, {
-    id: 'contributors.items.contributorTypeText',
-    label: 'ui-inventory.typeFreeText',
+    id: 'contributors.items.properties.contributorTypeText',
+    label: 'typeFreeText',
     categoryId: 'contributor',
+    value: 'TYPE,_FREE_TEXT',
     recordType: 'INSTANCE',
   }, {
-    id: 'contributors.items.primary',
-    label: 'ui-inventory.makePrimary',
+    id: 'contributors.items.properties.primary',
+    label: 'makePrimary',
     categoryId: 'contributor',
+    value: 'MAKE PRIMARY',
     recordType: 'INSTANCE',
-  }, { // Instance Descriptive data
-    id: 'publication.items.publisher',
-    label: 'ui-inventory.publisher',
+  },
+  /* Instance Descriptive data */
+  {
+    id: 'publication.items.properties.publisher',
+    label: 'publisher',
     categoryId: 'descriptive-data',
+    value: 'PUBLISHER',
     recordType: 'INSTANCE',
   }, {
-    id: 'publication.items.role',
-    label: 'ui-inventory.publisherRole',
+    id: 'publication.items.properties.role',
+    label: 'publisherRole',
     categoryId: 'descriptive-data',
+    value: 'PUBLISHER_ROLE',
     recordType: 'INSTANCE',
   }, {
-    id: 'publication.items.place',
-    label: 'ui-inventory.place',
+    id: 'publication.items.properties.place',
+    label: 'place',
     categoryId: 'descriptive-data',
+    value: 'PLACE',
     recordType: 'INSTANCE',
   }, {
-    id: 'publication.items.dateOfPublication',
-    label: 'ui-inventory.dateOfPublication',
+    id: 'publication.items.properties.dateOfPublication',
+    label: 'dateOfPublication',
     categoryId: 'descriptive-data',
+    value: 'PUBLICATION DATE',
     recordType: 'INSTANCE',
   }, {
     id: 'editions',
-    label: 'ui-inventory.edition',
+    label: 'edition',
     categoryId: 'descriptive-data',
+    value: 'EDITION',
     recordType: 'INSTANCE',
   }, {
     id: 'physicalDescriptions',
-    label: 'ui-inventory.physicalDescription',
+    label: 'physicalDescription',
     categoryId: 'descriptive-data',
+    value: 'PHYSICAL_DESCRIPTION',
     recordType: 'INSTANCE',
   }, {
     id: 'instanceTypeId',
-    label: 'ui-inventory.resourceType',
+    label: 'resourceType',
     categoryId: 'descriptive-data',
+    value: 'RESOURCE_TYPE',
     recordType: 'INSTANCE',
   }, {
     id: 'natureOfContentTermIds',
-    label: 'ui-inventory.natureOfContentTerms',
+    label: 'natureOfContentTerms',
     categoryId: 'descriptive-data',
+    value: 'NATURE_OF_CONTENT',
     recordType: 'INSTANCE',
   }, {
     id: 'instanceFormatIds',
-    label: 'ui-inventory.format',
+    label: 'format',
     categoryId: 'descriptive-data',
+    value: 'FORMAT',
     recordType: 'INSTANCE',
   }, {
     id: 'languages',
-    label: 'ui-inventory.language',
+    label: 'language',
     categoryId: 'descriptive-data',
+    value: 'LANGUAGE',
     recordType: 'INSTANCE',
   }, {
     id: 'publicationFrequency',
-    label: 'ui-inventory.publicationFrequency',
+    label: 'publicationFrequency',
     categoryId: 'descriptive-data',
+    value: 'PUBLICATION_FREQUENCY',
     recordType: 'INSTANCE',
   }, {
     id: 'publicationRange',
-    label: 'ui-inventory.publicationRange',
+    label: 'publicationRange',
     categoryId: 'descriptive-data',
+    value: 'PUBLICATION_RANGE',
     recordType: 'INSTANCE',
-  }, { // Instance Instance notes
-    id: 'notes.items.instanceNoteTypeId',
-    label: 'ui-inventory.noteType',
+  },
+  /* Instance Instance notes */
+  {
+    id: 'notes.items.properties.instanceNoteTypeId',
+    label: 'noteType',
     categoryId: 'instance-notes',
+    value: 'NOTE_TYPE',
     recordType: 'INSTANCE',
   }, {
-    id: 'notes.items.note',
-    label: 'ui-inventory.note',
+    id: 'notes.items.properties.note',
+    label: 'note',
     categoryId: 'instance-notes',
+    value: 'NOTE',
     recordType: 'INSTANCE',
   }, {
-    id: 'notes.items.staffOnly',
-    label: 'ui-inventory.staffOnly',
+    id: 'notes.items.properties.staffOnly',
+    label: 'staffOnly',
     categoryId: 'instance-notes',
+    value: 'STAFF_ONLY',
     recordType: 'INSTANCE',
-  }, { // Instance Electronic access
-    id: 'electronicAccess.items.relationshipId',
-    label: 'ui-inventory.urlRelationship',
+  },
+  /* Instance Electronic access */
+  {
+    id: 'electronicAccess.items.properties.relationshipId',
+    label: 'urlRelationship',
     categoryId: 'electronic-access',
+    value: 'RELATIONSHIP',
     recordType: 'INSTANCE',
   }, {
-    id: 'electronicAccess.items.uri',
-    label: 'ui-inventory.uri',
+    id: 'electronicAccess.items.properties.uri',
+    label: 'uri',
     categoryId: 'electronic-access',
+    value: 'URI',
     recordType: 'INSTANCE',
   }, {
-    id: 'electronicAccess.items.linkText',
-    label: 'ui-inventory.linkText',
+    id: 'electronicAccess.items.properties.linkText',
+    label: 'linkText',
     categoryId: 'electronic-access',
+    value: 'LINK_TEXT',
     recordType: 'INSTANCE',
   }, {
-    id: 'electronicAccess.items.materialsSpecification',
-    label: 'ui-inventory.materialsSpecification',
+    id: 'electronicAccess.items.properties.materialsSpecification',
+    label: 'materialsSpecification',
     categoryId: 'electronic-access',
+    value: 'MATERIALS_SPECIFIED',
     recordType: 'INSTANCE',
   }, {
-    id: 'electronicAccess.items.publicNote',
-    label: 'ui-inventory.urlPublicNote',
+    id: 'electronicAccess.items.properties.publicNote',
+    label: 'urlPublicNote',
     categoryId: 'electronic-access',
+    value: 'URL_PUBLIC_NOTE',
     recordType: 'INSTANCE',
-  }, { // Instance Subject
+  },
+  /* Instance Subject */
+  {
     id: 'subjects',
-    label: 'ui-inventory.subject',
+    label: 'subject',
     categoryId: 'subject',
+    value: 'SUBJECT',
     recordType: 'INSTANCE',
-  }, { // Instance Classification
-    id: 'classifications.items.classificationTypeId',
-    label: 'ui-inventory.classificationIdentifierType',
+  },
+  /* Instance Classification */
+  {
+    id: 'classifications.items.properties.classificationTypeId',
+    label: 'classificationIdentifierType',
     categoryId: 'classification',
+    value: 'CLASSIFICATION_IDENTIFIER_TYPE',
     recordType: 'INSTANCE',
   }, {
-    id: 'classifications.items.classificationNumber',
-    label: 'ui-inventory.classification',
+    id: 'classifications.items.properties.classificationNumber',
+    label: 'classification',
     categoryId: 'classification',
+    value: 'CLASSIFICATION',
     recordType: 'INSTANCE',
-  }, { // Instance Instance relationship
-    id: 'instanceRelationships.items.superInstanceId',
-    label: 'ui-inventory.parentInstance',
+  },
+  /* Instance Instance relationship */
+  {
+    id: 'superInstanceId',
+    label: 'parentInstance',
     categoryId: 'instance-relationship',
+    value: 'PARENT_INSTANCE',
     recordType: 'INSTANCE',
   }, {
-    id: 'instanceRelationships.items.instanceRelationshipTypeId',
-    label: 'ui-inventory.typeOfRelation',
+    id: 'instanceRelationshipTypeId',
+    label: 'typeOfRelation',
     categoryId: 'instance-relationship',
+    value: 'TYPE_OF_RELATION',
     recordType: 'INSTANCE',
   }, {
-    id: 'instanceRelationships.items.subInstanceId',
-    label: 'ui-inventory.childInstance',
+    id: 'subInstanceId',
+    label: 'childInstance',
     categoryId: 'instance-relationship',
+    value: 'CHILD_INSTANCE',
     recordType: 'INSTANCE',
-  }, { // Holdings Admin data
-    id: 'metadata.updatedDate',
-    label: 'ui-inventory.updatedDateAndTime',
+  },
+  /* Holdings Admin data */
+  {
+    id: 'updatedDate',
+    label: 'updatedDateAndTime',
     categoryId: 'admin-data',
+    value: 'UPDATED_DATE_AND_TIME',
     recordType: 'HOLDINGS',
   }, {
-    id: '',
-    label: 'ui-inventory.updatedSource',
+    id: 'updatedByUsername',
+    label: 'updatedSource',
     categoryId: 'admin-data',
+    value: 'UPDATED_SOURCE',
     recordType: 'HOLDINGS',
   }, {
-    id: 'metadata.createdDate',
-    label: 'ui-inventory.createdDateAndTime',
+    id: 'createdDate',
+    label: 'createdDateAndTime',
     categoryId: 'admin-data',
+    value: 'CREATED_DATE_AND_TIME',
     recordType: 'HOLDINGS',
   }, {
-    id: '',
-    label: 'ui-inventory.createdSource',
+    id: 'createdByUsername',
+    label: 'createdSource',
     categoryId: 'admin-data',
+    value: 'CREATED_SOURCE',
     recordType: 'HOLDINGS',
   }, {
     id: 'discoverySuppress',
-    label: 'ui-inventory.discoverySuppress',
+    label: 'discoverySuppress',
     categoryId: 'admin-data',
+    value: 'SUPPRESS_FROM_DISCOVERY',
     recordType: 'HOLDINGS',
   }, {
     id: 'hrid',
-    label: 'ui-inventory.holdingsHrid',
+    label: 'holdingsHrid',
     categoryId: 'admin-data',
+    value: 'HOLDINGS_HRID',
     recordType: 'HOLDINGS',
   }, {
     id: 'formerIds',
-    label: 'ui-inventory.formerHoldingsId',
+    label: 'formerHoldingsId',
     categoryId: 'admin-data',
+    value: 'FORMER_HOLDINGS_ID',
     recordType: 'HOLDINGS',
   }, {
     id: 'holdingsTypeId',
-    label: 'ui-inventory.holdingsType',
+    label: 'holdingsType',
     categoryId: 'admin-data',
+    value: 'HOLDINGS_TYPE',
     recordType: 'HOLDINGS',
   }, {
     id: 'statisticalCodeIds',
-    label: 'ui-inventory.statisticalCode',
+    label: 'statisticalCode',
     categoryId: 'admin-data',
+    value: 'STATISTICAL_CODE',
     recordType: 'HOLDINGS',
-  }, { // Holdings Location
+  },
+  /* Holdings Location */
+  {
     id: 'permanentLocationId',
-    label: 'ui-inventory.permanentLocation',
+    label: 'permanentLocation',
     categoryId: 'location',
+    value: 'PERMANENT_LOCATION',
     recordType: 'HOLDINGS',
   }, {
     id: 'temporaryLocationId',
-    label: 'ui-inventory.temporaryLocation',
+    label: 'temporaryLocation',
     categoryId: 'location',
-    recordType: 'HOLDINGS',
-  }, {
-    id: '',
-    label: 'ui-inventory.shelvingOrder',
-    categoryId: 'location',
+    value: 'TEMPORARY_LOCATION',
     recordType: 'HOLDINGS',
   }, {
     id: 'shelvingTitle',
-    label: 'ui-inventory.shelvingTitle',
+    label: 'shelvingTitle',
     categoryId: 'location',
+    value: 'SHELVING_TITLE',
     recordType: 'HOLDINGS',
   }, {
     id: 'copyNumber',
-    label: 'ui-inventory.copyNumber',
+    label: 'copyNumber',
     categoryId: 'location',
+    value: 'COPY_NUMBER',
     recordType: 'HOLDINGS',
   }, {
     id: 'callNumberTypeId',
-    label: 'ui-inventory.callNumberType',
+    label: 'callNumberType',
     categoryId: 'location',
+    value: 'CALL_NUMBER_TYPE',
     recordType: 'HOLDINGS',
   }, {
     id: 'callNumberPrefix',
-    label: 'ui-inventory.callNumberPrefix',
+    label: 'callNumberPrefix',
     categoryId: 'location',
+    value: 'CAL_NUMBER_PREFIX',
     recordType: 'HOLDINGS',
   }, {
     id: 'callNumber',
-    label: 'ui-inventory.callNumber',
+    label: 'callNumber',
     categoryId: 'location',
+    value: 'CALL_NUMBER',
     recordType: 'HOLDINGS',
   }, {
     id: 'callNumberSuffix',
-    label: 'ui-inventory.callNumberSuffix',
+    label: 'callNumberSuffix',
     categoryId: 'location',
+    value: 'CALL_NUMBER_SUFFIX',
     recordType: 'HOLDINGS',
-  }, { // Holdings Holding details
+  },
+  /* Holdings Holding details */
+  {
     id: 'numberOfItems',
-    label: 'ui-inventory.numberOfItems',
-    categoryId: 'holding-details',
+    label: 'numberOfItems',
+    categoryId: 'holdings-details',
+    value: 'NUMBER_OF_ITEMS',
     recordType: 'HOLDINGS',
   }, {
-    id: 'holdingsStatements.items.statement',
-    label: 'ui-inventory.holdingsStatement',
-    categoryId: 'holding-details',
+    id: 'holdingsStatements.items.properties.statement',
+    label: 'holdingsStatement',
+    categoryId: 'holdings-details',
+    value: 'HOLDINGS_STATEMENT',
     recordType: 'HOLDINGS',
   }, {
-    id: 'holdingsStatements.items.note',
-    label: 'ui-inventory.holdingsStatementNote',
-    categoryId: 'holding-details',
+    id: 'holdingsStatements.items.properties.note',
+    label: 'holdingsStatementNote',
+    categoryId: 'holdings-details',
+    value: 'HOLDINGS_STATEMENT_NOTE',
     recordType: 'HOLDINGS',
   }, {
-    id: 'holdingsStatementsForSupplements.items.statement',
-    label: 'ui-inventory.holdingsStatementForSupplements',
-    categoryId: 'holding-details',
+    id: 'holdingsStatementsForSupplements.items.properties.statement',
+    label: 'holdingsStatementForSupplements',
+    categoryId: 'holdings-details',
+    value: 'HOLDINGS_STATEMENT_FOR_SUPPLEMENTS',
     recordType: 'HOLDINGS',
   }, {
-    id: 'holdingsStatementsForSupplements.items.note',
-    label: 'ui-inventory.holdingsStatementForSupplementsNote',
-    categoryId: 'holding-details',
+    id: 'holdingsStatementsForSupplements.items.properties.note',
+    label: 'holdingsStatementForSupplementsNote',
+    categoryId: 'holdings-details',
+    value: 'HOLDINGS_STATEMENT_FOR_SUPPLEMENTS_NOTES',
     recordType: 'HOLDINGS',
   }, {
-    id: 'holdingsStatementsForIndexes.items.statement',
-    label: 'ui-inventory.holdingsStatementForIndexes',
-    categoryId: 'holding-details',
+    id: 'holdingsStatementsForIndexes.items.properties.statement',
+    label: 'holdingsStatementForIndexes',
+    categoryId: 'holdings-details',
+    value: 'HOLDINGS_STATEMENT_FOR_INDEXES',
     recordType: 'HOLDINGS',
   }, {
-    id: 'holdingsStatementsForIndexes.items.note',
-    label: 'ui-inventory.holdingsStatementForIndexesNote',
-    categoryId: 'holding-details',
+    id: 'holdingsStatementsForIndexes.items.properties.note',
+    label: 'holdingsStatementForIndexesNote',
+    categoryId: 'holdings-details',
+    value: 'HOLDINGS_STATEMENT_FOR_INDEXES_NOTES',
     recordType: 'HOLDINGS',
   }, {
     id: 'illPolicyId',
-    label: 'ui-inventory.illPolicy',
-    categoryId: 'holding-details',
+    label: 'illPolicy',
+    categoryId: 'holdings-details',
+    value: 'ILL_POLICY',
     recordType: 'HOLDINGS',
   }, {
     id: 'digitizationPolicy',
-    label: 'ui-inventory.digitizationPolicy',
-    categoryId: 'holding-details',
+    label: 'digitizationPolicy',
+    categoryId: 'holdings-details',
+    value: 'DIGITIZATION_POLICY',
     recordType: 'HOLDINGS',
   }, {
     id: 'retentionPolicy',
-    label: 'ui-inventory.retentionPolicy',
-    categoryId: 'holding-details',
+    label: 'retentionPolicy',
+    categoryId: 'holdings-details',
+    value: 'RETENTION_POLICY',
     recordType: 'HOLDINGS',
-  }, { // Holdings Holdings notes
-    id: 'notes.items.holdingsNoteTypeId',
-    label: 'ui-inventory.noteType',
-    categoryId: 'holding-notes',
+  },
+  /* Holdings Holdings notes */
+  {
+    id: 'notes.items.properties.holdingsNoteTypeId',
+    label: 'noteType',
+    categoryId: 'holdings-notes',
+    value: 'NOTE_TYPE',
     recordType: 'HOLDINGS',
   }, {
-    id: 'notes.items.note',
-    label: 'ui-inventory.note',
-    categoryId: 'holding-notes',
+    id: 'notes.items.properties.note',
+    label: 'note',
+    categoryId: 'holdings-notes',
+    value: 'NOTE',
     recordType: 'HOLDINGS',
   }, {
-    id: 'notes.items.staffOnly',
-    label: 'ui-inventory.staffOnly',
-    categoryId: 'holding-notes',
+    id: 'notes.items.properties.staffOnly',
+    label: 'staffOnly',
+    categoryId: 'holdings-notes',
+    value: 'STAFF_ONLY',
     recordType: 'HOLDINGS',
-  }, { // Holdings Electronic access
-    id: 'electronicAccess.items.relationshipId',
-    label: 'ui-inventory.urlRelationship',
+  },
+  /* Holdings Electronic access */
+  {
+    id: 'electronicAccess.items.properties.relationshipId',
+    label: 'urlRelationship',
     categoryId: 'electronic-access',
+    value: 'RELATIONSHIP',
     recordType: 'HOLDINGS',
   }, {
-    id: 'electronicAccess.items.uri',
-    label: 'ui-inventory.uri',
+    id: 'electronicAccess.items.properties.uri',
+    label: 'uri',
     categoryId: 'electronic-access',
+    value: 'URI',
     recordType: 'HOLDINGS',
   }, {
-    id: 'electronicAccess.items.linkText',
-    label: 'ui-inventory.linkText',
+    id: 'electronicAccess.items.properties.linkText',
+    label: 'linkText',
     categoryId: 'electronic-access',
+    value: 'LINK_TEXT',
     recordType: 'HOLDINGS',
   }, {
-    id: 'electronicAccess.items.materialsSpecification',
-    label: 'ui-inventory.materialsSpecification',
+    id: 'electronicAccess.items.properties.materialsSpecification',
+    label: 'materialsSpecification',
     categoryId: 'electronic-access',
+    value: 'MATERIALS_SPECIFIED',
     recordType: 'HOLDINGS',
   }, {
-    id: 'electronicAccess.items.publicNote',
-    label: 'ui-inventory.urlPublicNote',
+    id: 'electronicAccess.items.properties.publicNote',
+    label: 'urlPublicNote',
     categoryId: 'electronic-access',
+    value: 'URL_PUBLIC_NOTE',
     recordType: 'HOLDINGS',
-  }, { // Holdings Acquisition
+  },
+  /* Holdings Acquisition */
+  {
     id: 'acquisitionMethod',
-    label: 'ui-inventory.acquisitionMethod',
+    label: 'acquisitionMethod',
     categoryId: 'acquisition',
+    value: 'ACQUISITION_METHOD',
     recordType: 'HOLDINGS',
   }, {
     id: 'acquisitionFormat',
-    label: 'ui-inventory.acquisitionFormat',
+    label: 'acquisitionFormat',
     categoryId: 'acquisition',
+    value: 'ORDER_FORMAT',
     recordType: 'HOLDINGS',
   }, {
     id: 'receiptStatus',
-    label: 'ui-inventory.receiptStatus',
+    label: 'receiptStatus',
     categoryId: 'acquisition',
+    value: 'RECEIPT_STATUS',
     recordType: 'HOLDINGS',
-  }, { // Holdings Receiving history
-    id: 'receivingHistory.entries.items.publicDisplay',
-    label: 'ui-inventory.publicDisplay',
+  },
+  /* Holdings Receiving history */
+  {
+    id: 'receivingHistory.properties.entries.items.properties.publicDisplay',
+    label: 'publicDisplay',
     categoryId: 'receiving-history',
+    value: 'PUBLIC_DISPLAY',
     recordType: 'HOLDINGS',
   }, {
-    id: 'receivingHistory.entries.items.enumeration',
-    label: 'ui-inventory.enumeration',
+    id: 'receivingHistory.properties.entries.items.properties.enumeration',
+    label: 'enumeration',
     categoryId: 'receiving-history',
+    value: 'ENUMERATION',
     recordType: 'HOLDINGS',
   }, {
-    id: 'receivingHistory.entries.items.chronology',
-    label: 'ui-inventory.chronology',
+    id: 'receivingHistory.properties.entries.items.properties.chronology',
+    label: 'chronology',
     categoryId: 'receiving-history',
+    value: 'CHRONOLOGY',
     recordType: 'HOLDINGS',
-  }, { // Item Admin data
-    id: 'metadata.updatedDate',
-    label: 'ui-inventory.updatedDateAndTime',
+  },
+  /* Item Admin data */
+  {
+    id: 'updatedDate',
+    label: 'updatedDateAndTime',
     categoryId: 'admin-data',
+    value: 'UPDATED_DATE_AND_TIME',
     recordType: 'ITEM',
   }, {
-    id: '',
-    label: 'ui-inventory.updatedSource',
+    id: 'updatedByUsername',
+    label: 'updatedSource',
     categoryId: 'admin-data',
+    value: 'UPDATED_SOURCE',
     recordType: 'ITEM',
   }, {
-    id: 'metadata.createdDate',
-    label: 'ui-inventory.createdDateAndTime',
+    id: 'createdDate',
+    label: 'createdDateAndTime',
     categoryId: 'admin-data',
+    value: 'CREATED_DATE_AND_TIME',
     recordType: 'ITEM',
   }, {
-    id: '',
-    label: 'ui-inventory.createdSource',
+    id: 'createdByUsername',
+    label: 'createdSource',
     categoryId: 'admin-data',
+    value: 'CREATED_SOURCE',
     recordType: 'ITEM',
   }, {
     id: 'discoverySuppress',
-    label: 'ui-inventory.discoverySuppress',
+    label: 'discoverySuppress',
     categoryId: 'admin-data',
+    value: 'SUPPRESS_FROM_DISCOVERY',
     recordType: 'ITEM',
   }, {
     id: 'hrid',
-    label: 'ui-inventory.itemHrid',
+    label: 'itemHrid',
     categoryId: 'admin-data',
+    value: 'ITEM_HRID',
     recordType: 'ITEM',
   }, {
     id: 'barcode',
-    label: 'ui-inventory.barcode',
+    label: 'barcode',
     categoryId: 'admin-data',
+    value: 'BARCODE',
     recordType: 'ITEM',
   }, {
     id: 'accessionNumber',
-    label: 'ui-inventory.accessionNumber',
+    label: 'accessionNumber',
     categoryId: 'admin-data',
+    value: 'ACCESSION_NUMBER',
     recordType: 'ITEM',
   }, {
     id: 'id',
-    label: 'ui-inventory.itemIdentifier',
+    label: 'itemIdentifier',
     categoryId: 'admin-data',
+    value: 'ITEM_IDENTIFIER',
     recordType: 'ITEM',
   }, {
     id: 'formerIds',
-    label: 'ui-inventory.formerId',
+    label: 'formerId',
     categoryId: 'admin-data',
+    value: 'FORMER_IDENTIFIER',
     recordType: 'ITEM',
   }, {
     id: 'statisticalCodeIds',
-    label: 'ui-inventory.statisticalCode',
+    label: 'statisticalCode',
     categoryId: 'admin-data',
+    value: 'STATISTICAL_CODE',
     recordType: 'ITEM',
-  }, { // Item Item data
+  },
+  /* Item Item data */
+  {
     id: 'materialTypeId',
-    label: 'ui-inventory.materialType',
+    label: 'materialType',
     categoryId: 'item-data',
+    value: 'MATERIAL_TYPE',
     recordType: 'ITEM',
   }, {
     id: 'copyNumbers',
-    label: 'ui-inventory.copyNumber',
+    label: 'copyNumber',
     categoryId: 'item-data',
+    value: 'COPY_NUMBER',
     recordType: 'ITEM',
   }, {
     id: 'itemLevelCallNumberTypeId',
-    label: 'ui-inventory.callNumberType',
+    label: 'callNumberType',
     categoryId: 'item-data',
+    value: 'CALL_NUMBER_TYPE',
     recordType: 'ITEM',
   }, {
     id: 'itemLevelCallNumberPrefix',
-    label: 'ui-inventory.callNumberPrefix',
+    label: 'callNumberPrefix',
     categoryId: 'item-data',
+    value: 'CALL_NUMBER_PREFIX',
     recordType: 'ITEM',
   }, {
     id: 'itemLevelCallNumber',
-    label: 'ui-inventory.callNumber',
+    label: 'callNumber',
     categoryId: 'item-data',
+    value: 'CALL_NUMBER',
     recordType: 'ITEM',
   }, {
     id: 'itemLevelCallNumberSuffix',
-    label: 'ui-inventory.callNumberSuffix',
+    label: 'callNumberSuffix',
     categoryId: 'item-data',
+    value: 'CALL_NUMBER_SUFFIX',
     recordType: 'ITEM',
   }, {
     id: 'numberOfPieces',
-    label: 'ui-inventory.numberOfPieces',
+    label: 'numberOfPieces',
     categoryId: 'item-data',
+    value: 'NUMBER_OF_PIECES',
     recordType: 'ITEM',
   }, {
     id: 'descriptionOfPieces',
-    label: 'ui-inventory.descriptionOfPieces',
+    label: 'descriptionOfPieces',
     categoryId: 'item-data',
+    value: 'DESCRIPTION_OF_PIECES',
     recordType: 'ITEM',
-  }, { // Item Enumeration data
+  },
+  /* Item Enumeration data */
+  {
     id: 'enumeration',
-    label: 'ui-inventory.enumeration',
+    label: 'enumeration',
     categoryId: 'enumeration-data',
+    value: 'ENUMERATION',
     recordType: 'ITEM',
   }, {
     id: 'chronology',
-    label: 'ui-inventory.chronology',
+    label: 'chronology',
     categoryId: 'enumeration-data',
+    value: 'CHRONOLOGY',
     recordType: 'ITEM',
   }, {
     id: 'volume',
-    label: 'ui-inventory.volume',
+    label: 'volume',
     categoryId: 'enumeration-data',
+    value: 'VOLUME',
     recordType: 'ITEM',
   }, {
     id: 'yearCaption',
-    label: 'ui-inventory.yearCaption',
+    label: 'yearCaption',
     categoryId: 'enumeration-data',
+    value: 'YEAR,_CAPTION',
     recordType: 'ITEM',
-  }, { // Item Condition
+  },
+  /* Item Condition */
+  {
     id: 'numberOfMissingPieces',
-    label: 'ui-inventory.numberOfMissingPieces',
+    label: 'numberOfMissingPieces',
     categoryId: 'condition',
+    value: 'NUMBER_OF_MISSING_PIECES',
     recordType: 'ITEM',
   }, {
     id: 'missingPieces',
-    label: 'ui-inventory.missingPieces',
+    label: 'missingPieces',
     categoryId: 'condition',
+    value: 'MISSING_PIECES',
     recordType: 'ITEM',
   }, {
     id: 'missingPiecesDate',
-    label: 'ui-inventory.missingDate',
+    label: 'missingDate',
     categoryId: 'condition',
+    value: 'MISSING_DATE',
     recordType: 'ITEM',
   }, {
     id: 'itemDamagedStatusId',
-    label: 'ui-inventory.itemDamagedStatus',
+    label: 'itemDamagedStatus',
     categoryId: 'condition',
+    value: 'ITEM_DAMAGED_STATUS',
     recordType: 'ITEM',
   }, {
     id: 'itemDamagedStatusDate',
-    label: 'ui-inventory.itemDamagedStatusDate',
+    label: 'itemDamagedStatusDate',
     categoryId: 'condition',
+    value: 'DAMAGED_DATE',
     recordType: 'ITEM',
-  }, { // Item Item notes
-    id: 'notes.items.itemNoteTypeId',
-    label: 'ui-inventory.noteType',
+  },
+  /* Item Item notes */
+  {
+    id: 'notes.items.properties.itemNoteTypeId',
+    label: 'noteType',
     categoryId: 'item-notes',
+    value: 'NOTE_TYPE',
     recordType: 'ITEM',
   }, {
-    id: 'notes.items.note',
-    label: 'ui-inventory.note',
+    id: 'notes.items.properties.note',
+    label: 'note',
     categoryId: 'item-notes',
+    value: 'NOTE',
     recordType: 'ITEM',
   }, {
-    id: 'notes.items.staffOnly',
-    label: 'ui-inventory.staffOnly',
+    id: 'notes.items.properties.staffOnly',
+    label: 'staffOnly',
     categoryId: 'item-notes',
+    value: 'STAFF_ONLY',
     recordType: 'ITEM',
-  }, { // Item Loan and availability
+  },
+  /* Item Loan and availability */
+  {
     id: 'permanentLoanTypeId',
-    label: 'ui-inventory.loanTypePermanent',
+    label: 'loanTypePermanent',
     categoryId: 'loan-and-availability',
+    value: 'PERMANENT_LOAN_TYPE',
     recordType: 'ITEM',
   }, {
     id: 'temporaryLoanTypeId',
-    label: 'ui-inventory.loanTypeTemporary',
+    label: 'loanTypeTemporary',
     categoryId: 'loan-and-availability',
+    value: 'TEMPORARY_LOAN_TYPE',
     recordType: 'ITEM',
   }, {
-    id: 'status.name',
-    label: 'ui-inventory.status',
+    id: 'status.properties.name',
+    label: 'status',
     categoryId: 'loan-and-availability',
+    value: 'STATUS',
     recordType: 'ITEM',
   }, {
-    id: 'circulationNotes.items.noteType',
-    label: 'ui-inventory.checkInOutNoteType',
+    id: 'circulationNotes.items.properties.noteType',
+    label: 'checkInOutNoteType',
     categoryId: 'loan-and-availability',
+    value: 'CHECK_IN/OUT_NOTE_TYPE',
     recordType: 'ITEM',
   }, {
-    id: 'circulationNotes.items.note',
-    label: 'ui-inventory.note',
+    id: 'circulationNotes.items.properties.note',
+    label: 'note',
     categoryId: 'loan-and-availability',
+    value: 'NOTE',
     recordType: 'ITEM',
   }, {
-    id: 'circulationNotes.items.staffOnly',
-    label: 'ui-inventory.staffOnly',
+    id: 'circulationNotes.items.properties.staffOnly',
+    label: 'staffOnly',
     categoryId: 'loan-and-availability',
+    value: 'STAFF_ONLY',
     recordType: 'ITEM',
-  }, { // Item Location
+  },
+  /* Item Location */
+  {
     id: 'permanentLocationId',
-    label: 'ui-inventory.permanentLocation',
+    label: 'permanentLocation',
     categoryId: 'location',
+    value: 'PERMANENT',
     recordType: 'ITEM',
   }, {
     id: 'temporaryLocationId',
-    label: 'ui-inventory.temporaryLocation',
+    label: 'temporaryLocation',
     categoryId: 'location',
+    value: 'TEMPORARY',
     recordType: 'ITEM',
-  }, { // Item Electronic access
-    id: 'electronicAccess.items.relationshipId',
-    label: 'ui-inventory.urlRelationship',
+  },
+  /* Item Electronic access */
+  {
+    id: 'electronicAccess.items.properties.relationshipId',
+    label: 'urlRelationship',
     categoryId: 'electronic-access',
+    value: 'RELATIONSHIP',
     recordType: 'ITEM',
   }, {
-    id: 'electronicAccess.items.uri',
-    label: 'ui-inventory.uri',
+    id: 'electronicAccess.items.properties.uri',
+    label: 'uri',
     categoryId: 'electronic-access',
+    value: 'URI',
     recordType: 'ITEM',
   }, {
-    id: 'electronicAccess.items.linkText',
-    label: 'ui-inventory.linkText',
+    id: 'electronicAccess.items.properties.linkText',
+    label: 'linkText',
     categoryId: 'electronic-access',
+    value: 'LINK_TEXT',
     recordType: 'ITEM',
   }, {
-    id: 'electronicAccess.items.materialsSpecification',
-    label: 'ui-inventory.materialsSpecification',
+    id: 'electronicAccess.items.properties.materialsSpecification',
+    label: 'materialsSpecification',
     categoryId: 'electronic-access',
+    value: 'MATERIALS_SPECIFIED',
     recordType: 'ITEM',
   }, {
-    id: 'electronicAccess.items.publicNote',
-    label: 'ui-inventory.urlPublicNote',
+    id: 'electronicAccess.items.properties.publicNote',
+    label: 'urlPublicNote',
     categoryId: 'electronic-access',
+    value: 'URL_PUBLIC_NOTE',
     recordType: 'ITEM',
-  }, { // Order PO admin data
-    id: 'metadata.updatedDate',
+  },
+  /* Order PO admin data */
+  {
+    id: 'updatedDate',
     label: 'updatedDateAndTime',
     categoryId: 'po-admin-data',
     value: 'UPDATED_DATE_AND_TIME',
     recordType: 'ORDER',
   }, {
-    id: '',
+    id: 'updatedByUsername',
     label: 'updatedSource',
     categoryId: 'po-admin-data',
     value: 'UPDATED_SOURCE',
     recordType: 'ORDER',
   }, {
-    id: 'metadata.createdDate',
+    id: 'createdDate',
     label: 'createdDateAndTime',
     categoryId: 'po-admin-data',
     value: 'CREATED_DATE_AND_TIME',
     recordType: 'ORDER',
   }, {
-    id: '',
+    id: 'createdByUsername',
     label: 'createdSource',
     categoryId: 'po-admin-data',
     value: 'CREATED_SOURCE',
     recordType: 'ORDER',
-  }, { // Order PO purchase order
-    id: '',
-    label: 'orderDetails.orderNumberPrefix',
-    categoryId: 'po-purchase-order',
-    value: 'PREFIX',
-    recordType: 'ORDER',
-  }, {
+  },
+  /* Order PO purchase order */
+  {
     id: 'poNumber',
     label: 'orderDetails.poNumber',
     categoryId: 'po-purchase-order',
     value: 'PO_NUMBER',
-    recordType: 'ORDER',
-  }, {
-    id: '',
-    label: 'orderDetails.orderNumberSuffix',
-    categoryId: 'po-purchase-order',
-    value: 'SUFFIX',
     recordType: 'ORDER',
   }, {
     id: 'vendor',
@@ -748,13 +923,13 @@ export const fieldsConfig = [
     value: 'VENDOR',
     recordType: 'ORDER',
   }, {
-    id: 'metadata.updatedByUserId',
+    id: 'createdByUserId',
     label: 'orderDetails.createdBy',
     categoryId: 'po-purchase-order',
     value: 'CREATED_BY',
     recordType: 'ORDER',
   }, {
-    id: 'metadata.createdDate',
+    id: 'createdDate',
     label: 'orderDetails.createdOn',
     categoryId: 'po-purchase-order',
     value: 'CREATED_ON',
@@ -807,31 +982,35 @@ export const fieldsConfig = [
     categoryId: 'po-purchase-order',
     value: 'NOTE',
     recordType: 'ORDER',
-  }, { // Order PO renewal information
-    id: 'renewal.interval',
+  },
+  /* Order PO renewal information */
+  {
+    id: 'interval',
     label: 'renewals.renewalInterval',
     categoryId: 'po-renewal-information',
     value: 'RENEWAL_INTERVAL',
     recordType: 'ORDER',
   }, {
-    id: 'renewal.renewalDate',
+    id: 'renewalDate',
     label: 'renewals.renewalDate',
     categoryId: 'po-renewal-information',
     value: 'RENEWAL_DATE',
     recordType: 'ORDER',
   }, {
-    id: 'renewal.reviewPeriod',
+    id: 'reviewPeriod',
     label: 'renewals.renewalPeriod',
     categoryId: 'po-renewal-information',
     value: 'RENEWAL_PERIOD',
     recordType: 'ORDER',
   }, {
-    id: 'renewal.manualRenewal',
+    id: 'manualRenewal',
     label: 'renewals.manualRenewal',
     categoryId: 'po-renewal-information',
     value: 'MANUAL_RENEWAL',
     recordType: 'ORDER',
-  }, { // Order PO summary
+  },
+  /* Order PO summary */
+  {
     id: 'approved',
     label: 'orderSummary.approved',
     categoryId: 'po-summary',
@@ -843,37 +1022,43 @@ export const fieldsConfig = [
     categoryId: 'po-summary',
     value: 'WORKFLOW_STATUS',
     recordType: 'ORDER',
-  }, { // Order PO tags
+  },
+  /* Order PO tags */
+  {
     id: 'tags',
-    label: 'settings.orderTemplates.editor.template.tags',
+    label: 'tag',
     categoryId: 'po-tags',
     value: 'TAGS',
     recordType: 'ORDER',
-  }, { // Order POL admin data
-    id: 'metadata.updatedDate',
+  },
+  /* Order POL admin data */
+  {
+    id: 'updatedDate',
     label: 'updatedDateAndTime',
     categoryId: 'pol-admin-data',
     value: 'UPDATED_DATE_AND_TIME',
     recordType: 'ORDER',
   }, {
-    id: '',
+    id: 'updatedByUsername',
     label: 'updatedSource',
     categoryId: 'pol-admin-data',
     value: 'UPDATED_SOURCE',
     recordType: 'ORDER',
   }, {
-    id: 'metadata.createdDate',
+    id: 'createdDate',
     label: 'createdDateAndTime',
     categoryId: 'pol-admin-data',
     value: 'CREATED_DATE_AND_TIME',
     recordType: 'ORDER',
   }, {
-    id: '',
-    label: 'ui-order.createdSource',
+    id: 'createdByUsername',
+    label: 'createdSource',
     categoryId: 'pol-admin-data',
     value: 'CREATED_SOURCE',
     recordType: 'ORDER',
-  }, { // Order POL item details
+  },
+  /* Order POL item details */
+  {
     id: 'title',
     label: 'itemDetails.title',
     categoryId: 'pol-item-details',
@@ -904,55 +1089,55 @@ export const fieldsConfig = [
     value: 'EDITION',
     recordType: 'ORDER',
   }, {
-    id: 'subscriptionFrom', // details
+    id: 'subscriptionFrom',
     label: 'itemDetails.subscriptionFrom',
     categoryId: 'pol-item-details',
     value: 'SUBSCRIPTION_FROM',
     recordType: 'ORDER',
   }, {
-    id: 'subscriptionTo', // details
+    id: 'subscriptionTo',
     label: 'itemDetails.subscriptionTo',
     categoryId: 'pol-item-details',
     value: 'SUBSCRIPTION_TO',
     recordType: 'ORDER',
   }, {
-    id: 'subscriptionInterval', // details
+    id: 'subscriptionInterval',
     label: 'itemDetails.subscriptionInterval',
     categoryId: 'pol-item-details',
     value: 'SUBSCRIPTION_INTERVAL',
     recordType: 'ORDER',
   }, {
-    id: 'contributors.items.contributor',
+    id: 'contributor',
     label: 'itemDetails.contributor',
     categoryId: 'pol-item-details',
     value: 'CONTRIBUTOR',
     recordType: 'ORDER',
   }, {
-    id: 'contributors.items.contributorNameTypeId',
+    id: 'contributorNameTypeId',
     label: 'itemDetails.contributorType',
     categoryId: 'pol-item-details',
     value: 'CONTRIBUTOR_TYPE',
     recordType: 'ORDER',
   }, {
-    id: 'productIds.items.productId', // details
+    id: 'productIds.items.properties.productId',
     label: 'itemDetails.productId',
     categoryId: 'pol-item-details',
     value: 'PRODUCT_ID',
     recordType: 'ORDER',
   }, {
-    id: 'productIds.items.qualifier', // details
+    id: 'productIds.items.properties.qualifier',
     label: 'itemDetails.qualifier',
     categoryId: 'pol-item-details',
     value: 'QUALIFIER',
     recordType: 'ORDER',
   }, {
-    id: 'productIds.items.productIdType', // details
+    id: 'productIds.items.properties.productIdType',
     label: 'itemDetails.productIdType',
     categoryId: 'pol-item-details',
     value: 'PRODUCT_ID_TYPE',
     recordType: 'ORDER',
   }, {
-    id: 'receivingNote', // receiving_history
+    id: 'receivingNote',
     label: 'itemDetails.receivingNote',
     categoryId: 'pol-item-details',
     value: 'RECEIVING_NOTE',
@@ -963,7 +1148,9 @@ export const fieldsConfig = [
     categoryId: 'pol-item-details',
     value: 'INTERNAL_NOTE',
     recordType: 'ORDER',
-  }, { // Order POL details
+  },
+  /* Order POL details */
+  {
     id: 'acquisitionMethod',
     label: 'poLine.acquisitionMethod',
     categoryId: 'pol-details',
@@ -976,7 +1163,7 @@ export const fieldsConfig = [
     value: 'ORDER_FORMAT',
     recordType: 'ORDER',
   }, {
-    id: 'metadata.createdDate',
+    id: 'createdDate',
     label: 'poLine.createdOn',
     categoryId: 'pol-details',
     value: 'CREATED_ON',
@@ -1037,7 +1224,7 @@ export const fieldsConfig = [
     recordType: 'ORDER',
   }, {
     id: 'collection',
-    label: 'poLine.collection',
+    label: 'poLine.сollection',
     categoryId: 'pol-details',
     value: 'COLLECTION',
     recordType: 'ORDER',
@@ -1059,7 +1246,9 @@ export const fieldsConfig = [
     categoryId: 'pol-details',
     value: 'LINE_DESCRIPTION',
     recordType: 'ORDER',
-  }, { // Order POL cost details
+  },
+  /* Order POL cost details */
+  {
     id: 'listUnitPrice',
     label: 'cost.listPrice',
     categoryId: 'pol-cost-details',
@@ -1107,7 +1296,9 @@ export const fieldsConfig = [
     categoryId: 'pol-cost-details',
     value: 'ESTIMATED_PRICE',
     recordType: 'ORDER',
-  }, { // Order POL fund distribution
+  },
+  /* Order POL fund distribution */
+  {
     id: 'fundId',
     label: 'fund.fundIdentifier',
     categoryId: 'pol-fund-distribution',
@@ -1120,19 +1311,21 @@ export const fieldsConfig = [
     value: 'VALUE',
     recordType: 'ORDER',
   }, {
-    id: '',
+    id: 'distributionType',
     label: 'fund.selectAdjustment',
     categoryId: 'pol-fund-distribution',
     value: 'SELECT_ADJUSTMENT',
     recordType: 'ORDER',
   }, {
-    id: 'cost.poLineEstimatedPrice',
-    label: 'stripes-acq-components.fundDistribution.amount',
+    id: 'poLineEstimatedPrice',
+    label: 'adjustment.amount',
     categoryId: 'pol-fund-distribution',
     value: 'AMOUNT',
     recordType: 'ORDER',
-  }, { // Order POL location
-    id: 'locationId', // location
+  },
+  /* Order POL location */
+  {
+    id: 'locationId',
     label: 'line.accordion.location',
     categoryId: 'pol-location',
     value: 'LOCATION',
@@ -1149,8 +1342,10 @@ export const fieldsConfig = [
     categoryId: 'pol-location',
     value: 'QUANTITY_ELECTRONIC',
     recordType: 'ORDER',
-  }, { // Order POL physical resource details
-    id: 'materialSupplier', // physical
+  },
+  /* Order POL physical resource details */
+  {
+    id: 'materialSupplier',
     label: 'physical.materialSupplier',
     categoryId: 'pol-physical-resource-details',
     value: 'MATERIAL_SUPPLIER',
@@ -1185,8 +1380,10 @@ export const fieldsConfig = [
     categoryId: 'pol-physical-resource-details',
     value: 'VOLUME',
     recordType: 'ORDER',
-  }, { // Order POL e-resource details
-    id: 'accessProvider', // eresource
+  },
+  /* Order POL e-resource details */
+  {
+    id: 'accessProvider',
     label: 'eresource.accessProvider',
     categoryId: 'pol-e-resource-details',
     value: 'ACCESS_PROVIDER',
@@ -1233,7 +1430,9 @@ export const fieldsConfig = [
     categoryId: 'pol-e-resource-details',
     value: 'USER_LIMIT',
     recordType: 'ORDER',
-  }, { // Order POL vendor
+  },
+  /* Order POL vendor */
+  {
     id: 'refNumber',
     label: 'vendor.refNumber',
     categoryId: 'pol-vendor',
@@ -1257,325 +1456,435 @@ export const fieldsConfig = [
     categoryId: 'pol-vendor',
     value: 'INSTRUCTIONS_TO_VENDOR',
     recordType: 'ORDER',
-  }, { // Order POL notes
-    id: '',
+  },
+  /* Order POL notes */
+  {
+    id: 'createdDate',
     label: 'order.notes.date',
     categoryId: 'pol-notes',
     value: 'DATE',
     recordType: 'ORDER',
   }, {
-    id: '',
+    id: 'type',
     label: 'order.notes.type',
     categoryId: 'pol-notes',
     value: 'TYPE',
     recordType: 'ORDER',
   }, {
-    id: '',
+    id: 'title',
     label: 'orderLineList.title',
     categoryId: 'pol-notes',
     value: 'TITLE',
     recordType: 'ORDER',
   }, {
-    id: '',
+    id: 'content',
     label: 'line.paneTitle.details',
     categoryId: 'pol-notes',
     value: 'DETAILS',
     recordType: 'ORDER',
-  }, { // Order POL tags
+  },
+  /* Order POL tags */
+  {
     id: 'tags',
-    label: 'settings.orderTemplates.editor.template.tags',
-    categoryId: 'pol-notes',
+    label: 'tag',
+    categoryId: 'pol-tags',
     value: 'TAGS',
     recordType: 'ORDER',
-  }, { // Invoice Invoice admin data
-    id: 'metadata.updatedDate',
-    label: 'ui-invoice.', // create Updated date and time
+  },
+  /* Invoice Invoice admin data */
+  {
+    id: 'updatedDate',
+    label: 'updatedDateAndTime',
     categoryId: 'invoice-admin-data',
-    recordType: 'INVOICE',
-  }, { // Invoice Invoice admin data
-    id: 'metadata.updatedDate',
-    label: 'ui-invoice.', // create Updated date and time
-    categoryId: 'invoice-admin-data',
+    value: 'UPDATED_DATE_AND_TIME',
     recordType: 'INVOICE',
   }, {
-    id: '',
-    label: 'ui-invoice.updatedSource', // create
+    id: 'updatedByUsername',
+    label: 'updatedSource',
     categoryId: 'invoice-admin-data',
+    value: 'UPDATED_SOURCE',
     recordType: 'INVOICE',
   }, {
-    id: 'metadata.createdDate',
-    label: 'ui-invoice.createdDateAndTime', // create
+    id: 'createdDate',
+    label: 'createdDateAndTime',
     categoryId: 'invoice-admin-data',
+    value: 'CREATED_DATE_AND_TIME',
     recordType: 'INVOICE',
   }, {
-    id: '',
-    label: 'ui-invoice.createdSource', // create
+    id: 'createdByUsername',
+    label: 'createdSource',
     categoryId: 'invoice-admin-data',
+    value: 'CREATED_SOURCE',
     recordType: 'INVOICE',
-  }, { // Invoice Invoice information
+  },
+  /* Invoice Invoice information */
+  {
     id: 'invoiceDate',
-    label: 'ui-invoice.invoice.details.information.invoiceDate',
+    label: 'invoice.details.information.invoiceDate',
     categoryId: 'invoice-information',
+    value: 'INVOICE_DATE',
     recordType: 'INVOICE',
   }, {
     id: 'paymentDue',
-    label: 'ui-invoice.invoice.details.information.paymentDue',
+    label: 'invoice.details.information.paymentDue',
     categoryId: 'invoice-information',
+    value: 'PAYMENT_DUE',
     recordType: 'INVOICE',
   }, {
     id: 'paymentTerms',
-    label: 'ui-invoice.invoice.details.information.terms',
+    label: 'invoice.details.information.terms',
     categoryId: 'invoice-information',
+    value: 'TERMS',
+    recordType: 'INVOICE',
+  }, {
+    id: 'status',
+    label: 'invoice.list.status',
+    categoryId: 'invoice-information',
+    value: 'STATUS',
     recordType: 'INVOICE',
   }, {
     id: 'approvalDate',
-    label: 'ui-invoice.invoice.details.information.approvedDate',
+    label: 'invoice.details.information.approvedDate',
     categoryId: 'invoice-information',
+    value: 'APPROVAL_DATE',
+    recordType: 'INVOICE',
+  }, {
+    id: 'approvedBy',
+    label: 'invoice.approvedBy',
+    categoryId: 'invoice-information',
+    value: 'APPROVED_BY',
     recordType: 'INVOICE',
   }, {
     id: 'acqUnitIds',
-    label: 'ui-invoice.invoice.details.information.acqUnits',
+    label: 'invoice.details.information.acqUnits',
     categoryId: 'invoice-information',
+    value: 'ACQUISITIONS_UNITS',
     recordType: 'INVOICE',
   }, {
     id: 'subTotal',
-    label: 'ui-invoice.invoice.details.information.subTotal',
+    label: 'invoice.details.information.subTotal',
     categoryId: 'invoice-information',
+    value: 'SUB-TOTAL',
     recordType: 'INVOICE',
   }, {
     id: 'adjustmentsTotal',
-    label: 'ui-invoice.invoice.details.information.adjustment',
+    label: 'invoice.details.information.adjustment',
     categoryId: 'invoice-information',
+    value: 'TOTAL_ADJUSTMENTS',
     recordType: 'INVOICE',
   }, {
     id: 'total',
-    label: 'ui-invoice.invoice.details.information.totalAmount',
+    label: 'invoice.details.information.totalAmount',
     categoryId: 'invoice-information',
+    value: 'TOTAL_AMOUNT',
     recordType: 'INVOICE',
   }, {
     id: 'billTo',
-    label: 'ui-invoice.invoice.details.information.billToName',
+    label: 'invoice.details.information.billToName',
     categoryId: 'invoice-information',
+    value: 'BILL_TO_NAME',
     recordType: 'INVOICE',
   }, {
     id: 'note',
-    label: 'ui-invoice.invoice.note',
+    label: 'invoice.note',
     categoryId: 'invoice-information',
+    value: 'NOTE',
     recordType: 'INVOICE',
   }, {
     id: 'lockTotal',
-    label: 'ui-invoice.invoice.lockTotal',
+    label: 'invoice.lockTotal',
     categoryId: 'invoice-information',
+    value: 'LOCK_TOTAL',
     recordType: 'INVOICE',
-  }, { // Invoice Invoice adjustments
-    id: 'adjustments.items.adjustmentId',
-    label: 'ui-invoice.adjustment.presetAdjustment',
+  },
+  /* Invoice Invoice adjustments */
+  {
+    id: 'adjustmentId',
+    label: 'adjustment.presetAdjustment',
     categoryId: 'invoice-adjustments',
+    value: 'PRESET_ADJUSTMENTS',
     recordType: 'INVOICE',
   }, {
-    id: 'adjustments.items.description',
-    label: 'ui-invoice.adjustment.description',
-    categoryId: 'invoice-adjustments',
-    recordType: 'INVOICE',
-  }, {
-    id: 'adjustments.items.value',
-    label: 'ui-invoice.adjustment.amount',
-    categoryId: 'invoice-adjustments',
-    recordType: 'INVOICE',
-  }, {
-    id: 'adjustments.items.prorate',
-    label: 'ui-invoice.settings.adjustments.prorate',
-    categoryId: 'invoice-adjustments',
-    recordType: 'INVOICE',
-  }, {
-    id: 'adjustments.items.relationToTotal',
-    label: 'ui-invoice.settings.adjustments.relationToTotal',
-    categoryId: 'invoice-adjustments',
-    recordType: 'INVOICE',
-  }, { // Invoice Invoice vendor information
-    id: 'vendorInvoiceNo',
-    label: 'ui-invoice.invoice.vendorInvoiceNo',
-    categoryId: 'invoice-vendor-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'vendorId',
-    label: 'ui-invoice.invoice.vendorName',
-    categoryId: 'invoice-vendor-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'vendorId',
-    label: 'ui-invoice.invoice.accountingCode',
-    categoryId: 'invoice-vendor-information',
-    recordType: 'INVOICE',
-  }, { // Invoice Invoice extended information
-    id: 'folioInvoiceNo',
-    label: 'ui-invoice.invoice.folioInvoiceNo',
-    categoryId: 'invoice-extended-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'chkSubscriptionOverlap',
-    label: 'ui-invoice.invoice.chkSubscriptionOverlap',
-    categoryId: 'invoice-extended-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'currency',
-    label: 'ui-invoice.invoice.currency',
-    categoryId: 'invoice-extended-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'paymentMethod',
-    label: 'ui-invoice.invoice.paymentMethod',
-    categoryId: 'invoice-extended-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'exportToAccounting',
-    label: 'ui-invoice.invoice.exportToAccounting',
-    categoryId: 'invoice-extended-information',
-    recordType: 'INVOICE',
-  }, { // Invoice Invoice links & documents
-    id: 'name', // document_metadata
-    label: 'ui-invoice.invoice.link.name',
-    categoryId: 'invoice-links-and-documents',
-    recordType: 'INVOICE',
-  }, {
-    id: 'url',
-    label: 'ui-invoice.invoice.link.url',
-    categoryId: 'invoice-links-and-documents',
-    recordType: 'INVOICE',
-  }, { // Invoice Invoice tags
-    id: 'tags',
-    label: 'ui-invoice.', // create Tag
-    categoryId: 'invoice-tags',
-    recordType: 'INVOICE',
-  }, { // Invoice Invoice line admin data
-    id: 'metadata.updatedDate',
-    label: 'ui-invoice.', // create Updated date and time
-    categoryId: 'invoice-line-admin-data',
-    recordType: 'INVOICE',
-  }, {
-    id: '',
-    label: 'ui-invoice.updatedSource', // create
-    categoryId: 'invoice-line-admin-data',
-    recordType: 'INVOICE',
-  }, {
-    id: 'metadata.createdDate',
-    label: 'ui-invoice.createdDateAndTime', // create
-    categoryId: 'invoice-line-admin-data',
-    recordType: 'INVOICE',
-  }, {
-    id: '',
-    label: 'ui-invoice.createdSource', // create
-    categoryId: 'invoice-line-admin-data',
-    recordType: 'INVOICE',
-  }, { // Invoice Invoice line information
     id: 'description',
-    label: 'ui-invoice.invoiceLine.description',
-    categoryId: 'invoice-line-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'invoiceLineNumber',
-    label: 'ui-invoice.invoiceLine.invoiceLineNumber',
-    categoryId: 'invoice-line-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'invoiceLineStatus',
-    label: 'ui-invoice.invoiceLine.invoiceLineStatus',
-    categoryId: 'invoice-line-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'poLineId',
-    label: 'ui-invoice.invoiceLine.poLineId',
-    categoryId: 'invoice-line-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'subscriptionInfo',
-    label: 'ui-invoice.invoiceLine.subscriptionInfo',
-    categoryId: 'invoice-line-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'subscriptionEnd',
-    label: 'ui-invoice.invoiceLine.subscriptionEnd',
-    categoryId: 'invoice-line-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'quantity',
-    label: 'ui-invoice.invoiceLine.quantity',
-    categoryId: 'invoice-line-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'subTotal',
-    label: 'ui-invoice.invoiceLine.subTotal',
-    categoryId: 'invoice-line-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'vendorRefNo',
-    label: 'ui-invoice.invoiceLine.vendorRefNo',
-    categoryId: 'invoice-line-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'accountNumber',
-    label: 'ui-invoice.invoiceLine.accountNumber',
-    categoryId: 'invoice-line-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'comment',
-    label: 'ui-invoice.invoiceLine.comment',
-    categoryId: 'invoice-line-information',
-    recordType: 'INVOICE',
-  }, {
-    id: 'releaseEncumbrance',
-    label: 'ui-invoice.invoiceLine.releaseEncumbrance',
-    categoryId: 'invoice-line-information',
-    recordType: 'INVOICE',
-  }, { // Invoice Invoice line fund distribution
-    id: 'fundId',
-    label: 'ui-invoice.', // create Fund ID
-    categoryId: 'invoice-line-fund-distribution',
+    label: 'adjustment.description',
+    categoryId: 'invoice-adjustments',
+    value: 'DESCRIPTION',
     recordType: 'INVOICE',
   }, {
     id: 'value',
-    label: 'ui-invoice.', // create Value
-    categoryId: 'invoice-line-fund-distribution',
+    label: 'adjustment.amount',
+    categoryId: 'invoice-adjustments',
+    value: 'AMOUNT',
     recordType: 'INVOICE',
   }, {
-    id: '',
-    label: 'ui-invoice.', // create Adjustment
-    categoryId: 'invoice-line-fund-distribution',
+    id: 'type',
+    label: 'settings.adjustments.type',
+    categoryId: 'invoice-adjustments',
+    value: 'TYPE',
     recordType: 'INVOICE',
   }, {
-    id: '', // ???
-    label: 'ui-invoice.adjustment.amount',
-    categoryId: 'invoice-line-fund-distribution',
-    recordType: 'INVOICE',
-  }, { // Invoice Invoice line adjustments
-    id: 'adjustments.items.adjustmentId',
-    label: 'ui-invoice.adjustment.presetAdjustment',
-    categoryId: 'invoice-line-adjustments',
+    id: 'prorate',
+    label: 'settings.adjustments.prorate',
+    categoryId: 'invoice-adjustments',
+    value: 'PRO-RATE',
     recordType: 'INVOICE',
   }, {
-    id: 'adjustments.items.description',
-    label: 'ui-invoice.adjustment.description',
-    categoryId: 'invoice-line-adjustments',
+    id: 'relationToTotal',
+    label: 'settings.adjustments.relationToTotal',
+    categoryId: 'invoice-adjustments',
+    value: 'RELATION_TO_TOTAL',
+    recordType: 'INVOICE',
+  },
+  /* Invoice Invoice vendor information */
+  {
+    id: 'vendorInvoiceNo',
+    label: 'invoice.vendorInvoiceNo',
+    categoryId: 'invoice-vendor-information',
+    value: 'VENDOR_INVOICE_NUMBER',
     recordType: 'INVOICE',
   }, {
-    id: 'adjustments.items.value',
-    label: 'ui-invoice.adjustment.amount',
-    categoryId: 'invoice-line-adjustments',
+    id: 'vendorId',
+    label: 'invoice.vendorName',
+    categoryId: 'invoice-vendor-information',
+    value: 'VENDOR_NAME',
     recordType: 'INVOICE',
   }, {
-    id: 'adjustments.items.type',
-    label: 'ui-invoice.settings.adjustments.type',
-    categoryId: 'invoice-line-adjustments',
+    id: 'accountingCode',
+    label: 'invoice.accountingCode',
+    categoryId: 'invoice-vendor-information',
+    value: 'ACCOUNTING_CODE',
+    recordType: 'INVOICE',
+  },
+  /* Invoice Invoice extended information */
+  {
+    id: 'folioInvoiceNo',
+    label: 'invoice.folioInvoiceNo',
+    categoryId: 'invoice-extended-information',
+    value: 'FOLIO_INVOICE_NUMBER',
     recordType: 'INVOICE',
   }, {
-    id: 'adjustments.items.relationToTotal',
-    label: 'ui-invoice.settings.adjustments.relationToTotal',
-    categoryId: 'invoice-line-adjustments',
+    id: 'chkSubscriptionOverlap',
+    label: 'invoice.chkSubscriptionOverlap',
+    categoryId: 'invoice-extended-information',
+    value: 'CHECK_SUBSCRIPTION_OVERLAP',
     recordType: 'INVOICE',
-  }, { // Invoice Invoice line tags
+  }, {
+    id: 'currency',
+    label: 'invoice.currency',
+    categoryId: 'invoice-extended-information',
+    value: 'CURRENCY',
+    recordType: 'INVOICE',
+  }, {
+    id: 'paymentMethod',
+    label: 'invoice.paymentMethod',
+    categoryId: 'invoice-extended-information',
+    value: 'PAYMENT_METHOD',
+    recordType: 'INVOICE',
+  }, {
+    id: 'exportToAccounting',
+    label: 'invoice.exportToAccounting',
+    categoryId: 'invoice-extended-information',
+    value: 'EXPORT_TO_ACCOUNTING',
+    recordType: 'INVOICE',
+  },
+  /* Invoice Invoice links & documents */
+  {
+    id: 'name',
+    label: 'invoice.link.name',
+    categoryId: 'invoice-links-and-documents',
+    value: 'LINK_NAME',
+    recordType: 'INVOICE',
+  }, {
+    id: 'url',
+    label: 'invoice.link.url',
+    categoryId: 'invoice-links-and-documents',
+    value: 'EXTERNAL_URL',
+    recordType: 'INVOICE',
+  },
+  /* Invoice Invoice tags */
+  {
     id: 'tags',
-    label: 'ui-invoice.', // create Tag
+    label: 'tag',
+    categoryId: 'invoice-tags',
+    value: 'TAG',
+    recordType: 'INVOICE',
+  },
+  /* Invoice Invoice line admin data */
+  {
+    id: 'updatedDate',
+    label: 'updatedDateAndTime',
+    categoryId: 'invoice-line-admin-data',
+    value: 'UPDATED_DATE_AND_TIME',
+    recordType: 'INVOICE',
+  }, {
+    id: 'updatedByUsername',
+    label: 'updatedSource',
+    categoryId: 'invoice-line-admin-data',
+    value: 'UPDATED_SOURCE',
+    recordType: 'INVOICE',
+  }, {
+    id: 'createdDate',
+    label: 'createdDateAndTime',
+    categoryId: 'invoice-line-admin-data',
+    value: 'CREATED_DATE_AND_TIME',
+    recordType: 'INVOICE',
+  }, {
+    id: 'createdByUsername',
+    label: 'createdSource',
+    categoryId: 'invoice-line-admin-data',
+    value: 'CREATED_SOURCE',
+    recordType: 'INVOICE',
+  },
+  /* Invoice Invoice line information */
+  {
+    id: 'description',
+    label: 'invoiceLine.description',
+    categoryId: 'invoice-line-information',
+    value: 'DESCRIPTION',
+    recordType: 'INVOICE',
+  }, {
+    id: 'invoiceLineNumber',
+    label: 'invoiceLine.invoiceLineNumber',
+    categoryId: 'invoice-line-information',
+    value: 'INVOICE_LINE_NUMBER',
+    recordType: 'INVOICE',
+  }, {
+    id: 'invoiceLineStatus',
+    label: 'invoiceLine.invoiceLineStatus',
+    categoryId: 'invoice-line-information',
+    value: 'INVOICE_LINE_STATUS',
+    recordType: 'INVOICE',
+  }, {
+    id: 'poLineId',
+    label: 'invoiceLine.poLineId',
+    categoryId: 'invoice-line-information',
+    value: 'PO_LINE_ID',
+    recordType: 'INVOICE',
+  }, {
+    id: 'subscriptionInfo',
+    label: 'invoiceLine.subscriptionInfo',
+    categoryId: 'invoice-line-information',
+    value: 'SUBSCRIPTION_INFO',
+    recordType: 'INVOICE',
+  }, {
+    id: 'subscriptionStart',
+    label: 'invoiceLine.subscriptionStart',
+    categoryId: 'invoice-line-information',
+    value: 'SUBSCRIPTION_START_DATE',
+    recordType: 'INVOICE',
+  }, {
+    id: 'subscriptionEnd',
+    label: 'invoiceLine.subscriptionEnd',
+    categoryId: 'invoice-line-information',
+    value: 'SUBSCRIPTION_END_DATE',
+    recordType: 'INVOICE',
+  }, {
+    id: 'quantity',
+    label: 'invoiceLine.quantity',
+    categoryId: 'invoice-line-information',
+    value: 'QUANTITY',
+    recordType: 'INVOICE',
+  }, {
+    id: 'subTotal',
+    label: 'invoiceLine.subTotal',
+    categoryId: 'invoice-line-information',
+    value: 'SUB-TOTAL',
+    recordType: 'INVOICE',
+  }, {
+    id: 'vendorRefNo',
+    label: 'invoiceLine.vendorRefNo',
+    categoryId: 'invoice-line-information',
+    value: 'VENDOR_REF_NUMBER',
+    recordType: 'INVOICE',
+  }, {
+    id: 'accountNumber',
+    label: 'invoiceLine.accountNumber',
+    categoryId: 'invoice-line-information',
+    value: 'ACCOUNT_NUMBER',
+    recordType: 'INVOICE',
+  }, {
+    id: 'accountingCode',
+    label: 'invoiceLine.accountingCode',
+    categoryId: 'invoice-line-information',
+    value: 'ACCOUNTING_CODE',
+    recordType: 'INVOICE',
+  }, {
+    id: 'comment',
+    label: 'invoiceLine.comment',
+    categoryId: 'invoice-line-information',
+    value: 'COMMENT',
+    recordType: 'INVOICE',
+  }, {
+    id: 'releaseEncumbrance',
+    label: 'invoiceLine.releaseEncumbrance',
+    categoryId: 'invoice-line-information',
+    value: 'RELEASE_ENCUMBRANCE',
+    recordType: 'INVOICE',
+  },
+  /* Invoice Invoice line fund distribution */
+  {
+    id: 'fundId',
+    label: 'invoiceLine.fundId',
+    categoryId: 'invoice-line-fund-distribution',
+    value: 'FUND_ID',
+    recordType: 'INVOICE',
+  }, {
+    id: 'value',
+    label: 'invoiceLine.value',
+    categoryId: 'invoice-line-fund-distribution',
+    value: 'VALUE',
+    recordType: 'INVOICE',
+  }, {
+    id: 'distributionType',
+    label: 'adjustment',
+    categoryId: 'invoice-line-fund-distribution',
+    value: 'ADJUSTMENT',
+    recordType: 'INVOICE',
+  }, {
+    id: 'total',
+    label: 'adjustment.amount',
+    categoryId: 'invoice-line-fund-distribution',
+    value: 'AMOUNT',
+    recordType: 'INVOICE',
+  },
+  /* Invoice Invoice line adjustments */
+  {
+    id: 'adjustmentId',
+    label: 'adjustment.presetAdjustment',
+    categoryId: 'invoice-line-adjustments',
+    value: 'PRESET_ADJUSTMENT',
+    recordType: 'INVOICE',
+  }, {
+    id: 'description',
+    label: 'adjustment.description',
+    categoryId: 'invoice-line-adjustments',
+    value: 'DESCRIPTION',
+    recordType: 'INVOICE',
+  }, {
+    id: 'value',
+    label: 'adjustment.amount',
+    categoryId: 'invoice-line-adjustments',
+    value: 'AMOUNT',
+    recordType: 'INVOICE',
+  }, {
+    id: 'type',
+    label: 'settings.adjustments.type',
+    categoryId: 'invoice-line-adjustments',
+    value: 'TYPE',
+    recordType: 'INVOICE',
+  }, {
+    id: 'relationToTotal',
+    label: 'settings.adjustments.relationToTotal',
+    categoryId: 'invoice-line-adjustments',
+    value: 'RELATION_TO_TOTAL',
+    recordType: 'INVOICE',
+  },
+  /* Invoice Invoice line tags */
+  {
+    id: 'tags',
+    label: 'tag',
     categoryId: 'invoice-line-tags',
+    value: 'TAG',
     recordType: 'INVOICE',
   },
 ];

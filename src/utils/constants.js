@@ -216,3 +216,48 @@ export const PROFILE_LINKING_RULES = {
   },
   childrenAllowed: [ENTITY_KEYS.MATCH_PROFILES],
 };
+
+export const INSTANCE_RESOURCE_PATHS = [
+  'raml-util/schemas/metadata.schema',
+  'instance.json',
+  'instancerelationship.json',
+];
+
+export const HOLDINGS_RESOURCE_PATHS = [
+  'raml-util/schemas/metadata.schema',
+  'holdingsrecord.json',
+];
+
+export const ITEM_RESOURCE_PATHS = [
+  'raml-util/schemas/metadata.schema',
+  'item.json',
+];
+
+export const ORDER_RESOURCE_PATHS = [
+  'raml-util/schemas/metadata.schema',
+  'acq-models/mod-orders-storage/schemas/purchase_order.json',
+  'acq-models/mod-orders-storage/schemas/renewal.json',
+  'acq-models/mod-orders-storage/schemas/po_line.json',
+  'acq-models/mod-orders-storage/schemas/details.json',
+  'acq-models/mod-orders-storage/schemas/contributor.json',
+  'acq-models/mod-orders-storage/schemas/receiving_history.json',
+  'acq-models/mod-orders-storage/schemas/cost.json',
+  'acq-models/mod-orders-storage/schemas/fund_distribution.json',
+  'acq-models/mod-orders-storage/schemas/location.json',
+  'acq-models/mod-orders-storage/schemas/physical.json',
+  'acq-models/mod-orders-storage/schemas/eresource.json',
+  'acq-models/mod-orders-storage/schemas/vendor_detail.json',
+];
+
+export const NOTES_RESOURCE_PATHS = ['types/notes/note.json'];
+
+export const INVOICE_RESOURCE_PATHS = [
+  'raml-util/schemas/metadata.schema',
+  'acq-models/mod-invoice-storage/schemas/invoice.json',
+  'acq-models/mod-invoice-storage/schemas/adjustment.json',
+  'acq-models/mod-invoice-storage/schemas/document_metadata.json',
+  'acq-models/mod-invoice-storage/schemas/invoice_line.json',
+  'acq-models/mod-invoice-storage/schemas/fund_distribution.json',
+];
+
+export const SRM_RESOURCE_PATHS = ['instance.json'];

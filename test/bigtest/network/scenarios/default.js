@@ -13,6 +13,7 @@ import loadRecords from './load-records';
 import jobs from './fetch-jobs-data-success';
 import jobsLogs from './fetch-jobs-logs-success';
 import jobLogs from './fetch-job-log-success';
+import modules from './fetch-modules';
 
 export default function defaultScenario(server) {
   fileExtensions(server);
@@ -30,4 +31,5 @@ export default function defaultScenario(server) {
   jobs(server);
   jobsLogs(server);
   jobLogs(server);
+  modules(server);
 }

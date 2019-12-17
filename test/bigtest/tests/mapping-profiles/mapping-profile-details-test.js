@@ -12,10 +12,7 @@ import {
   mappingProfileForm,
   mappingProfileDetails,
 } from '../../interactors';
-import {
-  associatedActionProfiles,
-  noAssociatedActionProfiles,
-} from '../../mocks';
+import { noAssociatedActionProfiles } from '../../mocks';
 
 async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
   const {

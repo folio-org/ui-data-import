@@ -75,4 +75,7 @@ RecordTypesSelect.propTypes = {
   onRecordSelect: PropTypes.func,
 };
 
-RecordTypesSelect.defaultProps = { record: {} };
+RecordTypesSelect.defaultProps = {
+  id: 'compare-record-types',
+  record: {},
+};

@@ -16,6 +16,7 @@ import {
   Button,
   Headline,
   KeyValue,
+  NoValue,
   Accordion,
   AccordionSet,
   ConfirmationModal,
@@ -239,34 +240,37 @@ export class ViewMatchProfile extends Component {
           fields: [
             {
               label: 'field',
-              value: this.getValue(incomingFields, 'field') || '-',
+              value: this.getValue(incomingFields, 'field') || <NoValue />,
             }, {
               label: 'indicator1',
-              value: this.getValue(incomingFields, 'indicator1') || '-',
+              value: this.getValue(incomingFields, 'indicator1') || <NoValue />,
             }, {
               label: 'indicator2',
-              value: this.getValue(incomingFields, 'indicator2') || '-',
+              value: this.getValue(incomingFields, 'indicator2') || <NoValue />,
             }, {
               label: 'recordSubfield',
-              value: this.getValue(incomingFields, 'recordSubfield') || '-',
+              value: this.getValue(incomingFields, 'recordSubfield') || <NoValue />,
             },
           ],
           qualifier: {
             qualifierType: this.getLabel(QUALIFIER_TYPES, get(incomingMatchExpression, ['qualifier', 'qualifierType'])),
-            qualifierValue: get(incomingMatchExpression, ['qualifier', 'qualifierValue']) || '-',
+            qualifierValue: get(incomingMatchExpression, ['qualifier', 'qualifierValue']) || <NoValue />,
             comparisonPart: this.getLabel(COMPARISON_PARTS, get(incomingMatchExpression, ['qualifier', 'comparisonPart'])),
           },
         },
         incomingRecordType: get(matchDetails, 'incomingRecordType', ''),
-        matchCriterion: this.getLabel(CRITERION_TYPES, get(matchDetails, 'matchCriterion', '')) || '-',
+        matchCriterion: this.getLabel(CRITERION_TYPES, get(matchDetails, 'matchCriterion', ''))
+          || <NoValue />,
         existingMatchExpression: {
           fields: [
             {
               label: 'field',
-              value: capitalize(existingField, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS) || '-',
+              value: capitalize(existingField, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)
+                || <NoValue />,
             },
           ],
-          dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', '')) || '-',
+          dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', ''))
+            || <NoValue />,
           qualifier: {
             qualifierType: this.getLabel(QUALIFIER_TYPES, get(existingMatchExpression, ['qualifier', 'qualifierType'])),
             qualifierValue: get(existingMatchExpression, ['qualifier', 'qualifierValue']),
