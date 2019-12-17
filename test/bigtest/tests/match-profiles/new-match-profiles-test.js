@@ -25,8 +25,21 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
   await matchProfileForm.submitFormButton.click();
 }
 
+function checkOptionsCount(recordType, expectedCount) {
+  describe(`when ${recordType} record selected`, () => {
+    beforeEach(async function () {
+      await matchProfileForm.recordTypesSelect.select(recordType);
+      await matchProfileForm.matchCriteria.existingRecordFieldSections.clickDropdownButton();
+    });
+
+    it('has correct count of options', () => {
+      expect(matchProfileForm.matchCriteria.existingRecordFieldSections.dropdownList.optionCount).to.be.equal(expectedCount);
+    });
+  });
+}
+
 describe('Match profile form', () => {
-  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags'] });
+  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-modules', 'fetch-json-schemas', 'fetch-users', 'fetch-tags'] });
 
   describe('appears', () => {
     beforeEach(async function () {
@@ -217,13 +230,35 @@ describe('Match profile form', () => {
             expect(matchProfileForm.matchCriteria.existingRecord.label).to.be.equal('Existing record');
           });
 
-          it('has correct length of sections', () => {
+          it('has correct sections count', () => {
             expect(matchProfileForm.matchCriteria.existingRecordSections.children().length).to.be.equal(3);
           });
 
           describe('"Existing record field" section', () => {
             it('has correct label', () => {
               expect(matchProfileForm.matchCriteria.existingRecordSections.children(0).label).to.be.equal('Existing record field');
+            });
+
+            describe('when not MARC record selected', () => {
+              beforeEach(async function () {
+                await matchProfileForm.recordTypesSelect.select('INSTANCE');
+                await matchProfileForm.recordTypesSelect.select('ORDER');
+                await matchProfileForm.matchCriteria.existingRecordFieldSections.clickDropdownButton();
+              });
+
+              it('has correct label', () => {
+                expect(matchProfileForm.matchCriteria.existingRecordSections.children(0).label).to.be.equal('Existing Order record field');
+              });
+
+              it('dropdown is expanded', () => {
+                expect(matchProfileForm.matchCriteria.existingRecordFieldSections.expandedAttribute).to.be.equal('true');
+              });
+
+              checkOptionsCount('INSTANCE', 54);
+              checkOptionsCount('HOLDINGS', 19);
+              checkOptionsCount('ITEM', 13);
+              checkOptionsCount('ORDER', 29);
+              checkOptionsCount('INVOICE', 21);
             });
           });
 

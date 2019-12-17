@@ -1,107 +1,118 @@
 export const fieldCategoriesConfig = [
-  { // Instance
+  /* Instance */
+  {
     id: 'admin-data',
-    label: 'ui-inventory.administrativeData',
+    label: 'adminData',
     moduleId: 'instance',
   }, {
     id: 'title-data',
-    label: 'ui-inventory.titleData',
+    label: 'titleData',
+    moduleId: 'instance',
+  }, {
+    id: 'identifier',
+    label: 'identifier',
     moduleId: 'instance',
   }, {
     id: 'contributor',
-    label: 'ui-inventory.contributor',
+    label: 'contributor',
     moduleId: 'instance',
   }, {
     id: 'descriptive-data',
-    label: 'ui-inventory.descriptiveData',
+    label: 'descriptiveData',
     moduleId: 'instance',
   }, {
     id: 'instance-notes',
-    label: 'ui-inventory.instanceNotes',
+    label: 'instanceNotes',
     moduleId: 'instance',
   }, {
     id: 'electronic-access',
-    label: 'ui-inventory.electronicAccess',
+    label: 'electronicAccess',
     moduleId: 'instance',
   }, {
     id: 'subject',
-    label: 'ui-inventory.subject',
+    label: 'subject',
     moduleId: 'instance',
   }, {
     id: 'classification',
-    label: 'ui-inventory.classification',
+    label: 'classification',
     moduleId: 'instance',
   }, {
     id: 'instance-relationship',
-    label: 'ui-inventory.instanceRelationshipAnalyticsBoundWith',
+    label: 'instanceRelationshipAnalyticsBoundWith',
     moduleId: 'instance',
-  }, { // Holdings
+  },
+  /* Holdings */
+  {
     id: 'admin-data',
-    label: 'ui-inventory.administrativeData',
+    label: 'adminData',
     moduleId: 'holdings',
   }, {
     id: 'location',
-    label: 'ui-inventory.location',
+    label: 'location',
     moduleId: 'holdings',
   }, {
     id: 'holdings-details',
-    label: 'ui-inventory.holdingsDetails',
+    label: 'holdingsDetails',
     moduleId: 'holdings',
   }, {
     id: 'holdings-notes',
-    label: 'ui-inventory.holdingsNotes',
+    label: 'holdingsNotes',
     moduleId: 'holdings',
   }, {
     id: 'electronic-access',
-    label: 'ui-inventory.electronicAccess',
+    label: 'electronicAccess',
     moduleId: 'holdings',
   }, {
     id: 'acquisition',
-    label: 'ui-inventory.acquisition',
+    label: 'acquisition',
     moduleId: 'holdings',
   }, {
     id: 'receiving-history',
-    label: 'ui-inventory.receivingHistory',
+    label: 'receivingHistory',
     moduleId: 'holdings',
-  }, { // Item
+  },
+  /* Item */
+  {
     id: 'admin-data',
-    label: 'ui-inventory.administrativeData',
+    label: 'adminData',
     moduleId: 'item',
   }, {
     id: 'item-data',
-    label: 'ui-inventory.itemData',
+    label: 'itemData',
     moduleId: 'item',
   }, {
     id: 'enumeration-data',
-    label: 'ui-inventory.enumerationData',
+    label: 'enumerationData',
     moduleId: 'item',
   }, {
     id: 'condition',
-    label: 'ui-inventory.condition',
+    label: 'condition',
     moduleId: 'item',
   }, {
     id: 'item-notes',
-    label: 'ui-inventory.itemNotes',
+    label: 'itemNotes',
     moduleId: 'item',
   }, {
     id: 'loan-and-availability',
-    label: 'ui-inventory.item.loanAndAvailability',
+    label: 'item.loanAndAvailability',
     moduleId: 'item',
   }, {
     id: 'location',
-    label: 'ui-inventory.location',
+    label: 'location',
     moduleId: 'item',
   }, {
     id: 'electronic-access',
-    label: 'ui-inventory.electronicAccess',
+    label: 'electronicAccess',
     moduleId: 'item',
-  }, { // Order
+  },
+  /* Order */
+  {
     id: 'po-admin-data',
     label: 'order.adminData',
     moduleId: 'order',
   }, {
     id: 'po-purchase-order',
-    label: 'poPurchaseOrder',
+    label: 'order.purchaseOrder',
     moduleId: 'order',
   }, {
     id: 'po-renewal-information',
@@ -159,53 +170,55 @@ export const fieldCategoriesConfig = [
     id: 'pol-tags',
     label: 'settings.orderTemplates.accordion.polTags',
     moduleId: 'order',
-  }, { // Invoice
+  },
+  /* Invoice */
+  {
     id: 'invoice-admin-data',
-    label: 'ui-invoice.', // create Invoice admin data
+    label: 'invoice.invoiceAdminData',
     moduleId: 'invoice',
   }, {
     id: 'invoice-information',
-    label: 'ui-invoice.invoiceInformation',
+    label: 'invoiceInformation',
     moduleId: 'invoice',
   }, {
     id: 'invoice-adjustments',
-    label: 'ui-invoice.', // create Invoice adjustments
+    label: 'invoice.invoiceAdjustments',
     moduleId: 'invoice',
   }, {
     id: 'invoice-vendor-information',
-    label: 'ui-invoice.', // create Invoice vendor information
+    label: 'invoice.invoiceVendorInformation',
     moduleId: 'invoice',
   }, {
     id: 'invoice-extended-information',
-    label: 'ui-invoice.', // create Invoice extended information
+    label: 'invoice.invoiceExtendedInformation',
     moduleId: 'invoice',
   }, {
     id: 'invoice-links-and-documents',
-    label: 'ui-invoice.', // create Invoice links & documents
+    label: 'invoice.invoiceLinksAndDocuments',
     moduleId: 'invoice',
   }, {
     id: 'invoice-tags',
-    label: 'ui-invoice.', // create Invoice tags
+    label: 'invoice.invoiceTags',
     moduleId: 'invoice',
   }, {
     id: 'invoice-line-admin-data',
-    label: 'ui-invoice.', // create Invoice line admin data
+    label: 'invoiceLine.adminData',
     moduleId: 'invoice',
   }, {
     id: 'invoice-line-information',
-    label: 'ui-invoice.invoiceLineInformation',
+    label: 'invoiceLineInformation',
     moduleId: 'invoice',
   }, {
     id: 'invoice-line-fund-distribution',
-    label: 'ui-invoice.', // create Invoice line fund distribution
+    label: 'invoiceLine.fundDistribution',
     moduleId: 'invoice',
   }, {
     id: 'invoice-line-adjustments',
-    label: 'ui-invoice.', // create Invoice line adjustments
+    label: 'invoiceLine.adjustments',
     moduleId: 'invoice',
   }, {
     id: 'invoice-line-tags',
-    label: 'ui-invoice.', // create Invoice line tags
+    label: 'invoiceLine.tags',
     moduleId: 'invoice',
   },
 ];

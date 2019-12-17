@@ -3,8 +3,8 @@ import { get } from 'lodash';
 import ordersTranslations from '@folio/orders/translations/ui-orders/en';
 import inventoryTranslations from '@folio/inventory/translations/ui-inventory/en';
 import invoiceTranslations from '@folio/invoice/translations/ui-invoice/en';
-import { fieldsConfig } from '../../test/bigtest/mocks/fields-config';
-import { fieldCategoriesConfig } from '../../test/bigtest/mocks/field-categories-config';
+import { fieldsConfig } from './fields-config';
+import { fieldCategoriesConfig } from './field-categories-config';
 
 const translations = {
   ...ordersTranslations,
