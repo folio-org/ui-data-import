@@ -37,7 +37,7 @@
     "fileDeleteError": "Error while deleting {name} file",
     "upload.invalid": "Error: file upload",
     "upload.fileSize.invalid": "Error: not enough space to store the file. Contact system administrator",
-    "returnToAssign.message": "Draft job in progress",
+    "returnToAssign.message": "File upload already in progress",
     "returnToAssign.subMessage": "{filesAmount} files uploaded",
     "returnToAssign.resume": "Resume",
     "returnToAssign.deleteFiles": "Delete files",

@@ -247,7 +247,7 @@
     "match.incoming.qualifier": "Use um qualificador",
     "match.incoming.part": "Compare apenas parte do valor",
     "match.existing.record": "Registro existente de {recordType}",
-    "match.existing.record.field": "Campo {recordType} de registro existente ",
+    "match.existing.record.field": "Campo {recordType} de registro existente",
     "match.existing.qualifier": "Use um qualificador",
     "match.existing.part": "Compare apenas parte do valor",
     "match.qualifier.begins-with": "Começa com",
