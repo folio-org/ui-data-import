@@ -187,7 +187,7 @@
     "settings.mappingProfiles.new": "New field mapping profile",
     "chooseIncomingRecordType": "Select incoming record type",
     "chooseFolioRecordType": "Select FOLIO record type",
-    "settings.mappingProfiles.exceptionModal.label": "Cannot delete filed mapping profile",
+    "settings.mappingProfiles.exceptionModal.label": "Cannot delete field mapping profile",
     "settings.mappingProfiles.exceptionModal.message": "This field mapping profile cannot be deleted, as it is in use by one or more action profiles.",
     "modal.mappingProfile.delete.header": "Delete \"{name}\" field mapping profile?",
     "modal.mappingProfile.delete.message": "Delete field mapping profile?",
