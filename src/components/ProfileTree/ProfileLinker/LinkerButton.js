@@ -10,7 +10,7 @@ import {
 } from '@folio/stripes-core';
 import { Button } from '@folio/stripes-components';
 
-import css from './ProfileTree.css';
+import css from '../ProfileTree.css';
 
 export const LinkerButton = memo(({
   id,
@@ -18,18 +18,20 @@ export const LinkerButton = memo(({
   searchLabel,
   className,
   onTypeSelected,
-  onLinkCallback,
+  onLink,
+  onClose,
   dataAttributes,
 }) => (
   <Pluggable
     type="find-import-profile"
     id={`${id}-clickable-find-import-profile`}
-    addLines={onLinkCallback}
     entityKey={entityKey}
     dataKey={entityKey}
     disabled={false} // @TODO: Change this to actual value from LinkingRules object
     isSingleSelect
     isMultiLink
+    onLink={onLink}
+    onClose={onClose}
     {...dataAttributes}
     renderTrigger={({
       ref,
@@ -78,8 +80,9 @@ LinkerButton.propTypes = {
   id: PropTypes.string.isRequired,
   entityKey: PropTypes.string.isRequired,
   onTypeSelected: PropTypes.func.isRequired,
-  onLinkCallback: PropTypes.func.isRequired,
-  searchLabel: PropTypes.Node || PropTypes.string,
+  onLink: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
+  searchLabel: PropTypes.node || PropTypes.string,
   className: PropTypes.string,
   dataAttributes: PropTypes.object,
 };

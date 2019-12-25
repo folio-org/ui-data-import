@@ -155,7 +155,7 @@ export const MappingProfilesFormComponent = ({
         >
           <ActionsAssociator.current
             isMultiSelect
-            isMultiLink
+            isMultiLink={false}
           />
         </Accordion>
       </AccordionSet>
@@ -179,5 +179,5 @@ export const MappingProfilesForm = compose(
     form: formName,
     navigationCheck: true,
     enableReinitialize: true,
-  })
+  }),
 )(MappingProfilesFormComponent);
