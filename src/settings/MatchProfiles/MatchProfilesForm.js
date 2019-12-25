@@ -34,16 +34,12 @@ export const MatchProfilesFormComponent = ({
   const isEditMode = layer === LAYER_TYPES.EDIT;
   const isSubmitDisabled = pristine || submitting;
 
-  const paneTitle = isEditMode
-    ? (
-      <FormattedMessage id="ui-data-import.edit">
-        {txt => `${txt} ${initialValues.name}`}
-      </FormattedMessage>
-    )
-    : <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
-  const headLine = isEditMode
-    ? initialValues.name
-    : <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
+  const paneTitle = isEditMode ? (
+    <FormattedMessage id="ui-data-import.edit">
+      {txt => `${txt} ${initialValues.name}`}
+    </FormattedMessage>
+  ) : <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
+  const headLine = isEditMode ? initialValues.name : <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
 
   const editWithModal = isEditMode && associatedJobProfilesAmount;
   const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
@@ -57,33 +53,18 @@ export const MatchProfilesFormComponent = ({
     }
   };
 
+  const recordTypeId = FOLIO_RECORD_TYPES[initialValues.existingRecordType].captionId;
+  const recordTypeLabel = (
+    <FormattedMessage
+      id="ui-data-import.match.existing.record"
+      values={{ recordType: isEditMode ? <FormattedMessage id={recordTypeId} /> : '' }}
+    />
+  );
   const componentsProps = {
     'profile-headline': { children: headLine },
     'panel-existing': { id: 'panel-existing-edit' },
-    'existing-record-section': {
-      label: (
-        <FormattedMessage
-          id="ui-data-import.match.existing.record"
-          values={{
-            recordType: isEditMode
-              ? <FormattedMessage id={FOLIO_RECORD_TYPES[initialValues.existingRecordType].captionId} />
-              : '',
-          }}
-        />
-      ),
-    },
-    'existing-record-field': {
-      label: (
-        <FormattedMessage
-          id="ui-data-import.match.existing.record.field"
-          values={{
-            recordType: isEditMode
-              ? <FormattedMessage id={FOLIO_RECORD_TYPES[initialValues.existingRecordType].captionId} />
-              : '',
-          }}
-        />
-      ),
-    },
+    'existing-record-section': { label: recordTypeLabel },
+    'existing-record-field': { label: recordTypeLabel },
     'confirm-edit-match-profile-modal': {
       open: isConfirmEditModalOpen,
       heading: <FormattedMessage id="ui-data-import.settings.matchProfiles.confirmEditModal.heading" />,
