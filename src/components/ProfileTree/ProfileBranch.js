@@ -172,7 +172,7 @@ export const ProfileBranch = memo(({
                 id={`${recordData.id}-match`}
                 linkingRules={linkingRules}
                 onTypeSelected={setCurrentType}
-                onLinkCallback={onMatchLink}
+                onLink={onMatchLink}
                 {...dataAttributes}
               />
             )}
@@ -222,7 +222,7 @@ export const ProfileBranch = memo(({
                 id={`${recordData.id}-non-match`}
                 linkingRules={linkingRules}
                 onTypeSelected={setCurrentType}
-                onLinkCallback={onNonMatchLink}
+                onLink={onNonMatchLink}
                 {...dataAttributes}
               />
             )}
