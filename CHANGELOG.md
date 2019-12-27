@@ -2,6 +2,7 @@
 
 ## **1.8.0** (in progress)
 * Create ProfileTree Component (UIDATIMP-326)
+* Update sorting query for jobs (UIDATIMP-346)
 * Fix typo in a field mapping profile modal (UIDATIMP-336)
 
 ## [1.7.0](https://github.com/folio-org/ui-data-import/tree/v1.7.0) (2019-12-04)
