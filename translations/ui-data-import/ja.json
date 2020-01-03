@@ -275,9 +275,9 @@
     "modal.profile.unlink.heading": "Are you sure?",
     "modal.profile.unlink.message": "Are you sure you want to unlink \"{name}\" Profile?",
     "emptyMessage": "This {type} contains no items",
-    "list": "list",
+    "list": "リスト",
     "section": "section",
-    "settings.action.add": "Add",
+    "settings.action.add": "追加",
     "settings.getStarted": "Click here to get started",
     "settings.profiles.select.actionProfiles": "Action",
     "settings.profiles.select.jobProfiles": "Job",
@@ -285,5 +285,5 @@
     "settings.profiles.select.mappingProfiles": "Field mapping",
     "settings.profiles.linking.forMatches": "For matches",
     "settings.profiles.linking.forNonMatches": "For non-matches",
-    "modal.profile.delete.message": "Are you sure you want to delete \"{name}\" Profile?"
+    "modal.profile.delete.message": "「 {name} 」プロファイルを削除してもよろしいですか？"
 }
