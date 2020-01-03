@@ -147,7 +147,7 @@
     "settings.associatedJobProfiles": "Associated job profiles",
     "settings.associatedMappingProfile": "Associated field mapping profile",
     "settings.actionProfiles.confirmEditModal.heading": "Confirm action profile changes",
-    "settings.actionProfiles.confirmEditModal.message": "These action profile edit will affect {amount, number} associated job {amount, plural, one {profile} other {profiles}}. Please confirm",
+    "settings.actionProfiles.confirmEditModal.message": "Este perfil de acción afectará a {amount, number} proceso asociado {amount, plural, one { perfil } other { perfiles }} . Por favor confirmar",
     "modal.actionProfile.delete.header": "Delete \"{name}\" action profile?",
     "modal.actionProfile.delete.message": "Delete action profile?",
     "settings.actionProfiles.exceptionModal.label": "Cannot delete action profile",
