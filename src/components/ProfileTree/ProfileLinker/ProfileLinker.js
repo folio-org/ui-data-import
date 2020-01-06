@@ -1,7 +1,4 @@
-import React, {
-  memo,
-  useState,
-} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
@@ -16,7 +13,7 @@ import {
 
 import css from '../ProfileTree.css';
 
-export const ProfileLinker = memo(({
+export const ProfileLinker = ({
   id,
   title,
   linkingRules,
@@ -28,37 +25,33 @@ export const ProfileLinker = memo(({
 
   return (
     <Dropdown
-      id="type-selector-dropdown"
+      id={`type-selector-dropdown-${id}`}
       className={classNames(css['linker-button'], className)}
       open={typeSelectorOpen}
       onToggle={noop}
       renderTrigger={triggerProps => (
         <LinkerTrigger
-          id={id}
+          id={`type-selector-trigger-${id}`}
           title={title}
           onClick={() => setTypeSelectorOpen(!typeSelectorOpen)}
           {...triggerProps}
         />
       )}
-      renderMenu={menuProps => {
-        console.log('Menu Props: ', menuProps);
-
-        return (
-          <LinkerMenu
-            id={id}
-            linkingRules={linkingRules}
-            onTypeSelected={onTypeSelected}
-            onLink={onLink}
-            onClose={() => setTypeSelectorOpen(false)}
-            {...menuProps}
-          />
-        );
-      }}
+      renderMenu={menuProps => (
+        <LinkerMenu
+          id={`type-selector-menu-${id}`}
+          linkingRules={linkingRules}
+          onTypeSelected={onTypeSelected}
+          onLink={onLink}
+          onClose={() => setTypeSelectorOpen(false)}
+          {...menuProps}
+        />
+      )}
       usePortal={false}
       relativePosition
     />
   );
-});
+};
 
 ProfileLinker.propTypes = {
   id: PropTypes.string.isRequired,
