@@ -107,6 +107,7 @@ export const ProfileTree = memo(({
         </div>
         {!record && (
           <ProfileLinker
+            id="linker-root"
             linkingRules={linkingRules}
             onTypeSelected={setCurrentType}
             onLink={onRootLink}
