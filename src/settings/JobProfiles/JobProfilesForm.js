@@ -111,12 +111,10 @@ export const JobProfilesFormComponent = ({
           label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
           separator={false}
         >
-          {/* Will be released in v1.8.0
           <ProfileTree
             linkingRules={PROFILE_LINKING_RULES}
             contentData={get(currentWrapper, 'childSnapshotWrappers', [])}
           />
-          */}
         </Accordion>
       </AccordionSet>
     </FullScreenForm>
