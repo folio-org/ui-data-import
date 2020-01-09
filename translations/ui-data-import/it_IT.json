@@ -273,5 +273,17 @@
     "settings.profile.select": "Seleziona profilo",
     "settings.profile.unlink": "Scollega questo profilo",
     "modal.profile.unlink.heading": "Sei sicuro?",
-    "modal.profile.unlink.message": "Sei sicuro di voler scollegare il profilo \"{name}\"?"
+    "modal.profile.unlink.message": "Sei sicuro di voler scollegare il profilo \"{name}\"?",
+    "emptyMessage": "Questo {type} non contiene item",
+    "list": "Lista",
+    "section": "sezione",
+    "settings.action.add": "Aggiungi",
+    "settings.getStarted": "Clicca qui per iniziare",
+    "settings.profiles.select.actionProfiles": "Azione",
+    "settings.profiles.select.jobProfiles": "Procedura",
+    "settings.profiles.select.matchProfiles": "Corrispondenza",
+    "settings.profiles.select.mappingProfiles": "Mappatura del campo",
+    "settings.profiles.linking.forMatches": "Per le corrispondenze",
+    "settings.profiles.linking.forNonMatches": "Per le non corrispondenze",
+    "modal.profile.delete.message": "Sei sicuro di voler eliminare il profilo \"{name}\"?"
 }

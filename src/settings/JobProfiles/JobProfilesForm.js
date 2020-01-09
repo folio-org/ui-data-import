@@ -46,16 +46,12 @@ export const JobProfilesFormComponent = ({
   // @TODO: Remove this during backend unmocking task implementation
   const currentWrapper = snapshotWrappers.find(item => item.id === initialValues.id);
 
-  const paneTitle = isEditMode
-    ? (
-      <FormattedMessage id="ui-data-import.edit">
-        {txt => `${txt} ${initialValues.name}`}
-      </FormattedMessage>
-    )
-    : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
-  const headLine = isEditMode
-    ? initialValues.name
-    : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
+  const paneTitle = isEditMode ? (
+    <FormattedMessage id="ui-data-import.edit">
+      {txt => `${txt} ${initialValues.name}`}
+    </FormattedMessage>
+  ) : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
+  const headLine = isEditMode ? initialValues.name : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
 
   return (
     <FullScreenForm
@@ -115,10 +111,12 @@ export const JobProfilesFormComponent = ({
           label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
           separator={false}
         >
+          {/* Will be released in v1.8.0
           <ProfileTree
             linkingRules={PROFILE_LINKING_RULES}
             contentData={get(currentWrapper, 'childSnapshotWrappers', [])}
           />
+          */}
         </Accordion>
       </AccordionSet>
     </FullScreenForm>

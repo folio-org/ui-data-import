@@ -14,12 +14,22 @@ import sharedCss from '../../../shared.css';
 import { ActionIcon } from '../ActionIcon';
 
 export const ActionColumn = memo(({
-  record: {
-    action,
-    folioRecord,
-  },
+  record,
   searchTerm = '',
 }) => {
+  if (!record) {
+    return <span>-</span>;
+  }
+
+  const {
+    action,
+    folioRecord,
+  } = record;
+
+  if (!action || !folioRecord) {
+    return <span>-</span>;
+  }
+
   const createLabel = ({ formatMessage }) => {
     const actionString = formatMessage({ id: ACTION_TYPES[action].captionId });
     // record type should be in lower case except "MARC" is always all-caps

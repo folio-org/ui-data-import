@@ -15,30 +15,42 @@ import { FOLIO_RECORD_TYPES } from '../folioRecordTypes';
 import sharedCss from '../../../shared.css';
 
 export const MappedColumn = memo(({
-  record: { folioRecord },
+  record,
   searchTerm = '',
-}) => (
-  <Fragment>
-    {folioRecord && (
-      <IntlConsumer>
-        {({ formatMessage }) => (
-          <AppIcon
-            size="small"
-            app="data-import"
-            iconKey={FOLIO_RECORD_TYPES[folioRecord].iconKey}
-          >
-            <HighLight
-              search={searchTerm || ''}
-              className={sharedCss.container}
+}) => {
+  if (!record) {
+    return <span>-</span>;
+  }
+
+  const { folioRecord } = record;
+
+  if (!folioRecord) {
+    return <span>-</span>;
+  }
+
+  return (
+    <Fragment>
+      {folioRecord && (
+        <IntlConsumer>
+          {({ formatMessage }) => (
+            <AppIcon
+              size="small"
+              app="data-import"
+              iconKey={FOLIO_RECORD_TYPES[folioRecord].iconKey}
             >
-              {formatMessage({ id: FOLIO_RECORD_TYPES[folioRecord].captionId })}
-            </HighLight>
-          </AppIcon>
-        )}
-      </IntlConsumer>
-    )}
-  </Fragment>
-));
+              <HighLight
+                search={searchTerm || ''}
+                className={sharedCss.container}
+              >
+                {formatMessage({ id: FOLIO_RECORD_TYPES[folioRecord].captionId })}
+              </HighLight>
+            </AppIcon>
+          )}
+        </IntlConsumer>
+      )}
+    </Fragment>
+  );
+});
 
 MappedColumn.propTypes = {
   record: PropTypes.object.isRequired,

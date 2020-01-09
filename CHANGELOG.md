@@ -3,7 +3,11 @@
 ## **1.8.0** (in progress)
 * Create ProfileTree Component (UIDATIMP-326)
 
-## [1.7.0](https://github.com/folio-org/ui-data-import/tree/v1.7.0) (2019-12-04)
+## [1.7.3](https://github.com/folio-org/ui-data-import/tree/v1.7.3) (2019-12-04)
+* Update sorting query for jobs (UIDATIMP-346)
+* Fix typo in a field mapping profile modal (UIDATIMP-336)
+
+## [1.7.2](https://github.com/folio-org/ui-data-import/tree/v1.7.2) (2019-12-04)
 * Add action options to choose jobs screen (UIDATIMP-268)
 * Add non-editable mode feature for RecordTypesSelect component (UIDATIMP-323)
 * Add match details to the View match profile details pane (UIDATIMP-239)
