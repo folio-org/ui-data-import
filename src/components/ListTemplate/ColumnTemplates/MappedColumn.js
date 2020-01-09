@@ -22,27 +22,27 @@ export const MappedColumn = memo(({
     return <span>-</span>;
   }
 
-  const { folioRecord } = record;
+  const { existingRecordType } = record;
 
-  if (!folioRecord) {
+  if (!existingRecordType) {
     return <span>-</span>;
   }
 
   return (
     <Fragment>
-      {folioRecord && (
+      {existingRecordType && (
         <IntlConsumer>
           {({ formatMessage }) => (
             <AppIcon
               size="small"
               app="data-import"
-              iconKey={FOLIO_RECORD_TYPES[folioRecord].iconKey}
+              iconKey={FOLIO_RECORD_TYPES[existingRecordType].iconKey}
             >
               <HighLight
                 search={searchTerm || ''}
                 className={sharedCss.container}
               >
-                {formatMessage({ id: FOLIO_RECORD_TYPES[folioRecord].captionId })}
+                {formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
               </HighLight>
             </AppIcon>
           )}

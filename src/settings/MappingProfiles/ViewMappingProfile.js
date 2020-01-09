@@ -226,7 +226,7 @@ export class ViewMappingProfile extends Component {
             </KeyValue>
             <KeyValue label={<FormattedMessage id="ui-data-import.folioRecordType" />}>
               <div data-test-folio-record-type>
-                <FormattedMessage id={FOLIO_RECORD_TYPES[mappingProfile.folioRecord].captionId} />
+                <FormattedMessage id={FOLIO_RECORD_TYPES[mappingProfile.existingRecordType].captionId} />
               </div>
             </KeyValue>
             <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
