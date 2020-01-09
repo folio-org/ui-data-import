@@ -1,5 +1,6 @@
 import React, {
   memo,
+  useEffect,
   useState,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -25,17 +26,20 @@ export const ProfileTree = memo(({
   className,
   dataAttributes,
 }) => {
-  const getData = () => {
-    const res = JSON.parse(sessionStorage.getItem('root.data'));
-
-    return res || contentData;
-  };
-
   const [changesCount, setChangesCount] = useState(0);
   const [currentType, setCurrentType] = useState(null);
-  const [data, setData] = useState(getData());
+  const [data, setData] = useState([]);
   const [profilesToLink, setProfilesToLink] = useState([]);
   const [profilesToUnlink, setProfilesToUnlink] = useState([]);
+
+  useEffect(() => {
+    function getData() {
+      const res = JSON.parse(sessionStorage.getItem('root.data'));
+
+      return res || contentData;
+    }
+    setData(getData());
+  }, [contentData]);
 
   const ChangesContext = React.createContext(changesCount);
 
