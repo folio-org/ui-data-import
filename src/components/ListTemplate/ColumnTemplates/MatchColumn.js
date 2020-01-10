@@ -25,10 +25,18 @@ export const MatchColumn = memo(({
   record,
   searchTerm,
 }) => {
+  if (!record) {
+    return <span>-</span>;
+  }
+
   const {
     existingRecordType,
     field,
   } = record;
+
+  if (!field && !existingRecordType) {
+    return <span>-</span>;
+  }
 
   const fieldSource = (field || existingRecordType || '').replace(/_/g, ' ');
   const fieldsMatched = get(record, 'matchDetails[0].existingMatchExpression.fields', []).map(item => item.value || '');

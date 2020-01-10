@@ -13,7 +13,7 @@ export const FolioRecordTypeSelect = ({ dataOptions }) => (
       {placeholder => (
         <Field
           label={<FormattedMessage id="ui-data-import.folioRecordType" />}
-          name="folioRecord"
+          name="existingRecordType"
           component={Select}
           required
           itemToString={identity}

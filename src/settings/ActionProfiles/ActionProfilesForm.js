@@ -236,7 +236,7 @@ export const ActionProfilesFormComponent = ({
         >
           <MappingAssociator.current
             isMultiSelect={false}
-            isMultiLink={false}
+            isMultiLink
           />
         </Accordion>
         <Accordion
@@ -245,6 +245,7 @@ export const ActionProfilesFormComponent = ({
           separator={false}
         >
           <JobsAssociator.current
+            record={initialValues}
             isMultiSelect
             isMultiLink
           />
