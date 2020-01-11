@@ -1,8 +1,8 @@
 import { get } from 'lodash';
 
-import ordersTranslations from '@folio/orders/translations/ui-orders/en';
-import inventoryTranslations from '@folio/inventory/translations/ui-inventory/en';
-import invoiceTranslations from '@folio/invoice/translations/ui-invoice/en';
+import ordersTranslations from '@folio/orders/translations/ui-orders/en'; // eslint-disable-line import/no-unresolved
+import inventoryTranslations from '@folio/inventory/translations/ui-inventory/en'; // eslint-disable-line import/no-unresolved
+import invoiceTranslations from '@folio/invoice/translations/ui-invoice/en'; // eslint-disable-line import/no-unresolved
 import { fieldsConfig } from './fields-config';
 import { fieldCategoriesConfig } from './field-categories-config';
 

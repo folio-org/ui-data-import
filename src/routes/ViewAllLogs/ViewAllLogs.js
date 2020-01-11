@@ -99,9 +99,9 @@ class ViewAllLogs extends Component {
             logsSearchTemplate,
             {
               fileName: 'fileName',
-              hrId: 'hrId/sort.number',
+              hrId: 'hrId/number',
               jobProfileName: 'jobProfileInfo.name',
-              totalRecords: 'progress.total/sort.number',
+              totalRecords: 'progress.total/number',
               completedDate: 'completedDate',
               runBy: 'runBy.firstName runBy.lastName',
             },

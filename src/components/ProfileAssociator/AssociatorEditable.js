@@ -40,7 +40,7 @@ export const AssociatorEditable = memo(({
   const [current, setCurrent] = useState(null);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
 
-  const onLinesAdd = lines => {
+  const onLink = lines => {
     const newData = [...data, ...lines];
 
     setData(newData);
@@ -82,7 +82,7 @@ export const AssociatorEditable = memo(({
         id="clickable-find-import-profile"
         searchLabel={<FormattedMessage id="ui-data-import.settings.profile.select" />}
         searchButtonStyle="default"
-        addLines={onLinesAdd}
+        onLink={onLink}
         entityKey={entityKey}
         dataKey={entityKey}
         disabled={pluginDisabled}

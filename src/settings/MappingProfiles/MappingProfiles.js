@@ -25,7 +25,7 @@ const INITIAL_RESULT_COUNT = 5000;
 const RESULT_COUNT_INCREMENT = 5000;
 const queryTemplate = `(
   name="%{query.query}*" OR
-  folioRecord="%{query.query}*" OR
+  existingRecordType="%{query.query}*" OR
   tags.tagList="%{query.query}*"
 )`;
 
@@ -51,7 +51,7 @@ export const mappingProfilesShape = {
             queryTemplate,
             {
               name: 'name',
-              folioRecord: 'folioRecord',
+              folioRecord: 'existingRecordType',
               tags: 'tags.tagList',
               updated: 'metadata.updatedDate',
               updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
@@ -153,7 +153,7 @@ export class MappingProfiles extends Component {
             queryTemplate,
             {
               name: 'name',
-              folioRecord: 'folioRecord',
+              folioRecord: 'existingRecordType',
               tags: 'tags.tagList',
               updated: 'metadata.updatedDate',
               updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',

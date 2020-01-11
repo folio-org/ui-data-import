@@ -273,5 +273,17 @@
     "settings.profile.select": "اختر ملف تعريفي",
     "settings.profile.unlink": "إلغاء ربط هذا الملف التعريفي",
     "modal.profile.unlink.heading": "هل أنت متأكد؟",
-    "modal.profile.unlink.message": "هل أنت متأكد من أنك تريد إلغاء ربط الملف التعريفي \"{name}\"؟"
+    "modal.profile.unlink.message": "هل أنت متأكد من أنك تريد إلغاء ربط الملف التعريفي \"{name}\"؟",
+    "emptyMessage": "لا يحتوي هذا ال {type} على مواد",
+    "list": "قائمة",
+    "section": "القسم",
+    "settings.action.add": "إضافة",
+    "settings.getStarted": "انقر هنا للبدء",
+    "settings.profiles.select.actionProfiles": "الإجراء",
+    "settings.profiles.select.jobProfiles": "الوظيفة",
+    "settings.profiles.select.matchProfiles": "مطابقة",
+    "settings.profiles.select.mappingProfiles": "تخطيط الحقل",
+    "settings.profiles.linking.forMatches": "للمطابقات",
+    "settings.profiles.linking.forNonMatches": "لعدم المطابقة",
+    "modal.profile.delete.message": "هل أنت متأكد من أنك تريد حذف وضع \"{name}\" ؟"
 }
