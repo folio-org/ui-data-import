@@ -254,7 +254,7 @@ export class ViewMatchProfile extends Component {
           ],
           qualifier: {
             qualifierType: this.getLabel(QUALIFIER_TYPES, get(incomingMatchExpression, ['qualifier', 'qualifierType'])),
-            qualifierValue: get(incomingMatchExpression, ['qualifier', 'qualifierValue']) || <NoValue />,
+            qualifierValue: get(incomingMatchExpression, ['qualifier', 'qualifierValue']),
             comparisonPart: this.getLabel(COMPARISON_PARTS, get(incomingMatchExpression, ['qualifier', 'comparisonPart'])),
           },
         },
