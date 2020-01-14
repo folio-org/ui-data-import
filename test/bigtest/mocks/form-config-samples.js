@@ -273,11 +273,11 @@ export const formConfigSamples = [{
                     controlType: 'Field',
                     staticControlType: 'KeyValue',
                     id: 'criterion1-value-type',
-                    name: '', // Will be defined in a feature story
+                    name: 'matchDetails[0].existingMatchExpression.fields[0].value',
                     label: '',
-                    component: 'Select',
+                    component: 'Selection',
                     placeholder: '',
-                    dataOptions: [], // Will be defined in a feature story
+                    dataOptions: [],
                     validate: null,
                     dataAttributes: {},
                   }],

@@ -2,6 +2,9 @@ import {
   interactor,
   is,
   collection,
+  count,
+  attribute,
+  clickable,
 } from '@bigtest/interactor';
 
 import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tests/interactor';
@@ -13,9 +16,21 @@ import { SectionInteractor } from './section-interactor';
 import { CheckboxInteractor } from './checkbox-interactor';
 
 @interactor
+class ExistingRecordDropdown {
+  optionCount = count('li');
+}
+
+@interactor
 class MatchCriterion {
   isSection = is('section');
   dropdown = new SelectInteractor('#criterion1-criterion-type');
+}
+
+@interactor
+class ExistingRecordFieldSection {
+  dropdownList = new ExistingRecordDropdown('[id*="container-criterion1-value-type"]');
+  expandedAttribute = attribute('#criterion1-value-type', 'aria-expanded');
+  clickDropdownButton = clickable('#criterion1-value-type');
 }
 
 @interactor
@@ -43,6 +58,7 @@ export class MatchCriteriaInteractor extends AccordionInteractor {
 
   existingRecord = new SectionInteractor('section[class*=existing]');
   existingRecordSections = new RecordSections('section[class*=existing]');
+  existingRecordFieldSections = new ExistingRecordFieldSection('section[class*=existing] section[class*=field]');
   existingRecordQualifierCheckbox = new CheckboxInteractor('section[class*=existing] [class*="qualifier---"]');
   existingRecordPartCheckbox = new CheckboxInteractor('section[class*=existing] [class*="part---"]');
 }

@@ -30,12 +30,18 @@ const useUpdateOnResize = () => {
 const incomingRecord = FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC;
 
 export const RecordTypesSelect = ({
-  record,
   id,
+  record,
+  onRecordSelect,
 }) => {
   useUpdateOnResize();
   const [existingRecord, setExistingRecord] = useState();
   const isEditable = isEmpty(record);
+
+  const handleSelect = selectedRecord => {
+    setExistingRecord(selectedRecord);
+    onRecordSelect(selectedRecord);
+  };
 
   return (
     <div
@@ -48,14 +54,14 @@ export const RecordTypesSelect = ({
             id={id}
             incomingRecord={incomingRecord}
             existingRecord={isEditable ? existingRecord : record}
-            setExistingRecord={setExistingRecord}
+            setExistingRecord={handleSelect}
             isEditable={isEditable}
           />
         )
         : (
           <InitialRecordSelect
             id={id}
-            onItemSelect={setExistingRecord}
+            onItemSelect={handleSelect}
           />
         )
       }
@@ -64,8 +70,12 @@ export const RecordTypesSelect = ({
 };
 
 RecordTypesSelect.propTypes = {
-  record: PropTypes.object,
   id: PropTypes.string,
+  record: PropTypes.object,
+  onRecordSelect: PropTypes.func,
 };
 
-RecordTypesSelect.defaultProps = { record: {} };
+RecordTypesSelect.defaultProps = {
+  id: 'compare-record-types',
+  record: {},
+};

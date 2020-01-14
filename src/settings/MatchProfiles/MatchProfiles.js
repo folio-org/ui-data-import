@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   get,
+  isEqual,
+  isEmpty,
   omit,
 } from 'lodash';
 
@@ -13,8 +15,20 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   withCheckboxList,
   checkboxListShape,
+  fetchJsonSchema,
+  getModuleVersion,
+  handleAllRequests,
 } from '../../utils';
-import { ENTITY_KEYS } from '../../utils/constants';
+import {
+  ENTITY_KEYS,
+  INSTANCE_RESOURCE_PATHS,
+  HOLDINGS_RESOURCE_PATHS,
+  ITEM_RESOURCE_PATHS,
+  ORDER_RESOURCE_PATHS,
+  NOTES_RESOURCE_PATHS,
+  INVOICE_RESOURCE_PATHS,
+  SRM_RESOURCE_PATHS,
+} from '../../utils/constants';
 import { ListView } from '../../components';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
 import { ViewMatchProfile } from './ViewMatchProfile';
@@ -165,6 +179,12 @@ export class MatchProfiles extends Component {
         staticFallback: { params: {} },
       },
     },
+    modules: {
+      type: 'okapi',
+      path: '_/proxy/tenants/diku/modules',
+      throwErrors: false,
+      GET: { params: { full: true } },
+    },
   });
 
   static propTypes = {
@@ -175,6 +195,7 @@ export class MatchProfiles extends Component {
         PUT: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
+    stripes: PropTypes.object.isRequired,
     location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
@@ -213,10 +234,10 @@ export class MatchProfiles extends Component {
       name: '',
       description: '',
       /* TODO: these values are hardcoded now and will need to be changed in future (https://issues.folio.org/browse/UIDATIMP-175) */
-      incomingRecordType: 'MARC',
+      incomingRecordType: 'MARC_BIBLIOGRAPHIC',
       existingRecordType: 'HOLDINGS',
       matchDetails: [{
-        incomingRecordType: 'MARC',
+        incomingRecordType: 'MARC_BIBLIOGRAPHIC',
         existingRecordType: 'HOLDINGS',
         incomingMatchExpression: {
           fields: [{
@@ -234,12 +255,69 @@ export class MatchProfiles extends Component {
           }],
           dataValueType: 'VALUE_FROM_RECORD',
         },
-        existingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
+        existingMatchExpression: {
+          fields: [{
+            label: 'field',
+            value: '',
+          }],
+          dataValueType: 'VALUE_FROM_RECORD',
+        },
         matchCriterion: 'EXACTLY_MATCHES',
       }],
     },
     RecordView: ViewMatchProfile,
     RecordForm: MatchProfilesForm,
+  };
+
+  state = {
+    INSTANCE: {},
+    HOLDINGS: {},
+    ITEM: {},
+    ORDER: {},
+    INVOICE: {},
+  };
+
+  async componentDidUpdate(prevProps) {
+    if (!isEqual(prevProps.resources.modules, this.props.resources.modules)
+      && !isEmpty(this.props.resources.modules.records)) {
+      const {
+        stripes: { okapi },
+        resources: { modules: { records } },
+      } = this.props;
+
+      const inventoryModuleVersion = getModuleVersion(records, 'Inventory Storage Module');
+      const ordersModuleVersion = getModuleVersion(records, 'Orders Business Logic Module');
+      const notesModuleVersion = getModuleVersion(records, 'Notes');
+      const invoiceModuleVersion = getModuleVersion(records, 'Invoice business logic module');
+      const SRMModuleVersion = getModuleVersion(records, 'Source Record Manager Module');
+
+      const requestsToInstance = INSTANCE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
+      const requestsToHoldings = HOLDINGS_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
+      const requestsToItem = ITEM_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
+      const requestsToOrder = ORDER_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
+      const requestsToNotes = NOTES_RESOURCE_PATHS.map(path => fetchJsonSchema(path, notesModuleVersion, okapi));
+      const requestsToInvoice = INVOICE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, invoiceModuleVersion, okapi));
+      const requestsToSRM = SRM_RESOURCE_PATHS.map(path => fetchJsonSchema(path, SRMModuleVersion, okapi));
+
+      await handleAllRequests(requestsToInstance, 'INSTANCE', this.addToState);
+      await handleAllRequests(requestsToSRM, 'INSTANCE', this.addToState);
+      await handleAllRequests(requestsToHoldings, 'HOLDINGS', this.addToState);
+      await handleAllRequests(requestsToItem, 'ITEM', this.addToState);
+      await handleAllRequests(requestsToOrder, 'ORDER', this.addToState);
+      await handleAllRequests(requestsToNotes, 'ORDER', this.addToState);
+      await handleAllRequests(requestsToInvoice, 'INVOICE', this.addToState);
+    }
+  }
+
+  addToState = (properties, stateKey) => {
+    properties.forEach(item => {
+      this.setState(state => ({
+        [stateKey]: {
+          ...state[stateKey],
+          ...item,
+        },
+      }));
+    });
   };
 
   renderHeaders = () => matchProfilesShape.renderHeaders(this.props);
@@ -248,6 +326,7 @@ export class MatchProfiles extends Component {
     const resultedProps = {
       ...this.props,
       renderHeaders: this.renderHeaders,
+      detailProps: { jsonSchemas: { ...this.state } },
     };
 
     return <ListView {...resultedProps} />;

@@ -27,7 +27,7 @@
     "@folio/eslint-config-stripes": "^4.1.0",
     "@folio/stripes-core": "^3.3.0",
     "@folio/stripes-smart-components": "^2.12.0",
-    "@folio/stripes": "^2.12.0",
+    "@folio/stripes": "^2.13.0",
     "@folio/stripes-acq-components": "^1.3.0",
     "babel-eslint": "^9.0.0",
     "babel-polyfill": "^6.26.0",

@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, {
+  memo,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { get } from 'lodash';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
 
 import stripesForm from '@folio/stripes/form';
 
@@ -11,7 +17,11 @@ import {
   FlexibleForm,
   FOLIO_RECORD_TYPES,
 } from '../../components';
-import { compose } from '../../utils';
+import {
+  compose,
+  matchFields,
+  getDropdownOptions,
+} from '../../utils';
 import { LAYER_TYPES } from '../../utils/constants';
 import { formConfigSamples } from '../../../test/bigtest/mocks';
 
@@ -19,30 +29,50 @@ import styles from './MatchProfilesForm.css';
 
 const formName = 'matchProfilesForm';
 
-export const MatchProfilesFormComponent = ({
+export const MatchProfilesFormComponent = memo(({
   pristine,
   submitting,
-  initialValues,
+  initialValues: {
+    existingRecordType,
+    name,
+    matchDetails,
+  },
   handleSubmit,
   location: { search },
   associatedJobProfilesAmount,
   onCancel,
+  jsonSchemas,
 }) => {
-  const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
-
   const { layer } = queryString.parse(search);
   const isEditMode = layer === LAYER_TYPES.EDIT;
-  const isSubmitDisabled = pristine || submitting;
 
-  const paneTitle = isEditMode ? (
+  const [selectedExistingRecord, setSelectedExistingRecord] = useState(isEditMode ? existingRecordType : '');
+  const [existingRecordFields, setExistingRecordFields] = useState([]);
+  const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
+
+  const isSubmitDisabled = pristine || submitting;
+  const newLabel = <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
+  const getLabel = label => (isEditMode ? label : newLabel);
+
+  const paneTitle = getLabel((
     <FormattedMessage id="ui-data-import.edit">
-      {txt => `${txt} ${initialValues.name}`}
+      {txt => `${txt} ${name}`}
     </FormattedMessage>
-  ) : <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
-  const headLine = isEditMode ? initialValues.name : <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
+  ));
+  const headLine = getLabel(name);
 
   const editWithModal = isEditMode && associatedJobProfilesAmount;
   const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
+
+  const getInitialFields = () => {
+    if (isEditMode) {
+      const matches = matchFields(jsonSchemas[existingRecordType], existingRecordType);
+
+      return getDropdownOptions(matches);
+    }
+
+    return [];
+  };
 
   const onSubmit = e => {
     if (editWithModal) {
@@ -53,18 +83,41 @@ export const MatchProfilesFormComponent = ({
     }
   };
 
-  const recordTypeId = FOLIO_RECORD_TYPES[initialValues.existingRecordType].captionId;
-  const recordTypeLabel = (
+  const onFieldSearch = (value, dataOptions) => {
+    return dataOptions.filter(o => new RegExp(`${value}`, 'i').test(o.label));
+  };
+
+  const onExistingRecordChange = ({ type }) => {
+    const matches = matchFields(jsonSchemas[type], type);
+    const options = getDropdownOptions(matches);
+
+    setSelectedExistingRecord(type);
+    setExistingRecordFields(options);
+  };
+
+  const existingRecordLabel = (
     <FormattedMessage
       id="ui-data-import.match.existing.record"
-      values={{ recordType: isEditMode ? <FormattedMessage id={recordTypeId} /> : '' }}
+      values={{
+        recordType: !isEmpty(selectedExistingRecord)
+          ? <FormattedMessage id={FOLIO_RECORD_TYPES[selectedExistingRecord].captionId} />
+          : '',
+      }}
     />
   );
+
   const componentsProps = {
     'profile-headline': { children: headLine },
-    'panel-existing': { id: 'panel-existing-edit' },
-    'existing-record-section': { label: recordTypeLabel },
-    'existing-record-field': { label: recordTypeLabel },
+    'panel-existing': {
+      id: 'panel-existing-edit',
+      onRecordSelect: onExistingRecordChange,
+    },
+    'existing-record-section': { label: existingRecordLabel },
+    'existing-record-field': { label: existingRecordLabel },
+    'criterion1-value-type': {
+      dataOptions: isEmpty(existingRecordFields) ? getInitialFields() : existingRecordFields,
+      onFilter: onFieldSearch,
+    },
     'confirm-edit-match-profile-modal': {
       open: isConfirmEditModalOpen,
       heading: <FormattedMessage id="ui-data-import.settings.matchProfiles.confirmEditModal.heading" />,
@@ -92,14 +145,14 @@ export const MatchProfilesFormComponent = ({
       paneTitle={paneTitle}
       headLine={headLine}
       componentsProps={componentsProps}
-      referenceTables={{ matchDetails: initialValues.matchDetails }}
+      referenceTables={{ matchDetails }}
       submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={onSubmit}
       onCancel={onCancel}
     />
   );
-};
+});
 
 MatchProfilesFormComponent.propTypes = {
   initialValues: PropTypes.object.isRequired,
@@ -109,6 +162,13 @@ MatchProfilesFormComponent.propTypes = {
   location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
   associatedJobProfilesAmount: PropTypes.number.isRequired,
   onCancel: PropTypes.func.isRequired,
+  jsonSchemas: PropTypes.shape({
+    INSTANCE: PropTypes.object,
+    HOLDINGS: PropTypes.object,
+    ITEM: PropTypes.object,
+    ORDER: PropTypes.object,
+    INVOICE: PropTypes.object,
+  }).isRequired,
 };
 
 const mapStateToProps = state => {
