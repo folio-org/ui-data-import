@@ -24,32 +24,34 @@ export const ProfileLinker = ({
   const [typeSelectorOpen, setTypeSelectorOpen] = useState(false);
 
   return (
-    <Dropdown
-      id={`type-selector-dropdown-${id}`}
-      className={classNames(css['linker-button'], className)}
-      open={typeSelectorOpen}
-      onToggle={noop}
-      renderTrigger={triggerProps => (
-        <LinkerTrigger
-          id={`type-selector-trigger-${id}`}
-          title={title}
-          onClick={() => setTypeSelectorOpen(!typeSelectorOpen)}
-          {...triggerProps}
-        />
-      )}
-      renderMenu={menuProps => (
-        <LinkerMenu
-          id={`type-selector-menu-${id}`}
-          linkingRules={linkingRules}
-          onTypeSelected={onTypeSelected}
-          onLink={onLink}
-          onClose={() => setTypeSelectorOpen(false)}
-          {...menuProps}
-        />
-      )}
-      usePortal={false}
-      relativePosition
-    />
+    <div data-test-plus-sign-button>
+      <Dropdown
+        id={`type-selector-dropdown-${id}`}
+        className={classNames(css['linker-button'], className)}
+        open={typeSelectorOpen}
+        onToggle={noop}
+        renderTrigger={triggerProps => (
+          <LinkerTrigger
+            id={`type-selector-trigger-${id}`}
+            title={title}
+            onClick={() => setTypeSelectorOpen(!typeSelectorOpen)}
+            {...triggerProps}
+          />
+        )}
+        renderMenu={menuProps => (
+          <LinkerMenu
+            id={`type-selector-menu-${id}`}
+            linkingRules={linkingRules}
+            onTypeSelected={onTypeSelected}
+            onLink={onLink}
+            onClose={() => setTypeSelectorOpen(false)}
+            {...menuProps}
+          />
+        )}
+        usePortal={false}
+        relativePosition
+      />
+    </div>
   );
 };
 

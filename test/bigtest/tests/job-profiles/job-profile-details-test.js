@@ -52,6 +52,22 @@ describe('Job Profile View', () => {
       expect(jobProfileDetails.isTagsPresent).to.be.true;
     });
 
+    it('display overview accordion', () => {
+      expect(jobProfileDetails.isOverviewPresent).to.be.true;
+    });
+
+    it('has correct count of associated profiles', () => {
+      expect(jobProfileDetails.profileTree.branchesCount).to.be.equal(7);
+    });
+
+    it('first associated profile has secondary profiles', () => {
+      expect(jobProfileDetails.profileTree.branches(0).hasSubBranches).to.be.true;
+    });
+
+    it('there is no plus sign buttons', () => {
+      expect(jobProfileDetails.profileTree.plusSignButton.isPresent).to.be.false;
+    });
+
     describe('edit job profile form', () => {
       describe('appears', () => {
         beforeEach(async () => {
@@ -71,6 +87,21 @@ describe('Job Profile View', () => {
 
         it('upon click on edit button', () => {
           expect(jobProfileForm.isPresent).to.be.true;
+        });
+      });
+    });
+
+    describe('edit job profile form', () => {
+      describe('Overview section', () => {
+        describe('when there is an associated match profile', () => {
+          beforeEach(async () => {
+            await jobProfileDetails.editButton.click();
+          });
+
+          it('profile has "For matches" and "For non-matches" sections', () => {
+            expect(jobProfileForm.profileTree.branches(0).hasForMatchesSection).to.be.true;
+            expect(jobProfileForm.profileTree.branches(0).hasForNonMatchesSection).to.be.true;
+          });
         });
       });
     });

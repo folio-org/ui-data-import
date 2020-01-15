@@ -437,7 +437,10 @@ export class ViewJobProfile extends Component {
               <TagsAccordion link={tagsEntityLink} />
             </div>
           )}
-          <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}>
+          <Accordion
+            id="job-profile-overview"
+            label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
+          >
             <ProfileTree
               record={record}
               linkingRules={PROFILE_LINKING_RULES}

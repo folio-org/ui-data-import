@@ -71,6 +71,7 @@ export const JobProfilesFormComponent = ({
       </Headline>
       <AccordionSet>
         <Accordion
+          id="job-profile-summary"
           label={<FormattedMessage id="ui-data-import.summary" />}
           separator={false}
         >
@@ -108,6 +109,7 @@ export const JobProfilesFormComponent = ({
           </div>
         </Accordion>
         <Accordion
+          id="job-profile-overview"
           label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
           separator={false}
         >

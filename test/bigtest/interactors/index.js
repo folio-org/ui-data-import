@@ -13,3 +13,4 @@ export * from './associated-job-profiles';
 export * from './mapping-profiles';
 export * from './input-interactor';
 export * from './textarea-interactor';
+export * from './profile-tree-interactor';

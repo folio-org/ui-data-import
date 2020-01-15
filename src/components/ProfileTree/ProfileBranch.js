@@ -114,6 +114,7 @@ export const ProfileBranch = memo(({
 
   return (
     <div
+      data-test-profile-branch
       id={containerId}
       className={classNames(css['profile-branch'], className)}
     >
@@ -134,7 +135,10 @@ export const ProfileBranch = memo(({
             open={matchSectionOpen}
             onToggle={() => handleToggle('match', matchSectionOpen, setMatchSectionOpen)}
           >
-            <div className={css['branch-tree-container']}>
+            <div
+              data-test-for-matches-section
+              className={css['branch-tree-container']}
+            >
               {matchData && matchData.length ?
                 matchData.map(item => (
                   <ProfileBranch
@@ -184,7 +188,10 @@ export const ProfileBranch = memo(({
             open={nonMatchSectionOpen}
             onToggle={() => handleToggle('nonMatch', nonMatchSectionOpen, setNonMatchSectionOpen)}
           >
-            <div className={css['branch-tree-container']}>
+            <div
+              data-test-for-non-matches-section
+              className={css['branch-tree-container']}
+            >
               {nonMatchData && nonMatchData.length ?
                 nonMatchData.map((item, i) => (
                   <ProfileBranch
