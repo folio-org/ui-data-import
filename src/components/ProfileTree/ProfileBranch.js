@@ -52,13 +52,12 @@ export const ProfileBranch = memo(({
     return res || contentData;
   };
 
-  const [currentType, setCurrentType] = useState(null);
   const [matchSectionOpen, setMatchSectionOpen] = useState(getSectionStatus('match'));
   const [nonMatchSectionOpen, setNonMatchSectionOpen] = useState(getSectionStatus('nonMatch'));
   const [matchData, setMatchData] = useState(getSectionData('match'));
   const [nonMatchData, setNonMatchData] = useState(getSectionData('nonMatch'));
 
-  const getLines = (lines, reactTo) => lines.map(item => ({
+  const getLines = (lines, currentType, reactTo) => lines.map(item => ({
     id: item.id,
     contentType: snakeCase(currentType).slice(0, -1).toLocaleUpperCase(),
     reactTo,
@@ -72,8 +71,8 @@ export const ProfileBranch = memo(({
     onChange(prev => prev + 1);
   };
 
-  const onMatchLink = lines => {
-    const newData = [...matchData, ...getLines(lines, 'MATCH')];
+  const onMatchLink = (lines, currentType) => {
+    const newData = [...matchData, ...getLines(lines, currentType, 'MATCH')];
 
     sessionStorage.setItem(`${sectionKey}.data.match`, JSON.stringify(newData));
     setMatchData(newData);
@@ -90,8 +89,8 @@ export const ProfileBranch = memo(({
     onUnlink();
   };
 
-  const onNonMatchLink = lines => {
-    const newData = [...nonMatchData, ...getLines(lines, 'NON_MATCH')];
+  const onNonMatchLink = (lines, currentType) => {
+    const newData = [...nonMatchData, ...getLines(lines, currentType, 'NON_MATCH')];
 
     sessionStorage.setItem(`${sectionKey}.data.nonMatch`, JSON.stringify(newData));
     setNonMatchData(newData);
@@ -140,9 +139,9 @@ export const ProfileBranch = memo(({
               className={css['branch-tree-container']}
             >
               {matchData && matchData.length ?
-                matchData.map(item => (
+                matchData.map((item, i) => (
                   <ProfileBranch
-                    key={`profile-branch-${item.id}`}
+                    key={`profile-branch-${item.id}-${i}`}
                     entityKey={`${camelCase(item.contentType)}s`}
                     recordData={item.content}
                     contentData={item.childSnapshotWrappers}
@@ -175,7 +174,6 @@ export const ProfileBranch = memo(({
               <ProfileLinker
                 id={`${recordData.id}-match`}
                 linkingRules={linkingRules}
-                onTypeSelected={setCurrentType}
                 onLink={onMatchLink}
                 {...dataAttributes}
               />
@@ -228,7 +226,6 @@ export const ProfileBranch = memo(({
               <ProfileLinker
                 id={`${recordData.id}-non-match`}
                 linkingRules={linkingRules}
-                onTypeSelected={setCurrentType}
                 onLink={onNonMatchLink}
                 {...dataAttributes}
               />

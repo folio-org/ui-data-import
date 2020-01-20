@@ -1,10 +1,8 @@
 import React, {
   useState,
-  useRef,
   useMemo,
+  useEffect,
 } from 'react';
-import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import {
   FormattedMessage,
   injectIntl,
@@ -13,8 +11,13 @@ import {
 import {
   Field,
   formValueSelector,
+  change,
 } from 'redux-form';
 import { connect } from 'react-redux';
+
+import PropTypes from 'prop-types';
+import queryString from 'query-string';
+
 import {
   get,
   identity,
@@ -33,9 +36,9 @@ import {
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
-import { FullScreenForm } from '../../components/FullScreenForm';
 import {
   compose,
+  withProfileWrapper,
   validateRequiredField,
 } from '../../utils';
 import {
@@ -47,7 +50,8 @@ import {
   FolioRecordTypeSelect,
   ACTION_TYPES_SELECT,
   ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES,
-  createProfileAssociator,
+  ProfileAssociator,
+  FullScreenForm,
 } from '../../components';
 
 const formName = 'actionProfilesForm';
@@ -63,23 +67,19 @@ export const ActionProfilesFormComponent = ({
   onCancel,
   action,
   folioRecord,
+  dispatch,
 }) => {
-  const MappingAssociator = useRef(createProfileAssociator({
-    namespaceKey: 'AMP',
-    entityKey: ENTITY_KEYS.MAPPING_PROFILES,
-    parentType: PROFILE_TYPES.ACTION_PROFILE,
-    masterType: PROFILE_TYPES.ACTION_PROFILE,
-    detailType: PROFILE_TYPES.MAPPING_PROFILE,
-  }));
-  const JobsAssociator = useRef(createProfileAssociator({
-    namespaceKey: 'AJP',
-    entityKey: ENTITY_KEYS.JOB_PROFILES,
-    parentType: PROFILE_TYPES.ACTION_PROFILE,
-    masterType: PROFILE_TYPES.JOB_PROFILE,
-    detailType: PROFILE_TYPES.ACTION_PROFILE,
-  }));
-
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
+  const [addedRelations, setAddedRelations] = useState([]);
+  const [deletedRelations, setDeletedRelations] = useState([]);
+
+  useEffect(() => {
+    dispatch(change(formName, 'addedRelations', addedRelations));
+  }, [addedRelations]);
+
+  useEffect(() => {
+    dispatch(change(formName, 'deletedRelations', deletedRelations));
+  }, [deletedRelations]);
 
   const getFilteredActions = () => {
     switch (folioRecord) {
@@ -154,11 +154,16 @@ export const ActionProfilesFormComponent = ({
 
   const paneTitle = isEditMode ? (
     <FormattedMessage id="ui-data-import.edit">
-      {txt => `${txt} ${initialValues.name}`}
+      {txt => `${txt} ${initialValues.profile.name}`}
     </FormattedMessage>
   ) : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
-  const headLine = isEditMode ? initialValues.name : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
+  const headLine = isEditMode ? initialValues.profile.name : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
   const editWithModal = isEditMode && associatedJobProfilesAmount;
+  const associations = [
+    ...[],
+    ...get(initialValues, ['profile', 'parentProfiles'], []),
+    ...get(initialValues, ['profile', 'childProfiles'], []),
+  ];
 
   const onSubmit = e => {
     if (editWithModal) {
@@ -193,7 +198,7 @@ export const ActionProfilesFormComponent = ({
           <div data-test-name-field>
             <Field
               label={<FormattedMessage id="ui-data-import.name" />}
-              name="name"
+              name="profile.name"
               required
               component={TextField}
               validate={[validateRequiredField]}
@@ -202,7 +207,7 @@ export const ActionProfilesFormComponent = ({
           <div data-test-description-field>
             <Field
               label={<FormattedMessage id="ui-data-import.description" />}
-              name="description"
+              name="profile.description"
               component={TextArea}
             />
           </div>
@@ -216,7 +221,7 @@ export const ActionProfilesFormComponent = ({
               {placeholder => (
                 <Field
                   label={<FormattedMessage id="ui-data-import.action" />}
-                  name="action"
+                  name="profile.action"
                   component={Select}
                   required
                   itemToString={identity}
@@ -227,29 +232,55 @@ export const ActionProfilesFormComponent = ({
               )}
             </FormattedMessage>
           </div>
-          <FolioRecordTypeSelect dataOptions={folioRecordTypesDataOptions} />
+          <FolioRecordTypeSelect
+            fieldName="folioRecord"
+            dataOptions={folioRecordTypesDataOptions}
+          />
         </Accordion>
         <Accordion
           id="actionProfileFormAssociatedMappingProfileAccordion"
           label={<FormattedMessage id="ui-data-import.settings.associatedMappingProfile" />}
           separator={false}
         >
-          <MappingAssociator.current
+          <ProfileAssociator
+            entityKey={ENTITY_KEYS.MAPPING_PROFILES}
+            namespaceKey="AMP"
+            parentId={initialValues.profile.id}
+            parentType={PROFILE_TYPES.ACTION_PROFILE}
+            masterType={PROFILE_TYPES.ACTION_PROFILE}
+            detailType={PROFILE_TYPES.MAPPING_PROFILE}
+            contentData={associations}
+            hasLoaded
             isMultiSelect={false}
             isMultiLink
+            relationsToAdd={addedRelations}
+            relationsToDelete={deletedRelations}
+            onLink={setAddedRelations}
+            onUnlink={setDeletedRelations}
           />
         </Accordion>
-        <Accordion
-          id="actionProfileFormAssociatedJobProfileAccordion"
-          label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
-          separator={false}
-        >
-          <JobsAssociator.current
-            record={initialValues}
-            isMultiSelect
-            isMultiLink
-          />
-        </Accordion>
+        {isEditMode && (
+          <Accordion
+            id="actionProfileFormAssociatedJobProfileAccordion"
+            label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
+            separator={false}
+          >
+            <ProfileAssociator
+              entityKey={ENTITY_KEYS.JOB_PROFILES}
+              namespaceKey="AJP"
+              parentId={initialValues.profile.id}
+              parentType={PROFILE_TYPES.ACTION_PROFILE}
+              masterType={PROFILE_TYPES.JOB_PROFILE}
+              detailType={PROFILE_TYPES.ACTION_PROFILE}
+              contentData={associations}
+              record={initialValues}
+              hasLoaded
+              isMultiSelect={false}
+              isMultiLink
+              useSearch={false}
+            />
+          </Accordion>
+        )}
       </AccordionSet>
       <ConfirmationModal
         id="confirm-edit-action-profile-modal"
@@ -283,6 +314,7 @@ ActionProfilesFormComponent.propTypes = {
   action: PropTypes.string,
   folioRecord: PropTypes.string,
   onCancel: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const selector = formValueSelector(formName);
@@ -293,8 +325,8 @@ const mapStateToProps = state => {
     ['folio_data_import_associated_jobprofiles', 'records', 0, 'childSnapshotWrappers'],
     [],
   );
-  const action = selector(state, 'action');
-  const folioRecord = selector(state, 'folioRecord');
+  const action = selector(state, 'profile.action');
+  const folioRecord = selector(state, 'profile.folioRecord');
 
   return {
     associatedJobProfilesAmount,
@@ -305,6 +337,7 @@ const mapStateToProps = state => {
 
 export const ActionProfilesForm = compose(
   injectIntl,
+  withProfileWrapper,
   stripesForm({
     form: formName,
     navigationCheck: true,

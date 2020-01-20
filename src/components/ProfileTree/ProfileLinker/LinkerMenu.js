@@ -9,17 +9,15 @@ import {
   MenuSection,
 } from '@folio/stripes-components';
 
-import { ENTITY_KEYS } from '../../../utils/constants';
 import { LinkerButton } from '.';
 
 export const LinkerMenu = ({
   id,
   open,
-  keyHandler,
+  entityKeys: [matchProfiles, actionProfiles],
   onToggle,
-  onTypeSelected,
-  onLink,
-  onClose,
+  onClick,
+  keyHandler,
 }) => (
   <DropdownMenu
     role="menu"
@@ -36,17 +34,13 @@ export const LinkerMenu = ({
     >
       <LinkerButton
         id={`menu-link-match-${id}`}
-        entityKey={ENTITY_KEYS.MATCH_PROFILES}
-        onTypeSelected={onTypeSelected}
-        onLink={onLink}
-        onClose={onClose}
+        entityKey={matchProfiles}
+        onClick={onClick}
       />
       <LinkerButton
         id={`menu-link-action-${id}`}
-        entityKey={ENTITY_KEYS.ACTION_PROFILES}
-        onTypeSelected={onTypeSelected}
-        onLink={onLink}
-        onClose={onClose}
+        entityKey={actionProfiles}
+        onClick={onClick}
       />
     </MenuSection>
   </DropdownMenu>
@@ -55,17 +49,10 @@ export const LinkerMenu = ({
 LinkerMenu.propTypes = {
   id: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
+  entityKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onToggle: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   keyHandler: PropTypes.func,
-  onToggle: PropTypes.func,
-  onTypeSelected: PropTypes.func,
-  onLink: PropTypes.func,
-  onClose: PropTypes.func,
 };
 
-LinkerMenu.defaultProps = {
-  onToggle: noop,
-  keyHandler: noop,
-  onTypeSelected: noop,
-  onLink: noop,
-  onClose: noop,
-};
+LinkerMenu.defaultProps = { keyHandler: noop };

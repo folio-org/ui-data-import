@@ -18,14 +18,19 @@ import css from './ProfileAssociator.css';
 
 export const AssociatorEditable = memo(({
   entityKey,
-  nsSort,
-  nsQuery,
-  initialQuery,
-  query,
+  namespaceKey,
+  parentId,
+  parentType,
+  masterType,
+  detailType,
   contentData,
   dataAttributes,
   isMultiSelect,
   isMultiLink,
+  relationsToAdd,
+  relationsToDelete,
+  onLink,
+  onUnlink,
 }) => {
   const checkboxList = useCheckboxList(contentData);
   const columnWidths = {
@@ -40,8 +45,30 @@ export const AssociatorEditable = memo(({
   const [current, setCurrent] = useState(null);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
 
-  const onLink = lines => {
-    const newData = [...data, ...lines];
+  const findRelIndex = (relations, line) => {
+    const masterId = masterType === parentType ? parentId : line.id;
+    const detailId = masterType === parentType ? line.id : parentId;
+
+    return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === detailId);
+  };
+
+  const composeRelations = lines => lines.map(item => ({
+    masterProfileId: masterType === parentType ? parentId : item.id,
+    masterProfileType: masterType,
+    detailProfileId: masterType === parentType ? item.id : parentId,
+    detailProfileType: detailType,
+  }));
+
+  const link = lines => {
+    const uniqueLines = lines.filter(line => data.findIndex(item => item.id === line.id) === -1);
+    const newData = [...data, ...uniqueLines];
+    const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
+
+    if (linesToAdd && linesToAdd.length) {
+      const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd)];
+
+      onLink(relsToAdd);
+    }
 
     setData(newData);
     setPluginDisabled(isPluginDisabled(newData));
@@ -49,6 +76,13 @@ export const AssociatorEditable = memo(({
 
   const remove = row => {
     const index = data.findIndex(item => item.id === row.id);
+    const newIdx = findRelIndex(relationsToAdd, row);
+
+    if (newIdx < 0) {
+      const relsToDel = [...relationsToDelete, ...composeRelations([row])];
+
+      onUnlink(relsToDel);
+    }
 
     data.splice(index, 1);
     setData(data);
@@ -59,12 +93,9 @@ export const AssociatorEditable = memo(({
     <Fragment {...dataAttributes}>
       <AssociatedList
         entityKey={entityKey}
+        namespaceKey={namespaceKey}
         checkboxList={checkboxList}
         columnWidths={columnWidths}
-        nsSort={nsSort}
-        nsQuery={nsQuery}
-        initialQuery={initialQuery}
-        query={query}
         contentData={data}
         onSort={noop}
         onRemove={cur => {
@@ -82,7 +113,7 @@ export const AssociatorEditable = memo(({
         id="clickable-find-import-profile"
         searchLabel={<FormattedMessage id="ui-data-import.settings.profile.select" />}
         searchButtonStyle="default"
-        onLink={onLink}
+        onLink={link}
         entityKey={entityKey}
         dataKey={entityKey}
         disabled={pluginDisabled}
@@ -118,14 +149,19 @@ export const AssociatorEditable = memo(({
 
 AssociatorEditable.propTypes = {
   entityKey: PropTypes.string.isRequired,
-  nsSort: PropTypes.string.isRequired,
-  nsQuery: PropTypes.string.isRequired,
-  initialQuery: PropTypes.object.isRequired,
-  query: PropTypes.object.isRequired,
+  namespaceKey: PropTypes.string.isRequired,
+  parentId: PropTypes.string.isRequired || PropTypes.number.isRequired,
+  parentType: PropTypes.string.isRequired,
+  masterType: PropTypes.string.isRequired,
+  detailType: PropTypes.string.isRequired,
   contentData: PropTypes.arrayOf(PropTypes.object),
   isMultiSelect: PropTypes.bool,
   isMultiLink: PropTypes.bool,
   dataAttributes: PropTypes.shape(PropTypes.object),
+  relationsToAdd: PropTypes.arrayOf(PropTypes.object),
+  relationsToDelete: PropTypes.arrayOf(PropTypes.object),
+  onLink: PropTypes.func,
+  onUnlink: PropTypes.func,
 };
 
 AssociatorEditable.defaultProps = {
@@ -133,4 +169,8 @@ AssociatorEditable.defaultProps = {
   isMultiSelect: true,
   isMultiLink: true,
   dataAttributes: null,
+  relationsToAdd: [],
+  relationsToDelete: [],
+  onLink: noop,
+  onUnlink: noop,
 };
