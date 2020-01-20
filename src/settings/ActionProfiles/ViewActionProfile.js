@@ -38,7 +38,7 @@ import {
   ActionMenu,
   FOLIO_RECORD_TYPES,
   ACTION_TYPES,
-  createProfileAssociator,
+  ProfileAssociator,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
@@ -53,6 +53,7 @@ export class ViewActionProfile extends Component {
     actionProfile: {
       type: 'okapi',
       path: 'data-import-profiles/actionProfiles/:{id}',
+      params: { withRelations: true },
       throwErrors: false,
     },
   });
@@ -87,20 +88,6 @@ export class ViewActionProfile extends Component {
   state = {
     deletionInProgress: false,
     showDeleteConfirmation: false,
-    MappingAssociator: createProfileAssociator({
-      namespaceKey: 'AMP',
-      entityKey: ENTITY_KEYS.MAPPING_PROFILES,
-      parentType: PROFILE_TYPES.ACTION_PROFILE,
-      masterType: PROFILE_TYPES.ACTION_PROFILE,
-      detailType: PROFILE_TYPES.MAPPING_PROFILE,
-    }),
-    JobsAssociator: createProfileAssociator({
-      namespaceKey: 'AJP',
-      entityKey: ENTITY_KEYS.JOB_PROFILES,
-      parentType: PROFILE_TYPES.ACTION_PROFILE,
-      masterType: PROFILE_TYPES.JOB_PROFILE,
-      detailType: PROFILE_TYPES.ACTION_PROFILE,
-    }),
   };
 
   get actionProfileData() {
@@ -162,11 +149,7 @@ export class ViewActionProfile extends Component {
       paneId,
       tagsEnabled,
     } = this.props;
-    const {
-      showDeleteConfirmation,
-      MappingAssociator,
-      JobsAssociator,
-    } = this.state;
+    const { showDeleteConfirmation } = this.state;
     const {
       hasLoaded,
       record: actionProfile,
@@ -200,6 +183,7 @@ export class ViewActionProfile extends Component {
     }
 
     const tagsEntityLink = `data-import-profiles/actionProfiles/${actionProfile.id}`;
+    const associations = [...[], ...actionProfile.parentProfiles, ...actionProfile.childProfiles];
 
     return (
       <Pane
@@ -257,7 +241,14 @@ export class ViewActionProfile extends Component {
               </Button>
             )}
           >
-            <MappingAssociator
+            <ProfileAssociator
+              entityKey={ENTITY_KEYS.MAPPING_PROFILES}
+              namespaceKey="AMP"
+              parentType={PROFILE_TYPES.ACTION_PROFILE}
+              masterType={PROFILE_TYPES.ACTION_PROFILE}
+              detailType={PROFILE_TYPES.MAPPING_PROFILE}
+              contentData={associations}
+              hasLoaded={hasLoaded}
               record={actionProfile}
               isMultiSelect={false}
               isMultiLink
@@ -271,7 +262,14 @@ export class ViewActionProfile extends Component {
               </Button>
             )}
           >
-            <JobsAssociator
+            <ProfileAssociator
+              entityKey={ENTITY_KEYS.JOB_PROFILES}
+              namespaceKey="AJP"
+              parentType={PROFILE_TYPES.ACTION_PROFILE}
+              masterType={PROFILE_TYPES.JOB_PROFILE}
+              detailType={PROFILE_TYPES.ACTION_PROFILE}
+              contentData={associations}
+              hasLoaded={hasLoaded}
               record={actionProfile}
               isMultiSelect
               isMultiLink

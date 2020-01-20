@@ -1,6 +1,7 @@
 import React, {
   useMemo,
-  useRef,
+  useState,
+  useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
@@ -9,8 +10,15 @@ import {
   injectIntl,
   intlShape,
 } from 'react-intl';
-import { Field } from 'redux-form';
-import { identity } from 'lodash';
+
+import {
+  Field,
+  change,
+} from 'redux-form';
+import {
+  get,
+  identity,
+} from 'lodash';
 
 import {
   Select,
@@ -24,7 +32,7 @@ import stripesForm from '@folio/stripes/form';
 
 import {
   validateRequiredField,
-  compose,
+  compose, withProfileWrapper,
 } from '../../utils';
 import {
   ENTITY_KEYS,
@@ -34,9 +42,9 @@ import {
 import {
   FullScreenForm,
   FolioRecordTypeSelect,
+  ProfileAssociator,
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
-  createProfileAssociator,
 } from '../../components';
 
 const formName = 'mappingProfilesForm';
@@ -49,15 +57,9 @@ export const MappingProfilesFormComponent = ({
   location: { search },
   handleSubmit,
   onCancel,
+  dispatch,
 }) => {
-  const ActionsAssociator = useRef(createProfileAssociator({
-    namespaceKey: 'AAP',
-    entityKey: ENTITY_KEYS.ACTION_PROFILES,
-    parentType: PROFILE_TYPES.MAPPING_PROFILE,
-    masterType: PROFILE_TYPES.ACTION_PROFILE,
-    detailType: PROFILE_TYPES.MAPPING_PROFILE,
-  }));
-
+  const { profile } = initialValues;
   const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
       value: recordType,
@@ -77,13 +79,29 @@ export const MappingProfilesFormComponent = ({
   const paneTitle = isEditMode
     ? (
       <FormattedMessage id="ui-data-import.edit">
-        {txt => `${txt} ${initialValues.name}`}
+        {txt => `${txt} ${profile.name}`}
       </FormattedMessage>
     )
     : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
   const headLine = isEditMode
-    ? initialValues.name
+    ? profile.name
     : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
+  const associations = [
+    ...[],
+    ...get(initialValues, ['profile', 'parentProfiles'], []),
+    ...get(initialValues, ['profile', 'childProfiles'], []),
+  ];
+
+  const [addedRelations, setAddedRelations] = useState([]);
+  const [deletedRelations, setDeletedRelations] = useState([]);
+
+  useEffect(() => {
+    dispatch(change(formName, 'addedRelations', addedRelations));
+  }, [addedRelations]);
+
+  useEffect(() => {
+    dispatch(change(formName, 'deletedRelations', deletedRelations));
+  }, [deletedRelations]);
 
   return (
     <FullScreenForm
@@ -109,7 +127,7 @@ export const MappingProfilesFormComponent = ({
           <div data-test-name-field>
             <Field
               label={<FormattedMessage id="ui-data-import.name" />}
-              name="name"
+              name="profile.name"
               required
               component={TextField}
               validate={[validateRequiredField]}
@@ -120,7 +138,7 @@ export const MappingProfilesFormComponent = ({
               {placeholder => (
                 <Field
                   label={<FormattedMessage id="ui-data-import.incomingRecordType" />}
-                  name="incomingRecordType"
+                  name="profile.incomingRecordType"
                   component={Select}
                   required
                   itemToString={identity}
@@ -131,11 +149,14 @@ export const MappingProfilesFormComponent = ({
               )}
             </FormattedMessage>
           </div>
-          <FolioRecordTypeSelect dataOptions={folioRecordTypesDataOptions} />
+          <FolioRecordTypeSelect
+            fieldName="existingRecordType"
+            dataOptions={folioRecordTypesDataOptions}
+          />
           <div data-test-description-field>
             <Field
               label={<FormattedMessage id="ui-data-import.description" />}
-              name="description"
+              name="profile.description"
               component={TextArea}
             />
           </div>
@@ -153,9 +174,20 @@ export const MappingProfilesFormComponent = ({
           label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
           separator={false}
         >
-          <ActionsAssociator.current
+          <ProfileAssociator
+            entityKey={ENTITY_KEYS.ACTION_PROFILES}
+            namespaceKey="AAP"
+            parentType={PROFILE_TYPES.MAPPING_PROFILE}
+            masterType={PROFILE_TYPES.ACTION_PROFILE}
+            detailType={PROFILE_TYPES.MAPPING_PROFILE}
+            contentData={associations}
+            hasLoaded
             isMultiSelect
             isMultiLink={false}
+            relationsToAdd={addedRelations}
+            relationsToDelete={deletedRelations}
+            onLink={setAddedRelations}
+            onUnlink={setDeletedRelations}
           />
         </Accordion>
       </AccordionSet>
@@ -171,10 +203,12 @@ MappingProfilesFormComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export const MappingProfilesForm = compose(
   injectIntl,
+  withProfileWrapper,
   stripesForm({
     form: formName,
     navigationCheck: true,

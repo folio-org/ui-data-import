@@ -7,13 +7,16 @@ import { identity } from 'lodash';
 import { Select } from '@folio/stripes/components';
 import { validateRequiredField } from '../../utils';
 
-export const FolioRecordTypeSelect = ({ dataOptions }) => (
+export const FolioRecordTypeSelect = ({
+  fieldName,
+  dataOptions,
+}) => (
   <div data-test-folio-record-type-field>
     <FormattedMessage id="ui-data-import.chooseFolioRecordType">
       {placeholder => (
         <Field
           label={<FormattedMessage id="ui-data-import.folioRecordType" />}
-          name="existingRecordType"
+          name={`profile.${fieldName}`}
           component={Select}
           required
           itemToString={identity}
@@ -26,4 +29,7 @@ export const FolioRecordTypeSelect = ({ dataOptions }) => (
   </div>
 );
 
-FolioRecordTypeSelect.propTypes = { dataOptions: PropTypes.arrayOf(PropTypes.object) };
+FolioRecordTypeSelect.propTypes = {
+  fieldName: PropTypes.string.isRequired,
+  dataOptions: PropTypes.arrayOf(PropTypes.object),
+};
