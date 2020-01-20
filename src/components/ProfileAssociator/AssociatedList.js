@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { noop } from 'lodash';
 
 import { MultiColumnList } from '@folio/stripes/components';
+import { getNsKey } from '@folio/stripes-smart-components';
 
 import { checkboxListShape } from '../../utils';
 import {
@@ -27,20 +28,22 @@ const profiles = {
 
 export const AssociatedList = memo(({
   entityKey,
+  namespaceKey,
   isMultiSelect,
   isStatic,
   checkboxList,
-  nsSort,
-  nsQuery,
-  initialQuery,
-  query,
   columnWidths,
   contentData,
-  onSort,
-  onRemove,
   className,
+  onRemove,
   dataAttributes,
 }) => {
+  const nsSort = getNsKey('sort', namespaceKey);
+  const nsQuery = getNsKey('query', namespaceKey);
+  const initialQuery = {
+    [nsSort]: 'name',
+    [nsQuery]: '',
+  };
   const {
     selectRecord,
     selectedRecords,
@@ -52,7 +55,7 @@ export const AssociatedList = memo(({
   const {
     [nsSort]: sortOrderQuery = initialQuery[nsSort],
     [nsQuery]: searchTerm = initialQuery[nsQuery],
-  } = query;
+  } = initialQuery;
 
   const sortDirection = sortOrderQuery.startsWith('-') ? SORT_TYPES.DESCENDING : SORT_TYPES.ASCENDING;
   const sortOrder = sortOrderQuery.replace(/^-/, '').replace(/,.*/, '');
@@ -67,6 +70,9 @@ export const AssociatedList = memo(({
   }
 
   const rowUpdater = ({ id }) => selectedRecords.has(id);
+
+  const onSort = () => {};
+
   const columnHeaders = renderHeaders({
     checkboxList,
     unlink: true,
@@ -101,19 +107,15 @@ export const AssociatedList = memo(({
 
 AssociatedList.propTypes = {
   entityKey: PropTypes.string.isRequired,
+  namespaceKey: PropTypes.string.isRequired,
+  onRemove: PropTypes.func,
   isStatic: PropTypes.bool,
   isMultiSelect: PropTypes.bool,
-  nsSort: PropTypes.string.isRequired,
-  nsQuery: PropTypes.string.isRequired,
-  initialQuery: PropTypes.object.isRequired,
-  query: PropTypes.object.isRequired,
   dataAttributes: PropTypes.shape(PropTypes.object),
   contentData: PropTypes.arrayOf(PropTypes.object),
   selectedRecord: PropTypes.object,
   checkboxList: checkboxListShape,
   columnWidths: PropTypes.object,
-  onSort: PropTypes.func,
-  onRemove: PropTypes.func,
   className: PropTypes.string || PropTypes.object,
 };
 
@@ -122,4 +124,5 @@ AssociatedList.defaultProps = {
   isStatic: true,
   dataAttributes: null,
   contentData: null,
+  onRemove: noop,
 };

@@ -1,7 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
+import PropTypes from 'prop-types';
+
 import {
   get,
   identity,
@@ -17,13 +18,19 @@ import {
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
-import { validateRequiredField } from '../../utils';
 import {
   DATA_TYPES,
   PROFILE_LINKING_RULES,
 } from '../../utils/constants';
-import { FullScreenForm } from '../../components/FullScreenForm';
-import { ProfileTree } from '../../components/ProfileTree';
+import {
+  compose,
+  validateRequiredField,
+  withProfileWrapper,
+} from '../../utils';
+import {
+  FullScreenForm,
+  ProfileTree,
+} from '../../components';
 
 // @TODO: Remove this during backend unmocking task implementation
 import { snapshotWrappers } from '../../../test/bigtest/mocks';
@@ -41,17 +48,22 @@ export const JobProfilesFormComponent = ({
   handleSubmit,
   onCancel,
 }) => {
-  const isEditMode = Boolean(initialValues.id);
+  const {
+    profile,
+    addedRelations,
+    deletedRelations,
+  } = initialValues;
+  const isEditMode = Boolean(profile.id);
   const isSubmitDisabled = pristine || submitting;
   // @TODO: Remove this during backend unmocking task implementation
-  const currentWrapper = snapshotWrappers.find(item => item.id === initialValues.id);
+  const currentWrapper = snapshotWrappers.find(item => item.id === profile.id);
 
   const paneTitle = isEditMode ? (
     <FormattedMessage id="ui-data-import.edit">
-      {txt => `${txt} ${initialValues.name}`}
+      {txt => `${txt} ${profile.name}`}
     </FormattedMessage>
   ) : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
-  const headLine = isEditMode ? initialValues.name : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
+  const headLine = isEditMode ? profile.name : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
 
   return (
     <FullScreenForm
@@ -77,7 +89,7 @@ export const JobProfilesFormComponent = ({
           <div data-test-name-field>
             <Field
               label={<FormattedMessage id="ui-data-import.name" />}
-              name="name"
+              name="profile.name"
               required
               component={TextField}
               validate={[validateRequiredField]}
@@ -88,7 +100,7 @@ export const JobProfilesFormComponent = ({
               {placeholder => (
                 <Field
                   label={<FormattedMessage id="ui-data-import.settings.jobProfiles.acceptedDataType" />}
-                  name="dataType"
+                  name="profile.dataType"
                   component={Select}
                   required
                   itemToString={identity}
@@ -102,7 +114,7 @@ export const JobProfilesFormComponent = ({
           <div data-test-description-field>
             <Field
               label={<FormattedMessage id="ui-data-import.description" />}
-              name="description"
+              name="profile.description"
               component={TextArea}
             />
           </div>
@@ -129,8 +141,11 @@ JobProfilesFormComponent.propTypes = {
   onCancel: PropTypes.func.isRequired,
 };
 
-export const JobProfilesForm = stripesForm({
-  form: formName,
-  navigationCheck: true,
-  enableReinitialize: true,
-})(JobProfilesFormComponent);
+export const JobProfilesForm = compose(
+  withProfileWrapper,
+  stripesForm({
+    form: formName,
+    navigationCheck: true,
+    enableReinitialize: true,
+  }),
+)(JobProfilesFormComponent);
