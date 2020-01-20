@@ -22,21 +22,14 @@ export const AssociatorStatic = ({
   entityKey,
   namespaceKey,
   isMultiSelect,
-  mutator,
-  nsSort,
-  nsQuery,
-  initialQuery,
-  query,
   dataAttributes,
   contentData,
   hasLoaded,
+  useSearch,
 }) => {
   const columnWidths = { selected: 40 };
   const checkboxList = useCheckboxList(contentData);
   const { deselectAll } = checkboxList;
-
-  const querySetter = ({ nsValues }) => mutator.query.update(nsValues);
-  const queryGetter = () => query;
 
   const entityName = stringToWords(entityKey).map(word => word.toLocaleLowerCase()).join('-');
   const dataAttrs = dataAttributes || { [`data-test-associated-${entityName}`]: true };
@@ -85,16 +78,23 @@ export const AssociatorStatic = ({
     );
   };
 
-  if (isMultiSelect) {
+  RenderSearch.propTypes = {
+    searchValue: PropTypes.object.isRequired || PropTypes.string.isRequired,
+    resetAll: PropTypes.func.isRequired,
+    getSearchHandlers: PropTypes.func.isRequired,
+    onSubmitSearch: PropTypes.func.isRequired,
+  };
+
+  if (isMultiSelect || useSearch) {
     return (
       <div {...dataAttrs}>
         <SearchAndSortQuery
-          querySetter={querySetter}
-          queryGetter={queryGetter}
+          querySetter={noop}
+          queryGetter={noop}
           syncToLocationSearch={false}
           searchChangeCallback={deselectAll}
           nsParams={namespaceKey}
-          initialSearchState={initialQuery}
+          initialSearchState={{ query: '' }}
         >
           {({
             searchValue,
@@ -112,12 +112,9 @@ export const AssociatorStatic = ({
               />
               <AssociatedList
                 entityKey={entityKey}
+                namespaceKey={namespaceKey}
                 checkboxList={checkboxList}
                 columnWidths={columnWidths}
-                nsSort={nsSort}
-                nsQuery={nsQuery}
-                initialQuery={initialQuery}
-                query={query}
                 contentData={contentData}
                 onSort={onSort}
                 isStatic
@@ -134,12 +131,9 @@ export const AssociatorStatic = ({
     <div {...dataAttrs}>
       <AssociatedList
         entityKey={entityKey}
+        namespaceKey={namespaceKey}
         checkboxList={checkboxList}
         columnWidths={columnWidths}
-        nsSort={nsSort}
-        nsQuery={nsQuery}
-        initialQuery={initialQuery}
-        query={query}
         contentData={contentData}
         onSort={noop}
         isMultiSelect={isMultiSelect}
@@ -152,14 +146,10 @@ AssociatorStatic.propTypes = {
   entityKey: PropTypes.string.isRequired,
   namespaceKey: PropTypes.string.isRequired,
   isMultiSelect: PropTypes.bool,
-  mutator: PropTypes.shape({ query: PropTypes.object.isRequired }).isRequired,
-  nsSort: PropTypes.string.isRequired,
-  nsQuery: PropTypes.string.isRequired,
-  initialQuery: PropTypes.object.isRequired,
-  query: PropTypes.object.isRequired,
   dataAttributes: PropTypes.shape(PropTypes.object),
   contentData: PropTypes.arrayOf(PropTypes.object),
   hasLoaded: PropTypes.bool,
+  useSearch: PropTypes.bool,
   history: PropTypes.shape({ push: PropTypes.func.isRequired }),
 };
 
@@ -168,4 +158,5 @@ AssociatorStatic.defaultProps = {
   dataAttributes: null,
   contentData: null,
   hasLoaded: false,
+  useSearch: true,
 };

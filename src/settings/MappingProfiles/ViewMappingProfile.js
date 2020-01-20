@@ -36,8 +36,8 @@ import {
   EndOfItem,
   ActionMenu,
   INCOMING_RECORD_TYPES,
+  ProfileAssociator,
   FOLIO_RECORD_TYPES,
-  createProfileAssociator,
 } from '../../components';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
@@ -51,6 +51,7 @@ export class ViewMappingProfile extends Component {
     mappingProfile: {
       type: 'okapi',
       path: 'data-import-profiles/mappingProfiles/:{id}',
+      params: { withRelations: true },
       throwErrors: false,
     },
   });
@@ -85,13 +86,6 @@ export class ViewMappingProfile extends Component {
   state = {
     deletionInProgress: false,
     showDeleteConfirmation: false,
-    ActionsAssociator: createProfileAssociator({
-      namespaceKey: 'AAP',
-      entityKey: ENTITY_KEYS.ACTION_PROFILES,
-      parentType: PROFILE_TYPES.MAPPING_PROFILE,
-      masterType: PROFILE_TYPES.ACTION_PROFILE,
-      detailType: PROFILE_TYPES.MAPPING_PROFILE,
-    }),
   };
 
   get mappingProfileData() {
@@ -153,10 +147,7 @@ export class ViewMappingProfile extends Component {
       paneId,
       tagsEnabled,
     } = this.props;
-    const {
-      showDeleteConfirmation,
-      ActionsAssociator,
-    } = this.state;
+    const { showDeleteConfirmation } = this.state;
 
     const {
       hasLoaded,
@@ -191,6 +182,7 @@ export class ViewMappingProfile extends Component {
     }
 
     const tagsEntityLink = `data-import-profiles/mappingProfiles/${mappingProfile.id}`;
+    const associations = [...[], ...mappingProfile.parentProfiles, ...mappingProfile.childProfiles];
 
     return (
       <Pane
@@ -249,7 +241,14 @@ export class ViewMappingProfile extends Component {
               </Button>
             )}
           >
-            <ActionsAssociator
+            <ProfileAssociator
+              entityKey={ENTITY_KEYS.ACTION_PROFILES}
+              namespaceKey="AAP"
+              parentType={PROFILE_TYPES.MAPPING_PROFILE}
+              masterType={PROFILE_TYPES.ACTION_PROFILE}
+              detailType={PROFILE_TYPES.MAPPING_PROFILE}
+              contentData={associations}
+              hasLoaded={hasLoaded}
               record={mappingProfile}
               isMultiSelect
               isMultiLink

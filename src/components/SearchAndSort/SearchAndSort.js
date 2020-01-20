@@ -190,12 +190,12 @@ export class SearchAndSort extends Component {
     if (isSearchComplete) {
       const count = newState.totalCount();
 
-      this.SRStatusRef.current.sendMessage(
+      this.SRStatusRef.current.sendMessage((
         <FormattedMessage
           id="stripes-smart-components.searchReturnedResults"
           values={{ count }}
         />
-      );
+      ));
     }
 
     const showSingleResult = nextProps.showSingleResult &&

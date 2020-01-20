@@ -21,6 +21,7 @@ import {
   compose,
   matchFields,
   getDropdownOptions,
+  withProfileWrapper,
 } from '../../utils';
 import { LAYER_TYPES } from '../../utils/constants';
 import { formConfigSamples } from '../../../test/bigtest/mocks';
@@ -32,18 +33,25 @@ const formName = 'matchProfilesForm';
 export const MatchProfilesFormComponent = memo(({
   pristine,
   submitting,
-  initialValues: {
-    existingRecordType,
-    name,
-    matchDetails,
-  },
+  initialValues,
   handleSubmit,
   location: { search },
   associatedJobProfilesAmount,
   onCancel,
   jsonSchemas,
 }) => {
+  const {
+    profile,
+    addedRelations,
+    deletedRelations,
+  } = initialValues;
+  const {
+    existingRecordType,
+    name,
+    matchDetails,
+  } = profile;
   const { layer } = queryString.parse(search);
+
   const isEditMode = layer === LAYER_TYPES.EDIT;
 
   const [selectedExistingRecord, setSelectedExistingRecord] = useState(isEditMode ? existingRecordType : '');
@@ -182,6 +190,7 @@ const mapStateToProps = state => {
 };
 
 export const MatchProfilesForm = compose(
+  withProfileWrapper,
   stripesForm({
     form: formName,
     navigationCheck: true,

@@ -49,7 +49,7 @@ import {
   EndOfItem,
   ActionMenu,
   FlexibleForm,
-  createProfileAssociator,
+  ProfileAssociator,
 } from '../../components';
 import { FOLIO_RECORD_TYPES } from '../../components/ListTemplate';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
@@ -68,6 +68,7 @@ export class ViewMatchProfile extends Component {
     matchProfile: {
       type: 'okapi',
       path: 'data-import-profiles/matchProfiles/:{id}',
+      params: { withRelations: true },
       throwErrors: false,
     },
   });
@@ -102,13 +103,6 @@ export class ViewMatchProfile extends Component {
   state = {
     deletionInProgress: false,
     showDeleteConfirmation: false,
-    JobsAssociator: createProfileAssociator({
-      namespaceKey: 'AMP',
-      entityKey: ENTITY_KEYS.JOB_PROFILES,
-      parentType: PROFILE_TYPES.MATCH_PROFILE,
-      masterType: PROFILE_TYPES.JOB_PROFILE,
-      detailType: PROFILE_TYPES.MATCH_PROFILE,
-    }),
   };
 
   get matchProfileData() {
@@ -182,15 +176,13 @@ export class ViewMatchProfile extends Component {
       paneId,
       tagsEnabled,
     } = this.props;
-    const {
-      showDeleteConfirmation,
-      JobsAssociator,
-    } = this.state;
+    const { showDeleteConfirmation } = this.state;
 
     const {
       hasLoaded,
       record: matchProfile,
     } = this.matchProfileData;
+    const associations = [...[], ...get(matchProfile, ['parentProfiles'], []), ...get(matchProfile, ['childProfiles'], [])];
 
     if (!matchProfile || !hasLoaded) {
       return <Spinner entity={this} />;
@@ -259,18 +251,15 @@ export class ViewMatchProfile extends Component {
           },
         },
         incomingRecordType: get(matchDetails, 'incomingRecordType', ''),
-        matchCriterion: this.getLabel(CRITERION_TYPES, get(matchDetails, 'matchCriterion', ''))
-          || <NoValue />,
+        matchCriterion: this.getLabel(CRITERION_TYPES, get(matchDetails, 'matchCriterion', '')) || <NoValue />,
         existingMatchExpression: {
           fields: [
             {
               label: 'field',
-              value: capitalize(existingField, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)
-                || <NoValue />,
+              value: capitalize(existingField, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS) || <NoValue />,
             },
           ],
-          dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', ''))
-            || <NoValue />,
+          dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', '')) || <NoValue />,
           qualifier: {
             qualifierType: this.getLabel(QUALIFIER_TYPES, get(existingMatchExpression, ['qualifier', 'qualifierType'])),
             qualifierValue: get(existingMatchExpression, ['qualifier', 'qualifierValue']),
@@ -361,7 +350,14 @@ export class ViewMatchProfile extends Component {
               </Button>
             )}
           >
-            <JobsAssociator
+            <ProfileAssociator
+              entityKey={ENTITY_KEYS.JOB_PROFILES}
+              namespaceKey="AJP"
+              parentType={PROFILE_TYPES.MATCH_PROFILE}
+              masterType={PROFILE_TYPES.JOB_PROFILE}
+              detailType={PROFILE_TYPES.MATCH_PROFILE}
+              contentData={associations}
+              hasLoaded={hasLoaded}
               record={matchProfile}
               isMultiSelect
               isMultiLink
