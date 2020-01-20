@@ -15,7 +15,10 @@ import {
   Field,
   change,
 } from 'redux-form';
-import { identity } from 'lodash';
+import {
+  get,
+  identity,
+} from 'lodash';
 
 import {
   Select,
@@ -83,7 +86,11 @@ export const MappingProfilesFormComponent = ({
   const headLine = isEditMode
     ? profile.name
     : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
-  const associations = [...[], ...profile.parentProfiles, ...profile.childProfiles];
+  const associations = [
+    ...[],
+    ...get(initialValues, ['profile', 'parentProfiles'], []),
+    ...get(initialValues, ['profile', 'childProfiles'], []),
+  ];
 
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
