@@ -159,7 +159,11 @@ export const ActionProfilesFormComponent = ({
   ) : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
   const headLine = isEditMode ? initialValues.profile.name : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
   const editWithModal = isEditMode && associatedJobProfilesAmount;
-  const associations = [...[], ...initialValues.profile.parentProfiles, ...initialValues.profile.childProfiles];
+  const associations = [
+    ...[],
+    ...get(initialValues, ['profile', 'parentProfiles'], []),
+    ...get(initialValues, ['profile', 'childProfiles'], []),
+  ];
 
   const onSubmit = e => {
     if (editWithModal) {
@@ -255,26 +259,28 @@ export const ActionProfilesFormComponent = ({
             onUnlink={setDeletedRelations}
           />
         </Accordion>
-        <Accordion
-          id="actionProfileFormAssociatedJobProfileAccordion"
-          label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
-          separator={false}
-        >
-          <ProfileAssociator
-            entityKey={ENTITY_KEYS.JOB_PROFILES}
-            namespaceKey="AJP"
-            parentId={initialValues.profile.id}
-            parentType={PROFILE_TYPES.ACTION_PROFILE}
-            masterType={PROFILE_TYPES.JOB_PROFILE}
-            detailType={PROFILE_TYPES.ACTION_PROFILE}
-            contentData={associations}
-            record={initialValues}
-            hasLoaded
-            isMultiSelect={false}
-            isMultiLink
-            useSearch={false}
-          />
-        </Accordion>
+        {isEditMode && (
+          <Accordion
+            id="actionProfileFormAssociatedJobProfileAccordion"
+            label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
+            separator={false}
+          >
+            <ProfileAssociator
+              entityKey={ENTITY_KEYS.JOB_PROFILES}
+              namespaceKey="AJP"
+              parentId={initialValues.profile.id}
+              parentType={PROFILE_TYPES.ACTION_PROFILE}
+              masterType={PROFILE_TYPES.JOB_PROFILE}
+              detailType={PROFILE_TYPES.ACTION_PROFILE}
+              contentData={associations}
+              record={initialValues}
+              hasLoaded
+              isMultiSelect={false}
+              isMultiLink
+              useSearch={false}
+            />
+          </Accordion>
+        )}
       </AccordionSet>
       <ConfirmationModal
         id="confirm-edit-action-profile-modal"
