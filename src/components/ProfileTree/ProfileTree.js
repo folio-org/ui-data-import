@@ -20,14 +20,13 @@ import {
 import css from './ProfileTree.css';
 
 export const ProfileTree = memo(({
-  record,
   contentData,
   linkingRules,
+  record,
   className,
   dataAttributes,
 }) => {
   const [changesCount, setChangesCount] = useState(0);
-  const [currentType, setCurrentType] = useState(null);
   const [data, setData] = useState([]);
   const [profilesToLink, setProfilesToLink] = useState([]);
   const [profilesToUnlink, setProfilesToUnlink] = useState([]);
@@ -43,7 +42,7 @@ export const ProfileTree = memo(({
 
   const ChangesContext = React.createContext(changesCount);
 
-  const getLines = (lines, reactTo) => lines.map(item => ({
+  const getLines = (lines, currentType, reactTo) => lines.map(item => ({
     id: item.id,
     contentType: snakeCase(currentType).slice(0, -1).toLocaleUpperCase(),
     reactTo,
@@ -64,8 +63,8 @@ export const ProfileTree = memo(({
     onUnlink(recordId);
   };
 
-  const onRootLink = lines => {
-    const newData = [...data, ...getLines(lines)];
+  const onRootLink = (lines, currentType) => {
+    const newData = [...data, ...getLines(lines, currentType)];
 
     sessionStorage.setItem('root.data', JSON.stringify(newData));
     setData(newData);
@@ -87,9 +86,9 @@ export const ProfileTree = memo(({
       <div className={classNames(css['profile-tree'], className)}>
         <div className={css['profile-tree-container']}>
           {data && data.length ? (
-            data.map(item => (
+            data.map((item, i) => (
               <ProfileBranch
-                key={`profile-branch-${item.id}`}
+                key={`profile-branch-${item.id}-${i}`}
                 entityKey={`${camelCase(item.contentType)}s`}
                 recordData={item.content}
                 contentData={item.childSnapshotWrappers}
@@ -113,7 +112,6 @@ export const ProfileTree = memo(({
           <ProfileLinker
             id="linker-root"
             linkingRules={linkingRules}
-            onTypeSelected={setCurrentType}
             onLink={onRootLink}
             {...dataAttributes}
           />
@@ -125,7 +123,7 @@ export const ProfileTree = memo(({
 
 ProfileTree.propTypes = {
   contentData: PropTypes.arrayOf(PropTypes.object).isRequired,
-  linkingRules: PropTypes.object,
+  linkingRules: PropTypes.object.isRequired,
   record: PropTypes.object,
   className: PropTypes.string,
   dataAttributes: PropTypes.object,
