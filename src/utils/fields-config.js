@@ -960,7 +960,7 @@ export const fieldsConfig = [
     recordType: 'ORDER',
   }, {
     id: 'acqUnitIds',
-    label: 'order.acquisitionsUnit',
+    label: 'invoice.details.information.acqUnits',
     categoryId: 'po-purchase-order',
     value: 'ACQUISITIONS_UNITS',
     recordType: 'ORDER',
@@ -978,7 +978,7 @@ export const fieldsConfig = [
     recordType: 'ORDER',
   }, {
     id: 'notes',
-    label: 'order.notes',
+    label: 'orderDetails.note',
     categoryId: 'po-purchase-order',
     value: 'NOTE',
     recordType: 'ORDER',
@@ -1119,19 +1119,19 @@ export const fieldsConfig = [
     value: 'CONTRIBUTOR_TYPE',
     recordType: 'ORDER',
   }, {
-    id: 'productIds.items.properties.productId',
+    id: 'productId',
     label: 'itemDetails.productId',
     categoryId: 'pol-item-details',
     value: 'PRODUCT_ID',
     recordType: 'ORDER',
   }, {
-    id: 'productIds.items.properties.qualifier',
+    id: 'qualifier',
     label: 'itemDetails.qualifier',
     categoryId: 'pol-item-details',
     value: 'QUALIFIER',
     recordType: 'ORDER',
   }, {
-    id: 'productIds.items.properties.productIdType',
+    id: 'productIdType',
     label: 'itemDetails.productIdType',
     categoryId: 'pol-item-details',
     value: 'PRODUCT_ID_TYPE',
@@ -1151,6 +1151,12 @@ export const fieldsConfig = [
   },
   /* Order POL details */
   {
+    id: 'poLineNumber',
+    label: 'poLine.number',
+    categoryId: 'pol-details',
+    value: 'POL_NUMBER',
+    recordType: 'ORDER',
+  }, {
     id: 'acquisitionMethod',
     label: 'poLine.acquisitionMethod',
     categoryId: 'pol-details',
@@ -1544,7 +1550,7 @@ export const fieldsConfig = [
     recordType: 'INVOICE',
   }, {
     id: 'approvalDate',
-    label: 'invoice.details.information.approvedDate',
+    label: 'invoice.approvalDate',
     categoryId: 'invoice-information',
     value: 'APPROVAL_DATE',
     recordType: 'INVOICE',
