@@ -14,7 +14,11 @@
 * Connect Profile Tree Component to unified data source (UIDATIMP-357)
 * Rework ProfileLinker Component (UIDATIMP-358)
 
-* 
+### Bugs fixed:
+* Profile Associator lists are empty when the user reloads the page with Profile Edit Form open (UIDATIMP-338)
+* ProfileTree component TreeLines re-renders are late by one tick from state updates (UIDATIMP-343)
+* ProfileTree component ProfileLinker dropdown doesn't close automatically after list option has chosen (UIDATIMP-345)
+* Associated profiles not clearing out after viewing, like they should (UIDATIMP-354)
 
 ## [1.7.3](https://github.com/folio-org/ui-data-import/tree/v1.7.3) (2019-12-04)
 * Update sorting query for jobs (UIDATIMP-346)
