@@ -1,11 +1,20 @@
 # Change history for ui-data-import
 
 ## **1.8.0** (in progress)
+
+### Features added:
+* Attach a field mapping profile to an action profile that does not have one (UIDATIMP-269)
+* Attach one or more action profiles to a field mapping profile (UIDATIMP-279)
 * Create ProfileTree Component (UIDATIMP-326)
+* Job profile details, part 1: adding match profiles (UIDATIMP-312)
+* Job profile details, part 2: adding secondary match/action profiles (UIDATIMP-313)
 * Create FOLIO records' field lists (UIDATIMP-330)
+* Connect Profile Associator Component to unified data source (UIDATIMP-341)
 * Update field naming for mapping profiles (UIDATIMP-349)
-* Cover ProfileTree Component with tests (UIDATIMP-344)
+* Connect Profile Tree Component to unified data source (UIDATIMP-357)
 * Rework ProfileLinker Component (UIDATIMP-358)
+
+* 
 
 ## [1.7.3](https://github.com/folio-org/ui-data-import/tree/v1.7.3) (2019-12-04)
 * Update sorting query for jobs (UIDATIMP-346)
