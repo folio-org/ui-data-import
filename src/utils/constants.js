@@ -239,6 +239,7 @@ export const ORDER_RESOURCE_PATHS = [
   'acq-models/mod-orders-storage/schemas/renewal.json',
   'acq-models/mod-orders-storage/schemas/po_line.json',
   'acq-models/mod-orders-storage/schemas/details.json',
+  'acq-models/mod-orders-storage/schemas/product_identifier.json',
   'acq-models/mod-orders-storage/schemas/contributor.json',
   'acq-models/mod-orders-storage/schemas/receiving_history.json',
   'acq-models/mod-orders-storage/schemas/cost.json',
