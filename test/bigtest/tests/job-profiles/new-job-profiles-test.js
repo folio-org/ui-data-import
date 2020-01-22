@@ -141,6 +141,53 @@ describe('When job profile form', () => {
             expect(jobProfileForm.profileTree.branches(0).hasSubBranches).to.be.equal(false);
           });
         });
+
+        describe('when add to "For matches" section', () => {
+          beforeEach(async () => {
+            await sessionStorage.clear();
+            await jobProfileForm.profileTree.plusSignButton.addMatchButton.click();
+          });
+
+          describe('Action profile', () => {
+            beforeEach(async () => {
+              await jobProfileForm.profileTree.branches(0).matchesSection.plusSignButton.clickLinker();
+              await jobProfileForm.profileTree.branches(0).matchesSection.plusSignButton.addActionButton.click();
+            });
+
+            it('added', () => {
+              expect(jobProfileForm.profileTree.branches(0).matchesSection.branchesCount).to.be.equal(1);
+            });
+
+            it('to proper section', () => {
+              expect(jobProfileForm.profileTree.rootBranchesCount).to.be.equal(1);
+              expect(jobProfileForm.profileTree.allBranchesCount).to.be.equal(2);
+            });
+
+            it('does not have sub-branches', () => {
+              expect(jobProfileForm.profileTree.branches(0).matchesSection.hasSubBranches).to.be.false;
+            });
+          });
+
+          describe('Match profile', () => {
+            beforeEach(async () => {
+              await jobProfileForm.profileTree.branches(0).matchesSection.plusSignButton.clickLinker();
+              await jobProfileForm.profileTree.branches(0).matchesSection.plusSignButton.addMatchButton.click();
+            });
+
+            it('added', () => {
+              expect(jobProfileForm.profileTree.branches(0).matchesSection.branchesCount).to.be.equal(1);
+            });
+
+            it('to proper section', () => {
+              expect(jobProfileForm.profileTree.rootBranchesCount).to.be.equal(1);
+              expect(jobProfileForm.profileTree.allBranchesCount).to.be.equal(2);
+            });
+
+            it('has sub-branches', () => {
+              expect(jobProfileForm.profileTree.branches(0).matchesSection.hasSubBranches).to.be.true;
+            });
+          });
+        });
       });
     });
   });
