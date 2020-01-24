@@ -28,8 +28,8 @@ import {
 } from '@folio/stripes/smart-components';
 
 import {
-  capitalize,
   createLayerURL,
+  getFieldMatched,
 } from '../../utils';
 import {
   LAYER_TYPES,
@@ -223,51 +223,53 @@ export class ViewMatchProfile extends Component {
 
     const incomingFields = get(incomingMatchExpression, 'fields', []);
     const existingFields = get(existingMatchExpression, 'fields', []);
-    const existingField = this.getValue(existingFields, 'field').replace(/_/g, ' ');
+    const existingField = this.getValue(existingFields, 'field');
 
     const record = {
       ...matchProfile,
-      matchDetails: [{
-        incomingMatchExpression: {
-          fields: [
-            {
-              label: 'field',
-              value: this.getValue(incomingFields, 'field') || <NoValue />,
-            }, {
-              label: 'indicator1',
-              value: this.getValue(incomingFields, 'indicator1') || <NoValue />,
-            }, {
-              label: 'indicator2',
-              value: this.getValue(incomingFields, 'indicator2') || <NoValue />,
-            }, {
-              label: 'recordSubfield',
-              value: this.getValue(incomingFields, 'recordSubfield') || <NoValue />,
+      profile: {
+        matchDetails: [{
+          incomingMatchExpression: {
+            fields: [
+              {
+                label: 'field',
+                value: this.getValue(incomingFields, 'field') || <NoValue />,
+              }, {
+                label: 'indicator1',
+                value: this.getValue(incomingFields, 'indicator1') || <NoValue />,
+              }, {
+                label: 'indicator2',
+                value: this.getValue(incomingFields, 'indicator2') || <NoValue />,
+              }, {
+                label: 'recordSubfield',
+                value: this.getValue(incomingFields, 'recordSubfield') || <NoValue />,
+              },
+            ],
+            qualifier: {
+              qualifierType: this.getLabel(QUALIFIER_TYPES, get(incomingMatchExpression, ['qualifier', 'qualifierType'])),
+              qualifierValue: get(incomingMatchExpression, ['qualifier', 'qualifierValue']),
+              comparisonPart: this.getLabel(COMPARISON_PARTS, get(incomingMatchExpression, ['qualifier', 'comparisonPart'])),
             },
-          ],
-          qualifier: {
-            qualifierType: this.getLabel(QUALIFIER_TYPES, get(incomingMatchExpression, ['qualifier', 'qualifierType'])),
-            qualifierValue: get(incomingMatchExpression, ['qualifier', 'qualifierValue']),
-            comparisonPart: this.getLabel(COMPARISON_PARTS, get(incomingMatchExpression, ['qualifier', 'comparisonPart'])),
           },
-        },
-        incomingRecordType: get(matchDetails, 'incomingRecordType', ''),
-        matchCriterion: this.getLabel(CRITERION_TYPES, get(matchDetails, 'matchCriterion', '')) || <NoValue />,
-        existingMatchExpression: {
-          fields: [
-            {
-              label: 'field',
-              value: capitalize(existingField, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS) || <NoValue />,
+          incomingRecordType: get(matchDetails, 'incomingRecordType', ''),
+          matchCriterion: this.getLabel(CRITERION_TYPES, get(matchDetails, 'matchCriterion', '')) || <NoValue />,
+          existingMatchExpression: {
+            fields: [
+              {
+                label: 'field',
+                value: getFieldMatched(existingField, matchProfile.existingRecordType) || <NoValue />,
+              },
+            ],
+            dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', '')) || <NoValue />,
+            qualifier: {
+              qualifierType: this.getLabel(QUALIFIER_TYPES, get(existingMatchExpression, ['qualifier', 'qualifierType'])),
+              qualifierValue: get(existingMatchExpression, ['qualifier', 'qualifierValue']),
+              comparisonPart: this.getLabel(COMPARISON_PARTS, get(existingMatchExpression, ['qualifier', 'comparisonPart'])),
             },
-          ],
-          dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', '')) || <NoValue />,
-          qualifier: {
-            qualifierType: this.getLabel(QUALIFIER_TYPES, get(existingMatchExpression, ['qualifier', 'qualifierType'])),
-            qualifierValue: get(existingMatchExpression, ['qualifier', 'qualifierValue']),
-            comparisonPart: this.getLabel(COMPARISON_PARTS, get(existingMatchExpression, ['qualifier', 'comparisonPart'])),
           },
-        },
-        existingRecordType: get(matchDetails, 'existingRecordType', ''),
-      }],
+          existingRecordType: get(matchDetails, 'existingRecordType', ''),
+        }],
+      },
     };
 
     const componentsProps = {

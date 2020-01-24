@@ -5,6 +5,7 @@
 * Create FOLIO records' field lists (UIDATIMP-330)
 * Update field naming for mapping profiles (UIDATIMP-349)
 * Rework ProfileLinker Component (UIDATIMP-358)
+* Convert Match Profiles form Existing Record Field name to JSONPath format (UIDATIMP-375)
 
 ## [1.7.3](https://github.com/folio-org/ui-data-import/tree/v1.7.3) (2019-12-04)
 * Update sorting query for jobs (UIDATIMP-346)
