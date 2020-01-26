@@ -18,13 +18,13 @@ export const LinkerButton = memo(({
   dataAttributes,
 }) => (
   <Button
+    data-test-plugin-find-record-button
     aria-haspopup="true"
     buttonStyle="dropdownItem"
     id={`${id}-button-find-import-profile`}
     buttonClass={classNames(css['linker-button'], className)}
     marginTop0
     marginBottom0
-    data-test-plugin-find-record-button
     onClick={() => onClick(entityKey)}
     {...dataAttributes}
   >
