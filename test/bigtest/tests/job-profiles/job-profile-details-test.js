@@ -37,6 +37,7 @@ describe('Job Profile View', () => {
 
   describe('opens Job Profile details', () => {
     beforeEach(async () => {
+      await sessionStorage.clear();
       await jobProfiles.list.rows(0).click();
     });
 
@@ -50,6 +51,22 @@ describe('Job Profile View', () => {
 
     it('display tags accordion', () => {
       expect(jobProfileDetails.isTagsPresent).to.be.true;
+    });
+
+    it('display overview accordion', () => {
+      expect(jobProfileDetails.isOverviewPresent).to.be.true;
+    });
+
+    it('has correct count of associated profiles', () => {
+      expect(jobProfileDetails.profileTree.rootBranchesCount).to.be.equal(5);
+    });
+
+    it('first associated profile has secondary profiles', () => {
+      expect(jobProfileDetails.profileTree.branches(0).hasSubBranches).to.be.true;
+    });
+
+    it('there is no plus sign buttons', () => {
+      expect(jobProfileDetails.profileTree.plusSignButton.isPresent).to.be.false;
     });
 
     describe('edit job profile form', () => {
@@ -71,6 +88,24 @@ describe('Job Profile View', () => {
 
         it('upon click on edit button', () => {
           expect(jobProfileForm.isPresent).to.be.true;
+        });
+      });
+    });
+
+    describe('edit job profile form', () => {
+      describe('Overview section', () => {
+        describe('when there is an associated match profile', () => {
+          beforeEach(async () => {
+            await jobProfileDetails.editButton.click();
+          });
+
+          it('profile has "For matches" section', () => {
+            expect(jobProfileForm.profileTree.branches(0).matchesSection.isPresent).to.be.true;
+          });
+
+          it('profile has "For non-matches" section', () => {
+            expect(jobProfileForm.profileTree.branches(0).nonMatchesSection.isPresent).to.be.true;
+          });
         });
       });
     });
