@@ -9,6 +9,8 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 
+import { ProfileTreeInteractor } from '../profile-tree-interactor';
+
 @interactor class JobProfileDetailsInteractor {
   paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
   dropdownEditButton = new ButtonInteractor('[data-test-edit-item-menu-button]');
@@ -21,6 +23,8 @@ import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/inter
   acceptedDataType = scoped('[data-test-accepted-data-type]');
   description = scoped('[data-test-description]');
   isTagsPresent = isPresent('[data-test-tags-accordion]');
+  isOverviewPresent = isPresent('#job-profile-overview');
+  profileTree = new ProfileTreeInteractor();
   jobsUsingThisProfile = new MultiColumnListInteractor('#jobs-using-this-profile');
   confirmationModal = new ConfirmationModalInteractor('#delete-job-profile-modal');
   runConfirmationModal = new ConfirmationModalInteractor('#run-job-profile-modal');

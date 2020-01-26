@@ -1,6 +1,6 @@
 import setupStripesCore from '@folio/stripes-core/test/bigtest/helpers/setup-application';
-
 import mirageOptions from '../network';
+import findImportProfile from './findImportProfileModule';
 
 export function setupApplication({
   scenarios,
@@ -8,6 +8,7 @@ export function setupApplication({
 } = {}) {
   setupStripesCore({
     mirageOptions,
+    modules: [findImportProfile],
     scenarios,
     stripesConfig: { hasAllPerms },
   });

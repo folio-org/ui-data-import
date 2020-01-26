@@ -67,16 +67,18 @@ export const ProfileLinker = ({
 
   return (
     <Fragment>
-      <Dropdown
-        id={`type-selector-dropdown-${id}`}
-        className={classNames(css['linker-button'], className)}
-        open={typeSelectorOpen}
-        onToggle={() => setTypeSelectorOpen(!typeSelectorOpen)}
-        renderTrigger={trigger}
-        renderMenu={menu}
-        usePortal={false}
-        relativePosition
-      />
+      <div data-test-plus-sign-button>
+        <Dropdown
+          id={`type-selector-dropdown-${id}`}
+          className={classNames(css['linker-button'], className)}
+          open={typeSelectorOpen}
+          onToggle={() => setTypeSelectorOpen(!typeSelectorOpen)}
+          renderTrigger={trigger}
+          renderMenu={menu}
+          usePortal={false}
+          relativePosition
+        />
+      </div>
       <div style={{ display: 'none' }}>
         {profilesAllowed.map((entityKey, i) => (
           <Pluggable

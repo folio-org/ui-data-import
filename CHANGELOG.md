@@ -4,6 +4,7 @@
 * Create ProfileTree Component (UIDATIMP-326)
 * Create FOLIO records' field lists (UIDATIMP-330)
 * Update field naming for mapping profiles (UIDATIMP-349)
+* Cover ProfileTree Component with tests (UIDATIMP-344)
 * Rework ProfileLinker Component (UIDATIMP-358)
 * Convert Match Profiles form Existing Record Field name to JSONPath format (UIDATIMP-375)
 

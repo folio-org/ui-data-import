@@ -113,6 +113,7 @@ export const ProfileBranch = memo(({
 
   return (
     <div
+      data-test-profile-branch
       id={containerId}
       className={classNames(css['profile-branch'], className)}
     >
