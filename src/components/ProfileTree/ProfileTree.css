@@ -11,9 +11,10 @@
   display: flex;
   justify-content: space-between;
   justify-items: center;
-  height: 35px;
+  min-height: 35px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
+  background-color: var(--color-fill);
   & .record-container {padding: 7px;}
   & .buttons-container {
     display: flex;
@@ -30,6 +31,7 @@
   & .branch-container {
     margin: 10px 0 10px 35px;
     & [class|=accordion] {
+      background-color: var(--color-fill);
       &:not(:last-child) {margin-bottom: 10px;}
       border: 1px solid rgba(0, 0, 0, 0.2);
       border-radius: 10px;

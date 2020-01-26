@@ -30,6 +30,7 @@ import { ENTITY_KEYS } from '../../utils/constants';
 export const listTemplate = ({
   entityKey,
   searchTerm,
+  customValue,
   selectRecord,
   selectedRecords,
 }) => ({
@@ -44,6 +45,7 @@ export const listTemplate = ({
     <DefaultColumn
       iconKey={entityKey}
       value={record.name}
+      customValue={customValue}
       searchTerm={searchTerm}
     />
   ),
