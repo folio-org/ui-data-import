@@ -1,5 +1,9 @@
 @import "@folio/stripes-components/lib/variables.css";
 
+.profile-linker {
+  min-height: 150px;
+  border: solid 1px red;
+}
 .linker-caption {}
 .linker-button {
   & [class|=button] {

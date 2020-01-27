@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
+  noop,
   camelCase,
   snakeCase,
 } from 'lodash';
@@ -20,31 +21,32 @@ import {
 import css from './ProfileTree.css';
 
 export const ProfileTree = memo(({
-  contentData,
+  parentId,
   linkingRules,
+  contentData,
+  relationsToAdd,
+  relationsToDelete,
+  onLink,
+  onUnlink,
   record,
   className,
   dataAttributes,
 }) => {
+  const dataKey = `${parentId || 'new'}.root.data`;
   const [changesCount, setChangesCount] = useState(0);
   const [data, setData] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [profilesToLink, setProfilesToLink] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [profilesToUnlink, setProfilesToUnlink] = useState([]);
 
   useEffect(() => {
-    function getData() {
-      const res = JSON.parse(sessionStorage.getItem('root.data'));
+    setData(JSON.parse(sessionStorage.getItem(dataKey)) || contentData);
 
-      return res || contentData;
-    }
-    setData(getData());
+    return () => {
+      sessionStorage.removeItem(dataKey);
+    };
   }, [contentData]);
 
   const ChangesContext = React.createContext(changesCount);
 
-  const getLines = (lines, currentType, reactTo) => lines.map(item => ({
+  const getLines = (lines, currentType, reactTo = null) => lines.map(item => ({
     id: item.id,
     contentType: snakeCase(currentType).slice(0, -1).toLocaleUpperCase(),
     reactTo,
@@ -52,39 +54,61 @@ export const ProfileTree = memo(({
     childSnapshotWrappers: [],
   }));
 
-  // eslint-disable-next-line no-unused-vars
-  const onLink = lines => {
-    setProfilesToLink([]);
+  const findRelIndex = (relations, masterId, line) => {
+    return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === line.id);
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const onUnlink = recordId => {
-    setProfilesToUnlink([]);
-  };
+  const composeRelations = (lines, masterId, masterType, detailType) => lines.map(item => ({
+    masterProfileId: masterId,
+    masterProfileType: masterType,
+    detailProfileId: item.id,
+    detailProfileType: detailType,
+  }));
 
-  // eslint-disable-next-line no-unused-vars
-  const onDelete = recordId => {
-    // @TODO: Record deletion code should be here
-    onUnlink(recordId);
-  };
+  const link = (lines, masterId, masterType, detailType) => {
+    const uniqueLines = lines.filter(line => data.findIndex(item => item.id === line.id) === -1);
+    const newData = [...data, ...getLines(lines, masterType)];
+    const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
 
-  const onRootLink = (lines, currentType) => {
-    const newData = [...data, ...getLines(lines, currentType)];
+    if (linesToAdd && linesToAdd.length) {
+      const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd)];
 
-    sessionStorage.setItem('root.data', JSON.stringify(newData));
+      onLink(relsToAdd);
+    }
+
     setData(newData);
-    onLink();
+
+    sessionStorage.setItem(dataKey, JSON.stringify(newData));
+    onLink(linesToAdd);
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const onRootUnlink = recordId => {
-    const index = data.findIndex(item => item.id === recordId);
-    const newData = data;
+  const unlink = row => {
+    const index = data.findIndex(item => item.id === row.id);
+    const newIdx = findRelIndex(relationsToAdd, row);
 
-    newData.splice(index, 0);
-    sessionStorage.setItem('root.data', JSON.stringify(newData));
-    setData(newData);
-    onUnlink();
+    if (newIdx < 0) {
+      const relsToDel = [...relationsToDelete, ...composeRelations([row])];
+
+      onUnlink(relsToDel);
+    }
+
+    data.splice(index, 1);
+    setData(data);
+    sessionStorage.setItem(dataKey, JSON.stringify(data));
+  };
+
+  const remove = row => {
+    const index = data.findIndex(item => item.id === row.id);
+    const newIdx = findRelIndex(relationsToAdd, row);
+
+    if (newIdx < 0) {
+      const relsToDel = [...relationsToDelete, ...composeRelations([row])];
+
+      onUnlink(relsToDel);
+    }
+
+    data.splice(index, 1);
+    setData(data);
   };
 
   return (
@@ -118,7 +142,7 @@ export const ProfileTree = memo(({
           <ProfileLinker
             id="linker-root"
             linkingRules={linkingRules}
-            onLink={onRootLink}
+            onLink={link}
             {...dataAttributes}
           />
         )}
@@ -128,9 +152,25 @@ export const ProfileTree = memo(({
 });
 
 ProfileTree.propTypes = {
-  contentData: PropTypes.arrayOf(PropTypes.object).isRequired,
   linkingRules: PropTypes.object.isRequired,
+  contentData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  parentId: PropTypes.oneOf(PropTypes.string, PropTypes.number),
+  relationsToAdd: PropTypes.arrayOf(PropTypes.object),
+  relationsToDelete: PropTypes.arrayOf(PropTypes.object),
+  onLink: PropTypes.func,
+  onUnlink: PropTypes.func,
   record: PropTypes.object,
   className: PropTypes.string,
   dataAttributes: PropTypes.object,
+};
+
+ProfileTree.defaultProps = {
+  parentId: null,
+  relationsToAdd: [],
+  relationsToDelete: [],
+  onLink: noop,
+  onUnlink: noop,
+  record: null,
+  className: null,
+  dataAttributes: null,
 };

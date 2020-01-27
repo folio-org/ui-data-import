@@ -3,10 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import PropTypes from 'prop-types';
 
-import {
-  get,
-  identity,
-} from 'lodash';
+import { identity } from 'lodash';
 
 import {
   Headline,
@@ -32,9 +29,6 @@ import {
   ProfileTree,
 } from '../../components';
 
-// @TODO: Remove this during backend unmocking task implementation
-import { snapshotWrappers } from '../../../test/bigtest/mocks';
-
 const formName = 'jobProfilesForm';
 const dataTypes = DATA_TYPES.map(dataType => ({
   value: dataType,
@@ -51,8 +45,9 @@ export const JobProfilesFormComponent = ({
   const { profile } = initialValues;
   const isEditMode = Boolean(profile.id);
   const isSubmitDisabled = pristine || submitting;
-  // @TODO: Remove this during backend unmocking task implementation
-  const currentWrapper = snapshotWrappers.find(item => item.id === profile.id);
+  const childWrappers = JSON.parse(sessionStorage.getItem(`childWrappers.${profile.id}`)) || [];
+
+  console.log('Child Wrappers: ', childWrappers);
 
   const paneTitle = isEditMode ? (
     <FormattedMessage id="ui-data-import.edit">
@@ -122,8 +117,13 @@ export const JobProfilesFormComponent = ({
           separator={false}
         >
           <ProfileTree
+            parentId={profile.id}
             linkingRules={PROFILE_LINKING_RULES}
-            contentData={get(currentWrapper, 'childSnapshotWrappers', [])}
+            contentData={childWrappers}
+            // relationsToAdd={addedRelations}
+            // relationsToDelete={deletedRelations}
+            // onLink={setAddedRelations}
+            // onUnlink={setDeletedRelations}
           />
         </Accordion>
       </AccordionSet>
