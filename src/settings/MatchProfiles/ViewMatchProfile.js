@@ -215,7 +215,7 @@ export class ViewMatchProfile extends Component {
 
     // Here is mocked config file with mocked values, it should be replaced/rewritten once BE will be ready
     const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
-    const matchDetails = get(matchProfile, 'matchDetails[0]', []);
+    const matchDetails = get(matchProfile, ['matchDetails', '0'], []);
     const {
       incomingMatchExpression,
       existingMatchExpression,
@@ -223,7 +223,7 @@ export class ViewMatchProfile extends Component {
 
     const incomingFields = get(incomingMatchExpression, 'fields', []);
     const existingFields = get(existingMatchExpression, 'fields', []);
-    const existingField = this.getValue(existingFields, 'field').replace(/_/g, ' ');
+    const existingField = get(this.getValue(existingFields, 'field'), '', '').replace(/_/g, ' ');
 
     const record = {
       ...matchProfile,
