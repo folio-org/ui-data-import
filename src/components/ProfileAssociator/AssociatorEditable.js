@@ -6,7 +6,10 @@ import React, {
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { noop } from 'lodash';
+import {
+  noop,
+  camelCase,
+} from 'lodash';
 
 import { Pluggable } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
@@ -133,7 +136,10 @@ export const AssociatorEditable = memo(({
         message={(
           <FormattedMessage
             id="ui-data-import.modal.profile.unlink.message"
-            values={{ name: current ? current.name : '' }}
+            values={{
+              profileType1: <FormattedMessage id={`ui-data-import.${camelCase(parentType === masterType ? detailType : masterType)}Name`} />,
+              profileType2: <FormattedMessage id={`ui-data-import.${camelCase(parentType)}Name`} />,
+            }}
           />
         )}
         confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}

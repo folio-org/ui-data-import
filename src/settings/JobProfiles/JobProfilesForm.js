@@ -48,11 +48,7 @@ export const JobProfilesFormComponent = ({
   handleSubmit,
   onCancel,
 }) => {
-  const {
-    profile,
-    addedRelations,
-    deletedRelations,
-  } = initialValues;
+  const { profile } = initialValues;
   const isEditMode = Boolean(profile.id);
   const isSubmitDisabled = pristine || submitting;
   // @TODO: Remove this during backend unmocking task implementation
