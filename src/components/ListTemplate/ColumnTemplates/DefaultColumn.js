@@ -7,14 +7,17 @@ import { AppIcon } from '@folio/stripes/core';
 import sharedCss from '../../../shared.css';
 
 export const DefaultColumn = memo(({
-  value,
+  value: incomingValue,
+  customValue,
   className = sharedCss.cellAppIcon,
   iconKey,
   searchTerm,
 }) => {
-  if (!value) {
+  if (!customValue && !incomingValue) {
     return '-';
   }
+
+  const value = customValue || incomingValue;
 
   const content = searchTerm
     ? (
@@ -45,6 +48,7 @@ export const DefaultColumn = memo(({
 
 DefaultColumn.propTypes = {
   value: PropTypes.string.isRequired,
+  customValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   iconKey: PropTypes.string,
   className: PropTypes.string,
   searchTerm: PropTypes.string,

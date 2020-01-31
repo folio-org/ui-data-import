@@ -40,11 +40,7 @@ export const MatchProfilesFormComponent = memo(({
   onCancel,
   jsonSchemas,
 }) => {
-  const {
-    profile,
-    addedRelations,
-    deletedRelations,
-  } = initialValues;
+  const { profile } = initialValues;
   const {
     existingRecordType,
     name,

@@ -34,6 +34,8 @@ const hasContent = (children, record) => children
 
 export const Control = memo(props => {
   const {
+    staticNamespace,
+    editableNamespace,
     controlType,
     staticControlType,
     component,
@@ -71,6 +73,10 @@ export const Control = memo(props => {
       validate,
     } = props;
 
+    const staticPrefix = staticNamespace && staticNamespace.length ? `${staticNamespace}.` : '';
+    const editablePrefix = editableNamespace && editableNamespace.length ? `${editableNamespace}.` : '';
+    const fullName = `${isEditable ? editablePrefix : staticPrefix}${name}`;
+
     let attrs = {
       label: label ? (<FormattedMessage id={label} />) : label,
       component: component ? getControl(component) : null,
@@ -79,6 +85,13 @@ export const Control = memo(props => {
       ...attributes,
       ...dataAttributes,
     };
+
+    if (name && name.length) {
+      attrs = {
+        ...attrs,
+        name: fullName,
+      };
+    }
 
     if (dataOptions && dataOptions.length) {
       attrs = {
@@ -137,6 +150,8 @@ export const Control = memo(props => {
           {children.map((cfg, i) => (
             <Control
               key={`control-${i}`}
+              staticNamespace={staticNamespace}
+              editableNamespace={editableNamespace}
               intl={intl}
               styles={styles}
               referenceTables={referenceTables}
@@ -184,6 +199,8 @@ export const Control = memo(props => {
               {children.map((cfg, i) => (
                 <Control
                   key={`control-${i}`}
+                  staticNamespace={staticNamespace}
+                  editableNamespace={editableNamespace}
                   intl={intl}
                   styles={styles}
                   referenceTables={referenceTables}
@@ -205,6 +222,8 @@ export const Control = memo(props => {
 Control.propTypes = {
   controlType: PropTypes.string.isRequired,
   staticControlType: PropTypes.string.isRequired,
+  staticNamespace: PropTypes.string,
+  editableNamespace: PropTypes.string,
   component: PropTypes.string,
   label: PropTypes.string || Node,
   intl: intlShape,
@@ -221,4 +240,9 @@ Control.propTypes = {
   name: PropTypes.string,
   validate: PropTypes.arrayOf(PropTypes.string),
   referenceTables: PropTypes.object,
+  legend: PropTypes.oneOf(PropTypes.string, PropTypes.node),
+  addLabel: PropTypes.oneOf(PropTypes.string, PropTypes.node),
+  fields: PropTypes.arrayOf(PropTypes.object),
+  onAdd: PropTypes.func,
+  onRemove: PropTypes.func,
 };
