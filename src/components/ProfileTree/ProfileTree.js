@@ -28,7 +28,9 @@ export const ProfileTree = memo(({
 }) => {
   const [changesCount, setChangesCount] = useState(0);
   const [data, setData] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [profilesToLink, setProfilesToLink] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [profilesToUnlink, setProfilesToUnlink] = useState([]);
 
   useEffect(() => {
@@ -50,14 +52,17 @@ export const ProfileTree = memo(({
     childSnapshotWrappers: [],
   }));
 
+  // eslint-disable-next-line no-unused-vars
   const onLink = lines => {
     setProfilesToLink([]);
   };
 
+  // eslint-disable-next-line no-unused-vars
   const onUnlink = recordId => {
     setProfilesToUnlink([]);
   };
 
+  // eslint-disable-next-line no-unused-vars
   const onDelete = recordId => {
     // @TODO: Record deletion code should be here
     onUnlink(recordId);
@@ -71,6 +76,7 @@ export const ProfileTree = memo(({
     onLink();
   };
 
+  // eslint-disable-next-line no-unused-vars
   const onRootUnlink = recordId => {
     const index = data.findIndex(item => item.id === recordId);
     const newData = data;

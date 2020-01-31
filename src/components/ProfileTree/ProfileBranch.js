@@ -22,6 +22,7 @@ import {
 } from '.';
 
 import css from './ProfileTree.css';
+import { PROFILE_LABEL_IDS } from '../../utils/constants';
 
 export const ProfileBranch = memo(({
   entityKey,
@@ -65,6 +66,12 @@ export const ProfileBranch = memo(({
     childSnapshotWrappers: [],
   }));
 
+  const getLabel = (
+    <FormattedMessage id={PROFILE_LABEL_IDS[entityKey]}>
+      {profileName => `${profileName}: "${recordData.name}"`}
+    </FormattedMessage>
+  );
+
   const handleToggle = (section, togglerValue, togglerSetter) => {
     sessionStorage.setItem(`${sectionKey}.sectionStatus.${section}`, JSON.stringify(!togglerValue));
     togglerSetter(!togglerValue);
@@ -79,6 +86,7 @@ export const ProfileBranch = memo(({
     onLink();
   };
 
+  // eslint-disable-next-line no-unused-vars
   const onMatchUnlink = recordId => {
     const index = matchData.findIndex(item => item.id === recordId);
     const newData = matchData;
@@ -97,6 +105,7 @@ export const ProfileBranch = memo(({
     onLink();
   };
 
+  // eslint-disable-next-line no-unused-vars
   const onNonMatchUnlink = recordId => {
     const index = nonMatchData.findIndex(item => item.id === recordId);
     const newData = nonMatchData;
@@ -113,11 +122,13 @@ export const ProfileBranch = memo(({
 
   return (
     <div
+      data-test-profile-branch
       id={containerId}
       className={classNames(css['profile-branch'], className)}
     >
       <ProfileLabel
         entityKey={entityKey}
+        label={getLabel}
         recordData={recordData}
         record={record}
         linkingRules={linkingRules}

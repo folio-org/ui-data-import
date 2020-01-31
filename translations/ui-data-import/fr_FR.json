@@ -274,7 +274,7 @@
     "settings.profile.unlink": "Unlink this profile",
     "modal.profile.unlink.heading": "Êtes-vous sûr(e)?",
     "modal.profile.unlink.message": "Etes-vous sûr(e) de vouloir dissocier le profil \" {name} \"?",
-    "emptyMessage": "This {type} contains no items",
+    "emptyMessage": "Ce {type} ne contient aucun élément",
     "list": "Liste",
     "section": "Section",
     "settings.action.add": "Ajouter",

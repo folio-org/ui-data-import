@@ -24,7 +24,11 @@ export const FlexibleForm = memo(props => {
   const {
     component,
     config,
-    config: { childControls },
+    config: {
+      staticNamespace,
+      editableNamespace,
+      childControls,
+    },
     styles,
     record,
     componentsProps,
@@ -46,6 +50,8 @@ export const FlexibleForm = memo(props => {
             return (
               <Control
                 key={`control-${i}`}
+                staticNamespace={staticNamespace}
+                editableNamespace={editableNamespace}
                 intl={intl}
                 styles={styles}
                 referenceTables={referenceTables}

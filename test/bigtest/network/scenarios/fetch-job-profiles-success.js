@@ -5,6 +5,7 @@ import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
 
 export default server => {
   server.create('job-profile', {
+    id: '448ae575-daec-49c1-8041-d64c8ed8e5b1',
     name: 'Approval plan records',
     tags: { tagList: ['acq', 'cat', 'weekly'] },
     dataType: ['MARC'],

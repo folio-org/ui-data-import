@@ -215,7 +215,7 @@ export class ViewMatchProfile extends Component {
 
     // Here is mocked config file with mocked values, it should be replaced/rewritten once BE will be ready
     const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
-    const matchDetails = get(matchProfile, 'matchDetails[0]', []);
+    const matchDetails = get(matchProfile, ['matchDetails', '0'], []);
     const {
       incomingMatchExpression,
       existingMatchExpression,
@@ -227,49 +227,47 @@ export class ViewMatchProfile extends Component {
 
     const record = {
       ...matchProfile,
-      profile: {
-        matchDetails: [{
-          incomingMatchExpression: {
-            fields: [
-              {
-                label: 'field',
-                value: this.getValue(incomingFields, 'field') || <NoValue />,
-              }, {
-                label: 'indicator1',
-                value: this.getValue(incomingFields, 'indicator1') || <NoValue />,
-              }, {
-                label: 'indicator2',
-                value: this.getValue(incomingFields, 'indicator2') || <NoValue />,
-              }, {
-                label: 'recordSubfield',
-                value: this.getValue(incomingFields, 'recordSubfield') || <NoValue />,
-              },
-            ],
-            qualifier: {
-              qualifierType: this.getLabel(QUALIFIER_TYPES, get(incomingMatchExpression, ['qualifier', 'qualifierType'])),
-              qualifierValue: get(incomingMatchExpression, ['qualifier', 'qualifierValue']),
-              comparisonPart: this.getLabel(COMPARISON_PARTS, get(incomingMatchExpression, ['qualifier', 'comparisonPart'])),
+      matchDetails: [{
+        incomingMatchExpression: {
+          fields: [
+            {
+              label: 'field',
+              value: this.getValue(incomingFields, 'field') || <NoValue />,
+            }, {
+              label: 'indicator1',
+              value: this.getValue(incomingFields, 'indicator1') || <NoValue />,
+            }, {
+              label: 'indicator2',
+              value: this.getValue(incomingFields, 'indicator2') || <NoValue />,
+            }, {
+              label: 'recordSubfield',
+              value: this.getValue(incomingFields, 'recordSubfield') || <NoValue />,
             },
+          ],
+          qualifier: {
+            qualifierType: this.getLabel(QUALIFIER_TYPES, get(incomingMatchExpression, ['qualifier', 'qualifierType'])),
+            qualifierValue: get(incomingMatchExpression, ['qualifier', 'qualifierValue']),
+            comparisonPart: this.getLabel(COMPARISON_PARTS, get(incomingMatchExpression, ['qualifier', 'comparisonPart'])),
           },
-          incomingRecordType: get(matchDetails, 'incomingRecordType', ''),
-          matchCriterion: this.getLabel(CRITERION_TYPES, get(matchDetails, 'matchCriterion', '')) || <NoValue />,
-          existingMatchExpression: {
-            fields: [
-              {
-                label: 'field',
-                value: getFieldMatched(existingField, matchProfile.existingRecordType) || <NoValue />,
-              },
-            ],
-            dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', '')) || <NoValue />,
-            qualifier: {
-              qualifierType: this.getLabel(QUALIFIER_TYPES, get(existingMatchExpression, ['qualifier', 'qualifierType'])),
-              qualifierValue: get(existingMatchExpression, ['qualifier', 'qualifierValue']),
-              comparisonPart: this.getLabel(COMPARISON_PARTS, get(existingMatchExpression, ['qualifier', 'comparisonPart'])),
+        },
+        incomingRecordType: get(matchDetails, 'incomingRecordType', ''),
+        matchCriterion: this.getLabel(CRITERION_TYPES, get(matchDetails, 'matchCriterion', '')) || <NoValue />,
+        existingMatchExpression: {
+          fields: [
+            {
+              label: 'field',
+              value: getFieldMatched(existingField, matchProfile.existingRecordType) || <NoValue />,
             },
+          ],
+          dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', '')) || <NoValue />,
+          qualifier: {
+            qualifierType: this.getLabel(QUALIFIER_TYPES, get(existingMatchExpression, ['qualifier', 'qualifierType'])),
+            qualifierValue: get(existingMatchExpression, ['qualifier', 'qualifierValue']),
+            comparisonPart: this.getLabel(COMPARISON_PARTS, get(existingMatchExpression, ['qualifier', 'comparisonPart'])),
           },
-          existingRecordType: get(matchDetails, 'existingRecordType', ''),
-        }],
-      },
+        },
+        existingRecordType: get(matchDetails, 'existingRecordType', ''),
+      }],
     };
 
     const componentsProps = {

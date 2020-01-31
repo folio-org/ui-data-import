@@ -92,6 +92,13 @@ export const PROFILE_NAMES = {
   MAPPING_PROFILE: 'field mapping profile',
 };
 
+export const PROFILE_LABEL_IDS = {
+  matchProfiles: 'ui-data-import.matchProfileName',
+  actionProfiles: 'ui-data-import.actionProfileName',
+  jobProfiles: 'ui-data-import.jobProfileName',
+  mappingProfiles: 'ui-data-import.mappingProfileName',
+};
+
 export const LOG_VIEWER = {
   FILTER: {
     OPTIONS: {

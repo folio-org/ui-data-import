@@ -22,6 +22,7 @@ export const ProfileLabel = memo(({
   entityKey,
   recordData,
   linkingRules,
+  label,
   record,
   className,
   onUnlink,
@@ -37,7 +38,10 @@ export const ProfileLabel = memo(({
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [unlinkConfirmationOpen, setUnlinkConfirmationOpen] = useState(false);
 
-  const templates = listTemplate({ entityKey });
+  const templates = listTemplate({
+    entityKey,
+    customValue: label,
+  });
   const columns = columnsAllowed[entityKey];
 
   const handleUnlink = recordId => {
@@ -132,6 +136,7 @@ ProfileLabel.propTypes = {
   entityKey: PropTypes.string.isRequired,
   recordData: PropTypes.object.isRequired,
   linkingRules: PropTypes.object.isRequired,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   record: PropTypes.object,
   className: PropTypes.string,
   onUnlink: PropTypes.func,
