@@ -285,5 +285,7 @@
     "settings.profiles.select.mappingProfiles": "Mapping",
     "settings.profiles.linking.forMatches": "For matches",
     "settings.profiles.linking.forNonMatches": "For non-matches",
-    "modal.profile.delete.message": "Voulez-vous vraiment supprimer le profil \" {name} \"?"
+    "modal.profile.delete.message": "Voulez-vous vraiment supprimer le profil \" {name} \"?",
+    "modal.profile.unlink.confirm": "Dissocier",
+    "modal.profile.unlink.delete": "Supprimer"
 }

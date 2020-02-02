@@ -285,5 +285,7 @@
     "settings.profiles.select.mappingProfiles": "字段映射",
     "settings.profiles.linking.forMatches": "对于匹配",
     "settings.profiles.linking.forNonMatches": "对于不匹配",
-    "modal.profile.delete.message": "确定要删除“ {name} ”配置文件？"
+    "modal.profile.delete.message": "确定要删除“ {name} ”配置文件？",
+    "modal.profile.unlink.confirm": "Unlink",
+    "modal.profile.unlink.delete": "Delete"
 }
