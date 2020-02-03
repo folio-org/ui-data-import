@@ -285,5 +285,7 @@
     "settings.profiles.select.mappingProfiles": "Mapeo de campos",
     "settings.profiles.linking.forMatches": "Para coincidencias",
     "settings.profiles.linking.forNonMatches": "Para no coincidencias",
-    "modal.profile.delete.message": "Are you sure you want to delete \"{name}\" Profile?"
+    "modal.profile.delete.message": "Are you sure you want to delete \"{name}\" Profile?",
+    "modal.profile.unlink.confirm": "Unlink",
+    "modal.profile.unlink.delete": "Delete"
 }

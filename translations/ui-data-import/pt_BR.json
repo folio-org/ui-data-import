@@ -285,5 +285,7 @@
     "settings.profiles.select.mappingProfiles": "Mapeamento de campo",
     "settings.profiles.linking.forMatches": "Para correspondências",
     "settings.profiles.linking.forNonMatches": "Para não correspondências",
-    "modal.profile.delete.message": "Tem certeza de que deseja excluir o perfil \"{name}\"?"
+    "modal.profile.delete.message": "Tem certeza de que deseja excluir o perfil \"{name}\"?",
+    "modal.profile.unlink.confirm": "Desvincular",
+    "modal.profile.unlink.delete": "Excluir"
 }

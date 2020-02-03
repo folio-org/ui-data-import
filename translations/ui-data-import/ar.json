@@ -285,5 +285,7 @@
     "settings.profiles.select.mappingProfiles": "تخطيط الحقل",
     "settings.profiles.linking.forMatches": "للمطابقات",
     "settings.profiles.linking.forNonMatches": "لعدم المطابقة",
-    "modal.profile.delete.message": "هل أنت متأكد من أنك تريد حذف وضع \"{name}\" ؟"
+    "modal.profile.delete.message": "هل أنت متأكد من أنك تريد حذف وضع \"{name}\" ؟",
+    "modal.profile.unlink.confirm": "إلغاء ربط",
+    "modal.profile.unlink.delete": "حذف"
 }
