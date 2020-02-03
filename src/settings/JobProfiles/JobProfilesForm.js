@@ -1,6 +1,12 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect,
+} from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import {
+  Field,
+  change,
+} from 'redux-form';
 import PropTypes from 'prop-types';
 
 import { identity } from 'lodash';
@@ -41,13 +47,25 @@ export const JobProfilesFormComponent = ({
   initialValues,
   handleSubmit,
   onCancel,
+  dispatch,
 }) => {
   const { profile } = initialValues;
   const isEditMode = Boolean(profile.id);
   const isSubmitDisabled = pristine || submitting;
   const childWrappers = JSON.parse(sessionStorage.getItem(`childWrappers.${profile.id}`)) || [];
 
-  console.log('Child Wrappers: ', childWrappers);
+  const [addedRelations, setAddedRelations] = useState([]);
+  const [deletedRelations, setDeletedRelations] = useState([]);
+
+  useEffect(() => {
+    dispatch(change(formName, 'addedRelations', addedRelations));
+  }, [addedRelations]);
+
+  useEffect(() => {
+    dispatch(change(formName, 'deletedRelations', deletedRelations));
+  }, [deletedRelations]);
+
+  // console.log('Child Wrappers: ', childWrappers);
 
   const paneTitle = isEditMode ? (
     <FormattedMessage id="ui-data-import.edit">
@@ -120,10 +138,11 @@ export const JobProfilesFormComponent = ({
             parentId={profile.id}
             linkingRules={PROFILE_LINKING_RULES}
             contentData={childWrappers}
-            // relationsToAdd={addedRelations}
-            // relationsToDelete={deletedRelations}
-            // onLink={setAddedRelations}
-            // onUnlink={setDeletedRelations}
+            hasLoaded
+            relationsToAdd={addedRelations}
+            relationsToDelete={deletedRelations}
+            onLink={setAddedRelations}
+            onUnlink={setDeletedRelations}
           />
         </Accordion>
       </AccordionSet>
@@ -137,6 +156,7 @@ JobProfilesFormComponent.propTypes = {
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export const JobProfilesForm = compose(

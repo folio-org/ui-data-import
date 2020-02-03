@@ -123,7 +123,7 @@ export class ViewJobProfile extends Component {
               description: PropTypes.string.isRequired,
               tags: PropTypes.shape({ tagList: PropTypes.arrayOf(PropTypes.string) }),
               match: PropTypes.string.isRequired,
-            }).isRequired,
+            }),
             description: PropTypes.string,
           }),
         ),
@@ -200,7 +200,7 @@ export class ViewJobProfile extends Component {
     return {
       id: get(childWrappers, ['records', '0', 'id'], null),
       wrappers: get(childWrappers, ['records', '0', 'childSnapshotWrappers'], []),
-      hasLoaded: childWrappers.hasLoaded,
+      hasLoaded: get(childWrappers, ['hasLoaded'], false),
     };
   }
 
@@ -219,8 +219,9 @@ export class ViewJobProfile extends Component {
   componentDidUpdate() {
     const id = get(this.jobProfileData, ['record', 'id'], null);
     const { wrappers } = this.childWrappers;
+    const existingWrappers = JSON.parse(sessionStorage.getItem(`childWrappers.${id}`)) || [];
 
-    if (id && wrappers && wrappers.length) {
+    if (id && wrappers && wrappers.length && JSON.stringify(existingWrappers) !== JSON.stringify(wrappers)) {
       sessionStorage.setItem(`childWrappers.${id}`, JSON.stringify(wrappers));
     }
   }
@@ -362,6 +363,10 @@ export class ViewJobProfile extends Component {
       record,
     } = this.jobProfileData;
     const {
+      wrappers,
+      hasLoaded: wrappersLoaded,
+    } = this.childWrappers;
+    const {
       hasLoaded: jobsUsingThisProfileDataHasLoaded,
       jobsUsingThisProfileData,
     } = this.jobsUsingThisProfileData;
@@ -444,12 +449,13 @@ export class ViewJobProfile extends Component {
             id="job-profile-overview"
             label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
           >
-            <ProfileTree
-              linkingRules={PROFILE_LINKING_RULES}
-              contentData={get(this.childWrappers, 'wrappers', [])}
-              hasLoaded={get(this.childWrappers, 'hasLoaded', false)}
-              record={record}
-            />
+            {wrappersLoaded ? (
+              <ProfileTree
+                linkingRules={PROFILE_LINKING_RULES}
+                contentData={wrappers}
+                record={record}
+              />
+            ) : <Preloader />}
           </Accordion>
           <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.jobsUsingThisProfile" />}>
             {jobsUsingThisProfileDataHasLoaded ? (

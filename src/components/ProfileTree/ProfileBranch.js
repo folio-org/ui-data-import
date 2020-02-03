@@ -49,22 +49,15 @@ export const ProfileBranch = memo(({
 
   const getSectionData = section => {
     const res = JSON.parse(sessionStorage.getItem(`${sectionKey}.data.${section}`));
+    const itemData = contentData.filter(item => item.reactTo && item.reactTo === snakeCase(section).toLocaleUpperCase());
 
-    return res || contentData;
+    return res || itemData;
   };
 
   const [matchSectionOpen, setMatchSectionOpen] = useState(getSectionStatus('match'));
   const [nonMatchSectionOpen, setNonMatchSectionOpen] = useState(getSectionStatus('nonMatch'));
   const [matchData, setMatchData] = useState(getSectionData('match'));
   const [nonMatchData, setNonMatchData] = useState(getSectionData('nonMatch'));
-
-  const getLines = (lines, currentType, reactTo) => lines.map(item => ({
-    id: item.id,
-    contentType: snakeCase(currentType).slice(0, -1).toLocaleUpperCase(),
-    reactTo,
-    content: item,
-    childSnapshotWrappers: [],
-  }));
 
   const getLabel = (
     <FormattedMessage id={PROFILE_LABEL_IDS[entityKey]}>
@@ -76,44 +69,6 @@ export const ProfileBranch = memo(({
     sessionStorage.setItem(`${sectionKey}.sectionStatus.${section}`, JSON.stringify(!togglerValue));
     togglerSetter(!togglerValue);
     onChange(prev => prev + 1);
-  };
-
-  const onMatchLink = (lines, currentType) => {
-    const newData = [...matchData, ...getLines(lines, currentType, 'MATCH')];
-
-    sessionStorage.setItem(`${sectionKey}.data.match`, JSON.stringify(newData));
-    setMatchData(newData);
-    onLink();
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const onMatchUnlink = recordId => {
-    const index = matchData.findIndex(item => item.id === recordId);
-    const newData = matchData;
-
-    newData.splice(index, 0);
-    sessionStorage.setItem(`${sectionKey}.data.match`, JSON.stringify(newData));
-    setMatchData(newData);
-    onUnlink();
-  };
-
-  const onNonMatchLink = (lines, currentType) => {
-    const newData = [...nonMatchData, ...getLines(lines, currentType, 'NON_MATCH')];
-
-    sessionStorage.setItem(`${sectionKey}.data.nonMatch`, JSON.stringify(newData));
-    setNonMatchData(newData);
-    onLink();
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const onNonMatchUnlink = recordId => {
-    const index = nonMatchData.findIndex(item => item.id === recordId);
-    const newData = nonMatchData;
-
-    newData.splice(index, 0);
-    sessionStorage.setItem(`${sectionKey}.data.nonMatch`, JSON.stringify(newData));
-    setNonMatchData(newData);
-    onUnlink();
   };
 
   const containerId = `container-${record ? 'editable' : 'static'}-${recordData.id}`;
@@ -181,7 +136,13 @@ export const ProfileBranch = memo(({
               <ProfileLinker
                 id={`${recordData.id}-match`}
                 linkingRules={linkingRules}
-                onLink={onMatchLink}
+                parentId={recordData.id}
+                parentType={entityKey}
+                dataKey={`${sectionKey}.data.match`}
+                initialData={matchData}
+                setInitialData={setMatchData}
+                reactTo="MATCH"
+                onLink={onLink}
                 {...dataAttributes}
               />
             )}
@@ -230,7 +191,13 @@ export const ProfileBranch = memo(({
               <ProfileLinker
                 id={`${recordData.id}-non-match`}
                 linkingRules={linkingRules}
-                onLink={onNonMatchLink}
+                parentId={recordData.id}
+                parentType={entityKey}
+                dataKey={`${sectionKey}.data.nonMatch`}
+                initialData={nonMatchData}
+                setInitialData={setNonMatchData}
+                reactTo="NON_MATCH"
+                onLink={onLink}
                 {...dataAttributes}
               />
             )}

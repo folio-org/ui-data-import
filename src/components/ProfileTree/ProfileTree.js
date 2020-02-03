@@ -13,6 +13,7 @@ import {
 } from 'lodash';
 import classNames from 'classnames';
 
+import { ENTITY_KEYS } from '../../utils/constants';
 import {
   ProfileBranch,
   ProfileLinker,
@@ -32,22 +33,21 @@ export const ProfileTree = memo(({
   className,
   dataAttributes,
 }) => {
-  const dataKey = `${parentId || 'new'}.root.data`;
+  const dataKey = `childWrappers.${parentId || 'new'}`;
+  const getData = () => (record ? contentData : JSON.parse(sessionStorage.getItem(dataKey)) || contentData);
   const [changesCount, setChangesCount] = useState(0);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(JSON.parse(sessionStorage.getItem(dataKey)) || contentData);
+    setData(getData());
 
-    return () => {
-      sessionStorage.removeItem(dataKey);
-    };
+    return () => sessionStorage.removeItem(dataKey);
   }, [contentData]);
 
-  const ChangesContext = React.createContext(changesCount);
+  // const ChangesContext = React.createContext(changesCount);
 
   const getLines = (lines, currentType, reactTo = null) => lines.map(item => ({
-    id: item.id,
+    profileId: item.id,
     contentType: snakeCase(currentType).slice(0, -1).toLocaleUpperCase(),
     reactTo,
     content: item,
@@ -58,28 +58,27 @@ export const ProfileTree = memo(({
     return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === line.id);
   };
 
-  const composeRelations = (lines, masterId, masterType, detailType) => lines.map(item => ({
+  const composeRelations = (lines, masterId, masterType, detailType, reactTo) => lines.map(item => ({
     masterProfileId: masterId,
-    masterProfileType: masterType,
+    masterProfileType: snakeCase(masterType).slice(0, -1).toLocaleUpperCase(),
     detailProfileId: item.id,
-    detailProfileType: detailType,
+    detailProfileType: snakeCase(detailType).slice(0, -1).toLocaleUpperCase(),
+    reactTo,
   }));
 
-  const link = (lines, masterId, masterType, detailType) => {
-    const uniqueLines = lines.filter(line => data.findIndex(item => item.id === line.id) === -1);
-    const newData = [...data, ...getLines(lines, masterType)];
+  const link = (initialData, setInitialData, lines, masterId, masterType, detailType, reactTo, localDataKey) => {
+    const uniqueLines = lines.filter(line => initialData.findIndex(item => item.id === line.id) === -1);
+    const newData = [...initialData, ...getLines(uniqueLines, detailType, reactTo)];
     const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
 
     if (linesToAdd && linesToAdd.length) {
-      const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd)];
+      const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo)];
 
       onLink(relsToAdd);
     }
 
-    setData(newData);
-
-    sessionStorage.setItem(dataKey, JSON.stringify(newData));
-    onLink(linesToAdd);
+    setInitialData(newData);
+    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
   };
 
   const unlink = row => {
@@ -112,21 +111,28 @@ export const ProfileTree = memo(({
   };
 
   return (
-    <ChangesContext.Provider value={changesCount}>
+    /**
+     * Disabled due to UIDATIMP-357 and UIDATIMP-358 conflict with context solution
+     * @TODO return this to action or substitute with new solution to fix TreeLine rendering
+     */
+    /* <ChangesContext.Provider value={changesCount}> */
+    <div>
+      <div>{changesCount}</div>
       <div className={classNames(css['profile-tree'], className)}>
         <div className={css['profile-tree-container']}>
           {data && data.length ? (
             data.map((item, i) => (
               <ProfileBranch
-                key={`profile-branch-${item.id}-${i}`}
+                key={`profile-branch-${item.profileId}-${i}`}
                 entityKey={`${camelCase(item.contentType)}s`}
                 recordData={item.content}
                 contentData={item.childSnapshotWrappers}
                 record={record}
                 linkingRules={linkingRules}
                 onChange={setChangesCount}
-                onLink={onLink}
-                onUnlink={onUnlink}
+                onLink={link}
+                onUnlink={unlink}
+                onDelete={remove}
               />
             ))
           ) : (
@@ -141,13 +147,19 @@ export const ProfileTree = memo(({
         {!record && (
           <ProfileLinker
             id="linker-root"
+            parentId={parentId}
+            parentType={ENTITY_KEYS.JOB_PROFILES}
             linkingRules={linkingRules}
+            dataKey={dataKey}
+            initialData={data}
+            setInitialData={setData}
             onLink={link}
             {...dataAttributes}
           />
         )}
       </div>
-    </ChangesContext.Provider>
+    </div>
+    /* </ChangesContext.Provider> */
   );
 });
 
