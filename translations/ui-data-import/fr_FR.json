@@ -227,7 +227,7 @@
     "filter.user": "Adhérent",
     "hrId": "HRID",
     "uuId": "UUID",
-    "keyword": "Keyword (ID, File name)",
+    "keyword": "Mot-clé (ID, nom de fichier)",
     "placeholder.jobExecutionHrId": "Rechercher l'identifiant",
     "placeholder.fileName": "Rechercher un nom de fichier",
     "editJobProfile": "Modifier le profil de la tâche",
