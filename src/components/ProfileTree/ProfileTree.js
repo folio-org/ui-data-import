@@ -40,8 +40,6 @@ export const ProfileTree = memo(({
 
   useEffect(() => {
     setData(getData());
-
-    return () => sessionStorage.removeItem(dataKey);
   }, [contentData]);
 
   // const ChangesContext = React.createContext(changesCount);
