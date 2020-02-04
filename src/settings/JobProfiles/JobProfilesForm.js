@@ -80,8 +80,14 @@ export const JobProfilesFormComponent = ({
       paneTitle={paneTitle}
       submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
       isSubmitDisabled={isSubmitDisabled}
-      onSubmit={handleSubmit}
-      onCancel={onCancel}
+      onSubmit={record => {
+        sessionStorage.removeItem('childWrappers.new');
+        handleSubmit(record);
+      }}
+      onCancel={() => {
+        sessionStorage.removeItem('childWrappers.new');
+        onCancel();
+      }}
     >
       <Headline
         size="xx-large"
