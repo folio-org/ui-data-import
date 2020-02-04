@@ -14,12 +14,18 @@
 * Connect Profile Tree Component to unified data source (UIDATIMP-357)
 * Rework ProfileLinker Component (UIDATIMP-358)
 * Convert Match Profiles form Existing Record Field name to JSONPath format (UIDATIMP-375)
+* Define API Contract for MappingProfile field mapping definitions (UIDATIMP-377)
 
 ### Bugs fixed:
 * Profile Associator lists are empty when the user reloads the page with Profile Edit Form open (UIDATIMP-338)
 * ProfileTree component TreeLines re-renders are late by one tick from state updates (UIDATIMP-343)
 * ProfileTree component ProfileLinker dropdown doesn't close automatically after list option has chosen (UIDATIMP-345)
 * Associated profiles not clearing out after viewing, like they should (UIDATIMP-354)
+* Search and Sort don't work in Profile Associator Component in view mode (UIDATIMP-374)
+* Fix wording of unlink confirmation modal (UIDATIMP-378)
+* Fix wording of profile create/update confirmation toast (UIDATIMP-379)
+* Page unstable error when trying to save match profile (UIDATIMP-380)
+* Unlink action profile from field mapping profile is not working (UIDATIMP-381)
 
 ## [1.7.3](https://github.com/folio-org/ui-data-import/tree/v1.7.3) (2019-12-04)
 * Update sorting query for jobs (UIDATIMP-346)

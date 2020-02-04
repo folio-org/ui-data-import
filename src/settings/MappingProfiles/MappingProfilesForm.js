@@ -177,10 +177,11 @@ export const MappingProfilesFormComponent = ({
           <ProfileAssociator
             entityKey={ENTITY_KEYS.ACTION_PROFILES}
             namespaceKey="AAP"
-            parentId={initialValues.profile.id}
+            parentId={profile.id}
             parentType={PROFILE_TYPES.MAPPING_PROFILE}
             masterType={PROFILE_TYPES.ACTION_PROFILE}
             detailType={PROFILE_TYPES.MAPPING_PROFILE}
+            profileName={profile.name}
             contentData={associations}
             hasLoaded
             isMultiSelect
