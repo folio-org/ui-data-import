@@ -12,6 +12,8 @@ const translations = {
   ...invoiceTranslations,
 };
 
+export const getLabel = key => translations[key];
+
 export const matchFields = (resources, recordType) => {
   return fieldsConfig.filter(field => field.recordType
     && field.recordType === recordType
@@ -26,7 +28,7 @@ export const getDropdownOptions = records => {
 
     return {
       value: record.value,
-      label: `${translations[category.label]}: ${translations[record.label]}`,
+      label: `${getLabel(category.label)}: ${getLabel(record.label)}`,
     };
   });
 };

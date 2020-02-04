@@ -20,3 +20,4 @@ export * from './stringToWords';
 export * from './getDropdownOptions';
 export * from './fetchJsonShemas';
 export * from './withProfileWrapper';
+export * from './getFieldsMatched';
