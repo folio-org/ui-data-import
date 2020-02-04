@@ -62,9 +62,6 @@ import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
 
-// @TODO: Remove this during backend unmocking task implementation
-import { snapshotWrappers } from '../../../test/bigtest/mocks';
-
 @stripesConnect
 @injectIntl
 @withTags
@@ -77,7 +74,7 @@ export class ViewJobProfile extends Component {
     },
     childWrappers: {
       type: 'okapi',
-      path: 'data-import-profiles/jobProfileSnapshots/:{id}',
+      path: 'data-import-profiles/profileSnapshots/:{id}',
       throwErrors: false,
     },
     jobsUsingThisProfile: {
@@ -126,7 +123,7 @@ export class ViewJobProfile extends Component {
               description: PropTypes.string.isRequired,
               tags: PropTypes.shape({ tagList: PropTypes.arrayOf(PropTypes.string) }),
               match: PropTypes.string.isRequired,
-            }).isRequired,
+            }),
             description: PropTypes.string,
           }),
         ),
@@ -197,14 +194,13 @@ export class ViewJobProfile extends Component {
     };
   }
 
-  get ProfileChildWrappers() {
-    const { resources } = this.props;
-
-    const childWrappers = resources.childWrappers || snapshotWrappers;
+  get childWrappers() {
+    const { resources: { childWrappers } } = this.props;
 
     return {
-      childWrappers,
-      hasLoaded: childWrappers.hasLoaded,
+      id: get(childWrappers, ['records', '0', 'id'], null),
+      wrappers: get(childWrappers, ['records', '0', 'childSnapshotWrappers'], []),
+      hasLoaded: get(childWrappers, ['hasLoaded'], false),
     };
   }
 
@@ -220,8 +216,15 @@ export class ViewJobProfile extends Component {
     };
   }
 
-  // @TODO: Remove this during backend unmocking task implementation
-  getCurrentWrapper = record => snapshotWrappers.find(item => item.id === record.id);
+  componentDidUpdate() {
+    const id = get(this.jobProfileData, ['record', 'id'], null);
+    const { wrappers } = this.childWrappers;
+    const existingWrappers = JSON.parse(sessionStorage.getItem(`childWrappers.${id}`)) || [];
+
+    if (id && wrappers && wrappers.length && JSON.stringify(existingWrappers) !== JSON.stringify(wrappers)) {
+      sessionStorage.setItem(`childWrappers.${id}`, JSON.stringify(wrappers));
+    }
+  }
 
   showDeleteConfirmation = () => {
     this.setState({ showDeleteConfirmation: true });
@@ -360,6 +363,10 @@ export class ViewJobProfile extends Component {
       record,
     } = this.jobProfileData;
     const {
+      wrappers,
+      hasLoaded: wrappersLoaded,
+    } = this.childWrappers;
+    const {
       hasLoaded: jobsUsingThisProfileDataHasLoaded,
       jobsUsingThisProfileData,
     } = this.jobsUsingThisProfileData;
@@ -368,9 +375,10 @@ export class ViewJobProfile extends Component {
       return <Spinner entity={this} />;
     }
 
-    // JobProfiles sample data does not contain user Ids because of back-end limitations
-    // and therefore it is required to add it manually on UI side
-    // TODO: use real IDs when sample data will be removed (remove the block of code below)
+    /** JobProfiles sample data does not contain user Ids because of back-end limitations
+     * and therefore it is required to add it manually on UI side
+     * @TODO: use real IDs when sample data will be removed (remove the block of code below)
+     */
     {
       const userId = get(this.props, ['stripes', 'okapi', 'currentUser', 'id'], '');
 
@@ -441,37 +449,36 @@ export class ViewJobProfile extends Component {
             id="job-profile-overview"
             label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
           >
-            <ProfileTree
-              record={record}
-              linkingRules={PROFILE_LINKING_RULES}
-              contentData={get(this.getCurrentWrapper(record), 'childSnapshotWrappers', [])}
-            />
+            {wrappersLoaded ? (
+              <ProfileTree
+                linkingRules={PROFILE_LINKING_RULES}
+                contentData={wrappers}
+                record={record}
+              />
+            ) : <Preloader />}
           </Accordion>
           <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.jobsUsingThisProfile" />}>
-            {jobsUsingThisProfileDataHasLoaded
-              ? (
-                <MultiColumnList
-                  id="jobs-using-this-profile"
-                  totalCount={jobsUsingThisProfileData.length}
-                  contentData={jobsUsingThisProfileData}
-                  columnMapping={{
-                    fileName: <FormattedMessage id="ui-data-import.fileName" />,
-                    hrId: <FormattedMessage id="ui-data-import.settings.jobProfiles.jobID" />,
-                    completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
-                    runBy: <FormattedMessage id="ui-data-import.runBy" />,
-                  }}
-                  visibleColumns={[
-                    'fileName',
-                    'hrId',
-                    'completedDate',
-                    'runBy',
-                  ]}
-                  formatter={jobsUsingThisProfileFormatter}
-                  width="100%"
-                />
-              )
-              : <Preloader />
-            }
+            {jobsUsingThisProfileDataHasLoaded ? (
+              <MultiColumnList
+                id="jobs-using-this-profile"
+                totalCount={jobsUsingThisProfileData.length}
+                contentData={jobsUsingThisProfileData}
+                columnMapping={{
+                  fileName: <FormattedMessage id="ui-data-import.fileName" />,
+                  hrId: <FormattedMessage id="ui-data-import.settings.jobProfiles.jobID" />,
+                  completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
+                  runBy: <FormattedMessage id="ui-data-import.runBy" />,
+                }}
+                visibleColumns={[
+                  'fileName',
+                  'hrId',
+                  'completedDate',
+                  'runBy',
+                ]}
+                formatter={jobsUsingThisProfileFormatter}
+                width="100%"
+              />
+            ) : <Preloader />}
           </Accordion>
         </AccordionSet>
         <EndOfItem
