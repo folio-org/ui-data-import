@@ -69,6 +69,8 @@ export const ActionProfilesFormComponent = ({
   folioRecord,
   dispatch,
 }) => {
+  const { profile } = initialValues;
+
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
@@ -154,10 +156,10 @@ export const ActionProfilesFormComponent = ({
 
   const paneTitle = isEditMode ? (
     <FormattedMessage id="ui-data-import.edit">
-      {txt => `${txt} ${initialValues.profile.name}`}
+      {txt => `${txt} ${profile.name}`}
     </FormattedMessage>
   ) : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
-  const headLine = isEditMode ? initialValues.profile.name : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
+  const headLine = isEditMode ? profile.name : <FormattedMessage id="ui-data-import.settings.actionProfiles.new" />;
   const editWithModal = isEditMode && associatedJobProfilesAmount;
   const associations = [
     ...[],
@@ -245,10 +247,11 @@ export const ActionProfilesFormComponent = ({
           <ProfileAssociator
             entityKey={ENTITY_KEYS.MAPPING_PROFILES}
             namespaceKey="AMP"
-            parentId={initialValues.profile.id}
+            parentId={profile.id}
             parentType={PROFILE_TYPES.ACTION_PROFILE}
             masterType={PROFILE_TYPES.ACTION_PROFILE}
             detailType={PROFILE_TYPES.MAPPING_PROFILE}
+            profileName={profile.name}
             contentData={associations}
             hasLoaded
             isMultiSelect={false}
@@ -268,10 +271,11 @@ export const ActionProfilesFormComponent = ({
             <ProfileAssociator
               entityKey={ENTITY_KEYS.JOB_PROFILES}
               namespaceKey="AJP"
-              parentId={initialValues.profile.id}
+              parentId={profile.id}
               parentType={PROFILE_TYPES.ACTION_PROFILE}
               masterType={PROFILE_TYPES.JOB_PROFILE}
               detailType={PROFILE_TYPES.ACTION_PROFILE}
+              profileName={profile.name}
               contentData={associations}
               record={initialValues}
               hasLoaded

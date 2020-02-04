@@ -26,6 +26,7 @@ export const AssociatorEditable = memo(({
   parentType,
   masterType,
   detailType,
+  profileName,
   contentData,
   dataAttributes,
   isMultiSelect,
@@ -118,6 +119,9 @@ export const AssociatorEditable = memo(({
         searchButtonStyle="default"
         onLink={link}
         entityKey={entityKey}
+        parentType={parentType}
+        masterType={masterType}
+        profileName={profileName}
         dataKey={entityKey}
         disabled={pluginDisabled}
         isSingleSelect={!isMultiSelect}
@@ -160,6 +164,7 @@ AssociatorEditable.propTypes = {
   parentType: PropTypes.string.isRequired,
   masterType: PropTypes.string.isRequired,
   detailType: PropTypes.string.isRequired,
+  profileName: PropTypes.string,
   contentData: PropTypes.arrayOf(PropTypes.object),
   isMultiSelect: PropTypes.bool,
   isMultiLink: PropTypes.bool,
