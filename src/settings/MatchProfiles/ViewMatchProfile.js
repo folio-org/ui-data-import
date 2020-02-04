@@ -28,8 +28,8 @@ import {
 } from '@folio/stripes/smart-components';
 
 import {
-  capitalize,
   createLayerURL,
+  getFieldMatched,
 } from '../../utils';
 import {
   LAYER_TYPES,
@@ -223,7 +223,7 @@ export class ViewMatchProfile extends Component {
 
     const incomingFields = get(incomingMatchExpression, 'fields', []);
     const existingFields = get(existingMatchExpression, 'fields', []);
-    const existingField = get(this.getValue(existingFields, 'field'), '', '').replace(/_/g, ' ');
+    const existingField = this.getValue(existingFields, 'field');
 
     const record = {
       ...matchProfile,
@@ -256,7 +256,7 @@ export class ViewMatchProfile extends Component {
           fields: [
             {
               label: 'field',
-              value: capitalize(existingField, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS) || <NoValue />,
+              value: getFieldMatched(existingField, matchProfile.existingRecordType) || <NoValue />,
             },
           ],
           dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', '')) || <NoValue />,
