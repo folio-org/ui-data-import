@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect,
+} from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import {
+  Field,
+  change,
+} from 'redux-form';
 import PropTypes from 'prop-types';
 
-import {
-  get,
-  identity,
-} from 'lodash';
+import { identity } from 'lodash';
 
 import {
   Headline,
@@ -32,9 +35,6 @@ import {
   ProfileTree,
 } from '../../components';
 
-// @TODO: Remove this during backend unmocking task implementation
-import { snapshotWrappers } from '../../../test/bigtest/mocks';
-
 const formName = 'jobProfilesForm';
 const dataTypes = DATA_TYPES.map(dataType => ({
   value: dataType,
@@ -47,12 +47,25 @@ export const JobProfilesFormComponent = ({
   initialValues,
   handleSubmit,
   onCancel,
+  dispatch,
 }) => {
   const { profile } = initialValues;
   const isEditMode = Boolean(profile.id);
   const isSubmitDisabled = pristine || submitting;
-  // @TODO: Remove this during backend unmocking task implementation
-  const currentWrapper = snapshotWrappers.find(item => item.id === profile.id);
+  const childWrappers = JSON.parse(sessionStorage.getItem(`childWrappers.${profile.id}`)) || [];
+
+  const [addedRelations, setAddedRelations] = useState([]);
+  const [deletedRelations, setDeletedRelations] = useState([]);
+
+  useEffect(() => {
+    dispatch(change(formName, 'addedRelations', addedRelations));
+  }, [addedRelations]);
+
+  useEffect(() => {
+    dispatch(change(formName, 'deletedRelations', deletedRelations));
+  }, [deletedRelations]);
+
+  // console.log('Child Wrappers: ', childWrappers);
 
   const paneTitle = isEditMode ? (
     <FormattedMessage id="ui-data-import.edit">
@@ -122,8 +135,14 @@ export const JobProfilesFormComponent = ({
           separator={false}
         >
           <ProfileTree
+            parentId={profile.id}
             linkingRules={PROFILE_LINKING_RULES}
-            contentData={get(currentWrapper, 'childSnapshotWrappers', [])}
+            contentData={childWrappers}
+            hasLoaded
+            relationsToAdd={addedRelations}
+            relationsToDelete={deletedRelations}
+            onLink={setAddedRelations}
+            onUnlink={setDeletedRelations}
           />
         </Accordion>
       </AccordionSet>
@@ -137,6 +156,7 @@ JobProfilesFormComponent.propTypes = {
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export const JobProfilesForm = compose(
