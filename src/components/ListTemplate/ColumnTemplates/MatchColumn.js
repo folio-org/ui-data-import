@@ -15,7 +15,10 @@ import {
   STRING_CAPITALIZATION_EXCLUSIONS,
   STRING_CAPITALIZATION_MODES,
 } from '../../../utils/constants';
-import { capitalize } from '../../../utils';
+import {
+  capitalize,
+  getFieldMatched,
+} from '../../../utils';
 
 import { FOLIO_RECORD_TYPES } from '../folioRecordTypes';
 
@@ -45,7 +48,7 @@ export const MatchColumn = memo(({
     fieldsMatched.reverse();
   }
 
-  const fieldMatched = fieldsMatched.join('.').replace(/_/g, ' ');
+  const fieldMatched = fieldsMatched.join('.');
 
   return (
     <IntlConsumer>
@@ -76,7 +79,7 @@ export const MatchColumn = memo(({
                   search={searchTerm || ''}
                   className={sharedCss.container}
                 >
-                  {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
+                  {getFieldMatched(fieldMatched, fieldSource)}
                 </HighLight>
               </Fragment>
             )}
