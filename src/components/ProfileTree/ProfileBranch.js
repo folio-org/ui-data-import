@@ -47,12 +47,7 @@ export const ProfileBranch = memo(({
     return res === null || res === true;
   };
 
-  const getSectionData = section => {
-    const res = JSON.parse(sessionStorage.getItem(`${sectionKey}.data.${section}`));
-    const itemData = contentData.filter(item => item.reactTo && item.reactTo === snakeCase(section).toLocaleUpperCase());
-
-    return res || itemData;
-  };
+  const getSectionData = section => contentData.filter(item => item.reactTo && item.reactTo === snakeCase(section).toLocaleUpperCase());
 
   const [matchSectionOpen, setMatchSectionOpen] = useState(getSectionStatus('match'));
   const [nonMatchSectionOpen, setNonMatchSectionOpen] = useState(getSectionStatus('nonMatch'));
@@ -138,7 +133,6 @@ export const ProfileBranch = memo(({
                 linkingRules={linkingRules}
                 parentId={recordData.id}
                 parentType={entityKey}
-                dataKey={`${sectionKey}.data.match`}
                 initialData={matchData}
                 setInitialData={setMatchData}
                 reactTo="MATCH"
@@ -193,7 +187,6 @@ export const ProfileBranch = memo(({
                 linkingRules={linkingRules}
                 parentId={recordData.id}
                 parentType={entityKey}
-                dataKey={`${sectionKey}.data.nonMatch`}
                 initialData={nonMatchData}
                 setInitialData={setNonMatchData}
                 reactTo="NON_MATCH"

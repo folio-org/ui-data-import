@@ -122,7 +122,7 @@ export class ViewJobProfile extends Component {
               name: PropTypes.string.isRequired,
               description: PropTypes.string.isRequired,
               tags: PropTypes.shape({ tagList: PropTypes.arrayOf(PropTypes.string) }),
-              match: PropTypes.string.isRequired,
+              match: PropTypes.string,
             }),
             description: PropTypes.string,
           }),
@@ -214,16 +214,6 @@ export class ViewJobProfile extends Component {
       hasLoaded: jobsUsingThisProfile.hasLoaded,
       jobsUsingThisProfileData,
     };
-  }
-
-  componentDidUpdate() {
-    const id = get(this.jobProfileData, ['record', 'id'], null);
-    const { wrappers } = this.childWrappers;
-    const existingWrappers = JSON.parse(sessionStorage.getItem(`childWrappers.${id}`)) || [];
-
-    if (id && wrappers && wrappers.length && JSON.stringify(existingWrappers) !== JSON.stringify(wrappers)) {
-      sessionStorage.setItem(`childWrappers.${id}`, JSON.stringify(wrappers));
-    }
   }
 
   showDeleteConfirmation = () => {

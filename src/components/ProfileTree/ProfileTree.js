@@ -33,13 +33,11 @@ export const ProfileTree = memo(({
   className,
   dataAttributes,
 }) => {
-  const dataKey = `childWrappers.${parentId || 'new'}`;
-  const getData = () => (record ? contentData : JSON.parse(sessionStorage.getItem(dataKey)) || contentData);
   const [changesCount, setChangesCount] = useState(0);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(getData());
+    setData(contentData);
   }, [contentData]);
 
   // const ChangesContext = React.createContext(changesCount);
@@ -64,7 +62,7 @@ export const ProfileTree = memo(({
     reactTo,
   }));
 
-  const link = (initialData, setInitialData, lines, masterId, masterType, detailType, reactTo, localDataKey) => {
+  const link = (initialData, setInitialData, lines, masterId, masterType, detailType, reactTo) => {
     const uniqueLines = lines.filter(line => initialData.findIndex(item => item.id === line.id) === -1);
     const newData = [...initialData, ...getLines(uniqueLines, detailType, reactTo)];
     const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
@@ -76,7 +74,6 @@ export const ProfileTree = memo(({
     }
 
     setInitialData(newData);
-    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
   };
 
   const unlink = row => {
@@ -91,7 +88,6 @@ export const ProfileTree = memo(({
 
     data.splice(index, 1);
     setData(data);
-    sessionStorage.setItem(dataKey, JSON.stringify(data));
   };
 
   const remove = row => {
@@ -115,7 +111,7 @@ export const ProfileTree = memo(({
      */
     /* <ChangesContext.Provider value={changesCount}> */
     <div>
-      <div>{changesCount}</div>
+      {/* <div>{changesCount}</div> */}
       <div className={classNames(css['profile-tree'], className)}>
         <div className={css['profile-tree-container']}>
           {data && data.length ? (
@@ -148,7 +144,6 @@ export const ProfileTree = memo(({
             parentId={parentId}
             parentType={ENTITY_KEYS.JOB_PROFILES}
             linkingRules={linkingRules}
-            dataKey={dataKey}
             initialData={data}
             setInitialData={setData}
             onLink={link}
