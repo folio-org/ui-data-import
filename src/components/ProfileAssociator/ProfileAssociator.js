@@ -10,6 +10,12 @@ import {
 } from 'lodash';
 
 import { stringToWords } from '../../utils';
+import { ENTITY_KEYS } from '../../utils/constants';
+
+import { actionProfilesShape } from '../../settings/ActionProfiles';
+import { jobProfilesShape } from '../../settings/JobProfiles';
+import { mappingProfilesShape } from '../../settings/MappingProfiles';
+import { matchProfilesShape } from '../../settings/MatchProfiles';
 
 import { AssociatorStatic } from './AssociatorStatic';
 import { AssociatorEditable } from './AssociatorEditable';
@@ -34,6 +40,14 @@ export const ProfileAssociator = memo(({
   onUnlink,
   dataAttributes,
 }) => {
+  const profiles = {
+    [ENTITY_KEYS.JOB_PROFILES]: jobProfilesShape,
+    [ENTITY_KEYS.MATCH_PROFILES]: matchProfilesShape,
+    [ENTITY_KEYS.ACTION_PROFILES]: actionProfilesShape,
+    [ENTITY_KEYS.MAPPING_PROFILES]: mappingProfilesShape,
+  };
+  const profileShape = profiles[entityKey];
+
   const contentType = stringToWords(entityKey).map(word => word.toLocaleUpperCase()).join('_').slice(0, -1);
 
   const getProfiles = () => {
@@ -48,6 +62,7 @@ export const ProfileAssociator = memo(({
         <AssociatorStatic
           entityKey={entityKey}
           namespaceKey={namespaceKey}
+          profileShape={profileShape}
           record={record}
           contentData={getProfiles()}
           hasLoaded={hasLoaded}
@@ -61,6 +76,7 @@ export const ProfileAssociator = memo(({
           namespaceKey={namespaceKey}
           isMultiSelect={isMultiSelect}
           isMultiLink={isMultiLink}
+          profileShape={profileShape}
           contentData={getProfiles()}
           hasLoaded={hasLoaded}
           parentId={parentId}

@@ -11,7 +11,10 @@ import {
   camelCase,
 } from 'lodash';
 
-import { Pluggable } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  Pluggable,
+} from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
 
 import { useCheckboxList } from '../../utils';
@@ -31,6 +34,7 @@ export const AssociatorEditable = memo(({
   dataAttributes,
   isMultiSelect,
   isMultiLink,
+  profileShape,
   relationsToAdd,
   relationsToDelete,
   onLink,
@@ -95,21 +99,27 @@ export const AssociatorEditable = memo(({
 
   return (
     <Fragment {...dataAttributes}>
-      <AssociatedList
-        entityKey={entityKey}
-        namespaceKey={namespaceKey}
-        checkboxList={checkboxList}
-        columnWidths={columnWidths}
-        contentData={data}
-        onSort={noop}
-        onRemove={cur => {
-          setCurrent(cur);
-          setConfirmationOpen(true);
-        }}
-        className={css['list-editable']}
-        isStatic={false}
-        isMultiSelect
-      />
+      <IntlConsumer>
+        {intl => (
+          <AssociatedList
+            intl={intl}
+            entityKey={entityKey}
+            namespaceKey={namespaceKey}
+            checkboxList={checkboxList}
+            columnWidths={columnWidths}
+            profileShape={profileShape}
+            contentData={data}
+            onSort={noop}
+            onRemove={cur => {
+              setCurrent(cur);
+              setConfirmationOpen(true);
+            }}
+            className={css['list-editable']}
+            isStatic={false}
+            isMultiSelect
+          />
+        )}
+      </IntlConsumer>
       <br />
       <Pluggable
         aria-haspopup="true"
@@ -164,6 +174,7 @@ AssociatorEditable.propTypes = {
   parentType: PropTypes.string.isRequired,
   masterType: PropTypes.string.isRequired,
   detailType: PropTypes.string.isRequired,
+  profileShape: PropTypes.object.isRequired,
   profileName: PropTypes.string,
   contentData: PropTypes.arrayOf(PropTypes.object),
   isMultiSelect: PropTypes.bool,

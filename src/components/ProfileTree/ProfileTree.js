@@ -34,7 +34,6 @@ export const ProfileTree = memo(({
   dataAttributes,
 }) => {
   const dataKey = 'jobProfiles.current';
-
   const [changesCount, setChangesCount] = useState(0);
   const [data, setData] = useState([]);
 
@@ -70,6 +69,9 @@ export const ProfileTree = memo(({
     const uniqueLines = lines.filter(line => initialData.findIndex(item => item.id === line.id) === -1);
     const newData = [...initialData, ...getLines(uniqueLines, detailType, reactTo)];
     const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
+
+    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
+    setInitialData(newData);
 
     if (linesToAdd && linesToAdd.length) {
       const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo)];

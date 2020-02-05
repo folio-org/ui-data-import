@@ -36,12 +36,15 @@ import {
   buildUrl,
 } from '@folio/stripes/smart-components';
 
-import { Preloader } from '../Preloader';
+import {
+  createLayerURL,
+  buildSortOrder,
+} from '../../utils';
 import {
   SORT_TYPES,
   LAYER_TYPES,
 } from '../../utils/constants';
-import { createLayerURL } from '../../utils';
+import { Preloader } from '../Preloader';
 
 import css from './SearchAndSort.css';
 
@@ -313,19 +316,7 @@ export class SearchAndSort extends Component {
       defaultSort,
     } = this.props;
 
-    const newOrder = meta.name;
-    const oldOrder = this.queryParam('sort') || defaultSort;
-    const orders = oldOrder ? oldOrder.split(',') : [];
-    const mainSort = orders[0];
-    const isSameColumn = mainSort && newOrder === mainSort.replace(/^-/, '');
-
-    if (isSameColumn) {
-      orders[0] = `-${mainSort}`.replace(/^--/, '');
-    } else {
-      orders.unshift(newOrder);
-    }
-
-    const sortOrder = orders.slice(0, maxSortKeys).join(',');
+    const sortOrder = buildSortOrder(this.queryParam('sort') || defaultSort, meta.name, defaultSort, maxSortKeys);
 
     this.transitionToParams({ sort: sortOrder });
   };
