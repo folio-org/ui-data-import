@@ -77,6 +77,17 @@ export const JobProfilesFormComponent = ({
     </FormattedMessage>
   ) : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
   const headLine = isEditMode ? profile.name : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
+  const clearStorage = () => {
+    let n = sessionStorage.length;
+
+    while (n--) {
+      const key = sessionStorage.key(n);
+
+      if (/^jobProfiles\.current\.*/.test(key)) {
+        sessionStorage.removeItem(key);
+      }
+    }
+  };
 
   return (
     <FullScreenForm

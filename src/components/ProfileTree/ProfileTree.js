@@ -67,13 +67,16 @@ export const ProfileTree = memo(({
     const newData = [...initialData, ...getLines(uniqueLines, detailType, reactTo)];
     const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
 
+    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
+    setInitialData(newData);
+
     if (linesToAdd && linesToAdd.length) {
       const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo)];
 
       onLink(relsToAdd);
     }
 
-    setInitialData(newData);
+  setInitialData(newData);
   };
 
   const unlink = row => {
