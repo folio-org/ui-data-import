@@ -4,7 +4,10 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import { noop } from 'lodash';
+import {
+  get,
+  noop,
+} from 'lodash';
 
 import { stringToWords } from '../../utils';
 
@@ -34,13 +37,9 @@ export const ProfileAssociator = memo(({
   const contentType = stringToWords(entityKey).map(word => word.toLocaleUpperCase()).join('_').slice(0, -1);
 
   const getProfiles = () => {
-    const data = contentData.filter(item => item.contentType === contentType);
+    const data = get(contentData.filter(item => item.contentType === contentType), '', []);
 
-    if (!data || !data.length) {
-      return [];
-    }
-
-    return data.map(({ content }) => content);
+    return data.length ? data.map(({ content }) => content) : data;
   };
 
   return (
