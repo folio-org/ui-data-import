@@ -52,7 +52,7 @@ export const JobProfilesFormComponent = ({
   const { profile } = initialValues;
   const isEditMode = Boolean(profile.id);
   const isSubmitDisabled = pristine || submitting;
-  const childWrappers = JSON.parse(sessionStorage.getItem(`childWrappers.${profile.id}`)) || [];
+  const childWrappers = JSON.parse(sessionStorage.getItem(`jobProfiles.${profile.id}`)) || [];
 
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
@@ -73,6 +73,17 @@ export const JobProfilesFormComponent = ({
     </FormattedMessage>
   ) : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
   const headLine = isEditMode ? profile.name : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
+  const clearStorage = () => {
+    let n = sessionStorage.length;
+
+    while (n--) {
+      const key = sessionStorage.key(n);
+
+      if (/^jobProfiles\.current\.*/.test(key)) {
+        sessionStorage.removeItem(key);
+      }
+    }
+  };
 
   return (
     <FullScreenForm
@@ -81,11 +92,11 @@ export const JobProfilesFormComponent = ({
       submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={record => {
-        sessionStorage.removeItem('childWrappers.new');
+        clearStorage();
         handleSubmit(record);
       }}
       onCancel={() => {
-        sessionStorage.removeItem('childWrappers.new');
+        clearStorage();
         onCancel();
       }}
     >

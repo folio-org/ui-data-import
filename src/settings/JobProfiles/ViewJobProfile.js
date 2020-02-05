@@ -219,10 +219,10 @@ export class ViewJobProfile extends Component {
   componentDidUpdate() {
     const id = get(this.jobProfileData, ['record', 'id'], null);
     const { wrappers } = this.childWrappers;
-    const existingWrappers = JSON.parse(sessionStorage.getItem(`childWrappers.${id}`)) || [];
+    const existingWrappers = JSON.parse(sessionStorage.getItem(`jobProfiles.${id}`)) || [];
 
     if (id && wrappers && wrappers.length && JSON.stringify(existingWrappers) !== JSON.stringify(wrappers)) {
-      sessionStorage.setItem(`childWrappers.${id}`, JSON.stringify(wrappers));
+      sessionStorage.setItem(`jobProfiles.${id}`, JSON.stringify(wrappers));
     }
   }
 

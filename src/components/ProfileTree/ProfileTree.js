@@ -33,7 +33,7 @@ export const ProfileTree = memo(({
   className,
   dataAttributes,
 }) => {
-  const dataKey = `childWrappers.${parentId || 'new'}`;
+  const dataKey = 'jobProfiles.current';
   const getData = () => (record ? contentData : JSON.parse(sessionStorage.getItem(dataKey)) || contentData);
   const [changesCount, setChangesCount] = useState(0);
   const [data, setData] = useState([]);
@@ -69,14 +69,14 @@ export const ProfileTree = memo(({
     const newData = [...initialData, ...getLines(uniqueLines, detailType, reactTo)];
     const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
 
+    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
+    setInitialData(newData);
+
     if (linesToAdd && linesToAdd.length) {
       const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo)];
 
       onLink(relsToAdd);
     }
-
-    setInitialData(newData);
-    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
   };
 
   const unlink = row => {
