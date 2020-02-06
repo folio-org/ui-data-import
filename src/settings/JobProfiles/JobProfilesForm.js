@@ -59,7 +59,7 @@ export const JobProfilesFormComponent = ({
   const isEditMode = Boolean(profile.id);
   const isSubmitDisabled = pristine || submitting;
 
-  const profileTreeData = useMemo(() => (isEditMode ? childWrappers : []), [isEditMode, childWrappers]);
+  const profileTreeData = useMemo(() => (isEditMode ? childWrappers : []), [isEditMode]);
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
 
@@ -95,8 +95,14 @@ export const JobProfilesFormComponent = ({
       paneTitle={paneTitle}
       submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
       isSubmitDisabled={isSubmitDisabled}
-      onSubmit={handleSubmit}
-      onCancel={onCancel}
+      onSubmit={record => {
+        clearStorage();
+        handleSubmit(record);
+      }}
+      onCancel={() => {
+        clearStorage();
+        onCancel();
+      }}
     >
       <Headline
         size="xx-large"

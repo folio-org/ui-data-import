@@ -27,6 +27,7 @@ export const ProfileLinker = ({
   parentType,
   onLink,
   linkingRules: { profilesAllowed },
+  dataKey,
   initialData,
   setInitialData,
   reactTo,
@@ -96,7 +97,7 @@ export const ProfileLinker = ({
             disabled={false} // @TODO: Change this to actual value from LinkingRules object
             isSingleSelect
             isMultiLink
-            onLink={records => onLink(initialData, setInitialData, records, parentId, parentType, entityKey, reactTo)}
+            onLink={records => onLink(initialData, setInitialData, records, parentId, parentType, entityKey, reactTo, dataKey)}
             renderTrigger={triggerProps => renderPluginButton(triggerProps, entityKey)}
           >
             <span data-test-no-plugin-available>
@@ -115,6 +116,7 @@ ProfileLinker.propTypes = {
   parentType: PropTypes.string.isRequired,
   onLink: PropTypes.func.isRequired,
   linkingRules: PropTypes.object.isRequired,
+  dataKey: PropTypes.string.isRequired,
   initialData: PropTypes.arrayOf(PropTypes.object).isRequired,
   setInitialData: PropTypes.func.isRequired,
   reactTo: PropTypes.string,

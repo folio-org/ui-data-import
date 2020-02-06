@@ -33,6 +33,8 @@ export const ProfileTree = memo(({
   className,
   dataAttributes,
 }) => {
+  const dataKey = 'jobProfiles.current';
+
   const [changesCount, setChangesCount] = useState(0);
   const [data, setData] = useState([]);
 
@@ -62,13 +64,10 @@ export const ProfileTree = memo(({
     reactTo,
   }));
 
-  const link = (initialData, setInitialData, lines, masterId, masterType, detailType, reactTo) => {
+  const link = (initialData, setInitialData, lines, masterId, masterType, detailType, reactTo, localDataKey) => {
     const uniqueLines = lines.filter(line => initialData.findIndex(item => item.id === line.id) === -1);
     const newData = [...initialData, ...getLines(uniqueLines, detailType, reactTo)];
     const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
-
-    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
-    setInitialData(newData);
 
     if (linesToAdd && linesToAdd.length) {
       const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo)];
@@ -76,7 +75,8 @@ export const ProfileTree = memo(({
       onLink(relsToAdd);
     }
 
-  setInitialData(newData);
+    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
+    setInitialData(newData);
   };
 
   const unlink = row => {
@@ -91,6 +91,7 @@ export const ProfileTree = memo(({
 
     data.splice(index, 1);
     setData(data);
+    sessionStorage.setItem(dataKey, JSON.stringify(data));
   };
 
   const remove = row => {
@@ -147,6 +148,7 @@ export const ProfileTree = memo(({
             parentId={parentId}
             parentType={ENTITY_KEYS.JOB_PROFILES}
             linkingRules={linkingRules}
+            dataKey={dataKey}
             initialData={data}
             setInitialData={setData}
             onLink={link}

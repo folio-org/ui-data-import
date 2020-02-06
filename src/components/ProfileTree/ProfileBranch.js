@@ -1,5 +1,6 @@
 import React, {
   memo,
+  useEffect,
   useState,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -53,6 +54,11 @@ export const ProfileBranch = memo(({
   const [nonMatchSectionOpen, setNonMatchSectionOpen] = useState(getSectionStatus('nonMatch'));
   const [matchData, setMatchData] = useState(getSectionData('match'));
   const [nonMatchData, setNonMatchData] = useState(getSectionData('nonMatch'));
+
+  useEffect(() => {
+    setMatchData(getSectionData('match'));
+    setNonMatchData(getSectionData('nonMatch'));
+  }, [contentData]);
 
   const getLabel = (
     <FormattedMessage id={PROFILE_LABEL_IDS[entityKey]}>
@@ -133,6 +139,7 @@ export const ProfileBranch = memo(({
                 linkingRules={linkingRules}
                 parentId={recordData.id}
                 parentType={entityKey}
+                dataKey={`${sectionKey}.data.match`}
                 initialData={matchData}
                 setInitialData={setMatchData}
                 reactTo="MATCH"
@@ -187,6 +194,7 @@ export const ProfileBranch = memo(({
                 linkingRules={linkingRules}
                 parentId={recordData.id}
                 parentType={entityKey}
+                dataKey={`${sectionKey}.data.nonMatch`}
                 initialData={nonMatchData}
                 setInitialData={setNonMatchData}
                 reactTo="NON_MATCH"
