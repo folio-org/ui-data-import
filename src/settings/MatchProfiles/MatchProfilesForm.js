@@ -114,6 +114,7 @@ export const MatchProfilesFormComponent = memo(({
     'profile-headline': { children: headLine },
     'panel-existing': {
       id: 'panel-existing-edit',
+      existingRecordType,
       onRecordSelect: onExistingRecordChange,
     },
     'existing-record-section': { label: existingRecordLabel },

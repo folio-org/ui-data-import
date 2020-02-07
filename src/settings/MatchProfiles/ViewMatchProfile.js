@@ -272,12 +272,9 @@ export class ViewMatchProfile extends Component {
 
     const componentsProps = {
       'panel-existing': {
-        record: {
-          captionId: FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId,
-          iconKey: FOLIO_RECORD_TYPES[matchProfile.existingRecordType].iconKey,
-          type: FOLIO_RECORD_TYPES[matchProfile.existingRecordType].type,
-        },
         id: 'panel-existing-view',
+        existingRecordType: matchProfile.existingRecordType,
+        isEditable: false,
       },
       'existing-record-section': {
         label: (

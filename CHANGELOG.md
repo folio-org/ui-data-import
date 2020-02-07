@@ -1,6 +1,7 @@
 # Change history for ui-data-import
 
 ## **1.8.0** (in progress)
+* Fix displaying "match from" record type on Match profile edit screen (UIDATIMP-372)
 
 ### Features added:
 * Attach a field mapping profile to an action profile that does not have one (UIDATIMP-269)
