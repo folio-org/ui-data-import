@@ -9,6 +9,7 @@ import { setupApplication } from '../../helpers';
 import {
   jobProfiles,
   jobProfileForm,
+  ProfileBranchInteractor,
 } from '../../interactors';
 import translations from '../../../../translations/ui-data-import/en';
 
@@ -140,6 +141,16 @@ describe('When job profile form', () => {
           it('does not have sub-branches', () => {
             expect(jobProfileForm.profileTree.branches(0).hasSubBranches).to.be.equal(false);
           });
+
+          describe('when click linker button', () => {
+            beforeEach(async () => {
+              await jobProfileForm.profileTree.plusSignButton.clickLinker();
+            });
+
+            it('additional Match profiles can not be attached', () => {
+              expect(jobProfileForm.profileTree.plusSignButton.isMatchOptionDisabled).to.be.true;
+            });
+          });
         });
 
         describe('when add to "For matches" section', () => {
@@ -150,6 +161,7 @@ describe('When job profile form', () => {
 
           describe('Action profile', () => {
             beforeEach(async () => {
+              await sessionStorage.clear();
               await jobProfileForm.profileTree.branches(0).matchesSection.plusSignButton.clickLinker();
               await jobProfileForm.profileTree.branches(0).matchesSection.plusSignButton.addActionButton.click();
             });
@@ -164,12 +176,15 @@ describe('When job profile form', () => {
             });
 
             it('does not have sub-branches', () => {
-              expect(jobProfileForm.profileTree.branches(0).matchesSection.hasSubBranches).to.be.false;
+              const actionProfile = new ProfileBranchInteractor('[data-test-profile-branch] > [data-test-profile-branch]');
+
+              expect(actionProfile.hasSubBranches).to.be.false;
             });
           });
 
           describe('Match profile', () => {
             beforeEach(async () => {
+              await sessionStorage.clear();
               await jobProfileForm.profileTree.branches(0).matchesSection.plusSignButton.clickLinker();
               await jobProfileForm.profileTree.branches(0).matchesSection.plusSignButton.addMatchButton.click();
             });
@@ -184,7 +199,10 @@ describe('When job profile form', () => {
             });
 
             it('has sub-branches', () => {
-              expect(jobProfileForm.profileTree.branches(0).matchesSection.hasSubBranches).to.be.true;
+              const matchProfile = new ProfileBranchInteractor('[data-test-profile-branch] > [data-test-profile-branch]');
+
+              expect(matchProfile.matchesSection.isPresent).to.be.true;
+              expect(matchProfile.nonMatchesSection.isPresent).to.be.true;
             });
           });
         });
