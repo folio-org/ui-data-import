@@ -39,7 +39,9 @@ export const ProfileTree = memo(({
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(contentData);
+    const getData = JSON.parse(sessionStorage.getItem(dataKey)) || contentData;
+
+    setData(getData);
   }, [contentData]);
 
   // const ChangesContext = React.createContext(changesCount);

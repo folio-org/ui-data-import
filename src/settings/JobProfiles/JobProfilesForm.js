@@ -59,17 +59,18 @@ export const JobProfilesFormComponent = ({
   const isEditMode = Boolean(profile.id);
   const isSubmitDisabled = pristine || submitting;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const profileTreeData = useMemo(() => (isEditMode ? childWrappers : []), [isEditMode]);
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
 
   useEffect(() => {
     dispatch(change(formName, 'addedRelations', addedRelations));
-  }, [addedRelations]);
+  }, [addedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     dispatch(change(formName, 'deletedRelations', deletedRelations));
-  }, [deletedRelations]);
+  }, [deletedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const paneTitle = isEditMode ? (
     <FormattedMessage id="ui-data-import.edit">

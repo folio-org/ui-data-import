@@ -48,7 +48,12 @@ export const ProfileBranch = memo(({
     return res === null || res === true;
   };
 
-  const getSectionData = section => contentData.filter(item => item.reactTo && item.reactTo === snakeCase(section).toLocaleUpperCase());
+  const getSectionData = section => {
+    const res = JSON.parse(sessionStorage.getItem(`${sectionKey}.data.${section}`));
+    const itemData = contentData.filter(item => item.reactTo && item.reactTo === snakeCase(section).toLocaleUpperCase());
+
+    return res || itemData;
+  };
 
   const [matchSectionOpen, setMatchSectionOpen] = useState(getSectionStatus('match'));
   const [nonMatchSectionOpen, setNonMatchSectionOpen] = useState(getSectionStatus('nonMatch'));
@@ -58,7 +63,7 @@ export const ProfileBranch = memo(({
   useEffect(() => {
     setMatchData(getSectionData('match'));
     setNonMatchData(getSectionData('nonMatch'));
-  }, [contentData]);
+  }, [contentData]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getLabel = (
     <FormattedMessage id={PROFILE_LABEL_IDS[entityKey]}>
