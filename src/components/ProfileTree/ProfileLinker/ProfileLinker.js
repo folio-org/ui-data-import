@@ -93,6 +93,7 @@ export const ProfileLinker = ({
             id={`${id}-clickable-find-import-profile`}
             entityKey={entityKey}
             dataKey={entityKey}
+            parentType={parentType}
             disabled={false} // @TODO: Change this to actual value from LinkingRules object
             isSingleSelect
             isMultiLink

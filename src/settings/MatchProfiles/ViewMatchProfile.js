@@ -41,8 +41,6 @@ import {
   QUALIFIER_TYPES,
   CRITERION_TYPES,
   VALUE_TYPES,
-  STRING_CAPITALIZATION_MODES,
-  STRING_CAPITALIZATION_EXCLUSIONS,
 } from '../../utils/constants';
 import {
   Spinner,
