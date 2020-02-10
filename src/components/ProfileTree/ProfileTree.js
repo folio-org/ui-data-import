@@ -34,12 +34,14 @@ export const ProfileTree = memo(({
   dataAttributes,
 }) => {
   const dataKey = 'jobProfiles.current';
-  const getData = () => (record ? contentData : JSON.parse(sessionStorage.getItem(dataKey)) || contentData);
+
   const [changesCount, setChangesCount] = useState(0);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(getData());
+    const getData = JSON.parse(sessionStorage.getItem(dataKey)) || contentData;
+
+    setData(getData);
   }, [contentData]);
 
   // const ChangesContext = React.createContext(changesCount);
@@ -69,14 +71,14 @@ export const ProfileTree = memo(({
     const newData = [...initialData, ...getLines(uniqueLines, detailType, reactTo)];
     const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
 
-    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
-    setInitialData(newData);
-
     if (linesToAdd && linesToAdd.length) {
       const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo)];
 
       onLink(relsToAdd);
     }
+
+    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
+    setInitialData(newData);
   };
 
   const unlink = row => {
@@ -115,7 +117,7 @@ export const ProfileTree = memo(({
      */
     /* <ChangesContext.Provider value={changesCount}> */
     <div>
-      <div>{changesCount}</div>
+      {/* <div>{changesCount}</div> */}
       <div className={classNames(css['profile-tree'], className)}>
         <div className={css['profile-tree-container']}>
           {data && data.length ? (

@@ -1,15 +1,20 @@
 import React, {
   useState,
   useEffect,
+  useMemo,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
 import {
   Field,
   change,
 } from 'redux-form';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { identity } from 'lodash';
+import {
+  identity,
+  get,
+} from 'lodash';
 
 import {
   Headline,
@@ -45,6 +50,7 @@ export const JobProfilesFormComponent = ({
   pristine,
   submitting,
   initialValues,
+  childWrappers,
   handleSubmit,
   onCancel,
   dispatch,
@@ -52,20 +58,19 @@ export const JobProfilesFormComponent = ({
   const { profile } = initialValues;
   const isEditMode = Boolean(profile.id);
   const isSubmitDisabled = pristine || submitting;
-  const childWrappers = JSON.parse(sessionStorage.getItem(`jobProfiles.${profile.id}`)) || [];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const profileTreeData = useMemo(() => (isEditMode ? childWrappers : []), [isEditMode]);
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
 
   useEffect(() => {
     dispatch(change(formName, 'addedRelations', addedRelations));
-  }, [addedRelations]);
+  }, [addedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     dispatch(change(formName, 'deletedRelations', deletedRelations));
-  }, [deletedRelations]);
-
-  // console.log('Child Wrappers: ', childWrappers);
+  }, [deletedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const paneTitle = isEditMode ? (
     <FormattedMessage id="ui-data-import.edit">
@@ -154,7 +159,7 @@ export const JobProfilesFormComponent = ({
           <ProfileTree
             parentId={profile.id}
             linkingRules={PROFILE_LINKING_RULES}
-            contentData={childWrappers}
+            contentData={profileTreeData}
             hasLoaded
             relationsToAdd={addedRelations}
             relationsToDelete={deletedRelations}
@@ -174,6 +179,30 @@ JobProfilesFormComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
+  childWrappers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      profileId: PropTypes.string.isRequired,
+      contentType: PropTypes.string.isRequired,
+      content: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        tags: PropTypes.shape({ tagList: PropTypes.arrayOf(PropTypes.string) }),
+        match: PropTypes.string,
+      }),
+    })
+  ).isRequired,
+};
+
+const mapStateToProps = state => {
+  const childWrappers = get(
+    state,
+    ['folio_data_import_child_wrappers', 'records', 0, 'childSnapshotWrappers'],
+    [],
+  );
+
+  return { childWrappers };
 };
 
 export const JobProfilesForm = compose(
@@ -183,4 +212,5 @@ export const JobProfilesForm = compose(
     navigationCheck: true,
     enableReinitialize: true,
   }),
+  connect(mapStateToProps)
 )(JobProfilesFormComponent);

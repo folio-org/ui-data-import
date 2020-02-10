@@ -77,11 +77,11 @@ export const ActionProfilesFormComponent = ({
 
   useEffect(() => {
     dispatch(change(formName, 'addedRelations', addedRelations));
-  }, [addedRelations]);
+  }, [addedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     dispatch(change(formName, 'deletedRelations', deletedRelations));
-  }, [deletedRelations]);
+  }, [deletedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getFilteredActions = () => {
     switch (folioRecord) {
