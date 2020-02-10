@@ -273,7 +273,7 @@
     "settings.profile.select": "Seleziona profilo",
     "settings.profile.unlink": "Scollega questo profilo",
     "modal.profile.unlink.heading": "Sei sicuro?",
-    "modal.profile.unlink.message": "Sei sicuro di voler scollegare il profilo \"{name}\"?",
+    "modal.profile.unlink.message": "Conferma che questo {profileType1} sarà scollegato da questo {profileType2} ?",
     "emptyMessage": "Questo {type} non contiene item",
     "list": "Lista",
     "section": "sezione",
