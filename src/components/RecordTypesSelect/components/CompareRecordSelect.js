@@ -72,7 +72,7 @@ export const CompareRecordSelect = ({
 
   return (
     <section
-      data-test-compare-record
+      data-test-compare-record={existingRecord.type}
       className={css.container}
     >
       <Row>

@@ -257,7 +257,7 @@ describe('Match profile form', () => {
               checkOptionsCount('INSTANCE', 54);
               checkOptionsCount('HOLDINGS', 19);
               checkOptionsCount('ITEM', 13);
-              checkOptionsCount('ORDER', 29);
+              checkOptionsCount('ORDER', 30);
               checkOptionsCount('INVOICE', 21);
             });
           });

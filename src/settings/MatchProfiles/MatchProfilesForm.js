@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { change } from 'redux-form';
 import {
   get,
   isEmpty,
@@ -39,6 +40,7 @@ export const MatchProfilesFormComponent = memo(({
   associatedJobProfilesAmount,
   onCancel,
   jsonSchemas,
+  dispatch,
 }) => {
   const { profile } = initialValues;
   const {
@@ -97,18 +99,13 @@ export const MatchProfilesFormComponent = memo(({
 
     setSelectedExistingRecord(type);
     setExistingRecordFields(options);
+    dispatch(change(formName, 'profile.existingRecordType', type));
+    dispatch(change(formName, 'profile.matchDetails[0].existingRecordType', type));
   };
 
-  const existingRecordLabel = (
-    <FormattedMessage
-      id="ui-data-import.match.existing.record"
-      values={{
-        recordType: !isEmpty(selectedExistingRecord)
-          ? <FormattedMessage id={FOLIO_RECORD_TYPES[selectedExistingRecord].captionId} />
-          : '',
-      }}
-    />
-  );
+  const existingRecordLabel = !isEmpty(selectedExistingRecord)
+    ? <FormattedMessage id={FOLIO_RECORD_TYPES[selectedExistingRecord].captionId} />
+    : '';
 
   const componentsProps = {
     'profile-headline': { children: headLine },
@@ -117,8 +114,22 @@ export const MatchProfilesFormComponent = memo(({
       existingRecordType,
       onRecordSelect: onExistingRecordChange,
     },
-    'existing-record-section': { label: existingRecordLabel },
-    'existing-record-field': { label: existingRecordLabel },
+    'existing-record-section': {
+      label: (
+        <FormattedMessage
+          id="ui-data-import.match.existing.record"
+          values={{ recordType: existingRecordLabel }}
+        />
+      ),
+    },
+    'existing-record-field': {
+      label: (
+        <FormattedMessage
+          id="ui-data-import.match.existing.record.field"
+          values={{ recordType: existingRecordLabel }}
+        />
+      ),
+    },
     'criterion1-value-type': {
       dataOptions: isEmpty(existingRecordFields) ? getInitialFields() : existingRecordFields,
       onFilter: onFieldSearch,
