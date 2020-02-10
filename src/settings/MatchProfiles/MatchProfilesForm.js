@@ -185,6 +185,7 @@ MatchProfilesFormComponent.propTypes = {
     ORDER: PropTypes.object,
     INVOICE: PropTypes.object,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
