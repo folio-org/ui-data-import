@@ -15,17 +15,19 @@ export const LinkerButton = memo(({
   onClick,
   searchLabel,
   className,
+  isButtonDisabled,
   dataAttributes,
 }) => (
   <Button
     data-test-plugin-find-record-button
     aria-haspopup="true"
     buttonStyle="dropdownItem"
-    id={`${id}-button-find-import-profile`}
+    id={`${id}-button-find-import-profile-${entityKey}`}
     buttonClass={classNames(css['linker-button'], className)}
     marginTop0
     marginBottom0
     onClick={() => onClick(entityKey)}
+    disabled={isButtonDisabled}
     {...dataAttributes}
   >
     <AppIcon
@@ -44,11 +46,13 @@ LinkerButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   searchLabel: PropTypes.node || PropTypes.string,
   className: PropTypes.string,
+  isButtonDisabled: PropTypes.bool,
   dataAttributes: PropTypes.object,
 };
 
 LinkerButton.defaultProps = {
   className: '',
   searchLabel: '',
+  isButtonDisabled: false,
   dataAttributes: null,
 };

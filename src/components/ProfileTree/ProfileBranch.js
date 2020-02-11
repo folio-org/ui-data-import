@@ -20,6 +20,7 @@ import { TreeLine } from '../TreeLine';
 import {
   ProfileLabel,
   ProfileLinker,
+  getDisabledOptions,
 } from '.';
 
 import css from './ProfileTree.css';
@@ -37,8 +38,10 @@ export const ProfileBranch = memo(({
   onUnlink,
   dataAttributes,
 }) => {
-  const { childrenAllowed } = linkingRules;
-
+  const {
+    childrenAllowed,
+    siblingsProhibited,
+  } = linkingRules;
   const childrenSectionAllowed = childrenAllowed.findIndex(item => item === entityKey) >= 0;
   const sectionKey = `jobProfiles.${record ? record.id : 'current'}.${recordData ? recordData.id : 'root'}`;
 
@@ -142,6 +145,7 @@ export const ProfileBranch = memo(({
               <ProfileLinker
                 id={`${recordData.id}-match`}
                 linkingRules={linkingRules}
+                disabledOptions={getDisabledOptions(matchData, siblingsProhibited)}
                 parentId={recordData.id}
                 parentType={entityKey}
                 dataKey={`${sectionKey}.data.match`}
@@ -197,6 +201,7 @@ export const ProfileBranch = memo(({
               <ProfileLinker
                 id={`${recordData.id}-non-match`}
                 linkingRules={linkingRules}
+                disabledOptions={getDisabledOptions(nonMatchData, siblingsProhibited)}
                 parentId={recordData.id}
                 parentType={entityKey}
                 dataKey={`${sectionKey}.data.nonMatch`}
