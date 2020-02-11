@@ -17,6 +17,7 @@ import { ENTITY_KEYS } from '../../utils/constants';
 import {
   ProfileBranch,
   ProfileLinker,
+  getDisabledOptions,
 } from '.';
 
 import css from './ProfileTree.css';
@@ -33,6 +34,7 @@ export const ProfileTree = memo(({
   className,
   dataAttributes,
 }) => {
+  const { siblingsProhibited } = linkingRules;
   const dataKey = 'jobProfiles.current';
   const [changesCount, setChangesCount] = useState(0);
   const [data, setData] = useState([]);
@@ -152,6 +154,7 @@ export const ProfileTree = memo(({
             parentId={parentId}
             parentType={ENTITY_KEYS.JOB_PROFILES}
             linkingRules={linkingRules}
+            disabledOptions={getDisabledOptions(data, siblingsProhibited)}
             dataKey={dataKey}
             initialData={data}
             setInitialData={setData}

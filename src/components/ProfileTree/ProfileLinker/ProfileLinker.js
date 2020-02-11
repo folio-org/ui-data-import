@@ -27,6 +27,7 @@ export const ProfileLinker = ({
   parentType,
   onLink,
   linkingRules: { profilesAllowed },
+  disabledOptions,
   dataKey,
   initialData,
   setInitialData,
@@ -56,6 +57,7 @@ export const ProfileLinker = ({
       id={`type-selector-menu-${id}`}
       entityKeys={profilesAllowed}
       onClick={handleMenuClick}
+      disabledOptions={disabledOptions}
       {...menuProps}
     />
   );
@@ -119,6 +121,7 @@ ProfileLinker.propTypes = {
   dataKey: PropTypes.string.isRequired,
   initialData: PropTypes.arrayOf(PropTypes.object).isRequired,
   setInitialData: PropTypes.func.isRequired,
+  disabledOptions: PropTypes.arrayOf(PropTypes.string),
   reactTo: PropTypes.string,
   title: PropTypes.node || PropTypes.string,
   className: PropTypes.string,
@@ -128,4 +131,5 @@ ProfileLinker.defaultProps = {
   title: '',
   className: '',
   reactTo: null,
+  disabledOptions: [],
 };
