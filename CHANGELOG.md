@@ -1,8 +1,6 @@
 # Change history for ui-data-import
 
 ## **1.8.0** (in progress)
-* Fix displaying "match from" record type on Match profile edit screen (UIDATIMP-372)
-* Add rules for prohibited profile siblings for the ProfileTree component (UIDATIMP-314)
 
 ### Features added:
 * Attach a field mapping profile to an action profile that does not have one (UIDATIMP-269)
@@ -10,13 +8,16 @@
 * Create ProfileTree Component (UIDATIMP-326)
 * Job profile details, part 1: adding match profiles (UIDATIMP-312)
 * Job profile details, part 2: adding secondary match/action profiles (UIDATIMP-313)
+* Add rules for prohibited profile siblings for the ProfileTree component (UIDATIMP-314)
 * Create FOLIO records' field lists (UIDATIMP-330)
 * Connect Profile Associator Component to unified data source (UIDATIMP-341)
 * Update field naming for mapping profiles (UIDATIMP-349)
 * Connect Profile Tree Component to unified data source (UIDATIMP-357)
 * Rework ProfileLinker Component (UIDATIMP-358)
+* Search and Sort don't work in Profile Associator Component in view mode (UIDATIMP-374)
 * Convert Match Profiles form Existing Record Field name to JSONPath format (UIDATIMP-375)
 * Define API Contract for MappingProfile field mapping definitions (UIDATIMP-377)
+* ProfileAssociator Component lists are empty (UIDATIMP-399)
 
 ### Bugs fixed:
 * Profile Associator lists are empty when the user reloads the page with Profile Edit Form open (UIDATIMP-338)
