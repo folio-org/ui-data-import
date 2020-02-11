@@ -17,10 +17,13 @@ const withJobLogsSortComponent = WrappedComponent => {
   return class extends Component {
     static propTypes = {
       history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
-      location: PropTypes.shape({
-        search: PropTypes.string.isRequired,
-        pathname: PropTypes.string.isRequired,
-      }).isRequired || PropTypes.string.isRequired,
+      location: PropTypes.oneOfType([
+        PropTypes.shape({
+          search: PropTypes.string.isRequired,
+          pathname: PropTypes.string.isRequired,
+        }).isRequired,
+        PropTypes.string.isRequired,
+      ]),
       formatter: PropTypes.object,
     };
 

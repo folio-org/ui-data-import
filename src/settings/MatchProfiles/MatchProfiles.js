@@ -196,7 +196,13 @@ export class MatchProfiles extends Component {
       }).isRequired,
     }).isRequired,
     stripes: PropTypes.object.isRequired,
-    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
+    location: PropTypes.oneOfType([
+      PropTypes.shape({
+        search: PropTypes.string.isRequired,
+        pathname: PropTypes.string.isRequired,
+      }).isRequired,
+      PropTypes.string.isRequired,
+    ]),
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,
@@ -229,7 +235,7 @@ export class MatchProfiles extends Component {
       'deselectAll',
     ],
     visibleColumns: ['selected', ...matchProfilesShape.visibleColumns],
-    columnWidths: { selected: 40 },
+    columnWidths: { selected: '40px' },
     initialValues: {
       name: '',
       description: '',
