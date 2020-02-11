@@ -17,34 +17,41 @@ export const LinkerMenu = ({
   entityKeys: [matchProfiles, actionProfiles],
   onToggle,
   onClick,
+  disabledOptions,
   keyHandler,
-}) => (
-  <DropdownMenu
-    role="menu"
-    placement="bottom-end"
-    aria-label="Available Profile types"
-    open={open}
-    onToggle={onToggle}
-    onKeyDown={keyHandler}
-  >
-    <MenuSection
-      id={`menu-actions-${id}`}
-      label={<FormattedMessage id="ui-data-import.settings.action.add" />}
-      labelTag="h3"
+}) => {
+  const getButtonState = entityKey => disabledOptions.findIndex(item => item === entityKey) !== -1;
+
+  return (
+    <DropdownMenu
+      role="menu"
+      placement="bottom-end"
+      aria-label="Available Profile types"
+      open={open}
+      onToggle={onToggle}
+      onKeyDown={keyHandler}
     >
-      <LinkerButton
-        id={`menu-link-match-${id}`}
-        entityKey={matchProfiles}
-        onClick={onClick}
-      />
-      <LinkerButton
-        id={`menu-link-action-${id}`}
-        entityKey={actionProfiles}
-        onClick={onClick}
-      />
-    </MenuSection>
-  </DropdownMenu>
-);
+      <MenuSection
+        id={`menu-actions-${id}`}
+        label={<FormattedMessage id="ui-data-import.settings.action.add" />}
+        labelTag="h3"
+      >
+        <LinkerButton
+          id={`menu-link-match-${id}`}
+          entityKey={matchProfiles}
+          onClick={onClick}
+          isButtonDisabled={getButtonState(matchProfiles)}
+        />
+        <LinkerButton
+          id={`menu-link-action-${id}`}
+          entityKey={actionProfiles}
+          onClick={onClick}
+          isButtonDisabled={getButtonState(actionProfiles)}
+        />
+      </MenuSection>
+    </DropdownMenu>
+  );
+};
 
 LinkerMenu.propTypes = {
   id: PropTypes.string.isRequired,
@@ -53,6 +60,10 @@ LinkerMenu.propTypes = {
   onToggle: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   keyHandler: PropTypes.func,
+  disabledOptions: PropTypes.arrayOf(PropTypes.string),
 };
 
-LinkerMenu.defaultProps = { keyHandler: noop };
+LinkerMenu.defaultProps = {
+  keyHandler: noop,
+  disabledOptions: [],
+};
