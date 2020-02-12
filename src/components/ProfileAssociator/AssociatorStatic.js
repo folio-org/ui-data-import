@@ -1,4 +1,9 @@
-import React, { Fragment } from 'react';
+import React, {
+  memo,
+  Fragment,
+  useState,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { noop } from 'lodash';
@@ -13,26 +18,65 @@ import {
   useCheckboxList,
   stringToWords,
 } from '../../utils';
+import { searchAndSortTemplate } from '../ListTemplate';
 
 import { AssociatedList } from './AssociatedList';
 
 import searchAndSortCss from '../SearchAndSort/SearchAndSort.css';
 
-export const AssociatorStatic = ({
+export const AssociatorStatic = memo(({
+  intl,
   entityKey,
   namespaceKey,
   isMultiSelect,
+  profileShape,
   dataAttributes,
   contentData,
   hasLoaded,
   useSearch,
 }) => {
-  const columnWidths = { selected: 40 };
+  const [currentData, setCurrentData] = useState([]);
+  const [currentQuery, setCurrentQuery] = useState('');
   const checkboxList = useCheckboxList(contentData);
-  const { deselectAll } = checkboxList;
 
+  const columnWidths = { selected: '40px' };
+  const searchTemplate = searchAndSortTemplate(intl);
+
+  const { deselectAll } = checkboxList;
+  const { visibleColumns } = profileShape;
+
+  const descIdx = visibleColumns.indexOf('description');
+  let filterColumns = visibleColumns;
+
+  if (descIdx >= 0) {
+    filterColumns = visibleColumns.splice(descIdx, 1);
+  }
   const entityName = stringToWords(entityKey).map(word => word.toLocaleLowerCase()).join('-');
   const dataAttrs = dataAttributes || { [`data-test-associated-${entityName}`]: true };
+
+  useEffect(() => {
+    setCurrentData(contentData);
+  }, [contentData]);
+
+  useEffect(() => {
+    const newData = currentData.filter(item => {
+      for (let i = 0; i < filterColumns.length; i++) {
+        const col = filterColumns[i];
+
+        if (searchTemplate[col](item).includes(currentQuery)) {
+          return true;
+        }
+      }
+
+      return false;
+    });
+
+    setCurrentData(newData);
+  }, [currentQuery]);
+
+  const querySetter = () => {};
+
+  const queryGetter = () => {};
 
   const RenderSearch = ({
     searchValue,
@@ -41,6 +85,8 @@ export const AssociatorStatic = ({
     onSubmitSearch,
   }) => {
     const onSubmit = event => {
+      event.preventDefault();
+      setCurrentQuery(searchValue.query);
       onSubmitSearch(event);
       deselectAll();
     };
@@ -58,7 +104,10 @@ export const AssociatorStatic = ({
               name="query"
               value={searchValue.query}
               onChange={getSearchHandlers().query}
-              onClear={resetAll}
+              onClear={() => {
+                setCurrentData(contentData);
+                resetAll();
+              }}
             />
           </div>
           <div className={searchAndSortCss.searchButtonWrap}>
@@ -89,8 +138,8 @@ export const AssociatorStatic = ({
     return (
       <div {...dataAttrs}>
         <SearchAndSortQuery
-          querySetter={noop}
-          queryGetter={noop}
+          querySetter={queryGetter}
+          queryGetter={querySetter}
           syncToLocationSearch={false}
           searchChangeCallback={deselectAll}
           nsParams={namespaceKey}
@@ -111,11 +160,13 @@ export const AssociatorStatic = ({
                 getSearchHandlers={getSearchHandlers}
               />
               <AssociatedList
+                intl={intl}
                 entityKey={entityKey}
                 namespaceKey={namespaceKey}
                 checkboxList={checkboxList}
                 columnWidths={columnWidths}
-                contentData={contentData}
+                profileShape={profileShape}
+                contentData={currentData}
                 onSort={onSort}
                 isStatic
                 isMultiSelect={isMultiSelect}
@@ -130,21 +181,25 @@ export const AssociatorStatic = ({
   return (
     <div {...dataAttrs}>
       <AssociatedList
+        intl={intl}
         entityKey={entityKey}
         namespaceKey={namespaceKey}
         checkboxList={checkboxList}
         columnWidths={columnWidths}
-        contentData={contentData}
+        profileShape={profileShape}
+        contentData={currentData}
         onSort={noop}
         isMultiSelect={isMultiSelect}
       />
     </div>
   );
-};
+});
 
 AssociatorStatic.propTypes = {
+  intl: PropTypes.object.isRequired,
   entityKey: PropTypes.string.isRequired,
   namespaceKey: PropTypes.string.isRequired,
+  profileShape: PropTypes.object.isRequired,
   isMultiSelect: PropTypes.bool,
   dataAttributes: PropTypes.shape(PropTypes.object),
   contentData: PropTypes.arrayOf(PropTypes.object),

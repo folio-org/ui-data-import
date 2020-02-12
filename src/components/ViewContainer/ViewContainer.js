@@ -108,7 +108,13 @@ ViewContainer.propTypes = {
   entityKey: PropTypes.string.isRequired,
   children: PropTypes.func.isRequired,
   mutator: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired || PropTypes.string.isRequired,
+  location: PropTypes.oneOfType([
+    PropTypes.shape({
+      search: PropTypes.string.isRequired,
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+    PropTypes.string.isRequired,
+  ]),
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
   match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   selectRecord: PropTypes.func,

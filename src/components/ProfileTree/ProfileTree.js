@@ -169,7 +169,7 @@ export const ProfileTree = memo(({
 ProfileTree.propTypes = {
   linkingRules: PropTypes.object.isRequired,
   contentData: PropTypes.arrayOf(PropTypes.object).isRequired,
-  parentId: PropTypes.oneOf(PropTypes.string, PropTypes.number),
+  parentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   relationsToAdd: PropTypes.arrayOf(PropTypes.object),
   relationsToDelete: PropTypes.arrayOf(PropTypes.object),
   onLink: PropTypes.func,

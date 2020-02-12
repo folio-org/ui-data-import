@@ -13,6 +13,16 @@ import { ACTION_TYPES } from '../actionTypes';
 import sharedCss from '../../../shared.css';
 import { ActionIcon } from '../ActionIcon';
 
+export const createActionLabel = ({ formatMessage }, action, folioRecord) => {
+  const actionString = formatMessage({ id: ACTION_TYPES[action].captionId });
+  // record type should be in lower case except "MARC" is always all-caps
+  const recordTypeString = formatMessage({ id: FOLIO_RECORD_TYPES[folioRecord].captionId })
+    .toLowerCase()
+    .replace('marc', 'MARC');
+
+  return `${actionString} ${recordTypeString}`;
+};
+
 export const ActionColumn = memo(({
   record,
   searchTerm = '',
@@ -30,16 +40,6 @@ export const ActionColumn = memo(({
     return <span>-</span>;
   }
 
-  const createLabel = ({ formatMessage }) => {
-    const actionString = formatMessage({ id: ACTION_TYPES[action].captionId });
-    // record type should be in lower case except "MARC" is always all-caps
-    const recordTypeString = formatMessage({ id: FOLIO_RECORD_TYPES[folioRecord].captionId })
-      .toLowerCase()
-      .replace('marc', 'MARC');
-
-    return `${actionString} ${recordTypeString}`;
-  };
-
   return (
     <IntlConsumer>
       {intl => {
@@ -48,7 +48,7 @@ export const ActionColumn = memo(({
             search={searchTerm || ''}
             className={sharedCss.container}
           >
-            {createLabel(intl)}
+            {createActionLabel(intl, action, folioRecord)}
           </HighLight>
         );
         const actionIcon = (

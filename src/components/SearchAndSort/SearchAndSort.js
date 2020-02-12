@@ -36,12 +36,15 @@ import {
   buildUrl,
 } from '@folio/stripes/smart-components';
 
-import { Preloader } from '../Preloader';
+import {
+  createLayerURL,
+  buildSortOrder,
+} from '../../utils';
 import {
   SORT_TYPES,
   LAYER_TYPES,
 } from '../../utils/constants';
-import { createLayerURL } from '../../utils';
+import { Preloader } from '../Preloader';
 
 import css from './SearchAndSort.css';
 
@@ -56,10 +59,13 @@ export class SearchAndSort extends Component {
     resultCountIncrement: PropTypes.number.isRequired, // collection to be exploded and passed on to the detail view
     searchLabelKey: PropTypes.string.isRequired,
     resultCountMessageKey: PropTypes.string.isRequired,
-    location: PropTypes.shape({ // provided by withRouter
-      pathname: PropTypes.string.isRequired,
-      search: PropTypes.string.isRequired,
-    }).isRequired || PropTypes.string.isRequired,
+    location: PropTypes.oneOfType([
+      PropTypes.shape({
+        search: PropTypes.string.isRequired,
+        pathname: PropTypes.string.isRequired,
+      }).isRequired,
+      PropTypes.string.isRequired,
+    ]),
     history: PropTypes.shape({ // provided by withRouter
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -313,19 +319,7 @@ export class SearchAndSort extends Component {
       defaultSort,
     } = this.props;
 
-    const newOrder = meta.name;
-    const oldOrder = this.queryParam('sort') || defaultSort;
-    const orders = oldOrder ? oldOrder.split(',') : [];
-    const mainSort = orders[0];
-    const isSameColumn = mainSort && newOrder === mainSort.replace(/^-/, '');
-
-    if (isSameColumn) {
-      orders[0] = `-${mainSort}`.replace(/^--/, '');
-    } else {
-      orders.unshift(newOrder);
-    }
-
-    const sortOrder = orders.slice(0, maxSortKeys).join(',');
+    const sortOrder = buildSortOrder(this.queryParam('sort') || defaultSort, meta.name, defaultSort, maxSortKeys);
 
     this.transitionToParams({ sort: sortOrder });
   };
