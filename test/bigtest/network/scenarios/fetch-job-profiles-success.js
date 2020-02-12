@@ -47,7 +47,7 @@ export default server => {
     return record.attrs;
   });
 
-  server.get('/data-import-profiles/jobProfiles/:id');
+  server.get('/data-import-profiles/jobProfiles/:id?withRelations=true');
 
   server.put('/data-import-profiles/jobProfiles/:id', (schema, request) => {
     const {

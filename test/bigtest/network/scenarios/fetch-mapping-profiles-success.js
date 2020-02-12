@@ -1,5 +1,4 @@
 import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
-import { associatedActionProfiles } from '../../mocks';
 
 export default server => {
   server.createList('mapping-profile', 3);
@@ -21,9 +20,8 @@ export default server => {
       ],
     });
   });
-  server.get('/data-import-profiles/mappingProfiles/:id');
+  server.get('/data-import-profiles/mappingProfiles/:id?withRelations=true');
   server.delete('/data-import-profiles/mappingProfiles/:id', {}, 409);
-  server.get('/data-import-profiles/profileAssociations/:id/masters', associatedActionProfiles);
   server.post('/data-import-profiles/mappingProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
     const record = server.create('mapping-profile', params);

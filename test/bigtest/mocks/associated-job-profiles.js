@@ -1,79 +1,84 @@
-export const associatedJobProfiles = {
-  contentType: 'MATCH_PROFILE',
-  childSnapshotWrappers: [
-    {
-      contentType: 'JOB_PROFILE',
-      content: {
-        id: '448ae575-daec-49c1-8041-d64c8ed8e5b1',
-        name: 'Load vendor order records',
-        description: 'Ordered on vendor site; load MARC to create bib, holdings, item, and order; keep MARC',
-        dataType: 'MARC',
-        tags: { tagList: ['acq', 'daily'] },
-        userInfo: {
-          firstName: 'DIKU',
-          lastName: 'ADMINISTRATOR',
-          userName: 'diku_admin',
-        },
-        metadata: {
-          createdDate: '2018-10-30T12:41:22.000+0000',
-          createdByUserId: '',
-          createdByUsername: 'diku_admin',
-          updatedDate: '2018-11-02T12:09:51.000+0000',
-          updatedByUserId: '',
-          updatedByUsername: 'diku_admin',
-        },
-      },
+export const associatedJobProfiles = [{
+  id: '448ae575-daec-49c1-8041-d64c8ed8e5b1',
+  contentType: 'JOB_PROFILE',
+  content: {
+    id: '448ae575-daec-49c1-8041-d64c8ed8e5b1',
+    name: 'Load vendor order records',
+    description: 'Ordered on vendor site; load MARC to create bib, holdings, item, and order; keep MARC',
+    dataType: 'MARC',
+    tags: { tagList: ['acq', 'daily'] },
+    deleted: false,
+    userInfo: {
+      firstName: 'DIKU',
+      lastName: 'ADMINISTRATOR',
+      userName: 'diku_admin',
     },
-    {
-      contentType: 'JOB_PROFILE',
-      content: {
-        id: 'h4bcv28f-daec-22c1-9341-sbh22sk5b45hsh',
-        name: 'Bib record',
-        description: 'Uploading records data',
-        dataType: 'MARC',
-        tags: { tagList: [] },
-        userInfo: {
-          firstName: 'DIKU',
-          lastName: 'ADMINISTRATOR',
-          userName: 'diku_admin',
-        },
-        metadata: {
-          createdDate: '2018-10-30T12:41:22.000+0000',
-          createdByUserId: '',
-          createdByUsername: 'diku_admin',
-          updatedDate: '2018-11-02T12:09:51.000+0000',
-          updatedByUserId: '',
-          updatedByUsername: 'diku_admin',
-        },
-      },
+    parentProfiles: [],
+    childProfiles: [],
+    metadata: {
+      createdDate: 1540903282000,
+      createdByUserId: '',
+      createdByUsername: 'diku_admin',
+      updatedDate: 1541160591000,
+      updatedByUserId: '',
+      updatedByUsername: 'diku_admin',
     },
-    {
-      contentType: 'JOB_PROFILE',
-      content: {
-        id: '33nfkdjf-daec-44r3-1141-d64c8ed7dchs8c',
-        name: 'Initial parsing',
-        description: '',
-        dataType: 'MARC',
-        tags: { tagList: ['upload'] },
-        userInfo: {
-          firstName: 'DIKU',
-          lastName: 'ADMINISTRATOR',
-          userName: 'diku_admin',
-        },
-        metadata: {
-          createdDate: '2018-10-30T12:41:22.000+0000',
-          createdByUserId: '',
-          createdByUsername: 'diku_admin',
-          updatedDate: '2018-11-02T12:09:51.000+0000',
-          updatedByUserId: '',
-          updatedByUsername: 'diku_admin',
-        },
-      },
-    },
-  ],
-};
-
-export const noAssociatedJobProfiles = {
-  contentType: 'MATCH_PROFILE',
+  },
   childSnapshotWrappers: [],
-};
+}, {
+  id: '828a787c-bcf3-4c28-891a-9e6f3ba5068b',
+  contentType: 'JOB_PROFILE',
+  content: {
+    id: '828a787c-bcf3-4c28-891a-9e6f3ba5068b',
+    name: 'Load MARC, then throw away',
+    description: 'Ordered on vendor site; load MARC to create bib, holdings, item, and order; then discard MARC',
+    dataType: 'MARC',
+    tags: { tagList: ['acq', 'daily'] },
+    deleted: false,
+    userInfo: {
+      firstName: 'DIKU',
+      lastName: 'ADMINISTRATOR',
+      userName: 'diku_admin',
+    },
+    parentProfiles: [],
+    childProfiles: [],
+    metadata: {
+      createdDate: 1541070501000,
+      createdByUserId: '',
+      createdByUsername: 'diku_admin',
+      updatedDate: 1543690901000,
+      updatedByUserId: '',
+      updatedByUsername: 'diku_admin',
+    },
+  },
+  childSnapshotWrappers: [],
+}, {
+  id: '828a787c-bcf3-4c28-891a-9e6f3ba5068b',
+  contentType: 'JOB_PROFILE',
+  content: {
+    id: '828a787c-bcf3-4c28-891a-9e6f3ba5068b',
+    name: 'Load MARC, then throw away',
+    description: 'Ordered on vendor site; load MARC to create bib, holdings, item, and order; then discard MARC',
+    dataType: 'MARC',
+    tags: { tagList: ['acq', 'daily'] },
+    deleted: false,
+    userInfo: {
+      firstName: 'DIKU',
+      lastName: 'ADMINISTRATOR',
+      userName: 'diku_admin',
+    },
+    parentProfiles: [],
+    childProfiles: [],
+    metadata: {
+      createdDate: 1541070501000,
+      createdByUserId: '',
+      createdByUsername: 'diku_admin',
+      updatedDate: 1543690901000,
+      updatedByUserId: '',
+      updatedByUsername: 'diku_admin',
+    },
+  },
+  childSnapshotWrappers: [],
+}];
+
+export const noAssociatedJobProfiles = [];
