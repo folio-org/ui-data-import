@@ -3,10 +3,7 @@ import React, {
   useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
-import {
-  debounce,
-  isEmpty,
-} from 'lodash';
+import { debounce } from 'lodash';
 
 import { InitialRecordSelect } from './components/InitialRecordSelect';
 import { CompareRecordSelect } from './components/CompareRecordSelect';
@@ -31,12 +28,16 @@ const incomingRecord = FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC;
 
 export const RecordTypesSelect = ({
   id,
-  record,
+  existingRecordType,
   onRecordSelect,
+  isEditable,
 }) => {
   useUpdateOnResize();
-  const [existingRecord, setExistingRecord] = useState();
-  const isEditable = isEmpty(record);
+  const [existingRecord, setExistingRecord] = useState(undefined);
+
+  useEffect(() => {
+    setExistingRecord(FOLIO_RECORD_TYPES[existingRecordType] || undefined);
+  }, [existingRecordType]);
 
   const handleSelect = selectedRecord => {
     setExistingRecord(selectedRecord);
@@ -48,12 +49,12 @@ export const RecordTypesSelect = ({
       data-test-choose-existing-record
       id={id}
     >
-      {existingRecord || !isEditable
+      {existingRecord
         ? (
           <CompareRecordSelect
             id={id}
             incomingRecord={incomingRecord}
-            existingRecord={isEditable ? existingRecord : record}
+            existingRecord={existingRecord}
             setExistingRecord={handleSelect}
             isEditable={isEditable}
           />
@@ -71,11 +72,12 @@ export const RecordTypesSelect = ({
 
 RecordTypesSelect.propTypes = {
   id: PropTypes.string,
-  record: PropTypes.object,
+  existingRecordType: PropTypes.string,
   onRecordSelect: PropTypes.func,
+  isEditable: PropTypes.bool,
 };
 
 RecordTypesSelect.defaultProps = {
   id: 'compare-record-types',
-  record: {},
+  isEditable: true,
 };

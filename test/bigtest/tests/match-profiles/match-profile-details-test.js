@@ -146,6 +146,10 @@ describe('Match Profile View', () => {
       expect(matchProfileDetails.recordTypesSelect.isPresent).to.be.true;
     });
 
+    it('"Record type select" component has correct compare record value', () => {
+      expect(matchProfileDetails.recordTypesSelect.compareRecordValue).to.be.equal('INSTANCE');
+    });
+
     it('has "Match criteria" component', () => {
       expect(matchProfileDetails.matchCriteria.isPresent).to.be.true;
     });
