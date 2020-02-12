@@ -72,28 +72,29 @@ export const AssociatedList = memo(({
   const [currentSortOrder, setCurrentSortOrder] = useState(sortOrder);
   const [currentSortDirection, setCurrentSortDirection] = useState(sortDirection);
 
-  useEffect(() => {
-    setCurrentData(contentData);
-  }, [contentData]);
+  const localSort = (dataSet, curOrder, curDir) => {
+    const order = curOrder.replace(/^-/, '').replace(/,.*/, '');
 
-  useEffect(() => {
-    const order = currentSortOrder.replace(/^-/, '').replace(/,.*/, '');
-    const newData = currentData.sort((rowA, rowB) => {
+    return dataSet.sort((rowA, rowB) => {
       const colA = sortTemplate[order](rowA);
       const colB = sortTemplate[order](rowB);
 
       switch (order) {
         case 'updated':
-          return currentSortDirection === SORT_TYPES.ASCENDING ? sortDates(colA, colB) : sortDates(colB, colA);
+          return curDir === SORT_TYPES.ASCENDING ? sortDates(colA, colB) : sortDates(colB, colA);
         case 'order':
-          return currentSortDirection === SORT_TYPES.ASCENDING ? sortNums(colA, colB) : sortNums(colB, colA);
+          return curDir === SORT_TYPES.ASCENDING ? sortNums(colA, colB) : sortNums(colB, colA);
         default:
-          return currentSortDirection === SORT_TYPES.ASCENDING ? sortStrings(colA, colB) : sortStrings(colB, colA);
+          return curDir === SORT_TYPES.ASCENDING ? sortStrings(colA, colB) : sortStrings(colB, colA);
       }
     });
+  };
+
+  useEffect(() => {
+    const newData = localSort(contentData, currentSortOrder, currentSortDirection);
 
     setCurrentData(newData);
-  }, [currentSortOrder]);
+  }, [contentData]);
 
   const rowUpdater = ({ id }) => selectedRecords.has(id);
 
@@ -103,6 +104,10 @@ export const AssociatedList = memo(({
 
     setCurrentSortOrder(newSortOrder);
     setCurrentSortDirection(newSortDirection);
+
+    const newData = localSort(currentData, newSortOrder, newSortDirection);
+
+    setCurrentData(newData);
   };
 
   const columnHeaders = renderHeaders({
@@ -118,6 +123,8 @@ export const AssociatedList = memo(({
     selectedRecords,
     onRemove,
   });
+
+  console.log('New Data: ', currentSortOrder, currentSortDirection, currentData);
 
   return (
     <MultiColumnList

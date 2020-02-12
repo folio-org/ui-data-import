@@ -1,6 +1,6 @@
 import {
   associatedJobProfiles,
-  associatedMappingProfile,
+  associatedMappingProfiles,
 } from '../../mocks';
 import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
 
@@ -57,10 +57,8 @@ export default server => {
       ],
     });
   });
-  server.get('/data-import-profiles/actionProfiles/:id');
+  server.get('/data-import-profiles/actionProfiles/:id?withRelations=true');
   server.delete('/data-import-profiles/actionProfiles/:id', {}, 409);
-  server.get('/data-import-profiles/profileAssociations/:id/masters', associatedJobProfiles);
-  server.get('/data-import-profiles/profileAssociations/:id/details', associatedMappingProfile);
   server.post('/data-import-profiles/actionProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
     const record = server.create('action-profile', params);
@@ -80,6 +78,6 @@ export default server => {
     return actionProfileModel.attrs;
   });
 
-  server.get('/data-import-profiles/jobProfiles/:id', associatedJobProfiles.childSnapshotWrappers[0].content);
-  server.get('/data-import-profiles/mappingProfiles/:id', associatedMappingProfile.childSnapshotWrappers[0].content);
+  server.get('/data-import-profiles/jobProfiles/:id', associatedJobProfiles[0].content);
+  server.get('/data-import-profiles/mappingProfiles/:id', associatedMappingProfiles[0].content);
 };
