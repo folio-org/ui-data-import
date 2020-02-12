@@ -267,21 +267,18 @@ export class ViewMatchProfile extends Component {
         existingRecordType: get(matchDetails, 'existingRecordType', ''),
       }],
     };
-
+    const existingRecordLabel = <FormattedMessage id={FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId} />;
     const componentsProps = {
       'panel-existing': {
-        record: {
-          captionId: FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId,
-          iconKey: FOLIO_RECORD_TYPES[matchProfile.existingRecordType].iconKey,
-          type: FOLIO_RECORD_TYPES[matchProfile.existingRecordType].type,
-        },
         id: 'panel-existing-view',
+        existingRecordType: matchProfile.existingRecordType,
+        isEditable: false,
       },
       'existing-record-section': {
         label: (
           <FormattedMessage
             id="ui-data-import.match.existing.record"
-            values={{ recordType: <FormattedMessage id={FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId} /> }}
+            values={{ recordType: existingRecordLabel }}
           />
         ),
       },
@@ -289,7 +286,7 @@ export class ViewMatchProfile extends Component {
         label: (
           <FormattedMessage
             id="ui-data-import.match.existing.record.field"
-            values={{ recordType: <FormattedMessage id={FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId} /> }}
+            values={{ recordType: existingRecordLabel }}
           />
         ),
       },

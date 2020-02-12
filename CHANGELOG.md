@@ -1,6 +1,7 @@
 # Change history for ui-data-import
 
 ## **1.8.0** (in progress)
+* Fix displaying "match from" record type on Match profile edit screen (UIDATIMP-372)
 * Add rules for prohibited profile siblings for the ProfileTree component (UIDATIMP-314)
 
 ### Features added:
