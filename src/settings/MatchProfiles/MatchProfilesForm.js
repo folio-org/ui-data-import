@@ -17,6 +17,7 @@ import stripesForm from '@folio/stripes/form';
 import {
   FlexibleForm,
   FOLIO_RECORD_TYPES,
+  INCOMING_RECORD_TYPES,
 } from '../../components';
 import {
   compose,
@@ -45,6 +46,7 @@ export const MatchProfilesFormComponent = memo(({
   const { profile } = initialValues;
   const {
     existingRecordType,
+    incomingRecordType,
     name,
     matchDetails,
   } = profile;
@@ -53,6 +55,7 @@ export const MatchProfilesFormComponent = memo(({
   const isEditMode = layer === LAYER_TYPES.EDIT;
 
   const [selectedExistingRecord, setSelectedExistingRecord] = useState(isEditMode ? existingRecordType : '');
+  const [incomingRecord, setIncomingRecord] = useState(INCOMING_RECORD_TYPES[incomingRecordType]);
   const [existingRecordFields, setExistingRecordFields] = useState([]);
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
@@ -103,8 +106,17 @@ export const MatchProfilesFormComponent = memo(({
     dispatch(change(formName, 'profile.matchDetails[0].existingRecordType', type));
   };
 
+  const onIncomingRecordChange = record => {
+    setIncomingRecord(record);
+    dispatch(change(formName, 'profile.incomingRecordType', record.type));
+    dispatch(change(formName, 'profile.matchDetails[0].incomingRecordType', record.type));
+  };
+
   const existingRecordLabel = !isEmpty(selectedExistingRecord)
     ? <FormattedMessage id={FOLIO_RECORD_TYPES[selectedExistingRecord].captionId} />
+    : '';
+  const incomingRecordLabel = !isEmpty(incomingRecord)
+    ? <FormattedMessage id={incomingRecord.captionId} />
     : '';
 
   const componentsProps = {
@@ -112,7 +124,25 @@ export const MatchProfilesFormComponent = memo(({
     'panel-existing': {
       id: 'panel-existing-edit',
       existingRecordType,
+      incomingRecordType,
       onRecordSelect: onExistingRecordChange,
+      onIncomingRecordChange,
+    },
+    'incoming-record-section': {
+      label: (
+        <FormattedMessage
+          id="ui-data-import.match.incoming.record"
+          values={{ recordType: incomingRecordLabel }}
+        />
+      ),
+    },
+    'incoming-record-field': {
+      label: (
+        <FormattedMessage
+          id="ui-data-import.match.incoming.record.field"
+          values={{ recordType: incomingRecordLabel }}
+        />
+      ),
     },
     'existing-record-section': {
       label: (

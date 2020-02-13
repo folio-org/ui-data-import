@@ -58,7 +58,12 @@
 
 .cell {
   position: relative;
+  width: 100%;
   padding: var(--cell-padding);
+
+  & > :first-child {
+    width: inherit;
+  }
 }
 
 .borderLeft {
@@ -106,9 +111,16 @@
 
 .incomingRecord {
   composes: display-flex flex-align-items-center from "@folio/stripes-components/lib/Layout/Layout.css";
+  width: 100%;
+  line-height: .9;
+  white-space: normal;
 
   & > :first-child {
     width: 100%;
+  }
+
+  &:focus::before {
+    border: none;
   }
 }
 

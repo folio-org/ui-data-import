@@ -42,9 +42,10 @@ const recordsData = {
 
 export const RecordSelect = ({
   id,
-  onSelect = noop,
+  onSelect,
   container = `#${id} .${rootList}`,
   treeData = recordsData,
+  isEditable,
 }) => (
   <Fragment>
     <TreeView
@@ -55,6 +56,7 @@ export const RecordSelect = ({
         <RecordItem
           item={item.itemMeta}
           onClick={onSelect}
+          isEditable={isEditable}
         />
       )}
     />
@@ -77,4 +79,10 @@ RecordSelect.propTypes = {
   onSelect: PropTypes.func,
   container: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Element)]),
   treeData: PropTypes.object,
+  isEditable: PropTypes.bool,
+};
+
+RecordSelect.defaultProps = {
+  onSelect: noop,
+  isEditable: true,
 };

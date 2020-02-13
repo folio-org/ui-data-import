@@ -12,6 +12,7 @@ import css from '../RecordTypesSelect.css';
 export const InitialRecordSelect = ({
   id,
   onItemSelect,
+  isEditable,
 }) => {
   return (
     <section
@@ -32,12 +33,16 @@ export const InitialRecordSelect = ({
       <RecordSelect
         id={id}
         onSelect={onItemSelect}
+        isEditable={isEditable}
       />
     </section>
   );
 };
 
 InitialRecordSelect.propTypes = {
+  onItemSelect: PropTypes.func.isRequired,
   id: PropTypes.string,
-  onItemSelect: PropTypes.func,
+  isEditable: PropTypes.bool,
 };
+
+InitialRecordSelect.defaultProps = { isEditable: true };

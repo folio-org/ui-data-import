@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useState,
   useEffect,
 } from 'react';
@@ -7,7 +8,10 @@ import { debounce } from 'lodash';
 
 import { InitialRecordSelect } from './components/InitialRecordSelect';
 import { CompareRecordSelect } from './components/CompareRecordSelect';
-import { FOLIO_RECORD_TYPES } from '../ListTemplate';
+import {
+  FOLIO_RECORD_TYPES,
+  INCOMING_RECORD_TYPES,
+} from '../ListTemplate';
 
 const useForceUpdate = () => useState()[1];
 
@@ -24,20 +28,25 @@ const useUpdateOnResize = () => {
   }, [forceUpdate]);
 };
 
-const incomingRecord = FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC;
-
-export const RecordTypesSelect = ({
+export const RecordTypesSelect = memo(({
   id,
   existingRecordType,
+  incomingRecordType,
   onRecordSelect,
+  onIncomingRecordChange,
   isEditable,
 }) => {
   useUpdateOnResize();
   const [existingRecord, setExistingRecord] = useState(undefined);
+  const [incomingRecord, setIncomingRecord] = useState(undefined);
 
   useEffect(() => {
     setExistingRecord(FOLIO_RECORD_TYPES[existingRecordType] || undefined);
   }, [existingRecordType]);
+
+  useEffect(() => {
+    setIncomingRecord(INCOMING_RECORD_TYPES[incomingRecordType] || undefined);
+  }, [incomingRecordType]);
 
   const handleSelect = selectedRecord => {
     setExistingRecord(selectedRecord);
@@ -56,6 +65,7 @@ export const RecordTypesSelect = ({
             incomingRecord={incomingRecord}
             existingRecord={existingRecord}
             setExistingRecord={handleSelect}
+            setIncomingRecord={onIncomingRecordChange}
             isEditable={isEditable}
           />
         )
@@ -63,21 +73,25 @@ export const RecordTypesSelect = ({
           <InitialRecordSelect
             id={id}
             onItemSelect={handleSelect}
+            isEditable={isEditable}
           />
         )
       }
     </div>
   );
-};
+});
 
 RecordTypesSelect.propTypes = {
   id: PropTypes.string,
   existingRecordType: PropTypes.string,
+  incomingRecordType: PropTypes.string,
   onRecordSelect: PropTypes.func,
+  onIncomingRecordChange: PropTypes.func,
   isEditable: PropTypes.bool,
 };
 
 RecordTypesSelect.defaultProps = {
   id: 'compare-record-types',
+  incomingRecordType: INCOMING_RECORD_TYPES.MARC_BIBLIOGRAPHIC,
   isEditable: true,
 };
