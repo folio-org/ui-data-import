@@ -73,6 +73,8 @@
 .contentContainer {
   position: relative;
   flex-wrap: nowrap;
+
+  & [class|=overlay] {transform: translate3d(0, 39px, 0px)!important;}
 }
 
 .triangle {

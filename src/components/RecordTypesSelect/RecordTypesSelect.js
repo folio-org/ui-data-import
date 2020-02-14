@@ -4,7 +4,10 @@ import React, {
   useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
-import { debounce } from 'lodash';
+import {
+  debounce,
+  noop,
+} from 'lodash';
 
 import { InitialRecordSelect } from './components/InitialRecordSelect';
 import { CompareRecordSelect } from './components/CompareRecordSelect';
@@ -32,8 +35,8 @@ export const RecordTypesSelect = memo(({
   id,
   existingRecordType,
   incomingRecordType,
-  onRecordSelect,
-  onIncomingRecordChange,
+  onExistingSelect,
+  onIncomingSelect,
   isEditable,
 }) => {
   useUpdateOnResize();
@@ -41,16 +44,16 @@ export const RecordTypesSelect = memo(({
   const [incomingRecord, setIncomingRecord] = useState(undefined);
 
   useEffect(() => {
-    setExistingRecord(FOLIO_RECORD_TYPES[existingRecordType] || undefined);
+    setExistingRecord(FOLIO_RECORD_TYPES?.[existingRecordType]);
   }, [existingRecordType]);
 
   useEffect(() => {
-    setIncomingRecord(INCOMING_RECORD_TYPES[incomingRecordType] || undefined);
+    setIncomingRecord(INCOMING_RECORD_TYPES?.[incomingRecordType]);
   }, [incomingRecordType]);
 
   const handleSelect = selectedRecord => {
     setExistingRecord(selectedRecord);
-    onRecordSelect(selectedRecord);
+    onExistingSelect(selectedRecord);
   };
 
   return (
@@ -65,7 +68,7 @@ export const RecordTypesSelect = memo(({
             incomingRecord={incomingRecord}
             existingRecord={existingRecord}
             setExistingRecord={handleSelect}
-            setIncomingRecord={onIncomingRecordChange}
+            setIncomingRecord={onIncomingSelect}
             isEditable={isEditable}
           />
         )
@@ -85,13 +88,16 @@ RecordTypesSelect.propTypes = {
   id: PropTypes.string,
   existingRecordType: PropTypes.string,
   incomingRecordType: PropTypes.string,
-  onRecordSelect: PropTypes.func,
-  onIncomingRecordChange: PropTypes.func,
+  onExistingSelect: PropTypes.func,
+  onIncomingSelect: PropTypes.func,
   isEditable: PropTypes.bool,
 };
 
 RecordTypesSelect.defaultProps = {
   id: 'compare-record-types',
+  existingRecordType: '',
   incomingRecordType: INCOMING_RECORD_TYPES.MARC_BIBLIOGRAPHIC,
+  onExistingSelect: noop,
+  onIncomingSelect: noop,
   isEditable: true,
 };

@@ -34,7 +34,7 @@ export const RecordItem = memo(({
     setIncomingRecord(item);
   }, [item]);
 
-  const isInitial = className ? !className.includes('incomingRecord') : true;
+  const isInitial = !className?.includes('incomingRecord');
 
   const trigger = triggerProps => (
     <IncomingRecordTrigger
@@ -89,6 +89,8 @@ export const RecordItem = memo(({
         open={recordSelectorOpen}
         renderTrigger={trigger}
         renderMenu={menu}
+        usePortal={false}
+        relativePosition
         style={{ width: '100%' }}
       />
     </div>
@@ -102,9 +104,7 @@ RecordItem.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
   onClick: PropTypes.func,
+  isEditable: PropTypes.bool,
 };
 
-RecordItem.defaultProps = {
-  onClick: noop,
-  isEditable: true,
-};
+RecordItem.defaultProps = { isEditable: true };

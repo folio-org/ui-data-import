@@ -103,13 +103,13 @@ export const MatchProfilesFormComponent = memo(({
     setSelectedExistingRecord(type);
     setExistingRecordFields(options);
     dispatch(change(formName, 'profile.existingRecordType', type));
-    dispatch(change(formName, 'profile.matchDetails[0].existingRecordType', type));
+    matchDetails.forEach((item, i) => dispatch(change(formName, `profile.matchDetails[${i}].existingRecordType`, type)));
   };
 
   const onIncomingRecordChange = record => {
     setIncomingRecord(record);
     dispatch(change(formName, 'profile.incomingRecordType', record.type));
-    dispatch(change(formName, 'profile.matchDetails[0].incomingRecordType', record.type));
+    matchDetails.forEach((item, i) => dispatch(change(formName, `profile.matchDetails[${i}].incomingRecordType`, record.type)));
   };
 
   const existingRecordLabel = !isEmpty(selectedExistingRecord)
@@ -125,8 +125,8 @@ export const MatchProfilesFormComponent = memo(({
       id: 'panel-existing-edit',
       existingRecordType,
       incomingRecordType,
-      onRecordSelect: onExistingRecordChange,
-      onIncomingRecordChange,
+      onExistingSelect: onExistingRecordChange,
+      onIncomingSelect: onIncomingRecordChange,
     },
     'incoming-record-section': {
       label: (
