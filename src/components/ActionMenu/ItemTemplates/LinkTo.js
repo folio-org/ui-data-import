@@ -33,6 +33,12 @@ LinkTo.propTypes = {
   caption: PropTypes.string.isRequired,
   icon: PropTypes.string,
   menu: PropTypes.object.isRequired,
-  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
+  location: PropTypes.oneOfType([
+    PropTypes.shape({
+      search: PropTypes.string.isRequired,
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+    PropTypes.string.isRequired,
+  ]),
   dataAttributes: PropTypes.object,
 };

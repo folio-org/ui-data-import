@@ -81,7 +81,13 @@ export class ViewMatchProfile extends Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }).isRequired,
-    location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
+    location: PropTypes.oneOfType([
+      PropTypes.shape({
+        search: PropTypes.string.isRequired,
+        pathname: PropTypes.string.isRequired,
+      }).isRequired,
+      PropTypes.string.isRequired,
+    ]),
     match: PropTypes.shape({ params: PropTypes.shape({ id: PropTypes.string }).isRequired }).isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,

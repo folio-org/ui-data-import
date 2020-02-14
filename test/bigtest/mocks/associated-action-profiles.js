@@ -1,66 +1,61 @@
-export const associatedActionProfiles = {
-  contentType: 'MAPPING_PROFILE',
-  childSnapshotWrappers: [
-    {
-      id: 'ba8d822f-97db-4794-8393-562a0b2cf755',
-      contentType: 'ACTION_PROFILE',
-      content: {
-        id: 'ba8d822f-97db-4794-8393-562a0b2cf755',
-        name: 'Create authority MARC',
-        description: '',
-        tags: { tagList: ['authorities'] },
-        reactTo: 'NON-MATCH',
-        action: 'CREATE',
-        folioRecord: 'MARC_AUTHORITY',
-        deleted: false,
-        userInfo: {
-          firstName: 'DIKU',
-          lastName: 'ADMINISTRATOR',
-          userName: 'diku_admin',
-        },
-        metadata: {
-          createdDate: '2018-10-30T12:45:33.000+0000',
-          createdByUserId: '',
-          createdByUsername: '',
-          updatedDate: '2018-11-03T11:22:30.000+0000',
-          updatedByUserId: '',
-          updatedByUsername: '',
-        },
-      },
-      childSnapshotWrappers: [],
+export const associatedActionProfiles = [{
+  id: 'cf3d7393-8534-44fb-93fd-7495d220f4f6',
+  contentType: 'ACTION_PROFILE',
+  content: {
+    id: 'cf3d7393-8534-44fb-93fd-7495d220f4f6',
+    name: 'Create preliminary instance',
+    description: 'Brief instance created by order, will be updated later',
+    tags: { tagList: ['acq-related', 'preliminary'] },
+    reactTo: 'NON-MATCH',
+    action: 'CREATE',
+    folioRecord: 'INSTANCE',
+    deleted: false,
+    userInfo: {
+      firstName: 'DIKU',
+      lastName: 'ADMINISTRATOR',
+      userName: 'diku_admin',
     },
-    {
-      id: '8eeabfcc-4c11-4ec7-b273-9c04dc0013bb',
-      contentType: 'ACTION_PROFILE',
-      content: {
-        id: '8eeabfcc-4c11-4ec7-b273-9c04dc0013bb',
-        name: 'Replace authority MARC',
-        description: '',
-        tags: { tagList: ['authorities'] },
-        reactTo: 'MATCH',
-        action: 'REPLACE',
-        folioRecord: 'MARC_AUTHORITY',
-        deleted: false,
-        userInfo: {
-          firstName: 'DIKU',
-          lastName: 'ADMINISTRATOR',
-          userName: 'diku_admin',
-        },
-        metadata: {
-          createdDate: '2018-10-30T12:42:18.000+0000',
-          createdByUserId: '',
-          createdByUsername: '',
-          updatedDate: '2018-11-03T10:01:30.000+0000',
-          updatedByUserId: '',
-          updatedByUsername: '',
-        },
-      },
-      childSnapshotWrappers: [],
+    parentProfiles: [],
+    childProfiles: [],
+    metadata: {
+      createdDate: 1540903282000,
+      createdByUserId: '',
+      createdByUsername: '',
+      updatedDate: 1541160591000,
+      updatedByUserId: '',
+      updatedByUsername: '',
     },
-  ],
-};
-
-export const noAssociatedActionProfiles = {
-  contentType: 'MAPPING_PROFILE',
+  },
   childSnapshotWrappers: [],
-};
+}, {
+  id: '3bb0b2b3-b683-4cfb-b52c-175355d7f30c',
+  contentType: 'ACTION_PROFILE',
+  content: {
+    id: '3bb0b2b3-b683-4cfb-b52c-175355d7f30c',
+    name: 'Create MARC invoice',
+    description: 'Create invoice from MARC 9xx data',
+    tags: { tagList: ['acq-related', 'marc-invoice'] },
+    reactTo: 'MATCH',
+    action: 'CREATE',
+    folioRecord: 'INVOICE',
+    deleted: false,
+    userInfo: {
+      firstName: 'DIKU',
+      lastName: 'ADMINISTRATOR',
+      userName: 'diku_admin',
+    },
+    parentProfiles: [],
+    childProfiles: [],
+    metadata: {
+      createdDate: 1541070501000,
+      createdByUserId: '',
+      createdByUsername: '',
+      updatedDate: 1543690901000,
+      updatedByUserId: '',
+      updatedByUsername: '',
+    },
+  },
+  childSnapshotWrappers: [],
+}];
+
+export const noAssociatedActionProfiles = [];

@@ -148,7 +148,13 @@ export class ViewJobProfile extends Component {
         id: PropTypes.string,
       }).isRequired,
     }).isRequired,
-    location: PropTypes.object.isRequired || PropTypes.string.isRequired,
+    location: PropTypes.oneOfType([
+      PropTypes.shape({
+        search: PropTypes.string.isRequired,
+        pathname: PropTypes.string.isRequired,
+      }).isRequired,
+      PropTypes.string.isRequired,
+    ]),
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,

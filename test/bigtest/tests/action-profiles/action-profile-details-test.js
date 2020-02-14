@@ -14,8 +14,8 @@ import {
   mappingProfileDetails,
 } from '../../interactors';
 import {
-  associatedMappingProfile,
-  noAssociatedMappingProfile,
+  associatedMappingProfiles,
+  noAssociatedMappingProfiles,
   noAssociatedJobProfiles,
 } from '../../mocks';
 
@@ -55,7 +55,7 @@ describe('Action Profile View', () => {
   describe('associated field mapping profile', () => {
     describe('when there is associated profile', () => {
       beforeEach(async function () {
-        this.server.get('/data-import-profiles/profileAssociations/:id/details', associatedMappingProfile);
+        this.server.get('/data-import-profiles/profileAssociations/:id/details', associatedMappingProfiles);
         await actionProfiles.list.rows(0).click();
       });
 
@@ -66,7 +66,7 @@ describe('Action Profile View', () => {
 
     describe('when there is no associated profile', () => {
       beforeEach(async function () {
-        this.server.get('/data-import-profiles/profileAssociations/:id/details', noAssociatedMappingProfile);
+        this.server.get('/data-import-profiles/profileAssociations/:id/details', noAssociatedMappingProfiles);
         await actionProfiles.list.rows(0).click();
       });
 

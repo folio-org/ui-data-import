@@ -1,6 +1,7 @@
 import React, {
   memo,
   useState,
+  useEffect,
   Fragment,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -20,6 +21,7 @@ import { AssociatedList } from './AssociatedList';
 import css from './ProfileAssociator.css';
 
 export const AssociatorEditable = memo(({
+  intl,
   entityKey,
   namespaceKey,
   parentId,
@@ -31,23 +33,31 @@ export const AssociatorEditable = memo(({
   dataAttributes,
   isMultiSelect,
   isMultiLink,
+  profileShape,
   relationsToAdd,
   relationsToDelete,
   onLink,
   onUnlink,
 }) => {
-  const checkboxList = useCheckboxList(contentData);
-  const columnWidths = {
-    name: 250,
-    updated: 100,
-    tags: 150,
-    unlink: 65,
-  };
-  const [data, setData] = useState(contentData);
-  const isPluginDisabled = curData => !isMultiSelect && curData && curData.length > 0;
-  const [pluginDisabled, setPluginDisabled] = useState(isPluginDisabled(data));
+  const [currentData, setCurrentData] = useState([]);
   const [current, setCurrent] = useState(null);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [pluginDisabled, setPluginDisabled] = useState(false);
+
+  const isPluginDisabled = curData => !isMultiSelect && curData && curData.length > 0;
+
+  useEffect(() => {
+    setCurrentData(contentData);
+    setPluginDisabled(isPluginDisabled(contentData));
+  }, []);
+
+  const checkboxList = useCheckboxList(currentData);
+  const columnWidths = {
+    name: '250px',
+    updated: '100px',
+    tags: '150px',
+    unlink: '65px',
+  };
 
   const findRelIndex = (relations, line) => {
     const masterId = masterType === parentType ? parentId : line.id;
@@ -64,8 +74,8 @@ export const AssociatorEditable = memo(({
   }));
 
   const link = lines => {
-    const uniqueLines = lines.filter(line => data.findIndex(item => item.id === line.id) === -1);
-    const newData = [...data, ...uniqueLines];
+    const uniqueLines = lines.filter(line => currentData.findIndex(item => item.id === line.id) === -1);
+    const newData = [...currentData, ...uniqueLines];
     const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
 
     if (linesToAdd && linesToAdd.length) {
@@ -74,12 +84,12 @@ export const AssociatorEditable = memo(({
       onLink(relsToAdd);
     }
 
-    setData(newData);
+    setCurrentData(newData);
     setPluginDisabled(isPluginDisabled(newData));
   };
 
   const remove = row => {
-    const index = data.findIndex(item => item.id === row.id);
+    const index = currentData.findIndex(item => item.id === row.id);
     const newIdx = findRelIndex(relationsToAdd, row);
 
     if (newIdx < 0) {
@@ -88,19 +98,23 @@ export const AssociatorEditable = memo(({
       onUnlink(relsToDel);
     }
 
-    data.splice(index, 1);
-    setData(data);
-    setPluginDisabled(isPluginDisabled(data));
+    const newData = [...currentData];
+
+    newData.splice(index, 1);
+    setCurrentData(newData);
+    setPluginDisabled(isPluginDisabled(newData));
   };
 
   return (
     <Fragment {...dataAttributes}>
       <AssociatedList
+        intl={intl}
         entityKey={entityKey}
         namespaceKey={namespaceKey}
         checkboxList={checkboxList}
         columnWidths={columnWidths}
-        contentData={data}
+        profileShape={profileShape}
+        contentData={currentData}
         onSort={noop}
         onRemove={cur => {
           setCurrent(cur);
@@ -158,12 +172,14 @@ export const AssociatorEditable = memo(({
 });
 
 AssociatorEditable.propTypes = {
+  intl: PropTypes.object.isRequired,
   entityKey: PropTypes.string.isRequired,
   namespaceKey: PropTypes.string.isRequired,
   parentId: PropTypes.string.isRequired || PropTypes.number.isRequired,
   parentType: PropTypes.string.isRequired,
   masterType: PropTypes.string.isRequired,
   detailType: PropTypes.string.isRequired,
+  profileShape: PropTypes.object.isRequired,
   profileName: PropTypes.string,
   contentData: PropTypes.arrayOf(PropTypes.object),
   isMultiSelect: PropTypes.bool,

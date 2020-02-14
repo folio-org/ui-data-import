@@ -46,8 +46,8 @@ export class JobLogs extends Component {
   ];
 
   columnWidths = {
-    hrId: 60,
-    totalRecords: 80,
+    hrId: '60px',
+    totalRecords: '80px',
   };
 
   render() {

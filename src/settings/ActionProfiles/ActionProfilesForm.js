@@ -313,7 +313,13 @@ ActionProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired || PropTypes.string.isRequired,
+  location: PropTypes.oneOfType([
+    PropTypes.shape({
+      search: PropTypes.string.isRequired,
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+    PropTypes.string.isRequired,
+  ]),
   associatedJobProfilesAmount: PropTypes.number.isRequired,
   action: PropTypes.string,
   folioRecord: PropTypes.string,

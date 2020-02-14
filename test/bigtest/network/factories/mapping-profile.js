@@ -3,6 +3,8 @@ import {
   faker,
 } from '@bigtest/mirage';
 
+import { associatedActionProfiles } from '../../mocks';
+
 export default Factory.extend({
   id: () => faker.random.uuid(),
   name: i => `Name ${i}`,
@@ -11,6 +13,8 @@ export default Factory.extend({
   incomingRecordType: 'MARC_BIBLIOGRAPHIC',
   folioRecord: 'INSTANCE',
   deleted: false,
+  parentProfiles: associatedActionProfiles,
+  childProfiles: [],
   metadata: { updatedDate: faker.date.past(0.1, faker.date.past(0.1)).toString() },
   userInfo: {
     firstName: faker.name.firstName(),

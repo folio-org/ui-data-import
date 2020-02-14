@@ -1,4 +1,8 @@
-import React, { memo } from 'react';
+import React, {
+  memo,
+  useState,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
@@ -6,32 +10,26 @@ import { noop } from 'lodash';
 import { MultiColumnList } from '@folio/stripes/components';
 import { getNsKey } from '@folio/stripes-smart-components';
 
-import { checkboxListShape } from '../../utils';
 import {
-  ENTITY_KEYS,
-  SORT_TYPES,
-} from '../../utils/constants';
+  buildSortOrder,
+  sortNums,
+  sortStrings,
+  sortDates,
+  checkboxListShape,
+} from '../../utils';
+import { SORT_TYPES } from '../../utils/constants';
 
-import { jobProfilesShape } from '../../settings/JobProfiles';
-import { matchProfilesShape } from '../../settings/MatchProfiles';
-import { actionProfilesShape } from '../../settings/ActionProfiles';
-import { mappingProfilesShape } from '../../settings/MappingProfiles';
-
+import { searchAndSortTemplate } from '../ListTemplate';
 import { associatedProfilesColumns } from './associatedProfilesColumns';
 
-const profiles = {
-  [ENTITY_KEYS.JOB_PROFILES]: jobProfilesShape,
-  [ENTITY_KEYS.MATCH_PROFILES]: matchProfilesShape,
-  [ENTITY_KEYS.ACTION_PROFILES]: actionProfilesShape,
-  [ENTITY_KEYS.MAPPING_PROFILES]: mappingProfilesShape,
-};
-
 export const AssociatedList = memo(({
+  intl,
   entityKey,
   namespaceKey,
   isMultiSelect,
   isStatic,
   checkboxList,
+  profileShape,
   columnWidths,
   contentData,
   className,
@@ -51,7 +49,7 @@ export const AssociatedList = memo(({
   const {
     visibleColumns,
     renderHeaders,
-  } = profiles[entityKey];
+  } = profileShape;
   const {
     [nsSort]: sortOrderQuery = initialQuery[nsSort],
     [nsQuery]: searchTerm = initialQuery[nsQuery],
@@ -59,6 +57,7 @@ export const AssociatedList = memo(({
 
   const sortDirection = sortOrderQuery.startsWith('-') ? SORT_TYPES.DESCENDING : SORT_TYPES.ASCENDING;
   const sortOrder = sortOrderQuery.replace(/^-/, '').replace(/,.*/, '');
+  const sortTemplate = searchAndSortTemplate(intl);
   let columns = isStatic && isMultiSelect ? ['selected', ...visibleColumns] : visibleColumns;
 
   columns = !isStatic ? [...columns, 'unlink'] : columns;
@@ -69,9 +68,47 @@ export const AssociatedList = memo(({
     columns.splice(descI, 1);
   }
 
+  const [currentData, setCurrentData] = useState([]);
+  const [currentSortOrder, setCurrentSortOrder] = useState(sortOrder);
+  const [currentSortDirection, setCurrentSortDirection] = useState(sortDirection);
+
+  const localSort = (dataSet, curOrder, curDir) => {
+    const order = curOrder.replace(/^-/, '').replace(/,.*/, '');
+
+    return dataSet.sort((rowA, rowB) => {
+      const colA = sortTemplate[order](rowA);
+      const colB = sortTemplate[order](rowB);
+
+      switch (order) {
+        case 'updated':
+          return curDir === SORT_TYPES.ASCENDING ? sortDates(colA, colB) : sortDates(colB, colA);
+        case 'order':
+          return curDir === SORT_TYPES.ASCENDING ? sortNums(colA, colB) : sortNums(colB, colA);
+        default:
+          return curDir === SORT_TYPES.ASCENDING ? sortStrings(colA, colB) : sortStrings(colB, colA);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const newData = localSort(contentData, currentSortOrder, currentSortDirection);
+
+    setCurrentData(newData);
+  }, [contentData]);
+
   const rowUpdater = ({ id }) => selectedRecords.has(id);
 
-  const onSort = () => {};
+  const onSort = (e, meta) => {
+    const newSortOrder = buildSortOrder(currentSortOrder, meta.name, sortOrder, 1);
+    const newSortDirection = newSortOrder.startsWith('-') ? SORT_TYPES.DESCENDING : SORT_TYPES.ASCENDING;
+
+    setCurrentSortOrder(newSortOrder);
+    setCurrentSortDirection(newSortDirection);
+
+    const newData = localSort(currentData, newSortOrder, newSortDirection);
+
+    setCurrentData(newData);
+  };
 
   const columnHeaders = renderHeaders({
     checkboxList,
@@ -87,17 +124,19 @@ export const AssociatedList = memo(({
     onRemove,
   });
 
+  console.log('New Data: ', currentSortOrder, currentSortDirection, currentData);
+
   return (
     <MultiColumnList
       id={`associated-${entityKey}-list`}
       visibleColumns={columns}
       columnWidths={columnWidths}
       columnMapping={columnHeaders}
-      contentData={contentData}
+      contentData={currentData}
       formatter={columnTemplates}
       rowUpdater={isMultiSelect ? rowUpdater : noop}
-      sortOrder={sortOrder}
-      sortDirection={sortDirection}
+      sortOrder={currentSortOrder.replace(/^-/, '').replace(/,.*/, '')}
+      sortDirection={currentSortDirection}
       onHeaderClick={onSort}
       className={className}
       {...dataAttributes}
@@ -106,8 +145,10 @@ export const AssociatedList = memo(({
 });
 
 AssociatedList.propTypes = {
+  intl: PropTypes.object.isRequired,
   entityKey: PropTypes.string.isRequired,
   namespaceKey: PropTypes.string.isRequired,
+  profileShape: PropTypes.object.isRequired,
   onRemove: PropTypes.func,
   isStatic: PropTypes.bool,
   isMultiSelect: PropTypes.bool,

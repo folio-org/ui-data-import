@@ -57,12 +57,14 @@ export class UploadingJobsDisplay extends Component {
       push: PropTypes.func.isRequired,
       replace: PropTypes.func.isRequired,
     }).isRequired,
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-      state: PropTypes.shape({ // eslint-disable-line object-curly-newline
-        files: PropTypes.object,
-      }) || PropTypes.string.isRequired,
-    }).isRequired,
+    location: PropTypes.oneOfType([
+      PropTypes.shape({
+        pathname: PropTypes.string.isRequired,
+        search: PropTypes.string.isRequired,
+        state: PropTypes.shape({ files: PropTypes.object }),
+      }).isRequired,
+      PropTypes.string.isRequired,
+    ]),
     timeoutBeforeFileDeletion: PropTypes.number, // milliseconds
   };
 

@@ -65,7 +65,13 @@ export class ViewActionProfile extends Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }).isRequired,
-    location: PropTypes.object.isRequired || PropTypes.string.isRequired,
+    location: PropTypes.oneOfType([
+      PropTypes.shape({
+        search: PropTypes.string.isRequired,
+        pathname: PropTypes.string.isRequired,
+      }).isRequired,
+      PropTypes.string.isRequired,
+    ]),
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,

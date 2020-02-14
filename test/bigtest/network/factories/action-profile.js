@@ -3,6 +3,11 @@ import {
   faker,
 } from '@bigtest/mirage';
 
+import {
+  associatedMappingProfiles,
+  associatedJobProfiles,
+} from '../../mocks';
+
 export default Factory.extend({
   id: () => faker.random.uuid(),
   name: i => `Name ${i}`,
@@ -13,6 +18,8 @@ export default Factory.extend({
   mapping: 'Mapping',
   folioRecord: 'INSTANCE',
   deleted: false,
+  parentProfiles: associatedMappingProfiles,
+  childProfiles: associatedJobProfiles,
   metadata: { updatedDate: faker.date.past(0.1, faker.date.past(0.1)).toString() },
   userInfo: {
     firstName: faker.name.firstName(),
