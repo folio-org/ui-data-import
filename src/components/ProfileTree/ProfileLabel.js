@@ -6,7 +6,10 @@ import React, {
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { noop } from 'lodash';
+import {
+  camelCase,
+  noop,
+} from 'lodash';
 import classNames from 'classnames';
 
 import {
@@ -14,17 +17,22 @@ import {
   IconButton,
 } from '@folio/stripes-components';
 
+import { PROFILE_RELATION_TYPES } from '../../utils/constants';
 import { listTemplate } from '../ListTemplate';
 
 import css from './ProfileTree.css';
 
 export const ProfileLabel = memo(({
-  entityKey,
-  recordData,
-  linkingRules,
   label,
-  record,
+  reactTo,
+  linkingRules,
   className,
+  recordData,
+  record,
+  parentRecordData,
+  parentSectionKey,
+  parentSectionData,
+  setParentSectionData,
   onUnlink,
   onDelete,
   dataAttributes,
@@ -38,20 +46,27 @@ export const ProfileLabel = memo(({
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [unlinkConfirmationOpen, setUnlinkConfirmationOpen] = useState(false);
 
+  const { contentType: recordType } = recordData;
+  const {
+    contentType: parentType,
+    id: parentId,
+  } = parentRecordData;
+
+  const entityKey = `${camelCase(recordType)}s`;
   const templates = listTemplate({
     entityKey,
     customValue: label,
   });
   const columns = columnsAllowed[entityKey];
 
-  const handleUnlink = recordId => {
+  const handleUnlink = () => {
     setUnlinkConfirmationOpen(false);
-    onUnlink(recordId);
+    onUnlink(parentSectionData, setParentSectionData, recordData, parentId, parentType, recordType, reactTo, parentSectionKey);
   };
 
-  const handleDelete = recordId => {
+  const handleDelete = () => {
     setDeleteConfirmationOpen(false);
-    onDelete(recordId);
+    onDelete(parentSectionData, setParentSectionData, recordData, parentId, parentType, recordType, reactTo, parentSectionKey);
   };
 
   return (
@@ -96,7 +111,7 @@ export const ProfileLabel = memo(({
                 )}
                 confirmLabel={<FormattedMessage id="ui-data-import.unlink" />}
                 onCancel={() => setUnlinkConfirmationOpen(false)}
-                onConfirm={() => handleUnlink(recordData.id)}
+                onConfirm={handleUnlink}
               />
             </Fragment>
           )}
@@ -122,7 +137,7 @@ export const ProfileLabel = memo(({
                 )}
                 confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
                 onCancel={() => setDeleteConfirmationOpen(false)}
-                onConfirm={() => handleDelete(recordData.id)}
+                onConfirm={handleDelete}
               />
             </Fragment>
           )}
@@ -133,10 +148,14 @@ export const ProfileLabel = memo(({
 });
 
 ProfileLabel.propTypes = {
-  entityKey: PropTypes.string.isRequired,
-  recordData: PropTypes.object.isRequired,
   linkingRules: PropTypes.object.isRequired,
+  recordData: PropTypes.object.isRequired,
+  parentRecordData: PropTypes.object.isRequired,
+  parentSectionKey: PropTypes.string.isRequired,
+  parentSectionData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setParentSectionData: PropTypes.func.isRequired,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  reactTo: PropTypes.string,
   record: PropTypes.object,
   className: PropTypes.string,
   onUnlink: PropTypes.func,
@@ -145,6 +164,7 @@ ProfileLabel.propTypes = {
 };
 
 ProfileLabel.defaultProps = {
+  reactTo: PROFILE_RELATION_TYPES.NONE,
   record: null,
   className: null,
   dataAttributes: null,

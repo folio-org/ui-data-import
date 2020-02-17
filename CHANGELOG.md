@@ -9,6 +9,7 @@
 * Job profile details, part 1: adding match profiles (UIDATIMP-312)
 * Job profile details, part 2: adding secondary match/action profiles (UIDATIMP-313)
 * Add rules for prohibited profile siblings for the ProfileTree component (UIDATIMP-314)
+* Job profile details, part 4: unlinking match or action profiles (UIDATIMP-315)
 * Create FOLIO records' field lists (UIDATIMP-330)
 * Connect Profile Associator Component to unified data source (UIDATIMP-341)
 * Update field naming for mapping profiles (UIDATIMP-349)
