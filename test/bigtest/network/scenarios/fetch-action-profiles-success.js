@@ -1,6 +1,8 @@
 import {
   associatedJobProfiles,
   associatedMappingProfiles,
+  noAssociatedJobProfiles,
+  noAssociatedMappingProfiles,
 } from '../../mocks';
 import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
 
@@ -12,6 +14,8 @@ export default server => {
   server.create('action-profile', {
     action: 'CREATE',
     folioRecord: 'INVOICE',
+    parentProfiles: noAssociatedMappingProfiles,
+    childProfiles: noAssociatedJobProfiles,
   });
   server.create('action-profile', {
     action: 'COMBINE',
@@ -52,12 +56,11 @@ export default server => {
         'name',
         'action',
         'folioRecord',
-        'mapping',
         'tags.tagList',
       ],
     });
   });
-  server.get('/data-import-profiles/actionProfiles/:id?withRelations=true');
+  server.get('/data-import-profiles/actionProfiles/:id');
   server.delete('/data-import-profiles/actionProfiles/:id', {}, 409);
   server.post('/data-import-profiles/actionProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
@@ -73,7 +76,7 @@ export default server => {
     const actionProfileModel = schema.actionProfiles.find(id);
     const updatedActionProfile = JSON.parse(requestBody);
 
-    actionProfileModel.update({ ...updatedActionProfile });
+    actionProfileModel.update({ ...updatedActionProfile.profile });
 
     return actionProfileModel.attrs;
   });

@@ -13,11 +13,6 @@ import {
   jobProfileDetails,
   mappingProfileDetails,
 } from '../../interactors';
-import {
-  associatedMappingProfiles,
-  noAssociatedMappingProfiles,
-  noAssociatedJobProfiles,
-} from '../../mocks';
 
 async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
   const {
@@ -55,7 +50,6 @@ describe('Action Profile View', () => {
   describe('associated field mapping profile', () => {
     describe('when there is associated profile', () => {
       beforeEach(async function () {
-        this.server.get('/data-import-profiles/profileAssociations/:id/details', associatedMappingProfiles);
         await actionProfiles.list.rows(0).click();
       });
 
@@ -66,8 +60,7 @@ describe('Action Profile View', () => {
 
     describe('when there is no associated profile', () => {
       beforeEach(async function () {
-        this.server.get('/data-import-profiles/profileAssociations/:id/details', noAssociatedMappingProfiles);
-        await actionProfiles.list.rows(0).click();
+        await actionProfiles.list.rows(1).click();
       });
 
       it('renders empty message', () => {
@@ -89,31 +82,7 @@ describe('Action Profile View', () => {
 
     describe('when there are no associated profiles', () => {
       beforeEach(async function () {
-        this.server.get('/data-import-profiles/profileAssociations/:id/masters', noAssociatedJobProfiles);
-        await actionProfiles.list.rows(0).click();
-      });
-
-      it('renders empty message', () => {
-        expect(actionProfileDetails.associatedJobProfiles.list.displaysEmptyMessage).to.be.true;
-      }).timeout(5000);
-    });
-  });
-
-  describe('associated job profiles', () => {
-    describe('when there are associated profiles', () => {
-      beforeEach(async function () {
-        await actionProfiles.list.rows(0).click();
-      });
-
-      it('renders job profiles', () => {
-        expect(actionProfileDetails.associatedJobProfiles.list.rowCount).to.be.equal(3);
-      });
-    });
-
-    describe('when there are no associated profiles', () => {
-      beforeEach(async function () {
-        this.server.get('/data-import-profiles/profileAssociations/:id/masters', noAssociatedJobProfiles);
-        await actionProfiles.list.rows(0).click();
+        await actionProfiles.list.rows(1).click();
       });
 
       it('renders empty message', () => {
@@ -225,7 +194,8 @@ describe('Action Profile View', () => {
         await actionProfiles.list.rows(0).click();
       });
 
-      describe('appears', () => {
+      // TODO: Fix it in UIDATIMP-396
+      describe.skip('appears', () => {
         beforeEach(async () => {
           await actionProfileDetails.expandPaneHeaderDropdown();
           await actionProfileDetails.dropdownEditButton.click();
@@ -259,6 +229,10 @@ describe('Action Profile View', () => {
 
           it('it has correct length of items', () => {
             expect(actionProfileForm.associatedMappingProfile.editList.rowCount).to.be.equal(1);
+          });
+
+          it('it has unlink buttons', () => {
+            expect(actionProfileForm.associatedMappingProfile.unlinkButtons().length).to.be.above(0);
           });
 
           describe('click unlink button', () => {
@@ -313,42 +287,8 @@ describe('Action Profile View', () => {
             expect(actionProfileForm.associatedJobProfiles.editList.rowCount).to.be.equal(3);
           });
 
-          describe('click unlink button', () => {
-            beforeEach(async () => {
-              await actionProfileForm.associatedJobProfiles.unlinkButtons(0).click();
-            });
-
-            it('shows modal window', () => {
-              expect(actionProfileForm.confirmEditModal.isPresent).to.be.true;
-            });
-
-            describe('click "Confirm"', () => {
-              beforeEach(async () => {
-                await actionProfileForm.confirmEditModal.confirmButton.click();
-              });
-
-              it('modal window should be closed', () => {
-                expect(actionProfileForm.confirmEditModal.isPresent).to.be.false;
-              });
-
-              it('associated job profiles list has 2 items', () => {
-                expect(actionProfileForm.associatedJobProfiles.editList.rowCount).to.be.equal(2);
-              });
-            });
-
-            describe('click "Cancel"', () => {
-              beforeEach(async () => {
-                await actionProfileForm.confirmEditModal.cancelButton.click();
-              });
-
-              it('modal window should be closed', () => {
-                expect(actionProfileForm.confirmEditModal.isPresent).to.be.false;
-              });
-
-              it('associated job profiles list does not change', () => {
-                expect(actionProfileForm.associatedJobProfiles.editList.rowCount).to.be.equal(3);
-              });
-            });
+          it('it do not have unlink buttons', () => {
+            expect(actionProfileForm.associatedJobProfiles.unlinkButtons().length).to.be.equal(0);
           });
         });
 
@@ -372,35 +312,12 @@ describe('Action Profile View', () => {
           await actionProfileForm.submitFormButton.click();
         });
 
-        describe('and there are associated job profiles', () => {
-          it('confirmation modal appears', () => {
-            expect(actionProfileForm.confirmEditModal.isPresent).to.be.true;
-          });
-
-          describe('and "Confirm" button is clicked', () => {
-            beforeEach(async () => {
-              await actionProfileForm.confirmEditModal.confirmButton.click();
-            });
-
-            it('then action profile details renders updated action profile', () => {
-              expect(actionProfileDetails.headline.text).to.equal('Changed name');
-              expect(actionProfileDetails.description.text).to.equal('Changed description');
-              expect(actionProfileDetails.action.text).to.equal('Create');
-              expect(actionProfileDetails.folioRecord.text).to.equal('Invoice');
-            }).timeout(5000);
-          });
-
-          describe('and "Cancel" button is clicked', () => {
-            beforeEach(async () => {
-              await actionProfileForm.confirmEditModal.cancelButton.click();
-            });
-
-            it('closes modal and stay on edit screen', () => {
-              expect(actionProfileForm.confirmEditModal.isPresent).to.be.false;
-              expect(actionProfileForm.isPresent).to.be.true;
-            });
-          });
-        });
+        it('then action profile details renders updated action profile', () => {
+          expect(actionProfileDetails.headline.text).to.equal('Changed name');
+          expect(actionProfileDetails.description.text).to.equal('Changed description');
+          expect(actionProfileDetails.action.text).to.equal('Create');
+          expect(actionProfileDetails.folioRecord.text).to.equal('Invoice');
+        }).timeout(5000);
       });
 
       describe('is submitted and the response contains', () => {
@@ -429,11 +346,13 @@ describe('Action Profile View', () => {
       });
     });
 
-    describe('delete confirmation modal', () => {
+    // TODO: Fix it in UIDATIMP-396
+    describe.skip('delete confirmation modal', () => {
       it('is not visible when pane header dropdown is closed', () => {
         expect(actionProfileDetails.confirmationModal.isPresent).to.be.false;
       });
 
+      // TODO: Fix it in UIDATIMP-396
       describe('is visible', () => {
         beforeEach(async () => {
           await actionProfileDetails.expandPaneHeaderDropdown();
@@ -445,6 +364,7 @@ describe('Action Profile View', () => {
         });
       });
 
+      // TODO: Fix it in UIDATIMP-396
       describe('disappears', () => {
         beforeEach(async () => {
           await actionProfileDetails.expandPaneHeaderDropdown();
@@ -457,6 +377,7 @@ describe('Action Profile View', () => {
         });
       });
 
+      // TODO: Fix it in UIDATIMP-396
       describe('upon click on confirm button initiates the action profile deletion process and in case of error', () => {
         beforeEach(async function () {
           this.server.delete('/data-import-profiles/actionProfiles/:id', () => new Response(500, {}));
@@ -478,6 +399,7 @@ describe('Action Profile View', () => {
         });
       });
 
+      // TODO: Fix it in UIDATIMP-396
       describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
         describe('exception modal', () => {
           beforeEach(async () => {
@@ -512,6 +434,7 @@ describe('Action Profile View', () => {
           });
         });
 
+        // TODO: Fix it in UIDATIMP-394-398
         describe('when there are no associated job profiles', () => {
           beforeEach(async function () {
             this.server.delete('/data-import-profiles/actionProfiles/:id');
@@ -531,7 +454,8 @@ describe('Action Profile View', () => {
       });
     });
 
-    describe('duplicate action profile form', () => {
+    // TODO: Fix it in UIDATIMP-396
+    describe.skip('duplicate action profile form', () => {
       beforeEach(async () => {
         await actionProfileDetails.expandPaneHeaderDropdown();
         await actionProfileDetails.dropdownDuplicateButton.click();
@@ -609,29 +533,6 @@ describe('Action Profile View', () => {
         });
       });
     });
-  });
-
-  describe('when action profile is edited and there is no associated job profiles', () => {
-    setupApplication({ scenarios: ['fetch-action-profiles-success', 'fetch-users'] });
-
-    beforeEach(async function () {
-      this.server.get('/data-import-profiles/profileAssociations/:id/masters', {});
-      this.visit('/settings/data-import/action-profiles');
-      await actionProfiles.list.rows(0).click();
-      await actionProfileDetails.editButton.click();
-      await actionProfileForm.nameField.fillAndBlur('Changed name');
-      await actionProfileForm.descriptionField.fillAndBlur('Changed description');
-      await actionProfileForm.submitFormButton.click();
-    });
-
-    it('confirmation modal does not appear', () => {
-      expect(actionProfileForm.confirmEditModal.isPresent).to.be.false;
-    });
-
-    it('and action profile details renders updated action profile', () => {
-      expect(actionProfileDetails.headline.text).to.equal('Changed name');
-      expect(actionProfileDetails.description.text).to.equal('Changed description');
-    }).timeout(5000);
   });
 });
 

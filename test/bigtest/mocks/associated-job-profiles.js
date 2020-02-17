@@ -53,14 +53,14 @@ export const associatedJobProfiles = [{
   },
   childSnapshotWrappers: [],
 }, {
-  id: '828a787c-bcf3-4c28-891a-9e6f3ba5068b',
+  id: '87e4ad58-d677-43dd-8b04-9795741b2103',
   contentType: 'JOB_PROFILE',
   content: {
-    id: '828a787c-bcf3-4c28-891a-9e6f3ba5068b',
-    name: 'Load MARC, then throw away',
-    description: 'Ordered on vendor site; load MARC to create bib, holdings, item, and order; then discard MARC',
+    id: '87e4ad58-d677-43dd-8b04-9795741b2103',
+    name: 'Loading authority records',
+    description: 'Load new and updated MARC authority records',
     dataType: 'MARC',
-    tags: { tagList: ['acq', 'daily'] },
+    tags: { tagList: ['cat', 'monthly'] },
     deleted: false,
     userInfo: {
       firstName: 'DIKU',
