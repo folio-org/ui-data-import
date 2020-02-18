@@ -32,7 +32,7 @@ export const NetworkMessage = memo(({
             id={`ui-data-import.${type}.${messageId}`}
             tagName="p"
             values={{
-              name: recordName || profile.name || extension,
+              name: recordName || profile?.name || extension,
               action: <FormattedMessage id={`ui-data-import.action.${action}`} />,
             }}
           />
