@@ -41,7 +41,7 @@ describe('Mapping profiles', () => {
 
   describe('table', () => {
     it('renders proper amount of items', () => {
-      expect(mappingProfiles.list.rowCount).to.equal(3);
+      expect(mappingProfiles.list.rowCount).to.equal(5);
     });
 
     it('has proper columns order', () => {
