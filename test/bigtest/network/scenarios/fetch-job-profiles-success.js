@@ -2,10 +2,13 @@ import { Response } from '@bigtest/mirage';
 
 import { SYSTEM_USER_NAME } from '../../../../src/utils/constants';
 import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
+import { snapshotWrappers } from '../../mocks/job-profiles-child-wrappers';
+
+const JOB_PROFILE_ID = '448ae575-daec-49c1-8041-d64c8ed8e5b1';
 
 export default server => {
   server.create('job-profile', {
-    id: '448ae575-daec-49c1-8041-d64c8ed8e5b1',
+    id: JOB_PROFILE_ID,
     name: 'Approval plan records',
     tags: { tagList: ['acq', 'cat', 'weekly'] },
     dataType: ['MARC'],
@@ -21,6 +24,14 @@ export default server => {
     tags: { tagList: [] },
     dataType: ['Delimited'],
     userInfo: { lastName: 'Doe' },
+  });
+  server.create('profile-snapshot', {
+    profileId: JOB_PROFILE_ID,
+    childSnapshotWrappers: snapshotWrappers.find(wrapper => wrapper.id === JOB_PROFILE_ID).childSnapshotWrappers,
+    content: {
+      id: JOB_PROFILE_ID,
+      name: 'Approval plan records',
+    },
   });
 
   server.get('/data-import-profiles/jobProfiles', (schema, request) => {
@@ -47,7 +58,7 @@ export default server => {
     return record.attrs;
   });
 
-  server.get('/data-import-profiles/jobProfiles/:id?withRelations=true');
+  server.get('/data-import-profiles/jobProfiles/:id');
 
   server.put('/data-import-profiles/jobProfiles/:id', (schema, request) => {
     const {
@@ -57,7 +68,7 @@ export default server => {
     const jobProfileModel = schema.jobProfiles.find(id);
     const updatedJobProfile = JSON.parse(requestBody);
 
-    jobProfileModel.update({ ...updatedJobProfile });
+    jobProfileModel.update({ ...updatedJobProfile.profile });
 
     return jobProfileModel.attrs;
   });
@@ -69,5 +80,12 @@ export default server => {
     jobProfileModel.destroy();
 
     return new Response(200, {});
+  });
+
+  server.get('/data-import-profiles/profileSnapshots/:id', (schema, request) => {
+    const { params: { id } } = request;
+    const profileSnapshotModels = schema.profileSnapshots.where(snapshot => snapshot.profileId === id);
+
+    return profileSnapshotModels?.models[0]?.attrs;
   });
 };
