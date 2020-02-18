@@ -151,7 +151,7 @@ export class DataFetcher extends Component {
     const contextData = { hasLoaded: true };
 
     forEach(resources, (resourceValue, resourceName) => {
-      contextData[resourceName] = isEmpty ? {} : get(resourceValue, ['records', 0, 'jobExecutions'], {});
+      contextData[resourceName] = isEmpty ? [] : get(resourceValue, ['records', 0, 'jobExecutions'], {});
     });
 
     this.setState({ contextData });
