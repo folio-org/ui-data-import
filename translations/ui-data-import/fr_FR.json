@@ -273,7 +273,7 @@
     "settings.profile.select": "Sélectionner le profil",
     "settings.profile.unlink": "Unlink this profile",
     "modal.profile.unlink.heading": "Êtes-vous sûr(e)?",
-    "modal.profile.unlink.message": "Etes-vous sûr(e) de vouloir dissocier le profil \" {name} \"?",
+    "modal.profile.unlink.message": "Confirmez que ce {profileType1} ne sera plus lié à ce {profileType2} ?",
     "emptyMessage": "Ce {type} ne contient aucun élément",
     "list": "Liste",
     "section": "Section",
