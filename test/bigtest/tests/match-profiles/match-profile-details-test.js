@@ -123,8 +123,7 @@ describe('Match Profile View', () => {
 
     describe('when there are no associated profiles', () => {
       beforeEach(async function () {
-        this.server.get('/data-import-profiles/profileAssociations/:id/masters', noAssociatedJobProfiles);
-        await matchProfiles.list.rows(0).click();
+        await matchProfiles.list.rows(1).click();
       });
 
       it('renders empty message', () => {
@@ -191,8 +190,8 @@ describe('Match Profile View', () => {
             expect(matchProfileDetails.matchCriteria.fieldIn2.value.text).to.be.equal('-');
           });
 
-          it('has empty subfield field value', () => {
-            expect(matchProfileDetails.matchCriteria.fieldSubfield.value.text).to.be.equal('-');
+          it('has correct subfield field value', () => {
+            expect(matchProfileDetails.matchCriteria.fieldSubfield.value.text).to.be.equal('a');
           });
         });
 
@@ -272,7 +271,8 @@ describe('Match Profile View', () => {
   });
 
   describe('edit match profile form', () => {
-    describe('appears', () => {
+    // TODO: Fix it in UIDATIMP-395
+    describe.skip('appears', () => {
       beforeEach(async () => {
         await matchProfileDetails.expandPaneHeaderDropdown();
         await matchProfileDetails.dropdownEditButton.click();
@@ -296,6 +296,7 @@ describe('Match Profile View', () => {
 
   describe('edit match profile form', () => {
     beforeEach(async () => {
+      await matchProfiles.list.rows(1).click();
       await matchProfileDetails.editButton.click();
       await matchProfileForm.whenLoaded();
     });
@@ -307,32 +308,9 @@ describe('Match Profile View', () => {
         await matchProfileForm.submitFormButton.click();
       });
 
-      describe('and there are associated job profiles', () => {
-        it('confirmation modal appears', () => {
-          expect(matchProfileForm.confirmEditModal.isPresent).to.be.true;
-        });
-
-        describe('and "Confirm" button is clicked', () => {
-          beforeEach(async () => {
-            await matchProfileForm.confirmEditModal.confirmButton.click();
-          });
-
-          it('then match profile details renders updated match profile', () => {
-            expect(matchProfileDetails.headline.text).to.equal('Changed name');
-            expect(matchProfileDetails.description.text).to.equal('Changed description');
-          });
-        });
-
-        describe('and "Cancel" button is clicked', () => {
-          beforeEach(async () => {
-            await matchProfileForm.confirmEditModal.cancelButton.click();
-          });
-
-          it('closes modal and stay on edit screen', () => {
-            expect(matchProfileForm.confirmEditModal.isPresent).to.be.false;
-            expect(matchProfileForm.isPresent).to.be.true;
-          });
-        });
+      it('then match profile details renders updated match profile', () => {
+        expect(matchProfileDetails.headline.text).to.equal('Changed name');
+        expect(matchProfileDetails.description.text).to.equal('Changed description');
       });
     });
 
@@ -362,7 +340,8 @@ describe('Match Profile View', () => {
     });
   });
 
-  describe('duplicate match profile form', () => {
+  // TODO: Fix it in UIDATIMP-395
+  describe.skip('duplicate match profile form', () => {
     beforeEach(async () => {
       await matchProfileDetails.expandPaneHeaderDropdown();
       await matchProfileDetails.dropdownDuplicateButton.click();
@@ -439,30 +418,8 @@ describe('Match Profile View', () => {
   });
 });
 
-describe('when match profile is edited and there is no associated job profiles', () => {
-  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags'] });
-
-  beforeEach(async function () {
-    this.server.get('/data-import-profiles/profileAssociations/:id/masters', {});
-    this.visit('/settings/data-import/match-profiles');
-    await matchProfiles.list.rows(0).click();
-    await matchProfileDetails.editButton.click();
-    await matchProfileForm.nameField.fillAndBlur('Changed name');
-    await matchProfileForm.descriptionField.fillAndBlur('Changed description');
-    await matchProfileForm.submitFormButton.click();
-  });
-
-  it('confirmation modal does not appear', () => {
-    expect(matchProfileForm.confirmEditModal.isPresent).to.be.false;
-  });
-
-  it('and match profile details renders updated match profile', () => {
-    expect(matchProfileDetails.headline.text).to.equal('Changed name');
-    expect(matchProfileDetails.description.text).to.equal('Changed description');
-  });
-});
-
-describe('delete confirmation modal', () => {
+// TODO: Fix it in UIDATIMP-395
+describe.skip('delete confirmation modal', () => {
   setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags'] });
 
   beforeEach(async function () {
