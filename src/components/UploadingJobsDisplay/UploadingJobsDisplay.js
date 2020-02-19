@@ -625,11 +625,7 @@ export class UploadingJobsDisplay extends Component {
               label={jobProfilesLabel}
               actionMenuItems={null}
               withNewRecordButton={false}
-              detailProps={{
-                actionMenuItems,
-                withEditRecordButton: false,
-                withRunRecordButton: true,
-              }}
+              detailProps={{ actionMenuItems }}
             />
           )
           : (

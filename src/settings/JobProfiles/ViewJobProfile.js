@@ -18,9 +18,8 @@ import {
   AccordionSet,
   MultiColumnList,
   ConfirmationModal,
-  Button,
-  PaneMenu,
   Callout,
+  PaneHeader,
 } from '@folio/stripes/components';
 import {
   withTags,
@@ -36,16 +35,12 @@ import {
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import {
-  LAYER_TYPES,
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   PROFILE_LINKING_RULES,
 } from '../../utils/constants';
-import {
-  createUrl,
-  createLayerURL,
-} from '../../utils';
+import { createUrl } from '../../utils';
 import { loadRecords } from '../../utils/loadRecords';
 import {
   listTemplate,
@@ -57,8 +52,6 @@ import {
 } from '../../components';
 
 import { UploadingJobsContext } from '../../components/UploadingJobsContextProvider';
-
-import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
 
@@ -148,21 +141,12 @@ export class ViewJobProfile extends Component {
         id: PropTypes.string,
       }).isRequired,
     }).isRequired,
-    location: PropTypes.oneOfType([
-      PropTypes.shape({
-        search: PropTypes.string.isRequired,
-        pathname: PropTypes.string.isRequired,
-      }).isRequired,
-      PropTypes.string.isRequired,
-    ]),
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string, // eslint-disable-line
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
-    withEditRecordButton: PropTypes.bool,
-    withRunRecordButton: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -173,8 +157,6 @@ export class ViewJobProfile extends Component {
       'duplicate',
       'delete',
     ],
-    withEditRecordButton: true,
-    withRunRecordButton: false,
   };
 
   static contextType = UploadingJobsContext;
@@ -307,61 +289,57 @@ export class ViewJobProfile extends Component {
     />
   );
 
-  getEditButton(record) {
-    return (
-      <LastMenu
-        caption="ui-data-import.edit"
-        location={createLayerURL(this.props.location, LAYER_TYPES.EDIT)}
-        style={{ visibility: record ? 'visible' : 'hidden' }}
-        dataAttributes={{ 'data-test-edit-item-button': '' }}
-      />
-    );
-  }
-
-  getRunButton() {
-    return (
-      <PaneMenu>
-        <Button
-          data-test-run-item-button
-          buttonStyle="primary paneHeaderNewButton"
-          marginBottom0
-          onClick={() => this.showRunConfirmation()}
-        >
-          <FormattedMessage id="ui-data-import.run" />
-        </Button>
-      </PaneMenu>
-    );
-  }
-
-  renderLastMenu(record) {
+  renderPaneHeader = renderProps => {
     const {
-      withEditRecordButton,
-      withRunRecordButton,
+      onClose,
+      actionMenuItems,
     } = this.props;
 
-    if (!withEditRecordButton && !withRunRecordButton) {
-      return null;
-    }
+    const { record } = this.jobProfileData;
 
-    return withEditRecordButton ? this.getEditButton(record) : this.getRunButton();
-  }
+    const actionMenu = Array.isArray(actionMenuItems) && !!actionMenuItems.length
+      ? this.renderActionMenu
+      : null;
+
+    const paneTitle = (
+      <AppIcon
+        size="small"
+        app="data-import"
+        iconKey="jobProfiles"
+      >
+        {record.name}
+      </AppIcon>
+    );
+
+    return (
+      <PaneHeader
+        {...renderProps}
+        id="pane-job-profile-details"
+        paneTitle={paneTitle}
+        paneSub={<FormattedMessage id="ui-data-import.jobProfileName" />}
+        actionMenu={actionMenu}
+        dismissible
+        onClose={onClose}
+      />
+    );
+  };
 
   render() {
     const {
       intl,
-      onClose,
       tagsEnabled,
-      actionMenuItems,
     } = this.props;
 
     const {
       hasLoaded,
       record,
     } = this.jobProfileData;
+
     const {
       wrappers,
       hasLoaded: wrappersLoaded,
     } = this.childWrappers;
+
     const {
       hasLoaded: jobsUsingThisProfileDataHasLoaded,
       jobsUsingThisProfileData,
@@ -385,34 +363,15 @@ export class ViewJobProfile extends Component {
       };
     }
 
-    const paneTitle = (
-      <AppIcon
-        size="small"
-        app="data-import"
-        iconKey="jobProfiles"
-      >
-        {record.name}
-      </AppIcon>
-    );
     const jobsUsingThisProfileFormatter = listTemplate({ intl });
 
     const tagsEntityLink = `data-import-profiles/jobProfiles/${record.id}`;
 
-    const actionMenu = Array.isArray(actionMenuItems) && !!actionMenuItems.length
-      ? this.renderActionMenu
-      : null;
-
     return (
       <Pane
-        id="pane-job-profile-details"
         defaultWidth="fill"
         fluidContentWidth
-        paneTitle={paneTitle}
-        paneSub={<FormattedMessage id="ui-data-import.jobProfileName" />}
-        actionMenu={actionMenu}
-        lastMenu={this.renderLastMenu(record)}
-        dismissible
-        onClose={onClose}
+        renderHeader={this.renderPaneHeader}
       >
         <TitleManager record={record.name} />
         <Headline

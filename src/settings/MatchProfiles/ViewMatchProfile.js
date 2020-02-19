@@ -20,6 +20,7 @@ import {
   Accordion,
   AccordionSet,
   ConfirmationModal,
+  PaneHeader,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -27,12 +28,8 @@ import {
   TagsAccordion,
 } from '@folio/stripes/smart-components';
 
+import { getFieldMatched } from '../../utils';
 import {
-  createLayerURL,
-  getFieldMatched,
-} from '../../utils';
-import {
-  LAYER_TYPES,
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
@@ -50,7 +47,6 @@ import {
   ProfileAssociator,
 } from '../../components';
 import { FOLIO_RECORD_TYPES } from '../../components/ListTemplate';
-import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
 import styles from './ViewMatchProfile.css';
@@ -78,13 +74,6 @@ export class ViewMatchProfile extends Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }).isRequired,
-    location: PropTypes.oneOfType([
-      PropTypes.shape({
-        search: PropTypes.string.isRequired,
-        pathname: PropTypes.string.isRequired,
-      }).isRequired,
-      PropTypes.string.isRequired,
-    ]),
     match: PropTypes.shape({ params: PropTypes.shape({ id: PropTypes.string }).isRequired }).isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
@@ -153,15 +142,6 @@ export class ViewMatchProfile extends Component {
     />
   );
 
-  renderLastMenu = record => (
-    <LastMenu
-      caption="ui-data-import.edit"
-      location={createLayerURL(this.props.location, LAYER_TYPES.EDIT)}
-      style={{ visibility: !record ? 'hidden' : 'visible' }}
-      dataAttributes={{ 'data-test-edit-item-button': '' }}
-    />
-  );
-
   getValue = (fields, label) => {
     const field = fields.find(item => item.label === label);
 
@@ -174,12 +154,39 @@ export class ViewMatchProfile extends Component {
     return !isEmpty(element) ? <FormattedMessage id={element.label} /> : undefined;
   };
 
-  render() {
+  renderPaneHeader = renderProps => {
     const {
       onClose,
       paneId,
-      tagsEnabled,
     } = this.props;
+
+    const { record: matchProfile } = this.matchProfileData;
+
+    const paneTitle = (
+      <AppIcon
+        size="small"
+        app="data-import"
+        iconKey="matchProfiles"
+      >
+        {matchProfile.name}
+      </AppIcon>
+    );
+
+    return (
+      <PaneHeader
+        {...renderProps}
+        id={paneId}
+        paneTitle={paneTitle}
+        paneSub={<FormattedMessage id="ui-data-import.matchProfileName" />}
+        actionMenu={this.renderActionMenu}
+        dismissible
+        onClose={onClose}
+      />
+    );
+  };
+
+  render() {
+    const { tagsEnabled } = this.props;
     const { showDeleteConfirmation } = this.state;
 
     const {
@@ -191,16 +198,6 @@ export class ViewMatchProfile extends Component {
     if (!matchProfile || !hasLoaded) {
       return <Spinner entity={this} />;
     }
-
-    const paneTitle = (
-      <AppIcon
-        size="small"
-        app="data-import"
-        iconKey="matchProfiles"
-      >
-        {matchProfile.name}
-      </AppIcon>
-    );
 
     // MatchProfiles sample data does not contain user Ids because of back-end limitations
     // and therefore it is required to add it manually on UI side
@@ -300,15 +297,9 @@ export class ViewMatchProfile extends Component {
 
     return (
       <Pane
-        id={paneId}
+        renderHeader={this.renderPaneHeader}
         defaultWidth="620px"
         fluidContentWidth
-        paneTitle={paneTitle}
-        paneSub={<FormattedMessage id="ui-data-import.matchProfileName" />}
-        actionMenu={this.renderActionMenu}
-        lastMenu={this.renderLastMenu(matchProfile)}
-        dismissible
-        onClose={onClose}
       >
         <TitleManager record={matchProfile.name} />
         <Headline
