@@ -5,8 +5,8 @@ export default server => {
   server.create('match-profile', {
     name: '001 to Instance HRID',
     description: 'MARC 001 to Instance ID (numerics only)',
-    existingRecordType: 'INSTANCE',
     incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+    existingRecordType: 'INSTANCE',
     matchDetails: [
       {
         incomingRecordType: 'MARC_BIBLIOGRAPHIC',
@@ -16,7 +16,7 @@ export default server => {
           dataValueType: 'VALUE_FROM_RECORD',
           fields: [{
             label: 'field',
-            value: 'instance.metadata.updatedByUsername',
+            value: 'instance.hrid',
           }],
           qualifier: { comparisonPart: 'NUMERICS_ONLY' },
         },
@@ -27,10 +27,10 @@ export default server => {
             value: '001',
           }, {
             label: 'indicator1',
-            value: '',
+            value: ' ',
           }, {
             label: 'indicator2',
-            value: '',
+            value: ' ',
           }, {
             label: 'recordSubfield',
             value: 'a',
@@ -41,13 +41,165 @@ export default server => {
     ],
   });
   server.create('match-profile', {
-    name: 'MARC Identifiers',
+    name: 'EDI regular',
     description: 'EDIFACT POL',
-    existingRecordType: 'ORDER',
     incomingRecordType: 'EDIFACT',
+    existingRecordType: 'ORDER',
     parentProfiles: noAssociatedJobProfiles,
+    matchDetails: [{
+      incomingRecordType: 'EDIFACT',
+      existingRecordType: 'ORDER',
+      matchCriterion: 'EXACTLY_MATCHES',
+      existingMatchExpression: {
+        dataValueType: 'VALUE_FROM_RECORD',
+        fields: [{
+          label: 'field',
+          value: 'po_line.poLineNumber',
+        }],
+        qualifier: { comparisonPart: 'NUMERICS_ONLY' },
+      },
+      incomingMatchExpression: {
+        dataValueType: 'VALUE_FROM_RECORD',
+        fields: [{
+          label: 'field',
+          value: '001',
+        }, {
+          label: 'indicator1',
+          value: '',
+        }, {
+          label: 'indicator2',
+          value: '',
+        }, {
+          label: 'recordSubfield',
+          value: 'a',
+        }],
+        qualifier: { comparisonPart: 'NUMERICS_ONLY' },
+      },
+    }],
   });
-  server.createList('match-profile', 5);
+  server.create('match-profile', {
+    name: 'Invoice check',
+    incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+    existingRecordType: 'INVOICE',
+    matchDetails: [{
+      incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+      existingRecordType: 'INVOICE',
+      existingMatchExpression: {
+        dataValueType: 'VALUE_FROM_RECORD',
+        fields: [{
+          label: 'field',
+          value: 'invoice.vendorInvoiceNo',
+        }],
+      },
+    }],
+  });
+  server.create('match-profile', {
+    name: 'Item Barcode match',
+    incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+    existingRecordType: 'ITEM',
+    matchDetails: [{
+      incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+      existingRecordType: 'ITEM',
+      existingMatchExpression: {
+        dataValueType: 'VALUE_FROM_RECORD',
+        fields: [{
+          label: 'field',
+          value: 'item.barcode',
+        }],
+      },
+    }],
+  });
+  server.create('match-profile', {
+    name: 'KB ID in 935',
+    incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+    existingRecordType: 'MARC_BIBLIOGRAPHIC',
+    matchDetails: [{
+      incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+      existingRecordType: 'MARC_BIBLIOGRAPHIC',
+      existingMatchExpression: {
+        dataValueType: 'VALUE_FROM_RECORD',
+        fields: [{
+          label: 'field',
+          value: '035',
+        }, {
+          label: 'indicator1',
+          value: ' ',
+        }, {
+          label: 'indicator2',
+          value: ' ',
+        }, {
+          label: 'recordSubfield',
+          value: 'a',
+        }],
+      },
+    }],
+  });
+  server.create('match-profile', {
+    name: 'MARC 010',
+    incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+    existingRecordType: 'MARC_AUTHORITY',
+    matchDetails: [{
+      incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+      existingRecordType: 'MARC_AUTHORITY',
+      existingMatchExpression: {
+        dataValueType: 'VALUE_FROM_RECORD',
+        fields: [{
+          label: 'field',
+          value: '010',
+        }, {
+          label: 'indicator1',
+          value: ' ',
+        }, {
+          label: 'indicator2',
+          value: ' ',
+        }, {
+          label: 'recordSubfield',
+          value: 'a',
+        }],
+      },
+    }],
+  });
+  server.create('match-profile', {
+    name: 'MARC Identifiers',
+    incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+    existingRecordType: 'INSTANCE',
+    matchDetails: [{
+      incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+      existingRecordType: 'INSTANCE',
+      existingMatchExpression: {
+        dataValueType: 'VALUE_FROM_RECORD',
+        fields: [{
+          label: 'field',
+          value: 'instance.identifiers[].value',
+        }],
+      },
+    }],
+  });
+  server.create('match-profile', {
+    name: 'OCLC 035 DDA',
+    incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+    existingRecordType: 'MARC_BIBLIOGRAPHIC',
+    matchDetails: [{
+      incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+      existingRecordType: 'MARC_BIBLIOGRAPHIC',
+      existingMatchExpression: {
+        dataValueType: 'VALUE_FROM_RECORD',
+        fields: [{
+          label: 'field',
+          value: '035',
+        }, {
+          label: 'indicator1',
+          value: ' ',
+        }, {
+          label: 'indicator2',
+          value: ' ',
+        }, {
+          label: 'recordSubfield',
+          value: 'a',
+        }],
+      },
+    }],
+  });
 
   server.get('/data-import-profiles/matchProfiles', (schema, request) => {
     const { query = '' } = request.queryParams;

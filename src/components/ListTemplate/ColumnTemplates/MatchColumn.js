@@ -89,7 +89,7 @@ export const MatchColumn = memo(({
                   search={searchTerm || ''}
                   className={sharedCss.container}
                 >
-                  {capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
+                  {getFieldMatched(fieldMatched, fieldSource)}
                 </HighLight>
                 &nbsp;&larr;&nbsp;
                 <HighLight

@@ -184,15 +184,15 @@ describe('Match profiles', () => {
         });
 
         it('for record #2', () => {
-          expect(matchProfiles.list.rows(1).cells(2).content).to.equal(htmlDecode('Order&nbsp;&middot;&nbsp;Order&nbsp;&rarr;&nbsp;PO Line Number'));
+          expect(matchProfiles.list.rows(1).cells(2).content).to.equal(htmlDecode('Order&nbsp;&middot;&nbsp;Order&nbsp;&rarr;&nbsp;POL number'));
         });
 
         it('for record #3', () => {
-          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('Invoice&nbsp;&middot;&nbsp;Invoice&nbsp;&rarr;&nbsp;Vendor Invoice Number'));
+          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('Invoice&nbsp;&middot;&nbsp;Invoice&nbsp;&rarr;&nbsp;Vendor invoice number'));
         });
 
         it('for record #4', () => {
-          expect(matchProfiles.list.rows(3).cells(2).content).to.equal(htmlDecode('Item&nbsp;&middot;&nbsp;Item&nbsp;&rarr;&nbsp;Item Barcode'));
+          expect(matchProfiles.list.rows(3).cells(2).content).to.equal(htmlDecode('Item&nbsp;&middot;&nbsp;Item&nbsp;&rarr;&nbsp;Barcode'));
         });
 
         it('for record #5', () => {
@@ -204,7 +204,7 @@ describe('Match profiles', () => {
         });
 
         it('for record #7', () => {
-          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('Instance&nbsp;&middot;&nbsp;Instance&nbsp;&rarr;&nbsp;ISBN'));
+          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('Instance&nbsp;&middot;&nbsp;Instance&nbsp;&rarr;&nbsp;Identifier'));
         });
 
         it('for record #8', () => {
@@ -222,31 +222,31 @@ describe('Match profiles', () => {
         });
 
         it('for record #2', () => {
-          expect(matchProfiles.list.rows(1).cells(2).content).to.equal(htmlDecode('PO Line Number&nbsp;&larr;&nbsp;Order&nbsp;&middot;&nbsp;Order'));
+          expect(matchProfiles.list.rows(1).cells(2).content).to.equal(htmlDecode('POL number&nbsp;&larr;&nbsp;Order&nbsp;&middot;&nbsp;Order'));
         });
 
         it('for record #3', () => {
-          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('Vendor Invoice Number&nbsp;&larr;&nbsp;Invoice&nbsp;&middot;&nbsp;Invoice'));
+          expect(matchProfiles.list.rows(2).cells(2).content).to.equal(htmlDecode('Vendor invoice number&nbsp;&larr;&nbsp;Invoice&nbsp;&middot;&nbsp;Invoice'));
         });
 
         it('for record #4', () => {
-          expect(matchProfiles.list.rows(3).cells(2).content).to.equal(htmlDecode('Item Barcode&nbsp;&larr;&nbsp;Item&nbsp;&middot;&nbsp;Item'));
+          expect(matchProfiles.list.rows(3).cells(2).content).to.equal(htmlDecode('Barcode&nbsp;&larr;&nbsp;Item&nbsp;&middot;&nbsp;Item'));
         });
 
         it('for record #5', () => {
-          expect(matchProfiles.list.rows(4).cells(2).content).to.equal(htmlDecode('A. . .035&nbsp;&larr;&nbsp;MARC Bibliographic&nbsp;&middot;&nbsp;MARC Bibliographic'));
+          expect(matchProfiles.list.rows(4).cells(2).content).to.equal(htmlDecode('a. . .035&nbsp;&larr;&nbsp;MARC Bibliographic&nbsp;&middot;&nbsp;MARC Bibliographic'));
         });
 
         it('for record #6', () => {
-          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(htmlDecode('A. . .010&nbsp;&larr;&nbsp;MARC Authority&nbsp;&middot;&nbsp;MARC Authority'));
+          expect(matchProfiles.list.rows(5).cells(2).content).to.equal(htmlDecode('a. . .010&nbsp;&larr;&nbsp;MARC Authority&nbsp;&middot;&nbsp;MARC Authority'));
         });
 
         it('for record #7', () => {
-          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('ISBN&nbsp;&larr;&nbsp;Instance&nbsp;&middot;&nbsp;Instance'));
+          expect(matchProfiles.list.rows(6).cells(2).content).to.equal(htmlDecode('Identifier&nbsp;&larr;&nbsp;Instance&nbsp;&middot;&nbsp;Instance'));
         });
 
         it('for record #8', () => {
-          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(htmlDecode('A. . .035&nbsp;&larr;&nbsp;MARC Bibliographic&nbsp;&middot;&nbsp;MARC Bibliographic'));
+          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(htmlDecode('a. . .035&nbsp;&larr;&nbsp;MARC Bibliographic&nbsp;&middot;&nbsp;MARC Bibliographic'));
         });
       });
     });
