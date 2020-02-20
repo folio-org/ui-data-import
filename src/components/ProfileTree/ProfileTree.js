@@ -78,7 +78,7 @@ export const ProfileTree = memo(({
     const rel = {
       masterProfileId: masterId,
       masterProfileType: isSnakeCase(masterType) ? masterType : snakeCase(masterType).slice(0, -1).toLocaleUpperCase(),
-      detailProfileId: item.id,
+      detailProfileId: item.profileId || item.id,
       detailProfileType: isSnakeCase(detailType) ? detailType : snakeCase(detailType).slice(0, -1).toLocaleUpperCase(),
     };
 
