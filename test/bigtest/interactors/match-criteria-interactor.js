@@ -1,6 +1,5 @@
 import {
   interactor,
-  is,
   collection,
   count,
   attribute,
@@ -22,7 +21,6 @@ class ExistingRecordDropdown {
 
 @interactor
 class MatchCriterion {
-  isSection = is('section');
   dropdown = new SelectInteractor('#criterion1-criterion-type');
 }
 

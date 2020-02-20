@@ -6,6 +6,7 @@ import {
 } from '@bigtest/mocha';
 
 import { setupApplication } from '../../helpers';
+import wait from '../../helpers/wait';
 
 import {
   matchProfiles,
@@ -241,7 +242,7 @@ describe('Match profile form', () => {
 
             describe('when not MARC record selected', () => {
               beforeEach(async function () {
-                await matchProfileForm.recordTypesSelect.select('INSTANCE');
+                await wait();
                 await matchProfileForm.recordTypesSelect.select('ORDER');
                 await matchProfileForm.matchCriteria.existingRecordFieldSections.clickDropdownButton();
               });
@@ -254,7 +255,7 @@ describe('Match profile form', () => {
                 expect(matchProfileForm.matchCriteria.existingRecordFieldSections.expandedAttribute).to.be.equal('true');
               });
 
-              checkOptionsCount('INSTANCE', 54);
+              checkOptionsCount('INSTANCE', 52);
               checkOptionsCount('HOLDINGS', 19);
               checkOptionsCount('ITEM', 13);
               checkOptionsCount('ORDER', 30);
