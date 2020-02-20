@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { noop } from 'lodash';
 
 import { TreeLine } from '../../TreeLine';
 import { TreeView } from '../../TreeView';
@@ -42,9 +41,10 @@ const recordsData = {
 
 export const RecordSelect = ({
   id,
-  onSelect = noop,
+  onSelect,
   container = `#${id} .${rootList}`,
   treeData = recordsData,
+  isEditable,
 }) => (
   <Fragment>
     <TreeView
@@ -55,6 +55,7 @@ export const RecordSelect = ({
         <RecordItem
           item={item.itemMeta}
           onClick={onSelect}
+          isEditable={isEditable}
         />
       )}
     />
@@ -73,8 +74,11 @@ export const RecordSelect = ({
 );
 
 RecordSelect.propTypes = {
+  onSelect: PropTypes.func.isRequired,
   id: PropTypes.string,
-  onSelect: PropTypes.func,
   container: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Element)]),
   treeData: PropTypes.object,
+  isEditable: PropTypes.bool,
 };
+
+RecordSelect.defaultProps = { isEditable: true };

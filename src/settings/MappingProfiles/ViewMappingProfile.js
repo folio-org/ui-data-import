@@ -16,16 +16,14 @@ import {
   AccordionSet,
   ConfirmationModal,
   Button,
+  PaneHeader,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
   withTags,
   TagsAccordion,
 } from '@folio/stripes/smart-components';
-
-import { createLayerURL } from '../../utils';
 import {
-  LAYER_TYPES,
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
@@ -39,7 +37,6 @@ import {
   ProfileAssociator,
   FOLIO_RECORD_TYPES,
 } from '../../components';
-import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
 
@@ -63,13 +60,6 @@ export class ViewMappingProfile extends Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }).isRequired,
-    location: PropTypes.oneOfType([
-      PropTypes.shape({
-        search: PropTypes.string.isRequired,
-        pathname: PropTypes.string.isRequired,
-      }).isRequired,
-      PropTypes.string.isRequired,
-    ]),
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
@@ -138,31 +128,13 @@ export class ViewMappingProfile extends Component {
     />
   );
 
-  renderLastMenu = record => (
-    <LastMenu
-      caption="ui-data-import.edit"
-      location={createLayerURL(this.props.location, LAYER_TYPES.EDIT)}
-      style={{ visibility: !record ? 'hidden' : 'visible' }}
-      dataAttributes={{ 'data-test-edit-item-button': '' }}
-    />
-  );
-
-  render() {
+  renderPaneHeader = renderProps => {
     const {
       onClose,
       paneId,
-      tagsEnabled,
     } = this.props;
-    const { showDeleteConfirmation } = this.state;
 
-    const {
-      hasLoaded,
-      record: mappingProfile,
-    } = this.mappingProfileData;
-
-    if (!mappingProfile || !hasLoaded) {
-      return <Spinner entity={this} />;
-    }
+    const { record: mappingProfile } = this.mappingProfileData;
 
     const paneTitle = (
       <AppIcon
@@ -173,6 +145,32 @@ export class ViewMappingProfile extends Component {
         {mappingProfile.name}
       </AppIcon>
     );
+
+    return (
+      <PaneHeader
+        {...renderProps}
+        id={paneId}
+        paneTitle={paneTitle}
+        paneSub={<FormattedMessage id="ui-data-import.mappingProfileName" />}
+        actionMenu={this.renderActionMenu}
+        dismissible
+        onClose={onClose}
+      />
+    );
+  };
+
+  render() {
+    const { tagsEnabled } = this.props;
+    const { showDeleteConfirmation } = this.state;
+
+    const {
+      hasLoaded,
+      record: mappingProfile,
+    } = this.mappingProfileData;
+
+    if (!mappingProfile || !hasLoaded) {
+      return <Spinner entity={this} />;
+    }
 
     // MappingProfiles sample data does not contain user Ids because of back-end limitations
     // and therefore it is required to add it manually on UI side
@@ -192,15 +190,9 @@ export class ViewMappingProfile extends Component {
 
     return (
       <Pane
-        id={paneId}
         defaultWidth="fill"
         fluidContentWidth
-        paneTitle={paneTitle}
-        paneSub={<FormattedMessage id="ui-data-import.mappingProfileName" />}
-        actionMenu={this.renderActionMenu}
-        lastMenu={this.renderLastMenu(mappingProfile)}
-        dismissible
-        onClose={onClose}
+        renderHeader={this.renderPaneHeader}
       >
         <TitleManager record={mappingProfile.name} />
         <Headline

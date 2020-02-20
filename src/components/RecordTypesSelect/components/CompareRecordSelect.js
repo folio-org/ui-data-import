@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useState,
   useRef,
   useEffect,
@@ -31,11 +32,12 @@ const hintTriangleSize = 8;
 const hintMargin = 8 + 4;
 const compareElemMargin = 4;
 
-export const CompareRecordSelect = ({
+export const CompareRecordSelect = memo(({
   id,
   incomingRecord,
   existingRecord,
   setExistingRecord,
+  setIncomingRecord,
   isEditable,
 }) => {
   const [top, setTop] = useState();
@@ -85,7 +87,7 @@ export const CompareRecordSelect = ({
             margin="none"
             tag="h3"
           >
-            <FormattedMessage id="ui-data-import.incomingMarc" />
+            <FormattedMessage id="ui-data-import.incomingRecords" />
           </Headline>
         </Col>
         <Col
@@ -135,8 +137,10 @@ export const CompareRecordSelect = ({
         >
           <RecordItem
             item={incomingRecord}
+            onClick={setIncomingRecord}
             className={css.incomingRecord}
             style={{ height }}
+            isEditable={isEditable}
           />
           <div
             ref={compareElemRef}
@@ -165,7 +169,8 @@ export const CompareRecordSelect = ({
             {compareElemWidth && (
               <RecordSelect
                 id={id}
-                onSelect={isEditable ? setExistingRecord : noop}
+                onSelect={setExistingRecord}
+                isEditable={isEditable}
               />
             )}
           </div>
@@ -173,12 +178,21 @@ export const CompareRecordSelect = ({
       </Row>
     </section>
   );
-};
+});
 
 CompareRecordSelect.propTypes = {
   id: PropTypes.string,
-  incomingRecord: PropTypes.object.isRequired,
-  existingRecord: PropTypes.object.isRequired,
-  setExistingRecord: PropTypes.func.isRequired,
+  setExistingRecord: PropTypes.func,
+  setIncomingRecord: PropTypes.func,
+  incomingRecord: PropTypes.object,
+  existingRecord: PropTypes.object,
   isEditable: PropTypes.bool,
+};
+
+CompareRecordSelect.defaultProps = {
+  setExistingRecord: noop,
+  setIncomingRecord: noop,
+  incomingRecord: null,
+  existingRecord: null,
+  isEditable: true,
 };

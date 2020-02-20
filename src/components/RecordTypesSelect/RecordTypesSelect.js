@@ -1,13 +1,20 @@
 import React, {
+  memo,
   useState,
   useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
-import { debounce } from 'lodash';
+import {
+  debounce,
+  noop,
+} from 'lodash';
 
 import { InitialRecordSelect } from './components/InitialRecordSelect';
 import { CompareRecordSelect } from './components/CompareRecordSelect';
-import { FOLIO_RECORD_TYPES } from '../ListTemplate';
+import {
+  FOLIO_RECORD_TYPES,
+  INCOMING_RECORD_TYPES,
+} from '../ListTemplate';
 
 const useForceUpdate = () => useState()[1];
 
@@ -24,24 +31,29 @@ const useUpdateOnResize = () => {
   }, [forceUpdate]);
 };
 
-const incomingRecord = FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC;
-
-export const RecordTypesSelect = ({
+export const RecordTypesSelect = memo(({
   id,
   existingRecordType,
-  onRecordSelect,
+  incomingRecordType,
+  onExistingSelect,
+  onIncomingSelect,
   isEditable,
 }) => {
   useUpdateOnResize();
   const [existingRecord, setExistingRecord] = useState(undefined);
+  const [incomingRecord, setIncomingRecord] = useState(undefined);
 
   useEffect(() => {
-    setExistingRecord(FOLIO_RECORD_TYPES[existingRecordType] || undefined);
+    setExistingRecord(FOLIO_RECORD_TYPES?.[existingRecordType]);
   }, [existingRecordType]);
+
+  useEffect(() => {
+    setIncomingRecord(INCOMING_RECORD_TYPES?.[incomingRecordType]);
+  }, [incomingRecordType]);
 
   const handleSelect = selectedRecord => {
     setExistingRecord(selectedRecord);
-    onRecordSelect(selectedRecord);
+    onExistingSelect(selectedRecord);
   };
 
   return (
@@ -56,6 +68,7 @@ export const RecordTypesSelect = ({
             incomingRecord={incomingRecord}
             existingRecord={existingRecord}
             setExistingRecord={handleSelect}
+            setIncomingRecord={onIncomingSelect}
             isEditable={isEditable}
           />
         )
@@ -63,21 +76,28 @@ export const RecordTypesSelect = ({
           <InitialRecordSelect
             id={id}
             onItemSelect={handleSelect}
+            isEditable={isEditable}
           />
         )
       }
     </div>
   );
-};
+});
 
 RecordTypesSelect.propTypes = {
   id: PropTypes.string,
   existingRecordType: PropTypes.string,
-  onRecordSelect: PropTypes.func,
+  incomingRecordType: PropTypes.string,
+  onExistingSelect: PropTypes.func,
+  onIncomingSelect: PropTypes.func,
   isEditable: PropTypes.bool,
 };
 
 RecordTypesSelect.defaultProps = {
   id: 'compare-record-types',
+  existingRecordType: '',
+  incomingRecordType: INCOMING_RECORD_TYPES.MARC_BIBLIOGRAPHIC,
+  onExistingSelect: noop,
+  onIncomingSelect: noop,
   isEditable: true,
 };

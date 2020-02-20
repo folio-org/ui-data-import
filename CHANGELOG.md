@@ -9,6 +9,7 @@
 * Job profile details, part 1: adding match profiles (UIDATIMP-312)
 * Job profile details, part 2: adding secondary match/action profiles (UIDATIMP-313)
 * Add rules for prohibited profile siblings for the ProfileTree component (UIDATIMP-314)
+* Job profile details, part 4: unlinking match or action profiles (UIDATIMP-315)
 * Create FOLIO records' field lists (UIDATIMP-330)
 * Connect Profile Associator Component to unified data source (UIDATIMP-341)
 * Update field naming for mapping profiles (UIDATIMP-349)
@@ -16,6 +17,8 @@
 * Rework ProfileLinker Component (UIDATIMP-358)
 * Convert Match Profiles form Existing Record Field name to JSONPath format (UIDATIMP-375)
 * Define API Contract for MappingProfile field mapping definitions (UIDATIMP-377)
+* Remove extra action buttons in profiles Settings screens (UIDATIMP-394 - UIDATIMP-397)
+* Augment RecordTypeSelector component with Incoming Record Type selection dropdown (UIDATIMP-386)
 
 ### Bugs fixed:
 * Profile Associator lists are empty when the user reloads the page with Profile Edit Form open (UIDATIMP-338)

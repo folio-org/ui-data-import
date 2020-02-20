@@ -225,6 +225,12 @@ export const PROFILE_LINKING_RULES = {
   siblingsProhibited: { [ENTITY_KEYS.ACTION_PROFILES]: [ENTITY_KEYS.MATCH_PROFILES] },
 };
 
+export const PROFILE_RELATION_TYPES = {
+  NONE: null,
+  MATCH: 'MATCH',
+  NON_MATCH: 'NON_MATCH',
+};
+
 export const INSTANCE_RESOURCE_PATHS = [
   'raml-util/schemas/metadata.schema',
   'instance.json',

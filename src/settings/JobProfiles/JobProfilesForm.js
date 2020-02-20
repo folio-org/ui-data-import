@@ -191,7 +191,7 @@ JobProfilesFormComponent.propTypes = {
         tags: PropTypes.shape({ tagList: PropTypes.arrayOf(PropTypes.string) }),
         match: PropTypes.string,
       }),
-    })
+    }),
   ).isRequired,
 };
 
@@ -212,5 +212,5 @@ export const JobProfilesForm = compose(
     navigationCheck: true,
     enableReinitialize: true,
   }),
-  connect(mapStateToProps)
+  connect(mapStateToProps),
 )(JobProfilesFormComponent);

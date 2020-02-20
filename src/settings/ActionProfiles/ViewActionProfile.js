@@ -17,16 +17,14 @@ import {
   Accordion,
   AccordionSet,
   ConfirmationModal,
+  PaneHeader,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
   withTags,
   TagsAccordion,
 } from '@folio/stripes/smart-components';
-
-import { createLayerURL } from '../../utils';
 import {
-  LAYER_TYPES,
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
@@ -40,7 +38,6 @@ import {
   ACTION_TYPES,
   ProfileAssociator,
 } from '../../components';
-import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
 
@@ -65,13 +62,6 @@ export class ViewActionProfile extends Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }).isRequired,
-    location: PropTypes.oneOfType([
-      PropTypes.shape({
-        search: PropTypes.string.isRequired,
-        pathname: PropTypes.string.isRequired,
-      }).isRequired,
-      PropTypes.string.isRequired,
-    ]),
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
@@ -140,30 +130,13 @@ export class ViewActionProfile extends Component {
     />
   );
 
-  renderLastMenu = record => (
-    <LastMenu
-      caption="ui-data-import.edit"
-      location={createLayerURL(this.props.location, LAYER_TYPES.EDIT)}
-      style={{ visibility: !record ? 'hidden' : 'visible' }}
-      dataAttributes={{ 'data-test-edit-item-button': '' }}
-    />
-  );
-
-  render() {
+  renderPaneHeader = renderProps => {
     const {
       onClose,
       paneId,
-      tagsEnabled,
     } = this.props;
-    const { showDeleteConfirmation } = this.state;
-    const {
-      hasLoaded,
-      record: actionProfile,
-    } = this.actionProfileData;
 
-    if (!actionProfile || !hasLoaded) {
-      return <Spinner entity={this} />;
-    }
+    const { record: actionProfile } = this.actionProfileData;
 
     const paneTitle = (
       <AppIcon
@@ -174,6 +147,31 @@ export class ViewActionProfile extends Component {
         {actionProfile.name}
       </AppIcon>
     );
+
+    return (
+      <PaneHeader
+        {...renderProps}
+        id={paneId}
+        paneTitle={paneTitle}
+        paneSub={<FormattedMessage id="ui-data-import.actionProfileName" />}
+        actionMenu={this.renderActionMenu}
+        dismissible
+        onClose={onClose}
+      />
+    );
+  };
+
+  render() {
+    const { tagsEnabled } = this.props;
+    const { showDeleteConfirmation } = this.state;
+    const {
+      hasLoaded,
+      record: actionProfile,
+    } = this.actionProfileData;
+
+    if (!actionProfile || !hasLoaded) {
+      return <Spinner entity={this} />;
+    }
 
     // ActionProfiles sample data does not contain user Ids because of back-end limitations
     // and therefore it is required to add it manually on UI side
@@ -193,15 +191,9 @@ export class ViewActionProfile extends Component {
 
     return (
       <Pane
-        id={paneId}
         defaultWidth="fill"
         fluidContentWidth
-        paneTitle={paneTitle}
-        paneSub={<FormattedMessage id="ui-data-import.actionProfileName" />}
-        actionMenu={this.renderActionMenu}
-        lastMenu={this.renderLastMenu(actionProfile)}
-        dismissible
-        onClose={onClose}
+        renderHeader={this.renderPaneHeader}
       >
         <TitleManager record={actionProfile.name} />
         <Headline
