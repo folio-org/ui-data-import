@@ -49,7 +49,10 @@ import {
   FlexibleForm,
   ProfileAssociator,
 } from '../../components';
-import { FOLIO_RECORD_TYPES } from '../../components/ListTemplate';
+import {
+  FOLIO_RECORD_TYPES,
+  INCOMING_RECORD_TYPES,
+} from '../../components/ListTemplate';
 import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
@@ -273,12 +276,34 @@ export class ViewMatchProfile extends Component {
         existingRecordType: get(matchDetails, 'existingRecordType', ''),
       }],
     };
-    const existingRecordLabel = <FormattedMessage id={FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId} />;
+    const existingRecordLabel = FOLIO_RECORD_TYPES[matchProfile.existingRecordType]
+      ? <FormattedMessage id={FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId} />
+      : '';
+    const incomingRecordLabel = INCOMING_RECORD_TYPES[matchProfile.incomingRecordType]
+      ? <FormattedMessage id={INCOMING_RECORD_TYPES[matchProfile.incomingRecordType].captionId} />
+      : '';
     const componentsProps = {
       'panel-existing': {
         id: 'panel-existing-view',
         existingRecordType: matchProfile.existingRecordType,
+        incomingRecordType: matchProfile.incomingRecordType,
         isEditable: false,
+      },
+      'incoming-record-section': {
+        label: (
+          <FormattedMessage
+            id="ui-data-import.match.incoming.record"
+            values={{ recordType: incomingRecordLabel }}
+          />
+        ),
+      },
+      'incoming-record-field': {
+        label: (
+          <FormattedMessage
+            id="ui-data-import.match.incoming.record.field"
+            values={{ recordType: incomingRecordLabel }}
+          />
+        ),
       },
       'existing-record-section': {
         label: (

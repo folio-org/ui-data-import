@@ -84,11 +84,11 @@ describe('Match profile form', () => {
           expect(matchProfileForm.recordTypesSelect.initialRecord).to.be.true;
         });
 
-        it('incoming record select has correct amount of items', () => {
+        it('existing record select has correct amount of items', () => {
           expect(matchProfileForm.recordTypesSelect.items().length).to.be.equal(8);
         });
 
-        describe('when incoming record is selected', () => {
+        describe('when existing record is selected', () => {
           beforeEach(async () => {
             await matchProfileForm.recordTypesSelect.select('ITEM');
           });
@@ -98,8 +98,47 @@ describe('Match profile form', () => {
             expect(matchProfileForm.recordTypesSelect.compareRecord).to.be.true;
           });
 
+          it('incoming record button renders', () => {
+            expect(matchProfileForm.recordTypesSelect.incomingRecordDropdown.isPresent).to.be.true;
+          });
+
           it('then choose record to compare screen appears', () => {
             expect(matchProfileForm.recordTypesSelect.isPresent).to.be.true;
+          });
+        });
+
+        describe('when incoming record', () => {
+          beforeEach(async () => {
+            await matchProfileForm.recordTypesSelect.select('ITEM');
+          });
+
+          describe('is clicked', () => {
+            beforeEach(async () => {
+              await matchProfileForm.recordTypesSelect.incomingRecordDropdown.clickTrigger();
+            });
+
+            it('then menu appears', () => {
+              expect(matchProfileForm.recordTypesSelect.incomingRecordDropdown.isOpen).to.be.equal('true');
+            });
+
+            it('and has 6 menu items', () => {
+              expect(matchProfileForm.recordTypesSelect.incomingRecordDropdown.menu.items().length).to.be.equal(6);
+            });
+          });
+
+          describe('is selected', () => {
+            beforeEach(async () => {
+              await matchProfileForm.recordTypesSelect.incomingRecordDropdown.clickTrigger();
+              await matchProfileForm.recordTypesSelect.incomingRecordDropdown.menu.items(2).click();
+            });
+
+            it('then incoming record section\'s label changes', () => {
+              expect(matchProfileForm.matchCriteria.incomingRecord.label).to.be.equal('Incoming MARC Authority record');
+            });
+
+            it('and incoming record field section\'s label changes', () => {
+              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(0).label).to.be.equal('MARC Authority field in incoming record');
+            });
           });
         });
       });
@@ -113,26 +152,26 @@ describe('Match profile form', () => {
           expect(matchProfileForm.matchCriteria.isOpen).to.be.true;
         });
 
-        describe('"Incoming MARC record" section', () => {
+        describe('"Incoming record" section', () => {
           it('has correct label', () => {
-            expect(matchProfileForm.matchCriteria.incomingMarcRecord.label).to.be.equal('Incoming MARC record');
+            expect(matchProfileForm.matchCriteria.incomingRecord.label).to.be.equal('Incoming MARC Bibliographic record');
           });
 
           it('has correct length of sections', () => {
-            expect(matchProfileForm.matchCriteria.incomingMarcRecordSections.children().length).to.be.equal(3);
+            expect(matchProfileForm.matchCriteria.incomingRecordSections.children().length).to.be.equal(3);
           });
 
-          describe('"MARC field in incoming record" section', () => {
+          describe('"Incoming record field in incoming record" section', () => {
             it('has correct label', () => {
-              expect(matchProfileForm.matchCriteria.incomingMarcRecordSections.children(0).label).to.be.equal('MARC field in incoming record');
+              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(0).label).to.be.equal('MARC Bibliographic field in incoming record');
             });
 
             it('content is visible', () => {
-              expect(matchProfileForm.matchCriteria.incomingMarcRecordSections.children(0).hasContent).to.be.true;
+              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(0).hasContent).to.be.true;
             });
 
             it('is optional', () => {
-              expect(matchProfileForm.matchCriteria.incomingMarcRecordSections.children(0).hasCheckbox).to.be.false;
+              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(0).hasCheckbox).to.be.false;
             });
 
             describe('when not filled', () => {
@@ -156,56 +195,56 @@ describe('Match profile form', () => {
 
           describe('"Use a qualifier" section', () => {
             it('has correct label', () => {
-              expect(matchProfileForm.matchCriteria.incomingMarcRecordSections.children(1).label).to.be.equal('Use a qualifier');
+              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(1).label).to.be.equal('Use a qualifier');
             });
 
             it('content is hidden', () => {
-              expect(matchProfileForm.matchCriteria.incomingMarcRecordSections.children(1).hasContent).to.be.false;
+              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(1).hasContent).to.be.false;
             });
 
             it('is optional', () => {
-              expect(matchProfileForm.matchCriteria.incomingMarcRecordSections.children(1).hasCheckbox).to.be.true;
+              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(1).hasCheckbox).to.be.true;
             });
 
             describe('click checkbox', () => {
               beforeEach(async () => {
-                await matchProfileForm.matchCriteria.incomingMarcRecordQualifierCheckbox.clickAndBlur();
+                await matchProfileForm.matchCriteria.incomingRecordQualifierCheckbox.clickAndBlur();
               });
 
               it('checkbox is checked', () => {
-                expect(matchProfileForm.matchCriteria.incomingMarcRecordQualifierCheckbox.isChecked).to.be.true;
+                expect(matchProfileForm.matchCriteria.incomingRecordQualifierCheckbox.isChecked).to.be.true;
               });
 
               it('content is visible', () => {
-                expect(matchProfileForm.matchCriteria.incomingMarcRecordSections.children(1).hasContent).to.be.true;
+                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(1).hasContent).to.be.true;
               });
             });
           });
 
           describe('"Only compare part of the value"', () => {
             it('has correct label', () => {
-              expect(matchProfileForm.matchCriteria.incomingMarcRecordSections.children(2).label).to.be.equal('Only compare part of the value');
+              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(2).label).to.be.equal('Only compare part of the value');
             });
 
             it('content is hidden', () => {
-              expect(matchProfileForm.matchCriteria.incomingMarcRecordSections.children(2).hasContent).to.be.false;
+              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(2).hasContent).to.be.false;
             });
 
             it('is optional', () => {
-              expect(matchProfileForm.matchCriteria.incomingMarcRecordSections.children(2).hasCheckbox).to.be.true;
+              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(2).hasCheckbox).to.be.true;
             });
 
             describe('click checkbox', () => {
               beforeEach(async () => {
-                await matchProfileForm.matchCriteria.incomingMarcRecordPartCheckbox.clickAndBlur();
+                await matchProfileForm.matchCriteria.incomingRecordPartCheckbox.clickAndBlur();
               });
 
               it('checkbox is checked', () => {
-                expect(matchProfileForm.matchCriteria.incomingMarcRecordPartCheckbox.isChecked).to.be.true;
+                expect(matchProfileForm.matchCriteria.incomingRecordPartCheckbox.isChecked).to.be.true;
               });
 
               it('content is visible', () => {
-                expect(matchProfileForm.matchCriteria.incomingMarcRecordSections.children(2).hasContent).to.be.true;
+                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(2).hasContent).to.be.true;
               });
             });
           });

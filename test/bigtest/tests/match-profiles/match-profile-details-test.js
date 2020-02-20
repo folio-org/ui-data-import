@@ -159,24 +159,24 @@ describe('Match Profile View', () => {
         expect(matchProfileDetails.matchCriteria.isOpen).to.be.true;
       });
 
-      describe('"Incoming MARC record" section', () => {
+      describe('"Incoming record" section', () => {
         it('has correct label', () => {
-          expect(matchProfileDetails.matchCriteria.incomingMarcRecord.label).to.be.equal('Incoming MARC record');
+          expect(matchProfileDetails.matchCriteria.incomingRecord.label).to.be.equal('Incoming MARC Bibliographic record');
         });
 
         it('has correct length of sections', () => {
-          expect(matchProfileDetails.matchCriteria.incomingMarcRecordSections.children().length).to.be.equal(3);
+          expect(matchProfileDetails.matchCriteria.incomingRecordSections.children().length).to.be.equal(3);
         });
 
         it('sections are not optional', () => {
-          matchProfileDetails.matchCriteria.incomingMarcRecordSections.children().forEach(section => {
+          matchProfileDetails.matchCriteria.incomingRecordSections.children().forEach(section => {
             expect(section.hasCheckbox).to.be.false;
           });
         });
 
-        describe('"MARC field in incoming record" section', () => {
+        describe('"Incoming record field in incoming record" section', () => {
           it('has correct label', () => {
-            expect(matchProfileDetails.matchCriteria.incomingMarcRecordSections.children(0).label).to.be.equal('MARC field in incoming record');
+            expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(0).label).to.be.equal('MARC Bibliographic field in incoming record');
           });
 
           it('has correct main field value', () => {
@@ -198,21 +198,21 @@ describe('Match Profile View', () => {
 
         describe('"Use a qualifier" section', () => {
           it('has correct label', () => {
-            expect(matchProfileDetails.matchCriteria.incomingMarcRecordSections.children(1).label).to.be.equal('Use a qualifier');
+            expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(1).label).to.be.equal('Use a qualifier');
           });
 
           it('content is hidden', () => {
-            expect(matchProfileDetails.matchCriteria.incomingMarcRecordSections.children(1).hasContent).to.be.false;
+            expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(1).hasContent).to.be.false;
           });
         });
 
         describe('"Only compare part of the value" section', () => {
           it('has correct label', () => {
-            expect(matchProfileDetails.matchCriteria.incomingMarcRecordSections.children(2).label).to.be.equal('Only compare part of the value');
+            expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(2).label).to.be.equal('Only compare part of the value');
           });
 
           it('content is visible', () => {
-            expect(matchProfileDetails.matchCriteria.incomingMarcRecordSections.children(2).hasContent).to.be.true;
+            expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(2).hasContent).to.be.true;
           });
         });
       });
