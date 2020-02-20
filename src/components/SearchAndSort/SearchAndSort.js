@@ -20,10 +20,10 @@ import {
   Layer,
   MultiColumnList,
   Pane,
-  PaneMenu,
   Paneset,
   SearchField,
   SRStatus,
+  PaneHeader,
 } from '@folio/stripes/components';
 import {
   withStripes,
@@ -36,10 +36,7 @@ import {
   buildUrl,
 } from '@folio/stripes/smart-components';
 
-import {
-  createLayerURL,
-  buildSortOrder,
-} from '../../utils';
+import { buildSortOrder } from '../../utils';
 import {
   SORT_TYPES,
   LAYER_TYPES,
@@ -101,7 +98,6 @@ export class SearchAndSort extends Component {
       }),
       resultCount: PropTypes.number,
     }).isRequired,
-    withNewRecordButton: PropTypes.bool,
     ViewRecordComponent: PropTypes.func.isRequired,
     EditRecordComponent: PropTypes.func,
     actionMenu: PropTypes.func, // parameter properties provided by caller
@@ -145,7 +141,6 @@ export class SearchAndSort extends Component {
   };
 
   static defaultProps = {
-    withNewRecordButton: true,
     showSingleResult: false,
     maxSortKeys: 2,
     onComponentWillUnmount: noop,
@@ -324,14 +319,6 @@ export class SearchAndSort extends Component {
     this.transitionToParams({ sort: sortOrder });
   };
 
-  addNewRecord = e => {
-    if (e) {
-      e.preventDefault();
-    }
-
-    this.transitionToParams({ layer: LAYER_TYPES.CREATE });
-  };
-
   createNewRecord = async record => {
     const {
       massageNewRecord,
@@ -505,36 +492,6 @@ export class SearchAndSort extends Component {
           )
         }
       />
-    );
-  }
-
-  renderNewRecordButton() {
-    const {
-      location,
-      withNewRecordButton,
-    } = this.props;
-
-    if (!withNewRecordButton) {
-      return null;
-    }
-
-    return (
-      <PaneMenu>
-        <FormattedMessage id="stripes-smart-components.addNew">
-          {ariaLabel => (
-            <Button
-              data-test-new-button
-              href={createLayerURL(location, LAYER_TYPES.CREATE)}
-              aria-label={ariaLabel}
-              buttonStyle="primary"
-              marginBottom0
-              onClick={this.addNewRecord}
-            >
-              <FormattedMessage id="stripes-smart-components.new" />
-            </Button>
-          )}
-        </FormattedMessage>
-      </PaneMenu>
     );
   }
 
@@ -735,17 +692,24 @@ export class SearchAndSort extends Component {
 
   SRStatusRef = createRef();
 
-  render() {
+  getSource() {
     const {
       stripes,
-      actionMenu,
-      resultCountMessageKey,
-      resultsLabel,
       finishedResourceName,
     } = this.props;
 
-    const source = makeConnectedSource(this.props, stripes.logger, finishedResourceName);
-    const count = source.totalCount();
+    return makeConnectedSource(this.props, stripes.logger, finishedResourceName);
+  }
+
+  renderPaneHeader = renderProps => {
+    const {
+      actionMenu,
+      resultCountMessageKey,
+      resultsLabel,
+    } = this.props;
+
+    const count = this.getSource().totalCount();
+
     const paneSub = (
       <FormattedMessage
         id={resultCountMessageKey}
@@ -754,18 +718,27 @@ export class SearchAndSort extends Component {
     );
 
     return (
+      <PaneHeader
+        {...renderProps}
+        id="pane-results"
+        actionMenu={actionMenu}
+        paneTitle={resultsLabel}
+        paneSub={paneSub}
+      />
+    );
+  };
+
+  render() {
+    const source = this.getSource();
+
+    return (
       <Paneset>
         <SRStatus ref={this.SRStatusRef} />
-
         <Pane
-          id="pane-results"
           defaultWidth="fill"
           noOverflow
           padContent={false}
-          actionMenu={actionMenu}
-          paneTitle={resultsLabel}
-          paneSub={paneSub}
-          lastMenu={this.renderNewRecordButton()}
+          renderHeader={this.renderPaneHeader}
         >
           <div className={css.paneBody}>
             {this.renderSearch(source)}
