@@ -18,6 +18,7 @@
 * Convert Match Profiles form Existing Record Field name to JSONPath format (UIDATIMP-375)
 * Define API Contract for MappingProfile field mapping definitions (UIDATIMP-377)
 * Remove extra action buttons in profiles Settings screens (UIDATIMP-394 - UIDATIMP-397)
+* Augment RecordTypeSelector component with Incoming Record Type selection dropdown (UIDATIMP-386)
 
 ### Bugs fixed:
 * Profile Associator lists are empty when the user reloads the page with Profile Edit Form open (UIDATIMP-338)

@@ -40,7 +40,6 @@ class RecordSections {
 export class MatchCriteriaInteractor extends AccordionInteractor {
   matchCriterionSection = new MatchCriterion('[class*="criterion--"] div');
 
-  incomingMarcRecord = new SectionInteractor('section[class*=incoming]');
   fieldMain = new KeyValueInteractor('[data-test-field-main]');
   fieldIn1 = new KeyValueInteractor('[data-test-field-in1]');
   fieldIn2 = new KeyValueInteractor('[data-test-field-in2]');
@@ -49,9 +48,11 @@ export class MatchCriteriaInteractor extends AccordionInteractor {
   inputIn1 = new InputInteractor('[data-test-field-in1]');
   inputIn2 = new InputInteractor('[data-test-field-in2]');
   inputSubfield = new InputInteractor('[data-test-field-subfield');
-  incomingMarcRecordSections = new RecordSections('section[class*=incoming]');
-  incomingMarcRecordQualifierCheckbox = new CheckboxInteractor('section[class*=incoming] [class*="qualifier---"]');
-  incomingMarcRecordPartCheckbox = new CheckboxInteractor('section[class*=incoming] [class*="part---"]');
+
+  incomingRecord = new SectionInteractor('section[class*=incoming]');
+  incomingRecordSections = new RecordSections('section[class*=incoming]');
+  incomingRecordQualifierCheckbox = new CheckboxInteractor('section[class*=incoming] [class*="qualifier---"]');
+  incomingRecordPartCheckbox = new CheckboxInteractor('section[class*=incoming] [class*="part---"]');
 
   matchCriterion = new SectionInteractor('section[class*=" criterion"]');
   matchCriterionField = new KeyValueInteractor('[data-test-match-criterion]');
