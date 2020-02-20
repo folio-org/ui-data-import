@@ -24,26 +24,40 @@ import {
 } from '.';
 
 import css from './ProfileTree.css';
-import { PROFILE_LABEL_IDS } from '../../utils/constants';
+import {
+  PROFILE_LABEL_IDS,
+  PROFILE_RELATION_TYPES,
+} from '../../utils/constants';
 
 export const ProfileBranch = memo(({
-  entityKey,
-  recordData,
-  contentData,
+  reactTo,
   linkingRules,
+  recordData,
   record,
+  parentRecordData,
+  parentSectionKey,
+  parentSectionData,
+  setParentSectionData,
   className,
   onChange,
   onLink,
   onUnlink,
+  onDelete,
   dataAttributes,
 }) => {
   const {
     childrenAllowed,
     siblingsProhibited,
   } = linkingRules;
+  const {
+    contentType,
+    content: currentRecord,
+    childSnapshotWrappers: currentChildren,
+  } = recordData;
+
+  const entityKey = `${camelCase(contentType)}s`;
   const childrenSectionAllowed = childrenAllowed.findIndex(item => item === entityKey) >= 0;
-  const sectionKey = `jobProfiles.${record ? record.id : 'current'}.${recordData ? recordData.id : 'root'}`;
+  const sectionKey = `jobProfiles.${record ? record.id : 'current'}.${currentRecord ? currentRecord.id : 'root'}`;
 
   const getSectionStatus = section => {
     const res = JSON.parse(sessionStorage.getItem(`${sectionKey}.sectionStatus.${section}`));
@@ -53,7 +67,7 @@ export const ProfileBranch = memo(({
 
   const getSectionData = section => {
     const res = JSON.parse(sessionStorage.getItem(`${sectionKey}.data.${section}`));
-    const itemData = contentData.filter(item => item.reactTo && item.reactTo === snakeCase(section).toLocaleUpperCase());
+    const itemData = currentChildren.filter(item => item.reactTo && item.reactTo === snakeCase(section).toLocaleUpperCase());
 
     return res || itemData;
   };
@@ -66,11 +80,11 @@ export const ProfileBranch = memo(({
   useEffect(() => {
     setMatchData(getSectionData('match'));
     setNonMatchData(getSectionData('nonMatch'));
-  }, [contentData]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentChildren]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getLabel = (
     <FormattedMessage id={PROFILE_LABEL_IDS[entityKey]}>
-      {profileName => `${profileName}: "${recordData.name}"`}
+      {profileName => `${profileName}: "${currentRecord.name}"`}
     </FormattedMessage>
   );
 
@@ -80,9 +94,11 @@ export const ProfileBranch = memo(({
     onChange(prev => prev + 1);
   };
 
-  const containerId = `container-${record ? 'editable' : 'static'}-${recordData.id}`;
-  const matchSectionId = `accordion-match-${record ? 'editable' : 'static'}-${recordData.id}`;
-  const nonMatchSectionId = `accordion-non-match-${record ? 'editable' : 'static'}-${recordData.id}`;
+  const containerId = `container-${record ? 'editable' : 'static'}-${currentRecord.id}`;
+  const matchSectionId = `accordion-match-${record ? 'editable' : 'static'}-${currentRecord.id}`;
+  const nonMatchSectionId = `accordion-non-match-${record ? 'editable' : 'static'}-${currentRecord.id}`;
+  const matchSectionKey = `${sectionKey}.data.match`;
+  const nonMatchSectionKey = `${sectionKey}.data.nonMatch`;
 
   return (
     <div
@@ -91,13 +107,17 @@ export const ProfileBranch = memo(({
       className={classNames(css['profile-branch'], className)}
     >
       <ProfileLabel
-        entityKey={entityKey}
         label={getLabel}
+        reactTo={reactTo}
+        linkingRules={linkingRules}
         recordData={recordData}
         record={record}
-        linkingRules={linkingRules}
-        onUnlink={noop}
-        onDelete={noop}
+        parentRecordData={parentRecordData}
+        parentSectionKey={parentSectionKey}
+        parentSectionData={parentSectionData}
+        setParentSectionData={setParentSectionData}
+        onUnlink={onUnlink}
+        onDelete={onDelete}
       />
       {childrenSectionAllowed && (
         <div className={css['branch-container']}>
@@ -113,14 +133,18 @@ export const ProfileBranch = memo(({
                 matchData.map((item, i) => (
                   <ProfileBranch
                     key={`profile-branch-${item.id}-${i}`}
-                    entityKey={`${camelCase(item.contentType)}s`}
-                    recordData={item.content}
-                    contentData={item.childSnapshotWrappers}
-                    record={record}
+                    reactTo={PROFILE_RELATION_TYPES.MATCH}
                     linkingRules={linkingRules}
+                    recordData={item}
+                    record={record}
+                    parentRecordData={currentRecord}
+                    parentSectionKey={matchSectionKey}
+                    parentSectionData={matchData}
+                    setParentSectionData={setMatchData}
                     onChange={onChange}
                     onLink={onLink}
                     onUnlink={onUnlink}
+                    onDelete={onDelete}
                   />
                 )) : (
                   <div>
@@ -133,7 +157,7 @@ export const ProfileBranch = memo(({
               }
             </div>
             <TreeLine
-              from={`#branch-${record ? 'editable' : 'static'}-${recordData.id}`}
+              from={`#branch-${record ? 'editable' : 'static'}-${currentRecord.id}`}
               to={`#${matchSectionId} > :first-child`}
               container={`#${containerId}`}
               fromAnchor="left bottom"
@@ -143,15 +167,15 @@ export const ProfileBranch = memo(({
             />
             {!record && (
               <ProfileLinker
-                id={`${recordData.id}-match`}
+                id={`${currentRecord.id}-match`}
                 linkingRules={linkingRules}
                 disabledOptions={getDisabledOptions(matchData, siblingsProhibited)}
-                parentId={recordData.id}
+                parentId={currentRecord.id}
                 parentType={entityKey}
-                dataKey={`${sectionKey}.data.match`}
+                dataKey={matchSectionKey}
                 initialData={matchData}
                 setInitialData={setMatchData}
-                reactTo="MATCH"
+                reactTo={PROFILE_RELATION_TYPES.MATCH}
                 onLink={onLink}
                 {...dataAttributes}
               />
@@ -169,14 +193,18 @@ export const ProfileBranch = memo(({
                 nonMatchData.map((item, i) => (
                   <ProfileBranch
                     key={`profile-branch-${i}`}
-                    entityKey={`${camelCase(item.contentType)}s`}
-                    recordData={item.content}
-                    contentData={item.childSnapshotWrappers}
-                    record={record}
+                    reactTo={PROFILE_RELATION_TYPES.NON_MATCH}
                     linkingRules={linkingRules}
+                    recordData={item}
+                    record={record}
+                    parentRecordData={currentRecord}
+                    parentSectionKey={nonMatchSectionKey}
+                    parentSectionData={nonMatchData}
+                    setParentSectionData={setNonMatchData}
                     onChange={onChange}
                     onLink={onLink}
                     onUnlink={onUnlink}
+                    onDelete={onDelete}
                   />
                 )) : (
                   <div>
@@ -189,7 +217,7 @@ export const ProfileBranch = memo(({
               }
             </div>
             <TreeLine
-              from={`#branch-${record ? 'editable' : 'static'}-${recordData.id}`}
+              from={`#branch-${record ? 'editable' : 'static'}-${currentRecord.id}`}
               to={`#${nonMatchSectionId} > :first-child`}
               container={`#${containerId}`}
               fromAnchor="left bottom"
@@ -199,15 +227,15 @@ export const ProfileBranch = memo(({
             />
             {!record && (
               <ProfileLinker
-                id={`${recordData.id}-non-match`}
+                id={`${currentRecord.id}-non-match`}
                 linkingRules={linkingRules}
                 disabledOptions={getDisabledOptions(nonMatchData, siblingsProhibited)}
-                parentId={recordData.id}
+                parentId={currentRecord.id}
                 parentType={entityKey}
-                dataKey={`${sectionKey}.data.nonMatch`}
+                dataKey={nonMatchSectionKey}
                 initialData={nonMatchData}
                 setInitialData={setNonMatchData}
-                reactTo="NON_MATCH"
+                reactTo={PROFILE_RELATION_TYPES.NON_MATCH}
                 onLink={onLink}
                 {...dataAttributes}
               />
@@ -220,15 +248,19 @@ export const ProfileBranch = memo(({
 });
 
 ProfileBranch.propTypes = {
-  entityKey: PropTypes.string.isRequired,
-  recordData: PropTypes.object.isRequired,
-  contentData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  reactTo: PropTypes.string.isRequired,
   linkingRules: PropTypes.object.isRequired,
+  recordData: PropTypes.object.isRequired,
+  parentRecordData: PropTypes.object.isRequired,
+  parentSectionKey: PropTypes.string.isRequired,
+  parentSectionData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setParentSectionData: PropTypes.func.isRequired,
   record: PropTypes.object,
   className: PropTypes.string,
   onChange: PropTypes.func,
   onLink: PropTypes.func,
   onUnlink: PropTypes.func,
+  onDelete: PropTypes.func,
   dataAttributes: PropTypes.object,
 };
 
@@ -238,5 +270,6 @@ ProfileBranch.defaultProps = {
   onChange: noop,
   onLink: noop,
   onUnlink: noop,
+  onDelete: noop,
   dataAttributes: null,
 };
