@@ -194,21 +194,14 @@ describe('Action Profile View', () => {
         await actionProfiles.list.rows(0).click();
       });
 
-      // TODO: Fix it in UIDATIMP-396
-      describe.skip('appears', () => {
-        beforeEach(async () => {
-          await actionProfileDetails.expandPaneHeaderDropdown();
-          await actionProfileDetails.dropdownEditButton.click();
-        });
-
-        it('upon click on pane header menu edit button', () => {
-          expect(actionProfileForm.isPresent).to.be.true;
-        });
-      });
-
       describe('appears', () => {
         beforeEach(async () => {
-          await actionProfileDetails.editButton.click();
+          await actionProfileDetails.actionMenu.click();
+          await actionProfileDetails.actionMenu.editProfile.click();
+        });
+
+        it('upon click on pane header actions edit button', () => {
+          expect(actionProfileForm.isPresent).to.be.true;
         });
 
         it('and form fields are pre-filled with current data', () => {
@@ -291,16 +284,13 @@ describe('Action Profile View', () => {
             expect(actionProfileForm.associatedJobProfiles.unlinkButtons().length).to.be.equal(0);
           });
         });
-
-        it('upon click on edit button', () => {
-          expect(actionProfileForm.isPresent).to.be.true;
-        });
       });
     });
 
     describe('edit action profile form', () => {
       beforeEach(async () => {
-        await actionProfileDetails.editButton.click();
+        await actionProfileDetails.actionMenu.click();
+        await actionProfileDetails.actionMenu.editProfile.click();
       });
 
       describe('when form is submitted', () => {
@@ -346,29 +336,22 @@ describe('Action Profile View', () => {
       });
     });
 
-    // TODO: Fix it in UIDATIMP-396
-    describe.skip('delete confirmation modal', () => {
-      it('is not visible when pane header dropdown is closed', () => {
-        expect(actionProfileDetails.confirmationModal.isPresent).to.be.false;
-      });
-
-      // TODO: Fix it in UIDATIMP-396
+    describe('delete confirmation modal', () => {
       describe('is visible', () => {
         beforeEach(async () => {
-          await actionProfileDetails.expandPaneHeaderDropdown();
-          await actionProfileDetails.dropdownDeleteButton.click();
+          await actionProfileDetails.actionMenu.click();
+          await actionProfileDetails.actionMenu.deleteProfile.click();
         });
 
-        it('when pane header dropdown is opened', () => {
-          expect(actionProfileDetails.isPresent).to.be.true;
+        it('when pane header actions delete button is clicked', () => {
+          expect(actionProfileDetails.confirmationModal.isPresent).to.be.true;
         });
       });
 
-      // TODO: Fix it in UIDATIMP-396
       describe('disappears', () => {
         beforeEach(async () => {
-          await actionProfileDetails.expandPaneHeaderDropdown();
-          await actionProfileDetails.dropdownDeleteButton.click();
+          await actionProfileDetails.actionMenu.click();
+          await actionProfileDetails.actionMenu.deleteProfile.click();
           await actionProfileDetails.confirmationModal.cancelButton.click();
         });
 
@@ -377,12 +360,11 @@ describe('Action Profile View', () => {
         });
       });
 
-      // TODO: Fix it in UIDATIMP-396
       describe('upon click on confirm button initiates the action profile deletion process and in case of error', () => {
         beforeEach(async function () {
           this.server.delete('/data-import-profiles/actionProfiles/:id', () => new Response(500, {}));
-          await actionProfileDetails.expandPaneHeaderDropdown();
-          await actionProfileDetails.dropdownDeleteButton.click();
+          await actionProfileDetails.actionMenu.click();
+          await actionProfileDetails.actionMenu.deleteProfile.click();
           await actionProfileDetails.confirmationModal.confirmButton.click();
         });
 
@@ -399,12 +381,11 @@ describe('Action Profile View', () => {
         });
       });
 
-      // TODO: Fix it in UIDATIMP-396
       describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
         describe('exception modal', () => {
           beforeEach(async () => {
-            await actionProfileDetails.expandPaneHeaderDropdown();
-            await actionProfileDetails.dropdownDeleteButton.click();
+            await actionProfileDetails.actionMenu.click();
+            await actionProfileDetails.actionMenu.deleteProfile.click();
             await actionProfileDetails.confirmationModal.confirmButton.click();
             await actionProfileDetails.confirmationModal.confirmButton.click();
           });
@@ -434,12 +415,11 @@ describe('Action Profile View', () => {
           });
         });
 
-        // TODO: Fix it in UIDATIMP-394-398
         describe('when there are no associated job profiles', () => {
           beforeEach(async function () {
             this.server.delete('/data-import-profiles/actionProfiles/:id');
-            await actionProfileDetails.expandPaneHeaderDropdown();
-            await actionProfileDetails.dropdownDeleteButton.click();
+            await actionProfileDetails.actionMenu.click();
+            await actionProfileDetails.actionMenu.deleteProfile.click();
             await actionProfileDetails.confirmationModal.confirmButton.click();
           });
 
@@ -454,14 +434,13 @@ describe('Action Profile View', () => {
       });
     });
 
-    // TODO: Fix it in UIDATIMP-396
-    describe.skip('duplicate action profile form', () => {
+    describe('duplicate action profile form', () => {
       beforeEach(async () => {
-        await actionProfileDetails.expandPaneHeaderDropdown();
-        await actionProfileDetails.dropdownDuplicateButton.click();
+        await actionProfileDetails.actionMenu.click();
+        await actionProfileDetails.actionMenu.duplicateProfile.click();
       });
 
-      it('appears upon click on pane header menu duplicate button', () => {
+      it('appears upon click on pane actions duplicate button', () => {
         expect(actionProfileForm.isPresent).to.be.true;
       });
 

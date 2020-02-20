@@ -8,9 +8,9 @@ import {
 
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
-import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 
 import css from '../../../src/components/UploadingJobsDisplay/components/FileItem/FileItem.css';
+import { ActionMenuInteractor } from './action-menu-interactor';
 
 @interactor
 class LandingPageLink {
@@ -32,8 +32,7 @@ class LandingPageLink {
   files = collection('[data-test-file-item]', FileItem);
   callout = new CalloutInteractor();
   emptyMsg = scoped('[data-test-empty-msg]');
-  paneHeaderDropdown = new ButtonInteractor('[class*="paneHeaderCenterButton"]');
-  loadRecordsButton = new ButtonInteractor('[data-test-load-records]');
+  actionMenu = scoped('#pane-upload', ActionMenuInteractor);
 }
 
 export const landingPageLink = new LandingPageLink();

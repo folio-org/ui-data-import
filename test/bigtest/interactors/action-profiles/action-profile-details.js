@@ -4,19 +4,15 @@ import {
   isPresent,
 } from '@bigtest/interactor';
 
-import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 
 import { AssociatedJobProfiles } from '../associated-job-profiles';
 import { AssociatedMappingProfiles } from '../associated-mapping-profiles';
+import { ActionMenuInteractor } from '../action-menu-interactor';
 
 @interactor class ActionProfileDetailsInteractor {
-  paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
-  dropdownEditButton = new ButtonInteractor('[data-test-edit-item-menu-button]');
-  dropdownDeleteButton = new ButtonInteractor('[data-test-delete-item-menu-button]');
-  dropdownDuplicateButton = new ButtonInteractor('[data-test-duplicate-item-menu-button]');
-  editButton = new ButtonInteractor('[data-test-edit-item-button]');
+  actionMenu = new ActionMenuInteractor();
   headline = scoped('[data-test-headline]');
   description = scoped('[data-test-description]');
   isTagsPresent = isPresent('[data-test-tags-accordion]');
@@ -27,10 +23,6 @@ import { AssociatedMappingProfiles } from '../associated-mapping-profiles';
   associatedMappingProfile = new AssociatedMappingProfiles('[data-test-associated-mapping-profiles]');
   confirmationModal = new ConfirmationModalInteractor('#delete-action-profile-modal');
   callout = new CalloutInteractor();
-
-  expandPaneHeaderDropdown() {
-    return this.paneHeaderDropdown.click();
-  }
 }
 
 export const actionProfileDetails = new ActionProfileDetailsInteractor('#pane-action-profile-details');

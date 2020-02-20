@@ -9,10 +9,8 @@ import { FormattedMessage } from 'react-intl';
 import { noop } from 'lodash';
 import classNames from 'classnames';
 
-import {
-  AppIcon,
-  Dropdown,
-} from '@folio/stripes/components';
+import { Dropdown } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes-core';
 
 import { IncomingRecordMenu } from './IncomingRecordMenu';
 import { IncomingRecordTrigger } from './IncomingRecordTrigger';

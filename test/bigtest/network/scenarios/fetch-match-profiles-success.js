@@ -43,11 +43,11 @@ export default server => {
   server.create('match-profile', {
     name: 'EDI regular',
     description: 'EDIFACT POL',
-    incomingRecordType: 'EDIFACT',
+    incomingRecordType: 'EDIFACT_INVOICE',
     existingRecordType: 'ORDER',
     parentProfiles: noAssociatedJobProfiles,
     matchDetails: [{
-      incomingRecordType: 'EDIFACT',
+      incomingRecordType: 'EDIFACT_INVOICE',
       existingRecordType: 'ORDER',
       matchCriterion: 'EXACTLY_MATCHES',
       existingMatchExpression: {
@@ -226,7 +226,7 @@ export default server => {
   server.delete('/data-import-profiles/matchProfiles/:id', {}, 409);
   server.post('/data-import-profiles/matchProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
-    const record = server.create('match-profile', params);
+    const record = server.create('match-profile', params.profile);
 
     return record.attrs;
   });

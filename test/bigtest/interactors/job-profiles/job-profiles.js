@@ -17,7 +17,6 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   list = new MultiColumnListInteractor('#job-profiles-list');
   selectAllCheckBox = new CheckboxInteractor('[data-test-select-all-checkbox]');
   checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);
-  newJobProfileButton = new ButtonInteractor('[data-test-new-button]');
   searchFiled = new TextFieldInteractor('#input-job-profiles-search');
   searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
   clearSearchButton = new ButtonInteractor('#input-job-profiles-clear-search-button');

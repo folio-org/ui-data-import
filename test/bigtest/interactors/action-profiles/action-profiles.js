@@ -19,7 +19,6 @@ class ActionProfilesInteractor {
   list = new MultiColumnListInteractor('#action-profiles-list');
   selectAllCheckBox = new CheckboxInteractor('[data-test-select-all-checkbox]');
   checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);
-  newActionProfileButton = new ButtonInteractor('[data-test-new-button]');
   searchField = new TextFieldInteractor('#input-action-profiles-search');
   searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
   searchSubmitButtonDisabled = property('[data-test-search-and-sort-submit]', 'disabled');
