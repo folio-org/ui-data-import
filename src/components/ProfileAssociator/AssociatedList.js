@@ -124,8 +124,6 @@ export const AssociatedList = memo(({
     onRemove,
   });
 
-  console.log('New Data: ', currentSortOrder, currentSortDirection, currentData);
-
   return (
     <MultiColumnList
       id={`associated-${entityKey}-list`}

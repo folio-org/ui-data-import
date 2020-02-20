@@ -8,12 +8,15 @@ import PropTypes from 'prop-types';
 
 import {
   noop,
-  camelCase,
   snakeCase,
 } from 'lodash';
 import classNames from 'classnames';
 
-import { ENTITY_KEYS } from '../../utils/constants';
+import {
+  ENTITY_KEYS,
+  PROFILE_TYPES,
+  PROFILE_RELATION_TYPES,
+} from '../../utils/constants';
 import {
   ProfileBranch,
   ProfileLinker,
@@ -35,7 +38,12 @@ export const ProfileTree = memo(({
   dataAttributes,
 }) => {
   const { siblingsProhibited } = linkingRules;
+
   const dataKey = 'jobProfiles.current';
+  const parentRecordData = {
+    id: parentId,
+    contentType: PROFILE_TYPES.JOB_PROFILE,
+  };
 
   const [changesCount, setChangesCount] = useState(0);
   const [data, setData] = useState([]);
@@ -46,7 +54,13 @@ export const ProfileTree = memo(({
     setData(getData);
   }, [contentData]);
 
+  /**
+   * Disabled due to UIDATIMP-357 and UIDATIMP-358 conflict with context solution
+   * @TODO return this to action or substitute with new solution to fix TreeLine rendering
+   */
   // const ChangesContext = React.createContext(changesCount);
+
+  const isSnakeCase = str => str && str.includes('_');
 
   const getLines = (lines, currentType, reactTo = null) => lines.map(item => ({
     profileId: item.id,
@@ -60,13 +74,19 @@ export const ProfileTree = memo(({
     return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === line.id);
   };
 
-  const composeRelations = (lines, masterId, masterType, detailType, reactTo) => lines.map(item => ({
-    masterProfileId: masterId,
-    masterProfileType: snakeCase(masterType).slice(0, -1).toLocaleUpperCase(),
-    detailProfileId: item.id,
-    detailProfileType: snakeCase(detailType).slice(0, -1).toLocaleUpperCase(),
-    reactTo,
-  }));
+  const composeRelations = (lines, masterId, masterType, detailType, reactTo) => lines.map(item => {
+    const rel = {
+      masterProfileId: masterId,
+      masterProfileType: isSnakeCase(masterType) ? masterType : snakeCase(masterType).slice(0, -1).toLocaleUpperCase(),
+      detailProfileId: item.profileId || item.id,
+      detailProfileType: isSnakeCase(detailType) ? detailType : snakeCase(detailType).slice(0, -1).toLocaleUpperCase(),
+    };
+
+    return reactTo ? {
+      ...rel,
+      reactTo,
+    } : rel;
+  });
 
   const link = (initialData, setInitialData, lines, masterId, masterType, detailType, reactTo, localDataKey) => {
     const uniqueLines = lines.filter(line => initialData.findIndex(item => item.id === line.id) === -1);
@@ -83,33 +103,26 @@ export const ProfileTree = memo(({
     setInitialData(newData);
   };
 
-  const unlink = row => {
-    const index = data.findIndex(item => item.id === row.id);
-    const newIdx = findRelIndex(relationsToAdd, row);
+  const unlink = (parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey) => {
+    const index = parentData.findIndex(item => item.id === line.id);
+    const newIdx = findRelIndex(relationsToAdd, line);
 
     if (newIdx < 0) {
-      const relsToDel = [...relationsToDelete, ...composeRelations([row])];
+      const newRels = composeRelations([line], masterId, masterType, detailType, reactTo);
+      const relsToDel = [...relationsToDelete, ...newRels];
 
       onUnlink(relsToDel);
     }
 
-    data.splice(index, 1);
-    setData(data);
-    sessionStorage.setItem(dataKey, JSON.stringify(data));
+    const newData = [...parentData];
+
+    newData.splice(index, 1);
+    setParentData(newData);
+    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
   };
 
-  const remove = row => {
-    const index = data.findIndex(item => item.id === row.id);
-    const newIdx = findRelIndex(relationsToAdd, row);
-
-    if (newIdx < 0) {
-      const relsToDel = [...relationsToDelete, ...composeRelations([row])];
-
-      onUnlink(relsToDel);
-    }
-
-    data.splice(index, 1);
-    setData(data);
+  const remove = (parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey) => {
+    unlink(parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey);
   };
 
   return (
@@ -119,18 +132,20 @@ export const ProfileTree = memo(({
      */
     /* <ChangesContext.Provider value={changesCount}> */
     <div>
-      {/* <div>{changesCount}</div> */}
       <div className={classNames(css['profile-tree'], className)}>
         <div className={css['profile-tree-container']}>
           {data && data.length ? (
             data.map((item, i) => (
               <ProfileBranch
                 key={`profile-branch-${item.profileId}-${i}`}
-                entityKey={`${camelCase(item.contentType)}s`}
-                recordData={item.content}
-                contentData={item.childSnapshotWrappers}
-                record={record}
+                reactTo={PROFILE_RELATION_TYPES.NONE}
                 linkingRules={linkingRules}
+                recordData={item}
+                record={record}
+                parentRecordData={parentRecordData}
+                parentSectionKey={dataKey}
+                parentSectionData={data}
+                setParentSectionData={setData}
                 onChange={setChangesCount}
                 onLink={link}
                 onUnlink={unlink}

@@ -18,6 +18,7 @@ import {
   LinkerMenu,
   LinkerTrigger,
 } from '.';
+import { PROFILE_RELATION_TYPES } from '../../../utils/constants';
 
 import css from '../ProfileTree.css';
 
@@ -130,6 +131,6 @@ ProfileLinker.propTypes = {
 ProfileLinker.defaultProps = {
   title: '',
   className: '',
-  reactTo: null,
+  reactTo: PROFILE_RELATION_TYPES.NONE,
   disabledOptions: [],
 };
