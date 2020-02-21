@@ -1,7 +1,4 @@
-import React, {
-  Fragment,
-  memo,
-} from 'react';
+import React, { memo } from 'react';
 import {
   FormattedMessage,
   intlShape,
@@ -20,12 +17,11 @@ import * as components from '..';
 import * as validators from '../../utils/formValidators';
 
 const controls = {
-  Fragment,
   Field,
   ...stripesComponents,
 };
 
-const getControl = controlType => components[controlType] || controls[controlType];
+const getControl = controlType => components[controlType] || controls[controlType] || 'div';
 const getValidation = validation => validation.map(val => validators[val]);
 const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
 const hasContent = (children, record) => children
@@ -195,7 +191,7 @@ export const Control = memo(props => {
           onAdd={onAdd}
           onRemove={onRemove}
           renderField={() => (
-            <Fragment>
+            <>
               {children.map((cfg, i) => (
                 <Control
                   key={`control-${i}`}
@@ -209,7 +205,7 @@ export const Control = memo(props => {
                   {...cfg}
                 />
               ))}
-            </Fragment>
+            </>
           )}
         />
       </Cmp>

@@ -1,7 +1,4 @@
-import React, {
-  memo,
-  Fragment,
-} from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
@@ -12,12 +9,11 @@ import * as components from '..';
 import { Control } from './Control';
 
 const controls = {
-  Fragment,
   Field,
   ...stripesComponents,
 };
 
-const getControl = controlType => components[controlType] || controls[controlType];
+const getControl = controlType => components[controlType] || controls[controlType] || 'div';
 const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
 
 export const FlexibleForm = memo(props => {

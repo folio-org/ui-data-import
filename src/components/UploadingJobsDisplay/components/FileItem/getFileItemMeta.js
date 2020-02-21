@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import {
   FormattedMessage,
   FormattedDate,
@@ -99,7 +99,7 @@ export const getFileItemMeta = ({
       return {
         ...defaultFileMeta,
         renderHeading: () => (
-          <Fragment>
+          <>
             <span className={css.fileItemHeaderName}>{name}</span>
             <span className={classNames(css.fileItemHeaderContent, css.fileItemUploadedHeaderContent)}>
               <FormattedDate value={uploadedDate} />
@@ -116,7 +116,7 @@ export const getFileItemMeta = ({
                 />
               )}
             </FormattedMessage>
-          </Fragment>
+          </>
         ),
       };
     }
@@ -126,14 +126,14 @@ export const getFileItemMeta = ({
         ...defaultFileMeta,
         fileWrapperClassName: classNames(css.fileItemDanger, css.fileItemFailed),
         renderHeading: () => (
-          <Fragment>
+          <>
             <span className={css.fileItemHeaderName}>{name}</span>
             <span className={css.fileItemHeaderContent}>
               <FormattedMessage id={`ui-data-import.${errorMsgTranslationID}`}>
                 {content => (
-                  <Fragment>
+                  <>
                     <Icon icon="exclamation-circle" /> <span data-test-error-msg>{content}</span>
-                  </Fragment>
+                  </>
                 )}
               </FormattedMessage>
             </span>
@@ -154,7 +154,7 @@ export const getFileItemMeta = ({
               )
               : <Loading />
             }
-          </Fragment>
+          </>
         ),
       };
     }
@@ -163,7 +163,7 @@ export const getFileItemMeta = ({
         ...defaultFileMeta,
         fileWrapperClassName: css.fileItemDanger,
         renderHeading: () => (
-          <Fragment>
+          <>
             <span className={css.fileItemHeaderName}>
               <FormattedMessage
                 id="ui-data-import.deletedFile"
@@ -183,7 +183,7 @@ export const getFileItemMeta = ({
               )
               : <Loading />
             }
-          </Fragment>
+          </>
         ),
       };
     }

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -15,7 +15,7 @@ export const LinkerTrigger = ({
   keyHandler,
   onClick,
 }) => (
-  <Fragment>
+  <>
     <Button
       buttonStyle="default"
       ref={triggerRef}
@@ -36,7 +36,7 @@ export const LinkerTrigger = ({
       triggerRef={triggerRef}
       placement="right-end"
     />
-  </Fragment>
+  </>
 );
 
 LinkerTrigger.propTypes = {

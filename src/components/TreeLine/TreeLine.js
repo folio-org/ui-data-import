@@ -1,5 +1,4 @@
 import React, {
-  Fragment,
   useState,
   useEffect,
 } from 'react';
@@ -165,7 +164,7 @@ export const TreeLine = props => {
 
   if (orientation === ORIENTATIONS.HORIZONTAL) {
     return (
-      <Fragment>
+      <>
         <Line
           {...props}
           x0={coords.x0}
@@ -182,12 +181,12 @@ export const TreeLine = props => {
           y1={coords.y1}
           zIndex={zIndex}
         />
-      </Fragment>
+      </>
     );
   }
 
   return (
-    <Fragment>
+    <>
       <Line
         {...props}
         x0={coords.x0}
@@ -204,7 +203,7 @@ export const TreeLine = props => {
         y1={coords.y1}
         zIndex={zIndex}
       />
-    </Fragment>
+    </>
   );
 };
 

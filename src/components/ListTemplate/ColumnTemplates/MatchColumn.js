@@ -1,7 +1,4 @@
-import React, {
-  memo,
-  Fragment,
-} from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import HighLight from 'react-highlighter';
 import { get } from 'lodash';
@@ -58,9 +55,9 @@ export const MatchColumn = memo(({
           app="data-import"
           iconKey={FOLIO_RECORD_TYPES[existingRecordType].iconKey}
         >
-          <Fragment>
+          <>
             {document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT && (
-              <Fragment>
+              <>
                 <HighLight
                   search={searchTerm || ''}
                   className={sharedCss.container}
@@ -81,10 +78,10 @@ export const MatchColumn = memo(({
                 >
                   {getFieldMatched(fieldMatched, fieldSource)}
                 </HighLight>
-              </Fragment>
+              </>
             )}
             {document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT && (
-              <Fragment>
+              <>
                 <HighLight
                   search={searchTerm || ''}
                   className={sharedCss.container}
@@ -105,9 +102,9 @@ export const MatchColumn = memo(({
                 >
                   {formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
                 </HighLight>
-              </Fragment>
+              </>
             )}
-          </Fragment>
+          </>
         </AppIcon>
       )}
     </IntlConsumer>

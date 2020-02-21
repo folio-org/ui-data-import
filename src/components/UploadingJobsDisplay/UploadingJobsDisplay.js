@@ -246,7 +246,7 @@ export class UploadingJobsDisplay extends Component {
   }
 
   uploadFile(fileKey) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       try {
         const { files: { [fileKey]: fileMeta } } = this.state;
 

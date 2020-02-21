@@ -8,7 +8,7 @@ export const fetchUploadDefinition = async ({
 
   const response = await fetch(
     `${host}/data-import/uploadDefinitions/${id}`,
-    { headers: createOkapiHeaders(okapi) }
+    { headers: createOkapiHeaders(okapi) },
   );
 
   if (!response.ok) {

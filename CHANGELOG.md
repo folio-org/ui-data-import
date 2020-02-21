@@ -19,6 +19,7 @@
 * Define API Contract for MappingProfile field mapping definitions (UIDATIMP-377)
 * Remove extra action buttons in profiles Settings screens (UIDATIMP-394 - UIDATIMP-397)
 * Augment RecordTypeSelector component with Incoming Record Type selection dropdown (UIDATIMP-386)
+* Update eslint to v6.2.1 (UIDATIMP-376)
 
 ### Bugs fixed:
 * Profile Associator lists are empty when the user reloads the page with Profile Edit Form open (UIDATIMP-338)

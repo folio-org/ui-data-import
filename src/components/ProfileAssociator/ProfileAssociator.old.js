@@ -116,7 +116,7 @@ export const createProfileAssociator = props => {
       } = this.props;
 
       return (
-        <Fragment>
+        <>
           {record ? (
             <AssociatorStatic
               entityKey={entityKey}
@@ -147,7 +147,7 @@ export const createProfileAssociator = props => {
               dataAttributes={dataAttributes}
             />
           )}
-        </Fragment>
+        </>
       );
     }
   }
