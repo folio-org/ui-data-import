@@ -64,7 +64,7 @@ export default server => {
   server.delete('/data-import-profiles/actionProfiles/:id', {}, 409);
   server.post('/data-import-profiles/actionProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
-    const record = server.create('action-profile', params);
+    const record = server.create('action-profile', params.profile);
 
     return record.attrs;
   });

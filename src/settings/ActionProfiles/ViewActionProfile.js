@@ -131,11 +131,7 @@ export class ViewActionProfile extends Component {
   );
 
   renderPaneHeader = renderProps => {
-    const {
-      onClose,
-      paneId,
-    } = this.props;
-
+    const { onClose } = this.props;
     const { record: actionProfile } = this.actionProfileData;
 
     const paneTitle = (
@@ -151,7 +147,6 @@ export class ViewActionProfile extends Component {
     return (
       <PaneHeader
         {...renderProps}
-        id={paneId}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.actionProfileName" />}
         actionMenu={this.renderActionMenu}
@@ -162,7 +157,10 @@ export class ViewActionProfile extends Component {
   };
 
   render() {
-    const { tagsEnabled } = this.props;
+    const {
+      tagsEnabled,
+      paneId,
+    } = this.props;
     const { showDeleteConfirmation } = this.state;
     const {
       hasLoaded,
@@ -191,6 +189,7 @@ export class ViewActionProfile extends Component {
 
     return (
       <Pane
+        id={paneId}
         defaultWidth="fill"
         fluidContentWidth
         renderHeader={this.renderPaneHeader}

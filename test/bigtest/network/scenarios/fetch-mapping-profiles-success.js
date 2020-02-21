@@ -34,7 +34,7 @@ export default server => {
   server.delete('/data-import-profiles/mappingProfiles/:id', {}, 409);
   server.post('/data-import-profiles/mappingProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
-    const record = server.create('mapping-profile', params);
+    const record = server.create('mapping-profile', params.profile);
 
     return record.attrs;
   });

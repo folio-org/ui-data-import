@@ -32,7 +32,7 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
 }
 
 describe('Match Profile View', () => {
-  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
+  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-job-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
   beforeEach(async function () {
     this.visit('/settings/data-import/match-profiles');
@@ -271,24 +271,13 @@ describe('Match Profile View', () => {
   });
 
   describe('edit match profile form', () => {
-    // TODO: Fix it in UIDATIMP-395
-    describe.skip('appears', () => {
-      beforeEach(async () => {
-        await matchProfileDetails.expandPaneHeaderDropdown();
-        await matchProfileDetails.dropdownEditButton.click();
-      });
-
-      it('upon click on pane header menu edit button', () => {
-        expect(matchProfileForm.isPresent).to.be.true;
-      });
-    });
-
     describe('appears', () => {
       beforeEach(async () => {
-        await matchProfileDetails.editButton.click();
+        await matchProfileDetails.actionMenu.click();
+        await matchProfileDetails.actionMenu.editProfile.click();
       });
 
-      it('upon click on edit button', () => {
+      it('upon click on pane actions edit button', () => {
         expect(matchProfileForm.isPresent).to.be.true;
       });
     });
@@ -297,7 +286,8 @@ describe('Match Profile View', () => {
   describe('edit match profile form', () => {
     beforeEach(async () => {
       await matchProfiles.list.rows(1).click();
-      await matchProfileDetails.editButton.click();
+      await matchProfileDetails.actionMenu.click();
+      await matchProfileDetails.actionMenu.editProfile.click();
       await matchProfileForm.whenLoaded();
     });
 
@@ -340,11 +330,11 @@ describe('Match Profile View', () => {
     });
   });
 
-  // TODO: Fix it in UIDATIMP-395
-  describe.skip('duplicate match profile form', () => {
+  describe('duplicate match profile form', () => {
     beforeEach(async () => {
-      await matchProfileDetails.expandPaneHeaderDropdown();
-      await matchProfileDetails.dropdownDuplicateButton.click();
+      await matchProfiles.list.rows(1).click();
+      await matchProfileDetails.actionMenu.click();
+      await matchProfileDetails.actionMenu.duplicateProfile.click();
       await matchProfileForm.whenLoaded();
     });
 
@@ -418,8 +408,7 @@ describe('Match Profile View', () => {
   });
 });
 
-// TODO: Fix it in UIDATIMP-395
-describe.skip('delete confirmation modal', () => {
+describe('delete confirmation modal', () => {
   setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags'] });
 
   beforeEach(async function () {
@@ -427,25 +416,21 @@ describe.skip('delete confirmation modal', () => {
     await matchProfiles.list.rows(0).click();
   });
 
-  it('is not visible when pane header dropdown is closed', () => {
-    expect(matchProfileDetails.confirmationModal.isPresent).to.be.false;
-  });
-
   describe('is visible', () => {
     beforeEach(async () => {
-      await matchProfileDetails.expandPaneHeaderDropdown();
-      await matchProfileDetails.dropdownDeleteButton.click();
+      await matchProfileDetails.actionMenu.click();
+      await matchProfileDetails.actionMenu.deleteProfile.click();
     });
 
-    it('when pane header dropdown is opened', () => {
-      expect(matchProfileDetails.isPresent).to.be.true;
+    it('when pane header actions delete button is clicked', () => {
+      expect(matchProfileDetails.confirmationModal.isPresent).to.be.true;
     });
   });
 
   describe('disappears', () => {
     beforeEach(async () => {
-      await matchProfileDetails.expandPaneHeaderDropdown();
-      await matchProfileDetails.dropdownDeleteButton.click();
+      await matchProfileDetails.actionMenu.click();
+      await matchProfileDetails.actionMenu.deleteProfile.click();
       await matchProfileDetails.confirmationModal.cancelButton.click();
     });
 
@@ -457,8 +442,8 @@ describe.skip('delete confirmation modal', () => {
   describe('upon click on confirm button initiates the match profile deletion process and in case of error', () => {
     beforeEach(async function () {
       this.server.delete('/data-import-profiles/matchProfiles/:id', () => new Response(500, {}));
-      await matchProfileDetails.expandPaneHeaderDropdown();
-      await matchProfileDetails.dropdownDeleteButton.click();
+      await matchProfileDetails.actionMenu.click();
+      await matchProfileDetails.actionMenu.deleteProfile.click();
       await matchProfileDetails.confirmationModal.confirmButton.click();
     });
 
@@ -478,8 +463,8 @@ describe.skip('delete confirmation modal', () => {
   describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
     describe('exception modal', () => {
       beforeEach(async () => {
-        await matchProfileDetails.expandPaneHeaderDropdown();
-        await matchProfileDetails.dropdownDeleteButton.click();
+        await matchProfileDetails.actionMenu.click();
+        await matchProfileDetails.actionMenu.deleteProfile.click();
         await matchProfileDetails.confirmationModal.confirmButton.click();
         await matchProfileDetails.confirmationModal.confirmButton.click();
       });
@@ -512,8 +497,8 @@ describe.skip('delete confirmation modal', () => {
     describe('when there are no associated job profiles', () => {
       beforeEach(async function () {
         this.server.delete('/data-import-profiles/matchProfiles/:id');
-        await matchProfileDetails.expandPaneHeaderDropdown();
-        await matchProfileDetails.dropdownDeleteButton.click();
+        await matchProfileDetails.actionMenu.click();
+        await matchProfileDetails.actionMenu.deleteProfile.click();
         await matchProfileDetails.confirmationModal.confirmButton.click();
       });
 

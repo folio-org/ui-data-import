@@ -45,11 +45,11 @@ describe('Match profile form', () => {
   describe('appears', () => {
     beforeEach(async function () {
       this.visit('/settings/data-import/match-profiles');
-      await matchProfiles.newMatchProfileButton.click();
+      await matchProfiles.actionMenu.newProfileButton.click();
       await matchProfileForm.whenLoaded();
     });
 
-    it('upon click on new match profile button', () => {
+    it('upon click on actions new profile button', () => {
       expect(matchProfileForm.isPresent).to.be.true;
     });
   });

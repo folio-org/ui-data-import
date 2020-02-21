@@ -6,13 +6,13 @@ import {
 } from '@bigtest/mocha';
 
 import { setupApplication } from '../../helpers';
+import { associatedActionProfiles } from '../../mocks/associated-action-profiles';
 import {
   actionProfileDetails,
   mappingProfiles,
   mappingProfileForm,
   mappingProfileDetails,
 } from '../../interactors';
-import { noAssociatedActionProfiles } from '../../mocks';
 
 async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
   const {
@@ -71,6 +71,7 @@ describe('Mapping Profile View', () => {
 
       describe('when action profile is clicked', () => {
         beforeEach(async function () {
+          this.server.get('/data-import-profiles/actionProfiles/:id', associatedActionProfiles[1].content);
           await mappingProfileDetails.associatedActionProfiles.links(0).click();
         });
 
@@ -85,21 +86,14 @@ describe('Mapping Profile View', () => {
         await mappingProfiles.list.rows(1).click();
       });
 
-      // TODO: Fix it in UIDATIMP-397
-      describe.skip('appears', () => {
-        beforeEach(async () => {
-          await mappingProfileDetails.expandPaneHeaderDropdown();
-          await mappingProfileDetails.dropdownEditButton.click();
-        });
-
-        it('upon click on pane header menu edit button', () => {
-          expect(mappingProfileForm.isPresent).to.be.true;
-        });
-      });
-
       describe('appears', () => {
         beforeEach(async () => {
-          await mappingProfileDetails.editButton.click();
+          await mappingProfileDetails.actionMenu.click();
+          await mappingProfileDetails.actionMenu.editProfile.click();
+        });
+
+        it('upon click on pane header actions edit button', () => {
+          expect(mappingProfileForm.isPresent).to.be.true;
         });
 
         it('and form fields are pre-filled with current data', () => {
@@ -166,7 +160,8 @@ describe('Mapping Profile View', () => {
     describe('edit mapping profile form', () => {
       beforeEach(async () => {
         await mappingProfiles.list.rows(0).click();
-        await mappingProfileDetails.editButton.click();
+        await mappingProfileDetails.actionMenu.click();
+        await mappingProfileDetails.actionMenu.editProfile.click();
       });
 
       describe('when form is submitted', () => {
@@ -235,12 +230,11 @@ describe('Mapping Profile View', () => {
     });
   });
 
-  // TODO: Fix it in UIDATIMP-397
-  describe.skip('duplicate mapping profile form', () => {
+  describe('duplicate mapping profile form', () => {
     beforeEach(async () => {
       await mappingProfiles.list.rows(0).click();
-      await mappingProfileDetails.expandPaneHeaderDropdown();
-      await mappingProfileDetails.dropdownDuplicateButton.click();
+      await mappingProfileDetails.actionMenu.click();
+      await mappingProfileDetails.actionMenu.duplicateProfile.click();
     });
 
     it('appears upon click on pane header menu duplicate button', () => {
@@ -316,27 +310,26 @@ describe('Mapping Profile View', () => {
     });
   });
 
-  // TODO: Fix it in UIDATIMP-397
-  describe.skip('delete confirmation modal', () => {
+  describe('delete confirmation modal', () => {
     beforeEach(async () => {
       await mappingProfiles.list.rows(0).click();
     });
 
     describe('is visible', () => {
       beforeEach(async () => {
-        await mappingProfileDetails.expandPaneHeaderDropdown();
-        await mappingProfileDetails.dropdownDeleteButton.click();
+        await mappingProfileDetails.actionMenu.click();
+        await mappingProfileDetails.actionMenu.deleteProfile.click();
       });
 
-      it('when pane header dropdown is opened', () => {
-        expect(mappingProfileDetails.isPresent).to.be.true;
+      it('when pane header actions delete button is clicked', () => {
+        expect(mappingProfileDetails.confirmationModal.isPresent).to.be.true;
       });
     });
 
     describe('disappears', () => {
       beforeEach(async () => {
-        await mappingProfileDetails.expandPaneHeaderDropdown();
-        await mappingProfileDetails.dropdownDeleteButton.click();
+        await mappingProfileDetails.actionMenu.click();
+        await mappingProfileDetails.actionMenu.deleteProfile.click();
         await mappingProfileDetails.confirmationModal.cancelButton.click();
       });
 
@@ -348,8 +341,8 @@ describe('Mapping Profile View', () => {
     describe('upon click on confirm button initiates the mapping profile deletion process and in case of error', () => {
       beforeEach(async function () {
         this.server.delete('/data-import-profiles/mappingProfiles/:id', () => new Response(500, {}));
-        await mappingProfileDetails.expandPaneHeaderDropdown();
-        await mappingProfileDetails.dropdownDeleteButton.click();
+        await mappingProfileDetails.actionMenu.click();
+        await mappingProfileDetails.actionMenu.deleteProfile.click();
         await mappingProfileDetails.confirmationModal.confirmButton.click();
       });
 
@@ -362,15 +355,15 @@ describe('Mapping Profile View', () => {
       });
 
       it('renders the correct number including the one which tried to delete', () => {
-        expect(mappingProfiles.list.rowCount).to.equal(3);
+        expect(mappingProfiles.list.rowCount).to.equal(5);
       });
     });
 
     describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
       describe('exception modal', () => {
         beforeEach(async () => {
-          await mappingProfileDetails.expandPaneHeaderDropdown();
-          await mappingProfileDetails.dropdownDeleteButton.click();
+          await mappingProfileDetails.actionMenu.click();
+          await mappingProfileDetails.actionMenu.deleteProfile.click();
           await mappingProfileDetails.confirmationModal.confirmButton.click();
           await mappingProfileDetails.confirmationModal.confirmButton.click();
         });
@@ -394,7 +387,7 @@ describe('Mapping Profile View', () => {
             });
 
             it('renders the correct number including the one which tried to delete', () => {
-              expect(mappingProfiles.list.rowCount).to.equal(3);
+              expect(mappingProfiles.list.rowCount).to.equal(5);
             });
           });
         });
@@ -403,8 +396,8 @@ describe('Mapping Profile View', () => {
       describe('when there are no associated job profiles', () => {
         beforeEach(async function () {
           this.server.delete('/data-import-profiles/mappingProfiles/:id');
-          await mappingProfileDetails.expandPaneHeaderDropdown();
-          await mappingProfileDetails.dropdownDeleteButton.click();
+          await mappingProfileDetails.actionMenu.click();
+          await mappingProfileDetails.actionMenu.deleteProfile.click();
           await mappingProfileDetails.confirmationModal.confirmButton.click();
         });
 
@@ -413,7 +406,7 @@ describe('Mapping Profile View', () => {
         });
 
         it('renders the correct number of rows without deleted one', () => {
-          expect(mappingProfiles.list.rowCount).to.equal(2);
+          expect(mappingProfiles.list.rowCount).to.equal(4);
         });
       });
     });

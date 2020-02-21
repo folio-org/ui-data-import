@@ -2,36 +2,27 @@ import { Response } from '@bigtest/mirage';
 
 import { SYSTEM_USER_NAME } from '../../../../src/utils/constants';
 import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
-import { snapshotWrappers } from '../../mocks/job-profiles-child-wrappers';
-
-const JOB_PROFILE_ID = '448ae575-daec-49c1-8041-d64c8ed8e5b1';
 
 export default server => {
   server.create('job-profile', {
-    id: JOB_PROFILE_ID,
+    id: '448ae575-daec-49c1-8041-d64c8ed8e5b1',
     name: 'Approval plan records',
     tags: { tagList: ['acq', 'cat', 'weekly'] },
     dataType: ['MARC'],
   });
   server.create('job-profile', {
+    id: '828a787c-bcf3-4c28-891a-9e6f3ba5068b',
     name: 'Create orders from acquisitions',
     tags: { tagList: ['acq'] },
     dataType: ['MARC'],
     userInfo: { userName: SYSTEM_USER_NAME },
   });
   server.create('job-profile', {
+    id: '87e4ad58-d677-43dd-8b04-9795741b2103',
     name: 'DDA discovery records',
     tags: { tagList: [] },
     dataType: ['Delimited'],
     userInfo: { lastName: 'Doe' },
-  });
-  server.create('profile-snapshot', {
-    profileId: JOB_PROFILE_ID,
-    childSnapshotWrappers: snapshotWrappers.find(wrapper => wrapper.id === JOB_PROFILE_ID).childSnapshotWrappers,
-    content: {
-      id: JOB_PROFILE_ID,
-      name: 'Approval plan records',
-    },
   });
 
   server.get('/data-import-profiles/jobProfiles', (schema, request) => {
@@ -53,7 +44,7 @@ export default server => {
 
   server.post('/data-import-profiles/jobProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
-    const record = server.create('job-profile', params);
+    const record = server.create('job-profile', params.profile);
 
     return record.attrs;
   });
@@ -80,12 +71,5 @@ export default server => {
     jobProfileModel.destroy();
 
     return new Response(200, {});
-  });
-
-  server.get('/data-import-profiles/profileSnapshots/:id', (schema, request) => {
-    const { params: { id } } = request;
-    const profileSnapshotModels = schema.profileSnapshots.where(snapshot => snapshot.profileId === id);
-
-    return profileSnapshotModels?.models[0]?.attrs;
   });
 };

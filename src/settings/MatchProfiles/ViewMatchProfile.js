@@ -158,10 +158,7 @@ export class ViewMatchProfile extends Component {
   };
 
   renderPaneHeader = renderProps => {
-    const {
-      onClose,
-      paneId,
-    } = this.props;
+    const { onClose } = this.props;
 
     const { record: matchProfile } = this.matchProfileData;
 
@@ -178,7 +175,6 @@ export class ViewMatchProfile extends Component {
     return (
       <PaneHeader
         {...renderProps}
-        id={paneId}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.matchProfileName" />}
         actionMenu={this.renderActionMenu}
@@ -189,7 +185,10 @@ export class ViewMatchProfile extends Component {
   };
 
   render() {
-    const { tagsEnabled } = this.props;
+    const {
+      tagsEnabled,
+      paneId,
+    } = this.props;
     const { showDeleteConfirmation } = this.state;
 
     const {
@@ -322,6 +321,7 @@ export class ViewMatchProfile extends Component {
 
     return (
       <Pane
+        id={paneId}
         renderHeader={this.renderPaneHeader}
         defaultWidth="620px"
         fluidContentWidth

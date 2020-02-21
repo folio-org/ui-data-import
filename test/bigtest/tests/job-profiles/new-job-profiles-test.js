@@ -27,12 +27,13 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
 }
 
 describe('Job profile form', () => {
-  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
+  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-profile-snapshot-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
   describe('appears', () => {
     beforeEach(async function () {
       this.visit('/settings/data-import/job-profiles');
-      await jobProfiles.newJobProfileButton.click();
+      await jobProfiles.actionMenu.click();
+      await jobProfiles.actionMenu.newProfileButton.click();
     });
 
     it('upon click on new job profile button', () => {

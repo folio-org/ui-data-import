@@ -129,10 +129,7 @@ export class ViewMappingProfile extends Component {
   );
 
   renderPaneHeader = renderProps => {
-    const {
-      onClose,
-      paneId,
-    } = this.props;
+    const { onClose } = this.props;
 
     const { record: mappingProfile } = this.mappingProfileData;
 
@@ -149,7 +146,6 @@ export class ViewMappingProfile extends Component {
     return (
       <PaneHeader
         {...renderProps}
-        id={paneId}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.mappingProfileName" />}
         actionMenu={this.renderActionMenu}
@@ -160,7 +156,10 @@ export class ViewMappingProfile extends Component {
   };
 
   render() {
-    const { tagsEnabled } = this.props;
+    const {
+      tagsEnabled,
+      paneId,
+    } = this.props;
     const { showDeleteConfirmation } = this.state;
 
     const {
@@ -190,6 +189,7 @@ export class ViewMappingProfile extends Component {
 
     return (
       <Pane
+        id={paneId}
         defaultWidth="fill"
         fluidContentWidth
         renderHeader={this.renderPaneHeader}

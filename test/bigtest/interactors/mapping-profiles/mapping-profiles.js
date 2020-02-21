@@ -2,6 +2,7 @@ import {
   interactor,
   collection,
   property,
+  scoped,
 } from '@bigtest/interactor';
 
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
@@ -10,13 +11,14 @@ import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/i
 import ModalInteractor from '@folio/stripes-components/lib/Modal/tests/interactor';
 
 import { CheckboxInteractor } from '../checkbox-interactor';
+import { ActionMenuInteractor } from '../action-menu-interactor';
 
 @interactor
 class MappingProfilesInteractor {
+  actionMenu = scoped('#pane-results', ActionMenuInteractor);
   list = new MultiColumnListInteractor('#mapping-profiles-list');
   selectAllCheckBox = new CheckboxInteractor('[data-test-select-all-checkbox]');
   checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);
-  newMappingProfileButton = new ButtonInteractor('[data-test-new-button]');
   searchField = new TextFieldInteractor('#input-mapping-profiles-search');
   searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
   searchSubmitButtonDisabled = property('[data-test-search-and-sort-submit]', 'disabled');
