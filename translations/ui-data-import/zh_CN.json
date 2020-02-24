@@ -202,7 +202,6 @@
     "error.matchProfile.duplication.invalid": "匹配配置文件“ {name} ”已存在",
     "error.actionProfile.duplication.invalid": "操作配置文件“ {name} ”已存在",
     "error.mappingProfile.duplication.invalid": "字段映射配置文件“ {name} ”已存在",
-    "incomingMarc": "传入MARC",
     "existingRecords": "现有记录",
     "compare": "比较",
     "compareHint": "正比较到这个记录",
@@ -238,8 +237,6 @@
     "match.metadata": "匹配元数据",
     "match.criteria": "匹配准则",
     "match.criterion": "匹配准则",
-    "match.incoming.MARC": "传入的 MARC 记录",
-    "match.incoming.MARC.field": "传入记录中的MARC字段",
     "match.incoming.MARC.field-main": "字段",
     "match.incoming.MARC.field-in1": "第1指示符",
     "match.incoming.MARC.field-in2": "第2指示符",
@@ -287,5 +284,9 @@
     "settings.profiles.linking.forNonMatches": "对于不匹配",
     "modal.profile.delete.message": "确定要删除“ {name} ”配置文件？",
     "modal.profile.unlink.confirm": "Unlink",
-    "modal.profile.unlink.delete": "Delete"
+    "modal.profile.unlink.delete": "Delete",
+    "match.incoming.record": "Incoming {recordType} record",
+    "match.incoming.record.field": "{recordType} field in incoming record",
+    "incomingRecordTypes.static": "Static value (submatch only)",
+    "incomingRecords": "Incoming records"
 }

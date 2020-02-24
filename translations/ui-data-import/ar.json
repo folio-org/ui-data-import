@@ -202,7 +202,6 @@
     "error.matchProfile.duplication.invalid": "وضع المطابقة \"{name}\" موجود بالفعل",
     "error.actionProfile.duplication.invalid": "وضع الإجراء  \"{name}\" موجود بالفعل",
     "error.mappingProfile.duplication.invalid": "وضع تخطيط الحقل \"{name}\" موجود بالفعل",
-    "incomingMarc": "مارك الواردة",
     "existingRecords": "تسجيلات حالية",
     "compare": "قارن",
     "compareHint": "أنت تقارن بهذه التسجيلة",
@@ -238,8 +237,6 @@
     "match.metadata": "مطابقة الميتاداتا",
     "match.criteria": "معايير المطابقة",
     "match.criterion": "معيار المطابقة",
-    "match.incoming.MARC": "تسجيلة مارك الواردة",
-    "match.incoming.MARC.field": "حقل مارك في التسجيلة الواردة",
     "match.incoming.MARC.field-main": "حقل",
     "match.incoming.MARC.field-in1": "ln. 1",
     "match.incoming.MARC.field-in2": "ln. 2",
@@ -287,5 +284,9 @@
     "settings.profiles.linking.forNonMatches": "لعدم المطابقة",
     "modal.profile.delete.message": "هل أنت متأكد من أنك تريد حذف وضع \"{name}\" ؟",
     "modal.profile.unlink.confirm": "إلغاء ربط",
-    "modal.profile.unlink.delete": "حذف"
+    "modal.profile.unlink.delete": "حذف",
+    "match.incoming.record": "تسجيلة {recordType} واردة",
+    "match.incoming.record.field": "حقل {recordType} في التسجيلة الواردة",
+    "incomingRecordTypes.static": "قيمة ثابتة (مطابقة فرعية فقط)",
+    "incomingRecords": "التسجيلات الواردة"
 }

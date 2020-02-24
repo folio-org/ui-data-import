@@ -202,7 +202,6 @@
     "error.matchProfile.duplication.invalid": "El perfil de coincidencia \" {name} \" ya existe",
     "error.actionProfile.duplication.invalid": "El perfil de acción \" {name} \" ya existe",
     "error.mappingProfile.duplication.invalid": "El perfil de mapeo de campo \" {name} \" ya existe",
-    "incomingMarc": "MARC entrante",
     "existingRecords": "Registros existentes",
     "compare": "Comparar",
     "compareHint": "Estás comparando\na este registro",
@@ -238,8 +237,6 @@
     "match.metadata": "Metadatos de coincidencia",
     "match.criteria": "Criterios de coincidencia",
     "match.criterion": "Criterio de coincidencia",
-    "match.incoming.MARC": "Registro MARC entrante",
-    "match.incoming.MARC.field": "Campo MARC en el registro de entrada",
     "match.incoming.MARC.field-main": "Campo",
     "match.incoming.MARC.field-in1": "En. 1",
     "match.incoming.MARC.field-in2": "En. 2",
@@ -287,5 +284,9 @@
     "settings.profiles.linking.forNonMatches": "Para no coincidencias",
     "modal.profile.delete.message": "Are you sure you want to delete \"{name}\" Profile?",
     "modal.profile.unlink.confirm": "Unlink",
-    "modal.profile.unlink.delete": "Delete"
+    "modal.profile.unlink.delete": "Delete",
+    "match.incoming.record": "Incoming {recordType} record",
+    "match.incoming.record.field": "{recordType} field in incoming record",
+    "incomingRecordTypes.static": "Static value (submatch only)",
+    "incomingRecords": "Incoming records"
 }
