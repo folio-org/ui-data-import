@@ -202,7 +202,7 @@ export const FORMS_SETTINGS = {
 };
 
 export const PROFILE_LINKING_RULES = {
-  allowDelete: true,
+  allowDelete: false,
   deleteRecursive: false,
   allowUnlink: true,
   unlinkRecursive: false,
