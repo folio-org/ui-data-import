@@ -202,7 +202,6 @@
     "error.matchProfile.duplication.invalid": "Match profile \"{name}\" already exists",
     "error.actionProfile.duplication.invalid": "Action profile \"{name}\" already exists",
     "error.mappingProfile.duplication.invalid": "The field mapping profile \"{name}\" already exists",
-    "incomingMarc": "Incoming MARC",
     "existingRecords": "Существующие записи",
     "compare": "Сравнить",
     "compareHint": "You are comparing\nto this record",
@@ -238,8 +237,6 @@
     "match.metadata": "Match metadata",
     "match.criteria": "Match criteria",
     "match.criterion": "Match criterion",
-    "match.incoming.MARC": "Incoming MARC record",
-    "match.incoming.MARC.field": "MARC field in incoming record",
     "match.incoming.MARC.field-main": "Поле",
     "match.incoming.MARC.field-in1": "ln. 1",
     "match.incoming.MARC.field-in2": "ln. 2",
@@ -287,5 +284,9 @@
     "settings.profiles.linking.forNonMatches": "For non-matches",
     "modal.profile.delete.message": "Are you sure you want to delete \"{name}\" Profile?",
     "modal.profile.unlink.confirm": "Unlink",
-    "modal.profile.unlink.delete": "Delete"
+    "modal.profile.unlink.delete": "Delete",
+    "match.incoming.record": "Incoming {recordType} record",
+    "match.incoming.record.field": "{recordType} field in incoming record",
+    "incomingRecordTypes.static": "Static value (submatch only)",
+    "incomingRecords": "Incoming records"
 }
