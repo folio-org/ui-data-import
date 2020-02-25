@@ -202,7 +202,6 @@
     "error.matchProfile.duplication.invalid": "Il profilo di corrispondenza \"{name}\" esiste già",
     "error.actionProfile.duplication.invalid": "Il profilo di azione \"{name}\" esiste già",
     "error.mappingProfile.duplication.invalid": "The field mapping profile \"{name}\" already exists",
-    "incomingMarc": "MARC in entrata",
     "existingRecords": "Record esistenti",
     "compare": "Confronta",
     "compareHint": "Stai confrontando\ncon questo record",
@@ -238,8 +237,6 @@
     "match.metadata": "Match metadata",
     "match.criteria": "Criteri di corrispondenza",
     "match.criterion": "Criterio di corrispondenza",
-    "match.incoming.MARC": "Record MARC in entrata",
-    "match.incoming.MARC.field": "Campo MARC nel record in entrata",
     "match.incoming.MARC.field-main": "Campo",
     "match.incoming.MARC.field-in1": "ln. 1",
     "match.incoming.MARC.field-in2": "ln. 2",
@@ -287,5 +284,9 @@
     "settings.profiles.linking.forNonMatches": "Per le non corrispondenze",
     "modal.profile.delete.message": "Sei sicuro di voler eliminare il profilo \"{name}\"?",
     "modal.profile.unlink.confirm": "Scollega",
-    "modal.profile.unlink.delete": "Elimina"
+    "modal.profile.unlink.delete": "Elimina",
+    "match.incoming.record": "Incoming {recordType} record",
+    "match.incoming.record.field": "{recordType} field in incoming record",
+    "incomingRecordTypes.static": "Static value (submatch only)",
+    "incomingRecords": "Incoming records"
 }
