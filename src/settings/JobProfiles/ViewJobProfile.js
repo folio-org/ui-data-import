@@ -314,7 +314,6 @@ export class ViewJobProfile extends Component {
     return (
       <PaneHeader
         {...renderProps}
-        id="pane-job-profile-details"
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.jobProfileName" />}
         actionMenu={actionMenu}
@@ -369,6 +368,7 @@ export class ViewJobProfile extends Component {
 
     return (
       <Pane
+        id="pane-job-profile-details"
         defaultWidth="fill"
         fluidContentWidth
         renderHeader={this.renderPaneHeader}

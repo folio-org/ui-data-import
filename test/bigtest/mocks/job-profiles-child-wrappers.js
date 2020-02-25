@@ -1202,10 +1202,10 @@ export const snapshotWrappers = [{
       description: 'EDIFACT POL',
       tags: { tagList: ['pol'] },
       entityType: 'INVENTORY_ITEM',
-      incomingRecordType: 'EDIFACT',
+      incomingRecordType: 'EDIFACT_INVOICE',
       existingRecordType: 'ORDER',
       matchDetails: [{
-        incomingRecordType: 'EDIFACT',
+        incomingRecordType: 'EDIFACT_INVOICE',
         existingRecordType: 'ORDER',
         incomingMatchExpression: {
           dataValueType: 'VALUE_FROM_RECORD',

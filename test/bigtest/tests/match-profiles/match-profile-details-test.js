@@ -32,7 +32,7 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
 }
 
 describe('Match Profile View', () => {
-  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
+  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-job-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
   beforeEach(async function () {
     this.visit('/settings/data-import/match-profiles');
@@ -123,8 +123,7 @@ describe('Match Profile View', () => {
 
     describe('when there are no associated profiles', () => {
       beforeEach(async function () {
-        this.server.get('/data-import-profiles/profileAssociations/:id/masters', noAssociatedJobProfiles);
-        await matchProfiles.list.rows(0).click();
+        await matchProfiles.list.rows(1).click();
       });
 
       it('renders empty message', () => {
@@ -191,8 +190,8 @@ describe('Match Profile View', () => {
             expect(matchProfileDetails.matchCriteria.fieldIn2.value.text).to.be.equal('-');
           });
 
-          it('has empty subfield field value', () => {
-            expect(matchProfileDetails.matchCriteria.fieldSubfield.value.text).to.be.equal('-');
+          it('has correct subfield field value', () => {
+            expect(matchProfileDetails.matchCriteria.fieldSubfield.value.text).to.be.equal('a');
           });
         });
 
@@ -274,21 +273,11 @@ describe('Match Profile View', () => {
   describe('edit match profile form', () => {
     describe('appears', () => {
       beforeEach(async () => {
-        await matchProfileDetails.expandPaneHeaderDropdown();
-        await matchProfileDetails.dropdownEditButton.click();
+        await matchProfileDetails.actionMenu.click();
+        await matchProfileDetails.actionMenu.editProfile.click();
       });
 
-      it('upon click on pane header menu edit button', () => {
-        expect(matchProfileForm.isPresent).to.be.true;
-      });
-    });
-
-    describe('appears', () => {
-      beforeEach(async () => {
-        await matchProfileDetails.editButton.click();
-      });
-
-      it('upon click on edit button', () => {
+      it('upon click on pane actions edit button', () => {
         expect(matchProfileForm.isPresent).to.be.true;
       });
     });
@@ -296,7 +285,9 @@ describe('Match Profile View', () => {
 
   describe('edit match profile form', () => {
     beforeEach(async () => {
-      await matchProfileDetails.editButton.click();
+      await matchProfiles.list.rows(1).click();
+      await matchProfileDetails.actionMenu.click();
+      await matchProfileDetails.actionMenu.editProfile.click();
       await matchProfileForm.whenLoaded();
     });
 
@@ -307,32 +298,9 @@ describe('Match Profile View', () => {
         await matchProfileForm.submitFormButton.click();
       });
 
-      describe('and there are associated job profiles', () => {
-        it('confirmation modal appears', () => {
-          expect(matchProfileForm.confirmEditModal.isPresent).to.be.true;
-        });
-
-        describe('and "Confirm" button is clicked', () => {
-          beforeEach(async () => {
-            await matchProfileForm.confirmEditModal.confirmButton.click();
-          });
-
-          it('then match profile details renders updated match profile', () => {
-            expect(matchProfileDetails.headline.text).to.equal('Changed name');
-            expect(matchProfileDetails.description.text).to.equal('Changed description');
-          });
-        });
-
-        describe('and "Cancel" button is clicked', () => {
-          beforeEach(async () => {
-            await matchProfileForm.confirmEditModal.cancelButton.click();
-          });
-
-          it('closes modal and stay on edit screen', () => {
-            expect(matchProfileForm.confirmEditModal.isPresent).to.be.false;
-            expect(matchProfileForm.isPresent).to.be.true;
-          });
-        });
+      it('then match profile details renders updated match profile', () => {
+        expect(matchProfileDetails.headline.text).to.equal('Changed name');
+        expect(matchProfileDetails.description.text).to.equal('Changed description');
       });
     });
 
@@ -364,8 +332,9 @@ describe('Match Profile View', () => {
 
   describe('duplicate match profile form', () => {
     beforeEach(async () => {
-      await matchProfileDetails.expandPaneHeaderDropdown();
-      await matchProfileDetails.dropdownDuplicateButton.click();
+      await matchProfiles.list.rows(1).click();
+      await matchProfileDetails.actionMenu.click();
+      await matchProfileDetails.actionMenu.duplicateProfile.click();
       await matchProfileForm.whenLoaded();
     });
 
@@ -439,29 +408,6 @@ describe('Match Profile View', () => {
   });
 });
 
-describe('when match profile is edited and there is no associated job profiles', () => {
-  setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags'] });
-
-  beforeEach(async function () {
-    this.server.get('/data-import-profiles/profileAssociations/:id/masters', {});
-    this.visit('/settings/data-import/match-profiles');
-    await matchProfiles.list.rows(0).click();
-    await matchProfileDetails.editButton.click();
-    await matchProfileForm.nameField.fillAndBlur('Changed name');
-    await matchProfileForm.descriptionField.fillAndBlur('Changed description');
-    await matchProfileForm.submitFormButton.click();
-  });
-
-  it('confirmation modal does not appear', () => {
-    expect(matchProfileForm.confirmEditModal.isPresent).to.be.false;
-  });
-
-  it('and match profile details renders updated match profile', () => {
-    expect(matchProfileDetails.headline.text).to.equal('Changed name');
-    expect(matchProfileDetails.description.text).to.equal('Changed description');
-  });
-});
-
 describe('delete confirmation modal', () => {
   setupApplication({ scenarios: ['fetch-match-profiles-success', 'fetch-users', 'fetch-tags'] });
 
@@ -470,25 +416,21 @@ describe('delete confirmation modal', () => {
     await matchProfiles.list.rows(0).click();
   });
 
-  it('is not visible when pane header dropdown is closed', () => {
-    expect(matchProfileDetails.confirmationModal.isPresent).to.be.false;
-  });
-
   describe('is visible', () => {
     beforeEach(async () => {
-      await matchProfileDetails.expandPaneHeaderDropdown();
-      await matchProfileDetails.dropdownDeleteButton.click();
+      await matchProfileDetails.actionMenu.click();
+      await matchProfileDetails.actionMenu.deleteProfile.click();
     });
 
-    it('when pane header dropdown is opened', () => {
-      expect(matchProfileDetails.isPresent).to.be.true;
+    it('when pane header actions delete button is clicked', () => {
+      expect(matchProfileDetails.confirmationModal.isPresent).to.be.true;
     });
   });
 
   describe('disappears', () => {
     beforeEach(async () => {
-      await matchProfileDetails.expandPaneHeaderDropdown();
-      await matchProfileDetails.dropdownDeleteButton.click();
+      await matchProfileDetails.actionMenu.click();
+      await matchProfileDetails.actionMenu.deleteProfile.click();
       await matchProfileDetails.confirmationModal.cancelButton.click();
     });
 
@@ -500,8 +442,8 @@ describe('delete confirmation modal', () => {
   describe('upon click on confirm button initiates the match profile deletion process and in case of error', () => {
     beforeEach(async function () {
       this.server.delete('/data-import-profiles/matchProfiles/:id', () => new Response(500, {}));
-      await matchProfileDetails.expandPaneHeaderDropdown();
-      await matchProfileDetails.dropdownDeleteButton.click();
+      await matchProfileDetails.actionMenu.click();
+      await matchProfileDetails.actionMenu.deleteProfile.click();
       await matchProfileDetails.confirmationModal.confirmButton.click();
     });
 
@@ -521,8 +463,8 @@ describe('delete confirmation modal', () => {
   describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
     describe('exception modal', () => {
       beforeEach(async () => {
-        await matchProfileDetails.expandPaneHeaderDropdown();
-        await matchProfileDetails.dropdownDeleteButton.click();
+        await matchProfileDetails.actionMenu.click();
+        await matchProfileDetails.actionMenu.deleteProfile.click();
         await matchProfileDetails.confirmationModal.confirmButton.click();
         await matchProfileDetails.confirmationModal.confirmButton.click();
       });
@@ -555,8 +497,8 @@ describe('delete confirmation modal', () => {
     describe('when there are no associated job profiles', () => {
       beforeEach(async function () {
         this.server.delete('/data-import-profiles/matchProfiles/:id');
-        await matchProfileDetails.expandPaneHeaderDropdown();
-        await matchProfileDetails.dropdownDeleteButton.click();
+        await matchProfileDetails.actionMenu.click();
+        await matchProfileDetails.actionMenu.deleteProfile.click();
         await matchProfileDetails.confirmationModal.confirmButton.click();
       });
 

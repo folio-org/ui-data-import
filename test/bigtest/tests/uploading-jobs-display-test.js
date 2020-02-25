@@ -218,16 +218,8 @@ describe('Uploading jobs display', () => {
         expect(jobProfiles.list.rowCount).to.be.equal(3);
       });
 
-      it('has description column', () => {
-        expect(jobProfiles.list.headers(1).text).to.be.equal(translation.description);
-      });
-
-      it('does not have caret actions', () => {
+      it('does not have actions button', () => {
         expect(jobProfiles.actionMenu.isPresent).to.be.false;
-      });
-
-      it('does not have new button', () => {
-        expect(jobProfiles.newJobProfileButton.isPresent).to.be.false;
       });
     });
 
@@ -240,35 +232,27 @@ describe('Uploading jobs display', () => {
         expect(jobProfileDetails.isPresent).to.be.true;
       });
 
-      it('has caret actions', () => {
-        expect(jobProfileDetails.paneHeaderDropdown.isPresent).to.be.true;
+      it('has actions button', () => {
+        expect(jobProfileDetails.actionMenu.isMenuPresent).to.be.true;
       });
 
-      it('does not have edit button', () => {
-        expect(jobProfileDetails.editButton.isPresent).to.be.false;
-      });
-
-      it('has run button', () => {
-        expect(jobProfileDetails.runButton.isPresent).to.be.true;
-      });
-
-      describe('caret actions', () => {
+      describe('pane actions button', () => {
         beforeEach(async () => {
-          await jobProfileDetails.expandPaneHeaderDropdown();
+          await jobProfileDetails.actionMenu.click();
         });
 
         it('has "Run" option', () => {
-          expect(jobProfileDetails.dropdownRunButton.isPresent).to.be.true;
+          expect(jobProfileDetails.actionMenu.runProfile.isPresent).to.be.true;
         });
 
         it('has "Edit job profile" option', () => {
-          expect(jobProfileDetails.dropdownEditButton.isPresent).to.be.true;
+          expect(jobProfileDetails.actionMenu.editProfile.isPresent).to.be.true;
         });
 
         describe('edit job profile form', () => {
           describe('appears', () => {
             beforeEach(async () => {
-              await jobProfileDetails.dropdownEditButton.click();
+              await jobProfileDetails.actionMenu.editProfile.click();
             });
 
             it('upon click on pane header menu edit button', () => {
@@ -280,7 +264,8 @@ describe('Uploading jobs display', () => {
         describe('run confirmation modal', () => {
           describe('appears', () => {
             beforeEach(async () => {
-              await jobProfileDetails.dropdownRunButton.click();
+              await jobProfileDetails.actionMenu.click();
+              await jobProfileDetails.actionMenu.runProfile.click();
             });
 
             it('upon click on pane header menu run button', () => {
@@ -288,19 +273,10 @@ describe('Uploading jobs display', () => {
             });
           });
 
-          describe('appears', () => {
-            beforeEach(async () => {
-              await jobProfileDetails.runButton.click();
-            });
-
-            it('upon click on run button', () => {
-              expect(jobProfileDetails.runConfirmationModal.isPresent).to.be.true;
-            });
-          });
-
           describe('disappears', () => {
             beforeEach(async () => {
-              await jobProfileDetails.runButton.click();
+              await jobProfileDetails.actionMenu.click();
+              await jobProfileDetails.actionMenu.runProfile.click();
               await jobProfileDetails.runConfirmationModal.cancelButton.click();
             });
 
@@ -368,8 +344,8 @@ describe('Uploading jobs display', () => {
 
     describe('when load records button is clicked and the API response is successful', () => {
       beforeEach(async () => {
-        await uploadingJobsDisplay.paneHeaderDropdown.click();
-        await uploadingJobsDisplay.loadRecordsButton.click();
+        await uploadingJobsDisplay.actionMenu.click();
+        await uploadingJobsDisplay.actionMenu.loadRecordsButton.click();
       });
 
       it('navigates to landing page', () => {
@@ -383,9 +359,9 @@ describe('Uploading jobs display', () => {
 
     describe('when load records button is clicked twice and the API response is successful', () => {
       beforeEach(async () => {
-        await uploadingJobsDisplay.paneHeaderDropdown.click();
-        await uploadingJobsDisplay.loadRecordsButton.click();
-        await uploadingJobsDisplay.loadRecordsButton.click();
+        await uploadingJobsDisplay.actionMenu.click();
+        await uploadingJobsDisplay.actionMenu.loadRecordsButton.click();
+        await uploadingJobsDisplay.actionMenu.loadRecordsButton.click();
       });
 
       it.always('app works correctly and error callout does not appear', () => {
@@ -396,7 +372,8 @@ describe('Uploading jobs display', () => {
     describe('when run button is clicked and the API response is successful', () => {
       beforeEach(async () => {
         await jobProfiles.list.rows(0).click();
-        await jobProfileDetails.runButton.click();
+        await jobProfileDetails.actionMenu.click();
+        await jobProfileDetails.actionMenu.runProfile.click();
         await jobProfileDetails.runConfirmationModal.confirmButton.click();
       });
 
@@ -409,8 +386,8 @@ describe('Uploading jobs display', () => {
       beforeEach(async function () {
         this.server.get('/data-import/uploadDefinitions/:id', {}, 500);
         this.server.get('/data-import-profiles/jobProfiles/:id', {}, 500);
-        await uploadingJobsDisplay.paneHeaderDropdown.click();
-        await uploadingJobsDisplay.loadRecordsButton.click();
+        await uploadingJobsDisplay.actionMenu.click();
+        await uploadingJobsDisplay.actionMenu.loadRecordsButton.click();
       });
 
       it('error callout appears', () => {
@@ -421,8 +398,8 @@ describe('Uploading jobs display', () => {
     describe('when load records button is clicked and the API response is not successful', () => {
       beforeEach(async function () {
         this.server.post('/data-import/uploadDefinitions/:id/processFiles', {}, 500);
-        await uploadingJobsDisplay.paneHeaderDropdown.click();
-        await uploadingJobsDisplay.loadRecordsButton.click();
+        await uploadingJobsDisplay.actionMenu.click();
+        await uploadingJobsDisplay.actionMenu.loadRecordsButton.click();
       });
 
       it('error callout appears', () => {
@@ -434,7 +411,8 @@ describe('Uploading jobs display', () => {
       beforeEach(async function () {
         this.server.get('/data-import/uploadDefinitions/:id', {}, 500);
         await jobProfiles.list.rows(0).click();
-        await jobProfileDetails.runButton.click();
+        await jobProfileDetails.actionMenu.click();
+        await jobProfileDetails.actionMenu.runProfile.click();
         await jobProfileDetails.runConfirmationModal.confirmButton.click();
       });
 
@@ -451,7 +429,8 @@ describe('Uploading jobs display', () => {
       beforeEach(async function () {
         this.server.post('/data-import/uploadDefinitions/:id/processFiles', {}, 500);
         await jobProfiles.list.rows(0).click();
-        await jobProfileDetails.runButton.click();
+        await jobProfileDetails.actionMenu.click();
+        await jobProfileDetails.actionMenu.runProfile.click();
         await jobProfileDetails.runConfirmationModal.confirmButton.click();
       });
 

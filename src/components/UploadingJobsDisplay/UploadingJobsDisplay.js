@@ -22,6 +22,7 @@ import {
 import {
   Paneset,
   Pane,
+  PaneHeader,
   Layout,
   Callout,
   ConfirmationModal,
@@ -568,6 +569,14 @@ export class UploadingJobsDisplay extends Component {
 
   renderActionMenu = menu => this.renderLoadMarcButton(menu);
 
+  renderHeader = headerProps => (
+    <PaneHeader
+      {...headerProps}
+      paneTitle={<FormattedMessage id="ui-data-import.uploadingPaneTitle" />}
+      actionMenu={this.renderActionMenu}
+    />
+  );
+
   render() {
     const {
       hasLoaded,
@@ -598,12 +607,12 @@ export class UploadingJobsDisplay extends Component {
 
     return (
       <Paneset>
-        <Pane
-          defaultWidth="300px"
-          paneTitle={<FormattedMessage id="ui-data-import.uploadingPaneTitle" />}
-          actionMenu={this.renderActionMenu}
-        >
-          <div data-test-uploading-jobs-display>
+        <div data-test-uploading-jobs-display>
+          <Pane
+            id="pane-upload"
+            defaultWidth="300px"
+            renderHeader={this.renderHeader}
+          >
             {this.renderFiles()}
             <EndOfItem />
             <Callout ref={this.calloutRef} />
@@ -617,8 +626,8 @@ export class UploadingJobsDisplay extends Component {
               onConfirm={this.closeModal}
               onCancel={this.continue}
             />
-          </div>
-        </Pane>
+          </Pane>
+        </div>
         {JobProfilesComponent
           ? (
             <JobProfilesComponent

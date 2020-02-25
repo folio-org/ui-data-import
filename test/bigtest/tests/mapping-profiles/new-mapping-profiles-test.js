@@ -32,10 +32,10 @@ describe('Mapping profile form', () => {
   describe('appears', () => {
     beforeEach(async function () {
       this.visit('/settings/data-import/mapping-profiles');
-      await mappingProfiles.newMappingProfileButton.click();
+      await mappingProfiles.actionMenu.newProfileButton.click();
     });
 
-    it('upon click on new mapping profile button', () => {
+    it('upon click on action new profile button', () => {
       expect(mappingProfileForm.isPresent).to.be.true;
     });
   });

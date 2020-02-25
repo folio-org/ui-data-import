@@ -29,7 +29,7 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
 }
 
 describe('Job Profile View', () => {
-  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
+  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-profile-snapshot-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/job-profiles');
@@ -72,21 +72,11 @@ describe('Job Profile View', () => {
     describe('edit job profile form', () => {
       describe('appears', () => {
         beforeEach(async () => {
-          await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownEditButton.click();
+          await jobProfileDetails.actionMenu.click();
+          await jobProfileDetails.actionMenu.editProfile.click();
         });
 
         it('upon click on pane header menu edit button', () => {
-          expect(jobProfileForm.isPresent).to.be.true;
-        });
-      });
-
-      describe('appears', () => {
-        beforeEach(async () => {
-          await jobProfileDetails.editButton.click();
-        });
-
-        it('upon click on edit button', () => {
           expect(jobProfileForm.isPresent).to.be.true;
         });
       });
@@ -96,7 +86,8 @@ describe('Job Profile View', () => {
       describe('Overview section', () => {
         describe('when there is an associated match profile', () => {
           beforeEach(async () => {
-            await jobProfileDetails.editButton.click();
+            await jobProfileDetails.actionMenu.click();
+            await jobProfileDetails.actionMenu.editProfile.click();
           });
 
           it('profile has "For matches" section', () => {
@@ -112,7 +103,8 @@ describe('Job Profile View', () => {
 
     describe('edit job profile form', () => {
       beforeEach(async () => {
-        await jobProfileDetails.editButton.click();
+        await jobProfileDetails.actionMenu.click();
+        await jobProfileDetails.actionMenu.editProfile.click();
       });
 
       describe('when form is submitted', () => {
@@ -158,19 +150,19 @@ describe('Job Profile View', () => {
     describe('duplicate job profile form', () => {
       describe('appears', () => {
         beforeEach(async () => {
-          await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownDuplicateButton.click();
+          await jobProfileDetails.actionMenu.click();
+          await jobProfileDetails.actionMenu.duplicateProfile.click();
         });
 
-        it('upon click on pane header menu duplicate button', () => {
+        it('upon click on pane header actions menu duplicate button', () => {
           expect(jobProfileForm.isPresent).to.be.true;
         });
       });
 
       describe('appears', () => {
         beforeEach(async () => {
-          await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownDuplicateButton.click();
+          await jobProfileDetails.actionMenu.click();
+          await jobProfileDetails.actionMenu.duplicateProfile.click();
         });
 
         describe('when form is submitted', () => {
@@ -248,19 +240,19 @@ describe('Job Profile View', () => {
 
       describe('is visible', () => {
         beforeEach(async () => {
-          await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownDeleteButton.click();
+          await jobProfileDetails.actionMenu.click();
+          await jobProfileDetails.actionMenu.deleteProfile.click();
         });
 
-        it('when pane header dropdown is opened', () => {
+        it('when pane header actions delete button is clicked', () => {
           expect(jobProfileDetails.confirmationModal.isPresent).to.be.true;
         });
       });
 
       describe('disappears', () => {
         beforeEach(async () => {
-          await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownDeleteButton.click();
+          await jobProfileDetails.actionMenu.click();
+          await jobProfileDetails.actionMenu.deleteProfile.click();
           await jobProfileDetails.confirmationModal.cancelButton.click();
         });
 
@@ -271,8 +263,8 @@ describe('Job Profile View', () => {
 
       describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
         beforeEach(async () => {
-          await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownDeleteButton.click();
+          await jobProfileDetails.actionMenu.click();
+          await jobProfileDetails.actionMenu.deleteProfile.click();
           await jobProfileDetails.confirmationModal.confirmButton.click();
         });
 
@@ -287,8 +279,8 @@ describe('Job Profile View', () => {
 
       describe('upon click on confirm button twice initiates the job profile deletion process only once and in case of success', () => {
         beforeEach(async () => {
-          await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownDeleteButton.click();
+          await jobProfileDetails.actionMenu.click();
+          await jobProfileDetails.actionMenu.deleteProfile.click();
           await jobProfileDetails.confirmationModal.confirmButton.click();
           await jobProfileDetails.confirmationModal.confirmButton.click();
         });
@@ -309,8 +301,8 @@ describe('Job Profile View', () => {
       describe('upon click on confirm button twice initiates the job profile deletion process only once and in case of error', () => {
         beforeEach(async function () {
           this.server.delete('/data-import-profiles/jobProfiles/:id', () => new Response(500, {}));
-          await jobProfileDetails.expandPaneHeaderDropdown();
-          await jobProfileDetails.dropdownDeleteButton.click();
+          await jobProfileDetails.actionMenu.click();
+          await jobProfileDetails.actionMenu.deleteProfile.click();
           await jobProfileDetails.confirmationModal.confirmButton.click();
           await jobProfileDetails.confirmationModal.confirmButton.click();
         });
@@ -332,7 +324,7 @@ describe('Job Profile View', () => {
 });
 
 describe('Job Profile View', () => {
-  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-users', 'fetch-tags', 'tags-disabled'] });
+  setupApplication({ scenarios: ['fetch-job-profiles-success', 'fetch-profile-snapshot-success', 'fetch-users', 'fetch-tags', 'tags-disabled'] });
 
   beforeEach(async function () {
     this.visit('/settings/data-import/job-profiles');

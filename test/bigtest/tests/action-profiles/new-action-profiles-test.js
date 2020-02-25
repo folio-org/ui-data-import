@@ -32,10 +32,11 @@ describe('Action profile form', () => {
   describe('appears', () => {
     beforeEach(async function () {
       this.visit('/settings/data-import/action-profiles');
-      await actionProfiles.newActionProfileButton.click();
+      await actionProfiles.actionMenu.click();
+      await actionProfiles.actionMenu.newProfileButton.click();
     });
 
-    it('upon click on new action profile button', () => {
+    it('upon click on actions new profile button', () => {
       expect(actionProfileForm.isPresent).to.be.true;
     });
   });

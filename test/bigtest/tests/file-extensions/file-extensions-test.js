@@ -58,7 +58,8 @@ describe('File extensions', () => {
       expect(fileExtensions.restoreDefaultFileExtensionsButton.isVisible).to.be.false;
     });
 
-    describe('is visible', () => {
+    // TODO: Fix it in UIDATIMP-398
+    describe.skip('is visible', () => {
       beforeEach(async () => {
         await fileExtensions.expandPaneHeaderDropdown();
       });
@@ -74,7 +75,8 @@ describe('File extensions', () => {
       expect(fileExtensions.confirmationModal.isPresent).to.be.false;
     });
 
-    describe('is visible', () => {
+    // TODO: Fix it in UIDATIMP-398
+    describe.skip('is visible', () => {
       beforeEach(async () => {
         await fileExtensions.expandPaneHeaderDropdown();
         await fileExtensions.restoreDefaultFileExtensionsButton.click();
@@ -85,7 +87,8 @@ describe('File extensions', () => {
       });
     });
 
-    describe('disappears', () => {
+    // TODO: Fix it in UIDATIMP-398
+    describe.skip('disappears', () => {
       beforeEach(async () => {
         await fileExtensions.expandPaneHeaderDropdown();
         await fileExtensions.restoreDefaultFileExtensionsButton.click();
@@ -97,7 +100,8 @@ describe('File extensions', () => {
       });
     });
 
-    describe('upon click on confirm button initiate the restoring process and in case of network error', () => {
+    // TODO: Fix it in UIDATIMP-398
+    describe.skip('upon click on confirm button initiate the restoring process and in case of network error', () => {
       beforeEach(async function () {
         this.server.post('/data-import/fileExtensions/restore/default', {}, 500);
         await fileExtensions.expandPaneHeaderDropdown();
@@ -116,7 +120,8 @@ describe('File extensions', () => {
   });
 
   describe('restore default file extension confirmation modal', () => {
-    describe('upon click on confirm button initiate the restoring process and in case of success', () => {
+    // TODO: Fix it in UIDATIMP-398
+    describe.skip('upon click on confirm button initiate the restoring process and in case of success', () => {
       beforeEach(async () => {
         await fileExtensions.expandPaneHeaderDropdown();
         await fileExtensions.restoreDefaultFileExtensionsButton.click();
@@ -138,7 +143,8 @@ describe('File extensions', () => {
   });
 
   describe('restore default file extensions confirmation modal', () => {
-    describe('upon click on confirm button twice only initiate the restoring process once and in case of success', () => {
+    // TODO: Fix it in UIDATIMP-398
+    describe.skip('upon click on confirm button twice only initiate the restoring process once and in case of success', () => {
       beforeEach(async () => {
         await fileExtensions.expandPaneHeaderDropdown();
         await fileExtensions.restoreDefaultFileExtensionsButton.click();

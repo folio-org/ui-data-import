@@ -2,10 +2,8 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import {
-  AppIcon,
-  Button,
-} from '@folio/stripes-components';
+import { Button } from '@folio/stripes-components';
+import { AppIcon } from '@folio/stripes-core';
 
 import classNames from 'classnames';
 

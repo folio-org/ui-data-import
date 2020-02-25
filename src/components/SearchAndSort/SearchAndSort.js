@@ -720,7 +720,6 @@ export class SearchAndSort extends Component {
     return (
       <PaneHeader
         {...renderProps}
-        id="pane-results"
         actionMenu={actionMenu}
         paneTitle={resultsLabel}
         paneSub={paneSub}
@@ -735,6 +734,7 @@ export class SearchAndSort extends Component {
       <Paneset>
         <SRStatus ref={this.SRStatusRef} />
         <Pane
+          id="pane-results"
           defaultWidth="fill"
           noOverflow
           padContent={false}

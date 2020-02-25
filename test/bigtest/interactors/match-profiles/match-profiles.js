@@ -21,7 +21,6 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   searchField = new TextFieldInteractor('#input-match-profiles-search');
   searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
   searchSubmitButtonDisabled = property('[data-test-search-and-sort-submit]', 'disabled');
-  newMatchProfileButton = new ButtonInteractor('[data-test-new-button]');
   exceptionModal = new ModalInteractor('#delete-matchProfiles-exception-modal');
   exceptionModalCloseButton = new ButtonInteractor('[data-test-exception-modal-close-button]');
 }

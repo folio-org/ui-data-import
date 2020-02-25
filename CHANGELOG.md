@@ -32,6 +32,7 @@
 * Page unstable error when trying to save match profile (UIDATIMP-380)
 * Unlink action profile from field mapping profile is not working (UIDATIMP-381)
 * ProfileAssociator Component lists are empty (UIDATIMP-399)
+* Fix UI tests (UIDATIMP-399)
 
 ## [1.7.3](https://github.com/folio-org/ui-data-import/tree/v1.7.3) (2019-12-04)
 * Update sorting query for jobs (UIDATIMP-346)

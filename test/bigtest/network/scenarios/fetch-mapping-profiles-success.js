@@ -1,6 +1,16 @@
 import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
+import { noAssociatedActionProfiles } from '../../mocks';
 
 export default server => {
+  server.create('mapping-profile', {
+    incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+    existingRecordType: 'INSTANCE',
+    parentProfiles: noAssociatedActionProfiles,
+  });
+  server.create('mapping-profile', {
+    incomingRecordType: 'MARC_HOLDINGS',
+    existingRecordType: 'HOLDINGS',
+  });
   server.createList('mapping-profile', 3);
 
   server.get('/data-import-profiles/mappingProfiles', (schema, request) => {
@@ -20,11 +30,11 @@ export default server => {
       ],
     });
   });
-  server.get('/data-import-profiles/mappingProfiles/:id?withRelations=true');
+  server.get('/data-import-profiles/mappingProfiles/:id');
   server.delete('/data-import-profiles/mappingProfiles/:id', {}, 409);
   server.post('/data-import-profiles/mappingProfiles', (_, request) => {
     const params = JSON.parse(request.requestBody);
-    const record = server.create('mapping-profile', params);
+    const record = server.create('mapping-profile', params.profile);
 
     return record.attrs;
   });
@@ -36,7 +46,7 @@ export default server => {
     const mappingProfileModel = schema.mappingProfiles.find(id);
     const updatedMappingProfile = JSON.parse(requestBody);
 
-    mappingProfileModel.update({ ...updatedMappingProfile });
+    mappingProfileModel.update({ ...updatedMappingProfile.profile });
 
     return mappingProfileModel.attrs;
   });
