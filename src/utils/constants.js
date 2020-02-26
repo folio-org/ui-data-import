@@ -196,6 +196,7 @@ export const FORMS_SETTINGS = {
         'TEXT',
         'NUMBER',
         'DATE',
+        'DATE_RANGE',
       ],
     },
   },

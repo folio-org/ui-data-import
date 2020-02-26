@@ -105,8 +105,8 @@ export const ProfileLabel = memo(({
                 heading={<FormattedMessage id="ui-data-import.modal.profile.unlink.heading" />}
                 message={(
                   <FormattedMessage
-                    id="ui-data-import.modal.profile.unlink.message"
-                    values={{ name: recordData.name }}
+                    id="ui-data-import.modal.jobProfiles.unlink.message"
+                    values={{ name: recordData.content.name }}
                   />
                 )}
                 confirmLabel={<FormattedMessage id="ui-data-import.unlink" />}
@@ -132,7 +132,7 @@ export const ProfileLabel = memo(({
                 message={(
                   <FormattedMessage
                     id="ui-data-import.modal.profile.delete.message"
-                    values={{ name: recordData.name }}
+                    values={{ name: recordData.content.name }}
                   />
                 )}
                 confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
