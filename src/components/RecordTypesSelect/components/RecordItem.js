@@ -10,7 +10,7 @@ import { noop } from 'lodash';
 import classNames from 'classnames';
 
 import { Dropdown } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes-core';
+import { AppIcon } from '@folio/stripes/core';
 
 import { IncomingRecordMenu } from './IncomingRecordMenu';
 import { IncomingRecordTrigger } from './IncomingRecordTrigger';
