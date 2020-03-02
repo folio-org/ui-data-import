@@ -270,7 +270,7 @@
     "settings.profile.select": "Relacionar perfil",
     "settings.profile.unlink": "Desvincular este perfil",
     "modal.profile.unlink.heading": "Você tem certeza?",
-    "modal.profile.unlink.message": "Tem certeza de que deseja desvincular o perfil \"{name}\"?",
+    "modal.profile.unlink.message": "Confirma que este {profileType1} será desvinculado deste {profileType2}?",
     "emptyMessage": "Este {type} não contém itens",
     "list": "lista",
     "section": "seção",
