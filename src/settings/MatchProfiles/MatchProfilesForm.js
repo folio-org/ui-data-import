@@ -25,7 +25,10 @@ import {
   getDropdownOptions,
   withProfileWrapper,
 } from '../../utils';
-import { LAYER_TYPES } from '../../utils/constants';
+import {
+  LAYER_TYPES,
+  FORMS_SETTINGS, ENTITY_KEYS,
+} from '../../utils/constants';
 import { formConfigSamples } from '../../../test/bigtest/mocks';
 
 import styles from './MatchProfilesForm.css';
@@ -53,10 +56,12 @@ export const MatchProfilesFormComponent = memo(({
   const { layer } = queryString.parse(search);
 
   const isEditMode = layer === LAYER_TYPES.EDIT;
+  const staticValueTypes = FORMS_SETTINGS[ENTITY_KEYS.MATCH_PROFILES].MATCHING.STATIC_VALUE_TYPES;
 
-  const [selectedExistingRecord, setSelectedExistingRecord] = useState(isEditMode ? existingRecordType : '');
   const [incomingRecord, setIncomingRecord] = useState(INCOMING_RECORD_TYPES[incomingRecordType]);
+  const [existingRecord, setExistingRecord] = useState(isEditMode ? existingRecordType : '');
   const [existingRecordFields, setExistingRecordFields] = useState([]);
+  const [staticValueType, setStaticValueType] = useState(null);
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   const isSubmitDisabled = pristine || submitting;
@@ -92,41 +97,54 @@ export const MatchProfilesFormComponent = memo(({
     }
   };
 
-  const onFieldSearch = (value, dataOptions) => {
+  const handleFieldSearch = (value, dataOptions) => {
     return dataOptions.filter(o => new RegExp(`${value}`, 'i').test(o.label));
   };
 
-  const onExistingRecordChange = ({ type }) => {
+  const handleIncomingRecordChange = record => {
+    setIncomingRecord(record);
+    dispatch(change(formName, 'profile.incomingRecordType', record.type));
+    matchDetails.forEach((item, i) => dispatch(change(formName, `profile.matchDetails[${i}].incomingRecordType`, record.type)));
+
+    if (record.type === INCOMING_RECORD_TYPES.STATIC_VALUE.type) {
+      setStaticValueType(staticValueTypes[0]);
+    } else {
+      setStaticValueType(null);
+    }
+  };
+
+  const handleExistingRecordChange = ({ type }) => {
     const matches = matchFields(jsonSchemas[type], type);
     const options = getDropdownOptions(matches);
 
-    setSelectedExistingRecord(type);
+    setExistingRecord(type);
     setExistingRecordFields(options);
     dispatch(change(formName, 'profile.existingRecordType', type));
     matchDetails.forEach((item, i) => dispatch(change(formName, `profile.matchDetails[${i}].existingRecordType`, type)));
   };
 
-  const onIncomingRecordChange = record => {
-    setIncomingRecord(record);
-    dispatch(change(formName, 'profile.incomingRecordType', record.type));
-    matchDetails.forEach((item, i) => dispatch(change(formName, `profile.matchDetails[${i}].incomingRecordType`, record.type)));
-  };
-
-  const existingRecordLabel = !isEmpty(selectedExistingRecord)
-    ? <FormattedMessage id={FOLIO_RECORD_TYPES[selectedExistingRecord].captionId} />
-    : '';
   const incomingRecordLabel = !isEmpty(incomingRecord)
     ? <FormattedMessage id={incomingRecord.captionId} />
+    : '';
+  const existingRecordLabel = !isEmpty(existingRecord)
+    ? <FormattedMessage id={FOLIO_RECORD_TYPES[existingRecord].captionId} />
     : '';
 
   const componentsProps = {
     'profile-headline': { children: headLine },
+    'section-incoming-field': { stateFieldValue: incomingRecord.type },
+    'section-incoming-qualifier': { stateFieldValue: incomingRecord.type },
+    'section-incoming-qualifier-part': { stateFieldValue: incomingRecord.type },
+    'section-incoming-static-value-text': { stateFieldValue: staticValueType },
+    'section-existing-field': { stateFieldValue: existingRecord },
+    'section-existing-qualifier': { stateFieldValue: existingRecord },
+    'section-existing-qualifier-part': { stateFieldValue: existingRecord },
     'panel-existing': {
       id: 'panel-existing-edit',
       existingRecordType,
       incomingRecordType,
-      onExistingSelect: onExistingRecordChange,
-      onIncomingSelect: onIncomingRecordChange,
+      onExistingSelect: handleExistingRecordChange,
+      onIncomingSelect: handleIncomingRecordChange,
     },
     'incoming-record-section': {
       label: (
@@ -144,6 +162,7 @@ export const MatchProfilesFormComponent = memo(({
         />
       ),
     },
+    'criterion-static-value-type': { onChange: (event, newValue) => setStaticValueType(newValue) },
     'existing-record-section': {
       label: (
         <FormattedMessage
@@ -160,9 +179,9 @@ export const MatchProfilesFormComponent = memo(({
         />
       ),
     },
-    'criterion1-value-type': {
+    'criterion-value-type': {
       dataOptions: isEmpty(existingRecordFields) ? getInitialFields() : existingRecordFields,
-      onFilter: onFieldSearch,
+      onFilter: handleFieldSearch,
     },
     'confirm-edit-match-profile-modal': {
       open: isConfirmEditModalOpen,

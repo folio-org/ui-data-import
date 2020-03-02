@@ -19,6 +19,8 @@ import * as stripesComponents from '@folio/stripes/components';
 import * as components from '..';
 import * as validators from '../../utils/formValidators';
 
+export const VIRTUAL_CONTROLS = { COMMON_SECTION: 'CommonSection' };
+
 const controls = {
   Fragment,
   Field,
@@ -45,6 +47,9 @@ export const Control = memo(props => {
     classNames,
     dataOptions,
     repeatable,
+    repeatableIndex,
+    sectionNamespace,
+    commonSections,
     childControls,
     dataAttributes,
     componentsProps,
@@ -61,10 +66,20 @@ export const Control = memo(props => {
   const isFragment = (isEditable && controlType === 'Fragment') || (!isEditable && staticControlType === 'Fragment');
 
   const getOptions = options => {
-    return options.map(option => ({
-      value: option.value,
-      label: intl.formatMessage({ id: option.label }),
-    }));
+    return options.map(option => {
+      const lbl = option.label;
+
+      return {
+        value: option.value,
+        label: intl.formatMessage({ id: lbl && sectionNamespace ? lbl.split('**ns**').join(sectionNamespace) : lbl }),
+      };
+    });
+  };
+
+  const getActualName = name => {
+    const nsName = name && sectionNamespace ? name.split('**ns**').join(sectionNamespace) : name;
+
+    return nsName && repeatableIndex >= 0 ? nsName.split('##ri##').join(repeatableIndex) : nsName;
   };
 
   const getAttributes = () => {
@@ -75,13 +90,18 @@ export const Control = memo(props => {
 
     const staticPrefix = staticNamespace && staticNamespace.length ? `${staticNamespace}.` : '';
     const editablePrefix = editableNamespace && editableNamespace.length ? `${editableNamespace}.` : '';
-    const fullName = `${isEditable ? editablePrefix : staticPrefix}${name}`;
+    const actualId = id && sectionNamespace ? id.split('**ns**').join(sectionNamespace) : id;
+    const actualName = getActualName(name);
+    const fullName = `${isEditable ? editablePrefix : staticPrefix}${actualName}`;
+    const actualLabel = label && sectionNamespace ? label.split('**ns**').join(sectionNamespace) : label;
 
     let attrs = {
-      label: label ? (<FormattedMessage id={label} />) : label,
       component: component ? getControl(component) : null,
-      id,
+      id: actualId,
+      label: actualLabel ? (<FormattedMessage id={actualLabel} />) : actualLabel,
       optional,
+      sectionNamespace,
+      repeatableIndex,
       ...attributes,
       ...dataAttributes,
     };
@@ -100,10 +120,10 @@ export const Control = memo(props => {
       };
     }
 
-    if (record && get(record, name)) {
+    if (record && get(record, actualName)) {
       attrs = {
         ...attrs,
-        value: get(record, name, '-'),
+        value: get(record, actualName, '-'),
       };
     }
 
@@ -122,10 +142,10 @@ export const Control = memo(props => {
       };
     }
 
-    if (componentsProps[id]) {
+    if (componentsProps[actualId]) {
       attrs = {
         ...attrs,
-        ...componentsProps[id],
+        ...componentsProps[actualId],
       };
     }
 
@@ -150,12 +170,15 @@ export const Control = memo(props => {
           {children.map((cfg, i) => (
             <Control
               key={`control-${i}`}
+              repeatableIndex={repeatableIndex}
               staticNamespace={staticNamespace}
               editableNamespace={editableNamespace}
+              sectionNamespace={sectionNamespace}
               intl={intl}
               styles={styles}
               referenceTables={referenceTables}
               componentsProps={componentsProps}
+              commonSections={commonSections}
               record={record}
               {...cfg}
             />
@@ -199,12 +222,15 @@ export const Control = memo(props => {
               {children.map((cfg, i) => (
                 <Control
                   key={`control-${i}`}
+                  repeatableIndex={i}
                   staticNamespace={staticNamespace}
                   editableNamespace={editableNamespace}
+                  sectionNamespace={sectionNamespace}
                   intl={intl}
                   styles={styles}
                   referenceTables={referenceTables}
                   componentsProps={componentsProps}
+                  commonSections={commonSections}
                   record={record}
                   {...cfg}
                 />
@@ -215,6 +241,41 @@ export const Control = memo(props => {
       </Cmp>
     );
   };
+
+  const renderCommonSection = () => {
+    const {
+      sectionNamespace: sectionNS,
+      stateFieldValue,
+      acceptedSections,
+      repeatableIndex: ri,
+    } = attribs;
+
+    const currentSection = commonSections.find(item => item.sectionKey === acceptedSections[stateFieldValue]);
+
+    if (!currentSection?.controlType) {
+      return <>&nbsp;</>;
+    }
+
+    return (
+      <Control
+        intl={intl}
+        styles={styles}
+        staticNamespace={staticNamespace}
+        repeatableIndex={ri}
+        editableNamespace={editableNamespace}
+        sectionNamespace={sectionNS}
+        referenceTables={referenceTables}
+        componentsProps={componentsProps}
+        commonSections={commonSections}
+        record={record}
+        {...currentSection}
+      />
+    );
+  };
+
+  if (controlType === VIRTUAL_CONTROLS.COMMON_SECTION) {
+    return renderCommonSection();
+  }
 
   return (repeatable && isEditable) ? renderRepeatable() : renderDefault();
 });
@@ -231,6 +292,9 @@ Control.propTypes = {
   classNames: PropTypes.arrayOf(PropTypes.string),
   dataOptions: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   repeatable: PropTypes.bool,
+  repeatableIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  sectionNamespace: PropTypes.string,
+  commonSections: PropTypes.arrayOf(PropTypes.object),
   childControls: PropTypes.arrayOf(Node),
   dataAttributes: PropTypes.object,
   componentsProps: PropTypes.object,

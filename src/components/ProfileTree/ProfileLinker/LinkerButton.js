@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
 
-import { AppIcon } from '@folio/stripes-core';
+import { AppIcon } from '@folio/stripes/core';
 import { Button } from '@folio/stripes-components';
 
 import css from '../ProfileTree.css';
