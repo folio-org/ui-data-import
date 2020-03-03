@@ -443,4 +443,1232 @@ export const formConfigSamples = [{
     id: 'confirm-edit-match-profile-modal',
     dataAttributes: {},
   }],
+}, {
+  id: 'form-mapping-profiles',
+  name: 'mappingProfilesForm',
+  staticNamespace: '',
+  editableNamespace: '',
+  classNames: ['mapping-profiles'],
+  childControls: [{
+    controlType: 'Accordion',
+    staticControlType: 'Accordion',
+    id: 'mapping-profile-details',
+    collapsed: false,
+    separator: false,
+    label: 'ui-data-import.details',
+    dataAttributes: {},
+    childControls: [{
+      controlType: 'Headline',
+      staticControlType: 'Fragment',
+      id: 'instance-headline',
+      size: 'xx-large',
+      tag: 'h2',
+    }, {
+      controlType: 'AccordionSet',
+      staticControlType: 'AccordionSet',
+      dataAttributes: {},
+      childControls: [{ // Administrative data section start
+        controlType: 'Accordion',
+        staticControlType: 'Fragment',
+        id: 'administrative-data',
+        collapsed: false,
+        separator: true,
+        label: 'ui-data-import.settings.mappingProfiles.details.instance.administrativeData',
+        dataAttributes: {},
+        childControls: [{
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 3,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'Checkbox',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.suppressDiscoveryField', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.suppressDiscoveryField',
+              validate: null,
+              dataAttributes: { 'data-test-field-main': '' },
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 3,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'Checkbox',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.staffSuppressField', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.staffSuppressField',
+              validate: null,
+              dataAttributes: { 'data-test-field-main': '' },
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 3,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'Checkbox',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.previouslyHeldField', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.previouslyHeldField',
+              validate: null,
+              dataAttributes: { 'data-test-field-main': '' },
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 5,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              disabled: true,
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.Hrid', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.Hrid',
+              validate: [],
+              dataAttributes: { 'data-test-field-main': '' },
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 5,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              required: true,
+              disabled: true,
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.metadataSource', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.metadataSource',
+              validate: [],
+              dataAttributes: { 'data-test-field-main': '' },
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 5,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'Datepicker',
+              dateFormat: 'YYYY-MM-DD',
+              backendDateStandard: 'YYYY-MM-DD',
+              label: 'ui-data-import.catalogedDate',
+              name: 'catalogedDate',
+              disabled: false,
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'Select',
+              label: 'ui-data-import.instanceStatus',
+              name: 'statusId',
+              placeholder: 'Select instance status',
+              dataOptions: [],
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'Select',
+              label: 'ui-data-import.modeOfIssuance',
+              name: 'issuanceId',
+              placeholder: 'Select mode of issuance',
+              dataOptions: [],
+            }],
+          }],
+        }, { // start of statisticalCode repetable section
+          controlType: 'Row',
+          staticControlType: 'Row',
+          dataAttributes: {},
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'div',
+              staticControlType: 'Fragment',
+              repeatable: true,
+              name: 'mappingProfiles.details.instance.statisticalCode', // to be changed
+              id: 'statistical-code',
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.statisticalCode',
+              addLabel: 'ui-data-import.settings.mappingProfiles.details.instance.addStatisticalCode',
+              childControls: [{
+                controlType: 'TextField',
+                ariaLabelledBy: 'statisticalCode',
+              }],
+            }],
+          }],  // end of repetable section
+        }],  // Administrative data section end
+      }, { // Title data section start
+        controlType: 'Accordion',
+        staticControlType: 'Fragment',
+        id: 'title-data',
+        collapsed: false,
+        separator: true,
+        label: 'ui-data-import.settings.mappingProfiles.details.instance.titleData',
+        dataAttributes: {},
+        childControls: [{
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.resourceTitle', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.resourceTitle',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.alternativeTitles',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 5,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              disabled: true,
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.type', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.type',
+              validate: null,
+              dataAttributes: {},
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 5,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              disabled: true,
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.alternativeTitle', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.alternativeTitle',
+              validate: null,
+              dataAttributes: {},
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              disabled: true,
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.indexTitle', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.indexTitle',
+              validate: null,
+              dataAttributes: {},
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Headline',
+              staticControlType: 'Headline',
+              margin: 'x-small',
+              childControls: [{
+                controlType: 'FormattedMessage',
+                staticControlType: 'FormattedMessage',
+                id: 'ui-data-import.settings.mappingProfiles.details.instance.seriesStatements',
+              }],
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              disabled: true,
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.seriesStatements', // to be changed
+              validate: null,
+              dataAttributes: {},
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.relatedTitles',
+            }],
+          }],
+        }, { // start of precedingTitles repetable section
+          controlType: 'Row',
+          staticControlType: 'Row',
+          dataAttributes: {},
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'div',
+              staticControlType: 'Fragment',
+              repeatable: true,
+              name: 'mappingProfiles.details.instance.precedingTitles', // to be changed
+              id: 'preceding-titles',
+              label: '',
+              addLabel: 'ui-data-import.settings.mappingProfiles.details.instance.addPrecedingTitle',
+              legend: 'ui-data-import.settings.mappingProfiles.details.instance.precedingTitles',
+              childControls: [{
+                controlType: 'TextField',
+                staticControlType: 'Fragment',
+                ariaLabelledBy: 'folioId_1',
+              }],
+            }],
+          }],  // end of precedingTitles repetable section
+        }, { // start of succeedingTitles repetable section
+          controlType: 'Row',
+          staticControlType: 'Row',
+          dataAttributes: {},
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'div',
+              staticControlType: 'Fragment',
+              repeatable: true,
+              name: 'mappingProfiles.details.instance.succeedingTitles', // to be changed
+              id: 'succeeding-titles',
+              label: '',
+              addLabel: 'ui-data-import.settings.mappingProfiles.details.instance.addSucceedingTitle',
+              legend: 'ui-data-import.settings.mappingProfiles.details.instance.succeedingTitles',
+              childControls: [{
+                controlType: 'TextField',
+                staticControlType: 'Fragment',
+                ariaLabelledBy: 'folioId_2',
+              }],
+            }],
+          }],  // end of succeedingTitles repetable section
+        }],  // Title data section end
+      }, { // Identifier section start
+        controlType: 'Accordion',
+        staticControlType: 'Fragment',
+        id: 'identifier',
+        collapsed: false,
+        separator: true,
+        label: 'ui-data-import.settings.mappingProfiles.details.instance.identifier',
+        dataAttributes: {},
+        childControls: [{
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.identifiers',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 5,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.type', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.type',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 5,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.identifier', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.identifier',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }],  // Identifier section end
+      }, { // Contributor section start
+        controlType: 'Accordion',
+        staticControlType: 'Fragment',
+        id: 'contributor',
+        collapsed: false,
+        separator: true,
+        label: 'ui-data-import.settings.mappingProfiles.details.instance.contributor',
+        dataAttributes: {},
+        childControls: [{
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.contributors',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 2,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.name', // to be changed
+              label: 'ui-data-import.name',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 2,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.nameType', // to be changed
+              label: 'ui-data-import.nameType',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 2,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.type', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.type',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 2,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.typeFreeText', // to be changed
+              label: 'ui-data-import.typeFreeText',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 2,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.primary', // to be changed
+              label: 'ui-data-import.primary',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }],  // Contributor section end
+      }, { // Descriptive data section start
+        controlType: 'Accordion',
+        staticControlType: 'Fragment',
+        id: 'descriptive',
+        collapsed: false,
+        separator: true,
+        label: 'ui-data-import.settings.mappingProfiles.details.instance.descriptiveData',
+        dataAttributes: {},
+        childControls: [{
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.publications',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Row',
+              staticControlType: 'Row',
+              childControls: [{
+                controlType: 'Col',
+                staticControlType: 'Col',
+                xs: null,
+                childControls: [{
+                  controlType: 'Field',
+                  staticControlType: 'KeyValue',
+                  component: 'TextField',
+                  // id: 'criterion1-incoming.field.main',
+                  name: 'mappingProfiles.details.instance.publisher', // to be changed
+                  label: 'ui-data-import.settings.mappingProfiles.details.instance.publisher',
+                  validate: null,
+                  disabled: true,
+                  dataAttributes: {},
+                }],
+              }, {
+                controlType: 'Col',
+                staticControlType: 'Col',
+                xs: null,
+                childControls: [{
+                  controlType: 'Field',
+                  staticControlType: 'KeyValue',
+                  component: 'TextField',
+                  // id: 'criterion1-incoming.field.main',
+                  name: 'mappingProfiles.details.instance.publisherRole', // to be changed
+                  label: 'ui-data-import.settings.mappingProfiles.details.instance.publisherRole',
+                  validate: null,
+                  disabled: true,
+                  dataAttributes: {},
+                }],
+              }, {
+                controlType: 'Col',
+                staticControlType: 'Col',
+                xs: null,
+                childControls: [{
+                  controlType: 'Field',
+                  staticControlType: 'KeyValue',
+                  component: 'TextField',
+                  // id: 'criterion1-incoming.field.main',
+                  name: 'mappingProfiles.details.instance.place', // to be changed
+                  label: 'ui-data-import.settings.mappingProfiles.details.instance.place',
+                  validate: null,
+                  disabled: true,
+                  dataAttributes: {},
+                }],
+              }, {
+                controlType: 'Col',
+                staticControlType: 'Col',
+                xs: null,
+                childControls: [{
+                  controlType: 'Field',
+                  staticControlType: 'KeyValue',
+                  component: 'TextField',
+                  // id: 'criterion1-incoming.field.main',
+                  name: 'mappingProfiles.details.instance.dateOfPublication', // to be changed
+                  label: 'ui-data-import.settings.mappingProfiles.details.instance.dateOfPublication',
+                  validate: null,
+                  disabled: true,
+                  dataAttributes: {},
+                }],
+              }],
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.editions',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.edition', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.edition',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.physicalDescriptions',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.physicalDescription', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.physicalDescription',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.resourceType', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.resourceType',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }, { // start of NatureOfContent repetable section
+          controlType: 'Row',
+          staticControlType: 'Row',
+          dataAttributes: {},
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'div',
+              staticControlType: 'Fragment',
+              repeatable: true,
+              name: 'mappingProfiles.details.instance.natureOfContentTerms', // to be changed
+              id: 'nature-of-content-terms',
+              label: '',
+              addLabel: 'ui-data-import.settings.mappingProfiles.details.instance.addNatureOfContentTerm',
+              legend: 'ui-data-import.settings.mappingProfiles.details.instance.natureOfContentTerms',
+              childControls: [{
+                controlType: 'TextField',
+                ariaLabelledBy: 'natureOfContentTerm',
+              }],
+            }],
+          }],  // end of NatureOfContent repetable section
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.formats',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.format', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.format',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.languages',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.language', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.language',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.publicationFrequency',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.publicationFrequency', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.publicationFrequency',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.publicationRange',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.publicationRange', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.publicationRange',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }],  // Descriptive data section end
+      }, { // instanceNotes section start
+        controlType: 'Accordion',
+        staticControlType: 'Fragment',
+        id: 'instanceNotes',
+        collapsed: false,
+        separator: true,
+        label: 'ui-data-import.settings.mappingProfiles.details.instance.instanceNotes',
+        dataAttributes: {},
+        childControls: [{
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.notes',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Row',
+              staticControlType: 'Row',
+              childControls: [{
+                controlType: 'Col',
+                staticControlType: 'Col',
+                xs: null,
+                childControls: [{
+                  controlType: 'Field',
+                  staticControlType: 'KeyValue',
+                  component: 'TextField',
+                  // id: 'criterion1-incoming.field.main',
+                  name: 'mappingProfiles.details.instance.noteType', // to be changed
+                  label: 'ui-data-import.settings.mappingProfiles.details.instance.noteType',
+                  validate: null,
+                  disabled: true,
+                  dataAttributes: {},
+                }],
+              }, {
+                controlType: 'Col',
+                staticControlType: 'Col',
+                xs: null,
+                childControls: [{
+                  controlType: 'Field',
+                  staticControlType: 'KeyValue',
+                  component: 'TextField',
+                  // id: 'criterion1-incoming.field.main',
+                  name: 'mappingProfiles.details.instance.note', // to be changed
+                  label: 'ui-data-import.settings.mappingProfiles.details.instance.note',
+                  validate: null,
+                  disabled: true,
+                  dataAttributes: {},
+                }],
+              }, {
+                controlType: 'Col',
+                staticControlType: 'Col',
+                xs: null,
+                childControls: [{
+                  controlType: 'Field',
+                  staticControlType: 'KeyValue',
+                  component: 'TextField',
+                  // id: 'criterion1-incoming.field.main',
+                  name: 'mappingProfiles.details.instance.staffOnly', // to be changed
+                  label: 'ui-data-import.settings.mappingProfiles.details.instance.staffOnly',
+                  validate: null,
+                  disabled: true,
+                  dataAttributes: {},
+                }],
+              }],
+            }],
+          }],
+        }],  // instanceNotes section end
+      }, { // electronicAccess section start
+        controlType: 'Accordion',
+        staticControlType: 'Fragment',
+        id: 'electronicAccess',
+        collapsed: false,
+        separator: true,
+        label: 'ui-data-import.settings.mappingProfiles.details.instance.electronicAccess',
+        dataAttributes: {},
+        childControls: [{
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.electronicAccess',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          bottom: 'xs',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 2,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.urlRelationship', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.urlRelationship',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 2,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.uri', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.uri',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 2,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.linkText', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.linkText',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 2,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.materialsSpecification', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.materialsSpecification',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 2,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.urlPublicNote', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.urlPublicNote',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }],  // electronicAccess section end
+      }, { // Subject section start
+        controlType: 'Accordion',
+        staticControlType: 'Fragment',
+        id: 'subject',
+        collapsed: false,
+        separator: true,
+        label: 'ui-data-import.settings.mappingProfiles.details.instance.subjects',
+        dataAttributes: {},
+        childControls: [{
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.subjects', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.subjects',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }],  // Subject section end
+      }, { // classification section start
+        controlType: 'Accordion',
+        staticControlType: 'Fragment',
+        id: 'classification',
+        collapsed: false,
+        separator: true,
+        label: 'ui-data-import.settings.mappingProfiles.details.instance.classification',
+        dataAttributes: {},
+        childControls: [{
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'FormattedMessage',
+              staticControlType: 'FormattedMessage',
+              id: 'ui-data-import.settings.mappingProfiles.details.instance.classification',
+            }],
+          }],
+        }, {
+          controlType: 'Row',
+          staticControlType: 'Row',
+          bottom: 'xs',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 5,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.classificationIdentifierType', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.classificationIdentifierType',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }, {
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 5,
+            childControls: [{
+              controlType: 'Field',
+              staticControlType: 'KeyValue',
+              component: 'TextField',
+              // id: 'criterion1-incoming.field.main',
+              name: 'mappingProfiles.details.instance.classification', // to be changed
+              label: 'ui-data-import.settings.mappingProfiles.details.instance.classification',
+              validate: null,
+              disabled: true,
+              dataAttributes: {},
+            }],
+          }],
+        }],  // classification section end
+      }, { // instanceRelationshipAnalyticsBoundWith section start
+        controlType: 'Accordion',
+        staticControlType: 'Fragment',
+        id: 'instanceRelationshipAnalyticsBoundWith',
+        collapsed: false,
+        separator: true,
+        label: 'ui-data-import.settings.mappingProfiles.details.instance.instanceRelationshipAnalyticsBoundWith',
+        dataAttributes: {},
+        childControls: [{ // start parentInstances repeatable section
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'div',
+              staticControlType: 'Fragment',
+              repeatable: true,
+              name: 'mappingProfiles.details.instance.parentInstances', // to be changed
+              id: 'parent-instances',
+              legend: 'ui-data-import.settings.mappingProfiles.details.instance.parentInstances',
+              addLabel: 'ui-data-import.settings.mappingProfiles.details.instance.addParentInstance',
+              childControls: [{
+                controlType: 'Row',
+                staticControlType: 'Row',
+                childControls: [{
+                  controlType: 'Col',
+                  staticControlType: 'Col',
+                  xs: 6,
+                  childControls: [{
+                    controlType: 'TextField',
+                    staticControlType: 'TextField',
+                    ariaLabelledBy: 'parentInstances',
+                    name: 'parent-instances',
+                  }],
+                }, {
+                  controlType: 'Col',
+                  staticControlType: 'Col',
+                  xs: 6,
+                  childControls: [{
+                    controlType: 'TextField',
+                    staticControlType: 'TextField',
+                    ariaLabelledBy: 'typeOfRelation',
+                    name: 'parent-relation',
+                  }],
+                }],
+              }],
+            }],
+          }], // end parentInstances repeatable section
+        }, { // start childInstances repeatable section
+          controlType: 'Row',
+          staticControlType: 'Row',
+          childControls: [{
+            controlType: 'Col',
+            staticControlType: 'Col',
+            xs: 10,
+            childControls: [{
+              controlType: 'div',
+              staticControlType: 'Fragment',
+              repeatable: true,
+              name: 'mappingProfiles.details.instance.childInstances', // to be changed
+              id: 'child-instances',
+              legend: 'ui-data-import.settings.mappingProfiles.details.instance.childInstances',
+              addLabel: 'ui-data-import.settings.mappingProfiles.details.instance.addChildInstance',
+              childControls: [{
+                controlType: 'Row',
+                staticControlType: 'Row',
+                childControls: [{
+                  controlType: 'Col',
+                  staticControlType: 'Col',
+                  xs: 6,
+                  childControls: [{
+                    controlType: 'TextField',
+                    staticControlType: 'TextField',
+                    ariaLabelledBy: 'childInstance',
+                    name: 'child-instances',
+                  }],
+                }, {
+                  controlType: 'Col',
+                  staticControlType: 'Col',
+                  xs: 6,
+                  childControls: [{
+                    controlType: 'TextField',
+                    staticControlType: 'TextField',
+                    ariaLabelledBy: 'typeOfChildRelation',
+                    name: 'child-relation',
+                  }],
+                }],
+              }],
+            }],
+          }], // end childInstances repeatable section
+        }],  // instanceRelationshipAnalyticsBoundWith section end
+      }],
+    }],
+  }],
 }];

@@ -21,6 +21,9 @@ import {
 } from 'lodash';
 
 import {
+  Row,
+  Col,
+  Label,
   Select,
   Headline,
   TextArea,
@@ -39,12 +42,15 @@ import {
   LAYER_TYPES,
   PROFILE_TYPES,
 } from '../../utils/constants';
+import { formConfigSamples } from '../../../test/bigtest/mocks';
+
 import {
   FullScreenForm,
   FolioRecordTypeSelect,
   ProfileAssociator,
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
+  FlexibleForm,
 } from '../../components';
 
 const formName = 'mappingProfilesForm';
@@ -59,7 +65,10 @@ export const MappingProfilesFormComponent = ({
   onCancel,
   dispatch,
 }) => {
-  const { profile } = initialValues;
+  const {
+    profile,
+    profile: { existingRecordType },
+  } = initialValues;
   const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
       value: recordType,
@@ -92,8 +101,19 @@ export const MappingProfilesFormComponent = ({
     ...get(initialValues, ['profile', 'childProfiles'], []),
   ];
 
+  const initialInstancesFields = {
+    statisticalCode: [],
+    precedingTitles: [],
+    succeedingTitles: [],
+    natureOfContentTerm: [],
+    parentInstances: [],
+    childInstances: [],
+  };
+
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
+  const [existingRecord, setExistingRecord] = useState(existingRecordType);
+  const [instancesFields, setInstancesFields] = useState(initialInstancesFields);
 
   useEffect(() => {
     dispatch(change(formName, 'addedRelations', addedRelations));
@@ -102,6 +122,130 @@ export const MappingProfilesFormComponent = ({
   useEffect(() => {
     dispatch(change(formName, 'deletedRelations', deletedRelations));
   }, [deletedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
+  const currentFolioRecordType = folioRecordTypesDataOptions.find(opt => opt.value === existingRecordType).label;
+
+  const detailsTitle = (
+    <FormattedMessage id="ui-data-import.settings.profiles.select.mappingProfiles">
+      {txt => `${txt} - ${currentFolioRecordType}`}
+    </FormattedMessage>
+  );
+
+  const getRepeatableProps = (fieldType, fields, setFields) => ({
+    fields: fields[fieldType],
+    onAdd: () => {
+      const updatedFields = { ...fields };
+
+      updatedFields[fieldType] = [...updatedFields[fieldType], {}];
+      setFields(updatedFields);
+    },
+    onRemove: index => {
+      const updatedFields = { ...fields };
+
+      updatedFields[fieldType].splice(index, 1);
+      setFields(updatedFields);
+    },
+  });
+
+  const holdingsProps = {};
+  const instanceProps = {
+    'instance-headline': { children: detailsTitle },
+
+    'statistical-code': {
+      ...getRepeatableProps('statisticalCode', instancesFields, setInstancesFields),
+      headLabels: (
+        <Row>
+          <Col xs={8}>
+            <Label id="statisticalCode">
+              <FormattedMessage id="ui-data-import.settings.mappingProfiles.details.instance.statisticalCode" />
+            </Label>
+          </Col>
+        </Row>
+      ),
+    },
+    'preceding-titles': {
+      ...getRepeatableProps('precedingTitles', instancesFields, setInstancesFields),
+      headLabels: (
+        <Row>
+          <Col xs={8}>
+            <Label id="folioId_1">
+              <FormattedMessage id="ui-data-import.settings.mappingProfiles.details.instance.folioId" />
+            </Label>
+          </Col>
+        </Row>
+      ),
+    },
+    'succeeding-titles': {
+      ...getRepeatableProps('succeedingTitles', instancesFields, setInstancesFields),
+      headLabels: (
+        <Row>
+          <Col xs={8}>
+            <Label id="folioId_2">
+              <FormattedMessage id="ui-data-import.settings.mappingProfiles.details.instance.folioId" />
+            </Label>
+          </Col>
+        </Row>
+      ),
+    },
+    'nature-of-content-terms': {
+      ...getRepeatableProps('natureOfContentTerm', instancesFields, setInstancesFields),
+      headLabels: (
+        <Row>
+          <Col xs={8}>
+            <Label id="natureOfContentTerm">
+              <FormattedMessage id="ui-data-import.settings.mappingProfiles.details.instance.natureOfContentTerm" />
+            </Label>
+          </Col>
+        </Row>
+      ),
+    },
+    'parent-instances': {
+      ...getRepeatableProps('parentInstances', instancesFields, setInstancesFields),
+      headLabels: (
+        <Row>
+          <Col xs={6}>
+            <Label id="parentInstances">
+              <FormattedMessage id="ui-data-import.settings.mappingProfiles.details.instance.parentInstances" />
+            </Label>
+          </Col>
+          <Col xs={6}>
+            <Label id="typeOfRelation">
+              <FormattedMessage id="ui-data-import.settings.mappingProfiles.details.instance.typeOfRelation" />
+            </Label>
+          </Col>
+        </Row>
+      ),
+    },
+    'child-instances': {
+      ...getRepeatableProps('childInstances', instancesFields, setInstancesFields),
+      headLabels: (
+        <Row>
+          <Col xs={6}>
+            <Label id="childInstance">
+              <FormattedMessage id="ui-data-import.settings.mappingProfiles.details.instance.childInstance" />
+            </Label>
+          </Col>
+          <Col xs={6}>
+            <Label id="typeOfChildRelation">
+              <FormattedMessage id="ui-data-import.settings.mappingProfiles.details.instance.typeOfRelation" />
+            </Label>
+          </Col>
+        </Row>
+      ),
+    },
+  };
+
+  const getComponentsProps = () => {
+    switch (existingRecord) {
+      case FOLIO_RECORD_TYPES.HOLDINGS.type:
+        return holdingsProps;
+      case FOLIO_RECORD_TYPES.INSTANCE.type:
+        return instanceProps;
+      default:
+        return {};
+    }
+  };
 
   return (
     <FullScreenForm
@@ -152,6 +296,7 @@ export const MappingProfilesFormComponent = ({
           <FolioRecordTypeSelect
             fieldName="existingRecordType"
             dataOptions={folioRecordTypesDataOptions}
+            onChange={setExistingRecord}
           />
           <div data-test-description-field>
             <Field
@@ -161,14 +306,13 @@ export const MappingProfilesFormComponent = ({
             />
           </div>
         </Accordion>
-        <Accordion
-          label={<FormattedMessage id="ui-data-import.details" />}
-          separator={false}
-        >
-          <div>
-            {/* will be implemented in the future */}
-          </div>
-        </Accordion>
+
+        <FlexibleForm
+          component="Fragment"
+          config={formConfig}
+          componentsProps={getComponentsProps()}
+        />
+
         <Accordion
           id="mappingProfileFormAssociatedActionProfileAccordion"
           label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}

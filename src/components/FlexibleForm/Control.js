@@ -22,12 +22,13 @@ import * as validators from '../../utils/formValidators';
 export const VIRTUAL_CONTROLS = { COMMON_SECTION: 'CommonSection' };
 
 const controls = {
+  FormattedMessage,
   Fragment,
   Field,
   ...stripesComponents,
 };
 
-const getControl = controlType => components[controlType] || controls[controlType];
+const getControl = controlType => components[controlType] || controls[controlType] || controlType;
 const getValidation = validation => validation.map(val => validators[val]);
 const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
 const hasContent = (children, record) => children
@@ -141,7 +142,7 @@ export const Control = memo(props => {
         enabled: !!(isEditable && hasContent(children, referenceTables)),
       };
     }
-
+    // if (componentsProps && componentsProps[id])
     if (componentsProps[actualId]) {
       attrs = {
         ...attrs,
@@ -194,13 +195,12 @@ export const Control = memo(props => {
     const {
       legend,
       addLabel,
-      fields,
-      onAdd,
-      onRemove,
     } = props;
 
     const Cmp = getControl(controlType);
     const Repeatable = getControl('RepeatableField');
+    const getLegend = () => (legend ? intl.formatMessage({ id: legend }) : undefined);
+    const getAddLabel = () => (addLabel ? intl.formatMessage({ id: addLabel }) : undefined);
 
     if (isFragment) {
       return <Cmp />;
@@ -209,14 +209,12 @@ export const Control = memo(props => {
     return (
       <Cmp
         className={classes}
-        {...attribs}
       >
         <Repeatable
-          legend={legend}
-          addLabel={addLabel}
-          fields={referenceTables[fields]}
-          onAdd={onAdd}
-          onRemove={onRemove}
+          {...attribs}
+          legend={getLegend()}
+          addLabel={getAddLabel()}
+          // fields={referenceTables[fields]}
           renderField={() => (
             <Fragment>
               {children.map((cfg, i) => (
@@ -306,7 +304,5 @@ Control.propTypes = {
   referenceTables: PropTypes.object,
   legend: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   addLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  fields: PropTypes.arrayOf(PropTypes.object),
-  onAdd: PropTypes.func,
-  onRemove: PropTypes.func,
+  // fields: PropTypes.arrayOf(PropTypes.object),
 };
