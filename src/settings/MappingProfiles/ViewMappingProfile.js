@@ -36,9 +36,19 @@ import {
   INCOMING_RECORD_TYPES,
   ProfileAssociator,
   FOLIO_RECORD_TYPES,
+  FlexibleForm,
 } from '../../components';
+import {
+  getViewHoldingsDetails,
+  getViewHoldingsProps,
+} from './details';
 
 import sharedCss from '../../shared.css';
+import styles from './MappingProfiles.css';
+
+import { formConfigSamples } from '../../../test/bigtest/mocks';
+
+const formName = 'mappingProfilesForm';
 
 @stripesConnect
 @withTags
@@ -184,8 +194,27 @@ export class ViewMappingProfile extends Component {
       };
     }
 
+    const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
     const tagsEntityLink = `data-import-profiles/mappingProfiles/${mappingProfile.id}`;
     const associations = [...[], ...mappingProfile.parentProfiles, ...mappingProfile.childProfiles];
+
+    const getComponentsProps = () => {
+      switch (mappingProfile.existingRecordType) {
+        case FOLIO_RECORD_TYPES.HOLDINGS.type:
+          return getViewHoldingsProps(mappingProfile?.mappingDetails?.mappingFields);
+        default:
+          return {};
+      }
+    };
+
+    const getRecordData = () => {
+      switch (mappingProfile.existingRecordType) {
+        case FOLIO_RECORD_TYPES.HOLDINGS.type:
+          return getViewHoldingsDetails(mappingProfile?.mappingDetails?.mappingFields);
+        default:
+          return getViewHoldingsDetails(mappingProfile?.mappingDetails?.mappingFields);
+      }
+    };
 
     return (
       <Pane
@@ -229,7 +258,15 @@ export class ViewMappingProfile extends Component {
             </div>
           )}
           <Accordion label={<FormattedMessage id="ui-data-import.details" />}>
-            <div style={{ height: 60 }}>{/* will be implemented in future stories */}</div>
+            <div>
+              <FlexibleForm
+                component="Fragment"
+                config={formConfig}
+                styles={styles}
+                record={getRecordData()}
+                componentsProps={getComponentsProps()}
+              />
+            </div>
           </Accordion>
           <Accordion
             label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}

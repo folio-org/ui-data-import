@@ -28,6 +28,22 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
   await mappingProfileForm.submitFormButton.click();
 }
 
+const hasField = (details, accordion, field, fieldLabel) => {
+  it(`has ${fieldLabel} field`, () => {
+    expect(mappingProfileDetails[details][accordion][field].label.text).to.equal(fieldLabel);
+  });
+};
+
+const hasTable = (details, accordion, table, tableName, columnCount) => {
+  it(`has ${tableName} table`, () => {
+    expect(mappingProfileDetails[details][accordion][table].isPresent).to.be.true;
+  });
+
+  it(`${tableName} table has ${columnCount} columns`, () => {
+    expect(mappingProfileDetails[details][accordion][table].columnCount).to.equal(columnCount);
+  });
+};
+
 describe('Mapping Profile View', () => {
   setupApplication({ scenarios: ['fetch-mapping-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
@@ -58,6 +74,129 @@ describe('Mapping Profile View', () => {
 
     it('display tags accordion', () => {
       expect(mappingProfileDetails.isTagsPresent).to.be.true;
+    });
+
+    describe('details accordion', () => {
+      describe('when FOLIO record type equals to', () => {
+        describe('Holdings', () => {
+          beforeEach(async () => {
+            await mappingProfiles.list.rows(1).click();
+          });
+
+          it('has correct header', () => {
+            expect(mappingProfileDetails.holdingsDetails.header.mappedLabel).to.be.equal('Field mapping');
+            expect(mappingProfileDetails.holdingsDetails.header.mappableLabel).to.be.equal('Holdings');
+          });
+
+          it('has correct count of accordions', () => {
+            expect(mappingProfileDetails.holdingsDetails.set().length).to.equal(7);
+          });
+
+          describe('Administrative data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.adminDataAccordion.label).to.equal('Administrative data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.adminDataAccordion.isOpen).to.be.true;
+            });
+
+            hasField('holdingsDetails', 'adminDataAccordion', 'suppressFromDiscovery', 'Suppress from discovery');
+            hasField('holdingsDetails', 'adminDataAccordion', 'holdingsHRID', 'Holdings HRID');
+            hasTable('holdingsDetails', 'adminDataAccordion', 'formerHoldingsIdTable', 'Former holdings ID', 1);
+            hasField('holdingsDetails', 'adminDataAccordion', 'holdingsType', 'Holdings type');
+            hasTable('holdingsDetails', 'adminDataAccordion', 'statisticalCodeTable', 'Statistical code', 1);
+          });
+
+          describe('Location accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.locationAccordion.label).to.equal('Location');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.locationAccordion.isOpen).to.be.true;
+            });
+
+            hasField('holdingsDetails', 'locationAccordion', 'permanent', 'Permanent');
+            hasField('holdingsDetails', 'locationAccordion', 'temporary', 'Temporary');
+            hasField('holdingsDetails', 'locationAccordion', 'shelvingOrder', 'Shelving order');
+            hasField('holdingsDetails', 'locationAccordion', 'shelvingTitle', 'Shelving title');
+            hasField('holdingsDetails', 'locationAccordion', 'copyNumber', 'Copy number');
+            hasField('holdingsDetails', 'locationAccordion', 'callNumberType', 'Call number type');
+            hasField('holdingsDetails', 'locationAccordion', 'callNumberPrefix', 'Call number prefix');
+            hasField('holdingsDetails', 'locationAccordion', 'callNumber', 'Call number');
+            hasField('holdingsDetails', 'locationAccordion', 'callNumberSuffix', 'Call number suffix');
+          });
+
+          describe('Holdings details accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.holdingsDetailsAccordion.label).to.equal('Holdings details');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.holdingsDetailsAccordion.isOpen).to.be.true;
+            });
+
+            hasField('holdingsDetails', 'holdingsDetailsAccordion', 'numberOfItems', 'Number of items');
+            hasTable('holdingsDetails', 'holdingsDetailsAccordion', 'holdingsStatementsTable', 'Holdings statement', 2);
+            hasTable('holdingsDetails', 'holdingsDetailsAccordion', 'holdingsStatementsForSupplTable', 'Holdings statement for supplements', 2);
+            hasTable('holdingsDetails', 'holdingsDetailsAccordion', 'holdingsStatementsForIndexesTable', 'Holdings statement for indexes', 2);
+            hasField('holdingsDetails', 'holdingsDetailsAccordion', 'illPolicy', 'ILL policy');
+            hasField('holdingsDetails', 'holdingsDetailsAccordion', 'digitizationPolicy', 'Digitization policy');
+            hasField('holdingsDetails', 'holdingsDetailsAccordion', 'retentionPolicy', 'Retention policy');
+          });
+
+          describe('Holdings notes accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.holdingsNotesAccordion.label).to.equal('Holdings notes');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.holdingsNotesAccordion.isOpen).to.be.true;
+            });
+
+            hasTable('holdingsDetails', 'holdingsNotesAccordion', 'notesTable', 'Holdings notes', 3);
+          });
+
+          describe('Electronic access accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.electronicAccessAccordion.label).to.equal('Electronic access');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.electronicAccessAccordion.isOpen).to.be.true;
+            });
+
+            hasTable('holdingsDetails', 'electronicAccessAccordion', 'electronicAccessTable', 'Electronic access', 5);
+          });
+
+          describe('Acquisition accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.acquisitionAccordion.label).to.equal('Acquisition');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.acquisitionAccordion.isOpen).to.be.true;
+            });
+
+            hasField('holdingsDetails', 'acquisitionAccordion', 'acquisitionMethod', 'Acquisition method');
+            hasField('holdingsDetails', 'acquisitionAccordion', 'orderFormat', 'Order format');
+            hasField('holdingsDetails', 'acquisitionAccordion', 'receiptStatus', 'Receipt status');
+          });
+
+          describe('Receiving history accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.receivingHistoryAccordion.label).to.equal('Receiving history');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.receivingHistoryAccordion.isOpen).to.be.true;
+            });
+
+            hasTable('holdingsDetails', 'receivingHistoryAccordion', 'receivingHistoryTable', 'Receiving history', 3);
+          });
+        });
+      });
     });
 
     describe('associated action profile', () => {

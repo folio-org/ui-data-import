@@ -25,9 +25,9 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^4.1.0",
-    "@folio/stripes-core": "^3.3.0",
-    "@folio/stripes-smart-components": "^2.12.0",
-    "@folio/stripes": "^2.13.0",
+    "@folio/stripes-core": "^4.0.0",
+    "@folio/stripes-smart-components": "^3.0.0",
+    "@folio/stripes": "^3.0.0",
     "@folio/stripes-acq-components": "^1.3.0",
     "babel-eslint": "^9.0.0",
     "babel-polyfill": "^6.26.0",
@@ -40,7 +40,8 @@
     "query-string": "^5.0.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
-    "sinon": "^7.2.2"
+    "sinon": "^7.2.2",
+    "react-router-dom": "^4.3.1"
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -48,14 +49,14 @@
     "prop-types": "^15.6.0",
     "react-dropzone": "^7.0.1",
     "react-highlighter": "^0.4.3",
-    "react-intl": "^2.3.0",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.1.1",
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^2.12.0",
-    "react": "*"
+    "@folio/stripes": "^3.0.0",
+    "react": "*",
+    "react-intl": "^2.3.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1"
   },
   "stripes": {
     "type": "app",

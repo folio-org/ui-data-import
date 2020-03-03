@@ -20,12 +20,13 @@ import * as components from '..';
 import * as validators from '../../utils/formValidators';
 
 const controls = {
+  FormattedMessage,
   Fragment,
   Field,
   ...stripesComponents,
 };
 
-const getControl = controlType => components[controlType] || controls[controlType];
+const getControl = controlType => components[controlType] || controls[controlType] || controlType;
 const getValidation = validation => validation.map(val => validators[val]);
 const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
 const hasContent = (children, record) => children
@@ -122,7 +123,7 @@ export const Control = memo(props => {
       };
     }
 
-    if (componentsProps[id]) {
+    if (componentsProps?.[id]) {
       attrs = {
         ...attrs,
         ...componentsProps[id],
@@ -172,12 +173,17 @@ export const Control = memo(props => {
       legend,
       addLabel,
       fields,
+    } = props;
+
+    const {
       onAdd,
       onRemove,
-    } = props;
+    } = attribs;
 
     const Cmp = getControl(controlType);
     const Repeatable = getControl('RepeatableField');
+    const getLegend = () => (legend ? intl.formatMessage({ id: legend }) : undefined);
+    const getAddLabel = () => (addLabel ? intl.formatMessage({ id: addLabel }) : undefined);
 
     if (isFragment) {
       return <Cmp />;
@@ -186,11 +192,11 @@ export const Control = memo(props => {
     return (
       <Cmp
         className={classes}
-        {...attribs}
       >
         <Repeatable
-          legend={legend}
-          addLabel={addLabel}
+          {...attribs}
+          legend={getLegend()}
+          addLabel={getAddLabel()}
           fields={referenceTables[fields]}
           onAdd={onAdd}
           onRemove={onRemove}

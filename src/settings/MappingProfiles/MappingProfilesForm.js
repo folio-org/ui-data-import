@@ -2,6 +2,7 @@ import React, {
   useMemo,
   useState,
   useEffect,
+  memo,
 } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
@@ -42,14 +43,22 @@ import {
 import {
   FullScreenForm,
   FolioRecordTypeSelect,
+  FlexibleForm,
   ProfileAssociator,
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
 } from '../../components';
+import {
+  initialHoldingsFields,
+  getHoldingsProps,
+} from './details';
+import { formConfigSamples } from '../../../test/bigtest/mocks/form-config-samples';
+
+import styles from './MappingProfiles.css';
 
 const formName = 'mappingProfilesForm';
 
-export const MappingProfilesFormComponent = ({
+export const MappingProfilesFormComponent = memo(({
   intl: { formatMessage },
   pristine,
   submitting,
@@ -59,7 +68,10 @@ export const MappingProfilesFormComponent = ({
   onCancel,
   dispatch,
 }) => {
-  const { profile } = initialValues;
+  const {
+    profile,
+    profile: { existingRecordType },
+  } = initialValues;
   const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
       value: recordType,
@@ -70,6 +82,8 @@ export const MappingProfilesFormComponent = ({
       value: recordType,
       label: formatMessage({ id: captionId }),
     }));
+
+  const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
 
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, []);
   const incomingRecordTypesDataOptions = useMemo(getIncomingRecordTypesDataOptions, []);
@@ -94,6 +108,8 @@ export const MappingProfilesFormComponent = ({
 
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
+  const [existingRecord, setExistingRecord] = useState(existingRecordType);
+  const [holdingsFields, setHoldingsFields] = useState(initialHoldingsFields);
 
   useEffect(() => {
     dispatch(change(formName, 'addedRelations', addedRelations));
@@ -102,6 +118,15 @@ export const MappingProfilesFormComponent = ({
   useEffect(() => {
     dispatch(change(formName, 'deletedRelations', deletedRelations));
   }, [deletedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const getComponentsProps = () => {
+    switch (existingRecord) {
+      case FOLIO_RECORD_TYPES.HOLDINGS.type:
+        return getHoldingsProps(null, holdingsFields, setHoldingsFields);
+      default:
+        return {};
+    }
+  };
 
   return (
     <FullScreenForm
@@ -152,6 +177,7 @@ export const MappingProfilesFormComponent = ({
           <FolioRecordTypeSelect
             fieldName="existingRecordType"
             dataOptions={folioRecordTypesDataOptions}
+            onChange={setExistingRecord}
           />
           <div data-test-description-field>
             <Field
@@ -165,9 +191,13 @@ export const MappingProfilesFormComponent = ({
           label={<FormattedMessage id="ui-data-import.details" />}
           separator={false}
         >
-          <div>
-            {/* will be implemented in the future */}
-          </div>
+          <FlexibleForm
+            component="Fragment"
+            config={formConfig}
+            referenceTables={holdingsFields}
+            componentsProps={getComponentsProps()}
+            styles={styles}
+          />
         </Accordion>
         <Accordion
           id="mappingProfileFormAssociatedActionProfileAccordion"
@@ -195,7 +225,7 @@ export const MappingProfilesFormComponent = ({
       </AccordionSet>
     </FullScreenForm>
   );
-};
+});
 
 MappingProfilesFormComponent.propTypes = {
   initialValues: PropTypes.object.isRequired,

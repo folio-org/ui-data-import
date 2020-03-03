@@ -9,6 +9,7 @@ import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/inter
 
 import { AssociatedActionProfiles } from '../associated-action-profiles';
 import { ActionMenuInteractor } from '../action-menu-interactor';
+import { HoldingsDetailsAccordion } from './details/view-details-interactor';
 
 @interactor
 class MappingProfileDetailsInteractor {
@@ -18,6 +19,7 @@ class MappingProfileDetailsInteractor {
   incomingRecordType = scoped('[data-test-incoming-record-type]');
   folioRecordType = scoped('[data-test-folio-record-type]');
   isTagsPresent = isPresent('[data-test-tags-accordion]');
+  holdingsDetails = new HoldingsDetailsAccordion('#mapping-profile-details');
   associatedActionProfiles = new AssociatedActionProfiles('[data-test-associated-action-profiles]');
   confirmationModal = new ConfirmationModalInteractor('#delete-mapping-profile-modal');
   callout = new CalloutInteractor();
