@@ -277,3 +277,8 @@ export const INVOICE_RESOURCE_PATHS = [
 ];
 
 export const SRM_RESOURCE_PATHS = ['instance.json'];
+
+export const FILTER_QUERY_PARAMS = {
+  DEFAULT: 'cql.allRecords=1',
+  NOT_STATIC_VALUE: 'cql.allRecords=1 NOT incomingRecordType=STATIC_VALUE',
+};

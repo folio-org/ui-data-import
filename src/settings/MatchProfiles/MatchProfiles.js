@@ -18,6 +18,8 @@ import {
   fetchJsonSchema,
   getModuleVersion,
   handleAllRequests,
+  getSearchQuery,
+  getSortQuery,
 } from '../../utils';
 import {
   ENTITY_KEYS,
@@ -45,6 +47,13 @@ const queryTemplate = `(
   existingStaticValueType="%{query.query}*" OR
   tags.tagList="%{query.query}*"
 )`;
+const sortMap = {
+  name: 'name',
+  match: 'existingRecordType field fieldMarc fieldNonMarc existingStaticValueType',
+  tags: 'tags.tagList',
+  updated: 'metadata.updatedDate',
+  updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
+};
 
 export const matchProfilesShape = {
   INITIAL_RESULT_COUNT,
@@ -61,21 +70,15 @@ export const matchProfilesShape = {
       path: 'data-import-profiles/matchProfiles',
       clientGeneratePk: false,
       throwErrors: true,
-      GET: {
-        params: {
-          query: makeQueryFunction(
-            'cql.allRecords=1',
-            '(name="%{query.query}*" OR tags.tagList="%{query.query}*")',
-            {
-              name: 'name',
-              tags: 'tags.tagList',
-              updated: 'metadata.updatedDate',
-              updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
-            },
-            [],
-          ),
-        },
-        staticFallback: { params: {} },
+      params: (_q, _p, _r, _l, props) => {
+        const findAll = 'cql.allRecords=1';
+        const sort = get(_r, ['query', 'sort'], null);
+        const search = get(_r, ['query', 'query'], null);
+        const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
+        const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
+        const query = `${props.filterParams?.manifest?.query || findAll} ${searchQuery} ${sortQuery}`;
+
+        return { query };
       },
     },
   },
@@ -166,13 +169,7 @@ export class MatchProfiles extends Component {
           query: makeQueryFunction(
             'cql.allRecords=1',
             queryTemplate,
-            {
-              name: 'name',
-              match: 'existingRecordType field fieldMarc fieldNonMarc existingStaticValueType',
-              tags: 'tags.tagList',
-              updated: 'metadata.updatedDate',
-              updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
-            },
+            sortMap,
             [],
           ),
         },
