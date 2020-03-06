@@ -20,6 +20,7 @@ export const IncomingRecordTrigger = ({
   captionId,
   iconKey,
   className,
+  isExpanded,
   style,
 }) => (
   <Button
@@ -42,7 +43,7 @@ export const IncomingRecordTrigger = ({
     ) : (
       <FormattedMessage id={captionId} />
     )}
-    <Icon icon="caret-down" />
+    <Icon icon={`caret-${isExpanded ? 'up' : 'down'}`} />
   </Button>
 );
 
@@ -54,5 +55,6 @@ IncomingRecordTrigger.propTypes = {
   captionId: PropTypes.string.isRequired,
   iconKey: PropTypes.string,
   className: PropTypes.string,
+  isExpanded: PropTypes.bool,
   style: PropTypes.object,
 };
