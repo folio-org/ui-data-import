@@ -22,6 +22,7 @@
 * Remove extra action buttons in profiles Settings screens (UIDATIMP-394 - UIDATIMP-397)
 * Augment RecordTypeSelector component with Incoming Record Type selection dropdown (UIDATIMP-386)
 * Job profile details: suppress the delete/trash can icon (UIDATIMP-390)
+* Add "defaultMapping" query param to "/processFiles" path (UIDATIMP-417)
 
 ### Bugs fixed:
 * Profile Associator lists are empty when the user reloads the page with Profile Edit Form open (UIDATIMP-338)
@@ -35,6 +36,7 @@
 * Unlink action profile from field mapping profile is not working (UIDATIMP-381)
 * ProfileAssociator Component lists are empty (UIDATIMP-399)
 * Fix UI tests (UIDATIMP-399)
+* Wipe out linked profiles when duplicate a profile (UIDATIMP-410)
 
 ## [1.7.3](https://github.com/folio-org/ui-data-import/tree/v1.7.3) (2019-12-04)
 * Update sorting query for jobs (UIDATIMP-346)

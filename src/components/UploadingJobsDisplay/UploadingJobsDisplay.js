@@ -45,7 +45,7 @@ import {
   FILE_STATUSES,
 } from '../../utils/constants';
 import * as API from '../../utils/upload';
-import { loadMarcRecords } from '../../utils/loadRecords';
+import { loadRecords } from '../../utils/loadRecords';
 import { createJobProfiles } from '../../settings/JobProfiles';
 
 @withRouter
@@ -486,10 +486,19 @@ export class UploadingJobsDisplay extends Component {
     } = this.props;
     const { uploadDefinition } = this.context;
 
+    // `jobProfileInfo` is hardcoded to point to the default job profile (MODSOURMAN-113)
+    // later jobProfile will be picked through UI
+    const jobProfileInfo = {
+      id: '22fafcc3-f582-493d-88b0-3c538480cd83',
+      name: 'Create MARC Bibs',
+      dataType: 'MARC',
+    };
+
     try {
-      await loadMarcRecords({
-        uploadDefinitionId: uploadDefinition.id,
+      await loadRecords({
         okapi,
+        uploadDefinitionId: uploadDefinition.id,
+        jobProfileInfo,
       });
 
       history.push('/data-import');

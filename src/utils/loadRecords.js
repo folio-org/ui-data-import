@@ -1,4 +1,5 @@
 import { createOkapiHeaders } from './createOkapiHeaders';
+import { createUrl } from './createUrl';
 
 export const fetchUploadDefinition = async ({
   okapi,
@@ -8,7 +9,7 @@ export const fetchUploadDefinition = async ({
 
   const response = await fetch(
     `${host}/data-import/uploadDefinitions/${id}`,
-    { headers: createOkapiHeaders(okapi) }
+    { headers: createOkapiHeaders(okapi) },
   );
 
   if (!response.ok) {
@@ -39,45 +40,10 @@ export const loadRecords = async ({
     okapi,
   });
 
-  const response = await fetch(`${host}/data-import/uploadDefinitions/${uploadDefinitionId}/processFiles`, {
-    method: 'POST',
-    headers: {
-      ...createOkapiHeaders(okapi),
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      uploadDefinition,
-      jobProfileInfo,
-    }),
-  });
+  const uploadDefinitionsURL = createUrl(`${host}/data-import/uploadDefinitions/${uploadDefinitionId}/processFiles`,
+    { defaultMapping: true }, false);
 
-  if (!response.ok) {
-    throw response;
-  }
-
-  return response;
-};
-
-export const loadMarcRecords = async ({
-  okapi,
-  uploadDefinitionId,
-}) => {
-  // `jobProfileInfo` is hardcoded to point to the default job profile (MODSOURMAN-113)
-  // later jobProfile will be picked through UI
-  const jobProfileInfo = {
-    id: '22fafcc3-f582-493d-88b0-3c538480cd83',
-    name: 'Create MARC Bibs',
-    dataType: 'MARC',
-  };
-
-  const { url: host } = okapi;
-
-  const uploadDefinition = await fetchUploadDefinition({
-    id: uploadDefinitionId,
-    okapi,
-  });
-
-  const response = await fetch(`${host}/data-import/uploadDefinitions/${uploadDefinitionId}/processFiles`, {
+  const response = await fetch(uploadDefinitionsURL, {
     method: 'POST',
     headers: {
       ...createOkapiHeaders(okapi),
