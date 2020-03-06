@@ -637,7 +637,7 @@ export class SearchAndSort extends Component {
       }
       case LAYER_TYPES.DUPLICATE: {
         return {
-          initialValues: omit(editRecordInitialValues, 'id'),
+          initialValues: omit(editRecordInitialValues, ['id', 'parentProfiles', 'childProfiles']),
           onSubmit: this.createNewRecord,
           onSubmitSuccess: handleCreateSuccess,
         };

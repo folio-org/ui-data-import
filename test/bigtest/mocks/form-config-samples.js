@@ -119,7 +119,7 @@ export const formConfigSamples = [{
     controlType: 'Section',
     sectionKey: 'staticValueText',
     staticControlType: 'Section',
-    label: 'ui-data-import.match.**ns**.MARC.static-value-text',
+    label: '',
     id: '**ns**-static-value',
     optional: false,
     classNames: ['field', 'no-label', 'input-container'],

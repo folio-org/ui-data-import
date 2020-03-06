@@ -74,12 +74,13 @@ export const ProfileTree = memo(({
     return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === line.id);
   };
 
-  const composeRelations = (lines, masterId, masterType, detailType, reactTo) => lines.map(item => {
+  const composeRelations = (lines, masterId, masterType, detailType, reactTo, listSize) => lines.map((item, index) => {
     const rel = {
       masterProfileId: masterId,
       masterProfileType: isSnakeCase(masterType) ? masterType : snakeCase(masterType).slice(0, -1).toLocaleUpperCase(),
       detailProfileId: item.profileId || item.id,
       detailProfileType: isSnakeCase(detailType) ? detailType : snakeCase(detailType).slice(0, -1).toLocaleUpperCase(),
+      order: listSize + index,
     };
 
     return reactTo ? {
@@ -89,12 +90,13 @@ export const ProfileTree = memo(({
   });
 
   const link = (initialData, setInitialData, lines, masterId, masterType, detailType, reactTo, localDataKey) => {
+    const listSize = initialData.length;
     const uniqueLines = lines.filter(line => initialData.findIndex(item => item.id === line.id) === -1);
     const newData = [...initialData, ...getLines(uniqueLines, detailType, reactTo)];
     const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
 
     if (linesToAdd && linesToAdd.length) {
-      const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo)];
+      const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo, listSize)];
 
       onLink(relsToAdd);
     }
