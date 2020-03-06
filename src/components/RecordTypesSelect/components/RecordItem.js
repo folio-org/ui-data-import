@@ -41,6 +41,7 @@ export const RecordItem = memo(({
       onClick={() => setRecordSelectorOpen(!recordSelectorOpen)}
       iconKey={incomingRecord.iconKey}
       captionId={incomingRecord.captionId}
+      isExpanded={recordSelectorOpen}
       {...triggerProps}
     />
   );
