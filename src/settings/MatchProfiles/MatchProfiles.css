@@ -28,7 +28,6 @@
       & > div:last-child:not(:first-child) {
         display: inline-flex;
         justify-content: left;
-        align-items: center;
 
         & > :nth-child(n+2) {
           margin: 0 0 0 1rem;

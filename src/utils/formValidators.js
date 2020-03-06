@@ -53,8 +53,9 @@ export const validateFileExtension = value => {
 
 export const validateValueType = value => {
   const pattern = /^[a-zA-Z0-9]*$/;
+  const val = value && value.trim ? value.trim() : value;
 
-  if (!value || value.match(pattern)) {
+  if (!val || val.length === 0 || val.match(pattern)) {
     return null;
   }
 
@@ -62,7 +63,9 @@ export const validateValueType = value => {
 };
 
 export const validateValueLength = (value, maxLength) => {
-  if (!value || value.length <= maxLength) {
+  const val = value && value.trim ? value.trim() : value;
+
+  if (!val || val.length === 0 || val.length <= maxLength) {
     return null;
   }
 

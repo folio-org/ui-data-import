@@ -21,6 +21,7 @@ export const Section = memo(({
 }) => {
   const [isChecked, setChecked] = useState(optional ? enabled : true);
 
+  // eslint-disable-next-line react/prop-types
   const headline = ({ styles = '' }) => {
     if (!label) {
       return '';
