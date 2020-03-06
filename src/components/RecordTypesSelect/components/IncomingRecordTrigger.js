@@ -2,7 +2,10 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { Button } from '@folio/stripes-components';
+import {
+  Button,
+  Icon,
+} from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
 import classNames from 'classnames';
@@ -39,7 +42,7 @@ export const IncomingRecordTrigger = ({
     ) : (
       <FormattedMessage id={captionId} />
     )}
-
+    <Icon icon="caret-down" />
   </Button>
 );
 
