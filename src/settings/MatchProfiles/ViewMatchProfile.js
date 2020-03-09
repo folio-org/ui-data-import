@@ -215,6 +215,7 @@ export class ViewMatchProfile extends Component {
     }
 
     const record = JSON.parse(JSON.stringify({ ...matchProfile }));
+    const staticValueType = get(record, ['matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
 
     const tagsEntityLink = `data-import-profiles/matchProfiles/${matchProfile.id}`;
     // Here is mocked config file with mocked values, it should be replaced/rewritten once BE will be ready
@@ -225,11 +226,12 @@ export class ViewMatchProfile extends Component {
     const incomingRecordLabel = INCOMING_RECORD_TYPES[matchProfile.incomingRecordType]
       ? <FormattedMessage id={INCOMING_RECORD_TYPES[matchProfile.incomingRecordType].captionId} />
       : '';
-    const componentsProps = {
+
+    const injectedProps = {
       'section-incoming-field': { stateFieldValue: matchProfile.incomingRecordType },
       'section-incoming-qualifier': { stateFieldValue: matchProfile.incomingRecordType },
       'section-incoming-qualifier-part': { stateFieldValue: matchProfile.incomingRecordType },
-      // 'section-incoming-static-value-text': { stateFieldValue: staticValueType },
+      'section-incoming-static-value-text': { stateFieldValue: staticValueType },
       'section-existing-field': { stateFieldValue: matchProfile.existingRecordType },
       'section-existing-qualifier': { stateFieldValue: matchProfile.existingRecordType },
       'section-existing-qualifier-part': { stateFieldValue: matchProfile.existingRecordType },
@@ -310,7 +312,7 @@ export class ViewMatchProfile extends Component {
               config={formConfig}
               styles={styles}
               record={record}
-              componentsProps={componentsProps}
+              injectedProps={injectedProps}
             />
           </div>
           <Accordion
