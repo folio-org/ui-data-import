@@ -71,7 +71,7 @@ export const ProfileTree = memo(({
   }));
 
   const findRelIndex = (relations, masterId, line) => {
-    return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === line.id);
+    return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === line.profileId);
   };
 
   const composeRelations = (lines, masterId, masterType, detailType, reactTo, listSize) => lines.map((item, index) => {
@@ -91,7 +91,7 @@ export const ProfileTree = memo(({
 
   const link = (initialData, setInitialData, lines, masterId, masterType, detailType, reactTo, localDataKey) => {
     const listSize = initialData.length;
-    const uniqueLines = lines.filter(line => initialData.findIndex(item => item.id === line.id) === -1);
+    const uniqueLines = lines.filter(line => initialData.findIndex(item => item.profileId === line.id) === -1);
     const newData = [...initialData, ...getLines(uniqueLines, detailType, reactTo)];
     const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
 
@@ -106,7 +106,7 @@ export const ProfileTree = memo(({
   };
 
   const unlink = (parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey) => {
-    const index = parentData.findIndex(item => item.id === line.id);
+    const index = parentData.findIndex(item => item.profileId === line.profileId);
     const newIdx = findRelIndex(relationsToAdd, line);
 
     if (newIdx < 0) {
