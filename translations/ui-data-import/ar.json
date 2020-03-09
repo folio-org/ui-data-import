@@ -288,5 +288,16 @@
     "match.incoming.record": "تسجيلة {recordType} واردة",
     "match.incoming.record.field": "حقل {recordType} في التسجيلة الواردة",
     "incomingRecordTypes.static": "قيمة ثابتة (مطابقة فرعية فقط)",
-    "incomingRecords": "التسجيلات الواردة"
+    "incomingRecords": "التسجيلات الواردة",
+    "match.incoming.MARC.static-value-type": "نوع قيمة ثابتة",
+    "match.incoming.MARC.static-value-type-text": "نص",
+    "match.incoming.MARC.static-value-type-number": "رقم",
+    "match.incoming.MARC.static-value-type-date": "التاريخ",
+    "match.incoming.MARC.static-value-type-date-range": "نطاق التاريخ",
+    "match.incoming.MARC.static-value-text": "قيمة نصية ثابتة",
+    "match.existing.MARC.field-main": "حقل",
+    "match.existing.MARC.field-in1": "ln. 1",
+    "match.existing.MARC.field-in2": "ln. 2",
+    "match.existing.MARC.field-subfield": "حقل فرعي",
+    "modal.jobProfiles.unlink.message": "ستتم إزالة \"{name}\"  من وضع الوظيفة. المتابعة؟"
 }

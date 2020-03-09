@@ -269,7 +269,7 @@
     "unlink": "Unlink",
     "settings.profile.select": "Link Profile",
     "settings.profile.unlink": "Unlink this profile",
-    "modal.profile.unlink.heading": "Are you sure?",
+    "modal.profile.unlink.heading": "Confirm removal",
     "modal.profile.unlink.message": "Confirm that this {profileType1} will be unlinked from this {profileType2}?",
     "emptyMessage": "This {type} contains no items",
     "list": "list",
@@ -288,5 +288,16 @@
     "match.incoming.record": "Incoming {recordType} record",
     "match.incoming.record.field": "{recordType} field in incoming record",
     "incomingRecordTypes.static": "Static value (submatch only)",
-    "incomingRecords": "Incoming records"
+    "incomingRecords": "Incoming records",
+    "match.incoming.MARC.static-value-type": "Static value type",
+    "match.incoming.MARC.static-value-type-text": "Text",
+    "match.incoming.MARC.static-value-type-number": "Number",
+    "match.incoming.MARC.static-value-type-date": "Date",
+    "match.incoming.MARC.static-value-type-date-range": "Date range",
+    "match.incoming.MARC.static-value-text": "Static text value",
+    "match.existing.MARC.field-main": "Field",
+    "match.existing.MARC.field-in1": "ln. 1",
+    "match.existing.MARC.field-in2": "ln. 2",
+    "match.existing.MARC.field-subfield": "Subfield",
+    "modal.jobProfiles.unlink.message": "\"{name}\" will be removed from this job profile. Proceed?"
 }

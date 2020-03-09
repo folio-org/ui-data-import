@@ -288,5 +288,16 @@
     "match.incoming.record": "传入{recordType}记录",
     "match.incoming.record.field": "传入记录中的{recordType}字段",
     "incomingRecordTypes.static": "静态值（仅限子匹配）",
-    "incomingRecords": "传入记录"
+    "incomingRecords": "传入记录",
+    "match.incoming.MARC.static-value-type": "Static value type",
+    "match.incoming.MARC.static-value-type-text": "Text",
+    "match.incoming.MARC.static-value-type-number": "Number",
+    "match.incoming.MARC.static-value-type-date": "Date",
+    "match.incoming.MARC.static-value-type-date-range": "Date range",
+    "match.incoming.MARC.static-value-text": "Static text value",
+    "match.existing.MARC.field-main": "Field",
+    "match.existing.MARC.field-in1": "ln. 1",
+    "match.existing.MARC.field-in2": "ln. 2",
+    "match.existing.MARC.field-subfield": "Subfield",
+    "modal.jobProfiles.unlink.message": "\"{name}\" will be removed from this job profile. Proceed?"
 }
