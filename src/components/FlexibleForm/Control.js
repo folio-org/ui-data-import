@@ -187,7 +187,6 @@ export const Control = memo(props => {
   };
 
   const attribs = getAttributes();
-  // console.log('Attribs: ', attribs);
 
   const renderDefault = () => {
     const Cmp = !isEditable ? getControl(staticControlType) : getControl(controlType);

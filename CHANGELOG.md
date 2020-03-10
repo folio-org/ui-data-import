@@ -40,6 +40,7 @@
 * Fix action profiles' sequence in job profiles (UIDATIMP-412)
 * Wipe out linked profiles when duplicate a profile (UIDATIMP-410)
 * Fix unlinking associated profiles from job profile (UIDATIMP-420)
+* Fix Match Profile regressions (UIDATIMP-421)
 
 ## [1.7.3](https://github.com/folio-org/ui-data-import/tree/v1.7.3) (2019-12-04)
 * Update sorting query for jobs (UIDATIMP-346)
