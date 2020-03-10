@@ -19,6 +19,7 @@ import * as stripesComponents from '@folio/stripes/components';
 
 import * as components from '..';
 import * as validators from '../../utils/formValidators';
+import { checkEmpty } from '../../utils';
 
 export const VIRTUAL_CONTROLS = { COMMON_SECTION: 'CommonSection' };
 
@@ -30,7 +31,7 @@ const controls = {
 
 const getControl = controlType => components[controlType] || controls[controlType];
 const getValidation = validation => validation.map(val => validators[val]);
-const augmentParam = (param, placeholder, augment) => (param && augment ? param.split(placeholder).join(augment) : param);
+const augmentParam = (param, placeholder, augment) => (param ? param.split(placeholder).join(augment) : param);
 const getActualName = (name, sectionNamespace, repeatableIndex) => {
   const nsName = augmentParam(name, '**ns**', sectionNamespace);
 
@@ -46,10 +47,16 @@ const getOptions = (options, sectionNamespace, intl) => {
     };
   });
 };
-const getOptionLabel = (options, label) => {
+const getOptionLabel = (options, label, sectionNamespace) => {
   const option = options.find(item => item.value === label);
 
-  return !isEmpty(option) ? <FormattedMessage id={option.label} /> : undefined;
+  if (isEmpty(option)) {
+    return undefined;
+  }
+
+  const actualLabel = augmentParam(option.label, '**ns**', sectionNamespace);
+
+  return !isEmpty(option) ? <FormattedMessage id={actualLabel} /> : undefined;
 };
 const getValue = (controlName, record, sectionNamespace, repeatableIndex) => get(record, getActualName(controlName, sectionNamespace, repeatableIndex));
 const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
@@ -75,7 +82,7 @@ export const Control = memo(props => {
     commonSections,
     childControls,
     dataAttributes,
-    componentsProps,
+    injectedProps,
     record,
     id,
     optional,
@@ -109,6 +116,7 @@ export const Control = memo(props => {
       optional,
       sectionNamespace,
       repeatableIndex,
+      record,
       ...attributes,
       ...dataAttributes,
     };
@@ -127,9 +135,28 @@ export const Control = memo(props => {
       };
     }
 
-    if (record && get(record, actualName)) {
+    if (record) {
+      let actualRecord = record;
+
+      if (!isEditable && controlType === 'Field') {
+        let val = getValue(name, record, sectionNamespace, repeatableIndex);
+
+        if (typeof val === 'string') {
+          val = val.trim();
+        }
+
+        let actualValue = checkEmpty(val) ? <stripesComponents.NoValue /> : val;
+
+        if (dataOptions && dataOptions.length && !React.isValidElement(val)) {
+          actualValue = getOptionLabel(dataOptions, val, sectionNamespace);
+        }
+
+        actualRecord = set(record, actualName, actualValue);
+      }
+
       attrs = {
         ...attrs,
+        record: actualRecord,
         value: get(record, actualName) || <stripesComponents.NoValue />,
       };
     }
@@ -149,10 +176,10 @@ export const Control = memo(props => {
       };
     }
 
-    if (componentsProps[actualId]) {
+    if (injectedProps[actualId]) {
       attrs = {
         ...attrs,
-        ...componentsProps[actualId],
+        ...injectedProps[actualId],
       };
     }
 
@@ -160,34 +187,10 @@ export const Control = memo(props => {
   };
 
   const attribs = getAttributes();
+  // console.log('Attribs: ', attribs);
 
   const renderDefault = () => {
-    const { name } = props;
-    let { record: actualRecord } = props;
-
-    let Cmp;
-
-    if (!isEditable) {
-      Cmp = getControl(staticControlType);
-
-      if (controlType === 'Field') {
-        let val = getValue(name, record, sectionNamespace, repeatableIndex);
-
-        if (typeof val === 'string') {
-          val = val.trim();
-        }
-
-        let actualValue = !val ? <stripesComponents.NoValue /> : val;
-
-        if (dataOptions && dataOptions.length && !React.isValidElement(val)) {
-          actualValue = getOptionLabel(dataOptions, val);
-        }
-
-        actualRecord = set(actualRecord, attribs.name, actualValue);
-      }
-    } else {
-      Cmp = getControl(controlType);
-    }
+    const Cmp = !isEditable ? getControl(staticControlType) : getControl(controlType);
 
     if (isFragment) {
       return <Cmp />;
@@ -209,9 +212,9 @@ export const Control = memo(props => {
               intl={intl}
               styles={styles}
               referenceTables={referenceTables}
-              componentsProps={componentsProps}
+              injectedProps={injectedProps}
               commonSections={commonSections}
-              record={actualRecord}
+              record={attribs.record}
               {...cfg}
             />
           ))}
@@ -261,9 +264,9 @@ export const Control = memo(props => {
                   intl={intl}
                   styles={styles}
                   referenceTables={referenceTables}
-                  componentsProps={componentsProps}
+                  injectedProps={injectedProps}
                   commonSections={commonSections}
-                  record={record}
+                  record={attribs.record}
                   {...cfg}
                 />
               ))}
@@ -315,9 +318,9 @@ export const Control = memo(props => {
         editableNamespace={editableNamespace}
         sectionNamespace={sectionNS}
         referenceTables={referenceTables}
-        componentsProps={componentsProps}
+        injectedProps={injectedProps}
         commonSections={commonSections}
-        record={record}
+        record={attribs.record}
         {...sectionAttrs}
       />
     );
@@ -347,7 +350,7 @@ Control.propTypes = {
   commonSections: PropTypes.arrayOf(PropTypes.object),
   childControls: PropTypes.arrayOf(Node),
   dataAttributes: PropTypes.object,
-  componentsProps: PropTypes.object,
+  injectedProps: PropTypes.object,
   record: PropTypes.object,
   id: PropTypes.string,
   optional: PropTypes.bool,

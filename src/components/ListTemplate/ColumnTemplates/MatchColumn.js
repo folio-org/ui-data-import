@@ -42,7 +42,7 @@ export const MatchColumn = memo(({
   }
 
   const fieldSource = (field || existingRecordType || '').replace(/_/g, ' ');
-  const fieldsMatched = get(record, 'matchDetails[0].existingMatchExpression.fields', []).map(item => item.value || '');
+  const fieldsMatched = get(record, 'matchDetails[0].existingMatchExpression.fields', []).map(item => (item ? item.value || '' : ''));
 
   if (document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT) {
     fieldsMatched.reverse();

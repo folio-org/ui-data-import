@@ -32,7 +32,7 @@ export const FlexibleForm = memo(props => {
     },
     styles,
     record,
-    componentsProps,
+    injectedProps,
     referenceTables,
     dataAttributes,
     ...attributes
@@ -56,7 +56,7 @@ export const FlexibleForm = memo(props => {
                 intl={intl}
                 styles={styles}
                 referenceTables={referenceTables}
-                componentsProps={componentsProps}
+                injectedProps={injectedProps}
                 commonSections={commonSections}
                 record={record}
                 {...cfg}
@@ -77,5 +77,5 @@ FlexibleForm.propTypes = {
   dataAttributes: PropTypes.object,
   referenceTables: PropTypes.object,
   record: PropTypes.object,
-  componentsProps: PropTypes.object,
+  injectedProps: PropTypes.object,
 };

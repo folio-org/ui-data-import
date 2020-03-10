@@ -86,7 +86,7 @@ export const formConfigSamples = [{
     controlType: 'Section',
     sectionKey: 'staticValueType',
     staticControlType: 'Section',
-    label: 'ui-data-import.match.**ns**.MARC.static-value-type',
+    label: 'ui-data-import.match.**ns**.static.value-type',
     id: '**ns**-static-value',
     optional: false,
     classNames: ['field', 'input-container'],
@@ -100,16 +100,16 @@ export const formConfigSamples = [{
       component: 'Select',
       dataOptions: [{
         value: 'TEXT',
-        label: 'ui-data-import.match.**ns**.MARC.static-value-type-text',
+        label: 'ui-data-import.match.**ns**.static.value-type.text',
       }, {
         value: 'NUMBER',
-        label: 'ui-data-import.match.**ns**.MARC.static-value-type-number',
+        label: 'ui-data-import.match.**ns**.static.value-type.number',
       }, {
         value: 'DATE',
-        label: 'ui-data-import.match.**ns**.MARC.static-value-type-date',
+        label: 'ui-data-import.match.**ns**.static.value-type.date',
       }, {
         value: 'DATE_RANGE',
-        label: 'ui-data-import.match.**ns**.MARC.static-value-type-date-range',
+        label: 'ui-data-import.match.**ns**.static.value-type.date-range',
       }],
       placeholder: '',
       validate: null,
