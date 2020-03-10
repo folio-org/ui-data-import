@@ -43,6 +43,7 @@ export const MatchProfilesFormComponent = memo(({
   initialValues,
   handleSubmit,
   location: { search },
+  currentStaticValueType,
   associatedJobProfilesAmount,
   onCancel,
   jsonSchemas,
@@ -59,12 +60,11 @@ export const MatchProfilesFormComponent = memo(({
 
   const isEditMode = layer === LAYER_TYPES.EDIT;
   const staticValueTypes = FORMS_SETTINGS[ENTITY_KEYS.MATCH_PROFILES].MATCHING.STATIC_VALUE_TYPES;
-  const currentValueType = get(matchDetails, ['0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
 
   const [incomingRecord, setIncomingRecord] = useState(INCOMING_RECORD_TYPES[incomingRecordType]);
   const [existingRecord, setExistingRecord] = useState(isEditMode ? existingRecordType : '');
   const [existingRecordFields, setExistingRecordFields] = useState([]);
-  const [staticValueType, setStaticValueType] = useState(currentValueType);
+  const [staticValueType, setStaticValueType] = useState(currentStaticValueType);
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   const isSubmitDisabled = pristine || submitting;
@@ -242,6 +242,7 @@ MatchProfilesFormComponent.propTypes = {
   ]),
   associatedJobProfilesAmount: PropTypes.number.isRequired,
   onCancel: PropTypes.func.isRequired,
+  currentStaticValueType: PropTypes.string,
   jsonSchemas: PropTypes.shape({
     INSTANCE: PropTypes.object,
     HOLDINGS: PropTypes.object,
@@ -258,8 +259,17 @@ const mapStateToProps = state => {
     ['folio_data_import_associated_jobprofiles', 'records', 0, 'childSnapshotWrappers'],
     [],
   );
+  // @TODO: Remove this when FlexibleForm internal state mamagement will be implemented.
+  const currentStaticValueType = get(
+    state,
+    ['form', formName, 'values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'],
+    null,
+  );
 
-  return { associatedJobProfilesAmount };
+  return {
+    currentStaticValueType,
+    associatedJobProfilesAmount,
+  };
 };
 
 export const MatchProfilesForm = compose(
