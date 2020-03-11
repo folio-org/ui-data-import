@@ -61,6 +61,7 @@ const sectionInitialValues = {
       label: 'recordSubfield',
       value: '',
     }],
+    staticValueDetails: null,
     dataValueType: 'VALUE_FROM_RECORD',
   },
   INSTANCE: {
