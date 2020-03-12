@@ -45,7 +45,7 @@ export const ProfileTree = memo(({
     contentType: PROFILE_TYPES.JOB_PROFILE,
   };
 
-  const [changesCount, setChangesCount] = useState(0);
+  const [changesCount, setChangesCount] = useState(0); // eslint-disable-line no-unused-vars
   const [data, setData] = useState([]);
 
   useEffect(() => {

@@ -16,7 +16,6 @@ import {
   Button,
   Headline,
   KeyValue,
-  NoValue,
   Accordion,
   AccordionSet,
   ConfirmationModal,
@@ -28,16 +27,11 @@ import {
   TagsAccordion,
 } from '@folio/stripes/smart-components';
 
-import { getFieldMatched } from '../../utils';
 import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   PROFILE_TYPES,
-  COMPARISON_PARTS,
-  QUALIFIER_TYPES,
-  CRITERION_TYPES,
-  VALUE_TYPES,
 } from '../../utils/constants';
 import {
   Spinner,

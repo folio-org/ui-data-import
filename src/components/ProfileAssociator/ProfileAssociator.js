@@ -1,7 +1,4 @@
-import React, {
-  Fragment,
-  memo,
-} from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
@@ -58,7 +55,7 @@ export const ProfileAssociator = memo(({
   return (
     <IntlConsumer>
       {intl => (
-        <Fragment>
+        <>
           {record ? (
             <AssociatorStatic
               intl={intl}
@@ -94,7 +91,7 @@ export const ProfileAssociator = memo(({
               dataAttributes={dataAttributes}
             />
           )}
-        </Fragment>
+        </>
       )}
     </IntlConsumer>
   );

@@ -252,7 +252,7 @@ export const Control = memo(props => {
           onAdd={onAdd}
           onRemove={onRemove}
           renderField={() => (
-            <Fragment>
+            <>
               {children.map((cfg, i) => (
                 <Control
                   key={`control-${i}`}
@@ -269,7 +269,7 @@ export const Control = memo(props => {
                   {...cfg}
                 />
               ))}
-            </Fragment>
+            </>
           )}
         />
       </Cmp>

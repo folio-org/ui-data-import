@@ -74,7 +74,7 @@ export class UploadingJobsContextProvider extends Component {
     const isErrorStatus = uploadDefinitionStatus === FILE_STATUSES.ERROR;
     const areAllFilesFailed = every(
       fileDefinitions,
-      file => file.status === FILE_STATUSES.ERROR
+      file => file.status === FILE_STATUSES.ERROR,
     ) && !isEmpty(fileDefinitions);
 
     return isErrorStatus || areAllFilesFailed;

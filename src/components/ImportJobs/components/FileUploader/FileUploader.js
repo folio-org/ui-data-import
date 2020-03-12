@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDropzone from 'react-dropzone';
 import classNames from 'classnames/bind';
@@ -55,7 +55,7 @@ export const FileUploader = ({
       onDragLeave={onDragLeave}
     >
       {({ open }) => (
-        <Fragment>
+        <>
           {errorMessage && (
             <span
               hidden={isDropZoneActive}
@@ -83,7 +83,7 @@ export const FileUploader = ({
           <div hidden={isDropZoneActive}>
             {isFunction(children) ? children(open) : children}
           </div>
-        </Fragment>
+        </>
       )}
     </ReactDropzone>
   );

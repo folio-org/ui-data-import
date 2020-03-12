@@ -24,6 +24,7 @@
 * Job profile details: suppress the delete/trash can icon (UIDATIMP-390)
 * Add "defaultMapping" query param to "/processFiles" path (UIDATIMP-417)
 * Add caret to the incoming record select dropdown in match profile
+* Upgrade Stripes and all the dependencies to version 3.0.0 (UIDATIMP-422)
 
 ### Bugs fixed:
 * Profile Associator lists are empty when the user reloads the page with Profile Edit Form open (UIDATIMP-338)

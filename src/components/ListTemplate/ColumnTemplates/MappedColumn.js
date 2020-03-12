@@ -1,7 +1,4 @@
-import React, {
-  memo,
-  Fragment,
-} from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import HighLight from 'react-highlighter';
 
@@ -29,7 +26,7 @@ export const MappedColumn = memo(({
   }
 
   return (
-    <Fragment>
+    <>
       {existingRecordType && (
         <IntlConsumer>
           {({ formatMessage }) => (
@@ -48,7 +45,7 @@ export const MappedColumn = memo(({
           )}
         </IntlConsumer>
       )}
-    </Fragment>
+    </>
   );
 });
 

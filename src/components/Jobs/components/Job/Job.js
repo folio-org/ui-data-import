@@ -1,7 +1,4 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   injectIntl,
@@ -105,7 +102,7 @@ export class Job extends Component {
         </div>
 
         {jobMeta.showProgress && (
-          <Fragment>
+          <>
             <FormattedMessage
               id="ui-data-import.progressRunning"
               tagName="div"
@@ -114,7 +111,7 @@ export class Job extends Component {
               current={current}
               total={total}
             />
-          </Fragment>
+          </>
         )}
 
         {jobMeta.showPreview && (

@@ -1,7 +1,4 @@
-import React, {
-  memo,
-  Fragment,
-} from 'react';
+import React, { memo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -26,13 +23,13 @@ export const GroupAction = memo(({
     <Icon icon={icon}>
       <FormattedMessage id={caption} />
       {!!selectedCount && (
-        <Fragment>
+        <>
           &nbsp;
           <FormattedMessage
             id="ui-data-import.itemsCount"
             values={{ count: selectedCount }}
           />
-        </Fragment>
+        </>
       )}
     </Icon>
   </Button>

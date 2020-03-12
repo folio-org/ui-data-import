@@ -1,6 +1,5 @@
 import React, {
   Component,
-  Fragment,
   createRef,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -339,10 +338,10 @@ export class ImportJobs extends Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         {this.renderImportJobs()}
         <Callout ref={this.calloutRef} />
-      </Fragment>
+      </>
     );
   }
 }
