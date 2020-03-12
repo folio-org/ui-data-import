@@ -1,6 +1,5 @@
 import React, {
   memo,
-  Fragment,
   useState,
   useEffect,
 } from 'react';
@@ -72,7 +71,7 @@ export const AssociatorStatic = memo(({
     });
 
     setCurrentData(newData);
-  }, [currentQuery]);
+  }, [currentQuery]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const querySetter = () => {};
 
@@ -152,7 +151,7 @@ export const AssociatorStatic = memo(({
             onSort,
             resetAll,
           }) => (
-            <Fragment>
+            <>
               <RenderSearch
                 onSubmitSearch={onSubmitSearch}
                 searchValue={searchValue}
@@ -171,7 +170,7 @@ export const AssociatorStatic = memo(({
                 isStatic
                 isMultiSelect={isMultiSelect}
               />
-            </Fragment>
+            </>
           )}
         </SearchAndSortQuery>
       </div>

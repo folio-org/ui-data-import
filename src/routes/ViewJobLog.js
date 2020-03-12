@@ -25,9 +25,7 @@ export class ViewJobLog extends Component {
     resources: PropTypes.shape({
       jobLog: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
-        records: PropTypes.arrayOf(
-          PropTypes.object.isRequired
-        ).isRequired,
+        records: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
       }),
     }),
   };

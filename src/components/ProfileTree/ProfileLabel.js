@@ -1,5 +1,4 @@
 import React, {
-  Fragment,
   memo,
   useState,
 } from 'react';
@@ -91,17 +90,17 @@ export const ProfileLabel = memo(({
           const needSeparator = i < columns.length - 1;
 
           return (
-            <Fragment>
+            <>
               <span key={`label-item-${i}`}>{templates[item](recordData)}</span>
               {needSeparator && <span>&nbsp;&middot;&nbsp;</span>}
-            </Fragment>
+            </>
           );
         })}
       </div>
       {!record && (allowDelete || allowUnlink) && (
         <div className={css['buttons-container']}>
           {allowUnlink && (
-            <Fragment>
+            <>
               <IconButton
                 data-test-profile-unlink
                 icon="unlink"
@@ -136,10 +135,10 @@ export const ProfileLabel = memo(({
                 onCancel={() => setUnlinkConfirmationOpen(false)}
                 onConfirm={handleUnlink}
               />
-            </Fragment>
+            </>
           )}
           {allowDelete && (
-            <Fragment>
+            <>
               <IconButton
                 data-test-profile-delete
                 icon="trash"
@@ -174,7 +173,7 @@ export const ProfileLabel = memo(({
                 onCancel={() => setDeleteConfirmationOpen(false)}
                 onConfirm={handleDelete}
               />
-            </Fragment>
+            </>
           )}
         </div>
       )}

@@ -1,5 +1,4 @@
 import React, {
-  Fragment,
   useRef,
   useState,
 } from 'react';
@@ -75,7 +74,7 @@ export const ProfileLinker = ({
   };
 
   return (
-    <Fragment>
+    <>
       <div data-test-plus-sign-button>
         <Dropdown
           id={`type-selector-dropdown-${id}`}
@@ -109,7 +108,7 @@ export const ProfileLinker = ({
           </Pluggable>
         ))}
       </div>
-    </Fragment>
+    </>
   );
 };
 

@@ -247,6 +247,8 @@ export class UploadingJobsDisplay extends Component {
   }
 
   uploadFile(fileKey) {
+    // @FIXME: Fix this rules violation ASAP!
+    // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve, reject) => {
       try {
         const { files: { [fileKey]: fileMeta } } = this.state;
