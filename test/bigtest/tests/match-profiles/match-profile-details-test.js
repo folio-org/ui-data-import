@@ -12,7 +12,6 @@ import {
   jobProfileDetails,
   matchProfileDetails,
 } from '../../interactors';
-import { noAssociatedJobProfiles } from '../../mocks';
 
 async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
   const {

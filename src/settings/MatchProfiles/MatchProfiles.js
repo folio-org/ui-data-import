@@ -55,6 +55,43 @@ const sortMap = {
   updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
 };
 
+const sectionInitialValues = {
+  MARC_BIBLIOGRAPHIC: {
+    fields: [{
+      label: 'field',
+      value: '',
+    }, {
+      label: 'indicator1',
+      value: '',
+    }, {
+      label: 'indicator2',
+      value: '',
+    }, {
+      label: 'recordSubfield',
+      value: '',
+    }],
+    staticValueDetails: null,
+    dataValueType: 'VALUE_FROM_RECORD',
+  },
+  INSTANCE: {
+    fields: [{
+      label: 'field',
+      value: '',
+    }],
+    dataValueType: 'VALUE_FROM_RECORD',
+  },
+  STATIC_VALUE: {
+    fields: [],
+    staticValueDetails: {
+      staticValueType: 'TEXT',
+      text: '',
+    },
+    dataValueType: 'STATIC_VALUE',
+  },
+};
+
+export const getSectionInitialValues = recordType => sectionInitialValues[recordType];
+
 export const matchProfilesShape = {
   INITIAL_RESULT_COUNT,
   RESULT_COUNT_INCREMENT,
@@ -240,29 +277,9 @@ export class MatchProfiles extends Component {
       incomingRecordType: 'MARC_BIBLIOGRAPHIC',
       matchDetails: [{
         incomingRecordType: 'MARC_BIBLIOGRAPHIC',
-        incomingMatchExpression: {
-          fields: [{
-            label: 'field',
-            value: '',
-          }, {
-            label: 'indicator1',
-            value: '',
-          }, {
-            label: 'indicator2',
-            value: '',
-          }, {
-            label: 'recordSubfield',
-            value: '',
-          }],
-          dataValueType: 'VALUE_FROM_RECORD',
-        },
-        existingMatchExpression: {
-          fields: [{
-            label: 'field',
-            value: '',
-          }],
-          dataValueType: 'VALUE_FROM_RECORD',
-        },
+        incomingMatchExpression: getSectionInitialValues('MARC_BIBLIOGRAPHIC'),
+        existingRecordType: 'INSTANCE',
+        existingMatchExpression: getSectionInitialValues('INSTANCE'),
         matchCriterion: 'EXACTLY_MATCHES',
       }],
     },

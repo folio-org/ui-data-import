@@ -1,7 +1,4 @@
-import React, {
-  Fragment,
-  memo,
-} from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import { calculatePercentage } from '../../utils';
@@ -17,7 +14,7 @@ const progressInfoFormatters = {
     const isCompleted = percentage === 100;
 
     return (
-      <Fragment>
+      <>
         {isCompleted
           ? (
             <Preloader
@@ -26,13 +23,13 @@ const progressInfoFormatters = {
             />
           )
           : (
-            <Fragment>
+            <>
               {message}
               {` ${percentage}%`}
-            </Fragment>
+            </>
           )
         }
-      </Fragment>
+      </>
     );
   }
   ,

@@ -1,5 +1,4 @@
 import React, {
-  Fragment,
   memo,
   useState,
 } from 'react';
@@ -7,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
+  isEmpty,
   camelCase,
   noop,
 } from 'lodash';
@@ -17,7 +17,11 @@ import {
   IconButton,
 } from '@folio/stripes-components';
 
-import { PROFILE_RELATION_TYPES } from '../../utils/constants';
+import {
+  PROFILE_RELATION_TYPES,
+  PROFILE_TYPES,
+} from '../../utils/constants';
+
 import { listTemplate } from '../ListTemplate';
 
 import css from './ProfileTree.css';
@@ -59,6 +63,12 @@ export const ProfileLabel = memo(({
   });
   const columns = columnsAllowed[entityKey];
 
+  const hasChildren = () => {
+    const children = recordData.childSnapshotWrappers;
+
+    return !isEmpty(children) && !children.some(child => child.contentType === PROFILE_TYPES.MAPPING_PROFILE);
+  };
+
   const handleUnlink = () => {
     setUnlinkConfirmationOpen(false);
     onUnlink(parentSectionData, setParentSectionData, recordData, parentId, parentType, recordType, reactTo, parentSectionKey);
@@ -80,17 +90,17 @@ export const ProfileLabel = memo(({
           const needSeparator = i < columns.length - 1;
 
           return (
-            <Fragment>
+            <>
               <span key={`label-item-${i}`}>{templates[item](recordData)}</span>
               {needSeparator && <span>&nbsp;&middot;&nbsp;</span>}
-            </Fragment>
+            </>
           );
         })}
       </div>
       {!record && (allowDelete || allowUnlink) && (
         <div className={css['buttons-container']}>
           {allowUnlink && (
-            <Fragment>
+            <>
               <IconButton
                 data-test-profile-unlink
                 icon="unlink"
@@ -102,10 +112,22 @@ export const ProfileLabel = memo(({
               <ConfirmationModal
                 id="unlink-job-profile-modal"
                 open={unlinkConfirmationOpen}
-                heading={<FormattedMessage id="ui-data-import.modal.profile.unlink.heading" />}
+                heading={(
+                  <FormattedMessage
+                    id="ui-data-import.modal.profile.unlink.heading"
+                    values={{
+                      severity: (
+                        <FormattedMessage
+                          id="ui-data-import.warning"
+                          tagName="strong"
+                        />
+                      ),
+                    }}
+                  />
+                )}
                 message={(
                   <FormattedMessage
-                    id="ui-data-import.modal.jobProfiles.unlink.message"
+                    id={`ui-data-import.modal.jobProfiles.unlink.message.${hasChildren() ? 'children' : 'single'}`}
                     values={{ name: recordData.content.name }}
                   />
                 )}
@@ -113,10 +135,10 @@ export const ProfileLabel = memo(({
                 onCancel={() => setUnlinkConfirmationOpen(false)}
                 onConfirm={handleUnlink}
               />
-            </Fragment>
+            </>
           )}
           {allowDelete && (
-            <Fragment>
+            <>
               <IconButton
                 data-test-profile-delete
                 icon="trash"
@@ -128,10 +150,22 @@ export const ProfileLabel = memo(({
               <ConfirmationModal
                 id="delete-job-profile-modal"
                 open={deleteConfirmationOpen}
-                heading={<FormattedMessage id="ui-data-import.modal.profile.unlink.heading" />}
+                heading={(
+                  <FormattedMessage
+                    id="ui-data-import.modal.profile.unlink.heading"
+                    values={{
+                      severity: (
+                        <FormattedMessage
+                          id="ui-data-import.warning"
+                          tagName="strong"
+                        />
+                      ),
+                    }}
+                  />
+                )}
                 message={(
                   <FormattedMessage
-                    id="ui-data-import.modal.profile.delete.message"
+                    id={`ui-data-import.modal.jobProfiles.delete.message.${hasChildren() ? 'children' : 'single'}`}
                     values={{ name: recordData.content.name }}
                   />
                 )}
@@ -139,7 +173,7 @@ export const ProfileLabel = memo(({
                 onCancel={() => setDeleteConfirmationOpen(false)}
                 onConfirm={handleDelete}
               />
-            </Fragment>
+            </>
           )}
         </div>
       )}

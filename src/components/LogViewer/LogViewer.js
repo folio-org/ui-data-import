@@ -1,7 +1,6 @@
 import React, {
   memo,
   useState,
-  Fragment,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -88,7 +87,7 @@ export const LogViewer = memo(({
   );
 
   return (
-    <Fragment>
+    <>
       {visible && (
         <div className={css.toolbar}>
           <div className={css.header}>{message}&nbsp;{entries}&nbsp;{(errorsCount > 0) && errors}</div>
@@ -163,7 +162,7 @@ export const LogViewer = memo(({
           );
         })}
       </pre>
-    </Fragment>
+    </>
   );
 });
 

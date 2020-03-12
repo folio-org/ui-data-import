@@ -2,7 +2,10 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { Button } from '@folio/stripes-components';
+import {
+  Button,
+  Icon,
+} from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
 import classNames from 'classnames';
@@ -17,6 +20,7 @@ export const IncomingRecordTrigger = ({
   captionId,
   iconKey,
   className,
+  isExpanded,
   style,
 }) => (
   <Button
@@ -39,7 +43,7 @@ export const IncomingRecordTrigger = ({
     ) : (
       <FormattedMessage id={captionId} />
     )}
-
+    <Icon icon={`caret-${isExpanded ? 'up' : 'down'}`} />
   </Button>
 );
 
@@ -51,5 +55,6 @@ IncomingRecordTrigger.propTypes = {
   captionId: PropTypes.string.isRequired,
   iconKey: PropTypes.string,
   className: PropTypes.string,
+  isExpanded: PropTypes.bool,
   style: PropTypes.object,
 };

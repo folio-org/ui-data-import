@@ -31,6 +31,8 @@ import {
 } from '../../utils/constants';
 import { formConfigSamples } from '../../../test/bigtest/mocks';
 
+import { getSectionInitialValues } from './MatchProfiles';
+
 import styles from './MatchProfilesForm.css';
 
 const formName = 'matchProfilesForm';
@@ -41,6 +43,7 @@ export const MatchProfilesFormComponent = memo(({
   initialValues,
   handleSubmit,
   location: { search },
+  currentStaticValueType,
   associatedJobProfilesAmount,
   onCancel,
   jsonSchemas,
@@ -61,7 +64,7 @@ export const MatchProfilesFormComponent = memo(({
   const [incomingRecord, setIncomingRecord] = useState(INCOMING_RECORD_TYPES[incomingRecordType]);
   const [existingRecord, setExistingRecord] = useState(isEditMode ? existingRecordType : '');
   const [existingRecordFields, setExistingRecordFields] = useState([]);
-  const [staticValueType, setStaticValueType] = useState(null);
+  const [staticValueType, setStaticValueType] = useState(currentStaticValueType);
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   const isSubmitDisabled = pristine || submitting;
@@ -104,7 +107,10 @@ export const MatchProfilesFormComponent = memo(({
   const handleIncomingRecordChange = record => {
     setIncomingRecord(record);
     dispatch(change(formName, 'profile.incomingRecordType', record.type));
-    matchDetails.forEach((item, i) => dispatch(change(formName, `profile.matchDetails[${i}].incomingRecordType`, record.type)));
+    matchDetails.forEach((item, i) => {
+      dispatch(change(formName, `profile.matchDetails[${i}].incomingMatchExpression`, getSectionInitialValues(record.type)));
+      dispatch(change(formName, `profile.matchDetails[${i}].incomingRecordType`, record.type));
+    });
 
     if (record.type === INCOMING_RECORD_TYPES.STATIC_VALUE.type) {
       setStaticValueType(staticValueTypes[0]);
@@ -120,7 +126,10 @@ export const MatchProfilesFormComponent = memo(({
     setExistingRecord(type);
     setExistingRecordFields(options);
     dispatch(change(formName, 'profile.existingRecordType', type));
-    matchDetails.forEach((item, i) => dispatch(change(formName, `profile.matchDetails[${i}].existingRecordType`, type)));
+    matchDetails.forEach((item, i) => {
+      dispatch(change(formName, `profile.matchDetails[${i}].existingMatchExpression`, getSectionInitialValues(type)));
+      dispatch(change(formName, `profile.matchDetails[${i}].existingRecordType`, type));
+    });
   };
 
   const incomingRecordLabel = !isEmpty(incomingRecord)
@@ -130,7 +139,7 @@ export const MatchProfilesFormComponent = memo(({
     ? <FormattedMessage id={FOLIO_RECORD_TYPES[existingRecord].captionId} />
     : '';
 
-  const componentsProps = {
+  const injectedProps = {
     'profile-headline': { children: headLine },
     'section-incoming-field': { stateFieldValue: incomingRecord.type },
     'section-incoming-qualifier': { stateFieldValue: incomingRecord.type },
@@ -209,7 +218,7 @@ export const MatchProfilesFormComponent = memo(({
       styles={styles}
       paneTitle={paneTitle}
       headLine={headLine}
-      componentsProps={componentsProps}
+      injectedProps={injectedProps}
       referenceTables={{ matchDetails }}
       submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
       isSubmitDisabled={isSubmitDisabled}
@@ -233,6 +242,7 @@ MatchProfilesFormComponent.propTypes = {
   ]),
   associatedJobProfilesAmount: PropTypes.number.isRequired,
   onCancel: PropTypes.func.isRequired,
+  currentStaticValueType: PropTypes.string,
   jsonSchemas: PropTypes.shape({
     INSTANCE: PropTypes.object,
     HOLDINGS: PropTypes.object,
@@ -249,8 +259,17 @@ const mapStateToProps = state => {
     ['folio_data_import_associated_jobprofiles', 'records', 0, 'childSnapshotWrappers'],
     [],
   );
+  // @TODO: Remove this when FlexibleForm internal state mamagement will be implemented.
+  const currentStaticValueType = get(
+    state,
+    ['form', formName, 'values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'],
+    null,
+  );
 
-  return { associatedJobProfilesAmount };
+  return {
+    currentStaticValueType,
+    associatedJobProfilesAmount,
+  };
 };
 
 export const MatchProfilesForm = compose(

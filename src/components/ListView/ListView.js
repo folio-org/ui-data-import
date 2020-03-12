@@ -1,6 +1,5 @@
 import React, {
   Component,
-  Fragment,
   createRef,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -225,7 +224,7 @@ export class ListView extends Component {
         selectedRecords={selectedRecords}
       >
         {props => (
-          <Fragment>
+          <>
             <SearchAndSort
               objectName={objectName}
               finishedResourceName={ENTITY_KEY}
@@ -270,7 +269,7 @@ export class ListView extends Component {
               onCancel={this.handleHideRestoreModal}
             />
             <Callout ref={this.calloutRef} />
-          </Fragment>
+          </>
         )}
       </ViewContainer>
     );

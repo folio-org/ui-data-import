@@ -11,9 +11,9 @@ export const ActionMenu = memo(({
   const templates = menuTemplate(entity, menu);
 
   return (
-    <React.Fragment>
+    <>
       {Array.isArray(items) && items.map((item, i) => templates[item](`list-menu-item-${i}`))}
-    </React.Fragment>
+    </>
   );
 });
 

@@ -288,5 +288,19 @@
     "match.incoming.record": "Incoming {recordType} record",
     "match.incoming.record.field": "{recordType} field in incoming record",
     "incomingRecordTypes.static": "Static value (submatch only)",
-    "incomingRecords": "Incoming records"
+    "incomingRecords": "Incoming records",
+    "match.existing.MARC.field-main": "Field",
+    "match.existing.MARC.field-in1": "In. 1",
+    "match.existing.MARC.field-in2": "In. 2",
+    "match.existing.MARC.field-subfield": "Subfield",
+    "match.incoming.static.value-type": "Static value type",
+    "match.incoming.static.value-type.text": "Text",
+    "match.incoming.static.value-type.number": "Number",
+    "match.incoming.static.value-type.date": "Date",
+    "match.incoming.static.value-type.date-range": "Date range",
+    "warning": "WARNING!",
+    "modal.jobProfiles.unlink.message.single": "\"{name}\" will be removed from this job profile. Proceed?",
+    "modal.jobProfiles.unlink.message.children": "\"{name}\" and all subprofiles will be removed from this job profile. Proceed?",
+    "modal.jobProfiles.delete.message.single": "\"{name}\" will be removed from this job profile and deleted. Proceed?",
+    "modal.jobProfiles.delete.message.children": "\"{name}\" and all subprofiles will be removed from this job profile and deleted. Proceed?"
 }

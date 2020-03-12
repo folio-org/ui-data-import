@@ -38,23 +38,25 @@ export const fieldMappingRulesOption1 = {
       path: 'instanceName1.fieldName3',
       value: '',
       acceptedValues: [],
-      subfields: [{
-        name: 'subfieldName1',
-        path: 'instanceName1.fieldName3[].subfieldName1',
-        value: '$010|b',
-        acceptedValues: [],
-      }, {
-        name: 'subfieldName2',
-        path: 'instanceName1.fieldName3[].subfieldName1',
-        value: '$010|c',
-        acceptedValues: [{
-          id: 'uuid',
-          value: 'value1',
+      subfields: [
+        [{
+          name: 'subfieldName1',
+          path: 'instanceName1.fieldName3[].subfieldName1',
+          value: '$010|b',
+          acceptedValues: [],
         }, {
-          id: 'uuid',
-          value: 'value2',
+          name: 'subfieldName2',
+          path: 'instanceName1.fieldName3[].subfieldName1',
+          value: '$010|c',
+          acceptedValues: [{
+            id: 'uuid',
+            value: 'value1',
+          }, {
+            id: 'uuid',
+            value: 'value2',
+          }],
         }],
-      }],
+      ],
     }],
   }],
 };
