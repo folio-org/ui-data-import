@@ -64,6 +64,40 @@ const sectionInitialValues = {
     staticValueDetails: null,
     dataValueType: 'VALUE_FROM_RECORD',
   },
+  MARC_HOLDINGS: {
+    fields: [{
+      label: 'field',
+      value: '',
+    }, {
+      label: 'indicator1',
+      value: '',
+    }, {
+      label: 'indicator2',
+      value: '',
+    }, {
+      label: 'recordSubfield',
+      value: '',
+    }],
+    staticValueDetails: null,
+    dataValueType: 'VALUE_FROM_RECORD',
+  },
+  MARC_AUTHORITY: {
+    fields: [{
+      label: 'field',
+      value: '',
+    }, {
+      label: 'indicator1',
+      value: '',
+    }, {
+      label: 'indicator2',
+      value: '',
+    }, {
+      label: 'recordSubfield',
+      value: '',
+    }],
+    staticValueDetails: null,
+    dataValueType: 'VALUE_FROM_RECORD',
+  },
   INSTANCE: {
     fields: [{
       label: 'field',
@@ -71,6 +105,36 @@ const sectionInitialValues = {
     }],
     dataValueType: 'VALUE_FROM_RECORD',
   },
+  ITEM: {
+    fields: [{
+      label: 'field',
+      value: '',
+    }],
+    dataValueType: 'VALUE_FROM_RECORD',
+  },
+  HOLDINGS: {
+    fields: [{
+      label: 'field',
+      value: '',
+    }],
+    dataValueType: 'VALUE_FROM_RECORD',
+  },
+  ORDER: {
+    fields: [{
+      label: 'field',
+      value: '',
+    }],
+    dataValueType: 'VALUE_FROM_RECORD',
+  },
+  INVOICE: {
+    fields: [{
+      label: 'field',
+      value: '',
+    }],
+    dataValueType: 'VALUE_FROM_RECORD',
+  },
+  EDIFACT_INVOICE: {},
+  DELIMITED: {},
   STATIC_VALUE: {
     fields: [],
     staticValueDetails: {

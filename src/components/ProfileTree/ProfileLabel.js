@@ -53,7 +53,7 @@ export const ProfileLabel = memo(({
   const { contentType: recordType } = recordData;
   const {
     contentType: parentType,
-    id: parentId,
+    profileId: parentId,
   } = parentRecordData;
 
   const entityKey = `${camelCase(recordType)}s`;

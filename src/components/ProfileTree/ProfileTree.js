@@ -42,6 +42,7 @@ export const ProfileTree = memo(({
   const dataKey = 'jobProfiles.current';
   const parentRecordData = {
     id: parentId,
+    profileId: parentId,
     contentType: PROFILE_TYPES.JOB_PROFILE,
   };
 
