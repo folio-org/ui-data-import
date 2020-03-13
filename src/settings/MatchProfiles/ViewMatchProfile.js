@@ -20,6 +20,7 @@ import {
   AccordionSet,
   ConfirmationModal,
   PaneHeader,
+  NoValue,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -27,6 +28,7 @@ import {
   TagsAccordion,
 } from '@folio/stripes/smart-components';
 
+import { getFieldMatched } from '../../utils';
 import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
@@ -210,6 +212,7 @@ export class ViewMatchProfile extends Component {
 
     const record = JSON.parse(JSON.stringify({ ...matchProfile }));
     const staticValueType = get(record, ['matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
+    const existingRecordField = get(record, ['matchDetails', '0', 'existingMatchExpression', 'fields', '0', 'value'], null);
 
     const tagsEntityLink = `data-import-profiles/matchProfiles/${matchProfile.id}`;
     // Here is mocked config file with mocked values, it should be replaced/rewritten once BE will be ready
@@ -267,6 +270,7 @@ export class ViewMatchProfile extends Component {
           />
         ),
       },
+      'criterion-value-type': { value: getFieldMatched(existingRecordField, matchProfile.existingRecordType) || <NoValue /> },
     };
 
     return (
