@@ -251,7 +251,7 @@ export const ITEM_RESOURCE_PATHS = [
 export const ORDER_RESOURCE_PATHS = [
   'raml-util/schemas/metadata.schema',
   'acq-models/mod-orders-storage/schemas/purchase_order.json',
-  'acq-models/mod-orders-storage/schemas/renewal.json',
+  'acq-models/mod-orders-storage/schemas/ongoing.json',
   'acq-models/mod-orders-storage/schemas/po_line.json',
   'acq-models/mod-orders-storage/schemas/details.json',
   'acq-models/mod-orders-storage/schemas/product_identifier.json',
