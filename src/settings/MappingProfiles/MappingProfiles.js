@@ -13,8 +13,13 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   withCheckboxList,
   checkboxListShape,
+  getSortQuery,
+  getSearchQuery,
 } from '../../utils';
-import { ENTITY_KEYS } from '../../utils/constants';
+import {
+  ENTITY_KEYS,
+  FIND_ALL_CQL,
+} from '../../utils/constants';
 import { ListView } from '../../components';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
 import { ViewMappingProfile } from './ViewMappingProfile';
@@ -28,6 +33,13 @@ const queryTemplate = `(
   existingRecordType="%{query.query}*" OR
   tags.tagList="%{query.query}*"
 )`;
+const sortMap = {
+  name: 'name',
+  folioRecord: 'existingRecordType',
+  tags: 'tags.tagList',
+  updated: 'metadata.updatedDate',
+  updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
+};
 
 export const mappingProfilesShape = {
   INITIAL_RESULT_COUNT,
@@ -44,22 +56,14 @@ export const mappingProfilesShape = {
       path: 'data-import-profiles/mappingProfiles',
       clientGeneratePk: false,
       throwErrors: true,
-      GET: {
-        params: {
-          query: makeQueryFunction(
-            'cql.allRecords=1',
-            queryTemplate,
-            {
-              name: 'name',
-              folioRecord: 'existingRecordType',
-              tags: 'tags.tagList',
-              updated: 'metadata.updatedDate',
-              updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
-            },
-            [],
-          ),
-        },
-        staticFallback: { params: {} },
+      params: (_q, _p, _r, _l) => {
+        const sort = _r?.query?.sort;
+        const search = _r?.query?.query;
+        const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
+        const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
+        const query = `${FIND_ALL_CQL} ${searchQuery} ${sortQuery}`;
+
+        return { query };
       },
     },
   },
@@ -149,15 +153,9 @@ export class MappingProfiles extends Component {
       GET: {
         params: {
           query: makeQueryFunction(
-            'cql.allRecords=1',
+            FIND_ALL_CQL,
             queryTemplate,
-            {
-              name: 'name',
-              folioRecord: 'existingRecordType',
-              tags: 'tags.tagList',
-              updated: 'metadata.updatedDate',
-              updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
-            },
+            sortMap,
             [],
           ),
         },

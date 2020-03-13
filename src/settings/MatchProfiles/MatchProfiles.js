@@ -30,6 +30,7 @@ import {
   NOTES_RESOURCE_PATHS,
   INVOICE_RESOURCE_PATHS,
   SRM_RESOURCE_PATHS,
+  FIND_ALL_CQL,
 } from '../../utils/constants';
 import { ListView } from '../../components';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
@@ -71,12 +72,11 @@ export const matchProfilesShape = {
       clientGeneratePk: false,
       throwErrors: true,
       params: (_q, _p, _r, _l, props) => {
-        const findAll = 'cql.allRecords=1';
-        const sort = get(_r, ['query', 'sort'], null);
-        const search = get(_r, ['query', 'query'], null);
+        const sort = _r?.query?.sort;
+        const search = _r?.query?.query;
         const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
         const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
-        const query = `${props.filterParams?.manifest?.query || findAll} ${searchQuery} ${sortQuery}`;
+        const query = `${props.filterParams?.manifest?.query || FIND_ALL_CQL} ${searchQuery} ${sortQuery}`;
 
         return { query };
       },
@@ -167,7 +167,7 @@ export class MatchProfiles extends Component {
       GET: {
         params: {
           query: makeQueryFunction(
-            'cql.allRecords=1',
+            FIND_ALL_CQL,
             queryTemplate,
             sortMap,
             [],
