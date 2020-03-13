@@ -1000,7 +1000,7 @@ export const fieldsConfig = [
     id: 'reviewPeriod',
     label: 'renewals.renewalPeriod',
     categoryId: 'po-renewal-information',
-    value: 'purchase_order.renewal.renewal',
+    value: 'purchase_order.renewal.reviewPeriod',
     recordType: 'ORDER',
   }, {
     id: 'manualRenewal',
