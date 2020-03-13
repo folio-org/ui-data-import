@@ -14,8 +14,13 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   withCheckboxList,
   checkboxListShape,
+  getSortQuery,
+  getSearchQuery,
 } from '../../utils';
-import { ENTITY_KEYS } from '../../utils/constants';
+import {
+  ENTITY_KEYS,
+  FIND_ALL_CQL,
+} from '../../utils/constants';
 import { ListView } from '../../components/ListView';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
 
@@ -41,21 +46,22 @@ export const jobProfilesShape = {
       path: 'data-import-profiles/jobProfiles',
       clientGeneratePk: false,
       throwErrors: true,
-      GET: {
-        params: {
-          query: makeQueryFunction(
-            'cql.allRecords=1',
-            '(name="%{query.query}*" OR tags.tagList="%{query.query}*")',
-            {
-              name: 'name',
-              tags: 'tags.tagList',
-              updated: 'metadata.updatedDate',
-              updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
-            },
-            [],
-          ),
-        },
-        staticFallback: { params: {} },
+      params: (_q, _p, _r, _l) => {
+        const sortMap = {
+          name: 'name',
+          tags: 'tags.tagList',
+          updated: 'metadata.updatedDate',
+          updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
+          description: 'description',
+        };
+        const queryTemplate = '(name="%{query.query}*" OR tags.tagList="%{query.query}*" OR description="%{query.query}*")';
+        const sort = _r?.query?.sort;
+        const search = _r?.query?.query;
+        const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
+        const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
+        const query = `${FIND_ALL_CQL} ${searchQuery} ${sortQuery}`;
+
+        return { query };
       },
     },
   },
@@ -116,7 +122,7 @@ export const jobProfilesShape = {
 export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '') => {
   const findAll = (chooseJobProfile && dataTypeQuery !== '')
     ? `dataType==${dataTypeQuery}`
-    : 'cql.allRecords=1';
+    : FIND_ALL_CQL;
   const queryTemplate = chooseJobProfile
     ? `dataType==${dataTypeQuery === '' ? '*' : dataTypeQuery} AND (name="%{query.query}*" OR tags.tagList="%{query.query}*" OR description="%{query.query}*")`
     : '(name="%{query.query}*" OR tags.tagList="%{query.query}*")';

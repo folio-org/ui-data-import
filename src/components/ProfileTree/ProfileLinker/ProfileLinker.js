@@ -17,7 +17,12 @@ import {
   LinkerMenu,
   LinkerTrigger,
 } from '.';
-import { PROFILE_RELATION_TYPES } from '../../../utils/constants';
+
+import {
+  PROFILE_RELATION_TYPES,
+  ENTITY_KEYS,
+  FILTER_QUERY_PARAMS,
+} from '../../../utils/constants';
 
 import css from '../ProfileTree.css';
 
@@ -73,6 +78,14 @@ export const ProfileLinker = ({
     );
   };
 
+  const manifestParams = {
+    manifest: {
+      query: parentType === ENTITY_KEYS.JOB_PROFILES
+        ? FILTER_QUERY_PARAMS.NOT_STATIC_VALUE
+        : FILTER_QUERY_PARAMS.DEFAULT,
+    },
+  };
+
   return (
     <>
       <div data-test-plus-sign-button>
@@ -101,6 +114,7 @@ export const ProfileLinker = ({
             isMultiLink
             onLink={records => onLink(initialData, setInitialData, records, parentId, parentType, entityKey, reactTo, dataKey)}
             renderTrigger={triggerProps => renderPluginButton(triggerProps, entityKey)}
+            filterParams={manifestParams}
           >
             <span data-test-no-plugin-available>
               <FormattedMessage id="ui-data-import.find-import-profile-plugin-unavailable" />
