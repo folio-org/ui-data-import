@@ -1,3 +1,5 @@
+export const FIND_ALL_CQL = 'cql.allRecords=1';
+
 export const DEFAULT_FETCHER_UPDATE_INTERVAL = 5000;
 export const DEFAULT_TIMEOUT_BEFORE_FILE_DELETION = 0;
 
@@ -277,3 +279,8 @@ export const INVOICE_RESOURCE_PATHS = [
 ];
 
 export const SRM_RESOURCE_PATHS = ['instance.json'];
+
+export const FILTER_QUERY_PARAMS = {
+  DEFAULT: 'cql.allRecords=1',
+  NOT_STATIC_VALUE: 'cql.allRecords=1 NOT incomingRecordType=STATIC_VALUE',
+};

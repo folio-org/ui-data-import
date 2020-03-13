@@ -22,6 +22,7 @@
 * Remove extra action buttons in profiles Settings screens (UIDATIMP-394 - UIDATIMP-397)
 * Augment RecordTypeSelector component with Incoming Record Type selection dropdown (UIDATIMP-386)
 * Job profile details: suppress the delete/trash can icon (UIDATIMP-390)
+* Job Profile Tree: Changes needed to support Static value submatches (UIPFIMP-11)
 * Add "defaultMapping" query param to "/processFiles" path (UIDATIMP-417)
 * Add caret to the incoming record select dropdown in match profile
 * Upgrade Stripes and all the dependencies to version 3.0.0 (UIDATIMP-422)
