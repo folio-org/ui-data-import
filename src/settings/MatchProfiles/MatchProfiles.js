@@ -18,6 +18,8 @@ import {
   fetchJsonSchema,
   getModuleVersion,
   handleAllRequests,
+  getSearchQuery,
+  getSortQuery,
 } from '../../utils';
 import {
   ENTITY_KEYS,
@@ -28,6 +30,7 @@ import {
   NOTES_RESOURCE_PATHS,
   INVOICE_RESOURCE_PATHS,
   SRM_RESOURCE_PATHS,
+  FIND_ALL_CQL,
 } from '../../utils/constants';
 import { ListView } from '../../components';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
@@ -45,6 +48,13 @@ const queryTemplate = `(
   existingStaticValueType="%{query.query}*" OR
   tags.tagList="%{query.query}*"
 )`;
+const sortMap = {
+  name: 'name',
+  match: 'existingRecordType field fieldMarc fieldNonMarc existingStaticValueType',
+  tags: 'tags.tagList',
+  updated: 'metadata.updatedDate',
+  updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
+};
 
 const sectionInitialValues = {
   MARC_BIBLIOGRAPHIC: {
@@ -162,21 +172,14 @@ export const matchProfilesShape = {
       path: 'data-import-profiles/matchProfiles',
       clientGeneratePk: false,
       throwErrors: true,
-      GET: {
-        params: {
-          query: makeQueryFunction(
-            'cql.allRecords=1',
-            '(name="%{query.query}*" OR tags.tagList="%{query.query}*")',
-            {
-              name: 'name',
-              tags: 'tags.tagList',
-              updated: 'metadata.updatedDate',
-              updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
-            },
-            [],
-          ),
-        },
-        staticFallback: { params: {} },
+      params: (_q, _p, _r, _l, props) => {
+        const sort = _r?.query?.sort;
+        const search = _r?.query?.query;
+        const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
+        const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
+        const query = `${props.filterParams?.manifest?.query || FIND_ALL_CQL} ${searchQuery} ${sortQuery}`;
+
+        return { query };
       },
     },
   },
@@ -265,15 +268,9 @@ export class MatchProfiles extends Component {
       GET: {
         params: {
           query: makeQueryFunction(
-            'cql.allRecords=1',
+            FIND_ALL_CQL,
             queryTemplate,
-            {
-              name: 'name',
-              match: 'existingRecordType field fieldMarc fieldNonMarc existingStaticValueType',
-              tags: 'tags.tagList',
-              updated: 'metadata.updatedDate',
-              updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
-            },
+            sortMap,
             [],
           ),
         },
