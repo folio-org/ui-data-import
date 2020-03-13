@@ -94,7 +94,7 @@ export const AssociatedList = memo(({
     const newData = localSort(contentData, currentSortOrder, currentSortDirection);
 
     setCurrentData(newData);
-  }, [contentData]);
+  }, [contentData]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const rowUpdater = ({ id }) => selectedRecords.has(id);
 

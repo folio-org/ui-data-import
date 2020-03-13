@@ -1,5 +1,4 @@
 import React, {
-  Fragment,
   memo,
   useState,
   useRef,
@@ -78,7 +77,7 @@ export const ViewContainer = memo(({
   };
 
   return (
-    <Fragment>
+    <>
       {children({
         fullWidthContainer: fullWidthContainerRef.current,
         calloutRef: calloutRef.current,
@@ -100,7 +99,7 @@ export const ViewContainer = memo(({
         onClose={() => setShowExceptionModal(false)}
       />
       <Callout ref={calloutRef} />
-    </Fragment>
+    </>
   );
 });
 

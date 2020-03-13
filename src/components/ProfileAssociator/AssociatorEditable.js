@@ -2,7 +2,6 @@ import React, {
   memo,
   useState,
   useEffect,
-  Fragment,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -49,7 +48,7 @@ export const AssociatorEditable = memo(({
   useEffect(() => {
     setCurrentData(contentData);
     setPluginDisabled(isPluginDisabled(contentData));
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const checkboxList = useCheckboxList(currentData);
   const columnWidths = {
@@ -106,7 +105,7 @@ export const AssociatorEditable = memo(({
   };
 
   return (
-    <Fragment {...dataAttributes}>
+    <>
       <AssociatedList
         intl={intl}
         entityKey={entityKey}
@@ -123,6 +122,7 @@ export const AssociatorEditable = memo(({
         className={css['list-editable']}
         isStatic={false}
         isMultiSelect
+        {...dataAttributes}
       />
       <br />
       <Pluggable
@@ -167,7 +167,7 @@ export const AssociatorEditable = memo(({
         }}
         onCancel={() => setConfirmationOpen(false)}
       />
-    </Fragment>
+    </>
   );
 });
 

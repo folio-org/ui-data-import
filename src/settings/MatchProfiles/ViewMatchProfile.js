@@ -16,7 +16,6 @@ import {
   Button,
   Headline,
   KeyValue,
-  NoValue,
   Accordion,
   AccordionSet,
   ConfirmationModal,
@@ -28,16 +27,11 @@ import {
   TagsAccordion,
 } from '@folio/stripes/smart-components';
 
-import { getFieldMatched } from '../../utils';
 import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   PROFILE_TYPES,
-  COMPARISON_PARTS,
-  QUALIFIER_TYPES,
-  CRITERION_TYPES,
-  VALUE_TYPES,
 } from '../../utils/constants';
 import {
   Spinner,
@@ -214,71 +208,27 @@ export class ViewMatchProfile extends Component {
       };
     }
 
-    const tagsEntityLink = `data-import-profiles/matchProfiles/${matchProfile.id}`;
+    const record = JSON.parse(JSON.stringify({ ...matchProfile }));
+    const staticValueType = get(record, ['matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
 
+    const tagsEntityLink = `data-import-profiles/matchProfiles/${matchProfile.id}`;
     // Here is mocked config file with mocked values, it should be replaced/rewritten once BE will be ready
     const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
-    const matchDetails = get(matchProfile, ['matchDetails', '0'], []);
-    const {
-      incomingMatchExpression,
-      existingMatchExpression,
-    } = matchDetails;
-
-    const incomingFields = get(incomingMatchExpression, 'fields', []);
-    const existingFields = get(existingMatchExpression, 'fields', []);
-    const existingField = this.getValue(existingFields, 'field');
-
-    const record = {
-      ...matchProfile,
-      matchDetails: [{
-        incomingMatchExpression: {
-          fields: [
-            {
-              label: 'field',
-              value: this.getValue(incomingFields, 'field') || <NoValue />,
-            }, {
-              label: 'indicator1',
-              value: this.getValue(incomingFields, 'indicator1') || <NoValue />,
-            }, {
-              label: 'indicator2',
-              value: this.getValue(incomingFields, 'indicator2') || <NoValue />,
-            }, {
-              label: 'recordSubfield',
-              value: this.getValue(incomingFields, 'recordSubfield') || <NoValue />,
-            },
-          ],
-          qualifier: {
-            qualifierType: this.getLabel(QUALIFIER_TYPES, get(incomingMatchExpression, ['qualifier', 'qualifierType'])),
-            qualifierValue: get(incomingMatchExpression, ['qualifier', 'qualifierValue']),
-            comparisonPart: this.getLabel(COMPARISON_PARTS, get(incomingMatchExpression, ['qualifier', 'comparisonPart'])),
-          },
-        },
-        incomingRecordType: get(matchDetails, 'incomingRecordType', ''),
-        matchCriterion: this.getLabel(CRITERION_TYPES, get(matchDetails, 'matchCriterion', '')) || <NoValue />,
-        existingMatchExpression: {
-          fields: [
-            {
-              label: 'field',
-              value: getFieldMatched(existingField, matchProfile.existingRecordType) || <NoValue />,
-            },
-          ],
-          dataValueType: this.getLabel(VALUE_TYPES, get(existingMatchExpression, 'dataValueType', '')) || <NoValue />,
-          qualifier: {
-            qualifierType: this.getLabel(QUALIFIER_TYPES, get(existingMatchExpression, ['qualifier', 'qualifierType'])),
-            qualifierValue: get(existingMatchExpression, ['qualifier', 'qualifierValue']),
-            comparisonPart: this.getLabel(COMPARISON_PARTS, get(existingMatchExpression, ['qualifier', 'comparisonPart'])),
-          },
-        },
-        existingRecordType: get(matchDetails, 'existingRecordType', ''),
-      }],
-    };
     const existingRecordLabel = FOLIO_RECORD_TYPES[matchProfile.existingRecordType]
       ? <FormattedMessage id={FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId} />
       : '';
     const incomingRecordLabel = INCOMING_RECORD_TYPES[matchProfile.incomingRecordType]
       ? <FormattedMessage id={INCOMING_RECORD_TYPES[matchProfile.incomingRecordType].captionId} />
       : '';
-    const componentsProps = {
+
+    const injectedProps = {
+      'section-incoming-field': { stateFieldValue: matchProfile.incomingRecordType },
+      'section-incoming-qualifier': { stateFieldValue: matchProfile.incomingRecordType },
+      'section-incoming-qualifier-part': { stateFieldValue: matchProfile.incomingRecordType },
+      'section-incoming-static-value-text': { stateFieldValue: staticValueType },
+      'section-existing-field': { stateFieldValue: matchProfile.existingRecordType },
+      'section-existing-qualifier': { stateFieldValue: matchProfile.existingRecordType },
+      'section-existing-qualifier-part': { stateFieldValue: matchProfile.existingRecordType },
       'panel-existing': {
         id: 'panel-existing-view',
         existingRecordType: matchProfile.existingRecordType,
@@ -356,7 +306,7 @@ export class ViewMatchProfile extends Component {
               config={formConfig}
               styles={styles}
               record={record}
-              componentsProps={componentsProps}
+              injectedProps={injectedProps}
             />
           </div>
           <Accordion

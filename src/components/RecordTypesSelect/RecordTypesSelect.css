@@ -119,6 +119,7 @@
 
   & > :first-child {
     width: 100%;
+    justify-content: space-between;
   }
 
   &:focus::before {

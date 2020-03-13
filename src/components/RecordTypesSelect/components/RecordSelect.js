@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { TreeLine } from '../../TreeLine';
@@ -46,7 +46,7 @@ export const RecordSelect = ({
   treeData = recordsData,
   isEditable,
 }) => (
-  <Fragment>
+  <>
     <TreeView
       data={treeData}
       className={css.treeView}
@@ -70,7 +70,7 @@ export const RecordSelect = ({
         container={container}
       />
     ))}
-  </Fragment>
+  </>
 );
 
 RecordSelect.propTypes = {

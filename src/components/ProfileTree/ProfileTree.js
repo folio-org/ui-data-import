@@ -42,10 +42,11 @@ export const ProfileTree = memo(({
   const dataKey = 'jobProfiles.current';
   const parentRecordData = {
     id: parentId,
+    profileId: parentId,
     contentType: PROFILE_TYPES.JOB_PROFILE,
   };
 
-  const [changesCount, setChangesCount] = useState(0);
+  const [changesCount, setChangesCount] = useState(0); // eslint-disable-line no-unused-vars
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -71,15 +72,16 @@ export const ProfileTree = memo(({
   }));
 
   const findRelIndex = (relations, masterId, line) => {
-    return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === line.id);
+    return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === line.profileId);
   };
 
-  const composeRelations = (lines, masterId, masterType, detailType, reactTo) => lines.map(item => {
+  const composeRelations = (lines, masterId, masterType, detailType, reactTo, listSize) => lines.map((item, index) => {
     const rel = {
       masterProfileId: masterId,
       masterProfileType: isSnakeCase(masterType) ? masterType : snakeCase(masterType).slice(0, -1).toLocaleUpperCase(),
       detailProfileId: item.profileId || item.id,
       detailProfileType: isSnakeCase(detailType) ? detailType : snakeCase(detailType).slice(0, -1).toLocaleUpperCase(),
+      order: listSize + index,
     };
 
     return reactTo ? {
@@ -89,12 +91,13 @@ export const ProfileTree = memo(({
   });
 
   const link = (initialData, setInitialData, lines, masterId, masterType, detailType, reactTo, localDataKey) => {
-    const uniqueLines = lines.filter(line => initialData.findIndex(item => item.id === line.id) === -1);
+    const listSize = initialData.length;
+    const uniqueLines = lines.filter(line => initialData.findIndex(item => item.profileId === line.id) === -1);
     const newData = [...initialData, ...getLines(uniqueLines, detailType, reactTo)];
     const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
 
     if (linesToAdd && linesToAdd.length) {
-      const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo)];
+      const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo, listSize)];
 
       onLink(relsToAdd);
     }
@@ -104,7 +107,7 @@ export const ProfileTree = memo(({
   };
 
   const unlink = (parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey) => {
-    const index = parentData.findIndex(item => item.id === line.id);
+    const index = parentData.findIndex(item => item.profileId === line.profileId);
     const newIdx = findRelIndex(relationsToAdd, line);
 
     if (newIdx < 0) {

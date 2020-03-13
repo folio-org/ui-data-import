@@ -23,6 +23,9 @@
 * Augment RecordTypeSelector component with Incoming Record Type selection dropdown (UIDATIMP-386)
 * Job profile details: suppress the delete/trash can icon (UIDATIMP-390)
 * Job Profile Tree: Changes needed to support Static value submatches (UIPFIMP-11)
+* Add "defaultMapping" query param to "/processFiles" path (UIDATIMP-417)
+* Add caret to the incoming record select dropdown in match profile
+* Upgrade Stripes and all the dependencies to version 3.0.0 (UIDATIMP-422)
 
 ### Bugs fixed:
 * Profile Associator lists are empty when the user reloads the page with Profile Edit Form open (UIDATIMP-338)
@@ -36,6 +39,10 @@
 * Unlink action profile from field mapping profile is not working (UIDATIMP-381)
 * ProfileAssociator Component lists are empty (UIDATIMP-399)
 * Fix UI tests (UIDATIMP-399)
+* Fix action profiles' sequence in job profiles (UIDATIMP-412)
+* Wipe out linked profiles when duplicate a profile (UIDATIMP-410)
+* Fix unlinking associated profiles from job profile (UIDATIMP-420)
+* Fix Match Profile regressions (UIDATIMP-421)
 
 ## [1.7.3](https://github.com/folio-org/ui-data-import/tree/v1.7.3) (2019-12-04)
 * Update sorting query for jobs (UIDATIMP-346)

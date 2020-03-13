@@ -22,7 +22,7 @@ export const searchAndSortTemplate = intl => ({
   description: record => record.description,
   match: record => {
     const fieldSource = (record.field || record.existingRecordType || '').replace(/_/g, ' ');
-    const fieldsMatched = get(record, 'matchDetails[0].existingMatchExpression.fields', []).map(item => item.value || '');
+    const fieldsMatched = get(record, 'matchDetails[0].existingMatchExpression.fields', []).map(item => (item ? item.value || '' : ''));
 
     if (document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT) {
       fieldsMatched.reverse();
