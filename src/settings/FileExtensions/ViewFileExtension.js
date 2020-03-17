@@ -13,22 +13,20 @@ import {
   Col,
   KeyValue,
   ConfirmationModal,
+  PaneHeader,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import {
-  LAYER_TYPES,
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
 } from '../../utils/constants';
-import { createLayerURL } from '../../utils';
 import {
   ActionMenu,
   EndOfItem,
   Spinner,
 } from '../../components';
-import { LastMenu } from '../../components/ActionMenu/ItemTemplates/LastMenu';
 
 import sharedCss from '../../shared.css';
 
@@ -65,13 +63,6 @@ export class ViewFileExtension extends Component {
         id: PropTypes.string,
       }).isRequired,
     }).isRequired,
-    location: PropTypes.oneOfType([
-      PropTypes.shape({
-        search: PropTypes.string.isRequired,
-        pathname: PropTypes.string.isRequired,
-      }).isRequired,
-      PropTypes.string.isRequired,
-    ]),
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     paneId: PropTypes.string, // eslint-disable-line
@@ -137,17 +128,23 @@ export class ViewFileExtension extends Component {
     />
   );
 
-  renderLastMenu = record => (
-    <LastMenu
-      caption="ui-data-import.edit"
-      location={createLayerURL(this.props.location, LAYER_TYPES.EDIT)}
-      style={{ visibility: !record ? 'hidden' : 'visible' }}
-      dataAttributes={{ 'data-test-edit-item-button': '' }}
-    />
-  );
+  renderPaneHeader = renderProps => {
+    const { onClose } = this.props;
+    const { record } = this.fileExtensionData;
+
+    return (
+      <PaneHeader
+        {...renderProps}
+        paneTitle={record.extension}
+        paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
+        actionMenu={this.renderActionMenu}
+        dismissible
+        onClose={onClose}
+      />
+    );
+  };
 
   renderFileExtension(record) {
-    const { onClose } = this.props;
     const { showDeleteConfirmation } = this.state;
 
     return (
@@ -155,12 +152,7 @@ export class ViewFileExtension extends Component {
         id="pane-file-extension-details"
         defaultWidth="fill"
         fluidContentWidth
-        paneTitle={record.extension}
-        paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
-        actionMenu={this.renderActionMenu}
-        lastMenu={this.renderLastMenu(record)}
-        dismissible
-        onClose={onClose}
+        renderHeader={this.renderPaneHeader}
       >
         <TitleManager record={record.extension} />
         <Headline
