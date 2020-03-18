@@ -1,5 +1,12 @@
 # Change history for ui-data-import
 
+## **1.9.0** (in progress)
+
+### Features added:
+* Data import settings Match Profiles: Changes for Static value Number, Date submatches (UIDATIMP-414)
+
+### Bugs fixed:
+
 ## [1.8.0](https://github.com/folio-org/ui-data-import/tree/v1.8.0) (2020-03-13)
 
 ### Features added:

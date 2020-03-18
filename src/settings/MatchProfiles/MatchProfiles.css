@@ -12,6 +12,18 @@
     border: none;
     border-radius: 0;
 
+    & .incoming {
+      background-color: #b2b2b2;
+
+      & label :not(:first-child) {
+        color: #616161;
+      }
+
+      & .field > :first-child {
+        color: #616161;
+      }
+    }
+
     & .input-container {
       background-color: #e5e5e5;
 
@@ -35,15 +47,26 @@
       }
     }
 
-    & .incoming {
-      background-color: #b2b2b2;
+    & .static-section {
+      & > div:first-child {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: -1rem !important;
 
-      & label :not(:first-child) {
-        color: #616161;
+        & > div:first-child {
+          width: 150px;
+          margin-right: 3rem;
+        }
+
+        & > div:last-child:not(:first-child) {
+          flex-grow: 1;
+          margin-top: 0;
+        }
       }
 
-      & .field > :first-child {
-        color: #616161;
+      & .date-range-label {
+        margin: 0 0.7rem;
       }
     }
 

@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import {
   FormattedMessage,
+  FormattedDate,
   intlShape,
 } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -24,6 +25,7 @@ import { checkEmpty } from '../../utils';
 export const VIRTUAL_CONTROLS = { COMMON_SECTION: 'CommonSection' };
 
 const controls = {
+  FormattedMessage,
   Fragment,
   Field,
   ...stripesComponents,
@@ -63,6 +65,11 @@ const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
 const hasContent = (children, record, sectionNamespace, repeatableIndex) => children
   .map(child => getValue(child.name, record, sectionNamespace, repeatableIndex))
   .some(child => child !== undefined && child !== ' ' && child !== '-');
+const checkDate = (dataType, value) => {
+  const isDate = dataType === 'date';
+
+  return isDate ? <FormattedDate value={value} /> : value;
+};
 
 export const Control = memo(props => {
   const {
@@ -87,6 +94,7 @@ export const Control = memo(props => {
     id,
     optional,
     referenceTables,
+    dataType,
     ...attributes
   } = props;
 
@@ -145,7 +153,7 @@ export const Control = memo(props => {
           val = val.trim();
         }
 
-        let actualValue = checkEmpty(val) ? <stripesComponents.NoValue /> : val;
+        let actualValue = checkEmpty(val) ? <stripesComponents.NoValue /> : checkDate(dataType, val);
 
         if (dataOptions && dataOptions.length && !React.isValidElement(val)) {
           actualValue = getOptionLabel(dataOptions, val, sectionNamespace);
@@ -287,20 +295,21 @@ export const Control = memo(props => {
     const currentSection = commonSections.find(item => item.sectionKey === acceptedSections[stateFieldValue]);
 
     if (!currentSection?.controlType) {
-      return <>&nbsp;</>;
+      return <></>;
     }
 
     const {
-      childControls: cc,
+      childControls: cc = [],
       optional: isOptional,
     } = currentSection;
 
-    const sectionChildren = isOptional && !isEditable && !hasContent(cc, record, sectionNS, ri) ? [] : cc;
+    const isSectionComponent = currentSection.controlType === 'Section';
+    const sectionChildren = isSectionComponent && isOptional && !isEditable && !hasContent(cc, record, sectionNS, ri) ? [] : cc;
     const hasData = hasContent(sectionChildren, referenceTables, sectionNS, ri);
 
     let sectionAttrs = { ...currentSection };
 
-    if (currentSection.optional) {
+    if (isSectionComponent && currentSection.optional) {
       sectionAttrs = {
         ...sectionAttrs,
         optional: !!isEditable,
@@ -356,6 +365,7 @@ Control.propTypes = {
   name: PropTypes.string,
   validate: PropTypes.arrayOf(PropTypes.string),
   referenceTables: PropTypes.object,
+  dataType: PropTypes.string,
   legend: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   addLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   fields: PropTypes.arrayOf(PropTypes.object),

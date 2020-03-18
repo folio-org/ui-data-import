@@ -150,6 +150,10 @@ const sectionInitialValues = {
     staticValueDetails: {
       staticValueType: 'TEXT',
       text: '',
+      number: '',
+      exactDate: '',
+      fromDate: '',
+      toDate: '',
     },
     dataValueType: 'STATIC_VALUE',
   },

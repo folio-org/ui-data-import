@@ -8,6 +8,14 @@
   composes: input-container from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
 }
 
+.static-section {
+  composes: static-section from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
+}
+
+.date-range-label {
+  composes: date-range-label from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
+}
+
 .incoming {
   composes: incoming from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
 }

@@ -158,59 +158,101 @@ describe('Match Profile View', () => {
       });
 
       describe('"Incoming record" section', () => {
-        it('has correct label', () => {
-          expect(matchProfileDetails.matchCriteria.incomingRecord.label).to.be.equal('Incoming MARC Bibliographic record');
-        });
-
-        it('has correct length of sections', () => {
-          expect(matchProfileDetails.matchCriteria.incomingRecordSections.children().length).to.be.equal(3);
-        });
-
-        it('sections are not optional', () => {
-          matchProfileDetails.matchCriteria.incomingRecordSections.children().forEach(section => {
-            expect(section.hasCheckbox).to.be.false;
-          });
-        });
-
-        describe('"Incoming record field in incoming record" section', () => {
+        describe('when incoming record is MARC', () => {
           it('has correct label', () => {
-            expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(0).label).to.be.equal('MARC Bibliographic field in incoming record');
+            expect(matchProfileDetails.matchCriteria.incomingRecord.label).to.be.equal('Incoming MARC Bibliographic record');
           });
 
-          it('has correct main field value', () => {
-            expect(matchProfileDetails.matchCriteria.fieldMain.value.text).to.be.equal('001');
+          it('has correct length of sections', () => {
+            expect(matchProfileDetails.matchCriteria.incomingRecordSections.children().length).to.be.equal(3);
           });
 
-          it('has empty In1 field value', () => {
-            expect(matchProfileDetails.matchCriteria.fieldIn1.value.text).to.be.equal('-');
+          it('sections are not optional', () => {
+            matchProfileDetails.matchCriteria.incomingRecordSections.children().forEach(section => {
+              expect(section.hasCheckbox).to.be.false;
+            });
           });
 
-          it('has empty In2 field value', () => {
-            expect(matchProfileDetails.matchCriteria.fieldIn2.value.text).to.be.equal('-');
+          describe('"Incoming record field in incoming record" section', () => {
+            it('has correct label', () => {
+              expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(0).label).to.be.equal('MARC Bibliographic field in incoming record');
+            });
+
+            it('has correct main field value', () => {
+              expect(matchProfileDetails.matchCriteria.fieldMain.value.text).to.be.equal('001');
+            });
+
+            it('has empty In1 field value', () => {
+              expect(matchProfileDetails.matchCriteria.fieldIn1.value.text).to.be.equal('-');
+            });
+
+            it('has empty In2 field value', () => {
+              expect(matchProfileDetails.matchCriteria.fieldIn2.value.text).to.be.equal('-');
+            });
+
+            it('has correct subfield field value', () => {
+              expect(matchProfileDetails.matchCriteria.fieldSubfield.value.text).to.be.equal('a');
+            });
           });
 
-          it('has correct subfield field value', () => {
-            expect(matchProfileDetails.matchCriteria.fieldSubfield.value.text).to.be.equal('a');
+          describe('"Use a qualifier" section', () => {
+            it('has correct label', () => {
+              expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(1).label).to.be.equal('Use a qualifier');
+            });
+
+            it('content is hidden', () => {
+              expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(1).hasContent).to.be.false;
+            });
+          });
+
+          describe('"Only compare part of the value" section', () => {
+            it('has correct label', () => {
+              expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(2).label).to.be.equal('Only compare part of the value');
+            });
+
+            it('content is visible', () => {
+              expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(2).hasContent).to.be.true;
+            });
           });
         });
 
-        describe('"Use a qualifier" section', () => {
+        describe('when incoming record is Static value', () => {
+          beforeEach(async function () {
+            await matchProfiles.list.rows(8).click();
+          });
+
           it('has correct label', () => {
-            expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(1).label).to.be.equal('Use a qualifier');
+            expect(matchProfileDetails.matchCriteria.incomingRecord.label).to.be.equal('Incoming Static value (submatch only) record');
           });
 
-          it('content is hidden', () => {
-            expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(1).hasContent).to.be.false;
-          });
-        });
-
-        describe('"Only compare part of the value" section', () => {
-          it('has correct label', () => {
-            expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(2).label).to.be.equal('Only compare part of the value');
+          it('has correct length of sections', () => {
+            expect(matchProfileDetails.matchCriteria.incomingRecordSections.children().length).to.be.equal(1);
           });
 
-          it('content is visible', () => {
-            expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(2).hasContent).to.be.true;
+          describe('static value section', () => {
+            describe('when static value type is Text', () => {
+              it('static value type field has correct wording', () => {
+                expect(matchProfileDetails.matchCriteria.staticValueSection.staticValueTypeField.value.text).to.be.equal('Text');
+              });
+
+              it('static value exists', () => {
+                expect(matchProfileDetails.matchCriteria.staticValueSection.fieldText.value.text).to.be.equal('Test value');
+              });
+            });
+
+            describe('when static value type is Date', () => {
+              beforeEach(async function () {
+                await matchProfiles.list.rows(9).click();
+              });
+
+              it('static value type field has correct wording', () => {
+                expect(matchProfileDetails.matchCriteria.staticValueSection.staticValueTypeField.value.text).to.be.equal('Date');
+              });
+
+              it('date value is displayed correctly', () => {
+                expect(matchProfileDetails.matchCriteria.staticValueSection.fieldExactDate.value.text).to.be.equal('3/19/2020');
+              });
+            });
           });
         });
       });
@@ -455,7 +497,7 @@ describe('delete confirmation modal', () => {
     });
 
     it('renders the correct number including the one which tried to delete', () => {
-      expect(matchProfiles.list.rowCount).to.equal(8);
+      expect(matchProfiles.list.rowCount).to.equal(10);
     });
   });
 
@@ -487,7 +529,7 @@ describe('delete confirmation modal', () => {
           });
 
           it('renders the correct number including the one which tried to delete', () => {
-            expect(matchProfiles.list.rowCount).to.equal(8);
+            expect(matchProfiles.list.rowCount).to.equal(10);
           });
         });
       });
@@ -506,7 +548,7 @@ describe('delete confirmation modal', () => {
       });
 
       it('renders the correct number of rows without deleted one', () => {
-        expect(matchProfiles.list.rowCount).to.equal(7);
+        expect(matchProfiles.list.rowCount).to.equal(9);
       });
     });
   });

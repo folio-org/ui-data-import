@@ -197,7 +197,7 @@ export const FORMS_SETTINGS = {
       STATIC_VALUE_TYPES: [
         'TEXT',
         'NUMBER',
-        'DATE',
+        'EXACT_DATE',
         'DATE_RANGE',
       ],
     },
