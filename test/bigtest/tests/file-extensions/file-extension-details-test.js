@@ -30,7 +30,7 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
 describe('File extensions table', () => {
   setupApplication({ scenarios: ['fetch-file-extensions-success', 'fetch-users'] });
 
-  beforeEach(() => {
+  beforeEach(function () {
     this.visit('/settings/data-import/file-extensions');
   });
 
@@ -51,27 +51,15 @@ describe('File extensions table', () => {
       expect(fileExtensionDetails.isPresent).to.be.true;
     });
 
-    // TODO: Fix it in UIDATIMP-398
-    describe.skip('edit button', () => {
-      beforeEach(async () => {
-        await fileExtensionDetails.expandPaneHeaderDropdown();
-      });
-
-      it('when pane dropdown is opened', () => {
-        expect(fileExtensionDetails.dropdownEditButton.isVisible).to.be.true;
-      });
-    });
-
     describe('delete confirmation modal', () => {
       it('is not visible when pane header dropdown is closed', () => {
         expect(fileExtensionDetails.confirmationModal.isPresent).to.be.false;
       });
 
-      // TODO: Fix it in UIDATIMP-398
-      describe.skip('is visible', () => {
+      describe('is visible', () => {
         beforeEach(async () => {
-          await fileExtensionDetails.expandPaneHeaderDropdown();
-          await fileExtensionDetails.deleteButton.click();
+          await fileExtensionDetails.actionMenu.click();
+          await fileExtensionDetails.actionMenu.deleteProfile.click();
         });
 
         it('when pane header dropdown is opened', () => {
@@ -79,11 +67,10 @@ describe('File extensions table', () => {
         });
       });
 
-      // TODO: Fix it in UIDATIMP-398
-      describe.skip('disappears', () => {
+      describe('disappears', () => {
         beforeEach(async () => {
-          await fileExtensionDetails.expandPaneHeaderDropdown();
-          await fileExtensionDetails.deleteButton.click();
+          await fileExtensionDetails.actionMenu.click();
+          await fileExtensionDetails.actionMenu.deleteProfile.click();
           await fileExtensionDetails.confirmationModal.cancelButton.click();
         });
 
@@ -92,11 +79,10 @@ describe('File extensions table', () => {
         });
       });
 
-      // TODO: Fix it in UIDATIMP-398
-      describe.skip('upon click on confirm button initiates the deletion process of file extension and in case of success', () => {
+      describe('upon click on confirm button initiates the deletion process of file extension and in case of success', () => {
         beforeEach(async () => {
-          await fileExtensionDetails.expandPaneHeaderDropdown();
-          await fileExtensionDetails.deleteButton.click();
+          await fileExtensionDetails.actionMenu.click();
+          await fileExtensionDetails.actionMenu.deleteProfile.click();
           await fileExtensionDetails.confirmationModal.confirmButton.click();
         });
 
@@ -109,11 +95,10 @@ describe('File extensions table', () => {
         });
       });
 
-      // TODO: Fix it in UIDATIMP-398
-      describe.skip('upon click on confirm button twice initiates the deletion process only once file extension and in case of success', () => {
+      describe('upon click on confirm button twice initiates the deletion process only once file extension and in case of success', () => {
         beforeEach(async () => {
-          await fileExtensionDetails.expandPaneHeaderDropdown();
-          await fileExtensionDetails.deleteButton.click();
+          await fileExtensionDetails.actionMenu.click();
+          await fileExtensionDetails.actionMenu.deleteProfile.click();
           await fileExtensionDetails.confirmationModal.confirmButton.click();
           await fileExtensionDetails.confirmationModal.confirmButton.click();
         });
@@ -131,12 +116,11 @@ describe('File extensions table', () => {
         });
       });
 
-      // TODO: Fix it in UIDATIMP-398
-      describe.skip('upon click on confirm button twice initiates the deletion process only once file extension and in case of error', () => {
+      describe('upon click on confirm button twice initiates the deletion process only once file extension and in case of error', () => {
         beforeEach(async function () {
           this.server.delete('/data-import/fileExtensions/:id', () => new Response(500, {}));
-          await fileExtensionDetails.expandPaneHeaderDropdown();
-          await fileExtensionDetails.deleteButton.click();
+          await fileExtensionDetails.actionMenu.click();
+          await fileExtensionDetails.actionMenu.deleteProfile.click();
           await fileExtensionDetails.confirmationModal.confirmButton.click();
           await fileExtensionDetails.confirmationModal.confirmButton.click();
         });
@@ -156,24 +140,13 @@ describe('File extensions table', () => {
     });
 
     describe('file extension form', () => {
-      // TODO: Fix it in UIDATIMP-398
-      describe.skip('appears', () => {
-        beforeEach(async () => {
-          await fileExtensionDetails.expandPaneHeaderDropdown();
-          await fileExtensionDetails.dropdownEditButton.click();
-        });
-
-        it('upon click on pane header menu edit button', () => {
-          expect(fileExtensionForm.isPresent).to.be.true;
-        });
-      });
-
       describe('appears', () => {
         beforeEach(async () => {
-          await fileExtensionDetails.editButton.click();
+          await fileExtensionDetails.actionMenu.click();
+          await fileExtensionDetails.actionMenu.editProfile.click();
         });
 
-        it('upon click on edit button', () => {
+        it('upon click on pane header actions edit button', () => {
           expect(fileExtensionForm.isPresent).to.be.true;
         });
       });
@@ -181,7 +154,8 @@ describe('File extensions table', () => {
 
     describe('file extension form', () => {
       beforeEach(async () => {
-        await fileExtensionDetails.editButton.click();
+        await fileExtensionDetails.actionMenu.click();
+        await fileExtensionDetails.actionMenu.editProfile.click();
       });
 
       describe('when form is submitted', () => {

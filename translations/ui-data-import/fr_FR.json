@@ -86,7 +86,7 @@
     "modal.fileExtensions.memoryLimit.message": "Pas assez d'espace pour stocker les fichiers. Contacter l'administrateur système",
     "name": "Nom",
     "tags": "Mots-clés",
-    "settings.jobProfiles.title": "Job profiles",
+    "settings.jobProfiles.title": "Profils de tâche",
     "settings.jobProfiles.count": "{count, number} tâche {count, plural, one { profils } other { profils }}",
     "settings.matchProfiles.title": "Match profiles",
     "settings.actionProfiles.title": "Profils d'action",

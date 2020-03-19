@@ -26,8 +26,7 @@ async function setupFormSubmitErrorScenario(server, responseData = {}) {
   await fileExtensionForm.submitFormButton.click();
 }
 
-// TODO: Fix it in UIDATIMP-398
-describe.skip('File extension form', () => {
+describe('File extension form', () => {
   setupApplication();
 
   beforeEach(function () {
@@ -36,7 +35,8 @@ describe.skip('File extension form', () => {
 
   describe('appears', () => {
     beforeEach(async () => {
-      await fileExtensions.newFileExtensionButton.click();
+      await fileExtensions.actionMenu.click();
+      await fileExtensions.actionMenu.newProfileButton.click();
     });
 
     it('upon click on new file extension button', () => {

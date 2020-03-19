@@ -172,6 +172,7 @@
   "settings.reset.error": "Instance reset to defaults failure:",
   "settings.save.error.network": "Record not saved:",
   "settings.fileExtensions.title": "File extensions",
+  "settings.fileExtensions.new": "New file extension",
   "settings.fileExtensions.reset": "Reset all extension mappings to system defaults",
   "settings.fileExtensions.count": "{count, number} file {count, plural, one {extension} other {extensions}}",
   "filter.errors": "Errors in import",

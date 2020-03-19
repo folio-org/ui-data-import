@@ -118,7 +118,10 @@ export class FileExtensions extends Component {
     ENTITY_KEY: ENTITY_KEYS.FILE_EXTENSIONS,
     INITIAL_RESULT_COUNT,
     RESULT_COUNT_INCREMENT,
-    actionMenuItems: ['restoreDefaults'],
+    actionMenuItems: [
+      'addNew',
+      'restoreDefaults',
+    ],
     visibleColumns: [
       'extension',
       'importBlocked',
