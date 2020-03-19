@@ -422,7 +422,7 @@ export const formConfigSamples = [{
                 label: 'ui-data-import.match.criterion',
                 name: 'matchCriterion',
                 optional: false,
-                classNames: ['criterion', 'input-container'],
+                classNames: ['criterion-section', 'input-container'],
                 dataAttributes: {},
                 childControls: [{
                   controlType: 'Field',
@@ -487,6 +487,11 @@ export const formConfigSamples = [{
                   stateField: 'existingRecord',
                   sectionNamespace: 'existing',
                   acceptedSections: {
+                    INSTANCE: 'qualifier',
+                    HOLDINGS: 'qualifier',
+                    ITEM: 'qualifier',
+                    ORDER: 'qualifier',
+                    INVOICE: 'qualifier',
                     MARC_BIBLIOGRAPHIC: 'qualifier',
                     MARC_HOLDINGS: 'qualifier',
                     MARC_AUTHORITY: 'qualifier',
@@ -499,6 +504,11 @@ export const formConfigSamples = [{
                   stateField: 'existingRecord',
                   sectionNamespace: 'existing',
                   acceptedSections: {
+                    INSTANCE: 'qualifierPart',
+                    HOLDINGS: 'qualifierPart',
+                    ITEM: 'qualifierPart',
+                    ORDER: 'qualifierPart',
+                    INVOICE: 'qualifierPart',
                     MARC_BIBLIOGRAPHIC: 'qualifierPart',
                     MARC_HOLDINGS: 'qualifierPart',
                     MARC_AUTHORITY: 'qualifierPart',

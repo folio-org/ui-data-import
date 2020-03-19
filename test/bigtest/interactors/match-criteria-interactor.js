@@ -27,9 +27,9 @@ class MatchCriterion {
 
 @interactor
 class ExistingRecordFieldSection {
-  dropdownList = new ExistingRecordDropdown('[id*="container-criterion1-value-type"]');
-  expandedAttribute = attribute('#criterion1-value-type', 'aria-expanded');
-  clickDropdownButton = clickable('#criterion1-value-type');
+  dropdownList = new ExistingRecordDropdown('[id*="container-criterion-value-type"]');
+  expandedAttribute = attribute('#criterion-value-type', 'aria-expanded');
+  clickDropdownButton = clickable('#criterion-value-type');
 }
 
 @interactor
@@ -74,7 +74,7 @@ export class MatchCriteriaInteractor extends AccordionInteractor {
 
   staticValueSection = new StaticValueSection('section[class*="static-section---"]');
 
-  matchCriterion = new SectionInteractor('section[class*="criterion"]');
+  matchCriterion = new SectionInteractor('section[class*="criterion-section"]');
   matchCriterionField = new KeyValueInteractor('[data-test-match-criterion]');
 
   existingRecord = new SectionInteractor('section[class*=existing]');

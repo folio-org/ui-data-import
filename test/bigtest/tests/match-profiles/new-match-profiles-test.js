@@ -349,7 +349,7 @@ describe('Match profile form', () => {
 
         describe('"Existing record" section', () => {
           it('has correct label', () => {
-            expect(matchProfileForm.matchCriteria.existingRecord.label).to.be.equal('Existing record');
+            expect(matchProfileForm.matchCriteria.existingRecord.label).to.be.equal('Existing Instance record');
           });
 
           it('has correct sections count', () => {
@@ -358,10 +358,10 @@ describe('Match profile form', () => {
 
           describe('"Existing record field" section', () => {
             it('has correct label', () => {
-              expect(matchProfileForm.matchCriteria.existingRecordSections.children(0).label).to.be.equal('Existing record field');
+              expect(matchProfileForm.matchCriteria.existingRecordSections.children(0).label).to.be.equal('Existing Instance record field');
             });
 
-            describe('when not MARC record selected', () => {
+            describe('when non-MARC record selected', () => {
               beforeEach(async function () {
                 await wait();
                 await matchProfileForm.recordTypesSelect.select('ORDER');
