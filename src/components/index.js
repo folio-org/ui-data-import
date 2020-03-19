@@ -1,3 +1,4 @@
+export * from './AccordionHeader';
 export * from './ActionMenu';
 export * from './CodeHighlight';
 export * from './Callout';
