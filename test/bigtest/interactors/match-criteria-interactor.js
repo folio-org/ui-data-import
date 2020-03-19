@@ -9,6 +9,7 @@ import {
 import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tests/interactor';
 import KeyValueInteractor from '@folio/stripes-components/lib/KeyValue/tests/interactor';
 import SelectInteractor from '@folio/stripes-components/lib/Select/tests/interactor';
+import DatepickerInteractor from '@folio/stripes-components/lib/Datepicker/tests/interactor';
 import { InputInteractor } from './input-interactor';
 
 import { SectionInteractor } from './section-interactor';
@@ -26,22 +27,41 @@ class MatchCriterion {
 
 @interactor
 class ExistingRecordFieldSection {
-  dropdownList = new ExistingRecordDropdown('[id*="container-criterion1-value-type"]');
-  expandedAttribute = attribute('#criterion1-value-type', 'aria-expanded');
-  clickDropdownButton = clickable('#criterion1-value-type');
+  dropdownList = new ExistingRecordDropdown('[id*="container-criterion-value-type"]');
+  expandedAttribute = attribute('#criterion-value-type', 'aria-expanded');
+  clickDropdownButton = clickable('#criterion-value-type');
 }
 
 @interactor
 class RecordSections {
   children = collection('section', SectionInteractor);
 }
+
+@interactor
+class StaticValueSection {
+  staticValueDropdown = new SelectInteractor();
+  staticValueTypeField = new KeyValueInteractor('[data-test-select-static-value]');
+
+  inputText = new InputInteractor('[data-test-static-text-field]');
+  inputNumber = new InputInteractor('[data-test-static-number-field]');
+  inputExactDate = new DatepickerInteractor('[data-test-static-exact-date-wrapper]');
+  inputFromDate = new DatepickerInteractor('[data-test-static-date-range-field] > div:nth-child(2)');
+  inputToDate = new DatepickerInteractor('[data-test-static-date-range-field] > div:nth-child(3)');
+
+  fieldText = new KeyValueInteractor('[data-test-static-text-field]');
+  fieldNumber = new KeyValueInteractor('[data-test-static-number-field]');
+  fieldExactDate = new KeyValueInteractor('[data-test-static-exact-date-field]');
+  fieldFromDate = new KeyValueInteractor('[data-test-static-from-date-field]');
+  fieldToDate = new KeyValueInteractor('[data-test-static-to-date-field]');
+}
+
 export class MatchCriteriaInteractor extends AccordionInteractor {
   matchCriterionSection = new MatchCriterion('[class*="criterion--"] div');
 
   fieldMain = new KeyValueInteractor('[data-test-field-main]');
   fieldIn1 = new KeyValueInteractor('[data-test-field-in1]');
   fieldIn2 = new KeyValueInteractor('[data-test-field-in2]');
-  fieldSubfield = new KeyValueInteractor('[data-test-field-subfield');
+  fieldSubfield = new KeyValueInteractor('[data-test-field-subfield]');
   inputMain = new InputInteractor('[data-test-field-main]');
   inputIn1 = new InputInteractor('[data-test-field-in1]');
   inputIn2 = new InputInteractor('[data-test-field-in2]');
@@ -52,7 +72,9 @@ export class MatchCriteriaInteractor extends AccordionInteractor {
   incomingRecordQualifierCheckbox = new CheckboxInteractor('section[class*=incoming] [class*="qualifier---"]');
   incomingRecordPartCheckbox = new CheckboxInteractor('section[class*=incoming] [class*="part---"]');
 
-  matchCriterion = new SectionInteractor('section[class*=" criterion"]');
+  staticValueSection = new StaticValueSection('section[class*="static-section---"]');
+
+  matchCriterion = new SectionInteractor('section[class*="criterion-section"]');
   matchCriterionField = new KeyValueInteractor('[data-test-match-criterion]');
 
   existingRecord = new SectionInteractor('section[class*=existing]');

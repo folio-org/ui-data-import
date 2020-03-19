@@ -50,7 +50,7 @@ describe('Match profiles', () => {
 
   describe('table', () => {
     it('renders proper amount of items', () => {
-      expect(matchProfiles.list.rowCount).to.equal(8);
+      expect(matchProfiles.list.rowCount).to.equal(10);
     });
 
     it('has proper columns order', () => {
@@ -67,7 +67,7 @@ describe('Match profiles', () => {
       });
 
       it('by first column', () => {
-        expect(matchProfiles.list.rowCount).to.equal(8);
+        expect(matchProfiles.list.rowCount).to.equal(10);
       });
 
       describe('and', () => {
@@ -76,7 +76,7 @@ describe('Match profiles', () => {
         });
 
         it('by second column', () => {
-          expect(matchProfiles.list.rowCount).to.equal(8);
+          expect(matchProfiles.list.rowCount).to.equal(10);
         });
       });
     });

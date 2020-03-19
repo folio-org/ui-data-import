@@ -200,6 +200,54 @@ export default server => {
       },
     }],
   });
+  server.create('match-profile', {
+    name: 'Test static value type text',
+    incomingRecordType: 'STATIC_VALUE',
+    existingRecordType: 'INSTANCE',
+    matchDetails: [{
+      incomingRecordType: 'STATIC_VALUE',
+      existingRecordType: 'INSTANCE',
+      incomingMatchExpression: {
+        dataValueType: 'STATIC_VALUE',
+        fields: [],
+        staticValueDetails: {
+          staticValueType: 'TEXT',
+          text: 'Test value',
+        },
+      },
+      existingMatchExpression: {
+        dataValueType: 'VALUE_FROM_RECORD',
+        fields: [{
+          label: 'field',
+          value: '',
+        }],
+      },
+    }],
+  });
+  server.create('match-profile', {
+    name: 'Test static value type date',
+    incomingRecordType: 'STATIC_VALUE',
+    existingRecordType: 'INSTANCE',
+    matchDetails: [{
+      incomingRecordType: 'STATIC_VALUE',
+      existingRecordType: 'INSTANCE',
+      incomingMatchExpression: {
+        dataValueType: 'STATIC_VALUE',
+        fields: [],
+        staticValueDetails: {
+          staticValueType: 'EXACT_DATE',
+          exactDate: '2020-03-19T00:00:00.000Z',
+        },
+      },
+      existingMatchExpression: {
+        dataValueType: 'VALUE_FROM_RECORD',
+        fields: [{
+          label: 'field',
+          value: '',
+        }],
+      },
+    }],
+  });
 
   server.get('/data-import-profiles/matchProfiles', (schema, request) => {
     const { query = '' } = request.queryParams;

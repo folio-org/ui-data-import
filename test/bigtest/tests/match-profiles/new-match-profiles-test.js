@@ -145,6 +145,10 @@ describe('Match profile form', () => {
       });
 
       describe('"Match criterion" component', () => {
+        beforeEach(async function () {
+          await matchProfileForm.recordTypesSelect.select('INSTANCE');
+        });
+
         it('should render', () => {
           expect(matchProfileForm.matchCriteria.isPresent).to.be.true;
         });
@@ -154,98 +158,176 @@ describe('Match profile form', () => {
         });
 
         describe('"Incoming record" section', () => {
-          it('has correct label', () => {
-            expect(matchProfileForm.matchCriteria.incomingRecord.label).to.be.equal('Incoming MARC Bibliographic record');
-          });
+          describe('when incoming record is MARC', () => {
+            beforeEach(async function () {
+              await matchProfileForm.recordTypesSelect.incomingRecordDropdown.clickTrigger();
+              await matchProfileForm.recordTypesSelect.incomingRecordDropdown.menu.items(0).click();
+            });
 
-          it('has correct length of sections', () => {
-            expect(matchProfileForm.matchCriteria.incomingRecordSections.children().length).to.be.equal(3);
-          });
-
-          describe('"Incoming record field in incoming record" section', () => {
             it('has correct label', () => {
-              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(0).label).to.be.equal('MARC Bibliographic field in incoming record');
+              expect(matchProfileForm.matchCriteria.incomingRecord.label).to.be.equal('Incoming MARC Bibliographic record');
             });
 
-            it('content is visible', () => {
-              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(0).hasContent).to.be.true;
+            it('has correct length of sections', () => {
+              expect(matchProfileForm.matchCriteria.incomingRecordSections.children().length).to.be.equal(3);
             });
 
-            it('is optional', () => {
-              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(0).hasCheckbox).to.be.false;
-            });
-
-            describe('when not filled', () => {
-              it('should have empty "Field" input', () => {
-                expect(matchProfileForm.matchCriteria.inputMain.val).to.be.equal('');
-              });
-
-              it('should have empty "In.1" input', () => {
-                expect(matchProfileForm.matchCriteria.inputIn1.val).to.be.equal('');
-              });
-
-              it('should have empty "In.2" input', () => {
-                expect(matchProfileForm.matchCriteria.inputIn2.val).to.be.equal('');
-              });
-
-              it('should have empty "Subfield" input', () => {
-                expect(matchProfileForm.matchCriteria.inputSubfield.val).to.be.equal('');
-              });
-            });
-          });
-
-          describe('"Use a qualifier" section', () => {
-            it('has correct label', () => {
-              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(1).label).to.be.equal('Use a qualifier');
-            });
-
-            it('content is hidden', () => {
-              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(1).hasContent).to.be.false;
-            });
-
-            it('is optional', () => {
-              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(1).hasCheckbox).to.be.true;
-            });
-
-            describe('click checkbox', () => {
-              beforeEach(async () => {
-                await matchProfileForm.matchCriteria.incomingRecordQualifierCheckbox.clickAndBlur();
-              });
-
-              it('checkbox is checked', () => {
-                expect(matchProfileForm.matchCriteria.incomingRecordQualifierCheckbox.isChecked).to.be.true;
+            describe('"Incoming record field in incoming record" section', () => {
+              it('has correct label', () => {
+                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(0).label).to.be.equal('MARC Bibliographic field in incoming record');
               });
 
               it('content is visible', () => {
-                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(1).hasContent).to.be.true;
+                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(0).hasContent).to.be.true;
+              });
+
+              it('is optional', () => {
+                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(0).hasCheckbox).to.be.false;
+              });
+
+              describe('when not filled', () => {
+                it('should have empty "Field" input', () => {
+                  expect(matchProfileForm.matchCriteria.inputMain.val).to.be.equal('');
+                });
+
+                it('should have empty "In.1" input', () => {
+                  expect(matchProfileForm.matchCriteria.inputIn1.val).to.be.equal('');
+                });
+
+                it('should have empty "In.2" input', () => {
+                  expect(matchProfileForm.matchCriteria.inputIn2.val).to.be.equal('');
+                });
+
+                it('should have empty "Subfield" input', () => {
+                  expect(matchProfileForm.matchCriteria.inputSubfield.val).to.be.equal('');
+                });
+              });
+            });
+
+            describe('"Use a qualifier" section', () => {
+              it('has correct label', () => {
+                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(1).label).to.be.equal('Use a qualifier');
+              });
+
+              it('content is hidden', () => {
+                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(1).hasContent).to.be.false;
+              });
+
+              it('is optional', () => {
+                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(1).hasCheckbox).to.be.true;
+              });
+
+              describe('click checkbox', () => {
+                beforeEach(async () => {
+                  await matchProfileForm.matchCriteria.incomingRecordQualifierCheckbox.clickAndBlur();
+                });
+
+                it('checkbox is checked', () => {
+                  expect(matchProfileForm.matchCriteria.incomingRecordQualifierCheckbox.isChecked).to.be.true;
+                });
+
+                it('content is visible', () => {
+                  expect(matchProfileForm.matchCriteria.incomingRecordSections.children(1).hasContent).to.be.true;
+                });
+              });
+            });
+
+            describe('"Only compare part of the value"', () => {
+              it('has correct label', () => {
+                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(2).label).to.be.equal('Only compare part of the value');
+              });
+
+              it('content is hidden', () => {
+                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(2).hasContent).to.be.false;
+              });
+
+              it('is optional', () => {
+                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(2).hasCheckbox).to.be.true;
+              });
+
+              describe('click checkbox', () => {
+                beforeEach(async () => {
+                  await matchProfileForm.matchCriteria.incomingRecordPartCheckbox.clickAndBlur();
+                });
+
+                it('checkbox is checked', () => {
+                  expect(matchProfileForm.matchCriteria.incomingRecordPartCheckbox.isChecked).to.be.true;
+                });
+
+                it('content is visible', () => {
+                  expect(matchProfileForm.matchCriteria.incomingRecordSections.children(2).hasContent).to.be.true;
+                });
               });
             });
           });
 
-          describe('"Only compare part of the value"', () => {
+          describe('when incoming record is Static value', () => {
+            beforeEach(async function () {
+              await matchProfileForm.recordTypesSelect.incomingRecordDropdown.clickTrigger();
+              await matchProfileForm.recordTypesSelect.incomingRecordDropdown.menu.items(5).click();
+            });
+
             it('has correct label', () => {
-              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(2).label).to.be.equal('Only compare part of the value');
+              expect(matchProfileForm.matchCriteria.incomingRecord.label).to.be.equal('Incoming Static value (submatch only) record');
             });
 
-            it('content is hidden', () => {
-              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(2).hasContent).to.be.false;
+            it('has correct length of sections', () => {
+              expect(matchProfileForm.matchCriteria.incomingRecordSections.children().length).to.be.equal(1);
             });
 
-            it('is optional', () => {
-              expect(matchProfileForm.matchCriteria.incomingRecordSections.children(2).hasCheckbox).to.be.true;
-            });
-
-            describe('click checkbox', () => {
-              beforeEach(async () => {
-                await matchProfileForm.matchCriteria.incomingRecordPartCheckbox.clickAndBlur();
+            describe('static value section', () => {
+              it('renders', () => {
+                expect(matchProfileForm.matchCriteria.staticValueSection.isPresent).to.be.true;
               });
 
-              it('checkbox is checked', () => {
-                expect(matchProfileForm.matchCriteria.incomingRecordPartCheckbox.isChecked).to.be.true;
+              it('has dropdown', () => {
+                expect(matchProfileForm.matchCriteria.staticValueSection.staticValueDropdown.isPresent).to.be.true;
               });
 
-              it('content is visible', () => {
-                expect(matchProfileForm.matchCriteria.incomingRecordSections.children(2).hasContent).to.be.true;
+              describe('when static value type equals to', () => {
+                describe('Text', () => {
+                  beforeEach(async function () {
+                    await matchProfileForm.matchCriteria.staticValueSection.staticValueDropdown.selectAndBlur('Text');
+                  });
+
+                  it('then text field is next to dropdown', () => {
+                    expect(matchProfileForm.matchCriteria.staticValueSection.inputText.isPresent).to.be.true;
+                  });
+                });
+
+                describe('Number', () => {
+                  beforeEach(async function () {
+                    await matchProfileForm.matchCriteria.staticValueSection.staticValueDropdown.selectAndBlur('Number');
+                  });
+
+                  it('then text field is next to dropdown', () => {
+                    expect(matchProfileForm.matchCriteria.staticValueSection.inputNumber.isPresent).to.be.true;
+                  });
+                });
+
+                describe('Date', () => {
+                  beforeEach(async function () {
+                    await matchProfileForm.matchCriteria.staticValueSection.staticValueDropdown.selectAndBlur('Date');
+                  });
+
+                  it('then one datepicker is next to dropdown', () => {
+                    expect(matchProfileForm.matchCriteria.staticValueSection.inputExactDate.isPresent).to.be.true;
+                  });
+                });
+
+                describe('Date range', () => {
+                  beforeEach(async function () {
+                    await matchProfileForm.matchCriteria.staticValueSection.staticValueDropdown.selectAndBlur('Date range');
+                  });
+
+                  it('then From datepicker', () => {
+                    expect(matchProfileForm.matchCriteria.staticValueSection.inputFromDate.isPresent).to.be.true;
+                  });
+
+                  it('and To datepicker are next to dropdown', () => {
+                    expect(matchProfileForm.matchCriteria.staticValueSection.inputToDate.isPresent).to.be.true;
+                  });
+                });
               });
             });
           });
@@ -267,7 +349,7 @@ describe('Match profile form', () => {
 
         describe('"Existing record" section', () => {
           it('has correct label', () => {
-            expect(matchProfileForm.matchCriteria.existingRecord.label).to.be.equal('Existing record');
+            expect(matchProfileForm.matchCriteria.existingRecord.label).to.be.equal('Existing Instance record');
           });
 
           it('has correct sections count', () => {
@@ -276,10 +358,10 @@ describe('Match profile form', () => {
 
           describe('"Existing record field" section', () => {
             it('has correct label', () => {
-              expect(matchProfileForm.matchCriteria.existingRecordSections.children(0).label).to.be.equal('Existing record field');
+              expect(matchProfileForm.matchCriteria.existingRecordSections.children(0).label).to.be.equal('Existing Instance record field');
             });
 
-            describe('when not MARC record selected', () => {
+            describe('when non-MARC record selected', () => {
               beforeEach(async function () {
                 await wait();
                 await matchProfileForm.recordTypesSelect.select('ORDER');

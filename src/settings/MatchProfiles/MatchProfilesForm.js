@@ -100,6 +100,31 @@ export const MatchProfilesFormComponent = memo(({
     }
   };
 
+  const handleStaticValueTypeChange = selectedStaticType => {
+    setStaticValueType(selectedStaticType);
+
+    const staticTypeFields = {
+      TEXT: ['text'],
+      NUMBER: ['number'],
+      EXACT_DATE: ['exactDate'],
+      DATE_RANGE: ['fromDate', 'toDate'],
+    };
+
+    const changeFormFields = staticType => {
+      staticTypeFields[staticType].forEach(field => {
+        matchDetails.forEach((item, i) => {
+          dispatch(change(formName, `profile.matchDetails[${i}].incomingMatchExpression.staticValueDetails.${field}`, null));
+        });
+      });
+    };
+
+    Object.keys(staticTypeFields).forEach(staticType => {
+      if (staticType !== selectedStaticType) {
+        changeFormFields(staticType);
+      }
+    });
+  };
+
   const handleFieldSearch = (value, dataOptions) => {
     return dataOptions.filter(o => new RegExp(`${value}`, 'i').test(o.label));
   };
@@ -171,7 +196,7 @@ export const MatchProfilesFormComponent = memo(({
         />
       ),
     },
-    'criterion-static-value-type': { onChange: (event, newValue) => setStaticValueType(newValue) },
+    'criterion-static-value-type': { onChange: (event, newValue) => handleStaticValueTypeChange(newValue) },
     'existing-record-section': {
       label: (
         <FormattedMessage

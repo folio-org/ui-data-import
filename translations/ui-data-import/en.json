@@ -64,6 +64,8 @@
   "details": "Details",
   "options": "Options",
   "confirm": "Confirm",
+  "from": "From",
+  "to": "To",
   "match.metadata": "Match metadata",
   "match.criteria": "Match criteria",
   "match.criterion": "Match criterion",

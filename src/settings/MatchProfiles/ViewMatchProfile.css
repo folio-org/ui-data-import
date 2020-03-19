@@ -22,8 +22,12 @@
   composes: input-container from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
 }
 
-.criterion {
-  composes: criterion from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
+.date-range-label {
+  composes: date-range-label from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
+}
+
+.criterion-section {
+  composes: criterion-section from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
 }
 
 .incoming {
@@ -39,6 +43,18 @@
 .part {
   composes: field from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
 }
+
+.static-section {
+  composes: static-section from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
+  & > div:first-child {
+    color: var(--color-text);
+
+    & > div:first-child {
+      width: auto !important;
+    }
+  }
+}
+
 
 .match-criteria {
   & > :last-child > :last-child > :first-child {
