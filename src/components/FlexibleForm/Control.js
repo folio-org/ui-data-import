@@ -304,7 +304,8 @@ export const Control = memo(props => {
     } = currentSection;
 
     const isSectionComponent = currentSection.controlType === 'Section';
-    const sectionChildren = isSectionComponent && isOptional && !isEditable && !hasContent(cc, record, sectionNS, ri) ? [] : cc;
+    const sectionHasNoContent = isSectionComponent && isOptional && !isEditable && !hasContent(cc, record, sectionNS, ri);
+    const sectionChildren = sectionHasNoContent ? [] : cc;
     const hasData = hasContent(sectionChildren, referenceTables, sectionNS, ri);
 
     let sectionAttrs = { ...currentSection };
