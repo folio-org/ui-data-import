@@ -302,5 +302,8 @@
     "modal.jobProfiles.unlink.message.single": "ستتم إزالة \"{name}\"  من وضع الوظيفة هذا. المتابعة؟",
     "modal.jobProfiles.unlink.message.children": "ستتم إزالة \"{name}\" وكل الأوضاع الفرعية من وضع الوظيفة هذا. المتابعة؟",
     "modal.jobProfiles.delete.message.single": "ستتم إزالة \"{name}\" من وضع الوظيفة هذا وحذفها. المتابعة؟",
-    "modal.jobProfiles.delete.message.children": "ستتم إزالة \"{name}\" وكل الأوضاع الفرعية من وضع الوظيفة هذا وحذفها. المتابعة؟"
+    "modal.jobProfiles.delete.message.children": "ستتم إزالة \"{name}\" وكل الأوضاع الفرعية من وضع الوظيفة هذا وحذفها. المتابعة؟",
+    "settings.fileExtensions.new": "امتداد ملف جديد",
+    "from": "From",
+    "to": "To"
 }
