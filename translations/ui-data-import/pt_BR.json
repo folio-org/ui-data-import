@@ -302,5 +302,8 @@
     "modal.jobProfiles.unlink.message.single": "\"{name}\" será removido deste perfil de job. Continuar?",
     "modal.jobProfiles.unlink.message.children": "\"{name}\" e todos os sub-perfis serão removidos deste perfil de job. Continuar?",
     "modal.jobProfiles.delete.message.single": "\"{name}\" será removido deste perfil de job e excluído. Continuar?",
-    "modal.jobProfiles.delete.message.children": "\"{name}\" e todos os sub-perfis serão removidos deste perfil de job e excluídos. Continuar?"
+    "modal.jobProfiles.delete.message.children": "\"{name}\" e todos os sub-perfis serão removidos deste perfil de job e excluídos. Continuar?",
+    "settings.fileExtensions.new": "Nova extensão de arquivo",
+    "from": "De",
+    "to": "Para"
 }
