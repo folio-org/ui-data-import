@@ -302,5 +302,8 @@
     "modal.jobProfiles.unlink.message.single": "\"{name}\" will be removed from this job profile. Proceed?",
     "modal.jobProfiles.unlink.message.children": "\"{name}\" and all subprofiles will be removed from this job profile. Proceed?",
     "modal.jobProfiles.delete.message.single": "\"{name}\" will be removed from this job profile and deleted. Proceed?",
-    "modal.jobProfiles.delete.message.children": "\"{name}\" and all subprofiles will be removed from this job profile and deleted. Proceed?"
+    "modal.jobProfiles.delete.message.children": "\"{name}\" and all subprofiles will be removed from this job profile and deleted. Proceed?",
+    "settings.fileExtensions.new": "New file extension",
+    "from": "From",
+    "to": "To"
 }

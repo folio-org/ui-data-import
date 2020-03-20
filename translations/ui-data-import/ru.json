@@ -294,13 +294,16 @@
     "match.existing.MARC.field-in2": "Индикатор 2",
     "match.existing.MARC.field-subfield": "Subfield",
     "match.incoming.static.value-type": "Static value type",
-    "match.incoming.static.value-type.text": "Text",
-    "match.incoming.static.value-type.number": "Number",
-    "match.incoming.static.value-type.date": "Date",
-    "match.incoming.static.value-type.date-range": "Date range",
-    "warning": "WARNING!",
+    "match.incoming.static.value-type.text": "Текст",
+    "match.incoming.static.value-type.number": "Номер",
+    "match.incoming.static.value-type.date": "Дата",
+    "match.incoming.static.value-type.date-range": "Интервал дат",
+    "warning": "ПРЕДУПРЕЖДЕНИЕ!",
     "modal.jobProfiles.unlink.message.single": "\"{name}\" will be removed from this job profile. Proceed?",
     "modal.jobProfiles.unlink.message.children": "\"{name}\" and all subprofiles will be removed from this job profile. Proceed?",
     "modal.jobProfiles.delete.message.single": "\"{name}\" will be removed from this job profile and deleted. Proceed?",
-    "modal.jobProfiles.delete.message.children": "\"{name}\" and all subprofiles will be removed from this job profile and deleted. Proceed?"
+    "modal.jobProfiles.delete.message.children": "\"{name}\" and all subprofiles will be removed from this job profile and deleted. Proceed?",
+    "settings.fileExtensions.new": "Расширение нового файла",
+    "from": "From",
+    "to": "To"
 }
