@@ -6,7 +6,7 @@
 
 .rootList {
   position: relative;
-  padding-left: 0;
+  padding: 0;
 }
 
 .listItem {

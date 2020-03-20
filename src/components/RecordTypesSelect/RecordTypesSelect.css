@@ -28,8 +28,12 @@
   text-align: center;
 }
 
-.treeView {
+.treeViewLTR {
   padding-right: 20px;
+}
+
+.treeViewRTL {
+  padding-left: 20px;
 }
 
 .item {
@@ -70,6 +74,10 @@
   border-left: 1px solid var(--color-border);
 }
 
+.borderRight {
+  border-right: 1px solid var(--color-border);
+}
+
 .contentContainer {
   position: relative;
   flex-wrap: nowrap;
@@ -106,7 +114,6 @@
   border-radius: .5rem;
   color: #fff;
   margin: 4px;
-  margin-left: 0;
   white-space: pre-line;
   align-self: stretch;
 }
@@ -131,7 +138,6 @@
   composes: display-flex flex-align-items-center from "@folio/stripes-components/lib/Layout/Layout.css";
   position: absolute;
   top: 9px;
-  right: 0px;
   transform: translate(50%);
 }
 

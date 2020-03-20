@@ -5,8 +5,8 @@ import React, {
 import PropTypes from 'prop-types';
 import { isNil } from 'lodash';
 
-import { getElement } from './utils';
 import { Line } from './Line';
+import { getElement } from './utils';
 
 const anchorTextValues = {
   x: {
@@ -36,6 +36,7 @@ export const TreeLine = props => {
     fromAnchorOffset = '',
     toAnchorOffset = '',
     orientation = ORIENTATIONS.VERTICAL,
+    isLocalLTR = true,
   } = props;
   const [fromElement, setFromElement] = useState(undefined);
   const [toElement, setToElement] = useState(undefined);
@@ -131,10 +132,23 @@ export const TreeLine = props => {
       offsetY -= containerElementDimensions.top + (window.pageYOffset || document.documentElement.scrollTop);
     }
 
-    const x0 = fromElementDimensions.left + (fromElementDimensions.width * fromAnchorCoordinates.x) + offsetX + fromAnchorOffsetValue.x;
     const y0 = fromElementDimensions.top + (fromElementDimensions.height * fromAnchorCoordinates.y) + offsetY + fromAnchorOffsetValue.y;
-    const x1 = toElementDimensions.left + (toElementDimensions.width * toAnchorCoordinates.x) + offsetX + toAnchorOffsetValue.x;
     const y1 = toElementDimensions.top + (toElementDimensions.height * toAnchorCoordinates.y) + offsetY + toAnchorOffsetValue.y;
+
+    if (!isLocalLTR) {
+      const x0 = fromElementDimensions.left + (fromElementDimensions.width * fromAnchorCoordinates.x) + offsetX - fromAnchorOffsetValue.x;
+      const x1 = toElementDimensions.left + (toElementDimensions.width * toAnchorCoordinates.x) + offsetX - toAnchorOffsetValue.x;
+
+      return {
+        x0,
+        y0,
+        x1,
+        y1,
+      };
+    }
+
+    const x0 = fromElementDimensions.left + (fromElementDimensions.width * fromAnchorCoordinates.x) + offsetX + fromAnchorOffsetValue.x;
+    const x1 = toElementDimensions.left + (toElementDimensions.width * toAnchorCoordinates.x) + offsetX + toAnchorOffsetValue.x;
 
     return {
       x0,
@@ -221,4 +235,5 @@ TreeLine.propTypes = {
   borderWidth: PropTypes.number,
   className: PropTypes.string,
   zIndex: PropTypes.number,
+  isLocalLTR: PropTypes.bool,
 };

@@ -39,6 +39,7 @@ export const CompareRecordSelect = memo(({
   setExistingRecord,
   setIncomingRecord,
   isEditable,
+  isLocalLTR,
 }) => {
   const [top, setTop] = useState();
   const [height, setHeight] = useState();
@@ -92,7 +93,7 @@ export const CompareRecordSelect = memo(({
         </Col>
         <Col
           xs
-          className={classNames(css.headingCell, css.borderLeft)}
+          className={classNames(css.headingCell, { [css.borderLeft]: isLocalLTR }, { [css.borderRight]: !isLocalLTR })}
         >
           <Headline
             size="large"
@@ -118,10 +119,13 @@ export const CompareRecordSelect = memo(({
           >
             <Triangle
               size={hintTriangleSize}
-              direction="left"
+              direction={isLocalLTR ? 'left' : 'right'}
               color="#616161"
             />
-            <div className={css.hintMessage}>
+            <div
+              className={css.hintMessage}
+              style={{ [isLocalLTR ? 'marginLeft' : 'marginRight']: 0 }}
+            >
               <FormattedMessage id="ui-data-import.compareHint" />
             </div>
           </div>
@@ -132,7 +136,7 @@ export const CompareRecordSelect = memo(({
           style={{
             visibility: renderSelectedLine ? null : 'hidden',
             marginTop: top,
-            paddingRight: spaceForCompareElem,
+            [isLocalLTR ? 'paddingRight' : 'paddingLeft']: spaceForCompareElem,
           }}
         >
           <RecordItem
@@ -148,21 +152,23 @@ export const CompareRecordSelect = memo(({
             style={{
               width: compareElemWidth,
               height: `calc(${height}px + ${css.cellPadding} - ${css.selectedLineBorderWidth} - ${css.selectedLineBorderWidth})`,
+              right: isLocalLTR ? 0 : null,
+              left: !isLocalLTR ? `-${compareElemWidth}px` : null,
             }}
           >
-            <Triangle />
+            <Triangle direction={isLocalLTR ? 'right' : 'left'} />
             <span className={css.compareMessage}>
               <FormattedMessage id="ui-data-import.compare" />
             </span>
-            <Triangle direction="left" />
+            <Triangle direction={isLocalLTR ? 'left' : 'right'} />
           </div>
         </Col>
         <Col
           xs
-          className={classNames(css.cell, css.borderLeft)}
+          className={classNames(css.cell, { [css.borderLeft]: isLocalLTR }, { [css.borderRight]: !isLocalLTR })}
           style={{
-            paddingLeft: spaceForCompareElem,
-            paddingRight: spaceForHintElement,
+            paddingLeft: isLocalLTR ? spaceForCompareElem : spaceForHintElement,
+            paddingRight: isLocalLTR ? spaceForHintElement : spaceForCompareElem,
           }}
         >
           <div ref={existingRecordsElemRef}>
@@ -171,6 +177,7 @@ export const CompareRecordSelect = memo(({
                 id={id}
                 onSelect={setExistingRecord}
                 isEditable={isEditable}
+                isLocalLTR={isLocalLTR}
               />
             )}
           </div>
@@ -187,6 +194,7 @@ CompareRecordSelect.propTypes = {
   incomingRecord: PropTypes.object,
   existingRecord: PropTypes.object,
   isEditable: PropTypes.bool,
+  isLocalLTR: PropTypes.bool,
 };
 
 CompareRecordSelect.defaultProps = {
@@ -195,4 +203,5 @@ CompareRecordSelect.defaultProps = {
   incomingRecord: null,
   existingRecord: null,
   isEditable: true,
+  isLocalLTR: true,
 };
