@@ -15,6 +15,7 @@ import {
   FOLIO_RECORD_TYPES,
   INCOMING_RECORD_TYPES,
 } from '../ListTemplate';
+import { HTML_LANG_DIRECTIONS } from '../../utils/constants';
 
 const useForceUpdate = () => useState()[1];
 
@@ -39,6 +40,8 @@ export const RecordTypesSelect = memo(({
   onIncomingSelect,
   isEditable,
 }) => {
+  const IS_LOCALE_LTR = document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT;
+
   useUpdateOnResize();
   const [existingRecord, setExistingRecord] = useState(undefined);
   const [incomingRecord, setIncomingRecord] = useState(undefined);
@@ -70,6 +73,7 @@ export const RecordTypesSelect = memo(({
             setExistingRecord={handleSelect}
             setIncomingRecord={onIncomingSelect}
             isEditable={isEditable}
+            isLocalLTR={IS_LOCALE_LTR}
           />
         )
         : (
@@ -77,9 +81,9 @@ export const RecordTypesSelect = memo(({
             id={id}
             onItemSelect={handleSelect}
             isEditable={isEditable}
+            isLocalLTR={IS_LOCALE_LTR}
           />
-        )
-      }
+        )}
     </div>
   );
 });

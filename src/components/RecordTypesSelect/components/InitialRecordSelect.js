@@ -13,6 +13,7 @@ export const InitialRecordSelect = ({
   id,
   onItemSelect,
   isEditable,
+  isLocalLTR,
 }) => {
   return (
     <section
@@ -34,6 +35,7 @@ export const InitialRecordSelect = ({
         id={id}
         onSelect={onItemSelect}
         isEditable={isEditable}
+        isLocalLTR={isLocalLTR}
       />
     </section>
   );
@@ -43,6 +45,10 @@ InitialRecordSelect.propTypes = {
   onItemSelect: PropTypes.func.isRequired,
   id: PropTypes.string,
   isEditable: PropTypes.bool,
+  isLocalLTR: PropTypes.bool,
 };
 
-InitialRecordSelect.defaultProps = { isEditable: true };
+InitialRecordSelect.defaultProps = {
+  isEditable: true,
+  isLocalLTR: true,
+};

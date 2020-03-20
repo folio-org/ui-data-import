@@ -12,6 +12,7 @@ export const TreeView = ({
   indentation = 40,
   spacing = '1rem',
   container = `.${css.rootList}`,
+  isLocalLTR = true,
   className,
   renderItem = noop,
 }) => {
@@ -22,7 +23,7 @@ export const TreeView = ({
   }) => Array.isArray(items) && (
     <ul
       className={classNames(css.list, { [css.rootList]: root })}
-      style={root ? null : { paddingLeft: indentation }}
+      style={root ? null : { [isLocalLTR ? 'paddingLeft' : 'paddingRight']: indentation }}
     >
       {items.map((item, index) => {
         const itemKey = item.itemMeta.type;
@@ -41,10 +42,11 @@ export const TreeView = ({
                 from={parent}
                 to={itemSelector}
                 container={container}
-                fromAnchor="left bottom"
-                toAnchor="left"
+                fromAnchor={isLocalLTR ? 'left bottom' : 'right bottom'}
+                toAnchor={isLocalLTR ? 'left' : 'right'}
                 fromAnchorOffset={`${indentation / 2}px`}
                 orientation="horizontal"
+                isLocalLTR={isLocalLTR}
               />
             )}
             {renderList({
@@ -77,4 +79,5 @@ TreeView.propTypes = {
   container: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Element)]),
   className: PropTypes.string,
   renderItem: PropTypes.func,
+  isLocalLTR: PropTypes.bool,
 };

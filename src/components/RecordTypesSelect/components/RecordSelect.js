@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { TreeLine } from '../../TreeLine';
 import { TreeView } from '../../TreeView';
 import { RecordItem } from './RecordItem';
-import { FOLIO_RECORD_TYPES } from '../../ListTemplate';
 
+import { FOLIO_RECORD_TYPES } from '../../ListTemplate';
 import { rootList } from '../../TreeView/TreeView.css';
 import css from '../RecordTypesSelect.css';
 
@@ -45,12 +45,14 @@ export const RecordSelect = ({
   container = `#${id} .${rootList}`,
   treeData = recordsData,
   isEditable,
+  isLocalLTR,
 }) => (
   <>
     <TreeView
       data={treeData}
-      className={css.treeView}
+      className={isLocalLTR ? css.treeViewLTR : css.treeViewRTL}
       container={container}
+      isLocalLTR={isLocalLTR}
       renderItem={item => (
         <RecordItem
           item={item.itemMeta}
@@ -64,10 +66,11 @@ export const RecordSelect = ({
         key={element}
         from={element}
         to={treeData.connections[0]}
-        fromAnchor="right"
-        toAnchor="right"
+        fromAnchor={isLocalLTR ? 'right' : 'left'}
+        toAnchor={isLocalLTR ? 'right' : 'left'}
         toAnchorOffset="20px"
         container={container}
+        isLocalLTR={isLocalLTR}
       />
     ))}
   </>
@@ -79,6 +82,10 @@ RecordSelect.propTypes = {
   container: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Element)]),
   treeData: PropTypes.object,
   isEditable: PropTypes.bool,
+  isLocalLTR: PropTypes.bool,
 };
 
-RecordSelect.defaultProps = { isEditable: true };
+RecordSelect.defaultProps = {
+  isEditable: true,
+  isLocalLTR: true,
+};
