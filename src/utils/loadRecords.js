@@ -32,6 +32,7 @@ export const loadRecords = async ({
   okapi,
   uploadDefinitionId,
   jobProfileInfo,
+  defaultMapping,
 }) => {
   const { url: host } = okapi;
 
@@ -41,7 +42,7 @@ export const loadRecords = async ({
   });
 
   const uploadDefinitionsURL = createUrl(`${host}/data-import/uploadDefinitions/${uploadDefinitionId}/processFiles`,
-    { defaultMapping: true }, false);
+    { defaultMapping }, false);
 
   const response = await fetch(uploadDefinitionsURL, {
     method: 'POST',
