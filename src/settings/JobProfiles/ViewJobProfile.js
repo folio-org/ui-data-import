@@ -257,6 +257,7 @@ export class ViewJobProfile extends Component {
         okapi,
         uploadDefinitionId: uploadDefinition.id,
         jobProfileInfo,
+        defaultMapping: false,
       });
 
       history.push('/data-import');
