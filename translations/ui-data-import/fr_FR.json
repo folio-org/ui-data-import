@@ -304,6 +304,6 @@
     "modal.jobProfiles.delete.message.single": "\" {name} \" sera retiré de ce profil de tâche et supprimé. Continuer ?",
     "modal.jobProfiles.delete.message.children": "\" {name} \" et tous les sous-profils seront retirés de ce profil de tâche et supprimés. Procéder?",
     "settings.fileExtensions.new": "Nouvelle extension de fichier",
-    "from": "From",
-    "to": "To"
+    "from": "De",
+    "to": "À"
 }
