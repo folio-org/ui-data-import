@@ -6,6 +6,7 @@
 * Data import settings Match Profiles: Changes for Static value Number, Date submatches (UIDATIMP-414)
 * Set defaultMapping query param when data-import process is run with chosen JobProfile to false (UIDATIMP-418)
 * Rearrange the match profile diagram structure (UIDATIMP-411)
+* Add "profileType" query param to request for get /profileSnapshots/{profileId} (UIDATIMP-444)
 
 ### Bugs fixed:
 * Fix broken Record Type Selection Tree in RTL mode (UIDATIMP-425)

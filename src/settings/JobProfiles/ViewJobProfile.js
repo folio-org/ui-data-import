@@ -36,6 +36,7 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import {
   ENTITY_KEYS,
+  PROFILE_TYPES,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   PROFILE_LINKING_RULES,
@@ -67,7 +68,7 @@ export class ViewJobProfile extends Component {
     },
     childWrappers: {
       type: 'okapi',
-      path: 'data-import-profiles/profileSnapshots/:{id}',
+      path: createUrl('data-import-profiles/profileSnapshots/:{id}', { profileType: PROFILE_TYPES.JOB_PROFILE }),
       throwErrors: false,
     },
     jobsUsingThisProfile: {
