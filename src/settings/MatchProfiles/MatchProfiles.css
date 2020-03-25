@@ -41,8 +41,8 @@
         display: inline-flex;
         justify-content: left;
 
-        & > :nth-child(n+2) {
-          margin: 0 0 0 1rem;
+        & > :nth-child(n) {
+          margin: 0 0.5rem 0 0.5rem;
         }
       }
     }
@@ -56,7 +56,11 @@
 
         & > div:first-child {
           width: 150px;
-          margin-right: 3rem;
+        }
+
+        & > div:nth-child(n) {
+          margin-right: 0.5rem;
+          margin-left: 0.5rem;
         }
 
         & > div:last-child:not(:first-child) {
