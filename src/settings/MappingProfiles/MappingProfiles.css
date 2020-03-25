@@ -1,6 +1,6 @@
 @import "@folio/stripes-components/lib/variables.css";
 
-[class|="formContent"] {
+.mappingForm {
   max-width: 70em;
   & [for|="checkbox"] {
     & [class|="inner"] {
