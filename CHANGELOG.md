@@ -3,6 +3,9 @@
 ## **1.9.0** (in progress)
 
 ### Features added:
+* Data Import Field Mapping Profile details: Inventory instance from MARC (UIDATIMP-15)
+* Data Import Field Mapping Profile details: Inventory holdings from MARC Bib (UIDATIMP-290)
+* Data Import Field Mapping Profile details: Inventory item from MARC Bib (UIDATIMP-292)
 * Data import settings Match Profiles: Changes for Static value Number, Date submatches (UIDATIMP-414)
 * Set defaultMapping query param when data-import process is run with chosen JobProfile to false (UIDATIMP-418)
 * Rearrange the match profile diagram structure (UIDATIMP-411)

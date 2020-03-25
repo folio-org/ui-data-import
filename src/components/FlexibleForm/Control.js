@@ -41,14 +41,19 @@ const getActualName = (name, sectionNamespace, repeatableIndex) => {
 
   return augmentParam(nsName, '##ri##', repeatableIndex);
 };
+const isFormattedMessage = lbl => React.isValidElement(lbl);
+const isTranslationId = lbl => lbl && lbl.includes('ui-');
 const getOptions = (options, sectionNamespace, intl) => {
   return options.map(option => {
-    const lbl = option.label;
-    const isFormattedMessage = React.isValidElement(option.label);
+    let lbl = option.label;
+
+    if (!isFormattedMessage(lbl) && isTranslationId(lbl)) {
+      lbl = intl.formatMessage({ id: augmentParam(lbl, '**ns**', sectionNamespace) });
+    }
 
     return {
       value: option.value,
-      label: !isFormattedMessage ? intl.formatMessage({ id: augmentParam(lbl, '**ns**', sectionNamespace) }) : lbl,
+      label: lbl,
     };
   });
 };
@@ -59,14 +64,14 @@ const getOptionLabel = (options, label, sectionNamespace) => {
     return undefined;
   }
 
-  const isFormattedMessage = React.isValidElement(option.label);
-  const isTranslationId = option.label.includes('ui-');
+  const isFMessage = isFormattedMessage(option.label);
+  const isTranId = isTranslationId(option.label);
 
-  if (isFormattedMessage || (!isFormattedMessage && !isTranslationId)) {
+  if (isFMessage || (!isFMessage && !isTranId)) {
     return option.label;
   }
 
-  const actualLabel = !isFormattedMessage ? augmentParam(option.label, '**ns**', sectionNamespace) : option.label;
+  const actualLabel = !isFMessage ? augmentParam(option.label, '**ns**', sectionNamespace) : option.label;
 
   return !isFormattedMessage ? <FormattedMessage id={actualLabel} /> : actualLabel;
 };
@@ -187,7 +192,7 @@ export const Control = memo(props => {
       let actualRecord = record;
 
       if (!isEditable && controlType === 'Field') {
-        let val = getValue(name, record, sectionNamespace, repeatableIndex);
+        let val = !attrs.value ? getValue(name, record, sectionNamespace, repeatableIndex) : attrs.value;
 
         if (typeof val === 'string') {
           val = val.trim();
@@ -195,7 +200,7 @@ export const Control = memo(props => {
 
         let actualValue = checkEmpty(val) ? <stripesComponents.NoValue /> : checkDate(dataType, val);
 
-        if (!isEmpty(attrs.dataOptions) && !React.isValidElement(val)) {
+        if (!isEmpty(attrs.dataOptions) && !isFormattedMessage(val)) {
           actualValue = getOptionLabel(attrs.dataOptions, val, sectionNamespace);
         }
 
@@ -250,7 +255,7 @@ export const Control = memo(props => {
     }
 
     if (!isEmpty(placeholder)) {
-      return (
+      return !isFormattedMessage(placeholder) && isTranslationId(placeholder) ? (
         <FormattedMessage id={augmentParam(placeholder, '**ns**', sectionNamespace)}>
           {localized => (
             <Cmp
@@ -259,6 +264,12 @@ export const Control = memo(props => {
             />
           )}
         </FormattedMessage>
+      ) : (
+        <Cmp
+          placeholder={placeholder}
+          className={classes}
+          {...attribs}
+        />
       );
     }
 
