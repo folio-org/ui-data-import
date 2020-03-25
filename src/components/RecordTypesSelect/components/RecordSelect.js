@@ -23,11 +23,12 @@ const recordsData = {
       children: [
         {
           itemMeta: FOLIO_RECORD_TYPES.HOLDINGS,
-          children: [{ itemMeta: FOLIO_RECORD_TYPES.MARC_HOLDINGS }, { itemMeta: FOLIO_RECORD_TYPES.ITEM }],
+          children: [{ itemMeta: FOLIO_RECORD_TYPES.ITEM }],
         },
-        { itemMeta: FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC },
+        { itemMeta: FOLIO_RECORD_TYPES.MARC_HOLDINGS },
       ],
     },
+    { itemMeta: FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC },
     {
       itemMeta: {
         ...FOLIO_RECORD_TYPES.ORDER,
