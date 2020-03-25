@@ -188,12 +188,12 @@ export class ViewMappingProfile extends Component {
     const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
       .map(([recordType, { captionId }]) => ({
         value: recordType,
-        label: <FormattedMessage id={captionId} />,
+        label: captionId,
       }));
     const getExistingRecordTypesDataOptions = () => Object.entries(FOLIO_RECORD_TYPES)
       .map(([recordType, { captionId }]) => ({
         value: recordType,
-        label: <FormattedMessage id={captionId} />,
+        label: captionId,
       }));
 
     const associations = [
