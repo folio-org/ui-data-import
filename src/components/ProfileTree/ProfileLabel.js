@@ -113,17 +113,14 @@ export const ProfileLabel = memo(({
                 id="unlink-job-profile-modal"
                 open={unlinkConfirmationOpen}
                 heading={(
-                  <FormattedMessage
-                    id="ui-data-import.modal.profile.unlink.heading"
-                    values={{
-                      severity: (
-                        <FormattedMessage
-                          id="ui-data-import.warning"
-                          tagName="strong"
-                        />
-                      ),
-                    }}
-                  />
+                  <>
+                    <FormattedMessage
+                      id="ui-data-import.warning"
+                      tagName="strong"
+                    />
+                    &nbsp;
+                    <FormattedMessage id="ui-data-import.modal.profile.unlink.heading" />
+                  </>
                 )}
                 message={(
                   <FormattedMessage
@@ -151,17 +148,14 @@ export const ProfileLabel = memo(({
                 id="delete-job-profile-modal"
                 open={deleteConfirmationOpen}
                 heading={(
-                  <FormattedMessage
-                    id="ui-data-import.modal.profile.unlink.heading"
-                    values={{
-                      severity: (
-                        <FormattedMessage
-                          id="ui-data-import.warning"
-                          tagName="strong"
-                        />
-                      ),
-                    }}
-                  />
+                  <>
+                    <FormattedMessage
+                      id="ui-data-import.warning"
+                      tagName="strong"
+                    />
+                    &nbsp;
+                    <FormattedMessage id="ui-data-import.modal.profile.unlink.heading" />
+                  </>
                 )}
                 message={(
                   <FormattedMessage

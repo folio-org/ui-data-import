@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   isEmpty,
   get,
+  cloneDeep,
 } from 'lodash';
 
 import {
@@ -210,7 +211,8 @@ export class ViewMatchProfile extends Component {
       };
     }
 
-    const record = JSON.parse(JSON.stringify({ ...matchProfile }));
+    // const record = JSON.parse(JSON.stringify({ ...matchProfile }));
+    const record = cloneDeep(matchProfile);
     const staticValueType = get(record, ['matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
     const existingRecordField = get(record, ['matchDetails', '0', 'existingMatchExpression', 'fields', '0', 'value'], null);
 

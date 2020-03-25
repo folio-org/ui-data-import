@@ -22,6 +22,7 @@ import {
 } from '../../utils/constants';
 import { ListView } from '../../components';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
+
 import { ViewMappingProfile } from './ViewMappingProfile';
 import { MappingProfilesForm } from './MappingProfilesForm';
 
@@ -214,7 +215,10 @@ export class MappingProfiles extends Component {
     columnWidths: { selected: '40px' },
     initialValues: {
       name: '',
+      incomingRecordType: '',
+      existingRecordType: '',
       description: '',
+      mappingDetails: {},
     },
     RecordView: ViewMappingProfile,
     RecordForm: MappingProfilesForm,
