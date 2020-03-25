@@ -44,10 +44,11 @@ const getActualName = (name, sectionNamespace, repeatableIndex) => {
 const getOptions = (options, sectionNamespace, intl) => {
   return options.map(option => {
     const lbl = option.label;
+    const isFormattedMessage = React.isValidElement(option.label);
 
     return {
       value: option.value,
-      label: !React.isValidElement(lbl) ? intl.formatMessage({ id: augmentParam(lbl, '**ns**', sectionNamespace) }) : lbl,
+      label: !isFormattedMessage ? intl.formatMessage({ id: augmentParam(lbl, '**ns**', sectionNamespace) }) : lbl,
     };
   });
 };
@@ -58,9 +59,16 @@ const getOptionLabel = (options, label, sectionNamespace) => {
     return undefined;
   }
 
-  const actualLabel = !React.isValidElement(option.label) ? augmentParam(option.label, '**ns**', sectionNamespace) : option.label;
+  const isFormattedMessage = React.isValidElement(option.label);
+  const isTranslationId = option.label.includes('ui-');
 
-  return !React.isValidElement(actualLabel) ? <FormattedMessage id={actualLabel} /> : actualLabel;
+  if (isFormattedMessage || (!isFormattedMessage && !isTranslationId)) {
+    return option.label;
+  }
+
+  const actualLabel = !isFormattedMessage ? augmentParam(option.label, '**ns**', sectionNamespace) : option.label;
+
+  return !isFormattedMessage ? <FormattedMessage id={actualLabel} /> : actualLabel;
 };
 const getValue = (controlName, record, sectionNamespace, repeatableIndex) => get(record, getActualName(controlName, sectionNamespace, repeatableIndex));
 const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
@@ -144,7 +152,29 @@ export const Control = memo(props => {
       };
     }
 
-    const actualDataOptions = injectedProps?.[id]?.dataOptions || dataOptions;
+    if (validate && validate.length) {
+      attrs = {
+        ...attrs,
+        validate: getValidation(validate),
+      };
+    }
+
+    if (optional) {
+      attrs = {
+        ...attrs,
+        optional: !!isEditable,
+        enabled: !!(isEditable && hasContent(children, referenceTables, sectionNamespace, repeatableIndex)),
+      };
+    }
+
+    if (injectedProps?.[actualId]) {
+      attrs = {
+        ...attrs,
+        ...injectedProps[actualId],
+      };
+    }
+
+    const actualDataOptions = injectedProps?.[actualId]?.dataOptions || dataOptions;
 
     if (!isEmpty(actualDataOptions)) {
       attrs = {
@@ -176,28 +206,6 @@ export const Control = memo(props => {
         ...attrs,
         record: actualRecord,
         value: get(record, actualName) || <stripesComponents.NoValue />,
-      };
-    }
-
-    if (validate && validate.length) {
-      attrs = {
-        ...attrs,
-        validate: getValidation(validate),
-      };
-    }
-
-    if (optional) {
-      attrs = {
-        ...attrs,
-        optional: !!isEditable,
-        enabled: !!(isEditable && hasContent(children, referenceTables, sectionNamespace, repeatableIndex)),
-      };
-    }
-
-    if (injectedProps?.[actualId]) {
-      attrs = {
-        ...attrs,
-        ...injectedProps[actualId],
       };
     }
 
@@ -254,7 +262,12 @@ export const Control = memo(props => {
       );
     }
 
-    return <Cmp {...attribs} />;
+    return (
+      <Cmp
+        className={classes}
+        {...attribs}
+      />
+    );
   };
 
   const renderRepeatable = () => {

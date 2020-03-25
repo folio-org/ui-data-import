@@ -27,6 +27,10 @@ const initialValues = {
  * @returns {*}
  */
 export const getInitialDetails = (entity, stripRepeatableFields = false) => {
+  if (!entity) {
+    return {};
+  }
+
   const currentEntity = initialValues[entity];
 
   if (!stripRepeatableFields) {
@@ -52,6 +56,11 @@ export const getInitialDetails = (entity, stripRepeatableFields = false) => {
  */
 export const getInitialFields = entity => {
   let initialFields = {};
+
+  if (!entity) {
+    return initialFields;
+  }
+
   const initialDetails = getInitialDetails(entity);
   const fields = initialDetails.mappingFields.filter(field => field.subfields?.length);
 

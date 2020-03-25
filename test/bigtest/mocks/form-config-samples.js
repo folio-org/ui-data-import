@@ -356,8 +356,11 @@ export const formConfigSamples = [{
           optional: false,
           classNames: ['match-criteria'],
           repeatable: true,
+          canAdd: false,
+          canDelete: false,
           name: 'matchDetails',
           fields: 'matchDetails',
+          fieldsPath: 'matchDetails',
           emptyMessage: 'EMPTY FIELDS HERE',
           dataAttributes: {},
           childControls: [{ // Match Criterions List (array)

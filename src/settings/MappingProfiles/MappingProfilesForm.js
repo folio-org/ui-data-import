@@ -8,7 +8,6 @@ import queryString from 'query-string';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
 
 import { connect } from 'react-redux';
@@ -51,7 +50,6 @@ import './MappingProfiles.css';
 const formName = 'mappingProfilesForm';
 
 export const MappingProfilesFormComponent = ({
-  intl: { formatMessage },
   pristine,
   submitting,
   initialValues,
@@ -66,6 +64,7 @@ export const MappingProfilesFormComponent = ({
 
   const isEditMode = layer === LAYER_TYPES.EDIT;
   const isSubmitDisabled = pristine || submitting;
+
   const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
   const associations = [
     ...get(initialValues, ['profile', 'parentProfiles'], []),
@@ -75,12 +74,12 @@ export const MappingProfilesFormComponent = ({
   const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
       value: recordType,
-      label: formatMessage({ id: captionId }),
+      label: captionId,
     }));
   const getFolioRecordTypesDataOptions = () => Object.entries(FOLIO_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
       value: recordType,
-      label: formatMessage({ id: captionId }),
+      label: captionId,
     }));
 
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, []);
@@ -95,6 +94,7 @@ export const MappingProfilesFormComponent = ({
 
   const prevExistingRecordType = usePrevious(get(profile, 'existingRecordType', null));
   const [existingRecordType, setExistingRecordType] = useState(get(profile, 'existingRecordType', null));
+
   const [initials, setInitials] = useState({
     ...profile,
     mappingDetails: isEmpty(mappingDetails) ? getInitialDetails(existingRecordType, true) : mappingDetails,
@@ -104,7 +104,7 @@ export const MappingProfilesFormComponent = ({
 
   useEffect(() => {
     const isEqual = existingRecordType === prevExistingRecordType;
-    const needsUpdate = profile.id && (isEmpty(mappingDetails));
+    const needsUpdate = profile.id && (!isEqual || isEmpty(mappingDetails));
 
     if (isEqual || !needsUpdate) {
       return;
@@ -182,7 +182,6 @@ export const MappingProfilesFormComponent = ({
 
 MappingProfilesFormComponent.propTypes = {
   initialValues: PropTypes.object.isRequired,
-  intl: intlShape.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
