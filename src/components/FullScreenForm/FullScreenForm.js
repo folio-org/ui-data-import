@@ -5,6 +5,8 @@ import React, {
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import classNames from 'classnames';
+
 import {
   Pane,
   PaneMenu,
@@ -23,6 +25,7 @@ export const FullScreenForm = ({
   onCancel,
   isSubmitDisabled = false,
   submitMessage,
+  contentClassName = '',
 }) => {
   const headerCloseButtonRef = useRef();
 
@@ -87,7 +90,7 @@ export const FullScreenForm = ({
         firstMenu={firstMenu}
         footer={footer}
       >
-        <div className={css.formContent}>
+        <div className={classNames(css.formContent, contentClassName)}>
           {children}
         </div>
       </Pane>
@@ -106,4 +109,5 @@ FullScreenForm.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
   ]),
   isSubmitDisabled: PropTypes.bool,
+  contentClassName: PropTypes.string,
 };
