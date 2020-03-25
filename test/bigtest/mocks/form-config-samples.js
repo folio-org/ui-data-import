@@ -237,7 +237,7 @@ export const formConfigSamples = [{
       id: 'criterion-**ns**.qualifier.term',
       name: 'matchDetails[##ri##].**ns**MatchExpression.qualifier.qualifierType',
       component: 'Select',
-      placeholder: 'Select qualifier type',
+      placeholder: 'ui-data-import.match.qualifier.placeholder',
       dataOptions: [{
         value: 'BEGINS_WITH',
         label: 'ui-data-import.match.qualifier.begins-with',
@@ -276,7 +276,7 @@ export const formConfigSamples = [{
       name: 'matchDetails[##ri##].**ns**MatchExpression.qualifier.comparisonPart',
       label: '',
       component: 'Select',
-      placeholder: 'Select comparison type',
+      placeholder: 'ui-data-import.match.comparison-part.placeholder',
       dataOptions: [{
         value: 'NUMERICS_ONLY',
         label: 'ui-data-import.match.comparison-part.numerics-only',

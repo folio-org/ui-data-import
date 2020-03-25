@@ -236,6 +236,10 @@ export const MatchProfilesFormComponent = memo(({
       onCancel: () => setConfirmModalOpen(false),
     },
   };
+  const stateMethods = {
+    dispatch,
+    change,
+  };
 
   return (
     <FlexibleForm
@@ -246,6 +250,7 @@ export const MatchProfilesFormComponent = memo(({
       paneTitle={paneTitle}
       headLine={headLine}
       injectedProps={injectedProps}
+      stateMethods={stateMethods}
       referenceTables={{ matchDetails }}
       submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
       isSubmitDisabled={isSubmitDisabled}
