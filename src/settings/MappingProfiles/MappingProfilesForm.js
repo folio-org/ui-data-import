@@ -45,7 +45,7 @@ import {
 // @TODO: Remove this after server-side configs will be available
 import { formConfigSamples } from '../../../test/bigtest/mocks';
 
-import './MappingProfiles.css';
+import styles from './MappingProfiles.css';
 
 const formName = 'mappingProfilesForm';
 
@@ -176,6 +176,7 @@ export const MappingProfilesFormComponent = ({
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={handleSubmit}
       onCancel={onCancel}
+      contentClassName={styles.mappingForm}
     />
   );
 };
