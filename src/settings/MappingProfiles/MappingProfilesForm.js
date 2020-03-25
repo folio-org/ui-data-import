@@ -2,7 +2,6 @@ import React, {
   useMemo,
   useState,
   useEffect,
-  useRef,
 } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
@@ -23,6 +22,7 @@ import stripesForm from '@folio/stripes/form';
 
 import {
   compose,
+  usePrevious,
   withProfileWrapper,
 } from '../../utils';
 import {
@@ -92,7 +92,7 @@ export const MappingProfilesFormComponent = ({
   ) : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
   const headLine = isEditMode ? profile.name : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
 
-  const prevExistingRecordType = useRef(get(profile, 'existingRecordType', null));
+  const prevExistingRecordType = usePrevious(get(profile, 'existingRecordType', null));
   const [existingRecordType, setExistingRecordType] = useState(get(profile, 'existingRecordType', null));
 
   const [initials, setInitials] = useState({
@@ -103,7 +103,7 @@ export const MappingProfilesFormComponent = ({
   const [deletedRelations, setDeletedRelations] = useState([]);
 
   useEffect(() => {
-    const isEqual = existingRecordType === prevExistingRecordType.current;
+    const isEqual = existingRecordType === prevExistingRecordType;
     const needsUpdate = !profile.id || (profile.id && (!isEqual || isEmpty(mappingDetails)));
 
     if (isEqual || !needsUpdate) {
@@ -118,9 +118,6 @@ export const MappingProfilesFormComponent = ({
 
     setInitials(newInitials);
     dispatch(change(formName, 'profile.mappingDetails', newInitDetails));
-    if (prevExistingRecordType) {
-      prevExistingRecordType.current = existingRecordType;
-    }
   }, [existingRecordType]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     dispatch(change(formName, 'addedRelations', addedRelations));
