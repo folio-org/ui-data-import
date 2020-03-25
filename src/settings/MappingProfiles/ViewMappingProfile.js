@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
+import {
+  get,
+  cloneDeep,
+} from 'lodash';
 
 import {
   AppIcon,
@@ -9,20 +12,13 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 import {
-  Pane,
   Headline,
-  KeyValue,
-  Accordion,
-  AccordionSet,
+  Pane,
   ConfirmationModal,
-  Button,
   PaneHeader,
 } from '@folio/stripes/components';
-import {
-  ViewMetaData,
-  withTags,
-  TagsAccordion,
-} from '@folio/stripes/smart-components';
+import { withTags } from '@folio/stripes/smart-components';
+
 import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
@@ -33,12 +29,17 @@ import {
   Spinner,
   EndOfItem,
   ActionMenu,
+  FlexibleForm,
   INCOMING_RECORD_TYPES,
-  ProfileAssociator,
   FOLIO_RECORD_TYPES,
 } from '../../components';
 
+import { formConfigSamples } from '../../../test/bigtest/mocks';
+
 import sharedCss from '../../shared.css';
+import styles from '../MatchProfiles/ViewMatchProfile.css';
+
+const formName = 'mappingProfilesForm';
 
 @stripesConnect
 @withTags
@@ -184,8 +185,50 @@ export class ViewMappingProfile extends Component {
       };
     }
 
-    const tagsEntityLink = `data-import-profiles/mappingProfiles/${mappingProfile.id}`;
-    const associations = [...[], ...mappingProfile.parentProfiles, ...mappingProfile.childProfiles];
+    const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
+      .map(([recordType, { captionId }]) => ({
+        value: recordType,
+        label: <FormattedMessage id={captionId} />,
+      }));
+    const getExistingRecordTypesDataOptions = () => Object.entries(FOLIO_RECORD_TYPES)
+      .map(([recordType, { captionId }]) => ({
+        value: recordType,
+        label: <FormattedMessage id={captionId} />,
+      }));
+
+    const associations = [
+      ...mappingProfile.parentProfiles,
+      ...mappingProfile.childProfiles,
+    ];
+
+    const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
+    const record = cloneDeep(mappingProfile);
+    const existingRecordType = get(record, ['existingRecordType'], null);
+
+    const injectedProps = {
+      'section-metadata': {
+        metadata: mappingProfile.metadata,
+        systemId: SYSTEM_USER_ID,
+        systemUser: SYSTEM_USER_NAME,
+      },
+      'field-record-type-incoming': { dataOptions: getIncomingRecordTypesDataOptions() },
+      'field-record-type-existing': { dataOptions: getExistingRecordTypesDataOptions() },
+      'mapping-tags': {
+        renderForbidden: !tagsEnabled,
+        link: `data-import-profiles/mappingProfiles/${mappingProfile.id}`,
+      },
+      'section-mapping-details': { stateFieldValue: existingRecordType },
+      'mappingProfile.actionsAssociator': {
+        entityKey: ENTITY_KEYS.ACTION_PROFILES,
+        namespaceKey: 'AAP',
+        parentId: record.id,
+        parentType: PROFILE_TYPES.MAPPING_PROFILE,
+        masterType: PROFILE_TYPES.ACTION_PROFILE,
+        detailType: PROFILE_TYPES.MAPPING_PROFILE,
+        profileName: record.name,
+        contentData: associations,
+      },
+    };
 
     return (
       <Pane
@@ -202,57 +245,13 @@ export class ViewMappingProfile extends Component {
         >
           {mappingProfile.name}
         </Headline>
-        <AccordionSet>
-          <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
-            <ViewMetaData
-              metadata={mappingProfile.metadata}
-              systemId={SYSTEM_USER_ID}
-              systemUser={SYSTEM_USER_NAME}
-            />
-            <KeyValue label={<FormattedMessage id="ui-data-import.incomingRecordType" />}>
-              <div data-test-incoming-record-type>
-                <FormattedMessage id={INCOMING_RECORD_TYPES[mappingProfile.incomingRecordType].captionId} />
-              </div>
-            </KeyValue>
-            <KeyValue label={<FormattedMessage id="ui-data-import.folioRecordType" />}>
-              <div data-test-folio-record-type>
-                <FormattedMessage id={FOLIO_RECORD_TYPES[mappingProfile.existingRecordType].captionId} />
-              </div>
-            </KeyValue>
-            <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
-              <div data-test-description>{mappingProfile.description || '-'}</div>
-            </KeyValue>
-          </Accordion>
-          {tagsEnabled && (
-            <div data-test-tags-accordion>
-              <TagsAccordion link={tagsEntityLink} />
-            </div>
-          )}
-          <Accordion label={<FormattedMessage id="ui-data-import.details" />}>
-            <div style={{ height: 60 }}>{/* will be implemented in future stories */}</div>
-          </Accordion>
-          <Accordion
-            label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
-            displayWhenOpen={(
-              <Button>
-                <FormattedMessage id="ui-data-import.options" />
-              </Button>
-            )}
-          >
-            <ProfileAssociator
-              entityKey={ENTITY_KEYS.ACTION_PROFILES}
-              namespaceKey="AAP"
-              parentType={PROFILE_TYPES.MAPPING_PROFILE}
-              masterType={PROFILE_TYPES.ACTION_PROFILE}
-              detailType={PROFILE_TYPES.MAPPING_PROFILE}
-              contentData={associations}
-              hasLoaded={hasLoaded}
-              record={mappingProfile}
-              isMultiSelect
-              isMultiLink
-            />
-          </Accordion>
-        </AccordionSet>
+        <FlexibleForm
+          component="Fragment"
+          config={formConfig}
+          styles={styles}
+          record={record}
+          injectedProps={injectedProps}
+        />
         <EndOfItem
           className={sharedCss.endOfRecord}
           title={<FormattedMessage id="ui-data-import.endOfRecord" />}

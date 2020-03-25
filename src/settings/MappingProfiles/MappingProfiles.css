@@ -1,0 +1,10 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+[class|="formContent"] {
+  max-width: 70em;
+  & [for|="checkbox"] {
+    & [class|="inner"] {
+      min-height: 35px;
+    }
+  }
+}

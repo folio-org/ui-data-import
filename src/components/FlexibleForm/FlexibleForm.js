@@ -25,6 +25,7 @@ export const FlexibleForm = memo(props => {
     component,
     config,
     config: {
+      name,
       commonSections,
       staticNamespace,
       editableNamespace,
@@ -33,7 +34,9 @@ export const FlexibleForm = memo(props => {
     styles,
     record,
     injectedProps,
+    stateMethods,
     referenceTables,
+    initialFields,
     dataAttributes,
     ...attributes
   } = props;
@@ -41,6 +44,15 @@ export const FlexibleForm = memo(props => {
   const attrs = {
     ...attributes,
     ...dataAttributes,
+  };
+
+  const setReferenceTables = (fieldsPath, refTable) => {
+    const {
+      dispatch,
+      change,
+    } = stateMethods;
+
+    dispatch(change(name, fieldsPath, refTable));
   };
 
   return (
@@ -56,7 +68,9 @@ export const FlexibleForm = memo(props => {
                 intl={intl}
                 styles={styles}
                 referenceTables={referenceTables}
+                setReferenceTables={setReferenceTables}
                 injectedProps={injectedProps}
+                initialFields={initialFields}
                 commonSections={commonSections}
                 record={record}
                 {...cfg}
@@ -76,6 +90,8 @@ FlexibleForm.propTypes = {
   childControls: PropTypes.arrayOf(Node),
   dataAttributes: PropTypes.object,
   referenceTables: PropTypes.object,
+  initialFields: PropTypes.object,
   record: PropTypes.object,
   injectedProps: PropTypes.object,
+  stateMethods: PropTypes.objectOf(PropTypes.func),
 };

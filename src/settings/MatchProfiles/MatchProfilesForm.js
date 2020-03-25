@@ -29,6 +29,8 @@ import {
   LAYER_TYPES,
   FORMS_SETTINGS, ENTITY_KEYS,
 } from '../../utils/constants';
+
+// @TODO: Remove this after server-side configs will be available
 import { formConfigSamples } from '../../../test/bigtest/mocks';
 
 import { getSectionInitialValues } from './MatchProfiles';
