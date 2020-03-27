@@ -31,6 +31,7 @@ export const ProfileTree = memo(({
   contentData,
   relationsToAdd,
   relationsToDelete,
+  okapi,
   onLink,
   onUnlink,
   record,
@@ -67,8 +68,8 @@ export const ProfileTree = memo(({
     profileId: item.id,
     contentType: snakeCase(currentType).slice(0, -1).toLocaleUpperCase(),
     reactTo,
-    content: item,
-    childSnapshotWrappers: [],
+    content: item.content,
+    childSnapshotWrappers: item.childSnapshotWrappers || [],
   }));
 
   const findRelIndex = (relations, masterId, line) => {
@@ -153,6 +154,7 @@ export const ProfileTree = memo(({
                 onLink={link}
                 onUnlink={unlink}
                 onDelete={remove}
+                okapi={okapi}
               />
             ))
           ) : (
@@ -175,6 +177,7 @@ export const ProfileTree = memo(({
             initialData={data}
             setInitialData={setData}
             onLink={link}
+            okapi={okapi}
             {...dataAttributes}
           />
         )}
@@ -187,6 +190,11 @@ export const ProfileTree = memo(({
 ProfileTree.propTypes = {
   linkingRules: PropTypes.object.isRequired,
   contentData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  okapi: PropTypes.shape({
+    tenant: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  }).isRequired,
   parentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   relationsToAdd: PropTypes.arrayOf(PropTypes.object),
   relationsToDelete: PropTypes.arrayOf(PropTypes.object),

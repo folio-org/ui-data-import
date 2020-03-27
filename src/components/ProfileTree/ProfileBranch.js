@@ -34,6 +34,7 @@ export const ProfileBranch = memo(({
   linkingRules,
   recordData,
   record,
+  okapi,
   parentRecordData,
   parentSectionKey,
   parentSectionData,
@@ -153,8 +154,7 @@ export const ProfileBranch = memo(({
                       values={{ type: <FormattedMessage id="ui-data-import.section" /> }}
                     />
                   </div>
-                )
-              }
+                )}
             </div>
             <TreeLine
               from={`#branch-${record ? 'editable' : 'static'}-${currentRecord.id}`}
@@ -177,6 +177,7 @@ export const ProfileBranch = memo(({
                 setInitialData={setMatchData}
                 reactTo={PROFILE_RELATION_TYPES.MATCH}
                 onLink={onLink}
+                okapi={okapi}
                 {...dataAttributes}
               />
             )}
@@ -213,8 +214,7 @@ export const ProfileBranch = memo(({
                       values={{ type: <FormattedMessage id="ui-data-import.section" /> }}
                     />
                   </div>
-                )
-              }
+                )}
             </div>
             <TreeLine
               from={`#branch-${record ? 'editable' : 'static'}-${currentRecord.id}`}
@@ -237,6 +237,7 @@ export const ProfileBranch = memo(({
                 setInitialData={setNonMatchData}
                 reactTo={PROFILE_RELATION_TYPES.NON_MATCH}
                 onLink={onLink}
+                okapi={okapi}
                 {...dataAttributes}
               />
             )}
@@ -255,6 +256,11 @@ ProfileBranch.propTypes = {
   parentSectionKey: PropTypes.string.isRequired,
   parentSectionData: PropTypes.arrayOf(PropTypes.object).isRequired,
   setParentSectionData: PropTypes.func.isRequired,
+  okapi: PropTypes.shape({
+    tenant: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  }).isRequired,
   record: PropTypes.object,
   className: PropTypes.string,
   onChange: PropTypes.func,

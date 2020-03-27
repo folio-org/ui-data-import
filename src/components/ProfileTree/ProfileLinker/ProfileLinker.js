@@ -22,7 +22,9 @@ import {
   PROFILE_RELATION_TYPES,
   ENTITY_KEYS,
   FILTER_QUERY_PARAMS,
+  ASSOCIATION_TYPES,
 } from '../../../utils/constants';
+import { fetchProfileSnapshot } from '../../../utils/fetchProfileSnapshot';
 
 import css from '../ProfileTree.css';
 
@@ -31,6 +33,7 @@ export const ProfileLinker = ({
   parentId,
   parentType,
   onLink,
+  okapi,
   linkingRules: { profilesAllowed },
   disabledOptions,
   dataKey,
@@ -86,6 +89,19 @@ export const ProfileLinker = ({
     },
   };
 
+  const addNewLines = entityKey => async records => {
+    const profileSnapshotPromises = records.map(profile => fetchProfileSnapshot(profile.id, ASSOCIATION_TYPES[entityKey], okapi));
+
+    try {
+      await Promise.all(profileSnapshotPromises)
+        .then(response => onLink(initialData, setInitialData, response, parentId, parentType, entityKey, reactTo, dataKey));
+    } catch (error) {
+      console.error(error); // eslint-disable-line no-console
+
+      onLink(initialData, setInitialData, [], parentId, parentType, entityKey, reactTo, dataKey);
+    }
+  };
+
   return (
     <>
       <div data-test-plus-sign-button>
@@ -112,7 +128,7 @@ export const ProfileLinker = ({
             disabled={false} // @TODO: Change this to actual value from LinkingRules object
             isSingleSelect
             isMultiLink
-            onLink={records => onLink(initialData, setInitialData, records, parentId, parentType, entityKey, reactTo, dataKey)}
+            onLink={addNewLines(entityKey)}
             renderTrigger={triggerProps => renderPluginButton(triggerProps, entityKey)}
             filterParams={manifestParams}
           >
@@ -135,6 +151,11 @@ ProfileLinker.propTypes = {
   dataKey: PropTypes.string.isRequired,
   initialData: PropTypes.arrayOf(PropTypes.object).isRequired,
   setInitialData: PropTypes.func.isRequired,
+  okapi: PropTypes.shape({
+    tenant: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  }).isRequired,
   disabledOptions: PropTypes.arrayOf(PropTypes.string),
   reactTo: PropTypes.string,
   title: PropTypes.node || PropTypes.string,
