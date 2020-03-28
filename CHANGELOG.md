@@ -14,6 +14,7 @@
 ### Bugs fixed:
 * Fix broken Record Type Selection Tree in RTL mode (UIDATIMP-425)
 * Fix broken Match criterion section in RTL mode (UIDATIMP-426)
+* Mapping Profiles Form existing record type recognition behavior is wrong (UIDATIMP-456)
 
 ## [1.8.0](https://github.com/folio-org/ui-data-import/tree/v1.8.0) (2020-03-13)
 
