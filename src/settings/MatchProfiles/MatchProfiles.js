@@ -283,7 +283,11 @@ export class MatchProfiles extends Component {
     },
     modules: {
       type: 'okapi',
-      path: '_/proxy/tenants/diku/modules',
+      path: (queryParams, pathComponents, resourceData, logger, props) => {
+        const { stripes: { okapi: { tenant } } } = props;
+
+        return `_/proxy/tenants/${tenant}/modules`;
+      },
       throwErrors: false,
       GET: { params: { full: true } },
     },
