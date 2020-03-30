@@ -11,6 +11,7 @@
 * Rearrange the match profile diagram structure (UIDATIMP-411)
 * Wipe out lines from the match profile diagram (UIDATIMP-411)
 * Add "profileType" query param to request for get /profileSnapshots/{profileId} (UIDATIMP-444)
+* Provide a profile snapshot with childWrappers when new profile association added to a job profile (UIDATIMP-413)
 
 ### Bugs fixed:
 * Fix broken Record Type Selection Tree in RTL mode (UIDATIMP-425)

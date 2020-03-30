@@ -54,7 +54,9 @@ export const JobProfilesFormComponent = ({
   handleSubmit,
   onCancel,
   dispatch,
+  stripes,
 }) => {
+  const { okapi } = stripes;
   const { profile } = initialValues;
   const isEditMode = Boolean(profile.id);
   const isSubmitDisabled = pristine || submitting;
@@ -165,6 +167,7 @@ export const JobProfilesFormComponent = ({
             relationsToDelete={deletedRelations}
             onLink={setAddedRelations}
             onUnlink={setDeletedRelations}
+            okapi={okapi}
           />
         </Accordion>
       </AccordionSet>
@@ -179,6 +182,7 @@ JobProfilesFormComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
+  stripes: PropTypes.object.isRequired,
   childWrappers: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
