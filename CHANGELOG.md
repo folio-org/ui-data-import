@@ -9,12 +9,14 @@
 * Data import settings Match Profiles: Changes for Static value Number, Date submatches (UIDATIMP-414)
 * Set defaultMapping query param when data-import process is run with chosen JobProfile to false (UIDATIMP-418)
 * Rearrange the match profile diagram structure (UIDATIMP-411)
+* Wipe out lines from the match profile diagram (UIDATIMP-411)
 * Add "profileType" query param to request for get /profileSnapshots/{profileId} (UIDATIMP-444)
 * Provide a profile snapshot with childWrappers when new profile association added to a job profile (UIDATIMP-413)
 
 ### Bugs fixed:
 * Fix broken Record Type Selection Tree in RTL mode (UIDATIMP-425)
 * Fix broken Match criterion section in RTL mode (UIDATIMP-426)
+* Mapping Profiles Form existing record type recognition behavior is wrong (UIDATIMP-456)
 
 ## [1.8.0](https://github.com/folio-org/ui-data-import/tree/v1.8.0) (2020-03-13)
 
