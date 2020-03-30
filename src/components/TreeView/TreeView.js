@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { noop } from 'lodash';
 
-import { TreeLine } from '../TreeLine';
-
 import css from './TreeView.css';
 
 export const TreeView = ({
   data,
   indentation = 40,
   spacing = '1rem',
-  container = `.${css.rootList}`,
   isLocalLTR = true,
   className,
   renderItem = noop,
@@ -19,7 +16,6 @@ export const TreeView = ({
   const renderList = ({
     items,
     root = false,
-    parent,
   }) => Array.isArray(items) && (
     <ul
       className={classNames(css.list, { [css.rootList]: root })}
@@ -37,18 +33,6 @@ export const TreeView = ({
             style={{ marginTop: isFirstItem ? 0 : spacing }}
           >
             {renderItem(item)}
-            {parent && (
-              <TreeLine
-                from={parent}
-                to={itemSelector}
-                container={container}
-                fromAnchor={isLocalLTR ? 'left bottom' : 'right bottom'}
-                toAnchor={isLocalLTR ? 'left' : 'right'}
-                fromAnchorOffset={`${indentation / 2}px`}
-                orientation="horizontal"
-                isLocalLTR={isLocalLTR}
-              />
-            )}
             {renderList({
               items: item.children,
               parent: itemSelector,
@@ -76,7 +60,6 @@ TreeView.propTypes = {
   }).isRequired,
   indentation: PropTypes.number, // in pixels
   spacing: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  container: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Element)]),
   className: PropTypes.string,
   renderItem: PropTypes.func,
   isLocalLTR: PropTypes.bool,
