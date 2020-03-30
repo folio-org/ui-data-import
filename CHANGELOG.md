@@ -1,17 +1,17 @@
 # Change history for ui-data-import
 
-## **1.9.0** (in progress)
+## [1.8.1](https://github.com/folio-org/ui-data-import/tree/v1.8.1) (2020-03-31)
 
 ### Features added:
 * Data Import Field Mapping Profile details: Inventory instance from MARC (UIDATIMP-15)
 * Data Import Field Mapping Profile details: Inventory holdings from MARC Bib (UIDATIMP-290)
 * Data Import Field Mapping Profile details: Inventory item from MARC Bib (UIDATIMP-292)
-* Data import settings Match Profiles: Changes for Static value Number, Date submatches (UIDATIMP-414)
-* Set defaultMapping query param when data-import process is run with chosen JobProfile to false (UIDATIMP-418)
 * Rearrange the match profile diagram structure (UIDATIMP-411)
 * Wipe out lines from the match profile diagram (UIDATIMP-411)
-* Add "profileType" query param to request for get /profileSnapshots/{profileId} (UIDATIMP-444)
 * Provide a profile snapshot with childWrappers when new profile association added to a job profile (UIDATIMP-413)
+* Data import settings Match Profiles: Changes for Static value Number, Date submatches (UIDATIMP-414)
+* Set defaultMapping query param when data-import process is run with chosen JobProfile to false (UIDATIMP-418)
+* Add "profileType" query param to request for get /profileSnapshots/{profileId} (UIDATIMP-444)
 
 ### Bugs fixed:
 * Fix broken Record Type Selection Tree in RTL mode (UIDATIMP-425)
