@@ -18,6 +18,7 @@
 * Fix broken Match criterion section in RTL mode (UIDATIMP-426)
 * Mapping Profiles Form existing record type recognition behavior is wrong (UIDATIMP-456)
 * Fix hardcoded tenant value for the modules retrieving (UIDATIMP-465)
+* Fix styles for the form text fields (UIDATIMP-426)
 
 ## [1.8.0](https://github.com/folio-org/ui-data-import/tree/v1.8.0) (2020-03-13)
 
