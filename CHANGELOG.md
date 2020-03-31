@@ -1,5 +1,13 @@
 # Change history for ui-data-import
 
+## **1.9.0** (in progress)
+
+### Features added:
+
+
+### Bugs fixed:
+* More than one record cannot be created in Mapping Profiles Form repeatable fields (UIDATIMP-443)
+
 ## [1.8.1](https://github.com/folio-org/ui-data-import/tree/v1.8.1) (2020-03-31)
 
 ### Features added:

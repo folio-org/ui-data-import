@@ -341,12 +341,12 @@ export const Control = memo(props => {
           onRemove={onRemove}
           canAdd={canAdd}
           canRemove={canRemove}
-          renderField={() => (
+          renderField={(field, index) => (
             <>
               {children.map((cfg, i) => (
                 <Control
                   key={`control-${i}`}
-                  repeatableIndex={i}
+                  repeatableIndex={field?.[incrementalField] || index}
                   staticNamespace={staticNamespace}
                   editableNamespace={editableNamespace}
                   sectionNamespace={sectionNamespace}

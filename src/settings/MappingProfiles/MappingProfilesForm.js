@@ -108,11 +108,11 @@ export const MappingProfilesFormComponent = ({
     const isEqual = existingRecordType === prevExistingRecordType.current;
     const needsUpdate = !profile.id || (profile.id && (!isEqual || isEmpty(mappingDetails)));
 
-    if (isEqual || !needsUpdate) {
+    if (!needsUpdate) {
       return;
     }
 
-    const newInitDetails = existingRecordType === existingRecordTypeInitial
+    const newInitDetails = existingRecordType === existingRecordTypeInitial && !isEmpty(mappingDetails)
       ? mappingDetailsInitial
       : getInitialDetails(existingRecordType, true);
     const newInitials = {
