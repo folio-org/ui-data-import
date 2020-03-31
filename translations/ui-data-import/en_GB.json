@@ -484,5 +484,7 @@
     "settings.mappingProfiles.map.invoice": "Invoice",
     "settings.mappingProfiles.map.marcBib": "MARC Bibliographic",
     "settings.mappingProfiles.map.marcHoldings": "MARC Holdings",
-    "settings.mappingProfiles.map.marcAuthority": "MARC Authority"
+    "settings.mappingProfiles.map.marcAuthority": "MARC Authority",
+    "match.qualifier.placeholder": "Select qualifier type",
+    "match.comparison-part.placeholder": "Select comparison type"
 }
