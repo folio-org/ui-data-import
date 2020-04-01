@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 import {
   FormattedMessage,
-  FormattedDate,
   intlShape,
 } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -21,7 +20,17 @@ import * as stripesSmartComponents from '@folio/stripes/smart-components';
 
 import * as components from '..';
 import * as validators from '../../utils/formValidators';
-import { checkEmpty } from '../../utils';
+import {
+  getValidation,
+  augmentParam,
+  isFormattedMessage,
+  isTranslationId,
+  getOptionLabel,
+  checkDate,
+  checkEmpty,
+} from '../../utils';
+
+import * as decorators from './ControlDecorators';
 
 export const VIRTUAL_CONTROLS = { COMMON_SECTION: 'CommonSection' };
 
@@ -34,15 +43,11 @@ const controls = {
 };
 
 const getControl = controlType => components[controlType] || controls[controlType] || controlType;
-const getValidation = validation => validation.map(val => validators[val]);
-const augmentParam = (param, splitter, augment) => (param ? param.split(splitter).join(augment) : param);
 const getActualParam = (param, sectionNamespace, repeatableIndex) => {
   const nsParam = augmentParam(param, '**ns**', sectionNamespace);
 
   return augmentParam(nsParam, '##ri##', repeatableIndex);
 };
-const isFormattedMessage = lbl => React.isValidElement(lbl);
-const isTranslationId = lbl => lbl && lbl.includes('ui-');
 const getOptions = (options, sectionNamespace, intl) => {
   return options.map(option => {
     let lbl = option.label;
@@ -138,6 +143,7 @@ export const Control = memo(props => {
       name,
       fieldsPath,
       validate,
+      decorator,
     } = props;
 
     const staticPrefix = staticNamespace && staticNamespace.length ? `${staticNamespace}.` : '';
@@ -149,7 +155,6 @@ export const Control = memo(props => {
     const actualLabel = augmentParam(label, '**ns**', sectionNamespace);
 
     let attrs = {
-      component: component ? getControl(component) : null,
       id: actualId,
       label: actualLabel ? (<FormattedMessage id={actualLabel} />) : actualLabel,
       optional,
@@ -214,6 +219,22 @@ export const Control = memo(props => {
         ...attrs,
         record: actualRecord,
         value: get(record, actualName) || <stripesComponents.NoValue />,
+      };
+    }
+
+    if (component) {
+      const control = component ? getControl(component) : null;
+      let wrapped = null;
+
+      if (control && decorator) {
+        const wrapper = decorators[decorator];
+
+        wrapped = compose(wrapper)(control);
+      }
+      // console.log('Component: ', component, wrapped);
+      attrs = {
+        ...attrs,
+        component: wrapped || control,
       };
     }
 
@@ -357,7 +378,10 @@ export const Control = memo(props => {
     }
 
     return (
-      <Cmp {...attribs} />
+      <Cmp
+        className={classes}
+        {...attribs}
+      />
     );
   };
 
@@ -424,12 +448,12 @@ export const Control = memo(props => {
           onRemove={onRemove}
           canAdd={canAdd}
           canRemove={canRemove}
-          renderField={(field, index) => (
+          renderField={() => (
             <>
               {children.map((cfg, i) => (
                 <Control
                   key={`control-${i}`}
-                  repeatableIndex={field?.[incrementalField] || index}
+                  repeatableIndex={i}
                   staticNamespace={staticNamespace}
                   editableNamespace={editableNamespace}
                   sectionNamespace={sectionNamespace}
@@ -522,9 +546,13 @@ Control.propTypes = {
   enabled: PropTypes.bool,
   editableNamespace: PropTypes.string,
   component: PropTypes.string,
-  label: PropTypes.string || Node,
+  label: PropTypes.oneOfType([PropTypes.string, Node]),
+  decorator: PropTypes.string,
+  wrapperLabel: PropTypes.string,
+  wrapperSourceLink: PropTypes.string,
   placeholder: PropTypes.string,
   intl: intlShape,
+  okapi: PropTypes.object,
   styles: PropTypes.shape(PropTypes.string),
   classNames: PropTypes.arrayOf(PropTypes.string),
   dataOptions: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),

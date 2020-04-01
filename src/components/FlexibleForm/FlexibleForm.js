@@ -34,6 +34,7 @@ export const FlexibleForm = memo(props => {
     styles,
     record,
     injectedProps,
+    okapi,
     stateMethods,
     referenceTables,
     initialFields,
@@ -66,6 +67,7 @@ export const FlexibleForm = memo(props => {
                 staticNamespace={staticNamespace}
                 editableNamespace={editableNamespace}
                 intl={intl}
+                okapi={okapi}
                 styles={styles}
                 referenceTables={referenceTables}
                 setReferenceTables={setReferenceTables}
@@ -93,5 +95,6 @@ FlexibleForm.propTypes = {
   initialFields: PropTypes.object,
   record: PropTypes.object,
   injectedProps: PropTypes.object,
+  okapi: PropTypes.object,
   stateMethods: PropTypes.objectOf(PropTypes.func),
 };

@@ -865,10 +865,13 @@ export const formConfigSamples = [{
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
+                  enabled: true,
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemData.field.materialType',
                   name: 'mappingDetails.mappingFields[7].value',
-                  enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '',
                 }],
               }],
             }, {
@@ -901,10 +904,13 @@ export const formConfigSamples = [{
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
+                  enabled: true,
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.callNumberType',
                   name: 'mappingDetails.mappingFields[9].value',
-                  enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '',
                 }],
               }, {
                 controlType: 'Col',
