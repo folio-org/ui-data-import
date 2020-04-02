@@ -568,15 +568,20 @@ export const formConfigSamples = [{
               mappedLabelId: 'ui-data-import.settings.profiles.select.mappingProfiles',
               mappedLabel: 'Field mapping',
               mappableLabelId: 'ui-data-import.settings.mappingProfiles.map.item',
-              mappableLabel: 'Items',
+              mappableLabel: 'Item',
               headlineProps: { margin: 'small' },
             }],
           }, {
             controlType: 'Col',
             staticControlType: 'Col',
             childControls: [{
-              controlType: 'ExpandAllButton',
-              staticControlType: 'ExpandAllButton',
+              controlType: 'div',
+              staticControlType: 'div',
+              dataAttributes: { 'data-test-expand-all-button': '' },
+              childControls: [{
+                controlType: 'ExpandAllButton',
+                staticControlType: 'ExpandAllButton',
+              }],
             }],
           }],
         }, {
@@ -599,6 +604,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 6,
+                dataAttributes: { 'data-test-suppress-from-discovery': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -615,6 +621,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-item-hrid': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -627,6 +634,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-barcode': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -638,6 +646,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-accession-number': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -649,6 +658,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-item-identifier': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -676,7 +686,7 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-former-ids': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -714,7 +724,7 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-statistical-codes': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -750,6 +760,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 6,
+                dataAttributes: { 'data-test-material-type': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -766,6 +777,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 6,
+                dataAttributes: { 'data-test-copy-number': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -782,6 +794,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-call-number-type': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -793,6 +806,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-call-number-prefix': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -804,6 +818,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-call-number': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -815,6 +830,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-call-number-suffix': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -831,6 +847,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-number-of-pieces': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -842,6 +859,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-description-of-pieces': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -867,6 +885,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-enumeration': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -878,6 +897,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-chronology': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -894,6 +914,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 6,
+                dataAttributes: { 'data-test-volume': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -921,7 +942,7 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-years-and-captions': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -957,6 +978,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-missing-pieces-number': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -968,6 +990,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-missing-pieces': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -979,6 +1002,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-date': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -995,6 +1019,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-item-damaged-status': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1006,6 +1031,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-date2': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1041,7 +1067,7 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-item-notes': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -1099,6 +1125,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 6,
+                dataAttributes: { 'data-test-permanent-loan-type': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1115,6 +1142,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 6,
+                dataAttributes: { 'data-test-temporary-loan-type': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1131,6 +1159,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 6,
+                dataAttributes: { 'data-test-status': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1158,7 +1187,7 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-circulation-notes': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -1216,6 +1245,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-permanent': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1227,6 +1257,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-temporary': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1261,7 +1292,7 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-electronic-access': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -1365,8 +1396,13 @@ export const formConfigSamples = [{
             controlType: 'Col',
             staticControlType: 'Col',
             childControls: [{
-              controlType: 'ExpandAllButton',
-              staticControlType: 'ExpandAllButton',
+              controlType: 'div',
+              staticControlType: 'div',
+              dataAttributes: { 'data-test-expand-all-button': '' },
+              childControls: [{
+                controlType: 'ExpandAllButton',
+                staticControlType: 'ExpandAllButton',
+              }],
             }],
           }],
         }, {
@@ -1389,6 +1425,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-suppress-from-discovery': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1406,6 +1443,7 @@ export const formConfigSamples = [{
                   component: 'Checkbox',
                   label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.staffSuppress',
                   name: 'mappingDetails.mappingFields[1].value',
+                  dataAttributes: { 'data-test-staff-suppress': '' },
                 }],
               }, {
                 controlType: 'Col',
@@ -1417,6 +1455,7 @@ export const formConfigSamples = [{
                   component: 'Checkbox',
                   label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.previouslyHeld',
                   name: 'mappingDetails.mappingFields[2].value',
+                  dataAttributes: { 'data-test-previously-held': '' },
                 }],
               }],
             }, {
@@ -1427,6 +1466,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 6,
+                dataAttributes: { 'data-test-instance-hrid': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1439,6 +1479,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 6,
+                dataAttributes: { 'data-test-metadata-source': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1456,6 +1497,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 6,
+                dataAttributes: { 'data-test-cataloged-date': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1472,6 +1514,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 12,
+                dataAttributes: { 'data-test-status-term': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1488,6 +1531,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 12,
+                dataAttributes: { 'data-test-mode-of-issuance': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1516,7 +1560,7 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-statistical-codes': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -1552,6 +1596,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 12,
+                dataAttributes: { 'data-test-resource-title': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1582,7 +1627,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canRemove: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-alternative-titles': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -1598,11 +1643,13 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.titleData.alternativeTitles.field.alternativeTitleTypeId',
                       name: 'mappingDetails.mappingFields[10].subfields[##ri##].fields[0].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-alternative-title-type': '' },
                     }],
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 6,
+                    dataAttributes: { 'data-test-alternative-title': '' },
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -1622,6 +1669,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 12,
+                dataAttributes: { 'data-test-index-title': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1652,7 +1700,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-series-statements': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -1692,7 +1740,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: true,
                 canDelete: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-preceding-titles': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -1732,7 +1780,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: true,
                 canDelete: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-succeeding-titles': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -1781,7 +1829,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-identifiers': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -1796,6 +1844,7 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.titleData.identifiers.field.identifierTypeId',
                       name: 'mappingDetails.mappingFields[15].subfields[##ri##].fields[0].value',
+                      dataAttributes: { 'data-test-identifier-type': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -1807,6 +1856,7 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.titleData.identifiers.field.value',
                       name: 'mappingDetails.mappingFields[15].subfields[##ri##].fields[1].value',
+                      dataAttributes: { 'data-test-identifier-value': '' },
                     }],
                   }],
                 }],
@@ -1841,7 +1891,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-contributors': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -1856,6 +1906,7 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.contributors.field.contributorName',
                       name: 'mappingDetails.mappingFields[16].subfields[##ri##].fields[0].value',
+                      dataAttributes: { 'data-test-name': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -1867,6 +1918,7 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.contributors.field.contributorNameTypeId',
                       name: 'mappingDetails.mappingFields[16].subfields[##ri##].fields[1].value',
+                      dataAttributes: { 'data-test-name-type': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -1878,6 +1930,7 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.contributors.field.contributorTypeId',
                       name: 'mappingDetails.mappingFields[16].subfields[##ri##].fields[2].value',
+                      dataAttributes: { 'data-test-type': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -1889,6 +1942,7 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.contributors.field.contributorTypeText',
                       name: 'mappingDetails.mappingFields[16].subfields[##ri##].fields[3].value',
+                      dataAttributes: { 'data-test-type-free-text': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -1900,6 +1954,7 @@ export const formConfigSamples = [{
                       component: 'Checkbox',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.contributors.field.primary',
                       name: 'mappingDetails.mappingFields[16].subfields[##ri##].fields[4].value',
+                      dataAttributes: { 'data-test-primary': '' },
                     }],
                   }],
                 }],
@@ -1908,7 +1963,7 @@ export const formConfigSamples = [{
           }, {
             controlType: 'Accordion',
             staticControlType: 'Accordion',
-            id: 'administrative-data',
+            id: 'descriptive-data',
             collapsed: false,
             separator: true,
             label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.section',
@@ -1934,7 +1989,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-publications': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -1949,6 +2004,7 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.publisher',
                       name: 'mappingDetails.mappingFields[17].subfields[##ri##].fields[0].value',
+                      dataAttributes: { 'data-test-publisher': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -1960,6 +2016,7 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.role',
                       name: 'mappingDetails.mappingFields[17].subfields[##ri##].fields[1].value',
+                      dataAttributes: { 'data-test-publisher-role': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -1971,6 +2028,7 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.place',
                       name: 'mappingDetails.mappingFields[17].subfields[##ri##].fields[2].value',
+                      dataAttributes: { 'data-test-place': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -1982,6 +2040,7 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.dateOfPublication',
                       name: 'mappingDetails.mappingFields[17].subfields[##ri##].fields[3].value',
+                      dataAttributes: { 'data-test-publication-date': '' },
                     }],
                   }],
                 }],
@@ -2007,7 +2066,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-editions': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2022,6 +2081,7 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.edition',
                       name: 'mappingDetails.mappingFields[18].subfields[##ri##].fields[0].value',
+                      dataAttributes: { 'data-test-edition': '' },
                     }],
                   }],
                 }],
@@ -2047,7 +2107,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-physical-descriptions': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2062,6 +2122,7 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.physicalDescription',
                       name: 'mappingDetails.mappingFields[19].subfields[##ri##].fields[0].value',
+                      dataAttributes: { 'data-test-physical-description': '' },
                     }],
                   }],
                 }],
@@ -2074,6 +2135,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 12,
+                dataAttributes: { 'data-test-resource-type': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -2103,7 +2165,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: true,
                 canDelete: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-nature-of-content': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2142,7 +2204,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-formats': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2158,6 +2220,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.instanceFormatId',
                       name: 'mappingDetails.mappingFields[22].subfields[##ri##].fields[0].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-format': '' },
                     }],
                   }],
                 }],
@@ -2182,7 +2245,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-languages': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2198,6 +2261,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.languageId',
                       name: 'mappingDetails.mappingFields[23].subfields[##ri##].fields[0].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-language': '' },
                     }],
                   }],
                 }],
@@ -2222,7 +2286,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-publication-frequencies': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2238,6 +2302,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.publicationFrequency',
                       name: 'mappingDetails.mappingFields[24].subfields[##ri##].fields[0].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-publication-frequency': '' },
                     }],
                   }],
                 }],
@@ -2262,7 +2327,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-publication-ranges': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2278,6 +2343,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.publicationRange',
                       name: 'mappingDetails.mappingFields[25].subfields[##ri##].fields[0].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-publication-range': '' },
                     }],
                   }],
                 }],
@@ -2311,7 +2377,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-notes': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2327,6 +2393,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.field.notes.noteType',
                       name: 'mappingDetails.mappingFields[26].subfields[##ri##].fields[0].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-note-type': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -2339,6 +2406,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.field.notes.note',
                       name: 'mappingDetails.mappingFields[26].subfields[##ri##].fields[1].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-note': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -2351,6 +2419,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.field.notes.staffOnly',
                       name: 'mappingDetails.mappingFields[26].subfields[##ri##].fields[2].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-staff-only': '' },
                     }],
                   }],
                 }],
@@ -2383,7 +2452,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-electronic-access': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2399,6 +2468,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.relationship',
                       name: 'mappingDetails.mappingFields[27].subfields[##ri##].fields[0].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-relationship': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -2411,6 +2481,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.uri',
                       name: 'mappingDetails.mappingFields[27].subfields[##ri##].fields[1].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-uri': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -2423,6 +2494,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.linkText',
                       name: 'mappingDetails.mappingFields[27].subfields[##ri##].fields[2].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-link-text': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -2435,6 +2507,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.materialsSpecified',
                       name: 'mappingDetails.mappingFields[27].subfields[##ri##].fields[3].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-materials-specified': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -2447,6 +2520,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.urlPublicNote',
                       name: 'mappingDetails.mappingFields[27].subfields[##ri##].fields[4].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-url-public-note': '' },
                     }],
                   }],
                 }],
@@ -2458,7 +2532,7 @@ export const formConfigSamples = [{
             id: 'subjects',
             collapsed: false,
             separator: true,
-            label: 'ui-data-import.settings.mappingProfiles.map.instance.subjects.section',
+            label: 'ui-data-import.settings.mappingProfiles.map.instance.subject.section',
             dataAttributes: {},
             childControls: [{
               controlType: 'Row',
@@ -2479,7 +2553,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-subjects': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2492,9 +2566,10 @@ export const formConfigSamples = [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'TextField',
-                      label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.subject',
+                      label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.subjects',
                       name: 'mappingDetails.mappingFields[28].subfields[##ri##].fields[0].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-subjects-field': '' },
                     }],
                   }],
                 }],
@@ -2527,7 +2602,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-classifications': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2543,6 +2618,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.classificationTypeId',
                       name: 'mappingDetails.mappingFields[29].subfields[##ri##].fields[0].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-classification-identifier-type': '' },
                     }],
                   }, {
                     controlType: 'Col',
@@ -2555,6 +2631,7 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.classificationNumber',
                       name: 'mappingDetails.mappingFields[29].subfields[##ri##].fields[1].value',
                       disabled: true,
+                      dataAttributes: { 'data-test-classification': '' },
                     }],
                   }],
                 }],
@@ -2563,7 +2640,7 @@ export const formConfigSamples = [{
           }, {
             controlType: 'Accordion',
             staticControlType: 'Accordion',
-            id: 'administrative-data',
+            id: 'instance-relationship',
             collapsed: false,
             separator: true,
             label: 'ui-data-import.settings.mappingProfiles.map.instance.relationship.section',
@@ -2588,7 +2665,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: true,
                 canDelete: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-parent-instances': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2638,7 +2715,7 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: true,
                 canDelete: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-child-instances': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2672,7 +2749,7 @@ export const formConfigSamples = [{
           }, {
             controlType: 'Accordion',
             staticControlType: 'Accordion',
-            id: 'administrative-data',
+            id: 'related-instances',
             collapsed: false,
             separator: true,
             label: 'ui-data-import.settings.mappingProfiles.map.item.relatedInstances.section',
@@ -2731,8 +2808,18 @@ export const formConfigSamples = [{
             controlType: 'Col',
             staticControlType: 'Col',
             childControls: [{
-              controlType: 'ExpandAllButton',
-              staticControlType: 'ExpandAllButton',
+              controlType: 'div',
+              staticControlType: 'div',
+              dataAttributes: { 'data-test-expand-all-button': '' },
+              childControls: [{
+                controlType: 'div',
+                staticControlType: 'div',
+                dataAttributes: { 'data-test-expand-all-button': '' },
+                childControls: [{
+                  controlType: 'ExpandAllButton',
+                  staticControlType: 'ExpandAllButton',
+                }],
+              }],
             }],
           }],
         }, {
@@ -2755,6 +2842,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 6,
+                dataAttributes: { 'data-test-suppress-from-discovery': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -2771,6 +2859,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-holdings-hrid': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -2799,7 +2888,7 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-former-holdings': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2826,6 +2915,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-holdings-type': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -2854,7 +2944,7 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-statistical-codes': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2890,6 +2980,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-permanent': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -2901,6 +2992,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-temporary': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -2917,6 +3009,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-shelving-order': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -2928,6 +3021,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-shelving-title': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -2944,6 +3038,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 6,
+                dataAttributes: { 'data-test-copy-number': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -2960,6 +3055,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-call-number-type': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -2971,6 +3067,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-call-number-prefix': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -2982,6 +3079,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-call-number': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -2993,6 +3091,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 3,
+                dataAttributes: { 'data-test-call-number-suffix': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -3018,6 +3117,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-number-of-items': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -3044,7 +3144,7 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-statements': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -3092,7 +3192,7 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-statements-for-supplement': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -3140,7 +3240,7 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
-                dataAttributes: {},
+                dataAttributes: { 'data-test-statements-for-indexes': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -3178,6 +3278,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-ill-policy': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -3189,17 +3290,19 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-digitization-policy': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
                   component: 'TextField',
-                  label: 'ui-data-import.settings.mappingProfiles.map.holdings.field.digitalizationPolicy',
+                  label: 'ui-data-import.settings.mappingProfiles.map.holdings.field.digitizationPolicy',
                   name: 'mappingDetails.mappingFields[19].value',
                 }],
               }, {
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-retention-policy': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -3233,7 +3336,7 @@ export const formConfigSamples = [{
                   emptyMessage: 'EMPTY FIELDS HERE',
                   enabled: true,
                   repeatable: true,
-                  dataAttributes: {},
+                  dataAttributes: { 'data-test-notes': '' },
                   childControls: [{
                     controlType: 'Row',
                     staticControlType: 'Row',
@@ -3300,7 +3403,7 @@ export const formConfigSamples = [{
                   emptyMessage: 'EMPTY FIELDS HERE',
                   enabled: true,
                   repeatable: true,
-                  dataAttributes: {},
+                  dataAttributes: { 'data-test-electronic-access': '' },
                   childControls: [{
                     controlType: 'Row',
                     staticControlType: 'Row',
@@ -3380,6 +3483,7 @@ export const formConfigSamples = [{
                   controlType: 'Col',
                   staticControlType: 'Col',
                   xs: 4,
+                  dataAttributes: { 'data-test-acquisition-method': '' },
                   childControls: [{
                     controlType: 'Field',
                     staticControlType: 'KeyValue',
@@ -3391,6 +3495,7 @@ export const formConfigSamples = [{
                   controlType: 'Col',
                   staticControlType: 'Col',
                   xs: 4,
+                  dataAttributes: { 'data-test-order-format': '' },
                   childControls: [{
                     controlType: 'Field',
                     staticControlType: 'KeyValue',
@@ -3402,6 +3507,7 @@ export const formConfigSamples = [{
                   controlType: 'Col',
                   staticControlType: 'Col',
                   xs: 4,
+                  dataAttributes: { 'data-test-receipt-status': '' },
                   childControls: [{
                     controlType: 'Field',
                     staticControlType: 'KeyValue',
@@ -3436,7 +3542,7 @@ export const formConfigSamples = [{
                   emptyMessage: 'EMPTY FIELDS HERE',
                   enabled: true,
                   repeatable: true,
-                  dataAttributes: {},
+                  dataAttributes: { 'data-test-receiving-history-note': '' },
                   childControls: [{
                     controlType: 'Row',
                     staticControlType: 'Row',
@@ -3723,47 +3829,67 @@ export const formConfigSamples = [{
         staticControlType: 'ViewMetaData',
         id: 'section-metadata',
       }, {
-        controlType: 'Field',
-        staticControlType: 'KeyValue',
-        component: 'TextField',
-        name: 'name',
-        label: 'ui-data-import.name',
-        required: true,
-        validate: ['validateRequiredField'],
+        controlType: 'div',
+        staticControlType: 'div',
         dataAttributes: { 'data-test-name-field': '' },
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          component: 'TextField',
+          name: 'name',
+          label: 'ui-data-import.name',
+          required: true,
+          validate: ['validateRequiredField'],
+          dataAttributes: {},
+        }],
       }, {
-        controlType: 'Field',
-        staticControlType: 'KeyValue',
-        component: 'Select',
-        id: 'field-record-type-incoming',
-        name: 'incomingRecordType',
-        label: 'ui-data-import.incomingRecordType',
-        placeholder: 'ui-data-import.chooseIncomingRecordType',
-        required: true,
-        dataOptions: [],
-        validate: ['validateRequiredField'],
+        controlType: 'div',
+        staticControlType: 'div',
         dataAttributes: { 'data-test-incoming-record-type-field': '' },
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          component: 'Select',
+          id: 'field-record-type-incoming',
+          name: 'incomingRecordType',
+          label: 'ui-data-import.incomingRecordType',
+          placeholder: 'ui-data-import.chooseIncomingRecordType',
+          required: true,
+          dataOptions: [],
+          validate: ['validateRequiredField'],
+          dataAttributes: {},
+        }],
       }, {
-        controlType: 'Field',
-        staticControlType: 'KeyValue',
-        component: 'Select',
-        id: 'field-record-type-existing',
-        name: 'existingRecordType',
-        label: 'ui-data-import.folioRecordType',
-        placeholder: 'ui-data-import.chooseFolioRecordType',
-        required: true,
-        itemToString: null,
-        dataOptions: [],
-        validate: ['validateRequiredField'],
+        controlType: 'div',
+        staticControlType: 'div',
         dataAttributes: { 'data-test-folio-record-type-field': '' },
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          component: 'Select',
+          id: 'field-record-type-existing',
+          name: 'existingRecordType',
+          label: 'ui-data-import.folioRecordType',
+          placeholder: 'ui-data-import.chooseFolioRecordType',
+          required: true,
+          itemToString: null,
+          dataOptions: [],
+          validate: ['validateRequiredField'],
+          dataAttributes: {},
+        }],
       }, {
-        controlType: 'Field',
-        staticControlType: 'KeyValue',
-        component: 'TextArea',
-        name: 'description',
-        label: 'ui-data-import.description',
-        validate: null,
+        controlType: 'div',
+        staticControlType: 'div',
         dataAttributes: { 'data-test-description-field': '' },
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          component: 'TextArea',
+          name: 'description',
+          label: 'ui-data-import.description',
+          validate: null,
+          dataAttributes: {},
+        }],
       }],
     }, {
       controlType: 'Row',
@@ -3783,7 +3909,7 @@ export const formConfigSamples = [{
     }, {
       controlType: 'Accordion',
       staticControlType: 'Accordion',
-      id: 'section-details',
+      id: 'mapping-profile-details',
       collapsed: false,
       separator: false,
       label: 'ui-data-import.details',

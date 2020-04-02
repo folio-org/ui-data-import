@@ -11,7 +11,11 @@ export default server => {
     incomingRecordType: 'MARC_HOLDINGS',
     existingRecordType: 'HOLDINGS',
   });
-  server.createList('mapping-profile', 3);
+  server.create('mapping-profile', {
+    incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+    existingRecordType: 'ITEM',
+  });
+  server.createList('mapping-profile', 2);
 
   server.get('/data-import-profiles/mappingProfiles', (schema, request) => {
     const { query = '' } = request.queryParams;

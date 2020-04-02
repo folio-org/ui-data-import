@@ -6,12 +6,18 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
 
 import { FullScreenFormInteractor } from '../full-screen-form';
 import { AssociatedActionProfiles } from '../associated-action-profiles';
+import { HoldingsDetailsAccordion } from './details/editable/holdings-details-interactor';
+import { InstanceDetailsAccordion } from './details/editable/instance-details-interactor';
+import { ItemDetailsAccordion } from './details/editable/item-details-interactor';
 
 class MappingProfileFormInteractor extends FullScreenFormInteractor {
-  nameField = new TextFieldInteractor('[data-test-name-field]');
-  incomingRecordTypeField = new SelectInteractor('[data-test-incoming-record-type-field]');
-  folioRecordTypeField = new SelectInteractor('[data-test-folio-record-type-field]');
-  descriptionField = new TextAreaInteractor('[data-test-description-field]');
+  nameField = new TextFieldInteractor('#mapping-profiles-form [data-test-name-field]');
+  incomingRecordTypeField = new SelectInteractor('#mapping-profiles-form [data-test-incoming-record-type-field]');
+  folioRecordTypeField = new SelectInteractor('#mapping-profiles-form [data-test-folio-record-type-field]');
+  descriptionField = new TextAreaInteractor('#mapping-profiles-form [data-test-description-field]');
+  holdingsDetails = new HoldingsDetailsAccordion('#mapping-profile-details');
+  instanceDetails = new InstanceDetailsAccordion('#mapping-profile-details');
+  itemDetails = new ItemDetailsAccordion('#mapping-profile-details');
   confirmEditModal = new ConfirmationModalInteractor('#confirm-edit-action-profile-modal');
   associatedActionProfilesAccordion = new AccordionInteractor('#mappingProfileFormAssociatedActionProfileAccordion');
   associatedActionProfiles = new AssociatedActionProfiles('[data-test-full-screen-form] #associated-actionProfiles-list');

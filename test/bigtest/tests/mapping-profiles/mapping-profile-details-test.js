@@ -28,6 +28,76 @@ async function setupFormSubmitErrorScenario(method, server, responseData = {}) {
   await mappingProfileForm.submitFormButton.click();
 }
 
+const hasField = (details, accordion, field, fieldLabel) => {
+  it(`has ${fieldLabel} field`, () => {
+    expect(mappingProfileDetails[details][accordion][field].label.text).to.equal(fieldLabel);
+  });
+};
+
+const hasInput = (details, accordion, field, fieldLabel, isDisabled = false) => {
+  it(`has ${fieldLabel} field`, () => {
+    expect(mappingProfileForm[details][accordion][field].label).to.equal(fieldLabel);
+  });
+
+  if (isDisabled) {
+    it(`${fieldLabel} field is disabled`, () => {
+      expect(mappingProfileForm[details][accordion][field].isDisabled).to.be.true;
+    });
+  }
+};
+
+const hasRepeatableField = (details, accordion, field, legend, isDisabled = false) => {
+  if (!legend) {
+    it(`has ${legend} repeatable field`, () => {
+      expect(mappingProfileForm[details][accordion][field].isPresent).to.be.true;
+    });
+  } else {
+    it(`has ${legend} repeatable field`, () => {
+      expect(mappingProfileForm[details][accordion][field].legend).to.equal(legend);
+    });
+  }
+
+  it('has Add button', () => {
+    expect(mappingProfileForm[details][accordion][field].hasAddButton).to.be.true;
+  });
+
+  if (isDisabled) {
+    it(`${legend} field is disabled`, () => {
+      expect(mappingProfileForm[details][accordion][field].isAddDisabled).to.be.true;
+    });
+  } else {
+    describe('when Add button is clicked', () => {
+      beforeEach(async () => {
+        await mappingProfileForm[details][accordion][field].clickAddButton();
+      });
+
+      it('then new field appears', () => {
+        expect(mappingProfileForm[details][accordion][field].items().length).to.be.above(0);
+      });
+
+      it('field has Remove button', () => {
+        const fieldsLength = mappingProfileForm[details][accordion][field].items().length;
+        const newFieldOrder = fieldsLength ? (fieldsLength - 1) : 0;
+
+        expect(mappingProfileForm[details][accordion][field].items(newFieldOrder).hasRemoveButton).to.be.true;
+      });
+
+      describe('when Remove button is clicked', () => {
+        beforeEach(async () => {
+          const fieldsLength = mappingProfileForm[details][accordion][field].items().length;
+          const newFieldOrder = fieldsLength ? (fieldsLength - 1) : 0;
+
+          await mappingProfileForm[details][accordion][field].items(newFieldOrder).clickRemoveButton();
+        });
+
+        it('then field is removed', () => {
+          expect(mappingProfileForm[details][accordion][field].items().length).to.equal(0);
+        });
+      });
+    });
+  }
+};
+
 describe('Mapping Profile View', () => {
   setupApplication({ scenarios: ['fetch-mapping-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
@@ -202,6 +272,921 @@ describe('Mapping Profile View', () => {
 
           it('then error callout appears', () => {
             expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          });
+        });
+      });
+    });
+  });
+
+  describe('details section', () => {
+    describe('view details screen', () => {
+      describe('when FOLIO record type equals to', () => {
+        describe('Instance', () => {
+          beforeEach(async () => {
+            await mappingProfiles.list.rows(0).click();
+          });
+
+          it('has correct header', () => {
+            expect(mappingProfileDetails.instanceDetails.header.mappedLabel).to.be.equal('Field mapping');
+            expect(mappingProfileDetails.instanceDetails.header.mappableLabel).to.be.equal('Instance');
+          });
+
+          it('has correct count of accordions', () => {
+            expect(mappingProfileDetails.instanceDetails.set().length).to.equal(11);
+          });
+
+          it('has expand/collapse all button', () => {
+            expect(mappingProfileDetails.instanceDetails.expandAllButton.isPresent).to.be.true;
+          });
+
+          describe('click on expand/collapse all button', () => {
+            beforeEach(async () => {
+              await mappingProfileDetails.instanceDetails.expandAllButton.clickExpandAllButton();
+            });
+
+            it('button label should be equal to "Expand all"', () => {
+              expect(mappingProfileDetails.instanceDetails.expandAllButton.label).to.equal('Expand all');
+            });
+
+            it('all accordions should be closed', () => {
+              mappingProfileDetails.instanceDetails.set().forEach(accordion => {
+                expect(accordion.isOpen).to.be.false;
+              });
+            });
+          });
+
+          describe('Administrative data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.instanceDetails.adminDataAccordion.label).to.equal('Administrative data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.instanceDetails.adminDataAccordion.isOpen).to.be.true;
+            });
+
+            hasField('instanceDetails', 'adminDataAccordion', 'suppressFromDiscovery', 'Suppress from discovery');
+            hasField('instanceDetails', 'adminDataAccordion', 'staffSuppress', 'Staff suppress');
+            hasField('instanceDetails', 'adminDataAccordion', 'previouslyHeld', 'Previously held');
+            hasField('instanceDetails', 'adminDataAccordion', 'instanceHRID', 'Instance HRID');
+            hasField('instanceDetails', 'adminDataAccordion', 'metadataSource', 'Metadata source');
+            hasField('instanceDetails', 'adminDataAccordion', 'catalogedDate', 'Cataloged date');
+            hasField('instanceDetails', 'adminDataAccordion', 'instanceStatusTerm', 'Instance status term');
+            hasField('instanceDetails', 'adminDataAccordion', 'modeOfIssuance', 'Mode of issuance');
+          });
+
+          describe('Title data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.instanceDetails.titleDataAccordion.label).to.equal('Title data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.instanceDetails.titleDataAccordion.isOpen).to.be.true;
+            });
+
+            hasField('instanceDetails', 'titleDataAccordion', 'resourceTitle', 'Resource title');
+            hasField('instanceDetails', 'titleDataAccordion', 'alternativeTitleType', 'Type');
+            hasField('instanceDetails', 'titleDataAccordion', 'alternativeTitle', 'Alternative title');
+            hasField('instanceDetails', 'titleDataAccordion', 'indexTitle', 'Index title');
+            hasField('instanceDetails', 'titleDataAccordion', 'seriesStatements', 'Series statement');
+          });
+
+          describe('Identifier accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.instanceDetails.identifierAccordion.label).to.equal('Identifier');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.instanceDetails.identifierAccordion.isOpen).to.be.true;
+            });
+
+            hasField('instanceDetails', 'identifierAccordion', 'identifierType', 'Type');
+            hasField('instanceDetails', 'identifierAccordion', 'identifierValue', 'Value');
+          });
+
+          describe('Contributor accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.instanceDetails.contributorAccordion.label).to.equal('Contributor');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.instanceDetails.contributorAccordion.isOpen).to.be.true;
+            });
+
+            hasField('instanceDetails', 'contributorAccordion', 'name', 'Name');
+            hasField('instanceDetails', 'contributorAccordion', 'nameType', 'Name type');
+            hasField('instanceDetails', 'contributorAccordion', 'type', 'Type');
+            hasField('instanceDetails', 'contributorAccordion', 'typeFreeText', 'Type, free text');
+            hasField('instanceDetails', 'contributorAccordion', 'primary', 'Primary');
+          });
+
+          describe('Descriptive data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.instanceDetails.descriptiveDataAccordion.label).to.equal('Descriptive data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.instanceDetails.descriptiveDataAccordion.isOpen).to.be.true;
+            });
+
+            hasField('instanceDetails', 'descriptiveDataAccordion', 'publisher', 'Publisher');
+            hasField('instanceDetails', 'descriptiveDataAccordion', 'publisherRole', 'Publisher role');
+            hasField('instanceDetails', 'descriptiveDataAccordion', 'place', 'Place');
+            hasField('instanceDetails', 'descriptiveDataAccordion', 'publicationDate', 'Publication date');
+            hasField('instanceDetails', 'descriptiveDataAccordion', 'edition', 'Edition');
+            hasField('instanceDetails', 'descriptiveDataAccordion', 'physicalDescription', 'Physical description');
+            hasField('instanceDetails', 'descriptiveDataAccordion', 'resourceType', 'Resource type');
+            hasField('instanceDetails', 'descriptiveDataAccordion', 'format', 'Format');
+            hasField('instanceDetails', 'descriptiveDataAccordion', 'language', 'Language');
+            hasField('instanceDetails', 'descriptiveDataAccordion', 'publicationFrequency', 'Publication frequency');
+            hasField('instanceDetails', 'descriptiveDataAccordion', 'publicationRange', 'Publication range');
+          });
+
+          describe('Instance notes accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.instanceDetails.instanceNotesAccordion.label).to.equal('Instance notes');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.instanceDetails.instanceNotesAccordion.isOpen).to.be.true;
+            });
+
+            hasField('instanceDetails', 'instanceNotesAccordion', 'noteType', 'Note type');
+            hasField('instanceDetails', 'instanceNotesAccordion', 'note', 'Note');
+            hasField('instanceDetails', 'instanceNotesAccordion', 'staffOnly', 'Staff only');
+          });
+
+          describe('Electronic access accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.instanceDetails.electronicAccessAccordion.label).to.equal('Electronic access');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.instanceDetails.electronicAccessAccordion.isOpen).to.be.true;
+            });
+
+            hasField('instanceDetails', 'electronicAccessAccordion', 'relationship', 'Relationship');
+            hasField('instanceDetails', 'electronicAccessAccordion', 'uri', 'URI');
+            hasField('instanceDetails', 'electronicAccessAccordion', 'linkText', 'Link text');
+            hasField('instanceDetails', 'electronicAccessAccordion', 'materialsSpecified', 'Materials specified');
+            hasField('instanceDetails', 'electronicAccessAccordion', 'urlPublicNote', 'URL public note');
+          });
+
+          describe('Subject accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.instanceDetails.subjectAccordion.label).to.equal('Subject');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.instanceDetails.subjectAccordion.isOpen).to.be.true;
+            });
+
+            hasField('instanceDetails', 'subjectAccordion', 'subjects', 'Subjects');
+          });
+
+          describe('Classification accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.instanceDetails.classificationAccordion.label).to.equal('Classification');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.instanceDetails.classificationAccordion.isOpen).to.be.true;
+            });
+
+            hasField('instanceDetails', 'classificationAccordion', 'classificationIdentifierType', 'Classification identifier type');
+            hasField('instanceDetails', 'classificationAccordion', 'classification', 'Classification');
+          });
+
+          describe('Instance relationship accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.instanceDetails.instanceRelationshipAccordion.label).to.equal('Instance relationship (analytics and bound-with)');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.instanceDetails.instanceRelationshipAccordion.isOpen).to.be.true;
+            });
+          });
+
+          describe('Related instances accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.instanceDetails.relatedInstancesAccordion.label).to.equal('Related instances');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.instanceDetails.relatedInstancesAccordion.isOpen).to.be.true;
+            });
+          });
+        });
+
+        describe('Holdings', () => {
+          beforeEach(async () => {
+            await mappingProfiles.list.rows(1).click();
+          });
+
+          it('has correct header', () => {
+            expect(mappingProfileDetails.holdingsDetails.header.mappedLabel).to.be.equal('Field mapping');
+            expect(mappingProfileDetails.holdingsDetails.header.mappableLabel).to.be.equal('Holdings');
+          });
+
+          it('has correct count of accordions', () => {
+            expect(mappingProfileDetails.holdingsDetails.set().length).to.equal(7);
+          });
+
+          it('has expand/collapse all button', () => {
+            expect(mappingProfileDetails.holdingsDetails.expandAllButton.isPresent).to.be.true;
+          });
+
+          describe('click on expand/collapse all button', () => {
+            beforeEach(async () => {
+              await mappingProfileDetails.holdingsDetails.expandAllButton.clickExpandAllButton();
+            });
+
+            it('button label should be equal to "Expand all"', () => {
+              expect(mappingProfileDetails.holdingsDetails.expandAllButton.label).to.equal('Expand all');
+            });
+
+            it('all accordions should be closed', () => {
+              mappingProfileDetails.holdingsDetails.set().forEach(accordion => {
+                expect(accordion.isOpen).to.be.false;
+              });
+            });
+          });
+
+          describe('Administrative data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.adminDataAccordion.label).to.equal('Administrative data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.adminDataAccordion.isOpen).to.be.true;
+            });
+
+            hasField('holdingsDetails', 'adminDataAccordion', 'suppressFromDiscovery', 'Suppress from discovery');
+            hasField('holdingsDetails', 'adminDataAccordion', 'holdingsHRID', 'Holdings HRID');
+            hasField('holdingsDetails', 'adminDataAccordion', 'holdingsType', 'Holdings type');
+          });
+
+          describe('Location accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.locationAccordion.label).to.equal('Location');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.locationAccordion.isOpen).to.be.true;
+            });
+
+            hasField('holdingsDetails', 'locationAccordion', 'permanent', 'Permanent');
+            hasField('holdingsDetails', 'locationAccordion', 'temporary', 'Temporary');
+            hasField('holdingsDetails', 'locationAccordion', 'shelvingOrder', 'Shelving order');
+            hasField('holdingsDetails', 'locationAccordion', 'shelvingTitle', 'Shelving title');
+            hasField('holdingsDetails', 'locationAccordion', 'copyNumber', 'Copy number');
+            hasField('holdingsDetails', 'locationAccordion', 'callNumberType', 'Call number type');
+            hasField('holdingsDetails', 'locationAccordion', 'callNumberPrefix', 'Call number prefix');
+            hasField('holdingsDetails', 'locationAccordion', 'callNumber', 'Call number');
+            hasField('holdingsDetails', 'locationAccordion', 'callNumberSuffix', 'Call number suffix');
+          });
+
+          describe('Holdings details accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.holdingsDetailsAccordion.label).to.equal('Holdings details');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.holdingsDetailsAccordion.isOpen).to.be.true;
+            });
+
+            hasField('holdingsDetails', 'holdingsDetailsAccordion', 'numberOfItems', 'Number of items');
+            hasField('holdingsDetails', 'holdingsDetailsAccordion', 'illPolicy', 'ILL policy');
+            hasField('holdingsDetails', 'holdingsDetailsAccordion', 'digitizationPolicy', 'Digitization policy');
+            hasField('holdingsDetails', 'holdingsDetailsAccordion', 'retentionPolicy', 'Retention policy');
+          });
+
+          describe('Holdings notes accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.holdingsNotesAccordion.label).to.equal('Holdings notes');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.holdingsNotesAccordion.isOpen).to.be.true;
+            });
+          });
+
+          describe('Electronic access accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.electronicAccessAccordion.label).to.equal('Electronic access');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.electronicAccessAccordion.isOpen).to.be.true;
+            });
+          });
+
+          describe('Acquisition accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.acquisitionAccordion.label).to.equal('Acquisition');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.acquisitionAccordion.isOpen).to.be.true;
+            });
+
+            hasField('holdingsDetails', 'acquisitionAccordion', 'acquisitionMethod', 'Acquisition method');
+            hasField('holdingsDetails', 'acquisitionAccordion', 'orderFormat', 'Order format');
+            hasField('holdingsDetails', 'acquisitionAccordion', 'receiptStatus', 'Receipt status');
+          });
+
+          describe('Receiving history accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.holdingsDetails.receivingHistoryAccordion.label).to.equal('Receiving history');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.holdingsDetails.receivingHistoryAccordion.isOpen).to.be.true;
+            });
+          });
+        });
+
+        describe('Item', () => {
+          beforeEach(async () => {
+            await mappingProfiles.list.rows(2).click();
+          });
+
+          it('has correct header', () => {
+            expect(mappingProfileDetails.itemDetails.header.mappedLabel).to.be.equal('Field mapping');
+            expect(mappingProfileDetails.itemDetails.header.mappableLabel).to.be.equal('Item');
+          });
+
+          it('has correct count of accordions', () => {
+            expect(mappingProfileDetails.itemDetails.set().length).to.equal(8);
+          });
+
+          it('has expand/collapse all button', () => {
+            expect(mappingProfileDetails.itemDetails.expandAllButton.isPresent).to.be.true;
+          });
+
+          describe('click on expand/collapse all button', () => {
+            beforeEach(async () => {
+              await mappingProfileDetails.itemDetails.expandAllButton.clickExpandAllButton();
+            });
+
+            it('button label should be equal to "Expand all"', () => {
+              expect(mappingProfileDetails.itemDetails.expandAllButton.label).to.equal('Expand all');
+            });
+
+            it('all accordions should be closed', () => {
+              mappingProfileDetails.itemDetails.set().forEach(accordion => {
+                expect(accordion.isOpen).to.be.false;
+              });
+            });
+          });
+
+          describe('Administrative data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.itemDetails.adminDataAccordion.label).to.equal('Administrative data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.itemDetails.adminDataAccordion.isOpen).to.be.true;
+            });
+
+            hasField('itemDetails', 'adminDataAccordion', 'suppressFromDiscovery', 'Suppress from discovery');
+            hasField('itemDetails', 'adminDataAccordion', 'itemHRID', 'Item HRID');
+            hasField('itemDetails', 'adminDataAccordion', 'barcode', 'Barcode');
+            hasField('itemDetails', 'adminDataAccordion', 'accessionNumber', 'Accession number');
+            hasField('itemDetails', 'adminDataAccordion', 'itemIdentifier', 'Item identifier');
+          });
+
+          describe('Item data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.itemDetails.itemDataAccordion.label).to.equal('Item data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.itemDetails.itemDataAccordion.isOpen).to.be.true;
+            });
+
+            hasField('itemDetails', 'itemDataAccordion', 'materialType', 'Material type');
+            hasField('itemDetails', 'itemDataAccordion', 'copyNumber', 'Copy number');
+            hasField('itemDetails', 'itemDataAccordion', 'callNumberType', 'Call number type');
+            hasField('itemDetails', 'itemDataAccordion', 'callNumberPrefix', 'Call number prefix');
+            hasField('itemDetails', 'itemDataAccordion', 'callNumber', 'Call number');
+            hasField('itemDetails', 'itemDataAccordion', 'callNumberSuffix', 'Call number suffix');
+            hasField('itemDetails', 'itemDataAccordion', 'numberOfPieces', 'Number of pieces');
+            hasField('itemDetails', 'itemDataAccordion', 'descriptionOfPieces', 'Description of pieces');
+          });
+
+          describe('Enumeration data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.itemDetails.enumerationDataAccordion.label).to.equal('Enumeration data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.itemDetails.enumerationDataAccordion.isOpen).to.be.true;
+            });
+
+            hasField('itemDetails', 'enumerationDataAccordion', 'enumeration', 'Enumeration');
+            hasField('itemDetails', 'enumerationDataAccordion', 'chronology', 'Chronology');
+            hasField('itemDetails', 'enumerationDataAccordion', 'volume', 'Volume');
+          });
+
+          describe('Condition accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.itemDetails.conditionAccordion.label).to.equal('Condition');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.itemDetails.conditionAccordion.isOpen).to.be.true;
+            });
+
+            hasField('itemDetails', 'conditionAccordion', 'missingPiecesNumber', 'Number of missing pieces');
+            hasField('itemDetails', 'conditionAccordion', 'missingPieces', 'Missing pieces');
+            hasField('itemDetails', 'conditionAccordion', 'date', 'Date');
+            hasField('itemDetails', 'conditionAccordion', 'itemDamagedStatus', 'Item damaged status');
+            hasField('itemDetails', 'conditionAccordion', 'date2', 'Date');
+          });
+
+          describe('Item notes accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.itemDetails.itemNotesAccordion.label).to.equal('Item notes');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.itemDetails.itemNotesAccordion.isOpen).to.be.true;
+            });
+          });
+
+          describe('Loan and availability accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.itemDetails.loanAndAvailabilityAccordion.label).to.equal('Loan and availability');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.itemDetails.loanAndAvailabilityAccordion.isOpen).to.be.true;
+            });
+
+            hasField('itemDetails', 'loanAndAvailabilityAccordion', 'permanentLoanType', 'Permanent loan type');
+            hasField('itemDetails', 'loanAndAvailabilityAccordion', 'temporaryLoanType', 'Temporary loan type');
+            hasField('itemDetails', 'loanAndAvailabilityAccordion', 'status', 'Status');
+          });
+
+          describe('Location accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.itemDetails.locationAccordion.label).to.equal('Location');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.itemDetails.locationAccordion.isOpen).to.be.true;
+            });
+
+            hasField('itemDetails', 'locationAccordion', 'permanent', 'Permanent');
+            hasField('itemDetails', 'locationAccordion', 'temporary', 'Temporary');
+          });
+
+          describe('Electronic access accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileDetails.itemDetails.electronicAccessAccordion.label).to.equal('Electronic access');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileDetails.itemDetails.electronicAccessAccordion.isOpen).to.be.true;
+            });
+          });
+        });
+      });
+    });
+
+    describe('edit mapping profile form', () => {
+      describe('when FOLIO record type equals to', () => {
+        describe('Instance', () => {
+          beforeEach(async () => {
+            await mappingProfiles.list.rows(0).click();
+            await mappingProfileDetails.actionMenu.click();
+            await mappingProfileDetails.actionMenu.editProfile.click();
+          });
+
+          it('has correct header', () => {
+            expect(mappingProfileForm.instanceDetails.header.mappedLabel).to.be.equal('Field mapping');
+            expect(mappingProfileForm.instanceDetails.header.mappableLabel).to.be.equal('Instance');
+          });
+
+          it('has correct count of accordions', () => {
+            expect(mappingProfileForm.instanceDetails.set().length).to.equal(11);
+          });
+
+          it('has expand/collapse all button', () => {
+            expect(mappingProfileForm.instanceDetails.expandAllButton.isPresent).to.be.true;
+          });
+
+          describe('Administrative data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.instanceDetails.adminDataAccordion.label).to.equal('Administrative data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.instanceDetails.adminDataAccordion.isOpen).to.be.true;
+            });
+
+            hasInput('instanceDetails', 'adminDataAccordion', 'instanceHRID', 'Instance HRID', true);
+            hasInput('instanceDetails', 'adminDataAccordion', 'metadataSource', 'Metadata source', true);
+            hasInput('instanceDetails', 'adminDataAccordion', 'catalogedDate', 'Cataloged date');
+            hasInput('instanceDetails', 'adminDataAccordion', 'instanceStatusTerm', 'Instance status term');
+            hasInput('instanceDetails', 'adminDataAccordion', 'modeOfIssuance', 'Mode of issuance', true);
+            hasRepeatableField('instanceDetails', 'adminDataAccordion', 'statisticalCodes', 'Statistical codes');
+          });
+
+          describe('Title data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.instanceDetails.titleDataAccordion.label).to.equal('Title data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.instanceDetails.titleDataAccordion.isOpen).to.be.true;
+            });
+
+            hasInput('instanceDetails', 'titleDataAccordion', 'resourceTitle', 'Resource title', true);
+            hasRepeatableField('instanceDetails', 'titleDataAccordion', 'alternativeTitles', 'Alternative titles', true);
+            hasInput('instanceDetails', 'titleDataAccordion', 'indexTitle', 'Index title', true);
+            hasRepeatableField('instanceDetails', 'titleDataAccordion', 'seriesStatements', 'Series statements', true);
+            hasRepeatableField('instanceDetails', 'titleDataAccordion', 'precedingTitles', 'Preceding titles');
+            hasRepeatableField('instanceDetails', 'titleDataAccordion', 'succeedingTitles', 'Succeeding titles');
+          });
+
+          describe('Identifier accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.instanceDetails.identifierAccordion.label).to.equal('Identifier');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.instanceDetails.identifierAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('instanceDetails', 'identifierAccordion', 'identifiers', '', true);
+          });
+
+          describe('Contributor accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.instanceDetails.contributorAccordion.label).to.equal('Contributor');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.instanceDetails.contributorAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('instanceDetails', 'contributorAccordion', 'contributors', '', true);
+          });
+
+          describe('Descriptive data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.instanceDetails.descriptiveDataAccordion.label).to.equal('Descriptive data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.instanceDetails.descriptiveDataAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('instanceDetails', 'descriptiveDataAccordion', 'publications', 'Publications', true);
+            hasRepeatableField('instanceDetails', 'descriptiveDataAccordion', 'editions', 'Editions', true);
+            hasRepeatableField('instanceDetails', 'descriptiveDataAccordion', 'physicalDescriptions', 'Physical descriptions', true);
+            hasInput('instanceDetails', 'descriptiveDataAccordion', 'resourceType', 'Resource type', true);
+            hasRepeatableField('instanceDetails', 'descriptiveDataAccordion', 'natureOfContentTerms', 'Nature of content terms');
+            hasRepeatableField('instanceDetails', 'descriptiveDataAccordion', 'formats', 'Formats', true);
+            hasRepeatableField('instanceDetails', 'descriptiveDataAccordion', 'languages', 'Languages', true);
+            hasRepeatableField('instanceDetails', 'descriptiveDataAccordion', 'publicationFrequencies', 'Publication frequencies', true);
+            hasRepeatableField('instanceDetails', 'descriptiveDataAccordion', 'publicationRanges', 'Publication range', true);
+          });
+
+          describe('Instance notes accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.instanceDetails.instanceNotesAccordion.label).to.equal('Instance notes');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.instanceDetails.instanceNotesAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('instanceDetails', 'instanceNotesAccordion', 'notes', '', true);
+          });
+
+          describe('Electronic access accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.instanceDetails.electronicAccessAccordion.label).to.equal('Electronic access');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.instanceDetails.electronicAccessAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('instanceDetails', 'electronicAccessAccordion', 'electronicAccess', '', true);
+          });
+
+          describe('Subject accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.instanceDetails.subjectAccordion.label).to.equal('Subject');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.instanceDetails.subjectAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('instanceDetails', 'subjectAccordion', 'subjects', '', true);
+          });
+
+          describe('Classification accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.instanceDetails.classificationAccordion.label).to.equal('Classification');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.instanceDetails.classificationAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('instanceDetails', 'classificationAccordion', 'classifications', '', true);
+          });
+
+          describe('Instance relationship accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.instanceDetails.instanceRelationshipAccordion.label).to.equal('Instance relationship (analytics and bound-with)');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.instanceDetails.instanceRelationshipAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('instanceDetails', 'instanceRelationshipAccordion', 'parentInstances', 'Parent instances');
+            hasRepeatableField('instanceDetails', 'instanceRelationshipAccordion', 'childInstances', 'Child instances');
+          });
+
+          describe('Related instances accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.instanceDetails.relatedInstancesAccordion.label).to.equal('Related instances');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.instanceDetails.relatedInstancesAccordion.isOpen).to.be.true;
+            });
+          });
+        });
+
+        describe('Holdings', () => {
+          beforeEach(async () => {
+            await mappingProfiles.list.rows(1).click();
+            await mappingProfileDetails.actionMenu.click();
+            await mappingProfileDetails.actionMenu.editProfile.click();
+          });
+
+          it('has correct header', () => {
+            expect(mappingProfileForm.holdingsDetails.header.mappedLabel).to.be.equal('Field mapping');
+            expect(mappingProfileForm.holdingsDetails.header.mappableLabel).to.be.equal('Holdings');
+          });
+
+          it('has correct count of accordions', () => {
+            expect(mappingProfileForm.holdingsDetails.set().length).to.equal(7);
+          });
+
+          it('has expand/collapse all button', () => {
+            expect(mappingProfileForm.holdingsDetails.expandAllButton.isPresent).to.be.true;
+          });
+
+          describe('Administrative data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.holdingsDetails.adminDataAccordion.label).to.equal('Administrative data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.holdingsDetails.adminDataAccordion.isOpen).to.be.true;
+            });
+
+            hasInput('holdingsDetails', 'adminDataAccordion', 'holdingsHRID', 'Holdings HRID', true);
+            hasRepeatableField('holdingsDetails', 'adminDataAccordion', 'formerHoldings', 'Former holdings');
+            hasInput('holdingsDetails', 'adminDataAccordion', 'holdingsType', 'Holdings type');
+            hasRepeatableField('holdingsDetails', 'adminDataAccordion', 'statisticalCodes', 'Statistical codes');
+          });
+
+          describe('Location accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.holdingsDetails.locationAccordion.label).to.equal('Location');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.holdingsDetails.locationAccordion.isOpen).to.be.true;
+            });
+
+            hasInput('holdingsDetails', 'locationAccordion', 'permanent', 'Permanent');
+            hasInput('holdingsDetails', 'locationAccordion', 'temporary', 'Temporary');
+            hasInput('holdingsDetails', 'locationAccordion', 'shelvingOrder', 'Shelving order');
+            hasInput('holdingsDetails', 'locationAccordion', 'shelvingTitle', 'Shelving title');
+            hasInput('holdingsDetails', 'locationAccordion', 'copyNumber', 'Copy number');
+            hasInput('holdingsDetails', 'locationAccordion', 'callNumberType', 'Call number type');
+            hasInput('holdingsDetails', 'locationAccordion', 'callNumberPrefix', 'Call number prefix');
+            hasInput('holdingsDetails', 'locationAccordion', 'callNumber', 'Call number');
+            hasInput('holdingsDetails', 'locationAccordion', 'callNumberSuffix', 'Call number suffix');
+          });
+
+          describe('Holdings details accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.holdingsDetails.holdingsDetailsAccordion.label).to.equal('Holdings details');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.holdingsDetails.holdingsDetailsAccordion.isOpen).to.be.true;
+            });
+
+            hasInput('holdingsDetails', 'holdingsDetailsAccordion', 'numberOfItems', 'Number of items');
+            hasRepeatableField('holdingsDetails', 'holdingsDetailsAccordion', 'statements', 'Holdings statements');
+            hasRepeatableField('holdingsDetails', 'holdingsDetailsAccordion', 'statementsForSupplement', 'Holdings statements for supplement');
+            hasRepeatableField('holdingsDetails', 'holdingsDetailsAccordion', 'statementsForIndexes', 'Holdings statements for indexes');
+            hasInput('holdingsDetails', 'holdingsDetailsAccordion', 'illPolicy', 'ILL policy');
+            hasInput('holdingsDetails', 'holdingsDetailsAccordion', 'digitizationPolicy', 'Digitization policy');
+            hasInput('holdingsDetails', 'holdingsDetailsAccordion', 'retentionPolicy', 'Retention policy');
+          });
+
+          describe('Holdings notes accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.holdingsDetails.holdingsNotesAccordion.label).to.equal('Holdings notes');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.holdingsDetails.holdingsNotesAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('holdingsDetails', 'holdingsNotesAccordion', 'notes', '');
+          });
+
+          describe('Electronic access accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.holdingsDetails.electronicAccessAccordion.label).to.equal('Electronic access');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.holdingsDetails.electronicAccessAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('holdingsDetails', 'electronicAccessAccordion', 'electronicAccess', '');
+          });
+
+          describe('Acquisition accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.holdingsDetails.acquisitionAccordion.label).to.equal('Acquisition');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.holdingsDetails.acquisitionAccordion.isOpen).to.be.true;
+            });
+
+            hasInput('holdingsDetails', 'acquisitionAccordion', 'acquisitionMethod', 'Acquisition method');
+            hasInput('holdingsDetails', 'acquisitionAccordion', 'orderFormat', 'Order format');
+            hasInput('holdingsDetails', 'acquisitionAccordion', 'receiptStatus', 'Receipt status');
+          });
+
+          describe('Receiving history accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.holdingsDetails.receivingHistoryAccordion.label).to.equal('Receiving history');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.holdingsDetails.receivingHistoryAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('holdingsDetails', 'receivingHistoryAccordion', 'note', '');
+          });
+        });
+
+        describe('Item', () => {
+          beforeEach(async () => {
+            await mappingProfiles.list.rows(2).click();
+            await mappingProfileDetails.actionMenu.click();
+            await mappingProfileDetails.actionMenu.editProfile.click();
+          });
+
+          it('has correct header', () => {
+            expect(mappingProfileForm.itemDetails.header.mappedLabel).to.be.equal('Field mapping');
+            expect(mappingProfileForm.itemDetails.header.mappableLabel).to.be.equal('Item');
+          });
+
+          it('has correct count of accordions', () => {
+            expect(mappingProfileForm.holdingsDetails.set().length).to.equal(8);
+          });
+
+          it('has expand/collapse all button', () => {
+            expect(mappingProfileForm.holdingsDetails.expandAllButton.isPresent).to.be.true;
+          });
+
+          describe('Administrative data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.itemDetails.adminDataAccordion.label).to.equal('Administrative data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.itemDetails.adminDataAccordion.isOpen).to.be.true;
+            });
+
+            hasInput('itemDetails', 'adminDataAccordion', 'itemHRID', 'Item HRID', true);
+            hasInput('itemDetails', 'adminDataAccordion', 'barcode', 'Barcode');
+            hasInput('itemDetails', 'adminDataAccordion', 'accessionNumber', 'Accession number');
+            hasInput('itemDetails', 'adminDataAccordion', 'itemIdentifier', 'Item identifier');
+            hasRepeatableField('itemDetails', 'adminDataAccordion', 'formerIds', 'Former identifiers');
+            hasRepeatableField('itemDetails', 'adminDataAccordion', 'statisticalCodes', 'Statistical codes');
+          });
+
+          describe('Item data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.itemDetails.itemDataAccordion.label).to.equal('Item data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.itemDetails.itemDataAccordion.isOpen).to.be.true;
+            });
+
+            hasInput('itemDetails', 'itemDataAccordion', 'materialType', 'Material type');
+            hasInput('itemDetails', 'itemDataAccordion', 'copyNumber', 'Copy number');
+            hasInput('itemDetails', 'itemDataAccordion', 'callNumberType', 'Call number type');
+            hasInput('itemDetails', 'itemDataAccordion', 'callNumberPrefix', 'Call number prefix');
+            hasInput('itemDetails', 'itemDataAccordion', 'callNumber', 'Call number');
+            hasInput('itemDetails', 'itemDataAccordion', 'callNumberSuffix', 'Call number suffix');
+            hasInput('itemDetails', 'itemDataAccordion', 'numberOfPieces', 'Number of pieces');
+            hasInput('itemDetails', 'itemDataAccordion', 'descriptionOfPieces', 'Description of pieces');
+          });
+
+          describe('Enumeration data accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.itemDetails.enumerationDataAccordion.label).to.equal('Enumeration data');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.itemDetails.enumerationDataAccordion.isOpen).to.be.true;
+            });
+
+            hasInput('itemDetails', 'enumerationDataAccordion', 'enumeration', 'Enumeration');
+            hasInput('itemDetails', 'enumerationDataAccordion', 'chronology', 'Chronology');
+            hasInput('itemDetails', 'enumerationDataAccordion', 'volume', 'Volume');
+            hasRepeatableField('itemDetails', 'enumerationDataAccordion', 'yearsAndCaptions', 'Years and captions');
+          });
+
+          describe('Condition accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.itemDetails.conditionAccordion.label).to.equal('Condition');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.itemDetails.conditionAccordion.isOpen).to.be.true;
+            });
+
+            hasInput('itemDetails', 'conditionAccordion', 'missingPiecesNumber', 'Number of missing pieces');
+            hasInput('itemDetails', 'conditionAccordion', 'missingPieces', 'Missing pieces');
+            hasInput('itemDetails', 'conditionAccordion', 'date', 'Date');
+            hasInput('itemDetails', 'conditionAccordion', 'itemDamagedStatus', 'Item damaged status');
+            hasInput('itemDetails', 'conditionAccordion', 'date2', 'Date');
+          });
+
+          describe('Item notes accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.itemDetails.itemNotesAccordion.label).to.equal('Item notes');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.itemDetails.itemNotesAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('itemDetails', 'itemNotesAccordion', 'notes', '');
+          });
+
+          describe('Loan and availability accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.itemDetails.loanAndAvailabilityAccordion.label).to.equal('Loan and availability');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.itemDetails.loanAndAvailabilityAccordion.isOpen).to.be.true;
+            });
+
+            hasInput('itemDetails', 'loanAndAvailabilityAccordion', 'permanentLoanType', 'Permanent loan type');
+            hasInput('itemDetails', 'loanAndAvailabilityAccordion', 'temporaryLoanType', 'Temporary loan type');
+            hasInput('itemDetails', 'loanAndAvailabilityAccordion', 'status', 'Status');
+            hasRepeatableField('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotes', 'Circulation notes');
+          });
+
+          describe('Location accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.itemDetails.locationAccordion.label).to.equal('Location');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.itemDetails.locationAccordion.isOpen).to.be.true;
+            });
+
+            hasInput('itemDetails', 'locationAccordion', 'permanent', 'Permanent');
+            hasInput('itemDetails', 'locationAccordion', 'temporary', 'Temporary');
+          });
+
+          describe('Electronic access accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.itemDetails.electronicAccessAccordion.label).to.equal('Electronic access');
+            });
+
+            it('is open by default', () => {
+              expect(mappingProfileForm.itemDetails.electronicAccessAccordion.isOpen).to.be.true;
+            });
+
+            hasRepeatableField('itemDetails', 'electronicAccessAccordion', 'electronicAccess', '');
           });
         });
       });
