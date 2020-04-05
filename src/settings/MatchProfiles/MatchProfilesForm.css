@@ -35,12 +35,18 @@
 .match-criteria {
   composes: match-criteria from "@folio/data-import/src/settings/MatchProfiles/MatchProfiles.css";
 
-  & > :last-child > :last-child {
-    & > ul {
-      margin-bottom: 0;
+  & [class|="repeatableFieldList"] {
+    margin-bottom: 0;
 
-      & section {
-        & > :first-child button {
+    & > li {
+      position: relative;
+    }
+
+    & section {
+      & > [class|="headerWrapper"]  {
+        /*TODO: padding-right: 2.8rem; should be added after all mechanisn of adding new field added*/
+
+        & > button {
           & span {
             color: #b2b2b2;
           }
@@ -49,86 +55,32 @@
             color: var(--bg);
           }
         }
+      }
 
-        & > :last-child {
-          margin-bottom: 0;
-        }
+
+      & > :last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    & div[class|="repeatableFieldRemoveItem"] {
+      display: none; /*TODO: should be removed after all mechanisn of adding new field added*/
+      margin: 0;
+      flex: none;
+      position: absolute;
+      right: 0;
+      top: 0.5rem;
+
+      & button {
+        color: var(--bg);
       }
     }
   }
 
   & .match-criterion {
-    & .qualifier > div:last-child:not(:first-child) {
-      & > :first-child {
-        width: 16rem;
-      }
-
-      & > :last-child {
-        width: 26rem;
-      }
-    }
-
-    & .part > div:last-child:not(:first-child) {
-      & > :first-child {
-        width: 16rem;
-      }
-    }
-
-    & .incoming {
-      & .field > div:last-child:not(:first-child) {
-        & > :first-child {
-          width: 8rem;
-        }
-
-        & > :nth-child(2) {
-          width: 3rem;
-        }
-
-        & > :nth-child(3) {
-          width: 3rem;
-        }
-
-        & > :last-child {
-          width: 26rem;
-        }
-      }
-    }
-
-    & .criterion-section {
-      & > div:last-child:not(:first-child) {
-        & > :first-child {
-          width: 45rem;
-        }
-      }
-    }
-
-    & .input-container {
-      & > div:last-child:not(:first-child) {
-        width: 100%;
-      }
-    }
-
-    & .existing{
-      & > :last-child > :first-child > :last-child button div {
+    & .existing {
+      & [class|="selectionControlContainer"] button div {
         color: var(--color-text);
-      }
-
-      & .field > div:last-child:not(:first-child) {
-        & > :first-child {
-          width: 8rem;
-        }
-
-        & > :nth-child(2) {
-          width: 3rem;
-        }
-
-        & > :nth-child(3) {
-          width: 3rem;
-        }
-
-        & > :last-child {
-          width: 26rem;
-        }
       }
     }
   }
