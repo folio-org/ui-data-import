@@ -3704,8 +3704,8 @@ export const formConfigSamples = [{
                 renderStaticAsMCL: true,
                 visibleColumns: ['statement', 'note'],
                 columnMapping: {
-                  statement: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementForSupplements',
-                  note: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementForSupplementsNote',
+                  statement: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatement',
+                  note: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote',
                 },
                 mclColumnPaths: {
                   statement: {
@@ -3730,7 +3730,7 @@ export const formConfigSamples = [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'TextField',
-                      label: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementForSupplements',
+                      label: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatement',
                       name: 'mappingDetails.mappingFields[16].subfields[##ri##].fields[0].value',
                     }],
                   }, {
@@ -3741,7 +3741,7 @@ export const formConfigSamples = [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'TextField',
-                      label: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementForSupplementsNote',
+                      label: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote',
                       name: 'mappingDetails.mappingFields[16].subfields[##ri##].fields[1].value',
                     }],
                   }],
@@ -3768,8 +3768,8 @@ export const formConfigSamples = [{
                 renderStaticAsMCL: true,
                 visibleColumns: ['statement', 'note'],
                 columnMapping: {
-                  statement: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementForIndexes',
-                  note: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementForIndexesNote',
+                  statement: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatement',
+                  note: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote',
                 },
                 mclColumnPaths: {
                   statement: {
@@ -3794,7 +3794,7 @@ export const formConfigSamples = [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'TextField',
-                      label: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementForIndexes',
+                      label: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatement',
                       name: 'mappingDetails.mappingFields[17].subfields[##ri##].fields[0].value',
                     }],
                   }, {
@@ -3805,7 +3805,7 @@ export const formConfigSamples = [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'TextField',
-                      label: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementForIndexesNote',
+                      label: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote',
                       name: 'mappingDetails.mappingFields[17].subfields[##ri##].fields[1].value',
                     }],
                   }],
