@@ -3,7 +3,9 @@ import React, {
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
+import {
+  isEmpty, pickBy,
+} from 'lodash';
 
 import {
   Checkbox,
@@ -18,8 +20,11 @@ export const Section = memo(({
   enabled,
   className,
   children,
+  ...rest
 }) => {
   const [isChecked, setChecked] = useState(optional ? enabled : true);
+
+  const getDataAttributes = attrs => pickBy(attrs, (_, key) => key.startsWith('data-test-'));
 
   // eslint-disable-next-line react/prop-types
   const headline = ({ styles = '' }) => {
@@ -56,7 +61,10 @@ export const Section = memo(({
   };
 
   return (
-    <section className={`${css.container} ${className}`}>
+    <section
+      className={`${css.container} ${className}`}
+      {...getDataAttributes(rest)}
+    >
       {optional ? optionalHeadline() : headline({ styles: css.label })}
       {isChecked && !isEmpty(children) && (<div className={`${css.content} ${label ? '' : css['no-label']}`}>{children}</div>)}
     </section>
