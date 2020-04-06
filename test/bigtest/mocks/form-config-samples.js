@@ -277,7 +277,7 @@ export const formConfigSamples = [{
     optional: true,
     enabled: false,
     classNames: ['qualifier', 'input-container'],
-    dataAttributes: {},
+    dataAttributes: { 'data-test-qualifier': '' },
     childControls: [{
       controlType: 'Row',
       staticControlType: 'Row',
@@ -329,7 +329,7 @@ export const formConfigSamples = [{
     optional: true,
     enabled: false,
     classNames: ['part', 'input-container'],
-    dataAttributes: {},
+    dataAttributes: { 'data-test-part': '' },
     childControls: [{
       controlType: 'Row',
       staticControlType: 'Row',
@@ -508,7 +508,7 @@ export const formConfigSamples = [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'Select',
-                      id: 'criterion-criterion-type',
+                      id: 'criterion##ri##-criterion-type',
                       name: 'matchDetails[##ri##].matchCriterion',
                       label: '',
                       placeholder: '',

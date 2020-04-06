@@ -36,10 +36,10 @@ const controls = {
 const getControl = controlType => components[controlType] || controls[controlType] || controlType;
 const getValidation = validation => validation.map(val => validators[val]);
 const augmentParam = (param, splitter, augment) => (param ? param.split(splitter).join(augment) : param);
-const getActualName = (name, sectionNamespace, repeatableIndex) => {
-  const nsName = augmentParam(name, '**ns**', sectionNamespace);
+const getActualParam = (param, sectionNamespace, repeatableIndex) => {
+  const nsParam = augmentParam(param, '**ns**', sectionNamespace);
 
-  return augmentParam(nsName, '##ri##', repeatableIndex);
+  return augmentParam(nsParam, '##ri##', repeatableIndex);
 };
 const isFormattedMessage = lbl => React.isValidElement(lbl);
 const isTranslationId = lbl => lbl && lbl.includes('ui-');
@@ -75,7 +75,7 @@ const getOptionLabel = (options, label, sectionNamespace) => {
 
   return !isFormattedMessage ? <FormattedMessage id={actualLabel} /> : actualLabel;
 };
-const getValue = (controlName, record, sectionNamespace, repeatableIndex) => get(record, getActualName(controlName, sectionNamespace, repeatableIndex));
+const getValue = (controlName, record, sectionNamespace, repeatableIndex) => get(record, getActualParam(controlName, sectionNamespace, repeatableIndex));
 const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
 const hasContent = (children, record, sectionNamespace, repeatableIndex) => children
   .map(child => getValue(child.name, record, sectionNamespace, repeatableIndex))
@@ -131,8 +131,8 @@ export const Control = memo(props => {
 
     const staticPrefix = staticNamespace && staticNamespace.length ? `${staticNamespace}.` : '';
     const editablePrefix = editableNamespace && editableNamespace.length ? `${editableNamespace}.` : '';
-    const actualId = augmentParam(id, '**ns**', sectionNamespace);
-    const actualName = getActualName(name, sectionNamespace, repeatableIndex);
+    const actualId = getActualParam(id, sectionNamespace, repeatableIndex);
+    const actualName = getActualParam(name, sectionNamespace, repeatableIndex);
     const fullName = `${isEditable ? editablePrefix : staticPrefix}${actualName}`;
     const fullFieldsPath = `${isEditable ? editablePrefix : staticPrefix}${fieldsPath}`;
     const actualLabel = augmentParam(label, '**ns**', sectionNamespace);

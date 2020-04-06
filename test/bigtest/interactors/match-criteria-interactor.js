@@ -22,7 +22,7 @@ class ExistingRecordDropdown {
 
 @interactor
 class MatchCriterion {
-  dropdown = new SelectInteractor('#criterion1-criterion-type');
+  dropdown = new SelectInteractor('#criterion0-criterion-type');
 }
 
 @interactor
@@ -71,8 +71,8 @@ export class MatchCriteriaInteractor extends AccordionInteractor {
 
   incomingRecord = new SectionInteractor('section[class*=incoming]');
   incomingRecordSections = new RecordSections('section[class*=incoming]');
-  incomingRecordQualifierCheckbox = new CheckboxInteractor('section[class*=incoming] [class*="qualifier---"]');
-  incomingRecordPartCheckbox = new CheckboxInteractor('section[class*=incoming] [class*="part---"]');
+  incomingRecordQualifierCheckbox = new CheckboxInteractor('section[class*=incoming] [data-test-qualifier]');
+  incomingRecordPartCheckbox = new CheckboxInteractor('section[class*=incoming] [data-test-part]');
 
   staticValueSection = new StaticValueSection('section[class*="static-section---"]');
 
@@ -82,6 +82,6 @@ export class MatchCriteriaInteractor extends AccordionInteractor {
   existingRecord = new SectionInteractor('section[class*=existing]');
   existingRecordSections = new RecordSections('section[class*=existing]');
   existingRecordFieldSections = new ExistingRecordFieldSection('section[class*=existing] section[class*=field]');
-  existingRecordQualifierCheckbox = new CheckboxInteractor('section[class*=existing] [class*="qualifier---"]');
-  existingRecordPartCheckbox = new CheckboxInteractor('section[class*=existing] [class*="part---"]');
+  existingRecordQualifierCheckbox = new CheckboxInteractor('section[class*=existing] [data-test-qualifier]');
+  existingRecordPartCheckbox = new CheckboxInteractor('section[class*=existing] [data-test-part]');
 }
