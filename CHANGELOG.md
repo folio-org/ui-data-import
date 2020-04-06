@@ -4,6 +4,7 @@
 
 ### Features added:
 * Render Repeatable Fields as MultiColumnList in FlexibleForm static view when needed (UIDATIMP-445)
+* Cover mapping profile details sections with tests (UIDATIMP-406)
 
 ### Bugs fixed:
 * More than one record cannot be created in Mapping Profiles Form repeatable fields (UIDATIMP-443)
