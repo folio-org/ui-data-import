@@ -34,6 +34,8 @@ import {
   FOLIO_RECORD_TYPES,
 } from '../../components';
 
+import { getReferenceTables } from './initialDetails';
+
 import { formConfigSamples } from '../../../test/bigtest/mocks';
 
 import sharedCss from '../../shared.css';
@@ -204,6 +206,7 @@ export class ViewMappingProfile extends Component {
     const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
     const record = cloneDeep(mappingProfile);
     const existingRecordType = get(record, ['existingRecordType'], null);
+    const referenceTables = getReferenceTables(get(mappingProfile.mappingDetails, 'mappingFields', []));
 
     const injectedProps = {
       'section-metadata': {
@@ -250,6 +253,7 @@ export class ViewMappingProfile extends Component {
           config={formConfig}
           styles={styles}
           record={record}
+          referenceTables={referenceTables}
           injectedProps={injectedProps}
         />
         <EndOfItem

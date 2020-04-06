@@ -219,11 +219,100 @@ export const Control = memo(props => {
 
   const attribs = getAttributes();
 
+  const renderChildren = () => children.map((cfg, i) => (
+    <Control
+      key={`control-${i}`}
+      repeatableIndex={cfg.repeatable ? i : repeatableIndex}
+      staticNamespace={staticNamespace}
+      editableNamespace={editableNamespace}
+      sectionNamespace={sectionNamespace}
+      intl={intl}
+      styles={styles}
+      referenceTables={referenceTables}
+      setReferenceTables={setReferenceTables}
+      initialFields={initialFields}
+      injectedProps={injectedProps}
+      commonSections={commonSections}
+      record={attribs.record}
+      {...cfg}
+    />
+  ));
+
+  const renderMCL = contentData => {
+    const {
+      legend,
+      visibleColumns,
+      columnWidths,
+      columnMapping,
+      mclColumnPaths,
+    } = props;
+
+    const data = isEmpty(mclColumnPaths) ? contentData : contentData.map(row => {
+      let currentRow = {};
+
+      visibleColumns.forEach(col => {
+        const colPaths = mclColumnPaths[col];
+        const fieldName = get(row, colPaths.namePath, col);
+        const fieldValue = get(row, colPaths.valuePath, <stripesComponents.NoValue />);
+
+        currentRow = {
+          ...currentRow,
+          [fieldName]: fieldValue,
+        };
+      });
+
+      return currentRow;
+    });
+
+    let mapping = {};
+
+    Object.keys(columnMapping).forEach(key => {
+      const mapValue = columnMapping[key];
+
+      mapping = {
+        ...mapping,
+        [key]: isTranslationId(mapValue) ? <FormattedMessage id={mapValue} /> : mapValue,
+      };
+    });
+
+    return (
+      <>
+        <div>
+          <strong>{isTranslationId(legend) ? <FormattedMessage id={legend} /> : legend}</strong>
+        </div>
+        <stripesComponents.MultiColumnList
+          contentData={data}
+          visibleColumns={visibleColumns}
+          columnWidths={columnWidths}
+          columnMapping={mapping}
+        />
+        <br />
+      </>
+    );
+  };
+
   const renderDefault = () => {
     const Cmp = !isEditable ? getControl(staticControlType) : getControl(controlType);
 
     if (isFragment) {
       return <Cmp />;
+    }
+
+    const {
+      fields,
+      renderStaticAsMCL,
+    } = props;
+    const refTable = get(referenceTables, fields, []);
+
+    if (repeatable && renderStaticAsMCL) {
+      return (
+        <Cmp
+          className={classes}
+          {...attribs}
+        >
+          {renderMCL(refTable)}
+        </Cmp>
+      );
     }
 
     if (hasChildren(props)) {
@@ -232,24 +321,7 @@ export const Control = memo(props => {
           className={classes}
           {...attribs}
         >
-          {children.map((cfg, i) => (
-            <Control
-              key={`control-${i}`}
-              repeatableIndex={cfg.repeatable ? i : repeatableIndex}
-              staticNamespace={staticNamespace}
-              editableNamespace={editableNamespace}
-              sectionNamespace={sectionNamespace}
-              intl={intl}
-              styles={styles}
-              referenceTables={referenceTables}
-              setReferenceTables={setReferenceTables}
-              initialFields={initialFields}
-              injectedProps={injectedProps}
-              commonSections={commonSections}
-              record={attribs.record}
-              {...cfg}
-            />
-          ))}
+          {repeatable ? refTable.map(() => renderChildren()) : renderChildren()}
         </Cmp>
       );
     }
@@ -446,6 +518,16 @@ Control.propTypes = {
   dataOptions: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   repeatable: PropTypes.bool,
   repeatableIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  renderStaticAsMCL: PropTypes.bool,
+  visibleColumns: PropTypes.arrayOf(PropTypes.string),
+  columnWidths: PropTypes.objectOf(PropTypes.string),
+  columnMapping: PropTypes.objectOf(PropTypes.string),
+  mclColumnPaths: PropTypes.objectOf(
+    PropTypes.shape({
+      namePath: PropTypes.string,
+      valuePath: PropTypes.string,
+    }),
+  ),
   sectionNamespace: PropTypes.string,
   commonSections: PropTypes.arrayOf(PropTypes.object),
   childControls: PropTypes.arrayOf(Node),
