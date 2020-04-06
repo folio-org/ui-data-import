@@ -21,60 +21,29 @@ class AdministrativeDataAccordion extends AccordionInteractor {
 
 class TitleDataAccordion extends AccordionInteractor {
   resourceTitle = new KeyValueInteractor('[data-test-resource-title');
-  alternativeTitleType = new KeyValueInteractor('[data-test-alternative-title-type');
-  alternativeTitle = new KeyValueInteractor('[data-test-alternative-title');
   indexTitle = new KeyValueInteractor('[data-test-index-title');
-  seriesStatements = new KeyValueInteractor('[data-test-series-statements]');
 }
 
 class IdentifierAccordion extends AccordionInteractor {
-  identifierType = new KeyValueInteractor('[data-test-identifier-type');
-  identifierValue = new KeyValueInteractor('[data-test-identifier-value');
 }
 
 class ContributorAccordion extends AccordionInteractor {
-  name = new KeyValueInteractor('[data-test-name]');
-  nameType = new KeyValueInteractor('[data-test-name-type]');
-  type = new KeyValueInteractor('[data-test-type]');
-  typeFreeText = new KeyValueInteractor('[data-test-type-free-text]');
-  primary = new KeyValueInteractor('[data-test-primary]');
 }
 
 class DescriptiveDataAccordion extends AccordionInteractor {
-  publisher = new KeyValueInteractor('[data-test-publisher]');
-  publisherRole = new KeyValueInteractor('[data-test-publisher-role]');
-  place = new KeyValueInteractor('[data-test-place]');
-  publicationDate = new KeyValueInteractor('[data-test-publication-date]');
-  edition = new KeyValueInteractor('[data-test-edition]');
-  physicalDescription = new KeyValueInteractor('[data-test-physical-description]');
   resourceType = new KeyValueInteractor('[data-test-resource-type]');
-  format = new KeyValueInteractor('[data-test-format]');
-  language = new KeyValueInteractor('[data-test-language]');
-  publicationFrequency = new KeyValueInteractor('[data-test-publication-frequency]');
-  publicationRange = new KeyValueInteractor('[data-test-publication-range]');
 }
 
 class InstanceNotesAccordion extends AccordionInteractor {
-  noteType = new KeyValueInteractor('[data-test-note-type]');
-  note = new KeyValueInteractor('[data-test-note]');
-  staffOnly = new KeyValueInteractor('[data-test-staff-only]');
 }
 
 class ElectronicAccessAccordion extends AccordionInteractor {
-  relationship = new KeyValueInteractor('[data-test-relationship]');
-  uri = new KeyValueInteractor('[data-test-uri]');
-  linkText = new KeyValueInteractor('[data-test-link-text]');
-  materialsSpecified = new KeyValueInteractor('[data-test-materials-specified]');
-  urlPublicNote = new KeyValueInteractor('[data-test-url-public-note]');
 }
 
 class SubjectAccordion extends AccordionInteractor {
-  subjects = new KeyValueInteractor('[data-test-subjects-field]');
 }
 
 class ClassificationAccordion extends AccordionInteractor {
-  classificationIdentifierType = new KeyValueInteractor('[data-test-classification-identifier-type]');
-  classification = new KeyValueInteractor('[data-test-classification]');
 }
 
 export class InstanceDetailsAccordion extends AccordionSetInteractor {

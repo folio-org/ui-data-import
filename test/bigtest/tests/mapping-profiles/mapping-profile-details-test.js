@@ -344,10 +344,7 @@ describe('Mapping Profile View', () => {
             });
 
             hasField('instanceDetails', 'titleDataAccordion', 'resourceTitle', 'Resource title');
-            hasField('instanceDetails', 'titleDataAccordion', 'alternativeTitleType', 'Type');
-            hasField('instanceDetails', 'titleDataAccordion', 'alternativeTitle', 'Alternative title');
             hasField('instanceDetails', 'titleDataAccordion', 'indexTitle', 'Index title');
-            hasField('instanceDetails', 'titleDataAccordion', 'seriesStatements', 'Series statement');
           });
 
           describe('Identifier accordion', () => {
@@ -358,9 +355,6 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.identifierAccordion.isOpen).to.be.true;
             });
-
-            hasField('instanceDetails', 'identifierAccordion', 'identifierType', 'Type');
-            hasField('instanceDetails', 'identifierAccordion', 'identifierValue', 'Value');
           });
 
           describe('Contributor accordion', () => {
@@ -371,12 +365,6 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.contributorAccordion.isOpen).to.be.true;
             });
-
-            hasField('instanceDetails', 'contributorAccordion', 'name', 'Name');
-            hasField('instanceDetails', 'contributorAccordion', 'nameType', 'Name type');
-            hasField('instanceDetails', 'contributorAccordion', 'type', 'Type');
-            hasField('instanceDetails', 'contributorAccordion', 'typeFreeText', 'Type, free text');
-            hasField('instanceDetails', 'contributorAccordion', 'primary', 'Primary');
           });
 
           describe('Descriptive data accordion', () => {
@@ -388,17 +376,7 @@ describe('Mapping Profile View', () => {
               expect(mappingProfileDetails.instanceDetails.descriptiveDataAccordion.isOpen).to.be.true;
             });
 
-            hasField('instanceDetails', 'descriptiveDataAccordion', 'publisher', 'Publisher');
-            hasField('instanceDetails', 'descriptiveDataAccordion', 'publisherRole', 'Publisher role');
-            hasField('instanceDetails', 'descriptiveDataAccordion', 'place', 'Place');
-            hasField('instanceDetails', 'descriptiveDataAccordion', 'publicationDate', 'Publication date');
-            hasField('instanceDetails', 'descriptiveDataAccordion', 'edition', 'Edition');
-            hasField('instanceDetails', 'descriptiveDataAccordion', 'physicalDescription', 'Physical description');
             hasField('instanceDetails', 'descriptiveDataAccordion', 'resourceType', 'Resource type');
-            hasField('instanceDetails', 'descriptiveDataAccordion', 'format', 'Format');
-            hasField('instanceDetails', 'descriptiveDataAccordion', 'language', 'Language');
-            hasField('instanceDetails', 'descriptiveDataAccordion', 'publicationFrequency', 'Publication frequency');
-            hasField('instanceDetails', 'descriptiveDataAccordion', 'publicationRange', 'Publication range');
           });
 
           describe('Instance notes accordion', () => {
@@ -409,10 +387,6 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.instanceNotesAccordion.isOpen).to.be.true;
             });
-
-            hasField('instanceDetails', 'instanceNotesAccordion', 'noteType', 'Note type');
-            hasField('instanceDetails', 'instanceNotesAccordion', 'note', 'Note');
-            hasField('instanceDetails', 'instanceNotesAccordion', 'staffOnly', 'Staff only');
           });
 
           describe('Electronic access accordion', () => {
@@ -423,12 +397,6 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.electronicAccessAccordion.isOpen).to.be.true;
             });
-
-            hasField('instanceDetails', 'electronicAccessAccordion', 'relationship', 'Relationship');
-            hasField('instanceDetails', 'electronicAccessAccordion', 'uri', 'URI');
-            hasField('instanceDetails', 'electronicAccessAccordion', 'linkText', 'Link text');
-            hasField('instanceDetails', 'electronicAccessAccordion', 'materialsSpecified', 'Materials specified');
-            hasField('instanceDetails', 'electronicAccessAccordion', 'urlPublicNote', 'URL public note');
           });
 
           describe('Subject accordion', () => {
@@ -439,8 +407,6 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.subjectAccordion.isOpen).to.be.true;
             });
-
-            hasField('instanceDetails', 'subjectAccordion', 'subjects', 'Subjects');
           });
 
           describe('Classification accordion', () => {
@@ -451,9 +417,6 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.classificationAccordion.isOpen).to.be.true;
             });
-
-            hasField('instanceDetails', 'classificationAccordion', 'classificationIdentifierType', 'Classification identifier type');
-            hasField('instanceDetails', 'classificationAccordion', 'classification', 'Classification');
           });
 
           describe('Instance relationship accordion', () => {
