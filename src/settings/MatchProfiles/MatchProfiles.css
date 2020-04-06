@@ -36,37 +36,11 @@
       & input, & select {
         background-color: #ffffff;
       }
-
-      & > div:last-child:not(:first-child) {
-        display: inline-flex;
-        justify-content: left;
-
-        & > :nth-child(n) {
-          margin: 0 0.5rem 0 0.5rem;
-        }
-      }
     }
 
     & .static-section {
       & > div:first-child {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
         margin-bottom: -1rem !important;
-
-        & > div:first-child {
-          width: 150px;
-        }
-
-        & > div:nth-child(n) {
-          margin-right: 0.5rem;
-          margin-left: 0.5rem;
-        }
-
-        & > div:last-child:not(:first-child) {
-          flex-grow: 1;
-          margin-top: 0;
-        }
       }
 
       & .date-range-label {

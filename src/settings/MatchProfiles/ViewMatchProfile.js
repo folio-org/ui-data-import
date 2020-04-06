@@ -312,6 +312,7 @@ export class ViewMatchProfile extends Component {
               config={formConfig}
               styles={styles}
               record={record}
+              referenceTables={{ matchDetails: get(record, 'matchDetails', []) }}
               injectedProps={injectedProps}
             />
           </div>

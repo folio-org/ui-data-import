@@ -25,41 +25,65 @@ export const formConfigSamples = [{
     classNames: ['field', 'input-container'],
     dataAttributes: {},
     childControls: [{
-      controlType: 'Field',
-      staticControlType: 'KeyValue',
-      component: 'TextField',
-      id: 'criterion-**ns**.field.main',
-      name: 'matchDetails[##ri##].**ns**MatchExpression.fields[0].value',
-      label: 'ui-data-import.match.**ns**.MARC.field-main',
-      validate: ['validateValueType', 'validateValueLength3'],
-      dataAttributes: { 'data-test-field-main': '' },
-    }, {
-      controlType: 'Field',
-      staticControlType: 'KeyValue',
-      component: 'TextField',
-      id: 'criterion-**ns**.field.in1',
-      name: 'matchDetails[##ri##].**ns**MatchExpression.fields[1].value',
-      label: 'ui-data-import.match.**ns**.MARC.field-in1',
-      validate: ['validateValueType', 'validateValueLength1'],
-      dataAttributes: { 'data-test-field-in1': '' },
-    }, {
-      controlType: 'Field',
-      staticControlType: 'KeyValue',
-      component: 'TextField',
-      id: 'criterion-**ns**.field.in2',
-      name: 'matchDetails[##ri##].**ns**MatchExpression.fields[2].value',
-      label: 'ui-data-import.match.**ns**.MARC.field-in2',
-      validate: ['validateValueType', 'validateValueLength1'],
-      dataAttributes: { 'data-test-field-in2': '' },
-    }, {
-      controlType: 'Field',
-      staticControlType: 'KeyValue',
-      component: 'TextField',
-      id: 'criterion-**ns**.field.subfield',
-      name: 'matchDetails[##ri##].**ns**MatchExpression.fields[3].value',
-      label: 'ui-data-import.match.**ns**.MARC.field-subfield',
-      validate: ['validateValueType', 'validateValueLength1'],
-      dataAttributes: { 'data-test-field-subfield': '' },
+      controlType: 'Row',
+      staticControlType: 'Row',
+      childControls: [{
+        controlType: 'Col',
+        staticControlType: 'Col',
+        xs: 3,
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          component: 'TextField',
+          id: 'criterion-**ns**.field.main',
+          name: 'matchDetails[##ri##].**ns**MatchExpression.fields[0].value',
+          label: 'ui-data-import.match.**ns**.MARC.field-main',
+          validate: ['validateValueType', 'validateValueLength3'],
+          dataAttributes: { 'data-test-field-main': '' },
+        }],
+      }, {
+        controlType: 'Col',
+        staticControlType: 'Col',
+        xs: 2,
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          component: 'TextField',
+          id: 'criterion-**ns**.field.in1',
+          name: 'matchDetails[##ri##].**ns**MatchExpression.fields[1].value',
+          label: 'ui-data-import.match.**ns**.MARC.field-in1',
+          validate: ['validateValueType', 'validateValueLength1'],
+          dataAttributes: { 'data-test-field-in1': '' },
+        }],
+      }, {
+        controlType: 'Col',
+        staticControlType: 'Col',
+        xs: 2,
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          component: 'TextField',
+          id: 'criterion-**ns**.field.in2',
+          name: 'matchDetails[##ri##].**ns**MatchExpression.fields[2].value',
+          label: 'ui-data-import.match.**ns**.MARC.field-in2',
+          validate: ['validateValueType', 'validateValueLength1'],
+          dataAttributes: { 'data-test-field-in2': '' },
+        }],
+      }, {
+        controlType: 'Col',
+        staticControlType: 'Col',
+        xs: 5,
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          component: 'TextField',
+          id: 'criterion-**ns**.field.subfield',
+          name: 'matchDetails[##ri##].**ns**MatchExpression.fields[3].value',
+          label: 'ui-data-import.match.**ns**.MARC.field-subfield',
+          validate: ['validateValueType', 'validateValueLength1'],
+          dataAttributes: { 'data-test-field-subfield': '' },
+        }],
+      }],
     }],
   }, {
     controlType: 'Section',
@@ -71,16 +95,25 @@ export const formConfigSamples = [{
     classNames: ['field', 'input-container'],
     dataAttributes: {},
     childControls: [{
-      controlType: 'Field',
-      staticControlType: 'KeyValue',
-      id: 'criterion-value-type',
-      name: 'matchDetails[##ri##].**ns**MatchExpression.fields[0].value',
-      label: '',
-      component: 'Selection',
-      placeholder: '',
-      dataOptions: [],
-      validate: null,
-      dataAttributes: {},
+      controlType: 'Row',
+      staticControlType: 'Row',
+      childControls: [{
+        controlType: 'Col',
+        staticControlType: 'Col',
+        xs: 12,
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          id: 'criterion-value-type',
+          name: 'matchDetails[##ri##].**ns**MatchExpression.fields[0].value',
+          label: '',
+          component: 'Selection',
+          placeholder: '',
+          dataOptions: [],
+          validate: null,
+          dataAttributes: {},
+        }],
+      }],
     }],
   }, {
     controlType: 'Section',
@@ -92,39 +125,53 @@ export const formConfigSamples = [{
     classNames: ['input-container', 'static-section'],
     dataAttributes: { 'data-test-static-value-section': '' },
     childControls: [{
-      controlType: 'Field',
-      staticControlType: 'KeyValue',
-      id: 'criterion-static-value-type',
-      name: 'matchDetails[##ri##].**ns**MatchExpression.staticValueDetails.staticValueType',
-      label: '',
-      component: 'Select',
-      dataOptions: [{
-        value: 'TEXT',
-        label: 'ui-data-import.match.**ns**.static.value-type.text',
+      controlType: 'Row',
+      staticControlType: 'Row',
+      childControls: [{
+        controlType: 'Col',
+        staticControlType: 'Col',
+        xs: 3,
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          id: 'criterion-static-value-type',
+          name: 'matchDetails[##ri##].**ns**MatchExpression.staticValueDetails.staticValueType',
+          label: '',
+          component: 'Select',
+          dataOptions: [{
+            value: 'TEXT',
+            label: 'ui-data-import.match.**ns**.static.value-type.text',
+          }, {
+            value: 'NUMBER',
+            label: 'ui-data-import.match.**ns**.static.value-type.number',
+          }, {
+            value: 'EXACT_DATE',
+            label: 'ui-data-import.match.**ns**.static.value-type.date',
+          }, {
+            value: 'DATE_RANGE',
+            label: 'ui-data-import.match.**ns**.static.value-type.date-range',
+          }],
+          placeholder: '',
+          validate: null,
+          dataAttributes: { 'data-test-select-static-value': '' },
+        }],
       }, {
-        value: 'NUMBER',
-        label: 'ui-data-import.match.**ns**.static.value-type.number',
-      }, {
-        value: 'EXACT_DATE',
-        label: 'ui-data-import.match.**ns**.static.value-type.date',
-      }, {
-        value: 'DATE_RANGE',
-        label: 'ui-data-import.match.**ns**.static.value-type.date-range',
+        controlType: 'Col',
+        staticControlType: 'Col',
+        xs: 9,
+        childControls: [{
+          controlType: 'CommonSection',
+          id: 'section-incoming-static-value-text',
+          stateField: 'staticValueType',
+          sectionNamespace: 'incoming',
+          acceptedSections: {
+            TEXT: 'staticValueText',
+            NUMBER: 'staticValueNumber',
+            EXACT_DATE: 'staticValueExactDate',
+            DATE_RANGE: 'staticValueDateRange',
+          },
+        }],
       }],
-      placeholder: '',
-      validate: null,
-      dataAttributes: { 'data-test-select-static-value': '' },
-    }, {
-      controlType: 'CommonSection',
-      id: 'section-incoming-static-value-text',
-      stateField: 'staticValueType',
-      sectionNamespace: 'incoming',
-      acceptedSections: {
-        TEXT: 'staticValueText',
-        NUMBER: 'staticValueNumber',
-        EXACT_DATE: 'staticValueExactDate',
-        DATE_RANGE: 'staticValueDateRange',
-      },
     }],
   }, {
     sectionKey: 'staticValueText',
@@ -232,33 +279,47 @@ export const formConfigSamples = [{
     classNames: ['qualifier', 'input-container'],
     dataAttributes: {},
     childControls: [{
-      controlType: 'Field',
-      staticControlType: 'KeyValue',
-      id: 'criterion-**ns**.qualifier.term',
-      name: 'matchDetails[##ri##].**ns**MatchExpression.qualifier.qualifierType',
-      component: 'Select',
-      placeholder: 'ui-data-import.match.qualifier.placeholder',
-      dataOptions: [{
-        value: 'BEGINS_WITH',
-        label: 'ui-data-import.match.qualifier.begins-with',
+      controlType: 'Row',
+      staticControlType: 'Row',
+      childControls: [{
+        controlType: 'Col',
+        staticControlType: 'Col',
+        xs: 4,
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          id: 'criterion-**ns**.qualifier.term',
+          name: 'matchDetails[##ri##].**ns**MatchExpression.qualifier.qualifierType',
+          component: 'Select',
+          placeholder: 'ui-data-import.match.qualifier.placeholder',
+          dataOptions: [{
+            value: 'BEGINS_WITH',
+            label: 'ui-data-import.match.qualifier.begins-with',
+          }, {
+            value: 'ENDS_WITH',
+            label: 'ui-data-import.match.qualifier.ends-with',
+          }, {
+            value: 'CONTAINS',
+            label: 'ui-data-import.match.qualifier.contains',
+          }],
+          validate: null,
+          dataAttributes: { 'data-test-field-qualifier-type': '' },
+        }],
       }, {
-        value: 'ENDS_WITH',
-        label: 'ui-data-import.match.qualifier.ends-with',
-      }, {
-        value: 'CONTAINS',
-        label: 'ui-data-import.match.qualifier.contains',
+        controlType: 'Col',
+        staticControlType: 'Col',
+        xs: 8,
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          id: 'criterion-**ns**.qualifier.value',
+          name: 'matchDetails[##ri##].**ns**MatchExpression.qualifier.qualifierValue',
+          component: 'TextField',
+          placeholder: '',
+          validate: null,
+          dataAttributes: { 'data-test-field-qualifier-value': '' },
+        }],
       }],
-      validate: null,
-      dataAttributes: {},
-    }, {
-      controlType: 'Field',
-      staticControlType: 'KeyValue',
-      id: 'criterion-**ns**.qualifier.value',
-      name: 'matchDetails[##ri##].**ns**MatchExpression.qualifier.qualifierValue',
-      component: 'TextField',
-      placeholder: '',
-      validate: null,
-      dataAttributes: {},
     }],
   }, {
     controlType: 'Section',
@@ -270,22 +331,31 @@ export const formConfigSamples = [{
     classNames: ['part', 'input-container'],
     dataAttributes: {},
     childControls: [{
-      controlType: 'Field',
-      staticControlType: 'KeyValue',
-      id: 'criterion-**ns**.qualifier.term',
-      name: 'matchDetails[##ri##].**ns**MatchExpression.qualifier.comparisonPart',
-      label: '',
-      component: 'Select',
-      placeholder: 'ui-data-import.match.comparison-part.placeholder',
-      dataOptions: [{
-        value: 'NUMERICS_ONLY',
-        label: 'ui-data-import.match.comparison-part.numerics-only',
-      }, {
-        value: 'ALPHANUMERICS_ONLY',
-        label: 'ui-data-import.match.comparison-part.alpha-numerics-only',
+      controlType: 'Row',
+      staticControlType: 'Row',
+      childControls: [{
+        controlType: 'Col',
+        staticControlType: 'Col',
+        xs: 4,
+        childControls: [{
+          controlType: 'Field',
+          staticControlType: 'KeyValue',
+          id: 'criterion-**ns**.qualifier.term',
+          name: 'matchDetails[##ri##].**ns**MatchExpression.qualifier.comparisonPart',
+          label: '',
+          component: 'Select',
+          placeholder: 'ui-data-import.match.comparison-part.placeholder',
+          dataOptions: [{
+            value: 'NUMERICS_ONLY',
+            label: 'ui-data-import.match.comparison-part.numerics-only',
+          }, {
+            value: 'ALPHANUMERICS_ONLY',
+            label: 'ui-data-import.match.comparison-part.alpha-numerics-only',
+          }],
+          validate: null,
+          dataAttributes: { 'data-test-compare-part': '' },
+        }],
       }],
-      validate: null,
-      dataAttributes: { 'data-test-compare-part': '' },
     }],
   }],
   childControls: [{
@@ -428,37 +498,46 @@ export const formConfigSamples = [{
                 classNames: ['criterion-section', 'input-container'],
                 dataAttributes: {},
                 childControls: [{
-                  controlType: 'Field',
-                  staticControlType: 'KeyValue',
-                  component: 'Select',
-                  id: 'criterion-criterion-type',
-                  name: 'matchDetails[##ri##].matchCriterion',
-                  label: '',
-                  placeholder: '',
-                  dataOptions: [{
-                    value: 'EXACTLY_MATCHES',
-                    label: 'ui-data-import.match.criterion-type.exactly-matches',
-                  }, {
-                    value: 'EXISTING_VALUE_CONTAINS_INCOMING_VALUE',
-                    label: 'ui-data-import.match.criterion-type.existing-contains-incoming',
-                  }, {
-                    value: 'INCOMING_VALUE_CONTAINS_EXISTING_VALUE',
-                    label: 'ui-data-import.match.criterion-type.incoming-contains-existing',
-                  }, {
-                    value: 'EXISTING_VALUE_BEGINS_WITH_INCOMING_VALUE',
-                    label: 'ui-data-import.match.criterion-type.existing-begins-with-incoming',
-                  }, {
-                    value: 'INCOMING_VALUE_BEGINS_WITH_EXISTING_VALUE',
-                    label: 'ui-data-import.match.criterion-type.incoming-begins-with-existing',
-                  }, {
-                    value: 'EXISTING_VALUE_ENDS_WITH_INCOMING_VALUE',
-                    label: 'ui-data-import.match.criterion-type.existing-ends-with-incoming',
-                  }, {
-                    value: 'INCOMING_VALUE_ENDS_WITH_EXISTING_VALUE',
-                    label: 'ui-data-import.match.criterion-type.incoming-ends-with-existing',
+                  controlType: 'Row',
+                  staticControlType: 'Row',
+                  childControls: [{
+                    controlType: 'Col',
+                    staticControlType: 'Col',
+                    xs: 12,
+                    childControls: [{
+                      controlType: 'Field',
+                      staticControlType: 'KeyValue',
+                      component: 'Select',
+                      id: 'criterion-criterion-type',
+                      name: 'matchDetails[##ri##].matchCriterion',
+                      label: '',
+                      placeholder: '',
+                      dataOptions: [{
+                        value: 'EXACTLY_MATCHES',
+                        label: 'ui-data-import.match.criterion-type.exactly-matches',
+                      }, {
+                        value: 'EXISTING_VALUE_CONTAINS_INCOMING_VALUE',
+                        label: 'ui-data-import.match.criterion-type.existing-contains-incoming',
+                      }, {
+                        value: 'INCOMING_VALUE_CONTAINS_EXISTING_VALUE',
+                        label: 'ui-data-import.match.criterion-type.incoming-contains-existing',
+                      }, {
+                        value: 'EXISTING_VALUE_BEGINS_WITH_INCOMING_VALUE',
+                        label: 'ui-data-import.match.criterion-type.existing-begins-with-incoming',
+                      }, {
+                        value: 'INCOMING_VALUE_BEGINS_WITH_EXISTING_VALUE',
+                        label: 'ui-data-import.match.criterion-type.incoming-begins-with-existing',
+                      }, {
+                        value: 'EXISTING_VALUE_ENDS_WITH_INCOMING_VALUE',
+                        label: 'ui-data-import.match.criterion-type.existing-ends-with-incoming',
+                      }, {
+                        value: 'INCOMING_VALUE_ENDS_WITH_EXISTING_VALUE',
+                        label: 'ui-data-import.match.criterion-type.incoming-ends-with-existing',
+                      }],
+                      validate: null,
+                      dataAttributes: { 'data-test-match-criterion': '' },
+                    }],
                   }],
-                  validate: null,
-                  dataAttributes: { 'data-test-match-criterion': '' },
                 }],
               }, { // Existing Record Section
                 controlType: 'Section',
@@ -677,7 +756,6 @@ export const formConfigSamples = [{
                 xs: 12,
                 id: 'section-former-ids',
                 name: 'formerIds',
-                label: '',
                 fields: 'formerIds',
                 fieldsPath: 'mappingDetails.mappingFields[5].subfields',
                 incrementalField: 'order',
@@ -686,6 +764,15 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['formerId'],
+                columnMapping: { formerId: 'ui-data-import.settings.mappingProfiles.map.item.administrativeData.field.formerId' },
+                mclColumnPaths: {
+                  formerId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-former-ids': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -724,6 +811,15 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['statisticalCodeId'],
+                columnMapping: { statisticalCodeId: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.statisticalCode' },
+                mclColumnPaths: {
+                  statisticalCodeId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-statistical-codes': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -942,6 +1038,15 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['yearCaption'],
+                columnMapping: { yearCaption: 'ui-data-import.settings.mappingProfiles.map.item.enumerationData.field.yearCaption' },
+                mclColumnPaths: {
+                  yearCaption: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-years-and-captions': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -1067,6 +1172,27 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['itemNoteTypeId', 'note', 'staffOnly'],
+                columnMapping: {
+                  itemNoteTypeId: 'ui-data-import.settings.mappingProfiles.map.field.notes.noteType',
+                  note: 'ui-data-import.settings.mappingProfiles.map.field.notes.note',
+                  staffOnly: 'ui-data-import.settings.mappingProfiles.map.field.notes.staffOnly',
+                },
+                mclColumnPaths: {
+                  itemNoteTypeId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  note: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                  staffOnly: {
+                    namePath: 'fields[2].name',
+                    valuePath: 'fields[2].value',
+                  },
+                },
                 dataAttributes: { 'data-test-item-notes': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -1187,6 +1313,27 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['noteType', 'note', 'staffOnly'],
+                columnMapping: {
+                  noteType: 'ui-data-import.settings.mappingProfiles.map.field.notes.noteType',
+                  note: 'ui-data-import.settings.mappingProfiles.map.field.notes.note',
+                  staffOnly: 'ui-data-import.settings.mappingProfiles.map.field.notes.staffOnly',
+                },
+                mclColumnPaths: {
+                  noteType: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  note: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                  staffOnly: {
+                    namePath: 'fields[2].name',
+                    valuePath: 'fields[2].value',
+                  },
+                },
                 dataAttributes: { 'data-test-circulation-notes': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -1292,6 +1439,37 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['relationshipId', 'uri', 'linkText', 'materialsSpecification', 'publicNote'],
+                columnMapping: {
+                  relationshipId: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.relationship',
+                  uri: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.uri',
+                  linkText: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.linkText',
+                  materialsSpecification: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.materialsSpecified',
+                  publicNote: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.urlPublicNote',
+                },
+                mclColumnPaths: {
+                  relationshipId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  uri: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                  linkText: {
+                    namePath: 'fields[2].name',
+                    valuePath: 'fields[2].value',
+                  },
+                  materialsSpecification: {
+                    namePath: 'fields[3].name',
+                    valuePath: 'fields[3].value',
+                  },
+                  publicNote: {
+                    namePath: 'fields[4].name',
+                    valuePath: 'fields[4].value',
+                  },
+                },
                 dataAttributes: { 'data-test-electronic-access': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -1560,6 +1738,15 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['statisticalCodeId'],
+                columnMapping: { statisticalCodeId: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.statisticalCode' },
+                mclColumnPaths: {
+                  statisticalCodeId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-statistical-codes': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -1627,6 +1814,22 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canRemove: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['alternativeTitleTypeId', 'alternativeTitle'],
+                columnMapping: {
+                  alternativeTitleTypeId: 'ui-data-import.settings.mappingProfiles.map.titleData.alternativeTitles.field.alternativeTitleTypeId',
+                  alternativeTitle: 'ui-data-import.settings.mappingProfiles.map.titleData.alternativeTitles.field.alternativeTitle',
+                },
+                mclColumnPaths: {
+                  alternativeTitleTypeId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  alternativeTitle: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                },
                 dataAttributes: { 'data-test-alternative-titles': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -1700,6 +1903,15 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['series'],
+                columnMapping: { series: 'ui-data-import.settings.mappingProfiles.map.titleData.series.field.series' },
+                mclColumnPaths: {
+                  series: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-series-statements': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -1740,6 +1952,15 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: true,
                 canDelete: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['precedingInstanceId'],
+                columnMapping: { precedingInstanceId: 'ui-data-import.settings.mappingProfiles.map.titleData.precedingTitles.field.precedingInstanceId' },
+                mclColumnPaths: {
+                  precedingInstanceId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-preceding-titles': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -1780,6 +2001,15 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: true,
                 canDelete: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['succeedingInstanceId'],
+                columnMapping: { succeedingInstanceId: 'ui-data-import.settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingInstanceId' },
+                mclColumnPaths: {
+                  succeedingInstanceId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-succeeding-titles': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -1829,6 +2059,22 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['identifierTypeId', 'value'],
+                columnMapping: {
+                  identifierTypeId: 'ui-data-import.settings.mappingProfiles.map.titleData.identifiers.field.identifierTypeId',
+                  value: 'ui-data-import.settings.mappingProfiles.map.titleData.identifiers.field.value',
+                },
+                mclColumnPaths: {
+                  identifierTypeId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  value: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                },
                 dataAttributes: { 'data-test-identifiers': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -1891,6 +2137,37 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['contributorName', 'contributorNameTypeId', 'contributorTypeId', 'contributorTypeText', 'primary'],
+                columnMapping: {
+                  contributorName: 'ui-data-import.settings.mappingProfiles.map.instance.contributors.field.contributorName',
+                  contributorNameTypeId: 'ui-data-import.settings.mappingProfiles.map.instance.contributors.field.contributorNameTypeId',
+                  contributorTypeId: 'ui-data-import.settings.mappingProfiles.map.instance.contributors.field.contributorTypeId',
+                  contributorTypeText: 'ui-data-import.settings.mappingProfiles.map.instance.contributors.field.contributorTypeText',
+                  primary: 'ui-data-import.settings.mappingProfiles.map.instance.contributors.field.primary',
+                },
+                mclColumnPaths: {
+                  contributorName: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  contributorNameTypeId: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                  contributorTypeId: {
+                    namePath: 'fields[2].name',
+                    valuePath: 'fields[2].value',
+                  },
+                  contributorTypeText: {
+                    namePath: 'fields[3].name',
+                    valuePath: 'fields[3].value',
+                  },
+                  primary: {
+                    namePath: 'fields[4].name',
+                    valuePath: 'fields[4].value',
+                  },
+                },
                 dataAttributes: { 'data-test-contributors': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -1989,6 +2266,32 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['publisher', 'role', 'place', 'dateOfPublication'],
+                columnMapping: {
+                  publisher: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.publisher',
+                  role: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.role',
+                  place: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.place',
+                  dateOfPublication: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.dateOfPublication',
+                },
+                mclColumnPaths: {
+                  publisher: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  role: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                  place: {
+                    namePath: 'fields[2].name',
+                    valuePath: 'fields[2].value',
+                  },
+                  dateOfPublication: {
+                    namePath: 'fields[3].name',
+                    valuePath: 'fields[3].value',
+                  },
+                },
                 dataAttributes: { 'data-test-publications': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2066,6 +2369,15 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['edition'],
+                columnMapping: { edition: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.edition' },
+                mclColumnPaths: {
+                  edition: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-editions': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2107,6 +2419,15 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['physicalDescription'],
+                columnMapping: { physicalDescription: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.physicalDescription' },
+                mclColumnPaths: {
+                  physicalDescription: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-physical-descriptions': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2165,6 +2486,15 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: true,
                 canDelete: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['natureOfContentTermId'],
+                columnMapping: { natureOfContentTermId: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.natureOfContentTermId' },
+                mclColumnPaths: {
+                  natureOfContentTermId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-nature-of-content': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2204,6 +2534,15 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['instanceFormatId'],
+                columnMapping: { instanceFormatId: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.instanceFormatId' },
+                mclColumnPaths: {
+                  instanceFormatId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-formats': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2245,6 +2584,15 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['languageId'],
+                columnMapping: { languageId: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.languageId' },
+                mclColumnPaths: {
+                  languageId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-languages': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2286,6 +2634,15 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['publicationFrequency'],
+                columnMapping: { publicationFrequency: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.publicationFrequency' },
+                mclColumnPaths: {
+                  publicationFrequency: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-publication-frequencies': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2327,6 +2684,15 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['publicationRange'],
+                columnMapping: { publicationRange: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.publicationRange' },
+                mclColumnPaths: {
+                  publicationRange: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-publication-ranges': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2377,6 +2743,27 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['noteType', 'note', 'staffOnly'],
+                columnMapping: {
+                  noteType: 'ui-data-import.settings.mappingProfiles.map.field.notes.noteType',
+                  note: 'ui-data-import.settings.mappingProfiles.map.field.notes.note',
+                  staffOnly: 'ui-data-import.settings.mappingProfiles.map.field.notes.staffOnly',
+                },
+                mclColumnPaths: {
+                  noteType: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  note: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                  staffOnly: {
+                    namePath: 'fields[2].name',
+                    valuePath: 'fields[2].value',
+                  },
+                },
                 dataAttributes: { 'data-test-notes': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2452,6 +2839,37 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['relationshipId', 'uri', 'linkText', 'materialsSpecification', 'publicNote'],
+                columnMapping: {
+                  relationshipId: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.relationship',
+                  uri: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.uri',
+                  linkText: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.linkText',
+                  materialsSpecification: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.materialsSpecified',
+                  publicNote: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.urlPublicNote',
+                },
+                mclColumnPaths: {
+                  relationshipId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  uri: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                  linkText: {
+                    namePath: 'fields[2].name',
+                    valuePath: 'fields[2].value',
+                  },
+                  materialsSpecification: {
+                    namePath: 'fields[3].name',
+                    valuePath: 'fields[3].value',
+                  },
+                  publicNote: {
+                    namePath: 'fields[4].name',
+                    valuePath: 'fields[4].value',
+                  },
+                },
                 dataAttributes: { 'data-test-electronic-access': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2553,6 +2971,15 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['subject'],
+                columnMapping: { subject: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.subject' },
+                mclColumnPaths: {
+                  subject: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-subjects': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2602,6 +3029,22 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: false,
                 canDelete: false,
+                renderStaticAsMCL: true,
+                visibleColumns: ['classificationTypeId', 'classificationNumber'],
+                columnMapping: {
+                  classificationTypeId: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.classificationTypeId',
+                  classificationNumber: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.classificationNumber',
+                },
+                mclColumnPaths: {
+                  classificationTypeId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  classificationNumber: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                },
                 dataAttributes: { 'data-test-classifications': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2665,6 +3108,22 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: true,
                 canDelete: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['superInstanceId', 'instanceRelationshipTypeId'],
+                columnMapping: {
+                  superInstanceId: 'ui-data-import.settings.mappingProfiles.map.instance.parentInstances.field.superInstanceId',
+                  instanceRelationshipTypeId: 'ui-data-import.settings.mappingProfiles.map.instance.parentInstances.field.instnaceRelationshipTypeId',
+                },
+                mclColumnPaths: {
+                  superInstanceId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  instanceRelationshipTypeId: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                },
                 dataAttributes: { 'data-test-parent-instances': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2715,6 +3174,22 @@ export const formConfigSamples = [{
                 repeatable: true,
                 canAdd: true,
                 canDelete: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['subInstanceId', 'instanceRelationshipTypeId'],
+                columnMapping: {
+                  subInstanceId: 'ui-data-import.settings.mappingProfiles.map.instance.childInstances.field.subInstanceId',
+                  instanceRelationshipTypeId: 'ui-data-import.settings.mappingProfiles.map.instance.childInstances.field.instnaceRelationshipTypeId',
+                },
+                mclColumnPaths: {
+                  subInstanceId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  instanceRelationshipTypeId: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                },
                 dataAttributes: { 'data-test-child-instances': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2888,6 +3363,15 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['formerId'],
+                columnMapping: { formerId: 'ui-data-import.settings.mappingProfiles.map.holdings.administrativeData.field.formerId' },
+                mclColumnPaths: {
+                  formerId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-former-holdings': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -2944,6 +3428,15 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['statisticalCodeId'],
+                columnMapping: { statisticalCodeId: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.statisticalCode' },
+                mclColumnPaths: {
+                  statisticalCodeId: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                },
                 dataAttributes: { 'data-test-statistical-codes': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -3144,6 +3637,22 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['statement', 'note'],
+                columnMapping: {
+                  statement: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatement',
+                  note: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote',
+                },
+                mclColumnPaths: {
+                  statement: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  note: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                },
                 dataAttributes: { 'data-test-statements': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -3192,6 +3701,22 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['statement', 'note'],
+                columnMapping: {
+                  statement: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementForSupplements',
+                  note: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementForSupplementsNote',
+                },
+                mclColumnPaths: {
+                  statement: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  note: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                },
                 dataAttributes: { 'data-test-statements-for-supplement': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -3240,6 +3765,22 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
                 repeatable: true,
+                renderStaticAsMCL: true,
+                visibleColumns: ['statement', 'note'],
+                columnMapping: {
+                  statement: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementForIndexes',
+                  note: 'ui-data-import.settings.mappingProfiles.map.holdings.statements.field.holdingsStatementForIndexesNote',
+                },
+                mclColumnPaths: {
+                  statement: {
+                    namePath: 'fields[0].name',
+                    valuePath: 'fields[0].value',
+                  },
+                  note: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                },
                 dataAttributes: { 'data-test-statements-for-indexes': '' },
                 childControls: [{
                   controlType: 'Row',
@@ -3336,6 +3877,27 @@ export const formConfigSamples = [{
                   emptyMessage: 'EMPTY FIELDS HERE',
                   enabled: true,
                   repeatable: true,
+                  renderStaticAsMCL: true,
+                  visibleColumns: ['noteType', 'note', 'staffOnly'],
+                  columnMapping: {
+                    noteType: 'ui-data-import.settings.mappingProfiles.map.field.notes.noteType',
+                    note: 'ui-data-import.settings.mappingProfiles.map.field.notes.note',
+                    staffOnly: 'ui-data-import.settings.mappingProfiles.map.field.notes.staffOnly',
+                  },
+                  mclColumnPaths: {
+                    noteType: {
+                      namePath: 'fields[0].name',
+                      valuePath: 'fields[0].value',
+                    },
+                    note: {
+                      namePath: 'fields[1].name',
+                      valuePath: 'fields[1].value',
+                    },
+                    staffOnly: {
+                      namePath: 'fields[2].name',
+                      valuePath: 'fields[2].value',
+                    },
+                  },
                   dataAttributes: { 'data-test-notes': '' },
                   childControls: [{
                     controlType: 'Row',
@@ -3403,6 +3965,37 @@ export const formConfigSamples = [{
                   emptyMessage: 'EMPTY FIELDS HERE',
                   enabled: true,
                   repeatable: true,
+                  renderStaticAsMCL: true,
+                  visibleColumns: ['relationshipId', 'uri', 'linkText', 'materialsSpecification', 'publicNote'],
+                  columnMapping: {
+                    relationshipId: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.relationship',
+                    uri: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.uri',
+                    linkText: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.linkText',
+                    materialsSpecification: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.materialsSpecified',
+                    publicNote: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.urlPublicNote',
+                  },
+                  mclColumnPaths: {
+                    relationshipId: {
+                      namePath: 'fields[0].name',
+                      valuePath: 'fields[0].value',
+                    },
+                    uri: {
+                      namePath: 'fields[1].name',
+                      valuePath: 'fields[1].value',
+                    },
+                    linkText: {
+                      namePath: 'fields[2].name',
+                      valuePath: 'fields[2].value',
+                    },
+                    materialsSpecification: {
+                      namePath: 'fields[3].name',
+                      valuePath: 'fields[3].value',
+                    },
+                    publicNote: {
+                      namePath: 'fields[4].name',
+                      valuePath: 'fields[4].value',
+                    },
+                  },
                   dataAttributes: { 'data-test-electronic-access': '' },
                   childControls: [{
                     controlType: 'Row',
@@ -3542,6 +4135,27 @@ export const formConfigSamples = [{
                   emptyMessage: 'EMPTY FIELDS HERE',
                   enabled: true,
                   repeatable: true,
+                  renderStaticAsMCL: true,
+                  visibleColumns: ['publicDisplay', 'enumeration', 'chronology'],
+                  columnMapping: {
+                    publicDisplay: 'ui-data-import.settings.mappingProfiles.map.field.publicDisplay',
+                    enumeration: 'ui-data-import.settings.mappingProfiles.map.field.enumeration',
+                    chronology: 'ui-data-import.settings.mappingProfiles.map.field.chronology',
+                  },
+                  mclColumnPaths: {
+                    publicDisplay: {
+                      namePath: 'fields[0].name',
+                      valuePath: 'fields[0].value',
+                    },
+                    enumeration: {
+                      namePath: 'fields[1].name',
+                      valuePath: 'fields[1].value',
+                    },
+                    chronology: {
+                      namePath: 'fields[2].name',
+                      valuePath: 'fields[2].value',
+                    },
+                  },
                   dataAttributes: { 'data-test-receiving-history-note': '' },
                   childControls: [{
                     controlType: 'Row',

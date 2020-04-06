@@ -66,6 +66,8 @@ export class MatchCriteriaInteractor extends AccordionInteractor {
   inputIn1 = new InputInteractor('[data-test-field-in1]');
   inputIn2 = new InputInteractor('[data-test-field-in2]');
   inputSubfield = new InputInteractor('[data-test-field-subfield');
+  fieldQualifierType = new KeyValueInteractor('[data-test-field-qualifier-type');
+  fieldQualifierValue = new KeyValueInteractor('[data-test-field-qualifier-value');
 
   incomingRecord = new SectionInteractor('section[class*=incoming]');
   incomingRecordSections = new RecordSections('section[class*=incoming]');

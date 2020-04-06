@@ -1,7 +1,9 @@
 import React, {
   useMemo,
+  useRef,
   useState,
   useEffect,
+  useLayoutEffect,
 } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
@@ -22,7 +24,6 @@ import stripesForm from '@folio/stripes/form';
 
 import {
   compose,
-  usePrevious,
   withProfileWrapper,
 } from '../../utils';
 import {
@@ -53,6 +54,8 @@ export const MappingProfilesFormComponent = ({
   pristine,
   submitting,
   initialValues,
+  existingRecordTypeInitial,
+  mappingDetailsInitial,
   mappingDetails,
   location: { search },
   handleSubmit,
@@ -92,25 +95,26 @@ export const MappingProfilesFormComponent = ({
   ) : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
   const headLine = isEditMode ? profile.name : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
 
-  const prevExistingRecordType = usePrevious(get(profile, 'existingRecordType', null));
+  const prevExistingRecordType = useRef(existingRecordTypeInitial);
   const [existingRecordType, setExistingRecordType] = useState(get(profile, 'existingRecordType', null));
-
   const [initials, setInitials] = useState({
     ...profile,
-    mappingDetails: isEmpty(mappingDetails) ? getInitialDetails(existingRecordType, true) : mappingDetails,
+    mappingDetails: isEmpty(mappingDetails) ? getInitialDetails(prevExistingRecordType.current, true) : mappingDetails,
   });
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
 
-  useEffect(() => {
-    const isEqual = existingRecordType === prevExistingRecordType;
+  useLayoutEffect(() => {
+    const isEqual = existingRecordType === prevExistingRecordType.current;
     const needsUpdate = !profile.id || (profile.id && (!isEqual || isEmpty(mappingDetails)));
 
-    if (isEqual || !needsUpdate) {
+    if (!needsUpdate) {
       return;
     }
 
-    const newInitDetails = getInitialDetails(existingRecordType, true);
+    const newInitDetails = existingRecordType === existingRecordTypeInitial && !isEmpty(mappingDetails)
+      ? mappingDetailsInitial
+      : getInitialDetails(existingRecordType, true);
     const newInitials = {
       ...initials,
       mappingDetails: newInitDetails,
@@ -118,6 +122,9 @@ export const MappingProfilesFormComponent = ({
 
     setInitials(newInitials);
     dispatch(change(formName, 'profile.mappingDetails', newInitDetails));
+    if (!isEqual) {
+      prevExistingRecordType.current = existingRecordType;
+    }
   }, [existingRecordType]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     dispatch(change(formName, 'addedRelations', addedRelations));
@@ -193,6 +200,8 @@ MappingProfilesFormComponent.propTypes = {
     }).isRequired,
     PropTypes.string.isRequired,
   ]),
+  existingRecordTypeInitial: PropTypes.string.isRequired,
+  mappingDetailsInitial: PropTypes.object.isRequired,
   mappingDetails: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
@@ -200,9 +209,15 @@ MappingProfilesFormComponent.propTypes = {
 
 const mapStateToProps = state => {
   // @TODO: Remove this when FlexibleForm internal state mamagement will be implemented.
+  const mappingDetailsInitial = get(state, ['form', formName, 'initial', 'profile', 'mappingDetails'], null);
   const mappingDetails = get(state, ['form', formName, 'values', 'profile', 'mappingDetails'], null);
+  const existingRecordTypeInitial = get(state, ['form', formName, 'initial', 'profile', 'existingRecordType'], null);
 
-  return { mappingDetails };
+  return {
+    existingRecordTypeInitial,
+    mappingDetailsInitial,
+    mappingDetails,
+  };
 };
 
 export const MappingProfilesForm = compose(

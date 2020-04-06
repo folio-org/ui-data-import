@@ -11,7 +11,22 @@ import {
   jobProfileForm,
   ProfileBranchInteractor,
 } from '../../interactors';
+import { snapshotWrappers } from '../../mocks/job-profiles-child-wrappers';
 import translations from '../../../../translations/ui-data-import/en';
+
+const getProfileSnapshot = withChildren => (schema, request) => {
+  const { params: { id } } = request;
+
+  return {
+    profileId: id,
+    contentType: 'MATCH_PROFILE',
+    childSnapshotWrappers: withChildren ? snapshotWrappers[0].childSnapshotWrappers : [],
+    content: {
+      id,
+      name: 'Test match profile',
+    },
+  };
+};
 
 async function setupFormSubmitErrorScenario(server, responseData = {}) {
   const {
@@ -111,26 +126,57 @@ describe('When job profile form', () => {
         });
 
         describe('when add Match profile', () => {
-          beforeEach(async () => {
-            await sessionStorage.clear();
-            await jobProfileForm.profileTree.plusSignButton.addMatchButton.click();
+          describe('without children', () => {
+            beforeEach(async function () {
+              this.server.get('/data-import-profiles/profileSnapshots/:id', getProfileSnapshot(false));
+              await sessionStorage.clear();
+              await jobProfileForm.profileTree.plusSignButton.addMatchButton.click();
+            });
+
+            it('match profile appears', () => {
+              expect(jobProfileForm.profileTree.rootBranchesCount).to.be.equal(1);
+            });
+
+            it('has "For matches" section', () => {
+              expect(jobProfileForm.profileTree.branches(0).matchesSection.isPresent).to.be.true;
+            });
+
+            it('has "For non-matches" section', () => {
+              expect(jobProfileForm.profileTree.branches(0).nonMatchesSection.isPresent).to.be.true;
+            });
+
+            it('does not have initial filled sub-branches', () => {
+              expect(jobProfileForm.profileTree.branches(0).matchesSection.hasSubBranches).to.be.false;
+            });
           });
 
-          it('match profile appears', () => {
-            expect(jobProfileForm.profileTree.rootBranchesCount).to.be.equal(1);
-          });
+          describe('with children', () => {
+            beforeEach(async function () {
+              this.server.get('/data-import-profiles/profileSnapshots/:id', getProfileSnapshot(true));
+              await jobProfileForm.profileTree.plusSignButton.addMatchButton.click();
+            });
 
-          it('has "For matches" section', () => {
-            expect(jobProfileForm.profileTree.branches(0).matchesSection.isPresent).to.be.true;
-          });
+            it('match profile appears', () => {
+              expect(jobProfileForm.profileTree.rootBranchesCount).to.be.equal(1);
+            });
 
-          it('has "For non-matches" section', () => {
-            expect(jobProfileForm.profileTree.branches(0).nonMatchesSection.isPresent).to.be.true;
+            it('has "For matches" section', () => {
+              expect(jobProfileForm.profileTree.branches(0).matchesSection.isPresent).to.be.true;
+            });
+
+            it('has "For non-matches" section', () => {
+              expect(jobProfileForm.profileTree.branches(0).nonMatchesSection.isPresent).to.be.true;
+            });
+
+            it('has initial filled sub-branches', () => {
+              expect(jobProfileForm.profileTree.branches(0).matchesSection.hasSubBranches).to.be.true;
+            });
           });
         });
 
         describe('when add Action profile', () => {
-          beforeEach(async () => {
+          beforeEach(async function () {
+            this.server.get('/data-import-profiles/profileSnapshots/:id', getProfileSnapshot(false));
             await sessionStorage.clear();
             await jobProfileForm.profileTree.plusSignButton.addActionButton.click();
           });
@@ -155,7 +201,8 @@ describe('When job profile form', () => {
         });
 
         describe('when add to "For matches" section', () => {
-          beforeEach(async () => {
+          beforeEach(async function () {
+            this.server.get('/data-import-profiles/profileSnapshots/:id', getProfileSnapshot(false));
             await sessionStorage.clear();
             await jobProfileForm.profileTree.plusSignButton.addMatchButton.click();
           });
