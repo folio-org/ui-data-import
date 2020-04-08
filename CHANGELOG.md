@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **1.9.0** (in progress)
+## [1.8.2](https://github.com/folio-org/ui-data-import/tree/v1.8.2) (2020-04-07)
 
 ### Features added:
 * Render Repeatable Fields as MultiColumnList in FlexibleForm static view when needed (UIDATIMP-445)
