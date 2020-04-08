@@ -98,6 +98,24 @@ const hasRepeatableField = (details, accordion, field, legend, isDisabled = fals
   }
 };
 
+const hasTable = (details, accordion, table, tableName, columnCount, columnHeaders) => {
+  describe(`${tableName} table`, () => {
+    it('renders', () => {
+      expect(mappingProfileDetails[details][accordion][table].containerPresent).to.be.true;
+    });
+
+    it('has proper count of columns', () => {
+      expect(mappingProfileDetails[details][accordion][table].columnCount).to.be.equal(columnCount);
+    });
+
+    it('has correct column headers', () => {
+      mappingProfileDetails[details][accordion][table].headers().forEach((header, i) => {
+        expect(header.text).to.equal(columnHeaders[i]);
+      });
+    });
+  });
+};
+
 describe('Mapping Profile View', () => {
   setupApplication({ scenarios: ['fetch-mapping-profiles-success', 'fetch-users', 'fetch-tags', 'tags-enabled'] });
 
@@ -332,6 +350,7 @@ describe('Mapping Profile View', () => {
             hasField('instanceDetails', 'adminDataAccordion', 'catalogedDate', 'Cataloged date');
             hasField('instanceDetails', 'adminDataAccordion', 'instanceStatusTerm', 'Instance status term');
             hasField('instanceDetails', 'adminDataAccordion', 'modeOfIssuance', 'Mode of issuance');
+            hasTable('instanceDetails', 'adminDataAccordion', 'statisticalCodes', 'Statistical codes', 1, ['Statistical code']);
           });
 
           describe('Title data accordion', () => {
@@ -344,7 +363,15 @@ describe('Mapping Profile View', () => {
             });
 
             hasField('instanceDetails', 'titleDataAccordion', 'resourceTitle', 'Resource title');
+            hasTable('instanceDetails', 'titleDataAccordion', 'alternativeTitles',
+              'Alternative titles', 2, ['Type', 'Alternative title']);
             hasField('instanceDetails', 'titleDataAccordion', 'indexTitle', 'Index title');
+            hasTable('instanceDetails', 'titleDataAccordion', 'seriesStatement',
+              'Series statements', 1, ['Series statement']);
+            hasTable('instanceDetails', 'titleDataAccordion', 'precedingTitles',
+              'Preceding titles', 1, ['FOLIO ID']);
+            hasTable('instanceDetails', 'titleDataAccordion', 'succeedingTitles',
+              'Succeeding titles', 1, ['FOLIO ID']);
           });
 
           describe('Identifier accordion', () => {
@@ -355,6 +382,9 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.identifierAccordion.isOpen).to.be.true;
             });
+
+            hasTable('instanceDetails', 'identifierAccordion', 'identifiers',
+              'Identifiers', 2, ['Type', 'Value']);
           });
 
           describe('Contributor accordion', () => {
@@ -365,6 +395,9 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.contributorAccordion.isOpen).to.be.true;
             });
+
+            hasTable('instanceDetails', 'contributorAccordion', 'contributors',
+              'Contributors', 5, ['Name', 'Name type', 'Type', 'Type, free text', 'Primary']);
           });
 
           describe('Descriptive data accordion', () => {
@@ -376,7 +409,23 @@ describe('Mapping Profile View', () => {
               expect(mappingProfileDetails.instanceDetails.descriptiveDataAccordion.isOpen).to.be.true;
             });
 
+            hasTable('instanceDetails', 'descriptiveDataAccordion', 'publications',
+              'Publications', 4, ['Publisher', 'Publisher role', 'Place', 'Publication date']);
+            hasTable('instanceDetails', 'descriptiveDataAccordion', 'editions',
+              'Editions', 1, ['Edition']);
+            hasTable('instanceDetails', 'descriptiveDataAccordion', 'physicalDescriptions',
+              'Physical descriptions', 1, ['Physical description']);
             hasField('instanceDetails', 'descriptiveDataAccordion', 'resourceType', 'Resource type');
+            hasTable('instanceDetails', 'descriptiveDataAccordion', 'natureOfContentTerms',
+              'Nature of content terms', 1, ['Nature of content term']);
+            hasTable('instanceDetails', 'descriptiveDataAccordion', 'formats',
+              'Formats', 1, ['Format']);
+            hasTable('instanceDetails', 'descriptiveDataAccordion', 'languages',
+              'Languages', 1, ['Language']);
+            hasTable('instanceDetails', 'descriptiveDataAccordion', 'publicationFrequencies',
+              'Publication frequencies', 1, ['Publication frequency']);
+            hasTable('instanceDetails', 'descriptiveDataAccordion', 'publicationRange',
+              'Publication range', 1, ['Publication range']);
           });
 
           describe('Instance notes accordion', () => {
@@ -387,6 +436,9 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.instanceNotesAccordion.isOpen).to.be.true;
             });
+
+            hasTable('instanceDetails', 'instanceNotesAccordion', 'notes',
+              'Instance notes', 3, ['Note type', 'Note', 'Staff only']);
           });
 
           describe('Electronic access accordion', () => {
@@ -397,6 +449,9 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.electronicAccessAccordion.isOpen).to.be.true;
             });
+
+            hasTable('instanceDetails', 'electronicAccessAccordion', 'electronicAccess',
+              'Electronic access', 5, ['Relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']);
           });
 
           describe('Subject accordion', () => {
@@ -407,6 +462,9 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.subjectAccordion.isOpen).to.be.true;
             });
+
+            hasTable('instanceDetails', 'subjectAccordion', 'subjects',
+              'Subjects', 1, ['Subjects']);
           });
 
           describe('Classification accordion', () => {
@@ -417,6 +475,9 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.classificationAccordion.isOpen).to.be.true;
             });
+
+            hasTable('instanceDetails', 'classificationAccordion', 'classifications',
+              'Classifications', 2, ['Classification identifier type', 'Classification']);
           });
 
           describe('Instance relationship accordion', () => {
@@ -427,6 +488,11 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.instanceDetails.instanceRelationshipAccordion.isOpen).to.be.true;
             });
+
+            hasTable('instanceDetails', 'instanceRelationshipAccordion', 'parentInstances',
+              'Parent instances', 2, ['Parent instance', 'Type of relation']);
+            hasTable('instanceDetails', 'instanceRelationshipAccordion', 'childInstances',
+              'Child instances', 2, ['Child instance', 'Type of relation']);
           });
 
           describe('Related instances accordion', () => {
@@ -485,7 +551,11 @@ describe('Mapping Profile View', () => {
 
             hasField('holdingsDetails', 'adminDataAccordion', 'suppressFromDiscovery', 'Suppress from discovery');
             hasField('holdingsDetails', 'adminDataAccordion', 'holdingsHRID', 'Holdings HRID');
+            hasTable('holdingsDetails', 'adminDataAccordion', 'formerHoldings', 'Former holdings',
+              1, ['Former holdings ID']);
             hasField('holdingsDetails', 'adminDataAccordion', 'holdingsType', 'Holdings type');
+            hasTable('holdingsDetails', 'adminDataAccordion', 'statisticalCodes', 'Statistical codes',
+              1, ['Statistical code']);
           });
 
           describe('Location accordion', () => {
@@ -518,6 +588,12 @@ describe('Mapping Profile View', () => {
             });
 
             hasField('holdingsDetails', 'holdingsDetailsAccordion', 'numberOfItems', 'Number of items');
+            hasTable('holdingsDetails', 'holdingsDetailsAccordion', 'statements', 'Holdings statements',
+              2, ['Holdings statement', 'Statement note']);
+            hasTable('holdingsDetails', 'holdingsDetailsAccordion', 'statementsForSuppl', 'Holdings statements for supplement',
+              2, ['Holdings statement', 'Statement note']);
+            hasTable('holdingsDetails', 'holdingsDetailsAccordion', 'statementsForNotes', 'Holdings statements for indexes',
+              2, ['Holdings statement', 'Statement note']);
             hasField('holdingsDetails', 'holdingsDetailsAccordion', 'illPolicy', 'ILL policy');
             hasField('holdingsDetails', 'holdingsDetailsAccordion', 'digitizationPolicy', 'Digitization policy');
             hasField('holdingsDetails', 'holdingsDetailsAccordion', 'retentionPolicy', 'Retention policy');
@@ -531,6 +607,9 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.holdingsDetails.holdingsNotesAccordion.isOpen).to.be.true;
             });
+
+            hasTable('holdingsDetails', 'holdingsNotesAccordion', 'notes', 'Holding notes',
+              3, ['Note type', 'Note', 'Staff only']);
           });
 
           describe('Electronic access accordion', () => {
@@ -541,6 +620,9 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.holdingsDetails.electronicAccessAccordion.isOpen).to.be.true;
             });
+
+            hasTable('holdingsDetails', 'electronicAccessAccordion', 'electronicAccess', 'Electronic Access',
+              5, ['Relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']);
           });
 
           describe('Acquisition accordion', () => {
@@ -565,6 +647,9 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.holdingsDetails.receivingHistoryAccordion.isOpen).to.be.true;
             });
+
+            hasTable('holdingsDetails', 'receivingHistoryAccordion', 'receivingHistory', 'Receiving history',
+              3, ['Public display', 'Enumeration', 'Chronology']);
           });
         });
 
@@ -616,6 +701,10 @@ describe('Mapping Profile View', () => {
             hasField('itemDetails', 'adminDataAccordion', 'barcode', 'Barcode');
             hasField('itemDetails', 'adminDataAccordion', 'accessionNumber', 'Accession number');
             hasField('itemDetails', 'adminDataAccordion', 'itemIdentifier', 'Item identifier');
+            hasTable('itemDetails', 'adminDataAccordion', 'formerIds', 'Former identifiers',
+              1, ['Former Identifier']);
+            hasTable('itemDetails', 'adminDataAccordion', 'statisticalCodes', 'Statistical codes',
+              1, ['Statistical code']);
           });
 
           describe('Item data accordion', () => {
@@ -649,6 +738,8 @@ describe('Mapping Profile View', () => {
             hasField('itemDetails', 'enumerationDataAccordion', 'enumeration', 'Enumeration');
             hasField('itemDetails', 'enumerationDataAccordion', 'chronology', 'Chronology');
             hasField('itemDetails', 'enumerationDataAccordion', 'volume', 'Volume');
+            hasTable('itemDetails', 'enumerationDataAccordion', 'yearCaption', 'Years, captions',
+              1, ['Year, caption']);
           });
 
           describe('Condition accordion', () => {
@@ -675,6 +766,9 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.itemDetails.itemNotesAccordion.isOpen).to.be.true;
             });
+
+            hasTable('itemDetails', 'itemNotesAccordion', 'notes', 'Item notes',
+              3, ['Note type', 'Note', 'Staff only']);
           });
 
           describe('Loan and availability accordion', () => {
@@ -689,6 +783,8 @@ describe('Mapping Profile View', () => {
             hasField('itemDetails', 'loanAndAvailabilityAccordion', 'permanentLoanType', 'Permanent loan type');
             hasField('itemDetails', 'loanAndAvailabilityAccordion', 'temporaryLoanType', 'Temporary loan type');
             hasField('itemDetails', 'loanAndAvailabilityAccordion', 'status', 'Status');
+            hasTable('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotes', 'Circulation notes',
+              3, ['Note type', 'Note', 'Staff only']);
           });
 
           describe('Location accordion', () => {
@@ -712,6 +808,9 @@ describe('Mapping Profile View', () => {
             it('is open by default', () => {
               expect(mappingProfileDetails.itemDetails.electronicAccessAccordion.isOpen).to.be.true;
             });
+
+            hasTable('itemDetails', 'electronicAccessAccordion', 'electronicAccess', 'Electronic access',
+              5, ['Relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']);
           });
         });
       });

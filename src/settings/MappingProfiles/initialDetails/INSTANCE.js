@@ -67,7 +67,7 @@ const INSTANCE = {
         // order: 0,
         name: 'statisticalCodeId',
         enabled: true,
-        path: 'instance.statisticalCodeIds[].statistcalCodeId',
+        path: 'instance.statisticalCodeIds[].statisticalCodeId',
         value: '',
       }],
     }],

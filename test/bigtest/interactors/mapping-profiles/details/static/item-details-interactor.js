@@ -3,6 +3,7 @@ import {
   AccordionInteractor,
   AccordionSetInteractor,
 } from '@folio/stripes-components/lib/Accordion/tests/interactor';
+import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 import ExpandAllButtonInteractor from '@folio/stripes-components/lib/Accordion/tests/expand-all-button-interactor';
 import KeyValueInteractor from '@folio/stripes-components/lib/KeyValue/tests/interactor';
 
@@ -14,6 +15,8 @@ class AdministrativeDataAccordion extends AccordionInteractor {
   barcode = new KeyValueInteractor('[data-test-barcode]');
   accessionNumber = new KeyValueInteractor('[data-test-accession-number]');
   itemIdentifier = new KeyValueInteractor('[data-test-item-identifier]');
+  formerIds = new MultiColumnListInteractor('#section-former-ids');
+  statisticalCodes = new MultiColumnListInteractor('#section-statistical-code-ids');
 }
 
 class ItemDataAccordion extends AccordionInteractor {
@@ -31,6 +34,7 @@ class EnumerationDataAccordion extends AccordionInteractor {
   enumeration = new KeyValueInteractor('[data-test-enumeration]');
   chronology = new KeyValueInteractor('[data-test-chronology]');
   volume = new KeyValueInteractor('[data-test-volume]');
+  yearCaption = new MultiColumnListInteractor('#section-year-caption');
 }
 
 class ConditionAccordion extends AccordionInteractor {
@@ -41,15 +45,24 @@ class ConditionAccordion extends AccordionInteractor {
   date2 = new KeyValueInteractor('[data-test-date2]');
 }
 
+class ItemNotesAccordion extends AccordionInteractor {
+  notes = new MultiColumnListInteractor('#section-item-notes');
+}
+
 class LoanAndAvailabilityAccordion extends AccordionInteractor {
   permanentLoanType = new KeyValueInteractor('[data-test-permanent-loan-type]');
   temporaryLoanType = new KeyValueInteractor('[data-test-temporary-loan-type]');
   status = new KeyValueInteractor('[data-test-status]');
+  circulationNotes = new MultiColumnListInteractor('#section-circulation-notes');
 }
 
 class LocationAccordion extends AccordionInteractor {
   permanent = new KeyValueInteractor('[data-test-permanent]');
   temporary = new KeyValueInteractor('[data-test-temporary]');
+}
+
+class ElectronicAccessAccordion extends AccordionInteractor {
+  electronicAccess = new MultiColumnListInteractor('#section-electronic-access');
 }
 
 export class ItemDetailsAccordion extends AccordionSetInteractor {
@@ -59,8 +72,8 @@ export class ItemDetailsAccordion extends AccordionSetInteractor {
   itemDataAccordion = new ItemDataAccordion('#item-data');
   enumerationDataAccordion = new EnumerationDataAccordion('#enumeration-data');
   conditionAccordion = new ConditionAccordion('#item-condition');
-  itemNotesAccordion = new AccordionInteractor('#item-notes');
+  itemNotesAccordion = new ItemNotesAccordion('#item-notes');
   loanAndAvailabilityAccordion = new LoanAndAvailabilityAccordion('#item-loans');
   locationAccordion = new LocationAccordion('#item-location');
-  electronicAccessAccordion = new AccordionInteractor('#item-electronic-access');
+  electronicAccessAccordion = new ElectronicAccessAccordion('#item-electronic-access');
 }
