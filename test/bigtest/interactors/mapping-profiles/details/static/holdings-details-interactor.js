@@ -12,8 +12,9 @@ import { MappedHeaderInteractor } from '../../../mapped-header-interactor';
 class AdministrativeDataAccordion extends AccordionInteractor {
   suppressFromDiscovery = new KeyValueInteractor('[data-test-suppress-from-discovery]');
   holdingsHRID = new KeyValueInteractor('[data-test-holdings-hrid]');
+  formerHoldings = new MultiColumnListInteractor('#section-former-ids');
   holdingsType = new KeyValueInteractor('[data-test-holdings-type]');
-  statisticalCodeTable = new MultiColumnListInteractor('#mapping-details-statistical-code');
+  statisticalCodes = new MultiColumnListInteractor('#section-statistical-code-ids');
 }
 
 class LocationAccordion extends AccordionInteractor {
@@ -30,13 +31,20 @@ class LocationAccordion extends AccordionInteractor {
 
 class DetailsAccordion extends AccordionInteractor {
   numberOfItems = new KeyValueInteractor('[data-test-number-of-items]');
+  statements = new MultiColumnListInteractor('#section-holding-statements');
+  statementsForSuppl = new MultiColumnListInteractor('#section-holding-statements-for-supplements');
+  statementsForNotes = new MultiColumnListInteractor('#section-holding-statements-for-indexes');
   illPolicy = new KeyValueInteractor('[data-test-ill-policy]');
   digitizationPolicy = new KeyValueInteractor('[data-test-digitization-policy]');
   retentionPolicy = new KeyValueInteractor('[data-test-retention-policy]');
 }
 
+class HoldingsNotesAccordion extends AccordionInteractor {
+  notes = new MultiColumnListInteractor('#section-holdings-notes');
+}
+
 class ElectronicAccessAccordion extends AccordionInteractor {
-  electronicAccessTable = new MultiColumnListInteractor('#mapping-details-electronic-access');
+  electronicAccess = new MultiColumnListInteractor('#section-electronic-access');
 }
 
 class AcquisitionAccordion extends AccordionInteractor {
@@ -45,14 +53,18 @@ class AcquisitionAccordion extends AccordionInteractor {
   receiptStatus = new KeyValueInteractor('[data-test-receipt-status]');
 }
 
+class ReceivingHistoryAccordion extends AccordionInteractor {
+  receivingHistory = new MultiColumnListInteractor('#section-receiving-history');
+}
+
 export class HoldingsDetailsAccordion extends AccordionSetInteractor {
   header = new MappedHeaderInteractor();
   expandAllButton = new ExpandAllButtonInteractor('[data-test-expand-all-button]');
   adminDataAccordion = new AdministrativeDataAccordion('#administrative-data');
   locationAccordion = new LocationAccordion('#holdings-location');
   holdingsDetailsAccordion = new DetailsAccordion('#holdings-details');
-  holdingsNotesAccordion = new AccordionInteractor('#holdings-notes');
+  holdingsNotesAccordion = new HoldingsNotesAccordion('#holdings-notes');
   electronicAccessAccordion = new ElectronicAccessAccordion('#holdings-electronic-access');
   acquisitionAccordion = new AcquisitionAccordion('#holdings-acquisition');
-  receivingHistoryAccordion = new AccordionInteractor('#holdings-receiving-history');
+  receivingHistoryAccordion = new ReceivingHistoryAccordion('#holdings-receiving-history');
 }
