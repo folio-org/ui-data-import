@@ -4,6 +4,7 @@
 
 ### Features added:
 * Cover MCL in mapping profile details sections with tests (UIDATIMP-469)
+* Implement <ProhibitionIcon> component (UIDATIMP-477)
 
 ### Bugs fixed:
 
