@@ -52,6 +52,10 @@ export class ViewActionProfile extends Component {
       path: 'data-import-profiles/actionProfiles/:{id}',
       params: { withRelations: true },
       throwErrors: false,
+      // should resource be refreshed again on mount
+      resourceShouldRefresh: true,
+      // should resource be refreshed on POST/PUT/DELETE mutation
+      shouldRefresh: () => false,
     },
   });
 
