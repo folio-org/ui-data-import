@@ -114,6 +114,7 @@ export const Control = memo(props => {
     initialFields,
     dataType,
     renderForbidden,
+    enabled,
     ...attributes
   } = props;
 
@@ -121,6 +122,7 @@ export const Control = memo(props => {
   const classes = styles && classNames ? classNames.map(className => styles[className]).join(' ') : undefined;
   const children = optional && !isEditable && !hasContent(childControls, record, sectionNamespace, repeatableIndex) ? [] : childControls;
   const isFragment = (isEditable && controlType === 'Fragment') || (!isEditable && staticControlType === 'Fragment');
+  const noValueComponent = enabled ? <stripesComponents.NoValue /> : <components.ProhibitionIcon />;
 
   const getAttributes = () => {
     const {
@@ -167,8 +169,8 @@ export const Control = memo(props => {
     if (optional) {
       attrs = {
         ...attrs,
-        optional: !!isEditable,
-        enabled: !!(isEditable && hasContent(children, referenceTables, sectionNamespace, repeatableIndex)),
+        optional: isEditable,
+        isOpen: (isEditable && hasContent(children, referenceTables, sectionNamespace, repeatableIndex)),
       };
     }
 
@@ -198,7 +200,7 @@ export const Control = memo(props => {
           val = val.trim();
         }
 
-        let actualValue = checkEmpty(val) ? <stripesComponents.NoValue /> : checkDate(dataType, val);
+        let actualValue = checkEmpty(val) ? noValueComponent : checkDate(dataType, val);
 
         if (!isEmpty(attrs.dataOptions) && !isFormattedMessage(val)) {
           actualValue = getOptionLabel(attrs.dataOptions, val, sectionNamespace);
@@ -247,13 +249,13 @@ export const Control = memo(props => {
       mclColumnPaths,
     } = props;
 
-    const data = isEmpty(mclColumnPaths) ? contentData : contentData.map(row => {
+    const data = isEmpty(mclColumnPaths) ? contentData : (contentData.map(row => {
       let currentRow = {};
 
       visibleColumns.forEach(col => {
         const colPaths = mclColumnPaths[col];
         const fieldName = get(row, colPaths.namePath, col);
-        const fieldValue = get(row, colPaths.valuePath, <stripesComponents.NoValue />);
+        const fieldValue = get(row, colPaths.valuePath);
 
         currentRow = {
           ...currentRow,
@@ -262,9 +264,11 @@ export const Control = memo(props => {
       });
 
       return currentRow;
-    });
+    }));
+    const listData = !isEmpty(data) ? data : [{}];
 
     let mapping = {};
+    let formatter = {};
 
     Object.keys(columnMapping).forEach(key => {
       const mapValue = columnMapping[key];
@@ -272,6 +276,11 @@ export const Control = memo(props => {
       mapping = {
         ...mapping,
         [key]: isTranslationId(mapValue) ? <FormattedMessage id={mapValue} /> : mapValue,
+      };
+
+      formatter = {
+        ...formatter,
+        [key]: x => x?.[key] || noValueComponent,
       };
     });
 
@@ -281,10 +290,11 @@ export const Control = memo(props => {
           <strong>{isTranslationId(legend) ? <FormattedMessage id={legend} /> : legend}</strong>
         </div>
         <stripesComponents.MultiColumnList
-          contentData={data}
+          contentData={listData}
           visibleColumns={visibleColumns}
           columnWidths={columnWidths}
           columnMapping={mapping}
+          formatter={formatter}
         />
         <br />
       </>
@@ -469,8 +479,8 @@ export const Control = memo(props => {
     if (isSectionComponent && currentSection.optional) {
       sectionAttrs = {
         ...sectionAttrs,
-        optional: !!isEditable,
-        enabled: !!(isEditable && hasData),
+        optional: isEditable,
+        isOpen: (isEditable && hasData),
       };
     }
 
@@ -508,6 +518,7 @@ Control.propTypes = {
   controlType: PropTypes.string.isRequired,
   staticControlType: PropTypes.string.isRequired,
   staticNamespace: PropTypes.string,
+  enabled: PropTypes.bool,
   editableNamespace: PropTypes.string,
   component: PropTypes.string,
   label: PropTypes.string || Node,
@@ -550,3 +561,5 @@ Control.propTypes = {
   onAdd: PropTypes.func,
   onRemove: PropTypes.func,
 };
+
+Control.defaultProps = { enabled: true };
