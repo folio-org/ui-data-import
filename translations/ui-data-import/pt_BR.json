@@ -482,5 +482,6 @@
     "match.comparison-part.placeholder": "Selecione o tipo de comparação",
     "settings.mappingProfiles.map.instance.subject.section": "Assunto",
     "settings.mappingProfiles.map.instance.descriptiveData.field.subjects": "Assuntos",
-    "settings.mappingProfiles.map.holdings.field.digitizationPolicy": "Política de digitalização"
+    "settings.mappingProfiles.map.holdings.field.digitizationPolicy": "Política de digitalização",
+    "noValueAllowed": "Nenhum valor permitido"
 }
