@@ -312,7 +312,15 @@ export class ViewMatchProfile extends Component {
           </Accordion>
           {tagsEnabled && (
             <div data-test-tags-accordion>
-              <TagsAccordion link={tagsEntityLink} />
+              <TagsAccordion
+                link={tagsEntityLink}
+                entityWrapper={entity => ({
+                  id: entity.id,
+                  profile: entity,
+                  addedRelations: [],
+                  deletedRelations: [],
+                })}
+              />
             </div>
           )}
           <div className={styles.details}>

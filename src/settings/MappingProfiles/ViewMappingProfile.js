@@ -228,6 +228,12 @@ export class ViewMappingProfile extends Component {
       'mapping-tags': {
         renderForbidden: !tagsEnabled,
         link: `data-import-profiles/mappingProfiles/${mappingProfile.id}`,
+        entityWrapper: entity => ({
+          id: entity.id,
+          profile: entity,
+          addedRelations: [],
+          deletedRelations: [],
+        }),
       },
       'section-mapping-details': { stateFieldValue: existingRecordType },
       'mappingProfile.actionsAssociator': {

@@ -28,6 +28,7 @@
 
 ### Bugs fixed:
 * More than one record cannot be created in Mapping Profiles Form repeatable fields (UIDATIMP-443)
+* Error message when assigning or unassigning a tag to a data import profiles (UIDATIMP-461)
 * Trash can next to match profile match criteria should not be there (UIDATIMP-466)
 
 ## [1.8.1](https://github.com/folio-org/ui-data-import/tree/v1.8.1) (2020-03-31)
