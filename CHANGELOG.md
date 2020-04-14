@@ -7,6 +7,7 @@
 * Implement <ProhibitionIcon> component (UIDATIMP-477)
 
 ### Bugs fixed:
+* When returned to search results screen after profile save, wrong profile details show (UIDATIMP-424)
 
 ## [1.8.2](https://github.com/folio-org/ui-data-import/tree/v1.8.2) (2020-04-07)
 
