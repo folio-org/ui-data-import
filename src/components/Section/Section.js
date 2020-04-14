@@ -17,12 +17,12 @@ import css from './Section.css';
 export const Section = memo(({
   label,
   optional,
-  enabled,
+  isOpen,
   className,
   children,
   ...rest
 }) => {
-  const [isChecked, setChecked] = useState(optional ? enabled : true);
+  const [isChecked, setChecked] = useState(optional ? isOpen : true);
 
   const getDataAttributes = attrs => pickBy(attrs, (_, key) => key.startsWith('data-test-'));
 
@@ -74,7 +74,7 @@ export const Section = memo(({
 Section.propTypes = {
   label: PropTypes.node,
   optional: PropTypes.bool,
-  enabled: PropTypes.bool,
+  isOpen: PropTypes.bool,
   className: PropTypes.string,
   children: PropTypes.arrayOf(PropTypes.node),
 };
@@ -82,6 +82,6 @@ Section.propTypes = {
 Section.defaultProps = {
   label: null,
   optional: false,
-  enabled: false,
+  isOpen: false,
   children: [],
 };
