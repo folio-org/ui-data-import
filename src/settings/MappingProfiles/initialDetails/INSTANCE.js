@@ -185,9 +185,9 @@ const INSTANCE = {
       path: 'instance.contributors[]',
       fields: [{
         // order: 0,
-        name: 'contributorName',
+        name: 'name',
         enabled: false,
-        path: 'instance.contributors[].contributorName',
+        path: 'instance.contributors[].name',
         value: '',
       }, {
         // order: 0,

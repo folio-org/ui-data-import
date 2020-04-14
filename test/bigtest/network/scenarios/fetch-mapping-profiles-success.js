@@ -123,9 +123,9 @@ export default server => {
           path: 'instance.contributors[]',
           fields: [{
             order: 0,
-            name: 'contributorName',
+            name: 'name',
             enabled: false,
-            path: 'instance.contributors[].contributorName',
+            path: 'instance.contributors[].name',
             value: 'test1',
           }, {
             order: 0,
