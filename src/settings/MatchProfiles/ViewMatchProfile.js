@@ -64,6 +64,15 @@ export class ViewMatchProfile extends Component {
       path: 'data-import-profiles/matchProfiles/:{id}',
       params: { withRelations: true },
       throwErrors: false,
+
+      // Next two parameters added as a workaround to fix UIDATIMP-424,
+      // but it's not optimal from network side and produces extra GET requests.
+      // Should be checked and reworked in the future
+
+      // should resource be refreshed again on mount
+      resourceShouldRefresh: true,
+      // should resource be refreshed on POST/PUT/DELETE mutation
+      shouldRefresh: () => false,
     },
   });
 
