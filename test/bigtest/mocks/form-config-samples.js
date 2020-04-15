@@ -275,7 +275,7 @@ export const formConfigSamples = [{
     label: 'ui-data-import.match.**ns**.qualifier',
     name: '**ns**Qualifier',
     optional: true,
-    enabled: false,
+    isOpen: false,
     classNames: ['qualifier', 'input-container'],
     dataAttributes: { 'data-test-qualifier': '' },
     childControls: [{
@@ -327,7 +327,7 @@ export const formConfigSamples = [{
     staticControlType: 'Section',
     label: 'ui-data-import.match.**ns**.part',
     optional: true,
-    enabled: false,
+    isOpen: false,
     classNames: ['part', 'input-container'],
     dataAttributes: { 'data-test-part': '' },
     childControls: [{
@@ -690,6 +690,7 @@ export const formConfigSamples = [{
                   component: 'Checkbox',
                   label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.discoverySuppress',
                   name: 'mappingDetails.mappingFields[0].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -708,6 +709,7 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.item.administrativeData.field.hrid',
                   name: 'mappingDetails.mappingFields[1].value',
                   disabled: true, // @TODO: Possible change this for some programmatic status check
+                  enabled: false,
                 }],
               }, {
                 controlType: 'Col',
@@ -720,6 +722,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.administrativeData.field.barcode',
                   name: 'mappingDetails.mappingFields[2].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -732,6 +735,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.administrativeData.field.accessionNumber',
                   name: 'mappingDetails.mappingFields[3].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -744,6 +748,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.administrativeData.field.itemIdentifier',
                   name: 'mappingDetails.mappingFields[4].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -863,6 +868,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemData.field.materialType',
                   name: 'mappingDetails.mappingFields[7].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -880,6 +886,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.copyNumber',
                   name: 'mappingDetails.mappingFields[8].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -897,6 +904,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.callNumberType',
                   name: 'mappingDetails.mappingFields[9].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -909,6 +917,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.callNumberPrefix',
                   name: 'mappingDetails.mappingFields[10].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -921,6 +930,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.callNumber',
                   name: 'mappingDetails.mappingFields[11].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -933,6 +943,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.callNumberSuffix',
                   name: 'mappingDetails.mappingFields[12].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -950,6 +961,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemData.field.numberOfPieces',
                   name: 'mappingDetails.mappingFields[13].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -962,6 +974,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemData.field.descriptionOfPieces',
                   name: 'mappingDetails.mappingFields[14].value',
+                  enabled: true,
                 }],
               }],
             }],
@@ -988,6 +1001,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.enumeration',
                   name: 'mappingDetails.mappingFields[15].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -1000,6 +1014,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.chronology',
                   name: 'mappingDetails.mappingFields[16].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -1017,6 +1032,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.enumerationData.field.volume',
                   name: 'mappingDetails.mappingFields[17].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -1090,6 +1106,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemCondition.field.numberOfMissingPieces',
                   name: 'mappingDetails.mappingFields[19].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -1102,6 +1119,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemCondition.field.missingPieces',
                   name: 'mappingDetails.mappingFields[20].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -1114,6 +1132,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemCondition.field.missingPiecesDate',
                   name: 'mappingDetails.mappingFields[21].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -1131,6 +1150,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatus',
                   name: 'mappingDetails.mappingFields[22].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -1143,6 +1163,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatusDate',
                   name: 'mappingDetails.mappingFields[23].value',
+                  enabled: true,
                 }],
               }],
             }],
@@ -1258,6 +1279,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemLoans.field.loanTypePermanentRequired',
                   name: 'mappingDetails.mappingFields[25].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -1275,6 +1297,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemLoans.field.loanTypeTemporary',
                   name: 'mappingDetails.mappingFields[26].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -1292,6 +1315,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemLoans.field.loanStatus',
                   name: 'mappingDetails.mappingFields[27].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -1399,6 +1423,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.location.field.permanent',
                   name: 'mappingDetails.mappingFields[29].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -1411,6 +1436,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.location.field.temporary',
                   name: 'mappingDetails.mappingFields[30].value',
+                  enabled: true,
                 }],
               }],
             }],
@@ -1610,6 +1636,7 @@ export const formConfigSamples = [{
                   component: 'Checkbox',
                   label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.discoverySuppress',
                   name: 'mappingDetails.mappingFields[0].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -1622,6 +1649,7 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.staffSuppress',
                   name: 'mappingDetails.mappingFields[1].value',
                   dataAttributes: { 'data-test-staff-suppress': '' },
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -1634,6 +1662,7 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.previouslyHeld',
                   name: 'mappingDetails.mappingFields[2].value',
                   dataAttributes: { 'data-test-previously-held': '' },
+                  enabled: true,
                 }],
               }],
             }, {
@@ -1652,6 +1681,7 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.instance.administrationData.field.hrid',
                   name: 'mappingDetails.mappingFields[3].value',
                   disabled: true, // @TODO: Remove this in favour of data-driven status calculation
+                  enabled: false,
                 }],
               }, {
                 controlType: 'Col',
@@ -1665,6 +1695,7 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.instance.administrationData.field.source',
                   name: 'mappingDetails.mappingFields[4].value',
                   disabled: true, // @TODO: Remove this in favour of data-driven status calculation
+                  enabled: false,
                 }],
               }],
             }, {
@@ -1682,6 +1713,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.instance.administrationData.field.catalogedDate',
                   name: 'mappingDetails.mappingFields[5].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -1699,6 +1731,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.instance.administrationData.field.statusId',
                   name: 'mappingDetails.mappingFields[6].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -1717,6 +1750,7 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.instance.administrationData.field.modeOfIssuanceId',
                   name: 'mappingDetails.mappingFields[7].value',
                   disabled: true, // @TODO: Remove this in favour of data-driven status calculation
+                  enabled: false,
                 }],
               }],
             }, {
@@ -1791,6 +1825,7 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.instance.titleData.field.title',
                   name: 'mappingDetails.mappingFields[9].value',
                   disabled: true, // @TODO: Remove this in favour of data-driven status calculation
+                  enabled: false,
                 }],
               }],
             }, {
@@ -1880,6 +1915,7 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.instance.titleData.field.indexTitle',
                   name: 'mappingDetails.mappingFields[11].value',
                   disabled: true, // @TODO: Remove this in favour of data-driven status calculation
+                  enabled: false,
                 }],
               }],
             }, {
@@ -1904,10 +1940,10 @@ export const formConfigSamples = [{
                 canAdd: false,
                 canDelete: false,
                 renderStaticAsMCL: true,
-                visibleColumns: ['series'],
-                columnMapping: { series: 'ui-data-import.settings.mappingProfiles.map.titleData.series.field.series' },
+                visibleColumns: ['source'],
+                columnMapping: { source: 'ui-data-import.settings.mappingProfiles.map.titleData.series.field.series' },
                 mclColumnPaths: {
-                  series: {
+                  source: {
                     namePath: 'fields[0].name',
                     valuePath: 'fields[0].value',
                   },
@@ -2464,6 +2500,7 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.instanceTypeId',
                   name: 'mappingDetails.mappingFields[20].value',
                   disabled: true,
+                  enabled: false,
                 }],
               }],
             }, {
@@ -2673,8 +2710,8 @@ export const formConfigSamples = [{
                 staticControlType: 'Col',
                 xs: 12,
                 id: 'section-publication-range',
-                name: 'publicationFrequency',
-                fields: 'publicationFrequency',
+                name: 'publicationRange',
+                fields: 'publicationRange',
                 fieldsPath: 'mappingDetails.mappingFields[25].subfields',
                 incrementalField: 'order',
                 legend: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.publicationRange.legend',
@@ -3019,9 +3056,9 @@ export const formConfigSamples = [{
                 staticControlType: 'Col',
                 xs: 12,
                 id: 'section-classification',
-                name: 'subjects',
-                fields: 'subjects',
-                fieldsPath: 'mappingDetails.mappingFields[29].subfields',
+                name: 'classifications',
+                fields: 'classifications',
+                fieldsPath: 'mappingDetails.mappingFields[29].classifications',
                 incrementalField: 'order',
                 addLabel: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.classifications.addLabel',
                 emptyMessage: 'EMPTY FIELDS HERE',
@@ -3324,6 +3361,7 @@ export const formConfigSamples = [{
                   component: 'Checkbox',
                   label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.discoverySuppress',
                   name: 'mappingDetails.mappingFields[0].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -3342,6 +3380,7 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.holdings.administrativeData.field.hrid',
                   name: 'mappingDetails.mappingFields[1].value',
                   disabled: true, // @TODO: Possible change this for some programmatic status check
+                  enabled: false,
                 }],
               }],
             }, {
@@ -3480,6 +3519,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.location.field.permanent',
                   name: 'mappingDetails.mappingFields[5].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -3492,6 +3532,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.location.field.temporary',
                   name: 'mappingDetails.mappingFields[6].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -3509,6 +3550,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.holdings.location.field.shelvingOrder',
                   name: 'mappingDetails.mappingFields[7].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -3521,6 +3563,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.holdings.location.field.shelvingTitle',
                   name: 'mappingDetails.mappingFields[8].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -3538,6 +3581,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.copyNumber',
                   name: 'mappingDetails.mappingFields[9].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -3555,6 +3599,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.callNumberType',
                   name: 'mappingDetails.mappingFields[10].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -3567,6 +3612,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.callNumberPrefix',
                   name: 'mappingDetails.mappingFields[11].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -3579,6 +3625,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.callNumber',
                   name: 'mappingDetails.mappingFields[12].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -3591,6 +3638,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.field.callNumberSuffix',
                   name: 'mappingDetails.mappingFields[13].value',
+                  enabled: true,
                 }],
               }],
             }],
@@ -3617,6 +3665,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.holdings.details.field.numberOfItems',
                   name: 'mappingDetails.mappingFields[14].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -3826,6 +3875,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.holdings.field.illPolicy',
                   name: 'mappingDetails.mappingFields[18].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -3838,6 +3888,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.holdings.field.digitizationPolicy',
                   name: 'mappingDetails.mappingFields[19].value',
+                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -3850,6 +3901,7 @@ export const formConfigSamples = [{
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.holdings.field.retentionPolicy',
                   name: 'mappingDetails.mappingFields[20].value',
+                  enabled: true,
                 }],
               }],
             }, {
@@ -4083,6 +4135,7 @@ export const formConfigSamples = [{
                     component: 'TextField',
                     label: 'ui-data-import.settings.mappingProfiles.map.field.acquisitionMethod',
                     name: 'mappingDetails.mappingFields[23].value',
+                    enabled: true,
                   }],
                 }, {
                   controlType: 'Col',
@@ -4095,6 +4148,7 @@ export const formConfigSamples = [{
                     component: 'TextField',
                     label: 'ui-data-import.settings.mappingProfiles.map.field.orderFormat',
                     name: 'mappingDetails.mappingFields[24].value',
+                    enabled: true,
                   }],
                 }, {
                   controlType: 'Col',
@@ -4107,6 +4161,7 @@ export const formConfigSamples = [{
                     component: 'TextField',
                     label: 'ui-data-import.settings.mappingProfiles.map.field.receiptStatus',
                     name: 'mappingDetails.mappingFields[25].value',
+                    enabled: true,
                   }],
                 }],
               }],

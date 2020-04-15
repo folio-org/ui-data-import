@@ -87,7 +87,7 @@ export default server => {
             order: 0,
             name: 'source',
             enabled: false,
-            path: 'instance.series[].series',
+            path: 'instance.series[].source',
             value: 'test1',
           }],
         }],
@@ -123,9 +123,9 @@ export default server => {
           path: 'instance.contributors[]',
           fields: [{
             order: 0,
-            name: 'contributorNameTypeId',
+            name: 'name',
             enabled: false,
-            path: 'instance.contributors[].contributorName',
+            path: 'instance.contributors[].name',
             value: 'test1',
           }, {
             order: 0,
@@ -230,7 +230,7 @@ export default server => {
           path: 'instance.natureOfContentTermIds[]',
           fields: [{
             order: 0,
-            name: 'natureOfContentTermsId',
+            name: 'natureOfContentTermId',
             enabled: true,
             path: 'instance.natureOfContentTermIds[].natureOfContentTermId',
             value: 'test1',

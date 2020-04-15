@@ -117,7 +117,7 @@ const INSTANCE = {
         // order: 0,
         name: 'source',
         enabled: false,
-        path: 'instance.series[].series',
+        path: 'instance.series[].source',
         value: '',
       }],
     }],
@@ -185,9 +185,9 @@ const INSTANCE = {
       path: 'instance.contributors[]',
       fields: [{
         // order: 0,
-        name: 'contributorNameTypeId',
+        name: 'name',
         enabled: false,
-        path: 'instance.contributors[].contributorName',
+        path: 'instance.contributors[].name',
         value: '',
       }, {
         // order: 0,
@@ -205,7 +205,7 @@ const INSTANCE = {
         // order: 2,
         name: 'contributorTypeText',
         enabled: false,
-        path: 'instance.contributors[].contributorTypetext',
+        path: 'instance.contributors[].contributorTypeText',
         value: '',
       }, {
         // order: 3,
@@ -298,7 +298,7 @@ const INSTANCE = {
       path: 'instance.natureOfContentTermIds[]',
       fields: [{
         // order: 0,
-        name: 'natureOfContentTermsId',
+        name: 'natureOfContentTermId',
         enabled: true,
         path: 'instance.natureOfContentTermIds[].natureOfContentTermId',
         value: '',

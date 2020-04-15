@@ -6,7 +6,7 @@ import {
 } from '@bigtest/mocha';
 
 import { setupApplication } from '../../helpers';
-import { associatedActionProfiles } from '../../mocks/associated-action-profiles';
+import { associatedActionProfiles } from '../../mocks';
 import {
   actionProfileDetails,
   mappingProfiles,
@@ -811,6 +811,24 @@ describe('Mapping Profile View', () => {
 
             hasTable('itemDetails', 'electronicAccessAccordion', 'electronicAccess', 'Electronic access',
               5, ['Relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']);
+          });
+        });
+      });
+
+      describe('when there is no data', () => {
+        beforeEach(async () => {
+          await mappingProfiles.list.rows(1).click();
+        });
+
+        describe('and field is mappable', () => {
+          it('then dash is displayed', () => {
+            expect(mappingProfileDetails.holdingsDetails.adminDataAccordion.holdingsType.value.text).to.be.equal('-');
+          });
+        });
+
+        describe('and field is unmappable', () => {
+          it('then circle backslash character is displayed', () => {
+            expect(mappingProfileDetails.holdingsDetails.adminDataAccordion.holdingsHRID.value.text).to.be.equal(String.fromCharCode(8416));
           });
         });
       });

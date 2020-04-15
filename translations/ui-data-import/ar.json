@@ -480,7 +480,8 @@
     "settings.mappingProfiles.map.marcAuthority": "استناد مارك",
     "match.qualifier.placeholder": "اختر نوع المؤهل",
     "match.comparison-part.placeholder": "اختر نوع المقارنة",
-    "settings.mappingProfiles.map.instance.subject.section": "Subject",
-    "settings.mappingProfiles.map.instance.descriptiveData.field.subjects": "Subjects",
-    "settings.mappingProfiles.map.holdings.field.digitizationPolicy": "Digitization policy"
+    "settings.mappingProfiles.map.instance.subject.section": "الموضوع",
+    "settings.mappingProfiles.map.instance.descriptiveData.field.subjects": "الموضوعات",
+    "settings.mappingProfiles.map.holdings.field.digitizationPolicy": "سياسة الرقمنة",
+    "noValueAllowed": "غير مسموح بقيمة"
 }
