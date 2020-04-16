@@ -7,6 +7,7 @@
 * Implement <ProhibitionIcon> component (UIDATIMP-477)
 * Distinguish not mapped and unmappable fields in Field mapping profile View screen (UIDATIMP-471)
 * Field mapping profile - Add line above associated action profiles (UIDATIMP-472)
+* Label for Year field in caption section has been updated (UIDATIMP-475)
 
 ### Bugs fixed:
 * When returned to search results screen after profile save, wrong profile details show (UIDATIMP-424)
