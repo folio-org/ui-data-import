@@ -1049,7 +1049,7 @@ export const formConfigSamples = [{
                 fields: 'yearCaption',
                 fieldsPath: 'mappingDetails.mappingFields[18].subfields',
                 incrementalField: 'order',
-                legend: 'ui-data-import.settings.mappingProfiles.map.item.enumerationData.field.yearCaption.legend',
+                legend: 'ui-data-import.settings.mappingProfiles.map.item.enumerationData.field.yearCaption',
                 addLabel: 'ui-data-import.settings.mappingProfiles.map.item.enumerationData.field.yearCaption.addLabel',
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: true,
