@@ -355,7 +355,6 @@
     "settings.mappingProfiles.map.item.itemData.field.descriptionOfPieces": "件的描述",
     "settings.mappingProfiles.map.item.enumerationData.section": "期数数据",
     "settings.mappingProfiles.map.item.enumerationData.field.volume": "卷",
-    "settings.mappingProfiles.map.item.enumerationData.field.yearCaption.legend": "年份和标题",
     "settings.mappingProfiles.map.item.enumerationData.field.yearCaption": "年份, 标题",
     "settings.mappingProfiles.map.item.enumerationData.field.yearCaption.addLabel": "添加年份, 标题",
     "settings.mappingProfiles.map.item.itemCondition.section": "条件",

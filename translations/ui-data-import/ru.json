@@ -355,7 +355,6 @@
     "settings.mappingProfiles.map.item.itemData.field.descriptionOfPieces": "Description of pieces",
     "settings.mappingProfiles.map.item.enumerationData.section": "Данные перечисления",
     "settings.mappingProfiles.map.item.enumerationData.field.volume": "Том",
-    "settings.mappingProfiles.map.item.enumerationData.field.yearCaption.legend": "Года и подписи",
     "settings.mappingProfiles.map.item.enumerationData.field.yearCaption": "Год, подпись",
     "settings.mappingProfiles.map.item.enumerationData.field.yearCaption.addLabel": "Добавить год, подпись",
     "settings.mappingProfiles.map.item.itemCondition.section": "Условие",
