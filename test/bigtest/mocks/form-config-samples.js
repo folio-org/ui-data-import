@@ -4604,7 +4604,7 @@ export const formConfigSamples = [{
       staticControlType: 'Accordion',
       id: 'mappingProfileFormAssociatedActionProfileAccordion',
       collapsed: false,
-      separator: false,
+      separator: true,
       label: 'ui-data-import.settings.associatedActionProfiles',
       dataAttributes: {},
       childControls: [{
