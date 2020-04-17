@@ -200,11 +200,8 @@ describe('Match Profile View', () => {
               expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(1).label).to.be.equal('Use a qualifier');
             });
 
-            it('has empty QualifierType field value', () => {
-              expect(matchProfileDetails.matchCriteria.fieldQualifierType.value.text).to.be.equal('-');
-            });
-            it('has empty QualifierValue field value', () => {
-              expect(matchProfileDetails.matchCriteria.fieldQualifierValue.value.text).to.be.equal('-');
+            it('content is hidden', () => {
+              expect(matchProfileDetails.matchCriteria.incomingRecordSections.children(1).hasContent).to.be.false;
             });
           });
 
@@ -296,11 +293,8 @@ describe('Match Profile View', () => {
             expect(matchProfileDetails.matchCriteria.existingRecordSections.children(1).label).to.be.equal('Use a qualifier');
           });
 
-          it('has empty QualifierType field value', () => {
-            expect(matchProfileDetails.matchCriteria.fieldQualifierType.value.text).to.be.equal('-');
-          });
-          it('has empty QualifierValue field value', () => {
-            expect(matchProfileDetails.matchCriteria.fieldQualifierValue.value.text).to.be.equal('-');
+          it('content is hidden', () => {
+            expect(matchProfileDetails.matchCriteria.existingRecordSections.children(1).hasContent).to.be.false;
           });
         });
 
