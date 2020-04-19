@@ -332,7 +332,6 @@
   "settings.mappingProfiles.map.item.itemData.field.descriptionOfPieces": "Description of pieces",
   "settings.mappingProfiles.map.item.enumerationData.section": "Enumeration data",
   "settings.mappingProfiles.map.item.enumerationData.field.volume": "Volume",
-  "settings.mappingProfiles.map.item.enumerationData.field.yearCaption.legend": "Years and captions",
   "settings.mappingProfiles.map.item.enumerationData.field.yearCaption": "Year, caption",
   "settings.mappingProfiles.map.item.enumerationData.field.yearCaption.addLabel": "Add year, caption",
   "settings.mappingProfiles.map.item.itemCondition.section": "Condition",

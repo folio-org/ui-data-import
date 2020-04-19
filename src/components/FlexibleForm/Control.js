@@ -75,9 +75,18 @@ const getOptionLabel = (options, label, sectionNamespace) => {
 
   return !isFormattedMessage ? <FormattedMessage id={actualLabel} /> : actualLabel;
 };
+const getChildrenWithName = children => {
+  const childrenWithName = [];
+
+  const getChildren = items => items?.forEach(item => (item.name ? childrenWithName.push(item) : getChildren(item.childControls)));
+
+  getChildren(children);
+
+  return childrenWithName;
+};
 const getValue = (controlName, record, sectionNamespace, repeatableIndex) => get(record, getActualParam(controlName, sectionNamespace, repeatableIndex));
 const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
-const hasContent = (children, record, sectionNamespace, repeatableIndex) => children
+const hasContent = (children, record, sectionNamespace, repeatableIndex) => getChildrenWithName(children)
   .map(child => getValue(child.name, record, sectionNamespace, repeatableIndex))
   .some(child => child !== undefined && child !== ' ' && child !== '-');
 const checkDate = (dataType, value) => {
@@ -163,14 +172,6 @@ export const Control = memo(props => {
       attrs = {
         ...attrs,
         validate: getValidation(validate),
-      };
-    }
-
-    if (optional) {
-      attrs = {
-        ...attrs,
-        optional: isEditable,
-        isOpen: (isEditable && hasContent(children, referenceTables, sectionNamespace, repeatableIndex)),
       };
     }
 
@@ -480,7 +481,7 @@ export const Control = memo(props => {
       sectionAttrs = {
         ...sectionAttrs,
         optional: isEditable,
-        isOpen: (isEditable && hasData),
+        isOpen: hasData,
       };
     }
 

@@ -91,7 +91,7 @@ const hasRepeatableField = (details, accordion, field, legend, isDisabled = fals
         });
 
         it('then field is removed', () => {
-          expect(mappingProfileForm[details][accordion][field].items().length).to.equal(0);
+          expect(mappingProfileForm[details][accordion][field].items().length).to.equal(1);
         });
       });
     });
@@ -1198,7 +1198,7 @@ describe('Mapping Profile View', () => {
             hasInput('itemDetails', 'enumerationDataAccordion', 'enumeration', 'Enumeration');
             hasInput('itemDetails', 'enumerationDataAccordion', 'chronology', 'Chronology');
             hasInput('itemDetails', 'enumerationDataAccordion', 'volume', 'Volume');
-            hasRepeatableField('itemDetails', 'enumerationDataAccordion', 'yearsAndCaptions', 'Years and captions');
+            hasRepeatableField('itemDetails', 'enumerationDataAccordion', 'yearsAndCaptions', 'Year, caption');
           });
 
           describe('Condition accordion', () => {
