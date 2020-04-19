@@ -12,6 +12,7 @@
 ### Bugs fixed:
 * When returned to search results screen after profile save, wrong profile details show (UIDATIMP-424)
 * Optional sections are collapsed even if contain data (UIDATIMP-479)
+* Fix tree lines in Job profile associations tree (UIDATIMP-343)
 
 ## [1.8.2](https://github.com/folio-org/ui-data-import/tree/v1.8.2) (2020-04-07)
 

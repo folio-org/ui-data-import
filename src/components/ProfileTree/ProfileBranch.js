@@ -66,22 +66,22 @@ export const ProfileBranch = memo(({
     return res === null || res === true;
   };
 
-  const getSectionData = section => {
-    const res = JSON.parse(sessionStorage.getItem(`${sectionKey}.data.${section}`));
-    const itemData = currentChildren.filter(item => item.reactTo && item.reactTo === snakeCase(section).toLocaleUpperCase());
-
-    return res || itemData;
-  };
-
   const [matchSectionOpen, setMatchSectionOpen] = useState(getSectionStatus('match'));
   const [nonMatchSectionOpen, setNonMatchSectionOpen] = useState(getSectionStatus('nonMatch'));
-  const [matchData, setMatchData] = useState(getSectionData('match'));
-  const [nonMatchData, setNonMatchData] = useState(getSectionData('nonMatch'));
+  const [matchData, setMatchData] = useState(undefined);
+  const [nonMatchData, setNonMatchData] = useState(undefined);
 
   useEffect(() => {
+    const getSectionData = section => {
+      const res = JSON.parse(sessionStorage.getItem(`${sectionKey}.data.${section}`));
+      const itemData = currentChildren.filter(item => item.reactTo && item.reactTo === snakeCase(section).toLocaleUpperCase());
+
+      return res || itemData;
+    };
+
     setMatchData(getSectionData('match'));
     setNonMatchData(getSectionData('nonMatch'));
-  }, [currentChildren]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentChildren, sectionKey]);
 
   const getLabel = (
     <FormattedMessage id={PROFILE_LABEL_IDS[entityKey]}>
@@ -95,9 +95,10 @@ export const ProfileBranch = memo(({
     onChange(prev => prev + 1);
   };
 
-  const containerId = `container-${record ? 'editable' : 'static'}-${currentRecord.id}`;
-  const matchSectionId = `accordion-match-${record ? 'editable' : 'static'}-${currentRecord.id}`;
-  const nonMatchSectionId = `accordion-non-match-${record ? 'editable' : 'static'}-${currentRecord.id}`;
+  const branchMode = record ? 'static' : 'editable';
+  const containerId = `container-${branchMode}-${currentRecord.id}`;
+  const matchSectionId = `accordion-match-${branchMode}-${currentRecord.id}`;
+  const nonMatchSectionId = `accordion-non-match-${branchMode}-${currentRecord.id}`;
   const matchSectionKey = `${sectionKey}.data.match`;
   const nonMatchSectionKey = `${sectionKey}.data.nonMatch`;
 
@@ -157,7 +158,7 @@ export const ProfileBranch = memo(({
                 )}
             </div>
             <TreeLine
-              from={`#branch-${record ? 'editable' : 'static'}-${currentRecord.id}`}
+              from={`#branch-${branchMode}-${recordData.id}`}
               to={`#${matchSectionId} > :first-child`}
               container={`#${containerId}`}
               fromAnchor="left bottom"
@@ -217,7 +218,7 @@ export const ProfileBranch = memo(({
                 )}
             </div>
             <TreeLine
-              from={`#branch-${record ? 'editable' : 'static'}-${currentRecord.id}`}
+              from={`#branch-${branchMode}-${recordData.id}`}
               to={`#${nonMatchSectionId} > :first-child`}
               container={`#${containerId}`}
               fromAnchor="left bottom"
