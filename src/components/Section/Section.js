@@ -22,7 +22,7 @@ export const Section = memo(({
   children,
   ...rest
 }) => {
-  const [isChecked, setChecked] = useState(optional ? isOpen : true);
+  const [isChecked, setChecked] = useState(isOpen);
 
   const getDataAttributes = attrs => pickBy(attrs, (_, key) => key.startsWith('data-test-'));
 
@@ -82,6 +82,6 @@ Section.propTypes = {
 Section.defaultProps = {
   label: null,
   optional: false,
-  isOpen: false,
+  isOpen: true,
   children: [],
 };

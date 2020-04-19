@@ -355,7 +355,6 @@
     "settings.mappingProfiles.map.item.itemData.field.descriptionOfPieces": "وصف القطع",
     "settings.mappingProfiles.map.item.enumerationData.section": "بيانات الترقيم",
     "settings.mappingProfiles.map.item.enumerationData.field.volume": "مجلد",
-    "settings.mappingProfiles.map.item.enumerationData.field.yearCaption.legend": "السنوات والتعليقات",
     "settings.mappingProfiles.map.item.enumerationData.field.yearCaption": "السنة، لقطة",
     "settings.mappingProfiles.map.item.enumerationData.field.yearCaption.addLabel": "إضافة سنة، لقطة",
     "settings.mappingProfiles.map.item.itemCondition.section": "شرط",

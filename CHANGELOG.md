@@ -7,9 +7,11 @@
 * Implement <ProhibitionIcon> component (UIDATIMP-477)
 * Distinguish not mapped and unmappable fields in Field mapping profile View screen (UIDATIMP-471)
 * Field mapping profile - Add line above associated action profiles (UIDATIMP-472)
+* Label for Year field in caption section has been updated (UIDATIMP-475)
 
 ### Bugs fixed:
 * When returned to search results screen after profile save, wrong profile details show (UIDATIMP-424)
+* Optional sections are collapsed even if contain data (UIDATIMP-479)
 * Fix tree lines in Job profile associations tree (UIDATIMP-343)
 
 ## [1.8.2](https://github.com/folio-org/ui-data-import/tree/v1.8.2) (2020-04-07)
