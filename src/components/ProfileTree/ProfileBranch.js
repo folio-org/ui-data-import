@@ -95,9 +95,10 @@ export const ProfileBranch = memo(({
     onChange(prev => prev + 1);
   };
 
-  const containerId = `container-${record ? 'editable' : 'static'}-${currentRecord.id}`;
-  const matchSectionId = `accordion-match-${record ? 'editable' : 'static'}-${currentRecord.id}`;
-  const nonMatchSectionId = `accordion-non-match-${record ? 'editable' : 'static'}-${currentRecord.id}`;
+  const branchMode = record ? 'static' : 'editable';
+  const containerId = `container-${branchMode}-${currentRecord.id}`;
+  const matchSectionId = `accordion-match-${branchMode}-${currentRecord.id}`;
+  const nonMatchSectionId = `accordion-non-match-${branchMode}-${currentRecord.id}`;
   const matchSectionKey = `${sectionKey}.data.match`;
   const nonMatchSectionKey = `${sectionKey}.data.nonMatch`;
 
@@ -157,7 +158,7 @@ export const ProfileBranch = memo(({
                 )}
             </div>
             <TreeLine
-              from={`#branch-${record ? 'editable' : 'static'}-${recordData.id}`}
+              from={`#branch-${branchMode}-${recordData.id}`}
               to={`#${matchSectionId} > :first-child`}
               container={`#${containerId}`}
               fromAnchor="left bottom"
@@ -217,7 +218,7 @@ export const ProfileBranch = memo(({
                 )}
             </div>
             <TreeLine
-              from={`#branch-${record ? 'editable' : 'static'}-${recordData.id}`}
+              from={`#branch-${branchMode}-${recordData.id}`}
               to={`#${nonMatchSectionId} > :first-child`}
               container={`#${containerId}`}
               fromAnchor="left bottom"

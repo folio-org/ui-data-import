@@ -3,8 +3,13 @@ import React, {
   useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
-import { isNil } from 'lodash';
+import {
+  debounce,
+  isNil,
+  noop,
+} from 'lodash';
 
+import { useForceUpdate } from '../../utils';
 import { Line } from './Line';
 import { getElement } from './utils';
 
@@ -38,8 +43,24 @@ export const TreeLine = props => {
     orientation = ORIENTATIONS.VERTICAL,
     isLocalLTR = true,
   } = props;
+  const containerElement = getElement(container);
+  const forceUpdate = useForceUpdate();
+
   const [fromElement, setFromElement] = useState(undefined);
   const [toElement, setToElement] = useState(undefined);
+
+  useEffect(() => {
+    const handleResize = debounce(forceUpdate);
+    const resizeObserver = new ResizeObserver(handleResize);
+
+    if (containerElement) {
+      resizeObserver.observe(containerElement);
+
+      return () => resizeObserver.unobserve(containerElement);
+    }
+
+    return noop;
+  }, [containerElement, forceUpdate]);
 
   useEffect(() => {
     setFromElement(getElement(from, container));
@@ -122,8 +143,6 @@ export const TreeLine = props => {
 
     let offsetX = window.pageXOffset || document.documentElement.scrollLeft;
     let offsetY = window.pageYOffset || document.documentElement.scrollTop;
-
-    const containerElement = getElement(container);
 
     if (containerElement) {
       const containerElementDimensions = containerElement.getBoundingClientRect();

@@ -24,3 +24,4 @@ export * from './withProfileWrapper';
 export * from './getFieldsMatched';
 export * from './checkEmpty';
 export * from './hooks';
+export * from './useForceUpdate';

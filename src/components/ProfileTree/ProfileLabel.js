@@ -56,6 +56,7 @@ export const ProfileLabel = memo(({
     profileId: parentId,
   } = parentRecordData;
 
+  const labelMode = record ? 'static' : 'editable';
   const entityKey = `${camelCase(recordType)}s`;
   const templates = listTemplate({
     entityKey,
@@ -81,7 +82,7 @@ export const ProfileLabel = memo(({
 
   return (
     <div
-      id={`branch-${record ? 'editable' : 'static'}-${recordData.id}`}
+      id={`branch-${labelMode}-${recordData.id}`}
       className={classNames(css['profile-label'], className)}
       {...dataAttributes}
     >
