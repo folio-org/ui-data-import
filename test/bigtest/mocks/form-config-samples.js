@@ -840,6 +840,10 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.statisticalCode',
                       name: 'mappingDetails.mappingFields[6].subfields[##ri##].fields[0].value',
+                      decorator: 'withReferenceValues',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                      wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'statisticalCodes',
                     }],
                   }],
                 }],
@@ -871,7 +875,9 @@ export const formConfigSamples = [{
                   name: 'mappingDetails.mappingFields[7].value',
                   decorator: 'withReferenceValues',
                   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                  wrapperSourceLink: '',
+                  wrapperSourceLink: '/material-types?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'mtypes',
+                  // wrapperExplicitInsert: true,
                 }],
               }],
             }, {
@@ -899,7 +905,7 @@ export const formConfigSamples = [{
               childControls: [{
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 3,
+                xs: 6,
                 dataAttributes: { 'data-test-call-number-type': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -910,12 +916,13 @@ export const formConfigSamples = [{
                   name: 'mappingDetails.mappingFields[9].value',
                   decorator: 'withReferenceValues',
                   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                  wrapperSourceLink: '',
+                  wrapperSourceLink: '/call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'callNumberTypes',
                 }],
               }, {
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 3,
+                xs: 2,
                 dataAttributes: { 'data-test-call-number-prefix': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -928,7 +935,7 @@ export const formConfigSamples = [{
               }, {
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 3,
+                xs: 2,
                 dataAttributes: { 'data-test-call-number': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -941,7 +948,7 @@ export const formConfigSamples = [{
               }, {
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 3,
+                xs: 2,
                 dataAttributes: { 'data-test-call-number-suffix': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -1153,10 +1160,14 @@ export const formConfigSamples = [{
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
+                  enabled: true,
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatus',
                   name: 'mappingDetails.mappingFields[22].value',
-                  enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '/item-damaged-statuses?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'itemDamageStatuses',
                 }],
               }, {
                 controlType: 'Col',
@@ -1228,18 +1239,22 @@ export const formConfigSamples = [{
                   childControls: [{
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 4,
+                    xs: 5,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.field.notes.noteType',
                       name: 'mappingDetails.mappingFields[24].subfields[##ri##].fields[0].value',
+                      decorator: 'withReferenceValues',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                      wrapperSourceLink: '/item-note-types?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'itemNoteTypes',
                     }],
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 4,
+                    xs: 5,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -1250,7 +1265,7 @@ export const formConfigSamples = [{
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 4,
+                    xs: 2,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -1282,10 +1297,14 @@ export const formConfigSamples = [{
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
+                  enabled: true,
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemLoans.field.loanTypePermanentRequired',
                   name: 'mappingDetails.mappingFields[25].value',
-                  enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'loantypes',
                 }],
               }],
             }, {
@@ -1300,10 +1319,14 @@ export const formConfigSamples = [{
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
+                  enabled: true,
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemLoans.field.loanTypeTemporary',
                   name: 'mappingDetails.mappingFields[26].value',
-                  enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'loantypes',
                 }],
               }],
             }, {
@@ -1318,10 +1341,14 @@ export const formConfigSamples = [{
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
+                  enabled: true,
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemLoans.field.loanStatus',
                   name: 'mappingDetails.mappingFields[27].value',
-                  enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '/instance-statuses?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'instanceStatuses',
                 }],
               }],
             }, {
@@ -1372,18 +1399,22 @@ export const formConfigSamples = [{
                   childControls: [{
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 4,
+                    xs: 5,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.field.notes.noteType',
                       name: 'mappingDetails.mappingFields[28].subfields[##ri##].fields[0].value',
+                      decorator: 'withReferenceValues',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                      wrapperSourceLink: '/item-note-types?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'itemNoteTypes',
                     }],
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 4,
+                    xs: 5,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -1394,7 +1425,7 @@ export const formConfigSamples = [{
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 4,
+                    xs: 2,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -1421,28 +1452,36 @@ export const formConfigSamples = [{
               childControls: [{
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 4,
+                xs: 6,
                 dataAttributes: { 'data-test-permanent': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
+                  enabled: true,
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.location.field.permanent',
                   name: 'mappingDetails.mappingFields[29].value',
-                  enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'locations',
                 }],
               }, {
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 4,
+                xs: 6,
                 dataAttributes: { 'data-test-temporary': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
+                  enabled: true,
                   component: 'TextField',
                   label: 'ui-data-import.settings.mappingProfiles.map.location.field.temporary',
                   name: 'mappingDetails.mappingFields[30].value',
-                  enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'locations',
                 }],
               }],
             }],
@@ -1510,13 +1549,17 @@ export const formConfigSamples = [{
                   childControls: [{
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 2,
+                    xs: 4,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.relationship',
                       name: 'mappingDetails.mappingFields[31].subfields[##ri##].fields[0].value',
+                      decorator: 'withReferenceValues',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                      wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'electronicAccessRelationships',
                     }],
                   }, {
                     controlType: 'Col',
@@ -1532,7 +1575,7 @@ export const formConfigSamples = [{
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 3,
+                    xs: 2,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -1543,7 +1586,7 @@ export const formConfigSamples = [{
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 3,
+                    xs: 2,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
