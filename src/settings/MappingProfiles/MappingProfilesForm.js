@@ -54,6 +54,7 @@ export const MappingProfilesFormComponent = ({
   pristine,
   submitting,
   initialValues,
+  okapi,
   existingRecordTypeInitial,
   mappingDetailsInitial,
   mappingDetails,
@@ -175,6 +176,7 @@ export const MappingProfilesFormComponent = ({
       config={formConfig}
       paneTitle={paneTitle}
       headLine={headLine}
+      okapi={okapi}
       injectedProps={injectedProps}
       stateMethods={stateMethods}
       referenceTables={referenceTables}
@@ -200,6 +202,7 @@ MappingProfilesFormComponent.propTypes = {
     }).isRequired,
     PropTypes.string.isRequired,
   ]),
+  okapi: PropTypes.object.isRequired,
   existingRecordTypeInitial: PropTypes.string.isRequired,
   mappingDetailsInitial: PropTypes.object.isRequired,
   mappingDetails: PropTypes.object.isRequired,
@@ -209,11 +212,13 @@ MappingProfilesFormComponent.propTypes = {
 
 const mapStateToProps = state => {
   // @TODO: Remove this when FlexibleForm internal state mamagement will be implemented.
+  const okapi = get(state, ['okapi'], null);
   const mappingDetailsInitial = get(state, ['form', formName, 'initial', 'profile', 'mappingDetails'], null);
   const mappingDetails = get(state, ['form', formName, 'values', 'profile', 'mappingDetails'], null);
   const existingRecordTypeInitial = get(state, ['form', formName, 'initial', 'profile', 'existingRecordType'], null);
 
   return {
+    okapi,
     existingRecordTypeInitial,
     mappingDetailsInitial,
     mappingDetails,
