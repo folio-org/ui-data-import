@@ -356,12 +356,7 @@ export const Control = memo(props => {
       );
     }
 
-    return (
-      <Cmp
-        className={classes}
-        {...attribs}
-      />
-    );
+    return <Cmp {...attribs} />;
   };
 
   const renderRepeatable = () => {

@@ -877,6 +877,7 @@ export const formConfigSamples = [{
                   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
                   wrapperSourceLink: '/material-types?limit=1000&query=cql.allRecords=1 sortby name',
                   wrapperSourcePath: 'mtypes',
+                  // wrapperExplicitInsert: true,
                 }],
               }],
             }, {
