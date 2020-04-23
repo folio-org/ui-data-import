@@ -67,7 +67,7 @@ export const OptionsList = ({
 
 OptionsList.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.oneOfType([PropTypes.string, Node]).isRequired,
   dataOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   onSelect: PropTypes.func.isRequired,
   className: PropTypes.string,

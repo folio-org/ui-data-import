@@ -342,6 +342,7 @@ export const Control = memo(props => {
           {localized => (
             <Cmp
               placeholder={localized}
+              className={classes}
               {...attribs}
             />
           )}

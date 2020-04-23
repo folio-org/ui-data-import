@@ -28,13 +28,14 @@ export const withReferenceValues = memo(props => {
     wrapperLabel,
     wrapperSourceLink,
     wrapperSourcePath,
+    wrapperExplicitInsert,
     okapi,
     ...rest
   } = props;
 
   const [hasLoaded, setHasLoaded] = useState(false);
   const [dataOptions, setDataOptions] = useState([]);
-  const [currentValue, setCurrentValue] = useState(input?.value || null);
+  const [currentValue, setCurrentValue] = useState(input?.value || '');
   const [wrapperValue, setWrapperValue] = useState(null);
 
   const fetchList = async () => {
@@ -54,6 +55,11 @@ export const withReferenceValues = memo(props => {
     }
   };
 
+  const handleChange = e => {
+    setCurrentValue(e.target ? e.target.value : e);
+    input.onChange(e);
+  };
+
   useLayoutEffect(() => {
     let setCancel = false;
 
@@ -69,33 +75,40 @@ export const withReferenceValues = memo(props => {
   useLayoutEffect(() => {
     let newValue = '';
 
-    if (currentValue && wrapperValue) {
-      newValue = `${currentValue} ${wrapperValue}`;
-    } else if (!currentValue && wrapperValue) {
-      newValue = wrapperValue;
+    if (wrapperValue) {
+      if (wrapperExplicitInsert || !currentValue) {
+        newValue = `"${wrapperValue}"`;
+      } else {
+        newValue = `${currentValue} "${wrapperValue}"`;
+      }
     }
 
-    setCurrentValue(newValue);
+    if (newValue) {
+      setCurrentValue(newValue);
+      handleChange(newValue);
+    }
   }, [wrapperValue]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const handleChange = e => {
-    setCurrentValue(e.target.value);
-    input.onChange(e);
-  };
 
   const needsTranslation = wrapperLabel && !isFormattedMessage(wrapperLabel) && isTranslationId(wrapperLabel);
   const currentInput = useRef(input);
+
+  const {
+    onBlur,
+    onDragStart,
+    onDrop,
+    onFocus,
+  } = input;
 
   return (
     <div className={styles.decorator}>
       <WrappedComponent
         value={currentValue}
         inputRef={currentInput}
-        onBlur={input.onBlur}
+        onBlur={onBlur}
         onChange={handleChange}
-        onDragStart={input.onDragStart}
-        onDrop={input.onDrop}
-        onFocus={input.onFocus}
+        onDragStart={onDragStart}
+        onDrop={onDrop}
+        onFocus={onFocus}
         loading={!hasLoaded}
         {...rest}
       />
@@ -143,6 +156,7 @@ withReferenceValues.propTypes = {
   okapi: PropTypes.shape({ url: PropTypes.string }).isRequired,
   wrapperSourceLink: PropTypes.string.isRequired,
   wrapperSourcePath: PropTypes.string.isRequired,
+  wrapperExplicitInsert: PropTypes.bool,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
 };
@@ -150,4 +164,5 @@ withReferenceValues.propTypes = {
 withReferenceValues.defaultProps = {
   id: null,
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+  wrapperExplicitInsert: false,
 };
