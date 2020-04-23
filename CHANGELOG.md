@@ -3,9 +3,10 @@
 ## **1.9.0** (in progress)
 
 ### Features added:
+* Data Import field mapping profile details: Reference values dropdown component (UIDATIMP-402)
 * Cover MCL in mapping profile details sections with tests (UIDATIMP-469)
-* Implement <ProhibitionIcon> component (UIDATIMP-477)
 * Distinguish not mapped and unmappable fields in Field mapping profile View screen (UIDATIMP-471)
+* Implement <ProhibitionIcon> component (UIDATIMP-477)
 * Field mapping profile - Add line above associated action profiles (UIDATIMP-472)
 * Label for Year field in caption section has been updated (UIDATIMP-475)
 

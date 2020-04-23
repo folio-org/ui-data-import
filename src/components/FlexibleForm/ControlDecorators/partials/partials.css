@@ -1,0 +1,25 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.options-list {
+  min-width: 142px;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  & ul {
+    margin: 0;
+    list-style: none;
+    & li {
+      & [class|="button"] {
+        height: 23px;
+        margin: 0;
+        padding: 0 5px;
+        border: solid 1px transparent;
+        border-radius: 0;
+        &::before {
+          border-radius: 0;
+        }
+      }
+    }
+  }
+}
