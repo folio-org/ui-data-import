@@ -482,5 +482,6 @@
     "settings.mappingProfiles.map.instance.subject.section": "主题",
     "settings.mappingProfiles.map.instance.descriptiveData.field.subjects": "主题",
     "settings.mappingProfiles.map.holdings.field.digitizationPolicy": "数字化政策",
-    "noValueAllowed": "无允许值"
+    "noValueAllowed": "无允许值",
+    "settings.mappingProfiles.map.wrapper.acceptedValues": "Accepted values"
 }
