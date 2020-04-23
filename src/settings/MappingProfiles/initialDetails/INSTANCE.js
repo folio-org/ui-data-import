@@ -123,7 +123,7 @@ const INSTANCE = {
     }],
   }, {
     name: 'precedingTitles',
-    enabled: true,
+    enabled: false,
     path: 'instance.precedingTitles',
     value: '',
     subfields: [{
@@ -131,15 +131,33 @@ const INSTANCE = {
       path: 'instance.precedingTitles[]',
       fields: [{
         // order: 0,
-        name: 'precedingInstanceId',
+        name: 'precedingTitlesTitle',
         enabled: true,
-        path: 'instance.precedingTitles[].precedingInstanceId',
+        path: 'instance.precedingTitles[].precedingTitlesTitle',
+        value: '',
+      }, {
+        // order: 1,
+        name: 'precedingTitlesHrid',
+        enabled: true,
+        path: 'instance.precedingTitles[].precedingTitlesHrid',
+        value: '',
+      }, {
+        // order: 2,
+        name: 'precedingTitlesIsbn',
+        enabled: true,
+        path: 'instance.precedingTitles[].precedingTitlesIsbn',
+        value: '',
+      }, {
+        // order: 3,
+        name: 'precedingTitlesIssn',
+        enabled: true,
+        path: 'instance.precedingTitles[].precedingTitlesIssn',
         value: '',
       }],
     }],
   }, {
     name: 'succeedingTitles',
-    enabled: true,
+    enabled: false,
     path: 'instance.succeedingTitles',
     value: '',
     subfields: [{
@@ -147,9 +165,27 @@ const INSTANCE = {
       path: 'instance.succeedingTitles[]',
       fields: [{
         // order: 0,
-        name: 'succeedingInstanceId',
+        name: 'succeedingTitlesTitle',
         enabled: true,
-        path: 'instance.succeedingTitles[].succeedingInstanceId',
+        path: 'instance.succeedingTitles[].succeedingTitlesTitle',
+        value: '',
+      }, {
+        // order: 1,
+        name: 'succeedingTitlesHrid',
+        enabled: true,
+        path: 'instance.succeedingTitles[].succeedingTitlesHrid',
+        value: '',
+      }, {
+        // order: 2,
+        name: 'succeedingTitlesIsbn',
+        enabled: true,
+        path: 'instance.succeedingTitles[].succeedingTitlesIsbn',
+        value: '',
+      }, {
+        // order: 3,
+        name: 'succeedingTitlesIssn',
+        enabled: true,
+        path: 'instance.succeedingTitles[].succeedingTitlesIssn',
         value: '',
       }],
     }],
