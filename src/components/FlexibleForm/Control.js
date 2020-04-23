@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 import {
   FormattedMessage,
-  FormattedDate,
   intlShape,
 } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -20,8 +19,17 @@ import * as stripesComponents from '@folio/stripes/components';
 import * as stripesSmartComponents from '@folio/stripes/smart-components';
 
 import * as components from '..';
-import * as validators from '../../utils/formValidators';
-import { checkEmpty } from '../../utils';
+import {
+  getValidation,
+  augmentParam,
+  isFormattedMessage,
+  isTranslationId,
+  getOptionLabel,
+  checkDate,
+  checkEmpty,
+} from '../../utils';
+
+import * as decorators from './ControlDecorators';
 
 export const VIRTUAL_CONTROLS = { COMMON_SECTION: 'CommonSection' };
 
@@ -34,15 +42,11 @@ const controls = {
 };
 
 const getControl = controlType => components[controlType] || controls[controlType] || controlType;
-const getValidation = validation => validation.map(val => validators[val]);
-const augmentParam = (param, splitter, augment) => (param ? param.split(splitter).join(augment) : param);
 const getActualParam = (param, sectionNamespace, repeatableIndex) => {
   const nsParam = augmentParam(param, '**ns**', sectionNamespace);
 
   return augmentParam(nsParam, '##ri##', repeatableIndex);
 };
-const isFormattedMessage = lbl => React.isValidElement(lbl);
-const isTranslationId = lbl => lbl && lbl.includes('ui-');
 const getOptions = (options, sectionNamespace, intl) => {
   return options.map(option => {
     let lbl = option.label;
@@ -56,24 +60,6 @@ const getOptions = (options, sectionNamespace, intl) => {
       label: lbl,
     };
   });
-};
-const getOptionLabel = (options, label, sectionNamespace) => {
-  const option = options.find(item => item.value === label);
-
-  if (isEmpty(option)) {
-    return undefined;
-  }
-
-  const isFMessage = isFormattedMessage(option.label);
-  const isTranId = isTranslationId(option.label);
-
-  if (isFMessage || (!isFMessage && !isTranId)) {
-    return option.label;
-  }
-
-  const actualLabel = !isFMessage ? augmentParam(option.label, '**ns**', sectionNamespace) : option.label;
-
-  return !isFormattedMessage ? <FormattedMessage id={actualLabel} /> : actualLabel;
 };
 const getChildrenWithName = children => {
   const childrenWithName = [];
@@ -89,11 +75,6 @@ const hasChildren = cfg => cfg.childControls && cfg.childControls.length;
 const hasContent = (children, record, sectionNamespace, repeatableIndex) => getChildrenWithName(children)
   .map(child => getValue(child.name, record, sectionNamespace, repeatableIndex))
   .some(child => child !== undefined && child !== ' ' && child !== '-');
-const checkDate = (dataType, value) => {
-  const isDate = dataType === 'date';
-
-  return isDate ? <FormattedDate value={value} /> : value;
-};
 
 export const Control = memo(props => {
   const {
@@ -118,6 +99,7 @@ export const Control = memo(props => {
     record,
     id,
     optional,
+    okapi,
     referenceTables,
     setReferenceTables,
     initialFields,
@@ -138,6 +120,7 @@ export const Control = memo(props => {
       name,
       fieldsPath,
       validate,
+      decorator,
     } = props;
 
     const staticPrefix = staticNamespace && staticNamespace.length ? `${staticNamespace}.` : '';
@@ -149,13 +132,13 @@ export const Control = memo(props => {
     const actualLabel = augmentParam(label, '**ns**', sectionNamespace);
 
     let attrs = {
-      component: component ? getControl(component) : null,
       id: actualId,
       label: actualLabel ? (<FormattedMessage id={actualLabel} />) : actualLabel,
       optional,
       sectionNamespace,
       repeatableIndex,
       record,
+      okapi,
       ...attributes,
       ...dataAttributes,
     };
@@ -217,6 +200,21 @@ export const Control = memo(props => {
       };
     }
 
+    if (component) {
+      const control = component ? getControl(component) : null;
+      let wrapper = null;
+
+      if (control && decorator) {
+        wrapper = decorators[decorator];
+      }
+
+      attrs = {
+        ...attrs,
+        component: wrapper || control,
+        WrappedComponent: wrapper ? control : null,
+      };
+    }
+
     return attrs;
   };
 
@@ -231,6 +229,7 @@ export const Control = memo(props => {
       sectionNamespace={sectionNamespace}
       intl={intl}
       styles={styles}
+      okapi={okapi}
       referenceTables={referenceTables}
       setReferenceTables={setReferenceTables}
       initialFields={initialFields}
@@ -343,6 +342,7 @@ export const Control = memo(props => {
           {localized => (
             <Cmp
               placeholder={localized}
+              className={classes}
               {...attribs}
             />
           )}
@@ -356,9 +356,7 @@ export const Control = memo(props => {
       );
     }
 
-    return (
-      <Cmp {...attribs} />
-    );
+    return <Cmp {...attribs} />;
   };
 
   const renderRepeatable = () => {
@@ -424,17 +422,18 @@ export const Control = memo(props => {
           onRemove={onRemove}
           canAdd={canAdd}
           canRemove={canRemove}
-          renderField={(field, index) => (
+          renderField={() => (
             <>
               {children.map((cfg, i) => (
                 <Control
                   key={`control-${i}`}
-                  repeatableIndex={field?.[incrementalField] || index}
+                  repeatableIndex={i}
                   staticNamespace={staticNamespace}
                   editableNamespace={editableNamespace}
                   sectionNamespace={sectionNamespace}
                   intl={intl}
                   styles={styles}
+                  okapi={okapi}
                   referenceTables={referenceTables}
                   setReferenceTables={setReferenceTables}
                   initialFields={initialFields}
@@ -493,6 +492,7 @@ export const Control = memo(props => {
         repeatableIndex={ri}
         editableNamespace={editableNamespace}
         sectionNamespace={sectionNS}
+        okapi={okapi}
         referenceTables={referenceTables}
         setReferenceTables={setReferenceTables}
         initialFields={initialFields}
@@ -522,9 +522,13 @@ Control.propTypes = {
   enabled: PropTypes.bool,
   editableNamespace: PropTypes.string,
   component: PropTypes.string,
-  label: PropTypes.string || Node,
+  label: PropTypes.oneOfType([PropTypes.string, Node]),
+  decorator: PropTypes.string,
+  wrapperLabel: PropTypes.string,
+  wrapperSourceLink: PropTypes.string,
   placeholder: PropTypes.string,
   intl: intlShape,
+  okapi: PropTypes.object,
   styles: PropTypes.shape(PropTypes.string),
   classNames: PropTypes.arrayOf(PropTypes.string),
   dataOptions: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),

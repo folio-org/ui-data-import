@@ -10,6 +10,7 @@ export * from './formatUserName';
 export * from './xhr';
 export * from './isTestEnv';
 export * from './formValidators';
+export * from './formUtils';
 export * from './craftLayerURL';
 export * from './loadRecords';
 export * from './trimSearchTerm';
