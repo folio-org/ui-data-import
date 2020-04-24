@@ -204,7 +204,6 @@
   "validation.fileExtension": "Please enter a valid file extension (e.g. .marc)",
   "validation.valueType": "Please enter an alphanumeric value",
   "validation.maxLength": "Invalid value. Maximum {maxLength} character(s) allowed",
-  "validation.syntaxError": "Please correct the syntax to continue",
   "error.fileExtension.extension.invalid": "File extension {name} is not a valid format",
   "error.fileExtension.duplication.invalid": "File extension {name} already exists",
   "error.fileExtensions.action": "The file extension \"{name}\" was not {action}",

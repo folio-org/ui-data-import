@@ -6,18 +6,20 @@ import React, {
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { DATE_FORMAT } from '@folio/stripes-acq-components';
+import { get } from 'lodash';
 
-import {
-  isFormattedMessage,
-  isTranslationId,
-} from '../../../../utils';
+import { DATE_FORMAT } from '@folio/stripes-acq-components';
 
 import {
   OptionsList,
   TextDate,
 } from '../partials';
-import { ACCEPTED_DATE_VALUES } from '../partials/constants';
+import {
+  isFormattedMessage,
+  isTranslationId,
+  FORMS_SETTINGS,
+  ENTITY_KEYS,
+} from '../../../../utils';
 
 import styles from './withDatePicker.css';
 
@@ -35,15 +37,16 @@ export const withDatePicker = memo(props => {
   const {
     TODAY,
     CHOOSE_DATE,
-  } = ACCEPTED_DATE_VALUES;
+  } = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'DATE_PICKER'], []);
+
   const dataOptions = [
     {
       value: TODAY.value,
-      name: <FormattedMessage id={ACCEPTED_DATE_VALUES.TODAY.labelId} />,
+      name: <FormattedMessage id={TODAY.id} />,
     },
     {
       value: CHOOSE_DATE.value,
-      name: <FormattedMessage id={ACCEPTED_DATE_VALUES.CHOOSE_DATE.labelId} />,
+      name: <FormattedMessage id={CHOOSE_DATE.id} />,
     },
   ];
 
