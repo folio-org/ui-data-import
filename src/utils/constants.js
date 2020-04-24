@@ -202,6 +202,16 @@ export const FORMS_SETTINGS = {
       ],
     },
   },
+  [ENTITY_KEYS.MAPPING_PROFILES]: {
+    DECORATORS: {
+      REPEATABLE_ACTIONS: {
+        EXTEND_EXISTING: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.extendExisting',
+        DELETE_EXISTING: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.deleteExisting',
+        EXCHANGE_EXISTING: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.exchangeExisting',
+        DELETE_INCOMING: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.deleteIncoming',
+      },
+    },
+  },
 };
 
 export const PROFILE_LINKING_RULES = {
