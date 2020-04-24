@@ -682,15 +682,16 @@ export const formConfigSamples = [{
               childControls: [{
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 6,
+                xs: 4,
                 dataAttributes: { 'data-test-suppress-from-discovery': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
                   component: 'Checkbox',
                   label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.discoverySuppress',
-                  name: 'mappingDetails.mappingFields[0].value',
-                  enabled: true,
+                  name: 'mappingDetails.mappingFields[0].booleanFieldAction',
+                  decorator: 'withBooleanActions',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
                 }],
               }],
             }, {
@@ -1251,7 +1252,7 @@ export const formConfigSamples = [{
                   childControls: [{
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 5,
+                    xs: 4,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -1266,7 +1267,7 @@ export const formConfigSamples = [{
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 5,
+                    xs: 4,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -1277,13 +1278,15 @@ export const formConfigSamples = [{
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 2,
+                    xs: 4,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'Checkbox',
                       label: 'ui-data-import.settings.mappingProfiles.map.field.notes.staffOnly',
-                      name: 'mappingDetails.mappingFields[24].subfields[##ri##].fields[2].value',
+                      name: 'mappingDetails.mappingFields[24].subfields[##ri##].fields[2].booleanFieldAction',
+                      decorator: 'withBooleanActions',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
                     }],
                   }],
                 }],
@@ -1413,7 +1416,7 @@ export const formConfigSamples = [{
                   childControls: [{
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 5,
+                    xs: 4,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -1428,7 +1431,7 @@ export const formConfigSamples = [{
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 5,
+                    xs: 4,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -1439,13 +1442,15 @@ export const formConfigSamples = [{
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 2,
+                    xs: 4,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'Checkbox',
                       label: 'ui-data-import.settings.mappingProfiles.map.field.notes.staffOnly',
-                      name: 'mappingDetails.mappingFields[28].subfields[##ri##].fields[2].value',
+                      name: 'mappingDetails.mappingFields[28].subfields[##ri##].fields[2].booleanFieldAction',
+                      decorator: 'withBooleanActions',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
                     }],
                   }],
                 }],
@@ -1690,6 +1695,7 @@ export const formConfigSamples = [{
               controlType: 'Row',
               staticControlType: 'Row',
               left: 'xs',
+              middle: 'xs',
               childControls: [{
                 controlType: 'Col',
                 staticControlType: 'Col',
@@ -1700,8 +1706,9 @@ export const formConfigSamples = [{
                   staticControlType: 'KeyValue',
                   component: 'Checkbox',
                   label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.discoverySuppress',
-                  name: 'mappingDetails.mappingFields[0].value',
-                  enabled: true,
+                  name: 'mappingDetails.mappingFields[0].booleanFieldAction',
+                  decorator: 'withBooleanActions',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
                 }],
               }, {
                 controlType: 'Col',
@@ -1712,9 +1719,10 @@ export const formConfigSamples = [{
                   staticControlType: 'KeyValue',
                   component: 'Checkbox',
                   label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.staffSuppress',
-                  name: 'mappingDetails.mappingFields[1].value',
+                  name: 'mappingDetails.mappingFields[1].booleanFieldAction',
+                  decorator: 'withBooleanActions',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
                   dataAttributes: { 'data-test-staff-suppress': '' },
-                  enabled: true,
                 }],
               }, {
                 controlType: 'Col',
@@ -1725,9 +1733,10 @@ export const formConfigSamples = [{
                   staticControlType: 'KeyValue',
                   component: 'Checkbox',
                   label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.previouslyHeld',
-                  name: 'mappingDetails.mappingFields[2].value',
+                  name: 'mappingDetails.mappingFields[2].booleanFieldAction',
+                  decorator: 'withBooleanActions',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
                   dataAttributes: { 'data-test-previously-held': '' },
-                  enabled: true,
                 }],
               }],
             }, {
@@ -2455,7 +2464,9 @@ export const formConfigSamples = [{
                       staticControlType: 'KeyValue',
                       component: 'Checkbox',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.contributors.field.primary',
-                      name: 'mappingDetails.mappingFields[16].subfields[##ri##].fields[4].value',
+                      name: 'mappingDetails.mappingFields[16].subfields[##ri##].fields[4].booleanFieldAction',
+                      decorator: 'withBooleanActions',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
                       dataAttributes: { 'data-test-primary': '' },
                     }],
                   }],
@@ -3052,7 +3063,9 @@ export const formConfigSamples = [{
                       staticControlType: 'KeyValue',
                       component: 'Checkbox',
                       label: 'ui-data-import.settings.mappingProfiles.map.field.notes.staffOnly',
-                      name: 'mappingDetails.mappingFields[26].subfields[##ri##].fields[2].value',
+                      name: 'mappingDetails.mappingFields[26].subfields[##ri##].fields[2].booleanFieldAction',
+                      decorator: 'withBooleanActions',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
                       disabled: true,
                       dataAttributes: { 'data-test-staff-only': '' },
                     }],
@@ -3593,8 +3606,9 @@ export const formConfigSamples = [{
                   staticControlType: 'KeyValue',
                   component: 'Checkbox',
                   label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.discoverySuppress',
-                  name: 'mappingDetails.mappingFields[0].value',
-                  enabled: true,
+                  name: 'mappingDetails.mappingFields[0].booleanFieldAction',
+                  decorator: 'withBooleanActions',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
                 }],
               }],
             }, {
@@ -4227,7 +4241,7 @@ export const formConfigSamples = [{
                     childControls: [{
                       controlType: 'Col',
                       staticControlType: 'Col',
-                      xs: 5,
+                      xs: 4,
                       childControls: [{
                         controlType: 'Field',
                         staticControlType: 'KeyValue',
@@ -4242,7 +4256,7 @@ export const formConfigSamples = [{
                     }, {
                       controlType: 'Col',
                       staticControlType: 'Col',
-                      xs: 5,
+                      xs: 4,
                       childControls: [{
                         controlType: 'Field',
                         staticControlType: 'KeyValue',
@@ -4253,13 +4267,15 @@ export const formConfigSamples = [{
                     }, {
                       controlType: 'Col',
                       staticControlType: 'Col',
-                      xs: 2,
+                      xs: 4,
                       childControls: [{
                         controlType: 'Field',
                         staticControlType: 'KeyValue',
                         component: 'Checkbox',
                         label: 'ui-data-import.settings.mappingProfiles.map.field.notes.staffOnly',
-                        name: 'mappingDetails.mappingFields[21].subfields[##ri##].fields[2].value',
+                        name: 'mappingDetails.mappingFields[21].subfields[##ri##].fields[2].booleanFieldAction',
+                        decorator: 'withBooleanActions',
+                        wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
                       }],
                     }],
                   }],
@@ -4500,13 +4516,15 @@ export const formConfigSamples = [{
                     childControls: [{
                       controlType: 'Col',
                       staticControlType: 'Col',
-                      xs: 2,
+                      xs: 4,
                       childControls: [{
                         controlType: 'Field',
                         staticControlType: 'KeyValue',
                         component: 'Checkbox',
                         label: 'ui-data-import.settings.mappingProfiles.map.field.publicDisplay',
-                        name: 'mappingDetails.mappingFields[26].subfields[##ri##].fields[0].value',
+                        name: 'mappingDetails.mappingFields[26].subfields[##ri##].fields[0].booleanFieldAction',
+                        decorator: 'withBooleanActions',
+                        wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
                       }],
                     }, {
                       controlType: 'Col',

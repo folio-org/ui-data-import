@@ -1,0 +1,11 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.decorator {
+  & [class|="checkbox"] {
+    display: none;
+  }
+
+  & [class|="selectControl"] {
+    padding-right: 25px;
+  }
+}

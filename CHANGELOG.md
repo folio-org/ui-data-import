@@ -5,6 +5,7 @@
 ### Features added:
 * Data Import field mapping profile details: Repeatable field dropdown component (UIDATIMP-401)
 * Data Import field mapping profile details: Reference values dropdown component (UIDATIMP-402)
+* Data Import field mapping profile details: Checkbox decorator (UIDATIMP-368)
 * Cover MCL in mapping profile details sections with tests (UIDATIMP-469)
 * Distinguish not mapped and unmappable fields in Field mapping profile View screen (UIDATIMP-471)
 * Implement <ProhibitionIcon> component (UIDATIMP-477)

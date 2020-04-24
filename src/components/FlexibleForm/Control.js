@@ -27,6 +27,8 @@ import {
   getOptionLabel,
   checkDate,
   checkEmpty,
+  ENTITY_KEYS,
+  FORMS_SETTINGS,
 } from '../../utils';
 
 import * as decorators from './ControlDecorators';
@@ -206,6 +208,17 @@ export const Control = memo(props => {
 
       if (control && decorator) {
         wrapper = decorators[decorator];
+      }
+
+      // TODO: Should be moved to utils in the future
+      if (decorator && decorator === 'withBooleanActions' && staticControlType === 'KeyValue') {
+        const actions = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'BOOLEAN_ACTIONS'], []);
+        const newValue = actions.find(item => item.value === attrs?.value)?.label;
+
+        attrs = {
+          ...attrs,
+          value: newValue ? (<FormattedMessage id={newValue} />) : newValue,
+        };
       }
 
       attrs = {
