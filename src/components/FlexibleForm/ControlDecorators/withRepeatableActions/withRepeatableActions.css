@@ -1,3 +1,19 @@
 @import "@folio/stripes-components/lib/variables.css";
 
-.decorator {}
+.decorator {
+  & [class|="select"] {
+    float: right;
+    margin-bottom: -36px;
+  }
+  & fieldset {
+    min-width:100%;
+    width: 100%;
+  }
+}
+
+.no-legend {
+  & [class|="select"] {
+    margin-top: -32px;
+    margin-bottom: -5px;
+  }
+}

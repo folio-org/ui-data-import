@@ -3,6 +3,7 @@
 ## **1.9.0** (in progress)
 
 ### Features added:
+* Data Import field mapping profile details: Repeatable field dropdown component (UIDATIMP-401)
 * Data Import field mapping profile details: Reference values dropdown component (UIDATIMP-402)
 * Cover MCL in mapping profile details sections with tests (UIDATIMP-469)
 * Distinguish not mapped and unmappable fields in Field mapping profile View screen (UIDATIMP-471)
