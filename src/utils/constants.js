@@ -210,6 +210,16 @@ export const FORMS_SETTINGS = {
         EXCHANGE_EXISTING: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.exchangeExisting',
         DELETE_INCOMING: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.deleteIncoming',
       },
+      DATE_PICKER: {
+        TODAY: {
+          value: 'TODAY',
+          id: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues.today',
+        },
+        CHOOSE_DATE: {
+          value: 'CHOOSE_DATE',
+          id: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues.chooseDate',
+        },
+      },
     },
   },
 };

@@ -284,6 +284,8 @@
   "settings.mappingProfiles.exceptionModal.label": "Cannot delete field mapping profile",
   "settings.mappingProfiles.exceptionModal.message": "This field mapping profile cannot be deleted, as it is in use by one or more action profiles.",
   "settings.mappingProfiles.map.wrapper.acceptedValues": "Accepted values",
+  "settings.mappingProfiles.map.wrapper.acceptedValues.today": "Today",
+  "settings.mappingProfiles.map.wrapper.acceptedValues.chooseDate": "Choose date",
   "settings.mappingProfiles.map.wrapper.repeatableActions": "Select action",
   "settings.mappingProfiles.map.wrapper.repeatableActions.extendExisting": "Add these to existing",
   "settings.mappingProfiles.map.wrapper.repeatableActions.deleteExisting": "Delete all existing values",
