@@ -119,7 +119,7 @@ export const withReferenceValues = memo(props => {
               id={id}
               label={localized}
               dataOptions={dataOptions}
-              optionValue="id"
+              optionValue="name"
               optionLabel="name"
               className={styles['options-dropdown']}
               disabled={!hasLoaded}
@@ -132,7 +132,7 @@ export const withReferenceValues = memo(props => {
           id={id}
           label={wrapperLabel}
           dataOptions={dataOptions}
-          optionValue="id"
+          optionValue="name"
           optionLabel="name"
           className={styles['options-dropdown']}
           disabled={!hasLoaded}

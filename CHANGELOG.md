@@ -9,6 +9,7 @@
 * Implement <ProhibitionIcon> component (UIDATIMP-477)
 * Field mapping profile - Add line above associated action profiles (UIDATIMP-472)
 * Label for Year field in caption section has been updated (UIDATIMP-475)
+* Implement date picker decorator (UIDATIMP-407)
 
 ### Bugs fixed:
 * When returned to search results screen after profile save, wrong profile details show (UIDATIMP-424)

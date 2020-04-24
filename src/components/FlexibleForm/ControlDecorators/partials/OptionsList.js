@@ -50,7 +50,7 @@ export const OptionsList = ({
                 role="menuitem"
                 align="start"
                 onClick={() => {
-                  onSelect(option?.[optionLabel]);
+                  onSelect(option?.[optionValue] || option?.[optionLabel]);
                   setOpen(false);
                 }}
                 fullWidth

@@ -1,0 +1,147 @@
+import React, {
+  memo,
+  useRef,
+  useState,
+} from 'react';
+import { PropTypes } from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
+import { DATE_FORMAT } from '@folio/stripes-acq-components';
+
+import {
+  isFormattedMessage,
+  isTranslationId,
+} from '../../../../utils';
+
+import {
+  OptionsList,
+  TextDate,
+} from '../partials';
+import { ACCEPTED_DATE_VALUES } from '../partials/constants';
+
+import styles from '../withReferenceValues/withReferenceValues.css';
+
+export const withDatePicker = memo(props => {
+  const {
+    id,
+    input,
+    wrapperLabel,
+    WrappedComponent,
+    ...rest
+  } = props;
+  const [currentValue, setCurrentValue] = useState(input?.value || '');
+  const [isDatepicker, setIsDatepicker] = useState(false);
+
+  const {
+    TODAY,
+    CHOOSE_DATE,
+  } = ACCEPTED_DATE_VALUES;
+  const dataOptions = [
+    {
+      value: TODAY.value,
+      name: <FormattedMessage id={ACCEPTED_DATE_VALUES.TODAY.labelId} />,
+    },
+    {
+      value: CHOOSE_DATE.value,
+      name: <FormattedMessage id={ACCEPTED_DATE_VALUES.CHOOSE_DATE.labelId} />,
+    },
+  ];
+
+  const handleChange = e => {
+    setCurrentValue(e.target ? e.target.value : e);
+    input.onChange(e);
+  };
+
+  const handleSetDate = (e, value) => {
+    const newValue = currentValue ? `${currentValue} "${value}"` : `"${value}"`;
+
+    setCurrentValue(newValue);
+    input.onChange(newValue);
+  };
+
+  const handleChangeWrapperValue = wrapperValue => {
+    let newValue = '';
+
+    if (wrapperValue === TODAY.value) {
+      setIsDatepicker(false);
+      newValue = currentValue ? `${currentValue} ###TODAY###` : '###TODAY###';
+      handleChange(newValue);
+    }
+
+    if (wrapperValue === CHOOSE_DATE.value) {
+      setIsDatepicker(true);
+    }
+  };
+
+  const needsTranslation = wrapperLabel && !isFormattedMessage(wrapperLabel) && isTranslationId(wrapperLabel);
+  const currentInput = useRef(input);
+  const Component = !isDatepicker ? WrappedComponent : TextDate;
+
+  const {
+    onBlur,
+    onDragStart,
+    onDrop,
+    onFocus,
+  } = input;
+
+  return (
+    <div className={styles.decorator}>
+      <Component
+        value={currentValue}
+        inputRef={currentInput}
+        onBlur={onBlur}
+        onChange={handleChange}
+        onSetDate={handleSetDate}
+        onDragStart={onDragStart}
+        onDrop={onDrop}
+        onFocus={onFocus}
+        dateFormat={DATE_FORMAT}
+        {...rest}
+      />
+      {needsTranslation ? (
+        <FormattedMessage id={wrapperLabel}>
+          {localized => (
+            <OptionsList
+              id={id}
+              label={localized}
+              dataOptions={dataOptions}
+              optionValue="value"
+              optionLabel="name"
+              className={styles['options-dropdown']}
+              onSelect={handleChangeWrapperValue}
+            />
+          )}
+        </FormattedMessage>
+      ) : (
+        <OptionsList
+          id={id}
+          label={wrapperLabel}
+          dataOptions={dataOptions}
+          optionValue="value"
+          optionLabel="name"
+          className={styles['options-dropdown']}
+          onSelect={handleChangeWrapperValue}
+        />
+      )}
+    </div>
+  );
+});
+
+withDatePicker.propTypes = {
+  input: PropTypes.shape({
+    onBlur: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onDragStart: PropTypes.func.isRequired,
+    onDrop: PropTypes.func.isRequired,
+    onFocus: PropTypes.func.isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  }).isRequired,
+  WrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
+  id: PropTypes.string,
+  wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
+};
+
+withDatePicker.defaultProps = {
+  id: null,
+  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+};
