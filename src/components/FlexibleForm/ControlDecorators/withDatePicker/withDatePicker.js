@@ -75,7 +75,7 @@ export const withDatePicker = memo(props => {
 
   const needsTranslation = wrapperLabel && !isFormattedMessage(wrapperLabel) && isTranslationId(wrapperLabel);
   const currentInput = useRef(input);
-  const Component = !isDatepicker ? WrappedComponent : TextDate;
+  const Wrapper = !isDatepicker ? WrappedComponent : TextDate;
 
   const {
     onBlur,
@@ -86,7 +86,7 @@ export const withDatePicker = memo(props => {
 
   return (
     <div className={styles.decorator}>
-      <Component
+      <Wrapper
         value={currentValue}
         inputRef={currentInput}
         onBlur={onBlur}
