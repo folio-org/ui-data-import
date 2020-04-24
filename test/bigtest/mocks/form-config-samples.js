@@ -1787,6 +1787,10 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.instance.administrationData.field.statusId',
                   name: 'mappingDetails.mappingFields[6].value',
                   enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '/instance-statuses?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'instanceStatuses',
                 }],
               }],
             }, {
@@ -1851,6 +1855,10 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.statisticalCode',
                       name: 'mappingDetails.mappingFields[8].subfields[##ri##].fields[0].value',
+                      decorator: 'withReferenceValues',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                      wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'statisticalCodes',
                     }],
                   }],
                 }],
@@ -2041,15 +2049,32 @@ export const formConfigSamples = [{
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: false,
                 repeatable: true,
-                canAdd: true,
-                canDelete: true,
+                canAdd: false,
+                canDelete: false,
                 renderStaticAsMCL: true,
-                visibleColumns: ['precedingInstanceId'],
-                columnMapping: { precedingInstanceId: 'ui-data-import.settings.mappingProfiles.map.titleData.precedingTitles.field.precedingInstanceId' },
+                visibleColumns: ['precedingTitlesTitle', 'precedingTitlesHrid', 'precedingTitlesIsbn', 'precedingTitlesIssn'],
+                columnMapping: {
+                  precedingTitlesTitle: 'ui-data-import.settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesTitle',
+                  precedingTitlesHrid: 'ui-data-import.settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesHrid',
+                  precedingTitlesIsbn: 'ui-data-import.settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesIsbn',
+                  precedingTitlesIssn: 'ui-data-import.settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesIssn',
+                },
                 mclColumnPaths: {
-                  precedingInstanceId: {
+                  precedingTitlesTitle: {
                     namePath: 'fields[0].name',
                     valuePath: 'fields[0].value',
+                  },
+                  precedingTitlesHrid: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                  precedingTitlesIsbn: {
+                    namePath: 'fields[2].name',
+                    valuePath: 'fields[2].value',
+                  },
+                  precedingTitlesIssn: {
+                    namePath: 'fields[3].name',
+                    valuePath: 'fields[3].value',
                   },
                 },
                 dataAttributes: { 'data-test-preceding-titles': '' },
@@ -2060,13 +2085,46 @@ export const formConfigSamples = [{
                   childControls: [{
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 12,
+                    xs: 3,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'TextField',
-                      label: 'ui-data-import.settings.mappingProfiles.map.titleData.precedingTitles.field.precedingInstanceId',
+                      label: 'ui-data-import.settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesTitle',
                       name: 'mappingDetails.mappingFields[13].subfields[##ri##].fields[0].value',
+                    }],
+                  }, {
+                    controlType: 'Col',
+                    staticControlType: 'Col',
+                    xs: 3,
+                    childControls: [{
+                      controlType: 'Field',
+                      staticControlType: 'KeyValue',
+                      component: 'TextField',
+                      label: 'ui-data-import.settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesHrid',
+                      name: 'mappingDetails.mappingFields[13].subfields[##ri##].fields[1].value',
+                    }],
+                  }, {
+                    controlType: 'Col',
+                    staticControlType: 'Col',
+                    xs: 3,
+                    childControls: [{
+                      controlType: 'Field',
+                      staticControlType: 'KeyValue',
+                      component: 'TextField',
+                      label: 'ui-data-import.settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesIsbn',
+                      name: 'mappingDetails.mappingFields[13].subfields[##ri##].fields[2].value',
+                    }],
+                  }, {
+                    controlType: 'Col',
+                    staticControlType: 'Col',
+                    xs: 3,
+                    childControls: [{
+                      controlType: 'Field',
+                      staticControlType: 'KeyValue',
+                      component: 'TextField',
+                      label: 'ui-data-import.settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesIssn',
+                      name: 'mappingDetails.mappingFields[13].subfields[##ri##].fields[3].value',
                     }],
                   }],
                 }],
@@ -2085,20 +2143,37 @@ export const formConfigSamples = [{
                 fields: 'succeedingTitles',
                 fieldsPath: 'mappingDetails.mappingFields[14].subfields',
                 incrementalField: 'order',
-                legend: 'ui-data-import.settings.mappingProfiles.map.titleData.field.succedingTitles.legend',
+                legend: 'ui-data-import.settings.mappingProfiles.map.titleData.field.succeedingTitles.legend',
                 addLabel: 'ui-data-import.settings.mappingProfiles.map.titleData.field.succeedingTitles.addLabel',
                 emptyMessage: 'EMPTY FIELDS HERE',
                 enabled: false,
                 repeatable: true,
-                canAdd: true,
-                canDelete: true,
+                canAdd: false,
+                canDelete: false,
                 renderStaticAsMCL: true,
-                visibleColumns: ['succeedingInstanceId'],
-                columnMapping: { succeedingInstanceId: 'ui-data-import.settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingInstanceId' },
+                visibleColumns: ['succeedingTitlesTitle', 'succeedingTitlesHrid', 'succeedingTitlesIsbn', 'succeedingTitlesIssn'],
+                columnMapping: {
+                  succeedingTitlesTitle: 'ui-data-import.settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingTitlesTitle',
+                  succeedingTitlesHrid: 'ui-data-import.settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingTitlesHrid',
+                  succeedingTitlesIsbn: 'ui-data-import.settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingTitlesIsbn',
+                  succeedingTitlesIssn: 'ui-data-import.settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingTitlesIssn',
+                },
                 mclColumnPaths: {
-                  succeedingInstanceId: {
+                  succeedingTitlesTitle: {
                     namePath: 'fields[0].name',
                     valuePath: 'fields[0].value',
+                  },
+                  succeedingTitlesHrid: {
+                    namePath: 'fields[1].name',
+                    valuePath: 'fields[1].value',
+                  },
+                  succeedingTitlesIsbn: {
+                    namePath: 'fields[2].name',
+                    valuePath: 'fields[2].value',
+                  },
+                  succeedingTitlesIssn: {
+                    namePath: 'fields[3].name',
+                    valuePath: 'fields[3].value',
                   },
                 },
                 dataAttributes: { 'data-test-succeeding-titles': '' },
@@ -2109,13 +2184,46 @@ export const formConfigSamples = [{
                   childControls: [{
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 12,
+                    xs: 3,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
                       component: 'TextField',
-                      label: 'ui-data-import.settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingInstanceId',
+                      label: 'ui-data-import.settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingTitlesTitle',
                       name: 'mappingDetails.mappingFields[14].subfields[##ri##].fields[0].value',
+                    }],
+                  }, {
+                    controlType: 'Col',
+                    staticControlType: 'Col',
+                    xs: 3,
+                    childControls: [{
+                      controlType: 'Field',
+                      staticControlType: 'KeyValue',
+                      component: 'TextField',
+                      label: 'ui-data-import.settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingTitlesHrid',
+                      name: 'mappingDetails.mappingFields[14].subfields[##ri##].fields[1].value',
+                    }],
+                  }, {
+                    controlType: 'Col',
+                    staticControlType: 'Col',
+                    xs: 3,
+                    childControls: [{
+                      controlType: 'Field',
+                      staticControlType: 'KeyValue',
+                      component: 'TextField',
+                      label: 'ui-data-import.settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingTitlesIsbn',
+                      name: 'mappingDetails.mappingFields[14].subfields[##ri##].fields[2].value',
+                    }],
+                  }, {
+                    controlType: 'Col',
+                    staticControlType: 'Col',
+                    xs: 3,
+                    childControls: [{
+                      controlType: 'Field',
+                      staticControlType: 'KeyValue',
+                      component: 'TextField',
+                      label: 'ui-data-import.settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingTitlesIssn',
+                      name: 'mappingDetails.mappingFields[14].subfields[##ri##].fields[3].value',
                     }],
                   }],
                 }],
@@ -2602,6 +2710,10 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.descriptiveData.field.natureOfContentTermId',
                       name: 'mappingDetails.mappingFields[21].subfields[##ri##].fields[0].value',
+                      decorator: 'withReferenceValues',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                      wrapperSourceLink: '/nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'natureOfContentTerms',
                     }],
                   }],
                 }],
@@ -2970,7 +3082,7 @@ export const formConfigSamples = [{
                   childControls: [{
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 2,
+                    xs: 4,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -2978,6 +3090,10 @@ export const formConfigSamples = [{
                       label: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.relationship',
                       name: 'mappingDetails.mappingFields[27].subfields[##ri##].fields[0].value',
                       disabled: true,
+                      decorator: 'withReferenceValues',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                      wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'electronicAccessRelationships',
                       dataAttributes: { 'data-test-relationship': '' },
                     }],
                   }, {
@@ -2996,7 +3112,7 @@ export const formConfigSamples = [{
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 3,
+                    xs: 2,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -3009,7 +3125,7 @@ export const formConfigSamples = [{
                   }, {
                     controlType: 'Col',
                     staticControlType: 'Col',
-                    xs: 3,
+                    xs: 2,
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -3242,6 +3358,10 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.parentInstances.field.instnaceRelationshipTypeId',
                       name: 'mappingDetails.mappingFields[30].subfields[##ri##].fields[1].value',
+                      decorator: 'withReferenceValues',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                      wrapperSourceLink: '/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'instanceRelationshipTypes',
                     }],
                   }],
                 }],
@@ -3308,6 +3428,10 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.instance.childInstances.field.instnaceRelationshipTypeId',
                       name: 'mappingDetails.mappingFields[31].subfields[##ri##].fields[1].value',
+                      decorator: 'withReferenceValues',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                      wrapperSourceLink: '/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'instanceRelationshipTypes',
                     }],
                   }],
                 }],
@@ -3492,7 +3616,7 @@ export const formConfigSamples = [{
               childControls: [{
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 3,
+                xs: 6,
                 dataAttributes: { 'data-test-holdings-type': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -3501,6 +3625,10 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.holdings.administrativeData.field.holdingsTypeId',
                   name: 'mappingDetails.mappingFields[3].value',
                   enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '/holdings-types?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'holdingsTypes',
                 }],
               }],
             }, {
@@ -3546,6 +3674,10 @@ export const formConfigSamples = [{
                       component: 'TextField',
                       label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.statisticalCode',
                       name: 'mappingDetails.mappingFields[4].subfields[##ri##].fields[0].value',
+                      decorator: 'withReferenceValues',
+                      wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                      wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'statisticalCodes',
                     }],
                   }],
                 }],
@@ -3566,7 +3698,7 @@ export const formConfigSamples = [{
               childControls: [{
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 4,
+                xs: 6,
                 dataAttributes: { 'data-test-permanent': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -3575,11 +3707,15 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.location.field.permanent',
                   name: 'mappingDetails.mappingFields[5].value',
                   enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'locations',
                 }],
               }, {
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 4,
+                xs: 6,
                 dataAttributes: { 'data-test-temporary': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -3588,6 +3724,10 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.location.field.temporary',
                   name: 'mappingDetails.mappingFields[6].value',
                   enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'locations',
                 }],
               }],
             }, {
@@ -3597,7 +3737,7 @@ export const formConfigSamples = [{
               childControls: [{
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 4,
+                xs: 6,
                 dataAttributes: { 'data-test-shelving-order': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -3610,7 +3750,7 @@ export const formConfigSamples = [{
               }, {
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 4,
+                xs: 6,
                 dataAttributes: { 'data-test-shelving-title': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -3646,7 +3786,7 @@ export const formConfigSamples = [{
               childControls: [{
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 3,
+                xs: 6,
                 dataAttributes: { 'data-test-call-number-type': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -3655,11 +3795,15 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.field.callNumberType',
                   name: 'mappingDetails.mappingFields[10].value',
                   enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '/call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'callNumberTypes',
                 }],
               }, {
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 3,
+                xs: 2,
                 dataAttributes: { 'data-test-call-number-prefix': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -3672,7 +3816,7 @@ export const formConfigSamples = [{
               }, {
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 3,
+                xs: 2,
                 dataAttributes: { 'data-test-call-number': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -3685,7 +3829,7 @@ export const formConfigSamples = [{
               }, {
                 controlType: 'Col',
                 staticControlType: 'Col',
-                xs: 3,
+                xs: 2,
                 dataAttributes: { 'data-test-call-number-suffix': '' },
                 childControls: [{
                   controlType: 'Field',
@@ -3931,6 +4075,10 @@ export const formConfigSamples = [{
                   label: 'ui-data-import.settings.mappingProfiles.map.holdings.field.illPolicy',
                   name: 'mappingDetails.mappingFields[18].value',
                   enabled: true,
+                  decorator: 'withReferenceValues',
+                  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  wrapperSourceLink: '/ill-policies?limit=1000&query=cql.allRecords=1 sortby name',
+                  wrapperSourcePath: 'illPolicies',
                 }],
               }, {
                 controlType: 'Col',
@@ -4013,18 +4161,22 @@ export const formConfigSamples = [{
                     childControls: [{
                       controlType: 'Col',
                       staticControlType: 'Col',
-                      xs: 4,
+                      xs: 5,
                       childControls: [{
                         controlType: 'Field',
                         staticControlType: 'KeyValue',
                         component: 'TextField',
                         label: 'ui-data-import.settings.mappingProfiles.map.field.notes.noteType',
                         name: 'mappingDetails.mappingFields[21].subfields[##ri##].fields[0].value',
+                        decorator: 'withReferenceValues',
+                        wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                        wrapperSourceLink: '/holdings-note-types?limit=1000&query=cql.allRecords=1 sortby name',
+                        wrapperSourcePath: 'holdingsNoteTypes',
                       }],
                     }, {
                       controlType: 'Col',
                       staticControlType: 'Col',
-                      xs: 4,
+                      xs: 5,
                       childControls: [{
                         controlType: 'Field',
                         staticControlType: 'KeyValue',
@@ -4035,7 +4187,7 @@ export const formConfigSamples = [{
                     }, {
                       controlType: 'Col',
                       staticControlType: 'Col',
-                      xs: 4,
+                      xs: 2,
                       childControls: [{
                         controlType: 'Field',
                         staticControlType: 'KeyValue',
@@ -4111,13 +4263,17 @@ export const formConfigSamples = [{
                     childControls: [{
                       controlType: 'Col',
                       staticControlType: 'Col',
-                      xs: 2,
+                      xs: 4,
                       childControls: [{
                         controlType: 'Field',
                         staticControlType: 'KeyValue',
                         component: 'TextField',
                         label: 'ui-data-import.settings.mappingProfiles.map.EAccess.field.relationship',
                         name: 'mappingDetails.mappingFields[22].subfields[##ri##].fields[0].value',
+                        decorator: 'withReferenceValues',
+                        wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                        wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
+                        wrapperSourcePath: 'electronicAccessRelationships',
                       }],
                     }, {
                       controlType: 'Col',
@@ -4133,7 +4289,7 @@ export const formConfigSamples = [{
                     }, {
                       controlType: 'Col',
                       staticControlType: 'Col',
-                      xs: 3,
+                      xs: 2,
                       childControls: [{
                         controlType: 'Field',
                         staticControlType: 'KeyValue',
@@ -4144,7 +4300,7 @@ export const formConfigSamples = [{
                     }, {
                       controlType: 'Col',
                       staticControlType: 'Col',
-                      xs: 3,
+                      xs: 2,
                       childControls: [{
                         controlType: 'Field',
                         staticControlType: 'KeyValue',

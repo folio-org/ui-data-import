@@ -9,6 +9,8 @@
 * Implement <ProhibitionIcon> component (UIDATIMP-477)
 * Field mapping profile - Add line above associated action profiles (UIDATIMP-472)
 * Label for Year field in caption section has been updated (UIDATIMP-475)
+* Preceding/succeeding sections has been updated to match new Instance fields (UIDATIMP-476)
+* Update dependency on stripes-smart-components to version 3.1.1 (UIDATIMP-485)
 * Implement date picker decorator (UIDATIMP-407)
 
 ### Bugs fixed:

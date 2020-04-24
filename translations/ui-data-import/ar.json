@@ -482,5 +482,6 @@
     "settings.mappingProfiles.map.instance.subject.section": "الموضوع",
     "settings.mappingProfiles.map.instance.descriptiveData.field.subjects": "الموضوعات",
     "settings.mappingProfiles.map.holdings.field.digitizationPolicy": "سياسة الرقمنة",
-    "noValueAllowed": "غير مسموح بقيمة"
+    "noValueAllowed": "غير مسموح بقيمة",
+    "settings.mappingProfiles.map.wrapper.acceptedValues": "Accepted values"
 }

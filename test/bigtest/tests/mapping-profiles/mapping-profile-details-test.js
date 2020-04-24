@@ -369,9 +369,9 @@ describe('Mapping Profile View', () => {
             hasTable('instanceDetails', 'titleDataAccordion', 'seriesStatement',
               'Series statements', 1, ['Series statement']);
             hasTable('instanceDetails', 'titleDataAccordion', 'precedingTitles',
-              'Preceding titles', 1, ['FOLIO ID']);
+              'Preceding titles', 4, ['Title', 'Instance HRID', 'Instance ISBN', 'Instance ISSN']);
             hasTable('instanceDetails', 'titleDataAccordion', 'succeedingTitles',
-              'Succeeding titles', 1, ['FOLIO ID']);
+              'Succeeding titles', 4, ['Title', 'Instance HRID', 'Instance ISBN', 'Instance ISSN']);
           });
 
           describe('Identifier accordion', () => {
@@ -886,8 +886,8 @@ describe('Mapping Profile View', () => {
             hasRepeatableField('instanceDetails', 'titleDataAccordion', 'alternativeTitles', 'Alternative titles', true);
             hasInput('instanceDetails', 'titleDataAccordion', 'indexTitle', 'Index title', true);
             hasRepeatableField('instanceDetails', 'titleDataAccordion', 'seriesStatements', 'Series statements', true);
-            hasRepeatableField('instanceDetails', 'titleDataAccordion', 'precedingTitles', 'Preceding titles');
-            hasRepeatableField('instanceDetails', 'titleDataAccordion', 'succeedingTitles', 'Succeeding titles');
+            hasRepeatableField('instanceDetails', 'titleDataAccordion', 'precedingTitles', 'Preceding titles', true);
+            hasRepeatableField('instanceDetails', 'titleDataAccordion', 'succeedingTitles', 'Succeeding titles', true);
           });
 
           describe('Identifier accordion', () => {

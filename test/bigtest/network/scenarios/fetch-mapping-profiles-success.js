@@ -32,9 +32,24 @@ export default server => {
           order: 0,
           path: 'instance.precedingTitles[]',
           fields: [{
-            name: 'precedingInstanceId',
+            name: 'precedingTitlesTitle',
             enabled: true,
-            path: 'instance.precedingTitles[].precedingInstanceId',
+            path: 'instance.precedingTitles[].precedingTitlesTitle',
+            value: 'test1',
+          }, {
+            name: 'precedingTitlesHrid',
+            enabled: true,
+            path: 'instance.precedingTitles[].precedingTitlesHrid',
+            value: 'test1',
+          }, {
+            name: 'precedingTitlesIsbn',
+            enabled: true,
+            path: 'instance.precedingTitles[].precedingTitlesIsbn',
+            value: 'test1',
+          }, {
+            name: 'precedingTitlesIssn',
+            enabled: true,
+            path: 'instance.precedingTitles[].precedingTitlesIssn',
             value: 'test1',
           }],
         }],
@@ -47,9 +62,24 @@ export default server => {
           order: 0,
           path: 'instance.succeedingTitles[]',
           fields: [{
-            name: 'succeedingInstanceId',
+            name: 'succeedingTitlesTitle',
             enabled: true,
-            path: 'instance.succeedingTitles[].succeedingInstanceId',
+            path: 'instance.succeedingTitles[].succeedingTitlesTitle',
+            value: 'test1',
+          }, {
+            name: 'succeedingTitlesHrid',
+            enabled: true,
+            path: 'instance.succeedingTitles[].succeedingTitlesHrid',
+            value: 'test1',
+          }, {
+            name: 'succeedingTitlesIsbn',
+            enabled: true,
+            path: 'instance.precedingTitles[].succeedingTitlesIsbn',
+            value: 'test1',
+          }, {
+            name: 'succeedingTitlesIssn',
+            enabled: true,
+            path: 'instance.succeedingTitles[].succeedingTitlesIssn',
             value: 'test1',
           }],
         }],

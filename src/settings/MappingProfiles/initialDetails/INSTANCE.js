@@ -1,10 +1,6 @@
 const INSTANCE = {
   name: 'instance',
   recordType: 'INSTANCE',
-  /* mapActions: {
-    fieldTypeBool: ['ALL_TRUE', 'ALL_FALSE', 'AS_IS', 'IGNORE'],
-    fieldTypeRepeateble: ['EXTEND_EXISTING', 'DELETE_EXISTING', 'EXCHANGE_EXISTING', 'DELETE_INCOMING'],
-  }, */
   mappingFields: [{
     name: 'discoverySuppress',
     enabled: true,
@@ -123,7 +119,7 @@ const INSTANCE = {
     }],
   }, {
     name: 'precedingTitles',
-    enabled: true,
+    enabled: false,
     path: 'instance.precedingTitles',
     value: '',
     subfields: [{
@@ -131,15 +127,33 @@ const INSTANCE = {
       path: 'instance.precedingTitles[]',
       fields: [{
         // order: 0,
-        name: 'precedingInstanceId',
+        name: 'precedingTitlesTitle',
         enabled: true,
-        path: 'instance.precedingTitles[].precedingInstanceId',
+        path: 'instance.precedingTitles[].title',
+        value: '',
+      }, {
+        // order: 1,
+        name: 'precedingTitlesHrid',
+        enabled: true,
+        path: 'instance.precedingTitles[].hrid',
+        value: '',
+      }, {
+        // order: 2,
+        name: 'precedingTitlesIsbn',
+        enabled: true,
+        path: 'instance.precedingTitles[].identifiers[].value',
+        value: '',
+      }, {
+        // order: 3,
+        name: 'precedingTitlesIssn',
+        enabled: true,
+        path: 'instance.precedingTitles[].identifiers[].value',
         value: '',
       }],
     }],
   }, {
     name: 'succeedingTitles',
-    enabled: true,
+    enabled: false,
     path: 'instance.succeedingTitles',
     value: '',
     subfields: [{
@@ -147,9 +161,27 @@ const INSTANCE = {
       path: 'instance.succeedingTitles[]',
       fields: [{
         // order: 0,
-        name: 'succeedingInstanceId',
+        name: 'succeedingTitlesTitle',
         enabled: true,
-        path: 'instance.succeedingTitles[].succeedingInstanceId',
+        path: 'instance.succeedingTitles[].title',
+        value: '',
+      }, {
+        // order: 1,
+        name: 'succeedingTitlesHrid',
+        enabled: true,
+        path: 'instance.succeedingTitles[].hrid',
+        value: '',
+      }, {
+        // order: 2,
+        name: 'succeedingTitlesIsbn',
+        enabled: true,
+        path: 'instance.succeedingTitles[].identifiers[].value',
+        value: '',
+      }, {
+        // order: 3,
+        name: 'succeedingTitlesIssn',
+        enabled: true,
+        path: 'instance.succeedingTitles[].identifiers[].value',
         value: '',
       }],
     }],
