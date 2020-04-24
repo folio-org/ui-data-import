@@ -80,23 +80,3 @@ export const validateValueLength = (value, maxLength) => {
 export const validateValueLength1 = value => validateValueLength(value, 1);
 
 export const validateValueLength3 = value => validateValueLength(value, 3);
-
-export const validatePlainText = value => {
-  const pattern = /^("\w*")( "\w*")*$/;
-
-  if (value?.match(pattern)) {
-    return null;
-  }
-
-  return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
-};
-
-export const validateMarcPath = value => {
-  const pattern = /^((\d{3})\$([a-z]))$/;
-
-  if (value?.match(pattern)) {
-    return null;
-  }
-
-  return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
-};
