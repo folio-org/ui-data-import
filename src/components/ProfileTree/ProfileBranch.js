@@ -93,7 +93,6 @@ export const ProfileBranch = memo(({
   const handleToggle = (section, togglerValue, togglerSetter) => {
     sessionStorage.setItem(`${sectionKey}.sectionStatus.${section}`, JSON.stringify(!togglerValue));
     togglerSetter(!togglerValue);
-    onChange(prev => prev + 1);
   };
 
   const branchMode = record ? 'static' : 'editable';

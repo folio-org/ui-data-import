@@ -48,7 +48,6 @@ export const ProfileTree = memo(({
     contentType: PROFILE_TYPES.JOB_PROFILE,
   };
 
-  const [changesCount, setChangesCount] = useState(0); // eslint-disable-line no-unused-vars
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -56,12 +55,6 @@ export const ProfileTree = memo(({
 
     setData(getData);
   }, [contentData]);
-
-  /**
-   * Disabled due to UIDATIMP-357 and UIDATIMP-358 conflict with context solution
-   * @TODO return this to action or substitute with new solution to fix TreeLine rendering
-   */
-  // const ChangesContext = React.createContext(changesCount);
 
   const isSnakeCase = str => str && str.includes('_');
 
@@ -84,7 +77,7 @@ export const ProfileTree = memo(({
       masterProfileType: isSnakeCase(masterType) ? masterType : snakeCase(masterType).slice(0, -1).toLocaleUpperCase(),
       detailProfileId: item.profileId || item.id,
       detailProfileType: isSnakeCase(detailType) ? detailType : snakeCase(detailType).slice(0, -1).toLocaleUpperCase(),
-      profileId: parentId,
+      jobProfileId: parentId,
       order: item.order || order + index,
     };
 
@@ -137,11 +130,6 @@ export const ProfileTree = memo(({
   };
 
   return (
-    /**
-     * Disabled due to UIDATIMP-357 and UIDATIMP-358 conflict with context solution
-     * @TODO return this to action or substitute with new solution to fix TreeLine rendering
-     */
-    /* <ChangesContext.Provider value={changesCount}> */
     <div>
       <div className={classNames(css['profile-tree'], className)}>
         <div className={css['profile-tree-container']}>
@@ -158,7 +146,6 @@ export const ProfileTree = memo(({
                 parentSectionData={data}
                 setParentSectionData={setData}
                 rootId={parentRecordData.id}
-                onChange={setChangesCount}
                 onLink={link}
                 onUnlink={unlink}
                 onDelete={remove}
@@ -192,7 +179,6 @@ export const ProfileTree = memo(({
         )}
       </div>
     </div>
-    /* </ChangesContext.Provider> */
   );
 });
 
