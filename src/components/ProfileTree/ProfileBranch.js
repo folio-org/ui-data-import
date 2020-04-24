@@ -39,6 +39,7 @@ export const ProfileBranch = memo(({
   parentSectionKey,
   parentSectionData,
   setParentSectionData,
+  rootId,
   className,
   onChange,
   onLink,
@@ -143,6 +144,7 @@ export const ProfileBranch = memo(({
                     parentSectionKey={matchSectionKey}
                     parentSectionData={matchData}
                     setParentSectionData={setMatchData}
+                    rootId={rootId}
                     onChange={onChange}
                     onLink={onLink}
                     onUnlink={onUnlink}
@@ -172,6 +174,7 @@ export const ProfileBranch = memo(({
                 linkingRules={linkingRules}
                 disabledOptions={getDisabledOptions(matchData, siblingsProhibited)}
                 parentId={currentRecord.id}
+                rootId={rootId}
                 parentType={entityKey}
                 dataKey={matchSectionKey}
                 initialData={matchData}
@@ -203,6 +206,7 @@ export const ProfileBranch = memo(({
                     parentSectionKey={nonMatchSectionKey}
                     parentSectionData={nonMatchData}
                     setParentSectionData={setNonMatchData}
+                    rootId={rootId}
                     onChange={onChange}
                     onLink={onLink}
                     onUnlink={onUnlink}
@@ -232,6 +236,7 @@ export const ProfileBranch = memo(({
                 linkingRules={linkingRules}
                 disabledOptions={getDisabledOptions(nonMatchData, siblingsProhibited)}
                 parentId={currentRecord.id}
+                rootId={rootId}
                 parentType={entityKey}
                 dataKey={nonMatchSectionKey}
                 initialData={nonMatchData}
@@ -257,6 +262,7 @@ ProfileBranch.propTypes = {
   parentSectionKey: PropTypes.string.isRequired,
   parentSectionData: PropTypes.arrayOf(PropTypes.object).isRequired,
   setParentSectionData: PropTypes.func.isRequired,
+  rootId: PropTypes.string.isRequired,
   okapi: PropTypes.shape({
     tenant: PropTypes.string.isRequired,
     token: PropTypes.string.isRequired,

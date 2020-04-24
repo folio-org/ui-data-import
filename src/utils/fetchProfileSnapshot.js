@@ -5,14 +5,16 @@ import { createOkapiHeaders } from './createOkapiHeaders';
  *
  * @param {string} profileId
  * @param {string} profileType
+ * @param {string} jobProfileId
  * @param {object} okapi
  * @returns {Promise<{}>} Returns profile snapshot.
  */
-export const fetchProfileSnapshot = async (profileId, profileType, okapi) => {
+export const fetchProfileSnapshot = async (profileId, profileType, jobProfileId, okapi) => {
   const { url } = okapi;
 
   try {
-    const response = await fetch(`${url}/data-import-profiles/profileSnapshots/${profileId}?profileType=${profileType}`,
+    const path = `${url}/data-import-profiles/profileSnapshots/${profileId}?profileType=${profileType}&jobProfileId=${jobProfileId}`;
+    const response = await fetch(path,
       { headers: { ...createOkapiHeaders(okapi) } });
 
     if (!response.ok) {

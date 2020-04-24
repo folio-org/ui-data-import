@@ -156,6 +156,7 @@ export const ProfileTree = memo(({
                 parentSectionKey={dataKey}
                 parentSectionData={data}
                 setParentSectionData={setData}
+                rootId={parentRecordData.id}
                 onChange={setChangesCount}
                 onLink={link}
                 onUnlink={unlink}
@@ -176,6 +177,7 @@ export const ProfileTree = memo(({
           <ProfileLinker
             id="linker-root"
             parentId={parentId}
+            rootId={parentRecordData.id}
             parentType={ENTITY_KEYS.JOB_PROFILES}
             linkingRules={linkingRules}
             disabledOptions={getDisabledOptions(data, siblingsProhibited)}
