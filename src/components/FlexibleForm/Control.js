@@ -114,6 +114,8 @@ export const Control = memo(props => {
   const children = optional && !isEditable && !hasContent(childControls, record, sectionNamespace, repeatableIndex) ? [] : childControls;
   const isFragment = (isEditable && controlType === 'Fragment') || (!isEditable && staticControlType === 'Fragment');
   const noValueComponent = enabled ? <stripesComponents.NoValue /> : <components.ProhibitionIcon />;
+  const staticPrefix = staticNamespace && staticNamespace.length ? `${staticNamespace}.` : '';
+  const editablePrefix = editableNamespace && editableNamespace.length ? `${editableNamespace}.` : '';
 
   const getAttributes = () => {
     const {
@@ -123,8 +125,6 @@ export const Control = memo(props => {
       decorator,
     } = props;
 
-    const staticPrefix = staticNamespace && staticNamespace.length ? `${staticNamespace}.` : '';
-    const editablePrefix = editableNamespace && editableNamespace.length ? `${editableNamespace}.` : '';
     const actualId = getActualParam(id, sectionNamespace, repeatableIndex);
     const actualName = getActualParam(name, sectionNamespace, repeatableIndex);
     const fullName = `${isEditable ? editablePrefix : staticPrefix}${actualName}`;
@@ -368,6 +368,9 @@ export const Control = memo(props => {
       canAdd,
       canRemove,
       incrementalField,
+      decorator,
+      wrapperLabel,
+      wrapperFieldName,
     } = props;
     const { fieldsPath } = attribs;
 
@@ -409,43 +412,68 @@ export const Control = memo(props => {
       setReferenceTables(fieldsPath, newRefTable);
     };
 
+    const Template = (
+      <Repeatable
+        legend={legend ? <FormattedMessage id={legend} /> : legend}
+        addLabel={addLabel ? <FormattedMessage id={addLabel} /> : addLabel}
+        fields={refTable}
+        onAdd={onAdd}
+        onRemove={onRemove}
+        canAdd={canAdd}
+        canRemove={canRemove}
+        renderField={() => (
+          <>
+            {children.map((cfg, i) => (
+              <Control
+                key={`control-${i}`}
+                repeatableIndex={i}
+                staticNamespace={staticNamespace}
+                editableNamespace={editableNamespace}
+                sectionNamespace={sectionNamespace}
+                intl={intl}
+                styles={styles}
+                okapi={okapi}
+                referenceTables={referenceTables}
+                setReferenceTables={setReferenceTables}
+                initialFields={initialFields}
+                injectedProps={injectedProps}
+                commonSections={commonSections}
+                record={attribs.record}
+                {...cfg}
+              />
+            ))}
+          </>
+        )}
+      />
+    );
+
+    let Wrapper = null;
+    let fieldName = null;
+
+    if (decorator) {
+      Wrapper = decorators[decorator];
+      fieldName = `${isEditable ? editablePrefix : staticPrefix}${getActualParam(wrapperFieldName, sectionNamespace, repeatableIndex)}`;
+    }
+
     return (
       <Cmp
         className={classes}
         {...attribs}
       >
-        <Repeatable
-          legend={legend ? <FormattedMessage id={legend} /> : legend}
-          addLabel={addLabel ? <FormattedMessage id={addLabel} /> : addLabel}
-          fields={refTable}
-          onAdd={onAdd}
-          onRemove={onRemove}
-          canAdd={canAdd}
-          canRemove={canRemove}
-          renderField={() => (
-            <>
-              {children.map((cfg, i) => (
-                <Control
-                  key={`control-${i}`}
-                  repeatableIndex={i}
-                  staticNamespace={staticNamespace}
-                  editableNamespace={editableNamespace}
-                  sectionNamespace={sectionNamespace}
-                  intl={intl}
-                  styles={styles}
-                  okapi={okapi}
-                  referenceTables={referenceTables}
-                  setReferenceTables={setReferenceTables}
-                  initialFields={initialFields}
-                  injectedProps={injectedProps}
-                  commonSections={commonSections}
-                  record={attribs.record}
-                  {...cfg}
-                />
-              ))}
-            </>
-          )}
-        />
+        {Wrapper ? (
+          <Wrapper
+            intl={intl}
+            enabled={enabled}
+            legend={legend}
+            referenceTable={refTable}
+            wrapperLabel={wrapperLabel}
+            wrapperFieldName={fieldName}
+          >
+            {Template}
+          </Wrapper>
+        ) : (
+          <>{Template}</>
+        )}
       </Cmp>
     );
   };
