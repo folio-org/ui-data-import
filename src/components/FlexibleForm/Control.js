@@ -342,7 +342,6 @@ export const Control = memo(props => {
           {localized => (
             <Cmp
               placeholder={localized}
-              className={classes}
               {...attribs}
             />
           )}
@@ -350,7 +349,6 @@ export const Control = memo(props => {
       ) : (
         <Cmp
           placeholder={placeholder}
-          className={classes}
           {...attribs}
         />
       );
