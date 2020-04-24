@@ -2,11 +2,11 @@
 
 .decorator {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   & .options-dropdown {
     display: flex;
-    height: 25px;
-    margin: 12px 0 0 -1px;
+    height: 100%;
+    margin: 0 0 14px -1px;
     & button {
       min-width: 143px;
       height: 23px;
