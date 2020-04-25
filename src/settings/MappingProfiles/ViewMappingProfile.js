@@ -24,7 +24,9 @@ import {
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   PROFILE_TYPES,
-} from '../../utils/constants';
+  getEntity,
+  getEntityTags,
+} from '../../utils';
 import {
   Spinner,
   EndOfItem,
@@ -228,12 +230,8 @@ export class ViewMappingProfile extends Component {
       'mapping-tags': {
         renderForbidden: !tagsEnabled,
         link: `data-import-profiles/mappingProfiles/${mappingProfile.id}`,
-        entityWrapper: entity => ({
-          id: entity.id,
-          profile: entity,
-          addedRelations: [],
-          deletedRelations: [],
-        }),
+        getEntity,
+        getEntityTags,
       },
       'section-mapping-details': { stateFieldValue: existingRecordType },
       'mappingProfile.actionsAssociator': {

@@ -29,7 +29,9 @@ import {
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   PROFILE_TYPES,
-} from '../../utils/constants';
+  getEntity,
+  getEntityTags,
+} from '../../utils';
 import {
   Spinner,
   EndOfItem,
@@ -226,12 +228,8 @@ export class ViewActionProfile extends Component {
             <div data-test-tags-accordion>
               <TagsAccordion
                 link={tagsEntityLink}
-                entityWrapper={entity => ({
-                  id: entity.id,
-                  profile: entity,
-                  addedRelations: [],
-                  deletedRelations: [],
-                })}
+                getEntity={getEntity}
+                getEntityTags={getEntityTags}
               />
             </div>
           )}
