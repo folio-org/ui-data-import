@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **1.9.0** (in progress)
+## [1.8.3](https://github.com/folio-org/ui-data-import/tree/v1.8.3) (2020-04-27)
 
 ### Features added:
 * Data Import field mapping profile details: Repeatable field dropdown component (UIDATIMP-401)
