@@ -1,10 +1,11 @@
 # Change history for ui-data-import
 
-## **1.9.0** (in progress)
+## [1.8.3](https://github.com/folio-org/ui-data-import/tree/v1.8.3) (2020-04-27)
 
 ### Features added:
 * Data Import field mapping profile details: Repeatable field dropdown component (UIDATIMP-401)
 * Data Import field mapping profile details: Reference values dropdown component (UIDATIMP-402)
+* Data Import field mapping profile details: Checkbox decorator (UIDATIMP-368)
 * Cover MCL in mapping profile details sections with tests (UIDATIMP-469)
 * Distinguish not mapped and unmappable fields in Field mapping profile View screen (UIDATIMP-471)
 * Implement <ProhibitionIcon> component (UIDATIMP-477)
