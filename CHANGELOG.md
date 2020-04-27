@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **1.9.0** (in progress)
+## [1.8.3](https://github.com/folio-org/ui-data-import/tree/v1.8.3) (2020-04-27)
 
 ### Features added:
 * Data Import field mapping profile details: Repeatable field dropdown component (UIDATIMP-401)
@@ -19,6 +19,7 @@
 * When returned to search results screen after profile save, wrong profile details show (UIDATIMP-424)
 * Optional sections are collapsed even if contain data (UIDATIMP-479)
 * Fix tree lines in Job profile associations tree (UIDATIMP-343)
+* Fix displaying of profile associations on a job profile tree (UIDATIMP-413)
 
 ## [1.8.2](https://github.com/folio-org/ui-data-import/tree/v1.8.2) (2020-04-07)
 

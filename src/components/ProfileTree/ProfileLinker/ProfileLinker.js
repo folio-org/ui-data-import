@@ -31,6 +31,7 @@ import css from '../ProfileTree.css';
 export const ProfileLinker = ({
   id,
   parentId,
+  rootId,
   parentType,
   onLink,
   okapi,
@@ -90,7 +91,7 @@ export const ProfileLinker = ({
   };
 
   const addNewLines = entityKey => async records => {
-    const profileSnapshotPromises = records.map(profile => fetchProfileSnapshot(profile.id, ASSOCIATION_TYPES[entityKey], okapi));
+    const profileSnapshotPromises = records.map(profile => fetchProfileSnapshot(profile.id, ASSOCIATION_TYPES[entityKey], rootId, okapi));
 
     try {
       await Promise.all(profileSnapshotPromises)
@@ -145,6 +146,7 @@ export const ProfileLinker = ({
 ProfileLinker.propTypes = {
   id: PropTypes.string.isRequired,
   parentId: PropTypes.string.isRequired,
+  rootId: PropTypes.string.isRequired,
   parentType: PropTypes.string.isRequired,
   onLink: PropTypes.func.isRequired,
   linkingRules: PropTypes.object.isRequired,
