@@ -490,11 +490,15 @@
     "settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingTitlesHrid": "HRID da instância",
     "settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingTitlesIsbn": "ISBN da instância",
     "settings.mappingProfiles.map.titleData.succeedingTitles.field.succeedingTitlesIssn": "ISSN da instância",
-    "settings.mappingProfiles.map.wrapper.repeatableActions.extendExisting": "Add these to existing",
-    "settings.mappingProfiles.map.wrapper.repeatableActions.deleteExisting": "Delete all existing values",
-    "settings.mappingProfiles.map.wrapper.repeatableActions.exchangeExisting": "Delete all existing and add these",
-    "settings.mappingProfiles.map.wrapper.repeatableActions.deleteIncoming": "Find and remove these",
-    "settings.mappingProfiles.map.wrapper.repeatableActions": "Select action",
-    "settings.mappingProfiles.map.wrapper.acceptedValues.today": "Today",
-    "settings.mappingProfiles.map.wrapper.acceptedValues.chooseDate": "Choose date"
+    "settings.mappingProfiles.map.wrapper.repeatableActions.extendExisting": "Adicione estes aos existentes",
+    "settings.mappingProfiles.map.wrapper.repeatableActions.deleteExisting": "Excluir todos os valores existentes",
+    "settings.mappingProfiles.map.wrapper.repeatableActions.exchangeExisting": "Exclua todos os existentes e adicione estes",
+    "settings.mappingProfiles.map.wrapper.repeatableActions.deleteIncoming": "Encontre e remova estes",
+    "settings.mappingProfiles.map.wrapper.repeatableActions": "Selecionar ação",
+    "settings.mappingProfiles.map.wrapper.acceptedValues.today": "Hoje",
+    "settings.mappingProfiles.map.wrapper.acceptedValues.chooseDate": "Escolha a data",
+    "settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping": "Selecione o mapeamento do campo da caixa de seleção",
+    "settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords": "Marcar para todos os registros afetados",
+    "settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords": "Desmarcar todos os registros afetados",
+    "settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords": "Mantenha o valor existente para todos os registros afetados"
 }
