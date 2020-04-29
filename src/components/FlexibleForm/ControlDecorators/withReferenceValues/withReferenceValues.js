@@ -14,6 +14,7 @@ import {
   createUrl,
   isFormattedMessage,
   isTranslationId,
+  validateMARCWithElse,
 } from '../../../../utils';
 
 import { OptionsList } from '../partials';
@@ -37,6 +38,7 @@ export const withReferenceValues = memo(props => {
   const [dataOptions, setDataOptions] = useState([]);
   const [currentValue, setCurrentValue] = useState(input?.value || '');
   const [wrapperValue, setWrapperValue] = useState(null);
+  const [error, setError] = useState(undefined);
 
   const fetchList = async () => {
     try {
@@ -55,8 +57,44 @@ export const withReferenceValues = memo(props => {
     }
   };
 
+  const validateQuotedText = value => {
+    let isValid = true;
+    const pattern = /"[^"]+"/g;
+    const matches = value.match(pattern);
+
+    if (matches) {
+      const dataSet = dataOptions.map(option => option.name);
+
+      matches.forEach(str => {
+        const croppedStr = str.slice(1, -1);
+
+        isValid = dataSet.some(data => data === croppedStr);
+      });
+    }
+
+    return isValid;
+  };
+
+  const validate = value => {
+    if (value) {
+      const isQuotedStrValid = validateQuotedText(value);
+      const isValueValid = !validateMARCWithElse(value);
+
+      if (isQuotedStrValid && isValueValid) {
+        setError(undefined);
+      } else {
+        setError(<FormattedMessage id="ui-data-import.validation.syntaxError" />);
+      }
+    } else {
+      setError(undefined);
+    }
+  };
+
   const handleChange = e => {
-    setCurrentValue(e.target ? e.target.value : e);
+    const val = e.target ? e.target.value : e;
+
+    setCurrentValue(val);
+    validate(val);
     input.onChange(e);
   };
 
@@ -110,6 +148,7 @@ export const withReferenceValues = memo(props => {
         onDrop={onDrop}
         onFocus={onFocus}
         loading={!hasLoaded}
+        error={error}
         {...rest}
       />
       {needsTranslation ? (

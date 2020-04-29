@@ -1,5 +1,7 @@
 import React from 'react';
+import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
+
 import { isEmpty } from 'lodash';
 
 /**
@@ -80,3 +82,59 @@ export const validateValueLength = (value, maxLength) => {
 export const validateValueLength1 = value => validateValueLength(value, 1);
 
 export const validateValueLength3 = value => validateValueLength(value, 3);
+
+/**
+ * Validate MARC path, quoted string and else condition. Match `910`, `910$a`, `"text"`,
+ * `910$a "text"`, `910$a; else "text"; else 910`,
+ * @param value
+ * @returns {null|*}
+ */
+export const validateMARCWithElse = value => {
+  const pattern = new RegExp(['^(("[^"]+")|([0-9]{3}(\\$[a-z])?))',
+    '(((\\s(?=(("[^"]+")|([0-9]{3}(\\$[a-z])?))))',
+    '((?<=\\s)(("[^"]+")|([0-9]{3}(\\$[a-z])?))))|',
+    '(((; else )(?=(("[^"]+")|([0-9]{3}(\\$[a-z])?))))',
+    '((?<=(; else ))(("[^"]+")|([0-9]{3}(\\$[a-z])?)))))*$'].join(''));
+
+  if (!value || value.length === 0 || value.match(pattern)) {
+    return null;
+  }
+
+  return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
+};
+
+/**
+ * Validate MARC path, quoted date, `today` constant and else condition. Match `910`, `910$a`, `###TODAY###`,
+ * `"2020-01-01"`, `910$a "2020-01-01"`, `910$a; else ###TODAY###; else "2020-01-01"`,
+ * @param value
+ * @returns {null|*}
+ */
+export const validateMARCWithDate = value => {
+  const pattern = new RegExp(['^((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?))',
+    '(((\\s(?=((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?))))',
+    '((?<=\\s)((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?))))|',
+    '(((; else )(?=((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?))))',
+    '((?<=(; else ))((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?)))))*$'].join(''));
+
+  if (!value || value.length === 0) {
+    return null;
+  }
+
+  if (value.match(pattern)) {
+    const datePattern = /\d{4}-\d{2}-\d{2}/g;
+    const dates = value.match(datePattern);
+
+    if (dates) {
+      const DATE_FORMAT = 'YYYY-MM-DD';
+      const isValidDate = dates.every(date => moment(date, DATE_FORMAT, true).isValid());
+
+      if (!isValidDate) {
+        return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
+      }
+    }
+
+    return null;
+  }
+
+  return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
+};

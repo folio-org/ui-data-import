@@ -1155,6 +1155,7 @@ export const formConfigSamples = [{
                   name: 'mappingDetails.mappingFields[21].value',
                   decorator: 'withDatePicker',
                   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  validate: ['validateMARCWithDate'],
                 }],
               }],
             }, {
@@ -1192,6 +1193,7 @@ export const formConfigSamples = [{
                   name: 'mappingDetails.mappingFields[23].value',
                   decorator: 'withDatePicker',
                   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  validate: ['validateMARCWithDate'],
                 }],
               }],
             }],
@@ -1790,6 +1792,7 @@ export const formConfigSamples = [{
                   name: 'mappingDetails.mappingFields[5].value',
                   decorator: 'withDatePicker',
                   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+                  validate: ['validateMARCWithDate'],
                 }],
               }],
             }, {
