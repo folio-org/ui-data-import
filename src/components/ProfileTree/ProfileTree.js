@@ -17,7 +17,7 @@ import {
   ENTITY_KEYS,
   PROFILE_TYPES,
   PROFILE_RELATION_TYPES,
-} from '../../utils/constants';
+} from '../../utils';
 import {
   ProfileBranch,
   ProfileLinker,
@@ -72,14 +72,20 @@ export const ProfileTree = memo(({
   };
 
   const composeRelations = (lines, masterId, masterType, detailType, reactTo, order) => lines.map((item, index) => {
-    const rel = {
+    let rel = {
       masterProfileId: masterId,
       masterProfileType: isSnakeCase(masterType) ? masterType : snakeCase(masterType).slice(0, -1).toLocaleUpperCase(),
       detailProfileId: item.profileId || item.id,
       detailProfileType: isSnakeCase(detailType) ? detailType : snakeCase(detailType).slice(0, -1).toLocaleUpperCase(),
-      jobProfileId: parentId,
       order: item.order || order + index,
     };
+
+    if (masterId === PROFILE_TYPES.MATCH_PROFILE) {
+      rel = {
+        ...rel,
+        jobProfileId: parentId,
+      };
+    }
 
     return reactTo ? {
       ...rel,
