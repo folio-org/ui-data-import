@@ -480,7 +480,7 @@
     "settings.mappingProfiles.map.instance.descriptiveData.field.subjects": "Subjects",
     "settings.mappingProfiles.map.holdings.field.digitizationPolicy": "Digitization policy",
     "noValueAllowed": "No value allowed",
-    "settings.mappingProfiles.map.wrapper.acceptedValues": "Accepted values",
+    "settings.mappingProfiles.map.wrapper.acceptedValues": "Принятые значения",
     "settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesTitle": "Название",
     "settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesHrid": "HRID экземпляра",
     "settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesIsbn": "ISBN экземпляра",
@@ -494,7 +494,11 @@
     "settings.mappingProfiles.map.wrapper.repeatableActions.deleteExisting": "Удалить все существующие значения",
     "settings.mappingProfiles.map.wrapper.repeatableActions.exchangeExisting": "Удалить всё и добавить",
     "settings.mappingProfiles.map.wrapper.repeatableActions.deleteIncoming": "Найти и удалить",
-    "settings.mappingProfiles.map.wrapper.repeatableActions": "Select action",
-    "settings.mappingProfiles.map.wrapper.acceptedValues.today": "Today",
-    "settings.mappingProfiles.map.wrapper.acceptedValues.chooseDate": "Choose date"
+    "settings.mappingProfiles.map.wrapper.repeatableActions": "Выберите действие",
+    "settings.mappingProfiles.map.wrapper.acceptedValues.today": "Сегодня",
+    "settings.mappingProfiles.map.wrapper.acceptedValues.chooseDate": "Выбрать дату",
+    "settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping": "Select сheckbox field mapping",
+    "settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords": "Mark for all affected records",
+    "settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords": "Unmark for all affected records",
+    "settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords": "Keep the existing value for all affected records"
 }

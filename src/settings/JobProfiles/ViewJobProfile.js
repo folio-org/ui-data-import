@@ -79,8 +79,13 @@ export class ViewJobProfile extends Component {
     },
     childWrappers: {
       type: 'okapi',
-      path: createUrl('data-import-profiles/profileSnapshots/:{id}', { profileType: PROFILE_TYPES.JOB_PROFILE }),
+      path: createUrl('data-import-profiles/profileSnapshots/:{id}', {
+        profileType: PROFILE_TYPES.JOB_PROFILE,
+        jobProfileId: ':{id}',
+      }, false),
       throwErrors: false,
+      resourceShouldRefresh: true,
+      shouldRefresh: () => false,
     },
     jobsUsingThisProfile: {
       type: 'okapi',
