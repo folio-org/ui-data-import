@@ -40,9 +40,11 @@ import {
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   PROFILE_LINKING_RULES,
-} from '../../utils/constants';
-import { createUrl } from '../../utils';
-import { loadRecords } from '../../utils/loadRecords';
+  createUrl,
+  loadRecords,
+  getEntity,
+  getEntityTags,
+} from '../../utils';
 import {
   listTemplate,
   ActionMenu,
@@ -413,7 +415,11 @@ export class ViewJobProfile extends Component {
           </Accordion>
           {tagsEnabled && (
             <div data-test-tags-accordion>
-              <TagsAccordion link={tagsEntityLink} />
+              <TagsAccordion
+                link={tagsEntityLink}
+                getEntity={getEntity}
+                getEntityTags={getEntityTags}
+              />
             </div>
           )}
           <Accordion

@@ -4,18 +4,55 @@ import {
   FormattedDate,
 } from 'react-intl';
 
-import { isEmpty } from 'lodash';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
 
 import * as validators from './formValidators';
 
+/**
+ * Retrieves and returns a list of form control validators based on the list of keys given
+ *
+ * @param {array} validation
+ * @returns {Array|Uint8Array|BigInt64Array|*[]}
+ */
 export const getValidation = validation => validation.map(val => validators[val]);
 
+/**
+ * Augments given param name with augment value using augment key as a splitter
+ *
+ * @param {string} param Param name
+ * @param {string} splitter Param augmentation key
+ * @param {string|number} augment Param augmentation value
+ * @returns {string}
+ */
 export const augmentParam = (param, splitter, augment) => (param ? param.split(splitter).join(augment) : param);
 
+/**
+ * Finds out whether the given param is <FormattedMessage> node
+ *
+ * @param {string|Node} lbl
+ * @returns {boolean}
+ */
 export const isFormattedMessage = lbl => React.isValidElement(lbl);
 
+/**
+ * Finds out whether the given param is <FormattedMessage> translation id
+ *
+ * @param {string|Node} lbl
+ * @returns {boolean}
+ */
 export const isTranslationId = lbl => lbl && lbl.includes('ui-');
 
+/**
+ * Finds and returns localized option value from the dataOptions array given
+ *
+ * @param {array} options dataOptions list
+ * @param {string} label option label
+ * @param {string} sectionNamespace
+ * @returns {undefined|string|Node}
+ */
 export const getOptionLabel = (options, label, sectionNamespace) => {
   const option = options.find(item => item.value === label);
 
@@ -35,8 +72,44 @@ export const getOptionLabel = (options, label, sectionNamespace) => {
   return !isFormattedMessage ? <FormattedMessage id={actualLabel} /> : actualLabel;
 };
 
+/**
+ * Formats and localizes given date with intl <FormattedDate> component
+ *
+ * @param {string} dataType
+ * @param {string|number} value
+ * @returns {string|Node}
+ */
 export const checkDate = (dataType, value) => {
   const isDate = dataType === 'date';
 
   return isDate ? <FormattedDate value={value} /> : value;
+};
+
+/**
+ * Retrieves and wraps the profile entity with custom wrapper
+ *
+ * @param {object} props
+ * @returns {{addedRelations: [], profile: object, id: string, deletedRelations: []}}
+ */
+export const getEntity = props => {
+  const entity = get(props, ['resources', 'entities', 'records', 0], {});
+
+  return {
+    id: entity.id,
+    profile: entity,
+    addedRelations: [],
+    deletedRelations: [],
+  };
+};
+
+/**
+ * Retrieves and returns tags list from the custom wrapped entity
+ *
+ * @param {object} props
+ * @returns {*}
+ */
+export const getEntityTags = props => {
+  const entity = props.getEntity(props);
+
+  return get(entity, ['tags', 'tagList'], []);
 };
