@@ -57,7 +57,7 @@ export const validateValueType = value => {
   const pattern = /^[a-zA-Z0-9]*$/;
   const val = value && value.trim ? value.trim() : value;
 
-  if (!val || val.length === 0 || val.match(pattern)) {
+  if (!val || !val.length || val.match(pattern)) {
     return null;
   }
 
@@ -67,7 +67,7 @@ export const validateValueType = value => {
 export const validateValueLength = (value, maxLength) => {
   const val = value && value.trim ? value.trim() : value;
 
-  if (!val || val.length === 0 || val.length <= maxLength) {
+  if (!val || !val.length || val.length <= maxLength) {
     return null;
   }
 
@@ -90,13 +90,15 @@ export const validateValueLength3 = value => validateValueLength(value, 3);
  * @returns {null|*}
  */
 export const validateMARCWithElse = value => {
-  const pattern = new RegExp(['^(("[^"]+")|([0-9]{3}(\\$[a-z])?))',
-    '(((\\s(?=(("[^"]+")|([0-9]{3}(\\$[a-z])?))))',
-    '((?<=\\s)(("[^"]+")|([0-9]{3}(\\$[a-z])?))))|',
-    '(((; else )(?=(("[^"]+")|([0-9]{3}(\\$[a-z])?))))',
-    '((?<=(; else ))(("[^"]+")|([0-9]{3}(\\$[a-z])?)))))*$'].join(''));
+  const quotedStringOrMarcPathPattern = '(("[^"]+")|([0-9]{3}(\\$[a-z])?))';
+  const pattern = new RegExp([
+    `^${quotedStringOrMarcPathPattern}`,
+    `(((\\s(?=${quotedStringOrMarcPathPattern}))`,
+    `((?<=\\s)${quotedStringOrMarcPathPattern}))|`,
+    `(((; else )(?=${quotedStringOrMarcPathPattern}))`,
+    `((?<=(; else ))${quotedStringOrMarcPathPattern})))*$`].join(''));
 
-  if (!value || value.length === 0 || value.match(pattern)) {
+  if (!value || !value.length || value.match(pattern)) {
     return null;
   }
 
@@ -110,13 +112,15 @@ export const validateMARCWithElse = value => {
  * @returns {null|*}
  */
 export const validateMARCWithDate = value => {
-  const pattern = new RegExp(['^((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?))',
-    '(((\\s(?=((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?))))',
-    '((?<=\\s)((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?))))|',
-    '(((; else )(?=((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?))))',
-    '((?<=(; else ))((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?)))))*$'].join(''));
+  const todayOrDatePattern = '((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?))';
+  const pattern = new RegExp([
+    `^${todayOrDatePattern}`,
+    `(((\\s(?=${todayOrDatePattern}))`,
+    `((?<=\\s)${todayOrDatePattern}))|`,
+    `(((; else )(?=${todayOrDatePattern}))`,
+    `((?<=(; else ))${todayOrDatePattern})))*$`].join(''));
 
-  if (!value || value.length === 0) {
+  if (!value || !value.length) {
     return null;
   }
 

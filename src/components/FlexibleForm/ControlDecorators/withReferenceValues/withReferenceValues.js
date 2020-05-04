@@ -63,13 +63,15 @@ export const withReferenceValues = memo(props => {
     const matches = value.match(pattern);
 
     if (matches) {
-      const dataSet = dataOptions.map(option => option.name);
-
-      matches.forEach(str => {
+      for (const str of matches) {
         const croppedStr = str.slice(1, -1);
 
-        isValid = dataSet.some(data => data === croppedStr);
-      });
+        isValid = dataOptions.some(({ name }) => name === croppedStr);
+
+        if (!isValid) {
+          break;
+        }
+      }
     }
 
     return isValid;
