@@ -38,6 +38,7 @@ export const ProfileTree = memo(({
   record,
   className,
   dataAttributes,
+  showAsHotLink,
 }) => {
   const { siblingsProhibited } = linkingRules;
 
@@ -156,6 +157,7 @@ export const ProfileTree = memo(({
                 onUnlink={unlink}
                 onDelete={remove}
                 okapi={okapi}
+                showAsHotLink={showAsHotLink}
               />
             ))
           ) : (
@@ -204,6 +206,7 @@ ProfileTree.propTypes = {
   record: PropTypes.object,
   className: PropTypes.string,
   dataAttributes: PropTypes.object,
+  showAsHotLink: PropTypes.bool,
 };
 
 ProfileTree.defaultProps = {
@@ -215,4 +218,5 @@ ProfileTree.defaultProps = {
   record: null,
   className: null,
   dataAttributes: null,
+  showAsHotLink: false,
 };

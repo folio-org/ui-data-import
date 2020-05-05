@@ -24,6 +24,7 @@ import { ENTITY_KEYS } from '../../utils/constants';
  *   searchTerm?: string,
  *   selectRecord?: (id: string) => void,
  *   selectedRecords?: Set<string>,
+ *   showAsHotLink?: boolean,
  * }}
  * Note: check which params are required based on used columns
  */
@@ -33,6 +34,7 @@ export const listTemplate = ({
   customValue,
   selectRecord,
   selectedRecords,
+  showAsHotLink,
 }) => ({
   selected: record => (
     <CheckboxColumn
@@ -47,6 +49,8 @@ export const listTemplate = ({
       value={record.name}
       customValue={customValue}
       searchTerm={searchTerm}
+      showAsHotLink={showAsHotLink}
+      recordId={record.profileId}
     />
   ),
   description: record => (
