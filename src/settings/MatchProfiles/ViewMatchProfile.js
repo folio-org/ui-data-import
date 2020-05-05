@@ -29,13 +29,15 @@ import {
   TagsAccordion,
 } from '@folio/stripes/smart-components';
 
-import { getFieldMatched } from '../../utils';
 import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   PROFILE_TYPES,
-} from '../../utils/constants';
+  getFieldMatched,
+  getEntity,
+  getEntityTags,
+} from '../../utils';
 import {
   Spinner,
   EndOfItem,
@@ -312,7 +314,11 @@ export class ViewMatchProfile extends Component {
           </Accordion>
           {tagsEnabled && (
             <div data-test-tags-accordion>
-              <TagsAccordion link={tagsEntityLink} />
+              <TagsAccordion
+                link={tagsEntityLink}
+                getEntity={getEntity}
+                getEntityTags={getEntityTags}
+              />
             </div>
           )}
           <div className={styles.details}>
