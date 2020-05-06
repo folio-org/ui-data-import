@@ -43,12 +43,7 @@ export const withReferenceValues = memo(props => {
   };
 
   useEffect(() => {
-    if (!isEmpty(dataOptions)) {
-      setHasLoaded(true);
-    } else {
-      setHasLoaded(false);
-    }
-
+    setHasLoaded(!isEmpty(dataOptions));
     setListOptions(dataOptions);
   }, [dataOptions]);
 
