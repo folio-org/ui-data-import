@@ -142,3 +142,29 @@ export const validateMARCWithDate = value => {
 
   return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
 };
+
+export const validateAcceptedValues = acceptedValues => value => {
+  const pattern = /"[^"]+"/g;
+
+  if (!value || !value.length || !acceptedValues.length) {
+    return null;
+  }
+
+  const matches = value.match(pattern);
+
+  if (matches) {
+    for (const str of matches) {
+      const croppedStr = str.slice(1, -1);
+
+      const isValid = acceptedValues.some(({ name }) => name === croppedStr);
+
+      if (!isValid) {
+        return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
+      }
+    }
+
+    return null;
+  }
+
+  return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
+};
