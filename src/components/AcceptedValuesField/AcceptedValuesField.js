@@ -50,7 +50,7 @@ export const AcceptedValuesField = ({
       WrappedComponent={component}
       wrapperLabel={wrapperLabel}
       wrapperExplicitInsert={wrapperExplicitInsert}
-      validate={[memoizedValidation, validateMARCWithElse]}
+      validate={[validateMARCWithElse, memoizedValidation]}
       {...dataAttributes}
     />
   );
