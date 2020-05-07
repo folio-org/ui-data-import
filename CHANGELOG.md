@@ -14,6 +14,7 @@
 * Preceding/succeeding sections has been updated to match new Instance fields (UIDATIMP-476)
 * Update dependency on stripes-smart-components to version 3.1.1 (UIDATIMP-485)
 * Implement date picker decorator (UIDATIMP-407)
+* Add validation for field mapping profile fields (UIDATIMP-405)
 * Add hotlinks for match and action profiles on Job profiles details view (UIDATIMP-478)
 
 ### Bugs fixed:
