@@ -15,6 +15,7 @@
 * Update dependency on stripes-smart-components to version 3.1.1 (UIDATIMP-485)
 * Implement date picker decorator (UIDATIMP-407)
 * Add validation for field mapping profile fields (UIDATIMP-405)
+* Purge "intlShape" in prep for "react-intl" "v4" migration. (UIDATIMP-517)
 
 ### Bugs fixed:
 * When returned to search results screen after profile save, wrong profile details show (UIDATIMP-424)

@@ -31,6 +31,7 @@ import {
   stripesConnect,
   stripesShape,
 } from '@folio/stripes/core';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import {
   ENTITY_KEYS,
@@ -480,7 +481,7 @@ export class ViewJobProfile extends Component {
           open={this.state.showRunConfirmation}
           heading={<FormattedMessage id="ui-data-import.modal.jobProfile.run.header" />}
           message={(
-            <FormattedMessage
+            <SafeHTMLMessage
               id="ui-data-import.modal.jobProfile.run.message"
               values={{ name: record.name }}
             />
