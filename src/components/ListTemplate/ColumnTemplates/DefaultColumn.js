@@ -3,10 +3,9 @@ import HighLight from 'react-highlighter';
 import PropTypes from 'prop-types';
 
 import { Button } from '@folio/stripes/components';
-
 import { AppIcon } from '@folio/stripes/core';
 
-import { stringToWords } from '../../../utils';
+import { PROFILE_TYPES_FOR_URL } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
 
@@ -16,7 +15,7 @@ export const DefaultColumn = memo(({
   className = sharedCss.cellAppIcon,
   iconKey,
   searchTerm,
-  showAsHotLink,
+  showLabelsAsHotLink,
   recordId,
 }) => {
   if (!customValue && !incomingValue) {
@@ -24,8 +23,7 @@ export const DefaultColumn = memo(({
   }
 
   const value = customValue || incomingValue;
-
-  const entityName = iconKey ? stringToWords(iconKey).map(word => word.toLocaleLowerCase()).join('-') : '';
+  const entityName = iconKey ? PROFILE_TYPES_FOR_URL[iconKey] : '';
 
   const content = searchTerm
     ? (
@@ -53,19 +51,21 @@ export const DefaultColumn = memo(({
     return content;
   }
 
+  const hotlink = (
+    <Button
+      data-test-profile-link={entityName}
+      buttonStyle="link"
+      marginBottom0
+      to={`/settings/data-import/${entityName}/view/${recordId}`}
+      buttonClass={sharedCss.cellLink}
+    >
+      {appIcon}
+    </Button>
+  );
+
   return (
     <>
-      {showAsHotLink ? (
-        <Button
-          data-test-profile-link
-          buttonStyle="link"
-          marginBottom0
-          to={`/settings/data-import/${entityName}/view/${recordId}`}
-          buttonClass={sharedCss.cellLink}
-        >
-          {appIcon}
-        </Button>
-      ) : appIcon }
+      {showLabelsAsHotLink ? hotlink : appIcon }
     </>
   );
 });
@@ -76,11 +76,11 @@ DefaultColumn.propTypes = {
   iconKey: PropTypes.string,
   className: PropTypes.string,
   searchTerm: PropTypes.string,
-  showAsHotLink: PropTypes.bool,
+  showLabelsAsHotLink: PropTypes.bool,
   recordId: PropTypes.string,
 };
 
 DefaultColumn.defaultProps = {
-  showAsHotLink: false,
+  showLabelsAsHotLink: false,
   recordId: '',
 };

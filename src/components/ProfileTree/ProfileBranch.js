@@ -46,7 +46,7 @@ export const ProfileBranch = memo(({
   onUnlink,
   onDelete,
   dataAttributes,
-  showAsHotLink,
+  showLabelsAsHotLink,
 }) => {
   const {
     childrenAllowed,
@@ -121,7 +121,7 @@ export const ProfileBranch = memo(({
         setParentSectionData={setParentSectionData}
         onUnlink={onUnlink}
         onDelete={onDelete}
-        showAsHotLink={showAsHotLink}
+        showLabelsAsHotLink={showLabelsAsHotLink}
       />
       {childrenSectionAllowed && (
         <div className={css['branch-container']}>
@@ -151,7 +151,7 @@ export const ProfileBranch = memo(({
                     onLink={onLink}
                     onUnlink={onUnlink}
                     onDelete={onDelete}
-                    showAsHotLink={showAsHotLink}
+                    showLabelsAsHotLink={showLabelsAsHotLink}
                   />
                 )) : (
                   <div>
@@ -215,7 +215,7 @@ export const ProfileBranch = memo(({
                     onLink={onLink}
                     onUnlink={onUnlink}
                     onDelete={onDelete}
-                    showAsHotLink={showAsHotLink}
+                    showLabelsAsHotLink={showLabelsAsHotLink}
                   />
                 )) : (
                   <div>
@@ -280,7 +280,7 @@ ProfileBranch.propTypes = {
   onUnlink: PropTypes.func,
   onDelete: PropTypes.func,
   dataAttributes: PropTypes.object,
-  showAsHotLink: PropTypes.bool,
+  showLabelsAsHotLink: PropTypes.bool,
 };
 
 ProfileBranch.defaultProps = {
@@ -291,5 +291,5 @@ ProfileBranch.defaultProps = {
   onUnlink: noop,
   onDelete: noop,
   dataAttributes: null,
-  showAsHotLink: false,
+  showLabelsAsHotLink: false,
 };

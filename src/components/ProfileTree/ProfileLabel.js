@@ -40,7 +40,7 @@ export const ProfileLabel = memo(({
   onUnlink,
   onDelete,
   dataAttributes,
-  showAsHotLink,
+  showLabelsAsHotLink,
 }) => {
   const {
     columnsAllowed,
@@ -62,7 +62,7 @@ export const ProfileLabel = memo(({
   const templates = listTemplate({
     entityKey,
     customValue: label,
-    showAsHotLink,
+    showLabelsAsHotLink,
   });
   const columns = columnsAllowed[entityKey];
 
@@ -192,7 +192,7 @@ ProfileLabel.propTypes = {
   onUnlink: PropTypes.func,
   onDelete: PropTypes.func,
   dataAttributes: PropTypes.object,
-  showAsHotLink: PropTypes.bool,
+  showLabelsAsHotLink: PropTypes.bool,
 };
 
 ProfileLabel.defaultProps = {
@@ -202,5 +202,5 @@ ProfileLabel.defaultProps = {
   dataAttributes: null,
   onUnlink: noop,
   onDelete: noop,
-  showAsHotLink: false,
+  showLabelsAsHotLink: false,
 };

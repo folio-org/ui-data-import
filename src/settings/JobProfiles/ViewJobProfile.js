@@ -431,7 +431,7 @@ export class ViewJobProfile extends Component {
                 linkingRules={PROFILE_LINKING_RULES}
                 contentData={wrappers}
                 record={record}
-                showAsHotLink
+                showLabelsAsHotLink
               />
             ) : <Preloader />}
           </Accordion>

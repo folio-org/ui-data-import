@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { location } from '@bigtest/react';
 import { Response } from '@bigtest/mirage';
 import {
   describe,
@@ -67,6 +68,19 @@ describe('Job Profile View', () => {
 
     it('there is no plus sign buttons', () => {
       expect(jobProfileDetails.profileTree.plusSignButton.isPresent).to.be.false;
+    });
+
+    describe('when profile button is clicked', () => {
+      let linkProfileType;
+
+      beforeEach(async function () {
+        linkProfileType = jobProfileDetails.hotLink.$root.dataset.testProfileLink;
+        await jobProfileDetails.hotLink.click();
+      });
+
+      it('redirects to appropriate profile details page', () => {
+        expect(location().pathname).contains(linkProfileType);
+      });
     });
 
     describe('edit job profile form', () => {
