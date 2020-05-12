@@ -162,9 +162,7 @@ export const validateAcceptedValues = acceptedValues => value => {
         return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
       }
     }
-
-    return null;
   }
 
-  return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
+  return null;
 };
