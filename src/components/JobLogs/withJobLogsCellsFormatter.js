@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  injectIntl,
-  intlShape,
-} from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import { Button } from '@folio/stripes/components';
 
@@ -14,7 +11,7 @@ import sharedCss from '../../shared.css';
 export const withJobLogsCellsFormatter = WrappedComponent => {
   return injectIntl(class extends Component {
     static propTypes = {
-      intl: intlShape.isRequired,
+      intl: PropTypes.object.isRequired,
       formatter: PropTypes.object,
     };
 

@@ -7,7 +7,6 @@ import { PropTypes } from 'prop-types';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
 
 import { get } from 'lodash';
@@ -100,7 +99,7 @@ WithBooleanActionsControl.propTypes = {
   WrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
-  intl: intlShape,
+  intl: PropTypes.object,
   label: PropTypes.oneOfType([PropTypes.string, Node]),
 };
 

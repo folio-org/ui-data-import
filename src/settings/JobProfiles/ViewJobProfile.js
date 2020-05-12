@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import {
-  intlShape,
   injectIntl,
   FormattedMessage,
 } from 'react-intl';
@@ -32,7 +31,6 @@ import {
   stripesConnect,
   stripesShape,
 } from '@folio/stripes/core';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import {
   ENTITY_KEYS,
@@ -104,7 +102,7 @@ export class ViewJobProfile extends Component {
       push: PropTypes.func.isRequired,
       replace: PropTypes.func.isRequired,
     }).isRequired,
-    intl: intlShape.isRequired,
+    intl: PropTypes.object.isRequired,
     resources: PropTypes.shape({
       jobProfile: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -482,7 +480,7 @@ export class ViewJobProfile extends Component {
           open={this.state.showRunConfirmation}
           heading={<FormattedMessage id="ui-data-import.modal.jobProfile.run.header" />}
           message={(
-            <SafeHTMLMessage
+            <FormattedMessage
               id="ui-data-import.modal.jobProfile.run.message"
               values={{ name: record.name }}
             />
