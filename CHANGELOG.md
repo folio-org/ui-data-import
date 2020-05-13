@@ -1,5 +1,14 @@
 # Change history for ui-data-import
 
+## **2.0.0** (in progress)
+
+### Features added:
+* Purge "intlShape" in prep for "react-intl" "v4" migration. (UIDATIMP-517)
+* Data Import: Update to Stripes v4 (UIDATIMP-520)
+* Add hotlinks for match and action profiles on Job profiles details view (UIDATIMP-478)
+
+### Bugs fixed:
+
 ## [1.8.3](https://github.com/folio-org/ui-data-import/tree/v1.8.3) (2020-04-27)
 
 ### Features added:
@@ -15,8 +24,6 @@
 * Update dependency on stripes-smart-components to version 3.1.1 (UIDATIMP-485)
 * Implement date picker decorator (UIDATIMP-407)
 * Add validation for field mapping profile fields (UIDATIMP-405)
-* Add hotlinks for match and action profiles on Job profiles details view (UIDATIMP-478)
-* Purge "intlShape" in prep for "react-intl" "v4" migration. (UIDATIMP-517)
 
 ### Bugs fixed:
 * When returned to search results screen after profile save, wrong profile details show (UIDATIMP-424)
