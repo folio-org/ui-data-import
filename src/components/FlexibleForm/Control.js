@@ -2,10 +2,7 @@ import React, {
   Fragment,
   memo,
 } from 'react';
-import {
-  FormattedMessage,
-  intlShape,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
@@ -566,7 +563,7 @@ Control.propTypes = {
   wrapperLabel: PropTypes.string,
   wrapperSourceLink: PropTypes.string,
   placeholder: PropTypes.string,
-  intl: intlShape,
+  intl: PropTypes.object,
   okapi: PropTypes.object,
   styles: PropTypes.shape(PropTypes.string),
   classNames: PropTypes.arrayOf(PropTypes.string),

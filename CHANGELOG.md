@@ -16,6 +16,7 @@
 * Implement date picker decorator (UIDATIMP-407)
 * Add validation for field mapping profile fields (UIDATIMP-405)
 * Add hotlinks for match and action profiles on Job profiles details view (UIDATIMP-478)
+* Purge "intlShape" in prep for "react-intl" "v4" migration. (UIDATIMP-517)
 
 ### Bugs fixed:
 * When returned to search results screen after profile save, wrong profile details show (UIDATIMP-424)
