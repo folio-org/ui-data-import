@@ -500,5 +500,6 @@
     "settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping": "اختر تخطيط حقل مربع تحديد",
     "settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords": "وضع علامة لكل التسجيلات المتأثرة",
     "settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords": "إلغاء العلامة لكل التسجيلات المتأثرة",
-    "settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords": "احتفظ بالقيمة الحالية لكل التسجيلات المتأثرة"
+    "settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords": "احتفظ بالقيمة الحالية لكل التسجيلات المتأثرة",
+    "validation.syntaxError": "يرجى تصحيح بناء الجملة للمتابعة"
 }
