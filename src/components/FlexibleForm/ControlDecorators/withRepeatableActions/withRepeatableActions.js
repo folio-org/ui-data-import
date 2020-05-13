@@ -1,9 +1,6 @@
 import React, { memo } from 'react';
 import { PropTypes } from 'prop-types';
-import {
-  intlShape,
-  FormattedMessage,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import classNames from 'classnames';
 
@@ -77,7 +74,7 @@ export const withRepeatableActions = memo(props => {
 });
 
 withRepeatableActions.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.object.isRequired,
   enabled: PropTypes.bool.isRequired,
   referenceTable: PropTypes.arrayOf(PropTypes.object).isRequired,
   children: Node.isRequired,

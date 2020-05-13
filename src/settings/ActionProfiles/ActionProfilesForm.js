@@ -6,7 +6,6 @@ import React, {
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
 import {
   Field,
@@ -308,7 +307,7 @@ export const ActionProfilesFormComponent = ({
 };
 
 ActionProfilesFormComponent.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.object.isRequired,
   initialValues: PropTypes.object.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   injectIntl,
-  intlShape,
   FormattedDate,
   FormattedTime,
   FormattedMessage,
@@ -22,7 +21,7 @@ import css from './Job.css';
 export class Job extends Component {
   static propTypes = {
     job: jobExecutionPropTypes.isRequired,
-    intl: intlShape.isRequired,
+    intl: PropTypes.object.isRequired,
     handlePreview: PropTypes.func,
   };
 

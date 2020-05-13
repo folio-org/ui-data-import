@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
 
 import {
@@ -69,7 +68,7 @@ class ViewAllLogs extends Component {
     browseOnly: PropTypes.bool,
     packageInfo: PropTypes.object,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }),
-    intl: intlShape.isRequired,
+    intl: PropTypes.object.isRequired,
   };
 
   static defaultProps = { browseOnly: false };
