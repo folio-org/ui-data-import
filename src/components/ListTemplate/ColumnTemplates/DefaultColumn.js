@@ -36,6 +36,10 @@ export const DefaultColumn = memo(({
     )
     : value;
 
+  if (!iconKey) {
+    return content;
+  }
+
   const appIcon = (
     <AppIcon
       size="small"
@@ -46,10 +50,6 @@ export const DefaultColumn = memo(({
       {content}
     </AppIcon>
   );
-
-  if (!iconKey) {
-    return content;
-  }
 
   const hotlink = (
     <Button
@@ -63,11 +63,9 @@ export const DefaultColumn = memo(({
     </Button>
   );
 
-  return (
-    <>
-      {showLabelsAsHotLink ? hotlink : appIcon }
-    </>
-  );
+  return showLabelsAsHotLink
+    ? hotlink
+    : appIcon;
 });
 
 DefaultColumn.propTypes = {
