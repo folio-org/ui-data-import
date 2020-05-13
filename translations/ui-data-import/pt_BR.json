@@ -500,5 +500,6 @@
     "settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping": "Selecione o mapeamento do campo da caixa de seleção",
     "settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords": "Marcar para todos os registros afetados",
     "settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords": "Desmarcar todos os registros afetados",
-    "settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords": "Mantenha o valor existente para todos os registros afetados"
+    "settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords": "Mantenha o valor existente para todos os registros afetados",
+    "validation.syntaxError": "Corrija a sintaxe para continuar"
 }
