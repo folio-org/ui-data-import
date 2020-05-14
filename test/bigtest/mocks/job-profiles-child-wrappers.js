@@ -1194,6 +1194,7 @@ export const snapshotWrappers = [{
   id: '448ae575-daec-49c1-8041-d64c8ed8e5b1',
   childSnapshotWrappers: [{
     id: '054a185d-f90b-409d-9203-4cc389e20d13',
+    recordId: '054a185d-f90b-409d-9203-4cc389e20d13',
     contentType: 'MATCH_PROFILE',
     reactTo: 'MATCH',
     content: {
