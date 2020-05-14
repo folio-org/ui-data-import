@@ -6,6 +6,7 @@
 * Purge "intlShape" in prep for "react-intl" "v4" migration. (UIDATIMP-517)
 * Data Import: Update to Stripes v4 (UIDATIMP-520)
 * Add hotlinks for match and action profiles on Job profiles details view (UIDATIMP-478)
+* Layout styles in repeatable sections, which contain withRepeatableActions decorator has been fixed (UIDATIMP-502)
 
 ### Bugs fixed:
 
