@@ -76,6 +76,13 @@ export const PROFILE_TYPES = {
   MAPPING_PROFILE: 'MAPPING_PROFILE',
 };
 
+export const PROFILE_TYPES_FOR_URL = {
+  jobProfiles: 'job-profiles',
+  matchProfiles: 'match-profiles',
+  actionProfiles: 'action-profiles',
+  mappingProfiles: 'mapping-profiles',
+};
+
 export const ASSOCIATION_TYPES = {
   jobProfiles: 'JOB_PROFILE',
   matchProfiles: 'MATCH_PROFILE',

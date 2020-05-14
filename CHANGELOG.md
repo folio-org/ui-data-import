@@ -5,6 +5,7 @@
 ### Features added:
 * Purge "intlShape" in prep for "react-intl" "v4" migration. (UIDATIMP-517)
 * Data Import: Update to Stripes v4 (UIDATIMP-520)
+* Add hotlinks for match and action profiles on Job profiles details view (UIDATIMP-478)
 
 ### Bugs fixed:
 
