@@ -7,20 +7,21 @@ const INSTANCE = {
     path: 'instance.discoverySuppress',
     value: '',
     subfields: [],
-    booleanFieldAction: 'AS_IS',
+    booleanFieldAction: '',
   }, {
     name: 'staffSuppress',
     enabled: true,
     path: 'instance.staffSuppress',
     value: '',
     subfields: [],
+    booleanFieldAction: '',
   }, {
     name: 'previouslyHeld',
     enabled: true,
     path: 'instance.previouslyHeld',
     value: '',
     subfields: [],
-    booleanFieldAction: 'AS_IS',
+    booleanFieldAction: '',
   }, {
     name: 'hrid',
     enabled: false,

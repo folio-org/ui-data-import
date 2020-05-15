@@ -7,7 +7,7 @@ const HOLDINGS = {
     path: 'holdings.discoverySuppress',
     value: '',
     subfields: [],
-    booleanFieldAction: 'AS_IS',
+    booleanFieldAction: '',
   }, {
     name: 'hrid',
     enabled: false,
@@ -222,7 +222,7 @@ const HOLDINGS = {
         enabled: true,
         path: 'holdings.notes[].staffOnly',
         value: null,
-        booleanFieldAction: 'AS_IS',
+        booleanFieldAction: '',
       }],
     }],
   }, {
@@ -297,7 +297,7 @@ const HOLDINGS = {
         enabled: true,
         path: 'holdings.receivingHistory.entries[].publicDisplay',
         value: null,
-        booleanFieldAction: 'AS_IS',
+        booleanFieldAction: '',
       }, {
         // order: 0,
         name: 'enumeration',

@@ -122,6 +122,7 @@ export const MappingProfilesFormComponent = ({
     };
 
     setInitials(newInitials);
+    // @TODO: change method should be changed to initialize
     dispatch(change(formName, 'profile.mappingDetails', newInitDetails));
     if (!isEqual) {
       prevExistingRecordType.current = existingRecordType;
