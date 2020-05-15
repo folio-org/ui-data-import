@@ -25,12 +25,10 @@ import stripesForm from '@folio/stripes/form';
 import {
   compose,
   withProfileWrapper,
-} from '../../utils';
-import {
   ENTITY_KEYS,
   LAYER_TYPES,
   PROFILE_TYPES,
-} from '../../utils/constants';
+} from '../../utils';
 import {
   FlexibleForm,
   INCOMING_RECORD_TYPES,

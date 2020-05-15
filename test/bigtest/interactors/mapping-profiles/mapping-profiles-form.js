@@ -9,6 +9,7 @@ import { AssociatedActionProfiles } from '../associated-action-profiles';
 import { HoldingsDetailsAccordion } from './details/editable/holdings-details-interactor';
 import { InstanceDetailsAccordion } from './details/editable/instance-details-interactor';
 import { ItemDetailsAccordion } from './details/editable/item-details-interactor';
+import { MARCTableInteractor } from '../marc-table-interactor';
 
 class MappingProfileFormInteractor extends FullScreenFormInteractor {
   nameField = new TextFieldInteractor('#mapping-profiles-form [data-test-name-field]');
@@ -18,6 +19,7 @@ class MappingProfileFormInteractor extends FullScreenFormInteractor {
   holdingsDetails = new HoldingsDetailsAccordion('#mapping-profile-details');
   instanceDetails = new InstanceDetailsAccordion('#mapping-profile-details');
   itemDetails = new ItemDetailsAccordion('#mapping-profile-details');
+  marcDetailsTable = new MARCTableInteractor('#mapping-profiles-form');
   confirmEditModal = new ConfirmationModalInteractor('#confirm-edit-action-profile-modal');
   associatedActionProfilesAccordion = new AccordionInteractor('#mappingProfileFormAssociatedActionProfileAccordion');
   associatedActionProfiles = new AssociatedActionProfiles('[data-test-full-screen-form] #associated-actionProfiles-list');

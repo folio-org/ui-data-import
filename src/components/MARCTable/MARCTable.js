@@ -1,0 +1,70 @@
+import React from 'react';
+import { PropTypes } from 'prop-types';
+
+import {
+  MARCTableHeader,
+  MARCTableRowContainer,
+} from '.';
+
+import css from './MARCTable.css';
+
+// TODO: Connect table to the form once BE be ready
+export const MARCTable = ({
+  fields,
+  intl,
+}) => {
+  const columns = ['arrows', 'action', 'field', 'indicator1', 'indicator2', 'subfield', 'subaction', 'data', 'position', 'addRemove'];
+  const columnWidths = {
+    arrows: '70px',
+    action: '100px',
+    field: '120px',
+    indicator1: '75px',
+    indicator2: '75px',
+    subfield: '75px',
+    subaction: '140px',
+    data: '200px',
+    position: '140px',
+    addRemove: '70px',
+  };
+
+  return (
+    <div
+      data-test-marc-table
+      className={css.tableContainer}
+    >
+      <MARCTableHeader
+        columns={columns}
+        columnWidths={columnWidths}
+        intl={intl}
+      />
+      <MARCTableRowContainer
+        fields={fields}
+        columns={columns}
+        columnWidths={columnWidths}
+        intl={intl}
+      />
+    </div>
+  );
+};
+
+MARCTable.propTypes = {
+  intl: PropTypes.object.isRequired,
+  fields: PropTypes.arrayOf(PropTypes.object),
+};
+
+MARCTable.defaultProps = {
+  fields: [
+    {
+      order: 0,
+      data: {
+        text: '',
+        find: '',
+        replace: '',
+        field: '',
+        indicator1: '',
+        indicator2: '',
+        subfield: '',
+      },
+    },
+  ],
+};

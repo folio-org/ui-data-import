@@ -1,0 +1,59 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  border-bottom: 5px solid var(--primary);
+}
+
+.tableHeaderCell {
+  display: flex;
+  align-items: center;
+  padding: var(--gutter-static-two-thirds) var(--gutter-static-two-thirds) var(--gutter-static-one-third) var(--gutter-static-two-thirds);
+  font-weight: var(--text-weight-bold);
+  font-size: var(--font-size-medium);
+  color: var(--color-text);
+}
+
+.tableRowContainer {
+  background: var(--color-fill-table-row-odd);
+
+  &:nth-child(odd) {
+    background: var(--color-fill-table-row-even);
+  }
+}
+
+.tableRow {
+  display: flex;
+  width: 100%;
+  height: auto;
+}
+
+.tableCell {
+  display: flex;
+  align-items: flex-start;
+  padding: var(--gutter-static-one-third) var(--gutter-static-two-thirds);
+  min-height: var(--control-min-size-desktop);
+  overflow: hidden;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+  &:last-child {
+    border-right: 0;
+  }
+
+  &:not(:first-child):not(:last-child) > :first-child {
+    flex-grow: 1;
+  }
+}
+
+.tableDataCell {
+  margin-right: 5px;
+}

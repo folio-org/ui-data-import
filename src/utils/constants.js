@@ -318,3 +318,67 @@ export const FILTER_QUERY_PARAMS = {
   DEFAULT: 'cql.allRecords=1',
   NOT_STATIC_VALUE: 'cql.allRecords=1 NOT incomingRecordType=STATIC_VALUE',
 };
+
+export const ACTION_OPTIONS = [
+  {
+    value: 'ADD',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.action.add',
+  }, {
+    value: 'DELETE',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.action.delete',
+  }, {
+    value: 'EDIT',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.action.edit',
+  }, {
+    value: 'MOVE',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.action.move',
+  },
+];
+
+export const SUBACTION_OPTIONS = [
+  {
+    value: 'ADD_SUBFIELD',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.addSubfield',
+  }, {
+    value: 'INSERT',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.insert',
+  }, {
+    value: 'REMOVE',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.remove',
+  }, {
+    value: 'REPLACE',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.replace',
+  }, {
+    value: 'NEW',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.newField',
+  }, {
+    value: 'EXISTING',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.existingField',
+  },
+];
+
+export const POSITION_OPTIONS = [
+  {
+    value: 'BEFORE',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.position.before',
+  }, {
+    value: 'AFTER',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.position.after',
+  },
+];
+
+export const MARC_TABLE_CONFIG = {
+  allowedSubactions: {
+    ADD: ['ADD_SUBFIELD'],
+    DELETE: [],
+    EDIT: ['INSERT', 'REMOVE', 'REPLACE'],
+    MOVE: ['NEW', 'EXISTING'],
+  },
+  allowedPositions: { EDIT: { INSERT: ['BEFORE', 'AFTER'] } },
+  hasDataField: {
+    ADD: true,
+    DELETE: false,
+    EDIT: true,
+    MOVE: true,
+  },
+};
