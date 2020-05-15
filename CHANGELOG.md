@@ -7,6 +7,7 @@
 * Data Import: Update to Stripes v4 (UIDATIMP-520)
 * Add hotlinks for match and action profiles on Job profiles details view (UIDATIMP-478)
 * Layout styles in repeatable sections, which contain withRepeatableActions decorator has been fixed (UIDATIMP-502)
+* Implement basic layout for Field Mapping Profile details: MARC Bib from MARC Bib (UIDATIMP-297)
 
 ### Bugs fixed:
 
