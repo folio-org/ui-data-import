@@ -2,6 +2,7 @@ import {
   interactor,
   scoped,
   isPresent,
+  Interactor,
 } from '@bigtest/interactor';
 
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
@@ -23,6 +24,7 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   confirmationModal = new ConfirmationModalInteractor('#delete-job-profile-modal');
   runConfirmationModal = new ConfirmationModalInteractor('#run-job-profile-modal');
   callout = new CalloutInteractor();
+  hotLink = new Interactor('[class*="profile-tree---"] [data-test-profile-link]');
 }
 
 export const jobProfileDetails = new JobProfileDetailsInteractor('#pane-job-profile-details');

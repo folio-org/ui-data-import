@@ -12,7 +12,7 @@
 }
 
 .no-legend {
-  & [class|="select"] {
+  & > [class|="select"] {
     margin-top: -32px;
     margin-bottom: -5px;
   }

@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import {
-  intlShape,
   injectIntl,
   FormattedMessage,
 } from 'react-intl';
@@ -104,7 +103,7 @@ export class ViewJobProfile extends Component {
       push: PropTypes.func.isRequired,
       replace: PropTypes.func.isRequired,
     }).isRequired,
-    intl: intlShape.isRequired,
+    intl: PropTypes.object.isRequired,
     resources: PropTypes.shape({
       jobProfile: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -431,6 +430,7 @@ export class ViewJobProfile extends Component {
                 linkingRules={PROFILE_LINKING_RULES}
                 contentData={wrappers}
                 record={record}
+                showLabelsAsHotLink
               />
             ) : <Preloader />}
           </Accordion>

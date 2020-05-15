@@ -46,6 +46,7 @@ const propTypes = {
   id: PropTypes.string,
   input: PropTypes.object,
   inputRef: PropTypes.object,
+  intl: PropTypes.object,
   label: PropTypes.node,
   locale: PropTypes.string,
   meta: PropTypes.object,
@@ -64,8 +65,6 @@ const propTypes = {
   value: PropTypes.string,
 };
 
-const contextTypes = { intl: PropTypes.object };
-
 const defaultProps = {
   autoFocus: false,
   backendDateStandard: 'ISO8601',
@@ -83,10 +82,9 @@ const defaultProps = {
  */
 export class TextDate extends React.Component {
   static propTypes = propTypes;
-  static contextTypes = contextTypes;
   static defaultProps = defaultProps;
 
-  constructor(props, context) {
+  constructor(props) {
     super(props);
 
     this.picker = null;
@@ -96,8 +94,8 @@ export class TextDate extends React.Component {
 
     this.dbhideCalendar = debounce(this.hideCalendar, 10);
 
-    const timeZone = props.timeZone || context.intl.timeZone;
-    const locale = props.locale || context.intl.locale;
+    const timeZone = props.timeZone || props.intl.timeZone;
+    const locale = props.locale || props.intl.locale;
 
     moment.locale(locale);
 

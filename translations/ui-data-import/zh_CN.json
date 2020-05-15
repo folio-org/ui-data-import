@@ -500,5 +500,6 @@
     "settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping": "选择复选字段映射",
     "settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords": "标记所有受影响的记录",
     "settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords": "为所有受影响的记录取消标记",
-    "settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords": "保留所有受影响记录的现有值"
+    "settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords": "保留所有受影响记录的现有值",
+    "validation.syntaxError": "Please correct the syntax to continue"
 }

@@ -76,8 +76,8 @@
     "modal.fileExtensions.reset.message": "这将重置文件扩展名映射为系统默认值",
     "modal.fileExtensions.reset.actionButton": "全部重設",
     "deleted": "已删除",
-    "modal.fileExtension.delete.header": "刪除檔案副檔名 “{extension}”？",
-    "modal.fileExtension.delete.message": "删除檔案副檔名？",
+    "modal.fileExtension.delete.header": "刪除檔案副檔名 “{extension}” ？",
+    "modal.fileExtension.delete.message": "删除檔案副檔名 ？",
     "modal.fileExtensions.inconsistent.header": "檔案副檔名不一致",
     "modal.fileExtensions.inconsistent.message": "无法上传{highlightedText}文件。请上传具有相同扩展名的文件",
     "modal.fileExtensions.blocked.header": "匯入被禁止",
@@ -133,7 +133,7 @@
     "replace": "更换",
     "recordTypes.order": "訂單",
     "recordTypes.invoice": "發票",
-    "recordTypes.item": "館藏",
+    "recordTypes.item": "單件",
     "recordTypes.instance": "实例",
     "recordTypes.holdings": "館藏",
     "recordTypes.marc-bib": "MARC 書目",
@@ -500,5 +500,6 @@
     "settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping": "Select сheckbox field mapping",
     "settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords": "Mark for all affected records",
     "settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords": "Unmark for all affected records",
-    "settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords": "Keep the existing value for all affected records"
+    "settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords": "Keep the existing value for all affected records",
+    "validation.syntaxError": "Please correct the syntax to continue"
 }

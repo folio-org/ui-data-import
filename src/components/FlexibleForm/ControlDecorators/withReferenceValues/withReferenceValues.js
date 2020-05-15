@@ -3,15 +3,14 @@ import React, {
   useRef,
   useState,
   useLayoutEffect,
+  useEffect,
 } from 'react';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { get } from 'lodash';
+import { isEmpty } from 'lodash';
 
 import {
-  createOkapiHeaders,
-  createUrl,
   isFormattedMessage,
   isTranslationId,
 } from '../../../../utils';
@@ -24,53 +23,29 @@ export const withReferenceValues = memo(props => {
   const {
     id,
     input,
+    dataOptions,
     WrappedComponent,
     wrapperLabel,
-    wrapperSourceLink,
-    wrapperSourcePath,
     wrapperExplicitInsert,
-    okapi,
     ...rest
   } = props;
 
   const [hasLoaded, setHasLoaded] = useState(false);
-  const [dataOptions, setDataOptions] = useState([]);
+  const [listOptions, setListOptions] = useState([]);
   const [currentValue, setCurrentValue] = useState(input?.value || '');
   const [wrapperValue, setWrapperValue] = useState(null);
 
-  const fetchList = async () => {
-    try {
-      const response = await fetch(
-        createUrl(`${okapi.url}${wrapperSourceLink}`, null, false),
-        { headers: { ...createOkapiHeaders(okapi) } },
-      );
-      const body = await response.json();
-      const curDataOptions = get(body, wrapperSourcePath, []);
-
-      setDataOptions(curDataOptions);
-      setHasLoaded(true);
-    } catch (e) {
-      console.log('Error: ', e); // eslint-disable-line no-console
-      setHasLoaded(false);
-    }
-  };
-
   const handleChange = e => {
-    setCurrentValue(e.target ? e.target.value : e);
+    const val = e.target ? e.target.value : e;
+
+    setCurrentValue(val);
     input.onChange(e);
   };
 
-  useLayoutEffect(() => {
-    let setCancel = false;
-
-    if (!setCancel) {
-      fetchList().then();
-    }
-
-    return () => {
-      setCancel = true;
-    };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    setHasLoaded(!isEmpty(dataOptions));
+    setListOptions(dataOptions);
+  }, [dataOptions]);
 
   useLayoutEffect(() => {
     let newValue = '';
@@ -118,7 +93,7 @@ export const withReferenceValues = memo(props => {
             <OptionsList
               id={id}
               label={localized}
-              dataOptions={dataOptions}
+              dataOptions={listOptions}
               optionValue="name"
               optionLabel="name"
               className={styles['options-dropdown']}
@@ -131,7 +106,7 @@ export const withReferenceValues = memo(props => {
         <OptionsList
           id={id}
           label={wrapperLabel}
-          dataOptions={dataOptions}
+          dataOptions={listOptions}
           optionValue="name"
           optionLabel="name"
           className={styles['options-dropdown']}
@@ -152,10 +127,8 @@ withReferenceValues.propTypes = {
     onFocus: PropTypes.func.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   }).isRequired,
+  dataOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   WrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
-  okapi: PropTypes.shape({ url: PropTypes.string }).isRequired,
-  wrapperSourceLink: PropTypes.string.isRequired,
-  wrapperSourcePath: PropTypes.string.isRequired,
   wrapperExplicitInsert: PropTypes.bool,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
