@@ -13,7 +13,8 @@ export const MARCTable = ({
   fields,
   intl,
 }) => {
-  const columns = ['arrows', 'action', 'field', 'indicator1', 'indicator2', 'subfield', 'subaction', 'data', 'position', 'addRemove'];
+  const columns = ['arrows', 'action', 'field', 'indicator1', 'indicator2',
+    'subfield', 'subaction', 'data', 'position', 'addRemove'];
   const columnWidths = {
     arrows: '70px',
     action: '100px',
@@ -39,7 +40,6 @@ export const MARCTable = ({
       />
       <MARCTableRowContainer
         fields={fields}
-        columns={columns}
         columnWidths={columnWidths}
         intl={intl}
       />

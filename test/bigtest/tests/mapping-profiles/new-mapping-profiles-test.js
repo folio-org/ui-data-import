@@ -114,7 +114,7 @@ describe('Mapping profile form', () => {
             });
 
             it('action column has content', () => {
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).hasContent).to.be.true;
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).hasContent()).to.be.true;
             });
 
             it('and action is not selected', () => {
@@ -122,31 +122,31 @@ describe('Mapping profile form', () => {
             });
 
             it('field column has content', () => {
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(2).hasContent).to.be.true;
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(2).hasContent()).to.be.true;
             });
 
-            it('in1 column has content', () => {
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(3).hasContent).to.be.true;
+            it('indicator1 column has content', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(3).hasContent()).to.be.true;
             });
 
-            it('in2 column has content', () => {
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(4).hasContent).to.be.true;
+            it('indicator2 column has content', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(4).hasContent()).to.be.true;
             });
 
             it('subfield column has content', () => {
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(5).hasContent).to.be.true;
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(5).hasContent()).to.be.true;
             });
 
             it('subaction column does not have content', () => {
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent).to.be.false;
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent()).to.be.false;
             });
 
             it('data column does not have content', () => {
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent).to.be.false;
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent()).to.be.false;
             });
 
             it('position column does not have content', () => {
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent).to.be.false;
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
             });
 
             describe('when Action is selected', () => {
@@ -160,15 +160,15 @@ describe('Mapping profile form', () => {
                 });
 
                 it('subaction column has content', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent).to.be.true;
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent()).to.be.true;
                 });
 
                 it('data column has content', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent).to.be.true;
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent()).to.be.true;
                 });
 
                 it('position column does not have content', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent).to.be.false;
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
                 });
               });
 
@@ -182,15 +182,15 @@ describe('Mapping profile form', () => {
                 });
 
                 it('subaction column does not have content', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent).to.be.false;
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent()).to.be.false;
                 });
 
                 it('data column does not have content', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent).to.be.false;
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent()).to.be.false;
                 });
 
                 it('position column does not have content', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent).to.be.false;
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
                 });
               });
 
@@ -204,15 +204,15 @@ describe('Mapping profile form', () => {
                 });
 
                 it('subaction column has content', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent).to.be.true;
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent()).to.be.true;
                 });
 
                 it('data column has content', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent).to.be.true;
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent()).to.be.true;
                 });
 
                 it('position column does not have content', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent).to.be.false;
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
                 });
 
                 describe('when Insert subaction selected', () => {
@@ -221,7 +221,7 @@ describe('Mapping profile form', () => {
                   });
 
                   it('position column has content', () => {
-                    expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent).to.be.true;
+                    expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.true;
                   });
                 });
 
@@ -247,15 +247,15 @@ describe('Mapping profile form', () => {
                 });
 
                 it('subaction column has content', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent).to.be.true;
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent()).to.be.true;
                 });
 
                 it('data column has content', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent).to.be.true;
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent()).to.be.true;
                 });
 
                 it('position column does not have content', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent).to.be.false;
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
                 });
               });
             });

@@ -12,8 +12,8 @@ export const MARCTableHeader = ({
     arrows: '',
     action: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.action' }),
     field: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.field' }),
-    indicator1: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.in1' }),
-    indicator2: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.in2' }),
+    indicator1: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator1' }),
+    indicator2: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator2' }),
     subfield: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subfield' }),
     subaction: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subaction' }),
     data: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.data' }),
@@ -49,5 +49,5 @@ export const MARCTableHeader = ({
 MARCTableHeader.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   intl: PropTypes.object.isRequired,
-  columnWidths: PropTypes.object,
+  columnWidths: PropTypes.object.isRequired,
 };

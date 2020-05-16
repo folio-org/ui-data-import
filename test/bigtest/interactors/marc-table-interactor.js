@@ -19,11 +19,10 @@ class MARCTableHeaderInteractor {
 class MARCTableCellInteractor {
   arrowUp = new IconButtonInteractor('[data-test-marc-table-arrow-up]');
   arrowDown = new IconButtonInteractor('[data-test-marc-table-arrow-down]');
-  hasContent = isPresent('*:last-child:not([data-test-marc-table-cell])');
   action = new SelectInteractor('[data-test-marc-table-action]');
   tag = new SelectInteractor('[data-test-marc-table-tag]');
-  in1 = new SelectInteractor('[data-test-marc-table-in1]');
-  in2 = new SelectInteractor('[data-test-marc-table-in2]');
+  indicator1 = new SelectInteractor('[data-test-marc-table-indicator1]');
+  indicator2 = new SelectInteractor('[data-test-marc-table-indicator2]');
   subfield = new SelectInteractor('[data-test-marc-table-subfield]');
   subaction = new SelectInteractor('[data-test-marc-table-subaction]');
   position = new SelectInteractor('[data-test-marc-table-position]');
@@ -31,6 +30,10 @@ class MARCTableCellInteractor {
   dataReplaceField = new TextAreaInteractor('[data-test-marc-table-data-replace]');
   addRow = new IconButtonInteractor('[data-test-marc-table-add]');
   removeRow = new IconButtonInteractor('[data-test-marc-table-remove]');
+
+  hasContent() {
+    return this.$root?.childNodes?.length !== 0;
+  }
 }
 
 @interactor

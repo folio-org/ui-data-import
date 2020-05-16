@@ -78,7 +78,7 @@ export const mappingMarcDetails = [
     indicator1: ' ',
     indicator2: ' ',
     subfield: ' ',
-    subaction: 'NEW',
+    subaction: 'NEW_FIELD',
     data: {
       field: '991',
       indicator1: '',
@@ -92,7 +92,7 @@ export const mappingMarcDetails = [
     indicator1: ' ',
     indicator2: ' ',
     subfield: 'a',
-    subaction: 'EXISTING',
+    subaction: 'EXISTING_FIELD',
     data: {
       field: '993',
       indicator1: '',

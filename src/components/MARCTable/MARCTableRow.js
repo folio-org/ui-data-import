@@ -17,6 +17,8 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  MAPPING_DETAILS_ACTIONS,
+  MAPPING_DETAILS_SUBACTIONS,
   ACTION_OPTIONS,
   SUBACTION_OPTIONS,
   POSITION_OPTIONS,
@@ -159,13 +161,13 @@ export const MARCTableRow = ({
       </div>
     );
   };
-  const renderInd1Field = () => {
+  const renderIndicator1Field = () => {
     const cellStyle = { width: columnWidths.indicator1 };
 
     return (
       <div
         data-test-marc-table-cell
-        data-test-marc-table-in1
+        data-test-marc-table-indicator1
         className={css.tableCell}
         style={cellStyle}
       >
@@ -176,13 +178,13 @@ export const MARCTableRow = ({
       </div>
     );
   };
-  const renderInd2Field = () => {
+  const renderIndicator2Field = () => {
     const cellStyle = { width: columnWidths.indicator2 };
 
     return (
       <div
         data-test-marc-table-cell
-        data-test-marc-table-in2
+        data-test-marc-table-indicator2
         className={css.tableCell}
         style={cellStyle}
       >
@@ -240,11 +242,15 @@ export const MARCTableRow = ({
     );
   };
   const renderDataField = () => {
-    const EDIT_ACTION = 'EDIT';
-    const MOVE_ACTION = 'MOVE';
-    const REPLACE_SUBACTION = 'REPLACE';
-    const NEW_SUBACTION = 'NEW';
-    const EXISTING_SUBACTION = 'EXISTING';
+    const {
+      EDIT,
+      MOVE,
+    } = MAPPING_DETAILS_ACTIONS;
+    const {
+      REPLACE,
+      NEW_FIELD,
+      EXISTING_FIELD,
+    } = MAPPING_DETAILS_SUBACTIONS;
 
     let cellStyle = {
       width: columnWidths.data,
@@ -253,11 +259,11 @@ export const MARCTableRow = ({
     };
 
     const getContent = () => {
-      if (actionValue === EDIT_ACTION && subactionValue === REPLACE_SUBACTION) {
+      if (actionValue === EDIT && subactionValue === REPLACE) {
         cellStyle = {
           ...cellStyle,
           display: 'flex',
-          'flex-direction': 'column',
+          flexDirection: 'column',
         };
         const labelStyle = {
           marginRight: '10px',
@@ -304,7 +310,7 @@ export const MARCTableRow = ({
         );
       }
 
-      if (actionValue === MOVE_ACTION && (subactionValue === NEW_SUBACTION || EXISTING_SUBACTION)) {
+      if (actionValue === MOVE && (subactionValue === NEW_FIELD || subactionValue === EXISTING_FIELD)) {
         return (
           <>
             <TextField
@@ -318,14 +324,14 @@ export const MARCTableRow = ({
               className={css.tableDataCell}
               value={dataValue?.indicator1 || ''}
               onChange={e => onDataChange(e, 'indicator1')}
-              placeholder={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.in1' })}
+              placeholder={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator1' })}
               marginBottom0
             />
             <TextField
               className={css.tableDataCell}
               value={dataValue?.indicator2 || ''}
               onChange={e => onDataChange(e, 'indicator2')}
-              placeholder={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.in2' })}
+              placeholder={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator2' })}
               marginBottom0
             />
             <TextField
@@ -389,7 +395,7 @@ export const MARCTableRow = ({
   const renderAddRemove = () => {
     const cellStyle = {
       width: columnWidths.addRemove,
-      'justify-content': isSubline && 'flex-end',
+      justifyContent: isSubline && 'flex-end',
     };
 
     return (
@@ -419,8 +425,8 @@ export const MARCTableRow = ({
       {renderArrows()}
       {renderActionField()}
       {renderTagField()}
-      {renderInd1Field()}
-      {renderInd2Field()}
+      {renderIndicator1Field()}
+      {renderIndicator2Field()}
       {renderSubfieldField()}
       {renderSubactionField()}
       {renderDataField()}
@@ -433,7 +439,7 @@ export const MARCTableRow = ({
 MARCTableRow.propTypes = {
   intl: PropTypes.object.isRequired,
   field: PropTypes.object.isRequired,
-  columnWidths: PropTypes.object,
+  columnWidths: PropTypes.object.isRequired,
   isFirst: PropTypes.bool,
   isLast: PropTypes.bool,
   isSubline: PropTypes.bool,

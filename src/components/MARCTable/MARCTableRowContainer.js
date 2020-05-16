@@ -29,16 +29,17 @@ export const MARCTableRowContainer = ({
           intl={intl}
         />
         {containsSubsequentLines &&
-        field.subfields.map(subfield => (
-          <div>
-            <MARCTableRow
-              field={subfield}
-              columnWidths={columnWidths}
-              isSubline
-              intl={intl}
-            />
-          </div>
-        ))}
+          field.subfields.map(subfield => (
+            <div>
+              <MARCTableRow
+                field={subfield}
+                columnWidths={columnWidths}
+                isSubline
+                intl={intl}
+              />
+            </div>
+          ))
+        }
       </div>
     );
   };

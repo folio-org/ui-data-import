@@ -326,40 +326,56 @@ export const FILTER_QUERY_PARAMS = {
   NOT_STATIC_VALUE: 'cql.allRecords=1 NOT incomingRecordType=STATIC_VALUE',
 };
 
+export const MAPPING_DETAILS_ACTIONS = {
+  ADD: 'ADD',
+  DELETE: 'DELETE',
+  EDIT: 'EDIT',
+  MOVE: 'MOVE',
+};
+
+export const MAPPING_DETAILS_SUBACTIONS = {
+  ADD_SUBFIELD: 'ADD_SUBFIELD',
+  INSERT: 'INSERT',
+  REMOVE: 'REMOVE',
+  REPLACE: 'REPLACE',
+  NEW_FIELD: 'NEW_FIELD',
+  EXISTING_FIELD: 'EXISTING_FIELD',
+};
+
 export const ACTION_OPTIONS = [
   {
-    value: 'ADD',
+    value: MAPPING_DETAILS_ACTIONS.ADD,
     label: 'ui-data-import.settings.mappingProfile.marcTable.action.add',
   }, {
-    value: 'DELETE',
+    value: MAPPING_DETAILS_ACTIONS.DELETE,
     label: 'ui-data-import.settings.mappingProfile.marcTable.action.delete',
   }, {
-    value: 'EDIT',
+    value: MAPPING_DETAILS_ACTIONS.EDIT,
     label: 'ui-data-import.settings.mappingProfile.marcTable.action.edit',
   }, {
-    value: 'MOVE',
+    value: MAPPING_DETAILS_ACTIONS.MOVE,
     label: 'ui-data-import.settings.mappingProfile.marcTable.action.move',
   },
 ];
 
 export const SUBACTION_OPTIONS = [
   {
-    value: 'ADD_SUBFIELD',
+    value: MAPPING_DETAILS_SUBACTIONS.ADD_SUBFIELD,
     label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.addSubfield',
   }, {
-    value: 'INSERT',
+    value: MAPPING_DETAILS_SUBACTIONS.INSERT,
     label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.insert',
   }, {
-    value: 'REMOVE',
+    value: MAPPING_DETAILS_SUBACTIONS.REMOVE,
     label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.remove',
   }, {
-    value: 'REPLACE',
+    value: MAPPING_DETAILS_SUBACTIONS.REPLACE,
     label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.replace',
   }, {
-    value: 'NEW',
+    value: MAPPING_DETAILS_SUBACTIONS.NEW_FIELD,
     label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.newField',
   }, {
-    value: 'EXISTING',
+    value: MAPPING_DETAILS_SUBACTIONS.EXISTING_FIELD,
     label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.existingField',
   },
 ];
@@ -376,10 +392,10 @@ export const POSITION_OPTIONS = [
 
 export const MARC_TABLE_CONFIG = {
   allowedSubactions: {
-    ADD: ['ADD_SUBFIELD'],
+    ADD: [MAPPING_DETAILS_SUBACTIONS.ADD_SUBFIELD],
     DELETE: [],
-    EDIT: ['INSERT', 'REMOVE', 'REPLACE'],
-    MOVE: ['NEW', 'EXISTING'],
+    EDIT: [MAPPING_DETAILS_SUBACTIONS.INSERT, MAPPING_DETAILS_SUBACTIONS.REMOVE, MAPPING_DETAILS_SUBACTIONS.REPLACE],
+    MOVE: [MAPPING_DETAILS_SUBACTIONS.NEW_FIELD, MAPPING_DETAILS_SUBACTIONS.EXISTING_FIELD],
   },
   allowedPositions: { EDIT: { INSERT: ['BEFORE', 'AFTER'] } },
   hasDataField: {

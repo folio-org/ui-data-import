@@ -3,8 +3,6 @@
 .tableContainer {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: auto;
 }
 
 .tableHeader {
@@ -33,8 +31,6 @@
 
 .tableRow {
   display: flex;
-  width: 100%;
-  height: auto;
 }
 
 .tableCell {
