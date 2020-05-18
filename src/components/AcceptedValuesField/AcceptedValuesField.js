@@ -6,6 +6,8 @@ import React, {
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
+import { isEmpty } from 'lodash';
+
 import { withReferenceValues } from '../FlexibleForm/ControlDecorators/withReferenceValues';
 
 import { fetchAcceptedValuesList } from './fetchAcceptedValuesList';
@@ -22,21 +24,24 @@ export const AcceptedValuesField = ({
   okapi,
   component,
   wrapperLabel,
+  acceptedValuesList,
   wrapperSourceLink,
   wrapperSourcePath,
   wrapperExplicitInsert,
   dataAttributes,
 }) => {
-  const [dataOptions, setDataOptions] = useState([]);
+  const [listOptions, setListOptions] = useState(acceptedValuesList || []);
 
   useEffect(() => {
-    fetchAcceptedValuesList(okapi, wrapperSourceLink, wrapperSourcePath)
-      .then(setDataOptions);
-  }, [okapi, wrapperSourceLink, wrapperSourcePath]);
+    if (wrapperSourceLink && wrapperSourcePath && isEmpty(acceptedValuesList)) {
+      fetchAcceptedValuesList(okapi, wrapperSourceLink, wrapperSourcePath)
+        .then(setListOptions);
+    }
+  }, [okapi, wrapperSourceLink, wrapperSourcePath, acceptedValuesList]);
 
   const memoizedValidation = useCallback(
-    validateAcceptedValues(dataOptions),
-    [dataOptions],
+    validateAcceptedValues(listOptions),
+    [listOptions],
   );
 
   return (
@@ -46,7 +51,7 @@ export const AcceptedValuesField = ({
       component={withReferenceValues}
       name={name}
       label={label}
-      dataOptions={dataOptions}
+      dataOptions={listOptions}
       WrappedComponent={component}
       wrapperLabel={wrapperLabel}
       wrapperExplicitInsert={wrapperExplicitInsert}
@@ -59,14 +64,15 @@ export const AcceptedValuesField = ({
 AcceptedValuesField.propTypes = {
   component: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
   name: PropTypes.string.isRequired,
-  wrapperSourceLink: PropTypes.string.isRequired,
-  wrapperSourcePath: PropTypes.string.isRequired,
   okapi: PropTypes.shape({
     tenant: PropTypes.string.isRequired,
     token: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
   }).isRequired,
   meta: PropTypes.object.isRequired,
+  acceptedValuesList: PropTypes.arrayOf(PropTypes.object),
+  wrapperSourceLink: PropTypes.string,
+  wrapperSourcePath: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   wrapperExplicitInsert: PropTypes.bool,
   label: PropTypes.oneOfType([

@@ -1355,11 +1355,10 @@ export const formConfigSamples = [{
                   staticControlType: 'KeyValue',
                   enabled: true,
                   component: 'TextField',
+                  id: 'item-status',
                   label: 'ui-data-import.settings.mappingProfiles.map.item.itemLoans.field.loanStatus',
                   name: 'mappingDetails.mappingFields[27].value',
                   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                  wrapperSourceLink: '/instance-statuses?limit=1000&query=cql.allRecords=1 sortby name',
-                  wrapperSourcePath: 'instanceStatuses',
                 }],
               }],
             }, {

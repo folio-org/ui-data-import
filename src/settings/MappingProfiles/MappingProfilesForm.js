@@ -162,6 +162,22 @@ export const MappingProfilesFormComponent = ({
       onLink: setAddedRelations,
       onUnlink: setDeletedRelations,
     },
+    'item-status': {
+      acceptedValuesList: [
+        { name: 'Available' },
+        { name: 'Awaiting pickup' },
+        { name: 'Awaiting delivery' },
+        { name: 'Checked out' },
+        { name: 'In process' },
+        { name: 'In transit' },
+        { name: 'Missing' },
+        { name: 'On order' },
+        { name: 'Paged' },
+        { name: 'Declared lost' },
+        { name: 'Order closed' },
+        { name: 'Claimed returned' },
+      ],
+    },
   };
   const stateMethods = {
     dispatch,

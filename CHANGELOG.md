@@ -11,6 +11,7 @@
 * Cover Mapping Profile Form with tests including field decorators (UIDATIMP-442)
 
 ### Bugs fixed:
+* Fix Item status list in field mapping profiles (UIDATIMP-515)
 
 ## [1.8.3](https://github.com/folio-org/ui-data-import/tree/v1.8.3) (2020-04-27)
 
