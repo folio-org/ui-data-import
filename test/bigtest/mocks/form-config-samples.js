@@ -839,6 +839,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 12,
+                    dataAttributes: { 'data-test-statistical-code': '' },
                     childControls: [{
                       controlType: 'AcceptedValuesField',
                       staticControlType: 'KeyValue',
@@ -880,7 +881,6 @@ export const formConfigSamples = [{
                   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
                   wrapperSourceLink: '/material-types?limit=1000&query=cql.allRecords=1 sortby name',
                   wrapperSourcePath: 'mtypes',
-                  // wrapperExplicitInsert: true,
                 }],
               }],
             }, {
@@ -1239,7 +1239,7 @@ export const formConfigSamples = [{
                   },
                   staffOnly: {
                     namePath: 'fields[2].name',
-                    valuePath: 'fields[2].value',
+                    valuePath: 'fields[2].booleanFieldAction',
                   },
                 },
                 dataAttributes: { 'data-test-item-notes': '' },
@@ -1251,6 +1251,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 4,
+                    dataAttributes: { 'data-test-item-note': '' },
                     childControls: [{
                       controlType: 'AcceptedValuesField',
                       staticControlType: 'KeyValue',
@@ -1276,6 +1277,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 4,
+                    dataAttributes: { 'data-test-staff-only': '' },
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -1399,7 +1401,7 @@ export const formConfigSamples = [{
                   },
                   staffOnly: {
                     namePath: 'fields[2].name',
-                    valuePath: 'fields[2].value',
+                    valuePath: 'fields[2].booleanFieldAction',
                   },
                 },
                 dataAttributes: { 'data-test-circulation-notes': '' },
@@ -1411,6 +1413,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 4,
+                    dataAttributes: { 'data-test-circulation-note': '' },
                     childControls: [{
                       controlType: 'AcceptedValuesField',
                       staticControlType: 'KeyValue',
@@ -1436,6 +1439,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 4,
+                    dataAttributes: { 'data-test-staff-only': '' },
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -1562,6 +1566,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 4,
+                    dataAttributes: { 'data-test-electronic-relationship': '' },
                     childControls: [{
                       controlType: 'AcceptedValuesField',
                       staticControlType: 'KeyValue',
@@ -1685,7 +1690,6 @@ export const formConfigSamples = [{
               controlType: 'Row',
               staticControlType: 'Row',
               left: 'xs',
-              middle: 'xs',
               childControls: [{
                 controlType: 'Col',
                 staticControlType: 'Col',
@@ -1704,6 +1708,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-staff-suppress': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1718,6 +1723,7 @@ export const formConfigSamples = [{
                 controlType: 'Col',
                 staticControlType: 'Col',
                 xs: 4,
+                dataAttributes: { 'data-test-previously-held': '' },
                 childControls: [{
                   controlType: 'Field',
                   staticControlType: 'KeyValue',
@@ -1862,6 +1868,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 12,
+                    dataAttributes: { 'data-test-statistical-code': '' },
                     childControls: [{
                       controlType: 'AcceptedValuesField',
                       staticControlType: 'KeyValue',
@@ -2388,7 +2395,7 @@ export const formConfigSamples = [{
                   },
                   primary: {
                     namePath: 'fields[4].name',
-                    valuePath: 'fields[4].value',
+                    valuePath: 'fields[4].booleanFieldAction',
                   },
                 },
                 dataAttributes: { 'data-test-contributors': '' },
@@ -2448,6 +2455,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 2,
+                    dataAttributes: { 'data-test-primary': '' },
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -2456,7 +2464,6 @@ export const formConfigSamples = [{
                       name: 'mappingDetails.mappingFields[16].subfields[##ri##].fields[4].booleanFieldAction',
                       decorator: 'withBooleanActions',
                       wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
-                      dataAttributes: { 'data-test-primary': '' },
                     }],
                   }],
                 }],
@@ -2729,7 +2736,7 @@ export const formConfigSamples = [{
                     valuePath: 'fields[0].value',
                   },
                 },
-                dataAttributes: { 'data-test-nature-of-content': '' },
+                dataAttributes: { 'data-test-nature-of-content-terms': '' },
                 childControls: [{
                   controlType: 'Row',
                   staticControlType: 'Row',
@@ -2738,6 +2745,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 12,
+                    dataAttributes: { 'data-test-nature-of-content-term': '' },
                     childControls: [{
                       controlType: 'AcceptedValuesField',
                       staticControlType: 'KeyValue',
@@ -3008,7 +3016,7 @@ export const formConfigSamples = [{
                   },
                   staffOnly: {
                     namePath: 'fields[2].name',
-                    valuePath: 'fields[2].value',
+                    valuePath: 'fields[2].booleanFieldAction',
                   },
                 },
                 dataAttributes: { 'data-test-notes': '' },
@@ -3046,6 +3054,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 4,
+                    dataAttributes: { 'data-test-staff-only': '' },
                     childControls: [{
                       controlType: 'Field',
                       staticControlType: 'KeyValue',
@@ -3055,7 +3064,6 @@ export const formConfigSamples = [{
                       decorator: 'withBooleanActions',
                       wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping',
                       disabled: true,
-                      dataAttributes: { 'data-test-staff-only': '' },
                     }],
                   }],
                 }],
@@ -3130,6 +3138,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 4,
+                    dataAttributes: { 'data-test-relationship': '' },
                     childControls: [{
                       controlType: 'AcceptedValuesField',
                       staticControlType: 'KeyValue',
@@ -3404,6 +3413,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 6,
+                    dataAttributes: { 'data-test-parent-type-of-relation': '' },
                     childControls: [{
                       controlType: 'AcceptedValuesField',
                       staticControlType: 'KeyValue',
@@ -3475,6 +3485,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 6,
+                    dataAttributes: { 'data-test-child-type-of-relation': '' },
                     childControls: [{
                       controlType: 'AcceptedValuesField',
                       staticControlType: 'KeyValue',
@@ -3724,6 +3735,7 @@ export const formConfigSamples = [{
                     controlType: 'Col',
                     staticControlType: 'Col',
                     xs: 12,
+                    dataAttributes: { 'data-test-statistical-code': '' },
                     childControls: [{
                       controlType: 'AcceptedValuesField',
                       staticControlType: 'KeyValue',
@@ -4209,7 +4221,7 @@ export const formConfigSamples = [{
                     },
                     staffOnly: {
                       namePath: 'fields[2].name',
-                      valuePath: 'fields[2].value',
+                      valuePath: 'fields[2].booleanFieldAction',
                     },
                   },
                   dataAttributes: { 'data-test-notes': '' },
@@ -4221,6 +4233,7 @@ export const formConfigSamples = [{
                       controlType: 'Col',
                       staticControlType: 'Col',
                       xs: 4,
+                      dataAttributes: { 'data-test-note': '' },
                       childControls: [{
                         controlType: 'AcceptedValuesField',
                         staticControlType: 'KeyValue',
@@ -4246,6 +4259,7 @@ export const formConfigSamples = [{
                       controlType: 'Col',
                       staticControlType: 'Col',
                       xs: 4,
+                      dataAttributes: { 'data-test-staff-only': '' },
                       childControls: [{
                         controlType: 'Field',
                         staticControlType: 'KeyValue',
@@ -4326,6 +4340,7 @@ export const formConfigSamples = [{
                       controlType: 'Col',
                       staticControlType: 'Col',
                       xs: 4,
+                      dataAttributes: { 'data-test-electronic-relationship': '' },
                       childControls: [{
                         controlType: 'AcceptedValuesField',
                         staticControlType: 'KeyValue',
@@ -4482,7 +4497,7 @@ export const formConfigSamples = [{
                     },
                     chronology: {
                       namePath: 'fields[2].name',
-                      valuePath: 'fields[2].value',
+                      valuePath: 'fields[2].booleanFieldAction',
                     },
                   },
                   dataAttributes: { 'data-test-receiving-history-note': '' },
@@ -4494,6 +4509,7 @@ export const formConfigSamples = [{
                       controlType: 'Col',
                       staticControlType: 'Col',
                       xs: 4,
+                      dataAttributes: { 'data-test-public-display': '' },
                       childControls: [{
                         controlType: 'Field',
                         staticControlType: 'KeyValue',

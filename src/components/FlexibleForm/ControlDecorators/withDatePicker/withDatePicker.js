@@ -88,7 +88,10 @@ export const withDatePicker = memo(props => {
   } = input;
 
   return (
-    <div className={styles.decorator}>
+    <div
+      className={styles.decorator}
+      data-test-date-picker
+    >
       <Wrapper
         value={currentValue}
         inputRef={currentInput}

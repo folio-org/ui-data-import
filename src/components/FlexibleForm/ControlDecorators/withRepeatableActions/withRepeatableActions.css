@@ -1,9 +1,13 @@
 @import "@folio/stripes-components/lib/variables.css";
 
 .decorator {
-  & [class|="select"] {
+  & [data-test-repeatable-decorator] {
     float: right;
     margin-bottom: -36px;
+  }
+
+  & [class|="select"] {
+    float: right;
   }
   & fieldset {
     min-width:100%;
@@ -12,7 +16,7 @@
 }
 
 .no-legend {
-  & > [class|="select"] {
+  & [data-test-repeatable-decorator] {
     margin-top: -32px;
     margin-bottom: -5px;
   }

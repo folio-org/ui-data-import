@@ -44,7 +44,7 @@ export const withRepeatableActions = memo(props => {
   return (
     <div className={classNames(styles.decorator, isEmpty(legend) ? styles['no-legend'] : '')}>
       {enabled && hasRecords && (
-        <>
+        <div data-test-repeatable-decorator>
           {needsTranslation ? (
             <FormattedMessage id={wrapperLabel}>
               {placeholder => (
@@ -66,7 +66,7 @@ export const withRepeatableActions = memo(props => {
               placeholder={wrapperLabel}
             />
           )}
-        </>
+        </div>
       )}
       {children}
     </div>

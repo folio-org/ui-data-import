@@ -14,6 +14,7 @@ import jobs from './fetch-jobs-data-success';
 import jobsLogs from './fetch-jobs-logs-success';
 import jobLogs from './fetch-job-log-success';
 import modules from './fetch-modules';
+import acceptedValues from './fetch-accepted-values';
 
 export default function defaultScenario(server) {
   fileExtensions(server);
@@ -32,4 +33,5 @@ export default function defaultScenario(server) {
   jobsLogs(server);
   jobLogs(server);
   modules(server);
+  acceptedValues(server);
 }
