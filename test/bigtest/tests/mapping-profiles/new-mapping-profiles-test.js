@@ -45,7 +45,7 @@ describe('Mapping profile form', () => {
       this.visit('/settings/data-import/mapping-profiles?layer=create');
     });
 
-    it('when not filled when the submit button is disabled', () => {
+    it('when not filled then the submit button is disabled', () => {
       expect(mappingProfileForm.submitFormButtonDisabled).to.be.true;
     });
 
@@ -59,6 +59,208 @@ describe('Mapping profile form', () => {
 
       it('the submit button is not disabled', () => {
         expect(mappingProfileForm.submitFormButtonDisabled).to.be.false;
+      });
+    });
+
+    describe('when FOLIO record type is equal to', () => {
+      describe('MARC Bibliographic', () => {
+        beforeEach(async () => {
+          await mappingProfileForm.folioRecordTypeField.selectAndBlur('MARC Bibliographic');
+        });
+
+        describe('details section', () => {
+          it('has correct header', () => {
+            expect(mappingProfileForm.itemDetails.header.mappedLabel).to.be.equal('Field mapping');
+            expect(mappingProfileForm.itemDetails.header.mappableLabel).to.be.equal('MARC Bibliographic');
+          });
+
+          describe('MARC details table', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.marcDetailsTable.tablePresent).to.be.true;
+            });
+
+            it('has 1 row', () => {
+              expect(mappingProfileForm.marcDetailsTable.rowCount).to.equal(1);
+            });
+
+            it('has 10 columns', () => {
+              expect(mappingProfileForm.marcDetailsTable.columnCount).to.equal(10);
+            });
+
+            it('headers have correct captions', () => {
+              expect(mappingProfileForm.marcDetailsTable.headers(0).content).to.equal('');
+              expect(mappingProfileForm.marcDetailsTable.headers(1).content).to.equal('Action');
+              expect(mappingProfileForm.marcDetailsTable.headers(2).content).to.equal('Field');
+              expect(mappingProfileForm.marcDetailsTable.headers(3).content).to.equal('In.1');
+              expect(mappingProfileForm.marcDetailsTable.headers(4).content).to.equal('In.2');
+              expect(mappingProfileForm.marcDetailsTable.headers(5).content).to.equal('Subfield');
+              expect(mappingProfileForm.marcDetailsTable.headers(6).content).to.equal('Subaction');
+              expect(mappingProfileForm.marcDetailsTable.headers(7).content).to.equal('Data');
+              expect(mappingProfileForm.marcDetailsTable.headers(8).content).to.equal('Position');
+              expect(mappingProfileForm.marcDetailsTable.headers(9).content).to.equal('');
+            });
+
+            it('row does not have re-order arrows', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(0).arrowUp.isPresent).to.be.false;
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(0).arrowDown.isPresent).to.be.false;
+            });
+
+            it('row has add button', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(9).addRow.isPresent).to.be.true;
+            });
+
+            it('row has remove button', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(9).removeRow.isPresent).to.be.true;
+            });
+
+            it('action column has content', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).hasContent()).to.be.true;
+            });
+
+            it('and action is not selected', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.val).to.equal('');
+            });
+
+            it('field column has content', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(2).hasContent()).to.be.true;
+            });
+
+            it('indicator1 column has content', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(3).hasContent()).to.be.true;
+            });
+
+            it('indicator2 column has content', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(4).hasContent()).to.be.true;
+            });
+
+            it('subfield column has content', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(5).hasContent()).to.be.true;
+            });
+
+            it('subaction column does not have content', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent()).to.be.false;
+            });
+
+            it('data column does not have content', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent()).to.be.false;
+            });
+
+            it('position column does not have content', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
+            });
+
+            describe('when Action is selected', () => {
+              describe('and equal to Add', () => {
+                beforeEach(async () => {
+                  await mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.selectAndBlur('Add');
+                });
+
+                it('then action value is equal to Add', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.val).to.equal('ADD');
+                });
+
+                it('subaction column has content', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent()).to.be.true;
+                });
+
+                it('data column has content', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent()).to.be.true;
+                });
+
+                it('position column does not have content', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
+                });
+              });
+
+              describe('and equal to Delete', () => {
+                beforeEach(async () => {
+                  await mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.selectAndBlur('Delete');
+                });
+
+                it('then action value is equal to Delete', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.val).to.equal('DELETE');
+                });
+
+                it('subaction column does not have content', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent()).to.be.false;
+                });
+
+                it('data column does not have content', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent()).to.be.false;
+                });
+
+                it('position column does not have content', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
+                });
+              });
+
+              describe('and equal to Edit', () => {
+                beforeEach(async () => {
+                  await mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.selectAndBlur('Edit');
+                });
+
+                it('then action value is equal to Edit', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.val).to.equal('EDIT');
+                });
+
+                it('subaction column has content', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent()).to.be.true;
+                });
+
+                it('data column has content', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent()).to.be.true;
+                });
+
+                it('position column does not have content', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
+                });
+
+                describe('when Insert subaction selected', () => {
+                  beforeEach(async () => {
+                    await mappingProfileForm.marcDetailsTable.rows(0).cells(6).subaction.selectAndBlur('Insert');
+                  });
+
+                  it('position column has content', () => {
+                    expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.true;
+                  });
+                });
+
+                describe('when Replace subaction selected', () => {
+                  beforeEach(async () => {
+                    await mappingProfileForm.marcDetailsTable.rows(0).cells(6).subaction.selectAndBlur('Replace');
+                  });
+
+                  it('data column has 2 fields', () => {
+                    expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).dataFindField.isPresent).to.be.true;
+                    expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).dataReplaceField.isPresent).to.be.true;
+                  });
+                });
+              });
+
+              describe('and equal to Move', () => {
+                beforeEach(async () => {
+                  await mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.selectAndBlur('Move');
+                });
+
+                it('then action value is equal to Edit', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.val).to.equal('MOVE');
+                });
+
+                it('subaction column has content', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(6).hasContent()).to.be.true;
+                });
+
+                it('data column has content', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).hasContent()).to.be.true;
+                });
+
+                it('position column does not have content', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
+                });
+              });
+            });
+          });
+        });
       });
     });
   });

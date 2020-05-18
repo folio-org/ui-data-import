@@ -4668,14 +4668,11 @@ export const formConfigSamples = [{
               mappableLabel: 'Holdings',
               headlineProps: { margin: 'small' },
             }],
-          }, {
-            controlType: 'Col',
-            staticControlType: 'Col',
-            childControls: [{
-              controlType: 'ExpandAllButton',
-              staticControlType: 'ExpandAllButton',
-            }],
           }],
+        }, {
+          controlType: 'MARCTable',
+          staticControlType: 'Fragment',
+          dataAttributes: {},
         }],
       }],
     }],

@@ -12,6 +12,7 @@ export * from './FullScreenForm';
 export * from './ImportJobs';
 export * from './JobLogs';
 export * from './Jobs';
+export * from './MARCTable';
 export * from './Preloader';
 export * from './ProfileAssociator';
 export * from './ProfileTree';

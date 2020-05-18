@@ -364,7 +364,12 @@ export const Control = memo(props => {
       );
     }
 
-    return <Cmp {...attribs} />;
+    return (
+      <Cmp
+        {...attribs}
+        intl={intl}
+      />
+    );
   };
 
   const renderRepeatable = () => {

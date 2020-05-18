@@ -325,3 +325,83 @@ export const FILTER_QUERY_PARAMS = {
   DEFAULT: 'cql.allRecords=1',
   NOT_STATIC_VALUE: 'cql.allRecords=1 NOT incomingRecordType=STATIC_VALUE',
 };
+
+export const MAPPING_DETAILS_ACTIONS = {
+  ADD: 'ADD',
+  DELETE: 'DELETE',
+  EDIT: 'EDIT',
+  MOVE: 'MOVE',
+};
+
+export const MAPPING_DETAILS_SUBACTIONS = {
+  ADD_SUBFIELD: 'ADD_SUBFIELD',
+  INSERT: 'INSERT',
+  REMOVE: 'REMOVE',
+  REPLACE: 'REPLACE',
+  NEW_FIELD: 'NEW_FIELD',
+  EXISTING_FIELD: 'EXISTING_FIELD',
+};
+
+export const ACTION_OPTIONS = [
+  {
+    value: MAPPING_DETAILS_ACTIONS.ADD,
+    label: 'ui-data-import.settings.mappingProfile.marcTable.action.add',
+  }, {
+    value: MAPPING_DETAILS_ACTIONS.DELETE,
+    label: 'ui-data-import.settings.mappingProfile.marcTable.action.delete',
+  }, {
+    value: MAPPING_DETAILS_ACTIONS.EDIT,
+    label: 'ui-data-import.settings.mappingProfile.marcTable.action.edit',
+  }, {
+    value: MAPPING_DETAILS_ACTIONS.MOVE,
+    label: 'ui-data-import.settings.mappingProfile.marcTable.action.move',
+  },
+];
+
+export const SUBACTION_OPTIONS = [
+  {
+    value: MAPPING_DETAILS_SUBACTIONS.ADD_SUBFIELD,
+    label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.addSubfield',
+  }, {
+    value: MAPPING_DETAILS_SUBACTIONS.INSERT,
+    label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.insert',
+  }, {
+    value: MAPPING_DETAILS_SUBACTIONS.REMOVE,
+    label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.remove',
+  }, {
+    value: MAPPING_DETAILS_SUBACTIONS.REPLACE,
+    label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.replace',
+  }, {
+    value: MAPPING_DETAILS_SUBACTIONS.NEW_FIELD,
+    label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.newField',
+  }, {
+    value: MAPPING_DETAILS_SUBACTIONS.EXISTING_FIELD,
+    label: 'ui-data-import.settings.mappingProfile.marcTable.subaction.existingField',
+  },
+];
+
+export const POSITION_OPTIONS = [
+  {
+    value: 'BEFORE',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.position.before',
+  }, {
+    value: 'AFTER',
+    label: 'ui-data-import.settings.mappingProfile.marcTable.position.after',
+  },
+];
+
+export const MARC_TABLE_CONFIG = {
+  allowedSubactions: {
+    ADD: [MAPPING_DETAILS_SUBACTIONS.ADD_SUBFIELD],
+    DELETE: [],
+    EDIT: [MAPPING_DETAILS_SUBACTIONS.INSERT, MAPPING_DETAILS_SUBACTIONS.REMOVE, MAPPING_DETAILS_SUBACTIONS.REPLACE],
+    MOVE: [MAPPING_DETAILS_SUBACTIONS.NEW_FIELD, MAPPING_DETAILS_SUBACTIONS.EXISTING_FIELD],
+  },
+  allowedPositions: { EDIT: { INSERT: ['BEFORE', 'AFTER'] } },
+  hasDataField: {
+    ADD: true,
+    DELETE: false,
+    EDIT: true,
+    MOVE: true,
+  },
+};

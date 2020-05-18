@@ -1195,7 +1195,11 @@ export default server => {
       }],
     },
   });
-  server.createList('mapping-profile', 2);
+  server.create('mapping-profile', {
+    incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+    existingRecordType: 'MARC_BIBLIOGRAPHIC',
+  });
+  server.createList('mapping-profile', 1);
 
   server.get('/data-import-profiles/mappingProfiles', (schema, request) => {
     const { query = '' } = request.queryParams;
