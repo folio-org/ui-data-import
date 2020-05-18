@@ -18,11 +18,12 @@ import {
 
 export const AcceptedValuesField = ({
   id,
-  meta,
   name,
   label,
   okapi,
   component,
+  optionValue,
+  optionLabel,
   wrapperLabel,
   acceptedValuesList,
   wrapperSourceLink,
@@ -40,18 +41,19 @@ export const AcceptedValuesField = ({
   }, [okapi, wrapperSourceLink, wrapperSourcePath, acceptedValuesList]);
 
   const memoizedValidation = useCallback(
-    validateAcceptedValues(listOptions),
+    validateAcceptedValues(listOptions, optionValue),
     [listOptions],
   );
 
   return (
     <Field
-      {...meta}
       id={id}
       component={withReferenceValues}
       name={name}
       label={label}
       dataOptions={listOptions}
+      optionValue={optionValue}
+      optionLabel={optionLabel}
       WrappedComponent={component}
       wrapperLabel={wrapperLabel}
       wrapperExplicitInsert={wrapperExplicitInsert}
@@ -64,12 +66,13 @@ export const AcceptedValuesField = ({
 AcceptedValuesField.propTypes = {
   component: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
   name: PropTypes.string.isRequired,
+  optionValue: PropTypes.string.isRequired,
+  optionLabel: PropTypes.string.isRequired,
   okapi: PropTypes.shape({
     tenant: PropTypes.string.isRequired,
     token: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
   }).isRequired,
-  meta: PropTypes.object.isRequired,
   acceptedValuesList: PropTypes.arrayOf(PropTypes.object),
   wrapperSourceLink: PropTypes.string,
   wrapperSourcePath: PropTypes.string,
@@ -82,3 +85,5 @@ AcceptedValuesField.propTypes = {
   id: PropTypes.string,
   dataAttributes: PropTypes.arrayOf(PropTypes.object),
 };
+
+AcceptedValuesField.defaultProps = { acceptedValuesList: [] };

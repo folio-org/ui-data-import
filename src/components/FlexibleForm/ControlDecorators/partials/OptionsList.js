@@ -67,10 +67,10 @@ export const OptionsList = ({
 };
 
 OptionsList.propTypes = {
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.oneOfType([PropTypes.string, Node]).isRequired,
-  dataOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  dataOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSelect: PropTypes.func.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   className: PropTypes.string,
   optionValue: PropTypes.string,
   optionLabel: PropTypes.string,
@@ -78,6 +78,7 @@ OptionsList.propTypes = {
 };
 
 OptionsList.defaultProps = {
+  id: '',
   optionValue: 'value',
   optionLabel: 'label',
   className: null,

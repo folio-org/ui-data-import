@@ -143,7 +143,7 @@ export const validateMARCWithDate = value => {
   return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
 };
 
-export const validateAcceptedValues = acceptedValues => value => {
+export const validateAcceptedValues = (acceptedValues, valueKey) => value => {
   const pattern = /"[^"]+"/g;
 
   if (!value || !value.length || !acceptedValues.length) {
@@ -156,7 +156,7 @@ export const validateAcceptedValues = acceptedValues => value => {
     for (const str of matches) {
       const croppedStr = str.slice(1, -1);
 
-      const isValid = acceptedValues.some(({ name }) => name === croppedStr);
+      const isValid = acceptedValues.some(option => option[valueKey] === croppedStr);
 
       if (!isValid) {
         return <FormattedMessage id="ui-data-import.validation.syntaxError" />;

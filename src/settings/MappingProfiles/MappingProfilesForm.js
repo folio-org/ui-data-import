@@ -28,6 +28,7 @@ import {
   ENTITY_KEYS,
   LAYER_TYPES,
   PROFILE_TYPES,
+  ITEM_STATUS_OPTIONS,
 } from '../../utils';
 import {
   FlexibleForm,
@@ -163,20 +164,10 @@ export const MappingProfilesFormComponent = ({
       onUnlink: setDeletedRelations,
     },
     'item-status': {
-      acceptedValuesList: [
-        { name: 'Available' },
-        { name: 'Awaiting pickup' },
-        { name: 'Awaiting delivery' },
-        { name: 'Checked out' },
-        { name: 'In process' },
-        { name: 'In transit' },
-        { name: 'Missing' },
-        { name: 'On order' },
-        { name: 'Paged' },
-        { name: 'Declared lost' },
-        { name: 'Order closed' },
-        { name: 'Claimed returned' },
-      ],
+      acceptedValuesList: ITEM_STATUS_OPTIONS.map(option => ({
+        value: option.value,
+        label: <FormattedMessage id={option.label} />,
+      })),
     },
   };
   const stateMethods = {

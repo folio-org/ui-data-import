@@ -24,6 +24,8 @@ export const withReferenceValues = memo(props => {
     id,
     input,
     dataOptions,
+    optionValue,
+    optionLabel,
     WrappedComponent,
     wrapperLabel,
     wrapperExplicitInsert,
@@ -94,8 +96,8 @@ export const withReferenceValues = memo(props => {
               id={id}
               label={localized}
               dataOptions={listOptions}
-              optionValue="name"
-              optionLabel="name"
+              optionValue={optionValue}
+              optionLabel={optionLabel}
               className={styles['options-dropdown']}
               disabled={!hasLoaded}
               onSelect={setWrapperValue}
@@ -107,8 +109,8 @@ export const withReferenceValues = memo(props => {
           id={id}
           label={wrapperLabel}
           dataOptions={listOptions}
-          optionValue="name"
-          optionLabel="name"
+          optionValue={optionValue}
+          optionLabel={optionLabel}
           className={styles['options-dropdown']}
           disabled={!hasLoaded}
           onSelect={setWrapperValue}
@@ -128,6 +130,8 @@ withReferenceValues.propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   }).isRequired,
   dataOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  optionValue: PropTypes.string.isRequired,
+  optionLabel: PropTypes.string.isRequired,
   WrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
   wrapperExplicitInsert: PropTypes.bool,
   id: PropTypes.string,
