@@ -8,6 +8,7 @@
 * Add hotlinks for match and action profiles on Job profiles details view (UIDATIMP-478)
 * Layout styles in repeatable sections, which contain withRepeatableActions decorator has been fixed (UIDATIMP-502)
 * Implement basic layout for Field Mapping Profile details: MARC Bib from MARC Bib (UIDATIMP-297)
+* Cover Mapping Profile Form with tests including field decorators (UIDATIMP-442)
 
 ### Bugs fixed:
 

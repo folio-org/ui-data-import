@@ -15,7 +15,7 @@ import { ItemDetailsAccordion } from './details/static/item-details-interactor';
 
 @interactor
 class MappingProfileDetailsInteractor {
-  actionMenu = new ActionMenuInteractor();
+  actionMenu = new ActionMenuInteractor('#pane-mapping-profile-details [data-pane-header-actions-dropdown]');
   headline = scoped('[data-test-headline]');
   description = scoped('[data-test-description-field] [data-test-kv-value]');
   incomingRecordType = scoped('[data-test-incoming-record-type-field] [data-test-kv-value]');

@@ -26,6 +26,7 @@ export const OptionsList = ({
 
   return (
     <Dropdown
+      data-test-accepted-values-list
       id={id}
       label={label}
       className={classNames(styles['options-list'], className)}
