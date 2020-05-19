@@ -31,7 +31,7 @@ export const AcceptedValuesField = ({
   wrapperExplicitInsert,
   dataAttributes,
 }) => {
-  const [listOptions, setListOptions] = useState(acceptedValuesList || []);
+  const [listOptions, setListOptions] = useState(acceptedValuesList);
 
   useEffect(() => {
     if (wrapperSourceLink && wrapperSourcePath && isEmpty(acceptedValuesList)) {
