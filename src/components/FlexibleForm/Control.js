@@ -425,9 +425,17 @@ export const Control = memo(props => {
       setReferenceTables(fieldsPath, newRefTable);
     };
 
+    let Wrapper = null;
+    let fieldName = null;
+
+    if (decorator) {
+      Wrapper = decorators[decorator];
+      fieldName = `${isEditable ? editablePrefix : staticPrefix}${getActualParam(wrapperFieldName, sectionNamespace, repeatableIndex)}`;
+    }
+
     const Template = (
       <Repeatable
-        legend={legend ? <FormattedMessage id={legend} /> : legend}
+        legend={!Wrapper && (legend ? <FormattedMessage id={legend} /> : legend)}
         addLabel={addLabel ? <FormattedMessage id={addLabel} /> : addLabel}
         fields={refTable}
         onAdd={onAdd}
@@ -459,14 +467,6 @@ export const Control = memo(props => {
         )}
       />
     );
-
-    let Wrapper = null;
-    let fieldName = null;
-
-    if (decorator) {
-      Wrapper = decorators[decorator];
-      fieldName = `${isEditable ? editablePrefix : staticPrefix}${getActualParam(wrapperFieldName, sectionNamespace, repeatableIndex)}`;
-    }
 
     return (
       <Cmp
