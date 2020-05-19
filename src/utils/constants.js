@@ -405,3 +405,43 @@ export const MARC_TABLE_CONFIG = {
     MOVE: true,
   },
 };
+
+export const ITEM_STATUS_OPTIONS = [
+  {
+    value: 'Available',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.available',
+  }, {
+    value: 'Awaiting pickup',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.awaitingPickup',
+  }, {
+    value: 'Awaiting delivery',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.awaitingDelivery',
+  }, {
+    value: 'Checked out',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.checkedOut',
+  }, {
+    value: 'In process',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.inProcess',
+  }, {
+    value: 'In transit',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.inTransit',
+  }, {
+    value: 'Missing',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.missing',
+  }, {
+    value: 'On order',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.onOrder',
+  }, {
+    value: 'Paged',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.paged',
+  }, {
+    value: 'Declared lost',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.declareLost',
+  }, {
+    value: 'Order closed',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.orderClosed',
+  }, {
+    value: 'Claimed returned',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.claimedReturned',
+  },
+];

@@ -28,6 +28,7 @@ import {
   ENTITY_KEYS,
   LAYER_TYPES,
   PROFILE_TYPES,
+  ITEM_STATUS_OPTIONS,
 } from '../../utils';
 import {
   FlexibleForm,
@@ -161,6 +162,12 @@ export const MappingProfilesFormComponent = ({
       relationsToDelete: deletedRelations,
       onLink: setAddedRelations,
       onUnlink: setDeletedRelations,
+    },
+    'item-status': {
+      acceptedValuesList: ITEM_STATUS_OPTIONS.map(option => ({
+        value: option.value,
+        label: <FormattedMessage id={option.label} />,
+      })),
     },
   };
   const stateMethods = {
