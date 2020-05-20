@@ -1,13 +1,13 @@
 export const mappingMarcDetails = [
   {
-    order: 1,
+    order: 0,
     action: 'DELETE',
     field: '029',
     indicator1: '*',
     indicator2: '*',
     subfield: '*',
   }, {
-    order: 2,
+    order: 1,
     action: 'ADD',
     field: '500',
     indicator1: ' ',
@@ -15,7 +15,7 @@ export const mappingMarcDetails = [
     subfield: 'a',
     data: { text: 'Cataloged by John Doe' },
   }, {
-    order: 3,
+    order: 2,
     action: 'ADD',
     field: '901',
     indicator1: ' ',
@@ -41,7 +41,7 @@ export const mappingMarcDetails = [
       },
     ],
   }, {
-    order: 4,
+    order: 3,
     action: 'EDIT',
     field: '856',
     indicator1: '4',
@@ -51,7 +51,7 @@ export const mappingMarcDetails = [
     subaction: 'INSERT',
     position: 'BEFORE',
   }, {
-    order: 5,
+    order: 4,
     action: 'EDIT',
     field: '856',
     indicator1: '*',
@@ -60,7 +60,7 @@ export const mappingMarcDetails = [
     data: { text: 'chic_rbw' },
     subaction: 'REMOVE',
   }, {
-    order: 6,
+    order: 5,
     action: 'EDIT',
     field: '856',
     indicator1: '*',
@@ -72,7 +72,7 @@ export const mappingMarcDetails = [
       replace: 'https://',
     },
   }, {
-    order: 7,
+    order: 6,
     action: 'MOVE',
     field: '901',
     indicator1: ' ',
@@ -86,7 +86,7 @@ export const mappingMarcDetails = [
       subfield: '',
     },
   }, {
-    order: 8,
+    order: 7,
     action: 'MOVE',
     field: '903',
     indicator1: ' ',

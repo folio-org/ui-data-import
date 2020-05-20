@@ -39,6 +39,8 @@ class MARCTableCellInteractor {
 @interactor
 class MARCTableRowInteractor {
   cells = collection('[data-test-marc-table-cell]', MARCTableCellInteractor);
+  addRow = new IconButtonInteractor('[data-test-marc-table-add]');
+  removeRow = new IconButtonInteractor('[data-test-marc-table-remove]');
 }
 
 @interactor
