@@ -10,6 +10,7 @@ import { validateRequiredField } from '../../utils';
 export const FolioRecordTypeSelect = ({
   fieldName,
   dataOptions,
+  onRecordSelect,
 }) => (
   <div data-test-folio-record-type-field>
     <FormattedMessage id="ui-data-import.chooseFolioRecordType">
@@ -23,6 +24,7 @@ export const FolioRecordTypeSelect = ({
           validate={[validateRequiredField]}
           dataOptions={dataOptions}
           placeholder={placeholder}
+          onChange={onRecordSelect}
         />
       )}
     </FormattedMessage>
@@ -32,4 +34,5 @@ export const FolioRecordTypeSelect = ({
 FolioRecordTypeSelect.propTypes = {
   fieldName: PropTypes.string.isRequired,
   dataOptions: PropTypes.arrayOf(PropTypes.object),
+  onRecordSelect: PropTypes.func,
 };

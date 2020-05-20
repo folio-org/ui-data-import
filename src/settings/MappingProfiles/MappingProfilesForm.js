@@ -13,7 +13,10 @@ import {
 } from 'react-intl';
 
 import { connect } from 'react-redux';
-import { change } from 'redux-form';
+import {
+  Field,
+  change,
+} from 'redux-form';
 import {
   get,
   identity,
@@ -21,29 +24,47 @@ import {
 } from 'lodash';
 
 import stripesForm from '@folio/stripes/form';
+import {
+  Headline,
+  AccordionSet,
+  AccordionStatus,
+  Accordion,
+  ExpandAllButton,
+  TextField,
+  Select,
+  TextArea,
+  Col,
+  Row,
+} from '@folio/stripes/components';
 
 import {
   compose,
   withProfileWrapper,
+  validateRequiredField,
   ENTITY_KEYS,
   LAYER_TYPES,
   PROFILE_TYPES,
   ITEM_STATUS_OPTIONS,
 } from '../../utils';
 import {
-  FlexibleForm,
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
+  FullScreenForm,
+  FolioRecordTypeSelect,
+  ProfileAssociator,
+  MappedHeader,
 } from '../../components';
+import {
+  MappingInstanceDetails,
+  MappingHoldingsDetails,
+  MappingItemDetails,
+} from './detailsSections';
 
 import {
   getInitialDetails,
   getInitialFields,
   getReferenceTables,
 } from './initialDetails';
-
-// @TODO: Remove this after server-side configs will be available
-import { formConfigSamples } from '../../../test/bigtest/mocks';
 
 import styles from './MappingProfiles.css';
 
@@ -61,6 +82,7 @@ export const MappingProfilesFormComponent = ({
   handleSubmit,
   onCancel,
   dispatch,
+  intl,
 }) => {
   const { profile } = initialValues;
   const { layer } = queryString.parse(search);
@@ -68,7 +90,6 @@ export const MappingProfilesFormComponent = ({
   const isEditMode = layer === LAYER_TYPES.EDIT;
   const isSubmitDisabled = pristine || submitting;
 
-  const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
   const associations = [
     ...get(initialValues, ['profile', 'parentProfiles'], []),
     ...get(initialValues, ['profile', 'childProfiles'], []),
@@ -77,12 +98,12 @@ export const MappingProfilesFormComponent = ({
   const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
       value: recordType,
-      label: captionId,
+      label: intl.formatMessage({ id: captionId }),
     }));
   const getFolioRecordTypesDataOptions = () => Object.entries(FOLIO_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
       value: recordType,
-      label: captionId,
+      label: intl.formatMessage({ id: captionId }),
     }));
 
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, []);
@@ -96,7 +117,7 @@ export const MappingProfilesFormComponent = ({
   const headLine = isEditMode ? profile.name : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
 
   const prevExistingRecordType = useRef(existingRecordTypeInitial);
-  const [existingRecordType, setExistingRecordType] = useState(get(profile, 'existingRecordType', null));
+  const [folioRecordType, setFolioRecordType] = useState(get(profile, 'existingRecordType', null));
   const [initials, setInitials] = useState({
     ...profile,
     mappingDetails: isEmpty(mappingDetails) ? getInitialDetails(prevExistingRecordType.current, true) : mappingDetails,
@@ -105,16 +126,16 @@ export const MappingProfilesFormComponent = ({
   const [deletedRelations, setDeletedRelations] = useState([]);
 
   useLayoutEffect(() => {
-    const isEqual = existingRecordType === prevExistingRecordType.current;
+    const isEqual = folioRecordType === prevExistingRecordType.current;
     const needsUpdate = !profile.id || (profile.id && (!isEqual || isEmpty(mappingDetails)));
 
     if (!needsUpdate) {
       return;
     }
 
-    const newInitDetails = existingRecordType === existingRecordTypeInitial && !isEmpty(mappingDetails)
+    const newInitDetails = folioRecordType === existingRecordTypeInitial && !isEmpty(mappingDetails)
       ? mappingDetailsInitial
-      : getInitialDetails(existingRecordType, true);
+      : getInitialDetails(folioRecordType, true);
     const newInitials = {
       ...initials,
       mappingDetails: newInitDetails,
@@ -124,9 +145,9 @@ export const MappingProfilesFormComponent = ({
     // @TODO: change method should be changed to initialize
     dispatch(change(formName, 'profile.mappingDetails', newInitDetails));
     if (!isEqual) {
-      prevExistingRecordType.current = existingRecordType;
+      prevExistingRecordType.current = folioRecordType;
     }
-  }, [existingRecordType]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [folioRecordType]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     dispatch(change(formName, 'addedRelations', addedRelations));
   }, [addedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -135,7 +156,7 @@ export const MappingProfilesFormComponent = ({
   }, [deletedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const referenceTables = getReferenceTables(get(mappingDetails, 'mappingFields', []));
-  const initialFields = getInitialFields(existingRecordType);
+  const initialFields = getInitialFields(folioRecordType);
 
   const injectedProps = {
     'profile-headline': { children: headLine },
@@ -146,9 +167,9 @@ export const MappingProfilesFormComponent = ({
     'field-record-type-existing': {
       dataOptions: folioRecordTypesDataOptions,
       itemToString: identity,
-      onChange: (event, newValue) => setExistingRecordType(newValue),
+      onChange: (event, newValue) => setFolioRecordType(newValue),
     },
-    'section-mapping-details': { stateFieldValue: existingRecordType },
+    'section-mapping-details': { stateFieldValue: folioRecordType },
     'mappingProfile.actionsAssociator': {
       entityKey: ENTITY_KEYS.ACTION_PROFILES,
       namespaceKey: 'AAP',
@@ -175,24 +196,138 @@ export const MappingProfilesFormComponent = ({
     change,
   };
 
+  const setReferenceTables = (fieldsPath, refTable) => {
+    dispatch(change(formName, fieldsPath, refTable));
+  };
+
+  const renderDetails = {
+    INSTANCE: (
+      <MappingInstanceDetails
+        initialFields={initialFields}
+        referenceTables={referenceTables}
+        setReferenceTables={setReferenceTables}
+        okapi={okapi}
+        intl={intl}
+      />
+    ),
+    HOLDINGS: <MappingHoldingsDetails />,
+    ITEM: <MappingItemDetails />,
+  };
+
   return (
-    <FlexibleForm
-      component="FullScreenForm"
-      id="mapping-profiles-form"
-      config={formConfig}
-      paneTitle={paneTitle}
-      headLine={headLine}
-      okapi={okapi}
-      injectedProps={injectedProps}
-      stateMethods={stateMethods}
-      referenceTables={referenceTables}
-      initialFields={initialFields}
-      submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
-      isSubmitDisabled={isSubmitDisabled}
-      onSubmit={handleSubmit}
-      onCancel={onCancel}
-      contentClassName={styles.mappingForm}
-    />
+    <>
+      <FullScreenForm
+        id="mapping-profiles-form"
+        paneTitle={paneTitle}
+        submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
+        isSubmitDisabled={isSubmitDisabled}
+        onSubmit={handleSubmit}
+        onCancel={onCancel}
+        contentClassName={styles.mappingForm}
+      >
+        <Headline
+          data-test-header-title
+          id="profile-headline"
+          size="xx-large"
+          tag="h2"
+        >
+          {headLine}
+        </Headline>
+        <AccordionSet>
+          <Accordion
+            id="summary"
+            label={<FormattedMessage id="ui-data-import.summary" />}
+            separator
+          >
+            <div data-test-name-field>
+              <Field
+                label={<FormattedMessage id="ui-data-import.name" />}
+                name="profile.name"
+                required
+                component={TextField}
+                validate={[validateRequiredField]}
+              />
+            </div>
+            <div data-test-incoming-record-type-field>
+              <FormattedMessage id="ui-data-import.chooseIncomingRecordType">
+                {placeholder => (
+                  <Field
+                    label={<FormattedMessage id="ui-data-import.incomingRecordType" />}
+                    name="profile.incomingRecordType"
+                    component={Select}
+                    required
+                    itemToString={identity}
+                    validate={[validateRequiredField]}
+                    dataOptions={incomingRecordTypesDataOptions}
+                    placeholder={placeholder}
+                  />
+                )}
+              </FormattedMessage>
+            </div>
+            <FolioRecordTypeSelect
+              fieldName="existingRecordType"
+              dataOptions={folioRecordTypesDataOptions}
+              onRecordSelect={e => setFolioRecordType(e.target.value)}
+            />
+            <div data-test-description-field>
+              <Field
+                label={<FormattedMessage id="ui-data-import.description" />}
+                name="profile.description"
+                component={TextArea}
+              />
+            </div>
+          </Accordion>
+          <Accordion
+            id="mapping-profile-details"
+            label={<FormattedMessage id="ui-data-import.details" />}
+            separator={false}
+          >
+            <AccordionStatus>
+              <Row between="xs">
+                <Col>
+                  <MappedHeader
+                    mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
+                    mappedLabel="Field mapping"
+                    mappableLabelId="ui-data-import.settings.mappingProfiles.map.instance"
+                    mappableLabel="Instance"
+                    headlineProps={{ margin: 'small' }}
+                  />
+                </Col>
+                <Col>
+                  <div data-test-expand-all-button>
+                    <ExpandAllButton />
+                  </div>
+                </Col>
+              </Row>
+              {renderDetails[folioRecordType]}
+            </AccordionStatus>
+          </Accordion>
+          <Accordion
+            id="mappingProfileFormAssociatedActionProfileAccordion"
+            label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
+            separator
+          >
+            <ProfileAssociator
+              entityKey={ENTITY_KEYS.ACTION_PROFILES}
+              namespaceKey="AAP"
+              parentId={profile.id}
+              parentType={PROFILE_TYPES.MAPPING_PROFILE}
+              masterType={PROFILE_TYPES.ACTION_PROFILE}
+              detailType={PROFILE_TYPES.MAPPING_PROFILE}
+              profileName={profile.name}
+              contentData={associations}
+              hasLoaded
+              isMultiSelect
+              isMultiLink={false}
+              relationsToAdd={addedRelations}
+              relationsToDelete={deletedRelations}
+              onLink={setAddedRelations}
+              onUnlink={setDeletedRelations}
+            />
+          </Accordion>
+        </AccordionSet>
+      </FullScreenForm>
+    </>
   );
 };
 
@@ -214,6 +349,7 @@ MappingProfilesFormComponent.propTypes = {
   mappingDetails: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
+  intl: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => {

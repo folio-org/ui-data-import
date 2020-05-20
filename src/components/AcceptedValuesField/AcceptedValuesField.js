@@ -30,6 +30,7 @@ export const AcceptedValuesField = ({
   wrapperSourcePath,
   wrapperExplicitInsert,
   dataAttributes,
+  ...rest
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
 
@@ -47,6 +48,7 @@ export const AcceptedValuesField = ({
 
   return (
     <Field
+      {...rest}
       id={id}
       component={withReferenceValues}
       name={name}

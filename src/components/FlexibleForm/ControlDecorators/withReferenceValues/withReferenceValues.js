@@ -29,6 +29,7 @@ export const withReferenceValues = memo(props => {
     WrappedComponent,
     wrapperLabel,
     wrapperExplicitInsert,
+    disabled,
     ...rest
   } = props;
 
@@ -87,6 +88,7 @@ export const withReferenceValues = memo(props => {
         onDrop={onDrop}
         onFocus={onFocus}
         loading={!hasLoaded}
+        disabled={disabled}
         {...rest}
       />
       {needsTranslation ? (
@@ -99,7 +101,7 @@ export const withReferenceValues = memo(props => {
               optionValue={optionValue}
               optionLabel={optionLabel}
               className={styles['options-dropdown']}
-              disabled={!hasLoaded}
+              disabled={!hasLoaded || disabled}
               onSelect={setWrapperValue}
             />
           )}
@@ -112,7 +114,7 @@ export const withReferenceValues = memo(props => {
           optionValue={optionValue}
           optionLabel={optionLabel}
           className={styles['options-dropdown']}
-          disabled={!hasLoaded}
+          disabled={!hasLoaded || disabled}
           onSelect={setWrapperValue}
         />
       )}
@@ -136,10 +138,12 @@ withReferenceValues.propTypes = {
   wrapperExplicitInsert: PropTypes.bool,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
+  disabled: PropTypes.bool,
 };
 
 withReferenceValues.defaultProps = {
   id: null,
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
   wrapperExplicitInsert: false,
+  disabled: false,
 };

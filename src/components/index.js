@@ -1,6 +1,7 @@
 export * from './AcceptedValuesField';
 export * from './AccordionHeader';
 export * from './ActionMenu';
+export * from './BooleanActionField';
 export * from './CodeHighlight';
 export * from './Callout';
 export * from './ListView';
