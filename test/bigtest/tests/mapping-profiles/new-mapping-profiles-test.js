@@ -259,6 +259,16 @@ describe('Mapping profile form', () => {
                 });
               });
             });
+
+            describe('when plus sign is clicked', () => {
+              beforeEach(async () => {
+                await mappingProfileForm.marcDetailsTable.rows(0).addRow.clickIconButton();
+              });
+
+              it('then add new row', () => {
+                expect(mappingProfileForm.marcDetailsTable.rowCount).to.be.equal(2);
+              });
+            });
           });
         });
       });

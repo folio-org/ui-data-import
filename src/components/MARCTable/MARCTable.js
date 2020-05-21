@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 import { PropTypes } from 'prop-types';
 
 import {
@@ -13,6 +16,36 @@ export const MARCTable = ({
   fields,
   intl,
 }) => {
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    setRows(fields);
+  }, [fields]);
+
+  const addNewRow = index => {
+    const incrementOrders = row => ({
+      ...row,
+      order: row.order + 1,
+    });
+
+    const newRow = { order: index };
+    const updatedRows = [
+      ...rows.slice(0, index),
+      newRow,
+      ...rows.slice(index).map(incrementOrders),
+    ];
+
+    setRows(updatedRows);
+  };
+
+  const updateRowsData = (updatedRow, order) => {
+    const rowIndex = rows.findIndex(field => field.order === order);
+    const updatedRows = [...rows];
+
+    updatedRows[rowIndex] = { ...updatedRow };
+    setRows(updatedRows);
+  };
+
   const columns = ['arrows', 'action', 'field', 'indicator1', 'indicator2',
     'subfield', 'subaction', 'data', 'position', 'addRemove'];
   const columnWidths = {
@@ -39,8 +72,10 @@ export const MARCTable = ({
         intl={intl}
       />
       <MARCTableRowContainer
-        fields={fields}
+        fields={rows}
         columnWidths={columnWidths}
+        onAddNewRow={addNewRow}
+        onDataChange={updateRowsData}
         intl={intl}
       />
     </div>
