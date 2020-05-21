@@ -1,13 +1,13 @@
 @import "@folio/stripes-components/lib/variables.css";
 
 .decorator {
-  & [data-test-repeatable-decorator] {
-    display: flex;
-  }
-
   & fieldset {
     min-width:100%;
     width: 100%;
     margin: 0;
   }
+}
+
+.selectHolder {
+  display: flex;
 }

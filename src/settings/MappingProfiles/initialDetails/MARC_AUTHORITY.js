@@ -6,7 +6,7 @@ const MARC_AUTHORITY = {
     enabled: true,
     path: 'marcAuthority.discoverySuppress',
     value: null,
-    booleanFieldAction: 'AS_IS',
+    booleanFieldAction: 'IGNORE',
     subfields: [],
   }, {
     name: 'hrid',

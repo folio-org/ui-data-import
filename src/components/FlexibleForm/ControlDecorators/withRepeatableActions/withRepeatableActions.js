@@ -53,7 +53,10 @@ export const withRepeatableActions = memo(props => {
     <div className={styles.decorator}>
       {legend && legendHeadline}
       {enabled && (
-        <div data-test-repeatable-decorator>
+        <div
+          className={styles.selectHolder}
+          data-test-repeatable-decorator
+        >
           {needsTranslation ? (
             <FormattedMessage id={wrapperLabel}>
               {placeholder => (

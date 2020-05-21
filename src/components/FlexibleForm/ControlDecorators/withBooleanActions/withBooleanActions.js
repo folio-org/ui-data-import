@@ -35,12 +35,13 @@ const WithBooleanActionsControl = props => {
   } = props;
 
   const actions = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'BOOLEAN_ACTIONS'], []);
-  const dataOptions = actions.map(action => ({
+  const dataOptions = actions.OPTIONS.map(action => ({
     value: action.value,
     label: intl.formatMessage({ id: action.label }),
   }));
+  const defaultValue = input?.value && dataOptions.filter(option => option.value === input.value).length ? input.value : '';
 
-  const [currentValue, setCurrentValue] = useState(input?.value || '');
+  const [currentValue, setCurrentValue] = useState(defaultValue);
 
   const handleChangeWrapperValue = wrapperValue => {
     let newValue;

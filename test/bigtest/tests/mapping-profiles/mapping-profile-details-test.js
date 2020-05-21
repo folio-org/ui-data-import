@@ -121,7 +121,7 @@ const hasTable = (details, accordion, table, tableName, columnCount, columnHeade
   });
 };
 
-const hasBooleanActionsField = (details, accordion, field, fieldLabel, selectedOption, optionToSelect, isMCL = false) => {
+const hasBooleanActionsField = (details, accordion, field, fieldLabel, optionToSelect, isMCL = false, table = null, columnCells = []) => {
   describe('When boolean actions decorator applies', () => {
     it(`has correct ${fieldLabel} field label`, () => {
       expect(mappingProfileForm[details][accordion][field].label).to.equal(fieldLabel);
@@ -132,8 +132,7 @@ const hasBooleanActionsField = (details, accordion, field, fieldLabel, selectedO
     });
 
     it('has selected default option', () => {
-      // @TODO: selectedOption argument should be re-checked and possibly removed after fix issue with initial data set up (UIDATIMP-500)
-      expect(mappingProfileForm[details][accordion][field].val).to.equal(selectedOption);
+      expect(mappingProfileForm[details][accordion][field].val).to.equal('');
     });
 
     describe(`when option "${optionToSelect}" selected and form is submitted`, () => {
@@ -147,10 +146,10 @@ const hasBooleanActionsField = (details, accordion, field, fieldLabel, selectedO
           expect(mappingProfileDetails[details][accordion][field].value.text).to.be.equal(optionToSelect);
         });
       } else {
-        // @TODO: to be implemented after fix (UIDATIMP-500)
         it(`then mapping profile details renders updated ${fieldLabel} field`, () => {
-          // expect(mappingProfileDetails[details][accordion][field].value.text).to.be.equal(optionToSelect);
-          expect('Mark for all affected records').to.be.equal(optionToSelect);
+          mappingProfileDetails[details][accordion][table].rows(0).cells().forEach((cell, i) => {
+            expect(cell.text).to.equal(columnCells[i]);
+          });
         });
       }
     });
@@ -1181,9 +1180,9 @@ describe('Mapping Profile View', () => {
             hasInput('instanceDetails', 'adminDataAccordion', 'modeOfIssuance', 'Mode of issuance', true);
             hasRepeatableField('instanceDetails', 'adminDataAccordion', 'statisticalCodes', 'Statistical codes');
             hasRepeatableFieldDecorator('instanceDetails', 'adminDataAccordion', 'statisticalCodesRepeatable');
-            hasBooleanActionsField('instanceDetails', 'adminDataAccordion', 'suppressFromDiscovery', 'Suppress from discovery', '', 'Mark for all affected records');
-            hasBooleanActionsField('instanceDetails', 'adminDataAccordion', 'staffSuppress', 'Staff suppress', '', 'Mark for all affected records');
-            hasBooleanActionsField('instanceDetails', 'adminDataAccordion', 'previouslyHeld', 'Previously held', '', 'Mark for all affected records');
+            hasBooleanActionsField('instanceDetails', 'adminDataAccordion', 'suppressFromDiscovery', 'Suppress from discovery', 'Mark for all affected records');
+            hasBooleanActionsField('instanceDetails', 'adminDataAccordion', 'staffSuppress', 'Staff suppress', 'Mark for all affected records');
+            hasBooleanActionsField('instanceDetails', 'adminDataAccordion', 'previouslyHeld', 'Previously held', 'Mark for all affected records');
             hasReferenceValuesDecorator('instanceDetails', 'adminDataAccordion', 'instanceStatusTerm', 'Instance status term', 'instanceStatusTermAcceptedValues');
             hasReferenceValuesDecorator('instanceDetails', 'adminDataAccordion', 'statisticalCode', 'Statistical code', 'statisticalCodeAcceptedValues', true, 'statisticalCodes', ['"name 1"']);
           });
@@ -1233,7 +1232,7 @@ describe('Mapping Profile View', () => {
 
             hasRepeatableField('instanceDetails', 'contributorAccordion', 'contributors', '', true);
             hasRepeatableFieldDecorator('instanceDetails', 'contributorAccordion', 'contributorsRepeatable', true);
-            hasBooleanActionsField('instanceDetails', 'contributorAccordion', 'primary', 'Primary', '', 'Mark for all affected records', true);
+            hasBooleanActionsField('instanceDetails', 'contributorAccordion', 'primary', 'Primary', 'Mark for all affected records', true, 'contributors', ['910', '910', '910', '910', 'Mark for all affected records']);
           });
 
           describe('Descriptive data accordion', () => {
@@ -1278,7 +1277,7 @@ describe('Mapping Profile View', () => {
 
             hasRepeatableField('instanceDetails', 'instanceNotesAccordion', 'notes', '', true);
             hasRepeatableFieldDecorator('instanceDetails', 'instanceNotesAccordion', 'notesRepeatable', true);
-            hasBooleanActionsField('instanceDetails', 'instanceNotesAccordion', 'staffOnly', 'Staff only', '', 'Mark for all affected records', true);
+            hasBooleanActionsField('instanceDetails', 'instanceNotesAccordion', 'staffOnly', 'Staff only', 'Mark for all affected records', true, 'notes', ['910', '910', 'Mark for all affected records']);
           });
 
           describe('Electronic access accordion', () => {
@@ -1386,7 +1385,7 @@ describe('Mapping Profile View', () => {
             hasRepeatableField('holdingsDetails', 'adminDataAccordion', 'statisticalCodes', 'Statistical codes');
             hasRepeatableFieldDecorator('holdingsDetails', 'adminDataAccordion', 'statisticalCodesRepeatable');
             hasReferenceValuesDecorator('holdingsDetails', 'adminDataAccordion', 'statisticalCode', 'Statistical code', 'statisticalCodeAcceptedValues', true, 'statisticalCodes', ['"name 1"']);
-            hasBooleanActionsField('holdingsDetails', 'adminDataAccordion', 'suppressFromDiscovery', 'Suppress from discovery', '', 'Mark for all affected records');
+            hasBooleanActionsField('holdingsDetails', 'adminDataAccordion', 'suppressFromDiscovery', 'Suppress from discovery', 'Mark for all affected records');
           });
 
           describe('Location accordion', () => {
@@ -1446,7 +1445,7 @@ describe('Mapping Profile View', () => {
             hasRepeatableField('holdingsDetails', 'holdingsNotesAccordion', 'notes', '');
             hasRepeatableFieldDecorator('holdingsDetails', 'holdingsNotesAccordion', 'notesRepeatable');
             hasReferenceValuesDecorator('holdingsDetails', 'holdingsNotesAccordion', 'note', 'Note type', 'noteAcceptedValues', true, 'notes', ['"name 1"', '910', '-']);
-            hasBooleanActionsField('holdingsDetails', 'holdingsNotesAccordion', 'staffOnly', 'Staff only', '', 'Mark for all affected records', true);
+            hasBooleanActionsField('holdingsDetails', 'holdingsNotesAccordion', 'staffOnly', 'Staff only', 'Mark for all affected records', true, 'notes', ['910', '910', 'Mark for all affected records']);
           });
 
           describe('Electronic access accordion', () => {
@@ -1488,7 +1487,7 @@ describe('Mapping Profile View', () => {
 
             hasRepeatableField('holdingsDetails', 'receivingHistoryAccordion', 'note', '');
             hasRepeatableFieldDecorator('holdingsDetails', 'receivingHistoryAccordion', 'noteRepeatable');
-            hasBooleanActionsField('holdingsDetails', 'receivingHistoryAccordion', 'publicDisplay', 'Public display', '', 'Mark for all affected records', true);
+            hasBooleanActionsField('holdingsDetails', 'receivingHistoryAccordion', 'publicDisplay', 'Public display', 'Mark for all affected records', true, 'receivingHistory', ['Mark for all affected records', '910', '910']);
           });
         });
 
@@ -1530,7 +1529,7 @@ describe('Mapping Profile View', () => {
             hasRepeatableField('itemDetails', 'adminDataAccordion', 'statisticalCodes', 'Statistical codes');
             hasRepeatableFieldDecorator('itemDetails', 'adminDataAccordion', 'statisticalCodeRepeatable');
             hasReferenceValuesDecorator('itemDetails', 'adminDataAccordion', 'statisticalCode', 'Statistical code', 'statisticalCodeAcceptedValues', true, 'statisticalCodes', ['"name 1"', '910', '910', '910', '910']);
-            hasBooleanActionsField('itemDetails', 'adminDataAccordion', 'suppressFromDiscovery', 'Suppress from discovery', '', 'Mark for all affected records');
+            hasBooleanActionsField('itemDetails', 'adminDataAccordion', 'suppressFromDiscovery', 'Suppress from discovery', 'Mark for all affected records');
           });
 
           describe('Item data accordion', () => {
@@ -1601,7 +1600,7 @@ describe('Mapping Profile View', () => {
             hasRepeatableField('itemDetails', 'itemNotesAccordion', 'notes', '');
             hasRepeatableFieldDecorator('itemDetails', 'itemNotesAccordion', 'notesRepeatable');
             hasReferenceValuesDecorator('itemDetails', 'itemNotesAccordion', 'note', 'Note type', 'noteAcceptedValues', true, 'notes', ['"name 1"', '910', '-']);
-            hasBooleanActionsField('itemDetails', 'itemNotesAccordion', 'staffOnly', 'Staff only', '', 'Mark for all affected records', true);
+            hasBooleanActionsField('itemDetails', 'itemNotesAccordion', 'staffOnly', 'Staff only', 'Mark for all affected records', true, 'notes', ['910', '910', 'Mark for all affected records']);
           });
 
           describe('Loan and availability accordion', () => {
@@ -1622,7 +1621,7 @@ describe('Mapping Profile View', () => {
             hasRepeatableField('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotes', 'Circulation notes');
             hasRepeatableFieldDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotesRepeatable');
             hasReferenceValuesDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNote', 'Note type', 'circulationNoteAcceptedValues', true, 'circulationNotes', ['"name 1"', '910', '-']);
-            hasBooleanActionsField('itemDetails', 'locationAccordion', 'staffOnly', 'Staff only', '', 'Mark for all affected records', true);
+            hasBooleanActionsField('itemDetails', 'loanAndAvailabilityAccordion', 'staffOnly', 'Staff only', 'Mark for all affected records', true, 'circulationNotes', ['910', '910', 'Mark for all affected records']);
           });
 
           describe('Location accordion', () => {

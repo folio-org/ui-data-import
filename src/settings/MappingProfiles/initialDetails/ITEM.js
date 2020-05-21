@@ -6,7 +6,7 @@ const ITEM = {
     enabled: true,
     path: 'item.discoverySuppress',
     value: null,
-    booleanFieldAction: '',
+    booleanFieldAction: 'IGNORE',
     subfields: [],
   }, {
     name: 'hrid',
@@ -202,7 +202,7 @@ const ITEM = {
         enabled: true,
         path: 'item.notes[].staffOnly',
         value: null,
-        booleanFieldAction: '',
+        booleanFieldAction: 'IGNORE',
       }],
     }],
   }, {
@@ -249,7 +249,7 @@ const ITEM = {
         enabled: true,
         path: 'item.circulationNotes[].staffOnly',
         value: null,
-        booleanFieldAction: '',
+        booleanFieldAction: 'IGNORE',
       }],
     }],
   }, {

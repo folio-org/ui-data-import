@@ -7,21 +7,21 @@ const INSTANCE = {
     path: 'instance.discoverySuppress',
     value: '',
     subfields: [],
-    booleanFieldAction: '',
+    booleanFieldAction: 'IGNORE',
   }, {
     name: 'staffSuppress',
     enabled: true,
     path: 'instance.staffSuppress',
     value: '',
     subfields: [],
-    booleanFieldAction: '',
+    booleanFieldAction: 'IGNORE',
   }, {
     name: 'previouslyHeld',
     enabled: true,
     path: 'instance.previouslyHeld',
     value: '',
     subfields: [],
-    booleanFieldAction: '',
+    booleanFieldAction: 'IGNORE',
   }, {
     name: 'hrid',
     enabled: false,
@@ -218,9 +218,9 @@ const INSTANCE = {
       path: 'instance.contributors[]',
       fields: [{
         // order: 0,
-        name: 'name',
+        name: 'contributorName',
         enabled: false,
-        path: 'instance.contributors[].name',
+        path: 'instance.contributors[].contributorName',
         value: '',
       }, {
         // order: 0,
@@ -246,7 +246,7 @@ const INSTANCE = {
         enabled: false,
         path: 'instance.contributors[].primary',
         value: '',
-        booleanFieldAction: 'AS_IS',
+        booleanFieldAction: 'IGNORE',
       }],
     }],
   }, {
@@ -427,7 +427,7 @@ const INSTANCE = {
         enabled: false,
         path: 'instance.notes[].staffOnly',
         value: null,
-        booleanFieldAction: 'AS_IS',
+        booleanFieldAction: 'IGNORE',
       }],
     }],
   }, {

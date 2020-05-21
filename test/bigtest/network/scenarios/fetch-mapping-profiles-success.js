@@ -14,21 +14,21 @@ export default server => {
         path: 'instance.discoverySuppress',
         value: null,
         subfields: [],
-        booleanFieldAction: '',
+        booleanFieldAction: 'IGNORE',
       }, {
         name: 'staffSuppress',
         enabled: true,
         path: 'instance.staffSuppress',
         value: null,
         subfields: [],
-        booleanFieldAction: '',
+        booleanFieldAction: 'IGNORE',
       }, {
         name: 'previouslyHeld',
         enabled: true,
         path: 'instance.previouslyHeld',
         value: null,
         subfields: [],
-        booleanFieldAction: '',
+        booleanFieldAction: 'IGNORE',
       }, {
         name: 'hrid',
         enabled: false,
@@ -225,9 +225,9 @@ export default server => {
           path: 'instance.contributors[]',
           fields: [{
             // order: 0,
-            name: 'name',
+            name: 'contributorName',
             enabled: false,
-            path: 'instance.contributors[].name',
+            path: 'instance.contributors[].contributorName',
             value: '910',
           }, {
             // order: 0,
@@ -252,8 +252,8 @@ export default server => {
             name: 'primary',
             enabled: false,
             path: 'instance.contributors[].primary',
-            value: '910',
-            booleanFieldAction: '',
+            value: '',
+            booleanFieldAction: 'IGNORE',
           }],
         }],
       }, {
@@ -434,7 +434,7 @@ export default server => {
             enabled: false,
             path: 'instance.notes[].staffOnly',
             value: null,
-            booleanFieldAction: '',
+            booleanFieldAction: 'IGNORE',
           }],
         }],
       }, {
@@ -575,7 +575,7 @@ export default server => {
         path: 'holdings.discoverySuppress',
         value: '',
         subfields: [],
-        booleanFieldAction: '',
+        booleanFieldAction: 'IGNORE',
       }, {
         name: 'hrid',
         enabled: false,
@@ -790,7 +790,7 @@ export default server => {
             enabled: true,
             path: 'holdings.notes[].staffOnly',
             value: null,
-            booleanFieldAction: '',
+            booleanFieldAction: 'IGNORE',
           }],
         }],
       }, {
@@ -865,7 +865,7 @@ export default server => {
             enabled: true,
             path: 'holdings.receivingHistory.entries[].publicDisplay',
             value: null,
-            booleanFieldAction: '',
+            booleanFieldAction: 'IGNORE',
           }, {
             order: 0,
             name: 'enumeration',
@@ -894,7 +894,7 @@ export default server => {
         enabled: true,
         path: 'item.discoverySuppress',
         value: null,
-        booleanFieldAction: '',
+        booleanFieldAction: 'IGNORE',
         subfields: [],
       }, {
         name: 'hrid',
@@ -1090,7 +1090,7 @@ export default server => {
             enabled: true,
             path: 'item.notes[].staffOnly',
             value: null,
-            booleanFieldAction: '',
+            booleanFieldAction: 'IGNORE',
           }],
         }],
       }, {
@@ -1137,7 +1137,7 @@ export default server => {
             enabled: true,
             path: 'item.circulationNotes[].staffOnly',
             value: null,
-            booleanFieldAction: '',
+            booleanFieldAction: 'IGNORE',
           }],
         }],
       }, {
