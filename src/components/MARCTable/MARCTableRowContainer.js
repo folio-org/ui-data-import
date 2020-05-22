@@ -11,6 +11,7 @@ export const MARCTableRowContainer = ({
   fields,
   columnWidths,
   onAddNewRow,
+  onRemoveRow,
   onDataChange,
   intl,
 }) => {
@@ -29,6 +30,7 @@ export const MARCTableRowContainer = ({
           isFirst={i === 0}
           isLast={i === (fields.length - 1)}
           onAddNewRow={onAddNewRow}
+          onRemoveRow={onRemoveRow}
           onDataChange={onDataChange}
           intl={intl}
         />
@@ -56,6 +58,7 @@ MARCTableRowContainer.propTypes = {
   intl: PropTypes.object.isRequired,
   fields: PropTypes.arrayOf(PropTypes.object.isRequired),
   onAddNewRow: PropTypes.func.isRequired,
+  onRemoveRow: PropTypes.func.isRequired,
   onDataChange: PropTypes.func.isRequired,
   columnWidths: PropTypes.object,
 };

@@ -31,6 +31,7 @@ export const MARCTableRow = ({
   isLast,
   isSubline,
   onAddNewRow,
+  onRemoveRow,
   onDataChange,
   intl,
 }) => {
@@ -387,6 +388,7 @@ export const MARCTableRow = ({
     );
   };
   const renderAddRemove = () => {
+    const isSingle = isFirst && isLast;
     const cellStyle = {
       width: columnWidths.addRemove,
       justifyContent: isSubline && 'flex-end',
@@ -409,7 +411,9 @@ export const MARCTableRow = ({
         <IconButton
           data-test-marc-table-remove
           icon="trash"
+          disabled={isSingle}
           ariaLabel={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.deleteField' })}
+          onClick={() => onRemoveRow(field.order)}
         />
       </div>
     );
@@ -436,6 +440,7 @@ MARCTableRow.propTypes = {
   field: PropTypes.object.isRequired,
   columnWidths: PropTypes.object.isRequired,
   onAddNewRow: PropTypes.func.isRequired,
+  onRemoveRow: PropTypes.func.isRequired,
   onDataChange: PropTypes.func.isRequired,
   isFirst: PropTypes.bool,
   isLast: PropTypes.bool,

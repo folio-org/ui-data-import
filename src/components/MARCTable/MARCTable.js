@@ -38,6 +38,20 @@ export const MARCTable = ({
     setRows(updatedRows);
   };
 
+  const removeRow = index => {
+    const decrementOrders = row => ({
+      ...row,
+      order: row.order - 1,
+    });
+
+    const updatedRows = [
+      ...rows.slice(0, index),
+      ...rows.slice(index + 1).map(decrementOrders),
+    ];
+
+    setRows(updatedRows);
+  };
+
   const updateRowsData = (updatedRow, order) => {
     const rowIndex = rows.findIndex(field => field.order === order);
     const updatedRows = [...rows];
@@ -75,6 +89,7 @@ export const MARCTable = ({
         fields={rows}
         columnWidths={columnWidths}
         onAddNewRow={addNewRow}
+        onRemoveRow={removeRow}
         onDataChange={updateRowsData}
         intl={intl}
       />

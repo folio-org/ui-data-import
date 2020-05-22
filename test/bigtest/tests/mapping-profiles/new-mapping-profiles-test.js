@@ -149,6 +149,10 @@ describe('Mapping profile form', () => {
               expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
             });
 
+            it('remove row button is disabled as there is only one row present', () => {
+              expect(mappingProfileForm.marcDetailsTable.rows(0).isTrashDisabled).to.be.true;
+            });
+
             describe('when Action is selected', () => {
               describe('and equal to Add', () => {
                 beforeEach(async () => {
@@ -267,6 +271,17 @@ describe('Mapping profile form', () => {
 
               it('then add new row', () => {
                 expect(mappingProfileForm.marcDetailsTable.rowCount).to.be.equal(2);
+              });
+            });
+
+            describe('when remove row button is clicked', () => {
+              beforeEach(async () => {
+                await mappingProfileForm.marcDetailsTable.rows(0).addRow.clickIconButton();
+                await mappingProfileForm.marcDetailsTable.rows(0).removeRow.clickIconButton();
+              });
+
+              it('should remove row', () => {
+                expect(mappingProfileForm.marcDetailsTable.rowCount).to.be.equal(1);
               });
             });
           });
