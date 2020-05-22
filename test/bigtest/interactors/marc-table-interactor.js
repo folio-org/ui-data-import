@@ -4,6 +4,7 @@ import {
   count,
   collection,
   text,
+  property,
 } from '@bigtest/interactor';
 
 import IconButtonInteractor from '@folio/stripes-components/lib/IconButton/tests/interactor';
@@ -39,6 +40,9 @@ class MARCTableCellInteractor {
 @interactor
 class MARCTableRowInteractor {
   cells = collection('[data-test-marc-table-cell]', MARCTableCellInteractor);
+  addRow = new IconButtonInteractor('[data-test-marc-table-add]');
+  removeRow = new IconButtonInteractor('[data-test-marc-table-remove]');
+  isTrashDisabled = property('[data-test-marc-table-remove]', 'disabled');
 }
 
 @interactor

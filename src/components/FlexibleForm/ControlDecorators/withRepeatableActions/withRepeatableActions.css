@@ -2,22 +2,12 @@
 
 .decorator {
   & [data-test-repeatable-decorator] {
-    float: right;
-    margin-bottom: -36px;
+    display: flex;
   }
 
-  & [class|="select"] {
-    float: right;
-  }
   & fieldset {
     min-width:100%;
     width: 100%;
-  }
-}
-
-.no-legend {
-  & [data-test-repeatable-decorator] {
-    margin-top: -32px;
-    margin-bottom: -5px;
+    margin: 0;
   }
 }

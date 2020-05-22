@@ -10,6 +10,9 @@ import css from './MARCTable.css';
 export const MARCTableRowContainer = ({
   fields,
   columnWidths,
+  onAddNewRow,
+  onRemoveRow,
+  onDataChange,
   intl,
 }) => {
   const renderRow = (field, i) => {
@@ -26,6 +29,9 @@ export const MARCTableRowContainer = ({
           columnWidths={columnWidths}
           isFirst={i === 0}
           isLast={i === (fields.length - 1)}
+          onAddNewRow={onAddNewRow}
+          onRemoveRow={onRemoveRow}
+          onDataChange={onDataChange}
           intl={intl}
         />
         {containsSubsequentLines &&
@@ -34,6 +40,7 @@ export const MARCTableRowContainer = ({
               <MARCTableRow
                 field={subfield}
                 columnWidths={columnWidths}
+                onDataChange={onDataChange}
                 isSubline
                 intl={intl}
               />
@@ -50,5 +57,8 @@ export const MARCTableRowContainer = ({
 MARCTableRowContainer.propTypes = {
   intl: PropTypes.object.isRequired,
   fields: PropTypes.arrayOf(PropTypes.object.isRequired),
+  onAddNewRow: PropTypes.func.isRequired,
+  onRemoveRow: PropTypes.func.isRequired,
+  onDataChange: PropTypes.func.isRequired,
   columnWidths: PropTypes.object,
 };
