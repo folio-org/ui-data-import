@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
-import { identity } from 'lodash';
 
 import { Select } from '@folio/stripes/components';
 import { validateRequiredField } from '../../utils';
@@ -20,7 +19,6 @@ export const FolioRecordTypeSelect = ({
           name={`profile.${fieldName}`}
           component={Select}
           required
-          itemToString={identity}
           validate={[validateRequiredField]}
           dataOptions={dataOptions}
           placeholder={placeholder}

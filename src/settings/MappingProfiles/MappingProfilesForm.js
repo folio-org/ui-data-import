@@ -19,7 +19,6 @@ import {
 } from 'redux-form';
 import {
   get,
-  identity,
   isEmpty,
 } from 'lodash';
 
@@ -44,7 +43,7 @@ import {
   ENTITY_KEYS,
   LAYER_TYPES,
   PROFILE_TYPES,
-  ITEM_STATUS_OPTIONS,
+  MAPPING_DETAILS_HEADLINE,
 } from '../../utils';
 import {
   INCOMING_RECORD_TYPES,
@@ -158,44 +157,6 @@ export const MappingProfilesFormComponent = ({
   const referenceTables = getReferenceTables(get(mappingDetails, 'mappingFields', []));
   const initialFields = getInitialFields(folioRecordType);
 
-  const injectedProps = {
-    'profile-headline': { children: headLine },
-    'field-record-type-incoming': {
-      dataOptions: incomingRecordTypesDataOptions,
-      itemToString: identity,
-    },
-    'field-record-type-existing': {
-      dataOptions: folioRecordTypesDataOptions,
-      itemToString: identity,
-      onChange: (event, newValue) => setFolioRecordType(newValue),
-    },
-    'section-mapping-details': { stateFieldValue: folioRecordType },
-    'mappingProfile.actionsAssociator': {
-      entityKey: ENTITY_KEYS.ACTION_PROFILES,
-      namespaceKey: 'AAP',
-      parentId: profile.id,
-      parentType: PROFILE_TYPES.MAPPING_PROFILE,
-      masterType: PROFILE_TYPES.ACTION_PROFILE,
-      detailType: PROFILE_TYPES.MAPPING_PROFILE,
-      profileName: profile.name,
-      contentData: associations,
-      relationsToAdd: addedRelations,
-      relationsToDelete: deletedRelations,
-      onLink: setAddedRelations,
-      onUnlink: setDeletedRelations,
-    },
-    'item-status': {
-      acceptedValuesList: ITEM_STATUS_OPTIONS.map(option => ({
-        value: option.value,
-        label: <FormattedMessage id={option.label} />,
-      })),
-    },
-  };
-  const stateMethods = {
-    dispatch,
-    change,
-  };
-
   const setReferenceTables = (fieldsPath, refTable) => {
     dispatch(change(formName, fieldsPath, refTable));
   };
@@ -256,7 +217,6 @@ export const MappingProfilesFormComponent = ({
                     name="profile.incomingRecordType"
                     component={Select}
                     required
-                    itemToString={identity}
                     validate={[validateRequiredField]}
                     dataOptions={incomingRecordTypesDataOptions}
                     placeholder={placeholder}
@@ -282,25 +242,27 @@ export const MappingProfilesFormComponent = ({
             label={<FormattedMessage id="ui-data-import.details" />}
             separator={false}
           >
-            <AccordionStatus>
-              <Row between="xs">
-                <Col>
-                  <MappedHeader
-                    mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
-                    mappedLabel="Field mapping"
-                    mappableLabelId="ui-data-import.settings.mappingProfiles.map.instance"
-                    mappableLabel="Instance"
-                    headlineProps={{ margin: 'small' }}
-                  />
-                </Col>
-                <Col>
-                  <div data-test-expand-all-button>
-                    <ExpandAllButton />
-                  </div>
-                </Col>
-              </Row>
-              {renderDetails[folioRecordType]}
-            </AccordionStatus>
+            {folioRecordType && (
+              <AccordionStatus>
+                <Row between="xs">
+                  <Col>
+                    <MappedHeader
+                      mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
+                      mappedLabel="Field mapping"
+                      mappableLabelId={MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId}
+                      mappableLabel={MAPPING_DETAILS_HEADLINE[folioRecordType]?.label}
+                      headlineProps={{ margin: 'small' }}
+                    />
+                  </Col>
+                  <Col>
+                    <div data-test-expand-all-button>
+                      <ExpandAllButton />
+                    </div>
+                  </Col>
+                </Row>
+                {renderDetails[folioRecordType]}
+              </AccordionStatus>
+            )}
           </Accordion>
           <Accordion
             id="mappingProfileFormAssociatedActionProfileAccordion"

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Field } from 'redux-form';
-
 import { get } from 'lodash';
 
 import { Select } from '@folio/stripes/components';

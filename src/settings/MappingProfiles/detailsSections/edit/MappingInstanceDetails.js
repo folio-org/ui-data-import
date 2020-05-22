@@ -1,7 +1,10 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
-import { get } from 'lodash';
+import {
+  get,
+  noop,
+} from 'lodash';
 
 import {
   Row,
@@ -14,9 +17,14 @@ import {
 
 import { validateMARCWithDate } from '../../../../utils';
 import {
+  onAdd,
+  onRemove,
+} from './utils';
+import {
   AcceptedValuesField,
+  DatePickerDecorator,
+  RepeatableActionsField,
   BooleanActionField,
-  withDatePicker,
 } from '../../../../components';
 
 export const MappingInstanceDetails = ({
@@ -32,38 +40,14 @@ export const MappingInstanceDetails = ({
   const getFieldName = mappingFieldIndex => {
     return `${fieldNamePrefix}.mappingFields[${mappingFieldIndex}].value`;
   };
-  const getSubfieldName = (mappingFieldIndex, fieldIndex) => {
-    return `${fieldNamePrefix}.mappingFields[${mappingFieldIndex}].subfields[0].fields[${fieldIndex}].value`;
+  const getBoolFieldName = mappingFieldIndex => {
+    return `${fieldNamePrefix}.mappingFields[${mappingFieldIndex}].booleanFieldAction`;
   };
-
-  const onAdd = (refTable, fieldName, incrementalField, fieldIndex) => {
-    const fieldsPath = `${fieldNamePrefix}.mappingFields[${fieldIndex}].subfields`;
-    let newInitRow = { ...get(initialFields, [fieldName], {}) };
-
-    if (incrementalField) {
-      newInitRow = {
-        ...newInitRow,
-        [incrementalField]: refTable.length,
-      };
-    }
-
-    refTable.push(newInitRow);
-    setReferenceTables(fieldsPath, refTable);
+  const getSubfieldName = (mappingFieldIndex, fieldIndex, subfieldIndex) => {
+    return `${fieldNamePrefix}.mappingFields[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].value`;
   };
-  const onRemove = (index, refTable, incrementalField, fieldIndex) => {
-    const fieldsPath = `${fieldNamePrefix}.mappingFields[${fieldIndex}].subfields`;
-    let newRefTable = [...refTable];
-
-    newRefTable.splice(index, 1);
-
-    if (incrementalField) {
-      newRefTable = newRefTable.map((row, i) => ({
-        ...row,
-        [incrementalField]: i,
-      }));
-    }
-
-    setReferenceTables(fieldsPath, newRefTable);
+  const getBoolSubfieldName = (mappingFieldIndex, fieldIndex, subfieldIndex) => {
+    return `${fieldNamePrefix}.mappingFields[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].booleanFieldAction`;
   };
 
   const renderAdminData = () => {
@@ -82,7 +66,7 @@ export const MappingInstanceDetails = ({
           >
             <BooleanActionField
               label={<FormattedMessage id={`${translationPrefix}.administrativeData.field.discoverySuppress`} />}
-              name={`${fieldNamePrefix}.mappingFields[0].booleanFieldAction`}
+              name={getBoolFieldName(0)}
             />
           </Col>
           <Col
@@ -91,7 +75,7 @@ export const MappingInstanceDetails = ({
           >
             <BooleanActionField
               label={<FormattedMessage id={`${translationPrefix}.administrativeData.field.staffSuppress`} />}
-              name={`${fieldNamePrefix}.mappingFields[1].booleanFieldAction`}
+              name={getBoolFieldName(1)}
             />
           </Col>
           <Col
@@ -100,7 +84,7 @@ export const MappingInstanceDetails = ({
           >
             <BooleanActionField
               label={<FormattedMessage id={`${translationPrefix}.administrativeData.field.previouslyHeld`} />}
-              name={`${fieldNamePrefix}.mappingFields[2].booleanFieldAction`}
+              name={getBoolFieldName(2)}
             />
           </Col>
         </Row>
@@ -114,7 +98,6 @@ export const MappingInstanceDetails = ({
               label={<FormattedMessage id={`${translationPrefix}.instance.administrationData.field.hrid`} />}
               name={getFieldName(3)}
               disabled
-              enabled={false}
             />
           </Col>
           <Col
@@ -126,7 +109,6 @@ export const MappingInstanceDetails = ({
               label={<FormattedMessage id={`${translationPrefix}.instance.administrationData.field.source`} />}
               name={getFieldName(4)}
               disabled
-              enabled={false}
             />
           </Col>
         </Row>
@@ -136,10 +118,10 @@ export const MappingInstanceDetails = ({
             xs={6}
           >
             <Field
-              component={withDatePicker}
+              component={DatePickerDecorator}
               label={<FormattedMessage id={`${translationPrefix}.instance.administrationData.field.catalogedDate`} />}
               name={getFieldName(5)}
-              WrappedComponent={TextField}
+              wrappedComponent={TextField}
               wrapperLabel={`${translationPrefix}.wrapper.acceptedValues`}
               validate={[validateMARCWithDate]}
               intl={intl}
@@ -156,7 +138,6 @@ export const MappingInstanceDetails = ({
               component={TextField}
               name={getFieldName(6)}
               label={<FormattedMessage id={`${translationPrefix}.instance.administrationData.field.statusId`} />}
-              enabled
               optionValue="name"
               optionLabel="name"
               wrapperLabel={`${translationPrefix}.wrapper.acceptedValues`}
@@ -174,7 +155,6 @@ export const MappingInstanceDetails = ({
               component={TextField}
               label={<FormattedMessage id={`${translationPrefix}.instance.administrationData.field.modeOfIssuanceId`} />}
               name={getFieldName(7)}
-              enabled={false}
               disabled
             />
           </Col>
@@ -184,33 +164,37 @@ export const MappingInstanceDetails = ({
             data-test-statistical-codes
             xs={12}
           >
-            <RepeatableField
-              fields={statisticalCodes}
-              addLabel={<FormattedMessage id={`${translationPrefix}.administrativeData.field.statisticalCodes.addLabel`} />}
+            <RepeatableActionsField
+              wrapperFieldName={getFieldName(8)}
               legend={<FormattedMessage id={`${translationPrefix}.administrativeData.field.statisticalCodes.legend`} />}
-              onAdd={() => onAdd(statisticalCodes, 'statisticalCodeIds', 'order', 8)}
-              onRemove={index => onRemove(index, statisticalCodes, 'order', 8)}
-              renderField={() => (
-                <Row left="xs">
-                  <Col
-                    data-test-statistical-code
-                    xs={12}
-                  >
-                    <AcceptedValuesField
-                      okapi={okapi}
-                      component={TextField}
-                      name={getSubfieldName(8, 0)}
-                      label={<FormattedMessage id={`${translationPrefix}.administrativeData.field.statisticalCode`} />}
-                      optionLabel="name"
-                      optionValue="name"
-                      wrapperLabel={`${translationPrefix}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="statisticalCodes"
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+            >
+              <RepeatableField
+                fields={statisticalCodes}
+                addLabel={<FormattedMessage id={`${translationPrefix}.administrativeData.field.statisticalCodes.addLabel`} />}
+                onAdd={() => onAdd(statisticalCodes, 'statisticalCodeIds', 'order', 8, initialFields, setReferenceTables)}
+                onRemove={index => onRemove(index, statisticalCodes, 'order', 8, setReferenceTables)}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col
+                      data-test-statistical-code
+                      xs={12}
+                    >
+                      <AcceptedValuesField
+                        okapi={okapi}
+                        component={TextField}
+                        name={getSubfieldName(8, 0, index)}
+                        label={<FormattedMessage id={`${translationPrefix}.administrativeData.field.statisticalCode`} />}
+                        optionLabel="name"
+                        optionValue="name"
+                        wrapperLabel={`${translationPrefix}.wrapper.acceptedValues`}
+                        wrapperSourceLink="/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name"
+                        wrapperSourcePath="statisticalCodes"
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            </RepeatableActionsField>
           </Col>
         </Row>
       </Accordion>
@@ -237,7 +221,6 @@ export const MappingInstanceDetails = ({
               component={TextField}
               label={<FormattedMessage id={`${translationPrefix}.instance.titleData.field.title`} />}
               name={getFieldName(9)}
-              enabled={false}
               disabled
             />
           </Col>
@@ -253,6 +236,8 @@ export const MappingInstanceDetails = ({
               legend={<FormattedMessage id={`${translationPrefix}.titleData.field.alternativeTitles.legend`} />}
               canAdd={false}
               canDelete={false}
+              onAdd={noop}
+              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col
@@ -262,7 +247,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.titleData.alternativeTitles.field.alternativeTitleTypeId`} />}
-                      name={getSubfieldName(10, index)}
+                      name={getSubfieldName(10, 0, index)}
                       disabled
                     />
                   </Col>
@@ -273,7 +258,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.titleData.alternativeTitles.field.alternativeTitle`} />}
-                      name={getSubfieldName(10, index)}
+                      name={getSubfieldName(10, 1, index)}
                       disabled
                     />
                   </Col>
@@ -291,7 +276,6 @@ export const MappingInstanceDetails = ({
               component={TextField}
               label={<FormattedMessage id={`${translationPrefix}.instance.titleData.field.indexTitle`} />}
               name={getFieldName(11)}
-              enabled={false}
               disabled
             />
           </Col>
@@ -307,13 +291,15 @@ export const MappingInstanceDetails = ({
               legend={<FormattedMessage id={`${translationPrefix}.titleData.field.series.legend`} />}
               canAdd={false}
               canDelete={false}
-              renderField={() => (
+              onAdd={noop}
+              onDelete={noop}
+              renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.titleData.series.field.series`} />}
-                      name={getSubfieldName(12, 0)}
+                      name={getSubfieldName(12, 0, index)}
                       disabled
                     />
                   </Col>
@@ -327,49 +313,56 @@ export const MappingInstanceDetails = ({
             data-test-preceding-titles
             xs={12}
           >
-            <RepeatableField
-              fields={precedingTitles}
-              addLabel={<FormattedMessage id={`${translationPrefix}.titleData.field.precedingTitles.addLabel`} />}
+            <RepeatableActionsField
+              wrapperFieldName={getFieldName(13)}
               legend={<FormattedMessage id={`${translationPrefix}.titleData.field.precedingTitles.legend`} />}
-              canAdd={false}
-              canDelete={false}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.titleData.precedingTitles.field.precedingTitlesTitle`} />}
-                      name={getSubfieldName(13, index)}
-                      disabled
-                    />
-                  </Col>
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.titleData.precedingTitles.field.precedingTitlesHrid`} />}
-                      name={getSubfieldName(13, index)}
-                      disabled
-                    />
-                  </Col>
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.titleData.precedingTitles.field.precedingTitlesIsbn`} />}
-                      name={getSubfieldName(13, index)}
-                      disabled
-                    />
-                  </Col>
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.titleData.precedingTitles.field.precedingTitlesIssn`} />}
-                      name={getSubfieldName(13, index)}
-                      disabled
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+              disabled
+            >
+              <RepeatableField
+                fields={precedingTitles}
+                addLabel={<FormattedMessage id={`${translationPrefix}.titleData.field.precedingTitles.addLabel`} />}
+                canAdd={false}
+                canDelete={false}
+                onAdd={noop}
+                onDelete={noop}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.titleData.precedingTitles.field.precedingTitlesTitle`} />}
+                        name={getSubfieldName(13, 0, index)}
+                        disabled
+                      />
+                    </Col>
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.titleData.precedingTitles.field.precedingTitlesHrid`} />}
+                        name={getSubfieldName(13, 1, index)}
+                        disabled
+                      />
+                    </Col>
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.titleData.precedingTitles.field.precedingTitlesIsbn`} />}
+                        name={getSubfieldName(13, 2, index)}
+                        disabled
+                      />
+                    </Col>
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.titleData.precedingTitles.field.precedingTitlesIssn`} />}
+                        name={getSubfieldName(13, 3, index)}
+                        disabled
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            </RepeatableActionsField>
           </Col>
         </Row>
         <Row left="xs">
@@ -377,49 +370,56 @@ export const MappingInstanceDetails = ({
             data-test-succeeding-titles
             xs={12}
           >
-            <RepeatableField
-              fields={succeedingTitles}
-              addLabel={<FormattedMessage id={`${translationPrefix}.titleData.field.succeedingTitles.addLabel`} />}
+            <RepeatableActionsField
+              wrapperFieldName={getFieldName(14)}
               legend={<FormattedMessage id={`${translationPrefix}.titleData.field.succeedingTitles.legend`} />}
-              canAdd={false}
-              canDelete={false}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.titleData.succeedingTitles.field.succeedingTitlesTitle`} />}
-                      name={getSubfieldName(14, index)}
-                      disabled
-                    />
-                  </Col>
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.titleData.succeedingTitles.field.succeedingTitlesHrid`} />}
-                      name={getSubfieldName(14, index)}
-                      disabled
-                    />
-                  </Col>
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.titleData.succeedingTitles.field.succeedingTitlesIsbn`} />}
-                      name={getSubfieldName(14, index)}
-                      disabled
-                    />
-                  </Col>
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.titleData.succeedingTitles.field.succeedingTitlesIssn`} />}
-                      name={getSubfieldName(14, index)}
-                      disabled
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+              disabled
+            >
+              <RepeatableField
+                fields={succeedingTitles}
+                addLabel={<FormattedMessage id={`${translationPrefix}.titleData.field.succeedingTitles.addLabel`} />}
+                canAdd={false}
+                canDelete={false}
+                onAdd={noop}
+                onDelete={noop}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.titleData.succeedingTitles.field.succeedingTitlesTitle`} />}
+                        name={getSubfieldName(14, 0, index)}
+                        disabled
+                      />
+                    </Col>
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.titleData.succeedingTitles.field.succeedingTitlesHrid`} />}
+                        name={getSubfieldName(14, 1, index)}
+                        disabled
+                      />
+                    </Col>
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.titleData.succeedingTitles.field.succeedingTitlesIsbn`} />}
+                        name={getSubfieldName(14, 2, index)}
+                        disabled
+                      />
+                    </Col>
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.titleData.succeedingTitles.field.succeedingTitlesIssn`} />}
+                        name={getSubfieldName(14, 3, index)}
+                        disabled
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            </RepeatableActionsField>
           </Col>
         </Row>
       </Accordion>
@@ -444,13 +444,15 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.titleData.field.identifiers.addLabel`} />}
               canAdd={false}
               canDelete={false}
+              onAdd={noop}
+              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={6}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.titleData.identifiers.field.identifierTypeId`} />}
-                      name={getSubfieldName(15, index)}
+                      name={getSubfieldName(15, 0, index)}
                       disabled
                     />
                   </Col>
@@ -458,7 +460,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.titleData.identifiers.field.value`} />}
-                      name={getSubfieldName(14, index)}
+                      name={getSubfieldName(15, 1, index)}
                       disabled
                     />
                   </Col>
@@ -489,13 +491,15 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.contributors.field.addLabel`} />}
               canAdd={false}
               canDelete={false}
+              onAdd={noop}
+              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={3}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.contributors.field.contributorName`} />}
-                      name={getSubfieldName(16, index)}
+                      name={getSubfieldName(16, 0, index)}
                       disabled
                     />
                   </Col>
@@ -503,7 +507,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.contributors.field.contributorNameTypeId`} />}
-                      name={getSubfieldName(16, index)}
+                      name={getSubfieldName(16, 1, index)}
                       disabled
                     />
                   </Col>
@@ -511,7 +515,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.contributors.field.contributorTypeId`} />}
-                      name={getSubfieldName(16, index)}
+                      name={getSubfieldName(16, 2, index)}
                       disabled
                     />
                   </Col>
@@ -519,14 +523,14 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.contributors.field.contributorTypeText`} />}
-                      name={getSubfieldName(16, index)}
+                      name={getSubfieldName(16, 3, index)}
                       disabled
                     />
                   </Col>
                   <Col xs={2}>
                     <BooleanActionField
                       label={<FormattedMessage id={`${translationPrefix}.instance.contributors.field.primary`} />}
-                      name={getSubfieldName(16, index)}
+                      name={getBoolSubfieldName(16, 4, index)}
                       disabled
                     />
                   </Col>
@@ -565,13 +569,15 @@ export const MappingInstanceDetails = ({
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.publications.legend`} />}
               canAdd={false}
               canDelete={false}
+              onAdd={noop}
+              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={3}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.publisher`} />}
-                      name={getSubfieldName(17, index)}
+                      name={getSubfieldName(17, 0, index)}
                       disabled
                     />
                   </Col>
@@ -579,7 +585,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.role`} />}
-                      name={getSubfieldName(17, index)}
+                      name={getSubfieldName(17, 1, index)}
                       disabled
                     />
                   </Col>
@@ -587,7 +593,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.place`} />}
-                      name={getSubfieldName(17, index)}
+                      name={getSubfieldName(17, 2, index)}
                       disabled
                     />
                   </Col>
@@ -595,7 +601,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.dateOfPublication`} />}
-                      name={getSubfieldName(17, index)}
+                      name={getSubfieldName(17, 3, index)}
                       disabled
                     />
                   </Col>
@@ -615,13 +621,15 @@ export const MappingInstanceDetails = ({
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.editions.legend`} />}
               canAdd={false}
               canDelete={false}
-              renderField={() => (
+              onAdd={noop}
+              onDelete={noop}
+              renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.edition`} />}
-                      name={getSubfieldName(18, 0)}
+                      name={getSubfieldName(18, 0, index)}
                       disabled
                     />
                   </Col>
@@ -641,13 +649,15 @@ export const MappingInstanceDetails = ({
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.physicalDescriptions.legend`} />}
               canAdd={false}
               canDelete={false}
-              renderField={() => (
+              onAdd={noop}
+              onDelete={noop}
+              renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.physicalDescription`} />}
-                      name={getSubfieldName(19, 0)}
+                      name={getSubfieldName(19, 0, index)}
                       disabled
                     />
                   </Col>
@@ -665,7 +675,6 @@ export const MappingInstanceDetails = ({
               component={TextField}
               label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.instanceTypeId`} />}
               name={getFieldName(20)}
-              enabled={false}
               disabled
             />
           </Col>
@@ -675,31 +684,37 @@ export const MappingInstanceDetails = ({
             data-test-nature-of-content-terms
             xs={12}
           >
-            <RepeatableField
-              fields={natureOfContentTermIds}
-              addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.natureOfContentTermsIds.addLabel`} />}
+            <RepeatableActionsField
+              wrapperFieldName={getFieldName(21)}
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.natureOfContentTermsIds.legend`} />}
-              renderField={() => (
-                <Row left="xs">
-                  <Col
-                    data-test-nature-of-content-term
-                    xs={12}
-                  >
-                    <AcceptedValuesField
-                      okapi={okapi}
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.natureOfContentTermId`} />}
-                      name={getSubfieldName(21, 0)}
-                      optionValue="name"
-                      optionLabel="name"
-                      wrapperLabel={`${translationPrefix}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="natureOfContentTerms"
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+            >
+              <RepeatableField
+                fields={natureOfContentTermIds}
+                addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.natureOfContentTermsIds.addLabel`} />}
+                onAdd={() => onAdd(natureOfContentTermIds, 'natureOfContentTermIds', 'order', 21, initialFields, setReferenceTables)}
+                onRemove={index => onRemove(index, natureOfContentTermIds, 'order', 21, setReferenceTables)}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col
+                      data-test-nature-of-content-term
+                      xs={12}
+                    >
+                      <AcceptedValuesField
+                        okapi={okapi}
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.natureOfContentTermId`} />}
+                        name={getSubfieldName(21, 0, index)}
+                        optionValue="name"
+                        optionLabel="name"
+                        wrapperLabel={`${translationPrefix}.wrapper.acceptedValues`}
+                        wrapperSourceLink="/nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name"
+                        wrapperSourcePath="natureOfContentTerms"
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            </RepeatableActionsField>
           </Col>
         </Row>
         <Row left="xs">
@@ -713,13 +728,15 @@ export const MappingInstanceDetails = ({
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.instanceFormatIds.legend`} />}
               canAdd={false}
               canDelete={false}
-              renderField={() => (
+              onAdd={noop}
+              onDelete={noop}
+              renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.instanceFormatId`} />}
-                      name={getSubfieldName(22, 0)}
+                      name={getSubfieldName(22, 0, index)}
                       disabled
                     />
                   </Col>
@@ -739,13 +756,15 @@ export const MappingInstanceDetails = ({
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.languages.legend`} />}
               canAdd={false}
               canDelete={false}
-              renderField={() => (
+              onAdd={noop}
+              onDelete={noop}
+              renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.languageId`} />}
-                      name={getSubfieldName(23, 0)}
+                      name={getSubfieldName(23, 0, index)}
                       disabled
                     />
                   </Col>
@@ -765,13 +784,15 @@ export const MappingInstanceDetails = ({
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.publicationFrequency.legend`} />}
               canAdd={false}
               canDelete={false}
-              renderField={() => (
+              onAdd={noop}
+              onDelete={noop}
+              renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.publicationFrequency`} />}
-                      name={getSubfieldName(24, 0)}
+                      name={getSubfieldName(24, 0, index)}
                       disabled
                     />
                   </Col>
@@ -791,13 +812,15 @@ export const MappingInstanceDetails = ({
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.publicationRange.legend`} />}
               canAdd={false}
               canDelete={false}
-              renderField={() => (
+              onAdd={noop}
+              onDelete={noop}
+              renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.publicationRange`} />}
-                      name={getSubfieldName(25, 0)}
+                      name={getSubfieldName(25, 0, index)}
                       disabled
                     />
                   </Col>
@@ -828,13 +851,15 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.field.notes.addLabel`} />}
               canAdd={false}
               canDelete={false}
+              onAdd={noop}
+              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={4}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.field.notes.noteType`} />}
-                      name={getSubfieldName(26, index)}
+                      name={getSubfieldName(26, 0, index)}
                       disabled
                     />
                   </Col>
@@ -842,7 +867,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.field.notes.note`} />}
-                      name={getSubfieldName(26, index)}
+                      name={getSubfieldName(26, 1, index)}
                       disabled
                     />
                   </Col>
@@ -852,7 +877,7 @@ export const MappingInstanceDetails = ({
                   >
                     <BooleanActionField
                       label={<FormattedMessage id={`${translationPrefix}.field.notes.note`} />}
-                      name={getSubfieldName(26, index)}
+                      name={getBoolSubfieldName(26, 2, index)}
                       disabled
                     />
                   </Col>
@@ -883,6 +908,8 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.field.EAccess.addLabel`} />}
               canAdd={false}
               canDelete={false}
+              onAdd={noop}
+              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col
@@ -893,7 +920,7 @@ export const MappingInstanceDetails = ({
                       okapi={okapi}
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.EAccess.field.relationship`} />}
-                      name={getSubfieldName(27, index)}
+                      name={getSubfieldName(27, 0, index)}
                       optionValue="name"
                       optionLabel="name"
                       wrapperLabel={`${translationPrefix}.wrapper.acceptedValues`}
@@ -906,7 +933,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.EAccess.field.uri`} />}
-                      name={getSubfieldName(27, index)}
+                      name={getSubfieldName(27, 1, index)}
                       disabled
                     />
                   </Col>
@@ -914,7 +941,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.EAccess.field.linkText`} />}
-                      name={getSubfieldName(27, index)}
+                      name={getSubfieldName(27, 2, index)}
                       disabled
                     />
                   </Col>
@@ -922,7 +949,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.EAccess.field.materialsSpecified`} />}
-                      name={getSubfieldName(27, index)}
+                      name={getSubfieldName(27, 3, index)}
                       disabled
                     />
                   </Col>
@@ -930,7 +957,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.EAccess.field.urlPublicNote`} />}
-                      name={getSubfieldName(27, index)}
+                      name={getSubfieldName(27, 4, index)}
                       disabled
                     />
                   </Col>
@@ -961,13 +988,15 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.subjects.addLabel`} />}
               canAdd={false}
               canDelete={false}
-              renderField={() => (
+              onAdd={noop}
+              onDelete={noop}
+              renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.subjects`} />}
-                      name={getSubfieldName(28, 0)}
+                      name={getSubfieldName(28, 0, index)}
                       disabled
                     />
                   </Col>
@@ -998,13 +1027,15 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.classifications.addLabel`} />}
               canAdd={false}
               canDelete={false}
+              onAdd={noop}
+              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={6}>
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.classificationTypeId`} />}
-                      name={getSubfieldName(29, index)}
+                      name={getSubfieldName(29, 0, index)}
                       disabled
                     />
                   </Col>
@@ -1012,7 +1043,7 @@ export const MappingInstanceDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.classificationNumber`} />}
-                      name={getSubfieldName(29, index)}
+                      name={getSubfieldName(29, 0, index)}
                       disabled
                     />
                   </Col>
@@ -1039,38 +1070,44 @@ export const MappingInstanceDetails = ({
             data-test-parent-instances
             xs={12}
           >
-            <RepeatableField
-              fields={parentInstances}
-              addLabel={<FormattedMessage id={`${translationPrefix}.instance.field.parentInstances.addLabel`} />}
+            <RepeatableActionsField
+              wrapperFieldName={getFieldName(30)}
               legend={<FormattedMessage id={`${translationPrefix}.instance.field.parentInstances.legend`} />}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col xs={6}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.instance.parentInstances.field.superInstanceId`} />}
-                      name={getSubfieldName(30, index)}
-                    />
-                  </Col>
-                  <Col
-                    data-test-parent-type-of-relation
-                    xs={6}
-                  >
-                    <AcceptedValuesField
-                      okapi={okapi}
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.instance.parentInstances.field.instnaceRelationshipTypeId`} />}
-                      name={getSubfieldName(30, index)}
-                      optionValue="name"
-                      optionLabel="name"
-                      wrapperLabel={`${translationPrefix}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="instanceRelationshipTypes"
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+            >
+              <RepeatableField
+                fields={parentInstances}
+                addLabel={<FormattedMessage id={`${translationPrefix}.instance.field.parentInstances.addLabel`} />}
+                onAdd={() => onAdd(parentInstances, 'parentInstances', 'order', 30, initialFields, setReferenceTables)}
+                onRemove={index => onRemove(index, parentInstances, 'order', 30, setReferenceTables)}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col xs={6}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.instance.parentInstances.field.superInstanceId`} />}
+                        name={getSubfieldName(30, 0, index)}
+                      />
+                    </Col>
+                    <Col
+                      data-test-parent-type-of-relation
+                      xs={6}
+                    >
+                      <AcceptedValuesField
+                        okapi={okapi}
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.instance.parentInstances.field.instnaceRelationshipTypeId`} />}
+                        name={getSubfieldName(30, 1, index)}
+                        optionValue="name"
+                        optionLabel="name"
+                        wrapperLabel={`${translationPrefix}.wrapper.acceptedValues`}
+                        wrapperSourceLink="/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name"
+                        wrapperSourcePath="instanceRelationshipTypes"
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            </RepeatableActionsField>
           </Col>
         </Row>
         <Row left="xs">
@@ -1078,38 +1115,44 @@ export const MappingInstanceDetails = ({
             data-test-child-instances
             xs={12}
           >
-            <RepeatableField
-              fields={childInstances}
-              addLabel={<FormattedMessage id={`${translationPrefix}.instance.field.childInstances.addLabel`} />}
+            <RepeatableActionsField
+              wrapperFieldName={getFieldName(31)}
               legend={<FormattedMessage id={`${translationPrefix}.instance.field.childInstances.legend`} />}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col xs={6}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.instance.childInstances.field.subInstanceId`} />}
-                      name={getSubfieldName(31, index)}
-                    />
-                  </Col>
-                  <Col
-                    data-test-child-type-of-relation
-                    xs={6}
-                  >
-                    <AcceptedValuesField
-                      okapi={okapi}
-                      component={TextField}
-                      label={<FormattedMessage id={`${translationPrefix}.instance.childInstances.field.instnaceRelationshipTypeId`} />}
-                      name={getSubfieldName(31, index)}
-                      optionValue="name"
-                      optionLabel="name"
-                      wrapperLabel={`${translationPrefix}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="instanceRelationshipTypes"
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+            >
+              <RepeatableField
+                fields={childInstances}
+                addLabel={<FormattedMessage id={`${translationPrefix}.instance.field.childInstances.addLabel`} />}
+                onAdd={() => onAdd(childInstances, 'childInstances', 'order', 31, initialFields, setReferenceTables)}
+                onRemove={index => onRemove(index, childInstances, 'order', 31, setReferenceTables)}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col xs={6}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.instance.childInstances.field.subInstanceId`} />}
+                        name={getSubfieldName(31, 0, index)}
+                      />
+                    </Col>
+                    <Col
+                      data-test-child-type-of-relation
+                      xs={6}
+                    >
+                      <AcceptedValuesField
+                        okapi={okapi}
+                        component={TextField}
+                        label={<FormattedMessage id={`${translationPrefix}.instance.childInstances.field.instnaceRelationshipTypeId`} />}
+                        name={getSubfieldName(31, 1, index)}
+                        optionValue="name"
+                        optionLabel="name"
+                        wrapperLabel={`${translationPrefix}.wrapper.acceptedValues`}
+                        wrapperSourceLink="/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name"
+                        wrapperSourcePath="instanceRelationshipTypes"
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            </RepeatableActionsField>
           </Col>
         </Row>
       </Accordion>
@@ -1120,7 +1163,9 @@ export const MappingInstanceDetails = ({
       id="related-instances"
       label={<FormattedMessage id={`${translationPrefix}.item.relatedInstances.section`} />}
       separator
-    />
+    >
+      <></>
+    </Accordion>
   );
 
   return (

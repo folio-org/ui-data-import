@@ -1,1 +1,3 @@
-export const MappingHoldingsDetails = () => {};
+import React from 'react';
+
+export const MappingHoldingsDetails = () => (<></>);
