@@ -149,7 +149,7 @@ describe('Mapping profile form', () => {
               expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
             });
 
-            it('trash button is disabled as there is only one row present', () => {
+            it('remove row button is disabled as there is only one row present', () => {
               expect(mappingProfileForm.marcDetailsTable.rows(0).isTrashDisabled).to.be.true;
             });
 
