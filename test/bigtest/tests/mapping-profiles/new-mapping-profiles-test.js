@@ -274,13 +274,13 @@ describe('Mapping profile form', () => {
               });
             });
 
-            describe('when trash is clicked', () => {
+            describe('when remove row button is clicked', () => {
               beforeEach(async () => {
                 await mappingProfileForm.marcDetailsTable.rows(0).addRow.clickIconButton();
                 await mappingProfileForm.marcDetailsTable.rows(0).removeRow.clickIconButton();
               });
 
-              it('then remove row', () => {
+              it('should remove row', () => {
                 expect(mappingProfileForm.marcDetailsTable.rowCount).to.be.equal(1);
               });
             });
