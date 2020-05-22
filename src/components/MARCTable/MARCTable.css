@@ -53,7 +53,7 @@
 [data-test-marc-table-remove] {
   &:disabled {
     pointer-events: none;
-   }
+  }
 }
 
 .tableDataCell {
