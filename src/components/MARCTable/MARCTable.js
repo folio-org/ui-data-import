@@ -60,6 +60,25 @@ export const MARCTable = ({
     setRows(updatedRows);
   };
 
+  const moveRow = (order, orderToSwitch) => {
+    const rowIndex = rows.findIndex(field => field.order === order);
+    const rowToSwitchIndex = rows.findIndex(field => field.order === orderToSwitch);
+    const updatedRows = [...rows];
+
+    const rowToSwitch = {
+      ...updatedRows[rowToSwitchIndex],
+      order,
+    };
+
+    updatedRows[rowToSwitchIndex] = {
+      ...updatedRows[rowIndex],
+      order: orderToSwitch,
+    };
+    updatedRows[rowIndex] = rowToSwitch;
+
+    setRows(updatedRows);
+  };
+
   const columns = ['arrows', 'action', 'field', 'indicator1', 'indicator2',
     'subfield', 'subaction', 'data', 'position', 'addRemove'];
   const columnWidths = {
@@ -90,6 +109,7 @@ export const MARCTable = ({
         columnWidths={columnWidths}
         onAddNewRow={addNewRow}
         onRemoveRow={removeRow}
+        onMoveRow={moveRow}
         onDataChange={updateRowsData}
         intl={intl}
       />
