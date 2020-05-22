@@ -50,6 +50,12 @@
   }
 }
 
+[data-test-marc-table-remove] {
+  &:disabled {
+    pointer-events: none;
+   }
+}
+
 .tableDataCell {
   margin-right: 5px;
 }
