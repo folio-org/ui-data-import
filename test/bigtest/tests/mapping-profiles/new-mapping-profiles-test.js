@@ -101,16 +101,16 @@ describe('Mapping profile form', () => {
             });
 
             it('row does not have re-order arrows', () => {
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(0).arrowUp.isPresent).to.be.false;
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(0).arrowDown.isPresent).to.be.false;
+              expect(mappingProfileForm.marcDetailsTable.rows(0).moveRowUp.isPresent).to.be.false;
+              expect(mappingProfileForm.marcDetailsTable.rows(0).moveRowDown.isPresent).to.be.false;
             });
 
             it('row has add button', () => {
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(9).addRow.isPresent).to.be.true;
+              expect(mappingProfileForm.marcDetailsTable.rows(0).addRow.isPresent).to.be.true;
             });
 
             it('row has remove button', () => {
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(9).removeRow.isPresent).to.be.true;
+              expect(mappingProfileForm.marcDetailsTable.rows(0).removeRow.isPresent).to.be.true;
             });
 
             it('action column has content', () => {
@@ -118,7 +118,7 @@ describe('Mapping profile form', () => {
             });
 
             it('and action is not selected', () => {
-              expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.val).to.equal('');
+              expect(mappingProfileForm.marcDetailsTable.rows(0).action.val).to.equal('');
             });
 
             it('field column has content', () => {
@@ -156,11 +156,11 @@ describe('Mapping profile form', () => {
             describe('when Action is selected', () => {
               describe('and equal to Add', () => {
                 beforeEach(async () => {
-                  await mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.selectAndBlur('Add');
+                  await mappingProfileForm.marcDetailsTable.rows(0).action.selectAndBlur('Add');
                 });
 
                 it('then action value is equal to Add', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.val).to.equal('ADD');
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).action.val).to.equal('ADD');
                 });
 
                 it('subaction column has content', () => {
@@ -178,11 +178,11 @@ describe('Mapping profile form', () => {
 
               describe('and equal to Delete', () => {
                 beforeEach(async () => {
-                  await mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.selectAndBlur('Delete');
+                  await mappingProfileForm.marcDetailsTable.rows(0).action.selectAndBlur('Delete');
                 });
 
                 it('then action value is equal to Delete', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.val).to.equal('DELETE');
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).action.val).to.equal('DELETE');
                 });
 
                 it('subaction column does not have content', () => {
@@ -200,11 +200,11 @@ describe('Mapping profile form', () => {
 
               describe('and equal to Edit', () => {
                 beforeEach(async () => {
-                  await mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.selectAndBlur('Edit');
+                  await mappingProfileForm.marcDetailsTable.rows(0).action.selectAndBlur('Edit');
                 });
 
                 it('then action value is equal to Edit', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.val).to.equal('EDIT');
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).action.val).to.equal('EDIT');
                 });
 
                 it('subaction column has content', () => {
@@ -221,7 +221,7 @@ describe('Mapping profile form', () => {
 
                 describe('when Insert subaction selected', () => {
                   beforeEach(async () => {
-                    await mappingProfileForm.marcDetailsTable.rows(0).cells(6).subaction.selectAndBlur('Insert');
+                    await mappingProfileForm.marcDetailsTable.rows(0).subaction.selectAndBlur('Insert');
                   });
 
                   it('position column has content', () => {
@@ -231,23 +231,23 @@ describe('Mapping profile form', () => {
 
                 describe('when Replace subaction selected', () => {
                   beforeEach(async () => {
-                    await mappingProfileForm.marcDetailsTable.rows(0).cells(6).subaction.selectAndBlur('Replace');
+                    await mappingProfileForm.marcDetailsTable.rows(0).subaction.selectAndBlur('Replace');
                   });
 
                   it('data column has 2 fields', () => {
-                    expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).dataFindField.isPresent).to.be.true;
-                    expect(mappingProfileForm.marcDetailsTable.rows(0).cells(7).dataReplaceField.isPresent).to.be.true;
+                    expect(mappingProfileForm.marcDetailsTable.rows(0).dataFindField.isPresent).to.be.true;
+                    expect(mappingProfileForm.marcDetailsTable.rows(0).dataReplaceField.isPresent).to.be.true;
                   });
                 });
               });
 
               describe('and equal to Move', () => {
                 beforeEach(async () => {
-                  await mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.selectAndBlur('Move');
+                  await mappingProfileForm.marcDetailsTable.rows(0).action.selectAndBlur('Move');
                 });
 
                 it('then action value is equal to Edit', () => {
-                  expect(mappingProfileForm.marcDetailsTable.rows(0).cells(1).action.val).to.equal('MOVE');
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).action.val).to.equal('MOVE');
                 });
 
                 it('subaction column has content', () => {
@@ -282,6 +282,36 @@ describe('Mapping profile form', () => {
 
               it('should remove row', () => {
                 expect(mappingProfileForm.marcDetailsTable.rowCount).to.be.equal(1);
+              });
+            });
+
+            describe('Move buttons', () => {
+              beforeEach(async () => {
+                await mappingProfileForm.marcDetailsTable.rows(0).addRow.clickIconButton();
+                await mappingProfileForm.marcDetailsTable.rows(0).action.selectAndBlur('Add');
+                await mappingProfileForm.marcDetailsTable.rows(1).action.selectAndBlur('Delete');
+              });
+
+              describe('when move up button is clicked', () => {
+                beforeEach(async () => {
+                  await mappingProfileForm.marcDetailsTable.rows(1).moveRowUp.clickIconButton();
+                });
+
+                it('then row should move up', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).action.val).to.be.equal('DELETE');
+                  expect(mappingProfileForm.marcDetailsTable.rows(1).action.val).to.be.equal('ADD');
+                });
+              });
+
+              describe('when move down button is clicked', () => {
+                beforeEach(async () => {
+                  await mappingProfileForm.marcDetailsTable.rows(0).moveRowDown.clickIconButton();
+                });
+
+                it('then row should move down', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).action.val).to.be.equal('DELETE');
+                  expect(mappingProfileForm.marcDetailsTable.rows(1).action.val).to.be.equal('ADD');
+                });
               });
             });
           });

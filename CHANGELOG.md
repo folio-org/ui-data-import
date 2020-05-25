@@ -12,6 +12,7 @@
 * Implement add new row functionality for the Field Mapping Profile details (UIDATIMP-497)
 * Change placement of repeatable decorator in the Inventory field mapping screens (UIDATIMP-518)
 * Implement delete row functionality for the Field Mapping Profile details (UIDATIMP-498)
+* Implement re-order row functionality for the Field Mapping Profile details (UIDATIMP-496)
 
 ### Bugs fixed:
 * Fix Item status list in field mapping profiles (UIDATIMP-515)
