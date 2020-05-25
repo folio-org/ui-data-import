@@ -32,6 +32,7 @@ export const MARCTableRow = ({
   isSubline,
   onAddNewRow,
   onRemoveRow,
+  onMoveRow,
   onDataChange,
   intl,
 }) => {
@@ -77,6 +78,8 @@ export const MARCTableRow = ({
   };
 
   const renderArrows = () => {
+    const { order } = field;
+
     const cellStyle = {
       width: columnWidths.arrows,
       justifyContent: isFirst ? 'flex-end' : 'flex-start',
@@ -96,6 +99,7 @@ export const MARCTableRow = ({
             data-test-marc-table-arrow-up
             icon="arrow-up"
             ariaLabel={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.moveUpRow' })}
+            onClick={() => onMoveRow(order, order - 1)}
           />
         )}
         {withRowDown && (
@@ -103,6 +107,7 @@ export const MARCTableRow = ({
             data-test-marc-table-arrow-down
             icon="arrow-down"
             ariaLabel={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.moveDownRow' })}
+            onClick={() => onMoveRow(order, order + 1)}
           />
         )}
       </div>
@@ -441,6 +446,7 @@ MARCTableRow.propTypes = {
   columnWidths: PropTypes.object.isRequired,
   onAddNewRow: PropTypes.func.isRequired,
   onRemoveRow: PropTypes.func.isRequired,
+  onMoveRow: PropTypes.func.isRequired,
   onDataChange: PropTypes.func.isRequired,
   isFirst: PropTypes.bool,
   isLast: PropTypes.bool,

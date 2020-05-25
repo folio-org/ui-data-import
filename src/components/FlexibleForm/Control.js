@@ -24,7 +24,7 @@ import {
   getOptionLabel,
   checkDate,
   checkEmpty,
-  getBooleanActionsValue,
+  getDecoratorValue,
 } from '../../utils';
 
 import * as decorators from './ControlDecorators';
@@ -204,13 +204,16 @@ export const Control = memo(props => {
 
       if (control && decorator) {
         wrapper = decorators[decorator];
+        attrs = {
+          ...attrs,
+          value: getDecoratorValue(attrs?.value) || noValueComponent,
+        };
       }
 
       attrs = {
         ...attrs,
         component: wrapper || control,
         WrappedComponent: wrapper ? control : null,
-        value: getBooleanActionsValue(attrs?.value) || noValueComponent,
       };
     }
 
@@ -258,7 +261,7 @@ export const Control = memo(props => {
 
         currentRow = {
           ...currentRow,
-          [fieldName]: getBooleanActionsValue(fieldValue),
+          [fieldName]: getDecoratorValue(fieldValue),
         };
       });
 

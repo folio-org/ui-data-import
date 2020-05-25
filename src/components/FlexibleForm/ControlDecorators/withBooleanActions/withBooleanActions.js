@@ -39,7 +39,9 @@ const WithBooleanActionsControl = props => {
     value: action.value,
     label: intl.formatMessage({ id: action.label }),
   }));
-  const defaultValue = input?.value && dataOptions.filter(option => option.value === input.value).length ? input.value : '';
+
+  const isDefaultValueExist = input?.value && dataOptions.some(option => option.value === input.value);
+  const defaultValue = isDefaultValueExist ? input.value : '';
 
   const [currentValue, setCurrentValue] = useState(defaultValue);
 

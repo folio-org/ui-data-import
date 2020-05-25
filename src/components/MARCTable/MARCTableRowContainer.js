@@ -12,6 +12,7 @@ export const MARCTableRowContainer = ({
   columnWidths,
   onAddNewRow,
   onRemoveRow,
+  onMoveRow,
   onDataChange,
   intl,
 }) => {
@@ -20,7 +21,7 @@ export const MARCTableRowContainer = ({
 
     return (
       <div
-        data-test-marc-table-row
+        data-test-marc-table-row={field.order}
         key={i}
         className={css.tableRowContainer}
       >
@@ -31,6 +32,7 @@ export const MARCTableRowContainer = ({
           isLast={i === (fields.length - 1)}
           onAddNewRow={onAddNewRow}
           onRemoveRow={onRemoveRow}
+          onMoveRow={onMoveRow}
           onDataChange={onDataChange}
           intl={intl}
         />
@@ -59,6 +61,7 @@ MARCTableRowContainer.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.object.isRequired),
   onAddNewRow: PropTypes.func.isRequired,
   onRemoveRow: PropTypes.func.isRequired,
+  onMoveRow: PropTypes.func.isRequired,
   onDataChange: PropTypes.func.isRequired,
   columnWidths: PropTypes.object,
 };
