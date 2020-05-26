@@ -6,7 +6,7 @@ const MARC_BIBLIOGRAPHIC = {
     enabled: true,
     path: 'marcBib.discoverySuppress',
     value: null,
-    booleanFieldAction: 'AS_IS',
+    booleanFieldAction: 'IGNORE',
     subfields: [],
   }, {
     name: 'hrid',

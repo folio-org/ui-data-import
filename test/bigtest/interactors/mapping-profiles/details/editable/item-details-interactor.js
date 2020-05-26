@@ -62,7 +62,7 @@ class ConditionAccordion extends AccordionInteractor {
 }
 
 class ItemNotesAccordion extends AccordionInteractor {
-  staffOnly = new SelectInteractor('#mapping-profiles-form [data-test-staff-only]');
+  staffOnly = new SelectInteractor('#mapping-profiles-form #section-item-notes [data-test-staff-only]');
   notes = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-item-notes]');
   notesRepeatable = new SelectInteractor('#mapping-profiles-form #section-item-notes [data-test-repeatable-decorator]');
   note = new TextFieldInteractor('#mapping-profiles-form [data-test-item-note]');
@@ -80,10 +80,10 @@ class LoanAndAvailabilityAccordion extends AccordionInteractor {
   circulationNotesRepeatable = new SelectInteractor('#mapping-profiles-form #section-circulation-notes [data-test-repeatable-decorator]');
   circulationNote = new TextFieldInteractor('#mapping-profiles-form [data-test-circulation-note]');
   circulationNoteAcceptedValues = new DropdownInteractor('#mapping-profiles-form [data-test-circulation-note] [data-test-accepted-values-list]');
+  staffOnly = new SelectInteractor('#mapping-profiles-form #section-circulation-notes [data-test-staff-only]');
 }
 
 class LocationAccordion extends AccordionInteractor {
-  staffOnly = new SelectInteractor('#mapping-profiles-form [data-test-staff-only]');
   permanent = new TextFieldInteractor('#mapping-profiles-form [data-test-permanent]');
   permanentAcceptedValues = new DropdownInteractor('#mapping-profiles-form [data-test-permanent] [data-test-accepted-values-list]');
   temporary = new TextFieldInteractor('#mapping-profiles-form [data-test-temporary]');

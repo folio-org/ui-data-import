@@ -227,20 +227,23 @@ export const FORMS_SETTINGS = {
           id: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues.chooseDate',
         },
       },
-      BOOLEAN_ACTIONS: [
-        {
-          label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords',
-          value: 'ALL_TRUE',
-        },
-        {
-          label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords',
-          value: 'ALL_FALSE',
-        },
-        {
-          label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords',
-          value: 'AS_IS',
-        },
-      ],
+      BOOLEAN_ACTIONS: {
+        OPTIONS: [
+          {
+            label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords',
+            value: 'ALL_TRUE',
+          },
+          {
+            label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords',
+            value: 'ALL_FALSE',
+          },
+          {
+            label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords',
+            value: 'AS_IS',
+          },
+        ],
+        DEFAULT_OPTION: 'IGNORE',
+      },
     },
   },
 };

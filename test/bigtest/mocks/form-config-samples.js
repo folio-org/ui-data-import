@@ -4545,7 +4545,7 @@ export const formConfigSamples = [
                     mclColumnPaths: {
                       publicDisplay: {
                         namePath: 'fields[0].name',
-                        valuePath: 'fields[0].value',
+                        valuePath: 'fields[0].booleanFieldAction',
                       },
                       enumeration: {
                         namePath: 'fields[1].name',
@@ -4553,7 +4553,7 @@ export const formConfigSamples = [
                       },
                       chronology: {
                         namePath: 'fields[2].name',
-                        valuePath: 'fields[2].booleanFieldAction',
+                        valuePath: 'fields[2].value',
                       },
                     },
                     dataAttributes: { 'data-test-receiving-history-note': '' },
