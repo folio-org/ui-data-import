@@ -168,7 +168,6 @@ export const MappingProfilesFormComponent = ({
         referenceTables={referenceTables}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
-        intl={intl}
       />
     ),
     HOLDINGS: <MappingHoldingsDetails />,

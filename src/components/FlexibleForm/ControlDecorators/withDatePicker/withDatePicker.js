@@ -5,18 +5,17 @@ import React, {
 } from 'react';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
 import { get } from 'lodash';
 
 import { DATE_FORMAT } from '@folio/stripes-acq-components';
 
+import { WithTranslation } from '../../..';
 import {
   OptionsList,
   TextDate,
 } from '../partials';
+
 import {
-  isFormattedMessage,
-  isTranslationId,
   FORMS_SETTINGS,
   ENTITY_KEYS,
 } from '../../../../utils';
@@ -76,7 +75,6 @@ export const withDatePicker = memo(props => {
     }
   };
 
-  const needsTranslation = wrapperLabel && !isFormattedMessage(wrapperLabel) && isTranslationId(wrapperLabel);
   const currentInput = useRef(input);
   const Wrapper = !isDatepicker ? WrappedComponent : TextDate;
 
@@ -104,31 +102,21 @@ export const withDatePicker = memo(props => {
         dateFormat={DATE_FORMAT}
         {...rest}
       />
-      {needsTranslation ? (
-        <FormattedMessage id={wrapperLabel}>
-          {localized => (
-            <OptionsList
-              id={id}
-              label={localized}
-              dataOptions={dataOptions}
-              optionValue="value"
-              optionLabel="name"
-              className={styles['options-dropdown']}
-              onSelect={handleChangeWrapperValue}
-            />
-          )}
-        </FormattedMessage>
-      ) : (
-        <OptionsList
-          id={id}
-          label={wrapperLabel}
-          dataOptions={dataOptions}
-          optionValue="value"
-          optionLabel="name"
-          className={styles['options-dropdown']}
-          onSelect={handleChangeWrapperValue}
-        />
-      )}
+      <WithTranslation
+        wrapperLabel={wrapperLabel}
+      >
+        {label => (
+          <OptionsList
+            id={id}
+            label={label}
+            dataOptions={dataOptions}
+            optionValue="value"
+            optionLabel="name"
+            className={styles['options-dropdown']}
+            onSelect={handleChangeWrapperValue}
+          />
+        )}
+      </WithTranslation>
     </div>
   );
 });

@@ -1,5 +1,23 @@
 import { get } from 'lodash';
 
+import { FIELD_NAME_PREFIX } from './constants';
+
+export const getFieldName = mappingFieldIndex => {
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].value`;
+};
+
+export const getBoolFieldName = mappingFieldIndex => {
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].booleanFieldAction`;
+};
+
+export const getSubfieldName = (mappingFieldIndex, fieldIndex, subfieldIndex) => {
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].value`;
+};
+
+export const getBoolSubfieldName = (mappingFieldIndex, fieldIndex, subfieldIndex) => {
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].booleanFieldAction`;
+};
+
 export const onAdd = (refTable, fieldName, fieldIndex, initialFields, callback, incrementalField) => {
   const fieldsPath = `profile.mappingDetails.mappingFields[${fieldIndex}].subfields`;
   let newInitRow = { ...get(initialFields, [fieldName], {}) };

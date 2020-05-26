@@ -31,3 +31,4 @@ export * from './RecordTypesSelect';
 export * from './RepeatableActionsField';
 export * from './Section';
 export * from './FolioRecordTypeSelect';
+export * from './WithTranslation';

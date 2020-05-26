@@ -29,7 +29,6 @@ export const AcceptedValuesField = ({
   wrapperSourceLink,
   wrapperSourcePath,
   dataAttributes,
-  ...fieldProps
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
 
@@ -47,7 +46,6 @@ export const AcceptedValuesField = ({
 
   return (
     <Field
-      {...fieldProps}
       id={id}
       component={withReferenceValues}
       name={name}
@@ -55,7 +53,7 @@ export const AcceptedValuesField = ({
       dataOptions={listOptions}
       optionValue={optionValue}
       optionLabel={optionLabel}
-      WrappedComponent={component}
+      wrappedComponent={component}
       wrapperLabel={wrapperLabel}
       validate={[validateMARCWithElse, memoizedValidation]}
       {...dataAttributes}
@@ -82,7 +80,14 @@ AcceptedValuesField.propTypes = {
     PropTypes.node,
   ]),
   id: PropTypes.string,
-  dataAttributes: PropTypes.arrayOf(PropTypes.object),
+  dataAttributes: PropTypes.object,
 };
 
-AcceptedValuesField.defaultProps = { acceptedValuesList: [] };
+AcceptedValuesField.defaultProps = {
+  id: '',
+  acceptedValuesList: [],
+  wrapperSourceLink: '',
+  wrapperSourcePath: '',
+  label: '',
+  dataAttributes: {},
+};

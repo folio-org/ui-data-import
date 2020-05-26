@@ -1,9 +1,6 @@
 import React, { memo } from 'react';
 import { PropTypes } from 'prop-types';
-import {
-  FormattedMessage,
-  useIntl,
-} from 'react-intl';
+import { useIntl } from 'react-intl';
 import { Field } from 'redux-form';
 import { get } from 'lodash';
 
@@ -12,11 +9,11 @@ import {
   Headline,
 } from '@folio/stripes/components';
 
+import { WithTranslation } from '..';
+
 import {
   ENTITY_KEYS,
   FORMS_SETTINGS,
-  isFormattedMessage,
-  isTranslationId,
 } from '../../utils';
 
 import styles from './RepeatableActionsField.css';
@@ -36,8 +33,6 @@ export const RepeatableActionsField = memo(({
     label: intl.formatMessage({ id: actions[key] }),
   }));
 
-  const needsTranslation = wrapperPlaceholder && !isFormattedMessage(wrapperPlaceholder) && isTranslationId(wrapperPlaceholder);
-
   const legendHeadline = (
     <Headline
       tag="h3"
@@ -54,27 +49,19 @@ export const RepeatableActionsField = memo(({
         data-test-repeatable-decorator
         className={styles.repeatableActions}
       >
-        {needsTranslation ? (
-          <FormattedMessage id={wrapperPlaceholder}>
-            {placeholder => (
-              <Field
-                name={wrapperFieldName}
-                component={Select}
-                dataOptions={dataOptions}
-                placeholder={placeholder}
-                disabled={disabled}
-              />
-            )}
-          </FormattedMessage>
-        ) : (
-          <Field
-            name={wrapperFieldName}
-            component={Select}
-            dataOptions={dataOptions}
-            placeholder={wrapperPlaceholder}
-            disabled={disabled}
-          />
-        )}
+        <WithTranslation
+          wrapperLabel={wrapperPlaceholder}
+        >
+          {placeholder => (
+            <Field
+              name={wrapperFieldName}
+              component={Select}
+              dataOptions={dataOptions}
+              placeholder={placeholder}
+              disabled={disabled}
+            />
+          )}
+        </WithTranslation>
       </div>
       {children}
     </div>

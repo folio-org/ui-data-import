@@ -4,18 +4,21 @@ import React, {
   useState,
 } from 'react';
 import { PropTypes } from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { get } from 'lodash';
 
 import { DATE_FORMAT } from '@folio/stripes-acq-components';
 
+import { WithTranslation } from '..';
 import {
   OptionsList,
   TextDate,
 } from '../FlexibleForm/ControlDecorators/partials';
+
 import {
-  isFormattedMessage,
-  isTranslationId,
   FORMS_SETTINGS,
   ENTITY_KEYS,
 } from '../../utils';
@@ -30,13 +33,16 @@ export const DatePickerDecorator = memo(props => {
     wrappedComponent,
     ...rest
   } = props;
-  const [currentValue, setCurrentValue] = useState(input?.value || '');
-  const [isDatepicker, setIsDatepicker] = useState(false);
-
   const {
     TODAY,
     CHOOSE_DATE,
   } = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'DATE_PICKER'], []);
+
+  const [currentValue, setCurrentValue] = useState(input?.value || '');
+  const [isDatepicker, setIsDatepicker] = useState(false);
+
+  const currentInput = useRef(input);
+  const intl = useIntl();
 
   const dataOptions = [
     {
@@ -75,9 +81,7 @@ export const DatePickerDecorator = memo(props => {
     }
   };
 
-  const needsTranslation = wrapperLabel && !isFormattedMessage(wrapperLabel) && isTranslationId(wrapperLabel);
-  const currentInput = useRef(input);
-  const Wrapper = !isDatepicker ? wrappedComponent : TextDate;
+  const Component = !isDatepicker ? wrappedComponent : TextDate;
 
   const {
     onBlur,
@@ -100,6 +104,7 @@ export const DatePickerDecorator = memo(props => {
   const datePickerProps = {
     onSetDate: handleSetDate,
     dateFormat: DATE_FORMAT,
+    intl,
   };
 
   if (isDatepicker) {
@@ -111,37 +116,27 @@ export const DatePickerDecorator = memo(props => {
 
   return (
     <div
-      className={styles.decorator}
       data-test-date-picker
+      className={styles.decorator}
     >
-      <Wrapper
+      <Component
         {...commonProps}
       />
-      {needsTranslation ? (
-        <FormattedMessage id={wrapperLabel}>
-          {localized => (
-            <OptionsList
-              id={id}
-              label={localized}
-              dataOptions={dataOptions}
-              optionValue="value"
-              optionLabel="name"
-              className={styles['options-dropdown']}
-              onSelect={handleChangeWrapperValue}
-            />
-          )}
-        </FormattedMessage>
-      ) : (
-        <OptionsList
-          id={id}
-          label={wrapperLabel}
-          dataOptions={dataOptions}
-          optionValue="value"
-          optionLabel="name"
-          className={styles['options-dropdown']}
-          onSelect={handleChangeWrapperValue}
-        />
-      )}
+      <WithTranslation
+        wrapperLabel={wrapperLabel}
+      >
+        {label => (
+          <OptionsList
+            id={id}
+            label={label}
+            dataOptions={dataOptions}
+            optionValue="value"
+            optionLabel="name"
+            className={styles['options-dropdown']}
+            onSelect={handleChangeWrapperValue}
+          />
+        )}
+      </WithTranslation>
     </div>
   );
 });
