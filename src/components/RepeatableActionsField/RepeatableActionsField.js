@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { PropTypes } from 'prop-types';
 import {
   FormattedMessage,
-  injectIntl,
+  useIntl,
 } from 'react-intl';
 import { Field } from 'redux-form';
 import { get } from 'lodash';
@@ -21,14 +21,15 @@ import {
 
 import styles from './RepeatableActionsField.css';
 
-export const RepeatableActionsFieldComponent = memo(({
+export const RepeatableActionsField = memo(({
   wrapperFieldName,
   legend,
   wrapperPlaceholder,
   children,
   disabled,
-  intl,
 }) => {
+  const intl = useIntl();
+
   const actions = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'REPEATABLE_ACTIONS'], []);
   const dataOptions = Object.keys(actions).map(key => ({
     value: key,
@@ -80,8 +81,7 @@ export const RepeatableActionsFieldComponent = memo(({
   );
 });
 
-RepeatableActionsFieldComponent.propTypes = {
-  intl: PropTypes.object.isRequired,
+RepeatableActionsField.propTypes = {
   children: PropTypes.node.isRequired,
   wrapperFieldName: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
@@ -89,9 +89,7 @@ RepeatableActionsFieldComponent.propTypes = {
   wrapperPlaceholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 };
 
-RepeatableActionsFieldComponent.defaultProps = {
+RepeatableActionsField.defaultProps = {
   disabled: false,
   wrapperPlaceholder: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions',
 };
-
-export const RepeatableActionsField = injectIntl(RepeatableActionsFieldComponent);

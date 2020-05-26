@@ -161,6 +161,6 @@ DatePickerDecorator.propTypes = {
 };
 
 DatePickerDecorator.defaultProps = {
-  id: null,
+  id: '',
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
 };

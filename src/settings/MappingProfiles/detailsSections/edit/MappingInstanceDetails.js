@@ -35,19 +35,19 @@ export const MappingInstanceDetails = ({
   intl,
 }) => {
   const translationPrefix = 'ui-data-import.settings.mappingProfiles.map';
-  const fieldNamePrefix = 'profile.mappingDetails';
+  const fieldNamePrefix = 'profile.mappingDetails.mappingFields';
 
   const getFieldName = mappingFieldIndex => {
-    return `${fieldNamePrefix}.mappingFields[${mappingFieldIndex}].value`;
+    return `${fieldNamePrefix}[${mappingFieldIndex}].value`;
   };
   const getBoolFieldName = mappingFieldIndex => {
-    return `${fieldNamePrefix}.mappingFields[${mappingFieldIndex}].booleanFieldAction`;
+    return `${fieldNamePrefix}[${mappingFieldIndex}].booleanFieldAction`;
   };
   const getSubfieldName = (mappingFieldIndex, fieldIndex, subfieldIndex) => {
-    return `${fieldNamePrefix}.mappingFields[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].value`;
+    return `${fieldNamePrefix}[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].value`;
   };
   const getBoolSubfieldName = (mappingFieldIndex, fieldIndex, subfieldIndex) => {
-    return `${fieldNamePrefix}.mappingFields[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].booleanFieldAction`;
+    return `${fieldNamePrefix}[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].booleanFieldAction`;
   };
 
   const renderAdminData = () => {
@@ -57,7 +57,6 @@ export const MappingInstanceDetails = ({
       <Accordion
         id="administrative-data"
         label={<FormattedMessage id={`${translationPrefix}.administrativeData.section`} />}
-        separator
       >
         <Row left="xs">
           <Col
@@ -171,8 +170,8 @@ export const MappingInstanceDetails = ({
               <RepeatableField
                 fields={statisticalCodes}
                 addLabel={<FormattedMessage id={`${translationPrefix}.administrativeData.field.statisticalCodes.addLabel`} />}
-                onAdd={() => onAdd(statisticalCodes, 'statisticalCodeIds', 'order', 8, initialFields, setReferenceTables)}
-                onRemove={index => onRemove(index, statisticalCodes, 'order', 8, setReferenceTables)}
+                onAdd={() => onAdd(statisticalCodes, 'statisticalCodeIds', 8, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, statisticalCodes, 8, setReferenceTables, 'order')}
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col
@@ -210,7 +209,6 @@ export const MappingInstanceDetails = ({
       <Accordion
         id="title-data"
         label={<FormattedMessage id={`${translationPrefix}.instance.titleData.section`} />}
-        separator
       >
         <Row left="xs">
           <Col
@@ -235,9 +233,8 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.titleData.field.alternativeTitles.addLabel`} />}
               legend={<FormattedMessage id={`${translationPrefix}.titleData.field.alternativeTitles.legend`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col
@@ -290,9 +287,8 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.titleData.field.series.addLabel`} />}
               legend={<FormattedMessage id={`${translationPrefix}.titleData.field.series.legend`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
@@ -322,9 +318,8 @@ export const MappingInstanceDetails = ({
                 fields={precedingTitles}
                 addLabel={<FormattedMessage id={`${translationPrefix}.titleData.field.precedingTitles.addLabel`} />}
                 canAdd={false}
-                canDelete={false}
+                canRemove={false}
                 onAdd={noop}
-                onDelete={noop}
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col xs={3}>
@@ -379,9 +374,8 @@ export const MappingInstanceDetails = ({
                 fields={succeedingTitles}
                 addLabel={<FormattedMessage id={`${translationPrefix}.titleData.field.succeedingTitles.addLabel`} />}
                 canAdd={false}
-                canDelete={false}
+                canRemove={false}
                 onAdd={noop}
-                onDelete={noop}
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col xs={3}>
@@ -432,7 +426,6 @@ export const MappingInstanceDetails = ({
       <Accordion
         id="identifiers"
         label={<FormattedMessage id={`${translationPrefix}.identifiers.section`} />}
-        separator
       >
         <Row left="xs">
           <Col
@@ -443,9 +436,8 @@ export const MappingInstanceDetails = ({
               fields={identifiers}
               addLabel={<FormattedMessage id={`${translationPrefix}.titleData.field.identifiers.addLabel`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={6}>
@@ -479,7 +471,6 @@ export const MappingInstanceDetails = ({
       <Accordion
         id="contributors"
         label={<FormattedMessage id={`${translationPrefix}.instance.contributors.section`} />}
-        separator
       >
         <Row left="xs">
           <Col
@@ -490,9 +481,8 @@ export const MappingInstanceDetails = ({
               fields={contributors}
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.contributors.field.addLabel`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={3}>
@@ -556,7 +546,6 @@ export const MappingInstanceDetails = ({
       <Accordion
         id="descriptive-data"
         label={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.section`} />}
-        separator
       >
         <Row left="xs">
           <Col
@@ -568,9 +557,8 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.publications.addLabel`} />}
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.publications.legend`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={3}>
@@ -620,9 +608,8 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.editions.addLabel`} />}
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.editions.legend`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
@@ -648,9 +635,8 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.physicalDescriptions.addLabel`} />}
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.physicalDescriptions.legend`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
@@ -691,8 +677,8 @@ export const MappingInstanceDetails = ({
               <RepeatableField
                 fields={natureOfContentTermIds}
                 addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.natureOfContentTermsIds.addLabel`} />}
-                onAdd={() => onAdd(natureOfContentTermIds, 'natureOfContentTermIds', 'order', 21, initialFields, setReferenceTables)}
-                onRemove={index => onRemove(index, natureOfContentTermIds, 'order', 21, setReferenceTables)}
+                onAdd={() => onAdd(natureOfContentTermIds, 'natureOfContentTermIds', 21, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, natureOfContentTermIds, 21, setReferenceTables, 'order')}
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col
@@ -727,9 +713,8 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.instanceFormatIds.addLabel`} />}
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.instanceFormatIds.legend`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
@@ -755,9 +740,8 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.languages.addLabel`} />}
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.languages.legend`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
@@ -783,9 +767,8 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.publicationFrequency.addLabel`} />}
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.publicationFrequency.legend`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
@@ -811,9 +794,8 @@ export const MappingInstanceDetails = ({
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.publicationRange.addLabel`} />}
               legend={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.publicationRange.legend`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
@@ -839,7 +821,6 @@ export const MappingInstanceDetails = ({
       <Accordion
         id="instance-notes"
         label={<FormattedMessage id={`${translationPrefix}.instance.instanceNotes.section`} />}
-        separator
       >
         <Row left="xs">
           <Col
@@ -850,9 +831,8 @@ export const MappingInstanceDetails = ({
               fields={notes}
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.field.notes.addLabel`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={4}>
@@ -896,7 +876,6 @@ export const MappingInstanceDetails = ({
       <Accordion
         id="instance-electronic-access"
         label={<FormattedMessage id={`${translationPrefix}.EAccess.section`} />}
-        separator
       >
         <Row left="xs">
           <Col
@@ -907,9 +886,8 @@ export const MappingInstanceDetails = ({
               fields={electronicAccess}
               addLabel={<FormattedMessage id={`${translationPrefix}.field.EAccess.addLabel`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col
@@ -976,7 +954,6 @@ export const MappingInstanceDetails = ({
       <Accordion
         id="subjects"
         label={<FormattedMessage id={`${translationPrefix}.instance.subject.section`} />}
-        separator
       >
         <Row left="xs">
           <Col
@@ -987,9 +964,8 @@ export const MappingInstanceDetails = ({
               fields={subjects}
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.subjects.addLabel`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={12}>
@@ -1015,7 +991,6 @@ export const MappingInstanceDetails = ({
       <Accordion
         id="classification"
         label={<FormattedMessage id={`${translationPrefix}.instance.classifications.section`} />}
-        separator
       >
         <Row left="xs">
           <Col
@@ -1026,9 +1001,8 @@ export const MappingInstanceDetails = ({
               fields={classifications}
               addLabel={<FormattedMessage id={`${translationPrefix}.instance.descriptiveData.field.classifications.addLabel`} />}
               canAdd={false}
-              canDelete={false}
+              canRemove={false}
               onAdd={noop}
-              onDelete={noop}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col xs={6}>
@@ -1063,7 +1037,6 @@ export const MappingInstanceDetails = ({
       <Accordion
         id="instance-relationship"
         label={<FormattedMessage id={`${translationPrefix}.instance.relationship.section`} />}
-        separator
       >
         <Row left="xs">
           <Col
@@ -1077,8 +1050,8 @@ export const MappingInstanceDetails = ({
               <RepeatableField
                 fields={parentInstances}
                 addLabel={<FormattedMessage id={`${translationPrefix}.instance.field.parentInstances.addLabel`} />}
-                onAdd={() => onAdd(parentInstances, 'parentInstances', 'order', 30, initialFields, setReferenceTables)}
-                onRemove={index => onRemove(index, parentInstances, 'order', 30, setReferenceTables)}
+                onAdd={() => onAdd(parentInstances, 'parentInstances', 30, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, parentInstances, 30, setReferenceTables, 'order')}
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col xs={6}>
@@ -1122,8 +1095,8 @@ export const MappingInstanceDetails = ({
               <RepeatableField
                 fields={childInstances}
                 addLabel={<FormattedMessage id={`${translationPrefix}.instance.field.childInstances.addLabel`} />}
-                onAdd={() => onAdd(childInstances, 'childInstances', 'order', 31, initialFields, setReferenceTables)}
-                onRemove={index => onRemove(index, childInstances, 'order', 31, setReferenceTables)}
+                onAdd={() => onAdd(childInstances, 'childInstances', 31, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, childInstances, 31, setReferenceTables, 'order')}
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col xs={6}>
@@ -1158,15 +1131,16 @@ export const MappingInstanceDetails = ({
       </Accordion>
     );
   };
-  const renderRelatedInstances = () => (
-    <Accordion
-      id="related-instances"
-      label={<FormattedMessage id={`${translationPrefix}.item.relatedInstances.section`} />}
-      separator
-    >
-      <></>
-    </Accordion>
-  );
+  const renderRelatedInstances = () => {
+    return (
+      <Accordion
+        id="related-instances"
+        label={<FormattedMessage id={`${translationPrefix}.item.relatedInstances.section`} />}
+      >
+        <></>
+      </Accordion>
+    );
+  };
 
   return (
     <AccordionSet>

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { Field } from 'redux-form';
 import { get } from 'lodash';
 
@@ -11,21 +11,23 @@ import {
   FORMS_SETTINGS,
 } from '../../utils';
 
-export const BooleanActionFieldComponent = ({
+export const BooleanActionField = ({
   id,
   name,
   label,
   placeholder,
-  intl,
   disabled,
 }) => {
+  const intl = useIntl();
+
   const actions = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'BOOLEAN_ACTIONS'], []);
   const dataOptions = actions.map(action => ({
     value: action.value,
     label: intl.formatMessage({ id: action.label }),
   }));
 
-  const checkboxPlaceholder = intl.formatMessage({ id: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping' });
+  const defaultPlaceholderId = 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping';
+  const checkboxPlaceholder = placeholder || intl.formatMessage({ id: defaultPlaceholderId });
 
   return (
     <Field
@@ -33,27 +35,24 @@ export const BooleanActionFieldComponent = ({
       component={Select}
       name={name}
       label={label}
-      placeholder={placeholder || checkboxPlaceholder}
+      placeholder={checkboxPlaceholder}
       dataOptions={dataOptions}
       disabled={disabled}
     />
   );
 };
 
-BooleanActionFieldComponent.propTypes = {
+BooleanActionField.propTypes = {
   name: PropTypes.string.isRequired,
-  intl: PropTypes.object.isRequired,
   id: PropTypes.string,
   label: PropTypes.oneOfType(PropTypes.node, PropTypes.string),
   placeholder: PropTypes.oneOfType(PropTypes.node, PropTypes.string),
   disabled: PropTypes.bool,
 };
 
-BooleanActionFieldComponent.defaultProps = {
+BooleanActionField.defaultProps = {
   id: '',
   label: '',
   placeholder: '',
   disabled: false,
 };
-
-export const BooleanActionField = injectIntl(BooleanActionFieldComponent);

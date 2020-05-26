@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 
-export const onAdd = (refTable, fieldName, incrementalField, fieldIndex, initialFields, callback) => {
+export const onAdd = (refTable, fieldName, fieldIndex, initialFields, callback, incrementalField) => {
   const fieldsPath = `profile.mappingDetails.mappingFields[${fieldIndex}].subfields`;
   let newInitRow = { ...get(initialFields, [fieldName], {}) };
 
@@ -15,7 +15,7 @@ export const onAdd = (refTable, fieldName, incrementalField, fieldIndex, initial
   callback(fieldsPath, refTable);
 };
 
-export const onRemove = (index, refTable, incrementalField, fieldIndex, callback) => {
+export const onRemove = (index, refTable, fieldIndex, callback, incrementalField) => {
   const fieldsPath = `profile.mappingDetails.mappingFields[${fieldIndex}].subfields`;
   let newRefTable = [...refTable];
 

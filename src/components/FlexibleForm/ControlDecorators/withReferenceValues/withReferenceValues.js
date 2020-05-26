@@ -28,7 +28,6 @@ export const withReferenceValues = memo(props => {
     optionLabel,
     WrappedComponent,
     wrapperLabel,
-    wrapperExplicitInsert,
     disabled,
     ...rest
   } = props;
@@ -54,7 +53,7 @@ export const withReferenceValues = memo(props => {
     let newValue = '';
 
     if (wrapperValue) {
-      if (wrapperExplicitInsert || !currentValue) {
+      if (!currentValue) {
         newValue = `"${wrapperValue}"`;
       } else {
         newValue = `${currentValue} "${wrapperValue}"`;
@@ -135,7 +134,6 @@ withReferenceValues.propTypes = {
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
   WrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
-  wrapperExplicitInsert: PropTypes.bool,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
   disabled: PropTypes.bool,
@@ -144,6 +142,5 @@ withReferenceValues.propTypes = {
 withReferenceValues.defaultProps = {
   id: null,
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-  wrapperExplicitInsert: false,
   disabled: false,
 };
