@@ -45,16 +45,9 @@ export const withReferenceValues = memo(props => {
     input.onChange(e);
   };
   const updateDecoratorFieldValue = (curVal, newVal) => {
-    let newValue;
     const containQuotedText = curVal.match(decoratorValueRegExp);
 
-    if (containQuotedText) {
-      newValue = `${curVal.replace(containQuotedText, `"${newVal}"`)}`;
-    } else {
-      newValue = `${curVal} "${newVal}"`;
-    }
-
-    return newValue;
+    return containQuotedText ? `${curVal.replace(containQuotedText, `"${newVal}"`)}` : `${curVal} "${newVal}"`;
   };
 
   useEffect(() => {
