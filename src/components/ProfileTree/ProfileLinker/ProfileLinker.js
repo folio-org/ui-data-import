@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 
 import classNames from 'classnames';
 
-import { Pluggable } from '@folio/stripes-core';
+import { Pluggable } from '@folio/stripes/core';
 import {
   Button,
   Dropdown,
@@ -23,7 +23,7 @@ import {
   ENTITY_KEYS,
   FILTER_QUERY_PARAMS,
   ASSOCIATION_TYPES,
-} from '../../../utils/constants';
+} from '../../../utils';
 import { fetchProfileSnapshot } from '../../../utils/fetchProfileSnapshot';
 
 import css from '../ProfileTree.css';
