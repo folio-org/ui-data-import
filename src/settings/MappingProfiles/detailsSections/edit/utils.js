@@ -1,5 +1,3 @@
-import { get } from 'lodash';
-
 import { FIELD_NAME_PREFIX } from './constants';
 
 export const getFieldName = mappingFieldIndex => {
@@ -20,7 +18,7 @@ export const getBoolSubfieldName = (mappingFieldIndex, fieldIndex, subfieldIndex
 
 export const onAdd = (refTable, fieldName, fieldIndex, initialFields, callback, incrementalField) => {
   const fieldsPath = `profile.mappingDetails.mappingFields[${fieldIndex}].subfields`;
-  let newInitRow = { ...get(initialFields, [fieldName], {}) };
+  let newInitRow = { ...initialFields[fieldName] };
 
   if (incrementalField) {
     newInitRow = {

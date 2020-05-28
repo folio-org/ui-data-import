@@ -1,6 +1,5 @@
 import React, {
   useMemo,
-  useRef,
   useState,
   useEffect,
   useLayoutEffect,
@@ -11,16 +10,12 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-
 import { connect } from 'react-redux';
 import {
   Field,
   change,
 } from 'redux-form';
-import {
-  get,
-  isEmpty,
-} from 'lodash';
+import { isEmpty } from 'lodash';
 
 import stripesForm from '@folio/stripes/form';
 import {
@@ -36,15 +31,6 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import {
-  compose,
-  withProfileWrapper,
-  validateRequiredField,
-  ENTITY_KEYS,
-  LAYER_TYPES,
-  PROFILE_TYPES,
-  MAPPING_DETAILS_HEADLINE,
-} from '../../utils';
 import {
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
@@ -64,6 +50,15 @@ import {
   getInitialFields,
   getReferenceTables,
 } from './initialDetails';
+import {
+  compose,
+  withProfileWrapper,
+  validateRequiredField,
+  ENTITY_KEYS,
+  LAYER_TYPES,
+  PROFILE_TYPES,
+  MAPPING_DETAILS_HEADLINE,
+} from '../../utils';
 
 import styles from './MappingProfiles.css';
 
@@ -74,25 +69,86 @@ export const MappingProfilesFormComponent = ({
   submitting,
   initialValues,
   okapi,
-  existingRecordTypeInitial,
-  mappingDetailsInitial,
-  mappingDetails,
   location: { search },
   handleSubmit,
   onCancel,
   dispatch,
   intl,
 }) => {
-  const { profile } = initialValues;
+  const {
+    profile,
+    profile: {
+      id,
+      name,
+      existingRecordType,
+      mappingDetails = {},
+      parentProfiles = [],
+      childProfiles = [],
+    },
+  } = initialValues;
   const { layer } = queryString.parse(search);
 
   const isEditMode = layer === LAYER_TYPES.EDIT;
   const isSubmitDisabled = pristine || submitting;
 
+  const [folioRecordType, setFolioRecordType] = useState(existingRecordType || null);
+  const [addedRelations, setAddedRelations] = useState([]);
+  const [deletedRelations, setDeletedRelations] = useState([]);
+  const [prevExistingRecordType, setPrevExistingRecordType] = useState(existingRecordType);
+  const [initials, setInitials] = useState({
+    ...profile,
+    mappingDetails: isEmpty(mappingDetails) ? getInitialDetails(prevExistingRecordType, true) : mappingDetails,
+  });
+
+  useLayoutEffect(() => {
+    const isEqual = folioRecordType === prevExistingRecordType;
+    const needsUpdate = !id || (id && (!isEqual || isEmpty(mappingDetails)));
+
+    if (!needsUpdate) {
+      return;
+    }
+
+    const newInitDetails = folioRecordType === existingRecordType && !isEmpty(mappingDetails)
+      ? mappingDetails
+      : getInitialDetails(folioRecordType, true);
+
+    const newInitials = {
+      ...initials,
+      mappingDetails: newInitDetails,
+    };
+
+    setInitials(newInitials);
+    // @TODO: change method should be changed to initialize
+    dispatch(change(formName, 'profile.mappingDetails', newInitDetails));
+
+    if (!isEqual) {
+      setPrevExistingRecordType(folioRecordType);
+    }
+  }, [folioRecordType]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    dispatch(change(formName, 'addedRelations', addedRelations));
+  }, [addedRelations, dispatch]);
+  useEffect(() => {
+    dispatch(change(formName, 'deletedRelations', deletedRelations));
+  }, [deletedRelations, dispatch]);
+
+  const paneTitle = isEditMode
+    ? (
+      <FormattedMessage id="ui-data-import.edit">
+        {txt => `${txt} ${name}`}
+      </FormattedMessage>
+    )
+    : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
+
+  const headLine = isEditMode ? name : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
+
   const associations = [
-    ...get(initialValues, ['profile', 'parentProfiles'], []),
-    ...get(initialValues, ['profile', 'childProfiles'], []),
+    ...parentProfiles,
+    ...childProfiles,
   ];
+
+  const referenceTables = getReferenceTables(mappingDetails?.mappingFields || []);
+  const initialFields = getInitialFields(folioRecordType);
 
   const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
@@ -107,55 +163,6 @@ export const MappingProfilesFormComponent = ({
 
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, []);
   const incomingRecordTypesDataOptions = useMemo(getIncomingRecordTypesDataOptions, []);
-
-  const paneTitle = isEditMode ? (
-    <FormattedMessage id="ui-data-import.edit">
-      {txt => `${txt} ${profile.name}`}
-    </FormattedMessage>
-  ) : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
-  const headLine = isEditMode ? profile.name : <FormattedMessage id="ui-data-import.settings.mappingProfiles.new" />;
-
-  const prevExistingRecordType = useRef(existingRecordTypeInitial);
-  const [folioRecordType, setFolioRecordType] = useState(get(profile, 'existingRecordType', null));
-  const [initials, setInitials] = useState({
-    ...profile,
-    mappingDetails: isEmpty(mappingDetails) ? getInitialDetails(prevExistingRecordType.current, true) : mappingDetails,
-  });
-  const [addedRelations, setAddedRelations] = useState([]);
-  const [deletedRelations, setDeletedRelations] = useState([]);
-
-  useLayoutEffect(() => {
-    const isEqual = folioRecordType === prevExistingRecordType.current;
-    const needsUpdate = !profile.id || (profile.id && (!isEqual || isEmpty(mappingDetails)));
-
-    if (!needsUpdate) {
-      return;
-    }
-
-    const newInitDetails = folioRecordType === existingRecordTypeInitial && !isEmpty(mappingDetails)
-      ? mappingDetailsInitial
-      : getInitialDetails(folioRecordType, true);
-    const newInitials = {
-      ...initials,
-      mappingDetails: newInitDetails,
-    };
-
-    setInitials(newInitials);
-    // @TODO: change method should be changed to initialize
-    dispatch(change(formName, 'profile.mappingDetails', newInitDetails));
-    if (!isEqual) {
-      prevExistingRecordType.current = folioRecordType;
-    }
-  }, [folioRecordType]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    dispatch(change(formName, 'addedRelations', addedRelations));
-  }, [addedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    dispatch(change(formName, 'deletedRelations', deletedRelations));
-  }, [deletedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const referenceTables = getReferenceTables(get(mappingDetails, 'mappingFields', []));
-  const initialFields = getInitialFields(folioRecordType);
 
   const setReferenceTables = (fieldsPath, refTable) => {
     dispatch(change(formName, fieldsPath, refTable));
@@ -241,27 +248,30 @@ export const MappingProfilesFormComponent = ({
             label={<FormattedMessage id="ui-data-import.details" />}
             separator={false}
           >
-            {folioRecordType && (
-              <AccordionStatus>
-                <Row between="xs">
-                  <Col>
-                    <MappedHeader
-                      mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
-                      mappedLabel="Field mapping"
-                      mappableLabelId={MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId}
-                      mappableLabel={MAPPING_DETAILS_HEADLINE[folioRecordType]?.label}
-                      headlineProps={{ margin: 'small' }}
-                    />
-                  </Col>
-                  <Col>
-                    <div data-test-expand-all-button>
-                      <ExpandAllButton />
-                    </div>
-                  </Col>
-                </Row>
-                {renderDetails[folioRecordType]}
-              </AccordionStatus>
-            )}
+            {folioRecordType
+              ? (
+                <AccordionStatus>
+                  <Row between="xs">
+                    <Col>
+                      <MappedHeader
+                        mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
+                        mappedLabel="Field mapping"
+                        mappableLabelId={MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId}
+                        mappableLabel={MAPPING_DETAILS_HEADLINE[folioRecordType]?.label}
+                        headlineProps={{ margin: 'small' }}
+                      />
+                    </Col>
+                    <Col>
+                      <div data-test-expand-all-button>
+                        <ExpandAllButton />
+                      </div>
+                    </Col>
+                  </Row>
+                  {renderDetails[folioRecordType]}
+                </AccordionStatus>
+              )
+              : (<></>)
+            }
           </Accordion>
           <Accordion
             id="mappingProfileFormAssociatedActionProfileAccordion"
@@ -271,11 +281,11 @@ export const MappingProfilesFormComponent = ({
             <ProfileAssociator
               entityKey={ENTITY_KEYS.ACTION_PROFILES}
               namespaceKey="AAP"
-              parentId={profile.id}
+              parentId={id}
               parentType={PROFILE_TYPES.MAPPING_PROFILE}
               masterType={PROFILE_TYPES.ACTION_PROFILE}
               detailType={PROFILE_TYPES.MAPPING_PROFILE}
-              profileName={profile.name}
+              profileName={name}
               contentData={associations}
               hasLoaded
               isMultiSelect
@@ -305,8 +315,6 @@ MappingProfilesFormComponent.propTypes = {
     PropTypes.string.isRequired,
   ]),
   okapi: PropTypes.object.isRequired,
-  existingRecordTypeInitial: PropTypes.string.isRequired,
-  mappingDetailsInitial: PropTypes.object.isRequired,
   mappingDetails: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
@@ -314,18 +322,9 @@ MappingProfilesFormComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  // @TODO: Remove this when FlexibleForm internal state mamagement will be implemented.
-  const okapi = get(state, ['okapi'], null);
-  const mappingDetailsInitial = get(state, ['form', formName, 'initial', 'profile', 'mappingDetails'], null);
-  const mappingDetails = get(state, ['form', formName, 'values', 'profile', 'mappingDetails'], null);
-  const existingRecordTypeInitial = get(state, ['form', formName, 'initial', 'profile', 'existingRecordType'], null);
+  const okapi = state.okapi || null;
 
-  return {
-    okapi,
-    existingRecordTypeInitial,
-    mappingDetailsInitial,
-    mappingDetails,
-  };
+  return { okapi };
 };
 
 export const MappingProfilesForm = compose(

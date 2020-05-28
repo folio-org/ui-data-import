@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Field } from 'redux-form';
-import { get } from 'lodash';
 
 import { Select } from '@folio/stripes/components';
 
@@ -20,7 +19,7 @@ export const BooleanActionField = ({
 }) => {
   const intl = useIntl();
 
-  const actions = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'BOOLEAN_ACTIONS'], []);
+  const actions = FORMS_SETTINGS[ENTITY_KEYS.MAPPING_PROFILES].DECORATORS.BOOLEAN_ACTIONS;
   const dataOptions = actions.map(action => ({
     value: action.value,
     label: intl.formatMessage({ id: action.label }),
@@ -45,8 +44,8 @@ export const BooleanActionField = ({
 BooleanActionField.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string,
-  label: PropTypes.oneOfType(PropTypes.node, PropTypes.string),
-  placeholder: PropTypes.oneOfType(PropTypes.node, PropTypes.string),
+  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  placeholder: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   disabled: PropTypes.bool,
 };
 

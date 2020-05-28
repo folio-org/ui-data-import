@@ -8,7 +8,6 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import { get } from 'lodash';
 
 import { DATE_FORMAT } from '@folio/stripes-acq-components';
 
@@ -36,9 +35,9 @@ export const DatePickerDecorator = memo(props => {
   const {
     TODAY,
     CHOOSE_DATE,
-  } = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'DATE_PICKER'], []);
+  } = FORMS_SETTINGS[ENTITY_KEYS.MAPPING_PROFILES].DECORATORS.DATE_PICKER;
 
-  const [currentValue, setCurrentValue] = useState(input?.value || '');
+  const [currentValue, setCurrentValue] = useState(input.value || '');
   const [isDatepicker, setIsDatepicker] = useState(false);
 
   const currentInput = useRef(input);
@@ -90,7 +89,7 @@ export const DatePickerDecorator = memo(props => {
     onFocus,
   } = input;
 
-  let commonProps = {
+  const commonProps = {
     value: currentValue,
     inputRef: currentInput,
     onBlur,
@@ -102,17 +101,13 @@ export const DatePickerDecorator = memo(props => {
   };
 
   const datePickerProps = {
+    ...commonProps,
     onSetDate: handleSetDate,
     dateFormat: DATE_FORMAT,
     intl,
   };
 
-  if (isDatepicker) {
-    commonProps = {
-      ...commonProps,
-      ...datePickerProps,
-    };
-  }
+  const wrappedComponentProps = isDatepicker ? datePickerProps : commonProps;
 
   return (
     <div
@@ -120,7 +115,7 @@ export const DatePickerDecorator = memo(props => {
       className={styles.decorator}
     >
       <Component
-        {...commonProps}
+        {...wrappedComponentProps}
       />
       <WithTranslation
         wrapperLabel={wrapperLabel}

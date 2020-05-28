@@ -25,7 +25,7 @@ export const withReferenceValues = memo(({
 }) => {
   const [hasLoaded, setHasLoaded] = useState(false);
   const [listOptions, setListOptions] = useState([]);
-  const [currentValue, setCurrentValue] = useState(input?.value || '');
+  const [currentValue, setCurrentValue] = useState(input.value || '');
 
   useEffect(() => {
     setHasLoaded(!isEmpty(dataOptions));

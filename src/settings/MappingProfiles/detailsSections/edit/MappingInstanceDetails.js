@@ -1,5 +1,4 @@
 import React from 'react';
-import { get } from 'lodash';
 
 import { AccordionSet } from '@folio/stripes/components';
 
@@ -23,27 +22,27 @@ export const MappingInstanceDetails = ({
   setReferenceTables,
   okapi,
 }) => {
-  const statisticalCodes = get(referenceTables, 'statisticalCodeIds', []);
-  const alternativeTitles = get(referenceTables, 'alternativeTitles', []);
-  const seriesStatements = get(referenceTables, 'series', []);
-  const precedingTitles = get(referenceTables, 'precedingTitles', []);
-  const succeedingTitles = get(referenceTables, 'succeedingTitles', []);
-  const identifiers = get(referenceTables, 'identifiers', []);
-  const contributors = get(referenceTables, 'contributors', []);
-  const publications = get(referenceTables, 'publication', []);
-  const editions = get(referenceTables, 'editions', []);
-  const physicalDescriptions = get(referenceTables, 'physicalDescriptions', []);
-  const natureOfContentTermIds = get(referenceTables, 'natureOfContentTermIds', []);
-  const instanceFormatIds = get(referenceTables, 'instanceFormatIds', []);
-  const languages = get(referenceTables, 'languages', []);
-  const publicationFrequency = get(referenceTables, 'publicationFrequency', []);
-  const publicationRange = get(referenceTables, 'publicationRange', []);
-  const notes = get(referenceTables, 'notes', []);
-  const electronicAccess = get(referenceTables, 'electronicAccess', []);
-  const subjects = get(referenceTables, 'subjects', []);
-  const classifications = get(referenceTables, 'classifications', []);
-  const parentInstances = get(referenceTables, 'parentInstances', []);
-  const childInstances = get(referenceTables, 'childInstances', []);
+  const statisticalCodes = referenceTables?.statisticalCodeIds || [];
+  const alternativeTitles = referenceTables?.alternativeTitles || [];
+  const seriesStatements = referenceTables?.series || [];
+  const precedingTitles = referenceTables?.precedingTitles || [];
+  const succeedingTitles = referenceTables?.succeedingTitles || [];
+  const identifiers = referenceTables?.identifiers || [];
+  const contributors = referenceTables?.contributors || [];
+  const publications = referenceTables?.publication || [];
+  const editions = referenceTables?.editions || [];
+  const physicalDescriptions = referenceTables?.physicalDescriptions || [];
+  const natureOfContentTermIds = referenceTables?.natureOfContentTermIds || [];
+  const instanceFormatIds = referenceTables?.instanceFormatIds || [];
+  const languages = referenceTables?.languages || [];
+  const publicationFrequency = referenceTables?.publicationFrequency || [];
+  const publicationRange = referenceTables?.publicationRange || [];
+  const notes = referenceTables?.notes || [];
+  const electronicAccess = referenceTables?.electronicAccess || [];
+  const subjects = referenceTables?.subjects || [];
+  const classifications = referenceTables?.classifications || [];
+  const parentInstances = referenceTables?.parentInstances || [];
+  const childInstances = referenceTables?.childInstances || [];
 
   return (
     <AccordionSet>

@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import { PropTypes } from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Field } from 'redux-form';
-import { get } from 'lodash';
 
 import {
   Select,
@@ -27,7 +26,7 @@ export const RepeatableActionsField = memo(({
 }) => {
   const intl = useIntl();
 
-  const actions = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'REPEATABLE_ACTIONS'], []);
+  const actions = FORMS_SETTINGS[ENTITY_KEYS.MAPPING_PROFILES].DECORATORS.REPEATABLE_ACTIONS;
   const dataOptions = Object.keys(actions).map(key => ({
     value: key,
     label: intl.formatMessage({ id: actions[key] }),
