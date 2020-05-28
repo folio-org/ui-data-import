@@ -6,11 +6,12 @@
   & .options-dropdown {
     display: flex;
     height: 100%;
-    margin: 25.5px 0 0 -1px;
+    margin: 25px 0 0 -1px;
     & button {
       min-width: 143px;
       height: 23px;
       padding: 0 5px 0 10px;
+      margin: 0 0 -1px;
       border-top: 1px solid rgba(0, 0, 0, 0.42);
       border-right: 1px solid rgba(0, 0, 0, 0.42);
       border-bottom: 1px solid rgba(0, 0, 0, 0.42);
