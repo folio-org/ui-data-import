@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { noop } from 'lodash';
 
 import { MultiColumnList } from '@folio/stripes/components';
-import { getNsKey } from '@folio/stripes-smart-components';
+import { getNsKey } from '@folio/stripes/smart-components';
 
 import {
   buildSortOrder,
@@ -16,8 +16,8 @@ import {
   sortStrings,
   sortDates,
   checkboxListShape,
+  SORT_TYPES,
 } from '../../utils';
-import { SORT_TYPES } from '../../utils/constants';
 
 import { searchAndSortTemplate } from '../ListTemplate';
 import { associatedProfilesColumns } from './associatedProfilesColumns';
