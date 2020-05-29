@@ -4,39 +4,44 @@ import React, {
   useState,
 } from 'react';
 import { PropTypes } from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import { DATE_FORMAT } from '@folio/stripes-acq-components';
 
-import { WithTranslation } from '../../..';
+import { WithTranslation } from '..';
 import {
   OptionsList,
   TextDate,
-} from '../partials';
+} from '../FlexibleForm/ControlDecorators/partials';
 
 import {
   FORMS_SETTINGS,
   ENTITY_KEYS,
-} from '../../../../utils';
+} from '../../utils';
 
-import styles from './withDatePicker.css';
+import styles from './DatePickerDecorator.css';
 
-export const withDatePicker = memo(props => {
+export const DatePickerDecorator = memo(props => {
   const {
     id,
     input,
     wrapperLabel,
-    WrappedComponent,
+    wrappedComponent,
     ...rest
   } = props;
-  const [currentValue, setCurrentValue] = useState(input?.value || '');
-  const [isDatepicker, setIsDatepicker] = useState(false);
-
   const {
     TODAY,
     CHOOSE_DATE,
-  } = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'DATE_PICKER'], []);
+  } = FORMS_SETTINGS[ENTITY_KEYS.MAPPING_PROFILES].DECORATORS.DATE_PICKER;
+
+  const [currentValue, setCurrentValue] = useState(input.value || '');
+  const [isDatepicker, setIsDatepicker] = useState(false);
+
+  const currentInput = useRef(input);
+  const intl = useIntl();
 
   const dataOptions = [
     {
@@ -75,8 +80,7 @@ export const withDatePicker = memo(props => {
     }
   };
 
-  const currentInput = useRef(input);
-  const Wrapper = !isDatepicker ? WrappedComponent : TextDate;
+  const Component = !isDatepicker ? wrappedComponent : TextDate;
 
   const {
     onBlur,
@@ -85,22 +89,33 @@ export const withDatePicker = memo(props => {
     onFocus,
   } = input;
 
+  const commonProps = {
+    value: currentValue,
+    inputRef: currentInput,
+    onBlur,
+    onChange: handleChange,
+    onDragStart,
+    onDrop,
+    onFocus,
+    ...rest,
+  };
+
+  const datePickerProps = {
+    ...commonProps,
+    onSetDate: handleSetDate,
+    dateFormat: DATE_FORMAT,
+    intl,
+  };
+
+  const wrappedComponentProps = isDatepicker ? datePickerProps : commonProps;
+
   return (
     <div
-      className={styles.decorator}
       data-test-date-picker
+      className={styles.decorator}
     >
-      <Wrapper
-        value={currentValue}
-        inputRef={currentInput}
-        onBlur={onBlur}
-        onChange={handleChange}
-        onSetDate={handleSetDate}
-        onDragStart={onDragStart}
-        onDrop={onDrop}
-        onFocus={onFocus}
-        dateFormat={DATE_FORMAT}
-        {...rest}
+      <Component
+        {...wrappedComponentProps}
       />
       <WithTranslation
         wrapperLabel={wrapperLabel}
@@ -121,7 +136,7 @@ export const withDatePicker = memo(props => {
   );
 });
 
-withDatePicker.propTypes = {
+DatePickerDecorator.propTypes = {
   input: PropTypes.shape({
     onBlur: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
@@ -130,12 +145,12 @@ withDatePicker.propTypes = {
     onFocus: PropTypes.func.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   }).isRequired,
-  WrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
+  wrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
 };
 
-withDatePicker.defaultProps = {
-  id: null,
+DatePickerDecorator.defaultProps = {
+  id: '',
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
 };

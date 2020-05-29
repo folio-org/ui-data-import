@@ -445,3 +445,38 @@ export const ITEM_STATUS_OPTIONS = [
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.claimedReturned',
   },
 ];
+
+export const MAPPING_DETAILS_HEADLINE = {
+  INSTANCE: {
+    label: 'Instance',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.instance',
+  },
+  HOLDINGS: {
+    label: 'Holdings',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.holdings',
+  },
+  ITEM: {
+    label: 'Item',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.item',
+  },
+  ORDER: {
+    label: 'Order',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.order',
+  },
+  INVOICE: {
+    label: 'Invoice',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.invoice',
+  },
+  MARC_BIBLIOGRAPHIC: {
+    label: 'MARC Bibliographic',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.marcBib',
+  },
+  MARC_HOLDINGS: {
+    label: 'MARC Holdings',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.marcHoldings',
+  },
+  MARC_AUTHORITY: {
+    label: 'MARC Authority',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.marcAuthority',
+  },
+};
