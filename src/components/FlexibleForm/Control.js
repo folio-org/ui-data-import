@@ -1,6 +1,5 @@
 import React, {
   Fragment,
-  useCallback,
   memo,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
