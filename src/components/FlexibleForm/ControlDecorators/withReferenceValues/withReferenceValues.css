@@ -5,9 +5,8 @@
   align-items: flex-start;
   & .options-dropdown {
     display: flex;
-    align-self: flex-end;
     height: 100%;
-    margin: 0 0 1rem;
+    margin: 25.5px 0 0 -1px;
     & button {
       min-width: 143px;
       height: 23px;
