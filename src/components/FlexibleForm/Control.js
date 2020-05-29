@@ -1,5 +1,6 @@
 import React, {
   Fragment,
+  useCallback,
   memo,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -145,7 +146,7 @@ export const Control = memo(props => {
       attrs = {
         ...attrs,
         name: fullName,
-        fieldsPath: fullFieldsPath,
+        fieldsPath: getActualParam(fullFieldsPath, sectionNamespace, repeatableIndex),
       };
     }
 
@@ -214,6 +215,7 @@ export const Control = memo(props => {
         ...attrs,
         component: wrapper || control,
         WrappedComponent: wrapper ? control : null,
+        setAcceptedValues: data => setReferenceTables(attrs.fieldsPath, data),
       };
     }
 
@@ -434,12 +436,12 @@ export const Control = memo(props => {
         onRemove={onRemove}
         canAdd={canAdd}
         canRemove={canRemove}
-        renderField={() => (
+        renderField={(field, index) => (
           <>
             {children.map((cfg, i) => (
               <Control
                 key={`control-${i}`}
-                repeatableIndex={i}
+                repeatableIndex={index}
                 staticNamespace={staticNamespace}
                 editableNamespace={editableNamespace}
                 sectionNamespace={sectionNamespace}
