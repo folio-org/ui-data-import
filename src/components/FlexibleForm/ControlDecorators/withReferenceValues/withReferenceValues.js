@@ -28,7 +28,6 @@ export const withReferenceValues = memo(props => {
     optionLabel,
     WrappedComponent,
     wrapperLabel,
-    wrapperExplicitInsert,
     ...rest
   } = props;
 
@@ -37,11 +36,18 @@ export const withReferenceValues = memo(props => {
   const [currentValue, setCurrentValue] = useState(input?.value || '');
   const [wrapperValue, setWrapperValue] = useState(null);
 
+  const decoratorValueRegExp = /"(\\.|[^"\\])*"/g;
+
   const handleChange = e => {
     const val = e.target ? e.target.value : e;
 
     setCurrentValue(val);
     input.onChange(e);
+  };
+  const updateDecoratorFieldValue = (curVal, newVal) => {
+    const containQuotedText = curVal.match(decoratorValueRegExp);
+
+    return containQuotedText ? `${curVal.replace(containQuotedText, `"${newVal}"`)}` : `${curVal} "${newVal}"`;
   };
 
   useEffect(() => {
@@ -53,10 +59,10 @@ export const withReferenceValues = memo(props => {
     let newValue = '';
 
     if (wrapperValue) {
-      if (wrapperExplicitInsert || !currentValue) {
+      if (!currentValue) {
         newValue = `"${wrapperValue}"`;
       } else {
-        newValue = `${currentValue} "${wrapperValue}"`;
+        newValue = updateDecoratorFieldValue(currentValue, wrapperValue);
       }
     }
 
@@ -133,7 +139,6 @@ withReferenceValues.propTypes = {
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
   WrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
-  wrapperExplicitInsert: PropTypes.bool,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
 };
@@ -141,5 +146,4 @@ withReferenceValues.propTypes = {
 withReferenceValues.defaultProps = {
   id: null,
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-  wrapperExplicitInsert: false,
 };

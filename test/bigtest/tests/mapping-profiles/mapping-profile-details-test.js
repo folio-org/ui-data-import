@@ -252,19 +252,19 @@ const hasReferenceValuesDecorator = (details, accordion, field, fieldLabel, drop
       });
     });
 
-    describe('when accepted values is selected', () => {
+    describe('when accepted value is selected in first time', () => {
       beforeEach(async () => {
         await mappingProfileForm[details][accordion][field].fillValue('');
         await mappingProfileForm[details][accordion][dropdown].clickTrigger();
         await mappingProfileForm[details][accordion][dropdown].menu.items(0).click();
       });
 
-      it('then input field is filled in', () => {
+      it('then input field value extend with selected one', () => {
         expect(mappingProfileForm[details][accordion][field].val).to.equal('"name 1"');
       });
     });
 
-    describe('when several accepted values is selected', () => {
+    describe('when accepted value is selected in second time', () => {
       beforeEach(async () => {
         await mappingProfileForm[details][accordion][field].fillValue('');
         await mappingProfileForm[details][accordion][dropdown].clickTrigger();
@@ -273,8 +273,8 @@ const hasReferenceValuesDecorator = (details, accordion, field, fieldLabel, drop
         await mappingProfileForm[details][accordion][dropdown].menu.items(1).click();
       });
 
-      it('then input field is filled in with selected values', () => {
-        expect(mappingProfileForm[details][accordion][field].val).to.equal('"name 1" "name 2"');
+      it('then input field value inside quotation marks should be replaced with selected value', () => {
+        expect(mappingProfileForm[details][accordion][field].val).to.equal('"name 2"');
       });
     });
 
