@@ -29,17 +29,35 @@ export const AcceptedValuesField = ({
   wrapperSourceLink,
   wrapperSourcePath,
   wrapperExplicitInsert,
+  setAcceptedValues,
   dataAttributes,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
 
+  const getAcceptedValuesObj = data => {
+    let acceptedValues = {};
+
+    data.forEach(item => {
+      acceptedValues = {
+        ...acceptedValues,
+        [item.id]: item.name,
+      };
+    });
+
+    return acceptedValues;
+  };
+
   useEffect(() => {
     if (wrapperSourceLink && wrapperSourcePath && isEmpty(acceptedValuesList)) {
       fetchAcceptedValuesList(okapi, wrapperSourceLink, wrapperSourcePath)
-        .then(setListOptions);
-    }
-  }, [okapi, wrapperSourceLink, wrapperSourcePath, acceptedValuesList]);
+        .then(data => {
+          const acceptedValues = getAcceptedValuesObj(data);
 
+          setListOptions(data);
+          setAcceptedValues(acceptedValues);
+        });
+    }
+  }, [okapi, wrapperSourceLink, wrapperSourcePath, acceptedValuesList]); // eslint-disable-line react-hooks/exhaustive-deps
   const memoizedValidation = useCallback(
     validateAcceptedValues(listOptions, optionValue),
     [listOptions],
@@ -83,6 +101,7 @@ AcceptedValuesField.propTypes = {
     PropTypes.node,
   ]),
   id: PropTypes.string,
+  setAcceptedValues: PropTypes.func,
   dataAttributes: PropTypes.arrayOf(PropTypes.object),
 };
 
