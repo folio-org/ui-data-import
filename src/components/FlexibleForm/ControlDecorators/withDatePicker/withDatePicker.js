@@ -17,6 +17,7 @@ import {
 import {
   isFormattedMessage,
   isTranslationId,
+  formatDecoratorValue,
   FORMS_SETTINGS,
   ENTITY_KEYS,
 } from '../../../../utils';
@@ -56,7 +57,7 @@ export const withDatePicker = memo(props => {
   };
 
   const handleSetDate = (e, value) => {
-    const newValue = currentValue ? `${currentValue} "${value}"` : `"${value}"`;
+    const newValue = formatDecoratorValue(currentValue, value, true);
 
     setCurrentValue(newValue);
     input.onChange(newValue);
@@ -67,7 +68,7 @@ export const withDatePicker = memo(props => {
 
     if (wrapperValue === TODAY.value) {
       setIsDatepicker(false);
-      newValue = currentValue ? `${currentValue} ###TODAY###` : '###TODAY###';
+      newValue = formatDecoratorValue(currentValue, wrapperValue);
       handleChange(newValue);
     }
 

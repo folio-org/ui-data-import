@@ -13,6 +13,7 @@ import { isEmpty } from 'lodash';
 import {
   isFormattedMessage,
   isTranslationId,
+  formatDecoratorValue,
 } from '../../../../utils';
 
 import { OptionsList } from '../partials';
@@ -36,18 +37,11 @@ export const withReferenceValues = memo(props => {
   const [currentValue, setCurrentValue] = useState(input?.value || '');
   const [wrapperValue, setWrapperValue] = useState(null);
 
-  const decoratorValueRegExp = /"(\\.|[^"\\])*"/g;
-
   const handleChange = e => {
     const val = e.target ? e.target.value : e;
 
     setCurrentValue(val);
     input.onChange(e);
-  };
-  const updateDecoratorFieldValue = (curVal, newVal) => {
-    const containQuotedText = curVal.match(decoratorValueRegExp);
-
-    return containQuotedText ? `${curVal.replace(containQuotedText, `"${newVal}"`)}` : `${curVal} "${newVal}"`;
   };
 
   useEffect(() => {
@@ -56,15 +50,7 @@ export const withReferenceValues = memo(props => {
   }, [dataOptions]);
 
   useLayoutEffect(() => {
-    let newValue = '';
-
-    if (wrapperValue) {
-      if (!currentValue) {
-        newValue = `"${wrapperValue}"`;
-      } else {
-        newValue = updateDecoratorFieldValue(currentValue, wrapperValue);
-      }
-    }
+    const newValue = wrapperValue ? formatDecoratorValue(currentValue, wrapperValue, true) : '';
 
     if (newValue) {
       setCurrentValue(newValue);
