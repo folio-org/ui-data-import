@@ -68,7 +68,7 @@ export const withDatePicker = memo(props => {
 
     if (wrapperValue === TODAY.value) {
       setIsDatepicker(false);
-      newValue = formatDecoratorValue(currentValue, wrapperValue);
+      newValue = formatDecoratorValue(currentValue, wrapperValue, false);
       handleChange(newValue);
     }
 
