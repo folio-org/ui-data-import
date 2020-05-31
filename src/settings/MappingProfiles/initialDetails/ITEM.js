@@ -57,11 +57,11 @@ const ITEM = {
       order: 0,
       path: 'item.statisticalCodeIds[]',
       fields: [{
-        // order: 0,
         name: 'statisticalCodeId',
         enabled: true,
         path: 'item.statisticalCodeIds[].statisticalCodeId',
         value: '',
+        acceptedValues: {},
       }],
     }],
   }, {
@@ -70,6 +70,7 @@ const ITEM = {
     path: 'item.materialType.id',
     value: '',
     subfields: [],
+    acceptedValues: {},
   }, {
     name: 'copyNumber',
     enabled: true,
@@ -82,6 +83,7 @@ const ITEM = {
     path: 'item.itemLevelCallNumberTypeId',
     value: '',
     subfields: [],
+    acceptedValues: {},
   }, {
     name: 'itemLevelCallNumberPrefix',
     enabled: true,
@@ -139,7 +141,6 @@ const ITEM = {
       order: 0,
       path: 'item.yearCaption[]',
       fields: [{
-        // order: 0,
         name: 'yearCaption',
         enabled: true,
         path: 'item.yearCaption[].yearCaption',
@@ -185,19 +186,17 @@ const ITEM = {
       order: 0,
       path: 'item.notes[]',
       fields: [{
-        // order: 0,
         name: 'itemNoteTypeId',
         enabled: true,
         path: 'item.notes[].itemNoteTypeId',
         value: '',
+        acceptedValues: {},
       }, {
-        // order: 1,
         name: 'note',
         enabled: true,
         path: 'item.notes[].note',
         value: '',
       }, {
-        // order: 2,
         name: 'staffOnly',
         enabled: true,
         path: 'item.notes[].staffOnly',
@@ -211,12 +210,14 @@ const ITEM = {
     path: 'item.permanentLoanType.id',
     value: '',
     subfields: [],
+    acceptedValues: {},
   }, {
     name: 'temporaryLoanType.id',
     enabled: true,
     path: 'item.temporaryLoanType.id',
     value: '',
     subfields: [],
+    acceptedValues: {},
   }, {
     name: 'status.name',
     enabled: true,
@@ -232,19 +233,17 @@ const ITEM = {
       order: 0,
       path: 'item.circulationNotes[]',
       fields: [{
-        // order: 0,
         name: 'noteType',
         enabled: true,
         path: 'item.circulationNotes[].noteType',
         value: '',
+        acceptedValues: {},
       }, {
-        // order: 1,
         name: 'note',
         enabled: true,
         path: 'item.circulationNotes[].note',
         value: '',
       }, {
-        // order: 2,
         name: 'staffOnly',
         enabled: true,
         path: 'item.circulationNotes[].staffOnly',
@@ -258,12 +257,14 @@ const ITEM = {
     path: 'item.permanentLocation.id',
     value: '',
     subfields: [],
+    acceptedValues: {},
   }, {
     name: 'temporaryLocation.id',
     enabled: true,
     path: 'item.temporaryLocation.id',
     value: '',
     subfields: [],
+    acceptedValues: {},
   }, {
     name: 'electronicAccess',
     enabled: true,
@@ -273,31 +274,27 @@ const ITEM = {
       order: 0,
       path: 'item.electronicAccess[]',
       fields: [{
-        // order: 0,
         name: 'relationshipId',
         enabled: true,
         path: 'item.electronicAccess[].relationshipId',
         value: '',
+        acceptedValues: {},
       }, {
-        // order: 1,
         name: 'uri',
         enabled: true,
         path: 'item.electronicAccess[].uri',
         value: '',
       }, {
-        // order: 2,
         name: 'linkText',
         enabled: true,
         path: 'item.electronicAccess[].linkText',
         value: '',
       }, {
-        // order: 3,
         name: 'materialsSpecification',
         enabled: true,
         path: 'item.electronicAccess[].materialsSpecification',
         value: '',
       }, {
-        // order: 4,
         name: 'publicNote',
         enabled: true,
         path: 'item.electronicAccess[].publicNote',
