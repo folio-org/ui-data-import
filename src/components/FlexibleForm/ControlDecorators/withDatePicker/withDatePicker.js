@@ -51,13 +51,15 @@ export const withDatePicker = memo(props => {
     },
   ];
 
+  const decoratorDatepickerValueRegExp = /###TODAY###|"[^"]+"/g;
+
   const handleChange = e => {
     setCurrentValue(e.target ? e.target.value : e);
     input.onChange(e);
   };
 
   const handleSetDate = (e, value) => {
-    const newValue = formatDecoratorValue(currentValue, value, true);
+    const newValue = formatDecoratorValue(currentValue, value, decoratorDatepickerValueRegExp, true);
 
     setCurrentValue(newValue);
     input.onChange(newValue);
@@ -67,8 +69,10 @@ export const withDatePicker = memo(props => {
     let newValue = '';
 
     if (wrapperValue === TODAY.value) {
+      const newWrapperValue = `###${wrapperValue}###`;
+
       setIsDatepicker(false);
-      newValue = formatDecoratorValue(currentValue, wrapperValue, false);
+      newValue = formatDecoratorValue(currentValue, newWrapperValue, decoratorDatepickerValueRegExp, false);
       handleChange(newValue);
     }
 

@@ -350,7 +350,7 @@ const hasDatePickerDecorator = (details, accordion, field, fieldLabel, dropdown,
               await mappingProfileForm[details][accordion][dataPicker].blurInput();
             });
 
-            it('then input field existing quoted date value or ###TODAY### value should be replaced with new quoted date value', () => {
+            it('then the previous date value is replaced with the picked date', () => {
               expect(mappingProfileForm[details][accordion][field].val).to.equal('"2020-06-20"');
             });
           });
@@ -390,7 +390,7 @@ const hasDatePickerDecorator = (details, accordion, field, fieldLabel, dropdown,
             await mappingProfileForm[details][accordion][dropdown].menu.items(0).click();
           });
 
-          it('then input field existing quoted value should be replaced with ###TODAY###', () => {
+          it('then the previous date value is replaced with ###TODAY### value', () => {
             expect(mappingProfileForm[details][accordion][field].val).to.equal('###TODAY###');
           });
         });
