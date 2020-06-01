@@ -332,11 +332,29 @@ const hasDatePickerDecorator = (details, accordion, field, fieldLabel, dropdown,
         await mappingProfileForm[details][accordion][field].fillValue('');
         await mappingProfileForm[details][accordion][dropdown].clickTrigger();
         await mappingProfileForm[details][accordion][dropdown].menu.items(0).click();
-        await mappingProfileForm[details][accordion][field].blurInput();
       });
 
-      it('then input field is filled in with "###TODAY###"', () => {
+      it('then input field is filled in with ###TODAY### value', () => {
         expect(mappingProfileForm[details][accordion][field].val).to.equal('###TODAY###');
+      });
+
+      describe('when 2nd option from select is choosen after 1st option was already choosen', () => {
+        beforeEach(async () => {
+          await mappingProfileForm[details][accordion][dropdown].clickTrigger();
+          await mappingProfileForm[details][accordion][dropdown].menu.items(1).click();
+
+          describe('and date choosen', () => {
+            beforeEach(async () => {
+              await mappingProfileForm[details][accordion][dataPicker].calendarButton.click();
+              await mappingProfileForm[details][accordion][dataPicker].calendar.days(20).click();
+              await mappingProfileForm[details][accordion][dataPicker].blurInput();
+            });
+
+            it('then the previous date value is replaced with the picked date', () => {
+              expect(mappingProfileForm[details][accordion][field].val).to.equal('"2020-06-20"');
+            });
+          });
+        });
       });
     });
 
@@ -363,7 +381,18 @@ const hasDatePickerDecorator = (details, accordion, field, fieldLabel, dropdown,
         });
 
         it('then field is filled in', () => {
-          expect(mappingProfileForm[details][accordion][dataPicker].inputValue).to.be.equals('"2020-05-16"');
+          expect(mappingProfileForm[details][accordion][dataPicker].inputValue).to.be.equals('"2020-06-20"');
+        });
+
+        describe('when 1st option from select is choosen after 2nd option was already choosen', () => {
+          beforeEach(async () => {
+            await mappingProfileForm[details][accordion][dropdown].clickTrigger();
+            await mappingProfileForm[details][accordion][dropdown].menu.items(0).click();
+          });
+
+          it('then the previous date value is replaced with ###TODAY### value', () => {
+            expect(mappingProfileForm[details][accordion][field].val).to.equal('###TODAY###');
+          });
         });
       });
     });
