@@ -124,12 +124,16 @@ export const getEntityTags = props => {
  * @return {string} Decorated input value
  */
 export const formatDecoratorValue = (currentValue, newValue, pattern, isNeedToWrapInQuotes) => {
-  const containTextForReplace = currentValue.match(pattern);
-  let updatedValue = isNeedToWrapInQuotes ? `"${newValue}"` : newValue;
+  const updatedValue = isNeedToWrapInQuotes ? `"${newValue}"` : newValue;
 
-  if (currentValue.length && !containTextForReplace) {
-    updatedValue = `${currentValue} ${updatedValue}`;
+  if (!currentValue) {
+    return updatedValue;
+  }
+  const containTextForReplace = currentValue.match(pattern);
+
+  if (containTextForReplace) {
+    return `${currentValue.replace(containTextForReplace.toString(), updatedValue)}`;
   }
 
-  return containTextForReplace ? `${currentValue.replace(containTextForReplace.toString(), updatedValue)}` : updatedValue;
+  return `${currentValue} ${updatedValue}`;
 };
