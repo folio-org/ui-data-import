@@ -14,6 +14,7 @@ import { fetchAcceptedValuesList } from './fetchAcceptedValuesList';
 import {
   validateMARCWithElse,
   validateAcceptedValues,
+  updateValueWithTemplate,
 } from '../../utils';
 
 export const AcceptedValuesField = ({
@@ -30,6 +31,7 @@ export const AcceptedValuesField = ({
   wrapperSourcePath,
   setAcceptedValues,
   dataAttributes,
+  optionTemplate,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
 
@@ -39,20 +41,26 @@ export const AcceptedValuesField = ({
     data.forEach(item => {
       acceptedValues = {
         ...acceptedValues,
-        [item.id]: item.name,
+        [item.id]: optionTemplate ? updateValueWithTemplate(item, optionTemplate) : item[optionValue],
       };
     });
 
     return acceptedValues;
   };
 
+  const updateListOptions = data => data.map(option => ({
+    ...option,
+    name: optionTemplate ? updateValueWithTemplate(option, optionTemplate) : option.name,
+  }));
+
   useEffect(() => {
     if (wrapperSourceLink && wrapperSourcePath && isEmpty(acceptedValuesList)) {
       fetchAcceptedValuesList(okapi, wrapperSourceLink, wrapperSourcePath)
         .then(data => {
           const acceptedValues = getAcceptedValuesObj(data);
+          const updatedListOptions = updateListOptions(data);
 
-          setListOptions(data);
+          setListOptions(updatedListOptions);
           setAcceptedValues(acceptedValues);
         });
     }
@@ -84,6 +92,7 @@ AcceptedValuesField.propTypes = {
   name: PropTypes.string.isRequired,
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
+  optionTemplate: PropTypes.string,
   okapi: PropTypes.shape({
     tenant: PropTypes.string.isRequired,
     token: PropTypes.string.isRequired,

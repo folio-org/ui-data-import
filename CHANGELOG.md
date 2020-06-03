@@ -23,6 +23,7 @@
 * Update logic for reference dropdowns (UIDATIMP-516)
 * Fix reference dropdowns long lists height (UIDATIMP-511)
 * Update logic for reference dropdowns with datepicker (UIDATIMP-523)
+* Add location code display to accepted values list (UIDATIMP-514)
 
 ## [1.8.3](https://github.com/folio-org/ui-data-import/tree/v1.8.3) (2020-04-27)
 
