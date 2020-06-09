@@ -63,14 +63,14 @@ export const AcceptedValuesField = ({
     };
   });
 
-  const mappedFns = { statCodes: extendDataWithStatisticalCodeType };
+  const mappedFns = { statisticalCodeTypeName: extendDataWithStatisticalCodeType };
 
   useEffect(() => {
     if (wrapperSources && isEmpty(acceptedValuesList)) {
       const promises = wrapperSources.map(source => fetchAcceptedValuesList(okapi, source.wrapperSourceLink, source.wrapperSourcePath));
 
       Promise.all(promises).then(result => {
-        const dataWithExtendField = wrapperSourcesFn ? sortCollection(mappedFns[wrapperSourcesFn](sortCollection(result[0], ['code']), result[1]), ['statisticalCodeTypeName']) : '';
+        const dataWithExtendField = wrapperSourcesFn ? sortCollection(mappedFns[wrapperSourcesFn](sortCollection(result[0], ['code']), result[1]), [wrapperSourcesFn]) : '';
         const data = dataWithExtendField || result[0];
         const acceptedValues = getAcceptedValuesObj(data);
         const updatedListOptions = updateListOptions(data);
