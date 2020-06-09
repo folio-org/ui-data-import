@@ -1655,6 +1655,32 @@ describe('Mapping Profile View', () => {
             });
           });
         });
+
+        describe('MARC Bibliographic', () => {
+          beforeEach(async () => {
+            await mappingProfiles.list.rows(3).click();
+            await mappingProfileDetails.actionMenu.click();
+            await mappingProfileDetails.actionMenu.editProfile.click();
+          });
+
+          it('has MARC modifications table', () => {
+            expect(mappingProfileForm.marcDetailsTable.tablePresent).to.be.true;
+          });
+
+          it('table contains data', () => {
+            expect(mappingProfileForm.marcDetailsTable.rowCount).to.be.equal(8);
+          });
+
+          describe('when data in MARC modifications table changed', () => {
+            beforeEach(async () => {
+              await mappingProfileForm.marcDetailsTable.rows(0).removeRow.clickIconButton();
+            });
+
+            it('then "Save" button becomes active', () => {
+              expect(mappingProfileForm.submitFormButtonDisabled).to.be.false;
+            });
+          });
+        });
       });
     });
   });
