@@ -376,7 +376,7 @@
     "settings.mappingProfiles.map.instance.administrationData.field.source": "Fonte de metadados",
     "settings.mappingProfiles.map.instance.administrationData.field.catalogedDate": "Data da catalogação",
     "settings.mappingProfiles.map.instance.administrationData.field.statusId": "Termo do status da instância",
-    "settings.mappingProfiles.map.instance.administrationData.field.modeOfIssuanceId": "Modo de emissão",
+    "settings.mappingProfiles.map.instance.administrationData.field.modeOfIssuanceId": "Modo de periodicidade",
     "settings.mappingProfiles.map.instance.titleData.section": "Dados do título",
     "settings.mappingProfiles.map.instance.titleData.field.title": "Título do recurso",
     "settings.mappingProfiles.map.titleData.field.alternativeTitles.legend": "Títulos alternativos",

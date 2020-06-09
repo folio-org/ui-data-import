@@ -13,6 +13,7 @@ import { isEmpty } from 'lodash';
 import {
   isFormattedMessage,
   isTranslationId,
+  formatDecoratorValue,
 } from '../../../../utils';
 
 import { OptionsList } from '../partials';
@@ -28,7 +29,6 @@ export const withReferenceValues = memo(props => {
     optionLabel,
     WrappedComponent,
     wrapperLabel,
-    wrapperExplicitInsert,
     ...rest
   } = props;
 
@@ -36,6 +36,8 @@ export const withReferenceValues = memo(props => {
   const [listOptions, setListOptions] = useState([]);
   const [currentValue, setCurrentValue] = useState(input?.value || '');
   const [wrapperValue, setWrapperValue] = useState(null);
+
+  const decoratorValueRegExp = /"[^"]+"/g;
 
   const handleChange = e => {
     const val = e.target ? e.target.value : e;
@@ -50,15 +52,7 @@ export const withReferenceValues = memo(props => {
   }, [dataOptions]);
 
   useLayoutEffect(() => {
-    let newValue = '';
-
-    if (wrapperValue) {
-      if (wrapperExplicitInsert || !currentValue) {
-        newValue = `"${wrapperValue}"`;
-      } else {
-        newValue = `${currentValue} "${wrapperValue}"`;
-      }
-    }
+    const newValue = wrapperValue ? formatDecoratorValue(currentValue, wrapperValue, decoratorValueRegExp, true) : '';
 
     if (newValue) {
       setCurrentValue(newValue);
@@ -133,7 +127,6 @@ withReferenceValues.propTypes = {
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
   WrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
-  wrapperExplicitInsert: PropTypes.bool,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
 };
@@ -141,5 +134,4 @@ withReferenceValues.propTypes = {
 withReferenceValues.defaultProps = {
   id: null,
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-  wrapperExplicitInsert: false,
 };

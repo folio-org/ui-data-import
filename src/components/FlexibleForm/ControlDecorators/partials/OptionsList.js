@@ -43,7 +43,7 @@ export const OptionsList = ({
         aria-label={label}
         role="menu"
       >
-        <ul>
+        <ul className={styles.dropdownList}>
           {!isEmpty(dataOptions) && dataOptions.map(option => (
             <li key={option?.[optionValue]}>
               <Button
