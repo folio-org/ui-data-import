@@ -15,6 +15,7 @@ import {
   validateMARCWithElse,
   validateAcceptedValues,
   updateValueWithTemplate,
+  sortCollection,
 } from '../../utils';
 
 export const AcceptedValuesField = ({
@@ -69,7 +70,7 @@ export const AcceptedValuesField = ({
       const promises = wrapperSources.map(source => fetchAcceptedValuesList(okapi, source.wrapperSourceLink, source.wrapperSourcePath));
 
       Promise.all(promises).then(result => {
-        const dataWithExtendField = wrapperSourcesFn ? mappedFns[wrapperSourcesFn](result[0], result[1]).sort((a, b) => a.statisticalCodeTypeName.localeCompare(b.statisticalCodeTypeName)) : '';
+        const dataWithExtendField = wrapperSourcesFn ? sortCollection(mappedFns[wrapperSourcesFn](sortCollection(result[0], ['code']), result[1]), ['statisticalCodeTypeName']) : '';
         const data = dataWithExtendField || result[0];
         const acceptedValues = getAcceptedValuesObj(data);
         const updatedListOptions = updateListOptions(data);
