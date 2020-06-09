@@ -14,6 +14,7 @@ import { fetchAcceptedValuesList } from './fetchAcceptedValuesList';
 import {
   validateMARCWithElse,
   validateAcceptedValues,
+  updateValueWithTemplate,
 } from '../../utils';
 
 export const AcceptedValuesField = ({
@@ -28,18 +29,42 @@ export const AcceptedValuesField = ({
   acceptedValuesList,
   wrapperSourceLink,
   wrapperSourcePath,
-  wrapperExplicitInsert,
+  setAcceptedValues,
   dataAttributes,
+  optionTemplate,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
+
+  const getAcceptedValuesObj = data => {
+    let acceptedValues = {};
+
+    data.forEach(item => {
+      acceptedValues = {
+        ...acceptedValues,
+        [item.id]: optionTemplate ? updateValueWithTemplate(item, optionTemplate) : item[optionValue],
+      };
+    });
+
+    return acceptedValues;
+  };
+
+  const updateListOptions = data => data.map(option => ({
+    ...option,
+    name: optionTemplate ? updateValueWithTemplate(option, optionTemplate) : option.name,
+  }));
 
   useEffect(() => {
     if (wrapperSourceLink && wrapperSourcePath && isEmpty(acceptedValuesList)) {
       fetchAcceptedValuesList(okapi, wrapperSourceLink, wrapperSourcePath)
-        .then(setListOptions);
-    }
-  }, [okapi, wrapperSourceLink, wrapperSourcePath, acceptedValuesList]);
+        .then(data => {
+          const acceptedValues = getAcceptedValuesObj(data);
+          const updatedListOptions = updateListOptions(data);
 
+          setListOptions(updatedListOptions);
+          setAcceptedValues(acceptedValues);
+        });
+    }
+  }, [okapi, wrapperSourceLink, wrapperSourcePath, acceptedValuesList]); // eslint-disable-line react-hooks/exhaustive-deps
   const memoizedValidation = useCallback(
     validateAcceptedValues(listOptions, optionValue),
     [listOptions],
@@ -56,7 +81,6 @@ export const AcceptedValuesField = ({
       optionLabel={optionLabel}
       WrappedComponent={component}
       wrapperLabel={wrapperLabel}
-      wrapperExplicitInsert={wrapperExplicitInsert}
       validate={[validateMARCWithElse, memoizedValidation]}
       {...dataAttributes}
     />
@@ -68,6 +92,7 @@ AcceptedValuesField.propTypes = {
   name: PropTypes.string.isRequired,
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
+  optionTemplate: PropTypes.string,
   okapi: PropTypes.shape({
     tenant: PropTypes.string.isRequired,
     token: PropTypes.string.isRequired,
@@ -77,12 +102,12 @@ AcceptedValuesField.propTypes = {
   wrapperSourceLink: PropTypes.string,
   wrapperSourcePath: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  wrapperExplicitInsert: PropTypes.bool,
   label: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
   ]),
   id: PropTypes.string,
+  setAcceptedValues: PropTypes.func,
   dataAttributes: PropTypes.arrayOf(PropTypes.object),
 };
 

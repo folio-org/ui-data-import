@@ -391,6 +391,7 @@ export const MARCTableRow = ({
         )}
         <IconButton
           data-test-marc-table-remove
+          className={css.removeButton}
           icon="trash"
           disabled={isSingle}
           ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.deleteField' })}

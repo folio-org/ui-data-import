@@ -13,6 +13,7 @@
 * Change placement of repeatable decorator in the Inventory field mapping screens (UIDATIMP-518)
 * Implement delete row functionality for the Field Mapping Profile details (UIDATIMP-498)
 * Implement re-order row functionality for the Field Mapping Profile details (UIDATIMP-496)
+* Add acceptedValues obj to reference dropdown fields (UIDATIMP-519)
 * Get rid of "@folio/stripes-core" and "@folio/stripes-smart-components" dependencies
 * Update "react-router" and "react-router-dom" dependencies
 * Connect MARC modifications table to the Field mapping profile form (UIDATIMP-536)
@@ -20,6 +21,10 @@
 ### Bugs fixed:
 * Fix Item status list in field mapping profiles (UIDATIMP-515)
 * Initial data doesn't show up for checkbox decorator for existing profiles (UIDATIMP-500)
+* Update logic for reference dropdowns (UIDATIMP-516)
+* Fix reference dropdowns long lists height (UIDATIMP-511)
+* Update logic for reference dropdowns with datepicker (UIDATIMP-523)
+* Add location code display to accepted values list (UIDATIMP-514)
 
 ## [1.8.3](https://github.com/folio-org/ui-data-import/tree/v1.8.3) (2020-04-27)
 
