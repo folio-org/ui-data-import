@@ -54,14 +54,18 @@ export const AcceptedValuesField = ({
     name: optionTemplate ? updateValueWithTemplate(option, optionTemplate) : option.name,
   }));
 
-  const extendDataWithStatisticalCodeType = (arrToExtend, arrWithExtendedField) => arrToExtend.map(item => {
-    const correspondRecord = arrWithExtendedField.find(itemAlt => itemAlt.id === item.statisticalCodeTypeId);
+  const extendDataWithStatisticalCodeType = (arrToExtend, arrWithExtendedField) => {
+    const extendedData = sortCollection(arrToExtend, ['code']).map(item => {
+      const correspondRecord = arrWithExtendedField.find(itemAlt => itemAlt.id === item.statisticalCodeTypeId);
 
-    return {
-      ...item,
-      statisticalCodeTypeName: correspondRecord.name,
-    };
-  });
+      return {
+        ...item,
+        statisticalCodeTypeName: correspondRecord.name,
+      };
+    });
+
+    return sortCollection(extendedData, ['statisticalCodeTypeName']);
+  };
 
   const mappedFns = { statisticalCodeTypeName: extendDataWithStatisticalCodeType };
 
@@ -70,7 +74,7 @@ export const AcceptedValuesField = ({
       const promises = wrapperSources.map(source => fetchAcceptedValuesList(okapi, source.wrapperSourceLink, source.wrapperSourcePath));
 
       Promise.all(promises).then(result => {
-        const dataWithExtendField = wrapperSourcesFn ? sortCollection(mappedFns[wrapperSourcesFn](sortCollection(result[0], ['code']), result[1]), [wrapperSourcesFn]) : '';
+        const dataWithExtendField = wrapperSourcesFn ? mappedFns[wrapperSourcesFn](result[0], result[1]) : '';
         const data = dataWithExtendField || result[0];
         const acceptedValues = getAcceptedValuesObj(data);
         const updatedListOptions = updateListOptions(data);
