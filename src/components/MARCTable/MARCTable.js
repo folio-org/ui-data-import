@@ -11,10 +11,9 @@ import {
 
 import css from './MARCTable.css';
 
-// TODO: Connect table to the form once BE be ready
 export const MARCTable = ({
   fields,
-  intl,
+  onChange,
 }) => {
   const [rows, setRows] = useState([]);
 
@@ -35,7 +34,7 @@ export const MARCTable = ({
       ...rows.slice(index).map(incrementOrders),
     ];
 
-    setRows(updatedRows);
+    onChange(updatedRows);
   };
 
   const removeRow = index => {
@@ -49,15 +48,7 @@ export const MARCTable = ({
       ...rows.slice(index + 1).map(decrementOrders),
     ];
 
-    setRows(updatedRows);
-  };
-
-  const updateRowsData = (updatedRow, order) => {
-    const rowIndex = rows.findIndex(field => field.order === order);
-    const updatedRows = [...rows];
-
-    updatedRows[rowIndex] = { ...updatedRow };
-    setRows(updatedRows);
+    onChange(updatedRows);
   };
 
   const moveRow = (order, orderToSwitch) => {
@@ -76,7 +67,7 @@ export const MARCTable = ({
     };
     updatedRows[rowIndex] = rowToSwitch;
 
-    setRows(updatedRows);
+    onChange(updatedRows);
   };
 
   const columns = ['arrows', 'action', 'field', 'indicator1', 'indicator2',
@@ -102,7 +93,6 @@ export const MARCTable = ({
       <MARCTableHeader
         columns={columns}
         columnWidths={columnWidths}
-        intl={intl}
       />
       <MARCTableRowContainer
         fields={rows}
@@ -110,31 +100,12 @@ export const MARCTable = ({
         onAddNewRow={addNewRow}
         onRemoveRow={removeRow}
         onMoveRow={moveRow}
-        onDataChange={updateRowsData}
-        intl={intl}
       />
     </div>
   );
 };
 
 MARCTable.propTypes = {
-  intl: PropTypes.object.isRequired,
-  fields: PropTypes.arrayOf(PropTypes.object),
-};
-
-MARCTable.defaultProps = {
-  fields: [
-    {
-      order: 0,
-      data: {
-        text: '',
-        find: '',
-        replace: '',
-        field: '',
-        indicator1: '',
-        indicator2: '',
-        subfield: '',
-      },
-    },
-  ],
+  fields: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onChange: PropTypes.func,
 };

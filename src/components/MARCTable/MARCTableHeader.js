@@ -1,23 +1,25 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import { useIntl } from 'react-intl';
 
 import css from './MARCTable.css';
 
 export const MARCTableHeader = ({
   columns,
   columnWidths,
-  intl,
 }) => {
+  const { formatMessage } = useIntl();
+
   const headerLabels = {
     arrows: '',
-    action: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.action' }),
-    field: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.field' }),
-    indicator1: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator1' }),
-    indicator2: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator2' }),
-    subfield: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subfield' }),
-    subaction: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subaction' }),
-    data: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.data' }),
-    position: intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.position' }),
+    action: formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.action' }),
+    field: formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.field' }),
+    indicator1: formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator1' }),
+    indicator2: formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator2' }),
+    subfield: formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subfield' }),
+    subaction: formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subaction' }),
+    data: formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.data' }),
+    position: formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.position' }),
     addRemove: '',
   };
 
@@ -48,6 +50,5 @@ export const MARCTableHeader = ({
 
 MARCTableHeader.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.string).isRequired,
-  intl: PropTypes.object.isRequired,
   columnWidths: PropTypes.object.isRequired,
 };

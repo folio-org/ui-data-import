@@ -1,5 +1,8 @@
 import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
-import { noAssociatedActionProfiles } from '../../mocks';
+import {
+  noAssociatedActionProfiles,
+  marcMappingDetails,
+} from '../../mocks';
 
 export default server => {
   server.create('mapping-profile', {
@@ -1198,6 +1201,7 @@ export default server => {
   server.create('mapping-profile', {
     incomingRecordType: 'MARC_BIBLIOGRAPHIC',
     existingRecordType: 'MARC_BIBLIOGRAPHIC',
+    mappingDetails: { marcMappingDetails },
   });
   server.createList('mapping-profile', 1);
 

@@ -15,6 +15,7 @@
 * Implement re-order row functionality for the Field Mapping Profile details (UIDATIMP-496)
 * Get rid of "@folio/stripes-core" and "@folio/stripes-smart-components" dependencies
 * Update "react-router" and "react-router-dom" dependencies
+* Connect MARC modifications table to the Field mapping profile form (UIDATIMP-536)
 
 ### Bugs fixed:
 * Fix Item status list in field mapping profiles (UIDATIMP-515)
