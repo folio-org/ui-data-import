@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { noop } from 'lodash';
@@ -308,4 +309,18 @@ export const DescriptiveData = ({
       </Row>
     </Accordion>
   );
+};
+
+DescriptiveData.propTypes = {
+  publications: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  editions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  physicalDescriptions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  natureOfContentTermIds: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  languages: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  instanceFormatIds: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  publicationFrequency: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  publicationRange: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  initialFields: PropTypes.object.isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
+  okapi: PropTypes.object.isRequired,
 };

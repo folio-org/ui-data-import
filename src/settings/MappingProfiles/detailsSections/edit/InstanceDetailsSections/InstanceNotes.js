@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { noop } from 'lodash';
@@ -72,3 +73,5 @@ export const InstanceNotes = ({ notes }) => {
     </Accordion>
   );
 };
+
+InstanceNotes.propTypes = { notes: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired };

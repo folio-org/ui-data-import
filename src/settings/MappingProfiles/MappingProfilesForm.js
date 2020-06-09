@@ -68,6 +68,7 @@ export const MappingProfilesFormComponent = ({
   pristine,
   submitting,
   initialValues,
+  mappingDetails,
   okapi,
   location: { search },
   handleSubmit,
@@ -81,7 +82,6 @@ export const MappingProfilesFormComponent = ({
       id,
       name,
       existingRecordType,
-      mappingDetails = {},
       parentProfiles = [],
       childProfiles = [],
     },
@@ -168,16 +168,20 @@ export const MappingProfilesFormComponent = ({
     dispatch(change(formName, fieldsPath, refTable));
   };
 
+  const detailsProps = {
+    initialFields,
+    referenceTables,
+    setReferenceTables,
+    okapi,
+  };
+
   const renderDetails = {
     INSTANCE: (
-      <MappingInstanceDetails
-        initialFields={initialFields}
-        referenceTables={referenceTables}
-        setReferenceTables={setReferenceTables}
-        okapi={okapi}
-      />
+      <MappingInstanceDetails {...detailsProps} />
     ),
-    HOLDINGS: <MappingHoldingsDetails />,
+    HOLDINGS: (
+      <MappingHoldingsDetails {...detailsProps} />
+    ),
     ITEM: <MappingItemDetails />,
   };
 
@@ -315,7 +319,7 @@ MappingProfilesFormComponent.propTypes = {
     PropTypes.string.isRequired,
   ]),
   okapi: PropTypes.object.isRequired,
-  mappingDetails: PropTypes.object.isRequired,
+  mappingDetails: PropTypes.object,
   onCancel: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
@@ -323,8 +327,12 @@ MappingProfilesFormComponent.propTypes = {
 
 const mapStateToProps = state => {
   const okapi = state.okapi || null;
+  const mappingDetails = state.form[formName]?.values.profile?.mappingDetails || {};
 
-  return { okapi };
+  return {
+    okapi,
+    mappingDetails,
+  };
 };
 
 export const MappingProfilesForm = compose(

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 
@@ -127,4 +128,12 @@ export const InstanceRelationship = ({
       </Row>
     </Accordion>
   );
+};
+
+InstanceRelationship.propTypes = {
+  parentInstances: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  childInstances: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  initialFields: PropTypes.object.isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
+  okapi: PropTypes.object.isRequired,
 };
