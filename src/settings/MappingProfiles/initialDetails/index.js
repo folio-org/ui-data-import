@@ -36,18 +36,14 @@ export const getInitialDetails = (entity, stripRepeatableFields = false) => {
   const entityIsMARC = isMARCType(entity);
   const currentEntity = initialValues[entity];
 
-  if (!stripRepeatableFields) {
-    return currentEntity;
-  }
-
-  if (entityIsMARC) {
+  if (entityIsMARC || !stripRepeatableFields) {
     return currentEntity;
   }
 
   const fields = currentEntity.mappingFields.map(field => ({
     ...field,
     subfields: [],
-  })) || [];
+  }));
 
   return {
     ...currentEntity,

@@ -37,7 +37,7 @@ export const MARCTableRowContainer = ({
         />
         {containsSubsequentLines &&
           data.field.subfields.map((subfield, idx) => idx !== 0 && (
-            <div>
+            <div key={idx}>
               <MARCTableRow
                 name={name}
                 order={data.order}
