@@ -27,8 +27,8 @@ export const AcceptedValuesField = ({
   optionLabel,
   wrapperLabel,
   acceptedValuesList,
-  wrapperSourceLink,
-  wrapperSourcePath,
+  wrapperSources,
+  wrapperSourcesFn,
   setAcceptedValues,
   dataAttributes,
   optionTemplate,
@@ -53,18 +53,32 @@ export const AcceptedValuesField = ({
     name: optionTemplate ? updateValueWithTemplate(option, optionTemplate) : option.name,
   }));
 
-  useEffect(() => {
-    if (wrapperSourceLink && wrapperSourcePath && isEmpty(acceptedValuesList)) {
-      fetchAcceptedValuesList(okapi, wrapperSourceLink, wrapperSourcePath)
-        .then(data => {
-          const acceptedValues = getAcceptedValuesObj(data);
-          const updatedListOptions = updateListOptions(data);
+  const extendDataWithStatisticalCodeType = (arrToExtend, arrWithExtendedField) => arrToExtend.map(item => {
+    const correspondRecord = arrWithExtendedField.find(itemAlt => itemAlt.id === item.statisticalCodeTypeId);
 
-          setListOptions(updatedListOptions);
-          setAcceptedValues(acceptedValues);
-        });
+    return {
+      ...item,
+      statisticalCodeTypeName: correspondRecord.name,
+    };
+  });
+
+  const mappedFns = { statCodes: extendDataWithStatisticalCodeType };
+
+  useEffect(() => {
+    if (wrapperSources && isEmpty(acceptedValuesList)) {
+      const promises = wrapperSources.map(source => fetchAcceptedValuesList(okapi, source.wrapperSourceLink, source.wrapperSourcePath));
+
+      Promise.all(promises).then(result => {
+        const dataWithExtendField = wrapperSourcesFn ? mappedFns[wrapperSourcesFn](result[0], result[1]).sort((a, b) => a.statisticalCodeTypeName.localeCompare(b.statisticalCodeTypeName)) : '';
+        const data = dataWithExtendField || result[0];
+        const acceptedValues = getAcceptedValuesObj(data);
+        const updatedListOptions = updateListOptions(data);
+
+        setListOptions(updatedListOptions);
+        setAcceptedValues(acceptedValues);
+      });
     }
-  }, [okapi, wrapperSourceLink, wrapperSourcePath, acceptedValuesList]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [okapi, wrapperSources, acceptedValuesList]); // eslint-disable-line react-hooks/exhaustive-deps
   const memoizedValidation = useCallback(
     validateAcceptedValues(listOptions, optionValue),
     [listOptions],
@@ -99,8 +113,8 @@ AcceptedValuesField.propTypes = {
     url: PropTypes.string.isRequired,
   }).isRequired,
   acceptedValuesList: PropTypes.arrayOf(PropTypes.object),
-  wrapperSourceLink: PropTypes.string,
-  wrapperSourcePath: PropTypes.string,
+  wrapperSources: PropTypes.arrayOf(PropTypes.object),
+  wrapperSourcesFn: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   label: PropTypes.oneOfType([
     PropTypes.string,
