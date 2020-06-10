@@ -70,8 +70,8 @@ describe('Mapping profile form', () => {
 
         describe('details section', () => {
           it('has correct header', () => {
-            expect(mappingProfileForm.itemDetails.header.mappedLabel).to.be.equal('Field mapping');
-            expect(mappingProfileForm.itemDetails.header.mappableLabel).to.be.equal('MARC Bibliographic');
+            expect(mappingProfileForm.detailsSection.header.mappedLabel).to.be.equal('Field mapping');
+            expect(mappingProfileForm.detailsSection.header.mappableLabel).to.be.equal('MARC Bibliographic');
           });
 
           describe('MARC details table', () => {
@@ -173,6 +173,112 @@ describe('Mapping profile form', () => {
 
                 it('position column does not have content', () => {
                   expect(mappingProfileForm.marcDetailsTable.rows(0).cells(8).hasContent()).to.be.false;
+                });
+
+                describe('validation', () => {
+                  beforeEach(async () => {
+                    await mappingProfileForm.nameField.fillAndBlur('Test name');
+                    await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC Bibliographic');
+                  });
+
+                  describe('when "field" field is empty', () => {
+                    beforeEach(async () => {
+                      await mappingProfileForm.marcDetailsTable.rows(0).tag.fillAndBlur('');
+                      await mappingProfileForm.submitFormButton.click();
+                    });
+
+                    it('then "field" field has error style', () => {
+                      expect(mappingProfileForm.marcDetailsTable.rows(0).tag.hasErrorStyle).to.be.true;
+                    });
+                  });
+
+                  describe('when "field" field is filled in with "001" value', () => {
+                    beforeEach(async () => {
+                      await mappingProfileForm.marcDetailsTable.rows(0).tag.fillAndBlur('001');
+                      await mappingProfileForm.submitFormButton.click();
+                    });
+
+                    it('then "field" field has error style', () => {
+                      expect(mappingProfileForm.marcDetailsTable.rows(0).tag.hasErrorStyle).to.be.true;
+                    });
+                  });
+
+                  describe('when "field" field is filled in with "005" value', () => {
+                    beforeEach(async () => {
+                      await mappingProfileForm.marcDetailsTable.rows(0).tag.fillAndBlur('005');
+                      await mappingProfileForm.submitFormButton.click();
+                    });
+
+                    it('then "field" field has error style', () => {
+                      expect(mappingProfileForm.marcDetailsTable.rows(0).tag.hasErrorStyle).to.be.true;
+                    });
+                  });
+
+                  describe('when "field" field is filled in with "999" value and indicators are filled in with "f" value', () => {
+                    beforeEach(async () => {
+                      await mappingProfileForm.marcDetailsTable.rows(0).tag.fillAndBlur('999');
+                      await mappingProfileForm.marcDetailsTable.rows(0).indicator1.fillAndBlur('f');
+                      await mappingProfileForm.marcDetailsTable.rows(0).indicator2.fillAndBlur('f');
+                      await mappingProfileForm.submitFormButton.click();
+                    });
+
+                    it('then "field" field has error style', () => {
+                      expect(mappingProfileForm.marcDetailsTable.rows(0).tag.hasErrorStyle).to.be.true;
+                    });
+
+                    it('then "indicator1" field has error style', () => {
+                      expect(mappingProfileForm.marcDetailsTable.rows(0).indicator1.hasErrorStyle).to.be.true;
+                    });
+
+                    it('then "indicator2" field has error style', () => {
+                      expect(mappingProfileForm.marcDetailsTable.rows(0).indicator2.hasErrorStyle).to.be.true;
+                    });
+                  });
+
+                  describe('when "data" field is empty', () => {
+                    beforeEach(async () => {
+                      await mappingProfileForm.marcDetailsTable.rows(0).dataTextField.fillAndBlur('');
+                      await mappingProfileForm.submitFormButton.click();
+                    });
+
+                    it('then "data" field has error style', () => {
+                      expect(mappingProfileForm.marcDetailsTable.rows(0).dataTextField.hasErrorStyle).to.be.true;
+                    });
+                  });
+
+                  describe('when "field" field and "data" field are filled in, but "subfield" field is empty', () => {
+                    beforeEach(async () => {
+                      await mappingProfileForm.marcDetailsTable.rows(0).tag.fillAndBlur('900');
+                      await mappingProfileForm.marcDetailsTable.rows(0).dataTextField.fillAndBlur('test');
+                      await mappingProfileForm.marcDetailsTable.rows(0).subfield.fillAndBlur('');
+                      await mappingProfileForm.submitFormButton.click();
+                    });
+
+                    it('then "subfield" field has error style', () => {
+                      expect(mappingProfileForm.marcDetailsTable.rows(0).subfield.hasErrorStyle).to.be.true;
+                    });
+                  });
+
+                  describe('when "indicator1" or "indicator2" or "subfield" field is filled in with "*" value', () => {
+                    beforeEach(async () => {
+                      await mappingProfileForm.marcDetailsTable.rows(0).indicator1.fillAndBlur('*');
+                      await mappingProfileForm.marcDetailsTable.rows(0).indicator2.fillAndBlur('*');
+                      await mappingProfileForm.marcDetailsTable.rows(0).subfield.fillAndBlur('*');
+                      await mappingProfileForm.submitFormButton.click();
+                    });
+
+                    it('then "indicator1" field has error style', () => {
+                      expect(mappingProfileForm.marcDetailsTable.rows(0).indicator1.hasErrorStyle).to.be.true;
+                    });
+
+                    it('then "indicator2" field has error style', () => {
+                      expect(mappingProfileForm.marcDetailsTable.rows(0).indicator2.hasErrorStyle).to.be.true;
+                    });
+
+                    it('then "subfield" field has error style', () => {
+                      expect(mappingProfileForm.marcDetailsTable.rows(0).subfield.hasErrorStyle).to.be.true;
+                    });
+                  });
                 });
               });
 

@@ -17,6 +17,7 @@
 * Get rid of "@folio/stripes-core" and "@folio/stripes-smart-components" dependencies
 * Update "react-router" and "react-router-dom" dependencies
 * Connect MARC modifications table to the Field mapping profile form (UIDATIMP-536)
+* Add validation rules for Add action for the MARC modifications table fields (UIDATIMP-487)
 
 ### Bugs fixed:
 * Fix Item status list in field mapping profiles (UIDATIMP-515)

@@ -53,7 +53,24 @@ export const validateFileExtension = value => {
   return <FormattedMessage id="ui-data-import.validation.fileExtension" />;
 };
 
-export const validateValueType = value => {
+/**
+ * Validate an alphanumeric input value
+ *
+ * @param {string|*} value
+ * @returns {null|*}
+ *
+ * @example
+ *
+ * validateAlphanumericValue('value')
+ * // => null
+ *
+ * validateAlphanumericValue('123')
+ * // => null
+ *
+ * validateAlphanumericValue('*')
+ * // => Translated string (en = 'Please enter an alphanumeric value')
+ */
+export const validateAlphanumericValue = value => {
   const pattern = /^[a-zA-Z0-9]*$/;
   const val = value && value.trim ? value.trim() : value;
 
@@ -162,6 +179,84 @@ export const validateAcceptedValues = (acceptedValues, valueKey) => value => {
         return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
       }
     }
+  }
+
+  return null;
+};
+
+/**
+ * Validate MARC Field input value
+ *
+ * @param {string|*} indicator1
+ * @param {string|*} indicator2
+ * @returns {function(...[*]=)}
+ *
+ * @example
+ *
+ * validateMarcTagField('', '')('910')
+ * // => null
+ *
+ * validateMarcTagField('', '')('001')
+ * // => Translated string (en = 'This field cannot be updated')
+ *
+ * validateMarcTagField('', '')('005')
+ * // => Translated string (en = 'This field cannot be updated')
+ *
+ * validateMarcTagField('f', 'f')('999')
+ * // => Translated string (en = 'This field cannot be updated')
+ */
+export const validateMarcTagField = (indicator1, indicator2) => value => {
+  if (value === '001' || value === '005' || (value === '999' && indicator1 === 'f' && indicator2 === 'f')) {
+    return <FormattedMessage id="ui-data-import.validation.cannotBeUpdated" />;
+  }
+
+  return null;
+};
+
+/**
+ * Validate MARC Indicator input value
+ *
+ * @param {string|*} field
+ * @param {string|*} indicator1
+ * @param {string|*} indicator2
+ * @returns {null|*}
+ *
+ * @example
+ *
+ * validateMarcIndicatorField('910', 'a', 'a')
+ * // => null
+ *
+ * validateMarcIndicatorField('999', 'f', 'f')
+ * // => Translated string (en = 'This field cannot be updated')
+ */
+export const validateMarcIndicatorField = (field, indicator1, indicator2) => {
+  if (field === '999' && indicator1 === 'f' && indicator2 === 'f') {
+    return <FormattedMessage id="ui-data-import.validation.cannotBeUpdated" />;
+  }
+
+  return null;
+};
+
+/**
+ * Validate MARC Subfield input value
+ *
+ * @param {string|*} field
+ * @returns {function(...[*]=)}
+ *
+ * @example
+ *
+ * validateSubfieldField('910')('a')
+ * // => null
+ *
+ * validateSubfieldField('006')('')
+ * // => null
+ *
+ * validateSubfieldField('910')('')
+ * // => Translated string (en = 'Please enter a value')
+ */
+export const validateSubfieldField = field => value => {
+  if ((field !== '006' && field !== '007' && field !== '008') && isEmpty(value)) {
+    return <FormattedMessage id="ui-data-import.validation.enterValue" />;
   }
 
   return null;
