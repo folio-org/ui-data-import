@@ -13,6 +13,7 @@ export const MARCTableRowContainer = ({
   onMoveRow,
 }) => {
   const renderRow = (data, i) => {
+    const subfieldsData = data.field?.subfields;
     const containsSubsequentLines = data.field?.subfields?.length > 1;
     const name = `profile.mappingDetails.marcMappingDetails[${i}]`;
 
@@ -26,7 +27,7 @@ export const MARCTableRowContainer = ({
           name={name}
           order={data.order}
           action={data.action}
-          subaction={data.field?.subfields?.[0].subaction}
+          subaction={subfieldsData?.[0]?.subaction}
           columnWidths={columnWidths}
           isFirst={i === 0}
           isLast={i === (fields.length - 1)}
