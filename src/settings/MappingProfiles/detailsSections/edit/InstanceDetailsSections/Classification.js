@@ -14,6 +14,7 @@ import {
 
 import { getSubfieldName } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const Classification = ({ classifications }) => {
   return (
@@ -59,4 +60,4 @@ export const Classification = ({ classifications }) => {
   );
 };
 
-Classification.propTypes = { classifications: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired };
+Classification.propTypes = { classifications: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired };

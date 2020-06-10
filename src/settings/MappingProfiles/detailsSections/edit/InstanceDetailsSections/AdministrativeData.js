@@ -18,7 +18,11 @@ import {
   RepeatableActionsField,
 } from '../../../../../components';
 
-import { validateMARCWithDate } from '../../../../../utils';
+import {
+  validateMARCWithDate,
+  mappingProfileSubfieldShape,
+  okapiShape,
+} from '../../../../../utils';
 import {
   onAdd,
   onRemove,
@@ -181,8 +185,8 @@ export const AdministrativeData = ({
 };
 
 AdministrativeData.propTypes = {
-  statisticalCodes: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  statisticalCodes: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
-  okapi: PropTypes.object.isRequired,
+  okapi: PropTypes.shape(okapiShape).isRequired,
 };

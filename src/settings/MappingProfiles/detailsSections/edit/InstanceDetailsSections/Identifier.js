@@ -14,6 +14,7 @@ import {
 
 import { getSubfieldName } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const Identifier = ({ identifiers }) => {
   return (
@@ -59,4 +60,4 @@ export const Identifier = ({ identifiers }) => {
   );
 };
 
-Identifier.propTypes = { identifiers: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired };
+Identifier.propTypes = { identifiers: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired };

@@ -14,6 +14,7 @@ import {
 
 import { getSubfieldName } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const Subject = ({ subjects }) => {
   return (
@@ -51,4 +52,4 @@ export const Subject = ({ subjects }) => {
   );
 };
 
-Subject.propTypes = { subjects: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired };
+Subject.propTypes = { subjects: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired };

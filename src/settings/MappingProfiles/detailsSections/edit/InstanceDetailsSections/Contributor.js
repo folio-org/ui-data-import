@@ -19,6 +19,7 @@ import {
   getBoolSubfieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const Contributor = ({ contributors }) => {
   return (
@@ -87,4 +88,4 @@ export const Contributor = ({ contributors }) => {
   );
 };
 
-Contributor.propTypes = { contributors: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired };
+Contributor.propTypes = { contributors: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired };

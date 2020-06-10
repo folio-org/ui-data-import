@@ -23,6 +23,10 @@ import {
   getSubfieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import {
+  mappingProfileSubfieldShape,
+  okapiShape,
+} from '../../../../../utils';
 
 export const ElectronicAccess = ({
   electronicAccess,
@@ -104,8 +108,8 @@ export const ElectronicAccess = ({
 };
 
 ElectronicAccess.propTypes = {
-  electronicAccess: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  electronicAccess: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
-  okapi: PropTypes.object.isRequired,
+  okapi: PropTypes.shape(okapiShape).isRequired,
 };

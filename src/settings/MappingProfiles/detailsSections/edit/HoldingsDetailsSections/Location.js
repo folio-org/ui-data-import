@@ -9,6 +9,7 @@ import {
   Col,
   TextField,
 } from '@folio/stripes/components';
+import { okapiShape } from '../../../../../utils';
 
 import { AcceptedValuesField } from '../../../../../components';
 
@@ -141,4 +142,4 @@ export const Location = ({ okapi }) => {
   );
 };
 
-Location.propTypes = { okapi: PropTypes.object.isRequired };
+Location.propTypes = { okapi: PropTypes.shape(okapiShape).isRequired };

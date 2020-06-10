@@ -24,6 +24,10 @@ import {
   getBoolSubfieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import {
+  mappingProfileSubfieldShape,
+  okapiShape,
+} from '../../../../../utils';
 
 export const HoldingsNotes = ({
   notes,
@@ -93,8 +97,8 @@ export const HoldingsNotes = ({
 };
 
 HoldingsNotes.propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  notes: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
-  okapi: PropTypes.object.isRequired,
+  okapi: PropTypes.shape(okapiShape).isRequired,
 };

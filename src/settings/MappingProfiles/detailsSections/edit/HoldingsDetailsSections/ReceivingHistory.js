@@ -24,6 +24,7 @@ import {
   getBoolSubfieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const ReceivingHistory = ({
   receivingHistory,
@@ -86,7 +87,7 @@ export const ReceivingHistory = ({
 };
 
 ReceivingHistory.propTypes = {
-  receivingHistory: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  receivingHistory: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
 };

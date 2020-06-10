@@ -23,6 +23,10 @@ import {
   getSubfieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import {
+  mappingProfileSubfieldShape,
+  okapiShape,
+} from '../../../../../utils';
 
 export const HoldingsDetails = ({
   holdingStatements,
@@ -203,10 +207,10 @@ export const HoldingsDetails = ({
 };
 
 HoldingsDetails.propTypes = {
-  holdingStatements: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
-  holdingStatementsForSupplements: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
-  holdingStatementsForIndexes: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  holdingStatements: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  holdingStatementsForSupplements: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  holdingStatementsForIndexes: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
-  okapi: PropTypes.object.isRequired,
+  okapi: PropTypes.shape(okapiShape).isRequired,
 };

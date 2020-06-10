@@ -19,6 +19,7 @@ import {
   getBoolSubfieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const InstanceNotes = ({ notes }) => {
   return (
@@ -74,4 +75,4 @@ export const InstanceNotes = ({ notes }) => {
   );
 };
 
-InstanceNotes.propTypes = { notes: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired };
+InstanceNotes.propTypes = { notes: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired };

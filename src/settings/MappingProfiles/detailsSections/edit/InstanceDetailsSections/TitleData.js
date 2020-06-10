@@ -19,6 +19,7 @@ import {
   getSubfieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const TitleData = ({
   alternativeTitles,
@@ -242,8 +243,8 @@ export const TitleData = ({
 };
 
 TitleData.propTypes = {
-  alternativeTitles: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
-  seriesStatements: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
-  precedingTitles: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
-  succeedingTitles: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])).isRequired,
+  alternativeTitles: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  seriesStatements: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  precedingTitles: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  succeedingTitles: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
 };

@@ -14,6 +14,7 @@ import { fetchAcceptedValuesList } from './fetchAcceptedValuesList';
 import {
   validateMARCWithElse,
   validateAcceptedValues,
+  okapiShape,
 } from '../../utils';
 
 export const AcceptedValuesField = ({
@@ -66,11 +67,7 @@ AcceptedValuesField.propTypes = {
   name: PropTypes.string.isRequired,
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
-  okapi: PropTypes.shape({
-    tenant: PropTypes.string.isRequired,
-    token: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-  }).isRequired,
+  okapi: PropTypes.shape(okapiShape).isRequired,
   acceptedValuesList: PropTypes.arrayOf(PropTypes.object),
   wrapperSourceLink: PropTypes.string,
   wrapperSourcePath: PropTypes.string,
