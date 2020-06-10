@@ -1,8 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import { isEmpty } from 'lodash';
-
 import { MARCTableRow } from './MARCTableRow';
 
 import css from './MARCTable.css';
@@ -13,38 +11,41 @@ export const MARCTableRowContainer = ({
   onAddNewRow,
   onRemoveRow,
   onMoveRow,
-  onDataChange,
-  intl,
 }) => {
-  const renderRow = (field, i) => {
-    const containsSubsequentLines = !isEmpty(field.subfields);
+  const renderRow = (data, i) => {
+    const containsSubsequentLines = data.field?.subfields?.length > 1;
+    const name = `profile.mappingDetails.marcMappingDetails[${i}]`;
 
     return (
       <div
-        data-test-marc-table-row={field.order}
+        data-test-marc-table-row={data.order}
         key={i}
         className={css.tableRowContainer}
       >
         <MARCTableRow
-          field={field}
+          name={name}
+          order={data.order}
+          action={data.action}
+          subaction={data.field?.subfields?.[0].subaction}
           columnWidths={columnWidths}
           isFirst={i === 0}
           isLast={i === (fields.length - 1)}
           onAddNewRow={onAddNewRow}
           onRemoveRow={onRemoveRow}
           onMoveRow={onMoveRow}
-          onDataChange={onDataChange}
-          intl={intl}
+          subfieldIndex={0}
         />
         {containsSubsequentLines &&
-          field.subfields.map(subfield => (
-            <div>
+          data.field.subfields.map((subfield, idx) => idx !== 0 && (
+            <div key={idx}>
               <MARCTableRow
-                field={subfield}
+                name={name}
+                order={data.order}
+                action={data.action}
+                subaction={subfield.subaction}
                 columnWidths={columnWidths}
-                onDataChange={onDataChange}
                 isSubline
-                intl={intl}
+                subfieldIndex={idx}
               />
             </div>
           ))
@@ -57,11 +58,9 @@ export const MARCTableRowContainer = ({
 };
 
 MARCTableRowContainer.propTypes = {
-  intl: PropTypes.object.isRequired,
   fields: PropTypes.arrayOf(PropTypes.object.isRequired),
   onAddNewRow: PropTypes.func.isRequired,
   onRemoveRow: PropTypes.func.isRequired,
   onMoveRow: PropTypes.func.isRequired,
-  onDataChange: PropTypes.func.isRequired,
   columnWidths: PropTypes.object,
 };

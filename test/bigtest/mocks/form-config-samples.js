@@ -4847,6 +4847,7 @@ export const formConfigSamples = [
           }, {
             controlType: 'MARCTable',
             staticControlType: 'Fragment',
+            id: 'marc-modification-table',
             dataAttributes: {},
           }],
         }],

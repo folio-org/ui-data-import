@@ -9,6 +9,7 @@ export * from './sortCollection';
 export * from './sort';
 export * from './formatUserName';
 export * from './xhr';
+export * from './isMARCType';
 export * from './isTestEnv';
 export * from './formValidators';
 export * from './formUtils';

@@ -16,6 +16,7 @@
 * Add acceptedValues obj to reference dropdown fields (UIDATIMP-519)
 * Get rid of "@folio/stripes-core" and "@folio/stripes-smart-components" dependencies
 * Update "react-router" and "react-router-dom" dependencies
+* Connect MARC modifications table to the Field mapping profile form (UIDATIMP-536)
 
 ### Bugs fixed:
 * Fix Item status list in field mapping profiles (UIDATIMP-515)
