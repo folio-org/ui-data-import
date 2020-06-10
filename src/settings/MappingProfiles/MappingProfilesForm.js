@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect,
   useLayoutEffect,
+  useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
@@ -134,8 +135,20 @@ export const MappingProfilesFormComponent = ({
     dispatch(change(formName, 'deletedRelations', deletedRelations));
   }, [deletedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const onMarcDetailsChange = useCallback(
+    updatedFields => {
+      dispatch(change(formName, 'profile.mappingDetails.marcMappingDetails', updatedFields));
+    },
+    [dispatch],
+  );
+
   const referenceTables = getReferenceTables(get(mappingDetails, 'mappingFields', []));
   const initialFields = getInitialFields(existingRecordType);
+
+  const stateMethods = {
+    dispatch,
+    change,
+  };
 
   const injectedProps = {
     'profile-headline': { children: headLine },
@@ -169,10 +182,10 @@ export const MappingProfilesFormComponent = ({
         label: <FormattedMessage id={option.label} />,
       })),
     },
-  };
-  const stateMethods = {
-    dispatch,
-    change,
+    'marc-modification-table': {
+      fields: mappingDetails?.marcMappingDetails || [{ order: 0 }],
+      onChange: onMarcDetailsChange,
+    },
   };
 
   return (
