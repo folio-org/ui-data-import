@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { noop } from 'lodash';
@@ -18,6 +19,7 @@ import {
   getSubfieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const TitleData = ({
   alternativeTitles,
@@ -238,4 +240,11 @@ export const TitleData = ({
       </Row>
     </Accordion>
   );
+};
+
+TitleData.propTypes = {
+  alternativeTitles: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  seriesStatements: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  precedingTitles: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  succeedingTitles: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
 };

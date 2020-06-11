@@ -23,7 +23,6 @@ const HOLDINGS = {
       order: 0,
       path: 'holdings.formerIds[]',
       fields: [{
-        // order: 0,
         name: 'formerId',
         enabled: true,
         path: 'holdings.formerIds[].formerId',
@@ -45,7 +44,6 @@ const HOLDINGS = {
       order: 0,
       path: 'holdings.statisticalCodeIds[]',
       fields: [{
-        // order: 0,
         name: 'statisticalCodeId',
         enabled: true,
         path: 'holdings.statisticalCodeIds[].statisticalCodeId',
@@ -121,13 +119,11 @@ const HOLDINGS = {
       order: 0,
       path: 'holdings.holdingStatements[]',
       fields: [{
-        // order: 0,
         name: 'statement',
         enabled: true,
         path: 'holdings.holdingStatements[].statement',
         value: '',
       }, {
-        // order: 0,
         name: 'note',
         enabled: true,
         path: 'holdings.holdingStatements[].note',
@@ -143,13 +139,11 @@ const HOLDINGS = {
       order: 0,
       path: 'holdings.holdingStatementsForSupplements[]',
       fields: [{
-        // order: 0,
         name: 'statement',
         enabled: true,
         path: 'holdings.holdingStatementsForSupplements[].statement',
         value: '',
       }, {
-        // order: 0,
         name: 'note',
         enabled: true,
         path: 'holdings.holdingStatementsForSupplements[].note',
@@ -165,13 +159,11 @@ const HOLDINGS = {
       order: 0,
       path: 'holdings.holdingStatementsForIndexes[]',
       fields: [{
-        // order: 0,
         name: 'statement',
         enabled: true,
         path: 'holdings.holdingStatementsForIndexes[].statement',
         value: '',
       }, {
-        // order: 0,
         name: 'note',
         enabled: true,
         path: 'holdings.holdingStatementsForIndexes[].note',
@@ -205,19 +197,16 @@ const HOLDINGS = {
       order: 0,
       path: 'holdings.notes[]',
       fields: [{
-        // order: 0,
         name: 'noteType',
         enabled: true,
         path: 'holdings.notes[].noteType',
         value: '',
       }, {
-        // order: 1,
         name: 'note',
         enabled: true,
         path: 'holdings.notes[].note',
         value: '',
       }, {
-        // order: 2,
         name: 'staffOnly',
         enabled: true,
         path: 'holdings.notes[].staffOnly',
@@ -234,31 +223,26 @@ const HOLDINGS = {
       order: 0,
       path: 'holdings.electronicAccess[]',
       fields: [{
-        // order: 0,
         name: 'relationshipId',
         enabled: true,
         path: 'holdings.electronicAccess[].relationshipId',
         value: '',
       }, {
-        // order: 1,
         name: 'uri',
         enabled: true,
         path: 'holdings.electronicAccess[].uri',
         value: '',
       }, {
-        // order: 2,
         name: 'linkText',
         enabled: true,
         path: 'holdings.electronicAccess[].linkText',
         value: '',
       }, {
-        // order: 3,
         name: 'materialsSpecification',
         enabled: true,
         path: 'holdings.electronicAccess[].materialsSpecification',
         value: '',
       }, {
-        // order: 4,
         name: 'publicNote',
         enabled: true,
         path: 'holdings.electronicAccess[].publicNote',
@@ -292,20 +276,17 @@ const HOLDINGS = {
       order: 0,
       path: 'holdings.receivingHistory.entries[]',
       fields: [{
-        // order: 0,
         name: 'publicDisplay',
         enabled: true,
         path: 'holdings.receivingHistory.entries[].publicDisplay',
         value: null,
         booleanFieldAction: '',
       }, {
-        // order: 0,
         name: 'enumeration',
         enabled: true,
         path: 'holdings.receivingHistory.entries[].enumeration',
         value: '',
       }, {
-        // order: 0,
         name: 'chronology',
         enabled: true,
         path: 'holdings.receivingHistory.entries[].chronology',

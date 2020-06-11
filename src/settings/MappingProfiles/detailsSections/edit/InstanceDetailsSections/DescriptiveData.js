@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { noop } from 'lodash';
@@ -23,6 +24,10 @@ import {
   getFieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import {
+  mappingProfileSubfieldShape,
+  okapiShape,
+} from '../../../../../utils';
 
 export const DescriptiveData = ({
   publications,
@@ -308,4 +313,18 @@ export const DescriptiveData = ({
       </Row>
     </Accordion>
   );
+};
+
+DescriptiveData.propTypes = {
+  publications: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  editions: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  physicalDescriptions: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  natureOfContentTermIds: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  languages: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  instanceFormatIds: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  publicationFrequency: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  publicationRange: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  initialFields: PropTypes.object.isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
+  okapi: PropTypes.shape(okapiShape).isRequired,
 };

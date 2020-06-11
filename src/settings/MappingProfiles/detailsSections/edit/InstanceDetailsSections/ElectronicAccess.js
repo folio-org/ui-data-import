@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { noop } from 'lodash';
@@ -15,6 +16,10 @@ import { AcceptedValuesField } from '../../../../../components';
 
 import { getSubfieldName } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import {
+  mappingProfileSubfieldShape,
+  okapiShape,
+} from '../../../../../utils';
 
 export const ElectronicAccess = ({
   electronicAccess,
@@ -94,4 +99,9 @@ export const ElectronicAccess = ({
       </Row>
     </Accordion>
   );
+};
+
+ElectronicAccess.propTypes = {
+  electronicAccess: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  okapi: PropTypes.shape(okapiShape).isRequired,
 };

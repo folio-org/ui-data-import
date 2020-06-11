@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { noop } from 'lodash';
@@ -18,6 +19,7 @@ import {
   getBoolSubfieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const Contributor = ({ contributors }) => {
   return (
@@ -85,3 +87,5 @@ export const Contributor = ({ contributors }) => {
     </Accordion>
   );
 };
+
+Contributor.propTypes = { contributors: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired };

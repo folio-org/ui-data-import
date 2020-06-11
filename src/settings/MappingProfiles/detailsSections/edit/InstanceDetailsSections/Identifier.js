@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { noop } from 'lodash';
@@ -13,6 +14,7 @@ import {
 
 import { getSubfieldName } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const Identifier = ({ identifiers }) => {
   return (
@@ -57,3 +59,5 @@ export const Identifier = ({ identifiers }) => {
     </Accordion>
   );
 };
+
+Identifier.propTypes = { identifiers: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired };

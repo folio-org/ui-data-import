@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 
@@ -22,6 +23,10 @@ import {
   getSubfieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import {
+  mappingProfileSubfieldShape,
+  okapiShape,
+} from '../../../../../utils';
 
 export const InstanceRelationship = ({
   parentInstances,
@@ -127,4 +132,12 @@ export const InstanceRelationship = ({
       </Row>
     </Accordion>
   );
+};
+
+InstanceRelationship.propTypes = {
+  parentInstances: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  childInstances: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  initialFields: PropTypes.object.isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
+  okapi: PropTypes.shape(okapiShape).isRequired,
 };
