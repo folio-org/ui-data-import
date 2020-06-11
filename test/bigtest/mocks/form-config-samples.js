@@ -855,9 +855,16 @@ export const formConfigSamples = [
                         fields: 'statisticalCodeIds',
                         optionValue: 'name',
                         optionLabel: 'name',
+                        optionTemplate: '**statisticalCodeTypeName**: **code** - **name**',
                         wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                        wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'statisticalCodes',
+                        wrapperSources: [{
+                          wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'statisticalCodes',
+                        }, {
+                          wrapperSourceLink: '/statistical-code-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'statisticalCodeTypes',
+                        }],
+                        wrapperSourcesFn: 'statisticalCodeTypeName',
                       }],
                     }],
                   }],
@@ -892,8 +899,10 @@ export const formConfigSamples = [
                     optionValue: 'name',
                     optionLabel: 'name',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/material-types?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'mtypes',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/material-types?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'mtypes',
+                    }],
                   }],
                 }],
               }, {
@@ -935,8 +944,10 @@ export const formConfigSamples = [
                     optionValue: 'name',
                     optionLabel: 'name',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'callNumberTypes',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'callNumberTypes',
+                    }],
                   }],
                 }, {
                   controlType: 'Col',
@@ -1193,8 +1204,10 @@ export const formConfigSamples = [
                     optionValue: 'name',
                     optionLabel: 'name',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/item-damaged-statuses?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'itemDamageStatuses',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/item-damaged-statuses?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'itemDamageStatuses',
+                    }],
                   }],
                 }, {
                   controlType: 'Col',
@@ -1284,8 +1297,10 @@ export const formConfigSamples = [
                         optionValue: 'name',
                         optionLabel: 'name',
                         wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                        wrapperSourceLink: '/item-note-types?limit=1000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'itemNoteTypes',
+                        wrapperSources: [{
+                          wrapperSourceLink: '/item-note-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'itemNoteTypes',
+                        }],
                       }],
                     }, {
                       controlType: 'Col',
@@ -1345,8 +1360,10 @@ export const formConfigSamples = [
                     optionValue: 'name',
                     optionLabel: 'name',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'loantypes',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'loantypes',
+                    }],
                   }],
                 }],
               }, {
@@ -1370,8 +1387,10 @@ export const formConfigSamples = [
                     optionValue: 'name',
                     optionLabel: 'name',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'loantypes',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'loantypes',
+                    }],
                   }],
                 }],
               }, {
@@ -1459,8 +1478,10 @@ export const formConfigSamples = [
                         optionValue: 'name',
                         optionLabel: 'name',
                         wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                        wrapperSourceLink: '/item-note-types?limit=1000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'itemNoteTypes',
+                        wrapperSources: [{
+                          wrapperSourceLink: '/item-note-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'itemNoteTypes',
+                        }],
                       }],
                     }, {
                       controlType: 'Col',
@@ -1521,8 +1542,10 @@ export const formConfigSamples = [
                     optionLabel: 'name',
                     optionTemplate: '**name** (**code**)',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'locations',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'locations',
+                    }],
                   }],
                 }, {
                   controlType: 'Col',
@@ -1542,8 +1565,10 @@ export const formConfigSamples = [
                     optionLabel: 'name',
                     optionTemplate: '**name** (**code**)',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'locations',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'locations',
+                    }],
                   }],
                 }],
               }],
@@ -1626,8 +1651,10 @@ export const formConfigSamples = [
                         optionValue: 'name',
                         optionLabel: 'name',
                         wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                        wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'electronicAccessRelationships',
+                        wrapperSources: [{
+                          wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'electronicAccessRelationships',
+                        }],
                       }],
                     }, {
                       controlType: 'Col',
@@ -1862,8 +1889,10 @@ export const formConfigSamples = [
                     optionValue: 'name',
                     optionLabel: 'name',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/instance-statuses?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'instanceStatuses',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/instance-statuses?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'instanceStatuses',
+                    }],
                   }],
                 }],
               }, {
@@ -1935,9 +1964,16 @@ export const formConfigSamples = [
                         fields: 'statisticalCodeIds',
                         optionValue: 'name',
                         optionLabel: 'name',
+                        optionTemplate: '**statisticalCodeTypeName**: **code** - **name**',
                         wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                        wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'statisticalCodes',
+                        wrapperSources: [{
+                          wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'statisticalCodes',
+                        }, {
+                          wrapperSourceLink: '/statistical-code-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'statisticalCodeTypes',
+                        }],
+                        wrapperSourcesFn: 'statisticalCodeTypeName',
                       }],
                     }],
                   }],
@@ -2817,8 +2853,10 @@ export const formConfigSamples = [
                         optionValue: 'name',
                         optionLabel: 'name',
                         wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                        wrapperSourceLink: '/nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'natureOfContentTerms',
+                        wrapperSources: [{
+                          wrapperSourceLink: '/nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'natureOfContentTerms',
+                        }],
                       }],
                     }],
                   }],
@@ -3215,8 +3253,10 @@ export const formConfigSamples = [
                         optionValue: 'name',
                         optionLabel: 'name',
                         wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                        wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'electronicAccessRelationships',
+                        wrapperSources: [{
+                          wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'electronicAccessRelationships',
+                        }],
                         dataAttributes: { 'data-test-relationship': '' },
                       }],
                     }, {
@@ -3493,8 +3533,10 @@ export const formConfigSamples = [
                         optionValue: 'name',
                         optionLabel: 'name',
                         wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                        wrapperSourceLink: '/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'instanceRelationshipTypes',
+                        wrapperSources: [{
+                          wrapperSourceLink: '/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'instanceRelationshipTypes',
+                        }],
                       }],
                     }],
                   }],
@@ -3569,8 +3611,10 @@ export const formConfigSamples = [
                         optionValue: 'name',
                         optionLabel: 'name',
                         wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                        wrapperSourceLink: '/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'instanceRelationshipTypes',
+                        wrapperSources: [{
+                          wrapperSourceLink: '/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'instanceRelationshipTypes',
+                        }],
                       }],
                     }],
                   }],
@@ -3772,8 +3816,10 @@ export const formConfigSamples = [
                     optionValue: 'name',
                     optionLabel: 'name',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/holdings-types?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'holdingsTypes',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/holdings-types?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'holdingsTypes',
+                    }],
                   }],
                 }],
               }, {
@@ -3826,9 +3872,16 @@ export const formConfigSamples = [
                         fields: 'statisticalCodeIds',
                         optionValue: 'name',
                         optionLabel: 'name',
+                        optionTemplate: '**statisticalCodeTypeName**: **code** - **name**',
                         wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                        wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'statisticalCodes',
+                        wrapperSources: [{
+                          wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'statisticalCodes',
+                        }, {
+                          wrapperSourceLink: '/statistical-code-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'statisticalCodeTypes',
+                        }],
+                        wrapperSourcesFn: 'statisticalCodeTypeName',
                       }],
                     }],
                   }],
@@ -3864,8 +3917,10 @@ export const formConfigSamples = [
                     optionLabel: 'name',
                     optionTemplate: '**name** (**code**)',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'locations',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'locations',
+                    }],
                   }],
                 }, {
                   controlType: 'Col',
@@ -3885,8 +3940,10 @@ export const formConfigSamples = [
                     optionLabel: 'name',
                     optionTemplate: '**name** (**code**)',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'locations',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'locations',
+                    }],
                   }],
                 }],
               }, {
@@ -3959,8 +4016,10 @@ export const formConfigSamples = [
                     optionValue: 'name',
                     optionLabel: 'name',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'callNumberTypes',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'callNumberTypes',
+                    }],
                   }],
                 }, {
                   controlType: 'Col',
@@ -4248,8 +4307,10 @@ export const formConfigSamples = [
                     optionValue: 'name',
                     optionLabel: 'name',
                     wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                    wrapperSourceLink: '/ill-policies?limit=1000&query=cql.allRecords=1 sortby name',
-                    wrapperSourcePath: 'illPolicies',
+                    wrapperSources: [{
+                      wrapperSourceLink: '/ill-policies?limit=1000&query=cql.allRecords=1 sortby name',
+                      wrapperSourcePath: 'illPolicies',
+                    }],
                   }],
                 }, {
                   controlType: 'Col',
@@ -4347,8 +4408,10 @@ export const formConfigSamples = [
                           optionValue: 'name',
                           optionLabel: 'name',
                           wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                          wrapperSourceLink: '/holdings-note-types?limit=1000&query=cql.allRecords=1 sortby name',
-                          wrapperSourcePath: 'holdingsNoteTypes',
+                          wrapperSources: [{
+                            wrapperSourceLink: '/holdings-note-types?limit=1000&query=cql.allRecords=1 sortby name',
+                            wrapperSourcePath: 'holdingsNoteTypes',
+                          }],
                         }],
                       }, {
                         controlType: 'Col',
@@ -4458,8 +4521,10 @@ export const formConfigSamples = [
                           optionValue: 'name',
                           optionLabel: 'name',
                           wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-                          wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
-                          wrapperSourcePath: 'electronicAccessRelationships',
+                          wrapperSources: [{
+                            wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
+                            wrapperSourcePath: 'electronicAccessRelationships',
+                          }],
                         }],
                       }, {
                         controlType: 'Col',
