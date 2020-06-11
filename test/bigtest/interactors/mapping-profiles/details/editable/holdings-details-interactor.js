@@ -1,16 +1,12 @@
 // eslint-disable-next-line max-classes-per-file
-import {
-  AccordionInteractor,
-  AccordionSetInteractor,
-} from '@folio/stripes-components/lib/Accordion/tests/interactor';
-import ExpandAllButtonInteractor from '@folio/stripes-components/lib/Accordion/tests/expand-all-button-interactor';
+import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tests/interactor';
 import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
 import RepeatableFieldInteractor from '@folio/stripes-components/lib/RepeatableField/tests/interactor';
 import SelectInteractor from '@folio/stripes-components/lib/Select/tests/interactor';
 import DropdownInteractor from '@folio/stripes-components/lib/Dropdown/tests/interactor';
 
+import { DetailsSection } from '../details-section';
 import { InputInteractor } from '../../../input-interactor';
-import { MappedHeaderInteractor } from '../../../mapped-header-interactor';
 
 class AdministrativeDataAccordion extends AccordionInteractor {
   suppressFromDiscovery = new SelectInteractor('#mapping-profiles-form [data-test-suppress-from-discovery]');
@@ -81,9 +77,7 @@ class ReceivingHistoryAccordion extends AccordionInteractor {
   noteRepeatable = new SelectInteractor('#mapping-profiles-form #section-receiving-history [data-test-repeatable-decorator]');
 }
 
-export class HoldingsDetailsAccordion extends AccordionSetInteractor {
-  header = new MappedHeaderInteractor('#mapping-profiles-form');
-  expandAllButton = new ExpandAllButtonInteractor('#mapping-profiles-form [data-test-expand-all-button]');
+export class HoldingsDetailsAccordion extends DetailsSection {
   adminDataAccordion = new AdministrativeDataAccordion('#administrative-data');
   locationAccordion = new LocationAccordion('#holdings-location');
   holdingsDetailsAccordion = new DetailsAccordion('#holdings-details');
