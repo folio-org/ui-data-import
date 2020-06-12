@@ -17,6 +17,7 @@
 * Get rid of "@folio/stripes-core" and "@folio/stripes-smart-components" dependencies
 * Update "react-router" and "react-router-dom" dependencies
 * Connect MARC modifications table to the Field mapping profile form (UIDATIMP-536)
+* Add validation rules for Add action for the MARC modifications table fields (UIDATIMP-487)
 * Adjust mapping rules for repeatable fields in Field mapping profiles (UIDATIMP-544)
 
 ### Bugs fixed:
@@ -26,6 +27,7 @@
 * Fix reference dropdowns long lists height (UIDATIMP-511)
 * Update logic for reference dropdowns with datepicker (UIDATIMP-523)
 * Add location code display to accepted values list (UIDATIMP-514)
+* Reference dropdowns. Statistical code values lists has been updated (UIDATIMP-512)
 
 ## [1.8.3](https://github.com/folio-org/ui-data-import/tree/v1.8.3) (2020-04-27)
 

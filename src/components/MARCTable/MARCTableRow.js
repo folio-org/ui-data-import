@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { PropTypes } from 'prop-types';
 import {
   useIntl,
@@ -23,6 +27,11 @@ import {
   SUBACTION_OPTIONS,
   POSITION_OPTIONS,
   MARC_TABLE_CONFIG,
+  validateRequiredField,
+  validateMarcTagField,
+  validateMarcIndicatorField,
+  validateSubfieldField,
+  validateAlphanumericValue,
 } from '../../utils';
 
 import css from './MARCTable.css';
@@ -32,6 +41,9 @@ export const MARCTableRow = ({
   order,
   action,
   subaction,
+  field,
+  indicator1,
+  indicator2,
   columnWidths,
   isFirst,
   isLast,
@@ -48,12 +60,72 @@ export const MARCTableRow = ({
   } = MARC_TABLE_CONFIG;
 
   const { formatMessage } = useIntl();
-  const [actionValue, setActionValue] = useState(action);
-  const [subactionValue, setSubactionValue] = useState(subaction);
+  const [actionValue, setActionValue] = useState('');
+  const [subactionValue, setSubactionValue] = useState('');
+  const [fieldValue, setFieldValue] = useState('');
+  const [indicator1Value, setIndicator1Value] = useState('');
+  const [indicator2Value, setIndicator2Value] = useState('');
+
+  useEffect(() => {
+    setActionValue(action);
+  }, [action]);
+  useEffect(() => {
+    setSubactionValue(subaction);
+  }, [subaction]);
+  useEffect(() => {
+    setFieldValue(field);
+  }, [field]);
+  useEffect(() => {
+    setIndicator1Value(indicator1);
+  }, [indicator1]);
+  useEffect(() => {
+    setIndicator2Value(indicator2);
+  }, [indicator2]);
 
   const rowSubactions = allowedSubactions[actionValue] || [];
   const rowPositions = allowedPositions[actionValue] || {};
   const rowHasDataField = hasDataField[actionValue];
+
+  const validateTag = useCallback(
+    value => {
+      if (actionValue === MAPPING_DETAILS_ACTIONS.ADD) {
+        return validateMarcTagField(indicator1Value, indicator2Value)(value) || validateRequiredField(value);
+      }
+
+      return null;
+    },
+    [actionValue, indicator1Value, indicator2Value],
+  );
+  const validateIndicator1 = useCallback(
+    value => {
+      if (actionValue === MAPPING_DETAILS_ACTIONS.ADD) {
+        return validateAlphanumericValue(value) || validateMarcIndicatorField(fieldValue, value, indicator2Value);
+      }
+
+      return null;
+    },
+    [actionValue, fieldValue, indicator2Value],
+  );
+  const validateIndicator2 = useCallback(
+    value => {
+      if (actionValue === MAPPING_DETAILS_ACTIONS.ADD) {
+        return validateAlphanumericValue(value) || validateMarcIndicatorField(fieldValue, indicator1Value, value);
+      }
+
+      return null;
+    },
+    [actionValue, fieldValue, indicator1Value],
+  );
+  const validateSubfield = useCallback(
+    value => {
+      if (actionValue === MAPPING_DETAILS_ACTIONS.ADD) {
+        return validateAlphanumericValue(value) || validateSubfieldField(fieldValue)(value);
+      }
+
+      return null;
+    },
+    [actionValue, fieldValue],
+  );
 
   const renderArrows = () => {
     const cellStyle = {
@@ -121,6 +193,7 @@ export const MARCTableRow = ({
                 dataOptions={dataOptions}
                 placeholder={placeholder}
                 onChange={e => setActionValue(e.target.value)}
+                validate={[validateRequiredField]}
                 marginBottom0
               />
             )}
@@ -142,6 +215,8 @@ export const MARCTableRow = ({
         <Field
           name={`${name}.field.field`}
           component={TextField}
+          onChange={e => setFieldValue(e.target.value)}
+          validate={[validateTag]}
           marginBottom0
         />
       </div>
@@ -160,6 +235,8 @@ export const MARCTableRow = ({
         <Field
           name={`${name}.field.indicator1`}
           component={TextField}
+          onChange={e => setIndicator1Value(e.target.value)}
+          validate={[validateIndicator1]}
           marginBottom0
         />
       </div>
@@ -178,6 +255,8 @@ export const MARCTableRow = ({
         <Field
           name={`${name}.field.indicator2`}
           component={TextField}
+          onChange={e => setIndicator2Value(e.target.value)}
+          validate={[validateIndicator2]}
           marginBottom0
         />
       </div>
@@ -196,6 +275,7 @@ export const MARCTableRow = ({
         <Field
           name={`${name}.field.subfields[${subfieldIndex}].subfield`}
           component={TextField}
+          validate={[validateSubfield]}
           marginBottom0
         />
       </div>
@@ -356,11 +436,14 @@ export const MARCTableRow = ({
       }
 
       return (
-        <Field
-          name={`${name}.field.subfields[${subfieldIndex}].data.text`}
-          component={TextArea}
-          marginBottom0
-        />
+        <div data-test-marc-table-data-text>
+          <Field
+            name={`${name}.field.subfields[${subfieldIndex}].data.text`}
+            component={TextArea}
+            validate={[validateRequiredField]}
+            marginBottom0
+          />
+        </div>
       );
     };
 
@@ -470,6 +553,9 @@ MARCTableRow.propTypes = {
   onMoveRow: PropTypes.func.isRequired,
   action: PropTypes.string,
   subaction: PropTypes.string,
+  field: PropTypes.string,
+  indicator1: PropTypes.string,
+  indicator2: PropTypes.string,
   isFirst: PropTypes.bool,
   isLast: PropTypes.bool,
   isSubline: PropTypes.bool,
@@ -481,4 +567,7 @@ MARCTableRow.defaultProps = {
   isSubline: false,
   action: '',
   subaction: '',
+  field: '',
+  indicator1: '',
+  indicator2: '',
 };
