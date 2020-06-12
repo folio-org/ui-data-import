@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **2.0.0** (in progress)
+## [2.0.0](https://github.com/folio-org/ui-data-import/tree/v2.0.0) (2020-06-12)
 
 ### Features added:
 * Purge "intlShape" in prep for "react-intl" "v4" migration. (UIDATIMP-517)
