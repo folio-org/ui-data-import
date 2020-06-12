@@ -18,6 +18,7 @@
 * Update "react-router" and "react-router-dom" dependencies
 * Connect MARC modifications table to the Field mapping profile form (UIDATIMP-536)
 * Add validation rules for Add action for the MARC modifications table fields (UIDATIMP-487)
+* Migrate from `stripes.type` to `stripes.actsAs`
 
 ### Bugs fixed:
 * Fix Item status list in field mapping profiles (UIDATIMP-515)
