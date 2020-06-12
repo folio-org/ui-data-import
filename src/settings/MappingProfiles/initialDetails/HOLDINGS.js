@@ -17,7 +17,7 @@ const HOLDINGS = {
   }, {
     name: 'formerIds',
     enabled: true,
-    path: 'holdings.formerIds',
+    path: 'holdings.formerIds[]',
     value: '',
     subfields: [{
       order: 0,
@@ -25,7 +25,7 @@ const HOLDINGS = {
       fields: [{
         name: 'formerId',
         enabled: true,
-        path: 'holdings.formerIds[].formerId',
+        path: 'holdings.formerIds[]',
         value: '',
       }],
     }],
@@ -39,7 +39,7 @@ const HOLDINGS = {
   }, {
     name: 'statisticalCodeIds',
     enabled: true,
-    path: 'holdings.statisticalCodeIds',
+    path: 'holdings.statisticalCodeIds[]',
     value: '',
     subfields: [{
       order: 0,
@@ -47,7 +47,7 @@ const HOLDINGS = {
       fields: [{
         name: 'statisticalCodeId',
         enabled: true,
-        path: 'holdings.statisticalCodeIds[].statisticalCodeId',
+        path: 'holdings.statisticalCodeIds[]',
         value: '',
         acceptedValues: {},
       }],
@@ -118,7 +118,7 @@ const HOLDINGS = {
   }, {
     name: 'holdingStatements',
     enabled: true,
-    path: 'holdings.holdingStatements',
+    path: 'holdings.holdingStatements[]',
     value: '',
     subfields: [{
       order: 0,
@@ -138,7 +138,7 @@ const HOLDINGS = {
   }, {
     name: 'holdingStatementsForSupplements',
     enabled: true,
-    path: 'holdings.holdingStatementsForSupplements',
+    path: 'holdings.holdingStatementsForSupplements[]',
     value: '',
     subfields: [{
       order: 0,
@@ -158,7 +158,7 @@ const HOLDINGS = {
   }, {
     name: 'holdingStatementsForIndexes',
     enabled: true,
-    path: 'holdings.holdingStatementsForIndexes',
+    path: 'holdings.holdingStatementsForIndexes[]',
     value: '',
     subfields: [{
       order: 0,
@@ -183,6 +183,7 @@ const HOLDINGS = {
     subfields: [],
     acceptedValues: {},
   }, {
+    // TODO: Change to "digitizationPolicy" to fix UIDATIMP-543
     name: 'digitalizationPolicy',
     enabled: true,
     path: 'holdings.digitalizationPolicy',
@@ -197,7 +198,7 @@ const HOLDINGS = {
   }, {
     name: 'notes',
     enabled: true,
-    path: 'holdings.notes',
+    path: 'holdings.notes[]',
     value: '',
     subfields: [{
       order: 0,
@@ -205,7 +206,7 @@ const HOLDINGS = {
       fields: [{
         name: 'noteType',
         enabled: true,
-        path: 'holdings.notes[].noteType',
+        path: 'holdings.notes[].holdingsNoteTypeId',
         value: '',
         acceptedValues: {},
       }, {
@@ -224,7 +225,7 @@ const HOLDINGS = {
   }, {
     name: 'electronicAccess',
     enabled: true,
-    path: 'holdings.electronicAccess',
+    path: 'holdings.electronicAccess[]',
     value: '',
     subfields: [{
       order: 0,
@@ -278,7 +279,7 @@ const HOLDINGS = {
   }, {
     name: 'receivingHistory.entries',
     enabled: true,
-    path: 'holdings.receivingHistory.entries',
+    path: 'holdings.receivingHistory.entries[]',
     value: '',
     subfields: [{
       order: 0,

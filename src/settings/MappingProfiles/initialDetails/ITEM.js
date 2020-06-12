@@ -35,7 +35,7 @@ const ITEM = {
   }, {
     name: 'formerIds',
     enabled: true,
-    path: 'item.formerIds',
+    path: 'item.formerIds[]',
     value: '',
     subfields: [{
       order: 0,
@@ -44,14 +44,14 @@ const ITEM = {
         // order: 0,
         name: 'formerId',
         enabled: true,
-        path: 'item.formerIds[].formerId',
+        path: 'item.formerIds[]',
         value: '',
       }],
     }],
   }, {
     name: 'statisticalCodeIds',
     enabled: true,
-    path: 'item.statisticalCodeIds',
+    path: 'item.statisticalCodeIds[]',
     value: '',
     subfields: [{
       order: 0,
@@ -59,7 +59,7 @@ const ITEM = {
       fields: [{
         name: 'statisticalCodeId',
         enabled: true,
-        path: 'item.statisticalCodeIds[].statisticalCodeId',
+        path: 'item.statisticalCodeIds[]',
         value: '',
         acceptedValues: {},
       }],
@@ -135,7 +135,7 @@ const ITEM = {
   }, {
     name: 'yearCaption',
     enabled: true,
-    path: 'item.yearCaption',
+    path: 'item.yearCaption[]',
     value: '',
     subfields: [{
       order: 0,
@@ -143,7 +143,7 @@ const ITEM = {
       fields: [{
         name: 'yearCaption',
         enabled: true,
-        path: 'item.yearCaption[].yearCaption',
+        path: 'item.yearCaption[]',
         value: '',
       }],
     }],
@@ -180,7 +180,7 @@ const ITEM = {
   }, {
     name: 'notes',
     enabled: true,
-    path: 'item.notes',
+    path: 'item.notes[]',
     value: '',
     subfields: [{
       order: 0,
@@ -227,7 +227,7 @@ const ITEM = {
   }, {
     name: 'circulationNotes',
     enabled: true,
-    path: 'item.circulationNotes',
+    path: 'item.circulationNotes[]',
     value: '',
     subfields: [{
       order: 0,
@@ -268,7 +268,7 @@ const ITEM = {
   }, {
     name: 'electronicAccess',
     enabled: true,
-    path: 'item.electronicAccess',
+    path: 'item.electronicAccess[]',
     value: '',
     subfields: [{
       order: 0,
