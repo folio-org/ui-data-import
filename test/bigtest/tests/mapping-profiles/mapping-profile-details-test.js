@@ -1679,9 +1679,7 @@ describe('Mapping Profile View', () => {
 
             hasRepeatableField('itemDetails', 'electronicAccessAccordion', 'electronicAccess', '');
             hasRepeatableFieldDecorator('itemDetails', 'electronicAccessAccordion', 'electronicAccessRepeatable');
-            describe('123123', () => {
-              hasReferenceValuesDecorator('itemDetails', 'electronicAccessAccordion', 'electronicRelationship', 'Relationship', 'electronicRelationshipAcceptedValues', true, 'electronicAccess', ['"name 1"', '910', '910', '910', '910']);
-            });
+            hasReferenceValuesDecorator('itemDetails', 'electronicAccessAccordion', 'electronicRelationship', 'Relationship', 'electronicRelationshipAcceptedValues', true, 'electronicAccess', ['"name 1"', '910', '910', '910', '910']);
           });
         });
 
@@ -1707,6 +1705,82 @@ describe('Mapping Profile View', () => {
 
             it('then "Save" button becomes active', () => {
               expect(mappingProfileForm.submitFormButtonDisabled).to.be.false;
+            });
+          });
+
+          describe('row has subfields', () => {
+            beforeEach(async () => {
+              await mappingProfileForm.marcDetailsTable.rows(0).action.selectAndBlur('Add');
+              await mappingProfileForm.marcDetailsTable.rows(0).subaction.selectAndBlur('Add subfield');
+            });
+
+            describe('wnen "Add" action and "Add subfield" subaction are selected', () => {
+              it('then subfield row is added', () => {
+                expect(mappingProfileForm.marcDetailsTable.rows(0).subfieldsCount).to.be.equal(1);
+              });
+
+              it('subfield row does not include up/down arrows', () => {
+                expect(mappingProfileForm.marcDetailsTable.rows(0).subfields(0).moveRowUp.isPresent).to.be.false;
+                expect(mappingProfileForm.marcDetailsTable.rows(0).subfields(0).moveRowDown.isPresent).to.be.false;
+              });
+
+              it('subfield row do not includes "position" field', () => {
+                expect(mappingProfileForm.marcDetailsTable.rows(0).subfields(0).position.hasSelect).to.be.false;
+              });
+
+              it('subfield row do not includes "add" button', () => {
+                expect(mappingProfileForm.marcDetailsTable.rows(0).subfields(0).addRow.isPresent).to.be.false;
+              });
+
+              describe('when data is filled in for main row', () => {
+                beforeEach(async () => {
+                  await mappingProfileForm.marcDetailsTable.rows(0).tag.fillAndBlur('910');
+                  await mappingProfileForm.marcDetailsTable.rows(0).indicator1.fillAndBlur('a');
+                  await mappingProfileForm.marcDetailsTable.rows(0).indicator2.fillAndBlur('a');
+                  await mappingProfileForm.marcDetailsTable.rows(0).subfield.fillAndBlur('a');
+                  await mappingProfileForm.marcDetailsTable.rows(0).dataTextField.fillAndBlur('test');
+                });
+
+                it('subfield\'s "Field" value has the same "Field" value as main row', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).subfields(0).tag.val).to.be.equal('910');
+                });
+
+                it('subfield\'s "In.1" value has the same "In.1" value as main row', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).subfields(0).indicator1.val).to.be.equal('a');
+                });
+
+                it('subfield\'s "In.2" value has the same "In.2" value as main row', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).subfields(0).indicator2.val).to.be.equal('a');
+                });
+
+                it('subfield\'s "Subfield" value is empty', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).subfields(0).subfield.val).to.be.equal('');
+                });
+
+                it('subfield\'s "Data" value is empty', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).subfields(0).dataTextField.val).to.be.equal('');
+                });
+              });
+
+              describe('wnen "Add subfield" subaction of subfield row is selected', () => {
+                beforeEach(async () => {
+                  await mappingProfileForm.marcDetailsTable.rows(0).subfields(0).subaction.selectAndBlur('Add subfield');
+                });
+
+                it('then one more subfield row is added', () => {
+                  expect(mappingProfileForm.marcDetailsTable.rows(0).subfieldsCount).to.be.equal(2);
+                });
+
+                describe('when remove button of subfield row is clicked', () => {
+                  beforeEach(async () => {
+                    await mappingProfileForm.marcDetailsTable.rows(0).subfields(0).removeRow.clickIconButton();
+                  });
+
+                  it('then current subfield row is removed', () => {
+                    expect(mappingProfileForm.marcDetailsTable.rows(0).subfieldsCount).to.be.equal(1);
+                  });
+                });
+              });
             });
           });
         });

@@ -11,10 +11,13 @@ export const MARCTableRowContainer = ({
   onAddNewRow,
   onRemoveRow,
   onMoveRow,
+  onAddSubfieldRow,
+  onRemoveSubfieldRow,
+  onRemoveSubfieldRows,
 }) => {
   const renderRow = (data, i) => {
     const subfieldsData = data.field?.subfields;
-    const containsSubsequentLines = data.field?.subfields?.length > 1;
+    const containsSubsequentLines = subfieldsData?.length > 1;
     const name = `profile.mappingDetails.marcMappingDetails[${i}]`;
 
     return (
@@ -38,10 +41,17 @@ export const MARCTableRowContainer = ({
           onRemoveRow={onRemoveRow}
           onMoveRow={onMoveRow}
           subfieldIndex={0}
+          subfieldsData={subfieldsData}
+          onAddSubfieldRow={onAddSubfieldRow}
+          onRemoveSubfieldRow={onRemoveSubfieldRow}
+          onRemoveSubfieldRows={onRemoveSubfieldRows}
         />
         {containsSubsequentLines &&
           data.field.subfields.map((subfield, idx) => idx !== 0 && (
-            <div key={idx}>
+            <div
+              key={idx}
+              data-test-marc-subfield-row={idx}
+            >
               <MARCTableRow
                 name={name}
                 order={data.order}
@@ -53,6 +63,10 @@ export const MARCTableRowContainer = ({
                 columnWidths={columnWidths}
                 isSubline
                 subfieldIndex={idx}
+                subfieldsData={subfieldsData}
+                onAddSubfieldRow={onAddSubfieldRow}
+                onRemoveSubfieldRow={onRemoveSubfieldRow}
+                onRemoveSubfieldRows={onRemoveSubfieldRows}
               />
             </div>
           ))
@@ -70,4 +84,7 @@ MARCTableRowContainer.propTypes = {
   onRemoveRow: PropTypes.func.isRequired,
   onMoveRow: PropTypes.func.isRequired,
   columnWidths: PropTypes.object,
+  onAddSubfieldRow: PropTypes.func.isRequired,
+  onRemoveSubfieldRow: PropTypes.func.isRequired,
+  onRemoveSubfieldRows: PropTypes.func.isRequired,
 };

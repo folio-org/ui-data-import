@@ -20,6 +20,7 @@
 * Add validation rules for Add action for the MARC modifications table fields (UIDATIMP-487)
 * Migrate from `stripes.type` to `stripes.actsAs`
 * Adjust mapping rules for repeatable fields in Field mapping profiles (UIDATIMP-544)
+* Field Mapping Profile details: MARC Bib from MARC Bib 4 - Add Subsequent lines (UIDATIMP-488)
 
 ### Bugs fixed:
 * Fix Item status list in field mapping profiles (UIDATIMP-515)
