@@ -27,7 +27,10 @@ export const MARCTable = ({
       order: row.order + 1,
     });
 
-    const newRow = { order: index };
+    const newRow = {
+      order: index,
+      field: { subfields: [{}] },
+    };
     const updatedRows = [
       ...rows.slice(0, index),
       newRow,
@@ -70,6 +73,65 @@ export const MARCTable = ({
     onChange(updatedRows);
   };
 
+  const addSubfieldRow = order => {
+    const updatedRows = [...rows];
+    const rowToUpdateIndex = rows.findIndex(row => row.order === order);
+    const rowToUpdate = updatedRows[rowToUpdateIndex];
+
+    updatedRows[rowToUpdateIndex] = {
+      ...rowToUpdate,
+      field: {
+        ...rowToUpdate.field,
+        subfields: [...rowToUpdate.field.subfields, {}],
+      },
+    };
+
+    onChange(updatedRows);
+  };
+
+  const removeSubfieldRow = (order, index) => {
+    const updatedRows = [...rows];
+    const rowToUpdateIndex = rows.findIndex(row => row.order === order);
+    const rowToUpdate = updatedRows[rowToUpdateIndex];
+
+    const newSubfields = [
+      ...rowToUpdate.field.subfields.slice(0, index),
+      ...rowToUpdate.field.subfields.slice(index + 1),
+    ];
+    const lastSubfieldIndex = newSubfields.length - 1;
+
+    newSubfields[lastSubfieldIndex] = {
+      ...newSubfields[lastSubfieldIndex],
+      subaction: null,
+    };
+
+    updatedRows[rowToUpdateIndex] = {
+      ...rowToUpdate,
+      field: {
+        ...rowToUpdate.field,
+        subfields: newSubfields,
+      },
+    };
+
+    onChange(updatedRows);
+  };
+
+  const removeSubfieldRows = order => {
+    const updatedRows = [...rows];
+    const rowToUpdateIndex = rows.findIndex(row => row.order === order);
+    const rowToUpdate = updatedRows[rowToUpdateIndex];
+
+    updatedRows[rowToUpdateIndex] = {
+      ...rowToUpdate,
+      field: {
+        ...rowToUpdate.field,
+        subfields: [{}],
+      },
+    };
+
+    onChange(updatedRows);
+  };
+
   const columns = ['arrows', 'action', 'field', 'indicator1', 'indicator2',
     'subfield', 'subaction', 'data', 'position', 'addRemove'];
   const columnWidths = {
@@ -100,6 +162,9 @@ export const MARCTable = ({
         onAddNewRow={addNewRow}
         onRemoveRow={removeRow}
         onMoveRow={moveRow}
+        onAddSubfieldRow={addSubfieldRow}
+        onRemoveSubfieldRow={removeSubfieldRow}
+        onRemoveSubfieldRows={removeSubfieldRows}
       />
     </div>
   );

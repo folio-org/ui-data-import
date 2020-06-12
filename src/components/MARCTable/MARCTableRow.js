@@ -52,6 +52,10 @@ export const MARCTableRow = ({
   onRemoveRow,
   onMoveRow,
   subfieldIndex,
+  subfieldsData,
+  onAddSubfieldRow,
+  onRemoveSubfieldRow,
+  onRemoveSubfieldRows,
 }) => {
   const {
     allowedSubactions,
@@ -127,6 +131,28 @@ export const MARCTableRow = ({
     [actionValue, fieldValue],
   );
 
+  const handleActionChange = e => {
+    const { ADD } = MAPPING_DETAILS_ACTIONS;
+
+    setActionValue(e.target.value);
+
+    if (e.target.value !== ADD && subfieldsData?.length > 1) {
+      onRemoveSubfieldRows(order);
+    }
+  };
+
+  const handleSubActionChange = e => {
+    const { ADD_SUBFIELD } = MAPPING_DETAILS_SUBACTIONS;
+
+    setSubactionValue(e.target.value);
+
+    if (e.target.value === ADD_SUBFIELD) {
+      onAddSubfieldRow(order);
+    }
+  };
+
+  const handleRemoveRow = () => (!isSubline ? onRemoveRow(order) : onRemoveSubfieldRow(order, subfieldIndex));
+
   const renderArrows = () => {
     const cellStyle = {
       width: columnWidths.arrows,
@@ -192,7 +218,7 @@ export const MARCTableRow = ({
                 component={Select}
                 dataOptions={dataOptions}
                 placeholder={placeholder}
-                onChange={e => setActionValue(e.target.value)}
+                onChange={handleActionChange}
                 validate={[validateRequiredField]}
                 marginBottom0
               />
@@ -217,6 +243,7 @@ export const MARCTableRow = ({
           component={TextField}
           onChange={e => setFieldValue(e.target.value)}
           validate={[validateTag]}
+          disabled={isSubline}
           marginBottom0
         />
       </div>
@@ -237,6 +264,7 @@ export const MARCTableRow = ({
           component={TextField}
           onChange={e => setIndicator1Value(e.target.value)}
           validate={[validateIndicator1]}
+          disabled={isSubline}
           marginBottom0
         />
       </div>
@@ -257,6 +285,7 @@ export const MARCTableRow = ({
           component={TextField}
           onChange={e => setIndicator2Value(e.target.value)}
           validate={[validateIndicator2]}
+          disabled={isSubline}
           marginBottom0
         />
       </div>
@@ -306,7 +335,7 @@ export const MARCTableRow = ({
                 component={Select}
                 dataOptions={dataOptions}
                 placeholder={placeholder}
-                onChange={e => setSubactionValue(e.target.value)}
+                onChange={handleSubActionChange}
                 marginBottom0
               />
             )}
@@ -519,7 +548,7 @@ export const MARCTableRow = ({
               icon="trash"
               disabled={isSingle}
               ariaLabel={ariaLabel}
-              onClick={() => onRemoveRow(order)}
+              onClick={handleRemoveRow}
             />
           )}
         </FormattedMessage>
@@ -548,9 +577,9 @@ MARCTableRow.propTypes = {
   name: PropTypes.string.isRequired,
   order: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   columnWidths: PropTypes.object.isRequired,
-  onAddNewRow: PropTypes.func.isRequired,
-  onRemoveRow: PropTypes.func.isRequired,
-  onMoveRow: PropTypes.func.isRequired,
+  onAddNewRow: PropTypes.func,
+  onRemoveRow: PropTypes.func,
+  onMoveRow: PropTypes.func,
   action: PropTypes.string,
   subaction: PropTypes.string,
   field: PropTypes.string,
@@ -559,6 +588,14 @@ MARCTableRow.propTypes = {
   isFirst: PropTypes.bool,
   isLast: PropTypes.bool,
   isSubline: PropTypes.bool,
+  subfieldsData: PropTypes.arrayOf(PropTypes.shape({
+    subfield: PropTypes.string,
+    data: PropTypes.object,
+    subaction: PropTypes.string,
+  })),
+  onAddSubfieldRow: PropTypes.func.isRequired,
+  onRemoveSubfieldRow: PropTypes.func.isRequired,
+  onRemoveSubfieldRows: PropTypes.func.isRequired,
 };
 
 MARCTableRow.defaultProps = {
@@ -570,4 +607,5 @@ MARCTableRow.defaultProps = {
   field: '',
   indicator1: '',
   indicator2: '',
+  subfieldsData: [{}],
 };

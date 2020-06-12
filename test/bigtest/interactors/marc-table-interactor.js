@@ -25,8 +25,7 @@ class MARCTableCellInteractor {
   }
 }
 
-@interactor
-class MARCTableRowInteractor {
+class MARCTableRowBaseInteractor {
   cells = collection('[data-test-marc-table-cell]', MARCTableCellInteractor);
   addRow = scoped('[data-test-marc-table-add]', IconButtonInteractor);
   removeRow = scoped('[data-test-marc-table-remove]', IconButtonInteractor);
@@ -43,6 +42,15 @@ class MARCTableRowInteractor {
   dataFindField = scoped('[data-test-marc-table-data-find]', TextAreaInteractor);
   dataReplaceField = scoped('[data-test-marc-table-data-replace]', TextAreaInteractor);
   position = scoped('[data-test-marc-table-position]', SelectInteractor);
+}
+
+@interactor
+class MARCTableSubfieldsRowInteractor extends MARCTableRowBaseInteractor {}
+
+@interactor
+class MARCTableRowInteractor extends MARCTableRowBaseInteractor {
+  subfields = collection('[data-test-marc-subfield-row]', MARCTableSubfieldsRowInteractor);
+  subfieldsCount = count('[data-test-marc-subfield-row]');
 }
 
 @interactor
