@@ -61,11 +61,13 @@
     "react-router-dom": "^4.3.1"
   },
   "stripes": {
-    "type": "app",
+    "actsAs": [
+      "app",
+      "settings"
+    ],
     "displayName": "ui-data-import.meta.title",
     "route": "/data-import",
     "queryResource": "query",
-    "hasSettings": true,
     "icons": [
       {
         "name": "holdings",
