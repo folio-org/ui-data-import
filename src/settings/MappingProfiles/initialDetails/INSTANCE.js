@@ -56,7 +56,7 @@ const INSTANCE = {
   }, {
     name: 'statisticalCodeIds',
     enabled: true,
-    path: 'instance.statisticalCodeIds',
+    path: 'instance.statisticalCodeIds[]',
     value: '',
     subfields: [{
       order: 0,
@@ -78,7 +78,7 @@ const INSTANCE = {
   }, {
     name: 'alternativeTitles',
     enabled: false,
-    path: 'instance.alternativeTitles',
+    path: 'instance.alternativeTitles[]',
     value: '',
     subfields: [{
       order: 0,
@@ -104,7 +104,7 @@ const INSTANCE = {
   }, {
     name: 'series',
     enabled: false,
-    path: 'instance.series',
+    path: 'instance.series[]',
     value: '',
     subfields: [{
       order: 0,
@@ -112,14 +112,14 @@ const INSTANCE = {
       fields: [{
         name: 'source',
         enabled: false,
-        path: 'instance.series[].source',
+        path: 'instance.series[]',
         value: '',
       }],
     }],
   }, {
     name: 'precedingTitles',
     enabled: false,
-    path: 'instance.precedingTitles',
+    path: 'instance.precedingTitles[]',
     value: '',
     subfields: [{
       order: 0,
@@ -149,7 +149,7 @@ const INSTANCE = {
   }, {
     name: 'succeedingTitles',
     enabled: false,
-    path: 'instance.succeedingTitles',
+    path: 'instance.succeedingTitles[]',
     value: '',
     subfields: [{
       order: 0,
@@ -179,7 +179,7 @@ const INSTANCE = {
   }, {
     name: 'identifiers',
     enabled: false,
-    path: 'instance.identifiers',
+    path: 'instance.identifiers[]',
     value: '',
     subfields: [{
       order: 0,
@@ -199,7 +199,7 @@ const INSTANCE = {
   }, {
     name: 'contributors',
     enabled: false,
-    path: 'instance.contributors',
+    path: 'instance.contributors[]',
     value: '',
     subfields: [{
       order: 0,
@@ -207,7 +207,7 @@ const INSTANCE = {
       fields: [{
         name: 'contributorName',
         enabled: false,
-        path: 'instance.contributors[].contributorName',
+        path: 'instance.contributors[].name',
         value: '',
       }, {
         name: 'contributorNameTypeId',
@@ -235,7 +235,7 @@ const INSTANCE = {
   }, {
     name: 'publication',
     enabled: false,
-    path: 'instance.publication',
+    path: 'instance.publication[]',
     value: '',
     subfields: [{
       order: 0,
@@ -265,7 +265,7 @@ const INSTANCE = {
   }, {
     name: 'editions',
     enabled: false,
-    path: 'instance.editions',
+    path: 'instance.editions[]',
     value: '',
     subfields: [{
       order: 0,
@@ -273,14 +273,14 @@ const INSTANCE = {
       fields: [{
         name: 'edition',
         enabled: false,
-        path: 'instance.editions[].edition',
+        path: 'instance.editions[]',
         value: '',
       }],
     }],
   }, {
     name: 'physicalDescriptions',
     enabled: false,
-    path: 'instance.physicalDescriptions',
+    path: 'instance.physicalDescriptions[]',
     value: '',
     subfields: [{
       order: 0,
@@ -288,7 +288,7 @@ const INSTANCE = {
       fields: [{
         name: 'physicalDescription',
         enabled: false,
-        path: 'instance.physicalDescriptions[].physicalDescription',
+        path: 'instance.physicalDescriptions[]',
         value: '',
       }],
     }],
@@ -301,7 +301,7 @@ const INSTANCE = {
   }, {
     name: 'natureOfContentTermIds',
     enabled: true,
-    path: 'instance.natureOfContentTermIds',
+    path: 'instance.natureOfContentTermIds[]',
     value: '',
     subfields: [{
       order: 0,
@@ -309,7 +309,7 @@ const INSTANCE = {
       fields: [{
         name: 'natureOfContentTermId',
         enabled: true,
-        path: 'instance.natureOfContentTermIds[].natureOfContentTermId',
+        path: 'instance.natureOfContentTermIds[]',
         value: '',
         acceptedValues: {},
       }],
@@ -317,7 +317,7 @@ const INSTANCE = {
   }, {
     name: 'instanceFormatIds',
     enabled: false,
-    path: 'instance.instanceFormatIds',
+    path: 'instance.instanceFormatIds[]',
     value: '',
     subfields: [{
       order: 0,
@@ -325,14 +325,14 @@ const INSTANCE = {
       fields: [{
         name: 'instanceFormatId',
         enabled: false,
-        path: 'instance.instanceFormatIds[].instanceFormatId',
+        path: 'instance.instanceFormatIds[]',
         value: '',
       }],
     }],
   }, {
     name: 'languages',
     enabled: false,
-    path: 'instance.languages',
+    path: 'instance.languages[]',
     value: '',
     subfields: [{
       order: 0,
@@ -340,14 +340,14 @@ const INSTANCE = {
       fields: [{
         name: 'languageId',
         enabled: false,
-        path: 'instance.languages[].languageId',
+        path: 'instance.languages[]',
         value: '',
       }],
     }],
   }, {
     name: 'publicationFrequency',
     enabled: false,
-    path: 'instance.publicationFrequency',
+    path: 'instance.publicationFrequency[]',
     value: '',
     subfields: [{
       order: 0,
@@ -355,14 +355,14 @@ const INSTANCE = {
       fields: [{
         name: 'publicationFrequency',
         enabled: false,
-        path: 'instance.publicationFrequency[].publicationFrequency',
+        path: 'instance.publicationFrequency[]',
         value: '',
       }],
     }],
   }, {
     name: 'publicationRange',
     enabled: false,
-    path: 'instance.publicationRange',
+    path: 'instance.publicationRange[]',
     value: '',
     subfields: [{
       order: 0,
@@ -370,14 +370,14 @@ const INSTANCE = {
       fields: [{
         name: 'publicationRange',
         enabled: false,
-        path: 'instance.publicationRange[].publicationRange',
+        path: 'instance.publicationRange[]',
         value: '',
       }],
     }],
   }, {
     name: 'notes',
     enabled: false,
-    path: 'instance.notes',
+    path: 'instance.notes[]',
     value: '',
     subfields: [{
       order: 0,
@@ -385,7 +385,7 @@ const INSTANCE = {
       fields: [{
         name: 'noteType',
         enabled: false,
-        path: 'instance.notes[].noteType',
+        path: 'instance.notes[].instanceNoteTypeId',
         value: '',
       }, {
         name: 'note',
@@ -403,7 +403,7 @@ const INSTANCE = {
   }, {
     name: 'electronicAccess',
     enabled: false,
-    path: 'instance.electronicAccess',
+    path: 'instance.electronicAccess[]',
     value: '',
     subfields: [{
       order: 0,
@@ -439,7 +439,7 @@ const INSTANCE = {
   }, {
     name: 'subjects',
     enabled: false,
-    path: 'instance.subjects',
+    path: 'instance.subjects[]',
     value: '',
     subfields: [{
       order: 0,
@@ -447,14 +447,14 @@ const INSTANCE = {
       fields: [{
         name: 'subject',
         enabled: false,
-        path: 'instance.subjects[].subject',
+        path: 'instance.subjects[]',
         value: '',
       }],
     }],
   }, {
     name: 'classifications',
     enabled: false,
-    path: 'instance.classifications',
+    path: 'instance.classifications[]',
     value: '',
     subfields: [{
       order: 0,
@@ -474,7 +474,7 @@ const INSTANCE = {
   }, {
     name: 'parentInstances',
     enabled: true,
-    path: 'instance.parentInstances',
+    path: 'instance.parentInstances[]',
     value: '',
     subfields: [{
       order: 0,
@@ -495,7 +495,7 @@ const INSTANCE = {
   }, {
     name: 'childInstances',
     enabled: true,
-    path: 'instance.childInstances',
+    path: 'instance.childInstances[]',
     value: '',
     subfields: [{
       order: 0,
