@@ -64,7 +64,7 @@ const INSTANCE = {
       fields: [{
         name: 'statisticalCodeId',
         enabled: true,
-        path: 'instance.statisticalCodeIds[].statisticalCodeId',
+        path: 'instance.statisticalCodeIds[]',
         value: '',
         acceptedValues: {},
       }],

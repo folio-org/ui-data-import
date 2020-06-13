@@ -74,7 +74,7 @@ export default server => {
             // order: 0,
             name: 'statisticalCodeId',
             enabled: true,
-            path: 'instance.statisticalCodeIds[].statisticalCodeId',
+            path: 'instance.statisticalCodeIds[]',
             value: '910',
           }],
         }],
