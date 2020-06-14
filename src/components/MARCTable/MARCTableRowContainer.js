@@ -31,9 +31,9 @@ export const MARCTableRowContainer = ({
           order={data.order}
           action={data.action}
           subaction={subfieldsData?.[0]?.subaction}
-          field={subfieldsData?.[0]?.field}
-          indicator1={subfieldsData?.[0]?.indicator1}
-          indicator2={subfieldsData?.[0]?.indicator2}
+          field={data.field?.field}
+          indicator1={data.field?.indicator1}
+          indicator2={data.field?.indicator2}
           columnWidths={columnWidths}
           isFirst={i === 0}
           isLast={i === (fields.length - 1)}
@@ -60,7 +60,6 @@ export const MARCTableRowContainer = ({
                 field={subfield.field}
                 indicator1={subfield.indicator1}
                 indicator2={subfield.indicator2}
-                subfield={subfield.subfield}
                 columnWidths={columnWidths}
                 isSubline
                 subfieldIndex={idx}

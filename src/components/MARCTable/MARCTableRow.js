@@ -49,7 +49,6 @@ export const MARCTableRow = connect(null, { dispatchOnChange: change })(({
   field,
   indicator1,
   indicator2,
-  subfield,
   columnWidths,
   isFirst,
   isLast,
@@ -76,6 +75,7 @@ export const MARCTableRow = connect(null, { dispatchOnChange: change })(({
   } = MAPPING_DETAILS_ACTIONS;
 
   const { formatMessage } = useIntl();
+  const { subfield } = subfieldsData?.[0];
   const [actionValue, setActionValue] = useState('');
   const [subactionValue, setSubactionValue] = useState('');
   const [fieldValue, setFieldValue] = useState('');
@@ -107,13 +107,13 @@ export const MARCTableRow = connect(null, { dispatchOnChange: change })(({
   const rowHasDataField = hasDataField[actionValue];
 
   const fieldsToCheckArr = [{
-    value: indicator1Value.length ? indicator1Value : indicator1,
+    value: indicator1Value || '',
     path: `profile.mappingDetails.marcMappingDetails[${order}].field.indicator1`,
   }, {
-    value: indicator2Value.length ? indicator2Value : indicator2,
+    value: indicator2Value || '',
     path: `profile.mappingDetails.marcMappingDetails[${order}].field.indicator2`,
   }, {
-    value: subfieldValue.length ? subfieldValue : subfield,
+    value: subfieldValue || '',
     path: `profile.mappingDetails.marcMappingDetails[${order}].field.subfields[${subfieldIndex}].subfield`,
   }];
 
@@ -629,7 +629,6 @@ MARCTableRow.propTypes = {
   field: PropTypes.string,
   indicator1: PropTypes.string,
   indicator2: PropTypes.string,
-  subfield: PropTypes.string,
   isFirst: PropTypes.bool,
   isLast: PropTypes.bool,
   isSubline: PropTypes.bool,
@@ -653,6 +652,5 @@ MARCTableRow.defaultProps = {
   field: '',
   indicator1: '',
   indicator2: '',
-  subfield: '',
   subfieldsData: [{}],
 };
