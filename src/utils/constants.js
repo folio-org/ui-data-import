@@ -335,6 +335,8 @@ export const FILTER_QUERY_PARAMS = {
   NOT_STATIC_VALUE: 'cql.allRecords=1 NOT incomingRecordType=STATIC_VALUE',
 };
 
+export const MAPPING_DETAILS_FORM_NAME = 'mappingProfilesForm';
+
 export const MAPPING_DETAILS_ACTIONS = {
   ADD: 'ADD',
   DELETE: 'DELETE',

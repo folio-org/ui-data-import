@@ -60,6 +60,7 @@ export const MARCTableRowContainer = ({
                 field={subfield.field}
                 indicator1={subfield.indicator1}
                 indicator2={subfield.indicator2}
+                subfield={subfield.subfield}
                 columnWidths={columnWidths}
                 isSubline
                 subfieldIndex={idx}
