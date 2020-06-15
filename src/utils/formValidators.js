@@ -77,9 +77,8 @@ export const validateFileExtension = value => {
 export const validateAlphanumericOrAllowedValue = (value, allowedValue) => {
   const pattern = /^[a-zA-Z0-9]*$/;
   const val = value && value.trim ? value.trim() : value;
-  const isEmptyField = !val || !val.length;
 
-  if (isEmptyField || val === allowedValue || val.match(pattern)) {
+  if (isEmpty(val) || val === allowedValue || val.match(pattern)) {
     return null;
   }
 
