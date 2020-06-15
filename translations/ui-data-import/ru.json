@@ -405,7 +405,7 @@
     "settings.mappingProfiles.map.instance.descriptiveData.field.publications.addLabel": "Добавить публикацию",
     "settings.mappingProfiles.map.instance.descriptiveData.field.publisher": "Издатель",
     "settings.mappingProfiles.map.instance.descriptiveData.field.role": "Publisher role",
-    "settings.mappingProfiles.map.instance.descriptiveData.field.place": "Местоположение",
+    "settings.mappingProfiles.map.instance.descriptiveData.field.place": "Местонахождение",
     "settings.mappingProfiles.map.instance.descriptiveData.field.dateOfPublication": "Дата публикации",
     "settings.mappingProfiles.map.instance.descriptiveData.field.editions.legend": "Издания",
     "settings.mappingProfiles.map.instance.descriptiveData.field.editions.addLabel": "Добавить издание",
