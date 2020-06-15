@@ -132,6 +132,28 @@ export const MARCTable = ({
     onChange(updatedRows);
   };
 
+  const fillEmptyFieldOnDeleteAction = (order, items, valueToFill) => {
+    const updatedRows = [...rows];
+    const rowToUpdateIndex = rows.findIndex(row => row.order === order);
+
+    items
+      .map(item => {
+        const isSubfieldField = item.name === 'subfield';
+        const rowToUpdate = updatedRows[rowToUpdateIndex];
+
+        updatedRows[rowToUpdateIndex] = {
+          ...rowToUpdate,
+          field: {
+            ...rowToUpdate.field,
+            ...(!isSubfieldField && { [item.name]: valueToFill }),
+            ...(isSubfieldField && { subfields: [{ subfield: valueToFill }] }),
+          },
+        };
+
+        onChange(updatedRows);
+      });
+  };
+
   const columns = ['arrows', 'action', 'field', 'indicator1', 'indicator2',
     'subfield', 'subaction', 'data', 'position', 'addRemove'];
   const columnWidths = {
@@ -165,6 +187,7 @@ export const MARCTable = ({
         onAddSubfieldRow={addSubfieldRow}
         onRemoveSubfieldRow={removeSubfieldRow}
         onRemoveSubfieldRows={removeSubfieldRows}
+        onRemoveActionSelect={fillEmptyFieldOnDeleteAction}
       />
     </div>
   );
