@@ -540,5 +540,6 @@
     "settings.mappingProfiles.map.item.status.paged": "مقسم إلى صفحات",
     "settings.mappingProfiles.map.item.status.declareLost": "تم الإعلان عن فقدانه",
     "settings.mappingProfiles.map.item.status.orderClosed": "تم إغلاق الطلبية",
-    "settings.mappingProfiles.map.item.status.claimedReturned": "تم إدعاء إعادته"
+    "settings.mappingProfiles.map.item.status.claimedReturned": "تم إدعاء إعادته",
+    "validation.cannotBeUpdated": "لا يمكن تحديث هذا الحقل"
 }
