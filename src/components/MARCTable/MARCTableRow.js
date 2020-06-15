@@ -640,7 +640,7 @@ MARCTableRow.propTypes = {
   onAddSubfieldRow: PropTypes.func.isRequired,
   onRemoveSubfieldRow: PropTypes.func.isRequired,
   onRemoveSubfieldRows: PropTypes.func.isRequired,
-  dispatchOnChange: PropTypes.func.isRequired,
+  dispatchOnChange: PropTypes.func,
 };
 
 MARCTableRow.defaultProps = {
@@ -653,4 +653,5 @@ MARCTableRow.defaultProps = {
   indicator1: '',
   indicator2: '',
   subfieldsData: [{}],
+  dispatchOnChange: () => {},
 };
