@@ -137,6 +137,7 @@ export const MARCTable = ({
     const rowToUpdateIndex = rows.findIndex(row => row.order === order);
 
     items
+      // eslint-disable-next-line array-callback-return
       .map(item => {
         const isSubfieldField = item.name === 'subfield';
         const rowToUpdate = updatedRows[rowToUpdateIndex];
