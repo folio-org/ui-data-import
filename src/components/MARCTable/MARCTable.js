@@ -118,6 +118,7 @@ export const MARCTable = ({
     onChange('profile.mappingDetails.marcMappingDetails', updatedRows);
   };
 
+  // TODO: create separate function for removing subfield rows to avoid additional re-render
   const removeSubfieldRows = order => {
     const updatedRows = [...rows];
     const rowToUpdateIndex = rows.findIndex(row => row.order === order);
