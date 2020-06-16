@@ -540,5 +540,6 @@
     "settings.mappingProfiles.map.item.status.paged": "Paginado",
     "settings.mappingProfiles.map.item.status.declareLost": "Declarado perdido",
     "settings.mappingProfiles.map.item.status.orderClosed": "Pedido encerrado",
-    "settings.mappingProfiles.map.item.status.claimedReturned": "Alegou ter devolvido"
+    "settings.mappingProfiles.map.item.status.claimedReturned": "Alegou ter devolvido",
+    "validation.cannotBeUpdated": "Este campo não pode ser atualizado"
 }

@@ -316,7 +316,7 @@
     "settings.mappingProfiles.map.location.field.permanent": "Permanent",
     "settings.mappingProfiles.map.location.field.temporary": "Temporaire",
     "settings.mappingProfiles.map.field.copyNumber": "Numéro d'exemplaire",
-    "settings.mappingProfiles.map.field.callNumberType": "Call number type",
+    "settings.mappingProfiles.map.field.callNumberType": "Type de cote",
     "settings.mappingProfiles.map.field.callNumberPrefix": "Call number prefix",
     "settings.mappingProfiles.map.field.callNumber": "Call number",
     "settings.mappingProfiles.map.field.callNumberSuffix": "Call number suffix",
@@ -468,7 +468,7 @@
     "settings.mappingProfiles.map.holdings.field.retentionPolicy": "Retention policy",
     "settings.mappingProfiles.map.field.holdingsNotes.legend": "Holdings notes",
     "settings.mappingProfiles.map.field.holdingsNotes.addLabel": "Add holdings note",
-    "settings.mappingProfiles.map.holdings.holdingsNotes.section": "Holdings notes",
+    "settings.mappingProfiles.map.holdings.holdingsNotes.section": "Notes sur les collections",
     "settings.mappingProfiles.map.order": "Commande",
     "settings.mappingProfiles.map.invoice": "Facture",
     "settings.mappingProfiles.map.marcBib": "MARC Bibliographic",
@@ -540,5 +540,6 @@
     "settings.mappingProfiles.map.item.status.paged": "Paged",
     "settings.mappingProfiles.map.item.status.declareLost": "Déclaré perdu",
     "settings.mappingProfiles.map.item.status.orderClosed": "Commande close",
-    "settings.mappingProfiles.map.item.status.claimedReturned": "Claimed returned"
+    "settings.mappingProfiles.map.item.status.claimedReturned": "Claimed returned",
+    "validation.cannotBeUpdated": "Ce champ ne peut pas être mis à jour"
 }
