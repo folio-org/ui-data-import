@@ -67,6 +67,8 @@ export const MARCTableRow = ({
   const {
     ADD,
     DELETE,
+    EDIT,
+    MOVE,
   } = MAPPING_DETAILS_ACTIONS;
 
   const { formatMessage } = useIntl();
@@ -98,55 +100,55 @@ export const MARCTableRow = ({
 
   const validateTag = useCallback(
     value => {
-      if (actionValue === MAPPING_DETAILS_ACTIONS.ADD || actionValue === MAPPING_DETAILS_ACTIONS.DELETE) {
+      if (actionValue === ADD || actionValue === DELETE) {
         return validateMarcTagField(indicator1Value, indicator2Value)(value) || validateRequiredField(value);
       }
 
       return null;
     },
-    [actionValue, indicator1Value, indicator2Value],
+    [actionValue, indicator1Value, indicator2Value, ADD, DELETE],
   );
   const validateIndicator1 = useCallback(
     value => {
-      if (actionValue === MAPPING_DETAILS_ACTIONS.ADD) {
+      if (actionValue === ADD) {
         return validateAlphanumericOrAllowedValue(value) || validateMarcIndicatorField(fieldValue, value, indicator2Value);
       }
 
-      if (actionValue === MAPPING_DETAILS_ACTIONS.DELETE) {
+      if (actionValue === DELETE) {
         return validateAlphanumericOrAllowedValue(value, '*') || validateMarcIndicatorField(fieldValue, value, indicator2Value);
       }
 
       return null;
     },
-    [actionValue, fieldValue, indicator2Value],
+    [actionValue, fieldValue, indicator2Value, ADD, DELETE],
   );
   const validateIndicator2 = useCallback(
     value => {
-      if (actionValue === MAPPING_DETAILS_ACTIONS.ADD) {
+      if (actionValue === ADD) {
         return validateAlphanumericOrAllowedValue(value) || validateMarcIndicatorField(fieldValue, indicator1Value, value);
       }
 
-      if (actionValue === MAPPING_DETAILS_ACTIONS.DELETE) {
+      if (actionValue === DELETE) {
         return validateAlphanumericOrAllowedValue(value, '*') || validateMarcIndicatorField(fieldValue, indicator1Value, value);
       }
 
       return null;
     },
-    [actionValue, fieldValue, indicator1Value],
+    [actionValue, fieldValue, indicator1Value, ADD, DELETE],
   );
   const validateSubfield = useCallback(
     value => {
-      if (actionValue === MAPPING_DETAILS_ACTIONS.ADD) {
+      if (actionValue === ADD) {
         return validateAlphanumericOrAllowedValue(value) || validateSubfieldField(fieldValue)(value);
       }
 
-      if (actionValue === MAPPING_DETAILS_ACTIONS.DELETE) {
+      if (actionValue === DELETE) {
         return validateRequiredField(value) || validateAlphanumericOrAllowedValue(value, '*') || validateSubfieldField(fieldValue)(value);
       }
 
       return null;
     },
-    [actionValue, fieldValue],
+    [actionValue, fieldValue, ADD, DELETE],
   );
 
   const handleActionChange = e => {
@@ -366,10 +368,6 @@ export const MARCTableRow = ({
     );
   };
   const renderDataField = () => {
-    const {
-      EDIT,
-      MOVE,
-    } = MAPPING_DETAILS_ACTIONS;
     const {
       REPLACE,
       NEW_FIELD,
