@@ -136,8 +136,8 @@ export const MappingProfilesFormComponent = ({
   }, [deletedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onMarcDetailsChange = useCallback(
-    updatedFields => {
-      dispatch(change(formName, 'profile.mappingDetails.marcMappingDetails', updatedFields));
+    (fieldPath, updatedValue) => {
+      dispatch(change(formName, fieldPath, updatedValue));
     },
     [dispatch],
   );
