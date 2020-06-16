@@ -56,7 +56,7 @@ export const MARCTableRow = ({
   onAddSubfieldRow,
   onRemoveSubfieldRow,
   onRemoveSubfieldRows,
-  onRemoveActionSelect,
+  onDeleteActionSelect,
 }) => {
   const {
     allowedSubactions,
@@ -70,13 +70,11 @@ export const MARCTableRow = ({
   } = MAPPING_DETAILS_ACTIONS;
 
   const { formatMessage } = useIntl();
-  const { subfield } = subfieldsData?.[0];
   const [actionValue, setActionValue] = useState('');
   const [subactionValue, setSubactionValue] = useState('');
   const [fieldValue, setFieldValue] = useState('');
   const [indicator1Value, setIndicator1Value] = useState('');
   const [indicator2Value, setIndicator2Value] = useState('');
-  const [subfieldValue, setSubfieldValue] = useState('');
 
   useEffect(() => {
     setActionValue(action);
@@ -93,24 +91,10 @@ export const MARCTableRow = ({
   useEffect(() => {
     setIndicator2Value(indicator2);
   }, [indicator2]);
-  useEffect(() => {
-    setSubfieldValue(subfield);
-  }, [subfield]);
 
   const rowSubactions = allowedSubactions[actionValue] || [];
   const rowPositions = allowedPositions[actionValue] || {};
   const rowHasDataField = hasDataField[actionValue];
-
-  const fieldsToCheck = [{
-    value: indicator1Value || '',
-    name: 'indicator1',
-  }, {
-    value: indicator2Value || '',
-    name: 'indicator2',
-  }, {
-    value: subfieldValue || '',
-    name: 'subfield',
-  }];
 
   const validateTag = useCallback(
     value => {
@@ -166,14 +150,16 @@ export const MARCTableRow = ({
   );
 
   const handleActionChange = e => {
-    setActionValue(e.target.value);
+    const selectedAction = e.target.value;
 
-    if (e.target.value !== ADD && subfieldsData?.length > 1) {
+    setActionValue(selectedAction);
+
+    if (selectedAction !== ADD && subfieldsData?.length > 1) {
       onRemoveSubfieldRows(order);
     }
 
-    if (e.target.value === DELETE) {
-      onRemoveActionSelect(order, fieldsToCheck.filter(item => !item.value), '*');
+    if (selectedAction === DELETE) {
+      onDeleteActionSelect(order, ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*');
     }
   };
 
@@ -339,7 +325,6 @@ export const MARCTableRow = ({
         <Field
           name={`${name}.field.subfields[${subfieldIndex}].subfield`}
           component={TextField}
-          onChange={setSubfieldValue}
           validate={[validateSubfield]}
           marginBottom0
         />
@@ -632,7 +617,7 @@ MARCTableRow.propTypes = {
   onAddSubfieldRow: PropTypes.func.isRequired,
   onRemoveSubfieldRow: PropTypes.func.isRequired,
   onRemoveSubfieldRows: PropTypes.func.isRequired,
-  onRemoveActionSelect: PropTypes.func.isRequired,
+  onDeleteActionSelect: PropTypes.func.isRequired,
 };
 
 MARCTableRow.defaultProps = {
