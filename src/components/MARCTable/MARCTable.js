@@ -132,13 +132,12 @@ export const MARCTable = ({
     onChange(updatedRows);
   };
 
-  const fillEmptyFieldOnDeleteAction = (order, items, valueToFill) => {
+  const fillEmptyFieldOnDeleteAction = (order, items) => {
     const updatedRows = [...rows];
     const rowToUpdateIndex = rows.findIndex(row => row.order === order);
 
     items
-      // eslint-disable-next-line array-callback-return
-      .map(item => {
+      .forEach(item => {
         const isSubfieldField = item.name === 'subfield';
         const rowToUpdate = updatedRows[rowToUpdateIndex];
 
@@ -146,8 +145,8 @@ export const MARCTable = ({
           ...rowToUpdate,
           field: {
             ...rowToUpdate.field,
-            ...(!isSubfieldField && { [item.name]: valueToFill }),
-            ...(isSubfieldField && { subfields: [{ subfield: valueToFill }] }),
+            ...(!isSubfieldField && { [item.name]: item.value }),
+            ...(isSubfieldField && { subfields: [{ subfield: item.value }] }),
           },
         };
 
