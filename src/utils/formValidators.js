@@ -54,27 +54,31 @@ export const validateFileExtension = value => {
 };
 
 /**
- * Validate an alphanumeric input value
+ * Validate an alphanumeric or allowed input value
  *
  * @param {string|*} value
+ * @param {string?} allowedValue
  * @returns {null|*}
  *
  * @example
  *
- * validateAlphanumericValue('value')
+ * validateAlphanumericOrAllowedValue('value')
  * // => null
  *
- * validateAlphanumericValue('123')
+ * validateAlphanumericOrAllowedValue('123')
  * // => null
  *
- * validateAlphanumericValue('*')
+ * validateAlphanumericOrAllowedValue('*', '*')
+ * // => null
+ *
+ * validateAlphanumericOrAllowedValue('*')
  * // => Translated string (en = 'Please enter an alphanumeric value')
  */
-export const validateAlphanumericValue = value => {
+export const validateAlphanumericOrAllowedValue = (value, allowedValue) => {
   const pattern = /^[a-zA-Z0-9]*$/;
   const val = value && value.trim ? value.trim() : value;
 
-  if (!val || !val.length || val.match(pattern)) {
+  if (isEmpty(val) || val === allowedValue || val.match(pattern)) {
     return null;
   }
 

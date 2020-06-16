@@ -31,7 +31,7 @@ import {
   validateMarcTagField,
   validateMarcIndicatorField,
   validateSubfieldField,
-  validateAlphanumericValue,
+  validateAlphanumericOrAllowedValue,
 } from '../../utils';
 
 import css from './MARCTable.css';
@@ -56,12 +56,20 @@ export const MARCTableRow = ({
   onAddSubfieldRow,
   onRemoveSubfieldRow,
   onRemoveSubfieldRows,
+  onDeleteActionSelect,
 }) => {
   const {
     allowedSubactions,
     allowedPositions,
     hasDataField,
   } = MARC_TABLE_CONFIG;
+
+  const {
+    ADD,
+    DELETE,
+    EDIT,
+    MOVE,
+  } = MAPPING_DETAILS_ACTIONS;
 
   const { formatMessage } = useIntl();
   const [actionValue, setActionValue] = useState('');
@@ -92,52 +100,68 @@ export const MARCTableRow = ({
 
   const validateTag = useCallback(
     value => {
-      if (actionValue === MAPPING_DETAILS_ACTIONS.ADD) {
+      if (actionValue === ADD || actionValue === DELETE) {
         return validateMarcTagField(indicator1Value, indicator2Value)(value) || validateRequiredField(value);
       }
 
       return null;
     },
-    [actionValue, indicator1Value, indicator2Value],
+    [actionValue, indicator1Value, indicator2Value, ADD, DELETE],
   );
   const validateIndicator1 = useCallback(
     value => {
-      if (actionValue === MAPPING_DETAILS_ACTIONS.ADD) {
-        return validateAlphanumericValue(value) || validateMarcIndicatorField(fieldValue, value, indicator2Value);
+      if (actionValue === ADD) {
+        return validateAlphanumericOrAllowedValue(value) || validateMarcIndicatorField(fieldValue, value, indicator2Value);
+      }
+
+      if (actionValue === DELETE) {
+        return validateAlphanumericOrAllowedValue(value, '*') || validateMarcIndicatorField(fieldValue, value, indicator2Value);
       }
 
       return null;
     },
-    [actionValue, fieldValue, indicator2Value],
+    [actionValue, fieldValue, indicator2Value, ADD, DELETE],
   );
   const validateIndicator2 = useCallback(
     value => {
-      if (actionValue === MAPPING_DETAILS_ACTIONS.ADD) {
-        return validateAlphanumericValue(value) || validateMarcIndicatorField(fieldValue, indicator1Value, value);
+      if (actionValue === ADD) {
+        return validateAlphanumericOrAllowedValue(value) || validateMarcIndicatorField(fieldValue, indicator1Value, value);
+      }
+
+      if (actionValue === DELETE) {
+        return validateAlphanumericOrAllowedValue(value, '*') || validateMarcIndicatorField(fieldValue, indicator1Value, value);
       }
 
       return null;
     },
-    [actionValue, fieldValue, indicator1Value],
+    [actionValue, fieldValue, indicator1Value, ADD, DELETE],
   );
   const validateSubfield = useCallback(
     value => {
-      if (actionValue === MAPPING_DETAILS_ACTIONS.ADD) {
-        return validateAlphanumericValue(value) || validateSubfieldField(fieldValue)(value);
+      if (actionValue === ADD) {
+        return validateAlphanumericOrAllowedValue(value) || validateSubfieldField(fieldValue)(value);
+      }
+
+      if (actionValue === DELETE) {
+        return validateRequiredField(value) || validateAlphanumericOrAllowedValue(value, '*') || validateSubfieldField(fieldValue)(value);
       }
 
       return null;
     },
-    [actionValue, fieldValue],
+    [actionValue, fieldValue, ADD, DELETE],
   );
 
   const handleActionChange = e => {
-    const { ADD } = MAPPING_DETAILS_ACTIONS;
+    const selectedAction = e.target.value;
 
-    setActionValue(e.target.value);
+    setActionValue(selectedAction);
 
-    if (e.target.value !== ADD && subfieldsData?.length > 1) {
+    if (selectedAction !== ADD && subfieldsData?.length > 1) {
       onRemoveSubfieldRows(order);
+    }
+
+    if (selectedAction === DELETE) {
+      onDeleteActionSelect(order, ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*');
     }
   };
 
@@ -152,7 +176,6 @@ export const MARCTableRow = ({
   };
 
   const handleRemoveRow = () => (!isSubline ? onRemoveRow(order) : onRemoveSubfieldRow(order, subfieldIndex));
-
   const renderArrows = () => {
     const cellStyle = {
       width: columnWidths.arrows,
@@ -262,7 +285,7 @@ export const MARCTableRow = ({
         <Field
           name={`${name}.field.indicator1`}
           component={TextField}
-          onChange={e => setIndicator1Value(e.target.value)}
+          onChange={setIndicator1Value}
           validate={[validateIndicator1]}
           disabled={isSubline}
           marginBottom0
@@ -283,7 +306,7 @@ export const MARCTableRow = ({
         <Field
           name={`${name}.field.indicator2`}
           component={TextField}
-          onChange={e => setIndicator2Value(e.target.value)}
+          onChange={setIndicator2Value}
           validate={[validateIndicator2]}
           disabled={isSubline}
           marginBottom0
@@ -345,10 +368,6 @@ export const MARCTableRow = ({
     );
   };
   const renderDataField = () => {
-    const {
-      EDIT,
-      MOVE,
-    } = MAPPING_DETAILS_ACTIONS;
     const {
       REPLACE,
       NEW_FIELD,
@@ -596,6 +615,7 @@ MARCTableRow.propTypes = {
   onAddSubfieldRow: PropTypes.func.isRequired,
   onRemoveSubfieldRow: PropTypes.func.isRequired,
   onRemoveSubfieldRows: PropTypes.func.isRequired,
+  onDeleteActionSelect: PropTypes.func.isRequired,
 };
 
 MARCTableRow.defaultProps = {

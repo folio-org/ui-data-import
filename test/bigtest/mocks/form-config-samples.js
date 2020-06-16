@@ -40,7 +40,7 @@ export const formConfigSamples = [
             id: 'criterion-**ns**.field.main',
             name: 'matchDetails[##ri##].**ns**MatchExpression.fields[0].value',
             label: 'ui-data-import.match.**ns**.MARC.field-main',
-            validate: ['validateAlphanumericValue', 'validateValueLength3'],
+            validate: ['validateAlphanumericOrAllowedValue', 'validateValueLength3'],
             dataAttributes: { 'data-test-field-main': '' },
           }],
         }, {
@@ -54,7 +54,7 @@ export const formConfigSamples = [
             id: 'criterion-**ns**.field.in1',
             name: 'matchDetails[##ri##].**ns**MatchExpression.fields[1].value',
             label: 'ui-data-import.match.**ns**.MARC.field-in1',
-            validate: ['validateAlphanumericValue', 'validateValueLength1'],
+            validate: ['validateAlphanumericOrAllowedValue', 'validateValueLength1'],
             dataAttributes: { 'data-test-field-in1': '' },
           }],
         }, {
@@ -68,7 +68,7 @@ export const formConfigSamples = [
             id: 'criterion-**ns**.field.in2',
             name: 'matchDetails[##ri##].**ns**MatchExpression.fields[2].value',
             label: 'ui-data-import.match.**ns**.MARC.field-in2',
-            validate: ['validateAlphanumericValue', 'validateValueLength1'],
+            validate: ['validateAlphanumericOrAllowedValue', 'validateValueLength1'],
             dataAttributes: { 'data-test-field-in2': '' },
           }],
         }, {
@@ -82,7 +82,7 @@ export const formConfigSamples = [
             id: 'criterion-**ns**.field.subfield',
             name: 'matchDetails[##ri##].**ns**MatchExpression.fields[3].value',
             label: 'ui-data-import.match.**ns**.MARC.field-subfield',
-            validate: ['validateAlphanumericValue', 'validateValueLength1'],
+            validate: ['validateAlphanumericOrAllowedValue', 'validateValueLength1'],
             dataAttributes: { 'data-test-field-subfield': '' },
           }],
         }],
