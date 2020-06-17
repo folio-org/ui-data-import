@@ -234,19 +234,16 @@ export const MARCTableRow = ({
         style={cellStyle}
       >
         {!isSubline && (
-          <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.placeholder.select">
-            {placeholder => (
-              <Field
-                name={`${name}.action`}
-                component={Select}
-                dataOptions={dataOptions}
-                placeholder={placeholder}
-                onChange={handleActionChange}
-                validate={[validateRequiredField]}
-                marginBottom0
-              />
-            )}
-          </FormattedMessage>
+          <Field
+            name={`${name}.action`}
+            component={Select}
+            dataOptions={dataOptions}
+            placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
+            onChange={handleActionChange}
+            validate={[validateRequiredField]}
+            aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.select' })}
+            marginBottom0
+          />
         )}
       </div>
     );
@@ -267,6 +264,7 @@ export const MARCTableRow = ({
           onChange={e => setFieldValue(e.target.value)}
           validate={[validateTag]}
           disabled={isSubline}
+          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.field' })}
           marginBottom0
         />
       </div>
@@ -288,6 +286,7 @@ export const MARCTableRow = ({
           onChange={setIndicator1Value}
           validate={[validateIndicator1]}
           disabled={isSubline}
+          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.indicator1' })}
           marginBottom0
         />
       </div>
@@ -309,6 +308,7 @@ export const MARCTableRow = ({
           onChange={setIndicator2Value}
           validate={[validateIndicator2]}
           disabled={isSubline}
+          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.indicator2' })}
           marginBottom0
         />
       </div>
@@ -328,6 +328,7 @@ export const MARCTableRow = ({
           name={`${name}.field.subfields[${subfieldIndex}].subfield`}
           component={TextField}
           validate={[validateSubfield]}
+          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.subfield' })}
           marginBottom0
         />
       </div>
@@ -351,18 +352,15 @@ export const MARCTableRow = ({
         style={cellStyle}
       >
         {!isEmpty(dataOptions) && (
-          <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.placeholder.select">
-            {placeholder => (
-              <Field
-                name={`${name}.field.subfields[${subfieldIndex}].subaction`}
-                component={Select}
-                dataOptions={dataOptions}
-                placeholder={placeholder}
-                onChange={handleSubActionChange}
-                marginBottom0
-              />
-            )}
-          </FormattedMessage>
+          <Field
+            name={`${name}.field.subfields[${subfieldIndex}].subaction`}
+            component={Select}
+            dataOptions={dataOptions}
+            placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
+            onChange={handleSubActionChange}
+            aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.subaction' })}
+            marginBottom0
+          />
         )}
       </div>
     );
@@ -410,6 +408,7 @@ export const MARCTableRow = ({
               <Field
                 name={`${name}.field.subfields[${subfieldIndex}].data.find`}
                 component={TextArea}
+                aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.find' })}
                 marginBottom0
                 fullWidth
               />
@@ -424,6 +423,7 @@ export const MARCTableRow = ({
               <Field
                 name={`${name}.field.subfields[${subfieldIndex}].data.replaceWith`}
                 component={TextArea}
+                aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.replaceWith' })}
                 marginBottom0
                 fullWidth
               />
@@ -435,50 +435,38 @@ export const MARCTableRow = ({
       if (actionValue === MOVE && (subactionValue === NEW_FIELD || subactionValue === EXISTING_FIELD)) {
         return (
           <>
-            <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.header.field">
-              {placeholder => (
-                <Field
-                  name={`${name}.field.subfields[${subfieldIndex}].data.marcField.field`}
-                  component={TextField}
-                  className={css.tableDataCell}
-                  placeholder={placeholder}
-                  marginBottom0
-                />
-              )}
-            </FormattedMessage>
-            <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.header.indicator1">
-              {placeholder => (
-                <Field
-                  name={`${name}.field.subfields[${subfieldIndex}].data.marcField.indicator1`}
-                  component={TextField}
-                  className={css.tableDataCell}
-                  placeholder={placeholder}
-                  marginBottom0
-                />
-              )}
-            </FormattedMessage>
-            <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.header.indicator2">
-              {placeholder => (
-                <Field
-                  name={`${name}.field.subfields[${subfieldIndex}].data.marcField.indicator2`}
-                  component={TextField}
-                  className={css.tableDataCell}
-                  placeholder={placeholder}
-                  marginBottom0
-                />
-              )}
-            </FormattedMessage>
-            <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.header.subfield">
-              {placeholder => (
-                <Field
-                  name={`${name}.field.subfields[${subfieldIndex}].data.marcField.subfields[${subfieldIndex}].subfield`}
-                  component={TextField}
-                  className={css.tableDataCell}
-                  placeholder={placeholder}
-                  marginBottom0
-                />
-              )}
-            </FormattedMessage>
+            <Field
+              name={`${name}.field.subfields[${subfieldIndex}].data.marcField.field`}
+              component={TextField}
+              className={css.tableDataCell}
+              placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.field' })}
+              ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.field' })}
+              marginBottom0
+            />
+            <Field
+              name={`${name}.field.subfields[${subfieldIndex}].data.marcField.indicator1`}
+              component={TextField}
+              className={css.tableDataCell}
+              placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator1' })}
+              ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator1' })}
+              marginBottom0
+            />
+            <Field
+              name={`${name}.field.subfields[${subfieldIndex}].data.marcField.indicator2`}
+              component={TextField}
+              className={css.tableDataCell}
+              placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator2' })}
+              ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator2' })}
+              marginBottom0
+            />
+            <Field
+              name={`${name}.field.subfields[${subfieldIndex}].data.marcField.subfields[${subfieldIndex}].subfield`}
+              component={TextField}
+              className={css.tableDataCell}
+              placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subfield' })}
+              ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.subfield' })}
+              marginBottom0
+            />
           </>
         );
       }
@@ -489,6 +477,7 @@ export const MARCTableRow = ({
             name={`${name}.field.subfields[${subfieldIndex}].data.text`}
             component={TextArea}
             validate={[validateRequiredField]}
+            aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.text' })}
             marginBottom0
           />
         </div>
@@ -528,6 +517,7 @@ export const MARCTableRow = ({
             name={`${name}.field.subfields[${subfieldIndex}].position`}
             component={Select}
             dataOptions={dataOptions}
+            aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.position' })}
             marginBottom0
           />
         )}

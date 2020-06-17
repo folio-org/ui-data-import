@@ -5,6 +5,9 @@
 ### Features added:
 * Field Mapping Profile details: MARC Bib from MARC Bib 2 - Delete (UIDATIMP-486)
 
+### Bugs fixed:
+* Fix Accessibility problems for MARCTable component (UIDATIMP-547)
+
 ## [2.0.0](https://github.com/folio-org/ui-data-import/tree/v2.0.0) (2020-06-12)
 
 ### Features added:
