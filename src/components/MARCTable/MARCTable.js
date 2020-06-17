@@ -124,7 +124,10 @@ export const MARCTable = ({
     const rowToUpdateIndex = rows.findIndex(row => row.order === order);
     const firstSubfield = updatedRows[rowToUpdateIndex].field?.subfields?.[0] || {};
 
-    const subfields = [firstSubfield];
+    const subfields = [{
+      ...firstSubfield,
+      subaction: null,
+    }];
 
     onChange(`profile.mappingDetails.marcMappingDetails[${rowToUpdateIndex}].field.subfields`, subfields);
   };
