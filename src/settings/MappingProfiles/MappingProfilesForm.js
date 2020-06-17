@@ -177,13 +177,9 @@ export const MappingProfilesFormComponent = ({
   };
 
   const renderDetails = {
-    INSTANCE: (
-      <MappingInstanceDetails {...detailsProps} />
-    ),
-    HOLDINGS: (
-      <MappingHoldingsDetails {...detailsProps} />
-    ),
-    ITEM: <MappingItemDetails />,
+    INSTANCE: <MappingInstanceDetails {...detailsProps} />,
+    HOLDINGS: <MappingHoldingsDetails {...detailsProps} />,
+    ITEM: <MappingItemDetails {...detailsProps} />,
   };
 
   return (
@@ -319,7 +315,7 @@ MappingProfilesFormComponent.propTypes = {
     }).isRequired,
     PropTypes.string.isRequired,
   ]),
-  okapi: PropTypes.shape(okapiShape).isRequired,
+  okapi: okapiShape.isRequired,
   mappingDetails: PropTypes.object,
   onCancel: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,

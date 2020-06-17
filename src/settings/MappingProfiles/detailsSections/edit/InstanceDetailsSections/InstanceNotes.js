@@ -75,4 +75,4 @@ export const InstanceNotes = ({ notes }) => {
   );
 };
 
-InstanceNotes.propTypes = { notes: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired };
+InstanceNotes.propTypes = { notes: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired };

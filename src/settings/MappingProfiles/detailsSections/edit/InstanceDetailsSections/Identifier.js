@@ -60,4 +60,4 @@ export const Identifier = ({ identifiers }) => {
   );
 };
 
-Identifier.propTypes = { identifiers: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired };
+Identifier.propTypes = { identifiers: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired };

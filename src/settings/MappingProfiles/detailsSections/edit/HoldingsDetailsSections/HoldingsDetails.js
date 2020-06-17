@@ -21,6 +21,7 @@ import {
   onRemove,
   getFieldName,
   getSubfieldName,
+  getRepeatableFieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
 import {
@@ -60,7 +61,7 @@ export const HoldingsDetails = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getFieldName(15)}
+            wrapperFieldName={getRepeatableFieldName(15)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement.legend`} />}
           >
             <RepeatableField
@@ -97,7 +98,7 @@ export const HoldingsDetails = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getFieldName(16)}
+            wrapperFieldName={getRepeatableFieldName(16)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForSupplements.legend`} />}
           >
             <RepeatableField
@@ -134,7 +135,7 @@ export const HoldingsDetails = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getFieldName(17)}
+            wrapperFieldName={getRepeatableFieldName(17)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForIndexes.legend`} />}
           >
             <RepeatableField
@@ -207,10 +208,10 @@ export const HoldingsDetails = ({
 };
 
 HoldingsDetails.propTypes = {
-  holdingStatements: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  holdingStatementsForSupplements: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  holdingStatementsForIndexes: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  holdingStatements: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  holdingStatementsForSupplements: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  holdingStatementsForIndexes: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
-  okapi: PropTypes.shape(okapiShape).isRequired,
+  okapi: okapiShape.isRequired,
 };

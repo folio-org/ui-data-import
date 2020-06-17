@@ -52,4 +52,4 @@ export const Subject = ({ subjects }) => {
   );
 };
 
-Subject.propTypes = { subjects: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired };
+Subject.propTypes = { subjects: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired };

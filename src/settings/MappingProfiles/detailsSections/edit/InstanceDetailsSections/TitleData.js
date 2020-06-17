@@ -16,6 +16,7 @@ import { RepeatableActionsField } from '../../../../../components';
 
 import {
   getFieldName,
+  getRepeatableFieldName,
   getSubfieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
@@ -132,7 +133,7 @@ export const TitleData = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getFieldName(13)}
+            wrapperFieldName={getRepeatableFieldName(13)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.precedingTitles.legend`} />}
             disabled
           >
@@ -188,7 +189,7 @@ export const TitleData = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getFieldName(14)}
+            wrapperFieldName={getRepeatableFieldName(14)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.succeedingTitles.legend`} />}
             disabled
           >
@@ -243,8 +244,8 @@ export const TitleData = ({
 };
 
 TitleData.propTypes = {
-  alternativeTitles: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  seriesStatements: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  precedingTitles: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  succeedingTitles: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  alternativeTitles: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  seriesStatements: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  precedingTitles: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  succeedingTitles: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
 };

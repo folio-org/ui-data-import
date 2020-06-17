@@ -22,6 +22,7 @@ import {
   onRemove,
   getSubfieldName,
   getFieldName,
+  getRepeatableFieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
 import {
@@ -171,7 +172,7 @@ export const DescriptiveData = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getFieldName(21)}
+            wrapperFieldName={getRepeatableFieldName(21)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermsIds.legend`} />}
           >
             <RepeatableField
@@ -316,15 +317,15 @@ export const DescriptiveData = ({
 };
 
 DescriptiveData.propTypes = {
-  publications: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  editions: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  physicalDescriptions: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  natureOfContentTermIds: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  languages: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  instanceFormatIds: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  publicationFrequency: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  publicationRange: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  publications: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  editions: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  physicalDescriptions: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  natureOfContentTermIds: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  languages: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  instanceFormatIds: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  publicationFrequency: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  publicationRange: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
-  okapi: PropTypes.shape(okapiShape).isRequired,
+  okapi: okapiShape.isRequired,
 };

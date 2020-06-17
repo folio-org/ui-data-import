@@ -13,16 +13,10 @@ import {
 
 import {
   BooleanActionField,
-  DatePickerDecorator,
   AcceptedValuesField,
   RepeatableActionsField,
 } from '../../../../../components';
 
-import {
-  validateMARCWithDate,
-  mappingProfileSubfieldShape,
-  okapiShape,
-} from '../../../../../utils';
 import {
   onAdd,
   onRemove,
@@ -32,9 +26,14 @@ import {
   getRepeatableFieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import {
+  mappingProfileSubfieldShape,
+  okapiShape,
+} from '../../../../../utils';
 
 export const AdministrativeData = ({
-  statisticalCodes,
+  formerIds,
+  statisticalCodeIds,
   initialFields,
   setReferenceTables,
   okapi,
@@ -54,109 +53,95 @@ export const AdministrativeData = ({
             name={getBoolFieldName(0)}
           />
         </Col>
-        <Col
-          data-test-staff-suppress
-          xs={4}
-        >
-          <BooleanActionField
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.staffSuppress`} />}
-            name={getBoolFieldName(1)}
-          />
-        </Col>
-        <Col
-          data-test-previously-held
-          xs={4}
-        >
-          <BooleanActionField
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.previouslyHeld`} />}
-            name={getBoolFieldName(2)}
-          />
-        </Col>
       </Row>
       <Row left="xs">
         <Col
-          data-test-instance-hrid
-          xs={6}
+          data-test-item-hrid
+          xs={3}
         >
           <Field
             component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.hrid`} />}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.hrid`} />}
+            name={getFieldName(1)}
+            disabled
+          />
+        </Col>
+        <Col
+          data-test-barcode
+          xs={3}
+        >
+          <Field
+            component={TextField}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.barcode`} />}
+            name={getFieldName(2)}
+          />
+        </Col>
+        <Col
+          data-test-accession-number
+          xs={3}
+        >
+          <Field
+            component={TextField}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.accessionNumber`} />}
             name={getFieldName(3)}
-            disabled
           />
         </Col>
         <Col
-          data-test-metadata-source
-          xs={6}
+          data-test-item-identifier
+          xs={3}
         >
           <Field
             component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.source`} />}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.itemIdentifier`} />}
             name={getFieldName(4)}
-            disabled
           />
         </Col>
       </Row>
       <Row left="xs">
         <Col
-          data-test-cataloged-date
-          xs={6}
-        >
-          <Field
-            component={DatePickerDecorator}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.catalogedDate`} />}
-            name={getFieldName(5)}
-            wrappedComponent={TextField}
-            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            validate={[validateMARCWithDate]}
-          />
-        </Col>
-      </Row>
-      <Row left="xs">
-        <Col
-          data-test-status-term
+          data-test-former-ids
+          id="section-former-ids"
           xs={12}
         >
-          <AcceptedValuesField
-            component={TextField}
-            name={getFieldName(6)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.statusId`} />}
-            optionValue="name"
-            optionLabel="name"
-            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/instance-statuses?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="instanceStatuses"
-            okapi={okapi}
-          />
-        </Col>
-      </Row>
-      <Row left="xs">
-        <Col
-          data-test-mode-of-issuance
-          xs={12}
-        >
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.modeOfIssuanceId`} />}
-            name={getFieldName(7)}
-            disabled
-          />
+          <RepeatableActionsField
+            wrapperFieldName={getRepeatableFieldName(5)}
+            legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId.legend`} />}
+          >
+            <RepeatableField
+              fields={formerIds}
+              addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId.addLabel`} />}
+              onAdd={() => onAdd(formerIds, 'formerIds', 5, initialFields, setReferenceTables, 'order')}
+              onRemove={index => onRemove(index, formerIds, 5, setReferenceTables, 'order')}
+              renderField={(field, index) => (
+                <Row left="xs">
+                  <Col xs={12}>
+                    <Field
+                      component={TextField}
+                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId`} />}
+                      name={getSubfieldName(5, 0, index)}
+                    />
+                  </Col>
+                </Row>
+              )}
+            />
+          </RepeatableActionsField>
         </Col>
       </Row>
       <Row left="xs">
         <Col
           data-test-statistical-codes
+          id="section-statistical-code-ids"
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(8)}
+            wrapperFieldName={getRepeatableFieldName(6)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />}
           >
             <RepeatableField
-              fields={statisticalCodes}
+              fields={statisticalCodeIds}
               addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.addLabel`} />}
-              onAdd={() => onAdd(statisticalCodes, 'statisticalCodeIds', 8, initialFields, setReferenceTables, 'order')}
-              onRemove={index => onRemove(index, statisticalCodes, 8, setReferenceTables, 'order')}
+              onAdd={() => onAdd(statisticalCodeIds, 'statisticalCodeIds', 6, initialFields, setReferenceTables, 'order')}
+              onRemove={index => onRemove(index, statisticalCodeIds, 6, setReferenceTables, 'order')}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col
@@ -164,15 +149,15 @@ export const AdministrativeData = ({
                     xs={12}
                   >
                     <AcceptedValuesField
-                      okapi={okapi}
                       component={TextField}
-                      name={getSubfieldName(8, 0, index)}
+                      name={getSubfieldName(6, 0, index)}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCode`} />}
-                      optionLabel="name"
                       optionValue="name"
+                      optionLabel="name"
                       wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                       wrapperSourceLink="/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name"
                       wrapperSourcePath="statisticalCodes"
+                      okapi={okapi}
                     />
                   </Col>
                 </Row>
@@ -186,7 +171,8 @@ export const AdministrativeData = ({
 };
 
 AdministrativeData.propTypes = {
-  statisticalCodes: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  formerIds: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  statisticalCodeIds: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,

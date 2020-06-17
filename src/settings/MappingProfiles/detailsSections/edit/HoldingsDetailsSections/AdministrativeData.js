@@ -23,6 +23,7 @@ import {
   getFieldName,
   getSubfieldName,
   getBoolFieldName,
+  getRepeatableFieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
 import {
@@ -72,7 +73,7 @@ export const AdministrativeData = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getFieldName(2)}
+            wrapperFieldName={getRepeatableFieldName(2)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.formerId.legend`} />}
           >
             <RepeatableField
@@ -120,7 +121,7 @@ export const AdministrativeData = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getFieldName(4)}
+            wrapperFieldName={getRepeatableFieldName(4)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />}
           >
             <RepeatableField
@@ -157,9 +158,9 @@ export const AdministrativeData = ({
 };
 
 AdministrativeData.propTypes = {
-  formerIds: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  statisticalCodeIds: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  formerIds: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  statisticalCodeIds: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
-  okapi: PropTypes.shape(okapiShape).isRequired,
+  okapi: okapiShape.isRequired,
 };
