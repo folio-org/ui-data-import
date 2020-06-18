@@ -18,8 +18,8 @@ import {
   getFieldName,
   getRepeatableFieldName,
   getSubfieldName,
-} from '../utils';
-import { TRANSLATION_ID_PREFIX } from '../constants';
+} from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const TitleData = ({

@@ -12,8 +12,8 @@ import { okapiShape } from '../../../../../utils';
 
 import { AcceptedValuesField } from '../../../../../components';
 
-import { getFieldName } from '../utils';
-import { TRANSLATION_ID_PREFIX } from '../constants';
+import { getFieldName } from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 
 export const Location = ({ okapi }) => {
   return (

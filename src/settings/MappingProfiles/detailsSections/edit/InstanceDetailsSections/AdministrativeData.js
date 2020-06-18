@@ -30,8 +30,8 @@ import {
   getSubfieldName,
   getBoolFieldName,
   getRepeatableFieldName,
-} from '../utils';
-import { TRANSLATION_ID_PREFIX } from '../constants';
+} from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 
 export const AdministrativeData = ({
   statisticalCodes,

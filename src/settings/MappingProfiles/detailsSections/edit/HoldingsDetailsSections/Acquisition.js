@@ -9,8 +9,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import { getFieldName } from '../utils';
-import { TRANSLATION_ID_PREFIX } from '../constants';
+import { getFieldName } from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 
 export const Acquisition = () => {
   return (

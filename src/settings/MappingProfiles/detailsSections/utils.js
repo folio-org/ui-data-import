@@ -1,4 +1,10 @@
+import { isEmpty } from 'lodash';
+
 import { FIELD_NAME_PREFIX } from './constants';
+import {
+  ENTITY_KEYS,
+  FORMS_SETTINGS,
+} from '../../../utils';
 
 export const getFieldName = mappingFieldIndex => {
   return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].value`;
@@ -49,4 +55,29 @@ export const onRemove = (index, refTable, fieldIndex, callback, incrementalField
   }
 
   callback(fieldsPath, newRefTable);
+};
+
+export const getFieldValue = (details, fieldName, key) => details.find(item => item.name === fieldName)?.[key];
+
+export const transformSubfieldsData = (subfields, columns) => subfields.map(item => {
+  let currentRow = {};
+
+  columns.forEach(columnName => {
+    const fieldValue = item?.fields.find(field => field.name === columnName).value;
+
+    currentRow = {
+      ...currentRow,
+      [columnName]: fieldValue,
+    };
+  });
+
+  return currentRow;
+});
+
+export const getContentData = fields => (!isEmpty(fields) ? fields : [{}]);
+
+export const getBooleanLabelId = fieldValue => {
+  const booleanActions = FORMS_SETTINGS[ENTITY_KEYS.MAPPING_PROFILES].DECORATORS.BOOLEAN_ACTIONS;
+
+  return booleanActions.find(action => action.value === fieldValue)?.label;
 };

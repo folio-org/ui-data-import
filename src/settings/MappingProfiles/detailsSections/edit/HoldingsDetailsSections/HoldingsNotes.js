@@ -22,8 +22,8 @@ import {
   getSubfieldName,
   getBoolSubfieldName,
   getRepeatableFieldName,
-} from '../utils';
-import { TRANSLATION_ID_PREFIX } from '../constants';
+} from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   mappingProfileSubfieldShape,
   okapiShape,

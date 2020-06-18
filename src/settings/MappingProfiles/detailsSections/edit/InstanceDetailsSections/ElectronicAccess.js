@@ -14,8 +14,8 @@ import {
 
 import { AcceptedValuesField } from '../../../../../components';
 
-import { getSubfieldName } from '../utils';
-import { TRANSLATION_ID_PREFIX } from '../constants';
+import { getSubfieldName } from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   mappingProfileSubfieldShape,
   okapiShape,

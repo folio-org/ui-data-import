@@ -11,8 +11,8 @@ import {
 
 import { AcceptedValuesField } from '../../../../../components';
 
-import { getFieldName } from '../utils';
-import { TRANSLATION_ID_PREFIX } from '../constants';
+import { getFieldName } from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { okapiShape } from '../../../../../utils';
 
 export const ItemData = ({ okapi }) => {

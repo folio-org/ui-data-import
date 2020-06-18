@@ -17,11 +17,9 @@ export const ProhibitionIcon = ({ ariaLabel }) => {
 
   const getIcon = message => (
     <span
-      /* eslint-disable-next-line jsx-a11y/aria-role */
-      role="text"
+      data-test-no-value-allowed
       aria-label={message}
       className={css.noValueAllowed}
-      data-test-no-value-allowed
     >
       &#8416;
     </span>

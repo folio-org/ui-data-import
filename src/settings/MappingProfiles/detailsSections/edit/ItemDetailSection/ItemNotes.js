@@ -23,8 +23,8 @@ import {
   getSubfieldName,
   onAdd,
   onRemove,
-} from '../utils';
-import { TRANSLATION_ID_PREFIX } from '../constants';
+} from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   okapiShape,
   mappingProfileSubfieldShape,

@@ -43,7 +43,7 @@ import {
   MappingInstanceDetails,
   MappingHoldingsDetails,
   MappingItemDetails,
-} from './detailsSections';
+} from './detailsSections/edit';
 
 import {
   getInitialDetails,
