@@ -102,6 +102,6 @@ export const ElectronicAccess = ({
 };
 
 ElectronicAccess.propTypes = {
-  electronicAccess: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  okapi: PropTypes.shape(okapiShape).isRequired,
+  electronicAccess: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  okapi: okapiShape.isRequired,
 };

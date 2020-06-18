@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { AccordionSet } from '@folio/stripes/components';
 
@@ -11,6 +12,12 @@ import {
   Acquisition,
   ReceivingHistory,
 } from './HoldingsDetailsSections';
+
+import {
+  mappingHoldingsInitialFieldsShape,
+  mappingHoldingsRefTablesShape,
+  okapiShape,
+} from '../../../../utils';
 
 export const MappingHoldingsDetails = ({
   initialFields,
@@ -65,4 +72,11 @@ export const MappingHoldingsDetails = ({
       />
     </AccordionSet>
   );
+};
+
+MappingHoldingsDetails.propTypes = {
+  initialFields: mappingHoldingsInitialFieldsShape.isRequired,
+  referenceTables: mappingHoldingsRefTablesShape.isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
+  okapi: okapiShape.isRequired,
 };

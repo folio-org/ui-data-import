@@ -88,4 +88,4 @@ export const Contributor = ({ contributors }) => {
   );
 };
 
-Contributor.propTypes = { contributors: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired };
+Contributor.propTypes = { contributors: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired };

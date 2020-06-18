@@ -7,29 +7,30 @@ import {
   Accordion,
   Row,
   Col,
-  RepeatableField,
   TextField,
+  RepeatableField,
 } from '@folio/stripes/components';
 
 import {
-  AcceptedValuesField, BooleanActionField,
+  AcceptedValuesField,
+  BooleanActionField,
   RepeatableActionsField,
 } from '../../../../../components';
 
 import {
-  onAdd,
-  onRemove,
-  getSubfieldName,
   getBoolSubfieldName,
   getRepeatableFieldName,
+  getSubfieldName,
+  onAdd,
+  onRemove,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
 import {
-  mappingProfileSubfieldShape,
   okapiShape,
+  mappingProfileSubfieldShape,
 } from '../../../../../utils';
 
-export const HoldingsNotes = ({
+export const ItemNotes = ({
   notes,
   initialFields,
   setReferenceTables,
@@ -37,44 +38,44 @@ export const HoldingsNotes = ({
 }) => {
   return (
     <Accordion
-      id="holdings-notes"
-      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.holdingsNotes.section`} />}
+      id="item-notes"
+      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemNotes.section`} />}
     >
       <Row left="xs">
         <Col
-          data-test-notes
-          id="section-holding-statements"
+          data-test-item-notes
+          id="section-item-notes"
           xs={12}
         >
-          <RepeatableActionsField wrapperFieldName={getRepeatableFieldName(21)}>
+          <RepeatableActionsField wrapperFieldName={getRepeatableFieldName(24)}>
             <RepeatableField
               fields={notes}
-              addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.holdingsNotes.addLabel`} />}
-              onAdd={() => onAdd(notes, 'notes', 21, initialFields, setReferenceTables, 'order')}
-              onRemove={index => onRemove(index, notes, 21, setReferenceTables, 'order')}
+              addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.field.notes.addLabel`} />}
+              onAdd={() => onAdd(notes, 'notes', 24, initialFields, setReferenceTables, 'order')}
+              onRemove={index => onRemove(index, notes, 24, setReferenceTables, 'order')}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col
-                    data-test-note
+                    data-test-item-note
                     xs={4}
                   >
                     <AcceptedValuesField
                       component={TextField}
-                      name={getSubfieldName(21, 0, index)}
+                      name={getSubfieldName(24, 0, index)}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.noteType`} />}
                       optionValue="name"
                       optionLabel="name"
                       wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/holdings-note-types?limit=1000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="holdingsNoteTypes"
+                      wrapperSourceLink="/item-note-types?limit=1000&query=cql.allRecords=1 sortby name"
+                      wrapperSourcePath="itemNoteTypes"
                       okapi={okapi}
                     />
                   </Col>
                   <Col xs={4}>
                     <Field
                       component={TextField}
+                      name={getSubfieldName(24, 1, index)}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
-                      name={getSubfieldName(21, 1, index)}
                     />
                   </Col>
                   <Col
@@ -83,7 +84,7 @@ export const HoldingsNotes = ({
                   >
                     <BooleanActionField
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.staffOnly`} />}
-                      name={getBoolSubfieldName(21, 2, index)}
+                      name={getBoolSubfieldName(24, 2, index)}
                     />
                   </Col>
                 </Row>
@@ -96,7 +97,7 @@ export const HoldingsNotes = ({
   );
 };
 
-HoldingsNotes.propTypes = {
+ItemNotes.propTypes = {
   notes: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,

@@ -19,8 +19,8 @@ import {
 import {
   onAdd,
   onRemove,
-  getFieldName,
   getSubfieldName,
+  getRepeatableFieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
 import {
@@ -46,7 +46,7 @@ export const InstanceRelationship = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getFieldName(30)}
+            wrapperFieldName={getRepeatableFieldName(30)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.parentInstances.legend`} />}
           >
             <RepeatableField
@@ -91,7 +91,7 @@ export const InstanceRelationship = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getFieldName(31)}
+            wrapperFieldName={getRepeatableFieldName(31)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.childInstances.legend`} />}
           >
             <RepeatableField
@@ -135,9 +135,9 @@ export const InstanceRelationship = ({
 };
 
 InstanceRelationship.propTypes = {
-  parentInstances: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
-  childInstances: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  parentInstances: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  childInstances: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
-  okapi: PropTypes.shape(okapiShape).isRequired,
+  okapi: okapiShape.isRequired,
 };

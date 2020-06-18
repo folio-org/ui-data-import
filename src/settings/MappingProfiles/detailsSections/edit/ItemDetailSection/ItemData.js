@@ -8,72 +8,34 @@ import {
   Col,
   TextField,
 } from '@folio/stripes/components';
-import { okapiShape } from '../../../../../utils';
 
 import { AcceptedValuesField } from '../../../../../components';
 
 import { getFieldName } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import { okapiShape } from '../../../../../utils';
 
-export const Location = ({ okapi }) => {
+export const ItemData = ({ okapi }) => {
   return (
     <Accordion
-      id="holdings-location"
-      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.location.section`} />}
+      id="item-data"
+      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.section`} />}
     >
       <Row left="xs">
         <Col
-          data-test-permanent
+          data-test-material-type
           xs={6}
         >
           <AcceptedValuesField
-            component={TextField}
-            name={getFieldName(5)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.location.field.permanent`} />}
-            optionValue="name"
-            optionLabel="name"
-            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/locations?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="locations"
-            okapi={okapi}
-          />
-        </Col>
-        <Col
-          data-test-temporary
-          xs={6}
-        >
-          <AcceptedValuesField
-            component={TextField}
-            name={getFieldName(6)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.location.field.temporary`} />}
-            optionValue="name"
-            optionLabel="name"
-            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/locations?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="locations"
-            okapi={okapi}
-          />
-        </Col>
-      </Row>
-      <Row left="xs">
-        <Col
-          data-test-shelving-order
-          xs={6}
-        >
-          <Field
             component={TextField}
             name={getFieldName(7)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingOrder`} />}
-          />
-        </Col>
-        <Col
-          data-test-shelving-title
-          xs={6}
-        >
-          <Field
-            component={TextField}
-            name={getFieldName(8)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingTitle`} />}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.materialType`} />}
+            optionValue="name"
+            optionLabel="name"
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+            wrapperSourceLink="/material-types?limit=1000&query=cql.allRecords=1 sortby name"
+            wrapperSourcePath="mtypes"
+            okapi={okapi}
           />
         </Col>
       </Row>
@@ -84,7 +46,7 @@ export const Location = ({ okapi }) => {
         >
           <Field
             component={TextField}
-            name={getFieldName(9)}
+            name={getFieldName(8)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.copyNumber`} />}
           />
         </Col>
@@ -96,7 +58,7 @@ export const Location = ({ okapi }) => {
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(10)}
+            name={getFieldName(9)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberType`} />}
             optionValue="name"
             optionLabel="name"
@@ -112,7 +74,7 @@ export const Location = ({ okapi }) => {
         >
           <Field
             component={TextField}
-            name={getFieldName(11)}
+            name={getFieldName(10)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberPrefix`} />}
           />
         </Col>
@@ -122,7 +84,7 @@ export const Location = ({ okapi }) => {
         >
           <Field
             component={TextField}
-            name={getFieldName(12)}
+            name={getFieldName(11)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumber`} />}
           />
         </Col>
@@ -132,8 +94,30 @@ export const Location = ({ okapi }) => {
         >
           <Field
             component={TextField}
-            name={getFieldName(13)}
+            name={getFieldName(12)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberSuffix`} />}
+          />
+        </Col>
+      </Row>
+      <Row left="xs">
+        <Col
+          data-test-number-of-pieces
+          xs={4}
+        >
+          <Field
+            component={TextField}
+            name={getFieldName(13)}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.numberOfPieces`} />}
+          />
+        </Col>
+        <Col
+          data-test-description-of-pieces
+          xs={4}
+        >
+          <Field
+            component={TextField}
+            name={getFieldName(14)}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.descriptionOfPieces`} />}
           />
         </Col>
       </Row>
@@ -141,4 +125,4 @@ export const Location = ({ okapi }) => {
   );
 };
 
-Location.propTypes = { okapi: okapiShape.isRequired };
+ItemData.propTypes = { okapi: okapiShape.isRequired };

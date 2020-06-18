@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { AccordionSet } from '@folio/stripes/components';
 
@@ -15,6 +16,12 @@ import {
   InstanceRelationship,
   RelatedInstances,
 } from './InstanceDetailsSections';
+
+import {
+  mappingInstanceInitialFieldsShape,
+  mappingInstanceRefTablesShape,
+  okapiShape,
+} from '../../../../utils';
 
 export const MappingInstanceDetails = ({
   initialFields,
@@ -100,4 +107,11 @@ export const MappingInstanceDetails = ({
       <RelatedInstances />
     </AccordionSet>
   );
+};
+
+MappingInstanceDetails.propTypes = {
+  initialFields: mappingInstanceInitialFieldsShape.isRequired,
+  referenceTables: mappingInstanceRefTablesShape.isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
+  okapi: okapiShape.isRequired,
 };

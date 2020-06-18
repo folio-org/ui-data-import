@@ -19,9 +19,9 @@ import {
 import {
   onAdd,
   onRemove,
-  getFieldName,
   getSubfieldName,
   getBoolSubfieldName,
+  getRepeatableFieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
 import { mappingProfileSubfieldShape } from '../../../../../utils';
@@ -42,7 +42,7 @@ export const ReceivingHistory = ({
           id="section-receiving-history"
           xs={12}
         >
-          <RepeatableActionsField wrapperFieldName={getFieldName(26)}>
+          <RepeatableActionsField wrapperFieldName={getRepeatableFieldName(26)}>
             <RepeatableField
               fields={receivingHistory}
               addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.receivingHistory.addLabel`} />}
@@ -87,7 +87,7 @@ export const ReceivingHistory = ({
 };
 
 ReceivingHistory.propTypes = {
-  receivingHistory: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired,
+  receivingHistory: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
 };

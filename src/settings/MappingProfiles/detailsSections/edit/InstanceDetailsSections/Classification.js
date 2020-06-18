@@ -60,4 +60,4 @@ export const Classification = ({ classifications }) => {
   );
 };
 
-Classification.propTypes = { classifications: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldShape)).isRequired };
+Classification.propTypes = { classifications: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired };

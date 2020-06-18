@@ -7,8 +7,8 @@ import {
   Accordion,
   Row,
   Col,
-  RepeatableField,
   TextField,
+  RepeatableField,
 } from '@folio/stripes/components';
 
 import {
@@ -17,15 +17,15 @@ import {
 } from '../../../../../components';
 
 import {
+  getRepeatableFieldName,
+  getSubfieldName,
   onAdd,
   onRemove,
-  getSubfieldName,
-  getRepeatableFieldName,
 } from '../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
 import {
-  mappingProfileSubfieldShape,
   okapiShape,
+  mappingProfileSubfieldShape,
 } from '../../../../../utils';
 
 export const ElectronicAccess = ({
@@ -36,7 +36,7 @@ export const ElectronicAccess = ({
 }) => {
   return (
     <Accordion
-      id="holdings-electronic-access"
+      id="item-electronic-access"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.section`} />}
     >
       <Row left="xs">
@@ -45,12 +45,12 @@ export const ElectronicAccess = ({
           id="section-electronic-access"
           xs={12}
         >
-          <RepeatableActionsField wrapperFieldName={getRepeatableFieldName(22)}>
+          <RepeatableActionsField wrapperFieldName={getRepeatableFieldName(31)}>
             <RepeatableField
               fields={electronicAccess}
               addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.EAccess.addLabel`} />}
-              onAdd={() => onAdd(electronicAccess, 'electronicAccess', 22, initialFields, setReferenceTables, 'order')}
-              onRemove={index => onRemove(index, electronicAccess, 22, setReferenceTables, 'order')}
+              onAdd={() => onAdd(electronicAccess, 'electronicAccess', 31, initialFields, setReferenceTables, 'order')}
+              onRemove={index => onRemove(index, electronicAccess, 31, setReferenceTables, 'order')}
               renderField={(field, index) => (
                 <Row left="xs">
                   <Col
@@ -59,7 +59,7 @@ export const ElectronicAccess = ({
                   >
                     <AcceptedValuesField
                       component={TextField}
-                      name={getSubfieldName(22, 0, index)}
+                      name={getSubfieldName(31, 0, index)}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.relationship`} />}
                       optionValue="name"
                       optionLabel="name"
@@ -72,29 +72,29 @@ export const ElectronicAccess = ({
                   <Col xs={2}>
                     <Field
                       component={TextField}
+                      name={getSubfieldName(31, 1, index)}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.uri`} />}
-                      name={getSubfieldName(22, 1, index)}
                     />
                   </Col>
                   <Col xs={2}>
                     <Field
                       component={TextField}
+                      name={getSubfieldName(31, 2, index)}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.linkText`} />}
-                      name={getSubfieldName(22, 2, index)}
                     />
                   </Col>
                   <Col xs={2}>
                     <Field
                       component={TextField}
+                      name={getSubfieldName(31, 3, index)}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.materialsSpecified`} />}
-                      name={getSubfieldName(22, 3, index)}
                     />
                   </Col>
                   <Col xs={2}>
                     <Field
                       component={TextField}
+                      name={getSubfieldName(31, 4, index)}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.urlPublicNote`} />}
-                      name={getSubfieldName(22, 4, index)}
                     />
                   </Col>
                 </Row>

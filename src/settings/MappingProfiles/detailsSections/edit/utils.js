@@ -4,6 +4,10 @@ export const getFieldName = mappingFieldIndex => {
   return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].value`;
 };
 
+export const getRepeatableFieldName = mappingFieldIndex => {
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].repeatableFieldAction`;
+};
+
 export const getBoolFieldName = mappingFieldIndex => {
   return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].booleanFieldAction`;
 };
