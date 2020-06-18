@@ -756,9 +756,9 @@ export default server => {
         value: '910',
         subfields: [],
       }, {
-        name: 'digitalizationPolicy',
+        name: 'digitizationPolicy',
         enabled: true,
-        path: 'holdings.digitalizationPolicy',
+        path: 'holdings.digitizationPolicy',
         value: '910',
         subfields: [],
       }, {

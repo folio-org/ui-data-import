@@ -183,10 +183,9 @@ const HOLDINGS = {
     subfields: [],
     acceptedValues: {},
   }, {
-    // TODO: Change to "digitizationPolicy" to fix UIDATIMP-543
-    name: 'digitalizationPolicy',
+    name: 'digitizationPolicy',
     enabled: true,
-    path: 'holdings.digitalizationPolicy',
+    path: 'holdings.digitizationPolicy',
     value: '',
     subfields: [],
   }, {
