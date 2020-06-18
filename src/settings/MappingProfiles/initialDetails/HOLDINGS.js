@@ -31,7 +31,7 @@ const HOLDINGS = {
     }],
   }, {
     name: 'holdingsTypeId',
-    enabled: false,
+    enabled: true,
     path: 'holdings.holdingsTypeId',
     value: '',
     subfields: [],
