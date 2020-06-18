@@ -541,5 +541,19 @@
     "settings.mappingProfiles.map.item.status.declareLost": "تم الإعلان عن فقدانه",
     "settings.mappingProfiles.map.item.status.orderClosed": "تم إغلاق الطلبية",
     "settings.mappingProfiles.map.item.status.claimedReturned": "تم إدعاء إعادته",
-    "validation.cannotBeUpdated": "لا يمكن تحديث هذا الحقل"
+    "validation.cannotBeUpdated": "لا يمكن تحديث هذا الحقل",
+    "settings.mappingProfile.marcTable.ariaLabel.select": "اختر إجراء",
+    "settings.mappingProfile.marcTable.ariaLabel.field": "حقل الإجراء",
+    "settings.mappingProfile.marcTable.ariaLabel.indicator1": "حقل المؤشر 1",
+    "settings.mappingProfile.marcTable.ariaLabel.indicator2": "حقل المؤشر 2",
+    "settings.mappingProfile.marcTable.ariaLabel.subfield": "حقل الحقل الفرعي",
+    "settings.mappingProfile.marcTable.ariaLabel.subaction": "اختر إجراء فرعي",
+    "settings.mappingProfile.marcTable.ariaLabel.data.find": "ابحث عن حقل بيانات",
+    "settings.mappingProfile.marcTable.ariaLabel.data.replaceWith": "استبدال بحقل بيانات",
+    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.field": "حقل إجراء حقل مارك البيانات",
+    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator1": "حقل المؤشر 1 لحقل مارك البيانات",
+    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator2": "حقل المؤشر 2 لحقل مارك البيانات",
+    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.subfield": "حقل الحقل فرعي لحقل مارك البيانات",
+    "settings.mappingProfile.marcTable.ariaLabel.data.text": "حقل نص البيانات",
+    "settings.mappingProfile.marcTable.ariaLabel.position": "اختر موضع"
 }
