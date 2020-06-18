@@ -37,7 +37,16 @@ export const Identifier = ({ mappingDetails }) => {
     identifierTypeId: x => x?.identifierTypeId || <ProhibitionIcon />,
     value: x => x?.value || <ProhibitionIcon />,
   };
-  const identifiersData = transformSubfieldsData(identifiers, identifiersVisibleColumns);
+  const identifiersFieldsMap = [
+    {
+      field: 'identifierTypeId',
+      key: 'value',
+    }, {
+      field: 'value',
+      key: 'value',
+    },
+  ];
+  const identifiersData = transformSubfieldsData(identifiers, identifiersFieldsMap);
 
   return (
     <Accordion
@@ -62,4 +71,4 @@ export const Identifier = ({ mappingDetails }) => {
   );
 };
 
-Identifier.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+Identifier.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

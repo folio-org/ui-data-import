@@ -37,4 +37,4 @@ export const MappingInstanceDetails = ({ mappingDetails }) => {
   );
 };
 
-MappingInstanceDetails.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+MappingInstanceDetails.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

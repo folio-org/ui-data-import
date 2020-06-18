@@ -55,7 +55,22 @@ export const DescriptiveData = ({ mappingDetails }) => {
     place: x => x?.place || <ProhibitionIcon />,
     dateOfPublication: x => x?.dateOfPublication || <ProhibitionIcon />,
   };
-  const publicationsData = transformSubfieldsData(publications, publicationsVisibleColumns);
+  const publicationsFieldsMap = [
+    {
+      field: 'publisher',
+      key: 'value',
+    }, {
+      field: 'role',
+      key: 'value',
+    }, {
+      field: 'place',
+      key: 'value',
+    }, {
+      field: 'dateOfPublication',
+      key: 'value',
+    },
+  ];
+  const publicationsData = transformSubfieldsData(publications, publicationsFieldsMap);
 
   const editionsVisibleColumns = ['edition'];
   const editionsMapping = {
@@ -64,7 +79,13 @@ export const DescriptiveData = ({ mappingDetails }) => {
     ),
   };
   const editionsFormatter = { edition: x => x?.edition || <ProhibitionIcon /> };
-  const editionsData = transformSubfieldsData(editions, editionsVisibleColumns);
+  const editionsFieldsMap = [
+    {
+      field: 'edition',
+      key: 'value',
+    },
+  ];
+  const editionsData = transformSubfieldsData(editions, editionsFieldsMap);
 
   const physicalDescriptionsVisibleColumns = ['physicalDescription'];
   const physicalDescriptionsMapping = {
@@ -73,7 +94,13 @@ export const DescriptiveData = ({ mappingDetails }) => {
     ),
   };
   const physicalDescriptionsFormatter = { physicalDescription: x => x?.physicalDescription || <ProhibitionIcon /> };
-  const physicalDescriptionsData = transformSubfieldsData(physicalDescriptions, physicalDescriptionsVisibleColumns);
+  const physicalDescriptionsFieldsMap = [
+    {
+      field: 'physicalDescription',
+      key: 'value',
+    },
+  ];
+  const physicalDescriptionsData = transformSubfieldsData(physicalDescriptions, physicalDescriptionsFieldsMap);
 
   const natureOfContentTermsVisibleColumns = ['natureOfContentTermId'];
   const natureOfContentTermsMapping = {
@@ -82,7 +109,13 @@ export const DescriptiveData = ({ mappingDetails }) => {
     ),
   };
   const natureOfContentTermsFormatter = { natureOfContentTermId: x => x?.natureOfContentTermId || <NoValue /> };
-  const natureOfContentTermsData = transformSubfieldsData(natureOfContentTerms, natureOfContentTermsVisibleColumns);
+  const natureOfContentTermsFieldsMap = [
+    {
+      field: 'natureOfContentTermId',
+      key: 'value',
+    },
+  ];
+  const natureOfContentTermsData = transformSubfieldsData(natureOfContentTerms, natureOfContentTermsFieldsMap);
 
   const formatsVisibleColumns = ['instanceFormatId'];
   const formatsMapping = {
@@ -91,7 +124,13 @@ export const DescriptiveData = ({ mappingDetails }) => {
     ),
   };
   const formatsFormatter = { instanceFormatId: x => x?.instanceFormatId || <ProhibitionIcon /> };
-  const formatsData = transformSubfieldsData(formats, formatsVisibleColumns);
+  const formatsFieldsMap = [
+    {
+      field: 'instanceFormatId',
+      key: 'value',
+    },
+  ];
+  const formatsData = transformSubfieldsData(formats, formatsFieldsMap);
 
   const languagesVisibleColumns = ['languageId'];
   const languagesMapping = {
@@ -100,7 +139,13 @@ export const DescriptiveData = ({ mappingDetails }) => {
     ),
   };
   const languagesFormatter = { languageId: x => x?.languageId || <ProhibitionIcon /> };
-  const languagesData = transformSubfieldsData(languages, languagesVisibleColumns);
+  const languagesFieldsMap = [
+    {
+      field: 'languageId',
+      key: 'value',
+    },
+  ];
+  const languagesData = transformSubfieldsData(languages, languagesFieldsMap);
 
   const publicationFrequenciesVisibleColumns = ['publicationFrequency'];
   const publicationFrequenciesMapping = {
@@ -109,7 +154,13 @@ export const DescriptiveData = ({ mappingDetails }) => {
     ),
   };
   const publicationFrequenciesFormatter = { publicationFrequency: x => x?.publicationFrequency || <ProhibitionIcon /> };
-  const publicationFrequenciesData = transformSubfieldsData(publicationFrequencies, publicationFrequenciesVisibleColumns);
+  const publicationFrequenciesFieldsMap = [
+    {
+      field: 'publicationFrequency',
+      key: 'value',
+    },
+  ];
+  const publicationFrequenciesData = transformSubfieldsData(publicationFrequencies, publicationFrequenciesFieldsMap);
 
   const publicationRangeVisibleColumns = ['publicationRange'];
   const publicationRangeMapping = {
@@ -118,7 +169,13 @@ export const DescriptiveData = ({ mappingDetails }) => {
     ),
   };
   const publicationRangeFormatter = { publicationRange: x => x?.publicationRange || <ProhibitionIcon /> };
-  const publicationRangeData = transformSubfieldsData(publicationRange, publicationRangeVisibleColumns);
+  const publicationRangeFieldsMap = [
+    {
+      field: 'publicationRange',
+      key: 'value',
+    },
+  ];
+  const publicationRangeData = transformSubfieldsData(publicationRange, publicationRangeFieldsMap);
 
   return (
     <Accordion
@@ -131,10 +188,8 @@ export const DescriptiveData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publications.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publications.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(publicationsData)}
@@ -150,10 +205,8 @@ export const DescriptiveData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.editions.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.editions.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(editionsData)}
@@ -169,10 +222,8 @@ export const DescriptiveData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.physicalDescriptions.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.physicalDescriptions.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(physicalDescriptionsData)}
@@ -199,10 +250,8 @@ export const DescriptiveData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermsIds.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermsIds.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(natureOfContentTermsData)}
@@ -218,10 +267,8 @@ export const DescriptiveData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.instanceFormatIds.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.instanceFormatIds.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(formatsData)}
@@ -237,10 +284,8 @@ export const DescriptiveData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.languages.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.languages.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(languagesData)}
@@ -256,10 +301,8 @@ export const DescriptiveData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publicationFrequency.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publicationFrequency.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(publicationFrequenciesData)}
@@ -275,10 +318,8 @@ export const DescriptiveData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publicationRange.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publicationRange.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(publicationRangeData)}
@@ -292,4 +333,4 @@ export const DescriptiveData = ({ mappingDetails }) => {
   );
 };
 
-DescriptiveData.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+DescriptiveData.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

@@ -12,3 +12,9 @@
 .colWithTable {
   margin-bottom: 1em;
 }
+
+.tableLegend {
+  font-size: 1.05rem;
+  font-weight: var(--text-weight-bold);
+  line-height: var(--line-height);
+}

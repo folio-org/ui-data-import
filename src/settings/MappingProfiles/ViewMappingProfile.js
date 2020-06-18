@@ -267,30 +267,27 @@ export class ViewMappingProfile extends Component {
             id="mapping-profile-details"
             label={<FormattedMessage id="ui-data-import.details" />}
           >
-            {existingRecordType
-              ? (
-                <AccordionStatus>
-                  <Row between="xs">
-                    <Col>
-                      <MappedHeader
-                        mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
-                        mappedLabel="Field mapping"
-                        mappableLabelId={MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId}
-                        mappableLabel={MAPPING_DETAILS_HEADLINE[existingRecordType]?.label}
-                        headlineProps={{ margin: 'small' }}
-                      />
-                    </Col>
-                    <Col>
-                      <div data-test-expand-all-button>
-                        <ExpandAllButton />
-                      </div>
-                    </Col>
-                  </Row>
-                  {renderDetails[existingRecordType]}
-                </AccordionStatus>
-              )
-              : (<></>)
-            }
+            {existingRecordType && (
+              <AccordionStatus>
+                <Row between="xs">
+                  <Col>
+                    <MappedHeader
+                      mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
+                      mappedLabel="Field mapping"
+                      mappableLabelId={MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId}
+                      mappableLabel={MAPPING_DETAILS_HEADLINE[existingRecordType]?.label}
+                      headlineProps={{ margin: 'small' }}
+                    />
+                  </Col>
+                  <Col>
+                    <div data-test-expand-all-button>
+                      <ExpandAllButton />
+                    </div>
+                  </Col>
+                </Row>
+                {renderDetails[existingRecordType]}
+              </AccordionStatus>
+            )}
           </Accordion>
           <Accordion
             id="mappingProfileFormAssociatedActionProfileAccordion"

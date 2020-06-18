@@ -19,6 +19,7 @@ import {
   transformSubfieldsData,
   getContentData,
   getBooleanLabelId,
+  getValueById,
 } from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
@@ -39,9 +40,9 @@ export const AdministrativeData = ({ mappingDetails }) => {
   const staffSuppressLabelId = getBooleanLabelId(staffSuppress);
   const previouslyHeldLabelId = getBooleanLabelId(previouslyHeld);
 
-  const discoverySuppressValue = discoverySuppressLabelId ? <FormattedMessage id={discoverySuppressLabelId} /> : <NoValue />;
-  const staffSuppressValue = staffSuppressLabelId ? <FormattedMessage id={staffSuppressLabelId} /> : <NoValue />;
-  const previouslyHeldValue = previouslyHeldLabelId ? <FormattedMessage id={previouslyHeldLabelId} /> : <NoValue />;
+  const discoverySuppressValue = getValueById(discoverySuppressLabelId);
+  const staffSuppressValue = getValueById(staffSuppressLabelId);
+  const previouslyHeldValue = getValueById(previouslyHeldLabelId);
 
   const statisticalCodesVisibleColumns = ['statisticalCodeId'];
   const statisticalCodesMapping = {
@@ -50,7 +51,13 @@ export const AdministrativeData = ({ mappingDetails }) => {
     ),
   };
   const statisticalCodesFormatter = { statisticalCodeId: x => x?.statisticalCodeId || <NoValue /> };
-  const statisticalCodesData = transformSubfieldsData(statisticalCodes, statisticalCodesVisibleColumns);
+  const statisticalCodesFieldsMap = [
+    {
+      field: 'statisticalCodeId',
+      key: 'value',
+    },
+  ];
+  const statisticalCodesData = transformSubfieldsData(statisticalCodes, statisticalCodesFieldsMap);
 
   return (
     <Accordion
@@ -145,10 +152,8 @@ export const AdministrativeData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(statisticalCodesData)}
@@ -162,4 +167,4 @@ export const AdministrativeData = ({ mappingDetails }) => {
   );
 };
 
-AdministrativeData.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+AdministrativeData.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

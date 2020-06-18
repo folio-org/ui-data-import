@@ -37,7 +37,16 @@ export const InstanceRelationship = ({ mappingDetails }) => {
     superInstanceId: x => x?.superInstanceId || <NoValue />,
     instanceRelationshipTypeId: x => x?.instanceRelationshipTypeId || <NoValue />,
   };
-  const parentInstancesData = transformSubfieldsData(parentInstances, parentInstancesVisibleColumns);
+  const parentInstancesFieldsMap = [
+    {
+      field: 'superInstanceId',
+      key: 'value',
+    }, {
+      field: 'instanceRelationshipTypeId',
+      key: 'value',
+    },
+  ];
+  const parentInstancesData = transformSubfieldsData(parentInstances, parentInstancesFieldsMap);
 
   const childInstancesVisibleColumns = ['subInstanceId', 'instanceRelationshipTypeId'];
   const childInstancesMapping = {
@@ -52,7 +61,16 @@ export const InstanceRelationship = ({ mappingDetails }) => {
     subInstanceId: x => x?.subInstanceId || <NoValue />,
     instanceRelationshipTypeId: x => x?.instanceRelationshipTypeId || <NoValue />,
   };
-  const childInstancesData = transformSubfieldsData(childInstances, childInstancesVisibleColumns);
+  const childInstancesFieldsMap = [
+    {
+      field: 'subInstanceId',
+      key: 'value',
+    }, {
+      field: 'instanceRelationshipTypeId',
+      key: 'value',
+    },
+  ];
+  const childInstancesData = transformSubfieldsData(childInstances, childInstancesFieldsMap);
 
   return (
     <Accordion
@@ -65,10 +83,8 @@ export const InstanceRelationship = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.parentInstances.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.parentInstances.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(parentInstancesData)}
@@ -84,10 +100,8 @@ export const InstanceRelationship = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.childInstances.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.childInstances.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(childInstancesData)}
@@ -101,4 +115,4 @@ export const InstanceRelationship = ({ mappingDetails }) => {
   );
 };
 
-InstanceRelationship.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+InstanceRelationship.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

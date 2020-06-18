@@ -49,7 +49,25 @@ export const ElectronicAccess = ({ mappingDetails }) => {
     materialsSpecification: x => x?.materialsSpecification || <ProhibitionIcon />,
     publicNote: x => x?.publicNote || <ProhibitionIcon />,
   };
-  const electronicAccessData = transformSubfieldsData(electronicAccess, electronicAccessVisibleColumns);
+  const electronicAccessFieldsMap = [
+    {
+      field: 'relationshipId',
+      key: 'value',
+    }, {
+      field: 'uri',
+      key: 'value',
+    }, {
+      field: 'linkText',
+      key: 'value',
+    }, {
+      field: 'materialsSpecification',
+      key: 'value',
+    }, {
+      field: 'publicNote',
+      key: 'value',
+    },
+  ];
+  const electronicAccessData = transformSubfieldsData(electronicAccess, electronicAccessFieldsMap);
 
   return (
     <Accordion
@@ -74,4 +92,4 @@ export const ElectronicAccess = ({ mappingDetails }) => {
   );
 };
 
-ElectronicAccess.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+ElectronicAccess.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

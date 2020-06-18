@@ -16,6 +16,7 @@ import {
   getFieldValue,
   transformSubfieldsData,
   getBooleanLabelId,
+  getUnmappableValueById,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
@@ -42,10 +43,22 @@ export const InstanceNotes = ({ mappingDetails }) => {
     staffOnly: x => {
       const staffOnlyLabelId = getBooleanLabelId(x?.staffOnly);
 
-      return staffOnlyLabelId ? <FormattedMessage id={staffOnlyLabelId} /> : <ProhibitionIcon />;
+      return getUnmappableValueById(staffOnlyLabelId);
     },
   };
-  const notesData = transformSubfieldsData(notes, notesVisibleColumns);
+  const notesFieldsMap = [
+    {
+      field: 'noteType',
+      key: 'value',
+    }, {
+      field: 'note',
+      key: 'value',
+    }, {
+      field: 'staffOnly',
+      key: 'booleanFieldAction',
+    },
+  ];
+  const notesData = transformSubfieldsData(notes, notesFieldsMap);
 
   return (
     <Accordion
@@ -70,4 +83,4 @@ export const InstanceNotes = ({ mappingDetails }) => {
   );
 };
 
-InstanceNotes.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+InstanceNotes.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

@@ -16,6 +16,7 @@ import {
   getFieldValue,
   transformSubfieldsData,
   getBooleanLabelId,
+  getUnmappableValueById,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
@@ -52,10 +53,22 @@ export const Contributor = ({ mappingDetails }) => {
     primary: x => {
       const primaryLabelId = getBooleanLabelId(x?.primary);
 
-      return primaryLabelId ? <FormattedMessage id={primaryLabelId} /> : <ProhibitionIcon />;
+      return getUnmappableValueById(primaryLabelId);
     },
   };
-  const contributorsData = transformSubfieldsData(contributors, contributorsVisibleColumns);
+  const contributorsFieldsMap = [
+    {
+      field: 'contributorName',
+      key: 'value',
+    }, {
+      field: 'contributorNameTypeId',
+      key: 'value',
+    }, {
+      field: 'contributorTypeId',
+      key: 'value',
+    },
+  ];
+  const contributorsData = transformSubfieldsData(contributors, contributorsFieldsMap);
 
   return (
     <Accordion
@@ -80,4 +93,4 @@ export const Contributor = ({ mappingDetails }) => {
   );
 };
 
-Contributor.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+Contributor.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

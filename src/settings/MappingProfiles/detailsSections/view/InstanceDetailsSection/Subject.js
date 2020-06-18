@@ -29,7 +29,13 @@ export const Subject = ({ mappingDetails }) => {
     ),
   };
   const subjectsFormatter = { subject: x => x?.noteType || <ProhibitionIcon /> };
-  const subjectsData = transformSubfieldsData(subjects, subjectsVisibleColumns);
+  const subjectsFieldsMap = [
+    {
+      field: 'subject',
+      key: 'value',
+    },
+  ];
+  const subjectsData = transformSubfieldsData(subjects, subjectsFieldsMap);
 
   return (
     <Accordion
@@ -53,4 +59,4 @@ export const Subject = ({ mappingDetails }) => {
   );
 };
 
-Subject.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+Subject.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };
