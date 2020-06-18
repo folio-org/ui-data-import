@@ -7,6 +7,7 @@
 
 ### Bugs fixed:
 * Fix Accessibility problems for MARCTable component (UIDATIMP-547)
+* Fix issue with holdings type field population (UIDATIMP-542)
 
 ## [2.0.0](https://github.com/folio-org/ui-data-import/tree/v2.0.0) (2020-06-12)
 
