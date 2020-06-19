@@ -1,20 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
 
 import {
   Accordion,
   Row,
   Col,
-  TextField, NoValue, KeyValue,
+  NoValue,
+  KeyValue,
 } from '@folio/stripes/components';
 
-import { AcceptedValuesField } from '../../../../../components';
-
-import { getFieldName, getFieldValue } from '../../utils';
+import { getFieldValue } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileFieldShape, okapiShape } from '../../../../../utils';
-import PropTypes from 'prop-types';
+import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const ItemData = ({ mappingDetails }) => {
   const materialType = getFieldValue(mappingDetails, 'materialType.id', 'value');
