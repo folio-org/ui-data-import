@@ -47,7 +47,10 @@ import {
 } from '../../components';
 
 import sharedCss from '../../shared.css';
-import { MappingInstanceDetails } from './detailsSections/view';
+import {
+  MappingInstanceDetails,
+  MappingItemDetails,
+} from './detailsSections/view';
 
 @stripesConnect
 @withTags
@@ -204,7 +207,7 @@ export class ViewMappingProfile extends Component {
 
     const renderDetails = {
       INSTANCE: <MappingInstanceDetails mappingDetails={mappingDetails?.mappingFields} />,
-      ITEM: <></>,
+      ITEM: <MappingItemDetails mappingDetails={mappingDetails?.mappingFields} />,
       HOLDINGS: <></>,
     };
 
