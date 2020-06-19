@@ -6,7 +6,6 @@ const ITEM = {
     enabled: true,
     path: 'item.discoverySuppress',
     value: null,
-    booleanFieldAction: '',
     subfields: [],
   }, {
     name: 'hrid',
@@ -41,7 +40,6 @@ const ITEM = {
       order: 0,
       path: 'item.formerIds[]',
       fields: [{
-        // order: 0,
         name: 'formerId',
         enabled: true,
         path: 'item.formerIds[].formerId',
@@ -57,7 +55,6 @@ const ITEM = {
       order: 0,
       path: 'item.statisticalCodeIds[]',
       fields: [{
-        // order: 0,
         name: 'statisticalCodeId',
         enabled: true,
         path: 'item.statisticalCodeIds[].statisticalCodeId',
@@ -139,7 +136,6 @@ const ITEM = {
       order: 0,
       path: 'item.yearCaption[]',
       fields: [{
-        // order: 0,
         name: 'yearCaption',
         enabled: true,
         path: 'item.yearCaption[].yearCaption',
@@ -185,24 +181,20 @@ const ITEM = {
       order: 0,
       path: 'item.notes[]',
       fields: [{
-        // order: 0,
         name: 'itemNoteTypeId',
         enabled: true,
         path: 'item.notes[].itemNoteTypeId',
         value: '',
       }, {
-        // order: 1,
         name: 'note',
         enabled: true,
         path: 'item.notes[].note',
         value: '',
       }, {
-        // order: 2,
         name: 'staffOnly',
         enabled: true,
         path: 'item.notes[].staffOnly',
         value: null,
-        booleanFieldAction: '',
       }],
     }],
   }, {
@@ -232,24 +224,20 @@ const ITEM = {
       order: 0,
       path: 'item.circulationNotes[]',
       fields: [{
-        // order: 0,
         name: 'noteType',
         enabled: true,
         path: 'item.circulationNotes[].noteType',
         value: '',
       }, {
-        // order: 1,
         name: 'note',
         enabled: true,
         path: 'item.circulationNotes[].note',
         value: '',
       }, {
-        // order: 2,
         name: 'staffOnly',
         enabled: true,
         path: 'item.circulationNotes[].staffOnly',
         value: null,
-        booleanFieldAction: '',
       }],
     }],
   }, {
@@ -273,31 +261,26 @@ const ITEM = {
       order: 0,
       path: 'item.electronicAccess[]',
       fields: [{
-        // order: 0,
         name: 'relationshipId',
         enabled: true,
         path: 'item.electronicAccess[].relationshipId',
         value: '',
       }, {
-        // order: 1,
         name: 'uri',
         enabled: true,
         path: 'item.electronicAccess[].uri',
         value: '',
       }, {
-        // order: 2,
         name: 'linkText',
         enabled: true,
         path: 'item.electronicAccess[].linkText',
         value: '',
       }, {
-        // order: 3,
         name: 'materialsSpecification',
         enabled: true,
         path: 'item.electronicAccess[].materialsSpecification',
         value: '',
       }, {
-        // order: 4,
         name: 'publicNote',
         enabled: true,
         path: 'item.electronicAccess[].publicNote',

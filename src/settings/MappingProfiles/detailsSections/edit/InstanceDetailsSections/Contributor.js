@@ -17,8 +17,8 @@ import { BooleanActionField } from '../../../../../components';
 import {
   getSubfieldName,
   getBoolSubfieldName,
-} from '../utils';
-import { TRANSLATION_ID_PREFIX } from '../constants';
+} from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const Contributor = ({ contributors }) => {

@@ -12,8 +12,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import { getSubfieldName } from '../utils';
-import { TRANSLATION_ID_PREFIX } from '../constants';
+import { getSubfieldName } from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const Classification = ({ classifications }) => {

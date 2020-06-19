@@ -1,4 +1,16 @@
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { isEmpty } from 'lodash';
+
+import { NoValue } from '@folio/stripes/components';
+
+import { ProhibitionIcon } from '../../../components';
+
 import { FIELD_NAME_PREFIX } from './constants';
+import {
+  ENTITY_KEYS,
+  FORMS_SETTINGS,
+} from '../../../utils';
 
 export const getFieldName = mappingFieldIndex => {
   return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].value`;
@@ -49,4 +61,29 @@ export const onRemove = (index, refTable, fieldIndex, callback, incrementalField
   }
 
   callback(fieldsPath, newRefTable);
+};
+
+export const getFieldValue = (details, fieldName, key) => details.find(item => item.name === fieldName)?.[key];
+
+export const getValueById = id => (id ? <FormattedMessage id={id} /> : <NoValue />);
+
+export const getUnmappableValueById = id => (id ? <FormattedMessage id={id} /> : <ProhibitionIcon />);
+
+export const transformSubfieldsData = (subfields, columns) => subfields.map(item => {
+  return columns.reduce((acc, column) => {
+    const fieldValue = item?.fields.find(field => field.name === column.field)[column.key];
+
+    return {
+      ...acc,
+      [column.key]: fieldValue,
+    };
+  }, {});
+});
+
+export const getContentData = fields => (!isEmpty(fields) ? fields : [{}]);
+
+export const getBooleanLabelId = fieldValue => {
+  const booleanActions = FORMS_SETTINGS[ENTITY_KEYS.MAPPING_PROFILES].DECORATORS.BOOLEAN_ACTIONS;
+
+  return booleanActions.find(action => action.value === fieldValue)?.label;
 };

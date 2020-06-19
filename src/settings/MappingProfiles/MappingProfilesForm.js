@@ -43,7 +43,7 @@ import {
   MappingInstanceDetails,
   MappingHoldingsDetails,
   MappingItemDetails,
-} from './detailsSections';
+} from './detailsSections/edit';
 
 import {
   getInitialDetails,
@@ -249,30 +249,27 @@ export const MappingProfilesFormComponent = ({
             label={<FormattedMessage id="ui-data-import.details" />}
             separator={false}
           >
-            {folioRecordType
-              ? (
-                <AccordionStatus>
-                  <Row between="xs">
-                    <Col>
-                      <MappedHeader
-                        mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
-                        mappedLabel="Field mapping"
-                        mappableLabelId={MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId}
-                        mappableLabel={MAPPING_DETAILS_HEADLINE[folioRecordType]?.label}
-                        headlineProps={{ margin: 'small' }}
-                      />
-                    </Col>
-                    <Col>
-                      <div data-test-expand-all-button>
-                        <ExpandAllButton />
-                      </div>
-                    </Col>
-                  </Row>
-                  {renderDetails[folioRecordType]}
-                </AccordionStatus>
-              )
-              : (<></>)
-            }
+            {folioRecordType && (
+              <AccordionStatus>
+                <Row between="xs">
+                  <Col>
+                    <MappedHeader
+                      mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
+                      mappedLabel="Field mapping"
+                      mappableLabelId={MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId}
+                      mappableLabel={MAPPING_DETAILS_HEADLINE[folioRecordType]?.label}
+                      headlineProps={{ margin: 'small' }}
+                    />
+                  </Col>
+                  <Col>
+                    <div data-test-expand-all-button>
+                      <ExpandAllButton />
+                    </div>
+                  </Col>
+                </Row>
+                {renderDetails[folioRecordType]}
+              </AccordionStatus>
+            )}
           </Accordion>
           <Accordion
             id="mappingProfileFormAssociatedActionProfileAccordion"

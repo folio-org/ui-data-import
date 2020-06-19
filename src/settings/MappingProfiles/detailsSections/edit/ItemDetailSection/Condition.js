@@ -14,8 +14,8 @@ import {
   DatePickerDecorator,
 } from '../../../../../components';
 
-import { getFieldName } from '../utils';
-import { TRANSLATION_ID_PREFIX } from '../constants';
+import { getFieldName } from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   validateMARCWithDate,
   okapiShape,

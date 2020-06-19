@@ -12,11 +12,22 @@ export const mappingProfileSubfieldShape = PropTypes.shape({
     name: PropTypes.string.isRequired,
     path: PropTypes.string,
     value: PropTypes.string,
-    enabled: PropTypes.bool,
+    enabled: PropTypes.oneOf(['true', 'false']),
     booleanFieldAction: PropTypes.oneOf(Object.values(BOOLEAN_ACTIONS)),
     repeatableFieldAction: PropTypes.oneOf(Object.values(REPEATABLE_ACTIONS)),
     acceptedValues: PropTypes.object,
   })),
+});
+
+export const mappingProfileFieldShape = PropTypes.shape({
+  name: PropTypes.string.isRequired,
+  path: PropTypes.string,
+  value: PropTypes.string,
+  enabled: PropTypes.oneOf(['true', 'false']),
+  booleanFieldAction: PropTypes.oneOf(Object.values(BOOLEAN_ACTIONS)),
+  repeatableFieldAction: PropTypes.oneOf(Object.values(REPEATABLE_ACTIONS)),
+  acceptedValues: PropTypes.object,
+  subfields: PropTypes.arrayOf(mappingProfileSubfieldShape),
 });
 
 export const mappingInstanceInitialFieldsShape = PropTypes.shape({

@@ -24,8 +24,8 @@ import {
   getSubfieldName,
   onAdd,
   onRemove,
-} from '../utils';
-import { TRANSLATION_ID_PREFIX } from '../constants';
+} from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   ITEM_STATUS_OPTIONS,
   mappingProfileSubfieldShape,

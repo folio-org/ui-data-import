@@ -6,7 +6,7 @@ const INVOICE = {
     enabled: true,
     path: 'invoice.discoverySuppress',
     value: null,
-    booleanFieldAction: 'AS_IS',
+    booleanFieldAction: 'IGNORE',
     subfields: [],
   }, {
     name: 'hrid',
