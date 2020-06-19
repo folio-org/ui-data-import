@@ -28,15 +28,6 @@ import {
 } from '@folio/stripes/smart-components';
 
 import {
-  ENTITY_KEYS,
-  SYSTEM_USER_ID,
-  SYSTEM_USER_NAME,
-  PROFILE_TYPES,
-  MAPPING_DETAILS_HEADLINE,
-  getEntity,
-  getEntityTags,
-} from '../../utils';
-import {
   Spinner,
   EndOfItem,
   ActionMenu,
@@ -45,12 +36,22 @@ import {
   FOLIO_RECORD_TYPES,
   MappedHeader,
 } from '../../components';
-
-import sharedCss from '../../shared.css';
 import {
   MappingInstanceDetails,
   MappingItemDetails,
 } from './detailsSections/view';
+
+import {
+  ENTITY_KEYS,
+  SYSTEM_USER_ID,
+  SYSTEM_USER_NAME,
+  PROFILE_TYPES,
+  MAPPING_DETAILS_HEADLINE,
+  getEntity,
+  getEntityTags,
+} from '../../utils';
+
+import sharedCss from '../../shared.css';
 
 @stripesConnect
 @withTags
