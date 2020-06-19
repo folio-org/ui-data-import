@@ -61,7 +61,7 @@ export const AdministrativeData = ({
         >
           <Field
             component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.hrid`} />}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.hrid`} />}
             name={getFieldName(1)}
             disabled
           />
