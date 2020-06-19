@@ -4,6 +4,7 @@
 
 ### Features added:
 * Field Mapping Profile details: MARC Bib from MARC Bib 2 - Delete (UIDATIMP-486)
+* Update Requests to SRS for v4 (UIDATIMP-486)
 
 ### Bugs fixed:
 * Fix Accessibility problems for MARCTable component (UIDATIMP-547)
