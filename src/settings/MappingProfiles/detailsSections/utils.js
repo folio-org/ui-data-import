@@ -69,13 +69,13 @@ export const getValueById = id => (id ? <FormattedMessage id={id} /> : <NoValue 
 
 export const getUnmappableValueById = id => (id ? <FormattedMessage id={id} /> : <ProhibitionIcon />);
 
-export const transformSubfieldsData = (subfields, columns) => subfields.map(item => {
+export const transformSubfieldsData = (subfields, columns) => subfields?.map(item => {
   return columns.reduce((acc, column) => {
-    const fieldValue = item?.fields.find(field => field.name === column.field)[column.key];
+    const fieldValue = item?.fields.find(field => field.name === column.field)?.[column.key];
 
     return {
       ...acc,
-      [column.key]: fieldValue,
+      [column.field]: fieldValue,
     };
   }, {});
 });

@@ -24,6 +24,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const DescriptiveData = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const publications = getFieldValue(mappingDetails, 'publication', 'subfields');
   const editions = getFieldValue(mappingDetails, 'editions', 'subfields');
   const physicalDescriptions = getFieldValue(mappingDetails, 'physicalDescriptions', 'subfields');
@@ -108,7 +110,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermId`} />
     ),
   };
-  const natureOfContentTermsFormatter = { natureOfContentTermId: x => x?.natureOfContentTermId || <NoValue /> };
+  const natureOfContentTermsFormatter = { natureOfContentTermId: x => x?.natureOfContentTermId || noValueElement };
   const natureOfContentTermsFieldsMap = [
     {
       field: 'natureOfContentTermId',
