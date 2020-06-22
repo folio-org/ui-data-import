@@ -24,6 +24,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const LoanAndAvailability = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const permanentLoanType = getFieldValue(mappingDetails, 'permanentLoanType.id', 'value');
   const temporaryLoanType = getFieldValue(mappingDetails, 'temporaryLoanType.id', 'value');
   const status = getFieldValue(mappingDetails, 'status.name', 'value');
@@ -42,8 +44,8 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
     ),
   };
   const circulationNotesFormatter = {
-    noteType: x => x?.noteType || <NoValue />,
-    note: x => x?.note || <NoValue />,
+    noteType: x => x?.noteType || noValueElement,
+    note: x => x?.note || noValueElement,
     staffOnly: x => {
       const staffOnlyLabelId = getBooleanLabelId(x?.staffOnly);
 
@@ -76,7 +78,7 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanTypePermanentRequired`} />}
-            value={permanentLoanType || <NoValue />}
+            value={permanentLoanType || noValueElement}
           />
         </Col>
       </Row>
@@ -87,7 +89,7 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanTypeTemporary`} />}
-            value={temporaryLoanType || <NoValue />}
+            value={temporaryLoanType || noValueElement}
           />
         </Col>
       </Row>
@@ -98,7 +100,7 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanStatus`} />}
-            value={status || <NoValue />}
+            value={status || noValueElement}
           />
         </Col>
       </Row>

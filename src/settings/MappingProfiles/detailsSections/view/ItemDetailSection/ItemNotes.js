@@ -21,6 +21,8 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const ItemNotes = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const notes = getFieldValue(mappingDetails, 'notes', 'subfields');
 
   const notesVisibleColumns = ['itemNoteTypeId', 'note', 'staffOnly'];
@@ -36,8 +38,8 @@ export const ItemNotes = ({ mappingDetails }) => {
     ),
   };
   const notesFormatter = {
-    itemNoteTypeId: x => x?.itemNoteTypeId || <NoValue />,
-    note: x => x?.note || <NoValue />,
+    itemNoteTypeId: x => x?.itemNoteTypeId || noValueElement,
+    note: x => x?.note || noValueElement,
     staffOnly: x => {
       const staffOnlyLabelId = getBooleanLabelId(x?.staffOnly);
 

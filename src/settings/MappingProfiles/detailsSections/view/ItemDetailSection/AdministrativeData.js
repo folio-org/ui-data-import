@@ -26,6 +26,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const AdministrativeData = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const discoverySuppress = getFieldValue(mappingDetails, 'discoverySuppress', 'booleanFieldAction');
   const itemHrid = getFieldValue(mappingDetails, 'hrid', 'value');
   const barcode = getFieldValue(mappingDetails, 'barcode', 'value');
@@ -43,7 +45,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId`} />
     ),
   };
-  const formerIdentifiersFormatter = { formerId: x => x?.formerId || <NoValue /> };
+  const formerIdentifiersFormatter = { formerId: x => x?.formerId || noValueElement };
   const formerIdentifiersFieldsMap = [
     {
       field: 'formerId',
@@ -58,7 +60,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCode`} />
     ),
   };
-  const statisticalCodesFormatter = { statisticalCodeId: x => x?.statisticalCodeId || <NoValue /> };
+  const statisticalCodesFormatter = { statisticalCodeId: x => x?.statisticalCodeId || noValueElement };
   const statisticalCodesFieldsMap = [
     {
       field: 'statisticalCodeId',
@@ -99,7 +101,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.barcode`} />}
-            value={barcode || <NoValue />}
+            value={barcode || noValueElement}
           />
         </Col>
         <Col
@@ -108,7 +110,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.accessionNumber`} />}
-            value={accessionNumber || <NoValue />}
+            value={accessionNumber || noValueElement}
           />
         </Col>
         <Col
@@ -117,7 +119,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.itemIdentifier`} />}
-            value={itemIdentifier || <NoValue />}
+            value={itemIdentifier || noValueElement}
           />
         </Col>
       </Row>

@@ -21,6 +21,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const InstanceRelationship = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const parentInstances = getFieldValue(mappingDetails, 'parentInstances', 'subfields');
   const childInstances = getFieldValue(mappingDetails, 'childInstances', 'subfields');
 
@@ -34,8 +36,8 @@ export const InstanceRelationship = ({ mappingDetails }) => {
     ),
   };
   const parentInstancesFormatter = {
-    superInstanceId: x => x?.superInstanceId || <NoValue />,
-    instanceRelationshipTypeId: x => x?.instanceRelationshipTypeId || <NoValue />,
+    superInstanceId: x => x?.superInstanceId || noValueElement,
+    instanceRelationshipTypeId: x => x?.instanceRelationshipTypeId || noValueElement,
   };
   const parentInstancesFieldsMap = [
     {
@@ -58,8 +60,8 @@ export const InstanceRelationship = ({ mappingDetails }) => {
     ),
   };
   const childInstancesFormatter = {
-    subInstanceId: x => x?.subInstanceId || <NoValue />,
-    instanceRelationshipTypeId: x => x?.instanceRelationshipTypeId || <NoValue />,
+    subInstanceId: x => x?.subInstanceId || noValueElement,
+    instanceRelationshipTypeId: x => x?.instanceRelationshipTypeId || noValueElement,
   };
   const childInstancesFieldsMap = [
     {

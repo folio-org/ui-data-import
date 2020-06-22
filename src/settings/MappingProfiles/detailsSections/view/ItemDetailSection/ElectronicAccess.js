@@ -21,6 +21,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const ElectronicAccess = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const electronicAccess = getFieldValue(mappingDetails, 'electronicAccess', 'subfields');
 
   const electronicAccessVisibleColumns = ['relationshipId', 'uri', 'linkText', 'materialsSpecification', 'publicNote'];
@@ -42,11 +44,11 @@ export const ElectronicAccess = ({ mappingDetails }) => {
     ),
   };
   const electronicAccessFormatter = {
-    relationshipId: x => x?.relationshipId || <NoValue />,
-    uri: x => x?.uri || <NoValue />,
-    linkText: x => x?.linkText || <NoValue />,
-    materialsSpecification: x => x?.materialsSpecification || <NoValue />,
-    publicNote: x => x?.publicNote || <NoValue />,
+    relationshipId: x => x?.relationshipId || noValueElement,
+    uri: x => x?.uri || noValueElement,
+    linkText: x => x?.linkText || noValueElement,
+    materialsSpecification: x => x?.materialsSpecification || noValueElement,
+    publicNote: x => x?.publicNote || noValueElement,
   };
   const electronicAccessFieldsMap = [
     {

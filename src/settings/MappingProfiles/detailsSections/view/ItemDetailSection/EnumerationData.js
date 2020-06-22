@@ -22,6 +22,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const EnumerationData = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const enumeration = getFieldValue(mappingDetails, 'enumeration', 'value');
   const chronology = getFieldValue(mappingDetails, 'chronology', 'value');
   const volume = getFieldValue(mappingDetails, 'volume', 'value');
@@ -33,7 +35,7 @@ export const EnumerationData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />
     ),
   };
-  const yearsAndCaptionsFormatter = { yearCaption: x => x?.yearCaption || <NoValue /> };
+  const yearsAndCaptionsFormatter = { yearCaption: x => x?.yearCaption || noValueElement };
   const yearsAndCaptionsFieldsMap = [
     {
       field: 'yearCaption',
@@ -54,7 +56,7 @@ export const EnumerationData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
-            value={enumeration || <NoValue />}
+            value={enumeration || noValueElement}
           />
         </Col>
         <Col
@@ -63,7 +65,7 @@ export const EnumerationData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
-            value={chronology || <NoValue />}
+            value={chronology || noValueElement}
           />
         </Col>
       </Row>
@@ -74,7 +76,7 @@ export const EnumerationData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.volume`} />}
-            value={volume || <NoValue />}
+            value={volume || noValueElement}
           />
         </Col>
       </Row>

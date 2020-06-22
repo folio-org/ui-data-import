@@ -26,6 +26,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const AdministrativeData = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const discoverySuppress = getFieldValue(mappingDetails, 'discoverySuppress', 'booleanFieldAction');
   const staffSuppress = getFieldValue(mappingDetails, 'staffSuppress', 'booleanFieldAction');
   const previouslyHeld = getFieldValue(mappingDetails, 'previouslyHeld', 'booleanFieldAction');
@@ -50,7 +52,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCode`} />
     ),
   };
-  const statisticalCodesFormatter = { statisticalCodeId: x => x?.statisticalCodeId || <NoValue /> };
+  const statisticalCodesFormatter = { statisticalCodeId: x => x?.statisticalCodeId || noValueElement };
   const statisticalCodesFieldsMap = [
     {
       field: 'statisticalCodeId',
@@ -120,7 +122,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.catalogedDate`} />}
-            value={catalogedDate || <NoValue />}
+            value={catalogedDate || noValueElement}
           />
         </Col>
       </Row>
@@ -131,7 +133,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.statusId`} />}
-            value={statusTerm || <NoValue />}
+            value={statusTerm || noValueElement}
           />
         </Col>
       </Row>
