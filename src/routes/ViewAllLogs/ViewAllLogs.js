@@ -131,7 +131,7 @@ class ViewAllLogs extends Component {
 
     return searchableIndexes.map(index => {
       const label = formatMessage({ id: `ui-data-import.${index.label}` });
-      const placeholder = formatMessage({ id: `ui-data-import.placeholder.${index.placeholder}` });
+      const placeholder = index?.placeholder ? formatMessage({ id: `ui-data-import.placeholder.${index.placeholder}` }) : '';
 
       return {
         ...index,
