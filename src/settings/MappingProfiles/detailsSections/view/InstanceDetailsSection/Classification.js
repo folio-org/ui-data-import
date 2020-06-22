@@ -35,7 +35,16 @@ export const Classification = ({ mappingDetails }) => {
     classificationTypeId: x => x?.classificationTypeId || <ProhibitionIcon />,
     classificationNumber: x => x?.classificationNumber || <ProhibitionIcon />,
   };
-  const classificationsData = transformSubfieldsData(classifications, classificationsVisibleColumns);
+  const classificationsFieldsMap = [
+    {
+      field: 'classificationTypeId',
+      key: 'value',
+    }, {
+      field: 'classificationNumber',
+      key: 'value',
+    },
+  ];
+  const classificationsData = transformSubfieldsData(classifications, classificationsFieldsMap);
 
   return (
     <Accordion
@@ -59,4 +68,4 @@ export const Classification = ({ mappingDetails }) => {
   );
 };
 
-Classification.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+Classification.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

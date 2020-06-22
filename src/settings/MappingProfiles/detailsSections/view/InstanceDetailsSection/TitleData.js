@@ -43,7 +43,16 @@ export const TitleData = ({ mappingDetails }) => {
     alternativeTitleTypeId: x => x?.alternativeTitleTypeId || <ProhibitionIcon />,
     alternativeTitle: x => x?.alternativeTitle || <ProhibitionIcon />,
   };
-  const alternativeTitlesData = transformSubfieldsData(alternativeTitles, alternativeTitlesVisibleColumns);
+  const alternativeTitlesFieldsMap = [
+    {
+      field: 'alternativeTitleTypeId',
+      key: 'value',
+    }, {
+      field: 'alternativeTitle',
+      key: 'value',
+    },
+  ];
+  const alternativeTitlesData = transformSubfieldsData(alternativeTitles, alternativeTitlesFieldsMap);
 
   const seriesStatementsVisibleColumns = ['source'];
   const seriesStatementsMapping = {
@@ -52,7 +61,13 @@ export const TitleData = ({ mappingDetails }) => {
     ),
   };
   const seriesStatementsFormatter = { source: x => x?.source || <ProhibitionIcon /> };
-  const seriesStatementsData = transformSubfieldsData(seriesStatements, seriesStatementsVisibleColumns);
+  const seriesStatementsFieldsMap = [
+    {
+      field: 'source',
+      key: 'value',
+    },
+  ];
+  const seriesStatementsData = transformSubfieldsData(seriesStatements, seriesStatementsFieldsMap);
 
   const precedingTitlesVisibleColumns = ['precedingTitlesTitle', 'precedingTitlesHrid', 'precedingTitlesIsbn',
     'precedingTitlesIssn'];
@@ -76,7 +91,22 @@ export const TitleData = ({ mappingDetails }) => {
     precedingTitlesIsbn: x => x?.precedingTitlesIsbn || <ProhibitionIcon />,
     precedingTitlesIssn: x => x?.precedingTitlesIssn || <ProhibitionIcon />,
   };
-  const precedingTitlesData = transformSubfieldsData(precedingTitles, precedingTitlesVisibleColumns);
+  const precedingTitlesFieldsMap = [
+    {
+      field: 'precedingTitlesTitle',
+      key: 'value',
+    }, {
+      field: 'precedingTitlesHrid',
+      key: 'value',
+    }, {
+      field: 'precedingTitlesIsbn',
+      key: 'value',
+    }, {
+      field: 'precedingTitlesIssn',
+      key: 'value',
+    },
+  ];
+  const precedingTitlesData = transformSubfieldsData(precedingTitles, precedingTitlesFieldsMap);
 
   const succeedingTitlesVisibleColumns = ['succeedingTitlesTitle', 'succeedingTitlesHrid', 'succeedingTitlesIsbn',
     'succeedingTitlesIssn'];
@@ -100,7 +130,22 @@ export const TitleData = ({ mappingDetails }) => {
     succeedingTitlesIsbn: x => x?.succeedingTitlesIsbn || <ProhibitionIcon />,
     succeedingTitlesIssn: x => x?.succeedingTitlesIssn || <ProhibitionIcon />,
   };
-  const succeedingTitlesData = transformSubfieldsData(succeedingTitles, succeedingTitlesVisibleColumns);
+  const succeedingTitlesFieldsMap = [
+    {
+      field: 'succeedingTitlesTitle',
+      key: 'value',
+    }, {
+      field: 'succeedingTitlesHrid',
+      key: 'value',
+    }, {
+      field: 'succeedingTitlesIsbn',
+      key: 'value',
+    }, {
+      field: 'succeedingTitlesIssn',
+      key: 'value',
+    },
+  ];
+  const succeedingTitlesData = transformSubfieldsData(succeedingTitles, succeedingTitlesFieldsMap);
 
   return (
     <Accordion
@@ -124,10 +169,8 @@ export const TitleData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.alternativeTitles.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.alternativeTitles.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(alternativeTitlesData)}
@@ -155,10 +198,8 @@ export const TitleData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.series.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.series.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(seriesStatementsData)}
@@ -174,10 +215,8 @@ export const TitleData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.precedingTitles.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.precedingTitles.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(precedingTitlesData)}
@@ -193,10 +232,8 @@ export const TitleData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.succeedingTitles.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.succeedingTitles.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(succeedingTitlesData)}
@@ -210,4 +247,4 @@ export const TitleData = ({ mappingDetails }) => {
   );
 };
 
-TitleData.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+TitleData.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

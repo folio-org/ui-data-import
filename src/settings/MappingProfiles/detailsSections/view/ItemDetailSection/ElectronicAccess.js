@@ -7,14 +7,13 @@ import {
   Row,
   Col,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 
-import { ProhibitionIcon } from '../../../../../components';
-
 import {
-  transformSubfieldsData,
   getContentData,
   getFieldValue,
+  transformSubfieldsData,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
@@ -22,6 +21,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const ElectronicAccess = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const electronicAccess = getFieldValue(mappingDetails, 'electronicAccess', 'subfields');
 
   const electronicAccessVisibleColumns = ['relationshipId', 'uri', 'linkText', 'materialsSpecification', 'publicNote'];
@@ -43,11 +44,11 @@ export const ElectronicAccess = ({ mappingDetails }) => {
     ),
   };
   const electronicAccessFormatter = {
-    relationshipId: x => x?.relationshipId || <ProhibitionIcon />,
-    uri: x => x?.uri || <ProhibitionIcon />,
-    linkText: x => x?.linkText || <ProhibitionIcon />,
-    materialsSpecification: x => x?.materialsSpecification || <ProhibitionIcon />,
-    publicNote: x => x?.publicNote || <ProhibitionIcon />,
+    relationshipId: x => x?.relationshipId || noValueElement,
+    uri: x => x?.uri || noValueElement,
+    linkText: x => x?.linkText || noValueElement,
+    materialsSpecification: x => x?.materialsSpecification || noValueElement,
+    publicNote: x => x?.publicNote || noValueElement,
   };
   const electronicAccessFieldsMap = [
     {
@@ -71,12 +72,13 @@ export const ElectronicAccess = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="instance-electronic-access"
+      id="item-electronic-access"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.section`} />}
     >
       <Row left="xs">
         <Col
           data-test-electronic-access
+          id="section-electronic-access"
           xs={12}
           className={css.colWithTable}
         >

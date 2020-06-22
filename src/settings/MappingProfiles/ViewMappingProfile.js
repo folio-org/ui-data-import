@@ -28,15 +28,6 @@ import {
 } from '@folio/stripes/smart-components';
 
 import {
-  ENTITY_KEYS,
-  SYSTEM_USER_ID,
-  SYSTEM_USER_NAME,
-  PROFILE_TYPES,
-  MAPPING_DETAILS_HEADLINE,
-  getEntity,
-  getEntityTags,
-} from '../../utils';
-import {
   Spinner,
   EndOfItem,
   ActionMenu,
@@ -45,12 +36,23 @@ import {
   FOLIO_RECORD_TYPES,
   MappedHeader,
 } from '../../components';
-
-import sharedCss from '../../shared.css';
 import {
   MappingInstanceDetails,
+  MappingItemDetails,
   MappingHoldingsDetails,
 } from './detailsSections/view';
+
+import {
+  ENTITY_KEYS,
+  SYSTEM_USER_ID,
+  SYSTEM_USER_NAME,
+  PROFILE_TYPES,
+  MAPPING_DETAILS_HEADLINE,
+  getEntity,
+  getEntityTags,
+} from '../../utils';
+
+import sharedCss from '../../shared.css';
 
 @stripesConnect
 @withTags
@@ -207,8 +209,8 @@ export class ViewMappingProfile extends Component {
 
     const renderDetails = {
       INSTANCE: <MappingInstanceDetails mappingDetails={mappingDetails?.mappingFields} />,
-      ITEM: <></>,
       HOLDINGS: <MappingHoldingsDetails mappingDetails={mappingDetails?.mappingFields} />,
+      ITEM: <MappingItemDetails mappingDetails={mappingDetails?.mappingFields} />,
     };
 
     return (
@@ -270,30 +272,27 @@ export class ViewMappingProfile extends Component {
             id="mapping-profile-details"
             label={<FormattedMessage id="ui-data-import.details" />}
           >
-            {existingRecordType
-              ? (
-                <AccordionStatus>
-                  <Row between="xs">
-                    <Col>
-                      <MappedHeader
-                        mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
-                        mappedLabel="Field mapping"
-                        mappableLabelId={MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId}
-                        mappableLabel={MAPPING_DETAILS_HEADLINE[existingRecordType]?.label}
-                        headlineProps={{ margin: 'small' }}
-                      />
-                    </Col>
-                    <Col>
-                      <div data-test-expand-all-button>
-                        <ExpandAllButton />
-                      </div>
-                    </Col>
-                  </Row>
-                  {renderDetails[existingRecordType]}
-                </AccordionStatus>
-              )
-              : (<></>)
-            }
+            {existingRecordType && (
+              <AccordionStatus>
+                <Row between="xs">
+                  <Col>
+                    <MappedHeader
+                      mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
+                      mappedLabel="Field mapping"
+                      mappableLabelId={MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId}
+                      mappableLabel={MAPPING_DETAILS_HEADLINE[existingRecordType]?.label}
+                      headlineProps={{ margin: 'small' }}
+                    />
+                  </Col>
+                  <Col>
+                    <div data-test-expand-all-button>
+                      <ExpandAllButton />
+                    </div>
+                  </Col>
+                </Row>
+                {renderDetails[existingRecordType]}
+              </AccordionStatus>
+            )}
           </Accordion>
           <Accordion
             id="mappingProfileFormAssociatedActionProfileAccordion"

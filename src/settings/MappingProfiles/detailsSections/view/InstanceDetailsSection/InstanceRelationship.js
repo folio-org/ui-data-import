@@ -21,6 +21,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const InstanceRelationship = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const parentInstances = getFieldValue(mappingDetails, 'parentInstances', 'subfields');
   const childInstances = getFieldValue(mappingDetails, 'childInstances', 'subfields');
 
@@ -34,10 +36,19 @@ export const InstanceRelationship = ({ mappingDetails }) => {
     ),
   };
   const parentInstancesFormatter = {
-    superInstanceId: x => x?.superInstanceId || <NoValue />,
-    instanceRelationshipTypeId: x => x?.instanceRelationshipTypeId || <NoValue />,
+    superInstanceId: x => x?.superInstanceId || noValueElement,
+    instanceRelationshipTypeId: x => x?.instanceRelationshipTypeId || noValueElement,
   };
-  const parentInstancesData = transformSubfieldsData(parentInstances, parentInstancesVisibleColumns);
+  const parentInstancesFieldsMap = [
+    {
+      field: 'superInstanceId',
+      key: 'value',
+    }, {
+      field: 'instanceRelationshipTypeId',
+      key: 'value',
+    },
+  ];
+  const parentInstancesData = transformSubfieldsData(parentInstances, parentInstancesFieldsMap);
 
   const childInstancesVisibleColumns = ['subInstanceId', 'instanceRelationshipTypeId'];
   const childInstancesMapping = {
@@ -49,10 +60,19 @@ export const InstanceRelationship = ({ mappingDetails }) => {
     ),
   };
   const childInstancesFormatter = {
-    subInstanceId: x => x?.subInstanceId || <NoValue />,
-    instanceRelationshipTypeId: x => x?.instanceRelationshipTypeId || <NoValue />,
+    subInstanceId: x => x?.subInstanceId || noValueElement,
+    instanceRelationshipTypeId: x => x?.instanceRelationshipTypeId || noValueElement,
   };
-  const childInstancesData = transformSubfieldsData(childInstances, childInstancesVisibleColumns);
+  const childInstancesFieldsMap = [
+    {
+      field: 'subInstanceId',
+      key: 'value',
+    }, {
+      field: 'instanceRelationshipTypeId',
+      key: 'value',
+    },
+  ];
+  const childInstancesData = transformSubfieldsData(childInstances, childInstancesFieldsMap);
 
   return (
     <Accordion
@@ -65,10 +85,8 @@ export const InstanceRelationship = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.parentInstances.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.parentInstances.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(parentInstancesData)}
@@ -84,10 +102,8 @@ export const InstanceRelationship = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.childInstances.legend`} />
-            </strong>
+          <div className={css.tableLegend}>
+            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.childInstances.legend`} />
           </div>
           <MultiColumnList
             contentData={getContentData(childInstancesData)}
@@ -101,4 +117,4 @@ export const InstanceRelationship = ({ mappingDetails }) => {
   );
 };
 
-InstanceRelationship.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+InstanceRelationship.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

@@ -1,4 +1,10 @@
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { isEmpty } from 'lodash';
+
+import { NoValue } from '@folio/stripes/components';
+
+import { ProhibitionIcon } from '../../../components';
 
 import { FIELD_NAME_PREFIX } from './constants';
 import {
@@ -59,19 +65,19 @@ export const onRemove = (index, refTable, fieldIndex, callback, incrementalField
 
 export const getFieldValue = (details, fieldName, key) => details.find(item => item.name === fieldName)?.[key];
 
-export const transformSubfieldsData = (subfields, columns) => subfields.map(item => {
-  let currentRow = {};
+export const getValueById = id => (id ? <FormattedMessage id={id} /> : <NoValue />);
 
-  columns.forEach(columnName => {
-    const fieldValue = item?.fields.find(field => field.name === columnName).value;
+export const getUnmappableValueById = id => (id ? <FormattedMessage id={id} /> : <ProhibitionIcon />);
 
-    currentRow = {
-      ...currentRow,
-      [columnName]: fieldValue,
+export const transformSubfieldsData = (subfields, columns) => subfields?.map(item => {
+  return columns.reduce((acc, column) => {
+    const fieldValue = item?.fields.find(field => field.name === column.field)?.[column.key];
+
+    return {
+      ...acc,
+      [column.field]: fieldValue,
     };
-  });
-
-  return currentRow;
+  }, {});
 });
 
 export const getContentData = fields => (!isEmpty(fields) ? fields : [{}]);

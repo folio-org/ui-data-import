@@ -7,27 +7,27 @@ import {
   Row,
   Col,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 
-import { ProhibitionIcon } from '../../../../../components';
-
 import {
+  getBooleanLabelId,
   getContentData,
   getFieldValue,
+  getValueById,
   transformSubfieldsData,
-  getBooleanLabelId,
-  getUnmappableValueById,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
-import css from '../../../MappingProfiles.css';
 
-export const InstanceNotes = ({ mappingDetails }) => {
+export const ItemNotes = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const notes = getFieldValue(mappingDetails, 'notes', 'subfields');
 
-  const notesVisibleColumns = ['noteType', 'note', 'staffOnly'];
+  const notesVisibleColumns = ['itemNoteTypeId', 'note', 'staffOnly'];
   const notesMapping = {
-    noteType: (
+    itemNoteTypeId: (
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.noteType`} />
     ),
     note: (
@@ -38,17 +38,17 @@ export const InstanceNotes = ({ mappingDetails }) => {
     ),
   };
   const notesFormatter = {
-    noteType: x => x?.noteType || <ProhibitionIcon />,
-    note: x => x?.note || <ProhibitionIcon />,
+    itemNoteTypeId: x => x?.itemNoteTypeId || noValueElement,
+    note: x => x?.note || noValueElement,
     staffOnly: x => {
       const staffOnlyLabelId = getBooleanLabelId(x?.staffOnly);
 
-      return getUnmappableValueById(staffOnlyLabelId);
+      return getValueById(staffOnlyLabelId);
     },
   };
   const notesFieldsMap = [
     {
-      field: 'noteType',
+      field: 'itemNoteTypeId',
       key: 'value',
     }, {
       field: 'note',
@@ -62,14 +62,14 @@ export const InstanceNotes = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="instance-notes"
-      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.instanceNotes.section`} />}
+      id="item-notes"
+      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemNotes.section`} />}
     >
       <Row left="xs">
         <Col
-          data-test-notes
+          data-test-item-notes
+          id="section-item-notes"
           xs={12}
-          className={css.colWithTable}
         >
           <MultiColumnList
             contentData={getContentData(notesData)}
@@ -83,4 +83,4 @@ export const InstanceNotes = ({ mappingDetails }) => {
   );
 };
 
-InstanceNotes.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };
+ItemNotes.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };
