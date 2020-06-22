@@ -111,15 +111,14 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div className={css.tableLegend}>
-            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.field.circulationNotes.legend`} />
-          </div>
-          <MultiColumnList
-            contentData={getContentData(circulationNotesData)}
-            visibleColumns={circulationNotesVisibleColumns}
-            columnMapping={circulationNotesMapping}
-            formatter={circulationNotesFormatter}
-          />
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.field.circulationNotes.legend`} />}>
+            <MultiColumnList
+              contentData={getContentData(circulationNotesData)}
+              visibleColumns={circulationNotesVisibleColumns}
+              columnMapping={circulationNotesMapping}
+              formatter={circulationNotesFormatter}
+            />
+          </KeyValue>
         </Col>
       </Row>
     </Accordion>

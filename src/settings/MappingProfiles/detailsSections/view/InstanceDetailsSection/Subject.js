@@ -20,6 +20,8 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const Subject = ({ mappingDetails }) => {
+  const prohibitionIconElement = <ProhibitionIcon />;
+
   const subjects = getFieldValue(mappingDetails, 'subjects', 'subfields');
 
   const subjectsVisibleColumns = ['subject'];
@@ -28,7 +30,7 @@ export const Subject = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.subjects`} />
     ),
   };
-  const subjectsFormatter = { subject: x => x?.noteType || <ProhibitionIcon /> };
+  const subjectsFormatter = { subject: x => x?.noteType || prohibitionIconElement };
   const subjectsFieldsMap = [
     {
       field: 'subject',

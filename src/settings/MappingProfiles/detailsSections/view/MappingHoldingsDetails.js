@@ -29,4 +29,4 @@ export const MappingHoldingsDetails = ({ mappingDetails }) => {
   );
 };
 
-MappingHoldingsDetails.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+MappingHoldingsDetails.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

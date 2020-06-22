@@ -15,6 +15,8 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const Location = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const permanentLocation = getFieldValue(mappingDetails, 'permanentLocationId', 'value');
   const temporaryLocation = getFieldValue(mappingDetails, 'temporaryLocationId', 'value');
   const shelvingOrder = getFieldValue(mappingDetails, 'shelvingOrder', 'value');
@@ -37,7 +39,7 @@ export const Location = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.location.field.permanent`} />}
-            value={permanentLocation || <NoValue />}
+            value={permanentLocation || noValueElement}
           />
         </Col>
         <Col
@@ -46,7 +48,7 @@ export const Location = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.location.field.temporary`} />}
-            value={temporaryLocation || <NoValue />}
+            value={temporaryLocation || noValueElement}
           />
         </Col>
       </Row>
@@ -57,7 +59,7 @@ export const Location = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingOrder`} />}
-            value={shelvingOrder || <NoValue />}
+            value={shelvingOrder || noValueElement}
           />
         </Col>
         <Col
@@ -66,7 +68,7 @@ export const Location = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingTitle`} />}
-            value={shelvingTitle || <NoValue />}
+            value={shelvingTitle || noValueElement}
           />
         </Col>
       </Row>
@@ -77,7 +79,7 @@ export const Location = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.copyNumber`} />}
-            value={copyNumber || <NoValue />}
+            value={copyNumber || noValueElement}
           />
         </Col>
       </Row>
@@ -88,7 +90,7 @@ export const Location = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberType`} />}
-            value={callNumberType || <NoValue />}
+            value={callNumberType || noValueElement}
           />
         </Col>
         <Col
@@ -97,7 +99,7 @@ export const Location = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberPrefix`} />}
-            value={callNumberPrefix || <NoValue />}
+            value={callNumberPrefix || noValueElement}
           />
         </Col>
         <Col
@@ -106,7 +108,7 @@ export const Location = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumber`} />}
-            value={callNumber || <NoValue />}
+            value={callNumber || noValueElement}
           />
         </Col>
         <Col
@@ -115,7 +117,7 @@ export const Location = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberSuffix`} />}
-            value={callNumberSuffix || <NoValue />}
+            value={callNumberSuffix || noValueElement}
           />
         </Col>
       </Row>
@@ -123,4 +125,4 @@ export const Location = ({ mappingDetails }) => {
   );
 };
 
-Location.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+Location.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

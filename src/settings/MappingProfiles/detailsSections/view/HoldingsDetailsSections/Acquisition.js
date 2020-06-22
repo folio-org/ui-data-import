@@ -16,6 +16,8 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const Acquisition = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const acquisitionMethod = getFieldValue(mappingDetails, 'acquisitionMethod', 'value');
   const orderFormat = getFieldValue(mappingDetails, 'acquisitionFormat', 'value');
   const receiptStatus = getFieldValue(mappingDetails, 'receiptStatus', 'value');
@@ -32,7 +34,7 @@ export const Acquisition = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.acquisitionMethod`} />}
-            value={acquisitionMethod || <NoValue />}
+            value={acquisitionMethod || noValueElement}
           />
         </Col>
         <Col
@@ -41,7 +43,7 @@ export const Acquisition = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.orderFormat`} />}
-            value={orderFormat || <NoValue />}
+            value={orderFormat || noValueElement}
           />
         </Col>
         <Col
@@ -50,7 +52,7 @@ export const Acquisition = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.receiptStatus`} />}
-            value={receiptStatus || <NoValue />}
+            value={receiptStatus || noValueElement}
           />
         </Col>
       </Row>
@@ -58,4 +60,4 @@ export const Acquisition = ({ mappingDetails }) => {
   );
 };
 
-Acquisition.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+Acquisition.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

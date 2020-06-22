@@ -22,6 +22,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const ElectronicAccess = ({ mappingDetails }) => {
+  const prohibitionIconElement = <ProhibitionIcon />;
+
   const electronicAccess = getFieldValue(mappingDetails, 'electronicAccess', 'subfields');
 
   const electronicAccessVisibleColumns = ['relationshipId', 'uri', 'linkText', 'materialsSpecification', 'publicNote'];
@@ -43,11 +45,11 @@ export const ElectronicAccess = ({ mappingDetails }) => {
     ),
   };
   const electronicAccessFormatter = {
-    relationshipId: x => x?.relationshipId || <ProhibitionIcon />,
-    uri: x => x?.uri || <ProhibitionIcon />,
-    linkText: x => x?.linkText || <ProhibitionIcon />,
-    materialsSpecification: x => x?.materialsSpecification || <ProhibitionIcon />,
-    publicNote: x => x?.publicNote || <ProhibitionIcon />,
+    relationshipId: x => x?.relationshipId || prohibitionIconElement,
+    uri: x => x?.uri || prohibitionIconElement,
+    linkText: x => x?.linkText || prohibitionIconElement,
+    materialsSpecification: x => x?.materialsSpecification || prohibitionIconElement,
+    publicNote: x => x?.publicNote || prohibitionIconElement,
   };
   const electronicAccessFieldsMap = [
     {

@@ -21,6 +21,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const HoldingsDetails = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const numberOfItems = getFieldValue(mappingDetails, 'numberOfItems', 'value');
   const statements = getFieldValue(mappingDetails, 'holdingStatements', 'subfields');
   const statementsForSupplement = getFieldValue(mappingDetails, 'holdingStatementsForSupplements', 'subfields');
@@ -39,8 +41,8 @@ export const HoldingsDetails = ({ mappingDetails }) => {
     ),
   };
   const statementsFormatter = {
-    statement: x => x?.statement || <NoValue />,
-    note: x => x?.note || <NoValue />,
+    statement: x => x?.statement || noValueElement,
+    note: x => x?.note || noValueElement,
   };
   const statementsData = transformSubfieldsData(statements, statementsVisibleColumns);
 
@@ -54,8 +56,8 @@ export const HoldingsDetails = ({ mappingDetails }) => {
     ),
   };
   const statementsForSupplementFormatter = {
-    statement: x => x?.statement || <NoValue />,
-    note: x => x?.note || <NoValue />,
+    statement: x => x?.statement || noValueElement,
+    note: x => x?.note || noValueElement,
   };
   const statementsForSupplementData = transformSubfieldsData(statementsForSupplement, statementsForSupplementVisibleColumns);
 
@@ -69,8 +71,8 @@ export const HoldingsDetails = ({ mappingDetails }) => {
     ),
   };
   const statementsForIndexesFormatter = {
-    statement: x => x?.statement || <NoValue />,
-    note: x => x?.note || <NoValue />,
+    statement: x => x?.statement || noValueElement,
+    note: x => x?.note || noValueElement,
   };
   const statementsForIndexesData = transformSubfieldsData(statementsForIndexes, statementsForIndexesVisibleColumns);
 
@@ -86,7 +88,7 @@ export const HoldingsDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.details.field.numberOfItems`} />}
-            value={numberOfItems || <NoValue />}
+            value={numberOfItems || noValueElement}
           />
         </Col>
       </Row>
@@ -97,17 +99,14 @@ export const HoldingsDetails = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement.legend`} />
-            </strong>
-          </div>
-          <MultiColumnList
-            contentData={getContentData(statementsData)}
-            visibleColumns={statementsVisibleColumns}
-            columnMapping={statementsMapping}
-            formatter={statementsFormatter}
-          />
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement.legend`} />}>
+            <MultiColumnList
+              contentData={getContentData(statementsData)}
+              visibleColumns={statementsVisibleColumns}
+              columnMapping={statementsMapping}
+              formatter={statementsFormatter}
+            />
+          </KeyValue>
         </Col>
       </Row>
       <Row left="xs">
@@ -117,17 +116,14 @@ export const HoldingsDetails = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForSupplements.legend`} />
-            </strong>
-          </div>
-          <MultiColumnList
-            contentData={getContentData(statementsForSupplementData)}
-            visibleColumns={statementsForSupplementVisibleColumns}
-            columnMapping={statementsForSupplementMapping}
-            formatter={statementsForSupplementFormatter}
-          />
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForSupplements.legend`} />}>
+            <MultiColumnList
+              contentData={getContentData(statementsForSupplementData)}
+              visibleColumns={statementsForSupplementVisibleColumns}
+              columnMapping={statementsForSupplementMapping}
+              formatter={statementsForSupplementFormatter}
+            />
+          </KeyValue>
         </Col>
       </Row>
       <Row left="xs">
@@ -137,17 +133,14 @@ export const HoldingsDetails = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForIndexes.legend`} />
-            </strong>
-          </div>
-          <MultiColumnList
-            contentData={getContentData(statementsForIndexesData)}
-            visibleColumns={statementsForIndexesVisibleColumns}
-            columnMapping={statementsForIndexesMapping}
-            formatter={statementsForIndexesFormatter}
-          />
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForIndexes.legend`} />}>
+            <MultiColumnList
+              contentData={getContentData(statementsForIndexesData)}
+              visibleColumns={statementsForIndexesVisibleColumns}
+              columnMapping={statementsForIndexesMapping}
+              formatter={statementsForIndexesFormatter}
+            />
+          </KeyValue>
         </Col>
       </Row>
       <Row left="xs">
@@ -157,7 +150,7 @@ export const HoldingsDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.illPolicy`} />}
-            value={illPolicy || <NoValue />}
+            value={illPolicy || noValueElement}
           />
         </Col>
         <Col
@@ -166,7 +159,7 @@ export const HoldingsDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.digitizationPolicy`} />}
-            value={digitizationPolicy || <NoValue />}
+            value={digitizationPolicy || noValueElement}
           />
         </Col>
         <Col
@@ -175,7 +168,7 @@ export const HoldingsDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.retentionPolicy`} />}
-            value={retentionPolicy || <NoValue />}
+            value={retentionPolicy || noValueElement}
           />
         </Col>
       </Row>
@@ -183,4 +176,4 @@ export const HoldingsDetails = ({ mappingDetails }) => {
   );
 };
 
-HoldingsDetails.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+HoldingsDetails.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

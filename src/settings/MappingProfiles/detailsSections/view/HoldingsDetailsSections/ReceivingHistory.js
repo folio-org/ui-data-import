@@ -21,6 +21,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const ReceivingHistory = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const receivingHistory = getFieldValue(mappingDetails, 'receivingHistory.entries', 'subfields');
 
   const receivingHistoryVisibleColumns = ['publicDisplay', 'enumeration', 'chronology'];
@@ -36,9 +38,9 @@ export const ReceivingHistory = ({ mappingDetails }) => {
     ),
   };
   const receivingHistoryFormatter = {
-    publicDisplay: x => x?.publicDisplay || <NoValue />,
-    enumeration: x => x?.enumeration || <NoValue />,
-    chronology: x => x?.chronology || <NoValue />,
+    publicDisplay: x => x?.publicDisplay || noValueElement,
+    enumeration: x => x?.enumeration || noValueElement,
+    chronology: x => x?.chronology || noValueElement,
   };
   const receivingHistoryData = transformSubfieldsData(receivingHistory, receivingHistoryVisibleColumns);
 
@@ -66,4 +68,4 @@ export const ReceivingHistory = ({ mappingDetails }) => {
   );
 };
 
-ReceivingHistory.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+ReceivingHistory.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

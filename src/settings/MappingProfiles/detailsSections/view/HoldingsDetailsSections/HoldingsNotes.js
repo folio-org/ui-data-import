@@ -15,6 +15,7 @@ import {
   getFieldValue,
   transformSubfieldsData,
   getBooleanLabelId,
+  getValueById,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
@@ -22,6 +23,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const HoldingsNotes = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const notes = getFieldValue(mappingDetails, 'notes', 'subfields');
 
   const notesVisibleColumns = ['noteType', 'note', 'staffOnly'];
@@ -37,12 +40,12 @@ export const HoldingsNotes = ({ mappingDetails }) => {
     ),
   };
   const notesFormatter = {
-    noteType: x => x?.noteType || <NoValue />,
-    note: x => x?.note || <NoValue />,
+    noteType: x => x?.noteType || noValueElement,
+    note: x => x?.note || noValueElement,
     staffOnly: x => {
       const staffOnlyLabelId = getBooleanLabelId(x?.staffOnly);
 
-      return staffOnlyLabelId ? <FormattedMessage id={staffOnlyLabelId} /> : <NoValue />;
+      return getValueById(staffOnlyLabelId);
     },
   };
   const notesFieldsMap = [
@@ -83,4 +86,4 @@ export const HoldingsNotes = ({ mappingDetails }) => {
   );
 };
 
-HoldingsNotes.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+HoldingsNotes.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

@@ -7,6 +7,7 @@ import {
   Row,
   Col,
   NoValue,
+  KeyValue,
   MultiColumnList,
 } from '@folio/stripes/components';
 
@@ -85,15 +86,14 @@ export const InstanceRelationship = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div className={css.tableLegend}>
-            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.parentInstances.legend`} />
-          </div>
-          <MultiColumnList
-            contentData={getContentData(parentInstancesData)}
-            visibleColumns={parentInstancesVisibleColumns}
-            columnMapping={parentInstancesMapping}
-            formatter={parentInstancesFormatter}
-          />
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.parentInstances.legend`} />}>
+            <MultiColumnList
+              contentData={getContentData(parentInstancesData)}
+              visibleColumns={parentInstancesVisibleColumns}
+              columnMapping={parentInstancesMapping}
+              formatter={parentInstancesFormatter}
+            />
+          </KeyValue>
         </Col>
       </Row>
       <Row left="xs">
@@ -102,15 +102,14 @@ export const InstanceRelationship = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div className={css.tableLegend}>
-            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.childInstances.legend`} />
-          </div>
-          <MultiColumnList
-            contentData={getContentData(childInstancesData)}
-            visibleColumns={childInstancesVisibleColumns}
-            columnMapping={childInstancesMapping}
-            formatter={childInstancesFormatter}
-          />
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.childInstances.legend`} />}>
+            <MultiColumnList
+              contentData={getContentData(childInstancesData)}
+              visibleColumns={childInstancesVisibleColumns}
+              columnMapping={childInstancesMapping}
+              formatter={childInstancesFormatter}
+            />
+          </KeyValue>
         </Col>
       </Row>
     </Accordion>

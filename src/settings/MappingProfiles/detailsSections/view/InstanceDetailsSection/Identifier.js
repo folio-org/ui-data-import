@@ -22,6 +22,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const Identifier = ({ mappingDetails }) => {
+  const prohibitionIconElement = <ProhibitionIcon />;
+
   const identifiers = getFieldValue(mappingDetails, 'identifiers', 'subfields');
 
   const identifiersVisibleColumns = ['identifierTypeId', 'value'];
@@ -34,8 +36,8 @@ export const Identifier = ({ mappingDetails }) => {
     ),
   };
   const identifiersFormatter = {
-    identifierTypeId: x => x?.identifierTypeId || <ProhibitionIcon />,
-    value: x => x?.value || <ProhibitionIcon />,
+    identifierTypeId: x => x?.identifierTypeId || prohibitionIconElement,
+    value: x => x?.value || prohibitionIconElement,
   };
   const identifiersFieldsMap = [
     {

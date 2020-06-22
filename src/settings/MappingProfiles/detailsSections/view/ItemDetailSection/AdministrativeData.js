@@ -130,15 +130,14 @@ export const AdministrativeData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div className={css.tableLegend}>
-            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId.legend`} />
-          </div>
-          <MultiColumnList
-            contentData={getContentData(formerIdentifiersData)}
-            visibleColumns={formerIdentifiersVisibleColumns}
-            columnMapping={formerIdentifiersMapping}
-            formatter={formerIdentifiersFormatter}
-          />
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId.legend`} />}>
+            <MultiColumnList
+              contentData={getContentData(formerIdentifiersData)}
+              visibleColumns={formerIdentifiersVisibleColumns}
+              columnMapping={formerIdentifiersMapping}
+              formatter={formerIdentifiersFormatter}
+            />
+          </KeyValue>
         </Col>
       </Row>
       <Row left="xs">
@@ -148,15 +147,14 @@ export const AdministrativeData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div className={css.tableLegend}>
-            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />
-          </div>
-          <MultiColumnList
-            contentData={getContentData(statisticalCodesData)}
-            visibleColumns={statisticalCodesVisibleColumns}
-            columnMapping={statisticalCodesMapping}
-            formatter={statisticalCodesFormatter}
-          />
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />}>
+            <MultiColumnList
+              contentData={getContentData(statisticalCodesData)}
+              visibleColumns={statisticalCodesVisibleColumns}
+              columnMapping={statisticalCodesMapping}
+              formatter={statisticalCodesFormatter}
+            />
+          </KeyValue>
         </Col>
       </Row>
     </Accordion>

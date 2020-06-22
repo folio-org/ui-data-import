@@ -18,6 +18,7 @@ import {
   getBooleanLabelId,
   getContentData,
   transformSubfieldsData,
+  getValueById,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
@@ -25,6 +26,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const AdministrativeData = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
+
   const discoverySuppress = getFieldValue(mappingDetails, 'discoverySuppress', 'booleanFieldAction');
   const holdingsHrid = getFieldValue(mappingDetails, 'hrid', 'value');
   const formerIds = getFieldValue(mappingDetails, 'formerIds', 'subfields');
@@ -32,7 +35,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
   const statisticalCodes = getFieldValue(mappingDetails, 'statisticalCodeIds', 'subfields');
 
   const discoverySuppressLabelId = getBooleanLabelId(discoverySuppress);
-  const discoverySuppressValue = discoverySuppressLabelId ? <FormattedMessage id={discoverySuppressLabelId} /> : <NoValue />;
+  const discoverySuppressValue = getValueById(discoverySuppressLabelId);
 
   const formerIdsVisibleColumns = ['formerId'];
   const formerIdsMapping = {
@@ -40,7 +43,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.formerId`} />
     ),
   };
-  const formerIdsFormatter = { formerId: x => x?.formerId || <NoValue /> };
+  const formerIdsFormatter = { formerId: x => x?.formerId || noValueElement };
   const formerIdsData = transformSubfieldsData(formerIds, formerIdsVisibleColumns);
 
   const statisticalCodesVisibleColumns = ['statisticalCodeId'];
@@ -49,7 +52,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCode`} />
     ),
   };
-  const statisticalCodesFormatter = { statisticalCodeId: x => x?.statisticalCodeId || <NoValue /> };
+  const statisticalCodesFormatter = { statisticalCodeId: x => x?.statisticalCodeId || noValueElement };
   const statisticalCodesData = transformSubfieldsData(statisticalCodes, statisticalCodesVisibleColumns);
 
   return (
@@ -85,17 +88,14 @@ export const AdministrativeData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.formerId.legend`} />
-            </strong>
-          </div>
-          <MultiColumnList
-            contentData={getContentData(formerIdsData)}
-            visibleColumns={formerIdsVisibleColumns}
-            columnMapping={formerIdsMapping}
-            formatter={formerIdsFormatter}
-          />
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.formerId.legend`} />}>
+            <MultiColumnList
+              contentData={getContentData(formerIdsData)}
+              visibleColumns={formerIdsVisibleColumns}
+              columnMapping={formerIdsMapping}
+              formatter={formerIdsFormatter}
+            />
+          </KeyValue>
         </Col>
       </Row>
       <Row left="xs">
@@ -105,7 +105,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.holdingsTypeId`} />}
-            value={holdingsType || <NoValue />}
+            value={holdingsType || noValueElement}
           />
         </Col>
       </Row>
@@ -115,21 +115,18 @@ export const AdministrativeData = ({ mappingDetails }) => {
           id="section-statistical-code-ids"
           xs={12}
         >
-          <div>
-            <strong>
-              <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />
-            </strong>
-          </div>
-          <MultiColumnList
-            contentData={getContentData(statisticalCodesData)}
-            visibleColumns={statisticalCodesVisibleColumns}
-            columnMapping={statisticalCodesMapping}
-            formatter={statisticalCodesFormatter}
-          />
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />}>
+            <MultiColumnList
+              contentData={getContentData(statisticalCodesData)}
+              visibleColumns={statisticalCodesVisibleColumns}
+              columnMapping={statisticalCodesMapping}
+              formatter={statisticalCodesFormatter}
+            />
+          </KeyValue>
         </Col>
       </Row>
     </Accordion>
   );
 };
 
-AdministrativeData.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape) };
+AdministrativeData.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };
