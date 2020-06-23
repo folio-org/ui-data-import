@@ -554,6 +554,6 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator1": "Data marcField indicator1 field",
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator2": "Data marcField indicator2 field",
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.subfield": "Data marcField subfield field",
-    "settings.mappingProfile.marcTable.ariaLabel.data.text": "Data text field",
-    "settings.mappingProfile.marcTable.ariaLabel.position": "Select position"
+    "settings.mappingProfile.marcTable.ariaLabel.data.text": "Campo de texto de datos",
+    "settings.mappingProfile.marcTable.ariaLabel.position": "Seleccionar posición"
 }
