@@ -4,7 +4,6 @@
 
 ### Features added:
 * Field Mapping Profile details: MARC Bib from MARC Bib 2 - Delete (UIDATIMP-486)
-* Locking version for react-intl (UIDATIMP-551)
 
 ### Bugs fixed:
 * Fix Accessibility problems for MARCTable component (UIDATIMP-547)
