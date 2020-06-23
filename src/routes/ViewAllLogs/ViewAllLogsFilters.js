@@ -121,11 +121,16 @@ const ViewAllLogsFilters = ({
           onClearFilter={createClearFilterHandler(onChange, FILTERS.JOB_PROFILE)}
         >
           <div data-test-job-profiles-filter>
-            <Selection
-              dataOptions={getJobProfileOptions}
-              value={activeFilters[FILTERS.JOB_PROFILE] ? activeFilters[FILTERS.JOB_PROFILE][0] : ''}
-              onChange={onChangeSelectionFilter(onChange, FILTERS.JOB_PROFILE)}
-            />
+            <FormattedMessage id="ui-data-import.filter.chooseJobProfile">
+              {placeholder => (
+                <Selection
+                  dataOptions={getJobProfileOptions}
+                  value={activeFilters[FILTERS.JOB_PROFILE] ? activeFilters[FILTERS.JOB_PROFILE][0] : ''}
+                  onChange={onChangeSelectionFilter(onChange, FILTERS.JOB_PROFILE)}
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
           </div>
         </Accordion>
         <Accordion
@@ -137,11 +142,17 @@ const ViewAllLogsFilters = ({
           onClearFilter={createClearFilterHandler(onChange, FILTERS.USER)}
         >
           <div data-test-users-filter>
-            <Selection
-              dataOptions={getUsersOptions}
-              value={activeFilters[FILTERS.USER] ? activeFilters[FILTERS.USER][0] : ''}
-              onChange={onChangeSelectionFilter(onChange, FILTERS.USER)}
-            />
+            <FormattedMessage id="ui-data-import.filter.chooseUser">
+              {placeholder => (
+                <Selection
+                  dataOptions={getUsersOptions}
+                  value={activeFilters[FILTERS.USER] ? activeFilters[FILTERS.USER][0] : ''}
+                  onChange={onChangeSelectionFilter(onChange, FILTERS.USER)}
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
+
           </div>
         </Accordion>
       </AccordionSet>
