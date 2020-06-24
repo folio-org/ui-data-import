@@ -555,5 +555,7 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator2": "حقل المؤشر 2 لحقل مارك البيانات",
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.subfield": "حقل الحقل فرعي لحقل مارك البيانات",
     "settings.mappingProfile.marcTable.ariaLabel.data.text": "حقل نص البيانات",
-    "settings.mappingProfile.marcTable.ariaLabel.position": "اختر موضع"
+    "settings.mappingProfile.marcTable.ariaLabel.position": "اختر موضع",
+    "filter.chooseJobProfile": "اختر وضع وظيفة",
+    "filter.chooseUser": "اختر مستخدم"
 }
