@@ -555,5 +555,7 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator2": "Campo de dados MARC indicador2",
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.subfield": "Campo de subcampo de dados MARC",
     "settings.mappingProfile.marcTable.ariaLabel.data.text": "Campo de texto de dados",
-    "settings.mappingProfile.marcTable.ariaLabel.position": "Selecionar posição"
+    "settings.mappingProfile.marcTable.ariaLabel.position": "Selecionar posição",
+    "filter.chooseJobProfile": "Choose job profile",
+    "filter.chooseUser": "Choose user"
 }

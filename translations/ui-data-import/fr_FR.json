@@ -555,5 +555,7 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator2": "Data marcField indicator2 field",
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.subfield": "Data marcField subfield field",
     "settings.mappingProfile.marcTable.ariaLabel.data.text": "Champ texte de données",
-    "settings.mappingProfile.marcTable.ariaLabel.position": "Sélectionnez la position"
+    "settings.mappingProfile.marcTable.ariaLabel.position": "Sélectionnez la position",
+    "filter.chooseJobProfile": "Choose job profile",
+    "filter.chooseUser": "Choose user"
 }
