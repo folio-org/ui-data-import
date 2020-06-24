@@ -27,6 +27,7 @@ import css from '../../../MappingProfiles.css';
 
 export const AdministrativeData = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
+  const prohibitionIconElement = <ProhibitionIcon />;
 
   const discoverySuppress = getFieldValue(mappingDetails, 'discoverySuppress', 'booleanFieldAction');
   const staffSuppress = getFieldValue(mappingDetails, 'staffSuppress', 'booleanFieldAction');
@@ -102,7 +103,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.hrid`} />}
-            value={instanceHrid || <ProhibitionIcon />}
+            value={instanceHrid || prohibitionIconElement}
           />
         </Col>
         <Col
@@ -111,7 +112,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.source`} />}
-            value={metadataSource || <ProhibitionIcon />}
+            value={metadataSource || prohibitionIconElement}
           />
         </Col>
       </Row>
@@ -144,7 +145,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.modeOfIssuanceId`} />}
-            value={modeOfIssuance || <ProhibitionIcon />}
+            value={modeOfIssuance || prohibitionIconElement}
           />
         </Col>
       </Row>
@@ -154,15 +155,14 @@ export const AdministrativeData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div className={css.tableLegend}>
-            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />
-          </div>
-          <MultiColumnList
-            contentData={getContentData(statisticalCodesData)}
-            visibleColumns={statisticalCodesVisibleColumns}
-            columnMapping={statisticalCodesMapping}
-            formatter={statisticalCodesFormatter}
-          />
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />}>
+            <MultiColumnList
+              contentData={getContentData(statisticalCodesData)}
+              visibleColumns={statisticalCodesVisibleColumns}
+              columnMapping={statisticalCodesMapping}
+              formatter={statisticalCodesFormatter}
+            />
+          </KeyValue>
         </Col>
       </Row>
     </Accordion>

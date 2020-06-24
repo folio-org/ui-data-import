@@ -6,9 +6,9 @@ import {
   Accordion,
   Row,
   Col,
+  NoValue,
   KeyValue,
   MultiColumnList,
-  NoValue,
 } from '@folio/stripes/components';
 
 import { ProhibitionIcon } from '../../../../../components';
@@ -16,9 +16,9 @@ import { ProhibitionIcon } from '../../../../../components';
 import {
   getFieldValue,
   getBooleanLabelId,
-  getValueById,
   getContentData,
   transformSubfieldsData,
+  getValueById,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
@@ -29,30 +29,22 @@ export const AdministrativeData = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
 
   const discoverySuppress = getFieldValue(mappingDetails, 'discoverySuppress', 'booleanFieldAction');
-  const itemHrid = getFieldValue(mappingDetails, 'hrid', 'value');
-  const barcode = getFieldValue(mappingDetails, 'barcode', 'value');
-  const accessionNumber = getFieldValue(mappingDetails, 'accessionNumber', 'value');
-  const itemIdentifier = getFieldValue(mappingDetails, 'itemIdentifier', 'value');
+  const holdingsHrid = getFieldValue(mappingDetails, 'hrid', 'value');
   const formerIds = getFieldValue(mappingDetails, 'formerIds', 'subfields');
+  const holdingsType = getFieldValue(mappingDetails, 'holdingsTypeId', 'value');
   const statisticalCodes = getFieldValue(mappingDetails, 'statisticalCodeIds', 'subfields');
 
   const discoverySuppressLabelId = getBooleanLabelId(discoverySuppress);
   const discoverySuppressValue = getValueById(discoverySuppressLabelId);
 
-  const formerIdentifiersVisibleColumns = ['formerId'];
-  const formerIdentifiersMapping = {
+  const formerIdsVisibleColumns = ['formerId'];
+  const formerIdsMapping = {
     formerId: (
-      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId`} />
+      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.formerId`} />
     ),
   };
-  const formerIdentifiersFormatter = { formerId: x => x?.formerId || noValueElement };
-  const formerIdentifiersFieldsMap = [
-    {
-      field: 'formerId',
-      key: 'value',
-    },
-  ];
-  const formerIdentifiersData = transformSubfieldsData(formerIds, formerIdentifiersFieldsMap);
+  const formerIdsFormatter = { formerId: x => x?.formerId || noValueElement };
+  const formerIdsData = transformSubfieldsData(formerIds, formerIdsVisibleColumns);
 
   const statisticalCodesVisibleColumns = ['statisticalCodeId'];
   const statisticalCodesMapping = {
@@ -61,13 +53,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
     ),
   };
   const statisticalCodesFormatter = { statisticalCodeId: x => x?.statisticalCodeId || noValueElement };
-  const statisticalCodesFieldsMap = [
-    {
-      field: 'statisticalCodeId',
-      key: 'value',
-    },
-  ];
-  const statisticalCodesData = transformSubfieldsData(statisticalCodes, statisticalCodesFieldsMap);
+  const statisticalCodesData = transformSubfieldsData(statisticalCodes, statisticalCodesVisibleColumns);
 
   return (
     <Accordion
@@ -77,7 +63,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-suppress-from-discovery
-          xs={4}
+          xs={6}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.discoverySuppress`} />}
@@ -87,57 +73,40 @@ export const AdministrativeData = ({ mappingDetails }) => {
       </Row>
       <Row left="xs">
         <Col
-          data-test-item-hrid
+          data-test-holdings-hrid
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.hrid`} />}
-            value={itemHrid || <ProhibitionIcon />}
-          />
-        </Col>
-        <Col
-          data-test-barcode
-          xs={3}
-        >
-          <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.barcode`} />}
-            value={barcode || noValueElement}
-          />
-        </Col>
-        <Col
-          data-test-accession-number
-          xs={3}
-        >
-          <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.accessionNumber`} />}
-            value={accessionNumber || noValueElement}
-          />
-        </Col>
-        <Col
-          data-test-item-identifier
-          xs={3}
-        >
-          <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.itemIdentifier`} />}
-            value={itemIdentifier || noValueElement}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.hrid`} />}
+            value={holdingsHrid || <ProhibitionIcon />}
           />
         </Col>
       </Row>
       <Row left="xs">
         <Col
-          data-test-former-ids
           id="section-former-ids"
           xs={12}
           className={css.colWithTable}
         >
-          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId.legend`} />}>
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.formerId.legend`} />}>
             <MultiColumnList
-              contentData={getContentData(formerIdentifiersData)}
-              visibleColumns={formerIdentifiersVisibleColumns}
-              columnMapping={formerIdentifiersMapping}
-              formatter={formerIdentifiersFormatter}
+              contentData={getContentData(formerIdsData)}
+              visibleColumns={formerIdsVisibleColumns}
+              columnMapping={formerIdsMapping}
+              formatter={formerIdsFormatter}
             />
           </KeyValue>
+        </Col>
+      </Row>
+      <Row left="xs">
+        <Col
+          data-test-holdings-type
+          xs={6}
+        >
+          <KeyValue
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.holdingsTypeId`} />}
+            value={holdingsType || noValueElement}
+          />
         </Col>
       </Row>
       <Row left="xs">
@@ -145,7 +114,6 @@ export const AdministrativeData = ({ mappingDetails }) => {
           data-test-statistical-codes
           id="section-statistical-code-ids"
           xs={12}
-          className={css.colWithTable}
         >
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />}>
             <MultiColumnList

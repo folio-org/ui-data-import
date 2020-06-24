@@ -180,6 +180,7 @@ export const BOOLEAN_ACTIONS = {
   ALL_TRUE: 'ALL_TRUE',
   ALL_FALSE: 'ALL_FALSE',
   AS_IS: 'AS_IS',
+  IGNORE: 'IGNORE',
 };
 
 export const REPEATABLE_ACTIONS = {

@@ -7,23 +7,23 @@ import {
   Row,
   Col,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
-
-import { ProhibitionIcon } from '../../../../../components';
 
 import {
   getContentData,
   getFieldValue,
   transformSubfieldsData,
   getBooleanLabelId,
-  getUnmappableValueById,
+  getValueById,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
+
 import css from '../../../MappingProfiles.css';
 
-export const InstanceNotes = ({ mappingDetails }) => {
-  const prohibitionIconElement = <ProhibitionIcon />;
+export const HoldingsNotes = ({ mappingDetails }) => {
+  const noValueElement = <NoValue />;
 
   const notes = getFieldValue(mappingDetails, 'notes', 'subfields');
 
@@ -40,12 +40,12 @@ export const InstanceNotes = ({ mappingDetails }) => {
     ),
   };
   const notesFormatter = {
-    noteType: x => x?.noteType || prohibitionIconElement,
-    note: x => x?.note || prohibitionIconElement,
+    noteType: x => x?.noteType || noValueElement,
+    note: x => x?.note || noValueElement,
     staffOnly: x => {
       const staffOnlyLabelId = getBooleanLabelId(x?.staffOnly);
 
-      return getUnmappableValueById(staffOnlyLabelId);
+      return getValueById(staffOnlyLabelId);
     },
   };
   const notesFieldsMap = [
@@ -64,12 +64,13 @@ export const InstanceNotes = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="instance-notes"
-      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.instanceNotes.section`} />}
+      id="holdings-notes"
+      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.holdingsNotes.section`} />}
     >
       <Row left="xs">
         <Col
           data-test-notes
+          id="section-holding-statements"
           xs={12}
           className={css.colWithTable}
         >
@@ -85,4 +86,4 @@ export const InstanceNotes = ({ mappingDetails }) => {
   );
 };
 
-InstanceNotes.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };
+HoldingsNotes.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };

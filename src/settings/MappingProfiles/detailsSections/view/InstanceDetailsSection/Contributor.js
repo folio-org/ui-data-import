@@ -24,6 +24,8 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const Contributor = ({ mappingDetails }) => {
+  const prohibitionIconElement = <ProhibitionIcon />;
+
   const contributors = getFieldValue(mappingDetails, 'contributors', 'subfields');
 
   const contributorsVisibleColumns = ['contributorName', 'contributorNameTypeId', 'contributorTypeId',
@@ -46,10 +48,10 @@ export const Contributor = ({ mappingDetails }) => {
     ),
   };
   const contributorsFormatter = {
-    contributorName: x => x?.contributorName || <ProhibitionIcon />,
-    contributorNameTypeId: x => x?.contributorNameTypeId || <ProhibitionIcon />,
-    contributorTypeId: x => x?.contributorTypeId || <ProhibitionIcon />,
-    contributorTypeText: x => x?.contributorTypeText || <ProhibitionIcon />,
+    contributorName: x => x?.contributorName || prohibitionIconElement,
+    contributorNameTypeId: x => x?.contributorNameTypeId || prohibitionIconElement,
+    contributorTypeId: x => x?.contributorTypeId || prohibitionIconElement,
+    contributorTypeText: x => x?.contributorTypeText || prohibitionIconElement,
     primary: x => {
       const primaryLabelId = getBooleanLabelId(x?.primary);
 

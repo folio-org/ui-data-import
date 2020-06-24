@@ -87,15 +87,14 @@ export const EnumerationData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <div className={css.tableLegend}>
-            <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />
-          </div>
-          <MultiColumnList
-            contentData={getContentData(yearsAndCaptionsData)}
-            visibleColumns={yearsAndCaptionsVisibleColumns}
-            columnMapping={yearsAndCaptionsMapping}
-            formatter={yearsAndCaptionsFormatter}
-          />
+          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />}>
+            <MultiColumnList
+              contentData={getContentData(yearsAndCaptionsData)}
+              visibleColumns={yearsAndCaptionsVisibleColumns}
+              columnMapping={yearsAndCaptionsMapping}
+              formatter={yearsAndCaptionsFormatter}
+            />
+          </KeyValue>
         </Col>
       </Row>
     </Accordion>

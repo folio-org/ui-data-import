@@ -39,6 +39,7 @@ import {
 import {
   MappingInstanceDetails,
   MappingItemDetails,
+  MappingHoldingsDetails,
 } from './detailsSections/view';
 
 import {
@@ -208,8 +209,8 @@ export class ViewMappingProfile extends Component {
 
     const renderDetails = {
       INSTANCE: <MappingInstanceDetails mappingDetails={mappingDetails?.mappingFields} />,
+      HOLDINGS: <MappingHoldingsDetails mappingDetails={mappingDetails?.mappingFields} />,
       ITEM: <MappingItemDetails mappingDetails={mappingDetails?.mappingFields} />,
-      HOLDINGS: <></>,
     };
 
     return (
