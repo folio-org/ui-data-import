@@ -323,7 +323,7 @@
     "settings.mappingProfiles.map.field.notes.noteType": "Note type",
     "settings.mappingProfiles.map.field.notes.note": "Note",
     "settings.mappingProfiles.map.field.notes.staffOnly": "Staff only",
-    "settings.mappingProfiles.map.EAccess.section": "Electronic access",
+    "settings.mappingProfiles.map.EAccess.section": "Электронный доступ",
     "settings.mappingProfiles.map.EAccess.field.relationship": "Relationship",
     "settings.mappingProfiles.map.EAccess.field.uri": "URI",
     "settings.mappingProfiles.map.EAccess.field.linkText": "Link text",
@@ -556,6 +556,6 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.subfield": "Data marcField subfield field",
     "settings.mappingProfile.marcTable.ariaLabel.data.text": "Текстовое поле данных",
     "settings.mappingProfile.marcTable.ariaLabel.position": "Выберите позицию",
-    "filter.chooseJobProfile": "Choose job profile",
-    "filter.chooseUser": "Choose user"
+    "filter.chooseJobProfile": "Выберите профиль задания",
+    "filter.chooseUser": "Выберите пользователя"
 }
