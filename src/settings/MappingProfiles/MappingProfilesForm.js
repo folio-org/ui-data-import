@@ -183,7 +183,10 @@ export const MappingProfilesFormComponent = ({
       })),
     },
     'marc-modification-table': {
-      fields: mappingDetails?.marcMappingDetails || [{ order: 0 }],
+      fields: mappingDetails?.marcMappingDetails || [{
+        order: 0,
+        field: { subfields: [{}] },
+      }],
       onChange: onMarcDetailsChange,
     },
   };
