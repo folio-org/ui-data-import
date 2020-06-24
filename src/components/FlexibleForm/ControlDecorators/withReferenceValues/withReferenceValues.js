@@ -51,6 +51,10 @@ export const withReferenceValues = memo(props => {
     setListOptions(dataOptions);
   }, [dataOptions]);
 
+  useEffect(() => {
+    setCurrentValue(input.value);
+  }, [input.value]);
+
   useLayoutEffect(() => {
     const newValue = wrapperValue ? formatDecoratorValue(currentValue, wrapperValue, decoratorValueRegExp, true) : '';
 
