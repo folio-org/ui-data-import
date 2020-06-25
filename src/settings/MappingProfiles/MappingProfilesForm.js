@@ -38,6 +38,7 @@ import {
   FolioRecordTypeSelect,
   ProfileAssociator,
   MappedHeader,
+  MARCTable,
 } from '../../components';
 import {
   MappingInstanceDetails,
@@ -165,21 +166,33 @@ export const MappingProfilesFormComponent = ({
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, []);
   const incomingRecordTypesDataOptions = useMemo(getIncomingRecordTypesDataOptions, []);
 
-  const setReferenceTables = (fieldsPath, refTable) => {
-    dispatch(change(formName, fieldsPath, refTable));
+  const setFormFieldValue = (fieldsPath, updatedValue) => {
+    dispatch(change(formName, fieldsPath, updatedValue));
   };
 
   const detailsProps = {
     initialFields,
     referenceTables,
-    setReferenceTables,
+    setReferenceTables: setFormFieldValue,
     okapi,
   };
+
+  const marcTableFields = mappingDetails?.marcMappingDetails ||
+    [{
+      order: 0,
+      field: { subfields: [{}] },
+    }];
 
   const renderDetails = {
     INSTANCE: <MappingInstanceDetails {...detailsProps} />,
     HOLDINGS: <MappingHoldingsDetails {...detailsProps} />,
     ITEM: <MappingItemDetails {...detailsProps} />,
+    MARC_BIBLIOGRAPHIC: (
+      <MARCTable
+        fields={marcTableFields}
+        onChange={setFormFieldValue}
+      />
+    ),
   };
 
   return (
