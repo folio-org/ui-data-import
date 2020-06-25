@@ -1,7 +1,0 @@
-.decorator {
-  composes: decorator from "@folio/data-import/src/components/FlexibleForm/ControlDecorators/withReferenceValues/withReferenceValues.css";
-}
-
-.options-dropdown {
-  composes: options-dropdown from "@folio/data-import/src/components/FlexibleForm/ControlDecorators/withReferenceValues/withReferenceValues.css";
-}
