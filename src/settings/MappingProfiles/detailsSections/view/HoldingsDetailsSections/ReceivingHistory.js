@@ -42,7 +42,19 @@ export const ReceivingHistory = ({ mappingDetails }) => {
     enumeration: x => x?.enumeration || noValueElement,
     chronology: x => x?.chronology || noValueElement,
   };
-  const receivingHistoryData = transformSubfieldsData(receivingHistory, receivingHistoryVisibleColumns);
+  const receivingHistoryFieldsMap = [
+    {
+      field: 'publicDisplay',
+      key: 'booleanFieldAction',
+    }, {
+      field: 'enumeration',
+      key: 'value',
+    }, {
+      field: 'chronology',
+      key: 'value',
+    },
+  ];
+  const receivingHistoryData = transformSubfieldsData(receivingHistory, receivingHistoryFieldsMap);
 
   return (
     <Accordion
