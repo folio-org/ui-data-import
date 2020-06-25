@@ -51,7 +51,10 @@ export const MappingItemDetails = ({
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
       />
-      <Condition okapi={okapi} />
+      <Condition
+        setReferenceTables={setReferenceTables}
+        okapi={okapi}
+      />
       <ItemNotes
         notes={notes}
         initialFields={initialFields}
@@ -64,7 +67,10 @@ export const MappingItemDetails = ({
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
-      <Location okapi={okapi} />
+      <Location
+        setReferenceTables={setReferenceTables}
+        okapi={okapi}
+      />
       <ElectronicAccess
         electronicAccess={electronicAccess}
         initialFields={initialFields}
