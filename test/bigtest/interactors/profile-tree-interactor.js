@@ -13,7 +13,7 @@ import Button from '@folio/stripes-components/lib/Button/tests/interactor';
 
 @interactor
 class ProfileLinkerInteractor {
-  tooltipText = text('#linker-tooltip-text');
+  tooltipText = text('[data-test-linker-tooltip-text]');
   isOpen = attribute('[aria-haspopup]', 'aria-expanded');
   options = collection('[data-test-plugin-find-record-button]');
   optionsCount = count('[data-test-plugin-find-record-button]');

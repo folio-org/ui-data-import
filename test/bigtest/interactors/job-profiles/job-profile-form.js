@@ -14,7 +14,7 @@ class NewJobProfileInteractor extends FullScreenFormInteractor {
   dataTypeField = new SelectInteractor('[data-test-accepted-data-types-field]');
   descriptionField = new TextAreaInteractor('[data-test-description-field]');
   profileTree = new ProfileTreeInteractor();
-  overviewAccordion = new AccordionInteractor('#job-profile-overview');
+  overviewAccordion = new AccordionInteractor('[data-test-job-profile-overview]');
   summaryAccordion = new AccordionInteractor('#job-profile-summary');
 
   whenLoaded() {

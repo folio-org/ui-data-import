@@ -152,6 +152,8 @@
   "returnToAssign.resume": "Resume",
   "returnToAssign.deleteFiles": "Delete files",
   "loadMarcRecords": "Load MARC bibliographic records",
+  "settings.table.checkbox": "select item",
+  "settings.table.checkboxAll": "select all items",
   "settings.action.add": "Add",
   "settings.index.paneTitle": "Data Import",
   "settings.getStarted": "Click here to get started",
