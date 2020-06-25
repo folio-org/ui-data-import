@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **2.0.1** (in progress)
+## [2.1.0](https://github.com/folio-org/ui-data-import/tree/v2.1.0) (2020-06-25)
 
 ### Features added:
 * Field Mapping Profile details: MARC Bib from MARC Bib 2 - Delete (UIDATIMP-486)
