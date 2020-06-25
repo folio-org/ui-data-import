@@ -44,7 +44,13 @@ export const AdministrativeData = ({ mappingDetails }) => {
     ),
   };
   const formerIdsFormatter = { formerId: x => x?.formerId || noValueElement };
-  const formerIdsData = transformSubfieldsData(formerIds, formerIdsVisibleColumns);
+  const formerIdentifiersFieldsMap = [
+    {
+      field: 'formerId',
+      key: 'value',
+    },
+  ];
+  const formerIdsData = transformSubfieldsData(formerIds, formerIdentifiersFieldsMap);
 
   const statisticalCodesVisibleColumns = ['statisticalCodeId'];
   const statisticalCodesMapping = {
@@ -52,8 +58,14 @@ export const AdministrativeData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCode`} />
     ),
   };
+  const statisticalCodesFieldsMap = [
+    {
+      field: 'statisticalCodeId',
+      key: 'value',
+    },
+  ];
   const statisticalCodesFormatter = { statisticalCodeId: x => x?.statisticalCodeId || noValueElement };
-  const statisticalCodesData = transformSubfieldsData(statisticalCodes, statisticalCodesVisibleColumns);
+  const statisticalCodesData = transformSubfieldsData(statisticalCodes, statisticalCodesFieldsMap);
 
   return (
     <Accordion

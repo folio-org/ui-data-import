@@ -50,7 +50,25 @@ export const ElectronicAccess = ({ mappingDetails }) => {
     materialsSpecification: x => x?.materialsSpecification || noValueElement,
     publicNote: x => x?.publicNote || noValueElement,
   };
-  const electronicAccessData = transformSubfieldsData(electronicAccess, electronicAccessVisibleColumns);
+  const electronicAccessFieldsMap = [
+    {
+      field: 'relationshipId',
+      key: 'value',
+    }, {
+      field: 'uri',
+      key: 'value',
+    }, {
+      field: 'linkText',
+      key: 'value',
+    }, {
+      field: 'materialsSpecification',
+      key: 'value',
+    }, {
+      field: 'publicNote',
+      key: 'value',
+    },
+  ];
+  const electronicAccessData = transformSubfieldsData(electronicAccess, electronicAccessFieldsMap);
 
   return (
     <Accordion

@@ -44,7 +44,16 @@ export const HoldingsDetails = ({ mappingDetails }) => {
     statement: x => x?.statement || noValueElement,
     note: x => x?.note || noValueElement,
   };
-  const statementsData = transformSubfieldsData(statements, statementsVisibleColumns);
+  const statementsFieldsMap = [
+    {
+      field: 'statement',
+      key: 'value',
+    }, {
+      field: 'note',
+      key: 'value',
+    },
+  ];
+  const statementsData = transformSubfieldsData(statements, statementsFieldsMap);
 
   const statementsForSupplementVisibleColumns = ['statement', 'note'];
   const statementsForSupplementMapping = {
@@ -59,7 +68,16 @@ export const HoldingsDetails = ({ mappingDetails }) => {
     statement: x => x?.statement || noValueElement,
     note: x => x?.note || noValueElement,
   };
-  const statementsForSupplementData = transformSubfieldsData(statementsForSupplement, statementsForSupplementVisibleColumns);
+  const statementsForSupplementFieldsMap = [
+    {
+      field: 'statement',
+      key: 'value',
+    }, {
+      field: 'note',
+      key: 'value',
+    },
+  ];
+  const statementsForSupplementData = transformSubfieldsData(statementsForSupplement, statementsForSupplementFieldsMap);
 
   const statementsForIndexesVisibleColumns = ['statement', 'note'];
   const statementsForIndexesMapping = {
@@ -74,7 +92,16 @@ export const HoldingsDetails = ({ mappingDetails }) => {
     statement: x => x?.statement || noValueElement,
     note: x => x?.note || noValueElement,
   };
-  const statementsForIndexesData = transformSubfieldsData(statementsForIndexes, statementsForIndexesVisibleColumns);
+  const statementsForIndexesFieldsMap = [
+    {
+      field: 'statement',
+      key: 'value',
+    }, {
+      field: 'note',
+      key: 'value',
+    },
+  ];
+  const statementsForIndexesData = transformSubfieldsData(statementsForIndexes, statementsForIndexesFieldsMap);
 
   return (
     <Accordion
