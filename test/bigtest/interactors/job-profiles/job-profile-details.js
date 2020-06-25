@@ -18,7 +18,7 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   acceptedDataType = scoped('[data-test-accepted-data-type]');
   description = scoped('[data-test-description]');
   isTagsPresent = isPresent('[data-test-tags-accordion]');
-  isOverviewPresent = isPresent('#job-profile-overview');
+  isOverviewPresent = isPresent('[data-test-job-profile-overview-details]');
   profileTree = new ProfileTreeInteractor();
   jobsUsingThisProfile = new MultiColumnListInteractor('#jobs-using-this-profile');
   confirmationModal = new ConfirmationModalInteractor('#delete-job-profile-modal');

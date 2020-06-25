@@ -154,7 +154,7 @@ export const JobProfilesFormComponent = ({
           </div>
         </Accordion>
         <Accordion
-          id="job-profile-overview"
+          data-test-job-profile-overview
           label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
           separator={false}
         >
