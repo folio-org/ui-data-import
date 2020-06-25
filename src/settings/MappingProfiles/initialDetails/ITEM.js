@@ -6,7 +6,6 @@ const ITEM = {
     enabled: true,
     path: 'item.discoverySuppress',
     value: null,
-    booleanFieldAction: 'IGNORE',
     subfields: [],
   }, {
     name: 'hrid',
@@ -41,7 +40,6 @@ const ITEM = {
       order: 0,
       path: 'item.formerIds[]',
       fields: [{
-        // order: 0,
         name: 'formerId',
         enabled: true,
         path: 'item.formerIds[]',
@@ -201,7 +199,6 @@ const ITEM = {
         enabled: true,
         path: 'item.notes[].staffOnly',
         value: null,
-        booleanFieldAction: 'IGNORE',
       }],
     }],
   }, {
@@ -248,7 +245,6 @@ const ITEM = {
         enabled: true,
         path: 'item.circulationNotes[].staffOnly',
         value: null,
-        booleanFieldAction: 'IGNORE',
       }],
     }],
   }, {

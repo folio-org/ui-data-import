@@ -15,6 +15,7 @@ export * from './formValidators';
 export * from './formUtils';
 export * from './craftLayerURL';
 export * from './loadRecords';
+export * from './shapes';
 export * from './trimSearchTerm';
 export * from './checkboxList';
 export * from './getFileExtension';

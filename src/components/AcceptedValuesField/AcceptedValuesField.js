@@ -16,6 +16,7 @@ import {
   validateAcceptedValues,
   updateValueWithTemplate,
   sortCollection,
+  okapiShape,
 } from '../../utils';
 
 export const AcceptedValuesField = ({
@@ -31,6 +32,7 @@ export const AcceptedValuesField = ({
   wrapperSources,
   wrapperSourcesFn,
   setAcceptedValues,
+  acceptedValuesPath,
   dataAttributes,
   optionTemplate,
 }) => {
@@ -80,10 +82,11 @@ export const AcceptedValuesField = ({
         const updatedListOptions = updateListOptions(data);
 
         setListOptions(updatedListOptions);
-        setAcceptedValues(acceptedValues);
+        setAcceptedValues(acceptedValuesPath, acceptedValues);
       });
     }
-  }, [okapi, wrapperSources, acceptedValuesList]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const memoizedValidation = useCallback(
     validateAcceptedValues(listOptions, optionValue),
     [listOptions],
@@ -98,7 +101,7 @@ export const AcceptedValuesField = ({
       dataOptions={listOptions}
       optionValue={optionValue}
       optionLabel={optionLabel}
-      WrappedComponent={component}
+      wrappedComponent={component}
       wrapperLabel={wrapperLabel}
       validate={[validateMARCWithElse, memoizedValidation]}
       {...dataAttributes}
@@ -112,11 +115,7 @@ AcceptedValuesField.propTypes = {
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
   optionTemplate: PropTypes.string,
-  okapi: PropTypes.shape({
-    tenant: PropTypes.string.isRequired,
-    token: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-  }).isRequired,
+  okapi: okapiShape.isRequired,
   acceptedValuesList: PropTypes.arrayOf(PropTypes.object),
   wrapperSources: PropTypes.arrayOf(PropTypes.object),
   wrapperSourcesFn: PropTypes.string,
@@ -127,6 +126,7 @@ AcceptedValuesField.propTypes = {
   ]),
   id: PropTypes.string,
   setAcceptedValues: PropTypes.func,
+  acceptedValuesPath: PropTypes.string,
   dataAttributes: PropTypes.arrayOf(PropTypes.object),
 };
 

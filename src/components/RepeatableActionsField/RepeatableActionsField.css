@@ -1,0 +1,13 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.decorator {
+  & fieldset {
+    min-width:100%;
+    width: 100%;
+    margin: 0;
+  }
+}
+
+.repeatableActions {
+  display: flex;
+}

@@ -13,11 +13,11 @@ import {
   Headline,
 } from '@folio/stripes/components';
 
+import { WithTranslation } from '../../..';
+
 import {
   ENTITY_KEYS,
   FORMS_SETTINGS,
-  isFormattedMessage,
-  isTranslationId,
 } from '../../../../utils';
 
 import styles from './withRepeatableActions.css';
@@ -38,8 +38,6 @@ export const withRepeatableActions = memo(props => {
     label: intl.formatMessage({ id: actions[key] }),
   }));
 
-  const needsTranslation = wrapperLabel && !isFormattedMessage(wrapperLabel) && isTranslationId(wrapperLabel);
-
   const legendHeadline = (
     <Headline
       tag="h3"
@@ -54,30 +52,22 @@ export const withRepeatableActions = memo(props => {
       {legend && legendHeadline}
       {enabled && (
         <div
-          className={styles.selectHolder}
           data-test-repeatable-decorator
+          className={styles.selectHolder}
         >
-          {needsTranslation ? (
-            <FormattedMessage id={wrapperLabel}>
-              {placeholder => (
-                <Field
-                  name={wrapperFieldName}
-                  component={Select}
-                  itemToString={identity}
-                  dataOptions={dataOptions}
-                  placeholder={placeholder}
-                />
-              )}
-            </FormattedMessage>
-          ) : (
-            <Field
-              name={wrapperFieldName}
-              component={Select}
-              itemToString={identity}
-              dataOptions={dataOptions}
-              placeholder={wrapperLabel}
-            />
-          )}
+          <WithTranslation
+            wrapperLabel={wrapperLabel}
+          >
+            {placeholder => (
+              <Field
+                name={wrapperFieldName}
+                component={Select}
+                itemToString={identity}
+                dataOptions={dataOptions}
+                placeholder={placeholder}
+              />
+            )}
+          </WithTranslation>
         </div>
       )}
       {children}
