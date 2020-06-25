@@ -42,7 +42,10 @@ export const MappingItemDetails = ({
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
-      <ItemData okapi={okapi} />
+      <ItemData
+        setReferenceTables={setReferenceTables}
+        okapi={okapi}
+      />
       <EnumerationData
         yearCaption={yearCaption}
         initialFields={initialFields}

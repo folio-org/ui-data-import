@@ -7,6 +7,8 @@ import MARC_BIBLIOGRAPHIC from './MARC_BIBLIOGRAPHIC';
 import MARC_HOLDINGS from './MARC_HOLDINGS';
 import MARC_AUTHORITY from './MARC_AUTHORITY';
 
+import { isMARCType } from '../../../utils';
+
 const initialValues = {
   ITEM,
   INSTANCE,
@@ -31,9 +33,10 @@ export const getInitialDetails = (entity, stripRepeatableFields = false) => {
     return {};
   }
 
+  const entityIsMARC = isMARCType(entity);
   const currentEntity = initialValues[entity];
 
-  if (!stripRepeatableFields) {
+  if (entityIsMARC || !stripRepeatableFields) {
     return currentEntity;
   }
 
@@ -62,7 +65,7 @@ export const getInitialFields = entity => {
   }
 
   const initialDetails = getInitialDetails(entity);
-  const fields = initialDetails.mappingFields.filter(field => field.subfields?.length);
+  const fields = initialDetails.mappingFields?.filter(field => field.subfields?.length) || [];
 
   fields.forEach(field => {
     initialFields = {

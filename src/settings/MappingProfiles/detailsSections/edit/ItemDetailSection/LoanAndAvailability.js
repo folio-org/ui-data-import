@@ -18,8 +18,10 @@ import {
 } from '../../../../../components';
 
 import {
+  getAcceptedValuesPath,
   getBoolSubfieldName,
   getFieldName,
+  getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
   onAdd,
@@ -60,8 +62,12 @@ export const LoanAndAvailability = ({
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/loan-types?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="loantypes"
+            wrapperSources={[{
+              wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourcePath: 'loantypes',
+            }]}
+            setAcceptedValues={setReferenceTables}
+            acceptedValuesPath={getAcceptedValuesPath(25)}
             okapi={okapi}
           />
         </Col>
@@ -78,8 +84,12 @@ export const LoanAndAvailability = ({
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/loan-types?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="loantypes"
+            wrapperSources={[{
+              wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourcePath: 'loantypes',
+            }]}
+            setAcceptedValues={setReferenceTables}
+            acceptedValuesPath={getAcceptedValuesPath(26)}
             okapi={okapi}
           />
         </Col>
@@ -129,8 +139,12 @@ export const LoanAndAvailability = ({
                       optionValue="name"
                       optionLabel="name"
                       wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/item-note-types?limit=1000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="itemNoteTypes"
+                      wrapperSources={[{
+                        wrapperSourceLink: '/item-note-types?limit=1000&query=cql.allRecords=1 sortby name',
+                        wrapperSourcePath: 'itemNoteTypes',
+                      }]}
+                      setAcceptedValues={setReferenceTables}
+                      acceptedValuesPath={getRepeatableAcceptedValuesPath(28, 0, index)}
                       okapi={okapi}
                     />
                   </Col>

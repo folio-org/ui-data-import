@@ -51,7 +51,10 @@ export const withRepeatableActions = memo(props => {
     <div className={styles.decorator}>
       {legend && legendHeadline}
       {enabled && (
-        <div data-test-repeatable-decorator>
+        <div
+          data-test-repeatable-decorator
+          className={styles.selectHolder}
+        >
           <WithTranslation
             wrapperLabel={wrapperLabel}
           >

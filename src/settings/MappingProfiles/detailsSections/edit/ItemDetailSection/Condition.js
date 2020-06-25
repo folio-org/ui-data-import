@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 
@@ -14,14 +15,20 @@ import {
   DatePickerDecorator,
 } from '../../../../../components';
 
-import { getFieldName } from '../../utils';
+import {
+  getAcceptedValuesPath,
+  getFieldName,
+} from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   validateMARCWithDate,
   okapiShape,
 } from '../../../../../utils';
 
-export const Condition = ({ okapi }) => {
+export const Condition = ({
+  setReferenceTables,
+  okapi,
+}) => {
   return (
     <Accordion
       id="item-condition"
@@ -74,8 +81,12 @@ export const Condition = ({ okapi }) => {
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/item-damaged-statuses?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="itemDamageStatuses"
+            wrapperSources={[{
+              wrapperSourceLink: '/item-damaged-statuses?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourcePath: 'itemDamageStatuses',
+            }]}
+            setAcceptedValues={setReferenceTables}
+            acceptedValuesPath={getAcceptedValuesPath(22)}
             okapi={okapi}
           />
         </Col>
@@ -97,4 +108,7 @@ export const Condition = ({ okapi }) => {
   );
 };
 
-Condition.propTypes = { okapi: okapiShape.isRequired };
+Condition.propTypes = {
+  setReferenceTables: PropTypes.func.isRequired,
+  okapi: okapiShape.isRequired,
+};

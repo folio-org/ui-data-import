@@ -1,6 +1,14 @@
-import React from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { PropTypes } from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  useIntl,
+  FormattedMessage,
+} from 'react-intl';
+import { Field } from 'redux-form';
 
 import { isEmpty } from 'lodash';
 
@@ -19,21 +27,36 @@ import {
   SUBACTION_OPTIONS,
   POSITION_OPTIONS,
   MARC_TABLE_CONFIG,
+  validateRequiredField,
+  validateMarcTagField,
+  validateMarcIndicatorField,
+  validateSubfieldField,
+  validateAlphanumericOrAllowedValue,
 } from '../../utils';
 
 import css from './MARCTable.css';
 
-// TODO: Wrap fields into <Field> component once BE be ready
 export const MARCTableRow = ({
+  name,
+  order,
+  action,
+  subaction,
   field,
+  indicator1,
+  indicator2,
   columnWidths,
   isFirst,
   isLast,
   isSubline,
   onAddNewRow,
   onRemoveRow,
-  onDataChange,
-  intl,
+  onMoveRow,
+  subfieldIndex,
+  subfieldsData,
+  onAddSubfieldRow,
+  onRemoveSubfieldRow,
+  onRemoveSubfieldRows,
+  onDeleteActionSelect,
 }) => {
   const {
     allowedSubactions,
@@ -41,41 +64,118 @@ export const MARCTableRow = ({
     hasDataField,
   } = MARC_TABLE_CONFIG;
 
-  const rowSubactions = allowedSubactions[field.action] || [];
-  const rowPositions = allowedPositions[field.action] || {};
-  const rowHasDataField = hasDataField[field.action];
+  const {
+    ADD,
+    DELETE,
+    EDIT,
+    MOVE,
+  } = MAPPING_DETAILS_ACTIONS;
 
-  const onActionFieldChange = ({ target: { value } }) => {
-    const updatedData = {
-      ...field,
-      action: value,
-      subaction: '',
-    };
+  const { formatMessage } = useIntl();
+  const [actionValue, setActionValue] = useState('');
+  const [subactionValue, setSubactionValue] = useState('');
+  const [fieldValue, setFieldValue] = useState('');
+  const [indicator1Value, setIndicator1Value] = useState('');
+  const [indicator2Value, setIndicator2Value] = useState('');
 
-    onDataChange(updatedData, field.order);
+  useEffect(() => {
+    setActionValue(action);
+  }, [action]);
+  useEffect(() => {
+    setSubactionValue(subaction);
+  }, [subaction]);
+  useEffect(() => {
+    setFieldValue(field);
+  }, [field]);
+  useEffect(() => {
+    setIndicator1Value(indicator1);
+  }, [indicator1]);
+  useEffect(() => {
+    setIndicator2Value(indicator2);
+  }, [indicator2]);
+
+  const rowSubactions = allowedSubactions[actionValue] || [];
+  const rowPositions = allowedPositions[actionValue] || {};
+  const rowHasDataField = hasDataField[actionValue];
+
+  const validateTag = useCallback(
+    value => {
+      if (actionValue === ADD || actionValue === DELETE) {
+        return validateMarcTagField(indicator1Value, indicator2Value)(value) || validateRequiredField(value);
+      }
+
+      return null;
+    },
+    [actionValue, indicator1Value, indicator2Value, ADD, DELETE],
+  );
+  const validateIndicator1 = useCallback(
+    value => {
+      if (actionValue === ADD) {
+        return validateAlphanumericOrAllowedValue(value) || validateMarcIndicatorField(fieldValue, value, indicator2Value);
+      }
+
+      if (actionValue === DELETE) {
+        return validateAlphanumericOrAllowedValue(value, '*') || validateMarcIndicatorField(fieldValue, value, indicator2Value);
+      }
+
+      return null;
+    },
+    [actionValue, fieldValue, indicator2Value, ADD, DELETE],
+  );
+  const validateIndicator2 = useCallback(
+    value => {
+      if (actionValue === ADD) {
+        return validateAlphanumericOrAllowedValue(value) || validateMarcIndicatorField(fieldValue, indicator1Value, value);
+      }
+
+      if (actionValue === DELETE) {
+        return validateAlphanumericOrAllowedValue(value, '*') || validateMarcIndicatorField(fieldValue, indicator1Value, value);
+      }
+
+      return null;
+    },
+    [actionValue, fieldValue, indicator1Value, ADD, DELETE],
+  );
+  const validateSubfield = useCallback(
+    value => {
+      if (actionValue === ADD) {
+        return validateAlphanumericOrAllowedValue(value) || validateSubfieldField(fieldValue)(value);
+      }
+
+      if (actionValue === DELETE) {
+        return validateRequiredField(value) || validateAlphanumericOrAllowedValue(value, '*') || validateSubfieldField(fieldValue)(value);
+      }
+
+      return null;
+    },
+    [actionValue, fieldValue, ADD, DELETE],
+  );
+
+  const handleActionChange = e => {
+    const selectedAction = e.target.value;
+
+    setActionValue(selectedAction);
+
+    if (selectedAction !== ADD && subfieldsData?.length > 1) {
+      onRemoveSubfieldRows(order);
+    }
+
+    if (selectedAction === DELETE) {
+      onDeleteActionSelect(order, ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*');
+    }
   };
 
-  const onDataFieldChange = key => ({ target: { value } }) => {
-    const updatedData = {
-      ...field,
-      data: {
-        ...field.data,
-        [key]: value,
-      },
-    };
+  const handleSubActionChange = e => {
+    const { ADD_SUBFIELD } = MAPPING_DETAILS_SUBACTIONS;
 
-    onDataChange(updatedData, field.order);
+    setSubactionValue(e.target.value);
+
+    if (e.target.value === ADD_SUBFIELD) {
+      onAddSubfieldRow(order);
+    }
   };
 
-  const onFieldChange = key => ({ target: { value } }) => {
-    const updatedData = {
-      ...field,
-      [key]: value,
-    };
-
-    onDataChange(updatedData, field.order);
-  };
-
+  const handleRemoveRow = () => (!isSubline ? onRemoveRow(order) : onRemoveSubfieldRow(order, subfieldIndex));
   const renderArrows = () => {
     const cellStyle = {
       width: columnWidths.arrows,
@@ -92,18 +192,28 @@ export const MARCTableRow = ({
         style={cellStyle}
       >
         {withRowUp && (
-          <IconButton
-            data-test-marc-table-arrow-up
-            icon="arrow-up"
-            ariaLabel={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.moveUpRow' })}
-          />
+          <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.moveUpRow">
+            {ariaLabel => (
+              <IconButton
+                data-test-marc-table-arrow-up
+                icon="arrow-up"
+                ariaLabel={ariaLabel}
+                onClick={() => onMoveRow(order, order - 1)}
+              />
+            )}
+          </FormattedMessage>
         )}
         {withRowDown && (
-          <IconButton
-            data-test-marc-table-arrow-down
-            icon="arrow-down"
-            ariaLabel={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.moveDownRow' })}
-          />
+          <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.moveDownRow">
+            {ariaLabel => (
+              <IconButton
+                data-test-marc-table-arrow-down
+                icon="arrow-down"
+                ariaLabel={ariaLabel}
+                onClick={() => onMoveRow(order, order + 1)}
+              />
+            )}
+          </FormattedMessage>
         )}
       </div>
     );
@@ -113,7 +223,7 @@ export const MARCTableRow = ({
 
     const dataOptions = ACTION_OPTIONS.map(option => ({
       value: option.value,
-      label: intl.formatMessage({ id: option.label }),
+      label: formatMessage({ id: option.label }),
     }));
 
     return (
@@ -124,11 +234,14 @@ export const MARCTableRow = ({
         style={cellStyle}
       >
         {!isSubline && (
-          <Select
+          <Field
+            name={`${name}.action`}
+            component={Select}
             dataOptions={dataOptions}
-            value={field.action || ''}
-            onChange={onActionFieldChange}
-            placeholder={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
+            placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
+            onChange={handleActionChange}
+            validate={[validateRequiredField]}
+            aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.select' })}
             marginBottom0
           />
         )}
@@ -145,9 +258,13 @@ export const MARCTableRow = ({
         className={css.tableCell}
         style={cellStyle}
       >
-        <TextField
-          value={field.field || ''}
-          onChange={onFieldChange('field')}
+        <Field
+          name={`${name}.field.field`}
+          component={TextField}
+          onChange={e => setFieldValue(e.target.value)}
+          validate={[validateTag]}
+          disabled={isSubline}
+          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.field' })}
           marginBottom0
         />
       </div>
@@ -163,9 +280,13 @@ export const MARCTableRow = ({
         className={css.tableCell}
         style={cellStyle}
       >
-        <TextField
-          value={field.indicator1 || ''}
-          onChange={onFieldChange('indicator1')}
+        <Field
+          name={`${name}.field.indicator1`}
+          component={TextField}
+          onChange={setIndicator1Value}
+          validate={[validateIndicator1]}
+          disabled={isSubline}
+          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.indicator1' })}
           marginBottom0
         />
       </div>
@@ -181,9 +302,13 @@ export const MARCTableRow = ({
         className={css.tableCell}
         style={cellStyle}
       >
-        <TextField
-          value={field.indicator2 || ''}
-          onChange={onFieldChange('indicator2')}
+        <Field
+          name={`${name}.field.indicator2`}
+          component={TextField}
+          onChange={setIndicator2Value}
+          validate={[validateIndicator2]}
+          disabled={isSubline}
+          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.indicator2' })}
           marginBottom0
         />
       </div>
@@ -199,22 +324,24 @@ export const MARCTableRow = ({
         className={css.tableCell}
         style={cellStyle}
       >
-        <TextField
-          value={field.subfield || ''}
-          onChange={onFieldChange('subfield')}
+        <Field
+          name={`${name}.field.subfields[${subfieldIndex}].subfield`}
+          component={TextField}
+          validate={[validateSubfield]}
+          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.subfield' })}
           marginBottom0
         />
       </div>
     );
   };
   const renderSubactionField = () => {
-    const getMatchedSubaction = option => rowSubactions.some(subaction => subaction === option.value);
+    const getMatchedSubaction = option => rowSubactions.some(item => item === option.value);
 
     const cellStyle = { width: columnWidths.subaction };
     const allowedOptions = SUBACTION_OPTIONS.filter(getMatchedSubaction);
     const dataOptions = allowedOptions.map(option => ({
       value: option.value,
-      label: intl.formatMessage({ id: option.label }),
+      label: formatMessage({ id: option.label }),
     }));
 
     return (
@@ -225,11 +352,13 @@ export const MARCTableRow = ({
         style={cellStyle}
       >
         {!isEmpty(dataOptions) && (
-          <Select
+          <Field
+            name={`${name}.field.subfields[${subfieldIndex}].subaction`}
+            component={Select}
             dataOptions={dataOptions}
-            value={field.subaction || ''}
-            onChange={onFieldChange('subaction')}
-            placeholder={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
+            placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
+            onChange={handleSubActionChange}
+            aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.subaction' })}
             marginBottom0
           />
         )}
@@ -237,10 +366,6 @@ export const MARCTableRow = ({
     );
   };
   const renderDataField = () => {
-    const {
-      EDIT,
-      MOVE,
-    } = MAPPING_DETAILS_ACTIONS;
     const {
       REPLACE,
       NEW_FIELD,
@@ -254,7 +379,7 @@ export const MARCTableRow = ({
     };
 
     const getContent = () => {
-      if (field.action === EDIT && field.subaction === REPLACE) {
+      if (actionValue === EDIT && subactionValue === REPLACE) {
         cellStyle = {
           ...cellStyle,
           display: 'flex',
@@ -280,9 +405,10 @@ export const MARCTableRow = ({
               <Label style={labelStyle}>
                 <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.data.find" />
               </Label>
-              <TextArea
-                value={field.data?.find || ''}
-                onChange={onDataFieldChange('find')}
+              <Field
+                name={`${name}.field.subfields[${subfieldIndex}].data.find`}
+                component={TextArea}
+                aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.find' })}
                 marginBottom0
                 fullWidth
               />
@@ -294,9 +420,10 @@ export const MARCTableRow = ({
               <Label style={labelStyle}>
                 <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.data.replace" />
               </Label>
-              <TextArea
-                value={field.data?.replace || ''}
-                onChange={onDataFieldChange('replace')}
+              <Field
+                name={`${name}.field.subfields[${subfieldIndex}].data.replaceWith`}
+                component={TextArea}
+                aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.replaceWith' })}
                 marginBottom0
                 fullWidth
               />
@@ -305,34 +432,39 @@ export const MARCTableRow = ({
         );
       }
 
-      if (field.action === MOVE && (field.subaction === NEW_FIELD || field.subaction === EXISTING_FIELD)) {
+      if (actionValue === MOVE && (subactionValue === NEW_FIELD || subactionValue === EXISTING_FIELD)) {
         return (
           <>
-            <TextField
+            <Field
+              name={`${name}.field.subfields[${subfieldIndex}].data.marcField.field`}
+              component={TextField}
               className={css.tableDataCell}
-              value={field.data?.field || ''}
-              onChange={onDataFieldChange('field')}
-              placeholder={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.field' })}
+              placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.field' })}
+              ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.field' })}
               marginBottom0
             />
-            <TextField
+            <Field
+              name={`${name}.field.subfields[${subfieldIndex}].data.marcField.indicator1`}
+              component={TextField}
               className={css.tableDataCell}
-              value={field.data?.indicator1 || ''}
-              onChange={onDataFieldChange('indicator1')}
-              placeholder={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator1' })}
+              placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator1' })}
+              ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator1' })}
               marginBottom0
             />
-            <TextField
+            <Field
+              name={`${name}.field.subfields[${subfieldIndex}].data.marcField.indicator2`}
+              component={TextField}
               className={css.tableDataCell}
-              value={field.data?.indicator2 || ''}
-              onChange={onDataFieldChange('indicator2')}
-              placeholder={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator2' })}
+              placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator2' })}
+              ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator2' })}
               marginBottom0
             />
-            <TextField
-              value={field.data?.subfield || ''}
-              onChange={onDataFieldChange('subfield')}
-              placeholder={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subfield' })}
+            <Field
+              name={`${name}.field.subfields[${subfieldIndex}].data.marcField.subfields[${subfieldIndex}].subfield`}
+              component={TextField}
+              className={css.tableDataCell}
+              placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subfield' })}
+              ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.subfield' })}
               marginBottom0
             />
           </>
@@ -340,11 +472,15 @@ export const MARCTableRow = ({
       }
 
       return (
-        <TextArea
-          value={field.data?.text || ''}
-          marginBottom0
-          onChange={onDataFieldChange('text')}
-        />
+        <div data-test-marc-table-data-text>
+          <Field
+            name={`${name}.field.subfields[${subfieldIndex}].data.text`}
+            component={TextArea}
+            validate={[validateRequiredField]}
+            aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.text' })}
+            marginBottom0
+          />
+        </div>
       );
     };
 
@@ -354,19 +490,19 @@ export const MARCTableRow = ({
         className={css.tableCell}
         style={cellStyle}
       >
-        {!isEmpty(field.action) && rowHasDataField && getContent()}
+        {!isEmpty(actionValue) && rowHasDataField && getContent()}
       </div>
     );
   };
   const renderPositionField = () => {
     const cellStyle = { width: columnWidths.position };
-    const positions = rowPositions[field.subaction] || [];
+    const positions = rowPositions[subactionValue] || [];
     const getMatchedPositions = option => positions.some(position => position === option.value);
 
     const allowedOptions = POSITION_OPTIONS.filter(getMatchedPositions);
     const dataOptions = allowedOptions.map(option => ({
       value: option.value,
-      label: intl.formatMessage({ id: option.label }),
+      label: formatMessage({ id: option.label }),
     }));
 
     return (
@@ -377,10 +513,11 @@ export const MARCTableRow = ({
         style={cellStyle}
       >
         {!isEmpty(dataOptions) && (
-          <Select
+          <Field
+            name={`${name}.field.subfields[${subfieldIndex}].position`}
+            component={Select}
             dataOptions={dataOptions}
-            value={field.position || ''}
-            onChange={onFieldChange('position')}
+            aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.position' })}
             marginBottom0
           />
         )}
@@ -401,20 +538,29 @@ export const MARCTableRow = ({
         style={cellStyle}
       >
         {!isSubline && (
-          <IconButton
-            data-test-marc-table-add
-            icon="plus-sign"
-            ariaLabel={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.addField' })}
-            onClick={() => onAddNewRow(field.order + 1)}
-          />
+          <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.addField">
+            {ariaLabel => (
+              <IconButton
+                data-test-marc-table-add
+                icon="plus-sign"
+                ariaLabel={ariaLabel}
+                onClick={() => onAddNewRow(order + 1)}
+              />
+            )}
+          </FormattedMessage>
         )}
-        <IconButton
-          data-test-marc-table-remove
-          icon="trash"
-          disabled={isSingle}
-          ariaLabel={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.deleteField' })}
-          onClick={() => onRemoveRow(field.order)}
-        />
+        <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.deleteField">
+          {ariaLabel => (
+            <IconButton
+              data-test-marc-table-remove
+              className={css.removeButton}
+              icon="trash"
+              disabled={isSingle}
+              ariaLabel={ariaLabel}
+              onClick={handleRemoveRow}
+            />
+          )}
+        </FormattedMessage>
       </div>
     );
   };
@@ -436,19 +582,40 @@ export const MARCTableRow = ({
 };
 
 MARCTableRow.propTypes = {
-  intl: PropTypes.object.isRequired,
-  field: PropTypes.object.isRequired,
+  subfieldIndex: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  order: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   columnWidths: PropTypes.object.isRequired,
-  onAddNewRow: PropTypes.func.isRequired,
-  onRemoveRow: PropTypes.func.isRequired,
-  onDataChange: PropTypes.func.isRequired,
+  onAddNewRow: PropTypes.func,
+  onRemoveRow: PropTypes.func,
+  onMoveRow: PropTypes.func,
+  action: PropTypes.string,
+  subaction: PropTypes.string,
+  field: PropTypes.string,
+  indicator1: PropTypes.string,
+  indicator2: PropTypes.string,
   isFirst: PropTypes.bool,
   isLast: PropTypes.bool,
   isSubline: PropTypes.bool,
+  subfieldsData: PropTypes.arrayOf(PropTypes.shape({
+    subfield: PropTypes.string,
+    data: PropTypes.object,
+    subaction: PropTypes.string,
+  })),
+  onAddSubfieldRow: PropTypes.func.isRequired,
+  onRemoveSubfieldRow: PropTypes.func.isRequired,
+  onRemoveSubfieldRows: PropTypes.func.isRequired,
+  onDeleteActionSelect: PropTypes.func.isRequired,
 };
 
 MARCTableRow.defaultProps = {
   isFirst: false,
   isLast: false,
   isSubline: false,
+  action: '',
+  subaction: '',
+  field: '',
+  indicator1: '',
+  indicator2: '',
+  subfieldsData: [{}],
 };

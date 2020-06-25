@@ -12,7 +12,8 @@ import {
 } from '@folio/stripes/components';
 
 import {
-  AcceptedValuesField, BooleanActionField,
+  AcceptedValuesField,
+  BooleanActionField,
   RepeatableActionsField,
 } from '../../../../../components';
 
@@ -22,6 +23,7 @@ import {
   getSubfieldName,
   getBoolSubfieldName,
   getRepeatableFieldName,
+  getRepeatableAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -65,8 +67,12 @@ export const HoldingsNotes = ({
                       optionValue="name"
                       optionLabel="name"
                       wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/holdings-note-types?limit=1000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="holdingsNoteTypes"
+                      wrapperSources={[{
+                        wrapperSourceLink: '/holdings-note-types?limit=1000&query=cql.allRecords=1 sortby name',
+                        wrapperSourcePath: 'holdingsNoteTypes',
+                      }]}
+                      setAcceptedValues={setReferenceTables}
+                      acceptedValuesPath={getRepeatableAcceptedValuesPath(21, 0, index)}
                       okapi={okapi}
                     />
                   </Col>

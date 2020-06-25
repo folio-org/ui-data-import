@@ -24,6 +24,7 @@ import {
   getSubfieldName,
   getBoolFieldName,
   getRepeatableFieldName,
+  getRepeatableAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -155,8 +156,17 @@ export const AdministrativeData = ({
                       optionValue="name"
                       optionLabel="name"
                       wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="statisticalCodes"
+                      wrapperSourcesFn="statisticalCodeTypeName"
+                      wrapperSources={[{
+                        wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
+                        wrapperSourcePath: 'statisticalCodes',
+                      }, {
+                        wrapperSourceLink: '/statistical-code-types?limit=1000&query=cql.allRecords=1 sortby name',
+                        wrapperSourcePath: 'statisticalCodeTypes',
+                      }]}
+                      optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
+                      setAcceptedValues={setReferenceTables}
+                      acceptedValuesPath={getRepeatableAcceptedValuesPath(6, 0, index)}
                       okapi={okapi}
                     />
                   </Col>

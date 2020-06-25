@@ -22,6 +22,7 @@ import {
   getFieldName,
   getSubfieldName,
   getRepeatableFieldName,
+  getAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -177,8 +178,12 @@ export const HoldingsDetails = ({
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/ill-policies?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="illPolicies"
+            wrapperSources={[{
+              wrapperSourceLink: '/ill-policies?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourcePath: 'illPolicies',
+            }]}
+            setAcceptedValues={setReferenceTables}
+            acceptedValuesPath={getAcceptedValuesPath(18)}
             okapi={okapi}
           />
         </Col>

@@ -7,6 +7,8 @@ import React, {
 import { PropTypes } from 'prop-types';
 import { isEmpty } from 'lodash';
 
+import { formatDecoratorValue } from '../../../../utils';
+
 import { WithTranslation } from '../../..';
 import { OptionsList } from '../partials';
 
@@ -27,10 +29,7 @@ export const withReferenceValues = memo(({
   const [listOptions, setListOptions] = useState([]);
   const [currentValue, setCurrentValue] = useState(input.value || '');
 
-  useEffect(() => {
-    setHasLoaded(!isEmpty(dataOptions));
-    setListOptions(dataOptions);
-  }, [dataOptions]);
+  const decoratorValueRegExp = /"[^"]+"/g;
 
   const currentInput = useRef(input);
 
@@ -41,19 +40,19 @@ export const withReferenceValues = memo(({
     input.onChange(e);
   };
 
-  const onValueSelect = wrapperValue => {
-    let newValue = '';
+  useEffect(() => {
+    setHasLoaded(!isEmpty(dataOptions));
+    setListOptions(dataOptions);
+  }, [dataOptions]);
 
-    if (wrapperValue) {
-      if (!currentValue) {
-        newValue = `"${wrapperValue}"`;
-      } else {
-        newValue = `${currentValue} "${wrapperValue}"`;
-      }
-    }
+  useEffect(() => {
+    setCurrentValue(input.value);
+  }, [input.value]);
+
+  const onValueSelect = wrapperValue => {
+    const newValue = wrapperValue ? formatDecoratorValue(currentValue, wrapperValue, decoratorValueRegExp, true) : '';
 
     if (newValue) {
-      setCurrentValue(newValue);
       handleChange(newValue);
     }
   };

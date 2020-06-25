@@ -66,7 +66,7 @@ export class Job extends Component {
     const dateLabelId = `ui-data-import.${jobMeta.dateLabel}Running`;
 
     return (
-      <div
+      <li
         data-test-job-item
         className={css.job}
       >
@@ -126,7 +126,7 @@ export class Job extends Component {
             </Button>
           </div>
         )}
-      </div>
+      </li>
     );
   }
 }

@@ -19,6 +19,7 @@ import {
 
 import {
   getBoolSubfieldName,
+  getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
   onAdd,
@@ -66,8 +67,12 @@ export const ItemNotes = ({
                       optionValue="name"
                       optionLabel="name"
                       wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/item-note-types?limit=1000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="itemNoteTypes"
+                      wrapperSources={[{
+                        wrapperSourceLink: '/item-note-types?limit=1000&query=cql.allRecords=1 sortby name',
+                        wrapperSourcePath: 'itemNoteTypes',
+                      }]}
+                      setAcceptedValues={setReferenceTables}
+                      acceptedValuesPath={getRepeatableAcceptedValuesPath(24, 0, index)}
                       okapi={okapi}
                     />
                   </Col>

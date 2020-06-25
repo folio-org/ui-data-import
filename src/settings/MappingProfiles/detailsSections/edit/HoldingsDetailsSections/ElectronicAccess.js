@@ -21,6 +21,7 @@ import {
   onRemove,
   getSubfieldName,
   getRepeatableFieldName,
+  getRepeatableAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -64,8 +65,12 @@ export const ElectronicAccess = ({
                       optionValue="name"
                       optionLabel="name"
                       wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="electronicAccessRelationships"
+                      wrapperSources={[{
+                        wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
+                        wrapperSourcePath: 'electronicAccessRelationships',
+                      }]}
+                      setAcceptedValues={setReferenceTables}
+                      acceptedValuesPath={getRepeatableAcceptedValuesPath(22, 0, index)}
                       okapi={okapi}
                     />
                   </Col>

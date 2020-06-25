@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 
@@ -12,10 +13,16 @@ import { okapiShape } from '../../../../../utils';
 
 import { AcceptedValuesField } from '../../../../../components';
 
-import { getFieldName } from '../../utils';
+import {
+  getAcceptedValuesPath,
+  getFieldName,
+} from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 
-export const Location = ({ okapi }) => {
+export const Location = ({
+  setReferenceTables,
+  okapi,
+}) => {
   return (
     <Accordion
       id="holdings-location"
@@ -33,8 +40,13 @@ export const Location = ({ okapi }) => {
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/locations?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="locations"
+            wrapperSources={[{
+              wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourcePath: 'locations',
+            }]}
+            setAcceptedValues={setReferenceTables}
+            acceptedValuesPath={getAcceptedValuesPath(5)}
+            optionTemplate="**name** (**code**)"
             okapi={okapi}
           />
         </Col>
@@ -49,8 +61,13 @@ export const Location = ({ okapi }) => {
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/locations?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="locations"
+            wrapperSources={[{
+              wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourcePath: 'locations',
+            }]}
+            setAcceptedValues={setReferenceTables}
+            acceptedValuesPath={getAcceptedValuesPath(6)}
+            optionTemplate="**name** (**code**)"
             okapi={okapi}
           />
         </Col>
@@ -101,8 +118,12 @@ export const Location = ({ okapi }) => {
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/call-number-types?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="callNumberTypes"
+            wrapperSources={[{
+              wrapperSourceLink: '/call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourcePath: 'callNumberTypes',
+            }]}
+            setAcceptedValues={setReferenceTables}
+            acceptedValuesPath={getAcceptedValuesPath(10)}
             okapi={okapi}
           />
         </Col>
@@ -141,4 +162,7 @@ export const Location = ({ okapi }) => {
   );
 };
 
-Location.propTypes = { okapi: okapiShape.isRequired };
+Location.propTypes = {
+  setReferenceTables: PropTypes.func.isRequired,
+  okapi: okapiShape.isRequired,
+};

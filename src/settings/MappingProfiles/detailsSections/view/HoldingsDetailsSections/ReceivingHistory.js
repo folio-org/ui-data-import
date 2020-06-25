@@ -11,8 +11,10 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  getBooleanLabelId,
   getContentData,
   getFieldValue,
+  getValueById,
   transformSubfieldsData,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
@@ -38,7 +40,11 @@ export const ReceivingHistory = ({ mappingDetails }) => {
     ),
   };
   const receivingHistoryFormatter = {
-    publicDisplay: x => x?.publicDisplay || noValueElement,
+    publicDisplay: x => {
+      const publicDisplayLabelId = getBooleanLabelId(x?.publicDisplay);
+
+      return getValueById(publicDisplayLabelId);
+    },
     enumeration: x => x?.enumeration || noValueElement,
     chronology: x => x?.chronology || noValueElement,
   };

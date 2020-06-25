@@ -55,6 +55,12 @@ export const DATA_TYPES = [
   'EDIFACT',
 ];
 
+export const MARC_TYPES = [
+  'MARC_BIBLIOGRAPHIC',
+  'MARC_HOLDINGS',
+  'MARC_AUTHORITY',
+];
+
 export const LAYER_TYPES = {
   CREATE: 'create',
   EDIT: 'edit',
@@ -352,8 +358,13 @@ export const MAPPING_DETAILS_SUBACTIONS = {
   INSERT: 'INSERT',
   REMOVE: 'REMOVE',
   REPLACE: 'REPLACE',
-  NEW_FIELD: 'NEW_FIELD',
-  EXISTING_FIELD: 'EXISTING_FIELD',
+  NEW_FIELD: 'CREATE_NEW_FIELD',
+  EXISTING_FIELD: 'ADD_TO_EXISTING_FIELD',
+};
+
+export const MAPPING_DETAILS_POSITION = {
+  BEFORE_STRING: 'BEFORE_STRING',
+  AFTER_STRING: 'AFTER_STRING',
 };
 
 export const ACTION_OPTIONS = [
@@ -396,10 +407,10 @@ export const SUBACTION_OPTIONS = [
 
 export const POSITION_OPTIONS = [
   {
-    value: 'BEFORE',
+    value: MAPPING_DETAILS_POSITION.BEFORE_STRING,
     label: 'ui-data-import.settings.mappingProfile.marcTable.position.before',
   }, {
-    value: 'AFTER',
+    value: MAPPING_DETAILS_POSITION.AFTER_STRING,
     label: 'ui-data-import.settings.mappingProfile.marcTable.position.after',
   },
 ];
@@ -411,7 +422,7 @@ export const MARC_TABLE_CONFIG = {
     EDIT: [MAPPING_DETAILS_SUBACTIONS.INSERT, MAPPING_DETAILS_SUBACTIONS.REMOVE, MAPPING_DETAILS_SUBACTIONS.REPLACE],
     MOVE: [MAPPING_DETAILS_SUBACTIONS.NEW_FIELD, MAPPING_DETAILS_SUBACTIONS.EXISTING_FIELD],
   },
-  allowedPositions: { EDIT: { INSERT: ['BEFORE', 'AFTER'] } },
+  allowedPositions: { EDIT: { INSERT: [MAPPING_DETAILS_POSITION.BEFORE_STRING, MAPPING_DETAILS_POSITION.AFTER_STRING] } },
   hasDataField: {
     ADD: true,
     DELETE: false,

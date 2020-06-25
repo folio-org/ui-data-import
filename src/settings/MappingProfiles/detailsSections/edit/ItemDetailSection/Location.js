@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -10,11 +11,17 @@ import {
 
 import { AcceptedValuesField } from '../../../../../components';
 
-import { getFieldName } from '../../utils';
+import {
+  getAcceptedValuesPath,
+  getFieldName,
+} from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { okapiShape } from '../../../../../utils';
 
-export const Location = ({ okapi }) => {
+export const Location = ({
+  setReferenceTables,
+  okapi,
+}) => {
   return (
     <Accordion
       id="item-location"
@@ -32,8 +39,13 @@ export const Location = ({ okapi }) => {
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/locations?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="locations"
+            wrapperSources={[{
+              wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourcePath: 'locations',
+            }]}
+            optionTemplate="**name** (**code**)"
+            setAcceptedValues={setReferenceTables}
+            acceptedValuesPath={getAcceptedValuesPath(29)}
             okapi={okapi}
           />
         </Col>
@@ -48,8 +60,13 @@ export const Location = ({ okapi }) => {
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/locations?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="locations"
+            wrapperSources={[{
+              wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourcePath: 'locations',
+            }]}
+            optionTemplate="**name** (**code**)"
+            setAcceptedValues={setReferenceTables}
+            acceptedValuesPath={getAcceptedValuesPath(30)}
             okapi={okapi}
           />
         </Col>
@@ -58,4 +75,7 @@ export const Location = ({ okapi }) => {
   );
 };
 
-Location.propTypes = { okapi: okapiShape.isRequired };
+Location.propTypes = {
+  setReferenceTables: PropTypes.func.isRequired,
+  okapi: okapiShape.isRequired,
+};

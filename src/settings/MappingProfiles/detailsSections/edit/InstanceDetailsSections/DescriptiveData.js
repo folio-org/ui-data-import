@@ -23,6 +23,7 @@ import {
   getSubfieldName,
   getFieldName,
   getRepeatableFieldName,
+  getRepeatableAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -194,8 +195,12 @@ export const DescriptiveData = ({
                       optionValue="name"
                       optionLabel="name"
                       wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="natureOfContentTerms"
+                      wrapperSources={[{
+                        wrapperSourceLink: '/nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
+                        wrapperSourcePath: 'natureOfContentTerms',
+                      }]}
+                      setAcceptedValues={setReferenceTables}
+                      acceptedValuesPath={getRepeatableAcceptedValuesPath(21, 0, index)}
                     />
                   </Col>
                 </Row>

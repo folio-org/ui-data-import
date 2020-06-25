@@ -10,12 +10,14 @@ import { HoldingsDetailsAccordion } from './details/editable/holdings-details-in
 import { InstanceDetailsAccordion } from './details/editable/instance-details-interactor';
 import { ItemDetailsAccordion } from './details/editable/item-details-interactor';
 import { MARCTableInteractor } from '../marc-table-interactor';
+import { DetailsSection } from './details/details-section';
 
 class MappingProfileFormInteractor extends FullScreenFormInteractor {
   nameField = new TextFieldInteractor('#mapping-profiles-form [data-test-name-field]');
   incomingRecordTypeField = new SelectInteractor('#mapping-profiles-form [data-test-incoming-record-type-field]');
   folioRecordTypeField = new SelectInteractor('#mapping-profiles-form [data-test-folio-record-type-field]');
   descriptionField = new TextAreaInteractor('#mapping-profiles-form [data-test-description-field]');
+  detailsSection = new DetailsSection('#mapping-profile-details');
   holdingsDetails = new HoldingsDetailsAccordion('#mapping-profile-details');
   instanceDetails = new InstanceDetailsAccordion('#mapping-profile-details');
   itemDetails = new ItemDetailsAccordion('#mapping-profile-details');

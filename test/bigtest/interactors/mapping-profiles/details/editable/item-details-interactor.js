@@ -1,17 +1,13 @@
 // eslint-disable-next-line max-classes-per-file
-import {
-  AccordionInteractor,
-  AccordionSetInteractor,
-} from '@folio/stripes-components/lib/Accordion/tests/interactor';
-import ExpandAllButtonInteractor from '@folio/stripes-components/lib/Accordion/tests/expand-all-button-interactor';
+import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tests/interactor';
 import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
 import RepeatableFieldInteractor from '@folio/stripes-components/lib/RepeatableField/tests/interactor';
 import SelectInteractor from '@folio/stripes-components/lib/Select/tests/interactor';
 import DropdownInteractor from '@folio/stripes-components/lib/Dropdown/tests/interactor';
 import DatepickerInteractor from '@folio/stripes-components/lib/Datepicker/tests/interactor';
 
+import { DetailsSection } from '../details-section';
 import { InputInteractor } from '../../../input-interactor';
-import { MappedHeaderInteractor } from '../../../mapped-header-interactor';
 
 class AdministrativeDataAccordion extends AccordionInteractor {
   suppressFromDiscovery = new SelectInteractor('#mapping-profiles-form [data-test-suppress-from-discovery]');
@@ -62,7 +58,7 @@ class ConditionAccordion extends AccordionInteractor {
 }
 
 class ItemNotesAccordion extends AccordionInteractor {
-  staffOnly = new SelectInteractor('#mapping-profiles-form [data-test-staff-only]');
+  staffOnly = new SelectInteractor('#mapping-profiles-form #section-item-notes [data-test-staff-only]');
   notes = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-item-notes]');
   notesRepeatable = new SelectInteractor('#mapping-profiles-form #section-item-notes [data-test-repeatable-decorator]');
   note = new TextFieldInteractor('#mapping-profiles-form [data-test-item-note]');
@@ -80,10 +76,10 @@ class LoanAndAvailabilityAccordion extends AccordionInteractor {
   circulationNotesRepeatable = new SelectInteractor('#mapping-profiles-form #section-circulation-notes [data-test-repeatable-decorator]');
   circulationNote = new TextFieldInteractor('#mapping-profiles-form [data-test-circulation-note]');
   circulationNoteAcceptedValues = new DropdownInteractor('#mapping-profiles-form [data-test-circulation-note] [data-test-accepted-values-list]');
+  staffOnly = new SelectInteractor('#mapping-profiles-form #section-circulation-notes [data-test-staff-only]');
 }
 
 class LocationAccordion extends AccordionInteractor {
-  staffOnly = new SelectInteractor('#mapping-profiles-form [data-test-staff-only]');
   permanent = new TextFieldInteractor('#mapping-profiles-form [data-test-permanent]');
   permanentAcceptedValues = new DropdownInteractor('#mapping-profiles-form [data-test-permanent] [data-test-accepted-values-list]');
   temporary = new TextFieldInteractor('#mapping-profiles-form [data-test-temporary]');
@@ -97,9 +93,7 @@ class ElectronicAccessAccordion extends AccordionInteractor {
   electronicRelationshipAcceptedValues = new DropdownInteractor('#mapping-profiles-form [data-test-electronic-relationship] [data-test-accepted-values-list]');
 }
 
-export class ItemDetailsAccordion extends AccordionSetInteractor {
-  header = new MappedHeaderInteractor('#mapping-profiles-form');
-  expandAllButton = new ExpandAllButtonInteractor('#mapping-profiles-form [data-test-expand-all-button]');
+export class ItemDetailsAccordion extends DetailsSection {
   adminDataAccordion = new AdministrativeDataAccordion('#administrative-data');
   itemDataAccordion = new ItemDataAccordion('#item-data');
   enumerationDataAccordion = new EnumerationDataAccordion('#enumeration-data');

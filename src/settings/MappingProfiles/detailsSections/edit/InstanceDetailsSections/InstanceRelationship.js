@@ -21,6 +21,7 @@ import {
   onRemove,
   getSubfieldName,
   getRepeatableFieldName,
+  getRepeatableAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -75,8 +76,12 @@ export const InstanceRelationship = ({
                       optionValue="name"
                       optionLabel="name"
                       wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="instanceRelationshipTypes"
+                      wrapperSources={[{
+                        wrapperSourceLink: '/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
+                        wrapperSourcePath: 'instanceRelationshipTypes',
+                      }]}
+                      setAcceptedValues={setReferenceTables}
+                      acceptedValuesPath={getRepeatableAcceptedValuesPath(30, 1, index)}
                     />
                   </Col>
                 </Row>
@@ -120,8 +125,12 @@ export const InstanceRelationship = ({
                       optionValue="name"
                       optionLabel="name"
                       wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSourceLink="/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name"
-                      wrapperSourcePath="instanceRelationshipTypes"
+                      wrapperSources={[{
+                        wrapperSourceLink: '/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
+                        wrapperSourcePath: 'instanceRelationshipTypes',
+                      }]}
+                      setAcceptedValues={setReferenceTables}
+                      acceptedValuesPath={getRepeatableAcceptedValuesPath(31, 1, index)}
                     />
                   </Col>
                 </Row>

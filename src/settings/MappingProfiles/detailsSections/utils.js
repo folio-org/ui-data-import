@@ -32,6 +32,14 @@ export const getBoolSubfieldName = (mappingFieldIndex, fieldIndex, subfieldIndex
   return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].booleanFieldAction`;
 };
 
+export const getAcceptedValuesPath = mappingFieldIndex => {
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].acceptedValues`;
+};
+
+export const getRepeatableAcceptedValuesPath = (mappingFieldIndex, fieldIndex, subfieldIndex) => {
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].acceptedValues`;
+};
+
 export const onAdd = (refTable, fieldName, fieldIndex, initialFields, callback, incrementalField) => {
   const fieldsPath = `profile.mappingDetails.mappingFields[${fieldIndex}].subfields`;
   let newInitRow = { ...initialFields[fieldName] };

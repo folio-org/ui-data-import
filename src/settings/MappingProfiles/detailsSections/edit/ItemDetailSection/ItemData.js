@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 
@@ -11,11 +12,17 @@ import {
 
 import { AcceptedValuesField } from '../../../../../components';
 
-import { getFieldName } from '../../utils';
+import {
+  getAcceptedValuesPath,
+  getFieldName,
+} from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { okapiShape } from '../../../../../utils';
 
-export const ItemData = ({ okapi }) => {
+export const ItemData = ({
+  setReferenceTables,
+  okapi,
+}) => {
   return (
     <Accordion
       id="item-data"
@@ -33,8 +40,12 @@ export const ItemData = ({ okapi }) => {
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/material-types?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="mtypes"
+            wrapperSources={[{
+              wrapperSourceLink: '/material-types?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourcePath: 'mtypes',
+            }]}
+            setAcceptedValues={setReferenceTables}
+            acceptedValuesPath={getAcceptedValuesPath(7)}
             okapi={okapi}
           />
         </Col>
@@ -63,8 +74,12 @@ export const ItemData = ({ okapi }) => {
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            wrapperSourceLink="/call-number-types?limit=1000&query=cql.allRecords=1 sortby name"
-            wrapperSourcePath="callNumberTypes"
+            wrapperSources={[{
+              wrapperSourceLink: '/call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourcePath: 'callNumberTypes',
+            }]}
+            setAcceptedValues={setReferenceTables}
+            acceptedValuesPath={getAcceptedValuesPath(9)}
             okapi={okapi}
           />
         </Col>
@@ -125,4 +140,7 @@ export const ItemData = ({ okapi }) => {
   );
 };
 
-ItemData.propTypes = { okapi: okapiShape.isRequired };
+ItemData.propTypes = {
+  setReferenceTables: PropTypes.func.isRequired,
+  okapi: okapiShape.isRequired,
+};
