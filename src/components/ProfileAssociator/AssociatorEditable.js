@@ -175,11 +175,11 @@ AssociatorEditable.propTypes = {
   intl: PropTypes.object.isRequired,
   entityKey: PropTypes.string.isRequired,
   namespaceKey: PropTypes.string.isRequired,
-  parentId: PropTypes.string.isRequired || PropTypes.number.isRequired,
   parentType: PropTypes.string.isRequired,
   masterType: PropTypes.string.isRequired,
   detailType: PropTypes.string.isRequired,
   profileShape: PropTypes.object.isRequired,
+  parentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   profileName: PropTypes.string,
   contentData: PropTypes.arrayOf(PropTypes.object),
   isMultiSelect: PropTypes.bool,
@@ -192,6 +192,7 @@ AssociatorEditable.propTypes = {
 };
 
 AssociatorEditable.defaultProps = {
+  parentId: null,
   contentData: [],
   isMultiSelect: true,
   isMultiLink: true,
