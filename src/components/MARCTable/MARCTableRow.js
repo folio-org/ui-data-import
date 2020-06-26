@@ -70,6 +70,11 @@ export const MARCTableRow = ({
     allowedPositions,
     hasDataField,
   } = MARC_TABLE_CONFIG;
+  const {
+    REPLACE,
+    NEW_FIELD,
+    EXISTING_FIELD,
+  } = MAPPING_DETAILS_SUBACTIONS;
 
   const {
     ADD,
@@ -141,15 +146,11 @@ export const MARCTableRow = ({
         return validateAlphanumericOrAllowedValue(value) || validateSubfieldField(fieldValue)(value);
       }
 
-      if (actionValue === MOVE) {
-        return validateAlphanumericOrAllowedValue(value, '*');
-      }
-
       return validateAlphanumericOrAllowedValue(value, '*') || validateSubfieldField(fieldValue)(value);
     },
-    [ADD, MOVE, actionValue, fieldValue],
+    [ADD, actionValue, fieldValue],
   );
-  const validateSubAction = useCallback(
+  const validateSubaction = useCallback(
     value => {
       if (actionValue === MOVE || actionValue === EDIT) {
         return validateRequiredField(value);
@@ -179,6 +180,21 @@ export const MARCTableRow = ({
         || validateMarcIndicatorField(dataValue?.marcField?.field, dataValue?.marcField?.indicator1, value);
     },
     [dataValue],
+  );
+
+  const validateDataSubfield = useCallback(
+    value => {
+      if (subactionValue === NEW_FIELD) {
+        return validateAlphanumericOrAllowedValue(value, '*');
+      }
+
+      if (subactionValue === EXISTING_FIELD) {
+        return validateRequiredField(value) || validateAlphanumericOrAllowedValue(value, '*');
+      }
+
+      return null;
+    },
+    [NEW_FIELD, EXISTING_FIELD, subactionValue],
   );
 
   const setDataFieldValue = (value, key) => {
@@ -435,7 +451,7 @@ export const MARCTableRow = ({
             dataOptions={dataOptions}
             placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
             onChange={handleSubActionChange}
-            validate={[validateSubAction]}
+            validate={[validateSubaction]}
             aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.subaction' })}
             marginBottom0
           />
@@ -444,11 +460,6 @@ export const MARCTableRow = ({
     );
   };
   const renderDataField = () => {
-    const {
-      REPLACE,
-      NEW_FIELD,
-      EXISTING_FIELD,
-    } = MAPPING_DETAILS_SUBACTIONS;
 
     let cellStyle = {
       width: columnWidths.data,
@@ -560,7 +571,7 @@ export const MARCTableRow = ({
                   className={css.tableDataCell}
                   placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subfield' })}
                   ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.subfield' })}
-                  validate={[validateSubfield]}
+                  validate={[validateDataSubfield]}
                   marginBottom0
                 />
               </div>
