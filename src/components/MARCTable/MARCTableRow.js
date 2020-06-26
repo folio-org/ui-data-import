@@ -123,7 +123,7 @@ export const MARCTableRow = ({
 
       return validateAlphanumericOrAllowedValue(value, '*') || validateMarcIndicatorField(fieldValue, value, indicator2Value);
     },
-    [actionValue, ADD, fieldValue, indicator2Value],
+    [ADD, actionValue, fieldValue, indicator2Value],
   );
   const validateIndicator2 = useCallback(
     value => {
@@ -133,7 +133,7 @@ export const MARCTableRow = ({
 
       return validateAlphanumericOrAllowedValue(value, '*') || validateMarcIndicatorField(fieldValue, indicator1Value, value);
     },
-    [actionValue, ADD, fieldValue, indicator1Value],
+    [ADD, actionValue, fieldValue, indicator1Value],
   );
   const validateSubfield = useCallback(
     value => {
@@ -141,9 +141,13 @@ export const MARCTableRow = ({
         return validateAlphanumericOrAllowedValue(value) || validateSubfieldField(fieldValue)(value);
       }
 
-      return validateRequiredField(value) || validateAlphanumericOrAllowedValue(value, '*') || validateSubfieldField(fieldValue)(value);
+      if (actionValue === MOVE) {
+        return validateAlphanumericOrAllowedValue(value, '*');
+      }
+
+      return validateAlphanumericOrAllowedValue(value, '*') || validateSubfieldField(fieldValue)(value);
     },
-    [actionValue, ADD, fieldValue],
+    [ADD, actionValue, fieldValue],
   );
   const validateSubAction = useCallback(
     value => {
