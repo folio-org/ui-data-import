@@ -440,11 +440,9 @@
     "settings.mappingProfiles.map.instance.field.parentInstances.legend": "Instâncias pai",
     "settings.mappingProfiles.map.instance.field.parentInstances.addLabel": "Adicionar instância pai",
     "settings.mappingProfiles.map.instance.parentInstances.field.superInstanceId": "Instância pai",
-    "settings.mappingProfiles.map.instance.parentInstances.field.instnaceRelationshipTypeId": "Tipo de relação",
     "settings.mappingProfiles.map.instance.field.childInstances.legend": "Instâncias filho",
     "settings.mappingProfiles.map.instance.field.childInstances.addLabel": "Adicionar instância filho",
     "settings.mappingProfiles.map.instance.childInstances.field.subInstanceId": "Instância filho",
-    "settings.mappingProfiles.map.instance.childInstances.field.instnaceRelationshipTypeId": "Tipo de relação",
     "settings.mappingProfiles.map.item.relatedInstances.section": "Instâncias relacionadas",
     "settings.mappingProfiles.map.holdings": "Holdings",
     "settings.mappingProfiles.map.holdings.administrativeData.field.hrid": "HRID das holdings",
@@ -556,6 +554,11 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.subfield": "Campo de subcampo de dados MARC",
     "settings.mappingProfile.marcTable.ariaLabel.data.text": "Campo de texto de dados",
     "settings.mappingProfile.marcTable.ariaLabel.position": "Selecionar posição",
-    "filter.chooseJobProfile": "Choose job profile",
-    "filter.chooseUser": "Choose user"
+    "filter.chooseJobProfile": "Escolha o perfil do job",
+    "filter.chooseUser": "Escolha o usuário",
+    "settings.table.checkbox": "selecionar item",
+    "settings.table.checkboxAll": "selecione todos os itens",
+    "settings.mappingProfiles.map.instance.parentInstances.field.instanceRelationshipTypeId": "Type of relation",
+    "settings.mappingProfiles.map.instance.childInstances.field.instanceRelationshipTypeId": "Type of relation",
+    "validation.chooseDifferentField": "Please choose a different field"
 }

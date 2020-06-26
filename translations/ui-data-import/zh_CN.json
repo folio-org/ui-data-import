@@ -440,11 +440,9 @@
     "settings.mappingProfiles.map.instance.field.parentInstances.legend": "父实例",
     "settings.mappingProfiles.map.instance.field.parentInstances.addLabel": "添加父实例",
     "settings.mappingProfiles.map.instance.parentInstances.field.superInstanceId": "父实例",
-    "settings.mappingProfiles.map.instance.parentInstances.field.instnaceRelationshipTypeId": "关系类型",
     "settings.mappingProfiles.map.instance.field.childInstances.legend": "子实例",
     "settings.mappingProfiles.map.instance.field.childInstances.addLabel": "添加子实例",
     "settings.mappingProfiles.map.instance.childInstances.field.subInstanceId": "子实例",
-    "settings.mappingProfiles.map.instance.childInstances.field.instnaceRelationshipTypeId": "关系类型",
     "settings.mappingProfiles.map.item.relatedInstances.section": "相关实例",
     "settings.mappingProfiles.map.holdings": "馆藏",
     "settings.mappingProfiles.map.holdings.administrativeData.field.hrid": "馆藏HRID",
@@ -557,5 +555,10 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.text": "Data text field",
     "settings.mappingProfile.marcTable.ariaLabel.position": "Select position",
     "filter.chooseJobProfile": "Choose job profile",
-    "filter.chooseUser": "Choose user"
+    "filter.chooseUser": "Choose user",
+    "settings.table.checkbox": "select item",
+    "settings.table.checkboxAll": "select all items",
+    "settings.mappingProfiles.map.instance.parentInstances.field.instanceRelationshipTypeId": "Type of relation",
+    "settings.mappingProfiles.map.instance.childInstances.field.instanceRelationshipTypeId": "Type of relation",
+    "validation.chooseDifferentField": "Please choose a different field"
 }
