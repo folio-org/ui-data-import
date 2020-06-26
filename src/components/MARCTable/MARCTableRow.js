@@ -147,7 +147,7 @@ export const MARCTableRow = ({
 
       return validateAlphanumericOrAllowedValue(value, '*') || validateSubfieldField(fieldValue)(value);
     },
-    [ADD, actionValue, fieldValue],
+    [ADD, MOVE, actionValue, fieldValue],
   );
   const validateSubAction = useCallback(
     value => {
