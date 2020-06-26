@@ -440,11 +440,9 @@
     "settings.mappingProfiles.map.instance.field.parentInstances.legend": "الأوعية الأصلية",
     "settings.mappingProfiles.map.instance.field.parentInstances.addLabel": "إضافة وعاء أصلي",
     "settings.mappingProfiles.map.instance.parentInstances.field.superInstanceId": "وعاء أصلي",
-    "settings.mappingProfiles.map.instance.parentInstances.field.instnaceRelationshipTypeId": "نوع العلاقة",
     "settings.mappingProfiles.map.instance.field.childInstances.legend": "أوعية فرعية",
     "settings.mappingProfiles.map.instance.field.childInstances.addLabel": "إضافة وعاء فرعي",
     "settings.mappingProfiles.map.instance.childInstances.field.subInstanceId": "وعاء فرعي",
-    "settings.mappingProfiles.map.instance.childInstances.field.instnaceRelationshipTypeId": "نوع العلاقة",
     "settings.mappingProfiles.map.item.relatedInstances.section": "الحالات ذات الصلة",
     "settings.mappingProfiles.map.holdings": "المقتنيات",
     "settings.mappingProfiles.map.holdings.administrativeData.field.hrid": "رقم التعريف القابل للقراءة بشريًا للمقتنيات",
@@ -557,5 +555,10 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.text": "حقل نص البيانات",
     "settings.mappingProfile.marcTable.ariaLabel.position": "اختر موضع",
     "filter.chooseJobProfile": "اختر وضع وظيفة",
-    "filter.chooseUser": "اختر مستخدم"
+    "filter.chooseUser": "اختر مستخدم",
+    "settings.table.checkbox": "اختر مادة",
+    "settings.table.checkboxAll": "تحديد كل المواد",
+    "settings.mappingProfiles.map.instance.parentInstances.field.instanceRelationshipTypeId": "نوع العلاقة",
+    "settings.mappingProfiles.map.instance.childInstances.field.instanceRelationshipTypeId": "نوع العلاقة",
+    "validation.chooseDifferentField": "Please choose a different field"
 }
