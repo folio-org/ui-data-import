@@ -4,7 +4,11 @@ import React, {
 } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { get } from 'lodash';
+import {
+  get,
+  set,
+  cloneDeep,
+} from 'lodash';
 
 import {
   MARCTableHeader,
@@ -12,6 +16,8 @@ import {
 } from '.';
 
 import css from './MARCTable.css';
+
+import { mappingMARCFieldShape } from '../../utils';
 
 export const MARCTable = ({
   fields,
@@ -118,32 +124,59 @@ export const MARCTable = ({
     onChange('profile.mappingDetails.marcMappingDetails', updatedRows);
   };
 
-  // TODO: create separate function for removing subfield rows to avoid additional re-render
-  const removeSubfieldRows = order => {
-    const updatedRows = [...rows];
-    const rowToUpdateIndex = rows.findIndex(row => row.order === order);
-    const firstSubfield = updatedRows[rowToUpdateIndex].field?.subfields?.[0] || {};
-
-    const subfields = [{
+  const removeSubfieldsFromRow = rowToUpdate => {
+    const updatedField = cloneDeep(rowToUpdate);
+    const firstSubfield = rowToUpdate.field.subfields?.[0] || {};
+    const updatedSubfields = [{
       ...firstSubfield,
       subaction: null,
     }];
 
-    onChange(`profile.mappingDetails.marcMappingDetails[${rowToUpdateIndex}].field.subfields`, subfields);
+    set(updatedField, 'field.subfields', updatedSubfields);
+
+    return updatedField;
   };
 
-  const fillEmptyFieldsWithValue = (order, fieldNames, valueToFill) => {
-    const updatedRows = [...rows];
-    const rowToUpdateIndex = rows.findIndex(row => row.order === order);
-    const rowToUpdate = JSON.parse(JSON.stringify(updatedRows[rowToUpdateIndex]));
+  const removeSubactionFromRow = rowToUpdate => {
+    const updatedField = cloneDeep(rowToUpdate);
+    const subfields = rowToUpdate.field.subfields;
+
+    subfields.forEach((subfield, index) => {
+      set(updatedField, `field.subfields[${index}].subaction`, null);
+    });
+
+    return updatedField;
+  };
+
+  const removeDataValuesFromRow = rowToUpdate => {
+    const updatedField = cloneDeep(rowToUpdate);
+    const subfields = rowToUpdate.field.subfields;
+
+    subfields.forEach((subfield, index) => {
+      set(updatedField, `field.subfields[${index}].data`, null);
+    });
+
+    return updatedField;
+  };
+
+  const fillEmptyFieldsWithValue = (field, fieldNames, valueToFill) => {
+    const updatedField = cloneDeep(field);
 
     fieldNames.forEach(path => {
-      const fieldValue = get(rowToUpdate, path, '');
+      const fieldValue = get(field, path, '');
 
       if (!fieldValue) {
-        onChange(`profile.mappingDetails.marcMappingDetails[${rowToUpdateIndex}].${path}`, valueToFill);
+        set(updatedField, path, valueToFill);
       }
     });
+
+    return updatedField;
+  };
+
+  const onFieldUpdate = (order, rowToUpdate) => {
+    const rowToUpdateIndex = rows.findIndex(row => row.order === order);
+
+    onChange(`profile.mappingDetails.marcMappingDetails[${rowToUpdateIndex}]`, rowToUpdate);
   };
 
   const columns = ['arrows', 'action', 'field', 'indicator1', 'indicator2',
@@ -173,19 +206,22 @@ export const MARCTable = ({
       <MARCTableRowContainer
         fields={rows}
         columnWidths={columnWidths}
+        onFieldUpdate={onFieldUpdate}
         onAddNewRow={addNewRow}
         onRemoveRow={removeRow}
         onMoveRow={moveRow}
         onAddSubfieldRow={addSubfieldRow}
         onRemoveSubfieldRow={removeSubfieldRow}
-        onRemoveSubfieldRows={removeSubfieldRows}
-        onDeleteActionSelect={fillEmptyFieldsWithValue}
+        removeSubfieldRows={removeSubfieldsFromRow}
+        removeSubactionFromRow={removeSubactionFromRow}
+        removeDataValuesFromRow={removeDataValuesFromRow}
+        fillEmptyFieldsWithValue={fillEmptyFieldsWithValue}
       />
     </div>
   );
 };
 
 MARCTable.propTypes = {
-  fields: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fields: PropTypes.arrayOf(mappingMARCFieldShape.isRequired).isRequired,
   onChange: PropTypes.func,
 };

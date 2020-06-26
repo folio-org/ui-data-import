@@ -1,5 +1,13 @@
 # Change history for ui-data-import
 
+## **2.2.0** (in progress)
+
+### Features added:
+* Add validation rules for Move action for the MARC modifications table fields (UIDATIMP-492)
+
+### Bugs fixed:
+* Fix deletion repeatable fields in Field mapping profile (UIDATIMP-482)
+
 ## [2.1.0](https://github.com/folio-org/ui-data-import/tree/v2.1.0) (2020-06-25)
 
 ### Features added:

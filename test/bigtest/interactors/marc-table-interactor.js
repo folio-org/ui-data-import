@@ -41,6 +41,7 @@ class MARCTableRowBaseInteractor {
   dataTextField = scoped('[data-test-marc-table-data-text]', TextAreaInteractor);
   dataFindField = scoped('[data-test-marc-table-data-find]', TextAreaInteractor);
   dataReplaceField = scoped('[data-test-marc-table-data-replace]', TextAreaInteractor);
+  dataTagField = scoped('[data-test-marc-table-data-field]', TextFielInteractor);
   position = scoped('[data-test-marc-table-position]', SelectInteractor);
 }
 
