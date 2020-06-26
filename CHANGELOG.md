@@ -1,15 +1,19 @@
 # Change history for ui-data-import
 
-## **2.0.1** (in progress)
+## [2.1.0](https://github.com/folio-org/ui-data-import/tree/v2.1.0) (2020-06-25)
 
 ### Features added:
 * Field Mapping Profile details: MARC Bib from MARC Bib 2 - Delete (UIDATIMP-486)
+* Update Requests to SRS for v4 (UIDATIMP-486)
 
 ### Bugs fixed:
 * Fix Accessibility problems for MARCTable component (UIDATIMP-547)
 * Fix issue with holdings type field population (UIDATIMP-542)
 * Fix issue with digitization policy field (UIDATIMP-543)
 * Fix repeatable fields in Field mapping profiles (UIDATIMP-538)
+* Fix Accessibility problems for /data-import page (UIDATIMP-429)
+* Fix Accessibility problems for data-import/job-logs (Buttons must have discernible text) (UIDATIMP-432)
+* Fix Accessibility problems for settings/data-import/job-profiles?layer=create (UIDATIMP-433)
 
 ## [2.0.0](https://github.com/folio-org/ui-data-import/tree/v2.0.0) (2020-06-12)
 

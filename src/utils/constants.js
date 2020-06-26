@@ -182,6 +182,20 @@ export const VALUE_TYPES = [
   },
 ];
 
+export const BOOLEAN_ACTIONS = {
+  ALL_TRUE: 'ALL_TRUE',
+  ALL_FALSE: 'ALL_FALSE',
+  AS_IS: 'AS_IS',
+  IGNORE: 'IGNORE',
+};
+
+export const REPEATABLE_ACTIONS = {
+  EXTEND_EXISTING: 'EXTEND_EXISTING',
+  DELETE_EXISTING: 'DELETE_EXISTING',
+  EXCHANGE_EXISTING: 'EXCHANGE_EXISTING',
+  DELETE_INCOMING: 'DELETE_INCOMING',
+};
+
 export const FORMS_SETTINGS = {
   [ENTITY_KEYS.MATCH_PROFILES]: {
     MATCHING: {
@@ -233,23 +247,20 @@ export const FORMS_SETTINGS = {
           id: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues.chooseDate',
         },
       },
-      BOOLEAN_ACTIONS: {
-        OPTIONS: [
-          {
-            label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords',
-            value: 'ALL_TRUE',
-          },
-          {
-            label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords',
-            value: 'ALL_FALSE',
-          },
-          {
-            label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords',
-            value: 'AS_IS',
-          },
-        ],
-        DEFAULT_OPTION: 'IGNORE',
-      },
+      BOOLEAN_ACTIONS: [
+        {
+          label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords',
+          value: BOOLEAN_ACTIONS.ALL_TRUE,
+        },
+        {
+          label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords',
+          value: BOOLEAN_ACTIONS.ALL_FALSE,
+        },
+        {
+          label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords',
+          value: BOOLEAN_ACTIONS.AS_IS,
+        },
+      ],
     },
   },
 };
@@ -459,3 +470,38 @@ export const ITEM_STATUS_OPTIONS = [
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.claimedReturned',
   },
 ];
+
+export const MAPPING_DETAILS_HEADLINE = {
+  INSTANCE: {
+    label: 'Instance',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.instance',
+  },
+  HOLDINGS: {
+    label: 'Holdings',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.holdings',
+  },
+  ITEM: {
+    label: 'Item',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.item',
+  },
+  ORDER: {
+    label: 'Order',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.order',
+  },
+  INVOICE: {
+    label: 'Invoice',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.invoice',
+  },
+  MARC_BIBLIOGRAPHIC: {
+    label: 'MARC Bibliographic',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.marcBib',
+  },
+  MARC_HOLDINGS: {
+    label: 'MARC Holdings',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.marcHoldings',
+  },
+  MARC_AUTHORITY: {
+    label: 'MARC Authority',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.marcAuthority',
+  },
+};

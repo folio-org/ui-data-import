@@ -422,7 +422,7 @@ export class ViewJobProfile extends Component {
             </div>
           )}
           <Accordion
-            id="job-profile-overview"
+            data-test-job-profile-overview-details
             label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
           >
             {wrappersLoaded ? (
