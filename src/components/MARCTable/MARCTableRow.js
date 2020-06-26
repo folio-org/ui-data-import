@@ -460,7 +460,6 @@ export const MARCTableRow = ({
     );
   };
   const renderDataField = () => {
-
     let cellStyle = {
       width: columnWidths.data,
       flexGrow: 1,
