@@ -111,13 +111,9 @@ export const MARCTableRow = ({
 
   const validateTag = useCallback(
     value => {
-      if (actionValue === ADD || actionValue === DELETE || actionValue === MOVE) {
-        return validateMarcTagField(indicator1Value, indicator2Value)(value) || validateRequiredField(value);
-      }
-
-      return null;
+      return validateMarcTagField(indicator1Value, indicator2Value)(value) || validateRequiredField(value);
     },
-    [actionValue, ADD, DELETE, MOVE, indicator1Value, indicator2Value],
+    [indicator1Value, indicator2Value],
   );
   const validateIndicator1 = useCallback(
     value => {
@@ -125,13 +121,9 @@ export const MARCTableRow = ({
         return validateAlphanumericOrAllowedValue(value) || validateMarcIndicatorField(fieldValue, value, indicator2Value);
       }
 
-      if (actionValue === DELETE || actionValue === MOVE) {
-        return validateAlphanumericOrAllowedValue(value, '*') || validateMarcIndicatorField(fieldValue, value, indicator2Value);
-      }
-
-      return null;
+      return validateAlphanumericOrAllowedValue(value, '*') || validateMarcIndicatorField(fieldValue, value, indicator2Value);
     },
-    [ADD, DELETE, MOVE, actionValue, fieldValue, indicator2Value],
+    [actionValue, ADD, fieldValue, indicator2Value],
   );
   const validateIndicator2 = useCallback(
     value => {
@@ -139,13 +131,9 @@ export const MARCTableRow = ({
         return validateAlphanumericOrAllowedValue(value) || validateMarcIndicatorField(fieldValue, indicator1Value, value);
       }
 
-      if (actionValue === DELETE || actionValue === MOVE) {
-        return validateAlphanumericOrAllowedValue(value, '*') || validateMarcIndicatorField(fieldValue, indicator1Value, value);
-      }
-
-      return null;
+      return validateAlphanumericOrAllowedValue(value, '*') || validateMarcIndicatorField(fieldValue, indicator1Value, value);
     },
-    [ADD, DELETE, MOVE, actionValue, fieldValue, indicator1Value],
+    [actionValue, ADD, fieldValue, indicator1Value],
   );
   const validateSubfield = useCallback(
     value => {
@@ -153,27 +141,19 @@ export const MARCTableRow = ({
         return validateAlphanumericOrAllowedValue(value) || validateSubfieldField(fieldValue)(value);
       }
 
-      if (actionValue === DELETE) {
-        return validateRequiredField(value) || validateAlphanumericOrAllowedValue(value, '*') || validateSubfieldField(fieldValue)(value);
-      }
-
-      if (actionValue === MOVE) {
-        return validateAlphanumericOrAllowedValue(value, '*');
-      }
-
-      return null;
+      return validateRequiredField(value) || validateAlphanumericOrAllowedValue(value, '*') || validateSubfieldField(fieldValue)(value);
     },
-    [actionValue, ADD, DELETE, MOVE, fieldValue],
+    [actionValue, ADD, fieldValue],
   );
   const validateSubAction = useCallback(
     value => {
-      if (actionValue === MOVE) {
+      if (actionValue === MOVE || actionValue === EDIT) {
         return validateRequiredField(value);
       }
 
       return null;
     },
-    [MOVE, actionValue],
+    [MOVE, EDIT, actionValue],
   );
   const validateDataField = useCallback(
     value => {
@@ -222,7 +202,9 @@ export const MARCTableRow = ({
   };
   const onEditActionSelect = () => {
     const rowWithoutSubfields = removeSubfieldRows(rowData);
-    const updatedField = removeDataValuesFromRow(rowWithoutSubfields);
+    const rowWithoutData = removeDataValuesFromRow(rowWithoutSubfields);
+    const updatedField = fillEmptyFieldsWithValue(rowWithoutData,
+      ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*');
 
     onFieldUpdate(order, updatedField);
   };
@@ -501,6 +483,7 @@ export const MARCTableRow = ({
                 name={`${name}.field.subfields[${subfieldIndex}].data.find`}
                 component={TextArea}
                 aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.find' })}
+                validate={[validateRequiredField]}
                 marginBottom0
                 fullWidth
               />
@@ -516,6 +499,7 @@ export const MARCTableRow = ({
                 name={`${name}.field.subfields[${subfieldIndex}].data.replaceWith`}
                 component={TextArea}
                 aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.replaceWith' })}
+                validate={[validateRequiredField]}
                 marginBottom0
                 fullWidth
               />

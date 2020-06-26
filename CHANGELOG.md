@@ -4,6 +4,7 @@
 
 ### Features added:
 * Add validation rules for Move action for the MARC modifications table fields (UIDATIMP-492)
+* Add validation rules for Edit action for the MARC modifications table fields (UIDATIMP-489)
 
 ### Bugs fixed:
 * Fix deletion repeatable fields in Field mapping profile (UIDATIMP-482)
