@@ -60,10 +60,10 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1"
   },
-  "stripesDeps": [
-    "@folio/stripes-acq-components"
-  ],
   "stripes": {
+    "stripesDeps": [
+      "@folio/stripes-acq-components"
+    ],
     "actsAs": [
       "app",
       "settings"
