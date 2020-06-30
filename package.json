@@ -172,6 +172,7 @@
           "data-import.fileExtensions.put",
           "data-import.fileExtensions.delete",
           "data-import.fileExtensions.default",
+          "converter-storage.profileSnapshots.get",
           "converter-storage.jobprofile.get",
           "converter-storage.jobprofile.post",
           "converter-storage.jobprofile.put",
