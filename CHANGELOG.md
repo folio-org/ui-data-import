@@ -3,6 +3,7 @@
 ## **2.2.0** (in progress)
 
 ### Features added:
+* Handle import of stripes-acq-components to modules and platform (UISACQCOMP-3)
 * Add validation rules for Move action for the MARC modifications table fields (UIDATIMP-492)
 * Add validation rules for Edit action for the MARC modifications table fields (UIDATIMP-489)
 
