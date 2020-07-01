@@ -558,7 +558,8 @@
     "filter.chooseUser": "Escolha o usuário",
     "settings.table.checkbox": "selecionar item",
     "settings.table.checkboxAll": "selecione todos os itens",
-    "settings.mappingProfiles.map.instance.parentInstances.field.instanceRelationshipTypeId": "Type of relation",
-    "settings.mappingProfiles.map.instance.childInstances.field.instanceRelationshipTypeId": "Type of relation",
-    "validation.chooseDifferentField": "Please choose a different field"
+    "settings.mappingProfiles.map.instance.parentInstances.field.instanceRelationshipTypeId": "Tipo de relação",
+    "settings.mappingProfiles.map.instance.childInstances.field.instanceRelationshipTypeId": "Tipo de relação",
+    "validation.chooseDifferentField": "Por favor, escolha um campo diferente",
+    "settings.mappingProfile.marcTable.position.newSubfield": "novo subcampo"
 }

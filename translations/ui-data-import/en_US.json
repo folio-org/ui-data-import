@@ -560,5 +560,6 @@
     "settings.table.checkboxAll": "select all items",
     "settings.mappingProfiles.map.instance.parentInstances.field.instanceRelationshipTypeId": "Type of relation",
     "settings.mappingProfiles.map.instance.childInstances.field.instanceRelationshipTypeId": "Type of relation",
-    "validation.chooseDifferentField": "Please choose a different field"
+    "validation.chooseDifferentField": "Please choose a different field",
+    "settings.mappingProfile.marcTable.position.newSubfield": "new subfield"
 }
