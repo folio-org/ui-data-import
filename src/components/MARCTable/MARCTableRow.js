@@ -260,16 +260,19 @@ export const MARCTableRow = ({
     }
   };
   const handleSubActionChange = e => {
-    const rowWithoutPosition = removePositionFromRow(rowData);
-    const updatedField = removeDataValuesFromRow(rowWithoutPosition);
     const { ADD_SUBFIELD } = MAPPING_DETAILS_SUBACTIONS;
 
     setSubactionValue(e.target.value);
 
-    onFieldUpdate(order, updatedField);
-
     if (e.target.value === ADD_SUBFIELD) {
       onAddSubfieldRow(order);
+    }
+
+    if (actionValue === EDIT) {
+      const rowWithoutPosition = removePositionFromRow(rowData);
+      const updatedField = removeDataValuesFromRow(rowWithoutPosition);
+
+      onFieldUpdate(order, updatedField);
     }
   };
   const handleRemoveRow = () => (!isSubline ? onRemoveRow(order) : onRemoveSubfieldRow(order, subfieldIndex));
