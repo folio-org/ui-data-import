@@ -130,6 +130,7 @@ export const MARCTable = ({
     const updatedSubfields = [{
       ...firstSubfield,
       subaction: null,
+      position: null,
     }];
 
     set(updatedField, 'field.subfields', updatedSubfields);
@@ -154,6 +155,17 @@ export const MARCTable = ({
 
     subfields.forEach((subfield, index) => {
       set(updatedField, `field.subfields[${index}].data`, null);
+    });
+
+    return updatedField;
+  };
+
+  const removePositionFromRow = rowToUpdate => {
+    const updatedField = cloneDeep(rowToUpdate);
+    const subfields = rowToUpdate.field.subfields;
+
+    subfields.forEach((subfield, index) => {
+      set(updatedField, `field.subfields[${index}].position`, null);
     });
 
     return updatedField;
@@ -213,6 +225,7 @@ export const MARCTable = ({
         onAddSubfieldRow={addSubfieldRow}
         onRemoveSubfieldRow={removeSubfieldRow}
         removeSubfieldRows={removeSubfieldsFromRow}
+        removePositionFromRow={removePositionFromRow}
         removeSubactionFromRow={removeSubactionFromRow}
         removeDataValuesFromRow={removeDataValuesFromRow}
         fillEmptyFieldsWithValue={fillEmptyFieldsWithValue}

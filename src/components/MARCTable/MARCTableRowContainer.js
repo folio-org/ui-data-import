@@ -17,6 +17,7 @@ export const MARCTableRowContainer = ({
   onAddSubfieldRow,
   onRemoveSubfieldRow,
   removeSubfieldRows,
+  removePositionFromRow,
   removeSubactionFromRow,
   removeDataValuesFromRow,
   fillEmptyFieldsWithValue,
@@ -54,6 +55,7 @@ export const MARCTableRowContainer = ({
           onAddSubfieldRow={onAddSubfieldRow}
           onRemoveSubfieldRow={onRemoveSubfieldRow}
           removeSubfieldRows={removeSubfieldRows}
+          removePositionFromRow={removePositionFromRow}
           removeSubactionFromRow={removeSubactionFromRow}
           removeDataValuesFromRow={removeDataValuesFromRow}
           fillEmptyFieldsWithValue={fillEmptyFieldsWithValue}
@@ -100,6 +102,7 @@ MARCTableRowContainer.propTypes = {
   onAddSubfieldRow: PropTypes.func.isRequired,
   onRemoveSubfieldRow: PropTypes.func.isRequired,
   removeSubfieldRows: PropTypes.func.isRequired,
+  removePositionFromRow: PropTypes.func.isRequired,
   removeSubactionFromRow: PropTypes.func.isRequired,
   removeDataValuesFromRow: PropTypes.func.isRequired,
   fillEmptyFieldsWithValue: PropTypes.func.isRequired,

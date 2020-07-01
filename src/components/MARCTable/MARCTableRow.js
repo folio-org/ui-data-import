@@ -61,6 +61,7 @@ export const MARCTableRow = ({
   onAddSubfieldRow,
   onRemoveSubfieldRow,
   removeSubfieldRows,
+  removePositionFromRow,
   removeSubactionFromRow,
   removeDataValuesFromRow,
   fillEmptyFieldsWithValue,
@@ -259,9 +260,13 @@ export const MARCTableRow = ({
     }
   };
   const handleSubActionChange = e => {
+    const rowWithoutPosition = removePositionFromRow(rowData);
+    const updatedField = removeDataValuesFromRow(rowWithoutPosition);
     const { ADD_SUBFIELD } = MAPPING_DETAILS_SUBACTIONS;
 
     setSubactionValue(e.target.value);
+
+    onFieldUpdate(order, updatedField);
 
     if (e.target.value === ADD_SUBFIELD) {
       onAddSubfieldRow(order);
@@ -627,7 +632,9 @@ export const MARCTableRow = ({
             name={`${name}.field.subfields[${subfieldIndex}].position`}
             component={Select}
             dataOptions={dataOptions}
+            placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
             aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.position' })}
+            validate={[validateRequiredField]}
             marginBottom0
           />
         )}
@@ -713,6 +720,7 @@ MARCTableRow.propTypes = {
   isLast: PropTypes.bool,
   isSubline: PropTypes.bool,
   removeSubfieldRows: PropTypes.func,
+  removePositionFromRow: PropTypes.func,
   removeSubactionFromRow: PropTypes.func,
   removeDataValuesFromRow: PropTypes.func,
   fillEmptyFieldsWithValue: PropTypes.func,
