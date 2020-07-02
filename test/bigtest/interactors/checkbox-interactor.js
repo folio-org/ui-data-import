@@ -1,4 +1,5 @@
 import {
+  attribute,
   interactor,
   clickable,
   blurrable,
@@ -14,6 +15,7 @@ export class CheckboxInteractor {
   blurInput = blurrable('input');
   inputValue = value('input');
   isChecked = property('input', 'checked');
+  ariaLabel = attribute('input', 'aria-label');
 
   clickAndBlur() {
     return this

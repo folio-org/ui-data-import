@@ -422,19 +422,20 @@ export class ViewJobProfile extends Component {
               />
             </div>
           )}
-          <Accordion
-            data-test-job-profile-overview-details
-            label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
-          >
-            {wrappersLoaded ? (
-              <ProfileTree
-                linkingRules={PROFILE_LINKING_RULES}
-                contentData={wrappers}
-                record={record}
-                showLabelsAsHotLink
-              />
-            ) : <Preloader />}
-          </Accordion>
+          <div data-test-job-profile-overview-details>
+            <Accordion
+              label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
+            >
+              {wrappersLoaded ? (
+                <ProfileTree
+                  linkingRules={PROFILE_LINKING_RULES}
+                  contentData={wrappers}
+                  record={record}
+                  showLabelsAsHotLink
+                />
+              ) : <Preloader />}
+            </Accordion>
+          </div>
           <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.jobsUsingThisProfile" />}>
             {jobsUsingThisProfileDataHasLoaded ? (
               <MultiColumnList
