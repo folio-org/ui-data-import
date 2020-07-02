@@ -36,6 +36,7 @@ export const RepeatableActionsField = memo(({
     <Headline
       tag="h3"
       margin="xx-small"
+      data-test-repeatable-field-legend
     >
       {legend}
     </Headline>

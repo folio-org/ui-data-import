@@ -5,6 +5,7 @@ import {
   collection,
   text,
   property,
+  scoped
 } from '@bigtest/interactor';
 
 import IconButtonInteractor from '@folio/stripes-components/lib/IconButton/tests/interactor';
@@ -26,22 +27,22 @@ class MARCTableCellInteractor {
 
 class MARCTableRowBaseInteractor {
   cells = collection('[data-test-marc-table-cell]', MARCTableCellInteractor);
-  addRow = new IconButtonInteractor('[data-test-marc-table-add]');
-  removeRow = new IconButtonInteractor('[data-test-marc-table-remove]');
+  addRow = scoped('[data-test-marc-table-add]', IconButtonInteractor);
+  removeRow = scoped('[data-test-marc-table-remove]', IconButtonInteractor);
   isTrashDisabled = property('[data-test-marc-table-remove]', 'disabled');
-  moveRowUp = new IconButtonInteractor('[data-test-marc-table-arrow-up]');
-  moveRowDown = new IconButtonInteractor('[data-test-marc-table-arrow-down]');
-  action = new SelectInteractor('[data-test-marc-table-action]');
-  tag = new TextFieldInteractor('[data-test-marc-table-tag]');
-  indicator1 = new TextFieldInteractor('[data-test-marc-table-indicator1]');
-  indicator2 = new TextFieldInteractor('[data-test-marc-table-indicator2]');
-  subfield = new TextFieldInteractor('[data-test-marc-table-subfield]');
-  subaction = new SelectInteractor('[data-test-marc-table-subaction]');
-  dataTextField = new TextAreaInteractor('[data-test-marc-table-data-text]');
-  dataFindField = new TextAreaInteractor('[data-test-marc-table-data-find]');
-  dataReplaceField = new TextAreaInteractor('[data-test-marc-table-data-replace]');
-  dataTagField = new TextFieldInteractor('[data-test-marc-table-data-field]');
-  position = new SelectInteractor('[data-test-marc-table-position]');
+  moveRowUp = scoped('[data-test-marc-table-arrow-up]', IconButtonInteractor);
+  moveRowDown = scoped('[data-test-marc-table-arrow-down]', IconButtonInteractor);
+  action = scoped('[data-test-marc-table-action]', SelectInteractor);
+  tag = scoped('[data-test-marc-table-tag]', TextFieldInteractor);
+  indicator1 = scoped('[data-test-marc-table-indicator1]', TextFieldInteractor);
+  indicator2 = scoped('[data-test-marc-table-indicator2]', TextFieldInteractor);
+  subfield = scoped('[data-test-marc-table-subfield]', TextFieldInteractor);
+  subaction = scoped('[data-test-marc-table-subaction]', SelectInteractor);
+  dataTextField = scoped('[data-test-marc-table-data-text]', TextAreaInteractor);
+  dataFindField = scoped('[data-test-marc-table-data-find]', TextAreaInteractor);
+  dataReplaceField = scoped('[data-test-marc-table-data-replace]', TextAreaInteractor);
+  dataTagField = scoped('[data-test-marc-table-data-field]', TextFieldInteractor);
+  position = scoped('[data-test-marc-table-position]', SelectInteractor);
 }
 
 @interactor

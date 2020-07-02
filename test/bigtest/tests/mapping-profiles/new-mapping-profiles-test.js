@@ -453,11 +453,11 @@ describe('Mapping profile form', () => {
                   });
                 });
 
-                describe.skip('validation', () => {
+                describe('validation', () => {
                   beforeEach(async () => {
                     await mappingProfileForm.nameField.fillAndBlur('Test name');
                     await mappingProfileForm.incomingRecordTypeField.selectAndBlur('MARC Bibliographic');
-                    await mappingProfileForm.marcDetailsTable.rows(0).subaction.selectAndBlur('New field');
+                    await mappingProfileForm.marcDetailsTable.rows(0).subaction.selectAndBlur('Insert');
                   });
 
                   describe('when "field" field is empty', () => {
