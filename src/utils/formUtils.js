@@ -111,7 +111,7 @@ export const getEntity = props => {
 export const getEntityTags = props => {
   const entity = props.getEntity(props);
 
-  return get(entity, ['tags', 'tagList'], []);
+  return get(entity, ['profile', 'tags', 'tagList'], []);
 };
 
 /**
