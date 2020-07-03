@@ -2,40 +2,36 @@ import React, {
   memo,
   useRef,
   useState,
-  useLayoutEffect,
   useEffect,
 } from 'react';
 import { PropTypes } from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-
 import { isEmpty } from 'lodash';
 
-import {
-  isFormattedMessage,
-  isTranslationId,
-} from '../../../../utils';
+import { formatDecoratorValue } from '../../../../utils';
 
+import { WithTranslation } from '../../..';
 import { OptionsList } from '../partials';
 
 import styles from './withReferenceValues.css';
 
-export const withReferenceValues = memo(props => {
-  const {
-    id,
-    input,
-    dataOptions,
-    optionValue,
-    optionLabel,
-    WrappedComponent,
-    wrapperLabel,
-    wrapperExplicitInsert,
-    ...rest
-  } = props;
-
+export const withReferenceValues = memo(({
+  id,
+  input,
+  dataOptions,
+  optionValue,
+  optionLabel,
+  wrappedComponent,
+  wrapperLabel,
+  disabled,
+  ...rest
+}) => {
   const [hasLoaded, setHasLoaded] = useState(false);
   const [listOptions, setListOptions] = useState([]);
-  const [currentValue, setCurrentValue] = useState(input?.value || '');
-  const [wrapperValue, setWrapperValue] = useState(null);
+  const [currentValue, setCurrentValue] = useState(input.value || '');
+
+  const decoratorValueRegExp = /"[^"]+"/g;
+
+  const currentInput = useRef(input);
 
   const handleChange = e => {
     const val = e.target ? e.target.value : e;
@@ -49,25 +45,19 @@ export const withReferenceValues = memo(props => {
     setListOptions(dataOptions);
   }, [dataOptions]);
 
-  useLayoutEffect(() => {
-    let newValue = '';
+  useEffect(() => {
+    setCurrentValue(input.value);
+  }, [input.value]);
 
-    if (wrapperValue) {
-      if (wrapperExplicitInsert || !currentValue) {
-        newValue = `"${wrapperValue}"`;
-      } else {
-        newValue = `${currentValue} "${wrapperValue}"`;
-      }
-    }
+  const onValueSelect = wrapperValue => {
+    const newValue = wrapperValue ? formatDecoratorValue(currentValue, wrapperValue, decoratorValueRegExp, true) : '';
 
     if (newValue) {
-      setCurrentValue(newValue);
       handleChange(newValue);
     }
-  }, [wrapperValue]); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
-  const needsTranslation = wrapperLabel && !isFormattedMessage(wrapperLabel) && isTranslationId(wrapperLabel);
-  const currentInput = useRef(input);
+  const Component = wrappedComponent;
 
   const {
     onBlur,
@@ -78,7 +68,7 @@ export const withReferenceValues = memo(props => {
 
   return (
     <div className={styles.decorator}>
-      <WrappedComponent
+      <Component
         value={currentValue}
         inputRef={currentInput}
         onBlur={onBlur}
@@ -87,35 +77,25 @@ export const withReferenceValues = memo(props => {
         onDrop={onDrop}
         onFocus={onFocus}
         loading={!hasLoaded}
+        disabled={disabled}
         {...rest}
       />
-      {needsTranslation ? (
-        <FormattedMessage id={wrapperLabel}>
-          {localized => (
-            <OptionsList
-              id={id}
-              label={localized}
-              dataOptions={listOptions}
-              optionValue={optionValue}
-              optionLabel={optionLabel}
-              className={styles['options-dropdown']}
-              disabled={!hasLoaded}
-              onSelect={setWrapperValue}
-            />
-          )}
-        </FormattedMessage>
-      ) : (
-        <OptionsList
-          id={id}
-          label={wrapperLabel}
-          dataOptions={listOptions}
-          optionValue={optionValue}
-          optionLabel={optionLabel}
-          className={styles['options-dropdown']}
-          disabled={!hasLoaded}
-          onSelect={setWrapperValue}
-        />
-      )}
+      <WithTranslation
+        wrapperLabel={wrapperLabel}
+      >
+        {label => (
+          <OptionsList
+            id={id}
+            label={label}
+            dataOptions={listOptions}
+            optionValue={optionValue}
+            optionLabel={optionLabel}
+            className={styles['options-dropdown']}
+            disabled={!hasLoaded || disabled}
+            onSelect={onValueSelect}
+          />
+        )}
+      </WithTranslation>
     </div>
   );
 });
@@ -132,14 +112,14 @@ withReferenceValues.propTypes = {
   dataOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
-  WrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
-  wrapperExplicitInsert: PropTypes.bool,
+  wrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
+  disabled: PropTypes.bool,
 };
 
 withReferenceValues.defaultProps = {
   id: null,
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-  wrapperExplicitInsert: false,
+  disabled: false,
 };

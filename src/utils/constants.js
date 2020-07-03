@@ -55,6 +55,12 @@ export const DATA_TYPES = [
   'EDIFACT',
 ];
 
+export const MARC_TYPES = [
+  'MARC_BIBLIOGRAPHIC',
+  'MARC_HOLDINGS',
+  'MARC_AUTHORITY',
+];
+
 export const LAYER_TYPES = {
   CREATE: 'create',
   EDIT: 'edit',
@@ -176,6 +182,20 @@ export const VALUE_TYPES = [
   },
 ];
 
+export const BOOLEAN_ACTIONS = {
+  ALL_TRUE: 'ALL_TRUE',
+  ALL_FALSE: 'ALL_FALSE',
+  AS_IS: 'AS_IS',
+  IGNORE: 'IGNORE',
+};
+
+export const REPEATABLE_ACTIONS = {
+  EXTEND_EXISTING: 'EXTEND_EXISTING',
+  DELETE_EXISTING: 'DELETE_EXISTING',
+  EXCHANGE_EXISTING: 'EXCHANGE_EXISTING',
+  DELETE_INCOMING: 'DELETE_INCOMING',
+};
+
 export const FORMS_SETTINGS = {
   [ENTITY_KEYS.MATCH_PROFILES]: {
     MATCHING: {
@@ -230,15 +250,15 @@ export const FORMS_SETTINGS = {
       BOOLEAN_ACTIONS: [
         {
           label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords',
-          value: 'ALL_TRUE',
+          value: BOOLEAN_ACTIONS.ALL_TRUE,
         },
         {
           label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords',
-          value: 'ALL_FALSE',
+          value: BOOLEAN_ACTIONS.ALL_FALSE,
         },
         {
           label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords',
-          value: 'AS_IS',
+          value: BOOLEAN_ACTIONS.AS_IS,
         },
       ],
     },
@@ -338,8 +358,14 @@ export const MAPPING_DETAILS_SUBACTIONS = {
   INSERT: 'INSERT',
   REMOVE: 'REMOVE',
   REPLACE: 'REPLACE',
-  NEW_FIELD: 'NEW_FIELD',
-  EXISTING_FIELD: 'EXISTING_FIELD',
+  NEW_FIELD: 'CREATE_NEW_FIELD',
+  EXISTING_FIELD: 'ADD_TO_EXISTING_FIELD',
+};
+
+export const MAPPING_DETAILS_POSITION = {
+  BEFORE_STRING: 'BEFORE_STRING',
+  AFTER_STRING: 'AFTER_STRING',
+  NEW_SUBFIELD: 'NEW_SUBFIELD',
 };
 
 export const ACTION_OPTIONS = [
@@ -382,11 +408,14 @@ export const SUBACTION_OPTIONS = [
 
 export const POSITION_OPTIONS = [
   {
-    value: 'BEFORE',
+    value: MAPPING_DETAILS_POSITION.BEFORE_STRING,
     label: 'ui-data-import.settings.mappingProfile.marcTable.position.before',
   }, {
-    value: 'AFTER',
+    value: MAPPING_DETAILS_POSITION.AFTER_STRING,
     label: 'ui-data-import.settings.mappingProfile.marcTable.position.after',
+  }, {
+    value: MAPPING_DETAILS_POSITION.NEW_SUBFIELD,
+    label: 'ui-data-import.settings.mappingProfile.marcTable.position.newSubfield',
   },
 ];
 
@@ -397,7 +426,7 @@ export const MARC_TABLE_CONFIG = {
     EDIT: [MAPPING_DETAILS_SUBACTIONS.INSERT, MAPPING_DETAILS_SUBACTIONS.REMOVE, MAPPING_DETAILS_SUBACTIONS.REPLACE],
     MOVE: [MAPPING_DETAILS_SUBACTIONS.NEW_FIELD, MAPPING_DETAILS_SUBACTIONS.EXISTING_FIELD],
   },
-  allowedPositions: { EDIT: { INSERT: ['BEFORE', 'AFTER'] } },
+  allowedPositions: { EDIT: { INSERT: [MAPPING_DETAILS_POSITION.BEFORE_STRING, MAPPING_DETAILS_POSITION.AFTER_STRING, MAPPING_DETAILS_POSITION.NEW_SUBFIELD] } },
   hasDataField: {
     ADD: true,
     DELETE: false,
@@ -445,3 +474,38 @@ export const ITEM_STATUS_OPTIONS = [
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.claimedReturned',
   },
 ];
+
+export const MAPPING_DETAILS_HEADLINE = {
+  INSTANCE: {
+    label: 'Instance',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.instance',
+  },
+  HOLDINGS: {
+    label: 'Holdings',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.holdings',
+  },
+  ITEM: {
+    label: 'Item',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.item',
+  },
+  ORDER: {
+    label: 'Order',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.order',
+  },
+  INVOICE: {
+    label: 'Invoice',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.invoice',
+  },
+  MARC_BIBLIOGRAPHIC: {
+    label: 'MARC Bibliographic',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.marcBib',
+  },
+  MARC_HOLDINGS: {
+    label: 'MARC Holdings',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.marcHoldings',
+  },
+  MARC_AUTHORITY: {
+    label: 'MARC Authority',
+    labelId: 'ui-data-import.settings.mappingProfiles.map.marcAuthority',
+  },
+};

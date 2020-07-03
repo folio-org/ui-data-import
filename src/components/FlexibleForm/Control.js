@@ -24,8 +24,7 @@ import {
   getOptionLabel,
   checkDate,
   checkEmpty,
-  ENTITY_KEYS,
-  FORMS_SETTINGS,
+  getDecoratorValue,
 } from '../../utils';
 
 import * as decorators from './ControlDecorators';
@@ -146,7 +145,7 @@ export const Control = memo(props => {
       attrs = {
         ...attrs,
         name: fullName,
-        fieldsPath: fullFieldsPath,
+        fieldsPath: getActualParam(fullFieldsPath, sectionNamespace, repeatableIndex),
       };
     }
 
@@ -205,16 +204,9 @@ export const Control = memo(props => {
 
       if (control && decorator) {
         wrapper = decorators[decorator];
-      }
-
-      // TODO: Should be moved to utils in the future
-      if (decorator && decorator === 'withBooleanActions' && staticControlType === 'KeyValue') {
-        const actions = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'BOOLEAN_ACTIONS'], []);
-        const newValue = actions.find(item => item.value === attrs?.value)?.label;
-
         attrs = {
           ...attrs,
-          value: newValue ? (<FormattedMessage id={newValue} />) : newValue,
+          value: getDecoratorValue(attrs?.value) || noValueComponent,
         };
       }
 
@@ -222,6 +214,7 @@ export const Control = memo(props => {
         ...attrs,
         component: wrapper || control,
         WrappedComponent: wrapper ? control : null,
+        setAcceptedValues: data => setReferenceTables(attrs.fieldsPath, data),
       };
     }
 
@@ -269,7 +262,7 @@ export const Control = memo(props => {
 
         currentRow = {
           ...currentRow,
-          [fieldName]: fieldValue,
+          [fieldName]: getDecoratorValue(fieldValue),
         };
       });
 
@@ -425,21 +418,29 @@ export const Control = memo(props => {
       setReferenceTables(fieldsPath, newRefTable);
     };
 
+    let Wrapper = null;
+    let fieldName = null;
+
+    if (decorator) {
+      Wrapper = decorators[decorator];
+      fieldName = `${isEditable ? editablePrefix : staticPrefix}${getActualParam(wrapperFieldName, sectionNamespace, repeatableIndex)}`;
+    }
+
     const Template = (
       <Repeatable
-        legend={legend ? <FormattedMessage id={legend} /> : legend}
+        legend={!Wrapper && (legend ? <FormattedMessage id={legend} /> : legend)}
         addLabel={addLabel ? <FormattedMessage id={addLabel} /> : addLabel}
         fields={refTable}
         onAdd={onAdd}
         onRemove={onRemove}
         canAdd={canAdd}
         canRemove={canRemove}
-        renderField={() => (
+        renderField={(field, index) => (
           <>
             {children.map((cfg, i) => (
               <Control
                 key={`control-${i}`}
-                repeatableIndex={i}
+                repeatableIndex={index}
                 staticNamespace={staticNamespace}
                 editableNamespace={editableNamespace}
                 sectionNamespace={sectionNamespace}
@@ -459,14 +460,6 @@ export const Control = memo(props => {
         )}
       />
     );
-
-    let Wrapper = null;
-    let fieldName = null;
-
-    if (decorator) {
-      Wrapper = decorators[decorator];
-      fieldName = `${isEditable ? editablePrefix : staticPrefix}${getActualParam(wrapperFieldName, sectionNamespace, repeatableIndex)}`;
-    }
 
     return (
       <Cmp
@@ -566,7 +559,8 @@ Control.propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, Node]),
   decorator: PropTypes.string,
   wrapperLabel: PropTypes.string,
-  wrapperSourceLink: PropTypes.string,
+  wrapperSources: PropTypes.arrayOf(PropTypes.object),
+  wrapperSourcesFn: PropTypes.string,
   placeholder: PropTypes.string,
   intl: PropTypes.object,
   okapi: PropTypes.object,

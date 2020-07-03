@@ -14,13 +14,14 @@ export const LinkerTrigger = ({
   ariaProps,
   keyHandler,
   onClick,
+  id,
 }) => (
   <>
     <Button
       buttonStyle="default"
       ref={triggerRef}
-      aria-labelledby="linker-tooltip-text"
-      aria-describedby="linker-tooltip-sub"
+      aria-labelledby={`${id}-text`}
+      aria-describedby={`${id}-sub`}
       onClick={onClick}
       onKeyDown={keyHandler}
       {...ariaProps}
@@ -30,12 +31,14 @@ export const LinkerTrigger = ({
         size="medium"
       />
     </Button>
-    <Tooltip
-      id="linker-tooltip"
-      text={title || <FormattedMessage id="ui-data-import.settings.getStarted" />}
-      triggerRef={triggerRef}
-      placement="right-end"
-    />
+    <div data-test-linker-tooltip-text>
+      <Tooltip
+        id={id}
+        text={title || <FormattedMessage id="ui-data-import.settings.getStarted" />}
+        triggerRef={triggerRef}
+        placement="right-end"
+      />
+    </div>
   </>
 );
 
@@ -45,4 +48,5 @@ LinkerTrigger.propTypes = {
   ariaProps: PropTypes.object.isRequired,
   keyHandler: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };

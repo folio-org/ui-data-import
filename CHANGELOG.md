@@ -1,6 +1,31 @@
 # Change history for ui-data-import
 
-## **2.0.0** (in progress)
+## **2.2.0** (in progress)
+
+### Features added:
+* Handle import of stripes-acq-components to modules and platform (UISACQCOMP-3)
+* Add validation rules for Move action for the MARC modifications table fields (UIDATIMP-492)
+* Add validation rules for Edit action for the MARC modifications table fields (UIDATIMP-489)
+
+### Bugs fixed:
+* Fix deletion repeatable fields in Field mapping profile (UIDATIMP-482)
+
+## [2.1.0](https://github.com/folio-org/ui-data-import/tree/v2.1.0) (2020-06-25)
+
+### Features added:
+* Field Mapping Profile details: MARC Bib from MARC Bib 2 - Delete (UIDATIMP-486)
+* Update Requests to SRS for v4 (UIDATIMP-486)
+
+### Bugs fixed:
+* Fix Accessibility problems for MARCTable component (UIDATIMP-547)
+* Fix issue with holdings type field population (UIDATIMP-542)
+* Fix issue with digitization policy field (UIDATIMP-543)
+* Fix repeatable fields in Field mapping profiles (UIDATIMP-538)
+* Fix Accessibility problems for /data-import page (UIDATIMP-429)
+* Fix Accessibility problems for data-import/job-logs (Buttons must have discernible text) (UIDATIMP-432)
+* Fix Accessibility problems for settings/data-import/job-profiles?layer=create (UIDATIMP-433)
+
+## [2.0.0](https://github.com/folio-org/ui-data-import/tree/v2.0.0) (2020-06-12)
 
 ### Features added:
 * Purge "intlShape" in prep for "react-intl" "v4" migration. (UIDATIMP-517)
@@ -9,9 +34,27 @@
 * Layout styles in repeatable sections, which contain withRepeatableActions decorator has been fixed (UIDATIMP-502)
 * Implement basic layout for Field Mapping Profile details: MARC Bib from MARC Bib (UIDATIMP-297)
 * Cover Mapping Profile Form with tests including field decorators (UIDATIMP-442)
+* Implement add new row functionality for the Field Mapping Profile details (UIDATIMP-497)
+* Change placement of repeatable decorator in the Inventory field mapping screens (UIDATIMP-518)
+* Implement delete row functionality for the Field Mapping Profile details (UIDATIMP-498)
+* Implement re-order row functionality for the Field Mapping Profile details (UIDATIMP-496)
+* Add acceptedValues obj to reference dropdown fields (UIDATIMP-519)
+* Get rid of "@folio/stripes-core" and "@folio/stripes-smart-components" dependencies
+* Update "react-router" and "react-router-dom" dependencies
+* Connect MARC modifications table to the Field mapping profile form (UIDATIMP-536)
+* Add validation rules for Add action for the MARC modifications table fields (UIDATIMP-487)
+* Migrate from `stripes.type` to `stripes.actsAs`
+* Adjust mapping rules for repeatable fields in Field mapping profiles (UIDATIMP-544)
+* Field Mapping Profile details: MARC Bib from MARC Bib 4 - Add Subsequent lines (UIDATIMP-488)
 
 ### Bugs fixed:
 * Fix Item status list in field mapping profiles (UIDATIMP-515)
+* Initial data doesn't show up for checkbox decorator for existing profiles (UIDATIMP-500)
+* Update logic for reference dropdowns (UIDATIMP-516)
+* Fix reference dropdowns long lists height (UIDATIMP-511)
+* Update logic for reference dropdowns with datepicker (UIDATIMP-523)
+* Add location code display to accepted values list (UIDATIMP-514)
+* Reference dropdowns. Statistical code values lists has been updated (UIDATIMP-512)
 
 ## [1.8.3](https://github.com/folio-org/ui-data-import/tree/v1.8.3) (2020-04-27)
 

@@ -4,23 +4,18 @@ import React, {
   useState,
 } from 'react';
 import { PropTypes } from 'prop-types';
-import {
-  FormattedMessage,
-  injectIntl,
-} from 'react-intl';
-
+import { injectIntl } from 'react-intl';
 import { get } from 'lodash';
 
 import { Select } from '@folio/stripes/components';
 
+import { WithTranslation } from '../../..';
+
 import {
   compose,
-  isFormattedMessage,
-  isTranslationId,
   ENTITY_KEYS,
   FORMS_SETTINGS,
 } from '../../../../utils';
-
 import styles from './withBooleanActions.css';
 
 const WithBooleanActionsControl = props => {
@@ -35,12 +30,15 @@ const WithBooleanActionsControl = props => {
   } = props;
 
   const actions = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'BOOLEAN_ACTIONS'], []);
-  const dataOptions = actions.map(action => ({
+  const dataOptions = actions.OPTIONS.map(action => ({
     value: action.value,
     label: intl.formatMessage({ id: action.label }),
   }));
 
-  const [currentValue, setCurrentValue] = useState(input?.value || '');
+  const isDefaultValueExist = input?.value && dataOptions.some(option => option.value === input.value);
+  const defaultValue = isDefaultValueExist ? input.value : '';
+
+  const [currentValue, setCurrentValue] = useState(defaultValue);
 
   const handleChangeWrapperValue = wrapperValue => {
     let newValue;
@@ -53,7 +51,6 @@ const WithBooleanActionsControl = props => {
     input.onChange(newValue);
   };
 
-  const needsTranslation = wrapperLabel && !isFormattedMessage(wrapperLabel) && isTranslationId(wrapperLabel);
   const currentInput = useRef(input);
 
   return (
@@ -64,29 +61,20 @@ const WithBooleanActionsControl = props => {
         {...rest}
       />
 
-      {needsTranslation ? (
-        <FormattedMessage id={wrapperLabel}>
-          {localized => (
-            <Select
-              id={id}
-              label={label}
-              placeholder={localized}
-              value={currentValue}
-              dataOptions={dataOptions}
-              onChange={e => handleChangeWrapperValue(e.target.value)}
-            />
-          )}
-        </FormattedMessage>
-      ) : (
-        <Select
-          id={id}
-          label={label}
-          placeholder={wrapperLabel}
-          value={currentValue}
-          dataOptions={dataOptions}
-          onChange={e => handleChangeWrapperValue(e.target.value)}
-        />
-      )}
+      <WithTranslation
+        wrapperLabel={wrapperLabel}
+      >
+        {placeholder => (
+          <Select
+            id={id}
+            label={label}
+            placeholder={placeholder}
+            value={currentValue}
+            dataOptions={dataOptions}
+            onChange={e => handleChangeWrapperValue(e.target.value)}
+          />
+        )}
+      </WithTranslation>
     </div>
   );
 };

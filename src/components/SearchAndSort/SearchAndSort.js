@@ -400,10 +400,7 @@ export class SearchAndSort extends Component {
     } = row;
 
     return (
-      <div
-        role="listitem"
-        key={`row-${rowIndex}`}
-      >
+      <div key={`row-${rowIndex}`}>
         <a
           href={this.getRowURL(rowData.id)}
           aria-label={labelStrings && labelStrings.join('...')}

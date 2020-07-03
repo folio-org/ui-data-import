@@ -2,21 +2,22 @@ import React, { memo } from 'react';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
-import classNames from 'classnames';
 
 import {
   get,
   identity,
-  isEmpty,
 } from 'lodash';
 
-import { Select } from '@folio/stripes/components';
+import {
+  Select,
+  Headline,
+} from '@folio/stripes/components';
+
+import { WithTranslation } from '../../..';
 
 import {
   ENTITY_KEYS,
   FORMS_SETTINGS,
-  isFormattedMessage,
-  isTranslationId,
 } from '../../../../utils';
 
 import styles from './withRepeatableActions.css';
@@ -26,7 +27,6 @@ export const withRepeatableActions = memo(props => {
     intl,
     enabled,
     legend,
-    referenceTable,
     children,
     wrapperLabel,
     wrapperFieldName,
@@ -38,34 +38,36 @@ export const withRepeatableActions = memo(props => {
     label: intl.formatMessage({ id: actions[key] }),
   }));
 
-  const needsTranslation = wrapperLabel && !isFormattedMessage(wrapperLabel) && isTranslationId(wrapperLabel);
-  const hasRecords = !isEmpty(referenceTable);
+  const legendHeadline = (
+    <Headline
+      tag="h3"
+      margin="xx-small"
+    >
+      <FormattedMessage id={legend} />
+    </Headline>
+  );
 
   return (
-    <div className={classNames(styles.decorator, isEmpty(legend) ? styles['no-legend'] : '')}>
-      {enabled && hasRecords && (
-        <div data-test-repeatable-decorator>
-          {needsTranslation ? (
-            <FormattedMessage id={wrapperLabel}>
-              {placeholder => (
-                <Field
-                  name={wrapperFieldName}
-                  component={Select}
-                  itemToString={identity}
-                  dataOptions={dataOptions}
-                  placeholder={placeholder}
-                />
-              )}
-            </FormattedMessage>
-          ) : (
-            <Field
-              name={wrapperFieldName}
-              component={Select}
-              itemToString={identity}
-              dataOptions={dataOptions}
-              placeholder={wrapperLabel}
-            />
-          )}
+    <div className={styles.decorator}>
+      {legend && legendHeadline}
+      {enabled && (
+        <div
+          data-test-repeatable-decorator
+          className={styles.selectHolder}
+        >
+          <WithTranslation
+            wrapperLabel={wrapperLabel}
+          >
+            {placeholder => (
+              <Field
+                name={wrapperFieldName}
+                component={Select}
+                itemToString={identity}
+                dataOptions={dataOptions}
+                placeholder={placeholder}
+              />
+            )}
+          </WithTranslation>
         </div>
       )}
       {children}
@@ -76,7 +78,6 @@ export const withRepeatableActions = memo(props => {
 withRepeatableActions.propTypes = {
   intl: PropTypes.object.isRequired,
   enabled: PropTypes.bool.isRequired,
-  referenceTable: PropTypes.arrayOf(PropTypes.object).isRequired,
   children: Node.isRequired,
   wrapperFieldName: PropTypes.string.isRequired,
   legend: PropTypes.oneOfType([PropTypes.string, Node]),

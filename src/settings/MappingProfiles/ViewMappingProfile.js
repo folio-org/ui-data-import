@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  get,
-  cloneDeep,
-} from 'lodash';
 
 import {
   AppIcon,
@@ -16,34 +12,47 @@ import {
   Pane,
   ConfirmationModal,
   PaneHeader,
+  AccordionSet,
+  Accordion,
+  KeyValue,
+  NoValue,
+  AccordionStatus,
+  Row,
+  Col,
+  ExpandAllButton,
 } from '@folio/stripes/components';
-import { withTags } from '@folio/stripes/smart-components';
+import {
+  ViewMetaData,
+  withTags,
+  TagsAccordion,
+} from '@folio/stripes/smart-components';
+
+import {
+  Spinner,
+  EndOfItem,
+  ActionMenu,
+  ProfileAssociator,
+  INCOMING_RECORD_TYPES,
+  FOLIO_RECORD_TYPES,
+  MappedHeader,
+} from '../../components';
+import {
+  MappingInstanceDetails,
+  MappingItemDetails,
+  MappingHoldingsDetails,
+} from './detailsSections/view';
 
 import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   PROFILE_TYPES,
+  MAPPING_DETAILS_HEADLINE,
   getEntity,
   getEntityTags,
 } from '../../utils';
-import {
-  Spinner,
-  EndOfItem,
-  ActionMenu,
-  FlexibleForm,
-  INCOMING_RECORD_TYPES,
-  FOLIO_RECORD_TYPES,
-} from '../../components';
-
-import { getReferenceTables } from './initialDetails';
-
-import { formConfigSamples } from '../../../test/bigtest/mocks';
 
 import sharedCss from '../../shared.css';
-import styles from '../MatchProfiles/ViewMatchProfile.css';
-
-const formName = 'mappingProfilesForm';
 
 @stripesConnect
 @withTags
@@ -185,65 +194,23 @@ export class ViewMappingProfile extends Component {
       return <Spinner entity={this} />;
     }
 
-    // MappingProfiles sample data does not contain user Ids because of back-end limitations
-    // and therefore it is required to add it manually on UI side
-    // TODO: use real IDs when sample data will be removed (remove the block of code below)
-    {
-      const userId = get(this.props, ['stripes', 'okapi', 'currentUser', 'id'], '');
-
-      mappingProfile.metadata = {
-        ...mappingProfile.metadata,
-        createdByUserId: mappingProfile.metadata.createdByUserId || userId,
-        updatedByUserId: mappingProfile.metadata.updatedByUserId || userId,
-      };
-    }
-
-    const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
-      .map(([recordType, { captionId }]) => ({
-        value: recordType,
-        label: captionId,
-      }));
-    const getExistingRecordTypesDataOptions = () => Object.entries(FOLIO_RECORD_TYPES)
-      .map(([recordType, { captionId }]) => ({
-        value: recordType,
-        label: captionId,
-      }));
+    const {
+      id,
+      name,
+      incomingRecordType,
+      existingRecordType,
+      mappingDetails,
+    } = mappingProfile;
 
     const associations = [
       ...mappingProfile.parentProfiles,
       ...mappingProfile.childProfiles,
     ];
 
-    const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
-    const record = cloneDeep(mappingProfile);
-    const existingRecordType = get(record, ['existingRecordType'], null);
-    const referenceTables = getReferenceTables(get(mappingProfile.mappingDetails, 'mappingFields', []));
-
-    const injectedProps = {
-      'section-metadata': {
-        metadata: mappingProfile.metadata,
-        systemId: SYSTEM_USER_ID,
-        systemUser: SYSTEM_USER_NAME,
-      },
-      'field-record-type-incoming': { dataOptions: getIncomingRecordTypesDataOptions() },
-      'field-record-type-existing': { dataOptions: getExistingRecordTypesDataOptions() },
-      'mapping-tags': {
-        renderForbidden: !tagsEnabled,
-        link: `data-import-profiles/mappingProfiles/${mappingProfile.id}`,
-        getEntity,
-        getEntityTags,
-      },
-      'section-mapping-details': { stateFieldValue: existingRecordType },
-      'mappingProfile.actionsAssociator': {
-        entityKey: ENTITY_KEYS.ACTION_PROFILES,
-        namespaceKey: 'AAP',
-        parentId: record.id,
-        parentType: PROFILE_TYPES.MAPPING_PROFILE,
-        masterType: PROFILE_TYPES.ACTION_PROFILE,
-        detailType: PROFILE_TYPES.MAPPING_PROFILE,
-        profileName: record.name,
-        contentData: associations,
-      },
+    const renderDetails = {
+      INSTANCE: <MappingInstanceDetails mappingDetails={mappingDetails?.mappingFields} />,
+      HOLDINGS: <MappingHoldingsDetails mappingDetails={mappingDetails?.mappingFields} />,
+      ITEM: <MappingItemDetails mappingDetails={mappingDetails?.mappingFields} />,
     };
 
     return (
@@ -253,22 +220,100 @@ export class ViewMappingProfile extends Component {
         fluidContentWidth
         renderHeader={this.renderPaneHeader}
       >
-        <TitleManager record={mappingProfile.name} />
+        <TitleManager record={name} />
         <Headline
           data-test-headline
           size="xx-large"
           tag="h2"
         >
-          {mappingProfile.name}
+          {name}
         </Headline>
-        <FlexibleForm
-          component="Fragment"
-          config={formConfig}
-          styles={styles}
-          record={record}
-          referenceTables={referenceTables}
-          injectedProps={injectedProps}
-        />
+        <AccordionSet>
+          <Accordion
+            id="summary"
+            label={<FormattedMessage id="ui-data-import.summary" />}
+          >
+            <ViewMetaData
+              metadata={mappingProfile.metadata}
+              systemId={SYSTEM_USER_ID}
+              systemUser={SYSTEM_USER_NAME}
+            />
+            <div data-test-name-field>
+              <KeyValue
+                value={name}
+                label={<FormattedMessage id="ui-data-import.name" />}
+              />
+            </div>
+            <KeyValue label={<FormattedMessage id="ui-data-import.incomingRecordType" />}>
+              <div data-test-incoming-record-type>
+                <FormattedMessage id={INCOMING_RECORD_TYPES[incomingRecordType].captionId} />
+              </div>
+            </KeyValue>
+            <KeyValue label={<FormattedMessage id="ui-data-import.folioRecordType" />}>
+              <div data-test-folio-record-type>
+                <FormattedMessage id={FOLIO_RECORD_TYPES[existingRecordType].captionId} />
+              </div>
+            </KeyValue>
+            <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
+              <div data-test-description>{mappingProfile.description || <NoValue />}</div>
+            </KeyValue>
+          </Accordion>
+          {tagsEnabled && (
+            <div data-test-tags-accordion>
+              <TagsAccordion
+                link={`data-import-profiles/mappingProfiles/${id}`}
+                getEntity={getEntity}
+                getEntityTags={getEntityTags}
+                renderForbidden={!tagsEnabled}
+              />
+            </div>
+          )}
+          <Accordion
+            id="mapping-profile-details"
+            label={<FormattedMessage id="ui-data-import.details" />}
+          >
+            {existingRecordType && (
+              <AccordionStatus>
+                <Row between="xs">
+                  <Col>
+                    <MappedHeader
+                      mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
+                      mappedLabel="Field mapping"
+                      mappableLabelId={MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId}
+                      mappableLabel={MAPPING_DETAILS_HEADLINE[existingRecordType]?.label}
+                      headlineProps={{ margin: 'small' }}
+                    />
+                  </Col>
+                  <Col>
+                    <div data-test-expand-all-button>
+                      <ExpandAllButton />
+                    </div>
+                  </Col>
+                </Row>
+                {renderDetails[existingRecordType]}
+              </AccordionStatus>
+            )}
+          </Accordion>
+          <Accordion
+            id="mappingProfileFormAssociatedActionProfileAccordion"
+            label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
+          >
+            <ProfileAssociator
+              entityKey={ENTITY_KEYS.ACTION_PROFILES}
+              namespaceKey="AAP"
+              parentId={id}
+              parentType={PROFILE_TYPES.MAPPING_PROFILE}
+              masterType={PROFILE_TYPES.ACTION_PROFILE}
+              detailType={PROFILE_TYPES.MAPPING_PROFILE}
+              profileName={name}
+              contentData={associations}
+              hasLoaded={hasLoaded}
+              record={mappingProfile}
+              isMultiSelect
+              isMultiLink={false}
+            />
+          </Accordion>
+        </AccordionSet>
         <EndOfItem
           className={sharedCss.endOfRecord}
           title={<FormattedMessage id="ui-data-import.endOfRecord" />}
@@ -279,7 +324,7 @@ export class ViewMappingProfile extends Component {
           heading={(
             <FormattedMessage
               id="ui-data-import.modal.mappingProfile.delete.header"
-              values={{ name: mappingProfile.name }}
+              values={{ name }}
             />
           )}
           message={<FormattedMessage id="ui-data-import.modal.mappingProfile.delete.message" />}

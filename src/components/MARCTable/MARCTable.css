@@ -40,6 +40,7 @@
   min-height: var(--control-min-size-desktop);
   overflow: hidden;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
+  overflow-wrap: break-word;
 
   &:last-child {
     border-right: 0;
@@ -47,6 +48,12 @@
 
   &:not(:first-child):not(:last-child) > :first-child {
     flex-grow: 1;
+  }
+}
+
+.removeButton {
+  &:disabled {
+    pointer-events: none;
   }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "1.8.3",
+  "version": "2.1.0",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -26,9 +26,6 @@
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.0.0",
     "@folio/stripes": "^4.0.0",
-    "@folio/stripes-core": "^4.0.0",
-    "@folio/stripes-smart-components": "^3.2.0",
-    "@folio/stripes-acq-components": ">=2.0.0",
     "babel-eslint": "^10.0.3",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
@@ -43,11 +40,12 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-intl": "^4.5.1",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
     "sinon": "^7.2.2"
   },
   "dependencies": {
+    "@folio/stripes-acq-components": ">=2.0.0",
     "classnames": "^2.2.5",
     "lodash": "^4.16.4",
     "prop-types": "^15.6.0",
@@ -63,11 +61,16 @@
     "react-router-dom": "^4.3.1"
   },
   "stripes": {
-    "type": "app",
+    "stripesDeps": [
+      "@folio/stripes-acq-components"
+    ],
+    "actsAs": [
+      "app",
+      "settings"
+    ],
     "displayName": "ui-data-import.meta.title",
     "route": "/data-import",
     "queryResource": "query",
-    "hasSettings": true,
     "icons": [
       {
         "name": "holdings",
@@ -172,6 +175,7 @@
           "data-import.fileExtensions.put",
           "data-import.fileExtensions.delete",
           "data-import.fileExtensions.default",
+          "converter-storage.profileSnapshots.get",
           "converter-storage.jobprofile.get",
           "converter-storage.jobprofile.post",
           "converter-storage.jobprofile.put",

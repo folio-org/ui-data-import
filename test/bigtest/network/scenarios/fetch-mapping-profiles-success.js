@@ -1,5 +1,8 @@
 import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
-import { noAssociatedActionProfiles } from '../../mocks';
+import {
+  noAssociatedActionProfiles,
+  marcMappingDetails,
+} from '../../mocks';
 
 export default server => {
   server.create('mapping-profile', {
@@ -14,21 +17,21 @@ export default server => {
         path: 'instance.discoverySuppress',
         value: null,
         subfields: [],
-        booleanFieldAction: '',
+        booleanFieldAction: 'IGNORE',
       }, {
         name: 'staffSuppress',
         enabled: true,
         path: 'instance.staffSuppress',
         value: null,
         subfields: [],
-        booleanFieldAction: '',
+        booleanFieldAction: 'IGNORE',
       }, {
         name: 'previouslyHeld',
         enabled: true,
         path: 'instance.previouslyHeld',
         value: null,
         subfields: [],
-        booleanFieldAction: '',
+        booleanFieldAction: 'IGNORE',
       }, {
         name: 'hrid',
         enabled: false,
@@ -71,7 +74,7 @@ export default server => {
             // order: 0,
             name: 'statisticalCodeId',
             enabled: true,
-            path: 'instance.statisticalCodeIds[].statisticalCodeId',
+            path: 'instance.statisticalCodeIds[]',
             value: '910',
           }],
         }],
@@ -84,7 +87,7 @@ export default server => {
       }, {
         name: 'alternativeTitles',
         enabled: false,
-        path: 'instance.alternativeTitles',
+        path: 'instance.alternativeTitles[]',
         value: '910',
         subfields: [{
           order: 0,
@@ -112,7 +115,7 @@ export default server => {
       }, {
         name: 'series',
         enabled: false,
-        path: 'instance.series',
+        path: 'instance.series[]',
         value: '910',
         subfields: [{
           order: 0,
@@ -121,14 +124,14 @@ export default server => {
             // order: 0,
             name: 'source',
             enabled: false,
-            path: 'instance.series[].source',
+            path: 'instance.series[]',
             value: '910',
           }],
         }],
       }, {
         name: 'precedingTitles',
         enabled: true,
-        path: 'instance.precedingTitles',
+        path: 'instance.precedingTitles[]',
         value: '',
         subfields: [{
           order: 0,
@@ -162,7 +165,7 @@ export default server => {
       }, {
         name: 'succeedingTitles',
         enabled: false,
-        path: 'instance.succeedingTitles',
+        path: 'instance.succeedingTitles[]',
         value: '910',
         subfields: [{
           order: 0,
@@ -196,7 +199,7 @@ export default server => {
       }, {
         name: 'identifiers',
         enabled: false,
-        path: 'instance.identifiers',
+        path: 'instance.identifiers[]',
         value: '',
         subfields: [{
           order: 0,
@@ -218,14 +221,14 @@ export default server => {
       }, {
         name: 'contributors',
         enabled: false,
-        path: 'instance.contributors',
+        path: 'instance.contributors[]',
         value: '',
         subfields: [{
           order: 0,
           path: 'instance.contributors[]',
           fields: [{
             // order: 0,
-            name: 'name',
+            name: 'contributorName',
             enabled: false,
             path: 'instance.contributors[].name',
             value: '910',
@@ -252,14 +255,14 @@ export default server => {
             name: 'primary',
             enabled: false,
             path: 'instance.contributors[].primary',
-            value: '910',
-            booleanFieldAction: '',
+            value: '',
+            booleanFieldAction: 'IGNORE',
           }],
         }],
       }, {
         name: 'publication',
         enabled: false,
-        path: 'instance.publication',
+        path: 'instance.publication[]',
         value: '',
         subfields: [{
           order: 0,
@@ -293,7 +296,7 @@ export default server => {
       }, {
         name: 'editions',
         enabled: false,
-        path: 'instance.editions',
+        path: 'instance.editions[]',
         value: '',
         subfields: [{
           order: 0,
@@ -302,14 +305,14 @@ export default server => {
             // order: 0,
             name: 'edition',
             enabled: false,
-            path: 'instance.editions[].edition',
+            path: 'instance.editions[]',
             value: '910',
           }],
         }],
       }, {
         name: 'physicalDescriptions',
         enabled: false,
-        path: 'instance.physicalDescriptions',
+        path: 'instance.physicalDescriptions[]',
         value: '',
         subfields: [{
           order: 0,
@@ -318,7 +321,7 @@ export default server => {
             // order: 0,
             name: 'physicalDescription',
             enabled: false,
-            path: 'instance.physicalDescriptions[].physicalDescription',
+            path: 'instance.physicalDescriptions[]',
             value: '910',
           }],
         }],
@@ -331,7 +334,7 @@ export default server => {
       }, {
         name: 'natureOfContentTermIds',
         enabled: true,
-        path: 'instance.natureOfContentTermIds',
+        path: 'instance.natureOfContentTermIds[]',
         value: '',
         subfields: [{
           order: 0,
@@ -340,14 +343,14 @@ export default server => {
             // order: 0,
             name: 'natureOfContentTermId',
             enabled: true,
-            path: 'instance.natureOfContentTermIds[].natureOfContentTermId',
+            path: 'instance.natureOfContentTermIds[]',
             value: '910',
           }],
         }],
       }, {
         name: 'instanceFormatIds',
         enabled: false,
-        path: 'instance.instanceFormatIds',
+        path: 'instance.instanceFormatIds[]',
         value: '',
         subfields: [{
           order: 0,
@@ -356,14 +359,14 @@ export default server => {
             // order: 0,
             name: 'instanceFormatId',
             enabled: false,
-            path: 'instance.instanceFormatIds[].instanceFormatId',
+            path: 'instance.instanceFormatIds[]',
             value: '910',
           }],
         }],
       }, {
         name: 'languages',
         enabled: false,
-        path: 'instance.languages',
+        path: 'instance.languages[]',
         value: '',
         subfields: [{
           order: 0,
@@ -372,14 +375,14 @@ export default server => {
             // order: 0,
             name: 'languageId',
             enabled: false,
-            path: 'instance.languages[].languageId',
+            path: 'instance.languages[]',
             value: '910',
           }],
         }],
       }, {
         name: 'publicationFrequency',
         enabled: false,
-        path: 'instance.publicationFrequency',
+        path: 'instance.publicationFrequency[]',
         value: '',
         subfields: [{
           order: 0,
@@ -388,14 +391,14 @@ export default server => {
             // order: 0,
             name: 'publicationFrequency',
             enabled: false,
-            path: 'instance.publicationFrequency[].publicationFrequency',
+            path: 'instance.publicationFrequency[]',
             value: '910',
           }],
         }],
       }, {
         name: 'publicationRange',
         enabled: false,
-        path: 'instance.publicationRange',
+        path: 'instance.publicationRange[]',
         value: '',
         subfields: [{
           order: 0,
@@ -404,14 +407,14 @@ export default server => {
             // order: 0,
             name: 'publicationRange',
             enabled: false,
-            path: 'instance.publicationRange[].publicationRange',
+            path: 'instance.publicationRange[]',
             value: '910',
           }],
         }],
       }, {
         name: 'notes',
         enabled: false,
-        path: 'instance.notes',
+        path: 'instance.notes[]',
         value: '',
         subfields: [{
           order: 0,
@@ -420,7 +423,7 @@ export default server => {
             // order: 0,
             name: 'noteType',
             enabled: false,
-            path: 'instance.notes[].noteType',
+            path: 'instance.notes[].instanceNoteTypeId',
             value: '910',
           }, {
             // order: 1,
@@ -434,13 +437,13 @@ export default server => {
             enabled: false,
             path: 'instance.notes[].staffOnly',
             value: null,
-            booleanFieldAction: '',
+            booleanFieldAction: 'IGNORE',
           }],
         }],
       }, {
         name: 'electronicAccess',
         enabled: false,
-        path: 'instance.electronicAccess',
+        path: 'instance.electronicAccess[]',
         value: '',
         subfields: [{
           order: 0,
@@ -480,7 +483,7 @@ export default server => {
       }, {
         name: 'subjects',
         enabled: false,
-        path: 'instance.subjects',
+        path: 'instance.subjects[]',
         value: '',
         subfields: [{
           order: 0,
@@ -489,14 +492,14 @@ export default server => {
             // order: 0,
             name: 'subject',
             enabled: false,
-            path: 'instance.subjects[].subject',
+            path: 'instance.subjects[]',
             value: '910',
           }],
         }],
       }, {
         name: 'classifications',
         enabled: false,
-        path: 'instance.classifications',
+        path: 'instance.classifications[]',
         value: '',
         subfields: [{
           order: 0,
@@ -505,7 +508,7 @@ export default server => {
             // order: 0,
             name: 'classificationTypeId',
             enabled: false,
-            path: 'instance.classifications[].classificationTypeId',
+            path: 'instance.classifications[]',
             value: '910',
           }, {
             // order: 1,
@@ -518,7 +521,7 @@ export default server => {
       }, {
         name: 'parentInstances',
         enabled: true,
-        path: 'instance.parentInstances',
+        path: 'instance.parentInstances[]',
         value: '',
         subfields: [{
           order: 0,
@@ -540,7 +543,7 @@ export default server => {
       }, {
         name: 'childInstances',
         enabled: true,
-        path: 'instance.childInstances',
+        path: 'instance.childInstances[]',
         value: '',
         subfields: [{
           order: 0,
@@ -575,7 +578,7 @@ export default server => {
         path: 'holdings.discoverySuppress',
         value: '',
         subfields: [],
-        booleanFieldAction: '',
+        booleanFieldAction: 'IGNORE',
       }, {
         name: 'hrid',
         enabled: false,
@@ -585,7 +588,7 @@ export default server => {
       }, {
         name: 'formerIds',
         enabled: true,
-        path: 'holdings.formerIds',
+        path: 'holdings.formerIds[]',
         value: '',
         subfields: [{
           order: 0,
@@ -594,7 +597,7 @@ export default server => {
             order: 0,
             name: 'formerId',
             enabled: true,
-            path: 'holdings.formerIds[].formerId',
+            path: 'holdings.formerIds[]',
             value: '910',
           }],
         }],
@@ -607,7 +610,7 @@ export default server => {
       }, {
         name: 'statisticalCodeIds',
         enabled: true,
-        path: 'holdings.statisticalCodeIds',
+        path: 'holdings.statisticalCodeIds[]',
         value: '',
         subfields: [{
           order: 0,
@@ -616,7 +619,7 @@ export default server => {
             order: 0,
             name: 'statisticalCodeId',
             enabled: true,
-            path: 'holdings.statisticalCodeIds[].statisticalCodeId',
+            path: 'holdings.statisticalCodeIds[]',
             value: '910',
           }],
         }],
@@ -683,7 +686,7 @@ export default server => {
       }, {
         name: 'holdingStatements',
         enabled: true,
-        path: 'holdings.holdingStatements',
+        path: 'holdings.holdingStatements[]',
         value: '',
         subfields: [{
           order: 0,
@@ -705,7 +708,7 @@ export default server => {
       }, {
         name: 'holdingStatementsForSupplements',
         enabled: true,
-        path: 'holdings.holdingStatementsForSupplements',
+        path: 'holdings.holdingStatementsForSupplements[]',
         value: '',
         subfields: [{
           order: 0,
@@ -727,7 +730,7 @@ export default server => {
       }, {
         name: 'holdingStatementsForIndexes',
         enabled: true,
-        path: 'holdings.holdingStatementsForIndexes',
+        path: 'holdings.holdingStatementsForIndexes[]',
         value: '',
         subfields: [{
           order: 0,
@@ -753,9 +756,9 @@ export default server => {
         value: '910',
         subfields: [],
       }, {
-        name: 'digitalizationPolicy',
+        name: 'digitizationPolicy',
         enabled: true,
-        path: 'holdings.digitalizationPolicy',
+        path: 'holdings.digitizationPolicy',
         value: '910',
         subfields: [],
       }, {
@@ -767,7 +770,7 @@ export default server => {
       }, {
         name: 'notes',
         enabled: true,
-        path: 'holdings.notes',
+        path: 'holdings.notes[]',
         value: '',
         subfields: [{
           order: 0,
@@ -776,7 +779,7 @@ export default server => {
             order: 0,
             name: 'noteType',
             enabled: true,
-            path: 'holdings.notes[].noteType',
+            path: 'holdings.notes[].holdingsNoteTypeId',
             value: '910',
           }, {
             // order: 1,
@@ -790,13 +793,13 @@ export default server => {
             enabled: true,
             path: 'holdings.notes[].staffOnly',
             value: null,
-            booleanFieldAction: '',
+            booleanFieldAction: 'IGNORE',
           }],
         }],
       }, {
         name: 'electronicAccess',
         enabled: true,
-        path: 'holdings.electronicAccess',
+        path: 'holdings.electronicAccess[]',
         value: '',
         subfields: [{
           order: 0,
@@ -854,7 +857,7 @@ export default server => {
       }, {
         name: 'receivingHistory.entries',
         enabled: true,
-        path: 'holdings.receivingHistory.entries',
+        path: 'holdings.receivingHistory.entries[]',
         value: '',
         subfields: [{
           order: 0,
@@ -865,7 +868,7 @@ export default server => {
             enabled: true,
             path: 'holdings.receivingHistory.entries[].publicDisplay',
             value: null,
-            booleanFieldAction: '',
+            booleanFieldAction: 'IGNORE',
           }, {
             order: 0,
             name: 'enumeration',
@@ -894,7 +897,7 @@ export default server => {
         enabled: true,
         path: 'item.discoverySuppress',
         value: null,
-        booleanFieldAction: '',
+        booleanFieldAction: 'IGNORE',
         subfields: [],
       }, {
         name: 'hrid',
@@ -923,7 +926,7 @@ export default server => {
       }, {
         name: 'formerIds',
         enabled: true,
-        path: 'item.formerIds',
+        path: 'item.formerIds[]',
         value: '',
         subfields: [{
           order: 0,
@@ -932,14 +935,14 @@ export default server => {
             // order: 0,
             name: 'formerId',
             enabled: true,
-            path: 'item.formerIds[].formerId',
+            path: 'item.formerIds[]',
             value: '910',
           }],
         }],
       }, {
         name: 'statisticalCodeIds',
         enabled: true,
-        path: 'item.statisticalCodeIds',
+        path: 'item.statisticalCodeIds[]',
         value: '',
         subfields: [{
           order: 0,
@@ -948,7 +951,7 @@ export default server => {
             // order: 0,
             name: 'statisticalCodeId',
             enabled: true,
-            path: 'item.statisticalCodeIds[].statisticalCodeId',
+            path: 'item.statisticalCodeIds[]',
             value: '910',
           }],
         }],
@@ -1021,7 +1024,7 @@ export default server => {
       }, {
         name: 'yearCaption',
         enabled: true,
-        path: 'item.yearCaption',
+        path: 'item.yearCaption[]',
         value: '',
         subfields: [{
           order: 0,
@@ -1030,7 +1033,7 @@ export default server => {
             // order: 0,
             name: 'yearCaption',
             enabled: true,
-            path: 'item.yearCaption[].yearCaption',
+            path: 'item.yearCaption[]',
             value: '910',
           }],
         }],
@@ -1067,7 +1070,7 @@ export default server => {
       }, {
         name: 'notes',
         enabled: true,
-        path: 'item.notes',
+        path: 'item.notes[]',
         value: '',
         subfields: [{
           order: 0,
@@ -1090,7 +1093,7 @@ export default server => {
             enabled: true,
             path: 'item.notes[].staffOnly',
             value: null,
-            booleanFieldAction: '',
+            booleanFieldAction: 'IGNORE',
           }],
         }],
       }, {
@@ -1114,7 +1117,7 @@ export default server => {
       }, {
         name: 'circulationNotes',
         enabled: true,
-        path: 'item.circulationNotes',
+        path: 'item.circulationNotes[]',
         value: '',
         subfields: [{
           order: 0,
@@ -1137,7 +1140,7 @@ export default server => {
             enabled: true,
             path: 'item.circulationNotes[].staffOnly',
             value: null,
-            booleanFieldAction: '',
+            booleanFieldAction: 'IGNORE',
           }],
         }],
       }, {
@@ -1155,7 +1158,7 @@ export default server => {
       }, {
         name: 'electronicAccess',
         enabled: true,
-        path: 'item.electronicAccess',
+        path: 'item.electronicAccess[]',
         value: '',
         subfields: [{
           order: 0,
@@ -1198,6 +1201,7 @@ export default server => {
   server.create('mapping-profile', {
     incomingRecordType: 'MARC_BIBLIOGRAPHIC',
     existingRecordType: 'MARC_BIBLIOGRAPHIC',
+    mappingDetails: { marcMappingDetails },
   });
   server.createList('mapping-profile', 1);
 

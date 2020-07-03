@@ -6,7 +6,7 @@ const ORDER = {
     enabled: true,
     path: 'order.discoverySuppress',
     value: null,
-    booleanFieldAction: 'AS_IS',
+    booleanFieldAction: 'IGNORE',
     subfields: [],
   }, {
     name: 'hrid',

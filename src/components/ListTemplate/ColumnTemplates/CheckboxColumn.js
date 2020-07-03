@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
@@ -18,11 +19,16 @@ export const CheckboxColumn = memo(({
     data-test-select-item
     onClick={e => e.stopPropagation()}
   >
-    <Checkbox
-      name={`selected-${value}`}
-      checked={checked}
-      onChange={() => onChange(value)}
-    />
+    <FormattedMessage id="ui-data-import.settings.table.checkbox">
+      {ariaLabel => (
+        <Checkbox
+          name={`selected-${value}`}
+          checked={checked}
+          onChange={() => onChange(value)}
+          aria-label={ariaLabel}
+        />
+      )}
+    </FormattedMessage>
   </div>
 ));
 

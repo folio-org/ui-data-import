@@ -23,3 +23,16 @@
     }
   }
 }
+
+.dropdownList {
+  max-height: 300px;
+  overflow-x: hidden;
+  margin: 0 -13px;
+
+  & li {
+    padding: 0 13px;
+    &:first-child {
+      padding-top: 3px;
+    }
+  }
+}
