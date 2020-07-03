@@ -1,5 +1,6 @@
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { fieldsConfig } from './fields-config';
-import { getLabel } from './getDropdownOptions';
 
 export const getFieldMatched = (value, recordType) => {
   if (!value || !recordType) {
@@ -14,5 +15,5 @@ export const getFieldMatched = (value, recordType) => {
 
   const field = fieldsConfig.find(item => item.value === value);
 
-  return field ? getLabel(field.label) : undefined;
+  return field ? <FormattedMessage id={field.label} /> : undefined;
 };
