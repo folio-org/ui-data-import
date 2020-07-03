@@ -92,7 +92,7 @@ export const MatchProfilesFormComponent = memo(({
     if (isEditMode) {
       const matches = matchFields(jsonSchemas[existingRecordType], existingRecordType);
 
-      return getDropdownOptions(matches);
+      return getDropdownOptions(matches, intl);
     }
 
     return [];

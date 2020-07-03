@@ -3,8 +3,6 @@ import { get } from 'lodash';
 import { fieldsConfig } from './fields-config';
 import { fieldCategoriesConfig } from './field-categories-config';
 
-export const getLabel = key => translations[key];
-
 export const matchFields = (resources, recordType) => {
   return fieldsConfig.filter(field => field.recordType
     && field.recordType === recordType
