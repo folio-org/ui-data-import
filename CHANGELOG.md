@@ -1,5 +1,13 @@
 # Change history for ui-data-import
 
+## [2.1.1](https://github.com/folio-org/ui-data-import/tree/v2.1.1) (2020-07-09)
+
+### Features added:
+* Get rid of imported translations for math profiles (UIDATIMP-570)
+
+### Bugs fixed:
+* Fix deletion repeatable fields in Field mapping profile (UIDATIMP-482)
+
 ## [2.1.0](https://github.com/folio-org/ui-data-import/tree/v2.1.0) (2020-06-25)
 
 ### Features added:
