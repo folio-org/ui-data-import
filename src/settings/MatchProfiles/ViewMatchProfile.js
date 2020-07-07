@@ -283,7 +283,7 @@ export class ViewMatchProfile extends Component {
           />
         ),
       },
-      'criterion-value-type': { value: getFieldMatched(existingRecordField, matchProfile.existingRecordType) || <NoValue /> },
+      'criterion-value-type': { children: getFieldMatched(existingRecordField, matchProfile.existingRecordType) || <NoValue /> },
     };
 
     return (

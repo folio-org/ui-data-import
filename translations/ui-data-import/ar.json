@@ -560,5 +560,6 @@
     "settings.table.checkboxAll": "تحديد كل المواد",
     "settings.mappingProfiles.map.instance.parentInstances.field.instanceRelationshipTypeId": "نوع العلاقة",
     "settings.mappingProfiles.map.instance.childInstances.field.instanceRelationshipTypeId": "نوع العلاقة",
-    "validation.chooseDifferentField": "Please choose a different field"
+    "validation.chooseDifferentField": "يرجى اختيار حقل مختلف",
+    "settings.mappingProfile.marcTable.position.newSubfield": "حقل فرعي جديد"
 }

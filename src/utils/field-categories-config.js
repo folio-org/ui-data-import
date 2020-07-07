@@ -2,223 +2,223 @@ export const fieldCategoriesConfig = [
   /* Instance */
   {
     id: 'admin-data',
-    label: 'adminData',
+    label: 'ui-data-import.settings.matchProfiles.adminData',
     moduleId: 'instance',
   }, {
     id: 'title-data',
-    label: 'titleData',
+    label: 'ui-data-import.settings.matchProfiles.titleData',
     moduleId: 'instance',
   }, {
     id: 'identifier',
-    label: 'identifier',
+    label: 'ui-data-import.settings.matchProfiles.identifier',
     moduleId: 'instance',
   }, {
     id: 'contributor',
-    label: 'contributor',
+    label: 'ui-data-import.settings.matchProfiles.contributor',
     moduleId: 'instance',
   }, {
     id: 'descriptive-data',
-    label: 'descriptiveData',
+    label: 'ui-data-import.settings.matchProfiles.descriptiveData',
     moduleId: 'instance',
   }, {
     id: 'instance-notes',
-    label: 'instanceNotes',
+    label: 'ui-data-import.settings.matchProfiles.instanceNotes',
     moduleId: 'instance',
   }, {
     id: 'electronic-access',
-    label: 'electronicAccess',
+    label: 'ui-data-import.settings.matchProfiles.electronicAccess',
     moduleId: 'instance',
   }, {
     id: 'subject',
-    label: 'subject',
+    label: 'ui-data-import.settings.matchProfiles.subject',
     moduleId: 'instance',
   }, {
     id: 'classification',
-    label: 'classification',
+    label: 'ui-data-import.settings.matchProfiles.classification',
     moduleId: 'instance',
   }, {
     id: 'instance-relationship',
-    label: 'instanceRelationshipAnalyticsBoundWith',
+    label: 'ui-data-import.settings.matchProfiles.instanceRelationship',
     moduleId: 'instance',
   },
   /* Holdings */
   {
     id: 'admin-data',
-    label: 'adminData',
+    label: 'ui-data-import.settings.matchProfiles.adminData',
     moduleId: 'holdings',
   }, {
     id: 'location',
-    label: 'location',
+    label: 'ui-data-import.settings.matchProfiles.location',
     moduleId: 'holdings',
   }, {
     id: 'holdings-details',
-    label: 'holdingsDetails',
+    label: 'ui-data-import.settings.matchProfiles.holdingsDetails',
     moduleId: 'holdings',
   }, {
     id: 'holdings-notes',
-    label: 'holdingsNotes',
+    label: 'ui-data-import.settings.matchProfiles.holdingsNotes',
     moduleId: 'holdings',
   }, {
     id: 'electronic-access',
-    label: 'electronicAccess',
+    label: 'ui-data-import.settings.matchProfiles.electronicAccess',
     moduleId: 'holdings',
   }, {
     id: 'acquisition',
-    label: 'acquisition',
+    label: 'ui-data-import.settings.matchProfiles.acquisition',
     moduleId: 'holdings',
   }, {
     id: 'receiving-history',
-    label: 'receivingHistory',
+    label: 'ui-data-import.settings.matchProfiles.receivingHistory',
     moduleId: 'holdings',
   },
   /* Item */
   {
     id: 'admin-data',
-    label: 'adminData',
+    label: 'ui-data-import.settings.matchProfiles.adminData',
     moduleId: 'item',
   }, {
     id: 'item-data',
-    label: 'itemData',
+    label: 'ui-data-import.settings.matchProfiles.itemData',
     moduleId: 'item',
   }, {
     id: 'enumeration-data',
-    label: 'enumerationData',
+    label: 'ui-data-import.settings.matchProfiles.enumerationData',
     moduleId: 'item',
   }, {
     id: 'condition',
-    label: 'condition',
+    label: 'ui-data-import.settings.matchProfiles.condition',
     moduleId: 'item',
   }, {
     id: 'item-notes',
-    label: 'itemNotes',
+    label: 'ui-data-import.settings.matchProfiles.itemNotes',
     moduleId: 'item',
   }, {
     id: 'loan-and-availability',
-    label: 'item.loanAndAvailability',
+    label: 'ui-data-import.settings.matchProfiles.loanAndAvailability',
     moduleId: 'item',
   }, {
     id: 'location',
-    label: 'location',
+    label: 'ui-data-import.settings.matchProfiles.location',
     moduleId: 'item',
   }, {
     id: 'electronic-access',
-    label: 'electronicAccess',
+    label: 'ui-data-import.settings.matchProfiles.electronicAccess',
     moduleId: 'item',
   },
   /* Order */
   {
     id: 'po-admin-data',
-    label: 'order.adminData',
+    label: 'ui-data-import.settings.matchProfiles.poAdminData',
     moduleId: 'order',
   }, {
     id: 'po-purchase-order',
-    label: 'order.purchaseOrder',
+    label: 'ui-data-import.settings.matchProfiles.poPurchaseOrder',
     moduleId: 'order',
   }, {
     id: 'po-renewal-information',
-    label: 'settings.orderTemplates.accordion.poRenewals',
+    label: 'ui-data-import.settings.matchProfiles.poRenewalInfo',
     moduleId: 'order',
   }, {
     id: 'po-summary',
-    label: 'paneBlock.POSummary',
+    label: 'ui-data-import.settings.matchProfiles.poSummary',
     moduleId: 'order',
   }, {
     id: 'po-tags',
-    label: 'settings.orderTemplates.accordion.poTags',
+    label: 'ui-data-import.settings.matchProfiles.poTags',
     moduleId: 'order',
   }, {
     id: 'pol-admin-data',
-    label: 'poLine.administrativeData',
+    label: 'ui-data-import.settings.matchProfiles.polAdminData',
     moduleId: 'order',
   }, {
     id: 'pol-item-details',
-    label: 'poLine.itemDetails',
+    label: 'ui-data-import.settings.matchProfiles.polItemDetails',
     moduleId: 'order',
   }, {
     id: 'pol-details',
-    label: 'poLine.details',
+    label: 'ui-data-import.settings.matchProfiles.polDetails',
     moduleId: 'order',
   }, {
     id: 'pol-cost-details',
-    label: 'poLine.costDetails',
+    label: 'ui-data-import.settings.matchProfiles.polCostDetails',
     moduleId: 'order',
   }, {
     id: 'pol-fund-distribution',
-    label: 'poLine.fundDistribution',
+    label: 'ui-data-import.settings.matchProfiles.polFundDistribution',
     moduleId: 'order',
   }, {
     id: 'pol-location',
-    label: 'poLine.location',
+    label: 'ui-data-import.settings.matchProfiles.polLocation',
     moduleId: 'order',
   }, {
     id: 'pol-physical-resource-details',
-    label: 'poLine.physicalResourceDetails',
+    label: 'ui-data-import.settings.matchProfiles.polPhysicalResourceDetails',
     moduleId: 'order',
   }, {
     id: 'pol-e-resource-details',
-    label: 'poLine.eResourceDetails',
+    label: 'ui-data-import.settings.matchProfiles.polEResourceDetails',
     moduleId: 'order',
   }, {
     id: 'pol-vendor',
-    label: 'poLine.vendor',
+    label: 'ui-data-import.settings.matchProfiles.polVendor',
     moduleId: 'order',
   }, {
     id: 'pol-notes',
-    label: 'poLine.notes',
+    label: 'ui-data-import.settings.matchProfiles.polNotes',
     moduleId: 'order',
   }, {
     id: 'pol-tags',
-    label: 'settings.orderTemplates.accordion.polTags',
+    label: 'ui-data-import.settings.matchProfiles.polTags',
     moduleId: 'order',
   },
   /* Invoice */
   {
     id: 'invoice-admin-data',
-    label: 'invoice.invoiceAdminData',
+    label: 'ui-data-import.settings.matchProfiles.invoice.adminData',
     moduleId: 'invoice',
   }, {
     id: 'invoice-information',
-    label: 'invoiceInformation',
+    label: 'ui-data-import.settings.matchProfiles.invoice.information',
     moduleId: 'invoice',
   }, {
     id: 'invoice-adjustments',
-    label: 'invoice.invoiceAdjustments',
+    label: 'ui-data-import.settings.matchProfiles.invoice.adjustments',
     moduleId: 'invoice',
   }, {
     id: 'invoice-vendor-information',
-    label: 'invoice.invoiceVendorInformation',
+    label: 'ui-data-import.settings.matchProfiles.invoice.vendorInformation',
     moduleId: 'invoice',
   }, {
     id: 'invoice-extended-information',
-    label: 'invoice.invoiceExtendedInformation',
+    label: 'ui-data-import.settings.matchProfiles.invoice.extendedInformation',
     moduleId: 'invoice',
   }, {
     id: 'invoice-links-and-documents',
-    label: 'invoice.invoiceLinksAndDocuments',
+    label: 'ui-data-import.settings.matchProfiles.invoice.linksAndDocuments',
     moduleId: 'invoice',
   }, {
     id: 'invoice-tags',
-    label: 'invoice.invoiceTags',
+    label: 'ui-data-import.settings.matchProfiles.invoice.tags',
     moduleId: 'invoice',
   }, {
     id: 'invoice-line-admin-data',
-    label: 'invoiceLine.adminData',
+    label: 'ui-data-import.settings.matchProfiles.invoiceLine.adminData',
     moduleId: 'invoice',
   }, {
     id: 'invoice-line-information',
-    label: 'invoiceLineInformation',
+    label: 'ui-data-import.settings.matchProfiles.invoiceLine.information',
     moduleId: 'invoice',
   }, {
     id: 'invoice-line-fund-distribution',
-    label: 'invoiceLine.fundDistribution',
+    label: 'ui-data-import.settings.matchProfiles.invoiceLine.fundDistribution',
     moduleId: 'invoice',
   }, {
     id: 'invoice-line-adjustments',
-    label: 'invoiceLine.adjustments',
+    label: 'ui-data-import.settings.matchProfiles.invoiceLine.adjustments',
     moduleId: 'invoice',
   }, {
     id: 'invoice-line-tags',
-    label: 'invoiceLine.tags',
+    label: 'ui-data-import.settings.matchProfiles.invoiceLine.tags',
     moduleId: 'invoice',
   },
 ];

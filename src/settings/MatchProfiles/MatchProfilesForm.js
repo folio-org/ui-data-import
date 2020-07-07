@@ -4,7 +4,10 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { connect } from 'react-redux';
 import { change } from 'redux-form';
 import {
@@ -51,6 +54,8 @@ export const MatchProfilesFormComponent = memo(({
   jsonSchemas,
   dispatch,
 }) => {
+  const intl = useIntl();
+
   const { profile } = initialValues;
   const {
     existingRecordType,
@@ -87,7 +92,7 @@ export const MatchProfilesFormComponent = memo(({
     if (isEditMode) {
       const matches = matchFields(jsonSchemas[existingRecordType], existingRecordType);
 
-      return getDropdownOptions(matches);
+      return getDropdownOptions(matches, intl);
     }
 
     return [];
@@ -148,7 +153,7 @@ export const MatchProfilesFormComponent = memo(({
 
   const handleExistingRecordChange = ({ type }) => {
     const matches = matchFields(jsonSchemas[type], type);
-    const options = getDropdownOptions(matches);
+    const options = getDropdownOptions(matches, intl);
 
     setExistingRecord(type);
     setExistingRecordFields(options);
