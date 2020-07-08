@@ -264,6 +264,7 @@ export class ViewMappingProfile extends Component {
                 link={`data-import-profiles/mappingProfiles/${id}`}
                 getEntity={getEntity}
                 getEntityTags={getEntityTags}
+                entityTagsPath="profile.tags"
                 renderForbidden={!tagsEnabled}
               />
             </div>

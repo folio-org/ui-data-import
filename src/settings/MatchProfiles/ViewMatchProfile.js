@@ -318,6 +318,7 @@ export class ViewMatchProfile extends Component {
                 link={tagsEntityLink}
                 getEntity={getEntity}
                 getEntityTags={getEntityTags}
+                entityTagsPath="profile.tags"
               />
             </div>
           )}
