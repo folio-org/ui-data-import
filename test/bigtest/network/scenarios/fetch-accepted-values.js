@@ -57,14 +57,39 @@ const endpointsToMock = [
   },
 ];
 
-export default server => endpointsToMock
-  .forEach(endpoint => server.get(
+export default server => {
+  endpointsToMock.forEach(endpoint => server.get(
     endpoint.url,
     {
       [endpoint.responseKey]: [
-        { name: 'name 1' },
-        { name: 'name 2' },
+        {
+          id: '1',
+          statisticalCodeTypeId: '1',
+          code: 'ASER',
+          name: 'name 1',
+        },
+        {
+          id: '2',
+          statisticalCodeTypeId: '2',
+          code: 'ASER',
+          name: 'name 2',
+        },
       ],
       totalRecords: 2,
     },
   ));
+
+  server.get('/statistical-code-types', {
+    statisticalCodeTypes: [
+      {
+        id: '1',
+        name: 'statistical 1'
+      },
+      {
+        id: '2',
+        name: 'statistical 2'
+      },
+    ]
+  })
+  
+  };
