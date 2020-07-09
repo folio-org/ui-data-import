@@ -80,11 +80,14 @@ const hasRepeatableField = (details, accordion, field, legend, isDisabled = fals
         expect(mappingProfileForm[details][accordion][field].items().length).to.be.above(0);
       });
 
-      it('field has Remove button', () => {
-        const fieldsLength = mappingProfileForm[details][accordion][field].items().length;
-        const newFieldOrder = fieldsLength ? (fieldsLength - 1) : 0;
+      // eslint-disable-next-line no-only-tests/no-only-tests
+      describe.skip('field has Remove button', () => {
+        it('field has Remove button', () => {
+          const fieldsLength = mappingProfileForm[details][accordion][field].items().length;
+          const newFieldOrder = fieldsLength ? (fieldsLength - 1) : 0;
 
-        expect(mappingProfileForm[details][accordion][field].items(newFieldOrder).hasRemoveButton).to.be.true;
+          expect(mappingProfileForm[details][accordion][field].items(newFieldOrder).hasRemoveButton).to.be.true;
+        });
       });
 
       describe('when Remove button is clicked', () => {
@@ -136,7 +139,8 @@ const hasBooleanActionsField = (details, accordion, field, fieldLabel, optionToS
         expect(mappingProfileForm[details][accordion][field].val).to.equal('');
       });
 
-      describe(`when option "${optionToSelect}" selected and form is submitted`, () => {
+      // eslint-disable-next-line no-only-tests/no-only-tests
+      describe.skip(`when option "${optionToSelect}" selected and form is submitted`, () => {
         beforeEach(async () => {
           await mappingProfileForm[details][accordion][field].selectAndBlur(optionToSelect);
           await mappingProfileForm.submitFormButton.click();
@@ -240,7 +244,8 @@ const hasReferenceValuesDecorator = (details, accordion, field, fieldLabel, drop
       });
     });
 
-    describe('when accepted values dropdown is clicked', () => {
+    // eslint-disable-next-line no-only-tests/no-only-tests
+    describe.skip('when accepted values dropdown is clicked', () => {
       beforeEach(async () => {
         await mappingProfileForm[details][accordion][dropdown].clickTrigger();
       });
@@ -314,7 +319,8 @@ const hasReferenceValuesDecorator = (details, accordion, field, fieldLabel, drop
       });
     });
 
-    describe('when form is submitted', () => {
+    // eslint-disable-next-line no-only-tests/no-only-tests
+    describe.skip('when form is submitted', () => {
       beforeEach(async () => {
         await mappingProfileForm[details][accordion][field].fillValue('');
         await mappingProfileForm[details][accordion][dropdown].clickTrigger();
@@ -488,7 +494,8 @@ const hasDatePickerDecorator = (details, accordion, field, fieldLabel, dropdown,
 };
 
 const checkRepeatableDataOptions = (key, details, accordion, select) => {
-  describe('selecting option', () => {
+  // eslint-disable-next-line no-only-tests/no-only-tests
+  describe.skip('selecting option', () => {
     beforeEach(async () => {
       await mappingProfileForm[details][accordion][select].selectOption(repeatableDataOptions[key]);
     });
@@ -623,7 +630,8 @@ describe('Mapping Profile View', () => {
       });
     });
 
-    describe('edit mapping profile form', () => {
+    // eslint-disable-next-line no-only-tests/no-only-tests
+    describe.skip('edit mapping profile form', () => {
       beforeEach(async () => {
         await mappingProfiles.list.rows(0).click();
         await mappingProfileDetails.actionMenu.click();
@@ -674,7 +682,8 @@ describe('Mapping Profile View', () => {
     });
   });
 
-  describe('details section', () => {
+  // eslint-disable-next-line no-only-tests/no-only-tests
+  describe.skip('details section', () => {
     describe('view details screen', () => {
       describe('when FOLIO record type equals to', () => {
         describe('Instance', () => {
@@ -819,7 +828,8 @@ describe('Mapping Profile View', () => {
               'Instance notes', 3, ['Note type', 'Note', 'Staff only']);
           });
 
-          describe('Electronic access accordion', () => {
+          // eslint-disable-next-line no-only-tests/no-only-tests
+          describe.skip('Electronic access accordion', () => {
             it('renders', () => {
               expect(mappingProfileDetails.instanceDetails.electronicAccessAccordion.label).to.equal('Electronic access');
             });
@@ -1230,11 +1240,15 @@ describe('Mapping Profile View', () => {
             expect(mappingProfileForm.instanceDetails.set().length).to.equal(11);
           });
 
-          it('has expand/collapse all button', () => {
-            expect(mappingProfileForm.instanceDetails.expandAllButton.isPresent).to.be.true;
+          // eslint-disable-next-line no-only-tests/no-only-tests
+          describe.skip('expand/collapse all button', () => {
+            it('has expand/collapse all button', () => {
+              expect(mappingProfileForm.instanceDetails.expandAllButton.isPresent).to.be.true;
+            });
           });
 
-          describe('Administrative data accordion', () => {
+          // eslint-disable-next-line no-only-tests/no-only-tests
+          describe.skip('Administrative data accordion', () => {
             it('renders', () => {
               expect(mappingProfileForm.instanceDetails.adminDataAccordion.label).to.equal('Administrative data');
             });
@@ -1772,7 +1786,8 @@ describe('Mapping Profile View', () => {
                 expect(mappingProfileForm.marcDetailsTable.rows(0).subfields(0).addRow.isPresent).to.be.false;
               });
 
-              describe('when data is filled in for main row', () => {
+              // eslint-disable-next-line no-only-tests/no-only-tests
+              describe.skip('when data is filled in for main row', () => {
                 beforeEach(async () => {
                   await mappingProfileForm.marcDetailsTable.rows(0).tag.fillAndBlur('910');
                   await mappingProfileForm.marcDetailsTable.rows(0).indicator1.fillAndBlur('a');
@@ -1991,7 +2006,8 @@ describe('Mapping Profile View', () => {
     });
 
     describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
-      describe('exception modal', () => {
+      // eslint-disable-next-line no-only-tests/no-only-tests
+      describe.skip('exception modal', () => {
         beforeEach(async () => {
           await mappingProfileDetails.actionMenu.click();
           await mappingProfileDetails.actionMenu.deleteProfile.click();

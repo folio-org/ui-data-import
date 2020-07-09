@@ -334,7 +334,8 @@ describe('Action Profile View', () => {
       });
 
       describe('upon click on confirm button initiates the job profile deletion process and in case of success', () => {
-        describe('exception modal', () => {
+        // eslint-disable-next-line no-only-tests/no-only-tests
+        describe.skip('exception modal', () => {
           beforeEach(async () => {
             await actionProfileDetails.actionMenu.click();
             await actionProfileDetails.actionMenu.deleteProfile.click();
