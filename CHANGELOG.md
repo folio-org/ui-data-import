@@ -1,5 +1,13 @@
 # Change history for ui-data-import
 
+## **2.2.0** (in progress)
+
+### Features added:
+* Handle import of stripes-acq-components to modules and platform (UISACQCOMP-3)
+* Add validation rules for Move action for the MARC modifications table fields (UIDATIMP-492)
+* Add validation rules for Edit action for the MARC modifications table fields (UIDATIMP-489)
+* Increment `@folio/stripes` to `v5` and update dependency on `react-router`.
+
 ## [2.1.1](https://github.com/folio-org/ui-data-import/tree/v2.1.1) (2020-07-09)
 
 ### Features added:

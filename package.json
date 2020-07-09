@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -25,8 +25,7 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.0.0",
-    "@folio/stripes": "^4.0.0",
-    "@folio/stripes-acq-components": ">=2.0.0",
+    "@folio/stripes": "^5.0.0",
     "babel-eslint": "^10.0.3",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
@@ -41,11 +40,12 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-intl": "^4.5.1",
-    "react-router": "^5.0.1",
-    "react-router-dom": "^5.0.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "sinon": "^7.2.2"
   },
   "dependencies": {
+    "@folio/stripes-acq-components": ">=2.0.0",
     "classnames": "^2.2.5",
     "lodash": "^4.16.4",
     "prop-types": "^15.6.0",
@@ -54,13 +54,16 @@
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^4.0.0",
+    "@folio/stripes": "^5.0.0",
     "react": "*",
     "react-intl": "^4.5.1",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1"
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
   },
   "stripes": {
+    "stripesDeps": [
+      "@folio/stripes-acq-components"
+    ],
     "actsAs": [
       "app",
       "settings"

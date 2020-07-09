@@ -265,3 +265,25 @@ export const validateSubfieldField = field => value => {
 
   return null;
 };
+
+/**
+ * Validate field to move
+ *
+ * @param {string|*} field
+ * @returns {function(...[*]=)}
+ *
+ * @example
+ *
+ * validateMoveField('900')('910')
+ * // => null
+ *
+ * validateMoveField('900')('900')
+ * // => Translated string (en = 'Please choose a different field')
+ */
+export const validateMoveField = field => fieldToMove => {
+  if (field === fieldToMove) {
+    return <FormattedMessage id="ui-data-import.validation.chooseDifferentField" />;
+  }
+
+  return null;
+};
