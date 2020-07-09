@@ -71,7 +71,7 @@ export const InstanceRelationship = ({
                     <AcceptedValuesField
                       okapi={okapi}
                       component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.parentInstances.field.instnaceRelationshipTypeId`} />}
+                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.parentInstances.field.instanceRelationshipTypeId`} />}
                       name={getSubfieldName(30, 1, index)}
                       optionValue="name"
                       optionLabel="name"
@@ -120,7 +120,7 @@ export const InstanceRelationship = ({
                     <AcceptedValuesField
                       okapi={okapi}
                       component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.childInstances.field.instnaceRelationshipTypeId`} />}
+                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.childInstances.field.instanceRelationshipTypeId`} />}
                       name={getSubfieldName(31, 1, index)}
                       optionValue="name"
                       optionLabel="name"

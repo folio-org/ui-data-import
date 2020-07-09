@@ -332,7 +332,7 @@ export const fieldsConfig = [
     recordType: 'INSTANCE',
   }, {
     id: 'instanceRelationshipTypeId',
-    label: 'ui-data-import.settings.mappingProfiles.map.instance.childInstances.field.instnaceRelationshipTypeId',
+    label: 'ui-data-import.settings.mappingProfiles.map.instance.childInstances.field.instanceRelationshipTypeId',
     categoryId: 'instance-relationship',
     value: 'instancerelationship.instanceRelationshipTypeId',
     recordType: 'INSTANCE',
