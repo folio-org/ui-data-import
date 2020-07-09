@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
