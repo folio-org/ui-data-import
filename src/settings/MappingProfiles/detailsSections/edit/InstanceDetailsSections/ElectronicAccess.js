@@ -57,7 +57,7 @@ export const ElectronicAccess = ({
                     wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                     wrapperSources={[{
                       wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
-                      wrapperSourcePath: 'electronicAccessRelationships'
+                      wrapperSourcePath: 'electronicAccessRelationships',
                     }]}
                     disabled
                   />

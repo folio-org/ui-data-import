@@ -83,13 +83,12 @@ export default server => {
     statisticalCodeTypes: [
       {
         id: '1',
-        name: 'statistical 1'
+        name: 'statistical 1',
       },
       {
         id: '2',
-        name: 'statistical 2'
+        name: 'statistical 2',
       },
-    ]
-  })
-  
-  };
+    ],
+  });
+};

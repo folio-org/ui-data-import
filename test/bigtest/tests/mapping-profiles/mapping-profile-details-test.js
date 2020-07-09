@@ -122,40 +122,40 @@ const hasTable = (details, accordion, table, tableName, columnCount, columnHeade
 };
 
 const hasBooleanActionsField = (details, accordion, field, fieldLabel, optionToSelect, isMCL = false, table = null, columnCells = [], isDisabled = false) => {
-    describe('When boolean actions decorator applies', () => {
-      it(`has correct ${fieldLabel} field label`, () => {
-        expect(mappingProfileForm[details][accordion][field].label).to.equal(fieldLabel);
-      });
-  
-      it(`has ${fieldLabel} select`, () => {
-        expect(mappingProfileForm[details][accordion][field].hasSelect).to.be.true;
-      });
-
-      if(!isDisabled) {
-        it('has selected default option', () => {
-          expect(mappingProfileForm[details][accordion][field].val).to.equal('');
-        });
-
-        describe(`when option "${optionToSelect}" selected and form is submitted`, () => {
-          beforeEach(async () => {
-            await mappingProfileForm[details][accordion][field].selectAndBlur(optionToSelect);
-            await mappingProfileForm.submitFormButton.click();
-          });
-    
-          if (!isMCL) {
-            it(`then mapping profile details renders updated ${fieldLabel} field`, () => {
-              expect(mappingProfileDetails[details][accordion][field].value.text).to.be.equal(optionToSelect);
-            });
-          } else {
-            it(`then mapping profile details renders updated ${fieldLabel} field`, () => {
-              mappingProfileDetails[details][accordion][table].rows(0).cells().forEach((cell, i) => {
-                expect(cell.text).to.equal(columnCells[i]);
-              });
-            });
-          }
-        });
-      }
+  describe('When boolean actions decorator applies', () => {
+    it(`has correct ${fieldLabel} field label`, () => {
+      expect(mappingProfileForm[details][accordion][field].label).to.equal(fieldLabel);
     });
+
+    it(`has ${fieldLabel} select`, () => {
+      expect(mappingProfileForm[details][accordion][field].hasSelect).to.be.true;
+    });
+
+    if (!isDisabled) {
+      it('has selected default option', () => {
+        expect(mappingProfileForm[details][accordion][field].val).to.equal('');
+      });
+
+      describe(`when option "${optionToSelect}" selected and form is submitted`, () => {
+        beforeEach(async () => {
+          await mappingProfileForm[details][accordion][field].selectAndBlur(optionToSelect);
+          await mappingProfileForm.submitFormButton.click();
+        });
+
+        if (!isMCL) {
+          it(`then mapping profile details renders updated ${fieldLabel} field`, () => {
+            expect(mappingProfileDetails[details][accordion][field].value.text).to.be.equal(optionToSelect);
+          });
+        } else {
+          it(`then mapping profile details renders updated ${fieldLabel} field`, () => {
+            mappingProfileDetails[details][accordion][table].rows(0).cells().forEach((cell, i) => {
+              expect(cell.text).to.equal(columnCells[i]);
+            });
+          });
+        }
+      });
+    }
+  });
 };
 
 const hasReferenceValuesDecorator = (details, accordion, field, fieldLabel, dropdown, isMCL = false, repeatableFields = null, columnCells = []) => {
@@ -249,7 +249,7 @@ const hasReferenceValuesDecorator = (details, accordion, field, fieldLabel, drop
         expect(mappingProfileForm[details][accordion][dropdown].isOpen).to.be.equal('true');
       });
 
-      it(`and has correct amount of menu items`, () => {
+      it('and has correct amount of menu items', () => {
         if (field === 'status') {
           expect(mappingProfileForm[details][accordion][dropdown].menu.items().length).to.be.equal(12);
         } else {
@@ -323,7 +323,7 @@ const hasReferenceValuesDecorator = (details, accordion, field, fieldLabel, drop
       });
 
       it(`then mapping profile details renders updated ${fieldLabel} field`, () => {
-        if(isMCL) {
+        if (isMCL) {
           mappingProfileDetails[details][accordion][repeatableFields]?.rows(0).cells().forEach((cell, i) => {
             expect(cell.text).to.equal(columnCells[i]);
           });
@@ -425,11 +425,6 @@ const hasDatePickerDecorator = (details, accordion, field, fieldLabel, dropdown,
           await mappingProfileForm[details][accordion][dataPicker].calendar.days(20).click();
           await mappingProfileForm[details][accordion][dataPicker].blurInput();
         });
-
-        // TODO: need to figure out of how to set mock year and month to datePicker
-        // it('then field is filled in', () => {
-        //   expect(mappingProfileForm[details][accordion][dataPicker].inputValue).to.be.equals('"2020-06-20"');
-        // });
 
         describe('when 1st option from select is choosen after 2nd option was already choosen', () => {
           beforeEach(async () => {

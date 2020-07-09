@@ -5,7 +5,7 @@ import {
   collection,
   text,
   property,
-  scoped
+  scoped,
 } from '@bigtest/interactor';
 
 import IconButtonInteractor from '@folio/stripes-components/lib/IconButton/tests/interactor';

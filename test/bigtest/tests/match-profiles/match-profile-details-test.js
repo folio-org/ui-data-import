@@ -61,58 +61,6 @@ describe('Match Profile View', () => {
         expect(matchProfileDetails.associatedJobProfiles.list.rowCount).to.be.equal(3);
       }).timeout(5000);
 
-      // TODO: Should be re-checked and moved out from describe block if it works.
-      // Now it has problem with selecting checkbox
-      describe.skip('has select all checkbox', () => {
-        beforeEach(async () => {
-          await matchProfileDetails.associatedJobProfiles.selectAllCheckBox.clickAndBlur();
-        });
-
-        it('upon click changes its state', () => {
-          expect(matchProfileDetails.associatedJobProfiles.selectAllCheckBox.isChecked).to.be.true;
-        });
-
-        it('selects all items', () => {
-          matchProfileDetails.associatedJobProfiles.checkBoxes().forEach(checkBox => {
-            expect(checkBox.isChecked).to.be.true;
-          });
-        });
-
-        describe('when not all records are selected', () => {
-          beforeEach(async () => {
-            await matchProfileDetails.associatedJobProfiles.checkBoxes(0).clickAndBlur();
-          });
-
-          it('becomes unchecked', () => {
-            expect(matchProfileDetails.associatedJobProfiles.selectAllCheckBox.isChecked).to.be.false;
-          });
-        });
-
-        describe('when clicked again', () => {
-          beforeEach(async () => {
-            await matchProfileDetails.associatedJobProfiles.selectAllCheckBox.clickAndBlur();
-          });
-
-          it('all items become unchecked', () => {
-            matchProfileDetails.associatedJobProfiles.checkBoxes().forEach(checkBox => {
-              expect(checkBox.isChecked).to.be.false;
-            });
-          });
-        });
-      });
-
-      // TODO: Should be re-checked and moved out from describe block if it works.
-      // Now it has problem with selecting checkbox
-      describe.skip('has select individual item checkbox', () => {
-        beforeEach(async () => {
-          await matchProfileDetails.associatedJobProfiles.checkBoxes(0).clickAndBlur();
-        });
-
-        it('upon click changes its state', () => {
-          expect(matchProfileDetails.associatedJobProfiles.checkBoxes(0).isChecked).to.be.true;
-        });
-      });
-
       describe('when job profile name is clicked', () => {
         beforeEach(async () => {
           await matchProfileDetails.associatedJobProfiles.links(0).click();

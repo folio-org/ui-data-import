@@ -130,61 +130,6 @@ describe('Action Profile View', () => {
         expect(actionProfileDetails.associatedJobProfiles.list.rowCount).to.be.equal(3);
       });
 
-      // TODO: Should be re-checked and moved out from describe block if it works.
-      // Now it has problem with selecting checkbox
-      describe.skip('has select all checkbox', () => {
-        beforeEach(async () => {
-          await actionProfileDetails.associatedJobProfiles.selectAllCheckBox.clickInput();
-        });
-
-        it('has correct aria-label', () => {
-          expect(actionProfileDetails.associatedJobProfiles.selectAllCheckBox.ariaLabel).to.be.equal('select all items');
-        });
-
-        it('upon click changes its state', () => {
-          expect(actionProfileDetails.associatedJobProfiles.selectAllCheckBox.isChecked).to.be.true;
-        });
-
-        it('selects all items', () => {
-          actionProfileDetails.associatedJobProfiles.checkBoxes().forEach(checkBox => {
-            expect(checkBox.isChecked).to.be.true;
-          });
-        });
-
-        describe('when not all records are selected', () => {
-          beforeEach(async () => {
-            await actionProfileDetails.associatedJobProfiles.checkBoxes(0).clickAndBlur();
-          });
-
-          it('becomes unchecked', () => {
-            expect(actionProfileDetails.associatedJobProfiles.selectAllCheckBox.isChecked).to.be.false;
-          });
-        });
-
-        describe('when clicked again', () => {
-          beforeEach(async () => {
-            await actionProfileDetails.associatedJobProfiles.selectAllCheckBox.clickAndBlur();
-          });
-
-          it('all items become unchecked', () => {
-            actionProfileDetails.associatedJobProfiles.checkBoxes().forEach(checkBox => {
-              expect(checkBox.isChecked).to.be.false;
-            });
-          });
-        });
-      });
-      // TODO: Should be re-checked and moved out from describe block if it works.
-      // Now it has problem with selecting checkbox
-      describe.skip('has select individual item checkbox', () => {
-        beforeEach(async () => {
-          await actionProfileDetails.associatedJobProfiles.checkBoxes(0).clickAndBlur();
-        });
-
-        it('upon click changes its state', () => {
-          expect(actionProfileDetails.associatedJobProfiles.checkBoxes(0).isChecked).to.be.true;
-        });
-      });
-
       describe('when job profile name is clicked', () => {
         beforeEach(async () => {
           await actionProfileDetails.associatedJobProfiles.links(0).click();
