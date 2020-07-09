@@ -121,39 +121,41 @@ const hasTable = (details, accordion, table, tableName, columnCount, columnHeade
   });
 };
 
-const hasBooleanActionsField = (details, accordion, field, fieldLabel, optionToSelect, isMCL = false, table = null, columnCells = []) => {
-  describe('When boolean actions decorator applies', () => {
-    it(`has correct ${fieldLabel} field label`, () => {
-      expect(mappingProfileForm[details][accordion][field].label).to.equal(fieldLabel);
-    });
-
-    it(`has ${fieldLabel} select`, () => {
-      expect(mappingProfileForm[details][accordion][field].hasSelect).to.be.true;
-    });
-
-    it('has selected default option', () => {
-      expect(mappingProfileForm[details][accordion][field].val).to.equal('');
-    });
-
-    describe(`when option "${optionToSelect}" selected and form is submitted`, () => {
-      beforeEach(async () => {
-        await mappingProfileForm[details][accordion][field].selectAndBlur(optionToSelect);
-        await mappingProfileForm.submitFormButton.click();
+const hasBooleanActionsField = (details, accordion, field, fieldLabel, optionToSelect, isMCL = false, table = null, columnCells = [], isDisabled = false) => {
+    describe('When boolean actions decorator applies', () => {
+      it(`has correct ${fieldLabel} field label`, () => {
+        expect(mappingProfileForm[details][accordion][field].label).to.equal(fieldLabel);
+      });
+  
+      it(`has ${fieldLabel} select`, () => {
+        expect(mappingProfileForm[details][accordion][field].hasSelect).to.be.true;
       });
 
-      if (!isMCL) {
-        it(`then mapping profile details renders updated ${fieldLabel} field`, () => {
-          expect(mappingProfileDetails[details][accordion][field].value.text).to.be.equal(optionToSelect);
+      if(!isDisabled) {
+        it('has selected default option', () => {
+          expect(mappingProfileForm[details][accordion][field].val).to.equal('');
         });
-      } else {
-        it(`then mapping profile details renders updated ${fieldLabel} field`, () => {
-          mappingProfileDetails[details][accordion][table].rows(0).cells().forEach((cell, i) => {
-            expect(cell.text).to.equal(columnCells[i]);
+
+        describe(`when option "${optionToSelect}" selected and form is submitted`, () => {
+          beforeEach(async () => {
+            await mappingProfileForm[details][accordion][field].selectAndBlur(optionToSelect);
+            await mappingProfileForm.submitFormButton.click();
           });
+    
+          if (!isMCL) {
+            it(`then mapping profile details renders updated ${fieldLabel} field`, () => {
+              expect(mappingProfileDetails[details][accordion][field].value.text).to.be.equal(optionToSelect);
+            });
+          } else {
+            it(`then mapping profile details renders updated ${fieldLabel} field`, () => {
+              mappingProfileDetails[details][accordion][table].rows(0).cells().forEach((cell, i) => {
+                expect(cell.text).to.equal(columnCells[i]);
+              });
+            });
+          }
         });
       }
     });
-  });
 };
 
 const hasReferenceValuesDecorator = (details, accordion, field, fieldLabel, dropdown, isMCL = false, repeatableFields = null, columnCells = []) => {
@@ -247,8 +249,12 @@ const hasReferenceValuesDecorator = (details, accordion, field, fieldLabel, drop
         expect(mappingProfileForm[details][accordion][dropdown].isOpen).to.be.equal('true');
       });
 
-      it('and has 2 menu items', () => {
-        expect(mappingProfileForm[details][accordion][dropdown].menu.items().length).to.be.equal(2);
+      it(`and has correct amount of menu items`, () => {
+        if (field === 'status') {
+          expect(mappingProfileForm[details][accordion][dropdown].menu.items().length).to.be.equal(12);
+        } else {
+          expect(mappingProfileForm[details][accordion][dropdown].menu.items().length).to.be.equal(2);
+        }
       });
     });
 
@@ -261,6 +267,9 @@ const hasReferenceValuesDecorator = (details, accordion, field, fieldLabel, drop
 
       it('then input field value extend with selected one', () => {
         switch (field) {
+          case 'status':
+            expect(mappingProfileForm[details][accordion][field].val).to.equal('"Available"');
+            break;
           case 'statisticalCode':
             expect(mappingProfileForm[details][accordion][field].val).to.equal('"statistical 1: ASER - name 1"');
             break;
@@ -287,6 +296,9 @@ const hasReferenceValuesDecorator = (details, accordion, field, fieldLabel, drop
 
       it('then input field value inside quotation marks should be replaced with selected value', () => {
         switch (field) {
+          case 'status':
+            expect(mappingProfileForm[details][accordion][field].val).to.equal('"Awaiting pickup"');
+            break;
           case 'statisticalCode':
             expect(mappingProfileForm[details][accordion][field].val).to.equal('"statistical 2: ASER - name 2"');
             break;
@@ -414,7 +426,7 @@ const hasDatePickerDecorator = (details, accordion, field, fieldLabel, dropdown,
           await mappingProfileForm[details][accordion][dataPicker].blurInput();
         });
 
-        // TODO: need to figure out how to set mock year and month to datePicker
+        // TODO: need to figure out of how to set mock year and month to datePicker
         // it('then field is filled in', () => {
         //   expect(mappingProfileForm[details][accordion][dataPicker].inputValue).to.be.equals('"2020-06-20"');
         // });
@@ -1248,7 +1260,7 @@ describe('Mapping Profile View', () => {
             hasBooleanActionsField('instanceDetails', 'adminDataAccordion', 'staffSuppress', 'Staff suppress', 'Mark for all affected records');
             hasBooleanActionsField('instanceDetails', 'adminDataAccordion', 'previouslyHeld', 'Previously held', 'Mark for all affected records');
             hasReferenceValuesDecorator('instanceDetails', 'adminDataAccordion', 'instanceStatusTerm', 'Instance status term', 'instanceStatusTermAcceptedValues');
-            hasReferenceValuesDecorator('instanceDetails', 'adminDataAccordion', 'statisticalCode', 'Statistical code', 'statisticalCodeAcceptedValues', true, 'statisticalCodes', ['"name 1"']);
+            hasReferenceValuesDecorator('instanceDetails', 'adminDataAccordion', 'statisticalCode', 'Statistical code', 'statisticalCodeAcceptedValues', true, 'statisticalCodes', ['"statistical 1: ASER - name 1"']);
           });
 
           describe('Title data accordion', () => {
@@ -1296,7 +1308,7 @@ describe('Mapping Profile View', () => {
 
             hasRepeatableField('instanceDetails', 'contributorAccordion', 'contributors', '', true);
             hasRepeatableFieldDecorator('instanceDetails', 'contributorAccordion', 'contributorsRepeatable', true);
-            hasBooleanActionsField('instanceDetails', 'contributorAccordion', 'primary', 'Primary', 'Mark for all affected records', true, 'contributors', ['910', '910', '910', '910', 'Mark for all affected records']);
+            hasBooleanActionsField('instanceDetails', 'contributorAccordion', 'primary', 'Primary', 'Mark for all affected records', true, 'contributors', ['910', '910', '910', '910', 'Mark for all affected records'], true);
           });
 
           describe('Descriptive data accordion', () => {
@@ -1315,9 +1327,7 @@ describe('Mapping Profile View', () => {
             hasRepeatableField('instanceDetails', 'descriptiveDataAccordion', 'physicalDescriptions', 'Physical descriptions', true);
             hasRepeatableFieldDecorator('instanceDetails', 'descriptiveDataAccordion', 'physicalDescriptionsRepeatable', true);
             hasInput('instanceDetails', 'descriptiveDataAccordion', 'resourceType', 'Resource type', true);
-            describe('123123', () => {
-              hasRepeatableField('instanceDetails', 'descriptiveDataAccordion', 'natureOfContentTerms', 'Nature of content terms');
-            });
+            hasRepeatableField('instanceDetails', 'descriptiveDataAccordion', 'natureOfContentTerms', 'Nature of content terms');
             hasRepeatableFieldDecorator('instanceDetails', 'descriptiveDataAccordion', 'natureOfContentTermsRepeatable');
             hasRepeatableField('instanceDetails', 'descriptiveDataAccordion', 'formats', 'Formats', true);
             hasRepeatableFieldDecorator('instanceDetails', 'descriptiveDataAccordion', 'formatsRepeatable', true);
@@ -1448,7 +1458,7 @@ describe('Mapping Profile View', () => {
             hasReferenceValuesDecorator('holdingsDetails', 'adminDataAccordion', 'holdingsType', 'Holdings type', 'holdingsTypeAcceptedValues');
             hasRepeatableField('holdingsDetails', 'adminDataAccordion', 'statisticalCodes', 'Statistical codes');
             hasRepeatableFieldDecorator('holdingsDetails', 'adminDataAccordion', 'statisticalCodesRepeatable');
-            hasReferenceValuesDecorator('holdingsDetails', 'adminDataAccordion', 'statisticalCode', 'Statistical code', 'statisticalCodeAcceptedValues', true, 'statisticalCodes', ['"name 1"']);
+            hasReferenceValuesDecorator('holdingsDetails', 'adminDataAccordion', 'statisticalCode', 'Statistical code', 'statisticalCodeAcceptedValues', true, 'statisticalCodes', ['"statistical 1: ASER - name 1"']);
             hasBooleanActionsField('holdingsDetails', 'adminDataAccordion', 'suppressFromDiscovery', 'Suppress from discovery', 'Mark for all affected records');
           });
 
@@ -1667,29 +1677,27 @@ describe('Mapping Profile View', () => {
             hasBooleanActionsField('itemDetails', 'itemNotesAccordion', 'staffOnly', 'Staff only', 'Mark for all affected records', true, 'notes', ['910', '910', 'Mark for all affected records']);
           });
 
-          describe.only('Loan and availability accordion', () => {
-            // it('renders', () => {
-            //   expect(mappingProfileForm.itemDetails.loanAndAvailabilityAccordion.label).to.equal('Loan and availability');
-            // });
+          describe('Loan and availability accordion', () => {
+            it('renders', () => {
+              expect(mappingProfileForm.itemDetails.loanAndAvailabilityAccordion.label).to.equal('Loan and availability');
+            });
 
-            // it('is open by default', () => {
-            //   expect(mappingProfileForm.itemDetails.loanAndAvailabilityAccordion.isOpen).to.be.true;
-            // });
+            it('is open by default', () => {
+              expect(mappingProfileForm.itemDetails.loanAndAvailabilityAccordion.isOpen).to.be.true;
+            });
 
-            // hasInput('itemDetails', 'loanAndAvailabilityAccordion', 'permanentLoanType', 'Permanent loan type');
-            // hasReferenceValuesDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'permanentLoanType', 'Permanent loan type', 'permanentLoanTypeAcceptedValues');
-            // hasInput('itemDetails', 'loanAndAvailabilityAccordion', 'temporaryLoanType', 'Temporary loan type');
-            // hasReferenceValuesDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'temporaryLoanType', 'Temporary loan type', 'temporaryLoanTypeAcceptedValues');
-            // hasInput('itemDetails', 'loanAndAvailabilityAccordion', 'status', 'Status');
-
-            // hasReferenceValuesDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'status', 'Status', 'statusAcceptedValues');
-            // hasRepeatableField('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotes', 'Circulation notes');
-            // hasRepeatableFieldDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotesRepeatable');
+            hasInput('itemDetails', 'loanAndAvailabilityAccordion', 'permanentLoanType', 'Permanent loan type');
+            hasReferenceValuesDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'permanentLoanType', 'Permanent loan type', 'permanentLoanTypeAcceptedValues');
+            hasInput('itemDetails', 'loanAndAvailabilityAccordion', 'temporaryLoanType', 'Temporary loan type');
+            hasReferenceValuesDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'temporaryLoanType', 'Temporary loan type', 'temporaryLoanTypeAcceptedValues');
+            hasInput('itemDetails', 'loanAndAvailabilityAccordion', 'status', 'Status');
+            hasReferenceValuesDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'status', 'Status', 'statusAcceptedValues');
+            hasRepeatableField('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotes', 'Circulation notes');
+            hasRepeatableFieldDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotesRepeatable');
             hasReferenceValuesDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNote', 'Note type', 'circulationNoteAcceptedValues', true, 'circulationNotes', ['"name 1"', '910', '-']);
-            // hasBooleanActionsField('itemDetails', 'loanAndAvailabilityAccordion', 'staffOnly', 'Staff only', 'Mark for all affected records', true, 'circulationNotes', ['910', '910', 'Mark for all affected records']);
+            hasBooleanActionsField('itemDetails', 'loanAndAvailabilityAccordion', 'staffOnly', 'Staff only', 'Mark for all affected records', true, 'circulationNotes', ['910', '910', 'Mark for all affected records']);
           });
 
-          //passed
           describe('Location accordion', () => {
             it('renders', () => {
               expect(mappingProfileForm.itemDetails.locationAccordion.label).to.equal('Location');
@@ -1705,7 +1713,6 @@ describe('Mapping Profile View', () => {
             hasReferenceValuesDecorator('itemDetails', 'locationAccordion', 'temporary', 'Temporary', 'temporaryAcceptedValues');
           });
 
-          //passed
           describe('Electronic access accordion', () => {
             it('renders', () => {
               expect(mappingProfileForm.itemDetails.electronicAccessAccordion.label).to.equal('Electronic access');
@@ -1721,7 +1728,6 @@ describe('Mapping Profile View', () => {
           });
         });
 
-        //passed
         describe('MARC Bibliographic', () => {
           beforeEach(async () => {
             await mappingProfiles.list.rows(3).click();
@@ -1827,7 +1833,6 @@ describe('Mapping Profile View', () => {
     });
   });
 
-  //passed
   describe('associated action profiles', () => {
     describe('when there is associated profile', () => {
       beforeEach(async function () {
@@ -1861,7 +1866,6 @@ describe('Mapping Profile View', () => {
     });
   });
 
-  //passed
   describe('duplicate mapping profile form', () => {
     beforeEach(async () => {
       await mappingProfiles.list.rows(0).click();
@@ -1942,7 +1946,6 @@ describe('Mapping Profile View', () => {
     });
   });
 
-  //passed
   describe('delete confirmation modal', () => {
     beforeEach(async () => {
       await mappingProfiles.list.rows(0).click();
@@ -2046,7 +2049,6 @@ describe('Mapping Profile View', () => {
   });
 });
 
-//passed
 describe('Mapping Profile View', () => {
   setupApplication({ scenarios: ['fetch-mapping-profiles-success', 'fetch-users', 'fetch-tags', 'tags-disabled'] });
 

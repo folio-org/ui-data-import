@@ -72,7 +72,10 @@ export const Contributor = ({ contributors }) => {
                     disabled
                   />
                 </Col>
-                <Col xs={2}>
+                <Col
+                  data-test-primary
+                  xs={2}
+                >
                   <BooleanActionField
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.contributors.field.primary`} />}
                     name={getBoolSubfieldName(16, 4, index)}

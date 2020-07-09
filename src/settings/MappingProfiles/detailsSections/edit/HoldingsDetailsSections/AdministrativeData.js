@@ -71,6 +71,7 @@ export const AdministrativeData = ({
       </Row>
       <Row left="xs">
         <Col
+          data-test-former-ids
           id="section-former-ids"
           xs={12}
         >
