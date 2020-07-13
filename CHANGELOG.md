@@ -6,8 +6,15 @@
 * Handle import of stripes-acq-components to modules and platform (UISACQCOMP-3)
 * Add validation rules for Move action for the MARC modifications table fields (UIDATIMP-492)
 * Add validation rules for Edit action for the MARC modifications table fields (UIDATIMP-489)
-* Get rid of imported translations for math profiles (UIDATIMP-570)
 * Increment `@folio/stripes` to `v5` and update dependency on `react-router`.
+
+### Bugs fixed:
+* Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
+
+## [2.1.1](https://github.com/folio-org/ui-data-import/tree/v2.1.1) (2020-07-09)
+
+### Features added:
+* Get rid of imported translations for math profiles (UIDATIMP-570)
 
 ### Bugs fixed:
 * Fix deletion repeatable fields in Field mapping profile (UIDATIMP-482)

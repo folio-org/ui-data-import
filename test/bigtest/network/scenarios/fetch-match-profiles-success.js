@@ -27,12 +27,12 @@ export default server => {
             value: '001',
           }, {
             label: 'indicator1',
-            value: ' ',
+            value: '',
           }, {
             label: 'indicator2',
-            value: ' ',
+            value: '',
           }, {
-            label: 'recordSubfield',
+            label: 'subfield',
             value: 'a',
           }],
           qualifier: { comparisonPart: 'NUMERICS_ONLY' },
@@ -70,7 +70,7 @@ export default server => {
           label: 'indicator2',
           value: '',
         }, {
-          label: 'recordSubfield',
+          label: 'subfield',
           value: 'a',
         }],
         qualifier: { comparisonPart: 'NUMERICS_ONLY' },
@@ -128,7 +128,7 @@ export default server => {
           label: 'indicator2',
           value: ' ',
         }, {
-          label: 'recordSubfield',
+          label: 'subfield',
           value: 'a',
         }],
       },
@@ -153,7 +153,7 @@ export default server => {
           label: 'indicator2',
           value: ' ',
         }, {
-          label: 'recordSubfield',
+          label: 'subfield',
           value: 'a',
         }],
       },
@@ -189,12 +189,12 @@ export default server => {
           value: '035',
         }, {
           label: 'indicator1',
-          value: ' ',
+          value: '',
         }, {
           label: 'indicator2',
-          value: ' ',
+          value: '',
         }, {
-          label: 'recordSubfield',
+          label: 'subfield',
           value: 'a',
         }],
       },

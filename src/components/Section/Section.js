@@ -1,5 +1,6 @@
 import React, {
   memo,
+  useEffect,
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -23,6 +24,10 @@ export const Section = memo(({
   ...rest
 }) => {
   const [isChecked, setChecked] = useState(isOpen);
+
+  useEffect(() => {
+    setChecked(isOpen);
+  }, [isOpen]);
 
   const getDataAttributes = attrs => pickBy(attrs, (_, key) => key.startsWith('data-test-'));
 
