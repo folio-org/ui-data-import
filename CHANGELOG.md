@@ -10,6 +10,14 @@
 * Increment `@folio/stripes` to `v5` and update dependency on `react-router`.
 
 ### Bugs fixed:
+* Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
+
+## [2.1.1](https://github.com/folio-org/ui-data-import/tree/v2.1.1) (2020-07-09)
+
+### Features added:
+* Get rid of imported translations for math profiles (UIDATIMP-570)
+
+### Bugs fixed:
 * Fix deletion repeatable fields in Field mapping profile (UIDATIMP-482)
 * Fix assigning and unassigning tags to data import profiles (UIDATIMP-499)
 * Fix failing tests and turn on tests on CI (UIDATIMP-556)
