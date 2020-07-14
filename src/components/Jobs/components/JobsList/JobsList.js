@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { List } from '@folio/stripes/components';
+import { EndOfItem } from '@folio/stripes-data-transfer-components';
 
 import { Preloader } from '../../../Preloader';
-import { EndOfItem } from '../../../EndOfItem';
 import { Job } from '../Job';
 import { jobExecutionPropTypes } from '../Job/jobExecutionPropTypes';
 

@@ -26,10 +26,10 @@ import {
   withTags,
   TagsAccordion,
 } from '@folio/stripes/smart-components';
+import { EndOfItem } from '@folio/stripes-data-transfer-components';
 
 import {
   Spinner,
-  EndOfItem,
   ActionMenu,
   ProfileAssociator,
   INCOMING_RECORD_TYPES,
