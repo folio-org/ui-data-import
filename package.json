@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@folio/stripes-acq-components": ">=2.0.0",
+    "@folio/stripes-data-transfer-components": "^2.0.1",
     "classnames": "^2.2.5",
     "lodash": "^4.16.4",
     "prop-types": "^15.6.0",
@@ -62,7 +63,8 @@
   },
   "stripes": {
     "stripesDeps": [
-      "@folio/stripes-acq-components"
+      "@folio/stripes-acq-components",
+      "@folio/stripes-data-transfer-components"
     ],
     "actsAs": [
       "app",

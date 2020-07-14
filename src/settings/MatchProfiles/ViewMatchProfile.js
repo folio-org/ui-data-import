@@ -28,6 +28,7 @@ import {
   withTags,
   TagsAccordion,
 } from '@folio/stripes/smart-components';
+import { EndOfItem } from '@folio/stripes-data-transfer-components';
 
 import {
   ENTITY_KEYS,
@@ -40,7 +41,6 @@ import {
 } from '../../utils';
 import {
   Spinner,
-  EndOfItem,
   ActionMenu,
   FlexibleForm,
   ProfileAssociator,
