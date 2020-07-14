@@ -46,9 +46,9 @@ class IdentifierAccordion extends AccordionInteractor {
 }
 
 class ContributorAccordion extends AccordionInteractor {
-  primary = new SelectInteractor('#mapping-profiles-form [data-test-primary]');
+  primary = new SelectInteractor('#mapping-profiles-form [data-test-contributors] [data-test-primary]');
   contributors = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-contributors]');
-  contributorsRepeatable = new SelectInteractor('#mapping-profiles-form #section-contributors [data-test-repeatable-decorator]');
+  contributorsRepeatable = new SelectInteractor('#mapping-profiles-form [data-test-contributors] [data-test-repeatable-decorator]');
 }
 
 class DescriptiveDataAccordion extends AccordionInteractor {
@@ -60,7 +60,7 @@ class DescriptiveDataAccordion extends AccordionInteractor {
   physicalDescriptionsRepeatable = new SelectInteractor('#mapping-profiles-form #section-physical-descriptions [data-test-repeatable-decorator]');
   resourceType = new InputInteractor('#mapping-profiles-form [data-test-resource-type]');
   natureOfContentTerms = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-nature-of-content-terms]');
-  natureOfContentTermsRepeatable = new SelectInteractor('#mapping-profiles-form #section-nature-of-content [data-test-repeatable-decorator]');
+  natureOfContentTermsRepeatable = new SelectInteractor('#mapping-profiles-form [data-test-nature-of-content-terms] [data-test-repeatable-decorator]');
   natureOfContentTerm = new TextFieldInteractor('#mapping-profiles-form [data-test-nature-of-content-term]');
   natureOfContentTermAcceptedValues = new DropdownInteractor('#mapping-profile-details [data-test-nature-of-content-term] [data-test-accepted-values-list]');
   formats = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-formats]');
@@ -76,12 +76,12 @@ class DescriptiveDataAccordion extends AccordionInteractor {
 class InstanceNotesAccordion extends AccordionInteractor {
   staffOnly = new SelectInteractor('#mapping-profiles-form [data-test-staff-only]');
   notes = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-notes]');
-  notesRepeatable = new SelectInteractor('#mapping-profiles-form #section-instance-notes [data-test-repeatable-decorator]');
+  notesRepeatable = new SelectInteractor('#mapping-profiles-form [data-test-notes] [data-test-repeatable-decorator]');
 }
 
 class ElectronicAccessAccordion extends AccordionInteractor {
   electronicAccess = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-electronic-access]');
-  electronicAccessRepeatable = new SelectInteractor('#mapping-profiles-form #section-electronic-access [data-test-repeatable-decorator]');
+  electronicAccessRepeatable = new SelectInteractor('#mapping-profiles-form [data-test-electronic-access] [data-test-repeatable-decorator]');
   relationship = new TextFieldInteractor('#mapping-profiles-form [data-test-relationship]');
   relationshipAcceptedValues = new DropdownInteractor('#mapping-profile-details [data-test-relationship] [data-test-accepted-values-list]');
 }
@@ -98,11 +98,11 @@ class ClassificationAccordion extends AccordionInteractor {
 
 class InstanceRelationshipAccordion extends AccordionInteractor {
   parentInstances = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-parent-instances]');
-  parentInstancesRepeatable = new SelectInteractor('#mapping-profiles-form #section-parent-instances [data-test-repeatable-decorator]');
+  parentInstancesRepeatable = new SelectInteractor('#mapping-profiles-form [data-test-parent-instances] [data-test-repeatable-decorator]');
   parentTypeOfRelation = new TextFieldInteractor('#mapping-profiles-form [data-test-parent-type-of-relation]');
   parentTypeOfRelationAcceptedValues = new DropdownInteractor('#mapping-profile-details [data-test-parent-type-of-relation] [data-test-accepted-values-list]');
   childInstances = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-child-instances]');
-  childInstancesRepeatable = new SelectInteractor('#mapping-profiles-form #section-child-instances [data-test-repeatable-decorator]');
+  childInstancesRepeatable = new SelectInteractor('#mapping-profiles-form [data-test-child-instances] [data-test-repeatable-decorator]');
 
   childTypeOfRelation = new TextFieldInteractor('#mapping-profiles-form [data-test-child-type-of-relation]');
   childTypeOfRelationAcceptedValues = new DropdownInteractor('#mapping-profile-details [data-test-child-type-of-relation] [data-test-accepted-values-list]');

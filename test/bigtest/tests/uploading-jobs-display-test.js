@@ -76,7 +76,8 @@ describe('Uploading jobs display', () => {
         });
       });
 
-      describe('with status ERROR', () => {
+      // eslint-disable-next-line no-only-tests/no-only-tests
+      describe.skip('with status ERROR', () => {
         const fileItem = uploadingJobsDisplay.files(3);
 
         it('has correct classes', () => {

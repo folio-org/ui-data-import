@@ -61,7 +61,7 @@ export const InstanceNotes = ({ notes }) => {
                   xs={4}
                 >
                   <BooleanActionField
-                    label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
+                    label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.staffOnly`} />}
                     name={getBoolSubfieldName(26, 2, index)}
                     disabled
                   />

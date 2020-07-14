@@ -17,9 +17,9 @@ import { ItemDetailsAccordion } from './details/static/item-details-interactor';
 class MappingProfileDetailsInteractor {
   actionMenu = new ActionMenuInteractor('#pane-mapping-profile-details [data-pane-header-actions-dropdown]');
   headline = scoped('[data-test-headline]');
-  description = scoped('[data-test-description-field] [data-test-kv-value]');
-  incomingRecordType = scoped('[data-test-incoming-record-type-field] [data-test-kv-value]');
-  folioRecordType = scoped('[data-test-folio-record-type-field] [data-test-kv-value]');
+  description = scoped('[data-test-description]');
+  incomingRecordType = scoped('[data-test-incoming-record-type]');
+  folioRecordType = scoped('[data-test-folio-record-type]');
   isTagsPresent = isPresent('[data-test-tags-accordion]');
   holdingsDetails = new HoldingsDetailsAccordion('#mapping-profile-details');
   instanceDetails = new InstanceDetailsAccordion('#mapping-profile-details');

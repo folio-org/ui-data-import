@@ -10,7 +10,7 @@ import {
 
 import IconButtonInteractor from '@folio/stripes-components/lib/IconButton/tests/interactor';
 import SelectInteractor from '@folio/stripes-components/lib/Select/tests/interactor';
-import TextFielInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
+import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
 import TextAreaInteractor from '@folio/stripes-components/lib/TextArea/tests/interactor';
 
 @interactor
@@ -33,15 +33,15 @@ class MARCTableRowBaseInteractor {
   moveRowUp = scoped('[data-test-marc-table-arrow-up]', IconButtonInteractor);
   moveRowDown = scoped('[data-test-marc-table-arrow-down]', IconButtonInteractor);
   action = scoped('[data-test-marc-table-action]', SelectInteractor);
-  tag = scoped('[data-test-marc-table-tag]', TextFielInteractor);
-  indicator1 = scoped('[data-test-marc-table-indicator1]', TextFielInteractor);
-  indicator2 = scoped('[data-test-marc-table-indicator2]', TextFielInteractor);
-  subfield = scoped('[data-test-marc-table-subfield]', TextFielInteractor);
+  tag = scoped('[data-test-marc-table-tag]', TextFieldInteractor);
+  indicator1 = scoped('[data-test-marc-table-indicator1]', TextFieldInteractor);
+  indicator2 = scoped('[data-test-marc-table-indicator2]', TextFieldInteractor);
+  subfield = scoped('[data-test-marc-table-subfield]', TextFieldInteractor);
   subaction = scoped('[data-test-marc-table-subaction]', SelectInteractor);
   dataTextField = scoped('[data-test-marc-table-data-text]', TextAreaInteractor);
   dataFindField = scoped('[data-test-marc-table-data-find]', TextAreaInteractor);
   dataReplaceField = scoped('[data-test-marc-table-data-replace]', TextAreaInteractor);
-  dataTagField = scoped('[data-test-marc-table-data-field]', TextFielInteractor);
+  dataTagField = scoped('[data-test-marc-table-data-field]', TextFieldInteractor);
   position = scoped('[data-test-marc-table-position]', SelectInteractor);
 }
 

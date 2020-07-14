@@ -153,23 +153,24 @@ export const JobProfilesFormComponent = ({
             />
           </div>
         </Accordion>
-        <Accordion
-          data-test-job-profile-overview
-          label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
-          separator={false}
-        >
-          <ProfileTree
-            parentId={profile.id}
-            linkingRules={PROFILE_LINKING_RULES}
-            contentData={profileTreeData}
-            hasLoaded
-            relationsToAdd={addedRelations}
-            relationsToDelete={deletedRelations}
-            onLink={setAddedRelations}
-            onUnlink={setDeletedRelations}
-            okapi={okapi}
-          />
-        </Accordion>
+        <div data-test-job-profile-overview>
+          <Accordion
+            label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
+            separator={false}
+          >
+            <ProfileTree
+              parentId={profile.id}
+              linkingRules={PROFILE_LINKING_RULES}
+              contentData={profileTreeData}
+              hasLoaded
+              relationsToAdd={addedRelations}
+              relationsToDelete={deletedRelations}
+              onLink={setAddedRelations}
+              onUnlink={setDeletedRelations}
+              okapi={okapi}
+            />
+          </Accordion>
+        </div>
       </AccordionSet>
     </FullScreenForm>
   );

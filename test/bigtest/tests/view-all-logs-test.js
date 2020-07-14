@@ -124,8 +124,8 @@ describe('View all logs', () => {
           expect(searchAndSort.filters.jobProfile.controlPresent).to.be.true;
         });
 
-        it('does not have a value', () => {
-          expect(searchAndSort.filters.jobProfile.valLabel).to.equal('');
+        it('has placeholder', () => {
+          expect(searchAndSort.filters.jobProfile.valLabel).to.equal('Choose job profile');
         });
       });
 
@@ -139,8 +139,8 @@ describe('View all logs', () => {
           expect(searchAndSort.filters.users.controlPresent).to.be.true;
         });
 
-        it('does not have a value', () => {
-          expect(searchAndSort.filters.jobProfile.valLabel).to.equal('');
+        it('has placeholder', () => {
+          expect(searchAndSort.filters.users.valLabel).to.equal('Choose user');
         });
       });
     });

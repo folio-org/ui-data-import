@@ -40,7 +40,7 @@ class DetailsAccordion extends AccordionInteractor {
 }
 
 class HoldingsNotesAccordion extends AccordionInteractor {
-  notes = new MultiColumnListInteractor('#section-holdings-notes');
+  notes = new MultiColumnListInteractor('#holdings-notes');
 }
 
 class ElectronicAccessAccordion extends AccordionInteractor {
