@@ -25,6 +25,7 @@ import {
   ViewMetaData,
   TagsAccordion,
 } from '@folio/stripes/smart-components';
+import { EndOfItem } from '@folio/stripes-data-transfer-components';
 import {
   AppIcon,
   TitleManager,
@@ -47,7 +48,6 @@ import {
 import {
   listTemplate,
   ActionMenu,
-  EndOfItem,
   Preloader,
   Spinner,
   ProfileTree,

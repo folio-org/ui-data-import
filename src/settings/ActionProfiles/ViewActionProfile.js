@@ -24,6 +24,8 @@ import {
   withTags,
   TagsAccordion,
 } from '@folio/stripes/smart-components';
+import { EndOfItem } from '@folio/stripes-data-transfer-components';
+
 import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
@@ -34,7 +36,6 @@ import {
 } from '../../utils';
 import {
   Spinner,
-  EndOfItem,
   ActionMenu,
   FOLIO_RECORD_TYPES,
   ACTION_TYPES,

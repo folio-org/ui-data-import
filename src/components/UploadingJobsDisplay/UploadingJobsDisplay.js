@@ -28,9 +28,9 @@ import {
   ConfirmationModal,
   Button,
 } from '@folio/stripes/components';
+import { EndOfItem } from '@folio/stripes-data-transfer-components';
 
 import { Preloader } from '../Preloader';
-import { EndOfItem } from '../EndOfItem';
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 import { FileItem } from './components';
 import {
@@ -39,13 +39,11 @@ import {
   xhrAddHeaders,
   getFileExtension,
   generateSettingsLabel,
-} from '../../utils';
-import {
   DEFAULT_TIMEOUT_BEFORE_FILE_DELETION,
   FILE_STATUSES,
-} from '../../utils/constants';
+  loadRecords,
+} from '../../utils';
 import * as API from '../../utils/upload';
-import { loadRecords } from '../../utils/loadRecords';
 import { createJobProfiles } from '../../settings/JobProfiles';
 
 @withRouter
