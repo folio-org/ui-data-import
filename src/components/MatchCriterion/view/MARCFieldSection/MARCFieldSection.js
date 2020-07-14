@@ -31,7 +31,7 @@ export const MARCFieldSection = ({
         >
           <KeyValue
             label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-main`} />}
-            value={expressionDetails.fields.find(field => field.label === 'field')?.value || <NoValue />}
+            value={expressionDetails.fields?.find(field => field.label === 'field')?.value || <NoValue />}
           />
         </Col>
         <Col
@@ -40,7 +40,7 @@ export const MARCFieldSection = ({
         >
           <KeyValue
             label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-in1`} />}
-            value={expressionDetails.fields.find(field => field.label === 'indicator1')?.value || <NoValue />}
+            value={expressionDetails.fields?.find(field => field.label === 'indicator1')?.value || <NoValue />}
           />
         </Col>
         <Col
@@ -49,7 +49,7 @@ export const MARCFieldSection = ({
         >
           <KeyValue
             label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-in2`} />}
-            value={expressionDetails.fields.find(field => field.label === 'indicator2')?.value || <NoValue />}
+            value={expressionDetails.fields?.find(field => field.label === 'indicator2')?.value || <NoValue />}
           />
         </Col>
         <Col
@@ -58,7 +58,7 @@ export const MARCFieldSection = ({
         >
           <KeyValue
             label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-subfield`} />}
-            value={expressionDetails.fields.find(field => field.label === 'subfield')?.value || <NoValue />}
+            value={expressionDetails.fields?.find(field => field.label === 'subfield')?.value || <NoValue />}
           />
         </Col>
       </Row>

@@ -91,6 +91,7 @@ export default server => {
           value: 'invoice.vendorInvoiceNo',
         }],
       },
+      incomingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
     }],
   });
   server.create('match-profile', {
@@ -107,6 +108,7 @@ export default server => {
           value: 'item.barcode',
         }],
       },
+      incomingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
     }],
   });
   server.create('match-profile', {
@@ -132,6 +134,7 @@ export default server => {
           value: 'a',
         }],
       },
+      incomingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
     }],
   });
   server.create('match-profile', {
@@ -157,6 +160,7 @@ export default server => {
           value: 'a',
         }],
       },
+      incomingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
     }],
   });
   server.create('match-profile', {
@@ -173,6 +177,7 @@ export default server => {
           value: 'instance.identifiers[].value',
         }],
       },
+      incomingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
     }],
   });
   server.create('match-profile', {
@@ -198,6 +203,7 @@ export default server => {
           value: 'a',
         }],
       },
+      incomingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
     }],
   });
   server.create('match-profile', {
