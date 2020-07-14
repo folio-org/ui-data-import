@@ -52,7 +52,7 @@ export const Condition = ({ mappingDetails }) => {
           xs={4}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.missingPieces`} />}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.missingPiecesDate`} />}
             value={missingPiecesDate || noValueElement}
           />
         </Col>
@@ -72,7 +72,7 @@ export const Condition = ({ mappingDetails }) => {
           xs={4}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.itemDamagedStatus`} />}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.itemDamagedStatusDate`} />}
             value={itemDamagedStatusDate || noValueElement}
           />
         </Col>

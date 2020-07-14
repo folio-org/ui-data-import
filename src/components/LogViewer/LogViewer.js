@@ -173,7 +173,7 @@ LogViewer.propTypes = {
   errorDetector: PropTypes.func.isRequired,
   toolbar: PropTypes.shape({
     visible: PropTypes.bool,
-    message: PropTypes.any,
+    message: PropTypes.node,
     showThemes: PropTypes.bool,
   }),
 };

@@ -11,7 +11,7 @@ import { InputInteractor } from '../../../input-interactor';
 class AdministrativeDataAccordion extends AccordionInteractor {
   suppressFromDiscovery = new SelectInteractor('#mapping-profiles-form [data-test-suppress-from-discovery]');
   holdingsHRID = new InputInteractor('#mapping-profiles-form [data-test-holdings-hrid]');
-  formerHoldings = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-former-holdings]');
+  formerHoldings = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-former-ids]');
   formerHoldingsRepeatable = new SelectInteractor('#mapping-profiles-form #section-former-ids [data-test-repeatable-decorator]');
   holdingsType = new TextFieldInteractor('#mapping-profiles-form [data-test-holdings-type]');
   holdingsTypeAcceptedValues = new DropdownInteractor('#mapping-profile-details [data-test-holdings-type] [data-test-accepted-values-list]');
@@ -53,7 +53,7 @@ class DetailsAccordion extends AccordionInteractor {
 class NotesAccordion extends AccordionInteractor {
   staffOnly = new SelectInteractor('#mapping-profiles-form [data-test-staff-only]');
   notes = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-notes]');
-  notesRepeatable = new SelectInteractor('#mapping-profiles-form #section-holdings-notes [data-test-repeatable-decorator]');
+  notesRepeatable = new SelectInteractor('#mapping-profiles-form #holdings-notes [data-test-repeatable-decorator]');
   note = new TextFieldInteractor('#mapping-profiles-form [data-test-note]');
   noteAcceptedValues = new DropdownInteractor('#mapping-profile-details [data-test-note] [data-test-accepted-values-list]');
 }

@@ -19,6 +19,7 @@
 ### Bugs fixed:
 * Fix deletion repeatable fields in Field mapping profile (UIDATIMP-482)
 * Fix assigning and unassigning tags to data import profiles (UIDATIMP-499)
+* Fix failing tests and turn on tests on CI (UIDATIMP-556)
 
 ## [2.1.0](https://github.com/folio-org/ui-data-import/tree/v2.1.0) (2020-06-25)
 
