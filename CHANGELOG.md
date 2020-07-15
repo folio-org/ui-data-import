@@ -7,6 +7,7 @@
 * Add validation rules for Move action for the MARC modifications table fields (UIDATIMP-492)
 * Add validation rules for Edit action for the MARC modifications table fields (UIDATIMP-489)
 * Increment `@folio/stripes` to `v5` and update dependency on `react-router`.
+* Reuse `<EndOfItem>` component from `stripes-data-transfer-components` repository (UIDATIMP-571)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

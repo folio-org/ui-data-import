@@ -8,7 +8,6 @@ export * from './ListView';
 export * from './ListTemplate';
 export * from './DataFetcher';
 export * from './DatePickerDecorator';
-export * from './EndOfItem';
 export * from './FlexibleForm';
 export * from './FullScreenForm';
 export * from './ImportJobs';

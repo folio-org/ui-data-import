@@ -15,16 +15,16 @@ import {
   ConfirmationModal,
   PaneHeader,
 } from '@folio/stripes/components';
+import { EndOfItem } from '@folio/stripes-data-transfer-components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
-} from '../../utils/constants';
+} from '../../utils';
 import {
   ActionMenu,
-  EndOfItem,
   Spinner,
 } from '../../components';
 
