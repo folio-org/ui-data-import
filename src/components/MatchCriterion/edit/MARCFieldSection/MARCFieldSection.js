@@ -85,6 +85,8 @@ export const MARCFieldSection = ({
 
 MARCFieldSection.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
+  recordFieldType: PropTypes.oneOf(['incoming', 'existing']).isRequired,
   recordFieldSectionLabel: PropTypes.node,
-  recordFieldType: PropTypes.oneOf(['incoming', 'existing']),
 };
+
+MARCFieldSection.defaultProps = { recordFieldSectionLabel: null };

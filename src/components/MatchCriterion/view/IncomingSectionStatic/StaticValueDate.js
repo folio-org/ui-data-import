@@ -1,9 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedDate } from 'react-intl';
 
 import {
   Layout,
-  KeyValue,
   NoValue,
 } from '@folio/stripes/components';
 
@@ -13,7 +13,11 @@ export const StaticValueDate = ({ value }) => {
       data-test-static-exact-date-wrapper
       className="display-flex"
     >
-      <KeyValue value={value ? <FormattedDate value={value} /> : <NoValue />} />
+      {value ? <FormattedDate value={value} /> : <NoValue />}
     </Layout>
   );
 };
+
+StaticValueDate.propTypes = { value: PropTypes.string };
+
+StaticValueDate.defaultProps = { value: null };

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
 import {
@@ -20,3 +21,5 @@ export const StaticValueDate = ({ repeatableIndex }) => {
     </Layout>
   );
 };
+
+StaticValueDate.propTypes = { repeatableIndex: PropTypes.number.isRequired };

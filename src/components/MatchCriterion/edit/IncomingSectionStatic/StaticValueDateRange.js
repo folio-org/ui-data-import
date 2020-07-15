@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 
@@ -43,3 +44,5 @@ export const StaticValueDateRange = ({ repeatableIndex }) => {
     </Layout>
   );
 };
+
+StaticValueDateRange.propTypes = { repeatableIndex: PropTypes.number.isRequired };

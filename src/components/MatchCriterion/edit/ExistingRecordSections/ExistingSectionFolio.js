@@ -44,9 +44,14 @@ export const ExistingSectionFolio = ({
 
 ExistingSectionFolio.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
-  existingRecordFieldLabel: PropTypes.node,
   existingRecordFields: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   })),
+  existingRecordFieldLabel: PropTypes.node,
+};
+
+ExistingSectionFolio.defaultProps = {
+  existingRecordFields: null,
+  existingRecordFieldLabel: null,
 };

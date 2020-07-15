@@ -7,7 +7,6 @@ import {
   Accordion,
   Row,
   Col,
-  KeyValue,
   NoValue,
 } from '@folio/stripes/components';
 
@@ -194,8 +193,9 @@ export const ViewMatchCriterion = ({
               <Col
                 data-test-match-criterion
                 xs={12}
+                className={css.fieldValue}
               >
-                <KeyValue value={matchCriterionLabelId ? <FormattedMessage id={matchCriterionLabelId} /> : <NoValue />} />
+                {matchCriterionLabelId ? <FormattedMessage id={matchCriterionLabelId} /> : <NoValue />}
               </Col>
             </Row>
           </Section>
@@ -219,4 +219,11 @@ ViewMatchCriterion.propTypes = {
   existingRecordType: PropTypes.oneOf(Object.keys(FOLIO_RECORD_TYPES)),
   incomingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   existingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+};
+
+ViewMatchCriterion.defaultProps = {
+  incomingRecordType: null,
+  existingRecordType: null,
+  incomingRecordLabel: null,
+  existingRecordLabel: null,
 };

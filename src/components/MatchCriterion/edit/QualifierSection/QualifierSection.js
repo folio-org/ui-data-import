@@ -67,6 +67,8 @@ export const QualifierSection = ({
 
 QualifierSection.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
+  recordFieldType: PropTypes.oneOf(['incoming', 'existing']).isRequired,
   isOpen: PropTypes.bool,
-  recordFieldType: PropTypes.oneOf(['incoming', 'existing']),
 };
+
+QualifierSection.defaultProps = { isOpen: false };

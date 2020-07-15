@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Field } from 'redux-form';
 import classnames from 'classnames';
+import { noop } from 'lodash';
 
 import {
   Row,
@@ -78,4 +79,9 @@ IncomingSectionStatic.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
   staticValueType: PropTypes.oneOf(Object.keys(STATIC_VALUE_TYPES)),
   onTypeChange: PropTypes.func,
+};
+
+IncomingSectionStatic.defaultProps = {
+  staticValueType: null,
+  onTypeChange: noop,
 };

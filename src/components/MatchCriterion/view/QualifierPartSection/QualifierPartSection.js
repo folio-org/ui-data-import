@@ -9,7 +9,6 @@ import classnames from 'classnames';
 import {
   Row,
   Col,
-  KeyValue,
   NoValue,
 } from '@folio/stripes/components';
 
@@ -45,8 +44,11 @@ export const QualifierPartSection = ({
       className={classnames([css.part, css.inputContainer])}
     >
       <Row>
-        <Col xs={4}>
-          <KeyValue value={qualifierPartLabel || <NoValue />} />
+        <Col
+          xs={4}
+          className={css.fieldValue}
+        >
+          {qualifierPartLabel || <NoValue />}
         </Col>
       </Row>
     </Section>
@@ -54,6 +56,8 @@ export const QualifierPartSection = ({
 };
 
 QualifierPartSection.propTypes = {
+  recordFieldType: PropTypes.oneOf(['incoming', 'existing']).isRequired,
   qualifierData: qualifierShape,
-  recordFieldType: PropTypes.oneOf(['incoming', 'existing']),
 };
+
+QualifierPartSection.defaultProps = { qualifierData: null };

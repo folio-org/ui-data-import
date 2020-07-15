@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
 import { TextField } from '@folio/stripes/components';
@@ -14,3 +15,5 @@ export const StaticValueNumber = ({ repeatableIndex }) => {
     </div>
   );
 };
+
+StaticValueNumber.propTypes = { repeatableIndex: PropTypes.number.isRequired };

@@ -1,11 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { KeyValue } from '@folio/stripes/components';
+import { NoValue } from '@folio/stripes/components';
 
 export const StaticValueNumber = ({ value }) => {
   return (
     <div data-test-static-number-field>
-      <KeyValue value={value} />
+      {value || <NoValue />}
     </div>
   );
 };
+
+StaticValueNumber.propTypes = { value: PropTypes.string };
+
+StaticValueNumber.defaultProps = { value: null };

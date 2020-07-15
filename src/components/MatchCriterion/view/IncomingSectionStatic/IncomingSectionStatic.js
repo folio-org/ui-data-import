@@ -5,7 +5,6 @@ import classnames from 'classnames';
 import {
   Row,
   Col,
-  KeyValue,
   NoValue,
 } from '@folio/stripes/components';
 
@@ -63,10 +62,14 @@ export const IncomingSectionStatic = ({ staticValueDetails }) => {
         <Col
           data-test-select-static-value
           xs={3}
+          className={css.fieldValue}
         >
-          <KeyValue value={staticTypeLabel || <NoValue />} />
+          {staticTypeLabel || <NoValue />}
         </Col>
-        <Col xs={9}>
+        <Col
+          xs={9}
+          className={css.fieldValue}
+        >
           {staticValueSections[staticValueDetails?.staticValueType]}
         </Col>
       </Row>
@@ -75,3 +78,5 @@ export const IncomingSectionStatic = ({ staticValueDetails }) => {
 };
 
 IncomingSectionStatic.propTypes = { staticValueDetails: staticValueDetailsShape };
+
+IncomingSectionStatic.defaultProps = { staticValueDetails: null };

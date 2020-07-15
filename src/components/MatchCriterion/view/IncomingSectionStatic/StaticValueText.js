@@ -1,14 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import {
-  KeyValue,
-  NoValue,
-} from '@folio/stripes/components';
+import { NoValue } from '@folio/stripes/components';
 
 export const StaticValueText = ({ value }) => {
   return (
     <div data-test-static-text-field>
-      <KeyValue value={value || <NoValue />} />
+      {value || <NoValue />}
     </div>
   );
 };
+
+StaticValueText.propTypes = { value: PropTypes.string };
+
+StaticValueText.defaultProps = { value: null };

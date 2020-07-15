@@ -6,6 +6,7 @@ import {
   useIntl,
 } from 'react-intl';
 import classnames from 'classnames';
+import { noop } from 'lodash';
 
 import {
   Accordion,
@@ -40,11 +41,11 @@ export const MatchCriterion = ({
   matchDetails,
   incomingRecordType,
   existingRecordType,
+  staticValueType,
   incomingRecordLabel,
   existingRecordLabel,
   existingRecordFields,
   onStaticValueTypeChange,
-  staticValueType,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -248,8 +249,17 @@ MatchCriterion.propTypes = {
   })).isRequired,
   incomingRecordType: PropTypes.oneOf(Object.keys(INCOMING_RECORD_TYPES)),
   existingRecordType: PropTypes.oneOf(Object.keys(FOLIO_RECORD_TYPES)),
+  staticValueType: PropTypes.oneOf(Object.keys(STATIC_VALUE_TYPES)),
   incomingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   existingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   onStaticValueTypeChange: PropTypes.func,
-  staticValueType: PropTypes.oneOf(Object.keys(STATIC_VALUE_TYPES)),
+};
+
+MatchCriterion.defaultProps = {
+  incomingRecordType: null,
+  existingRecordType: null,
+  staticValueType: null,
+  incomingRecordLabel: null,
+  existingRecordLabel: null,
+  onStaticValueTypeChange: noop,
 };

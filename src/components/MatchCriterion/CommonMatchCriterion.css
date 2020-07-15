@@ -25,10 +25,8 @@
     & .inputContainer {
       background-color: #e5e5e5;
 
-      & [class|="content"] {
-        & [class|="formControl"] {
-          margin-bottom: 0;
-        }
+      & [class|="content"] [class|="formControl"] {
+        margin-bottom: 0;
       }
 
       & input, & select {

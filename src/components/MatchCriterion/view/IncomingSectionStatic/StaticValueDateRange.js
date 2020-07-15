@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   FormattedDate,
   FormattedMessage,
@@ -6,7 +7,8 @@ import {
 
 import {
   Layout,
-  Headline, NoValue,
+  Headline,
+  NoValue,
 } from '@folio/stripes/components';
 
 import css from '../ViewMatchCriterion.css';
@@ -38,4 +40,14 @@ export const StaticValueDateRange = ({
       {toDate ? <FormattedDate value={toDate} /> : <NoValue />}
     </Layout>
   );
+};
+
+StaticValueDateRange.propTypes = {
+  fromDate: PropTypes.string,
+  toDate: PropTypes.string,
+};
+
+StaticValueDateRange.defaultProps = {
+  fromDate: null,
+  toDate: null,
 };

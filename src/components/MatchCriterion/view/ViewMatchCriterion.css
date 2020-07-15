@@ -61,9 +61,11 @@
     }
   }
 
-  & .inputContainer > div:last-child:not(:first-child) {
-    & > :first-child {
-      margin-bottom: 0;
-    }
+  & .inputContainer > div:last-child:not(:first-child) > :first-child {
+    margin-bottom: 0;
+  }
+
+  & .fieldValue {
+    margin-bottom: 1rem;
   }
 }
