@@ -46,7 +46,7 @@ ExistingSectionFolio.propTypes = {
 };
 
 ExistingSectionFolio.defaultProps = {
-  existingRecordField: null,
+  existingRecordField: '',
   existingRecordType: null,
   existingRecordFieldLabel: null,
 };

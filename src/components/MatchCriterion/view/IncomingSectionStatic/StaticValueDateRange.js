@@ -48,6 +48,6 @@ StaticValueDateRange.propTypes = {
 };
 
 StaticValueDateRange.defaultProps = {
-  fromDate: null,
-  toDate: null,
+  fromDate: '',
+  toDate: '',
 };

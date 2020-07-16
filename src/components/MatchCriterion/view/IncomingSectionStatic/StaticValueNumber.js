@@ -13,4 +13,4 @@ export const StaticValueNumber = ({ value }) => {
 
 StaticValueNumber.propTypes = { value: PropTypes.string };
 
-StaticValueNumber.defaultProps = { value: null };
+StaticValueNumber.defaultProps = { value: '' };

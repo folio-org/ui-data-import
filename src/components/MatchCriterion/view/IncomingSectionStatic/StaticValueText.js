@@ -13,4 +13,4 @@ export const StaticValueText = ({ value }) => {
 
 StaticValueText.propTypes = { value: PropTypes.string };
 
-StaticValueText.defaultProps = { value: null };
+StaticValueText.defaultProps = { value: '' };

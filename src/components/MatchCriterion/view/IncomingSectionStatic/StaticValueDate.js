@@ -20,4 +20,4 @@ export const StaticValueDate = ({ value }) => {
 
 StaticValueDate.propTypes = { value: PropTypes.string };
 
-StaticValueDate.defaultProps = { value: null };
+StaticValueDate.defaultProps = { value: '' };
