@@ -1,0 +1,39 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.matchCriterion {
+  composes: matchCriterion from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+}
+
+.inputContainer {
+  composes: inputContainer from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+}
+
+.staticSection {
+  composes: staticSection from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+}
+
+.dateRangeLabel {
+  composes: dateRangeLabel from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+}
+
+.incoming {
+  composes: incoming from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+}
+
+.criterionSection {
+  composes: criterionSection from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+}
+
+.existing {
+  composes: existing from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+}
+
+.field {
+  composes: field from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+}
+
+.matchCriteria {
+  composes: matchCriteria from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+  margin-top: -14px;
+  margin-bottom: -14px;
+}

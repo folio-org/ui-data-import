@@ -42,19 +42,17 @@ import {
 import {
   Spinner,
   ActionMenu,
-  FlexibleForm,
   ProfileAssociator,
+  RecordTypesSelect,
 } from '../../components';
+import { ViewMatchCriterion } from '../../components/MatchCriterion/view';
 import {
   FOLIO_RECORD_TYPES,
   INCOMING_RECORD_TYPES,
 } from '../../components/ListTemplate';
 
 import sharedCss from '../../shared.css';
-import styles from './ViewMatchProfile.css';
-import { formConfigSamples } from '../../../test/bigtest/mocks';
-
-const formName = 'matchProfilesForm';
+import styles from './MatchProfiles.css';
 
 @stripesConnect
 @withTags
@@ -153,18 +151,6 @@ export class ViewMatchProfile extends Component {
     />
   );
 
-  getValue = (fields, label) => {
-    const field = fields.find(item => item.label === label);
-
-    return (!isEmpty(field) && !!field.value.trim()) ? field.value : undefined;
-  };
-
-  getLabel = (elements, label) => {
-    const element = elements.find(item => item.value === label);
-
-    return !isEmpty(element) ? <FormattedMessage id={element.label} /> : undefined;
-  };
-
   renderPaneHeader = renderProps => {
     const { onClose } = this.props;
 
@@ -209,82 +195,13 @@ export class ViewMatchProfile extends Component {
       return <Spinner entity={this} />;
     }
 
-    // MatchProfiles sample data does not contain user Ids because of back-end limitations
-    // and therefore it is required to add it manually on UI side
-    // TODO: use real IDs when sample data will be removed (remove the block of code below)
-    {
-      const userId = get(this.props, ['stripes', 'okapi', 'currentUser', 'id'], '');
-
-      matchProfile.metadata = {
-        ...matchProfile.metadata,
-        createdByUserId: matchProfile.metadata.createdByUserId || userId,
-        updatedByUserId: matchProfile.metadata.updatedByUserId || userId,
-      };
-    }
-
-    // const record = JSON.parse(JSON.stringify({ ...matchProfile }));
-    const record = cloneDeep(matchProfile);
-    const staticValueType = get(record, ['matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
-    const existingRecordField = get(record, ['matchDetails', '0', 'existingMatchExpression', 'fields', '0', 'value'], null);
-
     const tagsEntityLink = `data-import-profiles/matchProfiles/${matchProfile.id}`;
-    // Here is mocked config file with mocked values, it should be replaced/rewritten once BE will be ready
-    const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
     const existingRecordLabel = FOLIO_RECORD_TYPES[matchProfile.existingRecordType]
       ? <FormattedMessage id={FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId} />
       : '';
     const incomingRecordLabel = INCOMING_RECORD_TYPES[matchProfile.incomingRecordType]
       ? <FormattedMessage id={INCOMING_RECORD_TYPES[matchProfile.incomingRecordType].captionId} />
       : '';
-
-    const injectedProps = {
-      'section-incoming-field': { stateFieldValue: matchProfile.incomingRecordType },
-      'section-incoming-qualifier': { stateFieldValue: matchProfile.incomingRecordType },
-      'section-incoming-qualifier-part': { stateFieldValue: matchProfile.incomingRecordType },
-      'section-incoming-static-value-text': { stateFieldValue: staticValueType },
-      'section-existing-field': { stateFieldValue: matchProfile.existingRecordType },
-      'section-existing-qualifier': { stateFieldValue: matchProfile.existingRecordType },
-      'section-existing-qualifier-part': { stateFieldValue: matchProfile.existingRecordType },
-      'panel-existing': {
-        id: 'panel-existing-view',
-        existingRecordType: matchProfile.existingRecordType,
-        incomingRecordType: matchProfile.incomingRecordType,
-        isEditable: false,
-      },
-      'incoming-record-section': {
-        label: (
-          <FormattedMessage
-            id="ui-data-import.match.incoming.record"
-            values={{ recordType: incomingRecordLabel }}
-          />
-        ),
-      },
-      'incoming-record-field': {
-        label: (
-          <FormattedMessage
-            id="ui-data-import.match.incoming.record.field"
-            values={{ recordType: incomingRecordLabel }}
-          />
-        ),
-      },
-      'existing-record-section': {
-        label: (
-          <FormattedMessage
-            id="ui-data-import.match.existing.record"
-            values={{ recordType: existingRecordLabel }}
-          />
-        ),
-      },
-      'existing-record-field': {
-        label: (
-          <FormattedMessage
-            id="ui-data-import.match.existing.record.field"
-            values={{ recordType: existingRecordLabel }}
-          />
-        ),
-      },
-      'criterion-value-type': { children: getFieldMatched(existingRecordField, matchProfile.existingRecordType) || <NoValue /> },
-    };
 
     return (
       <Pane
@@ -323,14 +240,32 @@ export class ViewMatchProfile extends Component {
             </div>
           )}
           <div className={styles.details}>
-            <FlexibleForm
-              component="Fragment"
-              config={formConfig}
-              styles={styles}
-              record={record}
-              referenceTables={{ matchDetails: get(record, 'matchDetails', []) }}
-              injectedProps={injectedProps}
-            />
+            <Accordion
+              id="match-profile-details"
+              label={<FormattedMessage id="ui-data-import.details" />}
+            >
+              <RecordTypesSelect
+                id="panel-existing-view"
+                existingRecordType={matchProfile.existingRecordType}
+                incomingRecordType={matchProfile.incomingRecordType}
+                isEditable={false}
+              />
+              <Accordion
+                id="match-criteria"
+                label={<FormattedMessage id="ui-data-import.match.criteria" />}
+                separator={false}
+              >
+                {matchProfile.matchDetails.map((item, i) => (
+                  <ViewMatchCriterion
+                    key={i}
+                    repeatableIndex={i}
+                    matchDetails={item}
+                    incomingRecordLabel={incomingRecordLabel}
+                    existingRecordLabel={existingRecordLabel}
+                  />
+                ))}
+              </Accordion>
+            </Accordion>
           </div>
           <Accordion
             label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
