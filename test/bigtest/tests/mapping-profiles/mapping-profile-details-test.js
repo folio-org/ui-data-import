@@ -1171,7 +1171,7 @@ describe('Mapping Profile View', () => {
             hasField('itemDetails', 'loanAndAvailabilityAccordion', 'permanentLoanType', 'Permanent loan type');
             hasField('itemDetails', 'loanAndAvailabilityAccordion', 'temporaryLoanType', 'Temporary loan type');
             hasField('itemDetails', 'loanAndAvailabilityAccordion', 'status', 'Status');
-            hasTable('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotes', 'Circulation notes',
+            hasTable('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotes', 'Check in / Check out notes',
               3, ['Note type', 'Note', 'Staff only']);
           });
 
@@ -1701,7 +1701,7 @@ describe('Mapping Profile View', () => {
             hasReferenceValuesDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'temporaryLoanType', 'Temporary loan type', 'temporaryLoanTypeAcceptedValues');
             hasInput('itemDetails', 'loanAndAvailabilityAccordion', 'status', 'Status');
             hasReferenceValuesDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'status', 'Status', 'statusAcceptedValues');
-            hasRepeatableField('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotes', 'Circulation notes');
+            hasRepeatableField('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotes', 'Check in / Check out notes');
             hasRepeatableFieldDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNotesRepeatable');
             hasReferenceValuesDecorator('itemDetails', 'loanAndAvailabilityAccordion', 'circulationNote', 'Note type', 'circulationNoteAcceptedValues', true, 'circulationNotes', ['"name 1"', '910', '-']);
             hasBooleanActionsField('itemDetails', 'loanAndAvailabilityAccordion', 'staffOnly', 'Staff only', 'Mark for all affected records', true, 'circulationNotes', ['910', '910', 'Mark for all affected records']);
