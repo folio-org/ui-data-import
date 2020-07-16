@@ -331,7 +331,7 @@ export const formConfigSamples = [
       optional: true,
       isOpen: false,
       classNames: ['part', 'input-container'],
-      dataAttributes: { 'data-test-part': '' },
+      dataAttributes: { 'data-test-qualifier-part': '' },
       childControls: [{
         controlType: 'Row',
         staticControlType: 'Row',

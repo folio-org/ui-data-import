@@ -208,7 +208,7 @@ describe('Match profiles', () => {
         });
 
         it('for record #8', () => {
-          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(htmlDecode('MARC Bibliographic&nbsp;&middot;&nbsp;MARC Bibliographic&nbsp;&rarr;&nbsp;035. . .a'));
+          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(htmlDecode('MARC Bibliographic&nbsp;&middot;&nbsp;MARC Bibliographic&nbsp;&rarr;&nbsp;035...a'));
         });
       });
 
@@ -246,7 +246,7 @@ describe('Match profiles', () => {
         });
 
         it('for record #8', () => {
-          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(htmlDecode('a. . .035&nbsp;&larr;&nbsp;MARC Bibliographic&nbsp;&middot;&nbsp;MARC Bibliographic'));
+          expect(matchProfiles.list.rows(7).cells(2).content).to.equal(htmlDecode('a...035&nbsp;&larr;&nbsp;MARC Bibliographic&nbsp;&middot;&nbsp;MARC Bibliographic'));
         });
       });
     });

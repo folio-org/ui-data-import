@@ -9,36 +9,48 @@ import {
   useIntl,
 } from 'react-intl';
 import { connect } from 'react-redux';
-import { change } from 'redux-form';
+import {
+  Field,
+  change,
+} from 'redux-form';
 import {
   get,
   isEmpty,
+  noop,
 } from 'lodash';
 
 import stripesForm from '@folio/stripes/form';
 
 import {
-  FlexibleForm,
+  Headline,
+  AccordionSet,
+  Accordion,
+  TextField,
+  TextArea,
+  RepeatableField,
+  ConfirmationModal,
+} from '@folio/stripes/components';
+
+import {
   FOLIO_RECORD_TYPES,
   INCOMING_RECORD_TYPES,
+  FullScreenForm,
+  RecordTypesSelect,
 } from '../../components';
+import { MatchCriterion } from '../../components/MatchCriterion/edit';
+
 import {
   compose,
   matchFields,
   getDropdownOptions,
   withProfileWrapper,
-} from '../../utils';
-import {
   LAYER_TYPES,
-  FORMS_SETTINGS, ENTITY_KEYS,
-} from '../../utils/constants';
-
-// @TODO: Remove this after server-side configs will be available
-import { formConfigSamples } from '../../../test/bigtest/mocks';
+  FORMS_SETTINGS,
+  ENTITY_KEYS,
+  validateRequiredField,
+} from '../../utils';
 
 import { getSectionInitialValues } from './MatchProfiles';
-
-import styles from './MatchProfilesForm.css';
 
 const formName = 'matchProfilesForm';
 
@@ -86,7 +98,6 @@ export const MatchProfilesFormComponent = memo(({
   const headLine = getLabel(name);
 
   const editWithModal = isEditMode && associatedJobProfilesAmount;
-  const formConfig = formConfigSamples.find(cfg => cfg.name === formName);
 
   const getInitialFields = () => {
     if (isEditMode) {
@@ -132,10 +143,6 @@ export const MatchProfilesFormComponent = memo(({
     });
   };
 
-  const handleFieldSearch = (value, dataOptions) => {
-    return dataOptions.filter(o => new RegExp(`${value}`, 'i').test(o.label));
-  };
-
   const handleIncomingRecordChange = record => {
     setIncomingRecord(record);
     dispatch(change(formName, 'profile.incomingRecordType', record.type));
@@ -171,97 +178,102 @@ export const MatchProfilesFormComponent = memo(({
     ? <FormattedMessage id={FOLIO_RECORD_TYPES[existingRecord].captionId} />
     : '';
 
-  const injectedProps = {
-    'profile-headline': { children: headLine },
-    'section-incoming-field': { stateFieldValue: incomingRecord.type },
-    'section-incoming-qualifier': { stateFieldValue: incomingRecord.type },
-    'section-incoming-qualifier-part': { stateFieldValue: incomingRecord.type },
-    'section-incoming-static-value-text': { stateFieldValue: staticValueType },
-    'section-existing-field': { stateFieldValue: existingRecord },
-    'section-existing-qualifier': { stateFieldValue: existingRecord },
-    'section-existing-qualifier-part': { stateFieldValue: existingRecord },
-    'panel-existing': {
-      id: 'panel-existing-edit',
-      existingRecordType,
-      incomingRecordType,
-      onExistingSelect: handleExistingRecordChange,
-      onIncomingSelect: handleIncomingRecordChange,
-    },
-    'incoming-record-section': {
-      label: (
-        <FormattedMessage
-          id="ui-data-import.match.incoming.record"
-          values={{ recordType: incomingRecordLabel }}
-        />
-      ),
-    },
-    'incoming-record-field': {
-      label: (
-        <FormattedMessage
-          id="ui-data-import.match.incoming.record.field"
-          values={{ recordType: incomingRecordLabel }}
-        />
-      ),
-    },
-    'criterion-static-value-type': { onChange: (event, newValue) => handleStaticValueTypeChange(newValue) },
-    'existing-record-section': {
-      label: (
-        <FormattedMessage
-          id="ui-data-import.match.existing.record"
-          values={{ recordType: existingRecordLabel }}
-        />
-      ),
-    },
-    'existing-record-field': {
-      label: (
-        <FormattedMessage
-          id="ui-data-import.match.existing.record.field"
-          values={{ recordType: existingRecordLabel }}
-        />
-      ),
-    },
-    'criterion-value-type': {
-      dataOptions: isEmpty(existingRecordFields) ? getInitialFields() : existingRecordFields,
-      onFilter: handleFieldSearch,
-    },
-    'confirm-edit-match-profile-modal': {
-      open: isConfirmEditModalOpen,
-      heading: <FormattedMessage id="ui-data-import.settings.matchProfiles.confirmEditModal.heading" />,
-      message: (
-        <FormattedMessage
-          id="ui-data-import.settings.matchProfiles.confirmEditModal.message"
-          values={{ amount: associatedJobProfilesAmount }}
-        />
-      ),
-      confirmLabel: <FormattedMessage id="ui-data-import.confirm" />,
-      onConfirm: () => {
-        handleSubmit();
-        setConfirmModalOpen(false);
-      },
-      onCancel: () => setConfirmModalOpen(false),
-    },
-  };
-  const stateMethods = {
-    dispatch,
-    change,
-  };
-
   return (
-    <FlexibleForm
-      component="FullScreenForm"
+    <FullScreenForm
       id="match-profiles-form"
-      config={formConfig}
-      styles={styles}
       paneTitle={paneTitle}
-      headLine={headLine}
-      injectedProps={injectedProps}
-      stateMethods={stateMethods}
-      referenceTables={{ matchDetails }}
       submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
       isSubmitDisabled={isSubmitDisabled}
       onSubmit={onSubmit}
       onCancel={onCancel}
-    />
+    >
+      <Headline
+        size="xx-large"
+        tag="h2"
+        data-test-header-title
+      >
+        {headLine}
+      </Headline>
+      <AccordionSet>
+        <Accordion
+          id="summary"
+          label={<FormattedMessage id="ui-data-import.summary" />}
+          separator={false}
+        >
+          <div data-test-name-field>
+            <Field
+              label={<FormattedMessage id="ui-data-import.name" />}
+              name="profile.name"
+              required
+              component={TextField}
+              validate={[validateRequiredField]}
+            />
+          </div>
+          <div data-test-description-field>
+            <Field
+              label={<FormattedMessage id="ui-data-import.description" />}
+              name="profile.description"
+              component={TextArea}
+            />
+          </div>
+        </Accordion>
+        <Accordion
+          id="match-profile-details"
+          label={<FormattedMessage id="ui-data-import.details" />}
+          separator={false}
+        >
+          <RecordTypesSelect
+            id="panel-existing-edit"
+            existingRecordType={existingRecordType}
+            incomingRecordType={incomingRecordType}
+            onExistingSelect={handleExistingRecordChange}
+            onIncomingSelect={handleIncomingRecordChange}
+          />
+          <Accordion
+            id="match-criteria"
+            label={<FormattedMessage id="ui-data-import.match.criteria" />}
+            separator={false}
+          >
+            <RepeatableField
+              fields={matchDetails}
+              canAdd={false}
+              canRemove={false}
+              onAdd={noop}
+              renderField={(field, index) => (
+                <MatchCriterion
+                  repeatableIndex={index}
+                  matchDetails={field}
+                  incomingRecordType={incomingRecord.type}
+                  existingRecordType={existingRecord}
+                  incomingRecordLabel={incomingRecordLabel}
+                  existingRecordLabel={existingRecordLabel}
+                  existingRecordFields={isEmpty(existingRecordFields) ? getInitialFields() : existingRecordFields}
+                  onStaticValueTypeChange={(event, newValue) => handleStaticValueTypeChange(newValue)}
+                  staticValueType={staticValueType}
+                />
+              )}
+            />
+          </Accordion>
+        </Accordion>
+      </AccordionSet>
+      <ConfirmationModal
+        id="confirm-edit-match-profile-modal"
+        open={isConfirmEditModalOpen}
+        heading={<FormattedMessage id="ui-data-import.settings.matchProfiles.confirmEditModal.heading" />}
+        message={(
+          <FormattedMessage
+            id="ui-data-import.settings.matchProfiles.confirmEditModal.message"
+            values={{ amount: associatedJobProfilesAmount }}
+          />
+        )}
+        confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
+        onConfirm={() => {
+          handleSubmit();
+          setConfirmModalOpen(false);
+        }}
+        onCancel={() => setConfirmModalOpen(false)}
+      />
+    </FullScreenForm>
   );
 });
 
@@ -296,7 +308,6 @@ const mapStateToProps = state => {
     ['folio_data_import_associated_jobprofiles', 'records', 0, 'childSnapshotWrappers'],
     [],
   );
-  // @TODO: Remove this when FlexibleForm internal state mamagement will be implemented.
   const currentStaticValueType = get(
     state,
     ['form', formName, 'values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'],

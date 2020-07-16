@@ -10,10 +10,10 @@ import {
   FOLIO_RECORD_TYPES,
 } from '../../../../src/components/ListTemplate';
 import {
-  COMPARISON_PARTS,
-  CRITERION_TYPES,
+  COMPARISON_PARTS_OPTIONS,
+  CRITERION_TYPES_OPTIONS,
   VALUE_TYPES,
-} from '../../../../src/utils/constants';
+} from '../../../../src/utils';
 
 export default Factory.extend({
   id: () => faker.random.uuid(),
@@ -27,14 +27,14 @@ export default Factory.extend({
     {
       incomingRecordType: () => faker.random.arrayElement(Object.keys(INCOMING_RECORD_TYPES)),
       existingRecordType: () => faker.random.arrayElement(Object.keys(FOLIO_RECORD_TYPES)),
-      matchCriterion: () => faker.random.arrayElement(CRITERION_TYPES.map(type => type.value)),
+      matchCriterion: () => faker.random.arrayElement(CRITERION_TYPES_OPTIONS.map(type => type.value)),
       existingMatchExpression: {
         dataValueType: () => faker.random.arrayElement(VALUE_TYPES.map(type => type.value)),
         fields: [{
           label: 'field',
           value: () => faker.random.arrayElement(fieldsConfig.map(field => field.value)),
         }],
-        qualifier: { comparisonPart: () => faker.random.arrayElement(COMPARISON_PARTS.map(type => type.value)) },
+        qualifier: { comparisonPart: () => faker.random.arrayElement(COMPARISON_PARTS_OPTIONS.map(type => type.value)) },
       },
       incomingMatchExpression: {
         dataValueType: () => faker.random.arrayElement(VALUE_TYPES.map(type => type.value)),
@@ -51,7 +51,7 @@ export default Factory.extend({
           label: 'recordSubfield',
           value: 'a',
         }],
-        qualifier: { comparisonPart: () => faker.random.arrayElement(COMPARISON_PARTS.map(type => type.value)) },
+        qualifier: { comparisonPart: () => faker.random.arrayElement(COMPARISON_PARTS_OPTIONS.map(type => type.value)) },
       },
     },
   ],

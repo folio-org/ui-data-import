@@ -1,9 +1,45 @@
 import PropTypes from 'prop-types';
 
 import {
+  MAPPING_DETAILS_ACTIONS,
+  MAPPING_DETAILS_SUBACTIONS,
+  MAPPING_DETAILS_POSITION,
   BOOLEAN_ACTIONS,
   REPEATABLE_ACTIONS,
-} from '.';
+  CRITERION_TYPES,
+  COMPARISON_PARTS,
+  QUALIFIER_TYPES, STATIC_VALUE_TYPES,
+} from './constants';
+
+export const mappingMARCDataShape = PropTypes.shape({
+  text: PropTypes.string,
+  find: PropTypes.string,
+  replaceWith: PropTypes.string,
+  marcField: PropTypes.shape({
+    field: PropTypes.string,
+    indicator1: PropTypes.string,
+    indicator2: PropTypes.string,
+    subfields: PropTypes.arrayOf(PropTypes.shape({ subfield: PropTypes.string })),
+  }),
+});
+
+export const mappingMARCSubfieldShape = PropTypes.shape({
+  subfield: PropTypes.string,
+  data: mappingMARCDataShape,
+  subaction: PropTypes.oneOf([...Object.values(MAPPING_DETAILS_SUBACTIONS)]),
+  position: PropTypes.oneOf([...Object.values(MAPPING_DETAILS_POSITION)]),
+});
+
+export const mappingMARCFieldShape = PropTypes.shape({
+  order: PropTypes.number.isRequired,
+  field: PropTypes.shape({
+    subfields: PropTypes.arrayOf(mappingMARCSubfieldShape.isRequired).isRequired,
+    field: PropTypes.string,
+    indicator1: PropTypes.string,
+    indicator2: PropTypes.string,
+  }).isRequired,
+  action: PropTypes.oneOf([...Object.values(MAPPING_DETAILS_ACTIONS)]),
+});
 
 export const mappingProfileSubfieldShape = PropTypes.shape({
   order: PropTypes.number.isRequired,
@@ -122,4 +158,36 @@ export const okapiShape = PropTypes.shape({
   tenant: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+});
+
+export const qualifierShape = PropTypes.shape({
+  comparisonPart: PropTypes.oneOf(Object.values(COMPARISON_PARTS)),
+  qualifierType: PropTypes.oneOf(Object.values(QUALIFIER_TYPES)),
+  qualifierValue: PropTypes.string,
+});
+
+export const matchExpressionShape = PropTypes.shape({
+  dataValueType: PropTypes.string.isRequired,
+  fields: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.string,
+  })).isRequired,
+  qualifier: qualifierShape,
+});
+
+export const matchDetailsShape = PropTypes.shape({
+  existingMatchExpression: matchExpressionShape.isRequired,
+  existingRecordType: PropTypes.string.isRequired,
+  incomingMatchExpression: matchExpressionShape.isRequired,
+  incomingRecordType: PropTypes.string.isRequired,
+  matchCriterion: PropTypes.oneOf(Object.values(CRITERION_TYPES)).isRequired,
+});
+
+export const staticValueDetailsShape = PropTypes.shape({
+  staticValueType: PropTypes.oneOf(Object.values(STATIC_VALUE_TYPES)),
+  text: PropTypes.string,
+  number: PropTypes.string,
+  exactDate: PropTypes.string,
+  fromDate: PropTypes.string,
+  toDate: PropTypes.string,
 });
