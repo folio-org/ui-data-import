@@ -1,0 +1,63 @@
+.matchCriteria {
+  background-color: #616161;
+
+  & > :last-child > :last-child {
+    margin-top: 0;
+  }
+
+  & .matchCriterion {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+
+    & .incoming {
+      background-color: #b2b2b2;
+
+      & label :not(:first-child) {
+        color: #616161;
+      }
+
+      & .field > :first-child {
+        color: #616161;
+      }
+    }
+
+    & .inputContainer {
+      background-color: #e5e5e5;
+
+      & [class|="content"] [class|="formControl"] {
+        margin-bottom: 0;
+      }
+
+      & input, & select {
+        background-color: #ffffff;
+      }
+    }
+
+    & .staticSection {
+      & > div:first-child {
+        margin-bottom: -1rem !important;
+      }
+
+      & .dateRangeLabel {
+        margin: 0 0.7rem;
+      }
+    }
+
+    & .criterionSection {
+      background-color: #b2b2b2;
+    }
+
+    & .existing {
+      background-color: #b2b2b2;
+
+      & label :not(:first-child) {
+        color: #616161;
+      }
+
+      & .field > :first-child {
+        color: #616161;
+      }
+    }
+  }
+}
