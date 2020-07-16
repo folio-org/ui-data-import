@@ -124,50 +124,71 @@ export const LOG_VIEWER = {
   },
 };
 
-export const COMPARISON_PARTS = [
+export const QUALIFIER_TYPES = {
+  BEGINS_WITH: 'BEGINS_WITH',
+  ENDS_WITH: 'ENDS_WITH',
+  CONTAINS: 'CONTAINS',
+};
+
+export const COMPARISON_PARTS = {
+  NUMERICS_ONLY: 'NUMERICS_ONLY',
+  ALPHANUMERICS_ONLY: 'ALPHANUMERICS_ONLY',
+};
+
+export const CRITERION_TYPES = {
+  EXACTLY_MATCHES: 'EXACTLY_MATCHES',
+  EXISTING_VALUE_CONTAINS_INCOMING_VALUE: 'EXISTING_VALUE_CONTAINS_INCOMING_VALUE',
+  INCOMING_VALUE_CONTAINS_EXISTING_VALUE: 'INCOMING_VALUE_CONTAINS_EXISTING_VALUE',
+  EXISTING_VALUE_BEGINS_WITH_INCOMING_VALUE: 'EXISTING_VALUE_BEGINS_WITH_INCOMING_VALUE',
+  INCOMING_VALUE_BEGINS_WITH_EXISTING_VALUE: 'INCOMING_VALUE_BEGINS_WITH_EXISTING_VALUE',
+  EXISTING_VALUE_ENDS_WITH_INCOMING_VALUE: 'EXISTING_VALUE_ENDS_WITH_INCOMING_VALUE',
+  INCOMING_VALUE_ENDS_WITH_EXISTING_VALUE: 'INCOMING_VALUE_ENDS_WITH_EXISTING_VALUE',
+};
+
+export const COMPARISON_PARTS_OPTIONS = [
   {
-    value: 'NUMERICS_ONLY',
+    value: COMPARISON_PARTS.NUMERICS_ONLY,
     label: 'ui-data-import.match.comparison-part.numerics-only',
   }, {
-    value: 'ALPHANUMERICS_ONLY',
+    value: COMPARISON_PARTS.ALPHANUMERICS_ONLY,
     label: 'ui-data-import.match.comparison-part.alpha-numerics-only',
   },
 ];
 
-export const QUALIFIER_TYPES = [
+export const QUALIFIER_TYPES_OPTIONS = [
   {
-    value: 'BEGINS_WITH',
+    value: QUALIFIER_TYPES.BEGINS_WITH,
     label: 'ui-data-import.match.qualifier.begins-with',
   }, {
-    value: 'ENDS_WITH',
+    value: QUALIFIER_TYPES.ENDS_WITH,
     label: 'ui-data-import.match.qualifier.ends-with',
   }, {
-    value: 'CONTAINS',
+    value: QUALIFIER_TYPES.CONTAINS,
     label: 'ui-data-import.match.qualifier.contains',
   },
 ];
 
-export const CRITERION_TYPES = [
+export const CRITERION_TYPES_OPTIONS = [
   {
-    value: 'EXACTLY_MATCHES',
+    value: CRITERION_TYPES.EXACTLY_MATCHES,
     label: 'ui-data-import.match.criterion-type.exactly-matches',
   }, {
-    value: 'EXISTING_VALUE_CONTAINS_INCOMING_VALUE',
+    value: CRITERION_TYPES.EXISTING_VALUE_CONTAINS_INCOMING_VALUE,
     label: 'ui-data-import.match.criterion-type.existing-contains-incoming',
   }, {
-    value: 'INCOMING_VALUE_CONTAINS_EXISTING_VALUE',
+    value: CRITERION_TYPES.INCOMING_VALUE_CONTAINS_EXISTING_VALUE,
     label: 'ui-data-import.match.criterion-type.incoming-contains-existing',
   }, {
-    value: 'EXISTING_VALUE_BEGINS_WITH_INCOMING_VALUE',
+    value: CRITERION_TYPES.EXISTING_VALUE_BEGINS_WITH_INCOMING_VALUE,
     label: 'ui-data-import.match.criterion-type.existing-begins-with-incoming',
   }, {
-    value: 'INCOMING_VALUE_BEGINS_WITH_EXISTING_VALUE',
+    value: CRITERION_TYPES.INCOMING_VALUE_BEGINS_WITH_EXISTING_VALUE,
     label: 'ui-data-import.match.criterion-type.incoming-begins-with-existing',
   }, {
-    value: 'EXISTING_VALUE_ENDS_WITH_INCOMING_VALUE',
+    value: CRITERION_TYPES.EXISTING_VALUE_ENDS_WITH_INCOMING_VALUE,
     label: 'ui-data-import.match.criterion-type.existing-ends-with-incoming',
   }, {
-    value: 'INCOMING_VALUE_ENDS_WITH_EXISTING_VALUE',
+    value: CRITERION_TYPES.INCOMING_VALUE_ENDS_WITH_EXISTING_VALUE,
     label: 'ui-data-import.match.criterion-type.incoming-ends-with-existing',
   },
 ];
@@ -196,36 +217,43 @@ export const REPEATABLE_ACTIONS = {
   DELETE_INCOMING: 'DELETE_INCOMING',
 };
 
+export const STATIC_VALUE_TYPES = {
+  TEXT: 'TEXT',
+  NUMBER: 'NUMBER',
+  EXACT_DATE: 'EXACT_DATE',
+  DATE_RANGE: 'DATE_RANGE',
+};
+
 export const FORMS_SETTINGS = {
   [ENTITY_KEYS.MATCH_PROFILES]: {
     MATCHING: {
       QUALIFIER_TYPES: [
-        'BEGINS_WITH',
-        'ENDS_WITH',
-        'CONTAINS',
+        QUALIFIER_TYPES.BEGINS_WITH,
+        QUALIFIER_TYPES.ENDS_WITH,
+        QUALIFIER_TYPES.CONTAINS,
       ],
       COMPARISON_PARTS: [
-        'NUMERICS_ONLY',
-        'ALPHANUMERICS_ONLY',
+        COMPARISON_PARTS.NUMERICS_ONLY,
+        COMPARISON_PARTS.ALPHANUMERICS_ONLY,
       ],
       CRITERION_TYPES: [
-        'EXACTLY_MATCHES',
-        'EXISTING_VALUE_CONTAINS_INCOMING_VALUE',
-        'INCOMING_VALUE_CONTAINS_EXISTING_VALUE',
-        'EXISTING_VALUE_BEGINS_WITH_INCOMING_VALUE',
-        'INCOMING_VALUE_BEGINS_WITH_EXISTING_VALUE',
-        'EXISTING_VALUE_ENDS_WITH_INCOMING_VALUE',
-        'INCOMING_VALUE_ENDS_WITH_EXISTING_VALUE',
+        CRITERION_TYPES.EXACTLY_MATCHES,
+        CRITERION_TYPES.EXISTING_VALUE_CONTAINS_INCOMING_VALUE,
+        CRITERION_TYPES.INCOMING_VALUE_CONTAINS_EXISTING_VALUE,
+        CRITERION_TYPES.EXISTING_VALUE_BEGINS_WITH_INCOMING_VALUE,
+        CRITERION_TYPES.INCOMING_VALUE_BEGINS_WITH_EXISTING_VALUE,
+        CRITERION_TYPES.EXISTING_VALUE_ENDS_WITH_INCOMING_VALUE,
+        CRITERION_TYPES.INCOMING_VALUE_ENDS_WITH_EXISTING_VALUE,
       ],
       VALUE_TYPES: [
         'VALUE_FROM_RECORD',
         'STATIC_VALUE',
       ],
       STATIC_VALUE_TYPES: [
-        'TEXT',
-        'NUMBER',
-        'EXACT_DATE',
-        'DATE_RANGE',
+        STATIC_VALUE_TYPES.TEXT,
+        STATIC_VALUE_TYPES.NUMBER,
+        STATIC_VALUE_TYPES.EXACT_DATE,
+        STATIC_VALUE_TYPES.DATE_RANGE,
       ],
     },
   },

@@ -27,12 +27,12 @@ export default server => {
             value: '001',
           }, {
             label: 'indicator1',
-            value: ' ',
+            value: '',
           }, {
             label: 'indicator2',
-            value: ' ',
+            value: '',
           }, {
-            label: 'recordSubfield',
+            label: 'subfield',
             value: 'a',
           }],
           qualifier: { comparisonPart: 'NUMERICS_ONLY' },
@@ -70,7 +70,7 @@ export default server => {
           label: 'indicator2',
           value: '',
         }, {
-          label: 'recordSubfield',
+          label: 'subfield',
           value: 'a',
         }],
         qualifier: { comparisonPart: 'NUMERICS_ONLY' },
@@ -91,6 +91,7 @@ export default server => {
           value: 'invoice.vendorInvoiceNo',
         }],
       },
+      incomingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
     }],
   });
   server.create('match-profile', {
@@ -107,6 +108,7 @@ export default server => {
           value: 'item.barcode',
         }],
       },
+      incomingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
     }],
   });
   server.create('match-profile', {
@@ -128,10 +130,11 @@ export default server => {
           label: 'indicator2',
           value: ' ',
         }, {
-          label: 'recordSubfield',
+          label: 'subfield',
           value: 'a',
         }],
       },
+      incomingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
     }],
   });
   server.create('match-profile', {
@@ -153,10 +156,11 @@ export default server => {
           label: 'indicator2',
           value: ' ',
         }, {
-          label: 'recordSubfield',
+          label: 'subfield',
           value: 'a',
         }],
       },
+      incomingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
     }],
   });
   server.create('match-profile', {
@@ -173,6 +177,7 @@ export default server => {
           value: 'instance.identifiers[].value',
         }],
       },
+      incomingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
     }],
   });
   server.create('match-profile', {
@@ -189,15 +194,16 @@ export default server => {
           value: '035',
         }, {
           label: 'indicator1',
-          value: ' ',
+          value: '',
         }, {
           label: 'indicator2',
-          value: ' ',
+          value: '',
         }, {
-          label: 'recordSubfield',
+          label: 'subfield',
           value: 'a',
         }],
       },
+      incomingMatchExpression: { dataValueType: 'VALUE_FROM_RECORD' },
     }],
   });
   server.create('match-profile', {
