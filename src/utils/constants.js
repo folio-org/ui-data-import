@@ -463,6 +463,17 @@ export const MARC_TABLE_CONFIG = {
   },
 };
 
+export const ITEM_CIRCULATION_NOTES_OPTIONS = [
+  {
+    value: 'Check in note',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.field.circulationNotes.checkInNote',
+  },
+  {
+    value: 'Check out note',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.field.circulationNotes.checkOutNote',
+  },
+];
+
 export const ITEM_STATUS_OPTIONS = [
   {
     value: 'Available',

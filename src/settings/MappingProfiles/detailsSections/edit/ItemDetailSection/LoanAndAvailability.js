@@ -21,7 +21,6 @@ import {
   getAcceptedValuesPath,
   getBoolSubfieldName,
   getFieldName,
-  getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
   onAdd,
@@ -30,6 +29,7 @@ import {
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   ITEM_STATUS_OPTIONS,
+  ITEM_CIRCULATION_NOTES_OPTIONS,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
@@ -40,10 +40,13 @@ export const LoanAndAvailability = ({
   setReferenceTables,
   okapi,
 }) => {
-  const statusesList = ITEM_STATUS_OPTIONS.map(option => ({
+  const createOptionList = arr => arr.map(option => ({
     value: option.value,
     label: <FormattedMessage id={option.label} />,
   }));
+
+  const statusesList = createOptionList(ITEM_STATUS_OPTIONS);
+  const circulationNotesList = createOptionList(ITEM_CIRCULATION_NOTES_OPTIONS);
 
   return (
     <Accordion
@@ -136,15 +139,10 @@ export const LoanAndAvailability = ({
                       component={TextField}
                       name={getSubfieldName(28, 0, index)}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.noteType`} />}
-                      optionValue="name"
-                      optionLabel="name"
+                      optionValue="value"
+                      optionLabel="label"
                       wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSources={[{
-                        wrapperSourceLink: '/item-note-types?limit=1000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'itemNoteTypes',
-                      }]}
-                      setAcceptedValues={setReferenceTables}
-                      acceptedValuesPath={getRepeatableAcceptedValuesPath(28, 0, index)}
+                      acceptedValuesList={circulationNotesList}
                       okapi={okapi}
                     />
                   </Col>
