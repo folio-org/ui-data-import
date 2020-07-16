@@ -40,12 +40,10 @@ export const LoanAndAvailability = ({
   setReferenceTables,
   okapi,
 }) => {
-  const createOptionList = arr => {
-    return arr.map(option => ({
-      value: option.value,
-      label: <FormattedMessage id={option.label} />,
-    }));
-  };
+  const createOptionList = arr => arr.map(option => ({
+    value: option.value,
+    label: <FormattedMessage id={option.label} />,
+  }));
 
   const statusesList = createOptionList(ITEM_STATUS_OPTIONS);
   const circulationNotesList = createOptionList(ITEM_CIRCULATION_NOTES_OPTIONS);
