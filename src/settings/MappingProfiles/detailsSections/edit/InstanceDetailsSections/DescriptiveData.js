@@ -42,6 +42,7 @@ export const DescriptiveData = ({
   publicationRange,
   initialFields,
   setReferenceTables,
+  getRepeatableFieldAction,
   okapi,
 }) => {
   return (
@@ -175,37 +176,44 @@ export const DescriptiveData = ({
           <RepeatableActionsField
             wrapperFieldName={getRepeatableFieldName(21)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermsIds.legend`} />}
+            repeatableFieldAction={getRepeatableFieldAction(21)}
+            repeatableFieldIndex={21}
+            hasRepeatableFields={!!natureOfContentTermIds.length}
+            onRepeatableActionChange={setReferenceTables}
           >
-            <RepeatableField
-              fields={natureOfContentTermIds}
-              addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermsIds.addLabel`} />}
-              onAdd={() => onAdd(natureOfContentTermIds, 'natureOfContentTermIds', 21, initialFields, setReferenceTables, 'order')}
-              onRemove={index => onRemove(index, natureOfContentTermIds, 21, setReferenceTables, 'order')}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col
-                    data-test-nature-of-content-term
-                    xs={12}
-                  >
-                    <AcceptedValuesField
-                      okapi={okapi}
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermId`} />}
-                      name={getSubfieldName(21, 0, index)}
-                      optionValue="name"
-                      optionLabel="name"
-                      wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSources={[{
-                        wrapperSourceLink: '/nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'natureOfContentTerms',
-                      }]}
-                      setAcceptedValues={setReferenceTables}
-                      acceptedValuesPath={getRepeatableAcceptedValuesPath(21, 0, index)}
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+            {isDisabled => (
+              <RepeatableField
+                fields={natureOfContentTermIds}
+                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermsIds.addLabel`} />}
+                onAdd={() => onAdd(natureOfContentTermIds, 'natureOfContentTermIds', 21, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, natureOfContentTermIds, 21, setReferenceTables, 'order')}
+                canAdd={!isDisabled}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col
+                      data-test-nature-of-content-term
+                      xs={12}
+                    >
+                      <AcceptedValuesField
+                        okapi={okapi}
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermId`} />}
+                        name={getSubfieldName(21, 0, index)}
+                        optionValue="name"
+                        optionLabel="name"
+                        wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+                        wrapperSources={[{
+                          wrapperSourceLink: '/nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'natureOfContentTerms',
+                        }]}
+                        setAcceptedValues={setReferenceTables}
+                        acceptedValuesPath={getRepeatableAcceptedValuesPath(21, 0, index)}
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            )}
           </RepeatableActionsField>
         </Col>
       </Row>
@@ -332,5 +340,6 @@ DescriptiveData.propTypes = {
   publicationRange: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
+  getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
 };

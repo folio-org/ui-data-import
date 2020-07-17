@@ -37,6 +37,7 @@ export const AdministrativeData = ({
   statisticalCodeIds,
   initialFields,
   setReferenceTables,
+  getRepeatableFieldAction,
   okapi,
 }) => {
   return (
@@ -48,11 +49,10 @@ export const AdministrativeData = ({
         <Col
           data-test-suppress-from-discovery
           xs={4}
-        >
-          <BooleanActionField
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.discoverySuppress`} />}
-            name={getBoolFieldName(0)}
-          />
+        ><BooleanActionField
+          label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.discoverySuppress`} />}
+          name={getBoolFieldName(0)}
+        />
         </Col>
       </Row>
       <Row left="xs">
@@ -107,24 +107,31 @@ export const AdministrativeData = ({
           <RepeatableActionsField
             wrapperFieldName={getRepeatableFieldName(5)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId.legend`} />}
+            repeatableFieldAction={getRepeatableFieldAction(5)}
+            repeatableFieldIndex={5}
+            hasRepeatableFields={!!formerIds.length}
+            onRepeatableActionChange={setReferenceTables}
           >
-            <RepeatableField
-              fields={formerIds}
-              addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId.addLabel`} />}
-              onAdd={() => onAdd(formerIds, 'formerIds', 5, initialFields, setReferenceTables, 'order')}
-              onRemove={index => onRemove(index, formerIds, 5, setReferenceTables, 'order')}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col xs={12}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId`} />}
-                      name={getSubfieldName(5, 0, index)}
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+            {isDisabled => (
+              <RepeatableField
+                fields={formerIds}
+                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId.addLabel`} />}
+                onAdd={() => onAdd(formerIds, 'formerIds', 5, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, formerIds, 5, setReferenceTables, 'order')}
+                canAdd={!isDisabled}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col xs={12}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId`} />}
+                        name={getSubfieldName(5, 0, index)}
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            )}
           </RepeatableActionsField>
         </Col>
       </Row>
@@ -137,42 +144,49 @@ export const AdministrativeData = ({
           <RepeatableActionsField
             wrapperFieldName={getRepeatableFieldName(6)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />}
+            repeatableFieldAction={getRepeatableFieldAction(6)}
+            repeatableFieldIndex={6}
+            hasRepeatableFields={!!statisticalCodeIds.length}
+            onRepeatableActionChange={setReferenceTables}
           >
-            <RepeatableField
-              fields={statisticalCodeIds}
-              addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.addLabel`} />}
-              onAdd={() => onAdd(statisticalCodeIds, 'statisticalCodeIds', 6, initialFields, setReferenceTables, 'order')}
-              onRemove={index => onRemove(index, statisticalCodeIds, 6, setReferenceTables, 'order')}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col
-                    data-test-statistical-code
-                    xs={12}
-                  >
-                    <AcceptedValuesField
-                      component={TextField}
-                      name={getSubfieldName(6, 0, index)}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCode`} />}
-                      optionValue="name"
-                      optionLabel="name"
-                      wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSourcesFn="statisticalCodeTypeName"
-                      wrapperSources={[{
-                        wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'statisticalCodes',
-                      }, {
-                        wrapperSourceLink: '/statistical-code-types?limit=1000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'statisticalCodeTypes',
-                      }]}
-                      optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
-                      setAcceptedValues={setReferenceTables}
-                      acceptedValuesPath={getRepeatableAcceptedValuesPath(6, 0, index)}
-                      okapi={okapi}
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+            {isDisabled => (
+              <RepeatableField
+                fields={statisticalCodeIds}
+                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.addLabel`} />}
+                onAdd={() => onAdd(statisticalCodeIds, 'statisticalCodeIds', 6, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, statisticalCodeIds, 6, setReferenceTables, 'order')}
+                canAdd={!isDisabled}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col
+                      data-test-statistical-code
+                      xs={12}
+                    >
+                      <AcceptedValuesField
+                        component={TextField}
+                        name={getSubfieldName(6, 0, index)}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCode`} />}
+                        optionValue="name"
+                        optionLabel="name"
+                        wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+                        wrapperSourcesFn="statisticalCodeTypeName"
+                        wrapperSources={[{
+                          wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'statisticalCodes',
+                        }, {
+                          wrapperSourceLink: '/statistical-code-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'statisticalCodeTypes',
+                        }]}
+                        optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
+                        setAcceptedValues={setReferenceTables}
+                        acceptedValuesPath={getRepeatableAcceptedValuesPath(6, 0, index)}
+                        okapi={okapi}
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            )}
           </RepeatableActionsField>
         </Col>
       </Row>
@@ -185,5 +199,6 @@ AdministrativeData.propTypes = {
   statisticalCodeIds: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
+  getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
 };

@@ -23,6 +23,7 @@ export const MappingHoldingsDetails = ({
   initialFields,
   referenceTables,
   setReferenceTables,
+  getRepeatableFieldAction,
   okapi,
 }) => {
   const formerIds = referenceTables?.formerIds || [];
@@ -39,6 +40,7 @@ export const MappingHoldingsDetails = ({
       <AdministrativeData
         formerIds={formerIds}
         statisticalCodeIds={statisticalCodeIds}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
@@ -49,6 +51,7 @@ export const MappingHoldingsDetails = ({
       />
       <HoldingsDetails
         holdingStatements={holdingStatements}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         holdingStatementsForSupplements={holdingStatementsForSupplements}
         holdingStatementsForIndexes={holdingStatementsForIndexes}
         initialFields={initialFields}
@@ -57,12 +60,14 @@ export const MappingHoldingsDetails = ({
       />
       <HoldingsNotes
         notes={notes}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
       <ElectronicAccess
         electronicAccess={electronicAccess}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
@@ -70,6 +75,7 @@ export const MappingHoldingsDetails = ({
       <Acquisition />
       <ReceivingHistory
         receivingHistory={receivingHistory}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
       />
@@ -81,5 +87,6 @@ MappingHoldingsDetails.propTypes = {
   initialFields: mappingHoldingsInitialFieldsShape.isRequired,
   referenceTables: mappingHoldingsRefTablesShape.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
+  getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
 };

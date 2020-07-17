@@ -164,6 +164,16 @@ export const validateMARCWithDate = value => {
   return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
 };
 
+export const validateRepeatableActionsField = (value, hasFields) => {
+  const val = value && value.trim ? value.trim() : value;
+
+  if (!isEmpty(val) && !hasFields) {
+    return <FormattedMessage id="ui-data-import.validation.chooseAtLeastOneValue" />;
+  }
+
+  return null;
+};
+
 export const validateAcceptedValues = (acceptedValues, valueKey) => value => {
   const pattern = /"[^"]+"/g;
 

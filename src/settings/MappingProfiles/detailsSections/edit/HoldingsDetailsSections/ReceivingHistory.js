@@ -30,6 +30,7 @@ export const ReceivingHistory = ({
   receivingHistory,
   initialFields,
   setReferenceTables,
+  getRepeatableFieldAction,
 }) => {
   return (
     <Accordion
@@ -42,43 +43,52 @@ export const ReceivingHistory = ({
           id="section-receiving-history"
           xs={12}
         >
-          <RepeatableActionsField wrapperFieldName={getRepeatableFieldName(26)}>
-            <RepeatableField
-              fields={receivingHistory}
-              addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.receivingHistory.addLabel`} />}
-              onAdd={() => onAdd(receivingHistory, 'receivingHistory.entries', 26, initialFields, setReferenceTables, 'order')}
-              onRemove={index => onRemove(index, receivingHistory, 26, setReferenceTables, 'order')}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col
-                    data-test-public-display
-                    xs={4}
-                  >
-                    <BooleanActionField
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.publicDisplay`} />}
-                      name={getBoolSubfieldName(26, 0, index)}
-                    />
-                  </Col>
-                  <Col xs={4}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
-                      name={getSubfieldName(26, 1, index)}
-                    />
-                  </Col>
-                  <Col
-                    data-test-staff-only
-                    xs={4}
-                  >
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
-                      name={getSubfieldName(26, 2, index)}
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+          <RepeatableActionsField
+            wrapperFieldName={getRepeatableFieldName(26)}
+            repeatableFieldAction={getRepeatableFieldAction(26)}
+            repeatableFieldIndex={26}
+            hasRepeatableFields={!!receivingHistory.length}
+            onRepeatableActionChange={setReferenceTables}
+          >
+            {isDisabled => (
+              <RepeatableField
+                fields={receivingHistory}
+                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.receivingHistory.addLabel`} />}
+                onAdd={() => onAdd(receivingHistory, 'receivingHistory.entries', 26, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, receivingHistory, 26, setReferenceTables, 'order')}
+                canAdd={!isDisabled}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col
+                      data-test-public-display
+                      xs={4}
+                    >
+                      <BooleanActionField
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.publicDisplay`} />}
+                        name={getBoolSubfieldName(26, 0, index)}
+                      />
+                    </Col>
+                    <Col xs={4}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
+                        name={getSubfieldName(26, 1, index)}
+                      />
+                    </Col>
+                    <Col
+                      data-test-staff-only
+                      xs={4}
+                    >
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
+                        name={getSubfieldName(26, 2, index)}
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            )}
           </RepeatableActionsField>
         </Col>
       </Row>
@@ -90,4 +100,5 @@ ReceivingHistory.propTypes = {
   receivingHistory: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
+  getRepeatableFieldAction: PropTypes.func.isRequired,
 };

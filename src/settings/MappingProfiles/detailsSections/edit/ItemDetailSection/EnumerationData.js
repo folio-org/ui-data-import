@@ -27,6 +27,7 @@ export const EnumerationData = ({
   yearCaption,
   initialFields,
   setReferenceTables,
+  getRepeatableFieldAction,
 }) => {
   return (
     <Accordion
@@ -76,24 +77,31 @@ export const EnumerationData = ({
           <RepeatableActionsField
             wrapperFieldName={getRepeatableFieldName(18)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />}
+            repeatableFieldAction={getRepeatableFieldAction(18)}
+            repeatableFieldIndex={18}
+            hasRepeatableFields={!!yearCaption.length}
+            onRepeatableActionChange={setReferenceTables}
           >
-            <RepeatableField
-              fields={yearCaption}
-              addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption.addLabel`} />}
-              onAdd={() => onAdd(yearCaption, 'yearCaption', 18, initialFields, setReferenceTables, 'order')}
-              onRemove={index => onRemove(index, yearCaption, 18, setReferenceTables, 'order')}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col xs={12}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />}
-                      name={getSubfieldName(18, 0, index)}
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+            {isDisabled => (
+              <RepeatableField
+                fields={yearCaption}
+                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption.addLabel`} />}
+                onAdd={() => onAdd(yearCaption, 'yearCaption', 18, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, yearCaption, 18, setReferenceTables, 'order')}
+                canAdd={!isDisabled}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col xs={12}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />}
+                        name={getSubfieldName(18, 0, index)}
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            )}
           </RepeatableActionsField>
         </Col>
       </Row>
@@ -105,4 +113,5 @@ EnumerationData.propTypes = {
   yearCaption: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
+  getRepeatableFieldAction: PropTypes.func.isRequired,
 };

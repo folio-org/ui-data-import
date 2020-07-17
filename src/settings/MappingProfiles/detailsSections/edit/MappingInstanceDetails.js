@@ -27,6 +27,7 @@ export const MappingInstanceDetails = ({
   initialFields,
   referenceTables,
   setReferenceTables,
+  getRepeatableFieldAction,
   okapi,
 }) => {
   const statisticalCodes = referenceTables?.statisticalCodeIds || [];
@@ -55,12 +56,15 @@ export const MappingInstanceDetails = ({
     <AccordionSet>
       <AdministrativeData
         statisticalCodes={statisticalCodes}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
       <TitleData
         alternativeTitles={alternativeTitles}
+        getRepeatableFieldAction={getRepeatableFieldAction}
+        setReferenceTables={setReferenceTables}
         seriesStatements={seriesStatements}
         precedingTitles={precedingTitles}
         succeedingTitles={succeedingTitles}
@@ -73,6 +77,7 @@ export const MappingInstanceDetails = ({
       />
       <DescriptiveData
         publications={publications}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         editions={editions}
         physicalDescriptions={physicalDescriptions}
         natureOfContentTermIds={natureOfContentTermIds}
@@ -99,6 +104,7 @@ export const MappingInstanceDetails = ({
       />
       <InstanceRelationship
         parentInstances={parentInstances}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         childInstances={childInstances}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
@@ -113,5 +119,6 @@ MappingInstanceDetails.propTypes = {
   initialFields: mappingInstanceInitialFieldsShape.isRequired,
   referenceTables: mappingInstanceRefTablesShape.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
+  getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
 };
