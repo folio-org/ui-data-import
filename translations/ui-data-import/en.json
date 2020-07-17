@@ -211,6 +211,7 @@
   "validation.syntaxError": "Please correct the syntax to continue",
   "validation.cannotBeUpdated": "This field cannot be updated",
   "validation.chooseDifferentField": "Please choose a different field",
+  "validation.chooseAtLeastOneValue": "One or more values must be added before the profile can be saved.",
   "error.fileExtension.extension.invalid": "File extension {name} is not a valid format",
   "error.fileExtension.duplication.invalid": "File extension {name} already exists",
   "error.fileExtensions.action": "The file extension \"{name}\" was not {action}",

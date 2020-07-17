@@ -39,6 +39,7 @@ export const AdministrativeData = ({
   statisticalCodes,
   initialFields,
   setReferenceTables,
+  getRepeatableFieldAction,
   okapi,
 }) => {
   return (
@@ -157,43 +158,49 @@ export const AdministrativeData = ({
           <RepeatableActionsField
             wrapperFieldName={getRepeatableFieldName(8)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />}
+            repeatableFieldAction={getRepeatableFieldAction(8)}
+            repeatableFieldIndex={8}
+            hasRepeatableFields={!!statisticalCodes.length}
+            onRepeatableActionChange={setReferenceTables}
           >
-            <RepeatableField
-              fields={statisticalCodes}
-              addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.addLabel`} />}
-              onAdd={() => onAdd(statisticalCodes, 'statisticalCodeIds', 8, initialFields, setReferenceTables, 'order')}
-              onRemove={index => onRemove(index, statisticalCodes, 8, setReferenceTables, 'order')}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col
-                    data-test-statistical-code
-                    xs={12}
-                  >
-                    <AcceptedValuesField
-                      okapi={okapi}
-                      component={TextField}
-                      name={getSubfieldName(8, 0, index)}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCode`} />}
-                      optionLabel="name"
-                      optionValue="name"
-                      wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      wrapperSourcesFn="statisticalCodeTypeName"
-                      wrapperSources={[{
-                        wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'statisticalCodes',
-                      }, {
-                        wrapperSourceLink: '/statistical-code-types?limit=1000&query=cql.allRecords=1 sortby name',
-                        wrapperSourcePath: 'statisticalCodeTypes',
-                      }]}
-                      optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
-                      setAcceptedValues={setReferenceTables}
-                      acceptedValuesPath={getRepeatableAcceptedValuesPath(8, 0, index)}
-
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+            {isDisabled => (
+              <RepeatableField
+                fields={statisticalCodes}
+                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.addLabel`} />}
+                onAdd={() => onAdd(statisticalCodes, 'statisticalCodeIds', 8, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, statisticalCodes, 8, setReferenceTables, 'order')}
+                canAdd={!isDisabled}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col
+                      data-test-statistical-code
+                      xs={12}
+                    >
+                      <AcceptedValuesField
+                        okapi={okapi}
+                        component={TextField}
+                        name={getSubfieldName(8, 0, index)}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCode`} />}
+                        optionLabel="name"
+                        optionValue="name"
+                        wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+                        wrapperSourcesFn="statisticalCodeTypeName"
+                        wrapperSources={[{
+                          wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'statisticalCodes',
+                        }, {
+                          wrapperSourceLink: '/statistical-code-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourcePath: 'statisticalCodeTypes',
+                        }]}
+                        optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
+                        setAcceptedValues={setReferenceTables}
+                        acceptedValuesPath={getRepeatableAcceptedValuesPath(8, 0, index)}
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            )}
           </RepeatableActionsField>
         </Col>
       </Row>
@@ -205,5 +212,6 @@ AdministrativeData.propTypes = {
   statisticalCodes: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
+  getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
 };

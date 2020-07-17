@@ -38,6 +38,7 @@ export const LoanAndAvailability = ({
   circulationNotes,
   initialFields,
   setReferenceTables,
+  getRepeatableFieldAction,
   okapi,
 }) => {
   const createOptionList = arr => arr.map(option => ({
@@ -123,48 +124,55 @@ export const LoanAndAvailability = ({
           <RepeatableActionsField
             wrapperFieldName={getRepeatableFieldName(28)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.field.circulationNotes.legend`} />}
+            repeatableFieldAction={getRepeatableFieldAction(28)}
+            repeatableFieldIndex={28}
+            hasRepeatableFields={!!circulationNotes.length}
+            onRepeatableActionChange={setReferenceTables}
           >
-            <RepeatableField
-              fields={circulationNotes}
-              addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.field.circulationNotes.addLabel`} />}
-              onAdd={() => onAdd(circulationNotes, 'circulationNotes', 28, initialFields, setReferenceTables, 'order')}
-              onRemove={index => onRemove(index, circulationNotes, 28, setReferenceTables, 'order')}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col
-                    data-test-circulation-note
-                    xs={4}
-                  >
-                    <AcceptedValuesField
-                      component={TextField}
-                      name={getSubfieldName(28, 0, index)}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.noteType`} />}
-                      optionValue="value"
-                      optionLabel="label"
-                      wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                      acceptedValuesList={circulationNotesList}
-                      okapi={okapi}
-                    />
-                  </Col>
-                  <Col xs={4}>
-                    <Field
-                      component={TextField}
-                      name={getSubfieldName(28, 1, index)}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
-                    />
-                  </Col>
-                  <Col
-                    data-test-staff-only
-                    xs={4}
-                  >
-                    <BooleanActionField
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.staffOnly`} />}
-                      name={getBoolSubfieldName(28, 2, index)}
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+            {isDisabled => (
+              <RepeatableField
+                fields={circulationNotes}
+                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.field.circulationNotes.addLabel`} />}
+                onAdd={() => onAdd(circulationNotes, 'circulationNotes', 28, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, circulationNotes, 28, setReferenceTables, 'order')}
+                canAdd={!isDisabled}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col
+                      data-test-circulation-note
+                      xs={4}
+                    >
+                      <AcceptedValuesField
+                        component={TextField}
+                        name={getSubfieldName(28, 0, index)}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.noteType`} />}
+                        optionValue="value"
+                        optionLabel="label"
+                        wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+                        acceptedValuesList={circulationNotesList}
+                        okapi={okapi}
+                      />
+                    </Col>
+                    <Col xs={4}>
+                      <Field
+                        component={TextField}
+                        name={getSubfieldName(28, 1, index)}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
+                      />
+                    </Col>
+                    <Col
+                      data-test-staff-only
+                      xs={4}
+                    >
+                      <BooleanActionField
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.staffOnly`} />}
+                        name={getBoolSubfieldName(28, 2, index)}
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            )}
           </RepeatableActionsField>
         </Col>
       </Row>
@@ -176,5 +184,6 @@ LoanAndAvailability.propTypes = {
   circulationNotes: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
+  getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
 };
