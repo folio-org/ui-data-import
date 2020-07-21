@@ -32,8 +32,8 @@ import {
 
 export const HoldingsDetails = ({
   holdingStatements,
-  holdingStatementsForSupplements,
-  holdingStatementsForIndexes,
+  holdingsStatementsForSupplements,
+  holdingsStatementsForIndexes,
   initialFields,
   setReferenceTables,
   getRepeatableFieldAction,
@@ -111,15 +111,15 @@ export const HoldingsDetails = ({
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForSupplements.legend`} />}
             repeatableFieldAction={getRepeatableFieldAction(16)}
             repeatableFieldIndex={16}
-            hasRepeatableFields={!!holdingStatementsForSupplements.length}
+            hasRepeatableFields={!!holdingsStatementsForSupplements.length}
             onRepeatableActionChange={setReferenceTables}
           >
             {isDisabled => (
               <RepeatableField
-                fields={holdingStatementsForSupplements}
+                fields={holdingsStatementsForSupplements}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForSupplements.addLabel`} />}
-                onAdd={() => onAdd(holdingStatementsForSupplements, 'holdingStatementsForSupplements', 16, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, holdingStatementsForSupplements, 16, setReferenceTables, 'order')}
+                onAdd={() => onAdd(holdingsStatementsForSupplements, 'holdingsStatementsForSupplements', 16, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, holdingsStatementsForSupplements, 16, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -155,15 +155,15 @@ export const HoldingsDetails = ({
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForIndexes.legend`} />}
             repeatableFieldAction={getRepeatableFieldAction(17)}
             repeatableFieldIndex={17}
-            hasRepeatableFields={!!holdingStatementsForIndexes.length}
+            hasRepeatableFields={!!holdingsStatementsForIndexes.length}
             onRepeatableActionChange={setReferenceTables}
           >
             {isDisabled => (
               <RepeatableField
-                fields={holdingStatementsForIndexes}
+                fields={holdingsStatementsForIndexes}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForIndexes.addLabel`} />}
-                onAdd={() => onAdd(holdingStatementsForIndexes, 'holdingStatementsForIndexes', 17, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, holdingStatementsForIndexes, 17, setReferenceTables, 'order')}
+                onAdd={() => onAdd(holdingsStatementsForIndexes, 'holdingsStatementsForIndexes', 17, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, holdingsStatementsForIndexes, 17, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -236,8 +236,8 @@ export const HoldingsDetails = ({
 
 HoldingsDetails.propTypes = {
   holdingStatements: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
-  holdingStatementsForSupplements: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
-  holdingStatementsForIndexes: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  holdingsStatementsForSupplements: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  holdingsStatementsForIndexes: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   getRepeatableFieldAction: PropTypes.func.isRequired,

@@ -13,6 +13,7 @@
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
+* Fix Inconsistent in Holding schema between UI and Backend (UIDATIMP-596)
 
 ## [2.1.1](https://github.com/folio-org/ui-data-import/tree/v2.1.1) (2020-07-09)
 
