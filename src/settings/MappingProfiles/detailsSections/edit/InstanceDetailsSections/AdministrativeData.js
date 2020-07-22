@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
@@ -42,6 +42,13 @@ export const AdministrativeData = ({
   getRepeatableFieldAction,
   okapi,
 }) => {
+  const validateDatepickerValueField = useCallback(
+    value => {
+      return validateMARCWithDate(value, false);
+    },
+    [],
+  );
+
   return (
     <Accordion
       id="administrative-data"
@@ -111,7 +118,7 @@ export const AdministrativeData = ({
             name={getFieldName(5)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            validate={[validateMARCWithDate]}
+            validate={[validateDatepickerValueField]}
           />
         </Col>
       </Row>

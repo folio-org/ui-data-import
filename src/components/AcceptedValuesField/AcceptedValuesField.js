@@ -35,6 +35,7 @@ export const AcceptedValuesField = ({
   acceptedValuesPath,
   dataAttributes,
   optionTemplate,
+  isRemoveValueAllowed,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
 
@@ -92,6 +93,13 @@ export const AcceptedValuesField = ({
     [listOptions],
   );
 
+  const validateAcceptedValueField = useCallback(
+    value => {
+      return validateMARCWithElse(value, isRemoveValueAllowed);
+    },
+    [isRemoveValueAllowed],
+  );
+
   return (
     <Field
       id={id}
@@ -103,7 +111,7 @@ export const AcceptedValuesField = ({
       optionLabel={optionLabel}
       wrappedComponent={component}
       wrapperLabel={wrapperLabel}
-      validate={[validateMARCWithElse, memoizedValidation]}
+      validate={[validateAcceptedValueField, memoizedValidation]}
       {...dataAttributes}
     />
   );
@@ -128,6 +136,10 @@ AcceptedValuesField.propTypes = {
   setAcceptedValues: PropTypes.func,
   acceptedValuesPath: PropTypes.string,
   dataAttributes: PropTypes.arrayOf(PropTypes.object),
+  isRemoveValueAllowed: PropTypes.bool,
 };
 
-AcceptedValuesField.defaultProps = { acceptedValuesList: [] };
+AcceptedValuesField.defaultProps = {
+  acceptedValuesList: [],
+  isRemoveValueAllowed: false,
+};

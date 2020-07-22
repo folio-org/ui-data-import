@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { isEmpty } from 'lodash';
 
+const REMOVE_OPTION_VALUE = '###REMOVE###';
+
 /**
  * Validates field inputs
  *
@@ -107,10 +109,14 @@ export const validateValueLength3 = value => validateValueLength(value, 3);
 /**
  * Validate MARC path, quoted string and else condition. Match `910`, `910$a`, `"text"`,
  * `910$a "text"`, `910$a; else "text"; else 910`,
+ * validateMARCWithElse('###REMOVE###', true)
+ * // => null
  * @param value
+ * @param {boolean} isRemoveValueAllowed
  * @returns {null|*}
  */
-export const validateMARCWithElse = value => {
+export const validateMARCWithElse = (value, isRemoveValueAllowed) => {
+  const allowedValue = isRemoveValueAllowed ? REMOVE_OPTION_VALUE : '';
   const quotedStringOrMarcPathPattern = '(("[^"]+")|([0-9]{3}(\\$[a-z])?))';
   const pattern = new RegExp([
     `^${quotedStringOrMarcPathPattern}`,
@@ -119,7 +125,7 @@ export const validateMARCWithElse = value => {
     `(((; else )(?=${quotedStringOrMarcPathPattern}))`,
     `((?<=(; else ))${quotedStringOrMarcPathPattern})))*$`].join(''));
 
-  if (!value || !value.length || value.match(pattern)) {
+  if (isEmpty(value) || value === allowedValue || value.match(pattern)) {
     return null;
   }
 
@@ -127,12 +133,35 @@ export const validateMARCWithElse = value => {
 };
 
 /**
- * Validate MARC path, quoted date, `today` constant and else condition. Match `910`, `910$a`, `###TODAY###`,
- * `"2020-01-01"`, `910$a "2020-01-01"`, `910$a; else ###TODAY###; else "2020-01-01"`,
+ * Validate text inputs, check if they has remove option value
+ * validateTextFieldRemoveValue('###REMOVE###')
+ * // => null
  * @param value
  * @returns {null|*}
  */
-export const validateMARCWithDate = value => {
+export const validateTextFieldRemoveValue = value => {
+  if (isEmpty(value)) {
+    return null;
+  }
+
+  if (value.includes(REMOVE_OPTION_VALUE) && value !== REMOVE_OPTION_VALUE) {
+    return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
+  }
+
+  return null;
+};
+
+/**
+ * Validate MARC path, quoted date, `today` constant and else condition. Match `910`, `910$a`, `###TODAY###`,
+ * `"2020-01-01"`, `910$a "2020-01-01"`, `910$a; else ###TODAY###; else "2020-01-01"`,
+ * validateMARCWithElse('###REMOVE###', false)
+ * // => null
+ * @param value
+ * @param {boolean?} isRemoveValueProhibited
+ * @returns {null|*}
+ */
+export const validateMARCWithDate = (value, isRemoveValueProhibited) => {
+  const allowedValue = isRemoveValueProhibited ? '' : REMOVE_OPTION_VALUE;
   const todayOrDatePattern = '((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?))';
   const pattern = new RegExp([
     `^${todayOrDatePattern}`,
@@ -141,7 +170,7 @@ export const validateMARCWithDate = value => {
     `(((; else )(?=${todayOrDatePattern}))`,
     `((?<=(; else ))${todayOrDatePattern})))*$`].join(''));
 
-  if (!value || !value.length) {
+  if (isEmpty(value) || value === allowedValue) {
     return null;
   }
 

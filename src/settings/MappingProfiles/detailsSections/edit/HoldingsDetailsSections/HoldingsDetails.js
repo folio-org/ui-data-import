@@ -26,6 +26,7 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  validateTextFieldRemoveValue,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
@@ -53,6 +54,7 @@ export const HoldingsDetails = ({
             component={TextField}
             name={getFieldName(14)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.details.field.numberOfItems`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
       </Row>
@@ -204,6 +206,7 @@ export const HoldingsDetails = ({
               wrapperSourceLink: '/ill-policies?limit=1000&query=cql.allRecords=1 sortby name',
               wrapperSourcePath: 'illPolicies',
             }]}
+            isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(18)}
             okapi={okapi}
@@ -217,6 +220,7 @@ export const HoldingsDetails = ({
             component={TextField}
             name={getFieldName(19)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.digitizationPolicy`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
         <Col
@@ -227,6 +231,7 @@ export const HoldingsDetails = ({
             component={TextField}
             name={getFieldName(20)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.retentionPolicy`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
       </Row>
