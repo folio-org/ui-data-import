@@ -636,7 +636,7 @@
     "settings.matchProfiles.createdOn": "Created on",
     "settings.matchProfiles.assignedTo": "Assigned to",
     "settings.matchProfiles.manual": "Manual",
-    "settings.matchProfiles.reEncumber": "Re-encumber",
+    "settings.matchProfiles.reEncumber": "Повторное обременение",
     "settings.matchProfiles.orderType": "Order type",
     "settings.matchProfiles.acquisitionUnits": "Acquisition units",
     "settings.matchProfiles.billTo": "Bill to",
@@ -727,5 +727,8 @@
     "settings.matchProfiles.comment": "Комментарий",
     "settings.matchProfiles.releaseEncumbrance": "Снять обременение",
     "settings.matchProfiles.value": "Значение",
-    "settings.matchProfiles.adjustment": "Регулирование"
+    "settings.matchProfiles.adjustment": "Регулирование",
+    "settings.mappingProfiles.map.item.field.circulationNotes.checkInNote": "Check in note",
+    "settings.mappingProfiles.map.item.field.circulationNotes.checkOutNote": "Check out note",
+    "validation.chooseAtLeastOneValue": "One or more values must be added before the profile can be saved."
 }
