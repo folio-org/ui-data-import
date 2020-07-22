@@ -1,4 +1,4 @@
-import { Response } from '@bigtest/mirage';
+import { Response } from 'miragejs';
 
 import { SYSTEM_USER_NAME } from '../../../../src/utils/constants';
 import { searchEntityByQuery } from '../../helpers/searchEntityByQuery';
