@@ -7,7 +7,10 @@ export function setupApplication({
   hasAllPerms = true,
 } = {}) {
   setupStripesCore({
-    mirageOptions,
+    mirageOptions: {
+      serverType: 'miragejs',
+      ...mirageOptions,
+    },
     modules: [findImportProfile],
     scenarios,
     stripesConfig: { hasAllPerms },
