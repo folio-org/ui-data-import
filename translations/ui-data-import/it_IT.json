@@ -362,8 +362,8 @@
     "settings.mappingProfiles.map.item.itemCondition.field.missingPieces": "Missing pieces",
     "settings.mappingProfiles.map.item.itemCondition.field.missingPiecesDate": "Date",
     "settings.mappingProfiles.map.item.field.notes.addLabel": "Add item note",
-    "settings.mappingProfiles.map.item.field.circulationNotes.legend": "Circulation notes",
-    "settings.mappingProfiles.map.item.field.circulationNotes.addLabel": "Add circulation note",
+    "settings.mappingProfiles.map.item.field.circulationNotes.legend": "Check in / Check out notes",
+    "settings.mappingProfiles.map.item.field.circulationNotes.addLabel": "Add check in / check out note",
     "settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatus": "Item damaged status",
     "settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatusDate": "Date",
     "settings.mappingProfiles.map.item.itemNotes.section": "Item notes",
@@ -535,7 +535,7 @@
     "settings.mappingProfiles.map.item.status.inTransit": "In transit",
     "settings.mappingProfiles.map.item.status.missing": "Missing",
     "settings.mappingProfiles.map.item.status.onOrder": "On order",
-    "settings.mappingProfiles.map.item.status.paged": "Paged",
+    "settings.mappingProfiles.map.item.status.paged": "Richiesto",
     "settings.mappingProfiles.map.item.status.declareLost": "Declared lost",
     "settings.mappingProfiles.map.item.status.orderClosed": "Order closed",
     "settings.mappingProfiles.map.item.status.claimedReturned": "Claimed returned",
@@ -727,5 +727,8 @@
     "settings.matchProfiles.comment": "Comment",
     "settings.matchProfiles.releaseEncumbrance": "Release encumbrance",
     "settings.matchProfiles.value": "Value",
-    "settings.matchProfiles.adjustment": "Adjustment"
+    "settings.matchProfiles.adjustment": "Adjustment",
+    "settings.mappingProfiles.map.item.field.circulationNotes.checkInNote": "Check in note",
+    "settings.mappingProfiles.map.item.field.circulationNotes.checkOutNote": "Check out note",
+    "validation.chooseAtLeastOneValue": "One or more values must be added before the profile can be saved."
 }
