@@ -140,11 +140,7 @@ export const validateMARCWithElse = (value, isRemoveValueAllowed) => {
  * @returns {null|*}
  */
 export const validateTextFieldRemoveValue = value => {
-  if (isEmpty(value)) {
-    return null;
-  }
-
-  if (value.includes(REMOVE_OPTION_VALUE) && value !== REMOVE_OPTION_VALUE) {
+  if (!isEmpty(value) && value.includes(REMOVE_OPTION_VALUE) && value !== REMOVE_OPTION_VALUE) {
     return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
   }
 
