@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { Response } from 'miragejs';
 import {
   describe,
   beforeEach,
@@ -451,7 +452,7 @@ describe('delete confirmation modal', () => {
     });
 
     it('the error toast appears', () => {
-      expect(matchProfileDetails.callout.errorCalloutIsPresent).to.be.true;
+      expect(matchProfileDetails.callout.errorCalloutIsPresent).to.be.true; // fail
     });
 
     it('renders the correct number including the one which tried to delete', () => {

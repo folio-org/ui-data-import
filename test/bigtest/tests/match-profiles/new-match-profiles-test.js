@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { Response } from 'miragejs';
 import {
   describe,
   beforeEach,
@@ -465,7 +466,7 @@ describe('When match profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true;
+        expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
       });
     });
 
@@ -475,7 +476,7 @@ describe('When match profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true;
+        expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
       });
     });
   });

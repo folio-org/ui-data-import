@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { Response } from 'miragejs';
 import {
   describe,
   beforeEach,
@@ -1914,7 +1915,7 @@ describe('Mapping Profile View', () => {
         });
 
         it('then error callout appears', () => {
-          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
         });
       });
 
@@ -1924,7 +1925,7 @@ describe('Mapping Profile View', () => {
         });
 
         it('then error callout appears', () => {
-          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
         });
       });
 
@@ -1937,7 +1938,7 @@ describe('Mapping Profile View', () => {
         });
 
         it('then error callout appears', () => {
-          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
         });
       });
 
@@ -1950,7 +1951,7 @@ describe('Mapping Profile View', () => {
         });
 
         it('then error callout appears', () => {
-          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
+          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
         });
       });
     });
@@ -1997,7 +1998,7 @@ describe('Mapping Profile View', () => {
       });
 
       it('the error toast appears', () => {
-        expect(mappingProfileDetails.callout.errorCalloutIsPresent).to.be.true;
+        expect(mappingProfileDetails.callout.errorCalloutIsPresent).to.be.true; // fail
       });
 
       it('renders the correct number including the one which tried to delete', () => {
