@@ -123,6 +123,7 @@ export const AdministrativeData = ({
               wrapperSourceLink: '/holdings-types?limit=1000&query=cql.allRecords=1 sortby name',
               wrapperSourcePath: 'holdingsTypes',
             }]}
+            isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(3)}
             okapi={okapi}

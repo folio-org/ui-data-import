@@ -10,6 +10,7 @@
 * Reuse `<EndOfItem>` component from `stripes-data-transfer-components` repository (UIDATIMP-571)
 * Fix field mapping for Item record check in/check out note (UIDATIMP-554)
 * Field mappings: Repeatable field dropdown Validation (UIDATIMP-508)
+* Inventory field mapping: Instance, Holding, Item: add REMOVE option (UIDATIMP-567)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

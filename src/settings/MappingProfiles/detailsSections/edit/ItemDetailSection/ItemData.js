@@ -17,7 +17,10 @@ import {
   getFieldName,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { okapiShape } from '../../../../../utils';
+import {
+  validateTextFieldRemoveValue,
+  okapiShape,
+} from '../../../../../utils';
 
 export const ItemData = ({
   setReferenceTables,
@@ -59,6 +62,7 @@ export const ItemData = ({
             component={TextField}
             name={getFieldName(8)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.copyNumber`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
       </Row>
@@ -78,6 +82,7 @@ export const ItemData = ({
               wrapperSourceLink: '/call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
               wrapperSourcePath: 'callNumberTypes',
             }]}
+            isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(9)}
             okapi={okapi}
@@ -91,6 +96,7 @@ export const ItemData = ({
             component={TextField}
             name={getFieldName(10)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberPrefix`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
         <Col
@@ -101,6 +107,7 @@ export const ItemData = ({
             component={TextField}
             name={getFieldName(11)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumber`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
         <Col
@@ -111,6 +118,7 @@ export const ItemData = ({
             component={TextField}
             name={getFieldName(12)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberSuffix`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
       </Row>
@@ -123,6 +131,7 @@ export const ItemData = ({
             component={TextField}
             name={getFieldName(13)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.numberOfPieces`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
         <Col
@@ -133,6 +142,7 @@ export const ItemData = ({
             component={TextField}
             name={getFieldName(14)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.descriptionOfPieces`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
       </Row>
