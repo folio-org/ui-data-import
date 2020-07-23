@@ -60,3 +60,9 @@
 .tableDataCell {
   margin-right: 5px;
 }
+
+.tableViewLabel {
+  padding-right: 3px;
+  color: var(--color-fill-disabled);
+  white-space: nowrap;
+}
