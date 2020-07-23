@@ -31,7 +31,12 @@ export const MARCTableViewRow = ({
     MOVE,
   } = MAPPING_DETAILS_ACTIONS;
 
-  const renderCell = (key, actionValue, subactionValue) => {
+  const {
+    action,
+    subaction,
+  } = rowData;
+
+  const renderCell = (key, i) => {
     const cellData = rowData[key];
     const cellStyle = { width: columnWidths[key] };
 
@@ -54,7 +59,7 @@ export const MARCTableViewRow = ({
       }
 
       if (isDataField) {
-        if (actionValue === EDIT && subactionValue === REPLACE) {
+        if (action === EDIT && subaction === REPLACE) {
           const innerCellStyle = {
             display: 'flex',
             flexDirection: 'column',
@@ -83,19 +88,19 @@ export const MARCTableViewRow = ({
                 <span className={css.tableViewLabel}>
                   <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.data.replace" />
                 </span>
-                {cellData.replace}
+                {cellData.replaceWith}
               </div>
             </div>
           );
         }
 
-        if (actionValue === MOVE) {
+        if (action === MOVE) {
           const innerCellStyle = {
-            width: '25%',
+            width: '20%',
             paddingRight: '5px',
           };
 
-          if (subactionValue === NEW_FIELD || subactionValue === EXISTING_FIELD) {
+          if (subaction === NEW_FIELD || subaction === EXISTING_FIELD) {
             return (
               <>
                 <div
@@ -124,7 +129,10 @@ export const MARCTableViewRow = ({
                 </div>
                 <div
                   data-test-marc-table-view-data-subfield
-                  style={innerCellStyle}
+                  style={{
+                    ...innerCellStyle,
+                    width: '40%',
+                  }}
                 >
                   <span className={css.tableViewLabel}>
                     <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.header.subfield" />:
@@ -144,21 +152,20 @@ export const MARCTableViewRow = ({
 
     return (
       <div
+        key={i}
         data-test-marc-table-view-cell
         data-test-marc-table-view={key}
         className={css.tableCell}
         style={cellStyle}
       >
-        {cellData && !isEmpty(cellData) && getCellContent()}
+        {!isEmpty(cellData) && getCellContent()}
       </div>
     );
   };
 
   return (
     <div className={css.tableRow}>
-      {Object.keys(rowData).map(
-        key => renderCell(key, rowData.action, rowData.subaction),
-      )}
+      {Object.keys(rowData).map((key, i) => renderCell(key, i))}
     </div>
   );
 };

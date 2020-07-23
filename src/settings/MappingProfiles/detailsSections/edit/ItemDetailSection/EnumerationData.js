@@ -21,7 +21,10 @@ import {
   onRemove,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileSubfieldShape } from '../../../../../utils';
+import {
+  validateTextFieldRemoveValue,
+  mappingProfileSubfieldShape,
+} from '../../../../../utils';
 
 export const EnumerationData = ({
   yearCaption,
@@ -43,6 +46,7 @@ export const EnumerationData = ({
             component={TextField}
             name={getFieldName(15)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
         <Col
@@ -53,6 +57,7 @@ export const EnumerationData = ({
             component={TextField}
             name={getFieldName(16)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
       </Row>
@@ -65,6 +70,7 @@ export const EnumerationData = ({
             component={TextField}
             name={getFieldName(17)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.volume`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
       </Row>

@@ -9,7 +9,10 @@ import {
   Col,
   TextField,
 } from '@folio/stripes/components';
-import { okapiShape } from '../../../../../utils';
+import {
+  validateTextFieldRemoveValue,
+  okapiShape,
+} from '../../../../../utils';
 
 import { AcceptedValuesField } from '../../../../../components';
 
@@ -65,6 +68,7 @@ export const Location = ({
               wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
               wrapperSourcePath: 'locations',
             }]}
+            isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(6)}
             optionTemplate="**name** (**code**)"
@@ -81,6 +85,7 @@ export const Location = ({
             component={TextField}
             name={getFieldName(7)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingOrder`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
         <Col
@@ -91,6 +96,7 @@ export const Location = ({
             component={TextField}
             name={getFieldName(8)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingTitle`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
       </Row>
@@ -103,6 +109,7 @@ export const Location = ({
             component={TextField}
             name={getFieldName(9)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.copyNumber`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
       </Row>
@@ -122,6 +129,7 @@ export const Location = ({
               wrapperSourceLink: '/call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
               wrapperSourcePath: 'callNumberTypes',
             }]}
+            isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(10)}
             okapi={okapi}
@@ -135,6 +143,7 @@ export const Location = ({
             component={TextField}
             name={getFieldName(11)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberPrefix`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
         <Col
@@ -145,6 +154,7 @@ export const Location = ({
             component={TextField}
             name={getFieldName(12)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumber`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
         <Col
@@ -155,6 +165,7 @@ export const Location = ({
             component={TextField}
             name={getFieldName(13)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberSuffix`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
       </Row>

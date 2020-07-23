@@ -63,6 +63,6 @@
 
 .tableViewLabel {
   padding-right: 3px;
-  color: var(--color-fill-disabled);
+  color: var(--color-text-p2);
   white-space: nowrap;
 }

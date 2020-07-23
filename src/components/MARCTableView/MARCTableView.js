@@ -13,14 +13,14 @@ export const MARCTableView = ({ fields }) => {
     'subfield', 'subaction', 'data', 'position'];
 
   const columnWidths = {
-    action: '100px',
-    field: '120px',
-    indicator1: '93px',
-    indicator2: '93px',
+    action: '90px',
+    field: '90px',
+    indicator1: '63px',
+    indicator2: '63px',
     subfield: '93px',
     subaction: '140px',
-    data: '200px',
-    position: '140px',
+    data: '340px',
+    position: '100px',
   };
 
   return (

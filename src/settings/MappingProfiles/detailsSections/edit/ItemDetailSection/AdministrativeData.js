@@ -28,6 +28,7 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  validateTextFieldRemoveValue,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
@@ -75,6 +76,7 @@ export const AdministrativeData = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.barcode`} />}
             name={getFieldName(2)}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
         <Col
@@ -85,6 +87,7 @@ export const AdministrativeData = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.accessionNumber`} />}
             name={getFieldName(3)}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
         <Col
@@ -95,6 +98,7 @@ export const AdministrativeData = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.itemIdentifier`} />}
             name={getFieldName(4)}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
       </Row>
