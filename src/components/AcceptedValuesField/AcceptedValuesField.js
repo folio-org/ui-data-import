@@ -94,9 +94,7 @@ export const AcceptedValuesField = ({
   );
 
   const validateAcceptedValueField = useCallback(
-    value => {
-      return validateMARCWithElse(value, isRemoveValueAllowed);
-    },
+    value => validateMARCWithElse(value, isRemoveValueAllowed),
     [isRemoveValueAllowed],
   );
 

@@ -42,10 +42,8 @@ export const AdministrativeData = ({
   getRepeatableFieldAction,
   okapi,
 }) => {
-  const validateDatepickerValueField = useCallback(
-    value => {
-      return validateMARCWithDate(value, false);
-    },
+  const validateDatepickerFieldValue = useCallback(
+    value => validateMARCWithDate(value, false),
     [],
   );
 
@@ -118,7 +116,7 @@ export const AdministrativeData = ({
             name={getFieldName(5)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            validate={[validateDatepickerValueField]}
+            validate={[validateDatepickerFieldValue]}
           />
         </Col>
       </Row>
