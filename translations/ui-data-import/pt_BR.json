@@ -362,8 +362,8 @@
     "settings.mappingProfiles.map.item.itemCondition.field.missingPieces": "Peças em falta",
     "settings.mappingProfiles.map.item.itemCondition.field.missingPiecesDate": "Data",
     "settings.mappingProfiles.map.item.field.notes.addLabel": "Adicionar nota de item",
-    "settings.mappingProfiles.map.item.field.circulationNotes.legend": "Notas de circulação",
-    "settings.mappingProfiles.map.item.field.circulationNotes.addLabel": "Adicionar nota de circulação",
+    "settings.mappingProfiles.map.item.field.circulationNotes.legend": "Nota de devolução / empréstimo",
+    "settings.mappingProfiles.map.item.field.circulationNotes.addLabel": "Adicionar nota de devolução / empréstimo",
     "settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatus": "Status de item danificado",
     "settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatusDate": "Data",
     "settings.mappingProfiles.map.item.itemNotes.section": "Notas do item",
@@ -727,5 +727,8 @@
     "settings.matchProfiles.comment": "Comentário",
     "settings.matchProfiles.releaseEncumbrance": "Lançar oneração",
     "settings.matchProfiles.value": "Valor",
-    "settings.matchProfiles.adjustment": "Ajuste"
+    "settings.matchProfiles.adjustment": "Ajuste",
+    "settings.mappingProfiles.map.item.field.circulationNotes.checkInNote": "Nota de devolução",
+    "settings.mappingProfiles.map.item.field.circulationNotes.checkOutNote": "Nota de empréstimo",
+    "validation.chooseAtLeastOneValue": "Um ou mais valores devem ser adicionados antes que o perfil possa ser salvo."
 }
