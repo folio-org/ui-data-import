@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { Response } from '@bigtest/mirage';
+import { Response } from 'miragejs';
 import {
   describe,
   beforeEach,
