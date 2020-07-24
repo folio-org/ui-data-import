@@ -296,6 +296,7 @@ export const MARCTableRow = ({
           <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.moveUpRow">
             {ariaLabel => (
               <IconButton
+                data-testid="marc-table-arrow-up"
                 data-test-marc-table-arrow-up
                 icon="arrow-up"
                 ariaLabel={ariaLabel}
@@ -308,6 +309,7 @@ export const MARCTableRow = ({
           <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.moveDownRow">
             {ariaLabel => (
               <IconButton
+                data-testid="marc-table-arrow-down"
                 data-test-marc-table-arrow-down
                 icon="arrow-down"
                 ariaLabel={ariaLabel}
@@ -336,6 +338,7 @@ export const MARCTableRow = ({
       >
         {!isSubline && (
           <Field
+            data-testid="marc-table-action"
             name={`${name}.action`}
             component={Select}
             dataOptions={dataOptions}
@@ -454,6 +457,7 @@ export const MARCTableRow = ({
       >
         {!isEmpty(dataOptions) && (
           <Field
+            data-testid="marc-table-subaction"
             name={`${name}.field.subfields[${subfieldIndex}].subaction`}
             component={Select}
             dataOptions={dataOptions}
@@ -493,7 +497,10 @@ export const MARCTableRow = ({
         };
 
         return (
-          <div style={cellStyle}>
+          <div
+            data-testid="marc-table-data"
+            style={cellStyle}
+          >
             <div
               data-test-marc-table-data-find
               style={findContainerStyle}
@@ -533,7 +540,7 @@ export const MARCTableRow = ({
       if (actionValue === MOVE) {
         if (subactionValue === NEW_FIELD || subactionValue === EXISTING_FIELD) {
           return (
-            <>
+            <div data-testid="marc-table-data">
               <div data-test-marc-table-data-field>
                 <Field
                   name={`${name}.field.subfields[${subfieldIndex}].data.marcField.field`}
@@ -582,7 +589,7 @@ export const MARCTableRow = ({
                   marginBottom0
                 />
               </div>
-            </>
+            </div>
           );
         }
 
@@ -590,7 +597,7 @@ export const MARCTableRow = ({
       }
 
       return (
-        <div data-test-marc-table-data-text>
+        <div data-testid="marc-table-data">
           <Field
             name={`${name}.field.subfields[${subfieldIndex}].data.text`}
             component={TextArea}
@@ -632,6 +639,7 @@ export const MARCTableRow = ({
       >
         {!isEmpty(dataOptions) && (
           <Field
+            data-testid="marc-table-position"
             name={`${name}.field.subfields[${subfieldIndex}].position`}
             component={Select}
             dataOptions={dataOptions}
