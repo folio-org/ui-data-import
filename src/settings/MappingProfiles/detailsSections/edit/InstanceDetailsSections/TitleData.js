@@ -27,6 +27,8 @@ export const TitleData = ({
   seriesStatements,
   precedingTitles,
   succeedingTitles,
+  setReferenceTables,
+  getRepeatableFieldAction,
 }) => {
   return (
     <Accordion
@@ -135,51 +137,57 @@ export const TitleData = ({
           <RepeatableActionsField
             wrapperFieldName={getRepeatableFieldName(13)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.precedingTitles.legend`} />}
+            repeatableFieldAction={getRepeatableFieldAction(13)}
+            repeatableFieldIndex={13}
+            hasRepeatableFields={!!precedingTitles.length}
+            onRepeatableActionChange={setReferenceTables}
             disabled
           >
-            <RepeatableField
-              fields={precedingTitles}
-              addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.precedingTitles.addLabel`} />}
-              canAdd={false}
-              canRemove={false}
-              onAdd={noop}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesTitle`} />}
-                      name={getSubfieldName(13, 0, index)}
-                      disabled
-                    />
-                  </Col>
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesHrid`} />}
-                      name={getSubfieldName(13, 1, index)}
-                      disabled
-                    />
-                  </Col>
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesIsbn`} />}
-                      name={getSubfieldName(13, 2, index)}
-                      disabled
-                    />
-                  </Col>
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesIssn`} />}
-                      name={getSubfieldName(13, 3, index)}
-                      disabled
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+            {() => (
+              <RepeatableField
+                fields={precedingTitles}
+                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.precedingTitles.addLabel`} />}
+                canAdd={false}
+                canRemove={false}
+                onAdd={noop}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesTitle`} />}
+                        name={getSubfieldName(13, 0, index)}
+                        disabled
+                      />
+                    </Col>
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesHrid`} />}
+                        name={getSubfieldName(13, 1, index)}
+                        disabled
+                      />
+                    </Col>
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesIsbn`} />}
+                        name={getSubfieldName(13, 2, index)}
+                        disabled
+                      />
+                    </Col>
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesIssn`} />}
+                        name={getSubfieldName(13, 3, index)}
+                        disabled
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            )}
           </RepeatableActionsField>
         </Col>
       </Row>
@@ -191,51 +199,57 @@ export const TitleData = ({
           <RepeatableActionsField
             wrapperFieldName={getRepeatableFieldName(14)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.succeedingTitles.legend`} />}
+            repeatableFieldAction={getRepeatableFieldAction(14)}
+            repeatableFieldIndex={14}
+            hasRepeatableFields={!!succeedingTitles.length}
+            onRepeatableActionChange={setReferenceTables}
             disabled
           >
-            <RepeatableField
-              fields={succeedingTitles}
-              addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.succeedingTitles.addLabel`} />}
-              canAdd={false}
-              canRemove={false}
-              onAdd={noop}
-              renderField={(field, index) => (
-                <Row left="xs">
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesTitle`} />}
-                      name={getSubfieldName(14, 0, index)}
-                      disabled
-                    />
-                  </Col>
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesHrid`} />}
-                      name={getSubfieldName(14, 1, index)}
-                      disabled
-                    />
-                  </Col>
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesIsbn`} />}
-                      name={getSubfieldName(14, 2, index)}
-                      disabled
-                    />
-                  </Col>
-                  <Col xs={3}>
-                    <Field
-                      component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesIssn`} />}
-                      name={getSubfieldName(14, 3, index)}
-                      disabled
-                    />
-                  </Col>
-                </Row>
-              )}
-            />
+            {() => (
+              <RepeatableField
+                fields={succeedingTitles}
+                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.succeedingTitles.addLabel`} />}
+                canAdd={false}
+                canRemove={false}
+                onAdd={noop}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesTitle`} />}
+                        name={getSubfieldName(14, 0, index)}
+                        disabled
+                      />
+                    </Col>
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesHrid`} />}
+                        name={getSubfieldName(14, 1, index)}
+                        disabled
+                      />
+                    </Col>
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesIsbn`} />}
+                        name={getSubfieldName(14, 2, index)}
+                        disabled
+                      />
+                    </Col>
+                    <Col xs={3}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesIssn`} />}
+                        name={getSubfieldName(14, 3, index)}
+                        disabled
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            )}
           </RepeatableActionsField>
         </Col>
       </Row>
@@ -248,4 +262,6 @@ TitleData.propTypes = {
   seriesStatements: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   precedingTitles: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   succeedingTitles: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
+  getRepeatableFieldAction: PropTypes.func.isRequired,
 };

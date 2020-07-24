@@ -32,10 +32,10 @@ export const withRepeatableActions = memo(props => {
     wrapperFieldName,
   } = props;
 
-  const actions = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'REPEATABLE_ACTIONS'], []);
-  const dataOptions = Object.keys(actions).map(key => ({
-    value: key,
-    label: intl.formatMessage({ id: actions[key] }),
+  const actions = FORMS_SETTINGS[ENTITY_KEYS.MAPPING_PROFILES].DECORATORS.REPEATABLE_ACTIONS;
+  const dataOptions = actions.map(action => ({
+    value: action.value,
+    label: intl.formatMessage({ id: action.label }),
   }));
 
   const legendHeadline = (

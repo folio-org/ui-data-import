@@ -1,4 +1,9 @@
-import React, { memo } from 'react';
+import React, {
+  memo,
+  useEffect,
+  useState,
+  useCallback,
+} from 'react';
 import { PropTypes } from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Field } from 'redux-form';
@@ -13,6 +18,8 @@ import { WithTranslation } from '..';
 import {
   ENTITY_KEYS,
   FORMS_SETTINGS,
+  REPEATABLE_ACTIONS,
+  validateRepeatableActionsField,
 } from '../../utils';
 
 import styles from './RepeatableActionsField.css';
@@ -21,16 +28,39 @@ export const RepeatableActionsField = memo(({
   wrapperFieldName,
   legend,
   wrapperPlaceholder,
-  children,
+  repeatableFieldAction,
+  repeatableFieldIndex,
+  hasRepeatableFields,
+  onRepeatableActionChange,
   disabled,
+  children,
 }) => {
+  const { DELETE_EXISTING } = REPEATABLE_ACTIONS;
+
+  const [isAddButtonDisabled, setIsAddButtonDisabled] = useState(false);
+
+  useEffect(() => {
+    setIsAddButtonDisabled(repeatableFieldAction === DELETE_EXISTING);
+  }, [DELETE_EXISTING, repeatableFieldAction]);
+
   const intl = useIntl();
 
   const actions = FORMS_SETTINGS[ENTITY_KEYS.MAPPING_PROFILES].DECORATORS.REPEATABLE_ACTIONS;
-  const dataOptions = Object.keys(actions).map(key => ({
-    value: key,
-    label: intl.formatMessage({ id: actions[key] }),
+  const dataOptions = actions.map(action => ({
+    value: action.value,
+    label: intl.formatMessage({ id: action.label }),
   }));
+
+  const validateRepeatableActions = useCallback(
+    value => (value !== DELETE_EXISTING) && validateRepeatableActionsField(value, hasRepeatableFields),
+    [DELETE_EXISTING, hasRepeatableFields],
+  );
+
+  const handleRepeatableActionChange = e => {
+    if (e.target.value === DELETE_EXISTING) {
+      onRepeatableActionChange(`profile.mappingDetails.mappingFields[${repeatableFieldIndex}].subfields`, []);
+    }
+  };
 
   const legendHeadline = (
     <Headline
@@ -59,21 +89,27 @@ export const RepeatableActionsField = memo(({
               dataOptions={dataOptions}
               placeholder={placeholder}
               disabled={disabled}
+              onChange={handleRepeatableActionChange}
+              validate={[validateRepeatableActions]}
             />
           )}
         </WithTranslation>
       </div>
-      {children}
+      {children(isAddButtonDisabled)}
     </div>
   );
 });
 
 RepeatableActionsField.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.func.isRequired,
   wrapperFieldName: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   legend: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   wrapperPlaceholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  repeatableFieldAction: PropTypes.string.isRequired,
+  repeatableFieldIndex: PropTypes.number.isRequired,
+  hasRepeatableFields: PropTypes.bool.isRequired,
+  onRepeatableActionChange: PropTypes.func.isRequired,
 };
 
 RepeatableActionsField.defaultProps = {

@@ -23,13 +23,14 @@ export const MappingHoldingsDetails = ({
   initialFields,
   referenceTables,
   setReferenceTables,
+  getRepeatableFieldAction,
   okapi,
 }) => {
   const formerIds = referenceTables?.formerIds || [];
   const statisticalCodeIds = referenceTables?.statisticalCodeIds || [];
   const holdingStatements = referenceTables?.holdingStatements || [];
-  const holdingStatementsForSupplements = referenceTables?.holdingStatementsForSupplements || [];
-  const holdingStatementsForIndexes = referenceTables?.holdingStatementsForIndexes || [];
+  const holdingsStatementsForSupplements = referenceTables?.holdingsStatementsForSupplements || [];
+  const holdingsStatementsForIndexes = referenceTables?.holdingsStatementsForIndexes || [];
   const notes = referenceTables?.notes || [];
   const electronicAccess = referenceTables?.electronicAccess || [];
   const receivingHistory = referenceTables?.['receivingHistory.entries'] || [];
@@ -39,6 +40,7 @@ export const MappingHoldingsDetails = ({
       <AdministrativeData
         formerIds={formerIds}
         statisticalCodeIds={statisticalCodeIds}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
@@ -49,20 +51,23 @@ export const MappingHoldingsDetails = ({
       />
       <HoldingsDetails
         holdingStatements={holdingStatements}
-        holdingStatementsForSupplements={holdingStatementsForSupplements}
-        holdingStatementsForIndexes={holdingStatementsForIndexes}
+        getRepeatableFieldAction={getRepeatableFieldAction}
+        holdingsStatementsForSupplements={holdingsStatementsForSupplements}
+        holdingsStatementsForIndexes={holdingsStatementsForIndexes}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
       <HoldingsNotes
         notes={notes}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
       <ElectronicAccess
         electronicAccess={electronicAccess}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
@@ -70,6 +75,7 @@ export const MappingHoldingsDetails = ({
       <Acquisition />
       <ReceivingHistory
         receivingHistory={receivingHistory}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
       />
@@ -81,5 +87,6 @@ MappingHoldingsDetails.propTypes = {
   initialFields: mappingHoldingsInitialFieldsShape.isRequired,
   referenceTables: mappingHoldingsRefTablesShape.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
+  getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
 };

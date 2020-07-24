@@ -24,6 +24,7 @@ export const MappingItemDetails = ({
   initialFields,
   referenceTables,
   setReferenceTables,
+  getRepeatableFieldAction,
   okapi,
 }) => {
   const formerIds = referenceTables?.formerIds || [];
@@ -38,6 +39,7 @@ export const MappingItemDetails = ({
       <AdministrativeData
         formerIds={formerIds}
         statisticalCodeIds={statisticalCodeIds}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
@@ -48,6 +50,7 @@ export const MappingItemDetails = ({
       />
       <EnumerationData
         yearCaption={yearCaption}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
       />
@@ -57,12 +60,14 @@ export const MappingItemDetails = ({
       />
       <ItemNotes
         notes={notes}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
       <LoanAndAvailability
         circulationNotes={circulationNotes}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
@@ -73,6 +78,7 @@ export const MappingItemDetails = ({
       />
       <ElectronicAccess
         electronicAccess={electronicAccess}
+        getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
@@ -85,5 +91,6 @@ MappingItemDetails.propTypes = {
   initialFields: mappingItemInitialFieldsShape.isRequired,
   referenceTables: mappingItemRefTablesShape.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
+  getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
 };

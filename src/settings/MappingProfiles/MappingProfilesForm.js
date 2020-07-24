@@ -120,7 +120,6 @@ export const MappingProfilesFormComponent = ({
     };
 
     setInitials(newInitials);
-    // @TODO: change method should be changed to initialize
     dispatch(change(formName, 'profile.mappingDetails', newInitDetails));
 
     if (!isEqual) {
@@ -170,9 +169,14 @@ export const MappingProfilesFormComponent = ({
     dispatch(change(formName, fieldsPath, updatedValue));
   };
 
+  const getRepeatableFieldAction = mappingFieldIndex => {
+    return mappingDetails?.mappingFields?.[mappingFieldIndex]?.repeatableFieldAction || '';
+  };
+
   const detailsProps = {
     initialFields,
     referenceTables,
+    getRepeatableFieldAction,
     setReferenceTables: setFormFieldValue,
     okapi,
   };

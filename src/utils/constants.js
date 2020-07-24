@@ -259,12 +259,24 @@ export const FORMS_SETTINGS = {
   },
   [ENTITY_KEYS.MAPPING_PROFILES]: {
     DECORATORS: {
-      REPEATABLE_ACTIONS: {
-        EXTEND_EXISTING: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.extendExisting',
-        DELETE_EXISTING: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.deleteExisting',
-        EXCHANGE_EXISTING: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.exchangeExisting',
-        DELETE_INCOMING: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.deleteIncoming',
-      },
+      REPEATABLE_ACTIONS: [
+        {
+          label: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.extendExisting',
+          value: REPEATABLE_ACTIONS.EXTEND_EXISTING,
+        },
+        {
+          label: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.deleteExisting',
+          value: REPEATABLE_ACTIONS.DELETE_EXISTING,
+        },
+        {
+          label: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.exchangeExisting',
+          value: REPEATABLE_ACTIONS.EXCHANGE_EXISTING,
+        },
+        {
+          label: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.deleteIncoming',
+          value: REPEATABLE_ACTIONS.DELETE_INCOMING,
+        },
+      ],
       DATE_PICKER: {
         TODAY: {
           value: 'TODAY',
@@ -462,6 +474,17 @@ export const MARC_TABLE_CONFIG = {
     MOVE: true,
   },
 };
+
+export const ITEM_CIRCULATION_NOTES_OPTIONS = [
+  {
+    value: 'Check in note',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.field.circulationNotes.checkInNote',
+  },
+  {
+    value: 'Check out note',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.field.circulationNotes.checkOutNote',
+  },
+];
 
 export const ITEM_STATUS_OPTIONS = [
   {
