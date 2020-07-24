@@ -11,12 +11,7 @@ import { Provider } from 'react-redux';
 
 export const reduxFormMock = (component, initialStateValues = {}, formFieldValues = {}) => {
   const onSubmit = jest.fn();
-  const fieldReducer = (state = initialStateValues, { type }) => {
-    switch (type) {
-      default:
-        return state;
-    }
-  };
+  const fieldReducer = (state = initialStateValues) => state;
   const reducer = combineReducers({
     field: fieldReducer,
     form: formReducer,

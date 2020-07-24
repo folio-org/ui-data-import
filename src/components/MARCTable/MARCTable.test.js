@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   render,
-  cleanup,
   fireEvent,
 } from '@testing-library/react';
 
@@ -34,7 +33,6 @@ const renderMARCTable = fields => {
 
 describe('MARC modifications table', () => {
   afterEach(() => {
-    cleanup();
     onChange.mockClear();
   });
 
@@ -130,13 +128,13 @@ describe('MARC modifications table', () => {
   });
 
   describe('when there are no data received', () => {
-    it('should have initial row', () => {
+    it('table should have initial row', () => {
       const { getAllByTestId } = renderMARCTable(initialFields);
 
       expect(getAllByTestId('marc-table-row').length).toBe(1);
     });
 
-    it('there should not be re-ordering arrows', () => {
+    it('and re-ordering arrows should not be hidden', () => {
       const { queryByTestId } = renderMARCTable(initialFields);
 
       expect(queryByTestId('marc-table-arrow-up')).toBeNull();
@@ -156,20 +154,20 @@ describe('MARC modifications table', () => {
       },
     ];
 
-    it('should have 3 rows', () => {
+    it('table should have 3 rows', () => {
       const { getAllByTestId } = renderMARCTable(fields);
 
       expect(getAllByTestId('marc-table-row').length).toBe(3);
     });
 
-    it('there should be re-ordering arrows', () => {
+    it('re-ordering arrows should be visible', () => {
       const { getAllByTestId } = renderMARCTable(fields);
 
       expect(getAllByTestId('marc-table-arrow-up')).toBeDefined();
       expect(getAllByTestId('marc-table-arrow-down')).toBeDefined();
     });
 
-    it('subfield should be rendered', () => {
+    it('subfield should be displayed', () => {
       const { getByTestId } = renderMARCTable(fields);
 
       expect(getByTestId('marc-table-subfield-row')).toBeDefined();
@@ -185,7 +183,7 @@ describe('MARC modifications table', () => {
       },
     ];
 
-    it('there should be "Subaction" dropdown', () => {
+    it('"Subaction" dropdown should be displayed', () => {
       const { getByTestId } = renderMARCTable(fields);
 
       expect(getByTestId('marc-table-subaction')).toBeDefined();
@@ -197,13 +195,13 @@ describe('MARC modifications table', () => {
       expect(getByText('Add subfield')).toBeDefined();
     });
 
-    it('there should be "Data" field', () => {
+    it('"Data" field should be displayed', () => {
       const { getByTestId } = renderMARCTable(fields);
 
       expect(getByTestId('marc-table-data')).toBeDefined();
     });
 
-    it('there should not be "Position" dropdown', () => {
+    it('"Position" dropdown should not be hidden', () => {
       const { queryByTestId } = renderMARCTable(fields);
 
       expect(queryByTestId('marc-table-position')).toBeNull();
@@ -219,19 +217,19 @@ describe('MARC modifications table', () => {
       },
     ];
 
-    it('there should not be "Subaction" dropdown', () => {
+    it('"Subaction" dropdown should be hidden', () => {
       const { queryByTestId } = renderMARCTable(fields);
 
       expect(queryByTestId('marc-table-subaction')).toBeNull();
     });
 
-    it('there should not be "Data" field', () => {
+    it('"Data" field should be hidden', () => {
       const { queryByTestId } = renderMARCTable(fields);
 
       expect(queryByTestId('marc-table-data')).toBeNull();
     });
 
-    it('there should not be "Position" dropdown', () => {
+    it('"Position" dropdown should be hidden', () => {
       const { queryByTestId } = renderMARCTable(fields);
 
       expect(queryByTestId('marc-table-position')).toBeNull();
@@ -247,7 +245,7 @@ describe('MARC modifications table', () => {
       },
     ];
 
-    it('there should be "Subaction" dropdown', () => {
+    it('"Subaction" dropdown should be displayed', () => {
       const { getByTestId } = renderMARCTable(fields);
 
       expect(getByTestId('marc-table-subaction')).toBeDefined();
@@ -261,20 +259,20 @@ describe('MARC modifications table', () => {
       expect(getByText('Replace')).toBeDefined();
     });
 
-    it('there should be "Data" field', () => {
+    it('"Data" field should be displayed', () => {
       const { getByTestId } = renderMARCTable(fields);
 
       expect(getByTestId('marc-table-data')).toBeDefined();
     });
 
-    it('there should not be "Position" dropdown', () => {
+    it('"Position" dropdown should be hidden', () => {
       const { queryByTestId } = renderMARCTable(fields);
 
       expect(queryByTestId('marc-table-position')).toBeNull();
     });
 
     describe('when "Insert" subaction selected', () => {
-      it('there should be "Position" dropdown', () => {
+      it('"Position" dropdown should be displayed', () => {
         const { getByTestId } = renderMARCTable(fields);
 
         fireEvent.change(getByTestId('marc-table-subaction'), { target: { value: 'INSERT' } });
@@ -306,7 +304,7 @@ describe('MARC modifications table', () => {
       },
     ];
 
-    it('there should be "Subaction" dropdown', () => {
+    it('"Subaction" dropdown should be displayed', () => {
       const { getByTestId } = renderMARCTable(fields);
 
       expect(getByTestId('marc-table-subaction')).toBeDefined();
@@ -319,33 +317,37 @@ describe('MARC modifications table', () => {
       expect(getByText('Existing field')).toBeDefined();
     });
 
-    it('there should not be "Data" field', () => {
+    it('"Data" field should be hidden', () => {
       const { queryByTestId } = renderMARCTable(fields);
 
       expect(queryByTestId('marc-table-data')).toBeNull();
     });
 
-    it('there should not be "Position" dropdown', () => {
+    it('"Position" dropdown should be hidden', () => {
       const { queryByTestId } = renderMARCTable(fields);
 
       expect(queryByTestId('marc-table-position')).toBeNull();
     });
 
-    describe('when subaction selected', () => {
-      it('there should be "Data" field', () => {
-        const { getByTestId } = renderMARCTable(fields);
+    describe('when subaction', () => {
+      describe('"New field" selected', () => {
+        it('"Data" field should be displayed', () => {
+          const { getByTestId } = renderMARCTable(fields);
 
-        fireEvent.change(getByTestId('marc-table-subaction'), { target: { value: 'CREATE_NEW_FIELD' } });
+          fireEvent.change(getByTestId('marc-table-subaction'), { target: { value: 'CREATE_NEW_FIELD' } });
 
-        expect(getByTestId('marc-table-data')).toBeDefined();
+          expect(getByTestId('marc-table-data')).toBeDefined();
+        });
       });
 
-      it('there should be "Data" field', () => {
-        const { getByTestId } = renderMARCTable(fields);
+      describe('"Add to existing" selected', () => {
+        it('"Data" field should be displayed', () => {
+          const { getByTestId } = renderMARCTable(fields);
 
-        fireEvent.change(getByTestId('marc-table-subaction'), { target: { value: 'ADD_TO_EXISTING_FIELD' } });
+          fireEvent.change(getByTestId('marc-table-subaction'), { target: { value: 'ADD_TO_EXISTING_FIELD' } });
 
-        expect(getByTestId('marc-table-data')).toBeDefined();
+          expect(getByTestId('marc-table-data')).toBeDefined();
+        });
       });
     });
   });

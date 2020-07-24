@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   render,
-  cleanup,
   fireEvent,
 } from '@testing-library/react';
 
@@ -44,7 +43,6 @@ const renderMARCTableRow = () => {
 
 describe('MARC modifications table row', () => {
   afterEach(() => {
-    cleanup();
     mockedFunctions.forEach(fn => fn.mockClear());
   });
 
