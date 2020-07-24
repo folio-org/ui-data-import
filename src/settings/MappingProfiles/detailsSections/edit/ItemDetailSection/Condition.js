@@ -21,6 +21,7 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  validateTextFieldRemoveValue,
   validateMARCWithDate,
   okapiShape,
 } from '../../../../../utils';
@@ -43,6 +44,7 @@ export const Condition = ({
             component={TextField}
             name={getFieldName(19)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.numberOfMissingPieces`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
         <Col
@@ -53,6 +55,7 @@ export const Condition = ({
             component={TextField}
             name={getFieldName(20)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.missingPieces`} />}
+            validate={[validateTextFieldRemoveValue]}
           />
         </Col>
         <Col
@@ -85,6 +88,7 @@ export const Condition = ({
               wrapperSourceLink: '/item-damaged-statuses?limit=1000&query=cql.allRecords=1 sortby name',
               wrapperSourcePath: 'itemDamageStatuses',
             }]}
+            isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(22)}
             okapi={okapi}

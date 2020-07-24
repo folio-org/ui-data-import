@@ -727,5 +727,8 @@
     "settings.matchProfiles.comment": "Comment",
     "settings.matchProfiles.releaseEncumbrance": "Release encumbrance",
     "settings.matchProfiles.value": "Value",
-    "settings.matchProfiles.adjustment": "Adjustment"
+    "settings.matchProfiles.adjustment": "Adjustment",
+    "settings.mappingProfiles.map.item.field.circulationNotes.checkInNote": "Check in note",
+    "settings.mappingProfiles.map.item.field.circulationNotes.checkOutNote": "Check out note",
+    "validation.chooseAtLeastOneValue": "One or more values must be added before the profile can be saved."
 }

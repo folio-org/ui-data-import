@@ -234,7 +234,6 @@ const ITEM = {
         enabled: true,
         path: 'item.circulationNotes[].noteType',
         value: '',
-        acceptedValues: {},
       }, {
         name: 'note',
         enabled: true,
