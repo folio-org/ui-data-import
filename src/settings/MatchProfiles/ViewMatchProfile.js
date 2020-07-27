@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  isEmpty,
-  get,
-  cloneDeep,
-} from 'lodash';
+import { get } from 'lodash';
 
 import {
   AppIcon,
@@ -21,7 +17,6 @@ import {
   AccordionSet,
   ConfirmationModal,
   PaneHeader,
-  NoValue,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -35,7 +30,6 @@ import {
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   PROFILE_TYPES,
-  getFieldMatched,
   getEntity,
   getEntityTags,
 } from '../../utils';
