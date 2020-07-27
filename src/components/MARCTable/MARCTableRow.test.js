@@ -1,12 +1,9 @@
 import React from 'react';
-import {
-  render,
-  fireEvent,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
-import { Intl } from '../../../test/jest/__mock__/intl.mock';
 import { reduxFormMock } from '../../../test/jest/__mock__/reduxForm.mock';
+import { renderWithIntl } from '../../../test/jest/helpers';
 
 import { MARCTableRow } from './MARCTableRow';
 
@@ -21,24 +18,22 @@ const mockedFunctions = [onFieldUpdate, removeSubfieldRows, removeSubactionFromR
 
 const renderMARCTableRow = () => {
   const component = () => (
-    <Intl>
-      <MARCTableRow
-        subfieldIndex={0}
-        name="profile.mappingDetails.marcMappingDetails[0]"
-        order={0}
-        columnWidths={{}}
-        onAddSubfieldRow={() => {}}
-        onRemoveSubfieldRow={() => {}}
-        onFieldUpdate={onFieldUpdate}
-        removeSubfieldRows={removeSubfieldRows}
-        removeSubactionFromRow={removeSubactionFromRow}
-        removeDataValuesFromRow={removeDataValuesFromRow}
-        fillEmptyFieldsWithValue={fillEmptyFieldsWithValue}
-      />
-    </Intl>
+    <MARCTableRow
+      subfieldIndex={0}
+      name="profile.mappingDetails.marcMappingDetails[0]"
+      order={0}
+      columnWidths={{}}
+      onAddSubfieldRow={() => {}}
+      onRemoveSubfieldRow={() => {}}
+      onFieldUpdate={onFieldUpdate}
+      removeSubfieldRows={removeSubfieldRows}
+      removeSubactionFromRow={removeSubactionFromRow}
+      removeDataValuesFromRow={removeDataValuesFromRow}
+      fillEmptyFieldsWithValue={fillEmptyFieldsWithValue}
+    />
   );
 
-  return render(reduxFormMock(component));
+  return renderWithIntl(reduxFormMock(component));
 };
 
 describe('MARC modifications table row', () => {

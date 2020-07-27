@@ -1,12 +1,9 @@
 import React from 'react';
-import {
-  render,
-  fireEvent,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
-import { Intl } from '../../../test/jest/__mock__/intl.mock';
 import { reduxFormMock } from '../../../test/jest/__mock__/reduxForm.mock';
+import { renderWithIntl } from '../../../test/jest/helpers';
 
 import { MARCTable } from './MARCTable';
 
@@ -20,15 +17,13 @@ const initialFields = [
 
 const renderMARCTable = fields => {
   const component = () => (
-    <Intl>
-      <MARCTable
-        fields={fields}
-        onChange={onChange}
-      />
-    </Intl>
+    <MARCTable
+      fields={fields}
+      onChange={onChange}
+    />
   );
 
-  return render(reduxFormMock(component));
+  return renderWithIntl(reduxFormMock(component));
 };
 
 describe('MARC modifications table', () => {
