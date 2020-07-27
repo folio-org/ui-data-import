@@ -55,11 +55,11 @@ export const DATA_TYPES = [
   'EDIFACT',
 ];
 
-export const MARC_TYPES = [
-  'MARC_BIBLIOGRAPHIC',
-  'MARC_HOLDINGS',
-  'MARC_AUTHORITY',
-];
+export const MARC_TYPES = {
+  MARC_BIBLIOGRAPHIC: 'MARC_BIBLIOGRAPHIC',
+  MARC_HOLDINGS: 'MARC_HOLDINGS',
+  MARC_AUTHORITY: 'MARC_AUTHORITY',
+};
 
 export const LAYER_TYPES = {
   CREATE: 'create',
