@@ -29,7 +29,7 @@ export const MARCTableRowContainer = ({
 
     return (
       <div
-        data-test-marc-table-row={data.order}
+        data-testid="marc-table-row"
         key={i}
         className={css.tableRowContainer}
       >
@@ -64,6 +64,7 @@ export const MARCTableRowContainer = ({
           data.field.subfields.map((subfield, idx) => idx !== 0 && (
             <div
               key={idx}
+              data-testid="marc-table-subfield-row"
               data-test-marc-subfield-row={idx}
             >
               <MARCTableRow

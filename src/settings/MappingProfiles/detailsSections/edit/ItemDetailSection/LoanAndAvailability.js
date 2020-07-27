@@ -92,6 +92,7 @@ export const LoanAndAvailability = ({
               wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
               wrapperSourcePath: 'loantypes',
             }]}
+            isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(26)}
             okapi={okapi}

@@ -727,5 +727,8 @@
     "settings.matchProfiles.comment": "تعليق",
     "settings.matchProfiles.releaseEncumbrance": "إصدار التكاليف",
     "settings.matchProfiles.value": "القيمة",
-    "settings.matchProfiles.adjustment": "تعديل"
+    "settings.matchProfiles.adjustment": "تعديل",
+    "settings.mappingProfiles.map.item.field.circulationNotes.checkInNote": "ملاحظة الرد",
+    "settings.mappingProfiles.map.item.field.circulationNotes.checkOutNote": "ملاحظة الإعارة",
+    "validation.chooseAtLeastOneValue": "يجب إضافة قيمة واحدة أو أكثر قبل حفظ الوضع."
 }

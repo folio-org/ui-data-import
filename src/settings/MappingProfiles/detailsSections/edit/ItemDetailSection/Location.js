@@ -43,6 +43,7 @@ export const Location = ({
               wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
               wrapperSourcePath: 'locations',
             }]}
+            isRemoveValueAllowed
             optionTemplate="**name** (**code**)"
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(29)}
@@ -64,6 +65,7 @@ export const Location = ({
               wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
               wrapperSourcePath: 'locations',
             }]}
+            isRemoveValueAllowed
             optionTemplate="**name** (**code**)"
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(30)}
