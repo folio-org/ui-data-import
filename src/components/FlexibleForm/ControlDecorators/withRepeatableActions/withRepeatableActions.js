@@ -3,10 +3,7 @@ import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 
-import {
-  get,
-  identity,
-} from 'lodash';
+import { identity } from 'lodash';
 
 import {
   Select,
