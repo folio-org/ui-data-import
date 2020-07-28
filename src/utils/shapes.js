@@ -41,6 +41,17 @@ export const mappingMARCFieldShape = PropTypes.shape({
   action: PropTypes.oneOf([...Object.values(MAPPING_DETAILS_ACTIONS)]),
 });
 
+export const mappingMARCViewFieldShape = PropTypes.shape({
+  action: PropTypes.oneOf([...Object.values(MAPPING_DETAILS_ACTIONS)]),
+  field: PropTypes.string,
+  indicator1: PropTypes.string,
+  indicator2: PropTypes.string,
+  subfield: PropTypes.string,
+  subaction: PropTypes.oneOf([...Object.values(MAPPING_DETAILS_SUBACTIONS)]),
+  data: mappingMARCDataShape,
+  position: PropTypes.oneOf([...Object.values(MAPPING_DETAILS_POSITION)]),
+});
+
 export const mappingProfileSubfieldShape = PropTypes.shape({
   order: PropTypes.number.isRequired,
   path: PropTypes.string.isRequired,

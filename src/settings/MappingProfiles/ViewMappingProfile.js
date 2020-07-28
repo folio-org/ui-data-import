@@ -35,6 +35,7 @@ import {
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
   MappedHeader,
+  MARCTableView,
 } from '../../components';
 import {
   MappingInstanceDetails,
@@ -50,6 +51,7 @@ import {
   MAPPING_DETAILS_HEADLINE,
   getEntity,
   getEntityTags,
+  MARC_TYPES,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
@@ -207,10 +209,13 @@ export class ViewMappingProfile extends Component {
       ...mappingProfile.childProfiles,
     ];
 
+    const isMARCRecord = existingRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC;
+
     const renderDetails = {
       INSTANCE: <MappingInstanceDetails mappingDetails={mappingDetails?.mappingFields} />,
       HOLDINGS: <MappingHoldingsDetails mappingDetails={mappingDetails?.mappingFields} />,
       ITEM: <MappingItemDetails mappingDetails={mappingDetails?.mappingFields} />,
+      MARC_BIBLIOGRAPHIC: <MARCTableView fields={mappingDetails?.marcMappingDetails} />,
     };
 
     return (
@@ -285,11 +290,13 @@ export class ViewMappingProfile extends Component {
                       headlineProps={{ margin: 'small' }}
                     />
                   </Col>
-                  <Col>
-                    <div data-test-expand-all-button>
-                      <ExpandAllButton />
-                    </div>
-                  </Col>
+                  {!isMARCRecord && (
+                    <Col>
+                      <div data-test-expand-all-button>
+                        <ExpandAllButton />
+                      </div>
+                    </Col>
+                  )}
                 </Row>
                 {renderDetails[existingRecordType]}
               </AccordionStatus>

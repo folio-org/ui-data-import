@@ -600,6 +600,10 @@ Control.propTypes = {
   fieldsPath: PropTypes.string,
   onAdd: PropTypes.func,
   onRemove: PropTypes.func,
+  canAdd: PropTypes.bool,
+  canRemove: PropTypes.bool,
+  incrementalField: PropTypes.string,
+  wrapperFieldName: PropTypes.string,
 };
 
 Control.defaultProps = { enabled: true };
