@@ -4,7 +4,9 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import {
-  isEmpty, pickBy,
+  isEmpty,
+  pickBy,
+  noop,
 } from 'lodash';
 
 import {
@@ -18,6 +20,7 @@ export const Section = memo(({
   label,
   optional,
   isOpen,
+  onChange,
   className,
   children,
   ...rest
@@ -55,7 +58,10 @@ export const Section = memo(({
         label={headline({})}
         className={css.label}
         checked={isChecked}
-        onChange={() => setChecked(!isChecked)}
+        onChange={() => {
+          onChange(!isChecked);
+          setChecked(!isChecked);
+        }}
       />
     );
   };
@@ -75,6 +81,7 @@ Section.propTypes = {
   label: PropTypes.node,
   optional: PropTypes.bool,
   isOpen: PropTypes.bool,
+  onChange: PropTypes.func,
   className: PropTypes.string,
   children: PropTypes.arrayOf(PropTypes.node),
 };
@@ -83,5 +90,6 @@ Section.defaultProps = {
   label: null,
   optional: false,
   isOpen: true,
+  onChange: noop,
   children: [],
 };
