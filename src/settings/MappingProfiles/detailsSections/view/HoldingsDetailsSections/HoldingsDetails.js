@@ -24,7 +24,7 @@ export const HoldingsDetails = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
 
   const numberOfItems = getFieldValue(mappingDetails, 'numberOfItems', 'value');
-  const statements = getFieldValue(mappingDetails, 'holdingStatements', 'subfields');
+  const statements = getFieldValue(mappingDetails, 'holdingsStatements', 'subfields');
   const statementsForSupplement = getFieldValue(mappingDetails, 'holdingsStatementsForSupplements', 'subfields');
   const statementsForIndexes = getFieldValue(mappingDetails, 'holdingsStatementsForIndexes', 'subfields');
   const illPolicy = getFieldValue(mappingDetails, 'illPolicyId', 'value');
