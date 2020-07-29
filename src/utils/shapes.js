@@ -146,7 +146,7 @@ export const mappingItemRefTablesShape = PropTypes.shape({
 export const mappingHoldingsInitialFieldsShape = PropTypes.shape({
   formerIds: mappingProfileSubfieldShape,
   statisticalCodeIds: mappingProfileSubfieldShape,
-  holdingStatements: mappingProfileSubfieldShape,
+  holdingsStatements: mappingProfileSubfieldShape,
   holdingsStatementsForSupplements: mappingProfileSubfieldShape,
   holdingsStatementsForIndexes: mappingProfileSubfieldShape,
   notes: mappingProfileSubfieldShape,
@@ -157,7 +157,7 @@ export const mappingHoldingsInitialFieldsShape = PropTypes.shape({
 export const mappingHoldingsRefTablesShape = PropTypes.shape({
   formerIds: PropTypes.arrayOf(mappingProfileSubfieldShape),
   statisticalCodeIds: PropTypes.arrayOf(mappingProfileSubfieldShape),
-  holdingStatements: PropTypes.arrayOf(mappingProfileSubfieldShape),
+  holdingsStatements: PropTypes.arrayOf(mappingProfileSubfieldShape),
   holdingsStatementsForSupplements: PropTypes.arrayOf(mappingProfileSubfieldShape),
   holdingsStatementsForIndexes: PropTypes.arrayOf(mappingProfileSubfieldShape),
   notes: PropTypes.arrayOf(mappingProfileSubfieldShape),
