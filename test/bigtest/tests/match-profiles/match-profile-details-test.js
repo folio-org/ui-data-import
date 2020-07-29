@@ -413,7 +413,7 @@ describe('delete confirmation modal', () => {
 
   beforeEach(async function () {
     this.visit('/settings/data-import/match-profiles');
-    await matchProfiles.list.rows(0).click();
+    await matchProfiles.list.rows(0).click(); // fail
   });
 
   describe('is visible', () => {
