@@ -146,7 +146,7 @@ describe('Uploading jobs display', () => {
             });
 
             it('deletes the file', () => {
-              expect(uploadingJobsDisplay.files().length).to.equal(3);
+              expect(uploadingJobsDisplay.files().length).to.equal(3); // fail
             });
           });
         });
