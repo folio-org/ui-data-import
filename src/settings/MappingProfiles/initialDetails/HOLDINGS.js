@@ -115,22 +115,22 @@ const HOLDINGS = {
     value: '',
     subfields: [],
   }, {
-    name: 'holdingStatements',
+    name: 'holdingsStatements',
     enabled: true,
-    path: 'holdings.holdingStatements[]',
+    path: 'holdings.holdingsStatements[]',
     value: '',
     subfields: [{
       order: 0,
-      path: 'holdings.holdingStatements[]',
+      path: 'holdings.holdingsStatements[]',
       fields: [{
         name: 'statement',
         enabled: true,
-        path: 'holdings.holdingStatements[].statement',
+        path: 'holdings.holdingsStatements[].statement',
         value: '',
       }, {
         name: 'note',
         enabled: true,
-        path: 'holdings.holdingStatements[].note',
+        path: 'holdings.holdingsStatements[].note',
         value: '',
       }],
     }],

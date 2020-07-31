@@ -32,7 +32,7 @@ import {
 } from '../../../../../utils';
 
 export const HoldingsDetails = ({
-  holdingStatements,
+  holdingsStatements,
   holdingsStatementsForSupplements,
   holdingsStatementsForIndexes,
   initialFields,
@@ -69,15 +69,15 @@ export const HoldingsDetails = ({
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement.legend`} />}
             repeatableFieldAction={getRepeatableFieldAction(15)}
             repeatableFieldIndex={15}
-            hasRepeatableFields={!!holdingStatements.length}
+            hasRepeatableFields={!!holdingsStatements.length}
             onRepeatableActionChange={setReferenceTables}
           >
             {isDisabled => (
               <RepeatableField
-                fields={holdingStatements}
+                fields={holdingsStatements}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement.addLabel`} />}
-                onAdd={() => onAdd(holdingStatements, 'holdingStatements', 15, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, holdingStatements, 15, setReferenceTables, 'order')}
+                onAdd={() => onAdd(holdingsStatements, 'holdingsStatements', 15, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, holdingsStatements, 15, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -240,7 +240,7 @@ export const HoldingsDetails = ({
 };
 
 HoldingsDetails.propTypes = {
-  holdingStatements: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  holdingsStatements: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   holdingsStatementsForSupplements: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   holdingsStatementsForIndexes: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,

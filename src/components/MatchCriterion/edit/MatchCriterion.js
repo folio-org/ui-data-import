@@ -46,6 +46,7 @@ export const MatchCriterion = ({
   existingRecordLabel,
   existingRecordFields,
   onStaticValueTypeChange,
+  onQualifierSectionChange,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -105,6 +106,7 @@ export const MatchCriterion = ({
       repeatableIndex={repeatableIndex}
       recordFieldType="incoming"
       isOpen={!!incomingMatchExpression.qualifier?.qualifierType || !!incomingMatchExpression.qualifier?.qualifierValue}
+      onChange={onQualifierSectionChange}
     />
   );
   const incomingQualifierPartSectionElement = (
@@ -112,6 +114,7 @@ export const MatchCriterion = ({
       repeatableIndex={repeatableIndex}
       recordFieldType="incoming"
       isOpen={!!incomingMatchExpression.qualifier?.comparisonPart}
+      onChange={onQualifierSectionChange}
     />
   );
   const existingMARCSectionElement = (
@@ -133,6 +136,7 @@ export const MatchCriterion = ({
       repeatableIndex={repeatableIndex}
       recordFieldType="existing"
       isOpen={!!existingMatchExpression.qualifier?.qualifierType || !!existingMatchExpression.qualifier?.qualifierValue}
+      onChange={onQualifierSectionChange}
     />
   );
   const existingQualifierPartSectionElement = (
@@ -140,6 +144,7 @@ export const MatchCriterion = ({
       repeatableIndex={repeatableIndex}
       recordFieldType="existing"
       isOpen={!!existingMatchExpression.qualifier?.comparisonPart}
+      onChange={onQualifierSectionChange}
     />
   );
 
@@ -253,6 +258,7 @@ MatchCriterion.propTypes = {
   incomingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   existingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   onStaticValueTypeChange: PropTypes.func,
+  onQualifierSectionChange: PropTypes.func,
 };
 
 MatchCriterion.defaultProps = {
@@ -262,4 +268,5 @@ MatchCriterion.defaultProps = {
   incomingRecordLabel: null,
   existingRecordLabel: null,
   onStaticValueTypeChange: noop,
+  onQualifierSectionChange: noop,
 };
