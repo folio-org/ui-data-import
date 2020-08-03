@@ -58,6 +58,7 @@ export class ListView extends Component {
     columnWidths: PropTypes.object.isRequired,
     initialValues: PropTypes.object.isRequired,
     renderHeaders: PropTypes.func.isRequired,
+    isFullScreen: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -205,6 +206,7 @@ export class ListView extends Component {
       RecordForm,
       renderHeaders,
       actionMenuItems,
+      isFullScreen,
     } = this.props;
     const { showRestoreModal } = this.state;
 
@@ -255,6 +257,7 @@ export class ListView extends Component {
               editRecordInitialValuesAreLoaded={selectedRecord.hasLoaded}
               showSingleResult={showSingleResult}
               onSubmitSearch={deselectAll}
+              isFullScreen={isFullScreen}
               rowUpdater={rowUpdater}
               {...props}
             />

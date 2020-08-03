@@ -27,4 +27,4 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   hotLink = new Interactor('[class*="profile-tree---"] [data-test-profile-link]');
 }
 
-export const jobProfileDetails = new JobProfileDetailsInteractor('#pane-job-profile-details');
+export const jobProfileDetails = new JobProfileDetailsInteractor('[data-test-pane-job-profile-details]');

@@ -9,17 +9,12 @@ import {
 import { Preloader } from '../Preloader';
 
 export const Spinner = memo(({
-  entity: {
-    props: {
-      onClose,
-      paneId,
-    },
-  },
+  entity: { props: { onClose } },
+  ...props
 }) => {
   const header = renderProps => (
     <PaneHeader
       {...renderProps}
-      id={paneId}
       dismissible
       onClose={onClose}
     />
@@ -30,6 +25,7 @@ export const Spinner = memo(({
       defaultWidth="fill"
       fluidContentWidth
       renderHeader={header}
+      {...props}
     >
       <Preloader />
     </Pane>

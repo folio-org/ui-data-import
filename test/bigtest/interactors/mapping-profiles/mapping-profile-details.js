@@ -15,7 +15,7 @@ import { ItemDetailsAccordion } from './details/static/item-details-interactor';
 
 @interactor
 class MappingProfileDetailsInteractor {
-  actionMenu = new ActionMenuInteractor('#pane-mapping-profile-details [data-pane-header-actions-dropdown]');
+  actionMenu = new ActionMenuInteractor('[data-test-mapping-profile-details] [data-pane-header-actions-dropdown]');
   headline = scoped('[data-test-headline]');
   description = scoped('[data-test-description]');
   incomingRecordType = scoped('[data-test-incoming-record-type]');
@@ -29,4 +29,4 @@ class MappingProfileDetailsInteractor {
   callout = new CalloutInteractor();
 }
 
-export const mappingProfileDetails = new MappingProfileDetailsInteractor('#pane-mapping-profile-details');
+export const mappingProfileDetails = new MappingProfileDetailsInteractor('[data-test-mapping-profile-details]');
