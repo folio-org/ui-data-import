@@ -560,3 +560,8 @@ export const MAPPING_DETAILS_HEADLINE = {
     labelId: 'ui-data-import.settings.mappingProfiles.map.marcAuthority',
   },
 };
+
+export const CLOSING_REASONS_SOURCE = {
+  system: 'System',
+  user: 'User',
+};
