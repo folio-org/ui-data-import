@@ -12,6 +12,7 @@
 * Field mappings: Repeatable field dropdown Validation (UIDATIMP-508)
 * Inventory field mapping: Instance, Holding, Item: add REMOVE option (UIDATIMP-567)
 * Field Mapping Profile details: MARC Bib from MARC Bib 10 - View details screen (UIDATIMP-494)
+* Field Mapping Profile details: Have view details screen cover the entire screen (UIDATIMP-535)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

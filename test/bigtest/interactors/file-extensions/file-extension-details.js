@@ -16,4 +16,4 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   confirmationModal = new ConfirmationModalInteractor('#delete-file-extension-modal');
 }
 
-export const fileExtensionDetails = new FileExtensionDetailsInteractor('#pane-file-extension-details');
+export const fileExtensionDetails = new FileExtensionDetailsInteractor('[data-test-pane-file-extension-details]');

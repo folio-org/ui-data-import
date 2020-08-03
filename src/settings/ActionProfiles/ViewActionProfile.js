@@ -78,13 +78,11 @@ export class ViewActionProfile extends Component {
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
-    paneId: PropTypes.string,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   };
 
   static defaultProps = {
-    paneId: 'pane-action-profile-details',
     ENTITY_KEY: ENTITY_KEYS.ACTION_PROFILES,
     actionMenuItems: [
       'edit',
@@ -169,10 +167,7 @@ export class ViewActionProfile extends Component {
   };
 
   render() {
-    const {
-      tagsEnabled,
-      paneId,
-    } = this.props;
+    const { tagsEnabled } = this.props;
     const { showDeleteConfirmation } = this.state;
     const {
       hasLoaded,
@@ -180,7 +175,12 @@ export class ViewActionProfile extends Component {
     } = this.actionProfileData;
 
     if (!actionProfile || !hasLoaded) {
-      return <Spinner entity={this} />;
+      return (
+        <Spinner
+          data-test-mapping-profile-details
+          entity={this}
+        />
+      );
     }
 
     // ActionProfiles sample data does not contain user Ids because of back-end limitations
@@ -201,7 +201,7 @@ export class ViewActionProfile extends Component {
 
     return (
       <Pane
-        id={paneId}
+        data-test-pane-action-profile-details
         defaultWidth="fill"
         fluidContentWidth
         renderHeader={this.renderPaneHeader}

@@ -160,13 +160,11 @@ export class ViewJobProfile extends Component {
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
-    paneId: PropTypes.string, // eslint-disable-line
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   };
 
   static defaultProps = {
-    paneId: 'pane-job-profile-details',
     ENTITY_KEY: ENTITY_KEYS.JOB_PROFILES,
     actionMenuItems: [
       'edit',
@@ -362,7 +360,12 @@ export class ViewJobProfile extends Component {
     } = this.jobsUsingThisProfileData;
 
     if (!record || !hasLoaded) {
-      return <Spinner entity={this} />;
+      return (
+        <Spinner
+          data-test-pane-job-profile-details
+          entity={this}
+        />
+      );
     }
 
     /** JobProfiles sample data does not contain user Ids because of back-end limitations
@@ -385,7 +388,7 @@ export class ViewJobProfile extends Component {
 
     return (
       <Pane
-        id="pane-job-profile-details"
+        data-test-pane-job-profile-details
         defaultWidth="fill"
         fluidContentWidth
         renderHeader={this.renderPaneHeader}
