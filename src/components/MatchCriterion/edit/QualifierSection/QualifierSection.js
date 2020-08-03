@@ -5,6 +5,7 @@ import {
   useIntl,
 } from 'react-intl';
 import { Field } from 'redux-form';
+import { noop } from 'lodash';
 
 import {
   Row,
@@ -23,6 +24,7 @@ export const QualifierSection = ({
   repeatableIndex,
   recordFieldType,
   isOpen,
+  onChange,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -32,12 +34,16 @@ export const QualifierSection = ({
       label: formatMessage({ id: option.label }),
     }
   ));
+  const expressionType = `${recordFieldType}MatchExpression`;
 
   return (
     <Section
       data-test-qualifier
       label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.qualifier`} />}
       isOpen={isOpen}
+      onChange={isChecked => {
+        onChange(isChecked, repeatableIndex, expressionType, ['qualifierType', 'qualifierValue']);
+      }}
       optional
       className={css.inputContainer}
     >
@@ -47,7 +53,7 @@ export const QualifierSection = ({
             {placeholder => (
               <Field
                 component={Select}
-                name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.qualifier.qualifierType`}
+                name={`profile.matchDetails[${repeatableIndex}].${expressionType}.qualifier.qualifierType`}
                 placeholder={placeholder}
                 dataOptions={dataOptions}
               />
@@ -57,7 +63,7 @@ export const QualifierSection = ({
         <Col xs={8}>
           <Field
             component={TextField}
-            name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.qualifier.qualifierValue`}
+            name={`profile.matchDetails[${repeatableIndex}].${expressionType}.qualifier.qualifierValue`}
           />
         </Col>
       </Row>
@@ -69,6 +75,10 @@ QualifierSection.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
   recordFieldType: PropTypes.oneOf(['incoming', 'existing']).isRequired,
   isOpen: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
-QualifierSection.defaultProps = { isOpen: false };
+QualifierSection.defaultProps = {
+  isOpen: false,
+  onChange: noop,
+};

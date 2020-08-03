@@ -58,7 +58,7 @@ export const MARCFieldSection = ({
         >
           <KeyValue
             label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-subfield`} />}
-            value={expressionDetails.fields?.find(field => field.label === 'subfield')?.value || <NoValue />}
+            value={expressionDetails.fields?.find(field => field.label === 'recordSubfield')?.value || <NoValue />}
           />
         </Col>
       </Row>

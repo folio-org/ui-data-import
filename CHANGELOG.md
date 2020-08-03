@@ -12,11 +12,13 @@
 * Field mappings: Repeatable field dropdown Validation (UIDATIMP-508)
 * Inventory field mapping: Instance, Holding, Item: add REMOVE option (UIDATIMP-567)
 * Field Mapping Profile details: MARC Bib from MARC Bib 10 - View details screen (UIDATIMP-494)
+* Create `MARC field protection` settings screen (UIDATIMP-592)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
 * Fix Inconsistent in Holding schema between UI and Backend (UIDATIMP-596)
-* Create MARC field protection settings screen (UIDATIMP-592)
+* Fix saving subfield information of match profile (UIDATIMP-604)
+* Fix optional sections of match profile do not clear out when removed (UIDATIMP-597)
 
 ## [2.1.1](https://github.com/folio-org/ui-data-import/tree/v2.1.1) (2020-07-09)
 

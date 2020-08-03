@@ -5,6 +5,7 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
+import { noop } from 'lodash';
 
 import {
   Row,
@@ -22,6 +23,7 @@ export const QualifierPartSection = ({
   repeatableIndex,
   recordFieldType,
   isOpen,
+  onChange,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -31,6 +33,7 @@ export const QualifierPartSection = ({
       label: formatMessage({ id: option.label }),
     }
   ));
+  const expressionType = `${recordFieldType}MatchExpression`;
 
   return (
     <Section
@@ -38,6 +41,9 @@ export const QualifierPartSection = ({
       label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.part`} />}
       optional
       isOpen={isOpen}
+      onChange={isChecked => {
+        onChange(isChecked, repeatableIndex, expressionType, ['comparisonPart']);
+      }}
       className={css.inputContainer}
     >
       <Row>
@@ -46,7 +52,7 @@ export const QualifierPartSection = ({
             {placeholder => (
               <Field
                 component={Select}
-                name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.qualifier.comparisonPart`}
+                name={`profile.matchDetails[${repeatableIndex}].${expressionType}.qualifier.comparisonPart`}
                 placeholder={placeholder}
                 dataOptions={dataOptions}
               />
@@ -62,6 +68,10 @@ QualifierPartSection.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
   recordFieldType: PropTypes.oneOf(['incoming', 'existing']).isRequired,
   isOpen: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
-QualifierPartSection.defaultProps = { isOpen: false };
+QualifierPartSection.defaultProps = {
+  isOpen: false,
+  onChange: noop,
+};

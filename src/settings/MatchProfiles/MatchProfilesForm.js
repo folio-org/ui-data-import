@@ -171,6 +171,14 @@ export const MatchProfilesFormComponent = memo(({
     });
   };
 
+  const handleQualifierSectionChange = (isChecked, matchDetailsIdx, expressionType, fieldsToClear) => {
+    if (!isChecked) {
+      fieldsToClear.forEach(field => {
+        dispatch(change(formName, `profile.matchDetails[${matchDetailsIdx}].${expressionType}.qualifier.${field}`, null));
+      });
+    }
+  };
+
   const incomingRecordLabel = !isEmpty(incomingRecord)
     ? <FormattedMessage id={incomingRecord.captionId} />
     : '';
@@ -245,11 +253,12 @@ export const MatchProfilesFormComponent = memo(({
                   matchDetails={field}
                   incomingRecordType={incomingRecord.type}
                   existingRecordType={existingRecord}
+                  staticValueType={staticValueType}
                   incomingRecordLabel={incomingRecordLabel}
                   existingRecordLabel={existingRecordLabel}
                   existingRecordFields={isEmpty(existingRecordFields) ? getInitialFields() : existingRecordFields}
                   onStaticValueTypeChange={(event, newValue) => handleStaticValueTypeChange(newValue)}
-                  staticValueType={staticValueType}
+                  onQualifierSectionChange={handleQualifierSectionChange}
                 />
               )}
             />
