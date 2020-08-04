@@ -10,8 +10,8 @@ import { noop } from 'lodash';
 import classNames from 'classnames';
 
 import { Button } from '@folio/stripes/components';
+import { Progress } from '@folio/stripes-data-transfer-components';
 
-import { Progress } from '../../../Progress';
 import { jobMetaTypes } from './jobMetaTypes';
 import { jobExecutionPropTypes } from './jobExecutionPropTypes';
 

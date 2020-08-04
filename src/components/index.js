@@ -19,7 +19,6 @@ export * from './Preloader';
 export * from './ProfileAssociator';
 export * from './ProfileTree';
 export * from './ProhibitionIcon';
-export * from './Progress';
 export * from './Spinner';
 export * from './SearchAndSort';
 export * from './UploadingJobsContextProvider';
