@@ -25,4 +25,4 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   callout = new CalloutInteractor();
 }
 
-export const actionProfileDetails = new ActionProfileDetailsInteractor('#pane-action-profile-details');
+export const actionProfileDetails = new ActionProfileDetailsInteractor('[data-test-pane-action-profile-details]');

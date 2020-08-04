@@ -81,13 +81,11 @@ export class ViewMatchProfile extends Component {
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
-    paneId: PropTypes.string,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   };
 
   static defaultProps = {
-    paneId: 'pane-match-profile-details',
     ENTITY_KEY: ENTITY_KEYS.MATCH_PROFILES,
     actionMenuItems: [
       'edit',
@@ -173,10 +171,7 @@ export class ViewMatchProfile extends Component {
   };
 
   render() {
-    const {
-      tagsEnabled,
-      paneId,
-    } = this.props;
+    const { tagsEnabled } = this.props;
     const { showDeleteConfirmation } = this.state;
 
     const {
@@ -186,7 +181,12 @@ export class ViewMatchProfile extends Component {
     const associations = [...[], ...get(matchProfile, ['parentProfiles'], []), ...get(matchProfile, ['childProfiles'], [])];
 
     if (!matchProfile || !hasLoaded) {
-      return <Spinner entity={this} />;
+      return (
+        <Spinner
+          data-test-pane-match-profile-details
+          entity={this}
+        />
+      );
     }
 
     const tagsEntityLink = `data-import-profiles/matchProfiles/${matchProfile.id}`;
@@ -199,7 +199,7 @@ export class ViewMatchProfile extends Component {
 
     return (
       <Pane
-        id={paneId}
+        data-test-pane-match-profile-details
         renderHeader={this.renderPaneHeader}
         defaultWidth="620px"
         fluidContentWidth

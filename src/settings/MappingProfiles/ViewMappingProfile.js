@@ -9,7 +9,6 @@ import {
 } from '@folio/stripes/core';
 import {
   Headline,
-  Pane,
   ConfirmationModal,
   PaneHeader,
   AccordionSet,
@@ -26,7 +25,10 @@ import {
   withTags,
   TagsAccordion,
 } from '@folio/stripes/smart-components';
-import { EndOfItem } from '@folio/stripes-data-transfer-components';
+import {
+  EndOfItem,
+  FullScreenView,
+} from '@folio/stripes-data-transfer-components';
 
 import {
   Spinner,
@@ -89,13 +91,11 @@ export class ViewMappingProfile extends Component {
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
-    paneId: PropTypes.string,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   };
 
   static defaultProps = {
-    paneId: 'pane-mapping-profile-details',
     ENTITY_KEY: ENTITY_KEYS.MAPPING_PROFILES,
     actionMenuItems: [
       'edit',
@@ -181,10 +181,7 @@ export class ViewMappingProfile extends Component {
   };
 
   render() {
-    const {
-      tagsEnabled,
-      paneId,
-    } = this.props;
+    const { tagsEnabled } = this.props;
     const { showDeleteConfirmation } = this.state;
 
     const {
@@ -193,7 +190,13 @@ export class ViewMappingProfile extends Component {
     } = this.mappingProfileData;
 
     if (!mappingProfile || !hasLoaded) {
-      return <Spinner entity={this} />;
+      return (
+        <Spinner
+          data-test-mapping-profile-details
+          entity={this}
+          style={{ position: 'absolute' }}
+        />
+      );
     }
 
     const {
@@ -219,11 +222,11 @@ export class ViewMappingProfile extends Component {
     };
 
     return (
-      <Pane
-        id={paneId}
-        defaultWidth="fill"
-        fluidContentWidth
+      <FullScreenView
+        data-test-mapping-profile-details
+        contentLabel="Mapping profile details"
         renderHeader={this.renderPaneHeader}
+        centerContent={false}
       >
         <TitleManager record={name} />
         <Headline
@@ -291,11 +294,11 @@ export class ViewMappingProfile extends Component {
                     />
                   </Col>
                   {!isMARCRecord && (
-                    <Col>
-                      <div data-test-expand-all-button>
-                        <ExpandAllButton />
-                      </div>
-                    </Col>
+                  <Col>
+                    <div data-test-expand-all-button>
+                      <ExpandAllButton />
+                    </div>
+                  </Col>
                   )}
                 </Row>
                 {renderDetails[existingRecordType]}
@@ -334,14 +337,14 @@ export class ViewMappingProfile extends Component {
               id="ui-data-import.modal.mappingProfile.delete.header"
               values={{ name }}
             />
-          )}
+            )}
           message={<FormattedMessage id="ui-data-import.modal.mappingProfile.delete.message" />}
           confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
           cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
           onConfirm={() => this.handleDelete(mappingProfile)}
           onCancel={this.hideDeleteConfirmation}
         />
-      </Pane>
+      </FullScreenView>
     );
   }
 }
