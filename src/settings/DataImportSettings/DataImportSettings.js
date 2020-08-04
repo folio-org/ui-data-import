@@ -10,6 +10,7 @@ import { MatchProfiles } from '../MatchProfiles';
 import { ActionProfiles } from '../ActionProfiles';
 import { MappingProfiles } from '../MappingProfiles';
 import { FileExtensions } from '../FileExtensions';
+import { MARCFieldProtection } from '../MARCFieldProtection';
 import { generateSettingsLabel } from '../../utils';
 
 import css from './DataImportSettings.css';
@@ -50,6 +51,11 @@ export class DataImportSettings extends Component {
           route: 'file-extensions',
           label: <FormattedMessage id="ui-data-import.settings.fileExtensions.title" />,
           component: FileExtensions,
+        },
+        {
+          route: 'marc-field-protection',
+          label: <FormattedMessage id="ui-data-import.settings.marcFieldProtection.title" />,
+          component: MARCFieldProtection,
         },
       ],
     },

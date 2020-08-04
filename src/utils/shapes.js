@@ -8,7 +8,8 @@ import {
   REPEATABLE_ACTIONS,
   CRITERION_TYPES,
   COMPARISON_PARTS,
-  QUALIFIER_TYPES, STATIC_VALUE_TYPES,
+  QUALIFIER_TYPES,
+  STATIC_VALUE_TYPES,
 } from './constants';
 
 export const mappingMARCDataShape = PropTypes.shape({
