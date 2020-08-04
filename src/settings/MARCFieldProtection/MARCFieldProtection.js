@@ -42,13 +42,9 @@ export class MARCFieldProtection extends Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit({ source }) {
-    return source === CLOSING_REASONS_SOURCE.system;
-  }
+  suppressEdit = ({ source }) => source === CLOSING_REASONS_SOURCE.system;
 
-  suppressDelete({ source }) {
-    return source === CLOSING_REASONS_SOURCE.system;
-  }
+  suppressDelete = ({ source }) => source === CLOSING_REASONS_SOURCE.system;
 
   render() {
     const {
