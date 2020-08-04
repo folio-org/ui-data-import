@@ -730,5 +730,14 @@
     "settings.matchProfiles.adjustment": "Ajuste",
     "settings.mappingProfiles.map.item.field.circulationNotes.checkInNote": "Nota de devolução",
     "settings.mappingProfiles.map.item.field.circulationNotes.checkOutNote": "Nota de empréstimo",
-    "validation.chooseAtLeastOneValue": "Um ou mais valores devem ser adicionados antes que o perfil possa ser salvo."
+    "validation.chooseAtLeastOneValue": "Um ou mais valores devem ser adicionados antes que o perfil possa ser salvo.",
+    "settings.marcFieldProtection.title": "MARC field protection",
+    "settings.marcFieldProtection.field": "Field",
+    "settings.marcFieldProtection.indicator1": "Ind 1",
+    "settings.marcFieldProtection.indicator2": "Ind 2",
+    "settings.marcFieldProtection.subfield": "Subfield",
+    "settings.marcFieldProtection.data": "Data",
+    "settings.marcFieldProtection.source": "Source",
+    "settings.marcFieldProtection.actions": "Actions",
+    "settings.marcFieldProtection.listFormHeader": "The following MARC fields are protected from updates when new copies of MARC records are imported"
 }
