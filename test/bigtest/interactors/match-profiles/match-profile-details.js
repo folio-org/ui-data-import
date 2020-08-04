@@ -26,4 +26,4 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   callout = new CalloutInteractor();
 }
 
-export const matchProfileDetails = new MatchProfileDetailsInteractor('#pane-match-profile-details');
+export const matchProfileDetails = new MatchProfileDetailsInteractor('[data-test-pane-match-profile-details]');

@@ -138,6 +138,7 @@ export class SearchAndSort extends Component {
     finishedResourceName: PropTypes.string,
     fullWidthContainer: PropTypes.instanceOf(Element),
     rowUpdater: PropTypes.func,
+    isFullScreen: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -462,8 +463,30 @@ export class SearchAndSort extends Component {
       fullWidthContainer,
       handleEditSuccess,
       ViewRecordComponent,
+      isFullScreen,
       location: { pathname },
     } = this.props;
+
+    const commonProps = {
+      key: pathname,
+      stripes,
+      editContainer: fullWidthContainer,
+      parentResources,
+      connectedSource: source,
+      parentMutato: parentMutator,
+      onClose: this.collapseRecordDetails,
+      onCloseEdit: this.onCloseEditRecord,
+      onEdit: this.editRecord,
+      onDelete: this.deleteRecord,
+      onEditSuccess: handleEditSuccess,
+    };
+
+    const narrowViewScreenProps = {
+      ...commonProps,
+      paneWidth: '44%',
+    };
+
+    const viewRecordComponentProps = isFullScreen ? commonProps : narrowViewScreenProps;
 
     return (
       <Route
@@ -471,18 +494,7 @@ export class SearchAndSort extends Component {
         render={
           props => (
             <ViewRecordComponent
-              key={pathname}
-              stripes={stripes}
-              paneWidth="44%"
-              editContainer={fullWidthContainer}
-              parentResources={parentResources}
-              connectedSource={source}
-              parentMutator={parentMutator}
-              onClose={this.collapseRecordDetails}
-              onCloseEdit={this.onCloseEditRecord}
-              onEdit={this.editRecord}
-              onDelete={this.deleteRecord}
-              onEditSuccess={handleEditSuccess}
+              {...viewRecordComponentProps}
               {...props}
               {...detailProps}
             />
@@ -725,28 +737,33 @@ export class SearchAndSort extends Component {
   };
 
   render() {
+    const { isFullScreen } = this.props;
+
     const source = this.getSource();
 
     return (
-      <Paneset>
-        <SRStatus ref={this.SRStatusRef} />
-        <Pane
-          id="pane-results"
-          defaultWidth="fill"
-          noOverflow
-          padContent={false}
-          renderHeader={this.renderPaneHeader}
-        >
-          <div className={css.paneBody}>
-            {this.renderSearch(source)}
-            <div className={css.searchResults}>
-              {this.renderSearchResults(source)}
+      <>
+        <Paneset>
+          <SRStatus ref={this.SRStatusRef} />
+          <Pane
+            id="pane-results"
+            defaultWidth="fill"
+            noOverflow
+            padContent={false}
+            renderHeader={this.renderPaneHeader}
+          >
+            <div className={css.paneBody}>
+              {this.renderSearch(source)}
+              <div className={css.searchResults}>
+                {this.renderSearchResults(source)}
+              </div>
             </div>
-          </div>
-        </Pane>
-        {this.renderDetailsPane(source)}
-        {this.renderCreateRecordLayer(source)}
-      </Paneset>
+          </Pane>
+          {!isFullScreen && this.renderDetailsPane(source)}
+          {this.renderCreateRecordLayer(source)}
+        </Paneset>
+        {isFullScreen && this.renderDetailsPane(source)}
+      </>
     );
   }
 }

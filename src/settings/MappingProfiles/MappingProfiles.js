@@ -197,6 +197,7 @@ export class MappingProfiles extends Component {
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
     columnWidths: PropTypes.object,
     initialValues: PropTypes.object,
+    isFullScreen: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -220,6 +221,7 @@ export class MappingProfiles extends Component {
       description: '',
       mappingDetails: {},
     },
+    isFullScreen: true,
     RecordView: ViewMappingProfile,
     RecordForm: MappingProfilesForm,
   };

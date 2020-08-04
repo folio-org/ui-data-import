@@ -65,13 +65,11 @@ export class ViewFileExtension extends Component {
     }).isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
-    paneId: PropTypes.string, // eslint-disable-line
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   };
 
   static defaultProps = {
-    paneId: 'pane-file-extension-details',
     ENTITY_KEY: ENTITY_KEYS.FILE_EXTENSIONS,
     actionMenuItems: [
       'edit',
@@ -149,7 +147,7 @@ export class ViewFileExtension extends Component {
 
     return (
       <Pane
-        id="pane-file-extension-details"
+        data-test-pane-file-extension-details
         defaultWidth="fill"
         fluidContentWidth
         renderHeader={this.renderPaneHeader}
@@ -238,7 +236,12 @@ export class ViewFileExtension extends Component {
     } = this.fileExtensionData;
 
     if (!record || !hasLoaded) {
-      return <Spinner entity={this} />;
+      return (
+        <Spinner
+          data-test-pane-file-extension-details
+          entity={this}
+        />
+      );
     }
 
     return this.renderFileExtension(record);
