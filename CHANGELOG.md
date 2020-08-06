@@ -16,6 +16,9 @@
 * Reuse `<Progress>` component from `stripes-data-transfer-components` repository (UIDATIMP-575)
 * Create `MARC field protection` settings screen (UIDATIMP-592)
 * Reset repeatable fields to neutral when all rows deleted (UIDATIMP-607)
+* Match profile: Add Instance UUID as a match option (UIDATIMP-589)
+* Match profile: Add Holdings UUID as a match option (UIDATIMP-590)
+* Match profile: Add Item UUID as a match option (UIDATIMP-591)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

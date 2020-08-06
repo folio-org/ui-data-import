@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
@@ -13,7 +14,7 @@ import {
   FOLIO_RECORD_TYPES,
 } from '../../..';
 
-import { getFieldMatched } from '../../../../utils';
+import { getFieldMatchedWithCategory } from '../../../../utils';
 
 import css from '../ViewMatchCriterion.css';
 
@@ -22,6 +23,8 @@ export const ExistingSectionFolio = ({
   existingRecordType,
   existingRecordFieldLabel,
 }) => {
+  const intl = useIntl();
+
   return (
     <Section
       label={existingRecordFieldLabel}
@@ -32,7 +35,7 @@ export const ExistingSectionFolio = ({
           xs={12}
           className={css.fieldValue}
         >
-          {getFieldMatched(existingRecordField, existingRecordType) || <NoValue />}
+          {getFieldMatchedWithCategory(existingRecordField, existingRecordType, intl) || <NoValue />}
         </Col>
       </Row>
     </Section>

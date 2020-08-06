@@ -378,9 +378,9 @@ describe('Match profile form', () => {
                 expect(matchProfileForm.matchCriteria.existingRecordFieldSections.expandedAttribute).to.be.equal('true');
               });
 
-              checkOptionsCount('INSTANCE', 52);
-              checkOptionsCount('HOLDINGS', 19);
-              checkOptionsCount('ITEM', 13);
+              checkOptionsCount('INSTANCE', 53);
+              checkOptionsCount('HOLDINGS', 20);
+              checkOptionsCount('ITEM', 14);
               checkOptionsCount('ORDER', 30);
               checkOptionsCount('INVOICE', 21);
             });
