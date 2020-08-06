@@ -10,9 +10,9 @@ import {
   Icon,
   IconButton,
 } from '@folio/stripes/components';
-import { FILE_STATUSES } from '../../../../utils/constants';
+import { Progress } from '@folio/stripes-data-transfer-components';
 
-import { Progress } from '../../../Progress';
+import { FILE_STATUSES } from '../../../../utils';
 
 import css from './FileItem.css';
 
