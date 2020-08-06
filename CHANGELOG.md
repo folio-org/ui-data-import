@@ -15,6 +15,7 @@
 * Field Mapping Profile details: Have view details screen cover the entire screen (UIDATIMP-535)
 * Reuse `<Progress>` component from `stripes-data-transfer-components` repository (UIDATIMP-575)
 * Create `MARC field protection` settings screen (UIDATIMP-592)
+* Reset repeatable fields to neutral when all rows deleted (UIDATIMP-607)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
