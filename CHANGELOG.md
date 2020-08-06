@@ -13,6 +13,7 @@
 * Inventory field mapping: Instance, Holding, Item: add REMOVE option (UIDATIMP-567)
 * Field Mapping Profile details: MARC Bib from MARC Bib 10 - View details screen (UIDATIMP-494)
 * Field Mapping Profile details: Have view details screen cover the entire screen (UIDATIMP-535)
+* Reuse `<Progress>` component from `stripes-data-transfer-components` repository (UIDATIMP-575)
 * Create `MARC field protection` settings screen (UIDATIMP-592)
 
 ### Bugs fixed:
