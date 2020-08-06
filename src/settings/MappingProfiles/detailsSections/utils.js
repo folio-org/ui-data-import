@@ -68,6 +68,12 @@ export const onRemove = (index, refTable, fieldIndex, callback, incrementalField
     }));
   }
 
+  if (newRefTable.length === 0) {
+    const repeatableActionFieldPath = getRepeatableFieldName(fieldIndex);
+
+    callback(repeatableActionFieldPath, null);
+  }
+
   callback(fieldsPath, newRefTable);
 };
 
