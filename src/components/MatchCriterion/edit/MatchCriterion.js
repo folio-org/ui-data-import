@@ -62,6 +62,9 @@ export const MatchCriterion = ({
     }
   ));
 
+  const getMARCFieldValue = (typeExpression, fieldName) => typeExpression?.fields
+    .find(field => field.label === fieldName)?.value;
+
   const incomingRecordLbl = (
     <FormattedMessage
       id="ui-data-import.match.incoming.record"
@@ -92,6 +95,10 @@ export const MatchCriterion = ({
       repeatableIndex={repeatableIndex}
       recordFieldSectionLabel={incomingRecordFieldLbl}
       recordFieldType="incoming"
+      field={getMARCFieldValue(incomingMatchExpression, 'field')}
+      indicator1={getMARCFieldValue(incomingMatchExpression, 'indicator1')}
+      indicator2={getMARCFieldValue(incomingMatchExpression, 'indicator2')}
+      subfield={getMARCFieldValue(incomingMatchExpression, 'recordSubfield')}
     />
   );
   const incomingStaticValueSectionElement = (
@@ -122,6 +129,10 @@ export const MatchCriterion = ({
       repeatableIndex={repeatableIndex}
       recordFieldSectionLabel={existingRecordFieldLbl}
       recordFieldType="existing"
+      field={getMARCFieldValue(existingMatchExpression, 'field')}
+      indicator1={getMARCFieldValue(existingMatchExpression, 'indicator1')}
+      indicator2={getMARCFieldValue(existingMatchExpression, 'indicator2')}
+      subfield={getMARCFieldValue(existingMatchExpression, 'recordSubfield')}
     />
   );
   const existingSectionFolioElement = (
