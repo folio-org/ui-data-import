@@ -739,5 +739,8 @@
     "settings.marcFieldProtection.data": "Données",
     "settings.marcFieldProtection.source": "Source",
     "settings.marcFieldProtection.actions": "Actions",
-    "settings.marcFieldProtection.listFormHeader": "The following MARC fields are protected from updates when new copies of MARC records are imported"
+    "settings.marcFieldProtection.listFormHeader": "The following MARC fields are protected from updates when new copies of MARC records are imported",
+    "settings.mappingProfiles.map.item.administrativeData.field.id": "Item UUID",
+    "settings.mappingProfiles.map.instance.administrationData.field.id": "Instance UUID",
+    "settings.mappingProfiles.map.holdings.administrativeData.field.id": "Holdings UUID"
 }
