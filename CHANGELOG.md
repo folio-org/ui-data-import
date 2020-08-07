@@ -19,6 +19,7 @@
 * Match profile: Add Instance UUID as a match option (UIDATIMP-589)
 * Match profile: Add Holdings UUID as a match option (UIDATIMP-590)
 * Match profile: Add Item UUID as a match option (UIDATIMP-591)
+* UIDATIMP-525: Update MARC matching UI to differentiate [any] versus [blank] indicators
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

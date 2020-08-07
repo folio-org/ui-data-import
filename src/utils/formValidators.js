@@ -277,6 +277,28 @@ export const validateMarcIndicatorField = (field, indicator1, indicator2) => {
 };
 
 /**
+ * Validate MARC Field input value for Match Criterion
+ *
+ * @param {string|*} field
+ * @returns {null|*}
+ *
+ * @example
+ *
+ * validateMarcFieldInMatchCriterion('011')
+ * // => null
+ *
+ * validateMarcFieldInMatchCriterion('002')
+ * // => Translated string (en = 'This field cannot be updated')
+ */
+export const validateMARCFieldInMatchCriterion = (indicator1, indicator2, subfield) => {
+  if (!isEmpty(indicator1) || !isEmpty(indicator2) || !isEmpty(subfield)) {
+    return <FormattedMessage id="ui-data-import.validation.cannotBeUpdated" />;
+  }
+
+  return null;
+};
+
+/**
  * Validate MARC Subfield input value
  *
  * @param {string|*} field

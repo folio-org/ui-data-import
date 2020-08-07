@@ -458,6 +458,8 @@ describe('When match profile form', () => {
   describe('is submitted and the response contains', () => {
     describe('error message', () => {
       beforeEach(async function () {
+        await matchProfileForm.matchCriteria.inputMain.fillAndBlur('010');
+        await matchProfileForm.matchCriteria.inputSubfield.fillAndBlur('a');
         await setupFormSubmitErrorScenario(this.server, {
           response: { errors: [{ message: 'matchProfile.duplication.invalid' }] },
           status: 422,
@@ -471,6 +473,8 @@ describe('When match profile form', () => {
 
     describe('network error', () => {
       beforeEach(async function () {
+        await matchProfileForm.matchCriteria.inputMain.fillAndBlur('010');
+        await matchProfileForm.matchCriteria.inputSubfield.fillAndBlur('a');
         await setupFormSubmitErrorScenario(this.server);
       });
 
