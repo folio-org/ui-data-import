@@ -17,15 +17,15 @@ import {
   MultiSelection,
   OptionSegment,
 } from '@folio/stripes/components';
+import { FullScreenForm } from '@folio/stripes-data-transfer-components';
 import stripesForm from '@folio/stripes/form';
 
-import { FullScreenForm } from '../../components/FullScreenForm';
 import {
   validateDataTypes,
   validateFileExtension,
   validateRequiredField,
+  DATA_TYPES,
 } from '../../utils';
-import { DATA_TYPES } from '../../utils/constants';
 
 import css from './FileExtensionForm.css';
 
@@ -96,8 +96,9 @@ const FileExtensionFormComponent = ({
     <FullScreenForm
       id="file-extensions-form"
       paneTitle={paneTitle}
-      submitMessage={<FormattedMessage id="ui-data-import.saveAsFileExtension" />}
-      isSubmitDisabled={isSubmitDisabled}
+      submitButtonText={<FormattedMessage id="ui-data-import.saveAsFileExtension" />}
+      cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
+      isSubmitButtonDisabled={isSubmitDisabled}
       onSubmit={handleSubmit}
       onCancel={onCancel}
     >

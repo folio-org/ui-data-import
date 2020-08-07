@@ -9,7 +9,6 @@ export * from './ListTemplate';
 export * from './DataFetcher';
 export * from './DatePickerDecorator';
 export * from './FlexibleForm';
-export * from './FullScreenForm';
 export * from './ImportJobs';
 export * from './JobLogs';
 export * from './Jobs';

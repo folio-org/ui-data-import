@@ -30,11 +30,11 @@ import {
   RepeatableField,
   ConfirmationModal,
 } from '@folio/stripes/components';
+import { FullScreenForm } from '@folio/stripes-data-transfer-components';
 
 import {
   FOLIO_RECORD_TYPES,
   INCOMING_RECORD_TYPES,
-  FullScreenForm,
   RecordTypesSelect,
 } from '../../components';
 import { MatchCriterion } from '../../components/MatchCriterion/edit';
@@ -190,8 +190,9 @@ export const MatchProfilesFormComponent = memo(({
     <FullScreenForm
       id="match-profiles-form"
       paneTitle={paneTitle}
-      submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
-      isSubmitDisabled={isSubmitDisabled}
+      submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
+      cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
+      isSubmitButtonDisabled={isSubmitDisabled}
       onSubmit={onSubmit}
       onCancel={onCancel}
     >
