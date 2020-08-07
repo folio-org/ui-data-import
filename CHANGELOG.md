@@ -19,6 +19,7 @@
 * Match profile: Add Instance UUID as a match option (UIDATIMP-589)
 * Match profile: Add Holdings UUID as a match option (UIDATIMP-590)
 * Match profile: Add Item UUID as a match option (UIDATIMP-591)
+* Update MARC matching UI to differentiate [any] versus [blank] indicators (UIDATIMP-525)
 * Reuse `<FullScreenForm>` component from `stripes-data-transfer-components` repository (UIDATIMP-578)
 
 ### Bugs fixed:
