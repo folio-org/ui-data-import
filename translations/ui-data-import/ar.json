@@ -739,5 +739,8 @@
     "settings.marcFieldProtection.data": "البيانات",
     "settings.marcFieldProtection.source": "مصدر",
     "settings.marcFieldProtection.actions": "الإجراءات",
-    "settings.marcFieldProtection.listFormHeader": "حقول مارك التالية محمية من التحديثات عند استيراد نسخ جديدة من تسجيلات مارك"
+    "settings.marcFieldProtection.listFormHeader": "حقول مارك التالية محمية من التحديثات عند استيراد نسخ جديدة من تسجيلات مارك",
+    "settings.mappingProfiles.map.item.administrativeData.field.id": "المعرّف الفريد العمومي للمادة",
+    "settings.mappingProfiles.map.instance.administrationData.field.id": "المعرّف الفريد العمومي للوعاء",
+    "settings.mappingProfiles.map.holdings.administrativeData.field.id": "المعرّف الفريد العمومي للمقتنيات"
 }
