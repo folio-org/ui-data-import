@@ -24,21 +24,17 @@ import {
   Accordion,
   AccordionSet,
 } from '@folio/stripes/components';
+import { FullScreenForm } from '@folio/stripes-data-transfer-components';
 import stripesForm from '@folio/stripes/form';
 
-import {
-  DATA_TYPES,
-  PROFILE_LINKING_RULES,
-} from '../../utils/constants';
 import {
   compose,
   validateRequiredField,
   withProfileWrapper,
+  DATA_TYPES,
+  PROFILE_LINKING_RULES,
 } from '../../utils';
-import {
-  FullScreenForm,
-  ProfileTree,
-} from '../../components';
+import { ProfileTree } from '../../components';
 
 const formName = 'jobProfilesForm';
 const dataTypes = DATA_TYPES.map(dataType => ({
@@ -96,8 +92,9 @@ export const JobProfilesFormComponent = ({
     <FullScreenForm
       id="job-profiles-form"
       paneTitle={paneTitle}
-      submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
-      isSubmitDisabled={isSubmitDisabled}
+      submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
+      cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
+      isSubmitButtonDisabled={isSubmitDisabled}
       onSubmit={record => {
         clearStorage();
         handleSubmit(record);

@@ -33,24 +33,22 @@ import {
   ConfirmationModal,
   Select,
 } from '@folio/stripes/components';
+import { FullScreenForm } from '@folio/stripes-data-transfer-components';
 import stripesForm from '@folio/stripes/form';
 
 import {
   compose,
   withProfileWrapper,
   validateRequiredField,
-} from '../../utils';
-import {
   ENTITY_KEYS,
   LAYER_TYPES,
   PROFILE_TYPES,
-} from '../../utils/constants';
+} from '../../utils';
 import {
   FolioRecordTypeSelect,
   ACTION_TYPES_SELECT,
   ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES,
   ProfileAssociator,
-  FullScreenForm,
 } from '../../components';
 
 const formName = 'actionProfilesForm';
@@ -179,8 +177,9 @@ export const ActionProfilesFormComponent = ({
     <FullScreenForm
       id="action-profiles-form"
       paneTitle={paneTitle}
-      submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
-      isSubmitDisabled={isSubmitDisabled}
+      submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
+      cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
+      isSubmitButtonDisabled={isSubmitDisabled}
       onSubmit={onSubmit}
       onCancel={onCancel}
     >
