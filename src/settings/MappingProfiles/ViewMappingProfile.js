@@ -287,9 +287,7 @@ export class ViewMappingProfile extends Component {
                   <Col>
                     <MappedHeader
                       mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
-                      mappedLabel="Field mapping"
                       mappableLabelId={MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId}
-                      mappableLabel={MAPPING_DETAILS_HEADLINE[existingRecordType]?.label}
                       headlineProps={{ margin: 'small' }}
                     />
                   </Col>
