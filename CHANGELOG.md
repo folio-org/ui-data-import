@@ -1,18 +1,8 @@
 # Change history for ui-data-import
 
-## **2.2.0** (in progress)
-
-### Features added:
-* Handle import of stripes-acq-components to modules and platform (UISACQCOMP-3)
-* Add validation rules for Move action for the MARC modifications table fields (UIDATIMP-492)
-* Add validation rules for Edit action for the MARC modifications table fields (UIDATIMP-489)
-* Increment `@folio/stripes` to `v5` and update dependency on `react-router`.
-* Reuse `<EndOfItem>` component from `stripes-data-transfer-components` repository (UIDATIMP-571)
-* Fix field mapping for Item record check in/check out note (UIDATIMP-554)
-* Field mappings: Repeatable field dropdown Validation (UIDATIMP-508)
+## [2.1.2](https://github.com/folio-org/ui-data-import/tree/v2.1.2) (2020-08-11)
 
 ### Bugs fixed:
-* Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
 * Fix Inconsistent in Holding schema between UI and Backend (UIDATIMP-596)
 * Fix saving subfield information of match profile (UIDATIMP-604)
 * Fix optional sections of match profile do not clear out when removed (UIDATIMP-597)
