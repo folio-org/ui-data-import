@@ -1,4 +1,5 @@
 export const instanceJsonSchema = {
+  id: {},
   updatedDate: {},
   updatedByUsername: {},
   createdDate: {},
@@ -54,6 +55,7 @@ export const instanceJsonSchema = {
 };
 
 export const holdingsJsonSchema = {
+  id: {},
   updatedDate: {},
   updatedByUsername: {},
   createdDate: {},

@@ -730,5 +730,17 @@
     "settings.matchProfiles.adjustment": "Ajuste",
     "settings.mappingProfiles.map.item.field.circulationNotes.checkInNote": "Nota de devolução",
     "settings.mappingProfiles.map.item.field.circulationNotes.checkOutNote": "Nota de empréstimo",
-    "validation.chooseAtLeastOneValue": "Um ou mais valores devem ser adicionados antes que o perfil possa ser salvo."
+    "validation.chooseAtLeastOneValue": "Um ou mais valores devem ser adicionados antes que o perfil possa ser salvo.",
+    "settings.marcFieldProtection.title": "Proteção de campo MARC",
+    "settings.marcFieldProtection.field": "Campo",
+    "settings.marcFieldProtection.indicator1": "Ind 1",
+    "settings.marcFieldProtection.indicator2": "Ind 2",
+    "settings.marcFieldProtection.subfield": "Subcampo",
+    "settings.marcFieldProtection.data": "Dados",
+    "settings.marcFieldProtection.source": "Fonte",
+    "settings.marcFieldProtection.actions": "Ações",
+    "settings.marcFieldProtection.listFormHeader": "Os seguintes campos MARC são protegidos contra atualizações quando novas cópias dos registros MARC são importadas",
+    "settings.mappingProfiles.map.item.administrativeData.field.id": "UUID do item",
+    "settings.mappingProfiles.map.instance.administrationData.field.id": "UUId da instância",
+    "settings.mappingProfiles.map.holdings.administrativeData.field.id": "UUID de Holdings"
 }

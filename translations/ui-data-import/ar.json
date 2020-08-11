@@ -730,5 +730,17 @@
     "settings.matchProfiles.adjustment": "تعديل",
     "settings.mappingProfiles.map.item.field.circulationNotes.checkInNote": "ملاحظة الرد",
     "settings.mappingProfiles.map.item.field.circulationNotes.checkOutNote": "ملاحظة الإعارة",
-    "validation.chooseAtLeastOneValue": "يجب إضافة قيمة واحدة أو أكثر قبل حفظ الوضع."
+    "validation.chooseAtLeastOneValue": "يجب إضافة قيمة واحدة أو أكثر قبل حفظ الوضع.",
+    "settings.marcFieldProtection.title": "حماية حقل مارك",
+    "settings.marcFieldProtection.field": "حقل",
+    "settings.marcFieldProtection.indicator1": "مؤشر 1",
+    "settings.marcFieldProtection.indicator2": "مؤشر 2",
+    "settings.marcFieldProtection.subfield": "حقل فرعي",
+    "settings.marcFieldProtection.data": "البيانات",
+    "settings.marcFieldProtection.source": "مصدر",
+    "settings.marcFieldProtection.actions": "الإجراءات",
+    "settings.marcFieldProtection.listFormHeader": "حقول مارك التالية محمية من التحديثات عند استيراد نسخ جديدة من تسجيلات مارك",
+    "settings.mappingProfiles.map.item.administrativeData.field.id": "المعرّف الفريد العمومي للمادة",
+    "settings.mappingProfiles.map.instance.administrationData.field.id": "المعرّف الفريد العمومي للوعاء",
+    "settings.mappingProfiles.map.holdings.administrativeData.field.id": "المعرّف الفريد العمومي للمقتنيات"
 }

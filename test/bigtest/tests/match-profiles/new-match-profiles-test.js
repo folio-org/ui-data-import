@@ -379,9 +379,9 @@ describe('Match profile form', () => {
                 expect(matchProfileForm.matchCriteria.existingRecordFieldSections.expandedAttribute).to.be.equal('true');
               });
 
-              checkOptionsCount('INSTANCE', 52);
-              checkOptionsCount('HOLDINGS', 19);
-              checkOptionsCount('ITEM', 13);
+              checkOptionsCount('INSTANCE', 53);
+              checkOptionsCount('HOLDINGS', 20);
+              checkOptionsCount('ITEM', 14);
               checkOptionsCount('ORDER', 30);
               checkOptionsCount('INVOICE', 21);
             });
@@ -459,6 +459,8 @@ describe('When match profile form', () => {
   describe('is submitted and the response contains', () => {
     describe('error message', () => {
       beforeEach(async function () {
+        await matchProfileForm.matchCriteria.inputMain.fillAndBlur('010');
+        await matchProfileForm.matchCriteria.inputSubfield.fillAndBlur('a');
         await setupFormSubmitErrorScenario(this.server, {
           response: { errors: [{ message: 'matchProfile.duplication.invalid' }] },
           status: 422,
@@ -472,6 +474,8 @@ describe('When match profile form', () => {
 
     describe('network error', () => {
       beforeEach(async function () {
+        await matchProfileForm.matchCriteria.inputMain.fillAndBlur('010');
+        await matchProfileForm.matchCriteria.inputSubfield.fillAndBlur('a');
         await setupFormSubmitErrorScenario(this.server);
       });
 

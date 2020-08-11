@@ -10,7 +10,7 @@ import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/inter
 export class FullScreenFormInteractor {
   submitFormButton = new ButtonInteractor('[data-test-submit-button]');
   submitFormButtonDisabled = property('[data-test-submit-button]', 'disabled');
-  closeButton = new ButtonInteractor('[data-test-close-button]');
+  closeButton = new ButtonInteractor('[data-test-cancel-button]');
   paneHeaderCloseButton = new ButtonInteractor('[data-test-header-close-button]');
   callout = new CalloutInteractor();
 }

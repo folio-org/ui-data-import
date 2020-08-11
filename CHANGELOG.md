@@ -13,6 +13,14 @@
 * Inventory field mapping: Instance, Holding, Item: add REMOVE option (UIDATIMP-567)
 * Field Mapping Profile details: MARC Bib from MARC Bib 10 - View details screen (UIDATIMP-494)
 * Field Mapping Profile details: Have view details screen cover the entire screen (UIDATIMP-535)
+* Reuse `<Progress>` component from `stripes-data-transfer-components` repository (UIDATIMP-575)
+* Create `MARC field protection` settings screen (UIDATIMP-592)
+* Reset repeatable fields to neutral when all rows deleted (UIDATIMP-607)
+* Match profile: Add Instance UUID as a match option (UIDATIMP-589)
+* Match profile: Add Holdings UUID as a match option (UIDATIMP-590)
+* Match profile: Add Item UUID as a match option (UIDATIMP-591)
+* Update MARC matching UI to differentiate [any] versus [blank] indicators (UIDATIMP-525)
+* Reuse `<FullScreenForm>` component from `stripes-data-transfer-components` repository (UIDATIMP-578)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

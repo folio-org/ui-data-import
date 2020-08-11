@@ -1,6 +1,13 @@
 export const fieldsConfig = [
   /* Instance Admin data */
   {
+    id: 'id',
+    label: 'ui-data-import.settings.mappingProfiles.map.instance.administrationData.field.id',
+    categoryId: 'admin-data',
+    value: 'instance.id',
+    recordType: 'INSTANCE',
+  },
+  {
     id: 'updatedDate',
     label: 'ui-data-import.settings.matchProfiles.updatedDateAndTime',
     categoryId: 'admin-data',
@@ -345,6 +352,13 @@ export const fieldsConfig = [
   },
   /* Holdings Admin data */
   {
+    id: 'id',
+    label: 'ui-data-import.settings.mappingProfiles.map.holdings.administrativeData.field.id',
+    categoryId: 'admin-data',
+    value: 'holdingsrecord.id',
+    recordType: 'HOLDINGS',
+  },
+  {
     id: 'updatedDate',
     label: 'ui-data-import.settings.matchProfiles.updatedDateAndTime',
     categoryId: 'admin-data',
@@ -604,6 +618,13 @@ export const fieldsConfig = [
     recordType: 'HOLDINGS',
   },
   /* Item Admin data */
+  {
+    id: 'id',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.administrativeData.field.id',
+    categoryId: 'admin-data',
+    value: 'item.id',
+    recordType: 'ITEM',
+  },
   {
     id: 'updatedDate',
     label: 'ui-data-import.settings.matchProfiles.updatedDateAndTime',

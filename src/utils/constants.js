@@ -224,6 +224,10 @@ export const STATIC_VALUE_TYPES = {
   DATE_RANGE: 'DATE_RANGE',
 };
 
+export const RESTRICTED_MATCHING_MARC_FIELD_VALUE = [
+  'LDR', '001', '002', '003', '004', '005', '006', '007', '008', '009',
+];
+
 export const FORMS_SETTINGS = {
   [ENTITY_KEYS.MATCH_PROFILES]: {
     MATCHING: {
@@ -559,4 +563,9 @@ export const MAPPING_DETAILS_HEADLINE = {
     label: 'MARC Authority',
     labelId: 'ui-data-import.settings.mappingProfiles.map.marcAuthority',
   },
+};
+
+export const CLOSING_REASONS_SOURCE = {
+  system: 'System',
+  user: 'User',
 };

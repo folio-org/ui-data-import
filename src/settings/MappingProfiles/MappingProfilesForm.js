@@ -30,11 +30,11 @@ import {
   Col,
   Row,
 } from '@folio/stripes/components';
+import { FullScreenForm } from '@folio/stripes-data-transfer-components';
 
 import {
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
-  FullScreenForm,
   FolioRecordTypeSelect,
   ProfileAssociator,
   MappedHeader,
@@ -204,8 +204,9 @@ export const MappingProfilesFormComponent = ({
       <FullScreenForm
         id="mapping-profiles-form"
         paneTitle={paneTitle}
-        submitMessage={<FormattedMessage id="ui-data-import.saveAsProfile" />}
-        isSubmitDisabled={isSubmitDisabled}
+        submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
+        cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
+        isSubmitButtonDisabled={isSubmitDisabled}
         onSubmit={handleSubmit}
         onCancel={onCancel}
         contentClassName={styles.mappingForm}
