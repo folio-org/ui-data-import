@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **2.2.0** (in progress)
+## **3.0.0** (in progress)
 
 ### Features added:
 * Handle import of stripes-acq-components to modules and platform (UISACQCOMP-3)
@@ -25,6 +25,10 @@
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
+
+## [2.1.2](https://github.com/folio-org/ui-data-import/tree/v2.1.2) (2020-08-11)
+
+### Bugs fixed:
 * Fix Inconsistent in Holding schema between UI and Backend (UIDATIMP-596)
 * Fix saving subfield information of match profile (UIDATIMP-604)
 * Fix optional sections of match profile do not clear out when removed (UIDATIMP-597)
