@@ -21,6 +21,7 @@
 * Match profile: Add Item UUID as a match option (UIDATIMP-591)
 * Update MARC matching UI to differentiate [any] versus [blank] indicators (UIDATIMP-525)
 * Reuse `<FullScreenForm>` component from `stripes-data-transfer-components` repository (UIDATIMP-578)
+* Change Shelving order to unmappable on Holdings field mapping (UIDATIMP-611)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

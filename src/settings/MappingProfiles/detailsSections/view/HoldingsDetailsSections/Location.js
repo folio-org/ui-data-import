@@ -10,6 +10,8 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
+import { ProhibitionIcon } from '../../../../../components/ProhibitionIcon';
+
 import { getFieldValue } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
@@ -59,7 +61,7 @@ export const Location = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingOrder`} />}
-            value={shelvingOrder || noValueElement}
+            value={shelvingOrder || <ProhibitionIcon />}
           />
         </Col>
         <Col
