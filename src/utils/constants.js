@@ -390,6 +390,21 @@ export const FILTER_QUERY_PARAMS = {
   NOT_STATIC_VALUE: 'cql.allRecords=1 NOT incomingRecordType=STATIC_VALUE',
 };
 
+export const FIELD_MAPPINGS_FOR_MARC = {
+  MODIFICATIONS: 'MODIFICATIONS',
+  UPDATES: 'UPDATES',
+};
+
+export const FIELD_MAPPINGS_FOR_MARC_OPTIONS = [
+  {
+    value: FIELD_MAPPINGS_FOR_MARC.MODIFICATIONS,
+    label: 'ui-data-import.fieldMappingsForMarc.modifications',
+  }, {
+    value: FIELD_MAPPINGS_FOR_MARC.UPDATES,
+    label: 'ui-data-import.fieldMappingsForMarc.updates',
+  },
+];
+
 export const MAPPING_DETAILS_ACTIONS = {
   ADD: 'ADD',
   DELETE: 'DELETE',

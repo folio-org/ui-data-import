@@ -55,11 +55,14 @@ import {
   compose,
   withProfileWrapper,
   validateRequiredField,
+  isMARCType,
   okapiShape,
   ENTITY_KEYS,
   LAYER_TYPES,
   PROFILE_TYPES,
   MAPPING_DETAILS_HEADLINE,
+  MARC_TYPES,
+  FIELD_MAPPINGS_FOR_MARC_OPTIONS,
 } from '../../utils';
 
 import styles from './MappingProfiles.css';
@@ -94,6 +97,7 @@ export const MappingProfilesFormComponent = ({
   const isSubmitDisabled = pristine || submitting;
 
   const [folioRecordType, setFolioRecordType] = useState(existingRecordType || null);
+  const [fieldMappingsForMARC, setFieldMappingsForMARC] = useState('');
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
   const [prevExistingRecordType, setPrevExistingRecordType] = useState(existingRecordType);
@@ -187,11 +191,18 @@ export const MappingProfilesFormComponent = ({
       field: { subfields: [{}] },
     }];
 
+  const fieldMappingsForMARCOptions = FIELD_MAPPINGS_FOR_MARC_OPTIONS.map(option => (
+    {
+      value: option.value,
+      label: intl.formatMessage({ id: option.label }),
+    }
+  ));
+
   const renderDetails = {
     INSTANCE: <MappingInstanceDetails {...detailsProps} />,
     HOLDINGS: <MappingHoldingsDetails {...detailsProps} />,
     ITEM: <MappingItemDetails {...detailsProps} />,
-    MARC_BIBLIOGRAPHIC: (
+    MARC_BIBLIOGRAPHIC: fieldMappingsForMARC && (
       <MARCTable
         fields={marcTableFields}
         onChange={setFormFieldValue}
@@ -249,11 +260,37 @@ export const MappingProfilesFormComponent = ({
                 )}
               </FormattedMessage>
             </div>
-            <FolioRecordTypeSelect
-              fieldName="existingRecordType"
-              dataOptions={folioRecordTypesDataOptions}
-              onRecordSelect={e => setFolioRecordType(e.target.value)}
-            />
+            <Row>
+              <Col xs={6}>
+                <FolioRecordTypeSelect
+                  fieldName="existingRecordType"
+                  dataOptions={folioRecordTypesDataOptions}
+                  onRecordSelect={e => {
+                    setFolioRecordType(e.target.value);
+                    setFieldMappingsForMARC('');
+                  }}
+                />
+              </Col>
+              {folioRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC && (
+                <Col xs={6}>
+                  <FormattedMessage id="ui-data-import.fieldMappingsForMarc.placeholder">
+                    {placeholder => (
+                      <div data-test-field-mapping-foer-marc-field>
+                        {/* TODO: Wrap into the <Field> component when BE is done */}
+                        <Select
+                          dataOptions={fieldMappingsForMARCOptions}
+                          value={fieldMappingsForMARC}
+                          label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}
+                          placeholder={placeholder}
+                          onChange={e => setFieldMappingsForMARC(e.target.value)}
+                          required
+                        />
+                      </div>
+                    )}
+                  </FormattedMessage>
+                </Col>
+              )}
+            </Row>
             <div data-test-description-field>
               <Field
                 label={<FormattedMessage id="ui-data-import.description" />}
@@ -267,27 +304,34 @@ export const MappingProfilesFormComponent = ({
             label={<FormattedMessage id="ui-data-import.details" />}
             separator={false}
           >
-            {folioRecordType && (
-              <AccordionStatus>
-                <Row between="xs">
-                  <Col>
-                    <MappedHeader
-                      mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
-                      mappedLabel="Field mapping"
-                      mappableLabelId={MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId}
-                      mappableLabel={MAPPING_DETAILS_HEADLINE[folioRecordType]?.label}
-                      headlineProps={{ margin: 'small' }}
-                    />
-                  </Col>
-                  <Col>
-                    <div data-test-expand-all-button>
-                      <ExpandAllButton />
-                    </div>
-                  </Col>
-                </Row>
-                {renderDetails[folioRecordType]}
-              </AccordionStatus>
-            )}
+            {/*
+              Fragment is added to avoid warnings in a case when there is no data in the details section
+              since the `children` prop is required for the `Accordion` component
+            */}
+            <>
+              {folioRecordType && (
+                <AccordionStatus>
+                  <Row between="xs">
+                    <Col>
+                      <MappedHeader
+                        mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
+                        mappableLabelId={MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId}
+                        mappingTypeLabelId={FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label}
+                        headlineProps={{ margin: 'small' }}
+                      />
+                    </Col>
+                    {!isMARCType(folioRecordType) && (
+                      <Col>
+                        <div data-test-expand-all-button>
+                          <ExpandAllButton />
+                        </div>
+                      </Col>
+                    )}
+                  </Row>
+                  {renderDetails[folioRecordType]}
+                </AccordionStatus>
+              )}
+            </>
           </Accordion>
           <Accordion
             id="mappingProfileFormAssociatedActionProfileAccordion"

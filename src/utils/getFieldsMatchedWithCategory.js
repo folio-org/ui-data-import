@@ -1,4 +1,3 @@
-import React from 'react';
 import { fieldsConfig } from './fields-config';
 import { getCategoryId } from './getDropdownOptions';
 import { isMARCType } from './isMARCType';
