@@ -86,6 +86,7 @@ export const Location = ({
             name={getFieldName(7)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingOrder`} />}
             validate={[validateTextFieldRemoveValue]}
+            disabled
           />
         </Col>
         <Col
