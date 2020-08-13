@@ -1,5 +1,23 @@
 # Change history for ui-data-import
 
+## [2.1.4](https://github.com/folio-org/ui-data-import/tree/v2.1.4) (2020-08-13)
+
+### Bugs fixed:
+* Cannot create a holdings field mapping profile on Goldenrod bugfest, hotfix (UIDATIMP-619)
+
+## [2.1.3](https://github.com/folio-org/ui-data-import/tree/v2.1.3) (2020-08-11)
+
+### Bugs fixed:
+* Fix saving subfield information of match profile, hotfix (UIDATIMP-604)
+
+## [2.1.2](https://github.com/folio-org/ui-data-import/tree/v2.1.2) (2020-08-11)
+
+### Bugs fixed:
+* Fix Inconsistent in Holding schema between UI and Backend (UIDATIMP-596)
+* Fix saving subfield information of match profile (UIDATIMP-604)
+* Fix optional sections of match profile do not clear out when removed (UIDATIMP-597)
+
+
 ## [2.1.1](https://github.com/folio-org/ui-data-import/tree/v2.1.1) (2020-07-09)
 
 ### Features added:
