@@ -16,6 +16,7 @@ class MappingProfileFormInteractor extends FullScreenFormInteractor {
   nameField = new TextFieldInteractor('#mapping-profiles-form [data-test-name-field]');
   incomingRecordTypeField = new SelectInteractor('#mapping-profiles-form [data-test-incoming-record-type-field]');
   folioRecordTypeField = new SelectInteractor('#mapping-profiles-form [data-test-folio-record-type-field]');
+  fieldMappingsForMARCField = new SelectInteractor('#mapping-profiles-form [data-test-field-mapping-foer-marc-field]');
   descriptionField = new TextAreaInteractor('#mapping-profiles-form [data-test-description-field]');
   detailsSection = new DetailsSection('#mapping-profile-details');
   holdingsDetails = new HoldingsDetailsAccordion('#mapping-profile-details');

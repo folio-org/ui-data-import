@@ -66,12 +66,22 @@ describe('Mapping profile form', () => {
       describe('MARC Bibliographic', () => {
         beforeEach(async () => {
           await mappingProfileForm.folioRecordTypeField.selectAndBlur('MARC Bibliographic');
+          await mappingProfileForm.fieldMappingsForMARCField.selectAndBlur('Modifications');
+        });
+
+        it('"Field mappings for MARC" field should appear', () => {
+          expect(mappingProfileForm.fieldMappingsForMARCField.isPresent).to.be.true;
+        });
+
+        it('"Field mappings for MARC" field should have proper label', () => {
+          expect(mappingProfileForm.fieldMappingsForMARCField.label).to.equal('Field mappings for MARC*');
         });
 
         describe('details section', () => {
           it('has correct header', () => {
             expect(mappingProfileForm.detailsSection.header.mappedLabel).to.be.equal('Field mapping');
             expect(mappingProfileForm.detailsSection.header.mappableLabel).to.be.equal('MARC Bibliographic');
+            expect(mappingProfileForm.detailsSection.header.mappingTypeLabel).to.be.equal('Modifications');
           });
 
           // eslint-disable-next-line no-only-tests/no-only-tests
