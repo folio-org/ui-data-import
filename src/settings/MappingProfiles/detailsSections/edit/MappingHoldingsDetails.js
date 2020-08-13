@@ -27,9 +27,9 @@ export const MappingHoldingsDetails = ({
 }) => {
   const formerIds = referenceTables?.formerIds || [];
   const statisticalCodeIds = referenceTables?.statisticalCodeIds || [];
-  const holdingStatements = referenceTables?.holdingStatements || [];
-  const holdingStatementsForSupplements = referenceTables?.holdingStatementsForSupplements || [];
-  const holdingStatementsForIndexes = referenceTables?.holdingStatementsForIndexes || [];
+  const holdingsStatements = referenceTables?.holdingsStatements || [];
+  const holdingsStatementsForSupplements = referenceTables?.holdingsStatementsForSupplements || [];
+  const holdingsStatementsForIndexes = referenceTables?.holdingsStatementsForIndexes || [];
   const notes = referenceTables?.notes || [];
   const electronicAccess = referenceTables?.electronicAccess || [];
   const receivingHistory = referenceTables?.['receivingHistory.entries'] || [];
@@ -48,9 +48,9 @@ export const MappingHoldingsDetails = ({
         okapi={okapi}
       />
       <HoldingsDetails
-        holdingStatements={holdingStatements}
-        holdingStatementsForSupplements={holdingStatementsForSupplements}
-        holdingStatementsForIndexes={holdingStatementsForIndexes}
+        holdingsStatements={holdingsStatements}
+        holdingsStatementsForSupplements={holdingsStatementsForSupplements}
+        holdingsStatementsForIndexes={holdingsStatementsForIndexes}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
