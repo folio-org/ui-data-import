@@ -1485,7 +1485,7 @@ describe('Mapping Profile View', () => {
             hasReferenceValuesDecorator('holdingsDetails', 'locationAccordion', 'permanent', 'Permanent', 'permanentAcceptedValues');
             hasInput('holdingsDetails', 'locationAccordion', 'temporary', 'Temporary');
             hasReferenceValuesDecorator('holdingsDetails', 'locationAccordion', 'temporary', 'Temporary', 'temporaryAcceptedValues');
-            hasInput('holdingsDetails', 'locationAccordion', 'shelvingOrder', 'Shelving order');
+            hasInput('holdingsDetails', 'locationAccordion', 'shelvingOrder', 'Shelving order', true);
             hasInput('holdingsDetails', 'locationAccordion', 'shelvingTitle', 'Shelving title');
             hasInput('holdingsDetails', 'locationAccordion', 'copyNumber', 'Copy number');
             hasInput('holdingsDetails', 'locationAccordion', 'callNumberType', 'Call number type');
