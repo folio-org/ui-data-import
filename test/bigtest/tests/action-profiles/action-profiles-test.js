@@ -41,7 +41,7 @@ describe('Action profiles', () => {
 
   describe('table', () => {
     it('renders proper amount of items', () => {
-      expect(actionProfiles.list.rowCount).to.equal(8);
+      expect(actionProfiles.list.rowCount).to.equal(6);
     });
 
     it('has proper columns order', () => {

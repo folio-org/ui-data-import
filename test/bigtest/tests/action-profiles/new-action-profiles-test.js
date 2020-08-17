@@ -111,11 +111,10 @@ describe('Action profile form', () => {
           await actionProfileForm.folioRecordTypeField.select.selectAndBlur('Item');
         });
 
-        it('the action field has options "Create", "Combine" and "Replace"', () => {
-          expect(actionProfileForm.actionField.options().length).to.be.equal(4);
+        it('the action field has options "Create" and "Update"', () => {
+          expect(actionProfileForm.actionField.options().length).to.be.equal(3);
           expect(actionProfileForm.actionField.options(1).text).to.be.equal('Create (all record types)');
-          expect(actionProfileForm.actionField.options(2).text).to.be.equal('Combine (all record types except Orders)');
-          expect(actionProfileForm.actionField.options(3).text).to.be.equal('Replace (all record types except Orders, Invoices)');
+          expect(actionProfileForm.actionField.options(2).text).to.be.equal('Update (all record types except Orders)');
         });
       });
     });
