@@ -23,6 +23,7 @@
 * Reuse `<FullScreenForm>` component from `stripes-data-transfer-components` repository (UIDATIMP-578)
 * Add option for Modify or Update MARC Bib field mapping profile (UIDATIMP-612)
 * Change Shelving order to unmappable on Holdings field mapping (UIDATIMP-611)
+* Update the Field mapping View for repeatable fields options (UIDATIMP-555)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

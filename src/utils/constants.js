@@ -309,6 +309,25 @@ export const FORMS_SETTINGS = {
   },
 };
 
+export const MAPPING_REPEATABLE_FIELD_ACTIONS = [
+  {
+    label: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.extendExisting',
+    value: REPEATABLE_ACTIONS.EXTEND_EXISTING,
+  },
+  {
+    label: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.deleteExisting',
+    value: REPEATABLE_ACTIONS.DELETE_EXISTING,
+  },
+  {
+    label: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.exchangeExisting',
+    value: REPEATABLE_ACTIONS.EXCHANGE_EXISTING,
+  },
+  {
+    label: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.deleteIncoming',
+    value: REPEATABLE_ACTIONS.DELETE_INCOMING,
+  },
+];
+
 export const PROFILE_LINKING_RULES = {
   allowDelete: false,
   deleteRecursive: false,

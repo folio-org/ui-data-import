@@ -6,13 +6,13 @@ import {
   Accordion,
   Row,
   Col,
-  MultiColumnList,
   NoValue,
 } from '@folio/stripes/components';
 
+import { ViewRepeatableField } from '../ViewRepeatableField';
+
 import {
   getBooleanLabelId,
-  getContentData,
   getFieldValue,
   getValueById,
   transformSubfieldsData,
@@ -20,12 +20,12 @@ import {
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
-import css from '../../../MappingProfiles.css';
-
 export const ReceivingHistory = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
 
   const receivingHistory = getFieldValue(mappingDetails, 'receivingHistory.entries', 'subfields');
+  const receivingHistoryRepeatableAction = getFieldValue(mappingDetails,
+    'receivingHistory.entries', 'repeatableFieldAction');
 
   const receivingHistoryVisibleColumns = ['publicDisplay', 'enumeration', 'chronology'];
   const receivingHistoryMapping = {
@@ -72,13 +72,14 @@ export const ReceivingHistory = ({ mappingDetails }) => {
           data-test-receiving-history-note
           id="section-receiving-history"
           xs={12}
-          className={css.colWithTable}
         >
-          <MultiColumnList
-            contentData={getContentData(receivingHistoryData)}
+          <ViewRepeatableField
+            repeatableAction={receivingHistoryRepeatableAction}
+            fieldData={receivingHistoryData}
             visibleColumns={receivingHistoryVisibleColumns}
             columnMapping={receivingHistoryMapping}
             formatter={receivingHistoryFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.receivingHistory.section`}
           />
         </Col>
       </Row>
