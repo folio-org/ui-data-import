@@ -468,7 +468,7 @@ describe('When match profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+        expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
 
@@ -480,7 +480,7 @@ describe('When match profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+        expect(matchProfileForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
   });

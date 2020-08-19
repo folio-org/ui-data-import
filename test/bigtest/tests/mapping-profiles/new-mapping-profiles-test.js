@@ -804,7 +804,7 @@ describe('When mapping profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+        expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
 
@@ -814,7 +814,7 @@ describe('When mapping profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+        expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
   });

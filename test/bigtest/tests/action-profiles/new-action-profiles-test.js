@@ -140,7 +140,7 @@ describe('When action profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(actionProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+        expect(actionProfileForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
 
@@ -150,7 +150,7 @@ describe('When action profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(actionProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+        expect(actionProfileForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
   });

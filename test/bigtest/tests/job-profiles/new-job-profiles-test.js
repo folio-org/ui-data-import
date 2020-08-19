@@ -269,7 +269,7 @@ describe('When job profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+        expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
 
@@ -282,7 +282,7 @@ describe('When job profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+        expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
 
@@ -295,7 +295,7 @@ describe('When job profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+        expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
 
@@ -309,7 +309,7 @@ describe('When job profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+        expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
 
@@ -319,7 +319,7 @@ describe('When job profile form', () => {
       });
 
       it('then error callout appears', () => {
-        expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+        expect(jobProfileForm.callout.errorCalloutIsPresent).to.be.true;
       });
     });
   });

@@ -173,7 +173,6 @@ describe('Job profiles', () => {
 
     describe('when clearing search', () => {
       beforeEach(async () => {
-        // fail : unable to find #input-job-profiles-clear-search-button
         await jobProfiles.searchFiled.fill('acq');
         await jobProfiles.searchSubmitButton.click();
         await jobProfiles.checkBoxes(0).clickAndBlur();

@@ -413,7 +413,7 @@ describe('delete confirmation modal', () => {
 
   beforeEach(async function () {
     this.visit('/settings/data-import/match-profiles');
-    await matchProfiles.list.rows(0).click(); // fail
+    await matchProfiles.list.rows(0).click();
   });
 
   describe('is visible', () => {
@@ -452,7 +452,7 @@ describe('delete confirmation modal', () => {
     });
 
     it('the error toast appears', () => {
-      expect(matchProfileDetails.callout.errorCalloutIsPresent).to.be.true; // fail
+      expect(matchProfileDetails.callout.errorCalloutIsPresent).to.be.true;
     });
 
     it('renders the correct number including the one which tried to delete', () => {

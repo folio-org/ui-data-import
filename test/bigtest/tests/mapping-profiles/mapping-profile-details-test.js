@@ -1915,7 +1915,7 @@ describe('Mapping Profile View', () => {
         });
 
         it('then error callout appears', () => {
-          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
         });
       });
 
@@ -1925,7 +1925,7 @@ describe('Mapping Profile View', () => {
         });
 
         it('then error callout appears', () => {
-          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
         });
       });
 
@@ -1938,7 +1938,7 @@ describe('Mapping Profile View', () => {
         });
 
         it('then error callout appears', () => {
-          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
         });
       });
 
@@ -1951,7 +1951,7 @@ describe('Mapping Profile View', () => {
         });
 
         it('then error callout appears', () => {
-          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true; // fail
+          expect(mappingProfileForm.callout.errorCalloutIsPresent).to.be.true;
         });
       });
     });
@@ -1998,7 +1998,7 @@ describe('Mapping Profile View', () => {
       });
 
       it('the error toast appears', () => {
-        expect(mappingProfileDetails.callout.errorCalloutIsPresent).to.be.true; // fail
+        expect(mappingProfileDetails.callout.errorCalloutIsPresent).to.be.true;
       });
 
       it('renders the correct number including the one which tried to delete', () => {
