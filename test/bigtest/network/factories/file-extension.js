@@ -4,7 +4,7 @@ import faker from 'faker';
 export default Factory.extend({
   id: () => faker.random.uuid(),
   importBlocked: () => faker.random.boolean(),
-  dataTypes: () => [faker.random.arrayElement(['Delimited', 'MARC'])],
+  dataTypes: () => [faker.random.arrayElement(['EDIFACT', 'MARC'])],
   extension: i => `.marc${i}`,
   metadata: { updatedDate: faker.date.past(0.1, faker.date.past(0.1)).toString() },
   userInfo: {

@@ -4,7 +4,7 @@ import faker from 'faker';
 import { associatedJobProfiles } from '../../mocks';
 import { fieldsConfig } from '../../../../src/utils/fields-config';
 import {
-  INCOMING_RECORD_TYPES,
+  MATCH_INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
 } from '../../../../src/components/ListTemplate';
 import {
@@ -19,11 +19,11 @@ export default Factory.extend({
   description: i => `Description ${i}`,
   tags: { tagList: [faker.random.arrayElement(['tag1', 'tag2', 'tag3'])] },
   entityType: 'INVENTORY_ITEM',
-  incomingRecordType: () => faker.random.arrayElement(Object.keys(INCOMING_RECORD_TYPES)),
+  incomingRecordType: () => faker.random.arrayElement(Object.keys(MATCH_INCOMING_RECORD_TYPES)),
   existingRecordType: () => faker.random.arrayElement(Object.keys(FOLIO_RECORD_TYPES)),
   matchDetails: [
     {
-      incomingRecordType: () => faker.random.arrayElement(Object.keys(INCOMING_RECORD_TYPES)),
+      incomingRecordType: () => faker.random.arrayElement(Object.keys(MATCH_INCOMING_RECORD_TYPES)),
       existingRecordType: () => faker.random.arrayElement(Object.keys(FOLIO_RECORD_TYPES)),
       matchCriterion: () => faker.random.arrayElement(CRITERION_TYPES_OPTIONS.map(type => type.value)),
       existingMatchExpression: {
