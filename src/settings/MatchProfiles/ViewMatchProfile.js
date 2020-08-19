@@ -42,7 +42,7 @@ import {
 import { ViewMatchCriterion } from '../../components/MatchCriterion/view';
 import {
   FOLIO_RECORD_TYPES,
-  INCOMING_RECORD_TYPES,
+  MATCH_INCOMING_RECORD_TYPES,
 } from '../../components/ListTemplate';
 
 import sharedCss from '../../shared.css';
@@ -193,8 +193,8 @@ export class ViewMatchProfile extends Component {
     const existingRecordLabel = FOLIO_RECORD_TYPES[matchProfile.existingRecordType]
       ? <FormattedMessage id={FOLIO_RECORD_TYPES[matchProfile.existingRecordType].captionId} />
       : '';
-    const incomingRecordLabel = INCOMING_RECORD_TYPES[matchProfile.incomingRecordType]
-      ? <FormattedMessage id={INCOMING_RECORD_TYPES[matchProfile.incomingRecordType].captionId} />
+    const incomingRecordLabel = MATCH_INCOMING_RECORD_TYPES[matchProfile.incomingRecordType]
+      ? <FormattedMessage id={MATCH_INCOMING_RECORD_TYPES[matchProfile.incomingRecordType].captionId} />
       : '';
 
     return (

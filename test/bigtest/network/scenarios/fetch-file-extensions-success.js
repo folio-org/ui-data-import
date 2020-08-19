@@ -11,12 +11,12 @@ export default server => {
   });
   server.create('file-extension', {
     extension: '.csv',
-    dataTypes: ['Delimited'],
+    dataTypes: ['EDIFACT'],
     userInfo: { userName: SYSTEM_USER_NAME },
   });
   server.create('file-extension', {
     extension: '.math',
-    dataTypes: ['Delimited', 'EDIFACT'],
+    dataTypes: ['EDIFACT'],
     userInfo: { lastName: 'Doe' },
   });
 

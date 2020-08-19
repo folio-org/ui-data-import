@@ -34,7 +34,7 @@ import { FullScreenForm } from '@folio/stripes-data-transfer-components';
 
 import {
   FOLIO_RECORD_TYPES,
-  INCOMING_RECORD_TYPES,
+  MATCH_INCOMING_RECORD_TYPES,
   RecordTypesSelect,
 } from '../../components';
 import { MatchCriterion } from '../../components/MatchCriterion/edit';
@@ -80,7 +80,7 @@ export const MatchProfilesFormComponent = memo(({
   const isEditMode = layer === LAYER_TYPES.EDIT;
   const staticValueTypes = FORMS_SETTINGS[ENTITY_KEYS.MATCH_PROFILES].MATCHING.STATIC_VALUE_TYPES;
 
-  const [incomingRecord, setIncomingRecord] = useState(INCOMING_RECORD_TYPES[incomingRecordType]);
+  const [incomingRecord, setIncomingRecord] = useState(MATCH_INCOMING_RECORD_TYPES[incomingRecordType]);
   const [existingRecord, setExistingRecord] = useState(isEditMode ? existingRecordType : '');
   const [existingRecordFields, setExistingRecordFields] = useState([]);
   const [staticValueType, setStaticValueType] = useState(currentStaticValueType);
@@ -151,7 +151,7 @@ export const MatchProfilesFormComponent = memo(({
       dispatch(change(formName, `profile.matchDetails[${i}].incomingRecordType`, record.type));
     });
 
-    if (record.type === INCOMING_RECORD_TYPES.STATIC_VALUE.type) {
+    if (record.type === MATCH_INCOMING_RECORD_TYPES.STATIC_VALUE.type) {
       setStaticValueType(staticValueTypes[0]);
     } else {
       setStaticValueType(null);

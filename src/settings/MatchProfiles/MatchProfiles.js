@@ -144,7 +144,6 @@ const sectionInitialValues = {
     dataValueType: 'VALUE_FROM_RECORD',
   },
   EDIFACT_INVOICE: {},
-  DELIMITED: {},
   STATIC_VALUE: {
     fields: [],
     staticValueDetails: {
