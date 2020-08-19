@@ -51,7 +51,6 @@ export const SYSTEM_USER_NAME = 'System';
 
 export const DATA_TYPES = [
   'MARC',
-  'Delimited',
   'EDIFACT',
 ];
 

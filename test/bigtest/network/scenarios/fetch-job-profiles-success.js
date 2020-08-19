@@ -21,7 +21,7 @@ export default server => {
     id: '87e4ad58-d677-43dd-8b04-9795741b2103',
     name: 'DDA discovery records',
     tags: { tagList: [] },
-    dataType: ['Delimited'],
+    dataType: ['EDIFACT'],
     userInfo: { lastName: 'Doe' },
   });
 

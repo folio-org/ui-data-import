@@ -17,7 +17,7 @@ import {
 
 import {
   Section,
-  INCOMING_RECORD_TYPES,
+  MATCH_INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
 } from '../..';
 import {
@@ -170,14 +170,12 @@ export const MatchCriterion = ({
     MARC_HOLDINGS: incomingQualifierSectionElement,
     MARC_AUTHORITY: incomingQualifierSectionElement,
     EDIFACT_INVOICE: incomingQualifierSectionElement,
-    DELIMITED: incomingQualifierSectionElement,
   };
   const incomingRecordQualifierPartSections = {
     MARC_BIBLIOGRAPHIC: incomingQualifierPartSectionElement,
     MARC_HOLDINGS: incomingQualifierPartSectionElement,
     MARC_AUTHORITY: incomingQualifierPartSectionElement,
     EDIFACT_INVOICE: incomingQualifierPartSectionElement,
-    DELIMITED: incomingQualifierPartSectionElement,
   };
   const existingRecordFieldSections = {
     INSTANCE: existingSectionFolioElement,
@@ -263,7 +261,7 @@ MatchCriterion.propTypes = {
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   })).isRequired,
-  incomingRecordType: PropTypes.oneOf(Object.keys(INCOMING_RECORD_TYPES)),
+  incomingRecordType: PropTypes.oneOf(Object.keys(MATCH_INCOMING_RECORD_TYPES)),
   existingRecordType: PropTypes.oneOf(Object.keys(FOLIO_RECORD_TYPES)),
   staticValueType: PropTypes.oneOf(Object.keys(STATIC_VALUE_TYPES)),
   incomingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),

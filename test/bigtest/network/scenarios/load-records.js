@@ -23,7 +23,7 @@ export default server => {
   server.create('job-profile', {
     name: 'DDA discovery records',
     tags: { tagList: [] },
-    dataType: ['Delimited'],
+    dataType: ['EDIFACT'],
     userInfo: { lastName: 'Doe' },
   });
 
