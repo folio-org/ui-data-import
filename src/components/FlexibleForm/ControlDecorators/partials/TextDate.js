@@ -1,7 +1,6 @@
 import React, { createRef } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import RootCloseWrapper from '@folio/stripes/components/RootCloseWrapper';
 
 import moment from 'moment-timezone';
 import contains from 'dom-helpers/query/contains';
@@ -13,6 +12,7 @@ import {
 import {
   Popper,
   IconButton,
+  RootCloseWrapper,
   TextField,
 } from '@folio/stripes/components';
 import { AVAILABLE_PLACEMENTS } from '@folio/stripes-components/lib/Popper';
