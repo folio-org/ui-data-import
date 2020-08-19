@@ -7,12 +7,11 @@ import {
   Row,
   Col,
   NoValue,
-  KeyValue,
-  MultiColumnList,
 } from '@folio/stripes/components';
 
+import { ViewRepeatableField } from '../ViewRepeatableField';
+
 import {
-  getContentData,
   getFieldValue,
   transformSubfieldsData,
 } from '../../utils';
@@ -25,7 +24,11 @@ export const InstanceRelationship = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
 
   const parentInstances = getFieldValue(mappingDetails, 'parentInstances', 'subfields');
+  const parentInstancesRepeatableAction = getFieldValue(mappingDetails,
+    'parentInstances', 'repeatableFieldAction');
   const childInstances = getFieldValue(mappingDetails, 'childInstances', 'subfields');
+  const childInstancesRepeatableAction = getFieldValue(mappingDetails,
+    'childInstances', 'repeatableFieldAction');
 
   const parentInstancesVisibleColumns = ['superInstanceId', 'instanceRelationshipTypeId'];
   const parentInstancesMapping = {
@@ -86,30 +89,29 @@ export const InstanceRelationship = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.parentInstances.legend`} />}>
-            <MultiColumnList
-              contentData={getContentData(parentInstancesData)}
-              visibleColumns={parentInstancesVisibleColumns}
-              columnMapping={parentInstancesMapping}
-              formatter={parentInstancesFormatter}
-            />
-          </KeyValue>
+          <ViewRepeatableField
+            repeatableAction={parentInstancesRepeatableAction}
+            fieldData={parentInstancesData}
+            visibleColumns={parentInstancesVisibleColumns}
+            columnMapping={parentInstancesMapping}
+            formatter={parentInstancesFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.instance.field.parentInstances.legend`}
+          />
         </Col>
       </Row>
       <Row left="xs">
         <Col
           data-test-child-instances
           xs={12}
-          className={css.colWithTable}
         >
-          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.childInstances.legend`} />}>
-            <MultiColumnList
-              contentData={getContentData(childInstancesData)}
-              visibleColumns={childInstancesVisibleColumns}
-              columnMapping={childInstancesMapping}
-              formatter={childInstancesFormatter}
-            />
-          </KeyValue>
+          <ViewRepeatableField
+            repeatableAction={childInstancesRepeatableAction}
+            fieldData={childInstancesData}
+            visibleColumns={childInstancesVisibleColumns}
+            columnMapping={childInstancesMapping}
+            formatter={childInstancesFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.instance.field.childInstances.legend`}
+          />
         </Col>
       </Row>
     </Accordion>

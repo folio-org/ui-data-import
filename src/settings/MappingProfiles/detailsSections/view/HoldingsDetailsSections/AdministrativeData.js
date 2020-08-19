@@ -8,15 +8,14 @@ import {
   Col,
   NoValue,
   KeyValue,
-  MultiColumnList,
 } from '@folio/stripes/components';
 
 import { ProhibitionIcon } from '../../../../../components';
+import { ViewRepeatableField } from '../ViewRepeatableField';
 
 import {
   getFieldValue,
   getBooleanLabelId,
-  getContentData,
   transformSubfieldsData,
   getValueById,
 } from '../../utils';
@@ -31,8 +30,10 @@ export const AdministrativeData = ({ mappingDetails }) => {
   const discoverySuppress = getFieldValue(mappingDetails, 'discoverySuppress', 'booleanFieldAction');
   const holdingsHrid = getFieldValue(mappingDetails, 'hrid', 'value');
   const formerIds = getFieldValue(mappingDetails, 'formerIds', 'subfields');
+  const formerIdsRepeatableAction = getFieldValue(mappingDetails, 'formerIds', 'repeatableFieldAction');
   const holdingsType = getFieldValue(mappingDetails, 'holdingsTypeId', 'value');
   const statisticalCodes = getFieldValue(mappingDetails, 'statisticalCodeIds', 'subfields');
+  const statisticalCodesRepeatableAction = getFieldValue(mappingDetails, 'statisticalCodeIds', 'repeatableFieldAction');
 
   const discoverySuppressLabelId = getBooleanLabelId(discoverySuppress);
   const discoverySuppressValue = getValueById(discoverySuppressLabelId);
@@ -100,14 +101,14 @@ export const AdministrativeData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.formerId.legend`} />}>
-            <MultiColumnList
-              contentData={getContentData(formerIdsData)}
-              visibleColumns={formerIdsVisibleColumns}
-              columnMapping={formerIdsMapping}
-              formatter={formerIdsFormatter}
-            />
-          </KeyValue>
+          <ViewRepeatableField
+            repeatableAction={formerIdsRepeatableAction}
+            fieldData={formerIdsData}
+            visibleColumns={formerIdsVisibleColumns}
+            columnMapping={formerIdsMapping}
+            formatter={formerIdsFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.formerId.legend`}
+          />
         </Col>
       </Row>
       <Row left="xs">
@@ -127,14 +128,14 @@ export const AdministrativeData = ({ mappingDetails }) => {
           id="section-statistical-code-ids"
           xs={12}
         >
-          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />}>
-            <MultiColumnList
-              contentData={getContentData(statisticalCodesData)}
-              visibleColumns={statisticalCodesVisibleColumns}
-              columnMapping={statisticalCodesMapping}
-              formatter={statisticalCodesFormatter}
-            />
-          </KeyValue>
+          <ViewRepeatableField
+            repeatableAction={statisticalCodesRepeatableAction}
+            fieldData={statisticalCodesData}
+            visibleColumns={statisticalCodesVisibleColumns}
+            columnMapping={statisticalCodesMapping}
+            formatter={statisticalCodesFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`}
+          />
         </Col>
       </Row>
     </Accordion>

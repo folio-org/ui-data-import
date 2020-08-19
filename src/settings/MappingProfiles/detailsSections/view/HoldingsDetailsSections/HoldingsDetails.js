@@ -8,11 +8,11 @@ import {
   Col,
   NoValue,
   KeyValue,
-  MultiColumnList,
 } from '@folio/stripes/components';
 
+import { ViewRepeatableField } from '../ViewRepeatableField';
+
 import {
-  getContentData,
   getFieldValue,
   transformSubfieldsData,
 } from '../../utils';
@@ -25,8 +25,14 @@ export const HoldingsDetails = ({ mappingDetails }) => {
 
   const numberOfItems = getFieldValue(mappingDetails, 'numberOfItems', 'value');
   const statements = getFieldValue(mappingDetails, 'holdingsStatements', 'subfields');
+  const statementsRepeatableAction = getFieldValue(mappingDetails,
+    'holdingsStatements', 'repeatableFieldAction');
   const statementsForSupplement = getFieldValue(mappingDetails, 'holdingsStatementsForSupplements', 'subfields');
+  const statementsForSupplementRepeatableAction = getFieldValue(mappingDetails,
+    'holdingsStatementsForSupplements', 'repeatableFieldAction');
   const statementsForIndexes = getFieldValue(mappingDetails, 'holdingsStatementsForIndexes', 'subfields');
+  const statementsForIndexesRepeatableAction = getFieldValue(mappingDetails,
+    'holdingsStatementsForIndexes', 'repeatableFieldAction');
   const illPolicy = getFieldValue(mappingDetails, 'illPolicyId', 'value');
   const digitizationPolicy = getFieldValue(mappingDetails, 'digitizationPolicy', 'value');
   const retentionPolicy = getFieldValue(mappingDetails, 'retentionPolicy', 'value');
@@ -126,14 +132,14 @@ export const HoldingsDetails = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement.legend`} />}>
-            <MultiColumnList
-              contentData={getContentData(statementsData)}
-              visibleColumns={statementsVisibleColumns}
-              columnMapping={statementsMapping}
-              formatter={statementsFormatter}
-            />
-          </KeyValue>
+          <ViewRepeatableField
+            repeatableAction={statementsRepeatableAction}
+            fieldData={statementsData}
+            visibleColumns={statementsVisibleColumns}
+            columnMapping={statementsMapping}
+            formatter={statementsFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement.legend`}
+          />
         </Col>
       </Row>
       <Row left="xs">
@@ -143,14 +149,14 @@ export const HoldingsDetails = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForSupplements.legend`} />}>
-            <MultiColumnList
-              contentData={getContentData(statementsForSupplementData)}
-              visibleColumns={statementsForSupplementVisibleColumns}
-              columnMapping={statementsForSupplementMapping}
-              formatter={statementsForSupplementFormatter}
-            />
-          </KeyValue>
+          <ViewRepeatableField
+            repeatableAction={statementsForSupplementRepeatableAction}
+            fieldData={statementsForSupplementData}
+            visibleColumns={statementsForSupplementVisibleColumns}
+            columnMapping={statementsForSupplementMapping}
+            formatter={statementsForSupplementFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForSupplements.legend`}
+          />
         </Col>
       </Row>
       <Row left="xs">
@@ -160,14 +166,14 @@ export const HoldingsDetails = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForIndexes.legend`} />}>
-            <MultiColumnList
-              contentData={getContentData(statementsForIndexesData)}
-              visibleColumns={statementsForIndexesVisibleColumns}
-              columnMapping={statementsForIndexesMapping}
-              formatter={statementsForIndexesFormatter}
-            />
-          </KeyValue>
+          <ViewRepeatableField
+            repeatableAction={statementsForIndexesRepeatableAction}
+            fieldData={statementsForIndexesData}
+            visibleColumns={statementsForIndexesVisibleColumns}
+            columnMapping={statementsForIndexesMapping}
+            formatter={statementsForIndexesFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForIndexes.legend`}
+          />
         </Col>
       </Row>
       <Row left="xs">
