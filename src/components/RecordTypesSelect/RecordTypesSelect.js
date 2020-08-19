@@ -13,7 +13,7 @@ import { InitialRecordSelect } from './components/InitialRecordSelect';
 import { CompareRecordSelect } from './components/CompareRecordSelect';
 import {
   FOLIO_RECORD_TYPES,
-  INCOMING_RECORD_TYPES,
+  MATCH_INCOMING_RECORD_TYPES,
 } from '../ListTemplate';
 import { HTML_LANG_DIRECTIONS } from '../../utils/constants';
 
@@ -51,7 +51,7 @@ export const RecordTypesSelect = memo(({
   }, [existingRecordType]);
 
   useEffect(() => {
-    setIncomingRecord(INCOMING_RECORD_TYPES?.[incomingRecordType]);
+    setIncomingRecord(MATCH_INCOMING_RECORD_TYPES?.[incomingRecordType]);
   }, [incomingRecordType]);
 
   const handleSelect = selectedRecord => {
@@ -100,7 +100,7 @@ RecordTypesSelect.propTypes = {
 RecordTypesSelect.defaultProps = {
   id: 'compare-record-types',
   existingRecordType: '',
-  incomingRecordType: INCOMING_RECORD_TYPES.MARC_BIBLIOGRAPHIC,
+  incomingRecordType: MATCH_INCOMING_RECORD_TYPES.MARC_BIBLIOGRAPHIC,
   onExistingSelect: noop,
   onIncomingSelect: noop,
   isEditable: true,

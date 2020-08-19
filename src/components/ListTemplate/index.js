@@ -4,5 +4,6 @@ export * from './listTemplate';
 export * from './searchAndSortTemplate';
 export * from './folioRecordTypes';
 export * from './incomingRecordTypes';
+export * from './matchIncomingRecordTypes';
 export * from './actionTypes';
 export * from './actionProfilesFormFolioRecordTypes';

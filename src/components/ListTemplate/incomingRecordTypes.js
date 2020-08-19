@@ -9,14 +9,4 @@ export const INCOMING_RECORD_TYPES = {
     captionId: 'ui-data-import.incomingRecordTypes.edifact-invoice',
     iconKey: 'invoices',
   },
-  DELIMITED: {
-    type: 'DELIMITED',
-    captionId: 'ui-data-import.incomingRecordTypes.delimited',
-    iconKey: '',
-  },
-  STATIC_VALUE: {
-    type: 'STATIC_VALUE',
-    captionId: 'ui-data-import.incomingRecordTypes.static',
-    iconKey: '',
-  },
 };
