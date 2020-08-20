@@ -22,6 +22,7 @@
 * Update MARC matching UI to differentiate [any] versus [blank] indicators (UIDATIMP-525)
 * Reuse `<FullScreenForm>` component from `stripes-data-transfer-components` repository (UIDATIMP-578)
 * Add option for Modify or Update MARC Bib field mapping profile (UIDATIMP-612)
+* Update the available actions for Action profiles (UIDATIMP-559)
 * Change Shelving order to unmappable on Holdings field mapping (UIDATIMP-611)
 * Update the Field mapping View for repeatable fields options (UIDATIMP-555)
 * Update the available options for Field mapping profile Incoming record types (UIDATIMP-560)
