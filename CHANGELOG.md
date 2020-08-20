@@ -28,6 +28,7 @@
 * Update the available Accepted data types for Job profiles (UIDATIMP-561)
 * Update the available Incoming record options for Match profiles (UIDATIMP-562)
 * Update the available Data type options for File extension settings (UIDATIMP-626)
+* Connect MARC field protection settings to the server (UIDATIMP-621)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

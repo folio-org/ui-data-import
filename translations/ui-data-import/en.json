@@ -193,6 +193,8 @@
   "settings.marcFieldProtection.source": "Source",
   "settings.marcFieldProtection.actions": "Actions",
   "settings.marcFieldProtection.listFormHeader": "The following MARC fields are protected from updates when new copies of MARC records are imported",
+  "settings.marcFieldProtection.system": "System",
+  "settings.marcFieldProtection.user": "User",
   "filter.errors": "Errors in import",
   "filter.date": "Date",
   "filter.jobProfile": "Job profile",
