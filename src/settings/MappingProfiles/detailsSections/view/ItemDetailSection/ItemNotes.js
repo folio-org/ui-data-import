@@ -6,13 +6,13 @@ import {
   Accordion,
   Row,
   Col,
-  MultiColumnList,
   NoValue,
 } from '@folio/stripes/components';
 
+import { ViewRepeatableField } from '../ViewRepeatableField';
+
 import {
   getBooleanLabelId,
-  getContentData,
   getFieldValue,
   getValueById,
   transformSubfieldsData,
@@ -24,6 +24,7 @@ export const ItemNotes = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
 
   const notes = getFieldValue(mappingDetails, 'notes', 'subfields');
+  const notesRepeatableAction = getFieldValue(mappingDetails, 'notes', 'repeatableFieldAction');
 
   const notesVisibleColumns = ['itemNoteTypeId', 'note', 'staffOnly'];
   const notesMapping = {
@@ -71,11 +72,13 @@ export const ItemNotes = ({ mappingDetails }) => {
           id="section-item-notes"
           xs={12}
         >
-          <MultiColumnList
-            contentData={getContentData(notesData)}
+          <ViewRepeatableField
+            repeatableAction={notesRepeatableAction}
+            fieldData={notesData}
             visibleColumns={notesVisibleColumns}
             columnMapping={notesMapping}
             formatter={notesFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.item.itemNotes.section`}
           />
         </Col>
       </Row>

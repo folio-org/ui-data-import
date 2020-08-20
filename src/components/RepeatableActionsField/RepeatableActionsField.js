@@ -16,8 +16,7 @@ import {
 import { WithTranslation } from '..';
 
 import {
-  ENTITY_KEYS,
-  FORMS_SETTINGS,
+  MAPPING_REPEATABLE_FIELD_ACTIONS,
   REPEATABLE_ACTIONS,
   validateRepeatableActionsField,
 } from '../../utils';
@@ -45,7 +44,7 @@ export const RepeatableActionsField = memo(({
 
   const intl = useIntl();
 
-  const actions = FORMS_SETTINGS[ENTITY_KEYS.MAPPING_PROFILES].DECORATORS.REPEATABLE_ACTIONS;
+  const actions = MAPPING_REPEATABLE_FIELD_ACTIONS;
   const dataOptions = actions.map(action => ({
     value: action.value,
     label: intl.formatMessage({ id: action.label }),

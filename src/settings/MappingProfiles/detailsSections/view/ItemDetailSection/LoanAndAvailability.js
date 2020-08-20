@@ -8,20 +8,18 @@ import {
   Col,
   NoValue,
   KeyValue,
-  MultiColumnList,
 } from '@folio/stripes/components';
+
+import { ViewRepeatableField } from '../ViewRepeatableField';
 
 import {
   getBooleanLabelId,
-  getContentData,
   getFieldValue,
   getValueById,
   transformSubfieldsData,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
-
-import css from '../../../MappingProfiles.css';
 
 export const LoanAndAvailability = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
@@ -30,6 +28,8 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
   const temporaryLoanType = getFieldValue(mappingDetails, 'temporaryLoanType.id', 'value');
   const status = getFieldValue(mappingDetails, 'status.name', 'value');
   const circulationNotes = getFieldValue(mappingDetails, 'circulationNotes', 'subfields');
+  const circulationNotesRepeatableAction = getFieldValue(mappingDetails,
+    'circulationNotes', 'repeatableFieldAction');
 
   const circulationNotesVisibleColumns = ['noteType', 'note', 'staffOnly'];
   const circulationNotesMapping = {
@@ -109,16 +109,15 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
           data-test-circulation-notes
           id="section-circulation-notes"
           xs={12}
-          className={css.colWithTable}
         >
-          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.field.circulationNotes.legend`} />}>
-            <MultiColumnList
-              contentData={getContentData(circulationNotesData)}
-              visibleColumns={circulationNotesVisibleColumns}
-              columnMapping={circulationNotesMapping}
-              formatter={circulationNotesFormatter}
-            />
-          </KeyValue>
+          <ViewRepeatableField
+            repeatableAction={circulationNotesRepeatableAction}
+            fieldData={circulationNotesData}
+            visibleColumns={circulationNotesVisibleColumns}
+            columnMapping={circulationNotesMapping}
+            formatter={circulationNotesFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.item.field.circulationNotes.legend`}
+          />
         </Col>
       </Row>
     </Accordion>

@@ -8,18 +8,16 @@ import {
   Col,
   NoValue,
   KeyValue,
-  MultiColumnList,
 } from '@folio/stripes/components';
 
+import { ViewRepeatableField } from '../ViewRepeatableField';
+
 import {
-  getContentData,
   getFieldValue,
   transformSubfieldsData,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
-
-import css from '../../../MappingProfiles.css';
 
 export const EnumerationData = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
@@ -28,6 +26,8 @@ export const EnumerationData = ({ mappingDetails }) => {
   const chronology = getFieldValue(mappingDetails, 'chronology', 'value');
   const volume = getFieldValue(mappingDetails, 'volume', 'value');
   const yearsAndCaptions = getFieldValue(mappingDetails, 'yearCaption', 'subfields');
+  const yearsAndCaptionsRepeatableAction = getFieldValue(mappingDetails,
+    'yearCaption', 'repeatableFieldAction');
 
   const yearsAndCaptionsVisibleColumns = ['yearCaption'];
   const yearsAndCaptionsMapping = {
@@ -85,16 +85,15 @@ export const EnumerationData = ({ mappingDetails }) => {
           data-test-years-and-captions
           id="section-year-caption"
           xs={12}
-          className={css.colWithTable}
         >
-          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />}>
-            <MultiColumnList
-              contentData={getContentData(yearsAndCaptionsData)}
-              visibleColumns={yearsAndCaptionsVisibleColumns}
-              columnMapping={yearsAndCaptionsMapping}
-              formatter={yearsAndCaptionsFormatter}
-            />
-          </KeyValue>
+          <ViewRepeatableField
+            repeatableAction={yearsAndCaptionsRepeatableAction}
+            fieldData={yearsAndCaptionsData}
+            visibleColumns={yearsAndCaptionsVisibleColumns}
+            columnMapping={yearsAndCaptionsMapping}
+            formatter={yearsAndCaptionsFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`}
+          />
         </Col>
       </Row>
     </Accordion>

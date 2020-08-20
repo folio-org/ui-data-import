@@ -742,5 +742,9 @@
     "settings.marcFieldProtection.listFormHeader": "The following MARC fields are protected from updates when new copies of MARC records are imported",
     "settings.mappingProfiles.map.item.administrativeData.field.id": "Item UUID",
     "settings.mappingProfiles.map.instance.administrationData.field.id": "Instance UUID",
-    "settings.mappingProfiles.map.holdings.administrativeData.field.id": "Holdings UUID"
+    "settings.mappingProfiles.map.holdings.administrativeData.field.id": "Holdings UUID",
+    "fieldMappingsForMarc": "Field mappings for MARC",
+    "fieldMappingsForMarc.modifications": "Modifications",
+    "fieldMappingsForMarc.updates": "Updates",
+    "fieldMappingsForMarc.placeholder": "Select field mappings for MARC"
 }

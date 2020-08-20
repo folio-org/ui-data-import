@@ -6,12 +6,12 @@ import {
   Accordion,
   Row,
   Col,
-  MultiColumnList,
   NoValue,
 } from '@folio/stripes/components';
 
+import { ViewRepeatableField } from '../ViewRepeatableField';
+
 import {
-  getContentData,
   getFieldValue,
   transformSubfieldsData,
   getBooleanLabelId,
@@ -20,12 +20,11 @@ import {
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
-import css from '../../../MappingProfiles.css';
-
 export const HoldingsNotes = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
 
   const notes = getFieldValue(mappingDetails, 'notes', 'subfields');
+  const notesRepeatableAction = getFieldValue(mappingDetails, 'notes', 'repeatableFieldAction');
 
   const notesVisibleColumns = ['noteType', 'note', 'staffOnly'];
   const notesMapping = {
@@ -72,13 +71,14 @@ export const HoldingsNotes = ({ mappingDetails }) => {
           data-test-notes
           id="section-holding-statements"
           xs={12}
-          className={css.colWithTable}
         >
-          <MultiColumnList
-            contentData={getContentData(notesData)}
+          <ViewRepeatableField
+            repeatableAction={notesRepeatableAction}
+            fieldData={notesData}
             visibleColumns={notesVisibleColumns}
             columnMapping={notesMapping}
             formatter={notesFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.holdings.holdingsNotes.section`}
           />
         </Col>
       </Row>

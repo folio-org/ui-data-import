@@ -8,22 +8,19 @@ import {
   Row,
   KeyValue,
   NoValue,
-  MultiColumnList,
 } from '@folio/stripes/components';
 
 import { ProhibitionIcon } from '../../../../../components';
+import { ViewRepeatableField } from '../ViewRepeatableField';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   getFieldValue,
   transformSubfieldsData,
-  getContentData,
   getBooleanLabelId,
   getValueById,
 } from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
-
-import css from '../../../MappingProfiles.css';
 
 export const AdministrativeData = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
@@ -38,6 +35,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
   const statusTerm = getFieldValue(mappingDetails, 'statusId', 'value');
   const modeOfIssuance = getFieldValue(mappingDetails, 'modeOfIssuanceId', 'value');
   const statisticalCodes = getFieldValue(mappingDetails, 'statisticalCodeIds', 'subfields');
+  const statisticalCodesRepeatableAction = getFieldValue(mappingDetails, 'statisticalCodeIds', 'repeatableFieldAction');
 
   const discoverySuppressLabelId = getBooleanLabelId(discoverySuppress);
   const staffSuppressLabelId = getBooleanLabelId(staffSuppress);
@@ -153,16 +151,15 @@ export const AdministrativeData = ({ mappingDetails }) => {
         <Col
           data-test-statistical-codes
           xs={12}
-          className={css.colWithTable}
         >
-          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`} />}>
-            <MultiColumnList
-              contentData={getContentData(statisticalCodesData)}
-              visibleColumns={statisticalCodesVisibleColumns}
-              columnMapping={statisticalCodesMapping}
-              formatter={statisticalCodesFormatter}
-            />
-          </KeyValue>
+          <ViewRepeatableField
+            repeatableAction={statisticalCodesRepeatableAction}
+            fieldData={statisticalCodesData}
+            visibleColumns={statisticalCodesVisibleColumns}
+            columnMapping={statisticalCodesMapping}
+            formatter={statisticalCodesFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`}
+          />
         </Col>
       </Row>
     </Accordion>

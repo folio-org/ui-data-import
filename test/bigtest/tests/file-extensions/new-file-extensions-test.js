@@ -92,7 +92,7 @@ describe('File extension form', () => {
 
   describe('when data types field has value', () => {
     beforeEach(async () => {
-      await fileExtensionForm.dataTypesField.expandAndFilter('Del');
+      await fileExtensionForm.dataTypesField.expandAndFilter('MARC');
       await fileExtensionForm.dataTypesField.clickOption('1');
       await fileExtensionForm.dataTypesField.blur('input');
     });
@@ -136,7 +136,7 @@ describe('File extension form', () => {
   describe('when form is submitted with unblocked import', () => {
     beforeEach(async () => {
       await fileExtensionForm.descriptionField.fillAndBlur('Description');
-      await fileExtensionForm.dataTypesField.expandAndFilter('Del');
+      await fileExtensionForm.dataTypesField.expandAndFilter('MARC');
       await fileExtensionForm.dataTypesField.clickOption('1');
       await fileExtensionForm.extensionField.fillAndBlur('.csv');
       await fileExtensionForm.submitFormButton.click();
@@ -146,7 +146,7 @@ describe('File extension form', () => {
       expect(fileExtensionDetails.description.text).to.equal('Description');
       expect(fileExtensionDetails.headline.text).to.equal('.csv');
       expect(fileExtensionDetails.extension.text).to.equal('.csv');
-      expect(fileExtensionDetails.dataTypes.text).to.equal('Delimited');
+      expect(fileExtensionDetails.dataTypes.text).to.equal('MARC');
       expect(fileExtensionDetails.importBlocked.isPresent).to.be.false;
     });
   });

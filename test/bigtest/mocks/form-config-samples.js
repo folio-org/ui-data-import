@@ -476,7 +476,6 @@ export const formConfigSamples = [
                       MARC_HOLDINGS: 'qualifier',
                       MARC_AUTHORITY: 'qualifier',
                       EDIFACT_INVOICE: 'qualifier',
-                      DELIMITED: 'qualifier',
                     },
                   }, {
                     controlType: 'CommonSection',
@@ -488,7 +487,6 @@ export const formConfigSamples = [
                       MARC_HOLDINGS: 'qualifierPart',
                       MARC_AUTHORITY: 'qualifierPart',
                       EDIFACT_INVOICE: 'qualifierPart',
-                      DELIMITED: 'qualifierPart',
                     },
                   }],
                 }, { // Match Criterion Section
@@ -580,7 +578,6 @@ export const formConfigSamples = [
                       MARC_HOLDINGS: 'qualifier',
                       MARC_AUTHORITY: 'qualifier',
                       EDIFACT_INVOICE: 'qualifier',
-                      DELIMITED: 'qualifier',
                     },
                   }, {
                     controlType: 'CommonSection',
@@ -597,7 +594,6 @@ export const formConfigSamples = [
                       MARC_HOLDINGS: 'qualifierPart',
                       MARC_AUTHORITY: 'qualifierPart',
                       EDIFACT_INVOICE: 'qualifierPart',
-                      DELIMITED: 'qualifierPart',
                     },
                   }],
                 }],

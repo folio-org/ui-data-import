@@ -7,7 +7,7 @@ import {
   DropdownMenu,
 } from '@folio/stripes-components';
 
-import { INCOMING_RECORD_TYPES } from '../../ListTemplate/incomingRecordTypes';
+import { MATCH_INCOMING_RECORD_TYPES } from '../../ListTemplate';
 
 export const IncomingRecordMenu = ({
   open,
@@ -25,14 +25,14 @@ export const IncomingRecordMenu = ({
     open={open}
     minWidth="auto"
   >
-    {Object.keys(INCOMING_RECORD_TYPES).map((recordType, i) => (
+    {Object.keys(MATCH_INCOMING_RECORD_TYPES).map((recordType, i) => (
       <Button
         key={i}
         buttonStyle="dropdownItem"
-        onClick={() => onClick(INCOMING_RECORD_TYPES[recordType])}
+        onClick={() => onClick(MATCH_INCOMING_RECORD_TYPES[recordType])}
         {...dataAttributes}
       >
-        <FormattedMessage id={INCOMING_RECORD_TYPES[recordType].captionId} />
+        <FormattedMessage id={MATCH_INCOMING_RECORD_TYPES[recordType].captionId} />
       </Button>
     ))}
   </DropdownMenu>

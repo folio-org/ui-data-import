@@ -12,6 +12,7 @@ import {
 } from '@folio/stripes/components';
 
 import { ProhibitionIcon } from '../../../../../components';
+import { ViewRepeatableField } from '../ViewRepeatableField';
 
 import {
   transformSubfieldsData,
@@ -32,6 +33,8 @@ export const DescriptiveData = ({ mappingDetails }) => {
   const physicalDescriptions = getFieldValue(mappingDetails, 'physicalDescriptions', 'subfields');
   const resourceType = getFieldValue(mappingDetails, 'instanceTypeId', 'value');
   const natureOfContentTerms = getFieldValue(mappingDetails, 'natureOfContentTermIds', 'subfields');
+  const natureOfContentTermsRepeatableAction = getFieldValue(mappingDetails,
+    'natureOfContentTermIds', 'repeatableFieldAction');
   const formats = getFieldValue(mappingDetails, 'instanceFormatIds', 'subfields');
   const languages = getFieldValue(mappingDetails, 'languages', 'subfields');
   const publicationFrequencies = getFieldValue(mappingDetails, 'publicationFrequency', 'subfields');
@@ -250,14 +253,14 @@ export const DescriptiveData = ({ mappingDetails }) => {
           xs={12}
           className={css.colWithTable}
         >
-          <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermsIds.legend`} />}>
-            <MultiColumnList
-              contentData={getContentData(natureOfContentTermsData)}
-              visibleColumns={natureOfContentTermsVisibleColumns}
-              columnMapping={natureOfContentTermsMapping}
-              formatter={natureOfContentTermsFormatter}
-            />
-          </KeyValue>
+          <ViewRepeatableField
+            repeatableAction={natureOfContentTermsRepeatableAction}
+            fieldData={natureOfContentTermsData}
+            visibleColumns={natureOfContentTermsVisibleColumns}
+            columnMapping={natureOfContentTermsMapping}
+            formatter={natureOfContentTermsFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermsIds.legend`}
+          />
         </Col>
       </Row>
       <Row left="xs">

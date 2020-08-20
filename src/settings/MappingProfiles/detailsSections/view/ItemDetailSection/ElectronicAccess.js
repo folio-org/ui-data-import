@@ -6,24 +6,24 @@ import {
   Accordion,
   Row,
   Col,
-  MultiColumnList,
   NoValue,
 } from '@folio/stripes/components';
 
+import { ViewRepeatableField } from '../ViewRepeatableField';
+
 import {
-  getContentData,
   getFieldValue,
   transformSubfieldsData,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
-import css from '../../../MappingProfiles.css';
-
 export const ElectronicAccess = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
 
   const electronicAccess = getFieldValue(mappingDetails, 'electronicAccess', 'subfields');
+  const electronicAccessRepeatableAction = getFieldValue(mappingDetails,
+    'electronicAccess', 'repeatableFieldAction');
 
   const electronicAccessVisibleColumns = ['relationshipId', 'uri', 'linkText', 'materialsSpecification', 'publicNote'];
   const electronicAccessMapping = {
@@ -80,13 +80,14 @@ export const ElectronicAccess = ({ mappingDetails }) => {
           data-test-electronic-access
           id="section-electronic-access"
           xs={12}
-          className={css.colWithTable}
         >
-          <MultiColumnList
-            contentData={getContentData(electronicAccessData)}
+          <ViewRepeatableField
+            repeatableAction={electronicAccessRepeatableAction}
+            fieldData={electronicAccessData}
             visibleColumns={electronicAccessVisibleColumns}
             columnMapping={electronicAccessMapping}
             formatter={electronicAccessFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.EAccess.section`}
           />
         </Col>
       </Row>

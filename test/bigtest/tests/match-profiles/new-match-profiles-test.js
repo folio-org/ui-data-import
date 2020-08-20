@@ -265,7 +265,7 @@ describe('Match profile form', () => {
           describe('when incoming record is Static value', () => {
             beforeEach(async function () {
               await matchProfileForm.recordTypesSelect.incomingRecordDropdown.clickTrigger();
-              await matchProfileForm.recordTypesSelect.incomingRecordDropdown.menu.items(5).click();
+              await matchProfileForm.recordTypesSelect.incomingRecordDropdown.menu.items(4).click();
             });
 
             it('has correct label', () => {
