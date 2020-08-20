@@ -183,7 +183,6 @@
     "folioRecordType": "Тип записи FOLIO",
     "settings.associatedActionProfiles": "Associated action profiles",
     "incomingRecordTypes.edifact-invoice": "EDIFACT invoice",
-    "incomingRecordTypes.delimited": "Delimited",
     "settings.mappingProfiles.new": "New field mapping profile",
     "chooseIncomingRecordType": "Выберите тип входящей записи",
     "chooseFolioRecordType": "Выберите тип записи FOLIO",
