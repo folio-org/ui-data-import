@@ -329,7 +329,7 @@ describe('Action Profile View', () => {
         });
 
         it('renders the correct number including the one which tried to delete', () => {
-          expect(actionProfiles.list.rowCount).to.equal(8);
+          expect(actionProfiles.list.rowCount).to.equal(6);
         });
       });
 
@@ -381,7 +381,7 @@ describe('Action Profile View', () => {
           });
 
           it('renders the correct number of rows without deleted one', () => {
-            expect(actionProfiles.list.rowCount).to.equal(7);
+            expect(actionProfiles.list.rowCount).to.equal(5);
           });
         });
       });
