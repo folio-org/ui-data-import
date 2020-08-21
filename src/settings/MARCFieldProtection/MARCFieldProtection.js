@@ -8,26 +8,7 @@ import {
 import { stripesConnect } from '@folio/stripes/core';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 
-import { CLOSING_REASONS_SOURCE } from '../../utils';
-
-// TODO: Remove after connect to BE
-const initialValues = {
-  items: [{
-    field: '001',
-    indicator1: '',
-    indicator2: '',
-    subfield: '',
-    data: '*',
-    source: 'System',
-  }, {
-    field: '999',
-    indicator1: 'f',
-    indicator2: 'f',
-    subfield: '*',
-    data: '*',
-    source: 'System',
-  }],
-};
+import { MARC_FIELD_PROTECTION_SOURCE } from '../../utils';
 
 @injectIntl
 @stripesConnect
@@ -42,9 +23,9 @@ export class MARCFieldProtection extends Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = ({ source }) => source === CLOSING_REASONS_SOURCE.system;
+  suppressEdit = ({ source }) => source === MARC_FIELD_PROTECTION_SOURCE.SYSTEM.value;
 
-  suppressDelete = ({ source }) => source === CLOSING_REASONS_SOURCE.system;
+  suppressDelete = ({ source }) => source === MARC_FIELD_PROTECTION_SOURCE.SYSTEM.value;
 
   render() {
     const {
@@ -61,6 +42,13 @@ export class MARCFieldProtection extends Component {
       source: <FormattedMessage id="ui-data-import.settings.marcFieldProtection.source" />,
       actions: <FormattedMessage id="ui-data-import.settings.marcFieldProtection.actions" />,
     };
+    const formatter = {
+      source: ({ source }) => {
+        const sourceLabelId = MARC_FIELD_PROTECTION_SOURCE[source]?.labelId;
+
+        return sourceLabelId && <FormattedMessage id={sourceLabelId} />;
+      },
+    };
     const hiddenFields = ['numberOfObjects', 'lastUpdated'];
     const visibleFields = ['field', 'indicator1', 'indicator2', 'subfield', 'data', 'source'];
     const readOnlyFields = ['source'];
@@ -72,16 +60,20 @@ export class MARCFieldProtection extends Component {
     return (
       <this.connectedControlledVocab
         id="marc-field-protection"
+        baseUrl="field-protection-settings/marc"
+        records="marcFieldProtectionSettings"
         label={intl.formatMessage({ id: 'ui-data-import.settings.marcFieldProtection.title' })}
         labelSingular={<FormattedMessage id="ui-data-import.settings.marcFieldProtection.title" />}
         objectLabel={<FormattedMessage id="ui-data-import.settings.marcFieldProtection.title" />}
         listFormLabel={<FormattedMessage id="ui-data-import.settings.marcFieldProtection.listFormHeader" />}
         columnMapping={columnMapping}
+        formatter={formatter}
         readOnlyFields={readOnlyFields}
         visibleFields={visibleFields}
         hiddenFields={hiddenFields}
         actionSuppressor={actionSuppressor}
-        initialValues={initialValues}
+        itemTemplate={{ source: 'USER' }}
+        sortby="field"
         stripes={stripes}
       />
     );

@@ -183,7 +183,6 @@
     "folioRecordType": "FOLIO record type",
     "settings.associatedActionProfiles": "Perfiles de acción asociadas",
     "incomingRecordTypes.edifact-invoice": "Factura EDIFACT ",
-    "incomingRecordTypes.delimited": "Delimitado",
     "settings.mappingProfiles.new": "Nuevo perfil de mapeo de campo",
     "chooseIncomingRecordType": "Seleccionar tipo de registro entrante",
     "chooseFolioRecordType": "Seleccione el tipo de registro FOLIO",

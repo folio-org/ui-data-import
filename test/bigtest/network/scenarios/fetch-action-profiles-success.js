@@ -18,14 +18,6 @@ export default server => {
     childProfiles: noAssociatedJobProfiles,
   });
   server.create('action-profile', {
-    action: 'COMBINE',
-    folioRecord: 'ITEM',
-  });
-  server.create('action-profile', {
-    action: 'COMBINE',
-    folioRecord: 'INSTANCE',
-  });
-  server.create('action-profile', {
     action: 'MODIFY',
     folioRecord: 'HOLDINGS',
   });
@@ -34,11 +26,11 @@ export default server => {
     folioRecord: 'MARC_BIBLIOGRAPHIC',
   });
   server.create('action-profile', {
-    action: 'REPLACE',
+    action: 'UPDATE',
     folioRecord: 'MARC_AUTHORITY',
   });
   server.create('action-profile', {
-    action: 'REPLACE',
+    action: 'UPDATE',
     folioRecord: 'MARC_HOLDINGS',
   });
 
