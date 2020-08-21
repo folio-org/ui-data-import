@@ -183,7 +183,6 @@
     "folioRecordType": "FOLIO记录类型",
     "settings.associatedActionProfiles": "关联的操作配置文件",
     "incomingRecordTypes.edifact-invoice": "EDIFACT发票",
-    "incomingRecordTypes.delimited": "有分隔符的",
     "settings.mappingProfiles.new": "新字段映射配置文件",
     "chooseIncomingRecordType": "选择传入记录类型",
     "chooseFolioRecordType": "选择FOLIO记录类型",

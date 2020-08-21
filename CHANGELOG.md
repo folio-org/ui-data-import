@@ -22,6 +22,7 @@
 * Update MARC matching UI to differentiate [any] versus [blank] indicators (UIDATIMP-525)
 * Reuse `<FullScreenForm>` component from `stripes-data-transfer-components` repository (UIDATIMP-578)
 * Add option for Modify or Update MARC Bib field mapping profile (UIDATIMP-612)
+* Update the available actions for Action profiles (UIDATIMP-559)
 * Change Shelving order to unmappable on Holdings field mapping (UIDATIMP-611)
 * Update the Field mapping View for repeatable fields options (UIDATIMP-555)
 * Update the available options for Field mapping profile Incoming record types (UIDATIMP-560)
@@ -29,6 +30,7 @@
 * Update the available Incoming record options for Match profiles (UIDATIMP-562)
 * Update the available Data type options for File extension settings (UIDATIMP-626)
 * Connect MARC field protection settings to the server (UIDATIMP-621)
+* Field mappings: Item - update reference dropdown list for Item status (UIDATIMP-529)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

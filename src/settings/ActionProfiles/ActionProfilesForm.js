@@ -86,18 +86,14 @@ export const ActionProfilesFormComponent = ({
         return pick(ACTION_TYPES_SELECT, ACTION_TYPES_SELECT.CREATE.type);
       }
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INVOICE.type: {
-        return pick(ACTION_TYPES_SELECT, [
-          ACTION_TYPES_SELECT.CREATE.type,
-          ACTION_TYPES_SELECT.COMBINE.type,
-        ]);
+        return pick(ACTION_TYPES_SELECT, ACTION_TYPES_SELECT.CREATE.type);
       }
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INSTANCE.type:
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.HOLDINGS.type:
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ITEM.type: {
         return pick(ACTION_TYPES_SELECT, [
           ACTION_TYPES_SELECT.CREATE.type,
-          ACTION_TYPES_SELECT.COMBINE.type,
-          ACTION_TYPES_SELECT.REPLACE.type,
+          ACTION_TYPES_SELECT.UPDATE.type,
         ]);
       }
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type:
@@ -117,9 +113,6 @@ export const ActionProfilesFormComponent = ({
 
   const getFilteredFolioRecordTypes = () => {
     switch (action) {
-      case ACTION_TYPES_SELECT.COMBINE.type: {
-        return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type);
-      }
       case ACTION_TYPES_SELECT.MODIFY.type: {
         return pick(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
@@ -127,11 +120,8 @@ export const ActionProfilesFormComponent = ({
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type,
         ]);
       }
-      case ACTION_TYPES_SELECT.REPLACE.type: {
-        return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
-          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type,
-          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INVOICE.type,
-        ]);
+      case ACTION_TYPES_SELECT.UPDATE.type: {
+        return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type);
       }
       case ACTION_TYPES_SELECT.CREATE.type:
       default: {
