@@ -583,7 +583,13 @@ export const MAPPING_DETAILS_HEADLINE = {
   },
 };
 
-export const CLOSING_REASONS_SOURCE = {
-  system: 'System',
-  user: 'User',
+export const MARC_FIELD_PROTECTION_SOURCE = {
+  SYSTEM: {
+    value: 'SYSTEM',
+    labelId: 'ui-data-import.settings.marcFieldProtection.system',
+  },
+  USER: {
+    value: 'USER',
+    labelId: 'ui-data-import.settings.marcFieldProtection.user',
+  },
 };
