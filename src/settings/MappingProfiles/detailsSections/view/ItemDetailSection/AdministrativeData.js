@@ -94,7 +94,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.hrid`} />}
-            value={itemHrid || <ProhibitionIcon />}
+            value={itemHrid || <ProhibitionIcon fieldName="administrative-data-hrid" />}
           />
         </Col>
         <Col

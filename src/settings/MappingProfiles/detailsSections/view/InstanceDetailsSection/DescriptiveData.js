@@ -26,7 +26,7 @@ import css from '../../../MappingProfiles.css';
 
 export const DescriptiveData = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
-  const prohibitionIconElement = <ProhibitionIcon />;
+  const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
   const publications = getFieldValue(mappingDetails, 'publication', 'subfields');
   const editions = getFieldValue(mappingDetails, 'editions', 'subfields');
@@ -56,10 +56,10 @@ export const DescriptiveData = ({ mappingDetails }) => {
     ),
   };
   const publicationsFormatter = {
-    publisher: x => x?.publisher || prohibitionIconElement,
-    role: x => x?.role || prohibitionIconElement,
-    place: x => x?.place || prohibitionIconElement,
-    dateOfPublication: x => x?.dateOfPublication || prohibitionIconElement,
+    publisher: x => x?.publisher || prohibitionIconElement('publication-publisher'),
+    role: x => x?.role || prohibitionIconElement('publication-role'),
+    place: x => x?.place || prohibitionIconElement('publication-place'),
+    dateOfPublication: x => x?.dateOfPublication || prohibitionIconElement('publication-date-of-publication'),
   };
   const publicationsFieldsMap = [
     {
@@ -84,7 +84,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.edition`} />
     ),
   };
-  const editionsFormatter = { edition: x => x?.edition || prohibitionIconElement };
+  const editionsFormatter = { edition: x => x?.edition || prohibitionIconElement('edition') };
   const editionsFieldsMap = [
     {
       field: 'edition',
@@ -99,7 +99,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.physicalDescription`} />
     ),
   };
-  const physicalDescriptionsFormatter = { physicalDescription: x => x?.physicalDescription || prohibitionIconElement };
+  const physicalDescriptionsFormatter = { physicalDescription: x => x?.physicalDescription || prohibitionIconElement('physical-description') };
   const physicalDescriptionsFieldsMap = [
     {
       field: 'physicalDescription',
@@ -129,7 +129,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.instanceFormatId`} />
     ),
   };
-  const formatsFormatter = { instanceFormatId: x => x?.instanceFormatId || prohibitionIconElement };
+  const formatsFormatter = { instanceFormatId: x => x?.instanceFormatId || prohibitionIconElement('instance-format-id') };
   const formatsFieldsMap = [
     {
       field: 'instanceFormatId',
@@ -144,7 +144,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.languageId`} />
     ),
   };
-  const languagesFormatter = { languageId: x => x?.languageId || prohibitionIconElement };
+  const languagesFormatter = { languageId: x => x?.languageId || prohibitionIconElement('language-id') };
   const languagesFieldsMap = [
     {
       field: 'languageId',
@@ -159,7 +159,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publicationFrequency`} />
     ),
   };
-  const publicationFrequenciesFormatter = { publicationFrequency: x => x?.publicationFrequency || prohibitionIconElement };
+  const publicationFrequenciesFormatter = { publicationFrequency: x => x?.publicationFrequency || prohibitionIconElement('publication-frequency') };
   const publicationFrequenciesFieldsMap = [
     {
       field: 'publicationFrequency',
@@ -174,7 +174,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publicationRange`} />
     ),
   };
-  const publicationRangeFormatter = { publicationRange: x => x?.publicationRange || prohibitionIconElement };
+  const publicationRangeFormatter = { publicationRange: x => x?.publicationRange || prohibitionIconElement('publication-range') };
   const publicationRangeFieldsMap = [
     {
       field: 'publicationRange',
@@ -243,7 +243,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.instanceTypeId`} />}
-            value={resourceType || prohibitionIconElement}
+            value={resourceType || prohibitionIconElement('resource-type')}
           />
         </Col>
       </Row>

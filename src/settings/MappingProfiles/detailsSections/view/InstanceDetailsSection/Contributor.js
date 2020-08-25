@@ -24,7 +24,7 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const Contributor = ({ mappingDetails }) => {
-  const prohibitionIconElement = <ProhibitionIcon />;
+  const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
   const contributors = getFieldValue(mappingDetails, 'contributors', 'subfields');
 
@@ -48,14 +48,14 @@ export const Contributor = ({ mappingDetails }) => {
     ),
   };
   const contributorsFormatter = {
-    contributorName: x => x?.contributorName || prohibitionIconElement,
-    contributorNameTypeId: x => x?.contributorNameTypeId || prohibitionIconElement,
-    contributorTypeId: x => x?.contributorTypeId || prohibitionIconElement,
-    contributorTypeText: x => x?.contributorTypeText || prohibitionIconElement,
+    contributorName: x => x?.contributorName || prohibitionIconElement('contributor-name'),
+    contributorNameTypeId: x => x?.contributorNameTypeId || prohibitionIconElement('contributor-name-type-id'),
+    contributorTypeId: x => x?.contributorTypeId || prohibitionIconElement('contributor-type-id'),
+    contributorTypeText: x => x?.contributorTypeText || prohibitionIconElement('contributor-type-text'),
     primary: x => {
       const primaryLabelId = getBooleanLabelId(x?.primary);
 
-      return getUnmappableValueById(primaryLabelId);
+      return getUnmappableValueById(primaryLabelId, 'contributor-primary');
     },
   };
   const contributorsFieldsMap = [
