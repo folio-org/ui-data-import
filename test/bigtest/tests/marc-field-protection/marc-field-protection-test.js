@@ -10,7 +10,7 @@ import { setupApplication } from '../../helpers';
 import { marcFieldProtection } from '../../interactors/marc-field-protection';
 
 describe('MARC field protection', () => {
-  setupApplication();
+  setupApplication({ scenarios: ['fetch-marc-field-protection'] });
 
   beforeEach(function () {
     this.visit('/settings/data-import/marc-field-protection');

@@ -15,11 +15,9 @@ import {
   checkboxListShape,
   getSortQuery,
   getSearchQuery,
-} from '../../utils';
-import {
   ENTITY_KEYS,
   FIND_ALL_CQL,
-} from '../../utils/constants';
+} from '../../utils';
 import { ListView } from '../../components';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
 import { ViewActionProfile } from './ViewActionProfile';
