@@ -14,7 +14,8 @@ import css from './ProhibitionIcon.css';
  * @returns {{}}
  */
 export const ProhibitionIcon = ({
-  ariaLabel, fieldName,
+  ariaLabel,
+  fieldName,
 }) => {
   const ariaLabelIsTranslationId = ariaLabel && ariaLabel.includes('ui-');
   const ariaLabelIsMessageString = ariaLabel && !ariaLabel.includes('ui-');
@@ -27,7 +28,8 @@ export const ProhibitionIcon = ({
         text={message || <FormattedMessage id="ui-data-import.settings.mappingProfiles.canNotBeMapped" />}
       >
         {({
-          ref, ariaIds,
+          ref,
+          ariaIds,
         }) => (
           <span
             /* eslint-disable-next-line jsx-a11y/aria-role */
@@ -62,5 +64,5 @@ export const ProhibitionIcon = ({
 
 ProhibitionIcon.propTypes = {
   ariaLabel: PropTypes.string,
-  fieldName: PropTypes.string,
+  fieldName: PropTypes.string.isRequired,
 };
