@@ -32,8 +32,6 @@ export const ProhibitionIcon = ({
           ariaIds,
         }) => (
           <span
-            /* eslint-disable-next-line jsx-a11y/aria-role */
-            role="text"
             aria-label={message}
             aria-labelledby={ariaIds.text}
             ref={ref}
