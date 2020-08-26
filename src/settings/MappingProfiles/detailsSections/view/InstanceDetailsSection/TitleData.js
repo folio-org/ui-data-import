@@ -23,7 +23,7 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const TitleData = ({ mappingDetails }) => {
-  const prohibitionIconElement = <ProhibitionIcon />;
+  const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
   const resourceTitle = getFieldValue(mappingDetails, 'title', 'value');
   const alternativeTitles = getFieldValue(mappingDetails, 'alternativeTitles', 'subfields');
@@ -42,8 +42,8 @@ export const TitleData = ({ mappingDetails }) => {
     ),
   };
   const alternativeTitlesFormatter = {
-    alternativeTitleTypeId: x => x?.alternativeTitleTypeId || prohibitionIconElement,
-    alternativeTitle: x => x?.alternativeTitle || prohibitionIconElement,
+    alternativeTitleTypeId: x => x?.alternativeTitleTypeId || prohibitionIconElement('alternative-title-type-id'),
+    alternativeTitle: x => x?.alternativeTitle || prohibitionIconElement('alternative-title'),
   };
   const alternativeTitlesFieldsMap = [
     {
@@ -62,7 +62,7 @@ export const TitleData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.series.field.series`} />
     ),
   };
-  const seriesStatementsFormatter = { source: x => x?.source || prohibitionIconElement };
+  const seriesStatementsFormatter = { source: x => x?.source || prohibitionIconElement('series-statements-source') };
   const seriesStatementsFieldsMap = [
     {
       field: 'source',
@@ -88,10 +88,10 @@ export const TitleData = ({ mappingDetails }) => {
     ),
   };
   const precedingTitlesFormatter = {
-    precedingTitlesTitle: x => x?.precedingTitlesTitle || prohibitionIconElement,
-    precedingTitlesHrid: x => x?.precedingTitlesHrid || prohibitionIconElement,
-    precedingTitlesIsbn: x => x?.precedingTitlesIsbn || prohibitionIconElement,
-    precedingTitlesIssn: x => x?.precedingTitlesIssn || prohibitionIconElement,
+    precedingTitlesTitle: x => x?.precedingTitlesTitle || prohibitionIconElement('preceding-titles-title'),
+    precedingTitlesHrid: x => x?.precedingTitlesHrid || prohibitionIconElement('preceding-titles-hrid'),
+    precedingTitlesIsbn: x => x?.precedingTitlesIsbn || prohibitionIconElement('preceding-titles-isbn'),
+    precedingTitlesIssn: x => x?.precedingTitlesIssn || prohibitionIconElement('preceding-titles-issn'),
   };
   const precedingTitlesFieldsMap = [
     {
@@ -127,10 +127,10 @@ export const TitleData = ({ mappingDetails }) => {
     ),
   };
   const succeedingTitlesFormatter = {
-    succeedingTitlesTitle: x => x?.succeedingTitlesTitle || prohibitionIconElement,
-    succeedingTitlesHrid: x => x?.succeedingTitlesHrid || prohibitionIconElement,
-    succeedingTitlesIsbn: x => x?.succeedingTitlesIsbn || prohibitionIconElement,
-    succeedingTitlesIssn: x => x?.succeedingTitlesIssn || prohibitionIconElement,
+    succeedingTitlesTitle: x => x?.succeedingTitlesTitle || prohibitionIconElement('succeeding-titles-title'),
+    succeedingTitlesHrid: x => x?.succeedingTitlesHrid || prohibitionIconElement('succeeding-titles-hrid'),
+    succeedingTitlesIsbn: x => x?.succeedingTitlesIsbn || prohibitionIconElement('succeeding-titles-isbn'),
+    succeedingTitlesIssn: x => x?.succeedingTitlesIssn || prohibitionIconElement('succeeding-titles-issn'),
   };
   const succeedingTitlesFieldsMap = [
     {
@@ -161,7 +161,7 @@ export const TitleData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.titleData.field.title`} />}
-            value={resourceTitle || prohibitionIconElement}
+            value={resourceTitle || prohibitionIconElement('title-data-resource-title')}
           />
         </Col>
       </Row>
@@ -189,7 +189,7 @@ export const TitleData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.titleData.field.indexTitle`} />}
-            value={indexTitle || prohibitionIconElement}
+            value={indexTitle || prohibitionIconElement('title-data-index-title')}
           />
         </Col>
       </Row>

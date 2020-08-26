@@ -81,7 +81,7 @@ export const getFieldValue = (details, fieldName, key) => details.find(item => i
 
 export const getValueById = id => (id ? <FormattedMessage id={id} /> : <NoValue />);
 
-export const getUnmappableValueById = id => (id ? <FormattedMessage id={id} /> : <ProhibitionIcon />);
+export const getUnmappableValueById = (id, fieldName) => (id ? <FormattedMessage id={id} /> : <ProhibitionIcon fieldName={fieldName} />);
 
 export const transformSubfieldsData = (subfields, columns) => subfields?.map(item => {
   return columns.reduce((acc, column) => {
