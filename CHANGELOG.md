@@ -31,6 +31,7 @@
 * Update the available Data type options for File extension settings (UIDATIMP-626)
 * Connect MARC field protection settings to the server (UIDATIMP-621)
 * Field mappings: Item - update reference dropdown list for Item status (UIDATIMP-529)
+* Add validation for fields in MARC field protection settings (UIDATIMP-593)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
