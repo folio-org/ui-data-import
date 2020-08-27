@@ -472,7 +472,6 @@
     "settings.mappingProfiles.map.instance.subject.section": "الموضوع",
     "settings.mappingProfiles.map.instance.descriptiveData.field.subjects": "الموضوعات",
     "settings.mappingProfiles.map.holdings.field.digitizationPolicy": "سياسة الرقمنة",
-    "noValueAllowed": "غير مسموح بقيمة",
     "settings.mappingProfiles.map.wrapper.acceptedValues": "القيم المقبولة",
     "settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesTitle": "عنوان",
     "settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesHrid": "رقم التعريف القابل للقراءة بشريًا للوعاء",
@@ -741,5 +740,9 @@
     "actionSelect.update": "تحديث (كل أنواع التسجيلات ما عدا الطلبيات)",
     "settings.mappingProfiles.map.item.status.withdrawn": "مسحوب",
     "settings.marcFieldProtection.system": "النظام",
-    "settings.marcFieldProtection.user": "المستخدم"
+    "settings.marcFieldProtection.user": "المستخدم",
+    "settings.mappingProfiles.canNotBeMapped": "لا يمكن تخطيطه",
+    "validation.enterAsteriskOrNumeric": "Please enter * or numeric value",
+    "validation.enterAsteriskOrAlphanumeric": "Please enter * or alphanumeric value",
+    "validation.enterAsteriskOrOther": "Please enter * or other data"
 }

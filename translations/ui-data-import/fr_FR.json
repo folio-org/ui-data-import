@@ -472,7 +472,6 @@
     "settings.mappingProfiles.map.instance.subject.section": "Sujet",
     "settings.mappingProfiles.map.instance.descriptiveData.field.subjects": "Sujets",
     "settings.mappingProfiles.map.holdings.field.digitizationPolicy": "Digitization policy",
-    "noValueAllowed": "Aucune valeur autorisée",
     "settings.mappingProfiles.map.wrapper.acceptedValues": "Valeurs acceptées",
     "settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesTitle": "Titre",
     "settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesHrid": "Instance HRID",
@@ -741,5 +740,9 @@
     "actionSelect.update": "Mise à jour (tous les types d'enregistrement sauf les commandes)",
     "settings.mappingProfiles.map.item.status.withdrawn": "Retiré",
     "settings.marcFieldProtection.system": "Système",
-    "settings.marcFieldProtection.user": "Utilisateur"
+    "settings.marcFieldProtection.user": "Utilisateur",
+    "settings.mappingProfiles.canNotBeMapped": "Cannot be mapped",
+    "validation.enterAsteriskOrNumeric": "Please enter * or numeric value",
+    "validation.enterAsteriskOrAlphanumeric": "Please enter * or alphanumeric value",
+    "validation.enterAsteriskOrOther": "Please enter * or other data"
 }
