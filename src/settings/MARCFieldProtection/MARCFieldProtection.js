@@ -110,12 +110,19 @@ export class MARCFieldProtection extends Component {
         return sourceLabelId && <FormattedMessage id={sourceLabelId} />;
       },
     };
-    const hiddenFields = ['numberOfObjects', 'lastUpdated'];
-    const visibleFields = ['field', 'indicator1', 'indicator2', 'subfield', 'data', 'source'];
     const readOnlyFields = ['source'];
+    const visibleFields = ['field', 'indicator1', 'indicator2', 'subfield', 'data', 'source'];
+    const hiddenFields = ['numberOfObjects', 'lastUpdated'];
     const actionSuppressor = {
       edit: this.suppressEdit,
       delete: this.suppressDelete,
+    };
+    const itemTemplate = {
+      indicator1: '*',
+      indicator2: '*',
+      subfield: '*',
+      data: '*',
+      source: 'USER',
     };
 
     return (
@@ -133,7 +140,7 @@ export class MARCFieldProtection extends Component {
         visibleFields={visibleFields}
         hiddenFields={hiddenFields}
         actionSuppressor={actionSuppressor}
-        itemTemplate={{ source: 'USER' }}
+        itemTemplate={itemTemplate}
         sortby="field"
         validate={this.validateFields}
         stripes={stripes}
