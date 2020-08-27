@@ -8,7 +8,56 @@ import {
 import { stripesConnect } from '@folio/stripes/core';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 
-import { MARC_FIELD_PROTECTION_SOURCE } from '../../utils';
+import {
+  MARC_FIELD_PROTECTION_SOURCE,
+  validateRequiredField,
+} from '../../utils';
+
+const validateField = value => {
+  const checkFieldRange = () => {
+    return value.length === 3 && parseInt(value, 10) >= 10 && parseInt(value, 10) <= 999;
+  };
+
+  if (value && (value === '*' || checkFieldRange())) {
+    return null;
+  }
+
+  return <FormattedMessage id="ui-data-import.validation.enterAsteriskOrNumeric" />;
+};
+
+const validateAlphanumeric = value => {
+  const pattern = /^[*\w]$/;
+
+  if (!value || value.match(pattern)) {
+    return null;
+  }
+
+  return <FormattedMessage id="ui-data-import.validation.enterAsteriskOrAlphanumeric" />;
+};
+
+const validateSubfield = (subfieldValue, fieldValue) => {
+  let pattern = /^[*\w]$/;
+  let errorMessage = <FormattedMessage id="ui-data-import.validation.enterAsteriskOrAlphanumeric" />;
+
+  if (fieldValue === '*') {
+    pattern = /^\w$/;
+    errorMessage = <FormattedMessage id="ui-data-import.validation.valueType" />;
+  }
+
+  if (!subfieldValue || subfieldValue.match(pattern)) {
+    return null;
+  }
+
+  return errorMessage;
+};
+
+const validateData = value => {
+  if (value) {
+    return null;
+  }
+
+  return <FormattedMessage id="ui-data-import.validation.enterAsteriskOrOther" />;
+};
 
 @injectIntl
 @stripesConnect
@@ -26,6 +75,18 @@ export class MARCFieldProtection extends Component {
   suppressEdit = ({ source }) => source === MARC_FIELD_PROTECTION_SOURCE.SYSTEM.value;
 
   suppressDelete = ({ source }) => source === MARC_FIELD_PROTECTION_SOURCE.SYSTEM.value;
+
+  validateFields = item => {
+    const requiredFieldErrorMessage = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
+
+    return {
+      field: validateField(item.field),
+      indicator1: validateAlphanumeric(item.indicator1),
+      indicator2: validateAlphanumeric(item.indicator2),
+      subfield: validateRequiredField(item.subfield, requiredFieldErrorMessage) || validateSubfield(item.subfield, item.field),
+      data: validateData(item.data),
+    };
+  };
 
   render() {
     const {
@@ -49,12 +110,19 @@ export class MARCFieldProtection extends Component {
         return sourceLabelId && <FormattedMessage id={sourceLabelId} />;
       },
     };
-    const hiddenFields = ['numberOfObjects', 'lastUpdated'];
-    const visibleFields = ['field', 'indicator1', 'indicator2', 'subfield', 'data', 'source'];
     const readOnlyFields = ['source'];
+    const visibleFields = ['field', 'indicator1', 'indicator2', 'subfield', 'data', 'source'];
+    const hiddenFields = ['numberOfObjects', 'lastUpdated'];
     const actionSuppressor = {
       edit: this.suppressEdit,
       delete: this.suppressDelete,
+    };
+    const itemTemplate = {
+      indicator1: '*',
+      indicator2: '*',
+      subfield: '*',
+      data: '*',
+      source: 'USER',
     };
 
     return (
@@ -72,8 +140,9 @@ export class MARCFieldProtection extends Component {
         visibleFields={visibleFields}
         hiddenFields={hiddenFields}
         actionSuppressor={actionSuppressor}
-        itemTemplate={{ source: 'USER' }}
+        itemTemplate={itemTemplate}
         sortby="field"
+        validate={this.validateFields}
         stripes={stripes}
       />
     );
