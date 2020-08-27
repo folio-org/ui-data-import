@@ -20,7 +20,7 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const Classification = ({ mappingDetails }) => {
-  const prohibitionIconElement = <ProhibitionIcon />;
+  const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
   const classifications = getFieldValue(mappingDetails, 'classifications', 'subfields');
 
@@ -34,8 +34,8 @@ export const Classification = ({ mappingDetails }) => {
     ),
   };
   const classificationsFormatter = {
-    classificationTypeId: x => x?.classificationTypeId || prohibitionIconElement,
-    classificationNumber: x => x?.classificationNumber || prohibitionIconElement,
+    classificationTypeId: x => x?.classificationTypeId || prohibitionIconElement('classification-type-id'),
+    classificationNumber: x => x?.classificationNumber || prohibitionIconElement('classification-number'),
   };
   const classificationsFieldsMap = [
     {

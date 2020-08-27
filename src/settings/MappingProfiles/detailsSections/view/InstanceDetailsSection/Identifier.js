@@ -22,7 +22,7 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const Identifier = ({ mappingDetails }) => {
-  const prohibitionIconElement = <ProhibitionIcon />;
+  const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
   const identifiers = getFieldValue(mappingDetails, 'identifiers', 'subfields');
 
@@ -36,8 +36,8 @@ export const Identifier = ({ mappingDetails }) => {
     ),
   };
   const identifiersFormatter = {
-    identifierTypeId: x => x?.identifierTypeId || prohibitionIconElement,
-    value: x => x?.value || prohibitionIconElement,
+    identifierTypeId: x => x?.identifierTypeId || prohibitionIconElement('identifier-type-id'),
+    value: x => x?.value || prohibitionIconElement('identifier-value'),
   };
   const identifiersFieldsMap = [
     {

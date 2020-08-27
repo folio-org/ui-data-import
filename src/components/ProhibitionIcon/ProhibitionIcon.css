@@ -1,3 +1,6 @@
 .noValueAllowed {
   padding: 0 8px;
 }
+.iconContainer {
+  display: inline-block;
+}

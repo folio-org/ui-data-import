@@ -23,7 +23,7 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 import css from '../../../MappingProfiles.css';
 
 export const InstanceNotes = ({ mappingDetails }) => {
-  const prohibitionIconElement = <ProhibitionIcon />;
+  const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
   const notes = getFieldValue(mappingDetails, 'notes', 'subfields');
 
@@ -40,12 +40,12 @@ export const InstanceNotes = ({ mappingDetails }) => {
     ),
   };
   const notesFormatter = {
-    noteType: x => x?.noteType || prohibitionIconElement,
-    note: x => x?.note || prohibitionIconElement,
+    noteType: x => x?.noteType || prohibitionIconElement('notes-note-type'),
+    note: x => x?.note || prohibitionIconElement('notes-note'),
     staffOnly: x => {
       const staffOnlyLabelId = getBooleanLabelId(x?.staffOnly);
 
-      return getUnmappableValueById(staffOnlyLabelId);
+      return getUnmappableValueById(staffOnlyLabelId, 'notes-staff-only');
     },
   };
   const notesFieldsMap = [
