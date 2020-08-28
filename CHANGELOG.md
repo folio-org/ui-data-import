@@ -33,6 +33,7 @@
 * Field mappings: Item - update reference dropdown list for Item status (UIDATIMP-529)
 * Add validation for fields in MARC field protection settings (UIDATIMP-593)
 * Add hover text for "Cannot be mapped" icon in field mappings (UIDATIMP-558)
+* Remove "Edit job profile" from Choose jobs action menu (UIDATIMP-553)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
