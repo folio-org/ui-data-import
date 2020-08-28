@@ -246,22 +246,6 @@ describe('Uploading jobs display', () => {
           expect(jobProfileDetails.actionMenu.runProfile.isPresent).to.be.true;
         });
 
-        it('has "Edit job profile" option', () => {
-          expect(jobProfileDetails.actionMenu.editProfile.isPresent).to.be.true;
-        });
-
-        describe('edit job profile form', () => {
-          describe('appears', () => {
-            beforeEach(async () => {
-              await jobProfileDetails.actionMenu.editProfile.click();
-            });
-
-            it('upon click on pane header menu edit button', () => {
-              expect(jobProfileForm.isPresent).to.be.true;
-            });
-          });
-        });
-
         describe('run confirmation modal', () => {
           describe('appears', () => {
             beforeEach(async () => {
