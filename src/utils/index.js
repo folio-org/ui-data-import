@@ -32,3 +32,4 @@ export * from './hooks';
 export * from './useForceUpdate';
 export * from './getDecoratorValue';
 export * from './updateValueWithTemplate';
+export * from './fillEmptyFieldsWithValue';
