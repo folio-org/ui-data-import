@@ -2,6 +2,7 @@ import React, {
   useCallback,
   useEffect,
   useState,
+  Fragment,
 } from 'react';
 import { PropTypes } from 'prop-types';
 import {
@@ -35,6 +36,7 @@ import {
   validateMoveField,
   mappingMARCFieldShape,
   mappingMARCDataShape,
+  fillEmptyFieldsWithValue,
 } from '../../utils';
 
 import css from './MARCTable.css';
@@ -64,7 +66,7 @@ export const MARCTableRow = ({
   removePositionFromRow,
   removeSubactionFromRow,
   removeDataValuesFromRow,
-  fillEmptyFieldsWithValue,
+  columns,
 }) => {
   const {
     allowedSubactions,
@@ -693,18 +695,22 @@ export const MARCTableRow = ({
     );
   };
 
+  const cells = {
+    arrows: renderArrows,
+    action: renderActionField,
+    field: renderTagField,
+    indicator1: renderIndicator1Field,
+    indicator2: renderIndicator2Field,
+    subfield: renderSubfieldField,
+    subaction: renderSubactionField,
+    data: renderDataField,
+    position: renderPositionField,
+    addRemove: renderAddRemove,
+  };
+
   return (
     <div className={css.tableRow}>
-      {renderArrows()}
-      {renderActionField()}
-      {renderTagField()}
-      {renderIndicator1Field()}
-      {renderIndicator2Field()}
-      {renderSubfieldField()}
-      {renderSubactionField()}
-      {renderDataField()}
-      {renderPositionField()}
-      {renderAddRemove()}
+      {columns.map((columnName, i) => <Fragment key={i}>{cells[columnName]()}</Fragment>)}
     </div>
   );
 };
@@ -734,7 +740,7 @@ MARCTableRow.propTypes = {
   removePositionFromRow: PropTypes.func,
   removeSubactionFromRow: PropTypes.func,
   removeDataValuesFromRow: PropTypes.func,
-  fillEmptyFieldsWithValue: PropTypes.func,
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 MARCTableRow.defaultProps = {

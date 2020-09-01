@@ -24,7 +24,7 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const AdministrativeData = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
-  const prohibitionIconElement = <ProhibitionIcon />;
+  const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
   const discoverySuppress = getFieldValue(mappingDetails, 'discoverySuppress', 'booleanFieldAction');
   const staffSuppress = getFieldValue(mappingDetails, 'staffSuppress', 'booleanFieldAction');
@@ -101,7 +101,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.hrid`} />}
-            value={instanceHrid || prohibitionIconElement}
+            value={instanceHrid || prohibitionIconElement('instance-hrid')}
           />
         </Col>
         <Col
@@ -110,7 +110,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.source`} />}
-            value={metadataSource || prohibitionIconElement}
+            value={metadataSource || prohibitionIconElement('instance-source')}
           />
         </Col>
       </Row>
@@ -143,7 +143,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.modeOfIssuanceId`} />}
-            value={modeOfIssuance || prohibitionIconElement}
+            value={modeOfIssuance || prohibitionIconElement('instance-mode-of-issuance-id')}
           />
         </Col>
       </Row>

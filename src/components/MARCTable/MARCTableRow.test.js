@@ -7,14 +7,18 @@ import { renderWithIntl } from '../../../test/jest/helpers';
 
 import { MARCTableRow } from './MARCTableRow';
 
+import * as utils from '../../utils/fillEmptyFieldsWithValue';
+
 const onFieldUpdate = jest.fn();
 const removeSubfieldRows = jest.fn();
 const removeSubactionFromRow = jest.fn();
 const removeDataValuesFromRow = jest.fn();
-const fillEmptyFieldsWithValue = jest.fn();
+const fillEmptyFieldsWithValue = jest.spyOn(utils, 'fillEmptyFieldsWithValue');
 
 const mockedFunctions = [onFieldUpdate, removeSubfieldRows, removeSubactionFromRow,
   removeDataValuesFromRow, fillEmptyFieldsWithValue];
+const columns = ['arrows', 'action', 'field', 'indicator1', 'indicator2',
+  'subfield', 'subaction', 'data', 'position', 'addRemove'];
 
 const renderMARCTableRow = () => {
   const component = () => (
@@ -29,7 +33,7 @@ const renderMARCTableRow = () => {
       removeSubfieldRows={removeSubfieldRows}
       removeSubactionFromRow={removeSubactionFromRow}
       removeDataValuesFromRow={removeDataValuesFromRow}
-      fillEmptyFieldsWithValue={fillEmptyFieldsWithValue}
+      columns={columns}
     />
   );
 

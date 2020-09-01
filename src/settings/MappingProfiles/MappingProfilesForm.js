@@ -29,6 +29,7 @@ import {
   TextArea,
   Col,
   Row,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import { FullScreenForm } from '@folio/stripes-data-transfer-components';
 
@@ -62,7 +63,9 @@ import {
   PROFILE_TYPES,
   MAPPING_DETAILS_HEADLINE,
   MARC_TYPES,
+  FIELD_MAPPINGS_FOR_MARC,
   FIELD_MAPPINGS_FOR_MARC_OPTIONS,
+  fillEmptyFieldsWithValue,
 } from '../../utils';
 
 import styles from './MappingProfiles.css';
@@ -97,6 +100,7 @@ export const MappingProfilesFormComponent = ({
   const isSubmitDisabled = pristine || submitting;
 
   const [folioRecordType, setFolioRecordType] = useState(existingRecordType || null);
+  const [fieldMappingsForMARCSelectedOption, setFieldMappingsForMARCSelectedOption] = useState('');
   const [fieldMappingsForMARC, setFieldMappingsForMARC] = useState('');
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
@@ -105,6 +109,7 @@ export const MappingProfilesFormComponent = ({
     ...profile,
     mappingDetails: isEmpty(mappingDetails) ? getInitialDetails(prevExistingRecordType, true) : mappingDetails,
   });
+  const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   useLayoutEffect(() => {
     const isEqual = folioRecordType === prevExistingRecordType;
@@ -177,6 +182,15 @@ export const MappingProfilesFormComponent = ({
     return mappingDetails?.mappingFields?.[mappingFieldIndex]?.repeatableFieldAction || '';
   };
 
+  const handleMARCTypeChange = e => {
+    if (fieldMappingsForMARC && e.target.value !== fieldMappingsForMARC) {
+      setFieldMappingsForMARCSelectedOption(e.target.value);
+      setConfirmModalOpen(true);
+    } else {
+      setFieldMappingsForMARC(e.target.value);
+    }
+  };
+
   const detailsProps = {
     initialFields,
     referenceTables,
@@ -197,17 +211,39 @@ export const MappingProfilesFormComponent = ({
       label: intl.formatMessage({ id: option.label }),
     }
   ));
+  const updatesFieldMappingForMARCColumns = ['arrows', 'field', 'indicator1', 'indicator2', 'subfield', 'addRemove'];
+  const fieldMappingsForMARCPreviousOption = fieldMappingsForMARC && intl.formatMessage(
+    { id: FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label },
+  );
+  const fieldMappingsForMARCCurrentOption = fieldMappingsForMARCSelectedOption && intl.formatMessage(
+    { id: FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARCSelectedOption)?.label },
+  );
+
+  const renderMARCTable = () => {
+    switch (fieldMappingsForMARC) {
+      case FIELD_MAPPINGS_FOR_MARC.UPDATES:
+        return (
+          <MARCTable
+            fields={marcTableFields}
+            onChange={setFormFieldValue}
+            columns={updatesFieldMappingForMARCColumns}
+          />
+        );
+      default:
+        return (
+          <MARCTable
+            fields={marcTableFields}
+            onChange={setFormFieldValue}
+          />
+        );
+    }
+  };
 
   const renderDetails = {
     INSTANCE: <MappingInstanceDetails {...detailsProps} />,
     HOLDINGS: <MappingHoldingsDetails {...detailsProps} />,
     ITEM: <MappingItemDetails {...detailsProps} />,
-    MARC_BIBLIOGRAPHIC: fieldMappingsForMARC && (
-      <MARCTable
-        fields={marcTableFields}
-        onChange={setFormFieldValue}
-      />
-    ),
+    MARC_BIBLIOGRAPHIC: fieldMappingsForMARC && renderMARCTable(),
   };
 
   return (
@@ -282,7 +318,7 @@ export const MappingProfilesFormComponent = ({
                           value={fieldMappingsForMARC}
                           label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}
                           placeholder={placeholder}
-                          onChange={e => setFieldMappingsForMARC(e.target.value)}
+                          onChange={handleMARCTypeChange}
                           required
                         />
                       </div>
@@ -357,6 +393,38 @@ export const MappingProfilesFormComponent = ({
             />
           </Accordion>
         </AccordionSet>
+        <ConfirmationModal
+          id="confirm-marc-type-change"
+          open={isConfirmEditModalOpen}
+          heading={<FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.header" />}
+          message={(
+            <FormattedMessage
+              id="ui-data-import.settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.message"
+              values={{
+                previousType: fieldMappingsForMARCPreviousOption,
+                currentType: fieldMappingsForMARCCurrentOption,
+              }}
+            />
+          )}
+          confirmLabel={<FormattedMessage id="ui-data-import.continue" />}
+          onConfirm={() => {
+            let initalMarcMappingDetails = getInitialDetails(folioRecordType, true)?.marcMappingDetails;
+
+            if (fieldMappingsForMARCSelectedOption === FIELD_MAPPINGS_FOR_MARC.UPDATES) {
+              initalMarcMappingDetails = [
+                fillEmptyFieldsWithValue(
+                  initalMarcMappingDetails[0],
+                  ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*',
+                ),
+              ];
+            }
+
+            setFieldMappingsForMARC(fieldMappingsForMARCSelectedOption);
+            setFormFieldValue('profile.mappingDetails.marcMappingDetails', initalMarcMappingDetails);
+            setConfirmModalOpen(false);
+          }}
+          onCancel={() => setConfirmModalOpen(false)}
+        />
       </FullScreenForm>
     </>
   );

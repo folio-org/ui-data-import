@@ -79,7 +79,7 @@ export class UploadingJobsDisplay extends Component {
     renderLeaveModal: false,
     recordsLoadingInProgress: false,
     JobProfilesComponent: null,
-    actionMenuItems: ['run', 'editJobProfile'],
+    actionMenuItems: ['run'],
   };
 
   async componentDidMount() {
