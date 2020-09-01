@@ -472,7 +472,6 @@
     "settings.mappingProfiles.map.instance.subject.section": "الموضوع",
     "settings.mappingProfiles.map.instance.descriptiveData.field.subjects": "الموضوعات",
     "settings.mappingProfiles.map.holdings.field.digitizationPolicy": "سياسة الرقمنة",
-    "noValueAllowed": "غير مسموح بقيمة",
     "settings.mappingProfiles.map.wrapper.acceptedValues": "القيم المقبولة",
     "settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesTitle": "عنوان",
     "settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesHrid": "رقم التعريف القابل للقراءة بشريًا للوعاء",
@@ -741,5 +740,12 @@
     "actionSelect.update": "تحديث (كل أنواع التسجيلات ما عدا الطلبيات)",
     "settings.mappingProfiles.map.item.status.withdrawn": "مسحوب",
     "settings.marcFieldProtection.system": "النظام",
-    "settings.marcFieldProtection.user": "المستخدم"
+    "settings.marcFieldProtection.user": "المستخدم",
+    "settings.mappingProfiles.canNotBeMapped": "لا يمكن تخطيطه",
+    "validation.enterAsteriskOrNumeric": "يرجى إدخال * أو قيمة رقمية",
+    "validation.enterAsteriskOrAlphanumeric": "يرجى إدخال * أو قيمة أبجدية رقمية",
+    "validation.enterAsteriskOrOther": "يرجى إدخال * أو بيانات أخرى",
+    "continue": "متابعة",
+    "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.header": "يرجى التأكيد",
+    "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.message": "سيتم حذف تفاصيل وضع تخطيط حقل \"{previousType}\" السابق عند التبديل إلى \"{currentType}\". هل تريد المتابعة؟"
 }

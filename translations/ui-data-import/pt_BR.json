@@ -472,7 +472,6 @@
     "settings.mappingProfiles.map.instance.subject.section": "Assunto",
     "settings.mappingProfiles.map.instance.descriptiveData.field.subjects": "Assuntos",
     "settings.mappingProfiles.map.holdings.field.digitizationPolicy": "Política de digitalização",
-    "noValueAllowed": "Nenhum valor permitido",
     "settings.mappingProfiles.map.wrapper.acceptedValues": "Valores aceitos",
     "settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesTitle": "Título",
     "settings.mappingProfiles.map.titleData.precedingTitles.field.precedingTitlesHrid": "HRID da instância",
@@ -741,5 +740,12 @@
     "actionSelect.update": "Atualizar (todos os tipos de registro, exceto pedidos)",
     "settings.mappingProfiles.map.item.status.withdrawn": "Descartado",
     "settings.marcFieldProtection.system": "Sistema",
-    "settings.marcFieldProtection.user": "Usuário"
+    "settings.marcFieldProtection.user": "Usuário",
+    "settings.mappingProfiles.canNotBeMapped": "Não pode ser mapeado",
+    "validation.enterAsteriskOrNumeric": "Insira * ou valor numérico",
+    "validation.enterAsteriskOrAlphanumeric": "Insira * ou valor alfanumérico",
+    "validation.enterAsteriskOrOther": "Insira * ou outros dados",
+    "continue": "Continuar",
+    "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.header": "Por favor, confirme",
+    "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.message": "Os detalhes do perfil de mapeamento de campo \"{previousType}\" serão excluídos quando você alternar para \"{currentType}\". Você deseja  continuar?"
 }
