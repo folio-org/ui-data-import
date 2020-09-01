@@ -20,7 +20,7 @@ export const MARCTableRowContainer = ({
   removePositionFromRow,
   removeSubactionFromRow,
   removeDataValuesFromRow,
-  fillEmptyFieldsWithValue,
+  columns,
 }) => {
   const renderRow = (data, i) => {
     const subfieldsData = data.field?.subfields;
@@ -34,6 +34,7 @@ export const MARCTableRowContainer = ({
         className={css.tableRowContainer}
       >
         <MARCTableRow
+          columns={columns}
           name={name}
           rowData={data}
           order={data.order}
@@ -58,7 +59,6 @@ export const MARCTableRowContainer = ({
           removePositionFromRow={removePositionFromRow}
           removeSubactionFromRow={removeSubactionFromRow}
           removeDataValuesFromRow={removeDataValuesFromRow}
-          fillEmptyFieldsWithValue={fillEmptyFieldsWithValue}
         />
         {containsSubsequentLines &&
           data.field.subfields.map((subfield, idx) => idx !== 0 && (
@@ -68,6 +68,7 @@ export const MARCTableRowContainer = ({
               data-test-marc-subfield-row={idx}
             >
               <MARCTableRow
+                columns={columns}
                 name={name}
                 order={data.order}
                 action={data.action}
@@ -106,5 +107,5 @@ MARCTableRowContainer.propTypes = {
   removePositionFromRow: PropTypes.func.isRequired,
   removeSubactionFromRow: PropTypes.func.isRequired,
   removeDataValuesFromRow: PropTypes.func.isRequired,
-  fillEmptyFieldsWithValue: PropTypes.func.isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
