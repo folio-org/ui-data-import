@@ -5,7 +5,6 @@ import React, {
 import { PropTypes } from 'prop-types';
 
 import {
-  get,
   set,
   cloneDeep,
 } from 'lodash';
@@ -22,6 +21,7 @@ import { mappingMARCFieldShape } from '../../utils';
 export const MARCTable = ({
   fields,
   onChange,
+  columns,
 }) => {
   const [rows, setRows] = useState([]);
 
@@ -171,28 +171,12 @@ export const MARCTable = ({
     return updatedField;
   };
 
-  const fillEmptyFieldsWithValue = (field, fieldNames, valueToFill) => {
-    const updatedField = cloneDeep(field);
-
-    fieldNames.forEach(path => {
-      const fieldValue = get(field, path, '');
-
-      if (!fieldValue) {
-        set(updatedField, path, valueToFill);
-      }
-    });
-
-    return updatedField;
-  };
-
   const onFieldUpdate = (order, rowToUpdate) => {
     const rowToUpdateIndex = rows.findIndex(row => row.order === order);
 
     onChange(`profile.mappingDetails.marcMappingDetails[${rowToUpdateIndex}]`, rowToUpdate);
   };
 
-  const columns = ['arrows', 'action', 'field', 'indicator1', 'indicator2',
-    'subfield', 'subaction', 'data', 'position', 'addRemove'];
   const columnWidths = {
     arrows: '70px',
     action: '100px',
@@ -216,6 +200,7 @@ export const MARCTable = ({
         columnWidths={columnWidths}
       />
       <MARCTableRowContainer
+        columns={columns}
         fields={rows}
         columnWidths={columnWidths}
         onFieldUpdate={onFieldUpdate}
@@ -228,7 +213,6 @@ export const MARCTable = ({
         removePositionFromRow={removePositionFromRow}
         removeSubactionFromRow={removeSubactionFromRow}
         removeDataValuesFromRow={removeDataValuesFromRow}
-        fillEmptyFieldsWithValue={fillEmptyFieldsWithValue}
       />
     </div>
   );
@@ -237,4 +221,10 @@ export const MARCTable = ({
 MARCTable.propTypes = {
   fields: PropTypes.arrayOf(mappingMARCFieldShape.isRequired).isRequired,
   onChange: PropTypes.func,
+  columns: PropTypes.arrayOf(PropTypes.string),
+};
+
+MARCTable.defaultProps = {
+  columns: ['arrows', 'action', 'field', 'indicator1', 'indicator2',
+    'subfield', 'subaction', 'data', 'position', 'addRemove'],
 };
