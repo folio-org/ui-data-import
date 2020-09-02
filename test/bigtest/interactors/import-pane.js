@@ -10,7 +10,7 @@ import {
 import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 
-import css from '../../../src/components/ImportJobs/components/FileUploader/FileUploader.css';
+import css from '../../../src/components/ImportJobs/ImportJobs.css';
 
 class FileExtensionsModal extends ConfirmationModalInteractor {
   header = new Interactor('[data-test-file-extensions-modal-header]');

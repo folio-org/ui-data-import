@@ -57,6 +57,7 @@ export class Home extends Component {
             )}
             lastMenu={this.addManageJobs()}
           >
+            <ImportJobs />
             <Jobs />
           </Pane>
           <Pane
@@ -68,12 +69,6 @@ export class Home extends Component {
             <JobLogs />
           </Pane>
         </DataFetcher>
-        <Pane
-          defaultWidth="25%"
-          paneTitle={<FormattedMessage id="ui-data-import.importPaneTitle" />}
-        >
-          <ImportJobs />
-        </Pane>
       </Paneset>
     );
   }
