@@ -35,6 +35,7 @@
 * Add hover text for "Cannot be mapped" icon in field mappings (UIDATIMP-558)
 * Remove "Edit job profile" from Choose jobs action menu (UIDATIMP-553)
 * MARC Bib field mapping profile: details for Update Selected fields on Create/Edit screen (UIDATIMP-613)
+* Update react-intl to v5 (UIDATIMP-643)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
