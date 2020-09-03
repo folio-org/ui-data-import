@@ -13,14 +13,14 @@ const REMOVE_OPTION_VALUE = '###REMOVE###';
  * @param {string|Object} [errorMessage] Validation error message
  * @return {null|*} Validation message
  */
-export const validateRequiredField = (value, errorMessage) => {
+export const validateRequiredField = value => {
   const isValid = !isEmpty(value);
 
   if (isValid) {
     return null;
   }
 
-  return errorMessage || <FormattedMessage id="ui-data-import.validation.enterValue" />;
+  return <FormattedMessage id="ui-data-import.validation.enterValue" />;
 };
 
 /**
