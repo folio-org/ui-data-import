@@ -22,10 +22,9 @@ import {
   stripesShape,
 } from '@folio/stripes/core';
 
-import {
-  FileUploader,
-  ReturnToAssignJobs,
-} from './components';
+import { FileUploader } from '@folio/stripes-data-transfer-components';
+import { ReturnToAssignJobs } from './components';
+
 import { Preloader } from '../Preloader';
 
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
@@ -40,7 +39,7 @@ import {
   ERROR_MODAL_META_TYPES,
 } from './components/getErrorModalMeta';
 
-import css from './components/FileUploader/FileUploader.css';
+import css from './ImportJobs.css';
 
 @withRouter
 @withStripes

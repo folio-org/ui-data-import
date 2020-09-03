@@ -36,6 +36,7 @@
 * Remove "Edit job profile" from Choose jobs action menu (UIDATIMP-553)
 * MARC Bib field mapping profile: details for Update Selected fields on Create/Edit screen (UIDATIMP-613)
 * Update react-intl to v5 (UIDATIMP-643)
+* Relocate the file upload area on the Data Import landing page (UIDATIMP-633)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
