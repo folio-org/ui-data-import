@@ -40,6 +40,7 @@
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
+* Fix for validation function `validateRequiredFields` (UIDATIMP-645)
 
 ## [2.1.4](https://github.com/folio-org/ui-data-import/tree/v2.1.4) (2020-08-13)
 

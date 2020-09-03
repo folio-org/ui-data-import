@@ -8,10 +8,7 @@ import {
 import { stripesConnect } from '@folio/stripes/core';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 
-import {
-  MARC_FIELD_PROTECTION_SOURCE,
-  validateRequiredField,
-} from '../../utils';
+import { MARC_FIELD_PROTECTION_SOURCE } from '../../utils';
 
 const validateField = value => {
   const checkFieldRange = () => {
@@ -39,12 +36,16 @@ const validateSubfield = (subfieldValue, fieldValue) => {
   let pattern = /^[*\w]$/;
   let errorMessage = <FormattedMessage id="ui-data-import.validation.enterAsteriskOrAlphanumeric" />;
 
-  if (fieldValue === '*') {
+  if (!subfieldValue) {
+    errorMessage = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
+  }
+
+  if (subfieldValue && fieldValue === '*') {
     pattern = /^\w$/;
     errorMessage = <FormattedMessage id="ui-data-import.validation.valueType" />;
   }
 
-  if (!subfieldValue || subfieldValue.match(pattern)) {
+  if (subfieldValue.match(pattern)) {
     return null;
   }
 
@@ -76,17 +77,13 @@ export class MARCFieldProtection extends Component {
 
   suppressDelete = ({ source }) => source === MARC_FIELD_PROTECTION_SOURCE.SYSTEM.value;
 
-  validateFields = item => {
-    const requiredFieldErrorMessage = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
-
-    return {
-      field: validateField(item.field),
-      indicator1: validateAlphanumeric(item.indicator1),
-      indicator2: validateAlphanumeric(item.indicator2),
-      subfield: validateRequiredField(item.subfield, requiredFieldErrorMessage) || validateSubfield(item.subfield, item.field),
-      data: validateData(item.data),
-    };
-  };
+  validateFields = item => ({
+    field: validateField(item.field),
+    indicator1: validateAlphanumeric(item.indicator1),
+    indicator2: validateAlphanumeric(item.indicator2),
+    subfield: validateSubfield(item.subfield, item.field),
+    data: validateData(item.data),
+  });
 
   render() {
     const {
