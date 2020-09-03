@@ -101,7 +101,7 @@ export const MappingProfilesFormComponent = ({
 
   const [folioRecordType, setFolioRecordType] = useState(existingRecordType || null);
   const [fieldMappingsForMARCSelectedOption, setFieldMappingsForMARCSelectedOption] = useState('');
-  const [fieldMappingsForMARC, setFieldMappingsForMARC] = useState('');
+  const [fieldMappingsForMARC, setFieldMappingsForMARC] = useState(mappingDetails?.marcMappingOption || '');
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
   const [prevExistingRecordType, setPrevExistingRecordType] = useState(existingRecordType);
@@ -312,11 +312,12 @@ export const MappingProfilesFormComponent = ({
                   <FormattedMessage id="ui-data-import.fieldMappingsForMarc.placeholder">
                     {placeholder => (
                       <div data-test-field-mapping-foer-marc-field>
-                        {/* TODO: Wrap into the <Field> component when BE is done */}
-                        <Select
-                          dataOptions={fieldMappingsForMARCOptions}
-                          value={fieldMappingsForMARC}
+                        <Field
                           label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}
+                          name="profile.mappingDetails.marcMappingOption"
+                          component={Select}
+                          validate={[validateRequiredField]}
+                          dataOptions={fieldMappingsForMARCOptions}
                           placeholder={placeholder}
                           onChange={handleMARCTypeChange}
                           required
