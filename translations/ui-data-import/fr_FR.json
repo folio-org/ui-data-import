@@ -1,7 +1,6 @@
 {
     "jobsPaneTitle": "Tâches",
     "logsPaneTitle": "Logs",
-    "importPaneTitle": "Importation",
     "viewAllLogs": "Tout afficher",
     "manageJobs": "Gérer",
     "previewJobs": "Aperçus",
@@ -745,7 +744,7 @@
     "validation.enterAsteriskOrNumeric": "Veuillez saisir * ou une valeur numérique",
     "validation.enterAsteriskOrAlphanumeric": "Veuillez saisir * ou une valeur alphanumérique",
     "validation.enterAsteriskOrOther": "Veuillez saisir * ou d'autres données",
-    "continue": "Continue",
-    "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.header": "Please confirm",
+    "continue": "Continuer",
+    "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.header": "Merci de confirmer",
     "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.message": "The previous \"{previousType}\" field mapping profile details will be deleted when you switch to \"{currentType}\". Do you want to continue?"
 }
