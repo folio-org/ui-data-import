@@ -132,6 +132,7 @@
   "fieldMappingsForMarc": "Field mappings for MARC",
   "fieldMappingsForMarc.modifications": "Modifications",
   "fieldMappingsForMarc.updates": "Updates",
+  "fieldMappingsForMarc.updates.subtext": "If updates should only affect specific fields, add them here",
   "fieldMappingsForMarc.placeholder": "Select field mappings for MARC",
   "chooseFolioRecordType": "Select FOLIO record type",
   "jobExecutionHrId": "ID",
