@@ -182,12 +182,28 @@ export const MappingProfilesFormComponent = ({
     return mappingDetails?.mappingFields?.[mappingFieldIndex]?.repeatableFieldAction || '';
   };
 
+  const setInitalMarcMappingDetails = selectedOption => {
+    let initalMarcMappingDetails = getInitialDetails(folioRecordType, true)?.marcMappingDetails;
+
+    if (selectedOption === FIELD_MAPPINGS_FOR_MARC.UPDATES) {
+      initalMarcMappingDetails = [
+        fillEmptyFieldsWithValue(
+          initalMarcMappingDetails[0],
+          ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*',
+        ),
+      ];
+    }
+
+    setFormFieldValue('profile.mappingDetails.marcMappingDetails', initalMarcMappingDetails);
+  };
+
   const handleMARCTypeChange = e => {
     if (fieldMappingsForMARC && e.target.value !== fieldMappingsForMARC) {
       setFieldMappingsForMARCSelectedOption(e.target.value);
       setConfirmModalOpen(true);
     } else {
       setFieldMappingsForMARC(e.target.value);
+      setInitalMarcMappingDetails(e.target.value);
     }
   };
 
@@ -356,6 +372,12 @@ export const MappingProfilesFormComponent = ({
                         mappingTypeLabelId={FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label}
                         headlineProps={{ margin: 'small' }}
                       />
+
+                      {(fieldMappingsForMARC === FIELD_MAPPINGS_FOR_MARC.UPDATES) && (
+                        <span>
+                          <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updates.subtext" />
+                        </span>
+                      )}
                     </Col>
                     {!isMARCType(folioRecordType) && (
                       <Col>
@@ -409,22 +431,14 @@ export const MappingProfilesFormComponent = ({
           )}
           confirmLabel={<FormattedMessage id="ui-data-import.continue" />}
           onConfirm={() => {
-            let initalMarcMappingDetails = getInitialDetails(folioRecordType, true)?.marcMappingDetails;
-
-            if (fieldMappingsForMARCSelectedOption === FIELD_MAPPINGS_FOR_MARC.UPDATES) {
-              initalMarcMappingDetails = [
-                fillEmptyFieldsWithValue(
-                  initalMarcMappingDetails[0],
-                  ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*',
-                ),
-              ];
-            }
-
+            setInitalMarcMappingDetails(fieldMappingsForMARCSelectedOption);
             setFieldMappingsForMARC(fieldMappingsForMARCSelectedOption);
-            setFormFieldValue('profile.mappingDetails.marcMappingDetails', initalMarcMappingDetails);
             setConfirmModalOpen(false);
           }}
-          onCancel={() => setConfirmModalOpen(false)}
+          onCancel={() => {
+            setFormFieldValue('profile.mappingDetails.marcMappingOption', fieldMappingsForMARC);
+            setConfirmModalOpen(false);
+          }}
         />
       </FullScreenForm>
     </>
