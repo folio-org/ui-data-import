@@ -39,6 +39,7 @@ const {
 
 const columnMapping = {
   fileName: <FormattedMessage id="ui-data-import.fileName" />,
+  status: <FormattedMessage id="ui-data-import.status" />,
   hrId: <FormattedMessage id="ui-data-import.jobExecutionHrId" />,
   jobProfileName: <FormattedMessage id="ui-data-import.jobProfileName" />,
   totalRecords: <FormattedMessage id="ui-data-import.records" />,
@@ -48,6 +49,7 @@ const columnMapping = {
 
 const visibleColumns = [
   'fileName',
+  'status',
   'hrId',
   'jobProfileName',
   'totalRecords',
@@ -98,6 +100,7 @@ class ViewAllLogs extends Component {
             logsSearchTemplate,
             {
               fileName: 'fileName',
+              status: 'status',
               hrId: 'hrId/number',
               jobProfileName: 'jobProfileInfo.name',
               totalRecords: 'progress.total/number',
@@ -187,6 +190,7 @@ class ViewAllLogs extends Component {
           {record.fileName}
         </Button>
       ),
+      status: listTemplate({ intl }).status,
       runBy: listTemplate({ intl }).runBy,
       completedDate: listTemplate({ intl }).completedDate,
       jobProfileName: listTemplate({ intl }).jobProfileName,

@@ -118,6 +118,22 @@ export const listTemplate = ({
 
     return <DateColumn value={updatedDate} />;
   },
+  status: record => {
+    const {
+      status,
+      progress,
+    } = record;
+
+    if (status === 'ERROR') {
+      if (progress && progress.current > 0) {
+        return <FormattedMessage id="ui-data-import.completedWithErrors" />;
+      }
+
+      return <FormattedMessage id="ui-data-import.failed" />;
+    }
+
+    return <FormattedMessage id="ui-data-import.completed" />;
+  },
   updatedBy: record => (
     <DefaultColumn
       value={formatUserName(record.userInfo)}
