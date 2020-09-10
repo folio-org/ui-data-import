@@ -13,8 +13,11 @@ import {
   TagsColumn,
   DateColumn,
 } from './ColumnTemplates';
-import { formatUserName } from '../../utils';
-import { ENTITY_KEYS } from '../../utils/constants';
+import {
+  formatUserName,
+  ENTITY_KEYS,
+  STATUS_ERROR,
+} from '../../utils';
 
 /**
  * Retrieves and returns list of Column Templates renderProps
@@ -124,7 +127,7 @@ export const listTemplate = ({
       progress,
     } = record;
 
-    if (status === 'ERROR') {
+    if (status === STATUS_ERROR) {
       if (progress && progress.current > 0) {
         return <FormattedMessage id="ui-data-import.completedWithErrors" />;
       }
