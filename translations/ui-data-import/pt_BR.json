@@ -746,5 +746,6 @@
     "validation.enterAsteriskOrOther": "Insira * ou outros dados",
     "continue": "Continuar",
     "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.header": "Por favor, confirme",
-    "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.message": "Os detalhes do perfil de mapeamento de campo \"{previousType}\" serão excluídos quando você alternar para \"{currentType}\". Você deseja  continuar?"
+    "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.message": "Os detalhes do perfil de mapeamento de campo \"{previousType}\" serão excluídos quando você alternar para \"{currentType}\". Você deseja  continuar?",
+    "fieldMappingsForMarc.updates.subtext": "Se as atualizações afetarem apenas campos específicos, adicione-as aqui"
 }
