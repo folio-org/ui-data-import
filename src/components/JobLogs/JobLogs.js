@@ -29,6 +29,7 @@ export class JobLogs extends Component {
 
   columnMapping = {
     fileName: <FormattedMessage id="ui-data-import.fileName" />,
+    status: <FormattedMessage id="ui-data-import.status" />,
     hrId: <FormattedMessage id="ui-data-import.jobExecutionHrId" />,
     jobProfileName: <FormattedMessage id="ui-data-import.jobProfileName" />,
     totalRecords: <FormattedMessage id="ui-data-import.records" />,
@@ -38,6 +39,7 @@ export class JobLogs extends Component {
 
   visibleColumns = [
     'fileName',
+    'status',
     'hrId',
     'jobProfileName',
     'totalRecords',
