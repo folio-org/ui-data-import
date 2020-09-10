@@ -38,6 +38,7 @@
 * Update react-intl to v5 (UIDATIMP-643)
 * Relocate the file upload area on the Data Import landing page (UIDATIMP-633)
 * Sync with DTO updates. Modifying or updating the SRS MARC record (UIDATIMP-620)
+* MARC Bib field mapping profile: details for Update Selected fields on View screen (UIDATIMP-614)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

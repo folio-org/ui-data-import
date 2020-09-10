@@ -10,6 +10,8 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
+import { getTrimmedValue } from '../../../../utils';
+
 import { Section } from '../../..';
 
 import css from '../ViewMatchCriterion.css';
@@ -21,7 +23,7 @@ export const MARCFieldSection = ({
 }) => {
   const getValue = fieldName => {
     const value = expressionDetails.fields?.find(field => field.label === fieldName)?.value;
-    const formattedValue = value && value.trim ? value.trim() : value;
+    const formattedValue = getTrimmedValue(value);
 
     return formattedValue || <NoValue />;
   };

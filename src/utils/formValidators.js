@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { isEmpty } from 'lodash';
 
+import { getTrimmedValue } from '.';
+
 const REMOVE_OPTION_VALUE = '###REMOVE###';
 
 /**
@@ -79,7 +81,7 @@ export const validateFileExtension = value => {
  */
 export const validateAlphanumericOrAllowedValue = (value, allowedValue) => {
   const pattern = /^[a-zA-Z0-9]*$/;
-  const val = value && value.trim ? value.trim() : value;
+  const val = getTrimmedValue(value);
 
   if (isEmpty(val) || val === allowedValue || val.match(pattern)) {
     return null;
@@ -89,7 +91,7 @@ export const validateAlphanumericOrAllowedValue = (value, allowedValue) => {
 };
 
 export const validateValueLength = (value, maxLength) => {
-  const val = value && value.trim ? value.trim() : value;
+  const val = getTrimmedValue(value);
 
   if (!val || !val.length || val.length <= maxLength) {
     return null;
@@ -191,7 +193,7 @@ export const validateMARCWithDate = (value, isRemoveValueProhibited) => {
 };
 
 export const validateRepeatableActionsField = (value, hasFields) => {
-  const val = value && value.trim ? value.trim() : value;
+  const val = getTrimmedValue(value);
 
   if (!isEmpty(val) && !hasFields) {
     return <FormattedMessage id="ui-data-import.validation.chooseAtLeastOneValue" />;
