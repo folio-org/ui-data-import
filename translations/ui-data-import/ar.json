@@ -747,5 +747,9 @@
     "continue": "متابعة",
     "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.header": "يرجى التأكيد",
     "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.message": "سيتم حذف تفاصيل وضع تخطيط حقل \"{previousType}\" السابق عند التبديل إلى \"{currentType}\". هل تريد المتابعة؟",
-    "fieldMappingsForMarc.updates.subtext": "إذا كان من المفترض أن تؤثر التحديثات على حقول معينة فقط، قم بإضافتها هنا"
+    "fieldMappingsForMarc.updates.subtext": "إذا كان من المفترض أن تؤثر التحديثات على حقول معينة فقط، قم بإضافتها هنا",
+    "status": "الحالة",
+    "failed": "فشل",
+    "completed": "اكتمل",
+    "completedWithErrors": "اكتمل مع وجود أخطاء"
 }
