@@ -40,6 +40,7 @@
 * Sync with DTO updates. Modifying or updating the SRS MARC record (UIDATIMP-620)
 * MARC Bib field mapping profile: details for Update Selected fields on View screen (UIDATIMP-614)
 * Add column for Job status and Resequence columns (UIDATIMP-615)
+* Match Profiles: Remove EDIFACT invoice as a match option (UIDATIMP-353)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
