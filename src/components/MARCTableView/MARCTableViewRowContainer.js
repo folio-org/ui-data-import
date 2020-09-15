@@ -8,6 +8,7 @@ import { mappingMARCFieldShape } from '../../utils';
 import css from '../MARCTable/MARCTable.css';
 
 export const MARCTableViewRowContainer = ({
+  columns,
   fields,
   columnWidths,
 }) => {
@@ -15,16 +16,23 @@ export const MARCTableViewRowContainer = ({
     const subfieldsData = data.field?.subfields;
     const containsSubsequentLines = subfieldsData?.length > 1;
 
-    const getRowData = index => ({
-      action: data.action,
-      field: data.field?.field,
-      indicator1: data.field?.indicator1,
-      indicator2: data.field?.indicator2,
-      subfield: subfieldsData?.[index].subfield,
-      subaction: subfieldsData?.[index].subaction,
-      data: subfieldsData?.[index].data,
-      position: subfieldsData?.[index].position,
-    });
+    const getRowData = index => {
+      const rowData = {
+        action: data.action,
+        field: data.field?.field,
+        indicator1: data.field?.indicator1,
+        indicator2: data.field?.indicator2,
+        subfield: subfieldsData?.[index].subfield,
+        subaction: subfieldsData?.[index].subaction,
+        data: subfieldsData?.[index].data,
+        position: subfieldsData?.[index].position,
+      };
+
+      return columns.reduce((acc, column) => ({
+        ...acc,
+        [column]: rowData[column],
+      }), {});
+    };
 
     return (
       <div
@@ -58,6 +66,7 @@ export const MARCTableViewRowContainer = ({
 };
 
 MARCTableViewRowContainer.propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   fields: PropTypes.arrayOf(mappingMARCFieldShape.isRequired).isRequired,
   columnWidths: PropTypes.object.isRequired,
 };

@@ -169,13 +169,11 @@ export const MatchCriterion = ({
     MARC_BIBLIOGRAPHIC: incomingQualifierSectionElement,
     MARC_HOLDINGS: incomingQualifierSectionElement,
     MARC_AUTHORITY: incomingQualifierSectionElement,
-    EDIFACT_INVOICE: incomingQualifierSectionElement,
   };
   const incomingRecordQualifierPartSections = {
     MARC_BIBLIOGRAPHIC: incomingQualifierPartSectionElement,
     MARC_HOLDINGS: incomingQualifierPartSectionElement,
     MARC_AUTHORITY: incomingQualifierPartSectionElement,
-    EDIFACT_INVOICE: incomingQualifierPartSectionElement,
   };
   const existingRecordFieldSections = {
     INSTANCE: existingSectionFolioElement,

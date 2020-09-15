@@ -746,5 +746,10 @@
     "validation.enterAsteriskOrOther": "Veuillez saisir * ou d'autres données",
     "continue": "Continuer",
     "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.header": "Merci de confirmer",
-    "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.message": "The previous \"{previousType}\" field mapping profile details will be deleted when you switch to \"{currentType}\". Do you want to continue?"
+    "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.message": "The previous \"{previousType}\" field mapping profile details will be deleted when you switch to \"{currentType}\". Do you want to continue?",
+    "fieldMappingsForMarc.updates.subtext": "If updates should only affect specific fields, add them here",
+    "status": "Status",
+    "failed": "Failed",
+    "completed": "Completed",
+    "completedWithErrors": "Completed with errors"
 }
