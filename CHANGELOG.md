@@ -38,6 +38,7 @@
 * Update react-intl to v5 (UIDATIMP-643)
 * Relocate the file upload area on the Data Import landing page (UIDATIMP-633)
 * Sync with DTO updates. Modifying or updating the SRS MARC record (UIDATIMP-620)
+* Update Datepicker decorator (TextDate component) (UIDATIMP-638)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
