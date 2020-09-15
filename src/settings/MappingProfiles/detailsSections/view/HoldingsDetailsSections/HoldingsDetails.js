@@ -37,18 +37,22 @@ export const HoldingsDetails = ({ mappingDetails }) => {
   const digitizationPolicy = getFieldValue(mappingDetails, 'digitizationPolicy', 'value');
   const retentionPolicy = getFieldValue(mappingDetails, 'retentionPolicy', 'value');
 
-  const statementsVisibleColumns = ['statement', 'note'];
+  const statementsVisibleColumns = ['statement', 'note', 'staffNote'];
   const statementsMapping = {
     statement: (
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />
     ),
     note: (
-      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementNote`} />
+      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />
+    ),
+    staffNote: (
+      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />
     ),
   };
   const statementsFormatter = {
     statement: x => x?.statement || noValueElement,
     note: x => x?.note || noValueElement,
+    staffNote: x => x?.staffNote || noValueElement,
   };
   const statementsFieldsMap = [
     {
@@ -57,22 +61,29 @@ export const HoldingsDetails = ({ mappingDetails }) => {
     }, {
       field: 'note',
       key: 'value',
+    }, {
+      field: 'staffNote',
+      key: 'value',
     },
   ];
   const statementsData = transformSubfieldsData(statements, statementsFieldsMap);
 
-  const statementsForSupplementVisibleColumns = ['statement', 'note'];
+  const statementsForSupplementVisibleColumns = ['statement', 'note', 'staffNote'];
   const statementsForSupplementMapping = {
     statement: (
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />
     ),
     note: (
-      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementNote`} />
+      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />
+    ),
+    staffNote: (
+      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />
     ),
   };
   const statementsForSupplementFormatter = {
     statement: x => x?.statement || noValueElement,
     note: x => x?.note || noValueElement,
+    staffNote: x => x?.staffNote || noValueElement,
   };
   const statementsForSupplementFieldsMap = [
     {
@@ -81,22 +92,29 @@ export const HoldingsDetails = ({ mappingDetails }) => {
     }, {
       field: 'note',
       key: 'value',
+    }, {
+      field: 'staffNote',
+      key: 'value',
     },
   ];
   const statementsForSupplementData = transformSubfieldsData(statementsForSupplement, statementsForSupplementFieldsMap);
 
-  const statementsForIndexesVisibleColumns = ['statement', 'note'];
+  const statementsForIndexesVisibleColumns = ['statement', 'note', 'staffNote'];
   const statementsForIndexesMapping = {
     statement: (
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />
     ),
     note: (
-      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementNote`} />
+      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />
+    ),
+    staffNote: (
+      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />
     ),
   };
   const statementsForIndexesFormatter = {
     statement: x => x?.statement || noValueElement,
     note: x => x?.note || noValueElement,
+    staffNote: x => x?.staffNote || noValueElement,
   };
   const statementsForIndexesFieldsMap = [
     {
@@ -104,6 +122,9 @@ export const HoldingsDetails = ({ mappingDetails }) => {
       key: 'value',
     }, {
       field: 'note',
+      key: 'value',
+    }, {
+      field: 'staffNote',
       key: 'value',
     },
   ];
