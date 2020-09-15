@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { isEmpty } from 'lodash';
 
+import { NoValue } from '@folio/stripes/components';
+
 import {
   MAPPING_DETAILS_ACTIONS,
   MAPPING_DETAILS_SUBACTIONS,
@@ -11,6 +13,7 @@ import {
   SUBACTION_OPTIONS,
   POSITION_OPTIONS,
   mappingMARCViewFieldShape,
+  getTrimmedValue,
 } from '../../utils';
 
 import css from '../MARCTable/MARCTable.css';
@@ -36,8 +39,14 @@ export const MARCTableViewRow = ({
     subaction,
   } = rowData;
 
+  const getCellValue = value => {
+    const formattedValue = getTrimmedValue(value);
+
+    return !isEmpty(formattedValue) ? formattedValue : <NoValue />;
+  };
+
   const renderCell = (key, i) => {
-    const cellData = rowData[key];
+    const cellData = getCellValue(rowData[key]);
     const cellStyle = { width: columnWidths[key] };
 
     const getCellContent = () => {
@@ -158,7 +167,7 @@ export const MARCTableViewRow = ({
         className={css.tableCell}
         style={cellStyle}
       >
-        {!isEmpty(cellData) && getCellContent()}
+        {getCellContent()}
       </div>
     );
   };
