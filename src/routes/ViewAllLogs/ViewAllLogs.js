@@ -50,11 +50,11 @@ const columnMapping = {
 const visibleColumns = [
   'fileName',
   'status',
-  'hrId',
-  'jobProfileName',
   'totalRecords',
+  'jobProfileName',
   'completedDate',
   'runBy',
+  'hrId',
 ];
 
 const INITIAL_RESULT_COUNT = 25;
