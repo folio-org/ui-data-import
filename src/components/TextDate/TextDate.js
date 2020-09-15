@@ -8,7 +8,7 @@ import {
 } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import contains from 'dom-helpers/query/contains';
+import { contains } from 'dom-helpers';
 import {
   pick,
   uniqueId,
