@@ -25,6 +25,7 @@ export * from './UploadingJobsDisplay';
 export * from './ExceptionModal';
 export * from './TreeView';
 export * from './TreeLine';
+export * from './TextDate';
 export * from './RecordTypesSelect';
 export * from './RepeatableActionsField';
 export * from './Section';

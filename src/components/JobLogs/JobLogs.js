@@ -40,11 +40,11 @@ export class JobLogs extends Component {
   visibleColumns = [
     'fileName',
     'status',
-    'hrId',
-    'jobProfileName',
     'totalRecords',
+    'jobProfileName',
     'completedDate',
     'runBy',
+    'hrId',
   ];
 
   columnWidths = {
