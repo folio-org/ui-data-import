@@ -2,10 +2,11 @@ import React, {
   useState,
   useEffect,
 } from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
-  cloneDeepWith,
   omit,
+  unionBy,
 } from 'lodash';
 
 import {
@@ -17,7 +18,10 @@ import {
 
 import { MappedHeader } from '../../../../../components/AccordionHeader';
 
-import { MAPPING_DETAILS_HEADLINE } from '../../../../../utils';
+import {
+  MAPPING_DETAILS_HEADLINE,
+  marcFieldProtectionSettingsShape,
+} from '../../../../../utils';
 
 export const OverrideProtectedFieldsTable = ({
   marcFieldProtectionFields,
@@ -27,14 +31,11 @@ export const OverrideProtectedFieldsTable = ({
   const [protectedFields, setProtectedFields] = useState([]);
 
   useEffect(() => {
-    const getProtectedFields = () => {
-      const customizer = obj => mappingMarcFieldProtectionFields.find(item => item.id === obj.id);
-
-      return cloneDeepWith(marcFieldProtectionFields, customizer);
-    };
+    const getProtectedFields = () => unionBy(mappingMarcFieldProtectionFields, marcFieldProtectionFields, 'id')
+      .sort((a, b) => a.field - b.field);
 
     setProtectedFields(getProtectedFields());
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateForm = changedField => {
     if (changedField.override) {
@@ -57,7 +58,7 @@ export const OverrideProtectedFieldsTable = ({
       newState[changedFieldIndex] = omit(changedField, ['rowIndex']);
       newState[changedFieldIndex].override = !fields[changedFieldIndex].override;
 
-      updateForm(changedField);
+      updateForm(newState[changedFieldIndex]);
 
       return newState;
     });
@@ -109,4 +110,10 @@ export const OverrideProtectedFieldsTable = ({
       />
     </>
   );
+};
+
+OverrideProtectedFieldsTable.propTypes = {
+  marcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
+  mappingMarcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
 };

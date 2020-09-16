@@ -7,7 +7,6 @@ import css from './MARCTable.css';
 export const MARCTableHeader = ({
   columns,
   columnWidths,
-  isMarcFieldProtectionSettings,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -21,14 +20,13 @@ export const MARCTableHeader = ({
     subaction: formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subaction' }),
     data: formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.data' }),
     position: formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.position' }),
-    override: formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.override' }),
     addRemove: '',
   };
 
   const renderHeadline = (header, i) => {
     const headerStyle = {
       width: columnWidths[header],
-      flexGrow: (header === 'data') && !isMarcFieldProtectionSettings && 1,
+      flexGrow: (header === 'data') && 1,
     };
 
     return (
@@ -53,5 +51,4 @@ export const MARCTableHeader = ({
 MARCTableHeader.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   columnWidths: PropTypes.object.isRequired,
-  isMarcFieldProtectionSettings: PropTypes.bool,
 };

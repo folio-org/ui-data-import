@@ -15,6 +15,7 @@ import {
   checkboxListShape,
   getSortQuery,
   getSearchQuery,
+  marcFieldProtectionSettingsShape,
 } from '../../utils';
 import {
   ENTITY_KEYS,
@@ -179,7 +180,7 @@ export class MappingProfiles extends Component {
         POST: PropTypes.func.isRequired,
         PUT: PropTypes.func.isRequired,
       }).isRequired,
-      marcFieldProtectionSettings: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+      marcFieldProtectionSettings: PropTypes.shape({ records: PropTypes.arrayOf(marcFieldProtectionSettingsShape) }).isRequired,
     }).isRequired,
     location: PropTypes.oneOfType([
       PropTypes.shape({

@@ -32,7 +32,7 @@ export const mappingMARCSubfieldShape = PropTypes.shape({
 });
 
 export const mappingMARCFieldShape = PropTypes.shape({
-  order: PropTypes.number,
+  order: PropTypes.number.isRequired,
   field: PropTypes.shape({
     subfields: PropTypes.arrayOf(mappingMARCSubfieldShape.isRequired).isRequired,
     field: PropTypes.string,
@@ -43,14 +43,14 @@ export const mappingMARCFieldShape = PropTypes.shape({
 });
 
 export const marcFieldProtectionSettingsShape = PropTypes.shape({
-  data: PropTypes.string,
-  field: PropTypes.string,
-  id: PropTypes.string,
-  indicator1: PropTypes.string,
-  indicator2: PropTypes.string,
-  override: PropTypes.bool,
-  source: PropTypes.string,
-  subfield: PropTypes.string,
+  data: PropTypes.string.isRequired,
+  field: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  indicator1: PropTypes.string.isRequired,
+  indicator2: PropTypes.string.isRequired,
+  override: PropTypes.bool.isRequired,
+  source: PropTypes.string.isRequired,
+  subfield: PropTypes.string.isRequired,
 });
 
 export const mappingMARCViewFieldShape = PropTypes.shape({

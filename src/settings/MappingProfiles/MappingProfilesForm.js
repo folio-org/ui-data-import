@@ -80,7 +80,7 @@ export const MappingProfilesFormComponent = ({
   mappingDetails,
   mappingDetails: { marcMappingOption },
   parentResources: { marcFieldProtectionSettings: { records: marcFieldProtectionSettings = [] } },
-  mappingMarcFieldProtectionSettings,
+  mappingMarcFieldProtectionFields,
   okapi,
   location: { search },
   handleSubmit,
@@ -222,7 +222,7 @@ export const MappingProfilesFormComponent = ({
   const MARCDetailsProps = {
     marcMappingDetails: mappingDetails?.marcMappingDetails,
     marcFieldProtectionFields: marcFieldProtectionSettings,
-    mappingMarcFieldProtectionFields: mappingMarcFieldProtectionSettings,
+    mappingMarcFieldProtectionFields,
     fieldMappingsForMARCField: fieldMappingsForMARC,
     setReferenceTables: setFormFieldValue,
   };
@@ -442,23 +442,23 @@ MappingProfilesFormComponent.propTypes = {
     PropTypes.string.isRequired,
   ]),
   okapi: okapiShape.isRequired,
-  mappingDetails: PropTypes.object,
-  parentResources: PropTypes.object,
-  mappingMarcFieldProtectionSettings: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
+  mappingMarcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
   onCancel: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  mappingDetails: PropTypes.object,
+  parentResources: PropTypes.object,
 };
 
 const mapStateToProps = state => {
   const okapi = state.okapi || null;
   const mappingDetails = state.form[formName]?.values.profile?.mappingDetails || {};
-  const mappingMarcFieldProtectionSettings = state.form[formName]?.values.profile?.marcFieldProtectionSettings || [];
+  const mappingMarcFieldProtectionFields = state.form[formName]?.values.profile?.marcFieldProtectionSettings || [];
 
   return {
     okapi,
     mappingDetails,
-    mappingMarcFieldProtectionSettings,
+    mappingMarcFieldProtectionFields,
   };
 };
 
