@@ -16,12 +16,18 @@ import {
 
 import css from './MARCTable.css';
 
-import { mappingMARCFieldShape } from '../../utils';
+import {
+  mappingMARCFieldShape,
+  marcFieldProtectionSettingsShape,
+} from '../../utils';
 
 export const MARCTable = ({
+  columns,
   fields,
   onChange,
-  columns,
+  isMarcFieldProtectionSettings,
+  columnWidths,
+  customColumnWidth,
 }) => {
   const [rows, setRows] = useState([]);
 
@@ -177,17 +183,19 @@ export const MARCTable = ({
     onChange(`profile.mappingDetails.marcMappingDetails[${rowToUpdateIndex}]`, rowToUpdate);
   };
 
-  const columnWidths = {
-    arrows: '70px',
-    action: '100px',
-    field: '120px',
-    indicator1: '93px',
-    indicator2: '93px',
-    subfield: '93px',
-    subaction: '140px',
-    data: '200px',
-    position: '140px',
-    addRemove: '70px',
+  const updateMappingProtectedField = (index, value) => {
+    const newRows = cloneDeep(rows);
+
+    newRows[index].override = value;
+
+    const rowsWithOverrides = newRows.filter(row => row.override);
+
+    onChange('profile.marcFieldProtectionSettings', rowsWithOverrides);
+  };
+
+  const finalColumnWidth = {
+    ...columnWidths,
+    ...customColumnWidth,
   };
 
   return (
@@ -197,12 +205,14 @@ export const MARCTable = ({
     >
       <MARCTableHeader
         columns={columns}
-        columnWidths={columnWidths}
+        columnWidths={finalColumnWidth}
+        isMarcFieldProtectionSettings={isMarcFieldProtectionSettings}
       />
       <MARCTableRowContainer
         columns={columns}
         fields={rows}
-        columnWidths={columnWidths}
+        columnWidths={finalColumnWidth}
+        isMarcFieldProtectionSettings={isMarcFieldProtectionSettings}
         onFieldUpdate={onFieldUpdate}
         onAddNewRow={addNewRow}
         onRemoveRow={removeRow}
@@ -213,18 +223,39 @@ export const MARCTable = ({
         removePositionFromRow={removePositionFromRow}
         removeSubactionFromRow={removeSubactionFromRow}
         removeDataValuesFromRow={removeDataValuesFromRow}
+        onUpdateMappingProtectedField={updateMappingProtectedField}
       />
     </div>
   );
 };
 
 MARCTable.propTypes = {
-  fields: PropTypes.arrayOf(mappingMARCFieldShape.isRequired).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fields: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      mappingMARCFieldShape.isRequired,
+      marcFieldProtectionSettingsShape.isRequired,
+    ]),
+  ).isRequired,
+  columnWidths: PropTypes.object,
+  customColumnWidth: PropTypes.object,
+  isMarcFieldProtectionSettings: PropTypes.bool,
   onChange: PropTypes.func,
-  columns: PropTypes.arrayOf(PropTypes.string),
 };
 
 MARCTable.defaultProps = {
-  columns: ['arrows', 'action', 'field', 'indicator1', 'indicator2',
-    'subfield', 'subaction', 'data', 'position', 'addRemove'],
+  isMarcFieldProtectionSettings: false,
+  columnWidths: {
+    arrows: '70px',
+    action: '100px',
+    field: '120px',
+    indicator1: '93px',
+    indicator2: '93px',
+    subfield: '93px',
+    subaction: '140px',
+    data: '200px',
+    position: '140px',
+    addRemove: '70px',
+    override: '140px',
+  },
 };

@@ -3,14 +3,19 @@ import { PropTypes } from 'prop-types';
 
 import { MARCTableRow } from './MARCTableRow';
 
-import { mappingMARCFieldShape } from '../../utils';
+import {
+  mappingMARCFieldShape,
+  marcFieldProtectionSettingsShape,
+} from '../../utils';
 
 import css from './MARCTable.css';
 
 export const MARCTableRowContainer = ({
+  columns,
   fields,
   columnWidths,
   onFieldUpdate,
+  isMarcFieldProtectionSettings,
   onAddNewRow,
   onRemoveRow,
   onMoveRow,
@@ -20,12 +25,18 @@ export const MARCTableRowContainer = ({
   removePositionFromRow,
   removeSubactionFromRow,
   removeDataValuesFromRow,
-  columns,
+  onUpdateMappingProtectedField,
 }) => {
   const renderRow = (data, i) => {
     const subfieldsData = data.field?.subfields;
     const containsSubsequentLines = subfieldsData?.length > 1;
     const name = `profile.mappingDetails.marcMappingDetails[${i}]`;
+
+    const fieldData = isMarcFieldProtectionSettings ? data.field : data.field?.field;
+    const indicator1Data = isMarcFieldProtectionSettings ? data.indicator1 : data.field?.indicator1;
+    const indicator2Data = isMarcFieldProtectionSettings ? data.indicator2 : data.field?.indicator2;
+    const dataColumnData = isMarcFieldProtectionSettings ? data.data : subfieldsData?.[0]?.data;
+    const subfieldData = isMarcFieldProtectionSettings ? data.subfield : subfieldsData?.[0]?.subfield;
 
     return (
       <div
@@ -39,26 +50,30 @@ export const MARCTableRowContainer = ({
           rowData={data}
           order={data.order}
           action={data.action}
+          field={fieldData}
+          indicator1={indicator1Data}
+          indicator2={indicator2Data}
           subaction={subfieldsData?.[0]?.subaction}
-          field={data.field?.field}
-          indicator1={data.field?.indicator1}
-          indicator2={data.field?.indicator2}
-          data={subfieldsData?.[0]?.data}
+          data={dataColumnData}
+          subfield={subfieldData}
+          override={data.override}
           columnWidths={columnWidths}
+          isMarcFieldProtectionSettings={isMarcFieldProtectionSettings}
+          rowIndex={i}
           isFirst={i === 0}
           isLast={i === (fields.length - 1)}
+          subfieldIndex={0}
           onFieldUpdate={onFieldUpdate}
           onAddNewRow={onAddNewRow}
           onRemoveRow={onRemoveRow}
           onMoveRow={onMoveRow}
-          subfieldIndex={0}
-          subfieldsData={subfieldsData}
           onAddSubfieldRow={onAddSubfieldRow}
           onRemoveSubfieldRow={onRemoveSubfieldRow}
           removeSubfieldRows={removeSubfieldRows}
           removePositionFromRow={removePositionFromRow}
           removeSubactionFromRow={removeSubactionFromRow}
           removeDataValuesFromRow={removeDataValuesFromRow}
+          onUpdateMappingProtectedField={onUpdateMappingProtectedField}
         />
         {containsSubsequentLines &&
           data.field.subfields.map((subfield, idx) => idx !== 0 && (
@@ -80,7 +95,6 @@ export const MARCTableRowContainer = ({
                 columnWidths={columnWidths}
                 isSubline
                 subfieldIndex={idx}
-                subfieldsData={subfieldsData}
                 onAddSubfieldRow={onAddSubfieldRow}
                 onRemoveSubfieldRow={onRemoveSubfieldRow}
               />
@@ -95,8 +109,15 @@ export const MARCTableRowContainer = ({
 };
 
 MARCTableRowContainer.propTypes = {
-  fields: PropTypes.arrayOf(mappingMARCFieldShape.isRequired).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fields: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      mappingMARCFieldShape.isRequired,
+      marcFieldProtectionSettingsShape.isRequired,
+    ]),
+  ).isRequired,
   columnWidths: PropTypes.object.isRequired,
+  isMarcFieldProtectionSettings: PropTypes.bool.isRequired,
   onFieldUpdate: PropTypes.func.isRequired,
   onAddNewRow: PropTypes.func.isRequired,
   onRemoveRow: PropTypes.func.isRequired,
@@ -107,5 +128,5 @@ MARCTableRowContainer.propTypes = {
   removePositionFromRow: PropTypes.func.isRequired,
   removeSubactionFromRow: PropTypes.func.isRequired,
   removeDataValuesFromRow: PropTypes.func.isRequired,
-  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onUpdateMappingProtectedField: PropTypes.func.isRequired,
 };

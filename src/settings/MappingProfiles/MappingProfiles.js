@@ -163,6 +163,13 @@ export class MappingProfiles extends Component {
         staticFallback: { params: {} },
       },
     },
+    marcFieldProtectionSettings: {
+      type: 'okapi',
+      path: 'field-protection-settings/marc',
+      records: 'marcFieldProtectionSettings',
+      throwErrors: false,
+      GET: { path: 'field-protection-settings/marc?query=source=USER' },
+    },
   });
 
   static propTypes = {
@@ -172,6 +179,7 @@ export class MappingProfiles extends Component {
         POST: PropTypes.func.isRequired,
         PUT: PropTypes.func.isRequired,
       }).isRequired,
+      marcFieldProtectionSettings: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     }).isRequired,
     location: PropTypes.oneOfType([
       PropTypes.shape({

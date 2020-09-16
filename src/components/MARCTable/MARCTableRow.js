@@ -19,6 +19,7 @@ import {
   TextArea,
   IconButton,
   Label,
+  Checkbox,
 } from '@folio/stripes/components';
 
 import {
@@ -35,6 +36,7 @@ import {
   validateAlphanumericOrAllowedValue,
   validateMoveField,
   mappingMARCFieldShape,
+  marcFieldProtectionSettingsShape,
   mappingMARCDataShape,
   fillEmptyFieldsWithValue,
 } from '../../utils';
@@ -45,12 +47,15 @@ export const MARCTableRow = ({
   name,
   rowData,
   order,
+  rowIndex,
   action,
   subaction,
   field,
   indicator1,
   indicator2,
   data,
+  subfield,
+  override,
   columnWidths,
   isFirst,
   isLast,
@@ -66,7 +71,9 @@ export const MARCTableRow = ({
   removePositionFromRow,
   removeSubactionFromRow,
   removeDataValuesFromRow,
+  onUpdateMappingProtectedField,
   columns,
+  isMarcFieldProtectionSettings,
 }) => {
   const {
     allowedSubactions,
@@ -92,7 +99,8 @@ export const MARCTableRow = ({
   const [fieldValue, setFieldValue] = useState('');
   const [indicator1Value, setIndicator1Value] = useState('');
   const [indicator2Value, setIndicator2Value] = useState('');
-  const [dataValue, setDataValue] = useState({});
+  const [subfieldValue, setSubfieldValue] = useState('');
+  const [dataValue, setDataValue] = useState(isMarcFieldProtectionSettings ? '' : {});
 
   useEffect(() => {
     setActionValue(action);
@@ -110,8 +118,11 @@ export const MARCTableRow = ({
     setIndicator2Value(indicator2);
   }, [indicator2]);
   useEffect(() => {
-    setDataValue({ ...data });
-  }, [data]);
+    return isMarcFieldProtectionSettings ? setDataValue(data) : setDataValue({ ...data });
+  }, [data, isMarcFieldProtectionSettings]);
+  useEffect(() => {
+    setSubfieldValue(subfield);
+  }, [subfield]);
 
   const rowSubactions = allowedSubactions[actionValue] || [];
   const rowPositions = allowedPositions[actionValue] || {};
@@ -277,6 +288,9 @@ export const MARCTableRow = ({
       onFieldUpdate(order, updatedField);
     }
   };
+  const handleOverrideChange = e => {
+    onUpdateMappingProtectedField(rowIndex, e.target.checked);
+  };
   const handleRemoveRow = () => (!isSubline ? onRemoveRow(order) : onRemoveSubfieldRow(order, subfieldIndex));
 
   const renderArrows = () => {
@@ -364,15 +378,17 @@ export const MARCTableRow = ({
         className={css.tableCell}
         style={cellStyle}
       >
-        <Field
-          name={`${name}.field.field`}
-          component={TextField}
-          onChange={e => setFieldValue(e.target.value)}
-          validate={[validateTag]}
-          disabled={isSubline}
-          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.field' })}
-          marginBottom0
-        />
+        {isMarcFieldProtectionSettings ? fieldValue : (
+          <Field
+            name={`${name}.field.field`}
+            component={TextField}
+            onChange={e => setFieldValue(e.target.value)}
+            validate={[validateTag]}
+            disabled={isSubline}
+            ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.field' })}
+            marginBottom0
+          />
+        )}
       </div>
     );
   };
@@ -386,15 +402,17 @@ export const MARCTableRow = ({
         className={css.tableCell}
         style={cellStyle}
       >
-        <Field
-          name={`${name}.field.indicator1`}
-          component={TextField}
-          onChange={setIndicator1Value}
-          validate={[validateIndicator1]}
-          disabled={isSubline}
-          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.indicator1' })}
-          marginBottom0
-        />
+        {isMarcFieldProtectionSettings ? indicator1Value : (
+          <Field
+            name={`${name}.field.indicator1`}
+            component={TextField}
+            onChange={setIndicator1Value}
+            validate={[validateIndicator1]}
+            disabled={isSubline}
+            ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.indicator1' })}
+            marginBottom0
+          />
+        )}
       </div>
     );
   };
@@ -408,15 +426,17 @@ export const MARCTableRow = ({
         className={css.tableCell}
         style={cellStyle}
       >
-        <Field
-          name={`${name}.field.indicator2`}
-          component={TextField}
-          onChange={setIndicator2Value}
-          validate={[validateIndicator2]}
-          disabled={isSubline}
-          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.indicator2' })}
-          marginBottom0
-        />
+        {isMarcFieldProtectionSettings ? indicator2Value : (
+          <Field
+            name={`${name}.field.indicator2`}
+            component={TextField}
+            onChange={setIndicator2Value}
+            validate={[validateIndicator2]}
+            disabled={isSubline}
+            ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.indicator2' })}
+            marginBottom0
+          />
+        )}
       </div>
     );
   };
@@ -430,13 +450,15 @@ export const MARCTableRow = ({
         className={css.tableCell}
         style={cellStyle}
       >
-        <Field
-          name={`${name}.field.subfields[${subfieldIndex}].subfield`}
-          component={TextField}
-          validate={[validateSubfield]}
-          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.subfield' })}
-          marginBottom0
-        />
+        {isMarcFieldProtectionSettings ? subfieldValue : (
+          <Field
+            name={`${name}.field.subfields[${subfieldIndex}].subfield`}
+            component={TextField}
+            validate={[validateSubfield]}
+            ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.subfield' })}
+            marginBottom0
+          />
+        )}
       </div>
     );
   };
@@ -476,7 +498,7 @@ export const MARCTableRow = ({
   const renderDataField = () => {
     let cellStyle = {
       width: columnWidths.data,
-      flexGrow: 1,
+      flexGrow: !isMarcFieldProtectionSettings && 1,
       justifyContent: 'space-between',
     };
 
@@ -617,7 +639,10 @@ export const MARCTableRow = ({
         className={css.tableCell}
         style={cellStyle}
       >
-        {!isEmpty(actionValue) && rowHasDataField && getContent()}
+        {
+          (!isEmpty(actionValue) && rowHasDataField && getContent()) ||
+          (isMarcFieldProtectionSettings && dataValue)
+          }
       </div>
     );
   };
@@ -694,6 +719,23 @@ export const MARCTableRow = ({
       </div>
     );
   };
+  const renderOverrideField = () => {
+    const cellStyle = { width: columnWidths.override };
+
+    return (
+      <div
+        data-test-marc-table-cell
+        className={css.tableCell}
+        style={cellStyle}
+      >
+        <Checkbox
+          checked={override}
+          aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.override' })}
+          onChange={handleOverrideChange}
+        />
+      </div>
+    );
+  };
 
   const cells = {
     arrows: renderArrows,
@@ -706,6 +748,7 @@ export const MARCTableRow = ({
     data: renderDataField,
     position: renderPositionField,
     addRemove: renderAddRemove,
+    override: renderOverrideField,
   };
 
   return (
@@ -716,23 +759,27 @@ export const MARCTableRow = ({
 };
 
 MARCTableRow.propTypes = {
-  subfieldIndex: PropTypes.number.isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   name: PropTypes.string.isRequired,
-  order: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  rowData: PropTypes.oneOfType([mappingMARCFieldShape, marcFieldProtectionSettingsShape]),
+  subfieldIndex: PropTypes.number.isRequired,
+  order: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  rowIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   columnWidths: PropTypes.object.isRequired,
   onAddSubfieldRow: PropTypes.func.isRequired,
   onRemoveSubfieldRow: PropTypes.func.isRequired,
-  rowData: mappingMARCFieldShape,
   onFieldUpdate: PropTypes.func,
   onAddNewRow: PropTypes.func,
   onRemoveRow: PropTypes.func,
   onMoveRow: PropTypes.func,
   action: PropTypes.string,
-  data: mappingMARCDataShape,
+  data: PropTypes.oneOfType([mappingMARCDataShape, PropTypes.string]),
   subaction: PropTypes.string,
   field: PropTypes.string,
   indicator1: PropTypes.string,
   indicator2: PropTypes.string,
+  subfield: PropTypes.string,
+  override: PropTypes.bool,
   isFirst: PropTypes.bool,
   isLast: PropTypes.bool,
   isSubline: PropTypes.bool,
@@ -740,7 +787,8 @@ MARCTableRow.propTypes = {
   removePositionFromRow: PropTypes.func,
   removeSubactionFromRow: PropTypes.func,
   removeDataValuesFromRow: PropTypes.func,
-  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onUpdateMappingProtectedField: PropTypes.func,
+  isMarcFieldProtectionSettings: PropTypes.bool,
 };
 
 MARCTableRow.defaultProps = {
@@ -752,4 +800,6 @@ MARCTableRow.defaultProps = {
   field: '',
   indicator1: '',
   indicator2: '',
+  subfield: '',
+  override: false,
 };
