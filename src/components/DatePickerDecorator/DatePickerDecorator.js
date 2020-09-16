@@ -11,11 +11,11 @@ import {
 
 import { DATE_FORMAT } from '@folio/stripes-acq-components';
 
-import { WithTranslation } from '..';
 import {
-  OptionsList,
+  WithTranslation,
   TextDate,
-} from '../FlexibleForm/ControlDecorators/partials';
+} from '..';
+import { OptionsList } from '../FlexibleForm/ControlDecorators/partials';
 
 import {
   FORMS_SETTINGS,
@@ -62,7 +62,7 @@ export const DatePickerDecorator = memo(props => {
     input.onChange(e);
   };
 
-  const handleSetDate = (e, value) => {
+  const handleSetDate = value => {
     const newValue = formatDecoratorValue(currentValue, value, decoratorDatepickerValueRegExp, true);
 
     setCurrentValue(newValue);
