@@ -91,8 +91,15 @@ export const HoldingsDetails = ({
                     <Col xs={4}>
                       <Field
                         component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementNote`} />}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
                         name={getSubfieldName(15, 1, index)}
+                      />
+                    </Col>
+                    <Col xs={4}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
+                        name={getSubfieldName(15, 2, index)}
                       />
                     </Col>
                   </Row>
@@ -135,8 +142,15 @@ export const HoldingsDetails = ({
                     <Col xs={4}>
                       <Field
                         component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementNote`} />}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
                         name={getSubfieldName(16, 1, index)}
+                      />
+                    </Col>
+                    <Col xs={4}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
+                        name={getSubfieldName(16, 2, index)}
                       />
                     </Col>
                   </Row>
@@ -179,8 +193,15 @@ export const HoldingsDetails = ({
                     <Col xs={4}>
                       <Field
                         component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementNote`} />}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
                         name={getSubfieldName(17, 1, index)}
+                      />
+                    </Col>
+                    <Col xs={4}>
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
+                        name={getSubfieldName(17, 2, index)}
                       />
                     </Col>
                   </Row>

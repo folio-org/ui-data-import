@@ -132,6 +132,11 @@ const HOLDINGS = {
         enabled: true,
         path: 'holdings.holdingsStatements[].note',
         value: '',
+      }, {
+        name: 'staffNote',
+        enabled: true,
+        path: 'holdings.holdingsStatements[].staffNote',
+        value: '',
       }],
     }],
   }, {
@@ -152,6 +157,11 @@ const HOLDINGS = {
         enabled: true,
         path: 'holdings.holdingsStatementsForSupplements[].note',
         value: '',
+      }, {
+        name: 'staffNote',
+        enabled: true,
+        path: 'holdings.holdingsStatementsForSupplements[].staffNote',
+        value: '',
       }],
     }],
   }, {
@@ -171,6 +181,11 @@ const HOLDINGS = {
         name: 'note',
         enabled: true,
         path: 'holdings.holdingsStatementsForIndexes[].note',
+        value: '',
+      }, {
+        name: 'staffNote',
+        enabled: true,
+        path: 'holdings.holdingsStatementsForIndexes[].staffNote',
         value: '',
       }],
     }],
