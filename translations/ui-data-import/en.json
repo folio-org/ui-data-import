@@ -1,5 +1,5 @@
 {
-  "meta.title": "Data Import",
+  "meta.title": "Data import",
   "jobsPaneTitle": "Jobs",
   "logsPaneTitle": "Logs",
   "viewAllLogs": "View all",
@@ -161,7 +161,7 @@
   "settings.table.checkbox": "select item",
   "settings.table.checkboxAll": "select all items",
   "settings.action.add": "Add",
-  "settings.index.paneTitle": "Data Import",
+  "settings.index.paneTitle": "Data import",
   "settings.getStarted": "Click here to get started",
   "settings.profiles": "Profiles",
   "settings.learnMore": "Learn more",

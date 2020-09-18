@@ -42,6 +42,7 @@
 * MARC Bib field mapping profile: details for Update Selected fields on View screen (UIDATIMP-614)
 * Add column for Job status and Resequence columns (UIDATIMP-615)
 * Match Profiles: Remove EDIFACT invoice as a match option (UIDATIMP-353)
+* Change Data Import app name to sentence case (UIDATIMP-634)
 * Add Public/Staff field for Holdings Statement Notes (UIDATIMP-642)
 * MARC Bib field mapping profile: add option for Modify or Update to View screen (UIDATIMP-625)
 
