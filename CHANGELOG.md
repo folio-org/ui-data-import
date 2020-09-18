@@ -43,6 +43,7 @@
 * Add column for Job status and Resequence columns (UIDATIMP-615)
 * Match Profiles: Remove EDIFACT invoice as a match option (UIDATIMP-353)
 * Change Data Import app name to sentence case (UIDATIMP-634)
+* Add Public/Staff field for Holdings Statement Notes (UIDATIMP-642)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
