@@ -217,6 +217,8 @@ export class ViewMappingProfile extends Component {
 
     const isMARCRecord = existingRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC;
 
+    const marcMappingOptionLabel = FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === marcMappingOption)?.label;
+
     const renderMARCTableView = () => {
       const defaultFieldMappingForMARCColumns = ['action', 'field', 'indicator1', 'indicator2',
         'subfield', 'subaction', 'data', 'position'];
@@ -280,6 +282,13 @@ export class ViewMappingProfile extends Component {
                 <FormattedMessage id={FOLIO_RECORD_TYPES[existingRecordType].captionId} />
               </div>
             </KeyValue>
+            {isMARCRecord && (
+              <KeyValue label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}>
+                <div data-test-field-mapping-for-marc-field>
+                  <FormattedMessage id={marcMappingOptionLabel} />
+                </div>
+              </KeyValue>
+            )}
             <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
               <div data-test-description>{mappingProfile.description || <NoValue />}</div>
             </KeyValue>
@@ -306,7 +315,7 @@ export class ViewMappingProfile extends Component {
                     <MappedHeader
                       mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
                       mappableLabelId={MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId}
-                      mappingTypeLabelId={FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === marcMappingOption)?.label}
+                      mappingTypeLabelId={marcMappingOptionLabel}
                       headlineProps={{ margin: 'small' }}
                     />
                   </Col>

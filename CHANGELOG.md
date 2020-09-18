@@ -6,7 +6,7 @@
 * Handle import of stripes-acq-components to modules and platform (UISACQCOMP-3)
 * Add validation rules for Move action for the MARC modifications table fields (UIDATIMP-492)
 * Add validation rules for Edit action for the MARC modifications table fields (UIDATIMP-489)
-* Increment `@folio/stripes` to `v5` and update dependency on `react-router`.
+* Increment `@folio/stripes` to `v5` and update dependency on `react-router` (UIDATIMP-656)
 * Reuse `<EndOfItem>` component from `stripes-data-transfer-components` repository (UIDATIMP-571)
 * Fix field mapping for Item record check in/check out note (UIDATIMP-554)
 * Field mappings: Repeatable field dropdown Validation (UIDATIMP-508)
@@ -43,6 +43,7 @@
 * Add column for Job status and Resequence columns (UIDATIMP-615)
 * Match Profiles: Remove EDIFACT invoice as a match option (UIDATIMP-353)
 * Add Public/Staff field for Holdings Statement Notes (UIDATIMP-642)
+* MARC Bib field mapping profile: add option for Modify or Update to View screen (UIDATIMP-625)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
