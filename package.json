@@ -32,6 +32,8 @@
     "@folio/eslint-config-stripes": "^5.0.0",
     "@folio/stripes": "^5.0.0",
     "@folio/stripes-components": "^8.0.0",
+    "@folio/stripes-core": "^6.0.0",
+    "@folio/stripes-smart-components": "^5.0.0",
     "@testing-library/react": "^10.4.7",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^26.1.0",
@@ -51,16 +53,20 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-intl": "^5.7.0",
+    "react-redux": "^5.1.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5",
     "sinon": "^7.2.2"
   },
   "dependencies": {
+    "@folio/react-intl-safe-html": "^2.0.0",
     "@folio/stripes-acq-components": ">=2.0.0",
     "@folio/stripes-data-transfer-components": "^2.0.1",
     "classnames": "^2.2.5",
     "dom-helpers": "^5.2.0",
     "lodash": "^4.16.4",
+    "moment": "~2.24.0",
     "prop-types": "^15.6.0",
     "react-dropzone": "^7.0.1",
     "react-highlighter": "^0.4.3",
@@ -70,8 +76,13 @@
     "@folio/stripes": "^5.0.0",
     "react": "*",
     "react-intl": "^5.7.0",
+    "react-redux": "*",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "redux": "*"
+  },
+  "resolutions": {
+    "moment": "~2.24.0"
   },
   "stripes": {
     "stripesDeps": [

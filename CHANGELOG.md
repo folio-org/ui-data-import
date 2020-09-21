@@ -44,6 +44,7 @@
 * Match Profiles: Remove EDIFACT invoice as a match option (UIDATIMP-353)
 * Change Data Import app name to sentence case (UIDATIMP-634)
 * Add Public/Staff field for Holdings Statement Notes (UIDATIMP-642)
+* Remove 'import/no-extraneous-dependencies' rule from eslint config and add missed dependencies (UIDATIMP-639)
 * MARC Bib field mapping profile: add option for Modify or Update to View screen (UIDATIMP-625)
 
 ### Bugs fixed:
