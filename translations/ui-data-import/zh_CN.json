@@ -451,7 +451,6 @@
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement.legend": "馆藏说明",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement": "馆藏说明",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement.addLabel": "添加馆藏说明",
-    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote": "说明附注",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForSupplements.legend": "补编的馆藏说明",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForSupplements.addLabel": "添加补编的馆藏说明",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForIndexes.legend": "索引的馆藏说明",
@@ -751,5 +750,7 @@
     "status": "Status",
     "failed": "Failed",
     "completed": "Completed",
-    "completedWithErrors": "Completed with errors"
+    "completedWithErrors": "Completed with errors",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementPublicNote": "Statement public note",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementStaffNote": "Statement staff note"
 }

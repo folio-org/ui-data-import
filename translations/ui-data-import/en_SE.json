@@ -451,7 +451,6 @@
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement.legend": "Holdings statements",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement": "Holdings statement",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement.addLabel": "Add holdings statement",
-    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote": "Statement note",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForSupplements.legend": "Holdings statements for supplement",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForSupplements.addLabel": "Add holdings statement for supplement",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForIndexes.legend": "Holdings statements for indexes",
@@ -751,5 +750,7 @@
     "status": "Status",
     "failed": "Failed",
     "completed": "Completed",
-    "completedWithErrors": "Completed with errors"
+    "completedWithErrors": "Completed with errors",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementPublicNote": "Statement public note",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementStaffNote": "Statement staff note"
 }
