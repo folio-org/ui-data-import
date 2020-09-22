@@ -44,7 +44,7 @@ import {
   MappingInstanceDetails,
   MappingHoldingsDetails,
   MappingItemDetails,
-  MappingMARCDetails,
+  MappingMARCBibDetails,
 } from './detailsSections/edit';
 
 import {
@@ -220,10 +220,10 @@ export const MappingProfilesFormComponent = ({
   };
 
   const MARCDetailsProps = {
-    mappingDetails,
-    marcFieldProtectionSettings,
-    mappingMarcFieldProtectionSettings,
-    fieldMappingsForMARC,
+    marcMappingDetails: mappingDetails?.marcMappingDetails,
+    marcFieldProtectionFields: marcFieldProtectionSettings,
+    mappingMarcFieldProtectionFields: mappingMarcFieldProtectionSettings,
+    fieldMappingsForMARCField: fieldMappingsForMARC,
     setReferenceTables: setFormFieldValue,
   };
   const fieldMappingsForMARCOptions = FIELD_MAPPINGS_FOR_MARC_OPTIONS.map(option => (
@@ -243,7 +243,7 @@ export const MappingProfilesFormComponent = ({
     INSTANCE: <MappingInstanceDetails {...detailsProps} />,
     HOLDINGS: <MappingHoldingsDetails {...detailsProps} />,
     ITEM: <MappingItemDetails {...detailsProps} />,
-    MARC_BIBLIOGRAPHIC: <MappingMARCDetails {...MARCDetailsProps} />,
+    MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCDetailsProps} />,
   };
 
   return (
