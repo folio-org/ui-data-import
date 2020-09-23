@@ -48,6 +48,7 @@
 * MARC Bib field mapping profile: add option for Modify or Update to View screen (UIDATIMP-625)
 * Remove 'Manage' button from landing page (UIDATIMP-652)
 * MARC Bib field mapping profile: details for Update-Overrides on Create/Edit screen (UIDATIMP-631)
+* Remove 'Manage' button from landing page (UIDATIMP-652)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
