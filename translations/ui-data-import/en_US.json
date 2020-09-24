@@ -20,9 +20,9 @@
     "noPreviewsJobsMessage": "No previews to show",
     "noRunningJobsMessage": "No running jobs to show",
     "loading": "Loading",
-    "meta.title": "Data Import",
+    "meta.title": "Data import",
     "today": "today",
-    "settings.index.paneTitle": "Data Import",
+    "settings.index.paneTitle": "Data import",
     "settings.profiles": "Profiles",
     "settings.learnMore": "Learn more",
     "settings.profilesInfo": "The four types of profiles allow you to create, and centrally maintain, jobs, matches, actions and field mappings across multiple jobs. When you update a profile, all the jobs that contain it, are automatically updated.",
@@ -451,7 +451,6 @@
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement.legend": "Holdings statements",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement": "Holdings statement",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement.addLabel": "Add holdings statement",
-    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote": "Statement note",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForSupplements.legend": "Holdings statements for supplement",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForSupplements.addLabel": "Add holdings statement for supplement",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForIndexes.legend": "Holdings statements for indexes",
@@ -751,5 +750,11 @@
     "status": "Status",
     "failed": "Failed",
     "completed": "Completed",
-    "completedWithErrors": "Completed with errors"
+    "completedWithErrors": "Completed with errors",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementPublicNote": "Statement public note",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementStaffNote": "Statement staff note",
+    "fieldMappingsForMarc.overrideProtected": "Override protected fields",
+    "fieldMappingsForMarc.updatesOverrides.subtext": "If any protected field should be updated by this profile, check the appropriate box here",
+    "settings.mappingProfile.marcTable.header.override": "Override",
+    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Data marcField override field"
 }

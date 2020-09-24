@@ -451,7 +451,6 @@
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement.legend": "Declarações de holdings",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement": "Declaração de holdings",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement.addLabel": "Adicionar declaração de holdings",
-    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote": "Nota de declaração",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForSupplements.legend": "Declarações de holdings para suplemento",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForSupplements.addLabel": "Adicionar declaração de holdings para suplemento",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForIndexes.legend": "Declarações de holdings para índices",
@@ -751,5 +750,11 @@
     "status": "Status",
     "failed": "Falhou",
     "completed": "Concluído",
-    "completedWithErrors": "Concluído com erros"
+    "completedWithErrors": "Concluído com erros",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementPublicNote": "Declaração de nota pública",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementStaffNote": "Declaração de nota da equipe",
+    "fieldMappingsForMarc.overrideProtected": "Override protected fields",
+    "fieldMappingsForMarc.updatesOverrides.subtext": "If any protected field should be updated by this profile, check the appropriate box here",
+    "settings.mappingProfile.marcTable.header.override": "Override",
+    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Data marcField override field"
 }
