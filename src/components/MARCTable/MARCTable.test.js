@@ -15,10 +15,14 @@ const initialFields = [
   },
 ];
 
-const renderMARCTable = fields => {
+const initialColumns = ['arrows', 'action', 'field', 'indicator1', 'indicator2',
+  'subfield', 'subaction', 'data', 'position', 'addRemove'];
+
+const renderMARCTable = (fields, columns) => {
   const component = () => (
     <MARCTable
       fields={fields}
+      columns={columns}
       onChange={onChange}
     />
   );
@@ -37,7 +41,7 @@ describe('MARC modifications table', () => {
         order: 1,
         field: { subfields: [{}] },
       }];
-      const { getByLabelText } = renderMARCTable(initialFields);
+      const { getByLabelText } = renderMARCTable(initialFields, initialColumns);
 
       fireEvent.click(getByLabelText('Add a new field'));
 
@@ -52,7 +56,7 @@ describe('MARC modifications table', () => {
         order: 1,
         field: { subfields: [{}] },
       }];
-      const { getAllByLabelText } = renderMARCTable(fields);
+      const { getAllByLabelText } = renderMARCTable(fields, initialColumns);
 
       fireEvent.click(getAllByLabelText('Delete this field')[1]);
 
@@ -67,7 +71,7 @@ describe('MARC modifications table', () => {
         order: 1,
         field: { subfields: [{}] },
       }];
-      const { getByLabelText } = renderMARCTable(fields);
+      const { getByLabelText } = renderMARCTable(fields, initialColumns);
 
       fireEvent.click(getByLabelText('Move field up a row'));
 
@@ -92,7 +96,7 @@ describe('MARC modifications table', () => {
           field: { subfields: [{}, {}] },
         },
       ];
-      const { getByTestId } = renderMARCTable(fields);
+      const { getByTestId } = renderMARCTable(fields, initialColumns);
 
       fireEvent.change(getByTestId('marc-table-subaction'), { target: { value: 'ADD_SUBFIELD' } });
 
@@ -113,7 +117,7 @@ describe('MARC modifications table', () => {
         action: 'ADD',
         field: { subfields: [{ subaction: null }] },
       }];
-      const { getAllByLabelText } = renderMARCTable(fields);
+      const { getAllByLabelText } = renderMARCTable(fields, initialColumns);
 
       fireEvent.click(getAllByLabelText('Delete this field')[1]);
 
@@ -124,13 +128,13 @@ describe('MARC modifications table', () => {
 
   describe('when there are no data received', () => {
     it('table should have initial row', () => {
-      const { getAllByTestId } = renderMARCTable(initialFields);
+      const { getAllByTestId } = renderMARCTable(initialFields, initialColumns);
 
       expect(getAllByTestId('marc-table-row').length).toBe(1);
     });
 
     it('and re-ordering arrows should not be hidden', () => {
-      const { queryByTestId } = renderMARCTable(initialFields);
+      const { queryByTestId } = renderMARCTable(initialFields, initialColumns);
 
       expect(queryByTestId('marc-table-arrow-up')).toBeNull();
       expect(queryByTestId('marc-table-arrow-down')).toBeNull();
@@ -150,20 +154,20 @@ describe('MARC modifications table', () => {
     ];
 
     it('table should have 3 rows', () => {
-      const { getAllByTestId } = renderMARCTable(fields);
+      const { getAllByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(getAllByTestId('marc-table-row').length).toBe(3);
     });
 
     it('re-ordering arrows should be visible', () => {
-      const { getAllByTestId } = renderMARCTable(fields);
+      const { getAllByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(getAllByTestId('marc-table-arrow-up')).toBeDefined();
       expect(getAllByTestId('marc-table-arrow-down')).toBeDefined();
     });
 
     it('subfield should be displayed', () => {
-      const { getByTestId } = renderMARCTable(fields);
+      const { getByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(getByTestId('marc-table-subfield-row')).toBeDefined();
     });
@@ -179,25 +183,25 @@ describe('MARC modifications table', () => {
     ];
 
     it('"Subaction" dropdown should be displayed', () => {
-      const { getByTestId } = renderMARCTable(fields);
+      const { getByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(getByTestId('marc-table-subaction')).toBeDefined();
     });
 
     it('"Subaction" dropdown contains correct options', () => {
-      const { getByText } = renderMARCTable(fields);
+      const { getByText } = renderMARCTable(fields, initialColumns);
 
       expect(getByText('Add subfield')).toBeDefined();
     });
 
     it('"Data" field should be displayed', () => {
-      const { getByTestId } = renderMARCTable(fields);
+      const { getByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(getByTestId('marc-table-data')).toBeDefined();
     });
 
     it('"Position" dropdown should not be hidden', () => {
-      const { queryByTestId } = renderMARCTable(fields);
+      const { queryByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(queryByTestId('marc-table-position')).toBeNull();
     });
@@ -213,19 +217,19 @@ describe('MARC modifications table', () => {
     ];
 
     it('"Subaction" dropdown should be hidden', () => {
-      const { queryByTestId } = renderMARCTable(fields);
+      const { queryByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(queryByTestId('marc-table-subaction')).toBeNull();
     });
 
     it('"Data" field should be hidden', () => {
-      const { queryByTestId } = renderMARCTable(fields);
+      const { queryByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(queryByTestId('marc-table-data')).toBeNull();
     });
 
     it('"Position" dropdown should be hidden', () => {
-      const { queryByTestId } = renderMARCTable(fields);
+      const { queryByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(queryByTestId('marc-table-position')).toBeNull();
     });
@@ -241,13 +245,13 @@ describe('MARC modifications table', () => {
     ];
 
     it('"Subaction" dropdown should be displayed', () => {
-      const { getByTestId } = renderMARCTable(fields);
+      const { getByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(getByTestId('marc-table-subaction')).toBeDefined();
     });
 
     it('"Subaction" dropdown contains correct options', () => {
-      const { getByText } = renderMARCTable(fields);
+      const { getByText } = renderMARCTable(fields, initialColumns);
 
       expect(getByText('Insert')).toBeDefined();
       expect(getByText('Remove')).toBeDefined();
@@ -255,20 +259,20 @@ describe('MARC modifications table', () => {
     });
 
     it('"Data" field should be displayed', () => {
-      const { getByTestId } = renderMARCTable(fields);
+      const { getByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(getByTestId('marc-table-data')).toBeDefined();
     });
 
     it('"Position" dropdown should be hidden', () => {
-      const { queryByTestId } = renderMARCTable(fields);
+      const { queryByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(queryByTestId('marc-table-position')).toBeNull();
     });
 
     describe('when "Insert" subaction selected', () => {
       it('"Position" dropdown should be displayed', () => {
-        const { getByTestId } = renderMARCTable(fields);
+        const { getByTestId } = renderMARCTable(fields, initialColumns);
 
         fireEvent.change(getByTestId('marc-table-subaction'), { target: { value: 'INSERT' } });
 
@@ -279,7 +283,7 @@ describe('MARC modifications table', () => {
         const {
           getByTestId,
           getByText,
-        } = renderMARCTable(fields);
+        } = renderMARCTable(fields, initialColumns);
 
         fireEvent.change(getByTestId('marc-table-subaction'), { target: { value: 'INSERT' } });
 
@@ -300,26 +304,26 @@ describe('MARC modifications table', () => {
     ];
 
     it('"Subaction" dropdown should be displayed', () => {
-      const { getByTestId } = renderMARCTable(fields);
+      const { getByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(getByTestId('marc-table-subaction')).toBeDefined();
     });
 
     it('"Subaction" dropdown contains correct options', () => {
-      const { getByText } = renderMARCTable(fields);
+      const { getByText } = renderMARCTable(fields, initialColumns);
 
       expect(getByText('New field')).toBeDefined();
       expect(getByText('Existing field')).toBeDefined();
     });
 
     it('"Data" field should be hidden', () => {
-      const { queryByTestId } = renderMARCTable(fields);
+      const { queryByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(queryByTestId('marc-table-data')).toBeNull();
     });
 
     it('"Position" dropdown should be hidden', () => {
-      const { queryByTestId } = renderMARCTable(fields);
+      const { queryByTestId } = renderMARCTable(fields, initialColumns);
 
       expect(queryByTestId('marc-table-position')).toBeNull();
     });
@@ -327,7 +331,7 @@ describe('MARC modifications table', () => {
     describe('when subaction', () => {
       describe('"New field" selected', () => {
         it('"Data" field should be displayed', () => {
-          const { getByTestId } = renderMARCTable(fields);
+          const { getByTestId } = renderMARCTable(fields, initialColumns);
 
           fireEvent.change(getByTestId('marc-table-subaction'), { target: { value: 'CREATE_NEW_FIELD' } });
 
@@ -337,7 +341,7 @@ describe('MARC modifications table', () => {
 
       describe('"Add to existing" selected', () => {
         it('"Data" field should be displayed', () => {
-          const { getByTestId } = renderMARCTable(fields);
+          const { getByTestId } = renderMARCTable(fields, initialColumns);
 
           fireEvent.change(getByTestId('marc-table-subaction'), { target: { value: 'ADD_TO_EXISTING_FIELD' } });
 
