@@ -1,0 +1,5 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.uploadingJobs {
+  flex: 0 0 300px;
+}
