@@ -42,6 +42,17 @@ export const mappingMARCFieldShape = PropTypes.shape({
   action: PropTypes.oneOf([...Object.values(MAPPING_DETAILS_ACTIONS)]),
 });
 
+export const marcFieldProtectionSettingsShape = PropTypes.shape({
+  data: PropTypes.string.isRequired,
+  field: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  indicator1: PropTypes.string.isRequired,
+  indicator2: PropTypes.string.isRequired,
+  override: PropTypes.bool.isRequired,
+  source: PropTypes.string.isRequired,
+  subfield: PropTypes.string.isRequired,
+});
+
 export const mappingMARCViewFieldShape = PropTypes.shape({
   action: PropTypes.oneOf([...Object.values(MAPPING_DETAILS_ACTIONS)]),
   field: PropTypes.string,

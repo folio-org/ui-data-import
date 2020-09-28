@@ -684,6 +684,7 @@ export class SearchAndSort extends Component {
       <Layer
         isOpen={isLayerOpen}
         container={fullWidthContainer}
+        contentLabel="Mapping profile form"
       >
         <EditRecordComponent
           id={`${objectName}form-add${objectName}`}

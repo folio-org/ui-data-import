@@ -7,7 +7,7 @@
 * Handle import of stripes-acq-components to modules and platform (UISACQCOMP-3)
 * Add validation rules for Move action for the MARC modifications table fields (UIDATIMP-492)
 * Add validation rules for Edit action for the MARC modifications table fields (UIDATIMP-489)
-* Increment `@folio/stripes` to `v5` and update dependency on `react-router`.
+* Increment `@folio/stripes` to `v5` and update dependency on `react-router` (UIDATIMP-656)
 * Reuse `<EndOfItem>` component from `stripes-data-transfer-components` repository (UIDATIMP-571)
 * Fix field mapping for Item record check in/check out note (UIDATIMP-554)
 * Field mappings: Repeatable field dropdown Validation (UIDATIMP-508)
@@ -36,9 +36,24 @@
 * Add hover text for "Cannot be mapped" icon in field mappings (UIDATIMP-558)
 * Remove "Edit job profile" from Choose jobs action menu (UIDATIMP-553)
 * MARC Bib field mapping profile: details for Update Selected fields on Create/Edit screen (UIDATIMP-613)
+* Update react-intl to v5 (UIDATIMP-643)
+* Relocate the file upload area on the Data Import landing page (UIDATIMP-633)
+* Sync with DTO updates. Modifying or updating the SRS MARC record (UIDATIMP-620)
+* Update Datepicker decorator (TextDate component) (UIDATIMP-638)
+* MARC Bib field mapping profile: details for Update Selected fields on View screen (UIDATIMP-614)
+* Add column for Job status and Resequence columns (UIDATIMP-615)
+* Match Profiles: Remove EDIFACT invoice as a match option (UIDATIMP-353)
+* Change Data Import app name to sentence case (UIDATIMP-634)
+* Add Public/Staff field for Holdings Statement Notes (UIDATIMP-642)
+* Remove 'import/no-extraneous-dependencies' rule from eslint config and add missed dependencies (UIDATIMP-639)
+* MARC Bib field mapping profile: add option for Modify or Update to View screen (UIDATIMP-625)
+* Remove 'Manage' button from landing page (UIDATIMP-652)
+* MARC Bib field mapping profile: details for Update-Overrides on Create/Edit screen (UIDATIMP-631)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
+* Fix for validation function `validateRequiredFields` (UIDATIMP-645)
+* Fix `SyntaxError: Unexpected token 'export'` error when running tests (UIDATIMP-667)
 
 ## [2.1.4](https://github.com/folio-org/ui-data-import/tree/v2.1.4) (2020-08-13)
 

@@ -55,8 +55,11 @@ export class Home extends Component {
                 <FormattedMessage id="ui-data-import.jobsPaneTitle" />
               </span>
             )}
-            lastMenu={this.addManageJobs()}
+            // commented in scope of UIDATIMP-652
+            // TODO: should be uncomment after addManageJobs function implementation
+            // lastMenu={this.addManageJobs()}
           >
+            <ImportJobs />
             <Jobs />
           </Pane>
           <Pane
@@ -68,12 +71,6 @@ export class Home extends Component {
             <JobLogs />
           </Pane>
         </DataFetcher>
-        <Pane
-          defaultWidth="25%"
-          paneTitle={<FormattedMessage id="ui-data-import.importPaneTitle" />}
-        >
-          <ImportJobs />
-        </Pane>
       </Paneset>
     );
   }

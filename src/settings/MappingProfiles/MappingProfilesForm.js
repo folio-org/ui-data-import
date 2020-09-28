@@ -39,12 +39,12 @@ import {
   FolioRecordTypeSelect,
   ProfileAssociator,
   MappedHeader,
-  MARCTable,
 } from '../../components';
 import {
   MappingInstanceDetails,
   MappingHoldingsDetails,
   MappingItemDetails,
+  MappingMARCBibDetails,
 } from './detailsSections/edit';
 
 import {
@@ -66,6 +66,7 @@ import {
   FIELD_MAPPINGS_FOR_MARC,
   FIELD_MAPPINGS_FOR_MARC_OPTIONS,
   fillEmptyFieldsWithValue,
+  marcFieldProtectionSettingsShape,
 } from '../../utils';
 
 import styles from './MappingProfiles.css';
@@ -77,6 +78,9 @@ export const MappingProfilesFormComponent = ({
   submitting,
   initialValues,
   mappingDetails,
+  mappingDetails: { marcMappingOption },
+  parentResources: { marcFieldProtectionSettings: { records: marcFieldProtectionSettings = [] } },
+  mappingMarcFieldProtectionFields,
   okapi,
   location: { search },
   handleSubmit,
@@ -101,7 +105,7 @@ export const MappingProfilesFormComponent = ({
 
   const [folioRecordType, setFolioRecordType] = useState(existingRecordType || null);
   const [fieldMappingsForMARCSelectedOption, setFieldMappingsForMARCSelectedOption] = useState('');
-  const [fieldMappingsForMARC, setFieldMappingsForMARC] = useState('');
+  const [fieldMappingsForMARC, setFieldMappingsForMARC] = useState(marcMappingOption || '');
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
   const [prevExistingRecordType, setPrevExistingRecordType] = useState(existingRecordType);
@@ -182,12 +186,28 @@ export const MappingProfilesFormComponent = ({
     return mappingDetails?.mappingFields?.[mappingFieldIndex]?.repeatableFieldAction || '';
   };
 
+  const setInitalMarcMappingDetails = selectedOption => {
+    let initalMarcMappingDetails = getInitialDetails(folioRecordType, true)?.marcMappingDetails;
+
+    if (selectedOption === FIELD_MAPPINGS_FOR_MARC.UPDATES) {
+      initalMarcMappingDetails = [
+        fillEmptyFieldsWithValue(
+          initalMarcMappingDetails[0],
+          ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*',
+        ),
+      ];
+    }
+
+    setFormFieldValue('profile.mappingDetails.marcMappingDetails', initalMarcMappingDetails);
+  };
+
   const handleMARCTypeChange = e => {
     if (fieldMappingsForMARC && e.target.value !== fieldMappingsForMARC) {
       setFieldMappingsForMARCSelectedOption(e.target.value);
       setConfirmModalOpen(true);
     } else {
       setFieldMappingsForMARC(e.target.value);
+      setInitalMarcMappingDetails(e.target.value);
     }
   };
 
@@ -199,19 +219,19 @@ export const MappingProfilesFormComponent = ({
     okapi,
   };
 
-  const marcTableFields = mappingDetails?.marcMappingDetails ||
-    [{
-      order: 0,
-      field: { subfields: [{}] },
-    }];
-
+  const MARCDetailsProps = {
+    marcMappingDetails: mappingDetails?.marcMappingDetails,
+    marcFieldProtectionFields: marcFieldProtectionSettings,
+    mappingMarcFieldProtectionFields,
+    fieldMappingsForMARCField: fieldMappingsForMARC,
+    setReferenceTables: setFormFieldValue,
+  };
   const fieldMappingsForMARCOptions = FIELD_MAPPINGS_FOR_MARC_OPTIONS.map(option => (
     {
       value: option.value,
       label: intl.formatMessage({ id: option.label }),
     }
   ));
-  const updatesFieldMappingForMARCColumns = ['arrows', 'field', 'indicator1', 'indicator2', 'subfield', 'addRemove'];
   const fieldMappingsForMARCPreviousOption = fieldMappingsForMARC && intl.formatMessage(
     { id: FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label },
   );
@@ -219,31 +239,11 @@ export const MappingProfilesFormComponent = ({
     { id: FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARCSelectedOption)?.label },
   );
 
-  const renderMARCTable = () => {
-    switch (fieldMappingsForMARC) {
-      case FIELD_MAPPINGS_FOR_MARC.UPDATES:
-        return (
-          <MARCTable
-            fields={marcTableFields}
-            onChange={setFormFieldValue}
-            columns={updatesFieldMappingForMARCColumns}
-          />
-        );
-      default:
-        return (
-          <MARCTable
-            fields={marcTableFields}
-            onChange={setFormFieldValue}
-          />
-        );
-    }
-  };
-
   const renderDetails = {
     INSTANCE: <MappingInstanceDetails {...detailsProps} />,
     HOLDINGS: <MappingHoldingsDetails {...detailsProps} />,
     ITEM: <MappingItemDetails {...detailsProps} />,
-    MARC_BIBLIOGRAPHIC: fieldMappingsForMARC && renderMARCTable(),
+    MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCDetailsProps} />,
   };
 
   return (
@@ -312,11 +312,12 @@ export const MappingProfilesFormComponent = ({
                   <FormattedMessage id="ui-data-import.fieldMappingsForMarc.placeholder">
                     {placeholder => (
                       <div data-test-field-mapping-foer-marc-field>
-                        {/* TODO: Wrap into the <Field> component when BE is done */}
-                        <Select
-                          dataOptions={fieldMappingsForMARCOptions}
-                          value={fieldMappingsForMARC}
+                        <Field
                           label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}
+                          name="profile.mappingDetails.marcMappingOption"
+                          component={Select}
+                          validate={[validateRequiredField]}
+                          dataOptions={fieldMappingsForMARCOptions}
                           placeholder={placeholder}
                           onChange={handleMARCTypeChange}
                           required
@@ -355,6 +356,12 @@ export const MappingProfilesFormComponent = ({
                         mappingTypeLabelId={FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label}
                         headlineProps={{ margin: 'small' }}
                       />
+
+                      {(fieldMappingsForMARC === FIELD_MAPPINGS_FOR_MARC.UPDATES) && (
+                        <span>
+                          <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updates.subtext" />
+                        </span>
+                      )}
                     </Col>
                     {!isMARCType(folioRecordType) && (
                       <Col>
@@ -408,22 +415,14 @@ export const MappingProfilesFormComponent = ({
           )}
           confirmLabel={<FormattedMessage id="ui-data-import.continue" />}
           onConfirm={() => {
-            let initalMarcMappingDetails = getInitialDetails(folioRecordType, true)?.marcMappingDetails;
-
-            if (fieldMappingsForMARCSelectedOption === FIELD_MAPPINGS_FOR_MARC.UPDATES) {
-              initalMarcMappingDetails = [
-                fillEmptyFieldsWithValue(
-                  initalMarcMappingDetails[0],
-                  ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*',
-                ),
-              ];
-            }
-
+            setInitalMarcMappingDetails(fieldMappingsForMARCSelectedOption);
             setFieldMappingsForMARC(fieldMappingsForMARCSelectedOption);
-            setFormFieldValue('profile.mappingDetails.marcMappingDetails', initalMarcMappingDetails);
             setConfirmModalOpen(false);
           }}
-          onCancel={() => setConfirmModalOpen(false)}
+          onCancel={() => {
+            setFormFieldValue('profile.mappingDetails.marcMappingOption', fieldMappingsForMARC);
+            setConfirmModalOpen(false);
+          }}
         />
       </FullScreenForm>
     </>
@@ -443,19 +442,23 @@ MappingProfilesFormComponent.propTypes = {
     PropTypes.string.isRequired,
   ]),
   okapi: okapiShape.isRequired,
-  mappingDetails: PropTypes.object,
+  mappingMarcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
   onCancel: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  mappingDetails: PropTypes.object,
+  parentResources: PropTypes.object,
 };
 
 const mapStateToProps = state => {
   const okapi = state.okapi || null;
   const mappingDetails = state.form[formName]?.values.profile?.mappingDetails || {};
+  const mappingMarcFieldProtectionFields = state.form[formName]?.values.profile?.marcFieldProtectionSettings || [];
 
   return {
     okapi,
     mappingDetails,
+    mappingMarcFieldProtectionFields,
   };
 };
 

@@ -22,7 +22,6 @@
         "beforeColon": false
       }
     ],
-    "import/no-extraneous-dependencies": 0,
     "import/prefer-default-export": 0,
     "import/no-cycle": 0,
     "padding-line-between-statements": [

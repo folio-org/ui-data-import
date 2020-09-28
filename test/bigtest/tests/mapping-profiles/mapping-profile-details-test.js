@@ -978,11 +978,11 @@ describe('Mapping Profile View', () => {
 
             hasField('holdingsDetails', 'holdingsDetailsAccordion', 'numberOfItems', 'Number of items');
             hasTable('holdingsDetails', 'holdingsDetailsAccordion', 'statements', 'Holdings statements',
-              2, ['Holdings statement', 'Statement note']);
+              3, ['Holdings statement', 'Statement public note', 'Statement staff note']);
             hasTable('holdingsDetails', 'holdingsDetailsAccordion', 'statementsForSuppl', 'Holdings statements for supplement',
-              2, ['Holdings statement', 'Statement note']);
+              3, ['Holdings statement', 'Statement public note', 'Statement staff note']);
             hasTable('holdingsDetails', 'holdingsDetailsAccordion', 'statementsForNotes', 'Holdings statements for indexes',
-              2, ['Holdings statement', 'Statement note']);
+              3, ['Holdings statement', 'Statement public note', 'Statement staff note']);
             hasField('holdingsDetails', 'holdingsDetailsAccordion', 'illPolicy', 'ILL policy');
             hasField('holdingsDetails', 'holdingsDetailsAccordion', 'digitizationPolicy', 'Digitization policy');
             hasField('holdingsDetails', 'holdingsDetailsAccordion', 'retentionPolicy', 'Retention policy');

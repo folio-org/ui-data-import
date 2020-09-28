@@ -42,6 +42,7 @@ import {
 import css from './MARCTable.css';
 
 export const MARCTableRow = ({
+  columns,
   name,
   rowData,
   order,
@@ -66,7 +67,6 @@ export const MARCTableRow = ({
   removePositionFromRow,
   removeSubactionFromRow,
   removeDataValuesFromRow,
-  columns,
 }) => {
   const {
     allowedSubactions,
@@ -716,6 +716,7 @@ export const MARCTableRow = ({
 };
 
 MARCTableRow.propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   subfieldIndex: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   order: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -740,7 +741,6 @@ MARCTableRow.propTypes = {
   removePositionFromRow: PropTypes.func,
   removeSubactionFromRow: PropTypes.func,
   removeDataValuesFromRow: PropTypes.func,
-  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 MARCTableRow.defaultProps = {

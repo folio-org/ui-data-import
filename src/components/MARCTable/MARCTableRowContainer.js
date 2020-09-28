@@ -8,6 +8,7 @@ import { mappingMARCFieldShape } from '../../utils';
 import css from './MARCTable.css';
 
 export const MARCTableRowContainer = ({
+  columns,
   fields,
   columnWidths,
   onFieldUpdate,
@@ -20,7 +21,6 @@ export const MARCTableRowContainer = ({
   removePositionFromRow,
   removeSubactionFromRow,
   removeDataValuesFromRow,
-  columns,
 }) => {
   const renderRow = (data, i) => {
     const subfieldsData = data.field?.subfields;
@@ -39,20 +39,19 @@ export const MARCTableRowContainer = ({
           rowData={data}
           order={data.order}
           action={data.action}
-          subaction={subfieldsData?.[0]?.subaction}
           field={data.field?.field}
           indicator1={data.field?.indicator1}
           indicator2={data.field?.indicator2}
+          subaction={subfieldsData?.[0]?.subaction}
           data={subfieldsData?.[0]?.data}
           columnWidths={columnWidths}
           isFirst={i === 0}
           isLast={i === (fields.length - 1)}
+          subfieldIndex={0}
           onFieldUpdate={onFieldUpdate}
           onAddNewRow={onAddNewRow}
           onRemoveRow={onRemoveRow}
           onMoveRow={onMoveRow}
-          subfieldIndex={0}
-          subfieldsData={subfieldsData}
           onAddSubfieldRow={onAddSubfieldRow}
           onRemoveSubfieldRow={onRemoveSubfieldRow}
           removeSubfieldRows={removeSubfieldRows}
@@ -80,7 +79,6 @@ export const MARCTableRowContainer = ({
                 columnWidths={columnWidths}
                 isSubline
                 subfieldIndex={idx}
-                subfieldsData={subfieldsData}
                 onAddSubfieldRow={onAddSubfieldRow}
                 onRemoveSubfieldRow={onRemoveSubfieldRow}
               />
@@ -95,6 +93,7 @@ export const MARCTableRowContainer = ({
 };
 
 MARCTableRowContainer.propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   fields: PropTypes.arrayOf(mappingMARCFieldShape.isRequired).isRequired,
   columnWidths: PropTypes.object.isRequired,
   onFieldUpdate: PropTypes.func.isRequired,
@@ -107,5 +106,4 @@ MARCTableRowContainer.propTypes = {
   removePositionFromRow: PropTypes.func.isRequired,
   removeSubactionFromRow: PropTypes.func.isRequired,
   removeDataValuesFromRow: PropTypes.func.isRequired,
-  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
