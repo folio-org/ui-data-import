@@ -753,8 +753,8 @@
     "completedWithErrors": "اكتمل مع وجود أخطاء",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementPublicNote": "ملاحظة البيان العامة",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementStaffNote": "ملاحظة البيان للموظفين",
-    "fieldMappingsForMarc.overrideProtected": "Override protected fields",
-    "fieldMappingsForMarc.updatesOverrides.subtext": "If any protected field should be updated by this profile, check the appropriate box here",
-    "settings.mappingProfile.marcTable.header.override": "Override",
-    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Data marcField override field"
+    "fieldMappingsForMarc.overrideProtected": "تخطي الحقول المحمية",
+    "fieldMappingsForMarc.updatesOverrides.subtext": "إذا كان يجب تحديث أي حقل محمي بواسطة ملف التعريف هذا، قم بتحديد المربع المناسب من هنا",
+    "settings.mappingProfile.marcTable.header.override": "تخطي",
+    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "حقل تخطي بيانات حقل مارك"
 }
