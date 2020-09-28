@@ -753,8 +753,8 @@
     "completedWithErrors": "Concluído com erros",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementPublicNote": "Declaração de nota pública",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementStaffNote": "Declaração de nota da equipe",
-    "fieldMappingsForMarc.overrideProtected": "Override protected fields",
-    "fieldMappingsForMarc.updatesOverrides.subtext": "If any protected field should be updated by this profile, check the appropriate box here",
-    "settings.mappingProfile.marcTable.header.override": "Override",
-    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Data marcField override field"
+    "fieldMappingsForMarc.overrideProtected": "Sobrescrever campos protegidos",
+    "fieldMappingsForMarc.updatesOverrides.subtext": "Se algum campo protegido deve ser atualizado por este perfil, marque a caixa apropriada aqui",
+    "settings.mappingProfile.marcTable.header.override": "Sobrescrever",
+    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Sobrescrever dados do campo MARC"
 }
