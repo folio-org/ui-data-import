@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   omit,
   unionBy,
+  noop,
 } from 'lodash';
 
 import {
@@ -16,17 +17,18 @@ import {
   Checkbox,
 } from '@folio/stripes/components';
 
-import { MappedHeader } from '../../../../../components/AccordionHeader';
+import { MappedHeader } from '..';
 
 import {
   MAPPING_DETAILS_HEADLINE,
   marcFieldProtectionSettingsShape,
-} from '../../../../../utils';
+} from '../../utils';
 
 export const OverrideProtectedFieldsTable = ({
   marcFieldProtectionFields,
   mappingMarcFieldProtectionFields,
   setReferenceTables,
+  isEditable,
 }) => {
   const [protectedFields, setProtectedFields] = useState([]);
 
@@ -35,7 +37,7 @@ export const OverrideProtectedFieldsTable = ({
       .sort((a, b) => a.field - b.field);
 
     setProtectedFields(getProtectedFields());
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [mappingMarcFieldProtectionFields, marcFieldProtectionFields]);
 
   const updateForm = changedField => {
     if (changedField.override) {
@@ -79,6 +81,7 @@ export const OverrideProtectedFieldsTable = ({
         <Checkbox
           checked={!!protectedField.override}
           onChange={() => handleOverrideFieldSelect(protectedField.id)}
+          disabled={!isEditable}
         />
       );
     },
@@ -97,9 +100,11 @@ export const OverrideProtectedFieldsTable = ({
             mappingTypeLabelId="ui-data-import.fieldMappingsForMarc.overrideProtected"
             headlineProps={{ margin: 'small' }}
           />
-          <span>
-            <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.subtext" />
-          </span>
+          {isEditable && (
+            <span>
+              <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.subtext" />
+            </span>
+          )}
         </Col>
       </Row>
       <MultiColumnList
@@ -115,5 +120,11 @@ export const OverrideProtectedFieldsTable = ({
 OverrideProtectedFieldsTable.propTypes = {
   marcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
   mappingMarcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
-  setReferenceTables: PropTypes.func.isRequired,
+  setReferenceTables: PropTypes.func,
+  isEditable: PropTypes.bool,
+};
+
+OverrideProtectedFieldsTable.defaultProps = {
+  isEditable: false,
+  setReferenceTables: noop,
 };

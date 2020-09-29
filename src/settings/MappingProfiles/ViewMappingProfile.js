@@ -37,12 +37,12 @@ import {
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
   MappedHeader,
-  MARCTableView,
 } from '../../components';
 import {
   MappingInstanceDetails,
   MappingItemDetails,
   MappingHoldingsDetails,
+  MappingMARCBibDetails,
 } from './detailsSections/view';
 
 import {
@@ -54,8 +54,8 @@ import {
   getEntity,
   getEntityTags,
   MARC_TYPES,
-  FIELD_MAPPINGS_FOR_MARC,
   FIELD_MAPPINGS_FOR_MARC_OPTIONS,
+  marcFieldProtectionSettingsShape,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
@@ -89,6 +89,7 @@ export class ViewMappingProfile extends Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }).isRequired,
+    parentResources: PropTypes.shape({ marcFieldProtectionSettings: PropTypes.shape({ records: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired }).isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
@@ -112,14 +113,19 @@ export class ViewMappingProfile extends Component {
   };
 
   get mappingProfileData() {
-    const { resources } = this.props;
+    const {
+      resources,
+      parentResources,
+    } = this.props;
 
     const mappingProfile = resources.mappingProfile || {};
+    const marcFieldProtectionFields = parentResources.marcFieldProtectionSettings.records || [];
     const [record] = mappingProfile.records || [];
 
     return {
       hasLoaded: mappingProfile.hasLoaded,
       record,
+      marcFieldProtectionFields,
     };
   }
 
@@ -188,6 +194,7 @@ export class ViewMappingProfile extends Component {
 
     const {
       hasLoaded,
+      marcFieldProtectionFields,
       record: mappingProfile,
     } = this.mappingProfileData;
 
@@ -208,6 +215,7 @@ export class ViewMappingProfile extends Component {
       existingRecordType,
       mappingDetails,
       mappingDetails: { marcMappingOption },
+      marcFieldProtectionSettings: mappingMarcFieldProtectionFields,
     } = mappingProfile;
 
     const associations = [
@@ -219,26 +227,18 @@ export class ViewMappingProfile extends Component {
 
     const marcMappingOptionLabel = FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === marcMappingOption)?.label;
 
-    const renderMARCTableView = () => {
-      const defaultFieldMappingForMARCColumns = ['action', 'field', 'indicator1', 'indicator2',
-        'subfield', 'subaction', 'data', 'position'];
-      const updatesFieldMappingForMARCColumns = ['field', 'indicator1', 'indicator2', 'subfield'];
-
-      const fieldMappingForMARCColumns = { [FIELD_MAPPINGS_FOR_MARC.UPDATES]: updatesFieldMappingForMARCColumns };
-
-      return (
-        <MARCTableView
-          columns={fieldMappingForMARCColumns[marcMappingOption] || defaultFieldMappingForMARCColumns}
-          fields={mappingDetails?.marcMappingDetails}
-        />
-      );
+    const MARCBibDetailsProps = {
+      marcMappingDetails: mappingDetails?.marcMappingDetails,
+      marcMappingOption,
+      marcFieldProtectionFields,
+      mappingMarcFieldProtectionFields,
     };
 
     const renderDetails = {
       INSTANCE: <MappingInstanceDetails mappingDetails={mappingDetails?.mappingFields} />,
       HOLDINGS: <MappingHoldingsDetails mappingDetails={mappingDetails?.mappingFields} />,
       ITEM: <MappingItemDetails mappingDetails={mappingDetails?.mappingFields} />,
-      MARC_BIBLIOGRAPHIC: renderMARCTableView(),
+      MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCBibDetailsProps} />,
     };
 
     return (
@@ -320,11 +320,11 @@ export class ViewMappingProfile extends Component {
                     />
                   </Col>
                   {!isMARCRecord && (
-                  <Col>
-                    <div data-test-expand-all-button>
-                      <ExpandAllButton />
-                    </div>
-                  </Col>
+                    <Col>
+                      <div data-test-expand-all-button>
+                        <ExpandAllButton />
+                      </div>
+                    </Col>
                   )}
                 </Row>
                 {renderDetails[existingRecordType]}
