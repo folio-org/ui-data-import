@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { location } from '@bigtest/react';
-import { Response } from '@bigtest/mirage';
+import { Response } from 'miragejs';
 import {
   describe,
   beforeEach,

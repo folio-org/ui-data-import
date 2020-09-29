@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@folio/stripes-components';
-import { faker } from '@bigtest/mirage';
+import faker from 'faker';
 
 const {
   uuid,

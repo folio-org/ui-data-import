@@ -4,6 +4,7 @@ import {
   beforeEach,
   it,
 } from '@bigtest/mocha';
+import { Response } from 'miragejs';
 
 import { setupApplication } from '../../helpers';
 import {

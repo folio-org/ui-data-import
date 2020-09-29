@@ -1,3 +1,6 @@
-import { Model } from '@bigtest/mirage';
+import {
+  Model,
+  hasMany,
+} from 'miragejs';
 
-export default Model.extend();
+export default Model.extend({ fileDefinitions: hasMany('file') });

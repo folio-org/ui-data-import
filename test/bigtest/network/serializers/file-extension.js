@@ -1,4 +1,4 @@
-import { RestSerializer } from '@bigtest/mirage';
+import { RestSerializer } from 'miragejs';
 
 export default RestSerializer.extend({
   serialize(...args) {

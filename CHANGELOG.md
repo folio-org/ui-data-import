@@ -1,6 +1,7 @@
 # Change history for ui-data-import
 
 ## **3.0.0** (in progress)
+* Refactor `bigtest/mirage` with `miragejs`.
 
 ### Features added:
 * Handle import of stripes-acq-components to modules and platform (UISACQCOMP-3)
