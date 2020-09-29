@@ -451,7 +451,6 @@
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement.legend": "Holdings statements",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement": "Holdings statement",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatement.addLabel": "Add holdings statement",
-    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote": "Note sur le relevé",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForSupplements.legend": "Holdings statements for supplement",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForSupplements.addLabel": "Add holdings statement for supplement",
     "settings.mappingProfiles.map.statements.field.holdingsStatementsForIndexes.legend": "Holdings statements for indexes",
@@ -748,8 +747,14 @@
     "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.header": "Merci de confirmer",
     "settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.message": "The previous \"{previousType}\" field mapping profile details will be deleted when you switch to \"{currentType}\". Do you want to continue?",
     "fieldMappingsForMarc.updates.subtext": "If updates should only affect specific fields, add them here",
-    "status": "Status",
-    "failed": "Failed",
-    "completed": "Completed",
-    "completedWithErrors": "Completed with errors"
+    "status": "Statut",
+    "failed": "Échoué",
+    "completed": "Terminé",
+    "completedWithErrors": "Completed with errors",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementPublicNote": "Statement public note",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementStaffNote": "Statement staff note",
+    "fieldMappingsForMarc.overrideProtected": "Remplacer les champs protégés",
+    "fieldMappingsForMarc.updatesOverrides.subtext": "If any protected field should be updated by this profile, check the appropriate box here",
+    "settings.mappingProfile.marcTable.header.override": "Substituer",
+    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Data marcField override field"
 }

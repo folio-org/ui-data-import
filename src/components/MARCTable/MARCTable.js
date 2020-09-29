@@ -19,9 +19,10 @@ import css from './MARCTable.css';
 import { mappingMARCFieldShape } from '../../utils';
 
 export const MARCTable = ({
+  columns,
   fields,
   onChange,
-  columns,
+  columnWidths,
 }) => {
   const [rows, setRows] = useState([]);
 
@@ -177,19 +178,6 @@ export const MARCTable = ({
     onChange(`profile.mappingDetails.marcMappingDetails[${rowToUpdateIndex}]`, rowToUpdate);
   };
 
-  const columnWidths = {
-    arrows: '70px',
-    action: '100px',
-    field: '120px',
-    indicator1: '93px',
-    indicator2: '93px',
-    subfield: '93px',
-    subaction: '140px',
-    data: '200px',
-    position: '140px',
-    addRemove: '70px',
-  };
-
   return (
     <div
       data-test-marc-table
@@ -219,12 +207,23 @@ export const MARCTable = ({
 };
 
 MARCTable.propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   fields: PropTypes.arrayOf(mappingMARCFieldShape.isRequired).isRequired,
+  columnWidths: PropTypes.object,
   onChange: PropTypes.func,
-  columns: PropTypes.arrayOf(PropTypes.string),
 };
 
 MARCTable.defaultProps = {
-  columns: ['arrows', 'action', 'field', 'indicator1', 'indicator2',
-    'subfield', 'subaction', 'data', 'position', 'addRemove'],
+  columnWidths: {
+    arrows: '70px',
+    action: '100px',
+    field: '120px',
+    indicator1: '93px',
+    indicator2: '93px',
+    subfield: '93px',
+    subaction: '140px',
+    data: '200px',
+    position: '140px',
+    addRemove: '70px',
+  },
 };

@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { Response } from 'miragejs';
 import {
   describe,
   beforeEach,
