@@ -1,7 +1,5 @@
-import {
-  Factory,
-  faker,
-} from '@bigtest/mirage';
+import { Factory } from 'miragejs';
+import faker from 'faker';
 
 import { PROFILE_TYPES } from '../../../../src/utils/constants';
 

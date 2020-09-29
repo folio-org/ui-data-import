@@ -1,7 +1,5 @@
-import {
-  Factory,
-  faker,
-} from '@bigtest/mirage';
+import { Factory } from 'miragejs';
+import faker from 'faker';
 
 import { associatedActionProfiles } from '../../mocks';
 import { INCOMING_RECORD_TYPES } from '../../../../src/components/ListTemplate/incomingRecordTypes';
