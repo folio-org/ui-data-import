@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
 import classnames from 'classnames';
+import { last } from 'lodash';
 
 import {
   Row,
@@ -11,13 +11,43 @@ import {
 
 import { Section } from '../../..';
 
+import { fieldsConfig } from '../../../../utils/fieldsConfig';
+
 import css from '../MatchCriterions.css';
 
 export const ExistingSectionFolio = ({
   repeatableIndex,
   existingRecordFieldLabel,
   existingRecordFields,
+  existingRecordFieldsValue,
+  dispatchFormChange,
 }) => {
+  const [isDirty, setDirty] = useState(false);
+
+  const dropdownValue = last(existingRecordFieldsValue).value;
+
+  const handleExistingRecordSelect = value => {
+    const fieldToChangeName = `profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields`;
+    const fieldId = existingRecordFields.find(item => item.value === value)?.id;
+    const fieldFromConfig = fieldsConfig.find(item => item.id === fieldId);
+    const fieldToChangeValue = [{
+      label: 'field',
+      value: fieldFromConfig?.value,
+    }];
+
+    if (fieldFromConfig?.fromResources) {
+      const { fromResources } = fieldFromConfig;
+
+      fieldToChangeValue.push({
+        label: fromResources.labelToSend,
+        value,
+      });
+    }
+
+    dispatchFormChange(fieldToChangeName, fieldToChangeValue);
+    setDirty(value !== dropdownValue);
+  };
+
   const handleFieldSearch = (value, dataOptions) => {
     return dataOptions.filter(o => new RegExp(`${value}`, 'i').test(o.label));
   };
@@ -29,12 +59,13 @@ export const ExistingSectionFolio = ({
     >
       <Row>
         <Col xs={12}>
-          <Field
+          <Selection
             id="criterion-value-type"
-            component={Selection}
-            name={`profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields[0].value`}
+            value={dropdownValue}
             dataOptions={existingRecordFields}
+            onChange={handleExistingRecordSelect}
             onFilter={handleFieldSearch}
+            dirty={isDirty}
           />
         </Col>
       </Row>
@@ -44,11 +75,13 @@ export const ExistingSectionFolio = ({
 
 ExistingSectionFolio.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
+  existingRecordFieldsValue: PropTypes.arrayOf(PropTypes.object).isRequired,
   existingRecordFields: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   })),
   existingRecordFieldLabel: PropTypes.node,
+  dispatchFormChange: PropTypes.func,
 };
 
 ExistingSectionFolio.defaultProps = {

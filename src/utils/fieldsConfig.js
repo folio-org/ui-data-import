@@ -138,17 +138,17 @@ export const fieldsConfig = [
   },
   /* Instance Identifier */
   {
-    id: 'identifiers.items.properties.identifierTypeId',
-    label: 'ui-data-import.settings.matchProfiles.identifierType',
-    categoryId: 'identifier',
-    value: 'instance.identifiers[].identifierTypeId',
-    recordType: 'INSTANCE',
-  }, {
     id: 'identifiers.items.properties.value',
     label: 'ui-data-import.settings.mappingProfiles.map.identifiers.section',
     categoryId: 'identifier',
     value: 'instance.identifiers[].value',
     recordType: 'INSTANCE',
+    fromResources: {
+      recordsName: 'identifierTypes',
+      fieldToDisplay: 'name',
+      labelToSend: 'identifierTypeId',
+      fieldToSend: 'id',
+    },
   },
   /* Instance Contributor */
   {
