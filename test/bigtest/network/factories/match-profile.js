@@ -4,7 +4,7 @@ import {
 } from '@bigtest/mirage';
 
 import { associatedJobProfiles } from '../../mocks';
-import { fieldsConfig } from '../../../../src/utils/fields-config';
+import { fieldsConfig } from '../../../../src/utils/fieldsConfig';
 import {
   MATCH_INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,

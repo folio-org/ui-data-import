@@ -81,6 +81,7 @@ export class ViewMatchProfile extends Component {
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    parentResources: PropTypes.object,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   };
@@ -256,6 +257,7 @@ export class ViewMatchProfile extends Component {
                     matchDetails={item}
                     incomingRecordLabel={incomingRecordLabel}
                     existingRecordLabel={existingRecordLabel}
+                    resources={this.props.parentResources}
                   />
                 ))}
               </Accordion>

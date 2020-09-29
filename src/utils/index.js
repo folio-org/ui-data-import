@@ -26,7 +26,6 @@ export * from './getQueryParts';
 export * from './fetchJsonShemas';
 export * from './withProfileWrapper';
 export * from './getFieldsMatched';
-export * from './getFieldsMatchedWithCategory';
 export * from './checkEmpty';
 export * from './hooks';
 export * from './useForceUpdate';
