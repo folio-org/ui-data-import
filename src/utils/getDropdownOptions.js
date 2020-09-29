@@ -1,7 +1,9 @@
 import { get } from 'lodash';
 
-import { fieldsConfig } from './fieldsConfig';
-import { fieldCategoriesConfig } from './fieldCategoriesConfig';
+import {
+  fieldsConfig,
+  fieldCategoriesConfig,
+} from '.';
 
 export const matchFields = (resources, recordType) => {
   return fieldsConfig.filter(field => field.recordType
@@ -27,19 +29,19 @@ const getDropdownOptionsFromResources = (record, resources, categoryLabel) => {
   }));
 };
 
-export const getDropdownOptions = (records, resources, intl) => {
+export const getDropdownOptions = (records, resources, formatMessage) => {
   const options = [];
 
   records.forEach(record => {
     const category = getCategory(record);
-    const categoryLabel = category ? intl.formatMessage({ id: category.label }) : '';
+    const categoryLabel = category ? formatMessage({ id: category.label }) : '';
 
     if (record.fromResources) {
       const optionsFromResources = getDropdownOptionsFromResources(record, resources, categoryLabel);
 
       options.push(...optionsFromResources);
     } else {
-      const fieldLabel = intl.formatMessage({ id: record.label });
+      const fieldLabel = formatMessage({ id: record.label });
 
       options.push({
         id: record.id,

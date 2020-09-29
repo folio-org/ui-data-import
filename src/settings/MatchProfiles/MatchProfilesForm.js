@@ -104,7 +104,7 @@ export const MatchProfilesFormComponent = memo(({
     if (isEditMode) {
       const matches = matchFields(jsonSchemas[existingRecordType], existingRecordType);
 
-      return getDropdownOptions(matches, parentResources, intl);
+      return getDropdownOptions(matches, parentResources, intl.formatMessage);
     }
 
     return [];
@@ -165,7 +165,7 @@ export const MatchProfilesFormComponent = memo(({
 
   const handleExistingRecordChange = ({ type }) => {
     const matches = matchFields(jsonSchemas[type], type);
-    const options = getDropdownOptions(matches, parentResources, intl);
+    const options = getDropdownOptions(matches, parentResources, intl.formatMessage);
 
     setExistingRecord(type);
     setExistingRecordFields(options);

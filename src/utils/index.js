@@ -11,6 +11,8 @@ export * from './formatUserName';
 export * from './xhr';
 export * from './isMARCType';
 export * from './isTestEnv';
+export * from './fieldCategoriesConfig';
+export * from './fieldsConfig';
 export * from './formValidators';
 export * from './formUtils';
 export * from './craftLayerURL';

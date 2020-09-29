@@ -36,7 +36,8 @@ export const ExistingSectionFolio = ({
           xs={12}
           className={css.fieldValue}
         >
-          {getFieldMatchedWithCategory(existingRecordFields, existingRecordType, resources, intl) || <NoValue />}
+          {getFieldMatchedWithCategory(existingRecordFields, existingRecordType, resources, intl.formatMessage)
+          || <NoValue />}
         </Col>
       </Row>
     </Section>

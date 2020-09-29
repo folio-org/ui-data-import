@@ -11,7 +11,10 @@ import {
 
 import { Section } from '../../..';
 
-import { fieldsConfig } from '../../../../utils/fieldsConfig';
+import {
+  fieldsConfig,
+  MARC_FIELD_CONSTITUENT,
+} from '../../../../utils';
 
 import css from '../MatchCriterions.css';
 
@@ -31,7 +34,7 @@ export const ExistingSectionFolio = ({
     const fieldId = existingRecordFields.find(item => item.value === value)?.id;
     const fieldFromConfig = fieldsConfig.find(item => item.id === fieldId);
     const fieldToChangeValue = [{
-      label: 'field',
+      label: MARC_FIELD_CONSTITUENT.FIELD,
       value: fieldFromConfig?.value,
     }];
 

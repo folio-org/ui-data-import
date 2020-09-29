@@ -172,7 +172,10 @@ export class ViewMatchProfile extends Component {
   };
 
   render() {
-    const { tagsEnabled } = this.props;
+    const {
+      tagsEnabled,
+      parentResources,
+    } = this.props;
     const { showDeleteConfirmation } = this.state;
 
     const {
@@ -257,7 +260,7 @@ export class ViewMatchProfile extends Component {
                     matchDetails={item}
                     incomingRecordLabel={incomingRecordLabel}
                     existingRecordLabel={existingRecordLabel}
-                    resources={this.props.parentResources}
+                    resources={parentResources}
                   />
                 ))}
               </Accordion>

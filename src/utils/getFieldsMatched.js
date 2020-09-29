@@ -1,7 +1,8 @@
-import { fieldsConfig } from './fieldsConfig';
 import {
   HTML_LANG_DIRECTIONS,
+  MARC_FIELD_CONSTITUENT,
   getCategory,
+  fieldsConfig,
 } from '.';
 
 const getFieldFromResources = (fieldFromConfig, resources, fields) => {
@@ -17,12 +18,12 @@ const getFieldFromResources = (fieldFromConfig, resources, fields) => {
   return records.find(record => record[fieldToSend] === fieldValue)?.[fieldToDisplay];
 };
 
-const getField = (fields, recordType, resources, intl) => {
+const getField = (fields, recordType, resources, formatMessage) => {
   if (!fields.length || !recordType) {
     return undefined;
   }
 
-  const fieldValue = fields.find(field => field.label === 'field')?.value;
+  const fieldValue = fields.find(field => field.label === MARC_FIELD_CONSTITUENT.FIELD)?.value;
   const fieldFromConfig = fieldsConfig.find(item => item.value === fieldValue);
 
   if (fieldFromConfig?.fromResources) {
@@ -34,7 +35,7 @@ const getField = (fields, recordType, resources, intl) => {
     };
   }
 
-  const fieldLabel = fieldFromConfig ? intl.formatMessage({ id: fieldFromConfig.label }) : undefined;
+  const fieldLabel = fieldFromConfig ? formatMessage({ id: fieldFromConfig.label }) : undefined;
 
   return {
     fieldFromConfig,
@@ -42,7 +43,7 @@ const getField = (fields, recordType, resources, intl) => {
   };
 };
 
-export const getFieldMatched = (fields, recordType, resources, intl) => {
+export const getFieldMatched = (fields, recordType, resources, formatMessage) => {
   const isMarcRecord = recordType.toLowerCase().includes('marc');
 
   if (isMarcRecord) {
@@ -55,23 +56,23 @@ export const getFieldMatched = (fields, recordType, resources, intl) => {
     return fieldsMatched.join('.');
   }
 
-  const { fieldLabel } = getField(fields, recordType, resources, intl);
+  const { fieldLabel } = getField(fields, recordType, resources, formatMessage);
 
   return fieldLabel;
 };
 
-export const getFieldMatchedWithCategory = (fields, recordType, resources, intl) => {
+export const getFieldMatchedWithCategory = (fields, recordType, resources, formatMessage) => {
   const {
     fieldFromConfig,
     fieldLabel,
-  } = getField(fields, recordType, resources, intl);
+  } = getField(fields, recordType, resources, formatMessage);
 
   if (!fieldFromConfig) {
     return undefined;
   }
 
   const category = getCategory(fieldFromConfig);
-  const categoryLabel = category ? intl.formatMessage({ id: category.label }) : '';
+  const categoryLabel = category ? formatMessage({ id: category.label }) : '';
 
   return `${categoryLabel}: ${fieldLabel}`;
 };

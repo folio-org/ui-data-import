@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import HighLight from 'react-highlighter';
 import { get } from 'lodash';
@@ -27,8 +26,6 @@ export const MatchColumn = memo(({
   searchTerm,
   resources,
 }) => {
-  const intl = useIntl();
-
   if (!record) {
     return <span>-</span>;
   }
@@ -74,7 +71,7 @@ export const MatchColumn = memo(({
                   search={searchTerm || ''}
                   className={sharedCss.container}
                 >
-                  {getFieldMatched(fields, fieldSource, resources, intl) || <NoValue />}
+                  {getFieldMatched(fields, fieldSource, resources, formatMessage) || <NoValue />}
                 </HighLight>
               </>
             )}
@@ -84,7 +81,7 @@ export const MatchColumn = memo(({
                   search={searchTerm || ''}
                   className={sharedCss.container}
                 >
-                  {getFieldMatched(fields, fieldSource, resources, intl) || <NoValue />}
+                  {getFieldMatched(fields, fieldSource, resources, formatMessage) || <NoValue />}
                 </HighLight>
                 &nbsp;&larr;&nbsp;
                 <HighLight

@@ -37,7 +37,7 @@ export const searchAndSortTemplate = intl => ({
     if (document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT) {
       part1 = intl.formatMessage({ id: FOLIO_RECORD_TYPES[record.existingRecordType].captionId });
       part2 = capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS);
-      part3 = getFieldMatched(fieldMatched, fieldSource, intl);
+      part3 = getFieldMatched(fieldMatched, fieldSource, intl.formatMessage);
     } else {
       part1 = capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS);
       part2 = capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS);
