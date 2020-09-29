@@ -11,18 +11,8 @@ import { mappingMARCFieldShape } from '../../utils';
 export const MARCTableView = ({
   columns,
   fields,
+  columnWidths,
 }) => {
-  const columnWidths = {
-    action: '90px',
-    field: '90px',
-    indicator1: '63px',
-    indicator2: '63px',
-    subfield: '93px',
-    subaction: '140px',
-    data: '340px',
-    position: '100px',
-  };
-
   return (
     <div
       data-test-marc-table-view
@@ -44,4 +34,18 @@ export const MARCTableView = ({
 MARCTableView.propTypes = {
   fields: PropTypes.arrayOf(mappingMARCFieldShape.isRequired).isRequired,
   columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  columnWidths: PropTypes.object,
+};
+
+MARCTableView.defaultProps = {
+  columnWidths: {
+    action: '90px',
+    field: '90px',
+    indicator1: '63px',
+    indicator2: '63px',
+    subfield: '93px',
+    subaction: '140px',
+    data: '340px',
+    position: '100px',
+  },
 };
