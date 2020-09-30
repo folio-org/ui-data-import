@@ -28,6 +28,7 @@ import {
  *   selectRecord?: (id: string) => void,
  *   selectedRecords?: Set<string>,
  *   showLabelsAsHotLink?: boolean,
+ *   resources?: object,
  * }}
  * Note: check which params are required based on used columns
  */
@@ -38,6 +39,7 @@ export const listTemplate = ({
   selectRecord,
   selectedRecords,
   showLabelsAsHotLink,
+  resources,
 }) => ({
   selected: record => (
     <CheckboxColumn
@@ -66,6 +68,7 @@ export const listTemplate = ({
     <MatchColumn
       record={record}
       searchTerm={searchTerm}
+      resources={resources}
     />
   ),
   extension: record => (

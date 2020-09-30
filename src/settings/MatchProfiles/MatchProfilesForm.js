@@ -65,6 +65,7 @@ export const MatchProfilesFormComponent = memo(({
   onCancel,
   jsonSchemas,
   dispatch,
+  parentResources,
 }) => {
   const intl = useIntl();
 
@@ -103,7 +104,7 @@ export const MatchProfilesFormComponent = memo(({
     if (isEditMode) {
       const matches = matchFields(jsonSchemas[existingRecordType], existingRecordType);
 
-      return getDropdownOptions(matches, intl);
+      return getDropdownOptions(matches, parentResources, intl.formatMessage);
     }
 
     return [];
@@ -116,6 +117,10 @@ export const MatchProfilesFormComponent = memo(({
     } else {
       handleSubmit(e);
     }
+  };
+
+  const dispatchFormChange = (fieldName, fieldValue) => {
+    dispatch(change(formName, fieldName, fieldValue));
   };
 
   const handleStaticValueTypeChange = selectedStaticType => {
@@ -131,7 +136,7 @@ export const MatchProfilesFormComponent = memo(({
     const changeFormFields = staticType => {
       staticTypeFields[staticType].forEach(field => {
         matchDetails.forEach((item, i) => {
-          dispatch(change(formName, `profile.matchDetails[${i}].incomingMatchExpression.staticValueDetails.${field}`, null));
+          dispatchFormChange(`profile.matchDetails[${i}].incomingMatchExpression.staticValueDetails.${field}`, null);
         });
       });
     };
@@ -145,10 +150,10 @@ export const MatchProfilesFormComponent = memo(({
 
   const handleIncomingRecordChange = record => {
     setIncomingRecord(record);
-    dispatch(change(formName, 'profile.incomingRecordType', record.type));
+    dispatchFormChange('profile.incomingRecordType', record.type);
     matchDetails.forEach((item, i) => {
-      dispatch(change(formName, `profile.matchDetails[${i}].incomingMatchExpression`, getSectionInitialValues(record.type)));
-      dispatch(change(formName, `profile.matchDetails[${i}].incomingRecordType`, record.type));
+      dispatchFormChange(`profile.matchDetails[${i}].incomingMatchExpression`, getSectionInitialValues(record.type));
+      dispatchFormChange(`profile.matchDetails[${i}].incomingRecordType`, record.type);
     });
 
     if (record.type === MATCH_INCOMING_RECORD_TYPES.STATIC_VALUE.type) {
@@ -160,21 +165,21 @@ export const MatchProfilesFormComponent = memo(({
 
   const handleExistingRecordChange = ({ type }) => {
     const matches = matchFields(jsonSchemas[type], type);
-    const options = getDropdownOptions(matches, intl);
+    const options = getDropdownOptions(matches, parentResources, intl.formatMessage);
 
     setExistingRecord(type);
     setExistingRecordFields(options);
-    dispatch(change(formName, 'profile.existingRecordType', type));
+    dispatchFormChange('profile.existingRecordType', type);
     matchDetails.forEach((item, i) => {
-      dispatch(change(formName, `profile.matchDetails[${i}].existingMatchExpression`, getSectionInitialValues(type)));
-      dispatch(change(formName, `profile.matchDetails[${i}].existingRecordType`, type));
+      dispatchFormChange(`profile.matchDetails[${i}].existingMatchExpression`, getSectionInitialValues(type));
+      dispatchFormChange(`profile.matchDetails[${i}].existingRecordType`, type);
     });
   };
 
   const handleQualifierSectionChange = (isChecked, matchDetailsIdx, expressionType, fieldsToClear) => {
     if (!isChecked) {
       fieldsToClear.forEach(field => {
-        dispatch(change(formName, `profile.matchDetails[${matchDetailsIdx}].${expressionType}.qualifier.${field}`, null));
+        dispatchFormChange(`profile.matchDetails[${matchDetailsIdx}].${expressionType}.qualifier.${field}`, null);
       });
     }
   };
@@ -260,6 +265,7 @@ export const MatchProfilesFormComponent = memo(({
                   existingRecordFields={isEmpty(existingRecordFields) ? getInitialFields() : existingRecordFields}
                   onStaticValueTypeChange={(event, newValue) => handleStaticValueTypeChange(newValue)}
                   onQualifierSectionChange={handleQualifierSectionChange}
+                  dispatchFormChange={dispatchFormChange}
                 />
               )}
             />
@@ -288,6 +294,7 @@ export const MatchProfilesFormComponent = memo(({
 });
 
 MatchProfilesFormComponent.propTypes = {
+  parentResources: PropTypes.object.isRequired,
   initialValues: PropTypes.object.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,

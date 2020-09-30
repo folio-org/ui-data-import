@@ -1,7 +1,6 @@
 # Change history for ui-data-import
 
 ## **3.0.0** (in progress)
-* Refactor `bigtest/mirage` with `miragejs`.
 
 ### Features added:
 * Handle import of stripes-acq-components to modules and platform (UISACQCOMP-3)
@@ -46,8 +45,10 @@
 * Change Data Import app name to sentence case (UIDATIMP-634)
 * Add Public/Staff field for Holdings Statement Notes (UIDATIMP-642)
 * Remove 'import/no-extraneous-dependencies' rule from eslint config and add missed dependencies (UIDATIMP-639)
+* Refine an identifier matching for Instances (UIDATIMP-630)
 * MARC Bib field mapping profile: add option for Modify or Update to View screen (UIDATIMP-625)
 * Remove 'Manage' button from landing page (UIDATIMP-652)
+* Refactor `bigtest/mirage` with `miragejs`.
 * MARC Bib field mapping profile: details for Update-Overrides on Create/Edit screen (UIDATIMP-631)
 * MARC Bib field mapping profile: details for Update-Overrides on View screen (UIDATIMP-632)
 

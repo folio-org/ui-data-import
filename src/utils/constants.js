@@ -125,6 +125,13 @@ export const LOG_VIEWER = {
   },
 };
 
+export const MARC_FIELD_CONSTITUENT = {
+  FIELD: 'field',
+  INDICATOR1: 'indicator1',
+  INDICATOR2: 'indicator1',
+  SUBFIELD: 'subfield',
+};
+
 export const QUALIFIER_TYPES = {
   BEGINS_WITH: 'BEGINS_WITH',
   ENDS_WITH: 'ENDS_WITH',

@@ -19,9 +19,10 @@ import { getFieldMatchedWithCategory } from '../../../../utils';
 import css from '../ViewMatchCriterion.css';
 
 export const ExistingSectionFolio = ({
-  existingRecordField,
+  existingRecordFields,
   existingRecordType,
   existingRecordFieldLabel,
+  resources,
 }) => {
   const intl = useIntl();
 
@@ -35,7 +36,8 @@ export const ExistingSectionFolio = ({
           xs={12}
           className={css.fieldValue}
         >
-          {getFieldMatchedWithCategory(existingRecordField, existingRecordType, intl) || <NoValue />}
+          {getFieldMatchedWithCategory(existingRecordFields, existingRecordType, resources, intl.formatMessage)
+          || <NoValue />}
         </Col>
       </Row>
     </Section>
@@ -43,13 +45,15 @@ export const ExistingSectionFolio = ({
 };
 
 ExistingSectionFolio.propTypes = {
-  existingRecordField: PropTypes.string,
+  existingRecordFields: PropTypes.arrayOf(PropTypes.object),
   existingRecordType: PropTypes.oneOf(Object.keys(FOLIO_RECORD_TYPES)),
   existingRecordFieldLabel: PropTypes.node,
+  resources: PropTypes.object,
 };
 
 ExistingSectionFolio.defaultProps = {
-  existingRecordField: '',
+  existingRecordFields: [],
   existingRecordType: null,
   existingRecordFieldLabel: null,
+  resources: {},
 };

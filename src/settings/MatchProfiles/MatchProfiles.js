@@ -289,6 +289,11 @@ export class MatchProfiles extends Component {
       throwErrors: false,
       GET: { params: { full: true } },
     },
+    identifierTypes: {
+      type: 'okapi',
+      records: 'identifierTypes',
+      path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
+    },
   });
 
   static propTypes = {
@@ -298,6 +303,7 @@ export class MatchProfiles extends Component {
         POST: PropTypes.func.isRequired,
         PUT: PropTypes.func.isRequired,
       }).isRequired,
+      identifierTypes: PropTypes.object.isRequired,
     }).isRequired,
     stripes: PropTypes.object.isRequired,
     location: PropTypes.oneOfType([

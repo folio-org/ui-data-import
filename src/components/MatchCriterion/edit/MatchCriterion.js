@@ -47,6 +47,7 @@ export const MatchCriterion = ({
   existingRecordFields,
   onStaticValueTypeChange,
   onQualifierSectionChange,
+  dispatchFormChange,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -140,6 +141,8 @@ export const MatchCriterion = ({
       repeatableIndex={repeatableIndex}
       existingRecordFieldLabel={existingRecordFieldLbl}
       existingRecordFields={existingRecordFields}
+      existingRecordFieldsValue={existingMatchExpression.fields}
+      dispatchFormChange={dispatchFormChange}
     />
   );
   const existingQualifierSectionElement = (
@@ -259,13 +262,14 @@ MatchCriterion.propTypes = {
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   })).isRequired,
-  incomingRecordType: PropTypes.oneOf(Object.keys(MATCH_INCOMING_RECORD_TYPES)),
-  existingRecordType: PropTypes.oneOf(Object.keys(FOLIO_RECORD_TYPES)),
-  staticValueType: PropTypes.oneOf(Object.keys(STATIC_VALUE_TYPES)),
+  incomingRecordType: PropTypes.oneOf([...Object.keys(MATCH_INCOMING_RECORD_TYPES), '']),
+  existingRecordType: PropTypes.oneOf([...Object.keys(FOLIO_RECORD_TYPES), '']),
+  staticValueType: PropTypes.oneOf([...Object.keys(STATIC_VALUE_TYPES), '']),
   incomingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   existingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   onStaticValueTypeChange: PropTypes.func,
   onQualifierSectionChange: PropTypes.func,
+  dispatchFormChange: PropTypes.func,
 };
 
 MatchCriterion.defaultProps = {
@@ -276,4 +280,5 @@ MatchCriterion.defaultProps = {
   existingRecordLabel: null,
   onStaticValueTypeChange: noop,
   onQualifierSectionChange: noop,
+  dispatchFormChange: noop,
 };

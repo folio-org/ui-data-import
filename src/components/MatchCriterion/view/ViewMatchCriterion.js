@@ -34,6 +34,7 @@ export const ViewMatchCriterion = ({
   matchDetails,
   incomingRecordLabel,
   existingRecordLabel,
+  resources,
 }) => {
   const {
     incomingRecordType,
@@ -99,9 +100,10 @@ export const ViewMatchCriterion = ({
   );
   const existingSectionFolioElement = (
     <ExistingSectionFolio
-      existingRecordField={existingMatchExpression.fields.find(field => field.label === 'field')?.value}
+      existingRecordFields={existingMatchExpression.fields}
       existingRecordType={existingRecordType}
       existingRecordFieldLabel={existingRecordFieldLbl}
+      resources={resources}
     />
   );
   const existingQualifierSectionElement = (
@@ -215,6 +217,7 @@ ViewMatchCriterion.propTypes = {
   existingRecordType: PropTypes.oneOf(Object.keys(FOLIO_RECORD_TYPES)),
   incomingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   existingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  resources: PropTypes.object,
 };
 
 ViewMatchCriterion.defaultProps = {
