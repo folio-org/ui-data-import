@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { last } from 'lodash';
+import {
+  last,
+  noop,
+} from 'lodash';
 
 import {
   Row,
@@ -90,4 +93,5 @@ ExistingSectionFolio.propTypes = {
 ExistingSectionFolio.defaultProps = {
   existingRecordFields: null,
   existingRecordFieldLabel: null,
+  dispatchFormChange: noop,
 };
