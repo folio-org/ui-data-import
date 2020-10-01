@@ -15,7 +15,10 @@ import {
 
 import { Section } from '../../..';
 
-import { COMPARISON_PARTS_OPTIONS } from '../../../../utils';
+import {
+  createOptionsList,
+  COMPARISON_PARTS_OPTIONS,
+} from '../../../../utils';
 
 import css from '../MatchCriterions.css';
 
@@ -27,12 +30,7 @@ export const QualifierPartSection = ({
 }) => {
   const { formatMessage } = useIntl();
 
-  const dataOptions = COMPARISON_PARTS_OPTIONS.map(option => (
-    {
-      value: option.value,
-      label: formatMessage({ id: option.label }),
-    }
-  ));
+  const dataOptions = createOptionsList(COMPARISON_PARTS_OPTIONS, formatMessage);
   const expressionType = `${recordFieldType}MatchExpression`;
 
   return (

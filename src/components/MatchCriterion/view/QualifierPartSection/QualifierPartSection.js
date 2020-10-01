@@ -15,6 +15,7 @@ import {
 import { Section } from '../../..';
 
 import {
+  createOptionsList,
   COMPARISON_PARTS_OPTIONS,
   qualifierShape,
 } from '../../../../utils';
@@ -27,12 +28,7 @@ export const QualifierPartSection = ({
 }) => {
   const { formatMessage } = useIntl();
 
-  const dataOptions = COMPARISON_PARTS_OPTIONS.map(option => (
-    {
-      value: option.value,
-      label: formatMessage({ id: option.label }),
-    }
-  ));
+  const dataOptions = createOptionsList(COMPARISON_PARTS_OPTIONS, formatMessage);
 
   const qualifierPartLabel = dataOptions.find(item => item.value === qualifierData?.comparisonPart)?.label;
 

@@ -16,7 +16,10 @@ import {
 
 import { Section } from '../../..';
 
-import { QUALIFIER_TYPES_OPTIONS } from '../../../../utils';
+import {
+  createOptionsList,
+  QUALIFIER_TYPES_OPTIONS,
+} from '../../../../utils';
 
 import css from '../MatchCriterions.css';
 
@@ -28,12 +31,7 @@ export const QualifierSection = ({
 }) => {
   const { formatMessage } = useIntl();
 
-  const dataOptions = QUALIFIER_TYPES_OPTIONS.map(option => (
-    {
-      value: option.value,
-      label: formatMessage({ id: option.label }),
-    }
-  ));
+  const dataOptions = createOptionsList(QUALIFIER_TYPES_OPTIONS, formatMessage);
   const expressionType = `${recordFieldType}MatchExpression`;
 
   return (

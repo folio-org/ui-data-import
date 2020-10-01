@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import {
   Accordion,
@@ -19,14 +22,26 @@ import {
   transformSubfieldsData,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileFieldShape } from '../../../../../utils';
+import {
+  ITEM_CIRCULATION_NOTES_OPTIONS,
+  mappingProfileFieldShape,
+} from '../../../../../utils';
 
 export const LoanAndAvailability = ({ mappingDetails }) => {
+  const { formatMessage } = useIntl();
+
   const noValueElement = <NoValue />;
 
   const permanentLoanType = getFieldValue(mappingDetails, 'permanentLoanType.id', 'value');
   const temporaryLoanType = getFieldValue(mappingDetails, 'temporaryLoanType.id', 'value');
   const status = getFieldValue(mappingDetails, 'status.name', 'value');
+
+  const circulationNotesMap = ITEM_CIRCULATION_NOTES_OPTIONS.reduce((obj, item) => {
+    const key = `"${item.value}"`;
+    const value = formatMessage({ id: item.label });
+
+    return Object.assign(obj, { [key]: `"${value}"` });
+  }, {});
   const circulationNotes = getFieldValue(mappingDetails, 'circulationNotes', 'subfields');
   const circulationNotesRepeatableAction = getFieldValue(mappingDetails,
     'circulationNotes', 'repeatableFieldAction');
@@ -44,7 +59,13 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
     ),
   };
   const circulationNotesFormatter = {
-    noteType: x => x?.noteType || noValueElement,
+    noteType: x => {
+      if (x?.noteType) {
+        return circulationNotesMap[x.noteType] || x.noteType;
+      }
+
+      return noValueElement;
+    },
     note: x => x?.note || noValueElement,
     staffOnly: x => {
       const staffOnlyLabelId = getBooleanLabelId(x?.staffOnly);

@@ -1,22 +1,27 @@
 import React, {
-  memo,
-  useRef,
   useState,
   useEffect,
+  memo,
 } from 'react';
 import { PropTypes } from 'prop-types';
 import { isEmpty } from 'lodash';
 
-import { formatDecoratorValue } from '../../../../utils';
+import {
+  WithTranslation,
+  OptionsList,
+} from '..';
 
-import { WithTranslation } from '../../..';
-import { OptionsList } from '../partials';
+import { formatDecoratorValue } from '../../utils';
 
 import styles from './withReferenceValues.css';
+
+const decoratorValueRegExp = /"[^"]+"/g;
 
 export const withReferenceValues = memo(({
   id,
   input,
+  value,
+  onChange,
   dataOptions,
   optionValue,
   optionLabel,
@@ -25,29 +30,25 @@ export const withReferenceValues = memo(({
   disabled,
   ...rest
 }) => {
+  const currentValue = input?.value || value;
+
   const [hasLoaded, setHasLoaded] = useState(false);
-  const [listOptions, setListOptions] = useState([]);
-  const [currentValue, setCurrentValue] = useState(input.value || '');
 
-  const decoratorValueRegExp = /"[^"]+"/g;
-
-  const currentInput = useRef(input);
+  useEffect(() => {
+    setHasLoaded(!isEmpty(dataOptions));
+  }, [dataOptions]);
 
   const handleChange = e => {
     const val = e.target ? e.target.value : e;
 
-    setCurrentValue(val);
-    input.onChange(e);
+    if (input?.onChange) {
+      input.onChange(e);
+    }
+
+    if (typeof onChange === 'function') {
+      onChange(val);
+    }
   };
-
-  useEffect(() => {
-    setHasLoaded(!isEmpty(dataOptions));
-    setListOptions(dataOptions);
-  }, [dataOptions]);
-
-  useEffect(() => {
-    setCurrentValue(input.value);
-  }, [input.value]);
 
   const onValueSelect = wrapperValue => {
     const newValue = wrapperValue ? formatDecoratorValue(currentValue, wrapperValue, decoratorValueRegExp, true) : '';
@@ -59,23 +60,15 @@ export const withReferenceValues = memo(({
 
   const Component = wrappedComponent;
 
-  const {
-    onBlur,
-    onDragStart,
-    onDrop,
-    onFocus,
-  } = input;
-
   return (
     <div className={styles.decorator}>
       <Component
         value={currentValue}
-        inputRef={currentInput}
-        onBlur={onBlur}
+        onBlur={input?.onBlur}
         onChange={handleChange}
-        onDragStart={onDragStart}
-        onDrop={onDrop}
-        onFocus={onFocus}
+        onDragStart={input?.onDragStart}
+        onDrop={input?.onDrop}
+        onFocus={input?.onFocus}
         loading={!hasLoaded}
         disabled={disabled}
         {...rest}
@@ -87,7 +80,7 @@ export const withReferenceValues = memo(({
           <OptionsList
             id={id}
             label={label}
-            dataOptions={listOptions}
+            dataOptions={dataOptions}
             optionValue={optionValue}
             optionLabel={optionLabel}
             className={styles['options-dropdown']}
@@ -101,18 +94,20 @@ export const withReferenceValues = memo(({
 });
 
 withReferenceValues.propTypes = {
-  input: PropTypes.shape({
-    onBlur: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
-    onDragStart: PropTypes.func.isRequired,
-    onDrop: PropTypes.func.isRequired,
-    onFocus: PropTypes.func.isRequired,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  }).isRequired,
   dataOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
   wrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
+  input: PropTypes.shape({
+    onBlur: PropTypes.func,
+    onChange: PropTypes.func,
+    onDragStart: PropTypes.func,
+    onDrop: PropTypes.func,
+    onFocus: PropTypes.func,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onChange: PropTypes.func,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
   disabled: PropTypes.bool,

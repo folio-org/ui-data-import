@@ -29,6 +29,7 @@ import {
 } from '.';
 
 import {
+  createOptionsList,
   CRITERION_TYPES_OPTIONS,
   STATIC_VALUE_TYPES,
   matchDetailsShape,
@@ -56,12 +57,7 @@ export const MatchCriterion = ({
     existingMatchExpression,
   } = matchDetails;
 
-  const matchCriterionOptions = CRITERION_TYPES_OPTIONS.map(option => (
-    {
-      value: option.value,
-      label: formatMessage({ id: option.label }),
-    }
-  ));
+  const matchCriterionOptions = createOptionsList(CRITERION_TYPES_OPTIONS, formatMessage);
 
   const getMARCFieldValue = (typeExpression, fieldName) => typeExpression?.fields
     .find(field => field.label === fieldName)?.value;
