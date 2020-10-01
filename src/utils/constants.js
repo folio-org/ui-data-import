@@ -523,11 +523,11 @@ export const MARC_TABLE_CONFIG = {
 
 export const ITEM_CIRCULATION_NOTES_OPTIONS = [
   {
-    value: 'Check in note',
+    value: 'Check in',
     label: 'ui-data-import.settings.mappingProfiles.map.item.field.circulationNotes.checkInNote',
   },
   {
-    value: 'Check out note',
+    value: 'Check out',
     label: 'ui-data-import.settings.mappingProfiles.map.item.field.circulationNotes.checkOutNote',
   },
 ];

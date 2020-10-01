@@ -15,6 +15,7 @@ import {
 import { Section } from '../../..';
 
 import {
+  createOptionsList,
   QUALIFIER_TYPES_OPTIONS,
   qualifierShape,
 } from '../../../../utils';
@@ -27,13 +28,7 @@ export const QualifierSection = ({
 }) => {
   const { formatMessage } = useIntl();
 
-  const dataOptions = QUALIFIER_TYPES_OPTIONS.map(option => (
-    {
-      value: option.value,
-      label: formatMessage({ id: option.label }),
-    }
-  ));
-
+  const dataOptions = createOptionsList(QUALIFIER_TYPES_OPTIONS, formatMessage);
   const qualifierTypeLabel = dataOptions.find(item => item.value === qualifierData?.qualifierType)?.label;
 
   return (

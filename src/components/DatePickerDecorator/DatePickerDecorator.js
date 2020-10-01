@@ -14,8 +14,8 @@ import { DATE_FORMAT } from '@folio/stripes-acq-components';
 import {
   WithTranslation,
   TextDate,
+  OptionsList,
 } from '..';
-import { OptionsList } from '../FlexibleForm/ControlDecorators/partials';
 
 import {
   FORMS_SETTINGS,

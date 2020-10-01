@@ -8,7 +8,7 @@ import { Field } from 'redux-form';
 
 import { isEmpty } from 'lodash';
 
-import { withReferenceValues } from '../FlexibleForm/ControlDecorators/withReferenceValues';
+import { withReferenceValues } from '..';
 
 import { fetchAcceptedValuesList } from './fetchAcceptedValuesList';
 import {
@@ -36,6 +36,10 @@ export const AcceptedValuesField = ({
   dataAttributes,
   optionTemplate,
   isRemoveValueAllowed,
+  componentValue,
+  onChange,
+  isDirty,
+  isFormField,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
 
@@ -98,7 +102,7 @@ export const AcceptedValuesField = ({
     [isRemoveValueAllowed],
   );
 
-  return (
+  const renderFormField = () => (
     <Field
       id={id}
       component={withReferenceValues}
@@ -113,13 +117,34 @@ export const AcceptedValuesField = ({
       {...dataAttributes}
     />
   );
+
+  const renderElement = () => {
+    const WithReferenceValuesElement = withReferenceValues;
+
+    return (
+      <WithReferenceValuesElement
+        wrappedComponent={component}
+        dataOptions={listOptions}
+        value={componentValue}
+        onChange={onChange}
+        label={label}
+        wrapperLabel={wrapperLabel}
+        optionValue={optionValue}
+        optionLabel={optionLabel}
+        dirty={isDirty}
+        okapi={okapi}
+      />
+    );
+  };
+
+  return isFormField ? renderFormField() : renderElement();
 };
 
 AcceptedValuesField.propTypes = {
   component: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
-  name: PropTypes.string.isRequired,
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
+  name: PropTypes.string,
   optionTemplate: PropTypes.string,
   okapi: okapiShape.isRequired,
   acceptedValuesList: PropTypes.arrayOf(PropTypes.object),
@@ -135,9 +160,14 @@ AcceptedValuesField.propTypes = {
   acceptedValuesPath: PropTypes.string,
   dataAttributes: PropTypes.arrayOf(PropTypes.object),
   isRemoveValueAllowed: PropTypes.bool,
+  onChange: PropTypes.func,
+  componentValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isDirty: PropTypes.bool,
+  isFormField: PropTypes.bool,
 };
 
 AcceptedValuesField.defaultProps = {
   acceptedValuesList: [],
   isRemoveValueAllowed: false,
+  isFormField: true,
 };

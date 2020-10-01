@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { Field } from 'redux-form';
 
 import {
@@ -28,6 +31,7 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  createOptionsList,
   ITEM_STATUS_OPTIONS,
   ITEM_CIRCULATION_NOTES_OPTIONS,
   mappingProfileSubfieldShape,
@@ -41,13 +45,29 @@ export const LoanAndAvailability = ({
   getRepeatableFieldAction,
   okapi,
 }) => {
-  const createOptionList = arr => arr.map(option => ({
-    value: option.value,
-    label: <FormattedMessage id={option.label} />,
-  }));
+  const { formatMessage } = useIntl();
 
-  const statusesList = createOptionList(ITEM_STATUS_OPTIONS);
-  const circulationNotesList = createOptionList(ITEM_CIRCULATION_NOTES_OPTIONS);
+  const statusesList = createOptionsList(ITEM_STATUS_OPTIONS, formatMessage);
+  const circulationNotesList = createOptionsList(ITEM_CIRCULATION_NOTES_OPTIONS, formatMessage);
+  const initialCirculationNotes = useRef(circulationNotes);
+
+  const getCirculationNoteTypeState = index => {
+    const initialValue = initialCirculationNotes.current[index]?.fields.find(item => item.name === 'noteType').value;
+    const currentValue = circulationNotes[index]?.fields.find(item => item.name === 'noteType').value;
+    const isDirty = currentValue !== initialValue;
+
+    const updatedValue = circulationNotesList.find(item => `"${item.value}"` === currentValue)?.label;
+    const value = updatedValue ? `"${updatedValue}"` : currentValue;
+
+    return {
+      value,
+      isDirty,
+    };
+  };
+
+  const handleCirculationNoteTypeChange = index => value => {
+    setReferenceTables(getSubfieldName(28, 0, index), value);
+  };
 
   return (
     <Accordion
@@ -145,13 +165,16 @@ export const LoanAndAvailability = ({
                     >
                       <AcceptedValuesField
                         component={TextField}
-                        name={getSubfieldName(28, 0, index)}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.noteType`} />}
                         optionValue="value"
                         optionLabel="label"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         acceptedValuesList={circulationNotesList}
+                        componentValue={getCirculationNoteTypeState(index).value}
+                        onChange={handleCirculationNoteTypeChange(index)}
+                        isDirty={getCirculationNoteTypeState(index).isDirty}
                         okapi={okapi}
+                        isFormField={false}
                       />
                     </Col>
                     <Col xs={4}>

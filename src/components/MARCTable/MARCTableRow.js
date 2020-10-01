@@ -22,6 +22,7 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  createOptionsList,
   MAPPING_DETAILS_ACTIONS,
   MAPPING_DETAILS_SUBACTIONS,
   ACTION_OPTIONS,
@@ -326,10 +327,7 @@ export const MARCTableRow = ({
   const renderActionField = () => {
     const cellStyle = { width: columnWidths.action };
 
-    const dataOptions = ACTION_OPTIONS.map(option => ({
-      value: option.value,
-      label: formatMessage({ id: option.label }),
-    }));
+    const dataOptions = createOptionsList(ACTION_OPTIONS, formatMessage);
 
     return (
       <div
@@ -445,10 +443,7 @@ export const MARCTableRow = ({
 
     const cellStyle = { width: columnWidths.subaction };
     const allowedOptions = SUBACTION_OPTIONS.filter(getMatchedSubaction);
-    const dataOptions = allowedOptions.map(option => ({
-      value: option.value,
-      label: formatMessage({ id: option.label }),
-    }));
+    const dataOptions = createOptionsList(allowedOptions, formatMessage);
 
     return (
       <div
@@ -627,10 +622,7 @@ export const MARCTableRow = ({
     const getMatchedPositions = option => positions.some(position => position === option.value);
 
     const allowedOptions = POSITION_OPTIONS.filter(getMatchedPositions);
-    const dataOptions = allowedOptions.map(option => ({
-      value: option.value,
-      label: formatMessage({ id: option.label }),
-    }));
+    const dataOptions = createOptionsList(allowedOptions, formatMessage);
 
     return (
       <div

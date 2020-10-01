@@ -4,6 +4,7 @@ export * from './compose';
 export * from './capitalize';
 export * from './htmlDecode';
 export * from './createOkapiHeaders';
+export * from './createOptionsList';
 export * from './createUrl';
 export * from './sortCollection';
 export * from './sort';
