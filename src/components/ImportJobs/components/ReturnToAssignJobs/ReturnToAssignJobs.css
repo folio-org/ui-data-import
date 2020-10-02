@@ -1,7 +1,7 @@
 @import "@folio/stripes-components/lib/variables.css";
 
 .container {
-  height: 100%;
+  padding-bottom: var(--gutter);
   display: flex;
   flex-direction: column;
   justify-content: center;

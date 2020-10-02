@@ -14,9 +14,37 @@
   border-radius: var(--radius);
   font-size: var(--font-size-small);
   line-height: var(--line-height);
+  position: relative;
 
   &:not(:first-child) {
     margin-top: 10px;
+  }
+
+  & .delimiter:first-child {
+      padding-right: var(--control-min-size-desktop);
+  }
+
+  &.deletingInProgress {
+    border-color: var(--danger);
+    background-color: color(var(--error) alpha(-90%));
+
+    & .delimiter:first-child {
+      padding-right: 60px;
+    }
+
+    & .undoIcon {
+      display: inline-block;
+    }
+
+    & .deleteIcon {
+      display: none;
+    }
+  }
+
+  .fileItemDanger {
+    padding-right: 60px;
+    border-color: var(--danger);
+    background-color: color(var(--error) alpha(-90%));
   }
 }
 
@@ -38,4 +66,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.undoIcon {
+  display: none;
+  text-decoration: underline;
+  color: var(--color-text);
+}
+
+.deleteIcon {
+  display: inline-block;
 }

@@ -30,6 +30,8 @@ import {
 } from '@folio/stripes/components';
 import { EndOfItem } from '@folio/stripes-data-transfer-components';
 
+import css from './UploadingJobsDisplay.css';
+
 import { Preloader } from '../Preloader';
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 import { FileItem } from './components';
@@ -617,7 +619,10 @@ export class UploadingJobsDisplay extends Component {
 
     return (
       <Paneset>
-        <div data-test-uploading-jobs-display>
+        <div
+          className={css.uploadingJobs}
+          data-test-uploading-jobs-display
+        >
           <Pane
             id="pane-upload"
             defaultWidth="300px"
