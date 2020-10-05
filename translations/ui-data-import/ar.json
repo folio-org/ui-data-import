@@ -36,7 +36,7 @@
     "fileDeleteError": "حدث خطأ أثناء حذف ملف {name}",
     "upload.invalid": "خطأ: تحميل الملف",
     "upload.fileSize.invalid": "خطأ: لا توجد مساحة كافية لتخزين الملف. اتصل بمسؤول النظام",
-    "returnToAssign.message": "مشروع وظيفة قيد التقدم",
+    "returnToAssign.message": "جار تحميل الملف بالفعل",
     "returnToAssign.subMessage": "تم تحميل {filesAmount, plural, one {# ملف} other {# ملفات}}",
     "returnToAssign.resume": "استئناف",
     "returnToAssign.deleteFiles": "حذف الملفات",
@@ -756,5 +756,7 @@
     "fieldMappingsForMarc.overrideProtected": "تخطي الحقول المحمية",
     "fieldMappingsForMarc.updatesOverrides.subtext": "إذا كان يجب تحديث أي حقل محمي بواسطة ملف التعريف هذا، قم بتحديد المربع المناسب من هنا",
     "settings.mappingProfile.marcTable.header.override": "تخطي",
-    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "حقل تخطي بيانات حقل مارك"
+    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "حقل تخطي بيانات حقل مارك",
+    "stoppedJob": "تم إيقافه",
+    "jobDeleteError": "حدث خطأ أثناء حذف مهمة {name}"
 }
