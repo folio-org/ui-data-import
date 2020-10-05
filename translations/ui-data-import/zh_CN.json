@@ -756,5 +756,7 @@
     "fieldMappingsForMarc.overrideProtected": "覆盖受保护的字段",
     "fieldMappingsForMarc.updatesOverrides.subtext": "如果此配置文件应更新任何受保护的字段，请在此选中相应的框",
     "settings.mappingProfile.marcTable.header.override": "覆盖",
-    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "数据marcField覆盖字段"
+    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "数据marcField覆盖字段",
+    "stoppedJob": "has been stopped",
+    "jobDeleteError": "Error while deleting {name} job"
 }
