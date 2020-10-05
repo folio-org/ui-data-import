@@ -58,6 +58,7 @@
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
 * Fix for validation function `validateRequiredFields` (UIDATIMP-645)
 * Fix `SyntaxError: Unexpected token 'export'` error when running tests (UIDATIMP-667)
+* Fix "Position" in MCL View is not left justified (UIDATIMP-657)
 
 ## [2.1.4](https://github.com/folio-org/ui-data-import/tree/v2.1.4) (2020-08-13)
 
