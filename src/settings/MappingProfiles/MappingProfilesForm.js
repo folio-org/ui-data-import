@@ -202,7 +202,6 @@ export const MappingProfilesFormComponent = ({
       field: { subfields: [{}] },
     }];
 
-    initialMARCMappingDetails.order = 0;
     setFormFieldValue('profile.mappingDetails.marcMappingDetails', initialMARCMappingDetails);
   };
 
