@@ -758,5 +758,6 @@
     "settings.mappingProfile.marcTable.header.override": "Substituer",
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Data marcField override field",
     "stoppedJob": "a été arrêté",
-    "jobDeleteError": "Erreur lors de la suppression de la tâche {name}"
+    "jobDeleteError": "Erreur lors de la suppression de la tâche {name}",
+    "fieldMappingsForMarc.addField": "Add field"
 }
