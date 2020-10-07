@@ -758,5 +758,6 @@
     "settings.mappingProfile.marcTable.header.override": "تخطي",
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "حقل تخطي بيانات حقل مارك",
     "stoppedJob": "تم إيقافه",
-    "jobDeleteError": "حدث خطأ أثناء حذف مهمة {name}"
+    "jobDeleteError": "حدث خطأ أثناء حذف مهمة {name}",
+    "fieldMappingsForMarc.addField": "Add field"
 }

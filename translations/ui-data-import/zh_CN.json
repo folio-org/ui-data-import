@@ -758,5 +758,6 @@
     "settings.mappingProfile.marcTable.header.override": "覆盖",
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "数据marcField覆盖字段",
     "stoppedJob": "has been stopped",
-    "jobDeleteError": "Error while deleting {name} job"
+    "jobDeleteError": "Error while deleting {name} job",
+    "fieldMappingsForMarc.addField": "Add field"
 }
