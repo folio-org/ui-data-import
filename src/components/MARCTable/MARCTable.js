@@ -225,7 +225,7 @@ MARCTable.defaultProps = {
     indicator2: '93px',
     subfield: '93px',
     subaction: '140px',
-    data: '200px',
+    data: '340px',
     position: '140px',
     addRemove: '70px',
   },

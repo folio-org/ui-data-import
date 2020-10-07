@@ -54,6 +54,13 @@
   background-color: color(var(--primary) whiteness(30%))
 }
 
+.disabledItem {
+  background-color: #ccc;
+  color: var(--color-text-p2);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .headingCell {
   composes: display-flex centerContent from "@folio/stripes-components/lib/Layout/Layout.css";
   border-bottom: 1px solid var(--color-border);

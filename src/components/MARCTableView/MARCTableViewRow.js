@@ -47,7 +47,10 @@ export const MARCTableViewRow = ({
 
   const renderCell = (key, i) => {
     const cellData = getCellValue(rowData[key]);
-    const cellStyle = { width: columnWidths[key] };
+    const cellStyle = {
+      width: columnWidths[key],
+      flexGrow: (key === 'data') && 1,
+    };
 
     const getCellContent = () => {
       const actionField = ACTION_OPTIONS.find(option => option.value === cellData);

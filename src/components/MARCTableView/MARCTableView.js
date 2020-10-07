@@ -46,6 +46,6 @@ MARCTableView.defaultProps = {
     subfield: '93px',
     subaction: '140px',
     data: '340px',
-    position: '100px',
+    position: '140px',
   },
 };
