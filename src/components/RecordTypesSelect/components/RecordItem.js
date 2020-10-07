@@ -12,6 +12,8 @@ import classNames from 'classnames';
 import { Dropdown } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
+import { FOLIO_RECORD_TYPES_TO_DISABLE } from '../../../utils';
+
 import { IncomingRecordMenu } from './IncomingRecordMenu';
 import { IncomingRecordTrigger } from './IncomingRecordTrigger';
 
@@ -56,13 +58,21 @@ export const RecordItem = memo(({
     />
   );
 
+  // TODO: Disabling options should be removed after implentation is done
+  const isOptionDisabled = FOLIO_RECORD_TYPES_TO_DISABLE.some(option => option === item.type);
+
   const initialButton = (
     <div // eslint-disable-line jsx-a11y/click-events-have-key-events
       data-test-record-item
       tabIndex="0"
       role="button"
       id={incomingRecord.type}
-      className={classNames(css.item, { [css.clickableItem]: isEditable }, className)}
+      className={classNames(
+        css.item,
+        { [css.clickableItem]: isEditable },
+        className,
+        isOptionDisabled && css.disabledItem,
+      )}
       style={style}
       ref={ref}
       onClick={() => (isEditable ? onClick(incomingRecord) : noop)}
