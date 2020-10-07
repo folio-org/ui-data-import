@@ -23,6 +23,7 @@ export const MARCTable = ({
   fields,
   onChange,
   columnWidths,
+  isFirstRowRemovable,
 }) => {
   const [rows, setRows] = useState([]);
 
@@ -201,6 +202,7 @@ export const MARCTable = ({
         removePositionFromRow={removePositionFromRow}
         removeSubactionFromRow={removeSubactionFromRow}
         removeDataValuesFromRow={removeDataValuesFromRow}
+        isFirstRowRemovable={isFirstRowRemovable}
       />
     </div>
   );
@@ -211,6 +213,7 @@ MARCTable.propTypes = {
   fields: PropTypes.arrayOf(mappingMARCFieldShape.isRequired).isRequired,
   columnWidths: PropTypes.object,
   onChange: PropTypes.func,
+  isFirstRowRemovable: PropTypes.bool,
 };
 
 MARCTable.defaultProps = {
@@ -226,4 +229,5 @@ MARCTable.defaultProps = {
     position: '140px',
     addRemove: '70px',
   },
+  isFirstRowRemovable: false,
 };

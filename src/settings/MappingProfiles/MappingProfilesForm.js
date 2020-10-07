@@ -67,6 +67,7 @@ import {
   FIELD_MAPPINGS_FOR_MARC_OPTIONS,
   fillEmptyFieldsWithValue,
   marcFieldProtectionSettingsShape,
+  createOptionsList,
 } from '../../utils';
 
 import styles from './MappingProfiles.css';
@@ -88,6 +89,7 @@ export const MappingProfilesFormComponent = ({
   dispatch,
   intl,
 }) => {
+  const { formatMessage } = intl;
   const {
     profile,
     profile: {
@@ -167,12 +169,12 @@ export const MappingProfilesFormComponent = ({
   const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
       value: recordType,
-      label: intl.formatMessage({ id: captionId }),
+      label: formatMessage({ id: captionId }),
     }));
   const getFolioRecordTypesDataOptions = () => Object.entries(FOLIO_RECORD_TYPES)
     .map(([recordType, { captionId }]) => ({
       value: recordType,
-      label: intl.formatMessage({ id: captionId }),
+      label: formatMessage({ id: captionId }),
     }));
 
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, []);
@@ -186,28 +188,47 @@ export const MappingProfilesFormComponent = ({
     return mappingDetails?.mappingFields?.[mappingFieldIndex]?.repeatableFieldAction || '';
   };
 
-  const setInitalMarcMappingDetails = selectedOption => {
-    let initalMarcMappingDetails = getInitialDetails(folioRecordType, true)?.marcMappingDetails;
+  const setInitialValuesForMARCUpdates = () => {
+    const initialMARCMappingDetails = fillEmptyFieldsWithValue({},
+      ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*');
 
-    if (selectedOption === FIELD_MAPPINGS_FOR_MARC.UPDATES) {
-      initalMarcMappingDetails = [
-        fillEmptyFieldsWithValue(
-          initalMarcMappingDetails[0],
-          ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*',
-        ),
-      ];
-    }
-
-    setFormFieldValue('profile.mappingDetails.marcMappingDetails', initalMarcMappingDetails);
+    initialMARCMappingDetails.order = 0;
+    setFormFieldValue('profile.mappingDetails.marcMappingDetails', [initialMARCMappingDetails]);
   };
 
-  const handleMARCTypeChange = e => {
-    if (fieldMappingsForMARC && e.target.value !== fieldMappingsForMARC) {
-      setFieldMappingsForMARCSelectedOption(e.target.value);
+  const setInitialValuesForMARCModifications = () => {
+    const initialMARCMappingDetails = [{
+      order: 0,
+      field: { subfields: [{}] },
+    }];
+
+    initialMARCMappingDetails.order = 0;
+    setFormFieldValue('profile.mappingDetails.marcMappingDetails', initialMARCMappingDetails);
+  };
+
+  const resetMARCMappingDetails = () => {
+    setFormFieldValue('profile.mappingDetails.marcMappingDetails', []);
+  };
+
+  const setInitialMARCMappingDetails = () => {
+    if (fieldMappingsForMARCSelectedOption === FIELD_MAPPINGS_FOR_MARC.UPDATES) {
+      resetMARCMappingDetails();
+    }
+
+    if (fieldMappingsForMARCSelectedOption === FIELD_MAPPINGS_FOR_MARC.MODIFICATIONS) {
+      setInitialValuesForMARCModifications();
+    }
+  };
+
+  const handleFieldMappingsForMARCTypeChange = e => {
+    const value = e.target.value;
+
+    if (fieldMappingsForMARC && value !== fieldMappingsForMARC) {
+      setFieldMappingsForMARCSelectedOption(value);
       setConfirmModalOpen(true);
     } else {
-      setFieldMappingsForMARC(e.target.value);
-      setInitalMarcMappingDetails(e.target.value);
+      setFieldMappingsForMARC(value);
+      setInitialMARCMappingDetails();
     }
   };
 
@@ -224,18 +245,14 @@ export const MappingProfilesFormComponent = ({
     marcFieldProtectionFields: marcFieldProtectionSettings,
     mappingMarcFieldProtectionFields,
     fieldMappingsForMARCField: fieldMappingsForMARC,
+    onUpdateFieldAdd: setInitialValuesForMARCUpdates,
     setReferenceTables: setFormFieldValue,
   };
-  const fieldMappingsForMARCOptions = FIELD_MAPPINGS_FOR_MARC_OPTIONS.map(option => (
-    {
-      value: option.value,
-      label: intl.formatMessage({ id: option.label }),
-    }
-  ));
-  const fieldMappingsForMARCPreviousOption = fieldMappingsForMARC && intl.formatMessage(
+  const fieldMappingsForMARCOptions = createOptionsList(FIELD_MAPPINGS_FOR_MARC_OPTIONS, formatMessage);
+  const fieldMappingsForMARCPreviousOption = fieldMappingsForMARC && formatMessage(
     { id: FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label },
   );
-  const fieldMappingsForMARCCurrentOption = fieldMappingsForMARCSelectedOption && intl.formatMessage(
+  const fieldMappingsForMARCCurrentOption = fieldMappingsForMARCSelectedOption && formatMessage(
     { id: FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARCSelectedOption)?.label },
   );
 
@@ -319,7 +336,7 @@ export const MappingProfilesFormComponent = ({
                           validate={[validateRequiredField]}
                           dataOptions={fieldMappingsForMARCOptions}
                           placeholder={placeholder}
-                          onChange={handleMARCTypeChange}
+                          onChange={handleFieldMappingsForMARCTypeChange}
                           required
                         />
                       </div>
@@ -415,7 +432,7 @@ export const MappingProfilesFormComponent = ({
           )}
           confirmLabel={<FormattedMessage id="ui-data-import.continue" />}
           onConfirm={() => {
-            setInitalMarcMappingDetails(fieldMappingsForMARCSelectedOption);
+            setInitialMARCMappingDetails();
             setFieldMappingsForMARC(fieldMappingsForMARCSelectedOption);
             setConfirmModalOpen(false);
           }}

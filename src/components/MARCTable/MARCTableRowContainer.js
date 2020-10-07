@@ -21,6 +21,7 @@ export const MARCTableRowContainer = ({
   removePositionFromRow,
   removeSubactionFromRow,
   removeDataValuesFromRow,
+  isFirstRowRemovable,
 }) => {
   const renderRow = (data, i) => {
     const subfieldsData = data.field?.subfields;
@@ -58,6 +59,7 @@ export const MARCTableRowContainer = ({
           removePositionFromRow={removePositionFromRow}
           removeSubactionFromRow={removeSubactionFromRow}
           removeDataValuesFromRow={removeDataValuesFromRow}
+          isFirstRowRemovable={isFirstRowRemovable}
         />
         {containsSubsequentLines &&
           data.field.subfields.map((subfield, idx) => idx !== 0 && (
@@ -106,4 +108,7 @@ MARCTableRowContainer.propTypes = {
   removePositionFromRow: PropTypes.func.isRequired,
   removeSubactionFromRow: PropTypes.func.isRequired,
   removeDataValuesFromRow: PropTypes.func.isRequired,
+  isFirstRowRemovable: PropTypes.bool,
 };
+
+MARCTableRowContainer.defaultProps = { isFirstRowRemovable: false };

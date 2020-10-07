@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { isEmpty } from 'lodash';
+
+import { Button } from '@folio/stripes-components';
 
 import {
   MARCTable,
@@ -11,11 +15,14 @@ import {
   marcFieldProtectionSettingsShape,
 } from '../../../../utils';
 
+import css from '../../MappingProfiles.css';
+
 export const MappingMARCBibDetails = ({
   marcMappingDetails,
   fieldMappingsForMARCField,
   marcFieldProtectionFields,
   mappingMarcFieldProtectionFields,
+  onUpdateFieldAdd,
   setReferenceTables,
 }) => {
   const defaultFieldMappingForMARCColumns = ['arrows', 'action', 'field', 'indicator1', 'indicator2',
@@ -24,13 +31,28 @@ export const MappingMARCBibDetails = ({
   const renderUpdatesDetails = () => {
     const updatesFieldMappingForMARCColumns = ['arrows', 'field', 'indicator1', 'indicator2', 'subfield', 'addRemove'];
 
+    const addFieldButton = (
+      <Button
+        onClick={onUpdateFieldAdd}
+        buttonClass={css.addFieldButton}
+        bottomMargin0
+      >
+        <FormattedMessage id="ui-data-import.fieldMappingsForMarc.addField" />
+      </Button>
+    );
+
+    const renderMARCUpdatesTable = () => (
+      <MARCTable
+        columns={updatesFieldMappingForMARCColumns}
+        fields={marcMappingDetails}
+        onChange={setReferenceTables}
+        isFirstRowRemovable
+      />
+    );
+
     return (
       <>
-        <MARCTable
-          columns={updatesFieldMappingForMARCColumns}
-          fields={marcMappingDetails}
-          onChange={setReferenceTables}
-        />
+        {isEmpty(marcMappingDetails) ? addFieldButton : renderMARCUpdatesTable()}
         <OverrideProtectedFieldsTable
           marcFieldProtectionFields={marcFieldProtectionFields}
           mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
@@ -64,12 +86,7 @@ MappingMARCBibDetails.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   marcMappingDetails: PropTypes.arrayOf(PropTypes.object.isRequired),
   marcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape),
+  onUpdateFieldAdd: PropTypes.func,
 };
 
-MappingMARCBibDetails.defaultProps = {
-  marcMappingDetails: [{
-    order: 0,
-    field: { subfields: [{}] },
-  }],
-  marcFieldProtectionFields: [{}],
-};
+MappingMARCBibDetails.defaultProps = { marcFieldProtectionFields: [{}] };

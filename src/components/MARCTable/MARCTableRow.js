@@ -68,6 +68,7 @@ export const MARCTableRow = ({
   removePositionFromRow,
   removeSubactionFromRow,
   removeDataValuesFromRow,
+  isFirstRowRemovable,
 }) => {
   const {
     allowedSubactions,
@@ -677,7 +678,7 @@ export const MARCTableRow = ({
               data-test-marc-table-remove
               className={css.removeButton}
               icon="trash"
-              disabled={isSingle}
+              disabled={!isFirstRowRemovable && isSingle}
               ariaLabel={ariaLabel}
               onClick={handleRemoveRow}
             />
@@ -733,6 +734,7 @@ MARCTableRow.propTypes = {
   removePositionFromRow: PropTypes.func,
   removeSubactionFromRow: PropTypes.func,
   removeDataValuesFromRow: PropTypes.func,
+  isFirstRowRemovable: PropTypes.bool,
 };
 
 MARCTableRow.defaultProps = {
@@ -744,4 +746,5 @@ MARCTableRow.defaultProps = {
   field: '',
   indicator1: '',
   indicator2: '',
+  isFirstRowRemovable: false,
 };
