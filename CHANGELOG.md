@@ -53,6 +53,7 @@
 * MARC Bib field mapping profile: details for Update-Overrides on View screen (UIDATIMP-632)
 * Change "Check in/out note" value to "Check in/out" for items (UIDATIMP-679)
 * Add capability to remove jobs that are stuck in "Running" area of Data Import landing page first pane (UIDATIMP-651)
+* Match profile create-edit & view screens: change unuseable options to disabled (UIDATIMP-676)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

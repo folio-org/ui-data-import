@@ -604,3 +604,7 @@ export const MARC_FIELD_PROTECTION_SOURCE = {
     labelId: 'ui-data-import.settings.marcFieldProtection.user',
   },
 };
+
+// TODO: Options to disable until functionality is not implemented.
+// Should be removed in the future
+export const FOLIO_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'ORDER', 'INVOICE', 'MARC_AUTHORITY'];
