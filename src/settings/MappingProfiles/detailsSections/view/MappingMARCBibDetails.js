@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
+
+import { NoValue } from '@folio/stripes/components';
 
 import {
   MARCTableView,
@@ -24,12 +27,16 @@ export const MappingMARCBibDetails = ({
   const renderUpdatesDetails = () => {
     const updatesFieldMappingForMARCColumns = ['field', 'indicator1', 'indicator2', 'subfield'];
 
+    const renderMARCUpdatesTable = () => (
+      <MARCTableView
+        columns={updatesFieldMappingForMARCColumns}
+        fields={marcMappingDetails}
+      />
+    );
+
     return (
       <>
-        <MARCTableView
-          columns={updatesFieldMappingForMARCColumns}
-          fields={marcMappingDetails}
-        />
+        {!isEmpty(marcMappingDetails) ? renderMARCUpdatesTable() : <NoValue />}
         <OverrideProtectedFieldsTable
           marcFieldProtectionFields={marcFieldProtectionFields}
           mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
