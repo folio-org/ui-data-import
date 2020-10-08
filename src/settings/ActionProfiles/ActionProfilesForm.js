@@ -43,6 +43,7 @@ import {
   ENTITY_KEYS,
   LAYER_TYPES,
   PROFILE_TYPES,
+  FOLIO_RECORD_TYPES_TO_DISABLE,
 } from '../../utils';
 import {
   FolioRecordTypeSelect,
@@ -131,10 +132,16 @@ export const ActionProfilesFormComponent = ({
   };
 
   const getFolioRecordTypesDataOptions = () => Object.entries(getFilteredFolioRecordTypes())
-    .map(([recordType, { captionId }]) => ({
-      value: recordType,
-      label: formatMessage({ id: captionId }),
-    }));
+    .map(([recordType, { captionId }]) => {
+      // TODO: Disabling options should be removed after implentation is done
+      const isOptionDisabled = FOLIO_RECORD_TYPES_TO_DISABLE.some(option => option === recordType);
+
+      return {
+        value: recordType,
+        label: formatMessage({ id: captionId }),
+        disabled: isOptionDisabled,
+      };
+    });
   const actionsDataOptions = useMemo(getActionsDataOptions, [folioRecord]);
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, [action]);
   const { layer } = queryString.parse(search);
