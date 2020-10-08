@@ -758,5 +758,6 @@
     "settings.mappingProfile.marcTable.header.override": "Sobrescrever",
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Sobrescrever dados do campo MARC",
     "stoppedJob": "has been stopped",
-    "jobDeleteError": "Error while deleting {name} job"
+    "jobDeleteError": "Error while deleting {name} job",
+    "fieldMappingsForMarc.addField": "Add field"
 }
