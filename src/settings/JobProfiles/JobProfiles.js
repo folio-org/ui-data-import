@@ -189,6 +189,11 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '') 
           staticFallback: { params: {} },
         },
       },
+      identifierTypes: {
+        type: 'okapi',
+        records: 'identifierTypes',
+        path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
+      },
     });
 
     static propTypes = {

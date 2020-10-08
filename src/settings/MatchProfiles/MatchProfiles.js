@@ -184,6 +184,11 @@ export const matchProfilesShape = {
         return { query };
       },
     },
+    identifierTypes: {
+      type: 'okapi',
+      records: 'identifierTypes',
+      path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
+    },
   },
   visibleColumns: [
     'name',
