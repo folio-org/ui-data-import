@@ -209,12 +209,12 @@ export const MappingProfilesFormComponent = ({
     setFormFieldValue('profile.mappingDetails.marcMappingDetails', []);
   };
 
-  const setInitialMARCMappingDetails = () => {
-    if (fieldMappingsForMARCSelectedOption === FIELD_MAPPINGS_FOR_MARC.UPDATES) {
+  const setInitialMARCMappingDetails = fieldMappingForMARC => {
+    if (fieldMappingForMARC === FIELD_MAPPINGS_FOR_MARC.UPDATES) {
       resetMARCMappingDetails();
     }
 
-    if (fieldMappingsForMARCSelectedOption === FIELD_MAPPINGS_FOR_MARC.MODIFICATIONS) {
+    if (fieldMappingForMARC === FIELD_MAPPINGS_FOR_MARC.MODIFICATIONS) {
       setInitialValuesForMARCModifications();
     }
   };
@@ -227,7 +227,7 @@ export const MappingProfilesFormComponent = ({
       setConfirmModalOpen(true);
     } else {
       setFieldMappingsForMARC(value);
-      setInitialMARCMappingDetails();
+      setInitialMARCMappingDetails(value);
     }
   };
 
@@ -431,7 +431,7 @@ export const MappingProfilesFormComponent = ({
           )}
           confirmLabel={<FormattedMessage id="ui-data-import.continue" />}
           onConfirm={() => {
-            setInitialMARCMappingDetails();
+            setInitialMARCMappingDetails(fieldMappingsForMARCSelectedOption);
             setFieldMappingsForMARC(fieldMappingsForMARCSelectedOption);
             setConfirmModalOpen(false);
           }}
