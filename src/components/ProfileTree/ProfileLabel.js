@@ -41,6 +41,7 @@ export const ProfileLabel = memo(({
   onDelete,
   dataAttributes,
   showLabelsAsHotLink,
+  resources,
 }) => {
   const {
     columnsAllowed,
@@ -63,6 +64,7 @@ export const ProfileLabel = memo(({
     entityKey,
     customValue: label,
     showLabelsAsHotLink,
+    resources,
   });
   const columns = columnsAllowed[entityKey];
 
@@ -94,7 +96,7 @@ export const ProfileLabel = memo(({
 
           return (
             <>
-              <span key={`label-item-${i}`}>{templates[item](recordData)}</span>
+              <span key={`label-item-${i}`}>{templates[item](recordData.content)}</span>
               {needSeparator && <span>&nbsp;&middot;&nbsp;</span>}
             </>
           );
@@ -185,6 +187,7 @@ ProfileLabel.propTypes = {
   parentSectionKey: PropTypes.string.isRequired,
   parentSectionData: PropTypes.arrayOf(PropTypes.object).isRequired,
   setParentSectionData: PropTypes.func.isRequired,
+  resources: PropTypes.object.isRequired,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   reactTo: PropTypes.string,
   record: PropTypes.object,

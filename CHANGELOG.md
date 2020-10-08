@@ -61,6 +61,7 @@
 * Fix for validation function `validateRequiredFields` (UIDATIMP-645)
 * Fix `SyntaxError: Unexpected token 'export'` error when running tests (UIDATIMP-667)
 * Fix "Position" in MCL View is not left justified (UIDATIMP-657)
+* An error message appears when linking a match profile with Existing record field = "Identifier: ..." to a job profile (UIDATIMP-687)
 
 ## [2.1.4](https://github.com/folio-org/ui-data-import/tree/v2.1.4) (2020-08-13)
 

@@ -51,6 +51,7 @@ export const JobProfilesFormComponent = ({
   onCancel,
   dispatch,
   stripes,
+  parentResources,
 }) => {
   const { okapi } = stripes;
   const { profile } = initialValues;
@@ -165,6 +166,7 @@ export const JobProfilesFormComponent = ({
               onLink={setAddedRelations}
               onUnlink={setDeletedRelations}
               okapi={okapi}
+              resources={parentResources}
             />
           </Accordion>
         </div>
@@ -195,6 +197,7 @@ JobProfilesFormComponent.propTypes = {
       }),
     }),
   ).isRequired,
+  parentResources: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => {

@@ -39,6 +39,7 @@ export const ProfileTree = memo(({
   className,
   dataAttributes,
   showLabelsAsHotLink,
+  resources,
 }) => {
   const { siblingsProhibited } = linkingRules;
 
@@ -158,6 +159,7 @@ export const ProfileTree = memo(({
                 onDelete={remove}
                 okapi={okapi}
                 showLabelsAsHotLink={showLabelsAsHotLink}
+                resources={resources}
               />
             ))
           ) : (
@@ -198,6 +200,7 @@ ProfileTree.propTypes = {
     token: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
   }).isRequired,
+  resources: PropTypes.object.isRequired,
   parentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   relationsToAdd: PropTypes.arrayOf(PropTypes.object),
   relationsToDelete: PropTypes.arrayOf(PropTypes.object),
