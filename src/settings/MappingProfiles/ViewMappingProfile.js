@@ -310,7 +310,10 @@ export class ViewMappingProfile extends Component {
           >
             {existingRecordType && (
               <AccordionStatus>
-                <Row between="xs">
+                <Row
+                  between="xs"
+                  style={{ margin: 0 }}
+                >
                   <Col>
                     <MappedHeader
                       mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"

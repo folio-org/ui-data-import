@@ -364,7 +364,10 @@ export const MappingProfilesFormComponent = ({
             <>
               {folioRecordType && (
                 <AccordionStatus>
-                  <Row between="xs">
+                  <Row
+                    between="xs"
+                    style={{ margin: 0 }}
+                  >
                     <Col>
                       <MappedHeader
                         mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
