@@ -757,7 +757,7 @@
     "fieldMappingsForMarc.updatesOverrides.subtext": "Se algum campo protegido deve ser atualizado por este perfil, marque a caixa apropriada aqui",
     "settings.mappingProfile.marcTable.header.override": "Sobrescrever",
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Sobrescrever dados do campo MARC",
-    "stoppedJob": "has been stopped",
-    "jobDeleteError": "Error while deleting {name} job",
-    "fieldMappingsForMarc.addField": "Add field"
+    "stoppedJob": "foi parado",
+    "jobDeleteError": "Erro ao excluir o job {name}",
+    "fieldMappingsForMarc.addField": "Adicionar campo"
 }
