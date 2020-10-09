@@ -759,5 +759,5 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "حقل تخطي بيانات حقل مارك",
     "stoppedJob": "تم إيقافه",
     "jobDeleteError": "حدث خطأ أثناء حذف مهمة {name}",
-    "fieldMappingsForMarc.addField": "Add field"
+    "fieldMappingsForMarc.addField": "إضافة حقل"
 }

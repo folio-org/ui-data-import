@@ -336,7 +336,7 @@
     "settings.mappingProfiles.map.item": "Item",
     "settings.mappingProfiles.map.administrativeData.section": "Administrative data",
     "settings.mappingProfiles.map.item.administrativeData.field.hrid": "Item HRID",
-    "settings.mappingProfiles.map.item.administrativeData.field.barcode": "Barcode",
+    "settings.mappingProfiles.map.item.administrativeData.field.barcode": "Codice a barre ",
     "settings.mappingProfiles.map.item.administrativeData.field.accessionNumber": "Accession number",
     "settings.mappingProfiles.map.identifiers.section": "Identifier",
     "settings.mappingProfiles.map.item.administrativeData.field.itemIdentifier": "Item identifier",
