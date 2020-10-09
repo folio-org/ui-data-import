@@ -46,7 +46,7 @@ export const getFieldMatched = (fields, recordType, formatMessage, resources) =>
   const isMarcRecord = recordType.toLowerCase().includes('marc');
 
   if (isMarcRecord) {
-    const fieldsMatched = fields.map(item => (item ? item.value || '' : ''));
+    const fieldsMatched = fields.map(item => item.value || '');
 
     if (document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT) {
       fieldsMatched.reverse();

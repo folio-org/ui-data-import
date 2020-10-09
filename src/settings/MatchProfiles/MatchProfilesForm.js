@@ -33,8 +33,8 @@ import {
   FOLIO_RECORD_TYPES,
   MATCH_INCOMING_RECORD_TYPES,
   RecordTypesSelect,
-  MatchingFieldsManager,
 } from '../../components';
+import { MatchingFieldsManager } from '../../components/MatchingFieldsManager';
 import { MatchCriterion } from '../../components/MatchCriterion/edit';
 
 import {
