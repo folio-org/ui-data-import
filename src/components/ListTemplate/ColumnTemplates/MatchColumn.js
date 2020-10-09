@@ -7,7 +7,7 @@ import { get } from 'lodash';
 import { NoValue } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
-import { MatchingFieldsManager } from '../..';
+import { MatchingFieldsManager } from '../../MatchingFieldsManager';
 
 import {
   capitalize,

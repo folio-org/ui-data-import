@@ -35,6 +35,7 @@ import {
   RecordTypesSelect,
   MatchingFieldsManager,
 } from '../../components';
+import { MatchingFieldsManager } from '../../components/MatchingFieldsManager';
 import { MatchCriterion } from '../../components/MatchCriterion/edit';
 
 import {

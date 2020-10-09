@@ -10,9 +10,9 @@ import {
 
 import {
   Section,
-  MatchingFieldsManager,
   FOLIO_RECORD_TYPES,
 } from '../../..';
+import { MatchingFieldsManager } from '../../../MatchingFieldsManager';
 
 import css from '../ViewMatchCriterion.css';
 
