@@ -571,6 +571,7 @@
   "settings.mappingProfiles.map.item.status.withdrawn": "Withdrawn",
   "settings.mappingProfiles.map.item.status.orderClosed": "Order closed",
   "settings.mappingProfiles.map.instance": "Instance",
+  "settings.mappingProfiles.map.instance.subheader": "Inactive fields cannot be mapped because they are controlled by the system or by the library's MARC-Instance mapping profile",
   "settings.mappingProfiles.map.instance.administrationData.field.id": "Instance UUID",
   "settings.mappingProfiles.map.instance.administrationData.field.hrid": "Instance HRID",
   "settings.mappingProfiles.map.instance.administrationData.field.source": "Metadata source",
