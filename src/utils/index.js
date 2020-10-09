@@ -24,7 +24,6 @@ export * from './checkboxList';
 export * from './getFileExtension';
 export * from './generateSettingsLabel';
 export * from './stringToWords';
-export * from './getDropdownOptions';
 export * from './getQueryParts';
 export * from './fetchJsonShemas';
 export * from './withProfileWrapper';
