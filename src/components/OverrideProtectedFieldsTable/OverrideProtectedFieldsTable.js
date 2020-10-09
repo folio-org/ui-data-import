@@ -8,6 +8,7 @@ import {
   omit,
   unionBy,
   noop,
+  isEmpty,
 } from 'lodash';
 
 import {
@@ -15,6 +16,7 @@ import {
   Row,
   MultiColumnList,
   Checkbox,
+  NoValue,
 } from '@folio/stripes/components';
 
 import { MappedHeader } from '..';
@@ -38,6 +40,16 @@ export const OverrideProtectedFieldsTable = ({
 
     setProtectedFields(getProtectedFields());
   }, [mappingMarcFieldProtectionFields, marcFieldProtectionFields]);
+
+  const noProtectedFieldsDefined = isEmpty(protectedFields);
+  const emptyTableMessage = (
+    <div style={{ margin: '-1rem' }}>
+      {isEditable
+        ? <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.noFields" />
+        : <NoValue />
+      }
+    </div>
+  );
 
   const updateForm = changedField => {
     if (changedField.override) {
@@ -91,7 +103,11 @@ export const OverrideProtectedFieldsTable = ({
     <>
       <Row
         between="xs"
-        style={{ marginTop: '20px' }}
+        style={{
+          marginTop: '20px',
+          marginLeft: 0,
+          marginRight: 0,
+        }}
       >
         <Col>
           <MappedHeader
@@ -100,7 +116,7 @@ export const OverrideProtectedFieldsTable = ({
             mappingTypeLabelId="ui-data-import.fieldMappingsForMarc.overrideProtected"
             headlineProps={{ margin: 'small' }}
           />
-          {isEditable && (
+          {isEditable && !noProtectedFieldsDefined && (
             <span>
               <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.subtext" />
             </span>
@@ -112,6 +128,7 @@ export const OverrideProtectedFieldsTable = ({
         columnMapping={columnMapping}
         visibleColumns={visibleColumns}
         formatter={formatter}
+        isEmptyMessage={emptyTableMessage}
       />
     </>
   );
