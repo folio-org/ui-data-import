@@ -4,10 +4,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import {
-  FormattedMessage,
-  useIntl,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   Field,
@@ -36,13 +33,12 @@ import {
   FOLIO_RECORD_TYPES,
   MATCH_INCOMING_RECORD_TYPES,
   RecordTypesSelect,
+  MatchingFieldsManager,
 } from '../../components';
 import { MatchCriterion } from '../../components/MatchCriterion/edit';
 
 import {
   compose,
-  matchFields,
-  getDropdownOptions,
   withProfileWrapper,
   LAYER_TYPES,
   FORMS_SETTINGS,
@@ -65,10 +61,7 @@ export const MatchProfilesFormComponent = memo(({
   onCancel,
   jsonSchemas,
   dispatch,
-  parentResources,
 }) => {
-  const intl = useIntl();
-
   const { profile } = initialValues;
   const {
     existingRecordType,
@@ -100,11 +93,11 @@ export const MatchProfilesFormComponent = memo(({
 
   const editWithModal = isEditMode && associatedJobProfilesAmount;
 
-  const getInitialFields = () => {
+  const getInitialFields = (matchFields, getDropdownOptions) => {
     if (isEditMode) {
       const matches = matchFields(jsonSchemas[existingRecordType], existingRecordType);
 
-      return getDropdownOptions(matches, parentResources, intl.formatMessage);
+      return getDropdownOptions(matches);
     }
 
     return [];
@@ -163,9 +156,9 @@ export const MatchProfilesFormComponent = memo(({
     }
   };
 
-  const handleExistingRecordChange = ({ type }) => {
+  const handleExistingRecordChange = (type, matchFields, getDropdownOptions) => {
     const matches = matchFields(jsonSchemas[type], type);
-    const options = getDropdownOptions(matches, parentResources, intl.formatMessage);
+    const options = getDropdownOptions(matches);
 
     setExistingRecord(type);
     setExistingRecordFields(options);
@@ -236,40 +229,49 @@ export const MatchProfilesFormComponent = memo(({
           label={<FormattedMessage id="ui-data-import.details" />}
           separator={false}
         >
-          <RecordTypesSelect
-            id="panel-existing-edit"
-            existingRecordType={existingRecordType}
-            incomingRecordType={incomingRecordType}
-            onExistingSelect={handleExistingRecordChange}
-            onIncomingSelect={handleIncomingRecordChange}
-          />
-          <Accordion
-            id="match-criteria"
-            label={<FormattedMessage id="ui-data-import.match.criteria" />}
-            separator={false}
-          >
-            <RepeatableField
-              fields={matchDetails}
-              canAdd={false}
-              canRemove={false}
-              onAdd={noop}
-              renderField={(field, index) => (
-                <MatchCriterion
-                  repeatableIndex={index}
-                  matchDetails={field}
-                  incomingRecordType={incomingRecord.type}
-                  existingRecordType={existingRecord}
-                  staticValueType={staticValueType}
-                  incomingRecordLabel={incomingRecordLabel}
-                  existingRecordLabel={existingRecordLabel}
-                  existingRecordFields={isEmpty(existingRecordFields) ? getInitialFields() : existingRecordFields}
-                  onStaticValueTypeChange={(event, newValue) => handleStaticValueTypeChange(newValue)}
-                  onQualifierSectionChange={handleQualifierSectionChange}
-                  dispatchFormChange={dispatchFormChange}
+          <MatchingFieldsManager>
+            {({
+              matchFields,
+              getDropdownOptions,
+            }) => (
+              <>
+                <RecordTypesSelect
+                  id="panel-existing-edit"
+                  existingRecordType={existingRecordType}
+                  incomingRecordType={incomingRecordType}
+                  onExistingSelect={({ type }) => handleExistingRecordChange(type, matchFields, getDropdownOptions)}
+                  onIncomingSelect={handleIncomingRecordChange}
                 />
-              )}
-            />
-          </Accordion>
+                <Accordion
+                  id="match-criteria"
+                  label={<FormattedMessage id="ui-data-import.match.criteria" />}
+                  separator={false}
+                >
+                  <RepeatableField
+                    fields={matchDetails}
+                    canAdd={false}
+                    canRemove={false}
+                    onAdd={noop}
+                    renderField={(field, index) => (
+                      <MatchCriterion
+                        repeatableIndex={index}
+                        matchDetails={field}
+                        incomingRecordType={incomingRecord.type}
+                        existingRecordType={existingRecord}
+                        staticValueType={staticValueType}
+                        incomingRecordLabel={incomingRecordLabel}
+                        existingRecordLabel={existingRecordLabel}
+                        existingRecordFields={isEmpty(existingRecordFields) ? getInitialFields(matchFields, getDropdownOptions) : existingRecordFields}
+                        onStaticValueTypeChange={(event, newValue) => handleStaticValueTypeChange(newValue)}
+                        onQualifierSectionChange={handleQualifierSectionChange}
+                        dispatchFormChange={dispatchFormChange}
+                      />
+                    )}
+                  />
+                </Accordion>
+              </>
+            )}
+          </MatchingFieldsManager>
         </Accordion>
       </AccordionSet>
       <ConfirmationModal
@@ -294,7 +296,6 @@ export const MatchProfilesFormComponent = memo(({
 });
 
 MatchProfilesFormComponent.propTypes = {
-  parentResources: PropTypes.object.isRequired,
   initialValues: PropTypes.object.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,

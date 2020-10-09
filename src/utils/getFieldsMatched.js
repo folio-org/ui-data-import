@@ -1,7 +1,6 @@
 import {
   HTML_LANG_DIRECTIONS,
   MARC_FIELD_CONSTITUENT,
-  getCategory,
   fieldsConfig,
 } from '.';
 
@@ -12,7 +11,7 @@ const getFieldFromResources = (fieldFromConfig, resources, fields) => {
     fieldToDisplay,
   } = fieldFromConfig.fromResources;
 
-  const records = resources[recordsName]?.records || [];
+  const records = resources?.[recordsName]?.records || [];
   const fieldValue = fields[fields.length - 1].value;
 
   return records.find(record => record[fieldToSend] === fieldValue)?.[fieldToDisplay];
@@ -43,7 +42,7 @@ const getField = (fields, recordType, resources, formatMessage) => {
   };
 };
 
-export const getFieldMatched = (fields, recordType, resources, formatMessage) => {
+export const getFieldMatched = (fields, recordType, formatMessage, resources) => {
   const isMarcRecord = recordType.toLowerCase().includes('marc');
 
   if (isMarcRecord) {
@@ -59,20 +58,4 @@ export const getFieldMatched = (fields, recordType, resources, formatMessage) =>
   const { fieldLabel } = getField(fields, recordType, resources, formatMessage);
 
   return fieldLabel;
-};
-
-export const getFieldMatchedWithCategory = (fields, recordType, resources, formatMessage) => {
-  const {
-    fieldFromConfig,
-    fieldLabel,
-  } = getField(fields, recordType, resources, formatMessage);
-
-  if (!fieldFromConfig) {
-    return undefined;
-  }
-
-  const category = getCategory(fieldFromConfig);
-  const categoryLabel = category ? formatMessage({ id: category.label }) : '';
-
-  return `${categoryLabel}: ${fieldLabel}`;
 };

@@ -14,6 +14,7 @@ export * from './JobLogs';
 export * from './Jobs';
 export * from './MARCTable';
 export * from './MARCTableView';
+export * from './MatchingFieldsManager';
 export * from './OptionsList';
 export * from './OverrideProtectedFieldsTable';
 export * from './Preloader';
