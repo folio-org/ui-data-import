@@ -56,8 +56,9 @@ export const LoanAndAvailability = ({
     const currentValue = circulationNotes[index]?.fields.find(item => item.name === 'noteType').value;
     const isDirty = currentValue !== initialValue;
 
-    const updatedValue = circulationNotesList.find(item => `"${item.value}"` === currentValue)?.label;
-    const value = updatedValue ? `"${updatedValue}"` : currentValue;
+    const updatedValue = circulationNotesList.find(item => `"${item.value}"` === currentValue);
+    const updatedValueLabel = updatedValue?.label;
+    const value = updatedValueLabel ? `"${updatedValueLabel}"` : currentValue;
 
     return {
       value,
