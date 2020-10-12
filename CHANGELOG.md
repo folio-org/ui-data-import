@@ -60,6 +60,7 @@
 * MARC Bib field mapping profile: EXCEPTION details for Override protected fields on Create/Edit screen (UIDATIMP-662)
 * MARC Bib field mapping profile: EXCEPTION details for Override protected fields on View screen (UIDATIMP-663)
 * Field mapping profile create-edit screen: change unuseable options to disabled (UIDATIMP-674)
+* Job profile create-edit screen: change unusable options to disabled (UIDATIMP-675)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
