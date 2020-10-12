@@ -12,6 +12,7 @@ import {
   Row,
   Col,
   KeyValue,
+  NoValue,
   ConfirmationModal,
   PaneHeader,
 } from '@folio/stripes/components';
@@ -172,7 +173,7 @@ export class ViewFileExtension extends Component {
         <Row>
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
-              <div data-test-description>{record.description || '-'}</div>
+              <div data-test-description>{record.description || <NoValue />}</div>
             </KeyValue>
           </Col>
         </Row>

@@ -1,15 +1,16 @@
+import React from 'react';
 import { get } from 'lodash';
+
+import { NoValue } from '@folio/stripes/components';
 
 import {
   capitalize,
   formatUserName,
   getFieldMatched,
-} from '../../utils';
-import {
   HTML_LANG_DIRECTIONS,
   STRING_CAPITALIZATION_EXCLUSIONS,
   STRING_CAPITALIZATION_MODES,
-} from '../../utils/constants';
+} from '../../utils';
 
 import { createActionLabel } from './ColumnTemplates';
 import { FOLIO_RECORD_TYPES } from './folioRecordTypes';
@@ -48,7 +49,7 @@ export const searchAndSortTemplate = intl => ({
   },
   extension: record => record.extension,
   action: record => createActionLabel(intl, record.action, record.folioRecord),
-  mapping: record => record.mapping || '-',
+  mapping: record => record.mapping || <NoValue />,
   folioRecord: record => intl.formatMessage({ id: FOLIO_RECORD_TYPES[record.existingRecordType].captionId }),
   dataTypes: record => (Array.isArray(record.dataTypes) ? record.dataTypes.join(', ') : ''),
   importBlocked: record => {
