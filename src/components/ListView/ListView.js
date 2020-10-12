@@ -247,7 +247,6 @@ export class ListView extends Component {
                 searchTerm,
                 selectRecord,
                 selectedRecords,
-                resources,
               })}
               withNewRecordButton={withNewRecordButton}
               ViewRecordComponent={RecordView}

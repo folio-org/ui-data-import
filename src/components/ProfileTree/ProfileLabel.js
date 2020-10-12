@@ -41,7 +41,6 @@ export const ProfileLabel = memo(({
   onDelete,
   dataAttributes,
   showLabelsAsHotLink,
-  resources,
 }) => {
   const {
     columnsAllowed,
@@ -64,7 +63,6 @@ export const ProfileLabel = memo(({
     entityKey,
     customValue: label,
     showLabelsAsHotLink,
-    resources,
   });
   const columns = columnsAllowed[entityKey];
 

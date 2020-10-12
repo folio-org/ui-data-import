@@ -1,17 +1,16 @@
 import React, { memo } from 'react';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import HighLight from 'react-highlighter';
 import { get } from 'lodash';
 
 import { NoValue } from '@folio/stripes/components';
-import {
-  IntlConsumer,
-  AppIcon,
-} from '@folio/stripes/core';
+import { AppIcon } from '@folio/stripes/core';
+
+import { MatchingFieldsManager } from '../../MatchingFieldsManager';
 
 import {
   capitalize,
-  getFieldMatched,
   HTML_LANG_DIRECTIONS,
   STRING_CAPITALIZATION_EXCLUSIONS,
   STRING_CAPITALIZATION_MODES,
@@ -24,8 +23,9 @@ import sharedCss from '../../../shared.css';
 export const MatchColumn = memo(({
   record,
   searchTerm,
-  resources,
 }) => {
+  const { formatMessage } = useIntl();
+
   if (!record) {
     return <span>-</span>;
   }
@@ -43,8 +43,8 @@ export const MatchColumn = memo(({
   const fields = get(record, 'matchDetails[0].existingMatchExpression.fields', []);
 
   return (
-    <IntlConsumer>
-      {({ formatMessage }) => (
+    <MatchingFieldsManager>
+      {({ getFieldMatched }) => (
         <AppIcon
           size="small"
           app="data-import"
@@ -71,7 +71,7 @@ export const MatchColumn = memo(({
                   search={searchTerm || ''}
                   className={sharedCss.container}
                 >
-                  {getFieldMatched(fields, fieldSource, resources, formatMessage) || <NoValue />}
+                  {getFieldMatched(fields, fieldSource) || <NoValue />}
                 </HighLight>
               </>
             )}
@@ -81,7 +81,7 @@ export const MatchColumn = memo(({
                   search={searchTerm || ''}
                   className={sharedCss.container}
                 >
-                  {getFieldMatched(fields, fieldSource, resources, formatMessage) || <NoValue />}
+                  {getFieldMatched(fields, fieldSource) || <NoValue />}
                 </HighLight>
                 &nbsp;&larr;&nbsp;
                 <HighLight
@@ -102,12 +102,11 @@ export const MatchColumn = memo(({
           </>
         </AppIcon>
       )}
-    </IntlConsumer>
+    </MatchingFieldsManager>
   );
 });
 
 MatchColumn.propTypes = {
   record: PropTypes.object.isRequired,
   searchTerm: PropTypes.string,
-  resources: PropTypes.object,
 };

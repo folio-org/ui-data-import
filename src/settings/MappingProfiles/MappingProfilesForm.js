@@ -68,6 +68,8 @@ import {
   fillEmptyFieldsWithValue,
   marcFieldProtectionSettingsShape,
   createOptionsList,
+  FOLIO_RECORD_TYPES_TO_DISABLE,
+  INCOMING_RECORD_TYPES_TO_DISABLE,
 } from '../../utils';
 
 import styles from './MappingProfiles.css';
@@ -167,15 +169,27 @@ export const MappingProfilesFormComponent = ({
   const initialFields = getInitialFields(folioRecordType);
 
   const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
-    .map(([recordType, { captionId }]) => ({
-      value: recordType,
-      label: formatMessage({ id: captionId }),
-    }));
+    .map(([recordType, { captionId }]) => {
+      // TODO: Disabling options should be removed after implentation is done
+      const isOptionDisabled = INCOMING_RECORD_TYPES_TO_DISABLE.some(option => option === recordType);
+
+      return {
+        value: recordType,
+        label: formatMessage({ id: captionId }),
+        disabled: isOptionDisabled,
+      };
+    });
   const getFolioRecordTypesDataOptions = () => Object.entries(FOLIO_RECORD_TYPES)
-    .map(([recordType, { captionId }]) => ({
-      value: recordType,
-      label: formatMessage({ id: captionId }),
-    }));
+    .map(([recordType, { captionId }]) => {
+      // TODO: Disabling options should be removed after implentation is done
+      const isOptionDisabled = FOLIO_RECORD_TYPES_TO_DISABLE.some(option => option === recordType);
+
+      return {
+        value: recordType,
+        label: formatMessage({ id: captionId }),
+        disabled: isOptionDisabled,
+      };
+    });
 
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, []);
   const incomingRecordTypesDataOptions = useMemo(getIncomingRecordTypesDataOptions, []);
@@ -364,7 +378,10 @@ export const MappingProfilesFormComponent = ({
             <>
               {folioRecordType && (
                 <AccordionStatus>
-                  <Row between="xs">
+                  <Row
+                    between="xs"
+                    style={{ margin: 0 }}
+                  >
                     <Col>
                       <MappedHeader
                         mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
