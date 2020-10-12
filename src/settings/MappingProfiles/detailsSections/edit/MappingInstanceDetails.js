@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { AccordionSet } from '@folio/stripes/components';
@@ -53,65 +54,70 @@ export const MappingInstanceDetails = ({
   const childInstances = referenceTables?.childInstances || [];
 
   return (
-    <AccordionSet>
-      <AdministrativeData
-        statisticalCodes={statisticalCodes}
-        getRepeatableFieldAction={getRepeatableFieldAction}
-        initialFields={initialFields}
-        setReferenceTables={setReferenceTables}
-        okapi={okapi}
-      />
-      <TitleData
-        alternativeTitles={alternativeTitles}
-        getRepeatableFieldAction={getRepeatableFieldAction}
-        setReferenceTables={setReferenceTables}
-        seriesStatements={seriesStatements}
-        precedingTitles={precedingTitles}
-        succeedingTitles={succeedingTitles}
-      />
-      <Identifier
-        identifiers={identifiers}
-      />
-      <Contributor
-        contributors={contributors}
-      />
-      <DescriptiveData
-        publications={publications}
-        getRepeatableFieldAction={getRepeatableFieldAction}
-        editions={editions}
-        physicalDescriptions={physicalDescriptions}
-        natureOfContentTermIds={natureOfContentTermIds}
-        languages={languages}
-        instanceFormatIds={instanceFormatIds}
-        publicationFrequency={publicationFrequency}
-        publicationRange={publicationRange}
-        initialFields={initialFields}
-        setReferenceTables={setReferenceTables}
-        okapi={okapi}
-      />
-      <InstanceNotes
-        notes={notes}
-      />
-      <ElectronicAccess
-        electronicAccess={electronicAccess}
-        okapi={okapi}
-      />
-      <Subject
-        subjects={subjects}
-      />
-      <Classification
-        classifications={classifications}
-      />
-      <InstanceRelationship
-        parentInstances={parentInstances}
-        getRepeatableFieldAction={getRepeatableFieldAction}
-        childInstances={childInstances}
-        initialFields={initialFields}
-        setReferenceTables={setReferenceTables}
-        okapi={okapi}
-      />
-      <RelatedInstances />
-    </AccordionSet>
+    <>
+      <div style={{ marginBottom: '1rem' }}>
+        <FormattedMessage id="ui-data-import.settings.mappingProfiles.map.instance.subheader" />
+      </div>
+      <AccordionSet>
+        <AdministrativeData
+          statisticalCodes={statisticalCodes}
+          getRepeatableFieldAction={getRepeatableFieldAction}
+          initialFields={initialFields}
+          setReferenceTables={setReferenceTables}
+          okapi={okapi}
+        />
+        <TitleData
+          alternativeTitles={alternativeTitles}
+          getRepeatableFieldAction={getRepeatableFieldAction}
+          setReferenceTables={setReferenceTables}
+          seriesStatements={seriesStatements}
+          precedingTitles={precedingTitles}
+          succeedingTitles={succeedingTitles}
+        />
+        <Identifier
+          identifiers={identifiers}
+        />
+        <Contributor
+          contributors={contributors}
+        />
+        <DescriptiveData
+          publications={publications}
+          getRepeatableFieldAction={getRepeatableFieldAction}
+          editions={editions}
+          physicalDescriptions={physicalDescriptions}
+          natureOfContentTermIds={natureOfContentTermIds}
+          languages={languages}
+          instanceFormatIds={instanceFormatIds}
+          publicationFrequency={publicationFrequency}
+          publicationRange={publicationRange}
+          initialFields={initialFields}
+          setReferenceTables={setReferenceTables}
+          okapi={okapi}
+        />
+        <InstanceNotes
+          notes={notes}
+        />
+        <ElectronicAccess
+          electronicAccess={electronicAccess}
+          okapi={okapi}
+        />
+        <Subject
+          subjects={subjects}
+        />
+        <Classification
+          classifications={classifications}
+        />
+        <InstanceRelationship
+          parentInstances={parentInstances}
+          getRepeatableFieldAction={getRepeatableFieldAction}
+          childInstances={childInstances}
+          initialFields={initialFields}
+          setReferenceTables={setReferenceTables}
+          okapi={okapi}
+        />
+        <RelatedInstances />
+      </AccordionSet>
+    </>
   );
 };
 
