@@ -7,6 +7,8 @@ import {
   DropdownMenu,
 } from '@folio/stripes-components';
 
+import { INCOMING_RECORD_TYPES_TO_DISABLE } from '../../../utils';
+
 import { MATCH_INCOMING_RECORD_TYPES } from '../../ListTemplate';
 
 export const IncomingRecordMenu = ({
@@ -25,16 +27,22 @@ export const IncomingRecordMenu = ({
     open={open}
     minWidth="auto"
   >
-    {Object.keys(MATCH_INCOMING_RECORD_TYPES).map((recordType, i) => (
-      <Button
-        key={i}
-        buttonStyle="dropdownItem"
-        onClick={() => onClick(MATCH_INCOMING_RECORD_TYPES[recordType])}
-        {...dataAttributes}
-      >
-        <FormattedMessage id={MATCH_INCOMING_RECORD_TYPES[recordType].captionId} />
-      </Button>
-    ))}
+    {Object.keys(MATCH_INCOMING_RECORD_TYPES).map((recordType, i) => {
+      // TODO: Disabling options should be removed after implentation is done
+      const isOptionDisabled = INCOMING_RECORD_TYPES_TO_DISABLE.some(option => option === recordType);
+
+      return (
+        <Button
+          key={i}
+          buttonStyle="dropdownItem"
+          onClick={() => onClick(MATCH_INCOMING_RECORD_TYPES[recordType])}
+          disabled={isOptionDisabled}
+          {...dataAttributes}
+        >
+          <FormattedMessage id={MATCH_INCOMING_RECORD_TYPES[recordType].captionId} />
+        </Button>
+      );
+    })}
   </DropdownMenu>
 );
 
