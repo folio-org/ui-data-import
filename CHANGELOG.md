@@ -74,6 +74,7 @@
 * An error message appears when linking a match profile with Existing record field = "Identifier: ..." to a job profile (UIDATIMP-687)
 * Only import MatchingFieldsManager once (UIDATIMP-689)
 * Tweak syntax that caused ESLint to die early, allowing it complete, and find bugs like UIDATIMP-689 (UIDATIMP-690)
+* Fix sorting newly-created file extension settings in alphabetical order (UIDATIMP-681)
 
 ## [2.1.4](https://github.com/folio-org/ui-data-import/tree/v2.1.4) (2020-08-13)
 
