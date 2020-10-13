@@ -1,8 +1,10 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDate } from 'react-intl';
 
-import { Icon } from '@folio/stripes/components';
+import {
+  Icon,
+  FormattedDate,
+} from '@folio/stripes/components';
 
 import css from './DateColumn.css';
 

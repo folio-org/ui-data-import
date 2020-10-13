@@ -63,6 +63,7 @@
 * Field mapping profile create-edit screen: change unusable options to disabled (UIDATIMP-674)
 * Job profile create-edit screen: change unusable options to disabled (UIDATIMP-675)
 * Replace hyphens with `<NoValue>` component (UIDATIMP-628)
+* Data Import App: Consume {{FormattedDate}} and {{FormattedTime}} via stripes-component (UIDATIMP-665)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)

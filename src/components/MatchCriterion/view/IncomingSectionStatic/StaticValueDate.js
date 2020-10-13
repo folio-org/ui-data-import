@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDate } from 'react-intl';
 
 import {
   Layout,
   NoValue,
+  FormattedDate,
 } from '@folio/stripes/components';
 
 export const StaticValueDate = ({ value }) => {

@@ -1,13 +1,12 @@
 import React from 'react';
-import {
-  FormattedMessage,
-  FormattedDate,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   get,
   isEmpty,
 } from 'lodash';
+
+import { FormattedDate } from '@folio/stripes/components';
 
 import * as validators from './formValidators';
 
