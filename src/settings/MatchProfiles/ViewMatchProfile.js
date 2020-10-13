@@ -204,10 +204,10 @@ export class ViewMatchProfile extends Component {
 
     return (
       <Pane
-        data-test-pane-match-profile-details
-        renderHeader={this.renderPaneHeader}
-        defaultWidth="620px"
-        fluidContentWidth
+          data-test-pane-match-profile-details
+          renderHeader={this.renderPaneHeader}
+          defaultWidth="620px"
+          fluidContentWidth
       >
         <TitleManager record={matchProfile.name} />
         <Headline
