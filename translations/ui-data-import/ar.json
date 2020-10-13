@@ -759,5 +759,7 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "حقل تخطي بيانات حقل مارك",
     "stoppedJob": "تم إيقافه",
     "jobDeleteError": "حدث خطأ أثناء حذف مهمة {name}",
-    "fieldMappingsForMarc.addField": "إضافة حقل"
+    "fieldMappingsForMarc.addField": "إضافة حقل",
+    "fieldMappingsForMarc.updatesOverrides.noFields": "لم تقم المكتبة بتعريف أي حقول محمية",
+    "settings.mappingProfiles.map.instance.subheader": "لا يمكن تخطيط الحقول غير النشطة  لأنه يتم التحكم بها بواسطة النظام أو بوضع تخطيط وعاء مارك الخاص بالمكتبة"
 }

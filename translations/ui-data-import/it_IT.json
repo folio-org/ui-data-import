@@ -344,7 +344,7 @@
     "settings.mappingProfiles.map.item.administrativeData.field.formerId": "Former Identifier",
     "settings.mappingProfiles.map.item.administrativeData.field.formerId.addLabel": "Add former identifier",
     "settings.mappingProfiles.map.item.itemData.section": "Item data",
-    "settings.mappingProfiles.map.item.itemData.field.materialType": "Material type",
+    "settings.mappingProfiles.map.item.itemData.field.materialType": "Tipologia materiale",
     "settings.mappingProfiles.map.item.itemData.field.numberOfPieces": "Number of pieces",
     "settings.mappingProfiles.map.item.itemData.field.descriptionOfPieces": "Description of pieces",
     "settings.mappingProfiles.map.item.enumerationData.section": "Enumeration data",
@@ -525,7 +525,7 @@
     "settings.mappingProfiles.map.item.status.inTransit": "In transito",
     "settings.mappingProfiles.map.item.status.missing": "Smarrito",
     "settings.mappingProfiles.map.item.status.onOrder": "In acquisizione",
-    "settings.mappingProfiles.map.item.status.orderClosed": "Order closed",
+    "settings.mappingProfiles.map.item.status.orderClosed": "Ordine chiuso",
     "validation.cannotBeUpdated": "This field cannot be updated",
     "settings.mappingProfile.marcTable.ariaLabel.select": "Select action",
     "settings.mappingProfile.marcTable.ariaLabel.field": "Action field",
@@ -759,5 +759,7 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Data marcField override field",
     "stoppedJob": "has been stopped",
     "jobDeleteError": "Error while deleting {name} job",
-    "fieldMappingsForMarc.addField": "Add field"
+    "fieldMappingsForMarc.addField": "Add field",
+    "fieldMappingsForMarc.updatesOverrides.noFields": "The library has not defined any protected fields",
+    "settings.mappingProfiles.map.instance.subheader": "Inactive fields cannot be mapped because they are controlled by the system or by the library's MARC-Instance mapping profile"
 }
