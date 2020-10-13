@@ -759,5 +759,7 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Sobrescrever dados do campo MARC",
     "stoppedJob": "foi parado",
     "jobDeleteError": "Erro ao excluir o job {name}",
-    "fieldMappingsForMarc.addField": "Adicionar campo"
+    "fieldMappingsForMarc.addField": "Adicionar campo",
+    "fieldMappingsForMarc.updatesOverrides.noFields": "A biblioteca não definiu nenhum campo protegido",
+    "settings.mappingProfiles.map.instance.subheader": "Os campos inativos não podem ser mapeados porque são controlados pelo sistema ou pelo perfil de mapeamento de instância MARC da biblioteca"
 }
