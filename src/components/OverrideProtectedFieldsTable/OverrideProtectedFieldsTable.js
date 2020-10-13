@@ -1,7 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -32,15 +29,18 @@ export const OverrideProtectedFieldsTable = ({
   setReferenceTables,
   isEditable,
 }) => {
-  const [protectedFields, setProtectedFields] = useState([]);
+  const protectedFields = unionBy(mappingMarcFieldProtectionFields, marcFieldProtectionFields, 'id')
+    .sort((a, b) => {
+      if (a.field > b.field) {
+        return 1;
+      }
 
-  useEffect(() => {
-    const getProtectedFields = () => unionBy(mappingMarcFieldProtectionFields, marcFieldProtectionFields, 'id')
-      .sort((a, b) => a.field - b.field);
+      if (a.field < b.field) {
+        return -1;
+      }
 
-    setProtectedFields(getProtectedFields());
-  }, [mappingMarcFieldProtectionFields, marcFieldProtectionFields]);
-
+      return 0;
+    });
   const noProtectedFieldsDefined = isEmpty(protectedFields);
   const emptyTableMessage = (
     <div style={{ margin: '-1rem' }}>
@@ -64,18 +64,11 @@ export const OverrideProtectedFieldsTable = ({
 
   const handleOverrideFieldSelect = fieldId => {
     const changedFieldIndex = protectedFields.findIndex(field => field.id === fieldId);
+    const changedField = omit(protectedFields[changedFieldIndex], ['rowIndex']);
 
-    setProtectedFields(fields => {
-      const newState = [...fields];
-      const changedField = newState[changedFieldIndex];
+    changedField.override = !protectedFields[changedFieldIndex].override;
 
-      newState[changedFieldIndex] = omit(changedField, ['rowIndex']);
-      newState[changedFieldIndex].override = !fields[changedFieldIndex].override;
-
-      updateForm(newState[changedFieldIndex]);
-
-      return newState;
-    });
+    updateForm(changedField);
   };
 
   const columnMapping = {
