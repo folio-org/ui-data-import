@@ -1,14 +1,12 @@
 import React from 'react';
-import {
-  FormattedMessage,
-  FormattedDate,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { noop } from 'lodash';
 
 import {
   Icon,
   IconButton,
+  FormattedDate,
 } from '@folio/stripes/components';
 import { Progress } from '@folio/stripes-data-transfer-components';
 

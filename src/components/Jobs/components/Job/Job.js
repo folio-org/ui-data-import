@@ -5,8 +5,6 @@ import React, {
 import PropTypes from 'prop-types';
 import {
   injectIntl,
-  FormattedDate,
-  FormattedTime,
   FormattedMessage,
 } from 'react-intl';
 import { noop } from 'lodash';
@@ -21,6 +19,8 @@ import {
   Button,
   IconButton,
   Callout,
+  FormattedDate,
+  FormattedTime,
 } from '@folio/stripes/components';
 import { Progress } from '@folio/stripes-data-transfer-components';
 
