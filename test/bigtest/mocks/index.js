@@ -4,7 +4,6 @@ export * from './job-log';
 export * from './associated-job-profiles';
 export * from './associated-mapping-profiles';
 export * from './associated-action-profiles';
-export * from './form-config-samples';
 export * from './job-profiles-child-wrappers';
 export * from './json-schemas';
 export * from './marc-mapping-details';

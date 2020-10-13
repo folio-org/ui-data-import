@@ -5,7 +5,10 @@ import {
   isEmpty,
 } from 'lodash';
 
-import { Icon } from '@folio/stripes/components';
+import {
+  NoValue,
+  Icon,
+} from '@folio/stripes/components';
 
 import { DefaultColumn } from '..';
 
@@ -18,7 +21,7 @@ export const TagsColumn = memo(({
   const tags = get(record, 'tags.tagList', []);
 
   if (isEmpty(tags)) {
-    return '-';
+    return <NoValue />;
   }
 
   return (
