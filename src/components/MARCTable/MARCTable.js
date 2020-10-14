@@ -16,7 +16,10 @@ import {
 
 import css from './MARCTable.css';
 
-import { mappingMARCFieldShape } from '../../utils';
+import {
+  fillEmptyFieldsWithValue,
+  mappingMARCFieldShape,
+} from '../../utils';
 
 export const MARCTable = ({
   columns,
@@ -24,6 +27,7 @@ export const MARCTable = ({
   onChange,
   columnWidths,
   isFirstRowRemovable,
+  fillNewRowFieldsWithDefaultValue,
 }) => {
   const [rows, setRows] = useState([]);
 
@@ -41,9 +45,12 @@ export const MARCTable = ({
       order: index,
       field: { subfields: [{}] },
     };
+    const updatedField = fillEmptyFieldsWithValue(newRow,
+      ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*');
+
     const updatedRows = [
       ...rows.slice(0, index),
-      newRow,
+      fillNewRowFieldsWithDefaultValue ? updatedField : newRow,
       ...rows.slice(index).map(incrementOrders),
     ];
 
@@ -214,6 +221,7 @@ MARCTable.propTypes = {
   columnWidths: PropTypes.object,
   onChange: PropTypes.func,
   isFirstRowRemovable: PropTypes.bool,
+  fillNewRowFieldsWithDefaultValue: PropTypes.bool,
 };
 
 MARCTable.defaultProps = {
@@ -230,4 +238,5 @@ MARCTable.defaultProps = {
     addRemove: '70px',
   },
   isFirstRowRemovable: false,
+  fillNewRowFieldsWithDefaultValue: false,
 };

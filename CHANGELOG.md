@@ -62,6 +62,9 @@
 * MARC Bib field mapping profile: EXCEPTION details for Override protected fields on View screen (UIDATIMP-663)
 * Field mapping profile create-edit screen: change unusable options to disabled (UIDATIMP-674)
 * Job profile create-edit screen: change unusable options to disabled (UIDATIMP-675)
+* Replace hyphens with `<NoValue>` component (UIDATIMP-628)
+* Data Import App: Consume {{FormattedDate}} and {{FormattedTime}} via stripes-component (UIDATIMP-665)
+* In1, In2, Subfield defaults for subsequent update fields do not default to * (UIDATIMP-691)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
@@ -72,6 +75,7 @@
 * Only import MatchingFieldsManager once (UIDATIMP-689)
 * Tweak syntax that caused ESLint to die early, allowing it complete, and find bugs like UIDATIMP-689 (UIDATIMP-690)
 * MARC updates field mapping profile: override protected fields change sequence when edited (UIDATIMP-686)
+* Fix sorting newly-created file extension settings in alphabetical order (UIDATIMP-681)
 
 ## [2.1.4](https://github.com/folio-org/ui-data-import/tree/v2.1.4) (2020-08-13)
 

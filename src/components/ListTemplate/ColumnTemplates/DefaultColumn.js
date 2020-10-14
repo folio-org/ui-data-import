@@ -2,7 +2,10 @@ import React, { memo } from 'react';
 import HighLight from 'react-highlighter';
 import PropTypes from 'prop-types';
 
-import { Button } from '@folio/stripes/components';
+import {
+  NoValue,
+  Button,
+} from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
 import { PROFILE_TYPES_FOR_URL } from '../../../utils';
@@ -19,7 +22,7 @@ export const DefaultColumn = memo(({
   recordId,
 }) => {
   if (!customValue && !incomingValue) {
-    return '-';
+    return <NoValue />;
   }
 
   const value = customValue || incomingValue;

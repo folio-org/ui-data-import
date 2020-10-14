@@ -47,6 +47,7 @@ export const MappingMARCBibDetails = ({
         fields={marcMappingDetails}
         onChange={setReferenceTables}
         isFirstRowRemovable
+        fillNewRowFieldsWithDefaultValue
       />
     );
 

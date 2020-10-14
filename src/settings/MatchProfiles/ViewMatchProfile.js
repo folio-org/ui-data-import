@@ -13,6 +13,7 @@ import {
   Button,
   Headline,
   KeyValue,
+  NoValue,
   Accordion,
   AccordionSet,
   ConfirmationModal,
@@ -203,10 +204,10 @@ export class ViewMatchProfile extends Component {
 
     return (
       <Pane
-        data-test-pane-match-profile-details
-        renderHeader={this.renderPaneHeader}
-        defaultWidth="620px"
-        fluidContentWidth
+          data-test-pane-match-profile-details
+          renderHeader={this.renderPaneHeader}
+          defaultWidth="620px"
+          fluidContentWidth
       >
         <TitleManager record={matchProfile.name} />
         <Headline
@@ -224,7 +225,7 @@ export class ViewMatchProfile extends Component {
               systemUser={SYSTEM_USER_NAME}
             />
             <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
-              <div data-test-description>{matchProfile.description || '-'}</div>
+              <div data-test-description>{matchProfile.description || <NoValue />}</div>
             </KeyValue>
           </Accordion>
           {tagsEnabled && (

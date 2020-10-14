@@ -759,5 +759,7 @@
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Data marcField override field",
     "stoppedJob": "a été arrêté",
     "jobDeleteError": "Erreur lors de la suppression de la tâche {name}",
-    "fieldMappingsForMarc.addField": "Add field"
+    "fieldMappingsForMarc.addField": "Ajouter le champ",
+    "fieldMappingsForMarc.updatesOverrides.noFields": "La bibliothèque n'a défini aucun champ protégé",
+    "settings.mappingProfiles.map.instance.subheader": "Inactive fields cannot be mapped because they are controlled by the system or by the library's MARC-Instance mapping profile"
 }

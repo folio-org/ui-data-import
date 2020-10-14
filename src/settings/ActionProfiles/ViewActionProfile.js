@@ -14,6 +14,7 @@ import {
   Button,
   Headline,
   KeyValue,
+  NoValue,
   Accordion,
   AccordionSet,
   ConfirmationModal,
@@ -222,7 +223,7 @@ export class ViewActionProfile extends Component {
               systemUser={SYSTEM_USER_NAME}
             />
             <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
-              <div data-test-description>{actionProfile.description || '-'}</div>
+              <div data-test-description>{actionProfile.description || <NoValue />}</div>
             </KeyValue>
           </Accordion>
           {tagsEnabled && (

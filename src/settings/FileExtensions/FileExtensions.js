@@ -110,6 +110,7 @@ export class FileExtensions extends Component {
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
     initialValues: PropTypes.object,
+    defaultSort: PropTypes.string,
   };
 
   static defaultProps = {
@@ -129,6 +130,7 @@ export class FileExtensions extends Component {
       'updated',
       'updatedBy',
     ],
+    defaultSort: 'extension',
     initialValues: {
       importBlocked: false,
       description: '',

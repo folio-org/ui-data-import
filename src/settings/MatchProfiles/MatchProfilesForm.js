@@ -186,13 +186,13 @@ export const MatchProfilesFormComponent = memo(({
 
   return (
     <FullScreenForm
-      id="match-profiles-form"
-      paneTitle={paneTitle}
-      submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
-      cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
-      isSubmitButtonDisabled={isSubmitDisabled}
-      onSubmit={onSubmit}
-      onCancel={onCancel}
+        id="match-profiles-form"
+        paneTitle={paneTitle}
+        submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
+        cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
+        isSubmitButtonDisabled={isSubmitDisabled}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
     >
       <Headline
         size="xx-large"

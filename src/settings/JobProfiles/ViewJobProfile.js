@@ -13,6 +13,7 @@ import {
   Pane,
   Headline,
   KeyValue,
+  NoValue,
   Accordion,
   AccordionSet,
   MultiColumnList,
@@ -412,7 +413,7 @@ export class ViewJobProfile extends Component {
               <div data-test-accepted-data-type>{record.dataType}</div>
             </KeyValue>
             <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
-              <div data-test-description>{record.description || '-'}</div>
+              <div data-test-description>{record.description || <NoValue />}</div>
             </KeyValue>
           </Accordion>
           {tagsEnabled && (
