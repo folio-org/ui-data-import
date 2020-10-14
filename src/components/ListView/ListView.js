@@ -59,6 +59,7 @@ export class ListView extends Component {
     initialValues: PropTypes.object.isRequired,
     renderHeaders: PropTypes.func.isRequired,
     isFullScreen: PropTypes.bool,
+    defaultSort: PropTypes.string,
   };
 
   static defaultProps = {
@@ -72,6 +73,7 @@ export class ListView extends Component {
       hasLoaded: false,
     },
     checkboxList: {},
+    defaultSort: 'name',
   };
 
   state = {
@@ -207,6 +209,7 @@ export class ListView extends Component {
       renderHeaders,
       actionMenuItems,
       isFullScreen,
+      defaultSort,
     } = this.props;
     const { showRestoreModal } = this.state;
 
@@ -237,7 +240,7 @@ export class ListView extends Component {
               searchLabelKey={`ui-data-import.settings.${ENTITY_KEY}.title`}
               resultCountMessageKey={`ui-data-import.settings.${ENTITY_KEY}.count`}
               resultsLabel={label}
-              defaultSort="name"
+              defaultSort={defaultSort}
               actionMenu={actionMenu}
               visibleColumns={visibleColumns}
               columnWidths={columnWidths}
