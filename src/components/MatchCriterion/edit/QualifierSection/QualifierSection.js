@@ -48,7 +48,7 @@ export const QualifierSection = ({
       <Row>
         <Col xs={4}>
           <FormattedMessage id="ui-data-import.match.qualifier.placeholder">
-            {placeholder => (
+            {([placeholder]) => (
               <Field
                 component={Select}
                 name={`profile.matchDetails[${repeatableIndex}].${expressionType}.qualifier.qualifierType`}

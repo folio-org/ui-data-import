@@ -94,7 +94,7 @@ export const ProfileLabel = memo(({
 
           return (
             <>
-              <span key={`label-item-${i}`}>{templates[item](recordData.content)}</span>
+              <span key={`${recordType}-label-item-${i}`}>{templates[item](recordData.content)}</span>
               {needSeparator && <span>&nbsp;&middot;&nbsp;</span>}
             </>
           );
@@ -187,7 +187,7 @@ ProfileLabel.propTypes = {
   setParentSectionData: PropTypes.func.isRequired,
   resources: PropTypes.object.isRequired,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  reactTo: PropTypes.string,
+  reactTo: PropTypes.oneOf(Object.values(PROFILE_RELATION_TYPES)),
   record: PropTypes.object,
   className: PropTypes.string,
   onUnlink: PropTypes.func,

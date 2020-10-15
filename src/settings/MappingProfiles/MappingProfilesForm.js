@@ -313,7 +313,7 @@ export const MappingProfilesFormComponent = ({
             </div>
             <div data-test-incoming-record-type-field>
               <FormattedMessage id="ui-data-import.chooseIncomingRecordType">
-                {placeholder => (
+                {([placeholder]) => (
                   <Field
                     label={<FormattedMessage id="ui-data-import.incomingRecordType" />}
                     name="profile.incomingRecordType"
@@ -340,7 +340,7 @@ export const MappingProfilesFormComponent = ({
               {folioRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC && (
                 <Col xs={6}>
                   <FormattedMessage id="ui-data-import.fieldMappingsForMarc.placeholder">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <div data-test-field-mapping-foer-marc-field>
                         <Field
                           label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}
