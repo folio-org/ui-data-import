@@ -4,33 +4,34 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
+import {
+  get,
+  noop,
+} from 'lodash';
 
+import { stripesConnect } from '@folio/stripes/core';
 import {
   makeQueryFunction,
   SearchAndSort,
 } from '@folio/stripes/smart-components';
+import { Button } from '@folio/stripes/components';
 import {
   changeSearchIndex,
   getActiveFilters,
   handleFilterChange,
 } from '@folio/stripes-acq-components';
 
-import { stripesConnect } from '@folio/stripes/core';
-import { Button } from '@folio/stripes/components';
-import {
-  get,
-  noop,
-} from 'lodash';
-import packageInfo from '../../../package';
-import { FILE_STATUSES } from '../../utils/constants';
 import { filterConfig } from './ViewAllLogsFilterConfig';
 import ViewAllLogsFilters from './ViewAllLogsFilters';
 import {
   logsSearchTemplate,
   searchableIndexes,
 } from './ViewAllLogsSearchConfig';
-import sharedCss from '../../shared.css';
 import { listTemplate } from '../../components/ListTemplate';
+import packageInfo from '../../../package';
+import { FILE_STATUSES } from '../../utils';
+
+import sharedCss from '../../shared.css';
 
 const {
   COMMITTED,
@@ -148,13 +149,22 @@ class ViewAllLogs extends Component {
     const { resources } = this.props;
 
     const jobProfiles = get(resources, ['records', 'records'], [])
-      .map(item => item.jobProfileInfo);
+      .map(item => item.jobProfileInfo)
+      .sort((jobProfileA, jobProfileB) => jobProfileA.name.localeCompare(jobProfileB.name));
+
     const users = get(resources, ['records', 'records'], [])
       .map(item => ({
         userId: item.userId,
         firstName: item.runBy.firstName,
         lastName: item.runBy.lastName,
-      }));
+      }))
+      .sort((userA, userB) => {
+        if (userA.firstName.localeCompare(userB.firstName) === 0) {
+          return userA.lastName.localeCompare(userB.lastName);
+        }
+
+        return userA.firstName.localeCompare(userB.firstName);
+      });
 
     return resources.query
       ? (

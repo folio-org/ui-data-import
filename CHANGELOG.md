@@ -2,6 +2,11 @@
 
 ## **3.1.0** (in progress)
 
+### Features added:
+
+### Bugs fixed:
+* Log filter dropdowns by job profile and user are not in alphabetical order (UIDATIMP-601)
+
 ## [3.0.0](https://github.com/folio-org/ui-data-import/tree/v3.0.0) (2020-10-15)
 
 ### Features added:
