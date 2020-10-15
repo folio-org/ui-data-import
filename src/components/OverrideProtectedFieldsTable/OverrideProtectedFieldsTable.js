@@ -30,17 +30,7 @@ export const OverrideProtectedFieldsTable = ({
   isEditable,
 }) => {
   const protectedFields = unionBy(mappingMarcFieldProtectionFields, marcFieldProtectionFields, 'id')
-    .sort((a, b) => {
-      if (a.field > b.field) {
-        return 1;
-      }
-
-      if (a.field < b.field) {
-        return -1;
-      }
-
-      return 0;
-    });
+    .sort((a, b) => a.field.localeCompare(b.field));
   const noProtectedFieldsDefined = isEmpty(protectedFields);
   const emptyTableMessage = (
     <div style={{ margin: '-1rem' }}>
