@@ -145,8 +145,6 @@ export const ProfileLinker = ({
 
 ProfileLinker.propTypes = {
   id: PropTypes.string.isRequired,
-  parentId: PropTypes.string.isRequired,
-  rootId: PropTypes.string.isRequired,
   parentType: PropTypes.string.isRequired,
   onLink: PropTypes.func.isRequired,
   linkingRules: PropTypes.object.isRequired,
@@ -158,13 +156,17 @@ ProfileLinker.propTypes = {
     token: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
   }).isRequired,
+  rootId: PropTypes.string,
+  parentId: PropTypes.string,
   disabledOptions: PropTypes.arrayOf(PropTypes.string),
-  reactTo: PropTypes.string,
+  reactTo: PropTypes.oneOf(Object.values(PROFILE_RELATION_TYPES)),
   title: PropTypes.node || PropTypes.string,
   className: PropTypes.string,
 };
 
 ProfileLinker.defaultProps = {
+  rootId: null,
+  parentId: null,
   title: '',
   className: '',
   reactTo: PROFILE_RELATION_TYPES.NONE,

@@ -88,7 +88,12 @@ Section.propTypes = {
   isOpen: PropTypes.bool,
   onChange: PropTypes.func,
   className: PropTypes.string,
-  children: PropTypes.arrayOf(PropTypes.node),
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.func,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.arrayOf(PropTypes.func),
+  ]),
 };
 
 Section.defaultProps = {

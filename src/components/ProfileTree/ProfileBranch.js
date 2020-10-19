@@ -264,20 +264,20 @@ export const ProfileBranch = memo(({
 });
 
 ProfileBranch.propTypes = {
-  reactTo: PropTypes.string.isRequired,
   linkingRules: PropTypes.object.isRequired,
   recordData: PropTypes.object.isRequired,
   parentRecordData: PropTypes.object.isRequired,
   parentSectionKey: PropTypes.string.isRequired,
   parentSectionData: PropTypes.arrayOf(PropTypes.object).isRequired,
   setParentSectionData: PropTypes.func.isRequired,
-  rootId: PropTypes.string.isRequired,
   okapi: PropTypes.shape({
     tenant: PropTypes.string.isRequired,
     token: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
   }).isRequired,
   resources: PropTypes.object.isRequired,
+  reactTo: PropTypes.oneOf(Object.values(PROFILE_RELATION_TYPES)),
+  rootId: PropTypes.string,
   record: PropTypes.object,
   className: PropTypes.string,
   onChange: PropTypes.func,
@@ -289,6 +289,8 @@ ProfileBranch.propTypes = {
 };
 
 ProfileBranch.defaultProps = {
+  reactTo: null,
+  rootId: null,
   record: null,
   className: null,
   onChange: noop,

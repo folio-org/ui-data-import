@@ -13,7 +13,7 @@ export const FolioRecordTypeSelect = ({
 }) => (
   <div data-test-folio-record-type-field>
     <FormattedMessage id="ui-data-import.chooseFolioRecordType">
-      {placeholder => (
+      {([placeholder]) => (
         <Field
           label={<FormattedMessage id="ui-data-import.folioRecordType" />}
           name={`profile.${fieldName}`}
