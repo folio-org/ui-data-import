@@ -298,7 +298,7 @@ export const MARCTableRow = ({
       >
         {withRowUp && (
           <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.moveUpRow">
-            {ariaLabel => (
+            {([ariaLabel]) => (
               <IconButton
                 data-testid="marc-table-arrow-up"
                 data-test-marc-table-arrow-up
@@ -311,7 +311,7 @@ export const MARCTableRow = ({
         )}
         {withRowDown && (
           <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.moveDownRow">
-            {ariaLabel => (
+            {([ariaLabel]) => (
               <IconButton
                 data-testid="marc-table-arrow-down"
                 data-test-marc-table-arrow-down
@@ -662,7 +662,7 @@ export const MARCTableRow = ({
       >
         {!isSubline && (
           <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.addField">
-            {ariaLabel => (
+            {([ariaLabel]) => (
               <IconButton
                 data-test-marc-table-add
                 icon="plus-sign"
@@ -673,7 +673,7 @@ export const MARCTableRow = ({
           </FormattedMessage>
         )}
         <FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.deleteField">
-          {ariaLabel => (
+          {([ariaLabel]) => (
             <IconButton
               data-test-marc-table-remove
               className={css.removeButton}

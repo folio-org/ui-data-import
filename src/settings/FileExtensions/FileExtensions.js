@@ -109,6 +109,7 @@ export class FileExtensions extends Component {
     RESULT_COUNT_INCREMENT: PropTypes.number,
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
+    columnWidths: PropTypes.object,
     initialValues: PropTypes.object,
     defaultSort: PropTypes.string,
   };
@@ -130,6 +131,7 @@ export class FileExtensions extends Component {
       'updated',
       'updatedBy',
     ],
+    columnWidths: {},
     defaultSort: 'extension',
     initialValues: {
       importBlocked: false,
