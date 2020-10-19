@@ -122,7 +122,7 @@ const ViewAllLogsFilters = ({
         >
           <div data-test-job-profiles-filter>
             <FormattedMessage id="ui-data-import.filter.chooseJobProfile">
-              {placeholder => (
+              {([placeholder]) => (
                 <Selection
                   dataOptions={getJobProfileOptions}
                   value={activeFilters[FILTERS.JOB_PROFILE] ? activeFilters[FILTERS.JOB_PROFILE][0] : ''}
@@ -143,7 +143,7 @@ const ViewAllLogsFilters = ({
         >
           <div data-test-users-filter>
             <FormattedMessage id="ui-data-import.filter.chooseUser">
-              {placeholder => (
+              {([placeholder]) => (
                 <Selection
                   dataOptions={getUsersOptions}
                   value={activeFilters[FILTERS.USER] ? activeFilters[FILTERS.USER][0] : ''}

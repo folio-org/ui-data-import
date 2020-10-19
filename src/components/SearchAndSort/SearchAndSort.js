@@ -531,7 +531,7 @@ export class SearchAndSort extends Component {
                     <SearchField
                       id={`input-${objectName}-search`}
                       clearSearchId={`input-${objectName}-clear-search-button`}
-                      ariaLabel={ariaLabel}
+                      ariaLabel={ariaLabel.join('')}
                       marginBottom0
                       searchableIndexes={searchableIndexes}
                       selectedIndex={selectedIndex}
@@ -593,7 +593,7 @@ export class SearchAndSort extends Component {
         id="stripes-smart-components.searchResults"
         values={{ objectName: objectNameUC }}
       >
-        {ariaLabel => (
+        {([ariaLabel]) => (
           <MultiColumnList
             id={`${objectName}-list`}
             ariaLabel={ariaLabel}

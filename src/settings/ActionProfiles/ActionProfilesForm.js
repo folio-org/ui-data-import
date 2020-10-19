@@ -215,7 +215,7 @@ export const ActionProfilesFormComponent = ({
         >
           <div data-test-action-field>
             <FormattedMessage id="ui-data-import.selectAction">
-              {placeholder => (
+              {([placeholder]) => (
                 <Field
                   label={<FormattedMessage id="ui-data-import.action" />}
                   name="profile.action"

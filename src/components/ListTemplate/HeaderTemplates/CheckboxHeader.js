@@ -19,7 +19,7 @@ export const CheckboxHeader = memo(({
     onClick={e => e.stopPropagation()}
   >
     <FormattedMessage id="ui-data-import.settings.table.checkboxAll">
-      {ariaLabel => (
+      {([ariaLabel]) => (
         <Checkbox
           name="selected-all"
           checked={checked}

@@ -20,7 +20,7 @@ export const CheckboxColumn = memo(({
     onClick={e => e.stopPropagation()}
   >
     <FormattedMessage id="ui-data-import.settings.table.checkbox">
-      {ariaLabel => (
+      {([ariaLabel]) => (
         <Checkbox
           name={`selected-${value}`}
           checked={checked}
