@@ -24,7 +24,6 @@ export const LinkerButton = memo(({
     buttonStyle="dropdownItem"
     id={`${id}-button-find-import-profile-${entityKey}`}
     buttonClass={classNames(css['linker-button'], className)}
-    marginTop0
     marginBottom0
     onClick={() => onClick(entityKey)}
     disabled={isButtonDisabled}

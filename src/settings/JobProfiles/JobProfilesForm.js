@@ -131,7 +131,7 @@ export const JobProfilesFormComponent = ({
           </div>
           <div data-test-accepted-data-types-field>
             <FormattedMessage id="ui-data-import.settings.jobProfiles.chooseAcceptedDataType">
-              {placeholder => (
+              {([placeholder]) => (
                 <Field
                   label={<FormattedMessage id="ui-data-import.settings.jobProfiles.acceptedDataType" />}
                   name="profile.dataType"
