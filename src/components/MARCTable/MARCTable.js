@@ -32,7 +32,9 @@ export const MARCTable = ({
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    setRows(fields);
+    if (fields) {
+      setRows(fields);
+    }
   }, [fields]);
 
   const addNewRow = index => {
