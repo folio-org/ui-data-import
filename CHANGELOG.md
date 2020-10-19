@@ -1,6 +1,13 @@
 # Change history for ui-data-import
 
-## **3.0.0** (in progress)
+## **3.1.0** (in progress)
+
+### Features added:
+
+### Bugs fixed:
+* Log filter dropdowns by job profile and user are not in alphabetical order (UIDATIMP-601)
+
+## [3.0.0](https://github.com/folio-org/ui-data-import/tree/v3.0.0) (2020-10-15)
 
 ### Features added:
 * Handle import of stripes-acq-components to modules and platform (UISACQCOMP-3)
@@ -64,7 +71,6 @@
 * Job profile create-edit screen: change unusable options to disabled (UIDATIMP-675)
 * Replace hyphens with `<NoValue>` component (UIDATIMP-628)
 * Data Import App: Consume {{FormattedDate}} and {{FormattedTime}} via stripes-component (UIDATIMP-665)
-* In1, In2, Subfield defaults for subsequent update fields do not default to * (UIDATIMP-691)
 
 ### Bugs fixed:
 * Fix rendering qualifier sections with old data in match profiles details (UIDATIMP-481)
@@ -76,6 +82,7 @@
 * Tweak syntax that caused ESLint to die early, allowing it complete, and find bugs like UIDATIMP-689 (UIDATIMP-690)
 * MARC updates field mapping profile: override protected fields change sequence when edited (UIDATIMP-686)
 * Fix sorting newly-created file extension settings in alphabetical order (UIDATIMP-681)
+* In1, In2, Subfield defaults for subsequent update fields do not default to * (UIDATIMP-691)
 
 ## [2.1.4](https://github.com/folio-org/ui-data-import/tree/v2.1.4) (2020-08-13)
 

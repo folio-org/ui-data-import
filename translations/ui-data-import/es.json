@@ -753,13 +753,13 @@
     "completedWithErrors": "Completado con errores",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementPublicNote": "Statement public note",
     "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementStaffNote": "Statement staff note",
-    "fieldMappingsForMarc.overrideProtected": "Override protected fields",
-    "fieldMappingsForMarc.updatesOverrides.subtext": "If any protected field should be updated by this profile, check the appropriate box here",
-    "settings.mappingProfile.marcTable.header.override": "Override",
-    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Data marcField override field",
-    "stoppedJob": "has been stopped",
-    "jobDeleteError": "Error while deleting {name} job",
-    "fieldMappingsForMarc.addField": "Add field",
-    "fieldMappingsForMarc.updatesOverrides.noFields": "The library has not defined any protected fields",
-    "settings.mappingProfiles.map.instance.subheader": "Inactive fields cannot be mapped because they are controlled by the system or by the library's MARC-Instance mapping profile"
+    "fieldMappingsForMarc.overrideProtected": "Sobrescribir campos protegidos",
+    "fieldMappingsForMarc.updatesOverrides.subtext": "Si algún campo protegido debe ser actualizado por este perfil, marque la casilla correspondiente aquí",
+    "settings.mappingProfile.marcTable.header.override": "Sobrescribir",
+    "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "Campo de anulación de datos marcField",
+    "stoppedJob": "se ha detenido",
+    "jobDeleteError": "Error al eliminar el trabajo {name}",
+    "fieldMappingsForMarc.addField": "Añadir campo",
+    "fieldMappingsForMarc.updatesOverrides.noFields": "La biblioteca no ha definido ningún campo protegido",
+    "settings.mappingProfiles.map.instance.subheader": "Los campos inactivos no se pueden asignar porque están controlados por el sistema o por el perfil de asignación MARC-Instancia de la biblioteca"
 }
