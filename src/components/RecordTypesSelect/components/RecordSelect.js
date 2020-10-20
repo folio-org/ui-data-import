@@ -6,7 +6,7 @@ import { TreeView } from '../../TreeView';
 import { RecordItem } from './RecordItem';
 
 import { FOLIO_RECORD_TYPES } from '../../ListTemplate';
-import { rootList } from '../../TreeView/TreeView.css';
+import { rootListContainer } from '../../TreeView/TreeView.css';
 import css from '../RecordTypesSelect.css';
 
 const recordsData = {
@@ -16,7 +16,7 @@ const recordsData = {
     FOLIO_RECORD_TYPES.ITEM.type,
     FOLIO_RECORD_TYPES.ORDER.type,
     FOLIO_RECORD_TYPES.INVOICE.type,
-  ].map(id => `#${id}`),
+  ].map(id => `[data-id="${id}"]`),
   children: [
     {
       itemMeta: FOLIO_RECORD_TYPES.INSTANCE,
@@ -43,7 +43,7 @@ const recordsData = {
 export const RecordSelect = ({
   id,
   onSelect,
-  container = `#${id} .${rootList}`,
+  container = `#${id} .${rootListContainer}`,
   treeData = recordsData,
   isEditable,
   isLocalLTR,
@@ -52,7 +52,6 @@ export const RecordSelect = ({
     <TreeView
       data={treeData}
       className={isLocalLTR ? css.treeViewLTR : css.treeViewRTL}
-      container={container}
       isLocalLTR={isLocalLTR}
       renderItem={item => (
         <RecordItem

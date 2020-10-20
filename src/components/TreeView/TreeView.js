@@ -17,30 +17,32 @@ export const TreeView = ({
     items,
     root = false,
   }) => Array.isArray(items) && (
-    <ul
-      className={classNames(css.list, { [css.rootList]: root })}
-      style={root ? null : { [isLocalLTR ? 'paddingLeft' : 'paddingRight']: indentation }}
-    >
-      {items.map((item, index) => {
-        const itemKey = item.itemMeta.type;
-        const itemSelector = `#${itemKey}`;
-        const isFirstItem = root && index === 0;
+    <div className={css.rootListContainer}>
+      <ul
+        className={classNames(css.list, { [css.rootList]: root })}
+        style={root ? null : { [isLocalLTR ? 'paddingLeft' : 'paddingRight']: indentation }}
+      >
+        {items.map((item, index) => {
+          const itemKey = item.itemMeta.type;
+          const itemSelector = `[data-id="${itemKey}"]`;
+          const isFirstItem = root && index === 0;
 
-        return (
-          <li
-            key={itemKey}
-            className={classNames(css.listItem)}
-            style={{ marginTop: isFirstItem ? 0 : spacing }}
-          >
-            {renderItem(item)}
-            {renderList({
-              items: item.children,
-              parent: itemSelector,
-            })}
-          </li>
-        );
-      })}
-    </ul>
+          return (
+            <li
+              key={itemKey}
+              className={classNames(css.listItem)}
+              style={{ marginTop: isFirstItem ? 0 : spacing }}
+            >
+              {renderItem(item)}
+              {renderList({
+                items: item.children,
+                parent: itemSelector,
+              })}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 
   return (
