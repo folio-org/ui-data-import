@@ -470,7 +470,7 @@ export const MARCTableRow = ({
     );
   };
   const renderDataField = () => {
-    let cellStyle = {
+    const cellStyle = {
       width: columnWidths.data,
       flexGrow: 1,
       justifyContent: 'space-between',
@@ -478,11 +478,6 @@ export const MARCTableRow = ({
 
     const getContent = () => {
       if (actionValue === EDIT && subactionValue === REPLACE) {
-        cellStyle = {
-          ...cellStyle,
-          display: 'flex',
-          flexDirection: 'column',
-        };
         const labelStyle = {
           marginRight: '10px',
           fontWeight: '400',
@@ -495,10 +490,7 @@ export const MARCTableRow = ({
         };
 
         return (
-          <div
-            data-testid="marc-table-data"
-            style={cellStyle}
-          >
+          <div data-testid="marc-table-data">
             <div
               data-test-marc-table-data-find
               style={findContainerStyle}
@@ -537,50 +529,66 @@ export const MARCTableRow = ({
 
       if (actionValue === MOVE) {
         if (subactionValue === NEW_FIELD || subactionValue === EXISTING_FIELD) {
+          const dataCellStyle = {
+            display: 'flex',
+            justifyContent: 'space-between',
+          };
+
           return (
-            <div data-testid="marc-table-data">
-              <div data-test-marc-table-data-field>
+            <div
+              data-testid="marc-table-data"
+              style={dataCellStyle}
+            >
+              <div
+                data-test-marc-table-data-field
+                className={css.tableDataCell}
+              >
                 <Field
                   name={`${name}.field.subfields[${subfieldIndex}].data.marcField.field`}
                   component={TextField}
                   onChange={value => setDataFieldValue(value, 'field')}
-                  className={css.tableDataCell}
                   placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.field' })}
                   ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.field' })}
                   validate={[validateDataField]}
                   marginBottom0
                 />
               </div>
-              <div data-test-marc-table-data-indicator1>
+              <div
+                data-test-marc-table-data-indicator1
+                className={css.tableDataCell}
+              >
                 <Field
                   name={`${name}.field.subfields[${subfieldIndex}].data.marcField.indicator1`}
                   component={TextField}
                   onChange={value => setDataFieldValue(value, 'indicator1')}
-                  className={css.tableDataCell}
                   placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator1' })}
                   ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator1' })}
                   validate={[validateDataIndicator1]}
                   marginBottom0
                 />
               </div>
-              <div data-test-marc-table-data-indicator2>
+              <div
+                data-test-marc-table-data-indicator2
+                className={css.tableDataCell}
+              >
                 <Field
                   name={`${name}.field.subfields[${subfieldIndex}].data.marcField.indicator2`}
                   component={TextField}
                   onChange={value => setDataFieldValue(value, 'indicator2')}
-                  className={css.tableDataCell}
                   placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator2' })}
                   ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator2' })}
                   validate={[validateDataIndicator2]}
                   marginBottom0
                 />
               </div>
-              <div data-test-marc-table-data-subfield>
+              <div
+                data-test-marc-table-data-subfield
+                style={{ flexGrow: 1 }}
+              >
                 <Field
                   name={`${name}.field.subfields[${subfieldIndex}].data.marcField.subfields[${subfieldIndex}].subfield`}
                   component={TextField}
                   onChange={value => setDataFieldValue(value, 'subfield')}
-                  className={css.tableDataCell}
                   placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subfield' })}
                   ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.subfield' })}
                   validate={[validateDataSubfield]}
