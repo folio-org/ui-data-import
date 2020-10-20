@@ -58,6 +58,7 @@
 }
 
 .tableDataCell {
+  flex-grow: 1;
   margin-right: 5px;
 }
 
