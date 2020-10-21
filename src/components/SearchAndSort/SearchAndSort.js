@@ -401,15 +401,21 @@ export class SearchAndSort extends Component {
     } = row;
 
     return (
-      <div key={`row-${rowIndex}`}>
-        <a
-          href={this.getRowURL(rowData.id)}
-          aria-label={labelStrings && labelStrings.join('...')}
-          className={rowClass}
-          {...rowProps}
-        >
-          {cells}
-        </a>
+      <div
+        role="gridcell"
+        key={`row-${rowIndex}`}
+      >
+        <div role="grid">
+          <a
+            href={this.getRowURL(rowData.id)}
+            aria-label={labelStrings && labelStrings.join('...')}
+            className={rowClass}
+            {...rowProps}
+            role="row"
+          >
+            {cells}
+          </a>
+        </div>
       </div>
     );
   };

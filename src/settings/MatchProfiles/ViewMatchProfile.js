@@ -257,7 +257,6 @@ export class ViewMatchProfile extends Component {
                 {matchProfile.matchDetails.map((item, i) => (
                   <ViewMatchCriterion
                     key={i}
-                    repeatableIndex={i}
                     matchDetails={item}
                     incomingRecordLabel={incomingRecordLabel}
                     existingRecordLabel={existingRecordLabel}

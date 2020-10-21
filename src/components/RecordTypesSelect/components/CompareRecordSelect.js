@@ -59,7 +59,7 @@ export const CompareRecordSelect = memo(({
   }, []);
 
   useEffect(() => {
-    const selectedExistingRecordElem = getElement(`#${existingRecord.type}`, existingRecordsElemRef.current);
+    const selectedExistingRecordElem = getElement(`[data-id=${existingRecord.type}]`, existingRecordsElemRef.current);
 
     if (selectedExistingRecordElem) {
       setTop(selectedExistingRecordElem.offsetTop);

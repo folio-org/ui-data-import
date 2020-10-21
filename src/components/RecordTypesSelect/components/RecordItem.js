@@ -64,9 +64,9 @@ export const RecordItem = memo(({
   const initialButton = (
     <div // eslint-disable-line jsx-a11y/click-events-have-key-events
       data-test-record-item
+      data-id={incomingRecord.type}
       tabIndex="0"
       role="button"
-      id={incomingRecord.type}
       className={classNames(
         css.item,
         { [css.clickableItem]: isEditable },
