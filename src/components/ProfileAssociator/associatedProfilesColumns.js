@@ -20,6 +20,7 @@ export const associatedProfilesColumns = ({
   selectRecord,
   selectedRecords,
   onRemove,
+  intl,
 }) => {
   const formatter = listTemplate({
     entityKey,
@@ -42,6 +43,7 @@ export const associatedProfilesColumns = ({
           size="medium"
           buttonStyle="default"
           buttonClass={css['button-unlink']}
+          title={intl.formatMessage({ id: 'ui-data-import.settings.profile.unlink' })}
           marginBottom0
           onClick={() => onRemove(record)}
         >
@@ -75,6 +77,7 @@ associatedProfilesColumns.propTypes = {
   entityKey: PropTypes.string.isRequired,
   searchTerm: PropTypes.string.isRequired,
   selectRecord: PropTypes.func.isRequired,
+  intl: PropTypes.object.isRequired,
   selectedRecords: PropTypes.instanceOf(Set).isRequired,
   isMultiSelect: PropTypes.bool,
 };
