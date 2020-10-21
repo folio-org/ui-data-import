@@ -3,6 +3,7 @@
 ## **3.1.0** (in progress)
 
 ### Features added:
+* Reuse `<JobsList>` component from `stripes-data-transfer-components` rep (UIDATIMP-573)
 
 ### Bugs fixed:
 * Log filter dropdowns by job profile and user are not in alphabetical order (UIDATIMP-601)

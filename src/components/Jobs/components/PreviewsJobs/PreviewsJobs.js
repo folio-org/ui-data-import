@@ -2,9 +2,11 @@ import React, { PureComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
-import { JobsList } from '../JobsList';
+import { JobsList } from '@folio/stripes-data-transfer-components';
+
+import { itemFormatter } from '../../utils';
 import { sortPreviewJobs } from './sortPreviewJobs';
-import { JOB_STATUSES } from '../../../../utils/constants';
+import { JOB_STATUSES } from '../../../../utils';
 import { DataFetcherContext } from '../../../DataFetcher';
 
 export class PreviewsJobs extends PureComponent {
@@ -27,6 +29,7 @@ export class PreviewsJobs extends PureComponent {
         <JobsList
           jobs={jobs}
           hasLoaded={hasLoaded}
+          itemFormatter={itemFormatter}
           isEmptyMessage={<FormattedMessage id="ui-data-import.noPreviewsJobsMessage" />}
         />
       </div>
