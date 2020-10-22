@@ -122,6 +122,7 @@ export const AssociatedList = memo(({
     selectRecord,
     selectedRecords,
     onRemove,
+    intl,
   });
 
   return (
