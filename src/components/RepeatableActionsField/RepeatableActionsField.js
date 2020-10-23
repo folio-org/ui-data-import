@@ -90,6 +90,7 @@ export const RepeatableActionsField = memo(({
               disabled={disabled}
               onChange={handleRepeatableActionChange}
               validate={[validateRepeatableActions]}
+              aria-label={legend || intl.formatMessage({ id: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions' })}
             />
           )}
         </WithTranslation>
