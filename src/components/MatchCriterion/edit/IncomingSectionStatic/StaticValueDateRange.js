@@ -24,11 +24,17 @@ export const StaticValueDateRange = ({ repeatableIndex }) => {
       >
         <FormattedMessage id="ui-data-import.from" />
       </Headline>
-      <Field
-        name={`profile.matchDetails[${repeatableIndex}].incomingMatchExpression.staticValueDetails.fromDate`}
-        component={Datepicker}
-        dateFormat="YYYY-MM-DD"
-      />
+      <FormattedMessage id="ui-data-import.match.incoming.static.value-type.date-range">
+        {([ariaLabel]) => (
+          <Field
+            name={`profile.matchDetails[${repeatableIndex}].incomingMatchExpression.staticValueDetails.fromDate`}
+            component={Datepicker}
+            dateFormat="YYYY-MM-DD"
+            aria-label={ariaLabel}
+          />
+        )}
+      </FormattedMessage>
+
       <Headline
         weight="regular"
         margin="none"
@@ -36,11 +42,16 @@ export const StaticValueDateRange = ({ repeatableIndex }) => {
       >
         <FormattedMessage id="ui-data-import.to" />
       </Headline>
-      <Field
-        name={`profile.matchDetails[${repeatableIndex}].incomingMatchExpression.staticValueDetails.toDate`}
-        component={Datepicker}
-        dateFormat="YYYY-MM-DD"
-      />
+      <FormattedMessage id="ui-data-import.match.incoming.static.value-type.date-range">
+        {([ariaLabel]) => (
+          <Field
+            name={`profile.matchDetails[${repeatableIndex}].incomingMatchExpression.staticValueDetails.toDate`}
+            component={Datepicker}
+            dateFormat="YYYY-MM-DD"
+            aria-label={ariaLabel}
+          />
+        )}
+      </FormattedMessage>
     </Layout>
   );
 };

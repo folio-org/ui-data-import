@@ -17,7 +17,7 @@ export const TreeView = ({
     items,
     root = false,
   }) => Array.isArray(items) && (
-    <div className={css.rootListContainer}>
+    <div className={classNames(css.listContainer, { [css.rootListContainer]: root })}>
       <ul
         className={classNames(css.list, { [css.rootList]: root })}
         style={root ? null : { [isLocalLTR ? 'paddingLeft' : 'paddingRight']: indentation }}

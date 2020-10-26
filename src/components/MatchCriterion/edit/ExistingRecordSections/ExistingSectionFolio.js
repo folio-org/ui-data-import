@@ -72,6 +72,7 @@ export const ExistingSectionFolio = ({
             onChange={handleExistingRecordSelect}
             onFilter={handleFieldSearch}
             dirty={isDirty}
+            aria-label={existingRecordFieldLabel}
           />
         </Col>
       </Row>
@@ -86,12 +87,12 @@ ExistingSectionFolio.propTypes = {
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   })),
-  existingRecordFieldLabel: PropTypes.node,
+  existingRecordFieldLabel: PropTypes.string,
   dispatchFormChange: PropTypes.func,
 };
 
 ExistingSectionFolio.defaultProps = {
   existingRecordFields: null,
-  existingRecordFieldLabel: null,
+  existingRecordFieldLabel: '',
   dispatchFormChange: noop,
 };

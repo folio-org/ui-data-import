@@ -53,6 +53,7 @@ export const QualifierPartSection = ({
                 name={`profile.matchDetails[${repeatableIndex}].${expressionType}.qualifier.comparisonPart`}
                 placeholder={placeholder}
                 dataOptions={dataOptions}
+                aria-label={placeholder}
               />
             )}
           </FormattedMessage>

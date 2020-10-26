@@ -101,7 +101,6 @@ export const MARCFieldSection = ({
           xs={2}
         >
           <Field
-            id="criterion-incoming.field.in1"
             component={TextField}
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[1].value`}
             label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-in1`} />}
@@ -114,7 +113,6 @@ export const MARCFieldSection = ({
           xs={2}
         >
           <Field
-            id="criterion-incoming.field.in2"
             component={TextField}
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[2].value`}
             label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-in2`} />}
@@ -127,7 +125,6 @@ export const MARCFieldSection = ({
           xs={5}
         >
           <Field
-            id="criterion-incoming.field.subfield"
             component={TextField}
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[3].value`}
             label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-subfield`} />}
@@ -143,7 +140,7 @@ export const MARCFieldSection = ({
 MARCFieldSection.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
   recordFieldType: PropTypes.oneOf(['incoming', 'existing']).isRequired,
-  recordFieldSectionLabel: PropTypes.node,
+  recordFieldSectionLabel: PropTypes.string,
   field: PropTypes.string,
   indicator1: PropTypes.string,
   indicator2: PropTypes.string,
@@ -151,7 +148,7 @@ MARCFieldSection.propTypes = {
 };
 
 MARCFieldSection.defaultProps = {
-  recordFieldSectionLabel: null,
+  recordFieldSectionLabel: '',
   field: '',
   indicator1: '',
   indicator2: '',
