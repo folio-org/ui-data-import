@@ -62,29 +62,22 @@ export const MatchCriterion = ({
   const getMARCFieldValue = (typeExpression, fieldName) => typeExpression?.fields
     .find(field => field.label === fieldName)?.value;
 
-  const incomingRecordLbl = (
-    <FormattedMessage
-      id="ui-data-import.match.incoming.record"
-      values={{ recordType: incomingRecordLabel }}
-    />
+  const incomingRecordLbl = formatMessage(
+    { id: 'ui-data-import.match.incoming.record' },
+    { recordType: incomingRecordLabel },
   );
-  const incomingRecordFieldLbl = (
-    <FormattedMessage
-      id="ui-data-import.match.incoming.record.field"
-      values={{ recordType: incomingRecordLabel }}
-    />
+  const incomingRecordFieldLbl = formatMessage(
+    { id: 'ui-data-import.match.incoming.record.field' },
+    { recordType: incomingRecordLabel },
   );
-  const existingRecordLbl = (
-    <FormattedMessage
-      id="ui-data-import.match.existing.record"
-      values={{ recordType: existingRecordLabel }}
-    />
+  const existingRecordLbl = formatMessage(
+    { id: 'ui-data-import.match.existing.record' },
+    { recordType: existingRecordLabel },
   );
-  const existingRecordFieldLbl = (
-    <FormattedMessage
-      id="ui-data-import.match.existing.record.field"
-      values={{ recordType: existingRecordLabel }}
-    />
+
+  const existingRecordFieldLbl = formatMessage(
+    { id: 'ui-data-import.match.existing.record.field' },
+    { recordType: existingRecordLabel },
   );
 
   const incomingMARCSectionElement = (
@@ -229,11 +222,16 @@ export const MatchCriterion = ({
                 data-test-match-criterion
                 xs={12}
               >
-                <Field
-                  component={Select}
-                  name={`profile.matchDetails[${repeatableIndex}].matchCriterion`}
-                  dataOptions={matchCriterionOptions}
-                />
+                <FormattedMessage id="ui-data-import.match.criterion">
+                  {([ariaLabel]) => (
+                    <Field
+                      component={Select}
+                      name={`profile.matchDetails[${repeatableIndex}].matchCriterion`}
+                      dataOptions={matchCriterionOptions}
+                      aria-label={ariaLabel}
+                    />
+                  )}
+                </FormattedMessage>
               </Col>
             </Row>
           </Section>
@@ -262,7 +260,7 @@ MatchCriterion.propTypes = {
   existingRecordType: PropTypes.oneOf([...Object.keys(FOLIO_RECORD_TYPES), '']),
   staticValueType: PropTypes.oneOf([...Object.keys(STATIC_VALUE_TYPES), '']),
   incomingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  existingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  existingRecordLabel: PropTypes.string,
   onStaticValueTypeChange: PropTypes.func,
   onQualifierSectionChange: PropTypes.func,
   dispatchFormChange: PropTypes.func,
@@ -273,7 +271,7 @@ MatchCriterion.defaultProps = {
   existingRecordType: null,
   staticValueType: null,
   incomingRecordLabel: null,
-  existingRecordLabel: null,
+  existingRecordLabel: '',
   onStaticValueTypeChange: noop,
   onQualifierSectionChange: noop,
   dispatchFormChange: noop,

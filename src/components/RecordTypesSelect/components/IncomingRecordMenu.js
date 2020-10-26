@@ -37,6 +37,7 @@ export const IncomingRecordMenu = ({
           buttonStyle="dropdownItem"
           onClick={() => onClick(MATCH_INCOMING_RECORD_TYPES[recordType])}
           disabled={isOptionDisabled}
+          role="menuitem"
           {...dataAttributes}
         >
           <FormattedMessage id={MATCH_INCOMING_RECORD_TYPES[recordType].captionId} />

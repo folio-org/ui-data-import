@@ -54,15 +54,22 @@ export const QualifierSection = ({
                 name={`profile.matchDetails[${repeatableIndex}].${expressionType}.qualifier.qualifierType`}
                 placeholder={placeholder}
                 dataOptions={dataOptions}
+                aria-label={placeholder}
               />
             )}
           </FormattedMessage>
         </Col>
         <Col xs={8}>
-          <Field
-            component={TextField}
-            name={`profile.matchDetails[${repeatableIndex}].${expressionType}.qualifier.qualifierValue`}
-          />
+          <FormattedMessage id="ui-data-import.match.qualifier.text">
+            {([ariaLabel]) => (
+              <Field
+                component={TextField}
+                name={`profile.matchDetails[${repeatableIndex}].${expressionType}.qualifier.qualifierValue`}
+                aria-label={ariaLabel}
+              />
+            )}
+          </FormattedMessage>
+
         </Col>
       </Row>
     </Section>

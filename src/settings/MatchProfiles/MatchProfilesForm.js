@@ -4,7 +4,10 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { connect } from 'react-redux';
 import {
   Field,
@@ -62,6 +65,8 @@ export const MatchProfilesFormComponent = memo(({
   jsonSchemas,
   dispatch,
 }) => {
+  const { formatMessage } = useIntl();
+
   const { profile } = initialValues;
   const {
     existingRecordType,
@@ -178,10 +183,10 @@ export const MatchProfilesFormComponent = memo(({
   };
 
   const incomingRecordLabel = !isEmpty(incomingRecord)
-    ? <FormattedMessage id={incomingRecord.captionId} />
+    ? formatMessage({ id: incomingRecord.captionId })
     : '';
   const existingRecordLabel = !isEmpty(existingRecord)
-    ? <FormattedMessage id={FOLIO_RECORD_TYPES[existingRecord].captionId} />
+    ? formatMessage({ id: FOLIO_RECORD_TYPES[existingRecord].captionId })
     : '';
 
   return (
