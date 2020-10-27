@@ -73,11 +73,16 @@ export const OverrideProtectedFieldsTable = ({
   const formatter = {
     override: protectedField => {
       return (
-        <Checkbox
-          checked={!!protectedField.override}
-          onChange={() => handleOverrideFieldSelect(protectedField.id)}
-          disabled={!isEditable}
-        />
+        <FormattedMessage id="ui-data-import.fieldMappingsForMarc.overrideProtected">
+          {([ariaLabel]) => (
+            <Checkbox
+              checked={!!protectedField.override}
+              onChange={() => handleOverrideFieldSelect(protectedField.id)}
+              disabled={!isEditable}
+              aria-label={ariaLabel}
+            />
+          )}
+        </FormattedMessage>
       );
     },
   };

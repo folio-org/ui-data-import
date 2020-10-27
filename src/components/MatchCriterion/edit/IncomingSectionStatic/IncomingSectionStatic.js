@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
+import {
+  useIntl,
+  FormattedMessage,
+} from 'react-intl';
 import { Field } from 'redux-form';
 import classnames from 'classnames';
 import { noop } from 'lodash';
@@ -60,12 +63,17 @@ export const IncomingSectionStatic = ({
           data-test-select-static-value
           xs={3}
         >
-          <Field
-            name={`profile.matchDetails[${repeatableIndex}].incomingMatchExpression.staticValueDetails.staticValueType`}
-            component={Select}
-            dataOptions={dataOptions}
-            onChange={onTypeChange}
-          />
+          <FormattedMessage id="ui-data-import.incomingRecordTypes.static.select">
+            {([ariaLabel]) => (
+              <Field
+                name={`profile.matchDetails[${repeatableIndex}].incomingMatchExpression.staticValueDetails.staticValueType`}
+                component={Select}
+                dataOptions={dataOptions}
+                onChange={onTypeChange}
+                aria-label={ariaLabel}
+              />
+            )}
+          </FormattedMessage>
         </Col>
         <Col xs={9}>
           {staticValueSections[staticValueType]}

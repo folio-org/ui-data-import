@@ -47,7 +47,7 @@ export const Section = memo(({
         tag="h3"
         className={styles}
       >
-        {label}
+        <>{label}</>
       </Headline>
     );
   };
@@ -83,7 +83,7 @@ export const Section = memo(({
 });
 
 Section.propTypes = {
-  label: PropTypes.node,
+  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   optional: PropTypes.bool,
   isOpen: PropTypes.bool,
   onChange: PropTypes.func,
