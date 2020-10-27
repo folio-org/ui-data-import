@@ -4,8 +4,11 @@
   margin-bottom: 0;
 }
 
-.rootList {
+.rootListContainer {
   position: relative;
+}
+
+.rootList {
   padding: 0;
 }
 

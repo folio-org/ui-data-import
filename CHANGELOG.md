@@ -2,7 +2,7 @@
 
 ## **3.1.0** (in progress)
 
-### Features added:
+## [3.0.1](https://github.com/folio-org/ui-data-import/tree/v3.0.1) (2020-10-27)
 
 ### Bugs fixed:
 * MARC Bib field mapping profile: inconsistency with the layout (UIDATIMP-694)
