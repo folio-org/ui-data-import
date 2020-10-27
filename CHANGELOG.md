@@ -8,11 +8,15 @@
 
 ### Bugs fixed:
 * Log filter dropdowns by job profile and user are not in alphabetical order (UIDATIMP-601)
-* MARC Bib field mapping profile: inconsistency with the layout (UIDATIMP-694)
-* MARC Bib field mapping profile: error while saving MARC Modifications (UIDATIMP-695)
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
 * Fix Accessibility problems for settings/data-import/action-profiles?layer=create (Buttons must have discernible text) (UIDATIMP-448)
 * Fix Accessibility problems for settings/data-import/{...-profiles} (Form elements must have labels) (UIDATIMP-457)
+
+## [3.0.1](https://github.com/folio-org/ui-data-import/tree/v3.0.1) (2020-10-27)
+
+### Bugs fixed:
+* MARC Bib field mapping profile: inconsistency with the layout (UIDATIMP-694)
+* MARC Bib field mapping profile: error while saving MARC Modifications (UIDATIMP-695)
 * MARC field protection settings not working in Honeysuckle Bugfest (UIDATIMP-734)
 
 ## [3.0.0](https://github.com/folio-org/ui-data-import/tree/v3.0.0) (2020-10-15)
