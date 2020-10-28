@@ -22,6 +22,6 @@ export const fetchAcceptedValuesList = async (okapi, wrapperSourceLink, wrapperS
   } catch (e) {
     console.error('Error: ', e); // eslint-disable-line no-console
 
-    return {};
+    return [];
   }
 };
