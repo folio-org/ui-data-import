@@ -4,6 +4,7 @@
 
 ### Features added:
 * Reuse `<JobsList>` component from `stripes-data-transfer-components` rep (UIDATIMP-573)
+* Cover <AcceptedValuesField> component with unit tests (UIDATIMP-692)
 * Reuse `<JobsListAccordion>` component from `stripes-data-transfer-components` rep (UIDATIMP-574)
 
 ### Bugs fixed:
