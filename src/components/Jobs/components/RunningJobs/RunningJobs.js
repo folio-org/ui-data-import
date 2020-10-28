@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
-import { JobsList } from '@folio/stripes-data-transfer-components';
+import {
+  sortRunningJobs,
+  JobsListAccordion,
+} from '@folio/stripes-data-transfer-components';
 
 import { itemFormatter } from '../../utils';
-import { sortRunningJobs } from './sortRunningJobs';
 import { JOB_STATUSES } from '../../../../utils';
 import { DataFetcherContext } from '../../../DataFetcher';
 
@@ -26,11 +27,12 @@ export class RunningJobs extends PureComponent {
 
     return (
       <div data-test-running-jobs>
-        <JobsList
+        <JobsListAccordion
           jobs={jobs}
           hasLoaded={hasLoaded}
           itemFormatter={itemFormatter}
-          isEmptyMessage={<FormattedMessage id="ui-data-import.noRunningJobsMessage" />}
+          titleId="ui-data-import.runningJobs"
+          emptyMessageId="ui-data-import.noRunningJobsMessage"
         />
       </div>
     );
