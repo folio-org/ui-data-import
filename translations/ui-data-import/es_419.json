@@ -761,5 +761,7 @@
     "jobDeleteError": "Error al eliminar el trabajo {name}",
     "fieldMappingsForMarc.addField": "Añadir campo",
     "fieldMappingsForMarc.updatesOverrides.noFields": "La biblioteca no ha definido ningún campo protegido",
-    "settings.mappingProfiles.map.instance.subheader": "Los campos inactivos no se pueden asignar porque están controlados por el sistema o por el perfil de asignación MARC-Instancia de la biblioteca"
+    "settings.mappingProfiles.map.instance.subheader": "Los campos inactivos no se pueden asignar porque están controlados por el sistema o por el perfil de asignación MARC-Instancia de la biblioteca",
+    "match.qualifier.text": "Qualifier type text",
+    "incomingRecordTypes.static.select": "Choose Static value (submatch only)"
 }
