@@ -757,9 +757,11 @@
     "fieldMappingsForMarc.updatesOverrides.subtext": "如果此配置文件应更新任何受保护的字段，请在此选中相应的框",
     "settings.mappingProfile.marcTable.header.override": "覆盖",
     "settings.mappingProfile.marcTable.ariaLabel.data.marcField.override": "数据marcField覆盖字段",
-    "stoppedJob": "has been stopped",
-    "jobDeleteError": "Error while deleting {name} job",
-    "fieldMappingsForMarc.addField": "Add field",
-    "fieldMappingsForMarc.updatesOverrides.noFields": "The library has not defined any protected fields",
-    "settings.mappingProfiles.map.instance.subheader": "Inactive fields cannot be mapped because they are controlled by the system or by the library's MARC-Instance mapping profile"
+    "stoppedJob": "已停止",
+    "jobDeleteError": "删除{name}任务时出错",
+    "fieldMappingsForMarc.addField": "添加字段",
+    "fieldMappingsForMarc.updatesOverrides.noFields": "本馆尚未定义任何受保护的字段",
+    "settings.mappingProfiles.map.instance.subheader": "不能映射未激活字段，因为它们受系统或图书馆的MARC-实例映射配置文件控制",
+    "match.qualifier.text": "限定词类型文字",
+    "incomingRecordTypes.static.select": "选择静态值（仅子匹配项）"
 }
