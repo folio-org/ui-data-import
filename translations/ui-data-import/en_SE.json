@@ -761,5 +761,7 @@
     "jobDeleteError": "Error while deleting {name} job",
     "fieldMappingsForMarc.addField": "Add field",
     "fieldMappingsForMarc.updatesOverrides.noFields": "The library has not defined any protected fields",
-    "settings.mappingProfiles.map.instance.subheader": "Inactive fields cannot be mapped because they are controlled by the system or by the library's MARC-Instance mapping profile"
+    "settings.mappingProfiles.map.instance.subheader": "Inactive fields cannot be mapped because they are controlled by the system or by the library's MARC-Instance mapping profile",
+    "match.qualifier.text": "Qualifier type text",
+    "incomingRecordTypes.static.select": "Choose Static value (submatch only)"
 }

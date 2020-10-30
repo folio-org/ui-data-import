@@ -187,7 +187,7 @@
     "settings.mappingProfiles.exceptionModal.message": "لا يمكن حذف وضع تخطيط الحقل هذا لأنه قيد استخدام أحد أوضاع الإجراءات أو أكثر.",
     "modal.mappingProfile.delete.header": "حذف وضع تخطيط الحقل \"{name}\"؟",
     "modal.mappingProfile.delete.message": "حذف وضع تخطيط الحقل؟",
-    "success.mappingProfiles.action": "تم {action} وضع التخطيط \"{name}\" بنجاح",
+    "success.mappingProfiles.action": "تم {action} وضع تخطيط الحقل \"{name}\" بنجاح",
     "error.mappingProfiles.action": "لم يتم {action} وضع تخطيط الحقل \"{name}\"",
     "recordTypes.orderLine": "الطلبية وسطر الطلبية",
     "recordTypesSelect.compareExisting": "ما نوع التسجيلة الحالية الذي ترغب في مقارنته بالتسجيلة {type} الواردة؟",
@@ -264,7 +264,7 @@
     "settings.profile.select": "ربط البروفايل",
     "settings.profile.unlink": "إلغاء ربط هذا الملف التعريفي",
     "modal.profile.unlink.heading": "تأكيد الإزالة",
-    "modal.profile.unlink.message": "هل أنت متأكد من أنك تريد إلغاء ربط الملف التعريفي \"{name}\"؟",
+    "modal.profile.unlink.message": "تأكيد إلغاء ربط هذا ال {profileType1} بهذا {profileType2}؟",
     "emptyMessage": "لا يحتوي هذا ال {type} على مواد",
     "list": "قائمة",
     "section": "القسم",
@@ -761,5 +761,7 @@
     "jobDeleteError": "حدث خطأ أثناء حذف مهمة {name}",
     "fieldMappingsForMarc.addField": "إضافة حقل",
     "fieldMappingsForMarc.updatesOverrides.noFields": "لم تقم المكتبة بتعريف أي حقول محمية",
-    "settings.mappingProfiles.map.instance.subheader": "لا يمكن تخطيط الحقول غير النشطة  لأنه يتم التحكم بها بواسطة النظام أو بوضع تخطيط وعاء مارك الخاص بالمكتبة"
+    "settings.mappingProfiles.map.instance.subheader": "لا يمكن تخطيط الحقول غير النشطة  لأنه يتم التحكم بها بواسطة النظام أو بوضع تخطيط وعاء مارك الخاص بالمكتبة",
+    "match.qualifier.text": "نص نوع المؤهل",
+    "incomingRecordTypes.static.select": "اختر قيمة ثابتة (تطابق فرعي فقط)"
 }
