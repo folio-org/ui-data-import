@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const path = require('path');
 
-const esModules = ['@folio'].join('|');
+const esModules = ['@folio', 'ky'].join('|');
 
 module.exports = {
   collectCoverageFrom: [
@@ -13,7 +13,7 @@ module.exports = {
   coverageReporters: ['lcov'],
   reporters: ['jest-junit', 'default'],
   transform: { '^.+\\.(js|jsx)$': path.join(__dirname, './test/jest/jest-transformer.js') },
-  transformIgnorePatterns: [`/node_modules/(?!${esModules}|ky)`],
+  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
   moduleNameMapper: {
     '^.+\\.(css)$': 'identity-obj-proxy',
     '^.+\\.(svg)$': 'identity-obj-proxy',

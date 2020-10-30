@@ -79,12 +79,6 @@ describe('Mapping profile form', () => {
         });
 
         describe('details section', () => {
-          it('has correct header', () => {
-            expect(mappingProfileForm.detailsSection.header.mappedLabel).to.be.equal('Field mapping');
-            expect(mappingProfileForm.detailsSection.header.mappableLabel).to.be.equal('MARC Bibliographic');
-            expect(mappingProfileForm.detailsSection.header.mappingTypeLabel).to.be.equal('Modifications');
-          });
-
           // eslint-disable-next-line no-only-tests/no-only-tests
           describe.skip('MARC details table', () => {
             it('renders', () => {

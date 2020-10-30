@@ -7,8 +7,6 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 import KeyValueInteractor from '@folio/stripes-components/lib/KeyValue/tests/interactor';
 import ExpandAllButtonInteractor from '@folio/stripes-components/lib/Accordion/tests/expand-all-button-interactor';
 
-import { MappedHeaderInteractor } from '../../../mapped-header-interactor';
-
 class AdministrativeDataAccordion extends AccordionInteractor {
   suppressFromDiscovery = new KeyValueInteractor('[data-test-suppress-from-discovery]');
   holdingsHRID = new KeyValueInteractor('[data-test-holdings-hrid]');
@@ -58,7 +56,6 @@ class ReceivingHistoryAccordion extends AccordionInteractor {
 }
 
 export class HoldingsDetailsAccordion extends AccordionSetInteractor {
-  header = new MappedHeaderInteractor();
   expandAllButton = new ExpandAllButtonInteractor('[data-test-expand-all-button]');
   adminDataAccordion = new AdministrativeDataAccordion('#administrative-data');
   locationAccordion = new LocationAccordion('#holdings-location');

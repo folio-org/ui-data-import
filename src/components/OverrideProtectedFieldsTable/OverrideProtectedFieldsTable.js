@@ -99,9 +99,11 @@ export const OverrideProtectedFieldsTable = ({
       >
         <Col>
           <MappedHeader
-            mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
-            mappableLabelId={MAPPING_DETAILS_HEADLINE.MARC_BIBLIOGRAPHIC?.labelId}
-            mappingTypeLabelId="ui-data-import.fieldMappingsForMarc.overrideProtected"
+            headersToSeparate={[
+              'ui-data-import.settings.profiles.select.mappingProfiles',
+              MAPPING_DETAILS_HEADLINE.MARC_BIBLIOGRAPHIC.labelId,
+              'ui-data-import.fieldMappingsForMarc.overrideProtected',
+            ]}
             headlineProps={{ margin: 'small' }}
           />
           {isEditable && !noProtectedFieldsDefined && (
