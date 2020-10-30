@@ -48,6 +48,9 @@ export const ProfileBranch = memo(({
   dataAttributes,
   showLabelsAsHotLink,
   resources,
+  index,
+  parentIndex,
+  parentProfilesRelationTypes,
 }) => {
   const {
     childrenAllowed,
@@ -98,9 +101,11 @@ export const ProfileBranch = memo(({
   };
 
   const branchMode = record ? 'static' : 'editable';
-  const containerId = `container-${branchMode}-${currentRecord.id}`;
-  const matchSectionId = `accordion-match-${branchMode}-${currentRecord.id}`;
-  const nonMatchSectionId = `accordion-non-match-${branchMode}-${currentRecord.id}`;
+  const currentIndex = parentIndex ? `${parentIndex}-${index}` : `${index}`;
+  const currentProfilesRelationTypes = parentProfilesRelationTypes ? `${parentProfilesRelationTypes}-${reactTo}` : 'ROOT';
+  const containerId = `container-${currentProfilesRelationTypes}-${branchMode}-${currentRecord.id}-${currentIndex}`;
+  const matchSectionId = `accordion-match-${currentProfilesRelationTypes}-${branchMode}-${currentRecord.id}-${currentIndex}`;
+  const nonMatchSectionId = `accordion-non-match-${currentProfilesRelationTypes}-${branchMode}-${currentRecord.id}-${currentIndex}`;
   const matchSectionKey = `${sectionKey}.data.match`;
   const nonMatchSectionKey = `${sectionKey}.data.nonMatch`;
 
@@ -124,6 +129,8 @@ export const ProfileBranch = memo(({
         onDelete={onDelete}
         showLabelsAsHotLink={showLabelsAsHotLink}
         resources={resources}
+        currentIndex={currentIndex}
+        currentProfilesRelationTypes={currentProfilesRelationTypes}
       />
       {childrenSectionAllowed && (
         <div className={css['branch-container']}>
@@ -139,6 +146,9 @@ export const ProfileBranch = memo(({
                 matchData.map((item, i) => (
                   <ProfileBranch
                     key={`profile-branch-${item.id}-${i}`}
+                    index={i}
+                    parentIndex={currentIndex}
+                    parentProfilesRelationTypes={currentProfilesRelationTypes}
                     reactTo={PROFILE_RELATION_TYPES.MATCH}
                     linkingRules={linkingRules}
                     recordData={item}
@@ -176,7 +186,7 @@ export const ProfileBranch = memo(({
             />
             {!record && (
               <ProfileLinker
-                id={`${currentRecord.id}-match`}
+                id={`${currentProfilesRelationTypes}-${currentRecord.id}-${currentIndex}-match`}
                 linkingRules={linkingRules}
                 disabledOptions={getDisabledOptions(matchData, siblingsProhibited)}
                 parentId={currentRecord.id}
@@ -204,6 +214,9 @@ export const ProfileBranch = memo(({
                 nonMatchData.map((item, i) => (
                   <ProfileBranch
                     key={`profile-branch-${i}`}
+                    index={i}
+                    parentIndex={currentIndex}
+                    parentProfilesRelationTypes={currentProfilesRelationTypes}
                     reactTo={PROFILE_RELATION_TYPES.NON_MATCH}
                     linkingRules={linkingRules}
                     recordData={item}
@@ -241,7 +254,7 @@ export const ProfileBranch = memo(({
             />
             {!record && (
               <ProfileLinker
-                id={`${currentRecord.id}-non-match`}
+                id={`${currentProfilesRelationTypes}-${currentRecord.id}-${currentIndex}-non-match`}
                 linkingRules={linkingRules}
                 disabledOptions={getDisabledOptions(nonMatchData, siblingsProhibited)}
                 parentId={currentRecord.id}
@@ -286,6 +299,9 @@ ProfileBranch.propTypes = {
   onDelete: PropTypes.func,
   dataAttributes: PropTypes.object,
   showLabelsAsHotLink: PropTypes.bool,
+  index: PropTypes.number,
+  parentIndex: PropTypes.string,
+  parentProfilesRelationTypes: PropTypes.string,
 };
 
 ProfileBranch.defaultProps = {
@@ -299,4 +315,7 @@ ProfileBranch.defaultProps = {
   onDelete: noop,
   dataAttributes: null,
   showLabelsAsHotLink: false,
+  index: 0,
+  parentIndex: '',
+  parentProfilesRelationTypes: '',
 };

@@ -41,6 +41,8 @@ export const ProfileLabel = memo(({
   onDelete,
   dataAttributes,
   showLabelsAsHotLink,
+  currentProfilesRelationTypes,
+  currentIndex,
 }) => {
   const {
     columnsAllowed,
@@ -84,7 +86,7 @@ export const ProfileLabel = memo(({
 
   return (
     <div
-      id={`branch-${labelMode}-${recordData.id}`}
+      id={`branch-${currentProfilesRelationTypes}-${labelMode}-${recordData.content.id}-${currentIndex}`}
       className={classNames(css['profile-label'], className)}
       {...dataAttributes}
     >
@@ -194,6 +196,8 @@ ProfileLabel.propTypes = {
   onDelete: PropTypes.func,
   dataAttributes: PropTypes.object,
   showLabelsAsHotLink: PropTypes.bool,
+  currentProfilesRelationTypes: PropTypes.string,
+  currentIndex: PropTypes.string,
 };
 
 ProfileLabel.defaultProps = {
@@ -204,4 +208,6 @@ ProfileLabel.defaultProps = {
   onUnlink: noop,
   onDelete: noop,
   showLabelsAsHotLink: false,
+  currentIndex: '',
+  currentProfilesRelationTypes: '',
 };

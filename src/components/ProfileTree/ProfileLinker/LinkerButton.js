@@ -20,6 +20,7 @@ export const LinkerButton = memo(({
 }) => (
   <Button
     data-test-plugin-find-record-button
+    role="menuitem"
     aria-haspopup="true"
     buttonStyle="dropdownItem"
     id={`${id}-button-find-import-profile-${entityKey}`}
