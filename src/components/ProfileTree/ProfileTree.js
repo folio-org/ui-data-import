@@ -145,6 +145,7 @@ export const ProfileTree = memo(({
             data.map((item, i) => (
               <ProfileBranch
                 key={`profile-branch-${item.profileId}-${i}`}
+                index={i}
                 reactTo={PROFILE_RELATION_TYPES.NONE}
                 linkingRules={linkingRules}
                 recordData={item}

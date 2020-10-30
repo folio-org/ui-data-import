@@ -24,7 +24,6 @@ export const LinkerMenu = ({
 
   return (
     <DropdownMenu
-      role="menu"
       placement="bottom-end"
       aria-label="Available Profile types"
       open={open}
@@ -36,18 +35,20 @@ export const LinkerMenu = ({
         label={<FormattedMessage id="ui-data-import.settings.action.add" />}
         labelTag="h3"
       >
-        <LinkerButton
-          id={`menu-link-match-${id}`}
-          entityKey={matchProfiles}
-          onClick={onClick}
-          isButtonDisabled={getButtonState(matchProfiles)}
-        />
-        <LinkerButton
-          id={`menu-link-action-${id}`}
-          entityKey={actionProfiles}
-          onClick={onClick}
-          isButtonDisabled={getButtonState(actionProfiles)}
-        />
+        <div role="menu">
+          <LinkerButton
+            id={`menu-link-match-${id}`}
+            entityKey={matchProfiles}
+            onClick={onClick}
+            isButtonDisabled={getButtonState(matchProfiles)}
+          />
+          <LinkerButton
+            id={`menu-link-action-${id}`}
+            entityKey={actionProfiles}
+            onClick={onClick}
+            isButtonDisabled={getButtonState(actionProfiles)}
+          />
+        </div>
       </MenuSection>
     </DropdownMenu>
   );
