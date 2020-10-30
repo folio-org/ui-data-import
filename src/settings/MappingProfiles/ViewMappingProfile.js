@@ -316,9 +316,11 @@ export class ViewMappingProfile extends Component {
                 >
                   <Col>
                     <MappedHeader
-                      mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
-                      mappableLabelId={MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId}
-                      mappingTypeLabelId={marcMappingOptionLabel}
+                      headersToSeparate={[
+                        'ui-data-import.settings.profiles.select.mappingProfiles',
+                        MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId,
+                        marcMappingOptionLabel,
+                      ]}
                       headlineProps={{ margin: 'small' }}
                     />
                   </Col>

@@ -4,7 +4,8 @@
 
 ### Features added:
 * Reuse `<JobsList>` component from `stripes-data-transfer-components` rep (UIDATIMP-573)
-* Cover <AcceptedValuesField> component with unit tests (UIDATIMP-692)
+* Cover `<AcceptedValuesField>` component with unit tests (UIDATIMP-692)
+* Cover `<MappedHeader>` component with unit tests (UIDATIMP-693)
 
 ### Bugs fixed:
 * Log filter dropdowns by job profile and user are not in alphabetical order (UIDATIMP-601)

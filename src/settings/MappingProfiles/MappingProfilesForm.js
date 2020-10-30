@@ -384,9 +384,11 @@ export const MappingProfilesFormComponent = ({
                   >
                     <Col>
                       <MappedHeader
-                        mappedLabelId="ui-data-import.settings.profiles.select.mappingProfiles"
-                        mappableLabelId={MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId}
-                        mappingTypeLabelId={FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label}
+                        headersToSeparate={[
+                          'ui-data-import.settings.profiles.select.mappingProfiles',
+                          MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId,
+                          FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label,
+                        ]}
                         headlineProps={{ margin: 'small' }}
                       />
 

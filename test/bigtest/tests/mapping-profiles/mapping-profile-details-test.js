@@ -692,11 +692,6 @@ describe('Mapping Profile View', () => {
             await mappingProfiles.list.rows(0).click();
           });
 
-          it('has correct header', () => {
-            expect(mappingProfileDetails.instanceDetails.header.mappedLabel).to.be.equal('Field mapping');
-            expect(mappingProfileDetails.instanceDetails.header.mappableLabel).to.be.equal('Instance');
-          });
-
           it('has correct count of accordions', () => {
             expect(mappingProfileDetails.instanceDetails.set().length).to.equal(11);
           });
@@ -900,11 +895,6 @@ describe('Mapping Profile View', () => {
             await mappingProfiles.list.rows(1).click();
           });
 
-          it('has correct header', () => {
-            expect(mappingProfileDetails.holdingsDetails.header.mappedLabel).to.be.equal('Field mapping');
-            expect(mappingProfileDetails.holdingsDetails.header.mappableLabel).to.be.equal('Holdings');
-          });
-
           it('has correct count of accordions', () => {
             expect(mappingProfileDetails.holdingsDetails.set().length).to.equal(7);
           });
@@ -1045,11 +1035,6 @@ describe('Mapping Profile View', () => {
         describe('Item', () => {
           beforeEach(async () => {
             await mappingProfiles.list.rows(2).click();
-          });
-
-          it('has correct header', () => {
-            expect(mappingProfileDetails.itemDetails.header.mappedLabel).to.be.equal('Field mapping');
-            expect(mappingProfileDetails.itemDetails.header.mappableLabel).to.be.equal('Item');
           });
 
           it('has correct count of accordions', () => {
@@ -1230,11 +1215,6 @@ describe('Mapping Profile View', () => {
             await mappingProfiles.list.rows(0).click();
             await mappingProfileDetails.actionMenu.click();
             await mappingProfileDetails.actionMenu.editProfile.click();
-          });
-
-          it('has correct header', () => {
-            expect(mappingProfileForm.instanceDetails.header.mappedLabel).to.be.equal('Field mapping');
-            expect(mappingProfileForm.instanceDetails.header.mappableLabel).to.be.equal('Instance');
           });
 
           it('has correct count of accordions', () => {
@@ -1439,11 +1419,6 @@ describe('Mapping Profile View', () => {
             await mappingProfileDetails.actionMenu.editProfile.click();
           });
 
-          it('has correct header', () => {
-            expect(mappingProfileForm.holdingsDetails.header.mappedLabel).to.be.equal('Field mapping');
-            expect(mappingProfileForm.holdingsDetails.header.mappableLabel).to.be.equal('Holdings');
-          });
-
           it('has correct count of accordions', () => {
             expect(mappingProfileForm.holdingsDetails.set().length).to.equal(7);
           });
@@ -1580,11 +1555,6 @@ describe('Mapping Profile View', () => {
             await mappingProfiles.list.rows(2).click();
             await mappingProfileDetails.actionMenu.click();
             await mappingProfileDetails.actionMenu.editProfile.click();
-          });
-
-          it('has correct header', () => {
-            expect(mappingProfileForm.itemDetails.header.mappedLabel).to.be.equal('Field mapping');
-            expect(mappingProfileForm.itemDetails.header.mappableLabel).to.be.equal('Item');
           });
 
           it('has correct count of accordions', () => {

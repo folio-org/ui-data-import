@@ -7,8 +7,6 @@ import ExpandAllButtonInteractor from '@folio/stripes-components/lib/Accordion/t
 import KeyValueInteractor from '@folio/stripes-components/lib/KeyValue/tests/interactor';
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
-import { MappedHeaderInteractor } from '../../../mapped-header-interactor';
-
 class AdministrativeDataAccordion extends AccordionInteractor {
   suppressFromDiscovery = new KeyValueInteractor('[data-test-suppress-from-discovery]');
   staffSuppress = new KeyValueInteractor('[data-test-staff-suppress]');
@@ -72,7 +70,6 @@ class InstanceRelationshipAccordion extends AccordionInteractor {
 }
 
 export class InstanceDetailsAccordion extends AccordionSetInteractor {
-  header = new MappedHeaderInteractor();
   expandAllButton = new ExpandAllButtonInteractor('[data-test-expand-all-button]');
   adminDataAccordion = new AdministrativeDataAccordion('#administrative-data');
   titleDataAccordion = new TitleDataAccordion('#title-data');

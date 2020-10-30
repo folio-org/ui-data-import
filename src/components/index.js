@@ -1,5 +1,4 @@
 export * from './AcceptedValuesField';
-export * from './AccordionHeader';
 export * from './ActionMenu';
 export * from './BooleanActionField';
 export * from './CodeHighlight';
@@ -11,6 +10,7 @@ export * from './DatePickerDecorator';
 export * from './ImportJobs';
 export * from './JobLogs';
 export * from './Jobs';
+export * from './MappedHeader';
 export * from './MARCTable';
 export * from './MARCTableView';
 export * from './MatchingFieldsManager';
