@@ -9,7 +9,7 @@ import {
 
 import {
   Jobs,
-  JobLogs,
+  RecentJobLogs,
   ImportJobs,
   DataFetcher,
 } from '../components';
@@ -68,7 +68,7 @@ export class Home extends Component {
             lastMenu={this.addViewAllLogs()}
             padContent={false}
           >
-            <JobLogs />
+            <RecentJobLogs />
           </Pane>
         </DataFetcher>
       </Paneset>
