@@ -8,7 +8,6 @@ export * from './ListTemplate';
 export * from './DataFetcher';
 export * from './DatePickerDecorator';
 export * from './ImportJobs';
-export * from './JobLogs';
 export * from './Jobs';
 export * from './MappedHeader';
 export * from './MARCTable';
