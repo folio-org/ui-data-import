@@ -57,7 +57,7 @@ export const JobLogsContainer = props => {
     ...useJobLogsProperties(customProperties),
     resultsFormatter: useJobLogsListFormatter(
       {
-        ...listTemplate(customProperties),
+        ...listTemplate({}),
         fileName: fileNameCellFormatter,
       },
     ),
