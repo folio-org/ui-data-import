@@ -50,6 +50,7 @@ export const JobLogsContainer = props => {
         to={`/data-import/log/${record.id}`}
         buttonClass={sharedCss.cellLink}
         target="_blank"
+        onClick={ e => e.stopPropagation()}
       >
         {record.fileName}
       </Button>
