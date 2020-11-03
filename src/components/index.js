@@ -34,3 +34,4 @@ export * from './Section';
 export * from './FolioRecordTypeSelect';
 export * from './WithTranslation';
 export * from './withReferenceValues';
+export * from './RecentJobLogs';
