@@ -26,7 +26,10 @@ import {
   ViewMetaData,
   TagsAccordion,
 } from '@folio/stripes/smart-components';
-import { EndOfItem } from '@folio/stripes-data-transfer-components';
+import {
+  EndOfItem,
+  Preloader,
+} from '@folio/stripes-data-transfer-components';
 import {
   AppIcon,
   TitleManager,
@@ -49,7 +52,6 @@ import {
 import {
   listTemplate,
   ActionMenu,
-  Preloader,
   Spinner,
   ProfileTree,
 } from '../../components';
@@ -437,7 +439,13 @@ export class ViewJobProfile extends Component {
                   record={record}
                   showLabelsAsHotLink
                 />
-              ) : <Preloader />}
+              ) : (
+                <Preloader
+                  message={<FormattedMessage id="ui-data-import.loading" />}
+                  size="medium"
+                  preloaderClassName={sharedCss.preloader}
+                />
+              )}
             </Accordion>
           </div>
           <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.jobsUsingThisProfile" />}>
@@ -461,7 +469,13 @@ export class ViewJobProfile extends Component {
                 formatter={jobsUsingThisProfileFormatter}
                 width="100%"
               />
-            ) : <Preloader />}
+            ) : (
+              <Preloader
+                message={<FormattedMessage id="ui-data-import.loading" />}
+                size="medium"
+                preloaderClassName={sharedCss.preloader}
+              />
+            )}
           </Accordion>
         </AccordionSet>
         <EndOfItem

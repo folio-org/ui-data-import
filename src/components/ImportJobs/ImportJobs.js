@@ -22,10 +22,11 @@ import {
   stripesShape,
 } from '@folio/stripes/core';
 
-import { FileUploader } from '@folio/stripes-data-transfer-components';
+import {
+  FileUploader,
+  Preloader,
+} from '@folio/stripes-data-transfer-components';
 import { ReturnToAssignJobs } from './components';
-
-import { Preloader } from '../Preloader';
 
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 import {
@@ -40,6 +41,7 @@ import {
 } from './components/getErrorModalMeta';
 
 import css from './ImportJobs.css';
+import sharedCss from '../../shared.css';
 
 @withRouter
 @withStripes
@@ -275,7 +277,13 @@ export class ImportJobs extends Component {
     } = this.state;
 
     if (!hasLoaded) {
-      return <Preloader />;
+      return (
+        <Preloader
+          message={<FormattedMessage id="ui-data-import.loading" />}
+          size="medium"
+          preloaderClassName={sharedCss.preloader}
+        />
+      );
     }
 
     if (redirect) {

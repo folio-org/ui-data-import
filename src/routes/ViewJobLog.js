@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { Preloader } from '@folio/stripes-data-transfer-components';
 
-import { Preloader } from '../components/Preloader';
 import { LogViewer } from '../components/LogViewer';
 import { LANGUAGES } from '../components/CodeHighlight/Languages';
 import { THEMES } from '../components/CodeHighlight/Themes';
 
 import css from '../components/LogViewer/LogViewer.css';
+import sharedCss from '../shared.css';
 
 @stripesConnect
 export class ViewJobLog extends Component {
@@ -53,7 +54,13 @@ export class ViewJobLog extends Component {
     } = this.jobLogData;
 
     if (!record || !hasLoaded) {
-      return <Preloader />;
+      return (
+        <Preloader
+          message={<FormattedMessage id="ui-data-import.loading" />}
+          size="medium"
+          preloaderClassName={sharedCss.preloader}
+        />
+      );
     }
 
     const { records } = record;

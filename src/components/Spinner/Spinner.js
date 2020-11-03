@@ -1,12 +1,14 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Pane,
   PaneHeader,
 } from '@folio/stripes/components';
+import { Preloader } from '@folio/stripes-data-transfer-components';
 
-import { Preloader } from '../Preloader';
+import sharedCss from '../../shared.css';
 
 export const Spinner = memo(({
   entity: { props: { onClose } },
@@ -27,7 +29,11 @@ export const Spinner = memo(({
       renderHeader={header}
       {...props}
     >
-      <Preloader />
+      <Preloader
+        message={<FormattedMessage id="ui-data-import.loading" />}
+        size="medium"
+        preloaderClassName={sharedCss.preloader}
+      />
     </Pane>
   );
 });

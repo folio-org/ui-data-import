@@ -74,3 +74,10 @@
 .modifyActionIconLabel {
   margin: 0 0 0 0.35em;
 }
+
+.preloader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}

@@ -28,11 +28,11 @@ import {
   ConfirmationModal,
   Button,
 } from '@folio/stripes/components';
-import { EndOfItem } from '@folio/stripes-data-transfer-components';
+import {
+  Preloader,
+  EndOfItem,
+} from '@folio/stripes-data-transfer-components';
 
-import css from './UploadingJobsDisplay.css';
-
-import { Preloader } from '../Preloader';
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 import { FileItem } from './components';
 import {
@@ -47,6 +47,9 @@ import {
 } from '../../utils';
 import * as API from '../../utils/upload';
 import { createJobProfiles } from '../../settings/JobProfiles';
+
+import css from './UploadingJobsDisplay.css';
+import sharedCss from '../../shared.css';
 
 @withRouter
 @withStripes
@@ -598,7 +601,13 @@ export class UploadingJobsDisplay extends Component {
     } = this.state;
 
     if (!hasLoaded) {
-      return <Preloader />;
+      return (
+        <Preloader
+          message={<FormattedMessage id="ui-data-import.loading" />}
+          size="medium"
+          preloaderClassName={sharedCss.preloader}
+        />
+      );
     }
 
     const jobProfilesLabel = generateSettingsLabel('jobProfiles.title', 'jobProfiles');
@@ -657,7 +666,11 @@ export class UploadingJobsDisplay extends Component {
               paneTitle={jobProfilesLabel}
               defaultWidth="fill"
             >
-              <Preloader />
+              <Preloader
+                message={<FormattedMessage id="ui-data-import.loading" />}
+                size="medium"
+                preloaderClassName={sharedCss.preloader}
+              />
             </Pane>
           )
         }
