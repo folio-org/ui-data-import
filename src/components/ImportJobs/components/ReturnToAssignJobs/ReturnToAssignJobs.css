@@ -35,8 +35,3 @@
   margin-left: 0 !important;
   font-size: var(--font-size-large);
 }
-
-.preloader {
-  display: flex;
-  margin: 0;
-}

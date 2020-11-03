@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Button } from '@folio/stripes/components';
+import { Preloader } from '@folio/stripes-data-transfer-components';
 
-import { Preloader } from '../../../Preloader';
 import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
-import { FILE_STATUSES } from '../../../../utils/constants';
+import { FILE_STATUSES } from '../../../../utils';
 
 import css from './ReturnToAssignJobs.css';
 
@@ -98,12 +98,7 @@ export class ReturnToAssignJobs extends Component {
             onClick={this.onDelete}
           >
             {deletingInProgress
-              ? (
-                <Preloader
-                  className={css.preloader}
-                  message=""
-                />
-              )
+              ? <Preloader size="medium" />
               : <FormattedMessage id={this.getIntlId('deleteFiles')} />
             }
           </Button>

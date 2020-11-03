@@ -25,6 +25,7 @@ import {
   SRStatus,
   PaneHeader,
 } from '@folio/stripes/components';
+import { Preloader } from '@folio/stripes-data-transfer-components';
 import {
   withStripes,
   stripesShape,
@@ -36,14 +37,14 @@ import {
   buildUrl,
 } from '@folio/stripes/smart-components';
 
-import { buildSortOrder } from '../../utils';
 import {
+  buildSortOrder,
   SORT_TYPES,
   LAYER_TYPES,
-} from '../../utils/constants';
-import { Preloader } from '../Preloader';
+} from '../../utils';
 
 import css from './SearchAndSort.css';
+import sharedCss from '../../shared.css';
 
 @withRouter
 @withStripes
@@ -571,8 +572,15 @@ export class SearchAndSort extends Component {
 
   renderEmptyMessage(source) {
     const { notLoadedMessage } = this.props;
+    const preloader = (
+      <Preloader
+        message={<FormattedMessage id="ui-data-import.loading" />}
+        size="medium"
+        preloaderClassName={sharedCss.preloader}
+      />
+    );
 
-    return source.pending() ? <Preloader /> : notLoadedMessage;
+    return source.pending() ? preloader : notLoadedMessage;
   }
 
   renderSearchResults(source) {
