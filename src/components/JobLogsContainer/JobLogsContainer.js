@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
 
 import {
   useJobLogsProperties,
@@ -39,8 +38,6 @@ export const JobLogsContainer = props => {
     ...rest
   } = props;
 
-  const intl = useIntl();
-
   const calloutRef = useRef(null);
 
   const fileNameCellFormatter = record => (
@@ -60,7 +57,7 @@ export const JobLogsContainer = props => {
     ...useJobLogsProperties(customProperties),
     resultsFormatter: useJobLogsListFormatter(
       {
-        ...listTemplate({ intl }),
+        ...listTemplate(customProperties),
         fileName: fileNameCellFormatter,
       },
     ),
