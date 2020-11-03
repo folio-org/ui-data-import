@@ -5,11 +5,9 @@ import {
   DEFAULT_JOB_LOGS_SORT_COLUMNS,
   sortStrings,
 } from '@folio/stripes-data-transfer-components';
-
 import { stripesConnect } from '@folio/stripes/core';
 
 import { DataFetcherContext } from '../DataFetcher';
-
 import { JobLogsContainer } from '../JobLogsContainer';
 
 const sortColumns = {
