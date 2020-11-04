@@ -8,6 +8,8 @@ import { Field } from 'redux-form';
 
 import { isEmpty } from 'lodash';
 
+import { sortCollection } from '@folio/stripes-data-transfer-components';
+
 import { withReferenceValues } from '..';
 
 import { fetchAcceptedValuesList } from './fetchAcceptedValuesList';
@@ -15,7 +17,6 @@ import {
   validateMARCWithElse,
   validateAcceptedValues,
   updateValueWithTemplate,
-  sortCollection,
   okapiShape,
 } from '../../utils';
 

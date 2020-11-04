@@ -29,6 +29,7 @@ import {
 import {
   EndOfItem,
   Preloader,
+  createUrl,
 } from '@folio/stripes-data-transfer-components';
 import {
   AppIcon,
@@ -44,7 +45,6 @@ import {
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   PROFILE_LINKING_RULES,
-  createUrl,
   loadRecords,
   getEntity,
   getEntityTags,

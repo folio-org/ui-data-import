@@ -9,6 +9,7 @@
 * Reuse `<JobsListAccordion>` component from `stripes-data-transfer-components` rep (UIDATIMP-574)
 * Reuse `<JobsLogs>` component from `stripes-data-transfer-components` rep (UIDATIMP-572)
 * Reuse `<Preloader>` component from `stripes-data-transfer-components` rep (UIDATIMP-580)
+* Reuse utils from `stripes-data-transfer-components` rep (UIDATIMP-576)
 
 ### Bugs fixed:
 * Log filter dropdowns by job profile and user are not in alphabetical order (UIDATIMP-601)

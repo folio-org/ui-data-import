@@ -1,9 +1,10 @@
-import { sortCollection } from '../../../../utils';
+import { sortCollection } from '@folio/stripes-data-transfer-components';
 import {
   DATE_TYPES,
   convertDate,
-} from '../../utils';
-import { JOB_STATUSES } from '../../../../utils/constants';
+} from '@folio/stripes-data-transfer-components/lib/utils';
+
+import { JOB_STATUSES } from '../../../../utils';
 
 const {
   READY_FOR_PREVIEW,
