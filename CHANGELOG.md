@@ -18,6 +18,7 @@
 * Fix Accessibility problems in ProfileLinker Component (settings/data-import/job-profiles) (UIDATIMP-434)
 * Cannot delete an import stuck in "Running" (UIDATIMP-738)
 * Fix matching by `id` for Holdings and Item (UIDATIMP-747)
+* Bugfest: Search the log list on the View all log screen does not work as expected (UIDATIMP-744)
 
 ## [3.0.1](https://github.com/folio-org/ui-data-import/tree/v3.0.1) (2020-10-27)
 
