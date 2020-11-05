@@ -12,7 +12,10 @@ import {
   Selection,
 } from '@folio/stripes/components';
 
-import { Section } from '../../..';
+import {
+  Section,
+  FOLIO_RECORD_TYPES,
+} from '../../..';
 
 import {
   fieldsConfig,
@@ -26,6 +29,7 @@ export const ExistingSectionFolio = ({
   existingRecordFieldLabel,
   existingRecordFields,
   existingRecordFieldsValue,
+  existingRecordType,
   dispatchFormChange,
 }) => {
   const [isDirty, setDirty] = useState(false);
@@ -35,7 +39,7 @@ export const ExistingSectionFolio = ({
   const handleExistingRecordSelect = value => {
     const fieldToChangeName = `profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields`;
     const fieldId = existingRecordFields.find(item => item.value === value)?.id;
-    const fieldFromConfig = fieldsConfig.find(item => item.id === fieldId);
+    const fieldFromConfig = fieldsConfig.find(item => item.id === fieldId && item.recordType === existingRecordType);
     const fieldToChangeValue = [{
       label: MARC_FIELD_CONSTITUENT.FIELD,
       value: fieldFromConfig?.value,
@@ -82,6 +86,7 @@ export const ExistingSectionFolio = ({
 ExistingSectionFolio.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
   existingRecordFieldsValue: PropTypes.arrayOf(PropTypes.object).isRequired,
+  existingRecordType: PropTypes.oneOf(Object.keys(FOLIO_RECORD_TYPES)).isRequired,
   existingRecordFields: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
