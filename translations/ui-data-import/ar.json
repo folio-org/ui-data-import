@@ -149,7 +149,7 @@
     "modal.actionProfile.delete.message": "حذف وضع الإجراء؟",
     "settings.actionProfiles.exceptionModal.label": "لا يمكن حذف وضع الإجراء",
     "settings.actionProfiles.exceptionModal.message": "لا يمكن حذف وضع الأجراء لأنه قيد استخدام أحد أوضاع الوظائف أو التخطيط أو أكثر.",
-    "settings.mappingProfiles.count": "{count, number} تخطيط {count, plural, one {وضعًا} other {وضعًا}}",
+    "settings.mappingProfiles.count": "{count, number} تخطيط حقل {count, plural, one {وضعًا} other {وضعًا}}",
     "action.create": "تم إنشاؤه",
     "action.update": "تم تحديثه",
     "action.delete": "تم حذفه",
