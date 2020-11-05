@@ -11,6 +11,7 @@
 * Bugfest: Search the log list on the View all log screen does not work as expected (UIDATIMP-744)
 * Bugfest: Log filter dropdowns by job profile and user are not in alphabetical order (UIDATIMP-743)
 * Attempt to sort JobLogs table by status leads to error (UIDATIMP-741)
+* Match profiles are misaligned and have a stray line in them (UIDATIMP-739)
 
 ## [3.0.1](https://github.com/folio-org/ui-data-import/tree/v3.0.1) (2020-10-27)
 
