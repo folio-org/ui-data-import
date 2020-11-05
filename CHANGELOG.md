@@ -2,6 +2,13 @@
 
 ## **3.1.0** (in progress)
 
+## [3.0.2](https://github.com/folio-org/ui-data-import/tree/v3.0.2) (2020-11-05)
+
+### Bugs fixed:
+* Log filter dropdowns by job profile and user are not in alphabetical order (UIDATIMP-601)
+* Cannot delete an import stuck in "Running" (UIDATIMP-738)
+* Fix matching by id for Holdings and Item (UIDATIMP-747)
+
 ## [3.0.1](https://github.com/folio-org/ui-data-import/tree/v3.0.1) (2020-10-27)
 
 ### Bugs fixed:
