@@ -65,6 +65,10 @@ const withJobLogsSortComponent = WrappedComponent => {
         sortFn: sortDates,
         useFormatterFn: false,
       },
+      status: {
+        sortFn: sortStrings,
+        useFormatterFn: false,
+      },
     };
 
     setLogsSort() {
