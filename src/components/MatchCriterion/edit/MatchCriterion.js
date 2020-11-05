@@ -131,6 +131,7 @@ export const MatchCriterion = ({
       existingRecordFieldLabel={existingRecordFieldLbl}
       existingRecordFields={existingRecordFields}
       existingRecordFieldsValue={existingMatchExpression.fields}
+      existingRecordType={existingRecordType}
       dispatchFormChange={dispatchFormChange}
     />
   );
