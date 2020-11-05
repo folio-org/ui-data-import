@@ -244,6 +244,9 @@
           "inventory-storage.loan-types.collection.get",
           "inventory-storage.item-note-types.collection.get",
           "configuration.entries.collection.get",
+          "mapping-rules.get",
+          "mapping-rules.update",
+          "mapping-rules.restore",
           "tags.collection.get",
           "tags.item.post"
         ],
