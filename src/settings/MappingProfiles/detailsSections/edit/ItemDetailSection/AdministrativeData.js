@@ -15,6 +15,7 @@ import {
   BooleanActionField,
   AcceptedValuesField,
   RepeatableActionsField,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -28,7 +29,6 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
-  validateTextFieldRemoveValue,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
@@ -50,10 +50,11 @@ export const AdministrativeData = ({
         <Col
           data-test-suppress-from-discovery
           xs={4}
-        ><BooleanActionField
-          label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.discoverySuppress`} />}
-          name={getBoolFieldName(0)}
-        />
+        >
+          <BooleanActionField
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.discoverySuppress`} />}
+            name={getBoolFieldName(0)}
+          />
         </Col>
       </Row>
       <Row left="xs">
@@ -72,34 +73,46 @@ export const AdministrativeData = ({
           data-test-barcode
           xs={3}
         >
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.barcode`} />}
-            name={getFieldName(2)}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.barcode`} />}
+                name={getFieldName(2)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col
           data-test-accession-number
           xs={3}
         >
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.accessionNumber`} />}
-            name={getFieldName(3)}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.accessionNumber`} />}
+                name={getFieldName(3)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col
           data-test-item-identifier
           xs={3}
         >
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.itemIdentifier`} />}
-            name={getFieldName(4)}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.itemIdentifier`} />}
+                name={getFieldName(4)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
       <Row left="xs">
@@ -126,11 +139,16 @@ export const AdministrativeData = ({
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col xs={12}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId`} />}
-                        name={getSubfieldName(5, 0, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId`} />}
+                            name={getSubfieldName(5, 0, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                   </Row>
                 )}

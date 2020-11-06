@@ -13,6 +13,7 @@ import {
 import {
   AcceptedValuesField,
   DatePickerDecorator,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -21,7 +22,6 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
-  validateTextFieldRemoveValue,
   validateMARCWithDate,
   okapiShape,
 } from '../../../../../utils';
@@ -40,23 +40,31 @@ export const Condition = ({
           data-test-missing-pieces-number
           xs={4}
         >
-          <Field
-            component={TextField}
-            name={getFieldName(19)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.numberOfMissingPieces`} />}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                name={getFieldName(19)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.numberOfMissingPieces`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col
           data-test-missing-pieces
           xs={4}
         >
-          <Field
-            component={TextField}
-            name={getFieldName(20)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.missingPieces`} />}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                name={getFieldName(20)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.missingPieces`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col
           data-test-date

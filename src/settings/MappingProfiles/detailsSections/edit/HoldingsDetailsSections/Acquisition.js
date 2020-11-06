@@ -9,8 +9,9 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import { WithValidation } from '../../../../../components';
+
 import { getFieldName } from '../../utils';
-import { validateTextFieldRemoveValue } from '../../../../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 
 export const Acquisition = () => {
@@ -24,34 +25,46 @@ export const Acquisition = () => {
           data-test-acquisition-method
           xs={4}
         >
-          <Field
-            component={TextField}
-            name={getFieldName(23)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.acquisitionMethod`} />}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                name={getFieldName(23)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.acquisitionMethod`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col
           data-test-order-format
           xs={4}
         >
-          <Field
-            component={TextField}
-            name={getFieldName(24)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.orderFormat`} />}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                name={getFieldName(24)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.orderFormat`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col
           data-test-receipt-status
           xs={4}
         >
-          <Field
-            component={TextField}
-            name={getFieldName(25)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.receiptStatus`} />}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                name={getFieldName(25)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.receiptStatus`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
     </Accordion>

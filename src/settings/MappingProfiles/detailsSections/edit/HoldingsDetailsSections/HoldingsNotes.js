@@ -15,6 +15,7 @@ import {
   AcceptedValuesField,
   BooleanActionField,
   RepeatableActionsField,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -86,11 +87,16 @@ export const HoldingsNotes = ({
                       />
                     </Col>
                     <Col xs={4}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
-                        name={getSubfieldName(21, 1, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
+                            name={getSubfieldName(21, 1, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col
                       data-test-staff-only

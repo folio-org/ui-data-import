@@ -14,6 +14,7 @@ import {
 import {
   AcceptedValuesField,
   RepeatableActionsField,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -84,32 +85,52 @@ export const ElectronicAccess = ({
                       />
                     </Col>
                     <Col xs={2}>
-                      <Field
-                        component={TextField}
-                        name={getSubfieldName(31, 1, index)}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.uri`} />}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            name={getSubfieldName(31, 1, index)}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.uri`} />}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col xs={2}>
-                      <Field
-                        component={TextField}
-                        name={getSubfieldName(31, 2, index)}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.linkText`} />}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            name={getSubfieldName(31, 2, index)}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.linkText`} />}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col xs={2}>
-                      <Field
-                        component={TextField}
-                        name={getSubfieldName(31, 3, index)}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.materialsSpecified`} />}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            name={getSubfieldName(31, 3, index)}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.materialsSpecified`} />}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col xs={2}>
-                      <Field
-                        component={TextField}
-                        name={getSubfieldName(31, 4, index)}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.urlPublicNote`} />}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            name={getSubfieldName(31, 4, index)}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.urlPublicNote`} />}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                   </Row>
                 )}

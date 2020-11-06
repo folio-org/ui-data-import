@@ -14,6 +14,7 @@ import {
 import {
   BooleanActionField,
   RepeatableActionsField,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -69,21 +70,31 @@ export const ReceivingHistory = ({
                       />
                     </Col>
                     <Col xs={4}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
-                        name={getSubfieldName(26, 1, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
+                            name={getSubfieldName(26, 1, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col
                       data-test-staff-only
                       xs={4}
                     >
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
-                        name={getSubfieldName(26, 2, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
+                            name={getSubfieldName(26, 2, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                   </Row>
                 )}
