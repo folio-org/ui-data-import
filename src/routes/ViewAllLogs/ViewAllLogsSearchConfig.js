@@ -25,5 +25,5 @@ export const searchableIndexes = [
 
 export const logsSearchTemplate = `
 (status any "COMMITTED ERROR ") AND
-(hrId="%{query.query}*" OR 
-fileName="%{query.query}*")`;
+(hrId=="%{query.query}*" OR 
+fileName=="*%{query.query}*")`;

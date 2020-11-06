@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -244,6 +244,9 @@
           "inventory-storage.loan-types.collection.get",
           "inventory-storage.item-note-types.collection.get",
           "configuration.entries.collection.get",
+          "mapping-rules.get",
+          "mapping-rules.update",
+          "mapping-rules.restore",
           "tags.collection.get",
           "tags.item.post"
         ],
