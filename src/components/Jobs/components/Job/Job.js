@@ -22,16 +22,16 @@ import {
   FormattedDate,
   FormattedTime,
 } from '@folio/stripes/components';
-import { Progress } from '@folio/stripes-data-transfer-components';
+import {
+  Progress,
+  createOkapiHeaders,
+  createUrl,
+} from '@folio/stripes-data-transfer-components';
 
 import { jobMetaTypes } from './jobMetaTypes';
 import { jobExecutionPropTypes } from './jobExecutionPropTypes';
 
-import {
-  createUrl,
-  createOkapiHeaders,
-  DEFAULT_TIMEOUT_BEFORE_JOB_DELETION,
-} from '../../../../utils';
+import { DEFAULT_TIMEOUT_BEFORE_JOB_DELETION } from '../../../../utils';
 
 import * as API from '../../../../utils/upload';
 

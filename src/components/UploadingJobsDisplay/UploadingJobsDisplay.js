@@ -31,15 +31,15 @@ import {
 import {
   Preloader,
   EndOfItem,
+  createOkapiHeaders,
+  createUrl,
+  getFileExtension,
 } from '@folio/stripes-data-transfer-components';
 
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 import { FileItem } from './components';
 import {
-  createUrl,
-  createOkapiHeaders,
   xhrAddHeaders,
-  getFileExtension,
   generateSettingsLabel,
   DEFAULT_TIMEOUT_BEFORE_FILE_DELETION,
   FILE_STATUSES,

@@ -6,14 +6,14 @@ import {
 } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { createUrl } from '@folio/stripes-data-transfer-components';
+import { DEFAULT_FETCHER_UPDATE_INTERVAL } from '@folio/stripes-data-transfer-components/lib/utils';
 
 import { jobExecutionPropTypes } from '../Jobs/components/Job/jobExecutionPropTypes';
 import {
-  DEFAULT_FETCHER_UPDATE_INTERVAL,
   JOB_STATUSES,
   FILE_STATUSES,
-} from '../../utils/constants';
-import { createUrl } from '../../utils';
+} from '../../utils';
 
 import { DataFetcherContext } from '.';
 

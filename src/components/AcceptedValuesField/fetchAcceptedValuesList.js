@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import {
   createOkapiHeaders,
   createUrl,
-} from '../../utils';
+} from '@folio/stripes-data-transfer-components';
 
 export const fetchAcceptedValuesList = async (okapi, wrapperSourceLink, wrapperSourcePath) => {
   try {

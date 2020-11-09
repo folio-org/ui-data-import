@@ -10,10 +10,10 @@ import {
   withStripes,
   stripesShape,
 } from '@folio/stripes/core';
+import { createUrl } from '@folio/stripes-data-transfer-components';
 
-import { FILE_STATUSES } from '../../utils/constants';
+import { FILE_STATUSES } from '../../utils';
 import * as API from '../../utils/upload';
-import { createUrl } from '../../utils';
 import { UploadingJobsContext } from '.';
 
 @withStripes

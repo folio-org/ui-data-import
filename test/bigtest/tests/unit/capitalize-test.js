@@ -4,11 +4,11 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import { capitalize } from '../../../../src/utils';
 import {
+  capitalize,
   STRING_CAPITALIZATION_MODES,
   STRING_CAPITALIZATION_EXCLUSIONS,
-} from '../../../../src/utils/constants';
+} from '../../../../src/utils';
 
 const {
   ALL,
