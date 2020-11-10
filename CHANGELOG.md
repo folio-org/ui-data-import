@@ -9,6 +9,7 @@
 * Reuse `<JobsListAccordion>` component from `stripes-data-transfer-components` rep (UIDATIMP-574)
 * Reuse `<JobsLogs>` component from `stripes-data-transfer-components` rep (UIDATIMP-572)
 * Reuse `<Preloader>` component from `stripes-data-transfer-components` rep (UIDATIMP-580)
+* Reuse `<SearchResults>` component from `stripes-data-transfer-components` rep (UIDATIMP-581)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
