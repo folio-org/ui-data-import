@@ -1,6 +1,6 @@
 {
     "jobsPaneTitle": "Procedure",
-    "logsPaneTitle": "Logs",
+    "logsPaneTitle": "Log",
     "viewAllLogs": "Visualizza tutto",
     "manageJobs": "Gestisci",
     "previewJobs": "Anteprime",
@@ -459,7 +459,7 @@
     "settings.mappingProfiles.map.holdings.field.retentionPolicy": "Retention policy",
     "settings.mappingProfiles.map.field.holdingsNotes.legend": "Holdings notes",
     "settings.mappingProfiles.map.field.holdingsNotes.addLabel": "Add holdings note",
-    "settings.mappingProfiles.map.holdings.holdingsNotes.section": "Holdings notes",
+    "settings.mappingProfiles.map.holdings.holdingsNotes.section": "Note sul posseduto",
     "settings.mappingProfiles.map.order": "Order",
     "settings.mappingProfiles.map.invoice": "Invoice",
     "settings.mappingProfiles.map.marcBib": "MARC Bibliographic",
@@ -763,5 +763,6 @@
     "fieldMappingsForMarc.updatesOverrides.noFields": "The library has not defined any protected fields",
     "settings.mappingProfiles.map.instance.subheader": "Inactive fields cannot be mapped because they are controlled by the system or by the library's MARC-Instance mapping profile",
     "match.qualifier.text": "Qualifier type text",
-    "incomingRecordTypes.static.select": "Choose Static value (submatch only)"
+    "incomingRecordTypes.static.select": "Choose Static value (submatch only)",
+    "validation.quotationError": "I valori non MARC devono utilizzare le virgolette"
 }
