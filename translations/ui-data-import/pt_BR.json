@@ -763,5 +763,6 @@
     "fieldMappingsForMarc.updatesOverrides.noFields": "A biblioteca não definiu nenhum campo protegido",
     "settings.mappingProfiles.map.instance.subheader": "Os campos inativos não podem ser mapeados porque são controlados pelo sistema ou pelo perfil de mapeamento de instância MARC da biblioteca",
     "match.qualifier.text": "Texto do tipo de qualificador",
-    "incomingRecordTypes.static.select": "Escolha o valor estático (apenas submatch)"
+    "incomingRecordTypes.static.select": "Escolha o valor estático (apenas submatch)",
+    "validation.quotationError": "O valor não MARC deve usar aspas"
 }

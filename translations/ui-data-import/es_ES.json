@@ -763,5 +763,6 @@
     "fieldMappingsForMarc.updatesOverrides.noFields": "La biblioteca no ha definido ningún campo protegido",
     "settings.mappingProfiles.map.instance.subheader": "Los campos inactivos no se pueden asignar porque están controlados por el sistema o por el perfil de asignación MARC-Instancia de la biblioteca",
     "match.qualifier.text": "Qualifier type text",
-    "incomingRecordTypes.static.select": "Choose Static value (submatch only)"
+    "incomingRecordTypes.static.select": "Choose Static value (submatch only)",
+    "validation.quotationError": "Non-MARC value must use quotation marks"
 }
