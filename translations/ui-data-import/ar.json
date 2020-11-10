@@ -763,5 +763,6 @@
     "fieldMappingsForMarc.updatesOverrides.noFields": "لم تقم المكتبة بتعريف أي حقول محمية",
     "settings.mappingProfiles.map.instance.subheader": "لا يمكن تخطيط الحقول غير النشطة  لأنه يتم التحكم بها بواسطة النظام أو بوضع تخطيط وعاء مارك الخاص بالمكتبة",
     "match.qualifier.text": "نص نوع المؤهل",
-    "incomingRecordTypes.static.select": "اختر قيمة ثابتة (تطابق فرعي فقط)"
+    "incomingRecordTypes.static.select": "اختر قيمة ثابتة (تطابق فرعي فقط)",
+    "validation.quotationError": "يجب أن تستخدم قيمة غير-مارك علامات اقتباس"
 }
