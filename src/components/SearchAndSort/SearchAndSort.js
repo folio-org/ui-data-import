@@ -26,6 +26,7 @@ import {
   PaneHeader,
 } from '@folio/stripes/components';
 import { Preloader } from '@folio/stripes-data-transfer-components';
+import { SearchResults } from '@folio/stripes-data-transfer-components/lib/SearchResults';
 import {
   withStripes,
   stripesShape,
@@ -284,12 +285,6 @@ export class SearchAndSort extends Component {
     }
 
     this.transitionToParams({ layer: null });
-  };
-
-  onNeedMore = source => {
-    const { resultCountIncrement } = this.props;
-
-    source.fetchMore(resultCountIncrement);
   };
 
   onSelectRow = (e, meta) => {
@@ -570,33 +565,20 @@ export class SearchAndSort extends Component {
     );
   }
 
-  renderEmptyMessage(source) {
-    const { notLoadedMessage } = this.props;
-    const preloader = (
-      <Preloader
-        message={<FormattedMessage id="ui-data-import.loading" />}
-        size="medium"
-        preloaderClassName={sharedCss.preloader}
-      />
-    );
-
-    return source.pending() ? preloader : notLoadedMessage;
-  }
-
   renderSearchResults(source) {
     const {
-      columnMapping,
-      columnWidths,
-      resultsFormatter,
-      visibleColumns,
       objectName,
-      defaultSort,
+      notLoadedMessage,
+      resultCountIncrement,
+      resultsFormatter,
       rowUpdater,
+      visibleColumns,
+      defaultSort,
+      columnWidths,
+      columnMapping,
     } = this.props;
     const { selectedItem } = this.state;
 
-    const records = source.records();
-    const count = source.totalCount();
     const objectNameUC = upperFirst(objectName);
     const sortOrderQuery = this.queryParam('sort') || defaultSort;
     const sortDirection = sortOrderQuery.startsWith('-') ? SORT_TYPES.DESCENDING : SORT_TYPES.ASCENDING;
@@ -608,27 +590,23 @@ export class SearchAndSort extends Component {
         values={{ objectName: objectNameUC }}
       >
         {([ariaLabel]) => (
-          <MultiColumnList
+          <SearchResults
             id={`${objectName}-list`}
+            source={source}
+            notLoadedMessage={notLoadedMessage}
+            resultCountIncrement={resultCountIncrement}
             ariaLabel={ariaLabel}
-            totalCount={count}
-            contentData={records}
             selectedRow={selectedItem}
             formatter={resultsFormatter}
             rowUpdater={rowUpdater}
             visibleColumns={visibleColumns}
             sortOrder={sortOrder}
             sortDirection={sortDirection}
-            isEmptyMessage={this.renderEmptyMessage(source)}
             columnWidths={columnWidths}
             columnMapping={columnMapping}
-            loading={source.pending()}
-            autosize
-            virtualize
             rowFormatter={this.anchoredRowFormatter}
             onRowClick={this.onSelectRow}
             onHeaderClick={this.onSort}
-            onNeedMoreData={() => this.onNeedMore(source)}
           />
         )}
       </FormattedMessage>
