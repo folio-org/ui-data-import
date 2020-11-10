@@ -14,6 +14,7 @@ import {
 import {
   RepeatableActionsField,
   AcceptedValuesField,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -65,11 +66,17 @@ export const InstanceRelationship = ({
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col xs={6}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.parentInstances.field.superInstanceId`} />}
-                        name={getSubfieldName(30, 0, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.parentInstances.field.superInstanceId`} />}
+                            name={getSubfieldName(30, 0, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
+
                     </Col>
                     <Col
                       data-test-parent-type-of-relation
@@ -121,11 +128,16 @@ export const InstanceRelationship = ({
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col xs={6}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.childInstances.field.subInstanceId`} />}
-                        name={getSubfieldName(31, 0, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.childInstances.field.subInstanceId`} />}
+                            name={getSubfieldName(31, 0, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col
                       data-test-child-type-of-relation

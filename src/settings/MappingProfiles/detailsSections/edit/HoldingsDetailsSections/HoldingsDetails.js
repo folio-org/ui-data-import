@@ -14,6 +14,7 @@ import {
 import {
   AcceptedValuesField,
   RepeatableActionsField,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -26,7 +27,6 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
-  validateTextFieldRemoveValue,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
@@ -50,12 +50,16 @@ export const HoldingsDetails = ({
           data-test-number-of-items
           xs={4}
         >
-          <Field
-            component={TextField}
-            name={getFieldName(14)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.details.field.numberOfItems`} />}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                name={getFieldName(14)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.details.field.numberOfItems`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
       <Row left="xs">
@@ -82,25 +86,40 @@ export const HoldingsDetails = ({
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col xs={4}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />}
-                        name={getSubfieldName(15, 0, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />}
+                            name={getSubfieldName(15, 0, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col xs={4}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
-                        name={getSubfieldName(15, 1, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
+                            name={getSubfieldName(15, 1, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col xs={4}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
-                        name={getSubfieldName(15, 2, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
+                            name={getSubfieldName(15, 2, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                   </Row>
                 )}
@@ -133,25 +152,40 @@ export const HoldingsDetails = ({
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col xs={4}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />}
-                        name={getSubfieldName(16, 0, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />}
+                            name={getSubfieldName(16, 0, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col xs={4}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
-                        name={getSubfieldName(16, 1, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
+                            name={getSubfieldName(16, 1, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col xs={4}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
-                        name={getSubfieldName(16, 2, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
+                            name={getSubfieldName(16, 2, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                   </Row>
                 )}
@@ -184,25 +218,40 @@ export const HoldingsDetails = ({
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col xs={4}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />}
-                        name={getSubfieldName(17, 0, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />}
+                            name={getSubfieldName(17, 0, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col xs={4}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
-                        name={getSubfieldName(17, 1, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
+                            name={getSubfieldName(17, 1, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col xs={4}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
-                        name={getSubfieldName(17, 2, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
+                            name={getSubfieldName(17, 2, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                   </Row>
                 )}
@@ -237,23 +286,31 @@ export const HoldingsDetails = ({
           data-test-digitization-policy
           xs={4}
         >
-          <Field
-            component={TextField}
-            name={getFieldName(19)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.digitizationPolicy`} />}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                name={getFieldName(19)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.digitizationPolicy`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col
           data-test-retention-policy
           xs={4}
         >
-          <Field
-            component={TextField}
-            name={getFieldName(20)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.retentionPolicy`} />}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                name={getFieldName(20)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.retentionPolicy`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
     </Accordion>
