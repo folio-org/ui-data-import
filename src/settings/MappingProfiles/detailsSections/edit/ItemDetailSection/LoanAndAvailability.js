@@ -18,6 +18,7 @@ import {
   AcceptedValuesField,
   BooleanActionField,
   RepeatableActionsField,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -179,11 +180,16 @@ export const LoanAndAvailability = ({
                       />
                     </Col>
                     <Col xs={4}>
-                      <Field
-                        component={TextField}
-                        name={getSubfieldName(28, 1, index)}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            name={getSubfieldName(28, 1, index)}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                     <Col
                       data-test-staff-only

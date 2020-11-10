@@ -31,5 +31,6 @@ export * from './RepeatableActionsField';
 export * from './Section';
 export * from './FolioRecordTypeSelect';
 export * from './WithTranslation';
+export * from './WithValidation';
 export * from './withReferenceValues';
 export * from './RecentJobLogs';
