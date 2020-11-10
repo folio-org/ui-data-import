@@ -11,7 +11,10 @@ import {
   RepeatableField,
 } from '@folio/stripes/components';
 
-import { RepeatableActionsField } from '../../../../../components';
+import {
+  RepeatableActionsField,
+  WithValidation,
+} from '../../../../../components';
 
 import {
   getFieldName,
@@ -21,10 +24,7 @@ import {
   onRemove,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import {
-  validateTextFieldRemoveValue,
-  mappingProfileSubfieldShape,
-} from '../../../../../utils';
+import { mappingProfileSubfieldShape } from '../../../../../utils';
 
 export const EnumerationData = ({
   yearCaption,
@@ -42,23 +42,31 @@ export const EnumerationData = ({
           data-test-enumeration
           xs={4}
         >
-          <Field
-            component={TextField}
-            name={getFieldName(15)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                name={getFieldName(15)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col
           data-test-chronology
           xs={4}
         >
-          <Field
-            component={TextField}
-            name={getFieldName(16)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                name={getFieldName(16)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
       <Row left="xs">
@@ -66,12 +74,16 @@ export const EnumerationData = ({
           data-test-volume
           xs={6}
         >
-          <Field
-            component={TextField}
-            name={getFieldName(17)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.volume`} />}
-            validate={[validateTextFieldRemoveValue]}
-          />
+          <WithValidation isRemoveValueAllowed>
+            {validation => (
+              <Field
+                component={TextField}
+                name={getFieldName(17)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.volume`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
       <Row left="xs">
@@ -98,11 +110,16 @@ export const EnumerationData = ({
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col xs={12}>
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />}
-                        name={getSubfieldName(18, 0, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />}
+                            name={getSubfieldName(18, 0, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                   </Row>
                 )}

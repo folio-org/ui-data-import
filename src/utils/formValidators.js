@@ -110,17 +110,23 @@ export const validateValueLength1 = value => validateValueLength(value, 1);
 export const validateValueLength3 = value => validateValueLength(value, 3);
 
 /**
- * Validate MARC path, quoted string and else condition. Match `910`, `910$a`, `"text"`,
+ * Validate MARC path, quoted string and else condition. Match `910`, `910$a`, `"text"`, `LDR`, `LDR/7`, `005/7-10`,
  * `910$a "text"`, `910$a; else "text"; else 910`,
- * validateMARCWithElse('###REMOVE###', true)
- * // => null
  * @param value
  * @param {boolean} isRemoveValueAllowed
- * @returns {null|*}
+ * @returns {boolean}
+ *
+ * @example
+ * validateQuotedStringOrMarcPathPattern('###REMOVE###', true)
+ * // => true
+ *
+ * validateQuotedStringOrMarcPathPattern('TEST', false)
+ * // => false
  */
-export const validateMARCWithElse = (value, isRemoveValueAllowed) => {
+const validateQuotedStringOrMarcPathPattern = (value, isRemoveValueAllowed) => {
   const allowedValue = isRemoveValueAllowed ? REMOVE_OPTION_VALUE : '';
-  const quotedStringOrMarcPathPattern = '(("[^"]+")|([0-9]{3}(\\$[a-z])?))';
+  const quotedStringOrMarcPathPattern = '(("[^"]+")|((005|006|007|008|LDR)[\\w\\/\\-]*)|([0-9]{3}(\\$[a-z])?))';
+
   const pattern = new RegExp([
     `^${quotedStringOrMarcPathPattern}`,
     `(((\\s(?=${quotedStringOrMarcPathPattern}))`,
@@ -128,26 +134,51 @@ export const validateMARCWithElse = (value, isRemoveValueAllowed) => {
     `(((; else )(?=${quotedStringOrMarcPathPattern}))`,
     `((?<=(; else ))${quotedStringOrMarcPathPattern})))*$`].join(''));
 
-  if (isEmpty(value) || value === allowedValue || value.match(pattern)) {
-    return null;
-  }
+  return isEmpty(value) || value === allowedValue || value.match(pattern);
+};
+
+/**
+ * Validate MARC path, quoted string and else condition. Match `910`, `910$a`, `"text"`, `LDR`, `LDR/7`, `005/7-10`,
+ * `910$a "text"`, `910$a; else "text"; else 910`,
+ * @param value
+ * @param {boolean} isRemoveValueAllowed
+ * @returns {null|*}
+ *
+ * @example
+ * validateMARCWithElse('###REMOVE###', true)
+ * // => null
+ *
+ * validateMARCWithElse('###REMOVE###', false)
+ * // => Translated string (en = 'Please correct the syntax to continue')
+ */
+export const validateMARCWithElse = (value, isRemoveValueAllowed) => {
+  const isValid = validateQuotedStringOrMarcPathPattern(value, isRemoveValueAllowed);
+
+  if (isValid) { return null; }
 
   return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
 };
 
 /**
- * Validate text inputs, check if they has remove option value
- * validateTextFieldRemoveValue('###REMOVE###')
- * // => null
+ * Validate MARC path, quoted string and else condition. Match `910`, `910$a`, `"text"`, `LDR`, `LDR/7`, `005/7-10`,
+ * `910$a "text"`, `910$a; else "text"; else 910`,
  * @param value
+ * @param {boolean} isRemoveValueAllowed
  * @returns {null|*}
+ *
+ * @example
+ * validateQuotedStringOrMarcPath('###REMOVE###', true)
+ * // => null
+ *
+ * validateQuotedStringOrMarcPath('###REMOVE###', false)
+ * // => Translated string (en = 'Non-MARC value must use quotation marks')
  */
-export const validateTextFieldRemoveValue = value => {
-  if (!isEmpty(value) && value.includes(REMOVE_OPTION_VALUE) && value !== REMOVE_OPTION_VALUE) {
-    return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
-  }
+export const validateQuotedStringOrMarcPath = (value, isRemoveValueAllowed) => {
+  const isValid = validateQuotedStringOrMarcPathPattern(value, isRemoveValueAllowed);
 
-  return null;
+  if (isValid) { return null; }
+
+  return <FormattedMessage id="ui-data-import.validation.quotationError" />;
 };
 
 /**

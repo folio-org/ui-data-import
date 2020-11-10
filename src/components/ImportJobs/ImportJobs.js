@@ -25,14 +25,12 @@ import {
 import {
   FileUploader,
   Preloader,
-} from '@folio/stripes-data-transfer-components';
-import { ReturnToAssignJobs } from './components';
-
-import { UploadingJobsContext } from '../UploadingJobsContextProvider';
-import {
   createUrl,
   getFileExtension,
-} from '../../utils';
+} from '@folio/stripes-data-transfer-components';
+
+import { ReturnToAssignJobs } from './components';
+import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 import * as API from '../../utils/upload';
 import {
   checkForKnowErrorModalTypes,

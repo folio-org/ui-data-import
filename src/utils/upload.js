@@ -1,19 +1,13 @@
 import {
+  convertBytesToKilobytes,
+  createOkapiHeaders,
+  createUrl,
+} from '@folio/stripes-data-transfer-components';
+
+import {
   FILE_STATUSES,
   UPLOAD_DEFINITION_STATUSES,
 } from './constants';
-import {
-  createOkapiHeaders,
-  createUrl,
-} from '.';
-
-/**
- * Converts bytes to kilobytes
- *
- * @param {number} size
- * @return {number}
- */
-const convertBytesToKilobytes = size => Math.ceil(size / 1024);
 
 /**
  * Generates Upload Definitions body data

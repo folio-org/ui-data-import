@@ -1,5 +1,7 @@
-import { createOkapiHeaders } from './createOkapiHeaders';
-import { createUrl } from './createUrl';
+import {
+  createOkapiHeaders,
+  createUrl,
+} from '@folio/stripes-data-transfer-components';
 
 export const fetchUploadDefinition = async ({
   okapi,

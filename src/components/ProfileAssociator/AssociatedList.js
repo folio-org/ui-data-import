@@ -9,15 +9,17 @@ import { noop } from 'lodash';
 
 import { MultiColumnList } from '@folio/stripes/components';
 import { getNsKey } from '@folio/stripes/smart-components';
-
 import {
-  buildSortOrder,
-  sortNums,
+  sortNumbers,
   sortStrings,
   sortDates,
-  checkboxListShape,
+} from '@folio/stripes-data-transfer-components';
+import {
   SORT_TYPES,
-} from '../../utils';
+  buildSortOrder,
+} from '@folio/stripes-data-transfer-components/lib/utils';
+
+import { checkboxListShape } from '../../utils';
 
 import { searchAndSortTemplate } from '../ListTemplate';
 import { associatedProfilesColumns } from './associatedProfilesColumns';
@@ -83,7 +85,7 @@ export const AssociatedList = memo(({
         case 'updated':
           return curDir === SORT_TYPES.ASCENDING ? sortDates(colA, colB) : sortDates(colB, colA);
         case 'order':
-          return curDir === SORT_TYPES.ASCENDING ? sortNums(colA, colB) : sortNums(colB, colA);
+          return curDir === SORT_TYPES.ASCENDING ? sortNumbers(colA, colB) : sortNumbers(colB, colA);
         default:
           return curDir === SORT_TYPES.ASCENDING ? sortStrings(colA, colB) : sortStrings(colB, colA);
       }

@@ -1,4 +1,4 @@
-import { createOkapiHeaders } from './createOkapiHeaders';
+import { createOkapiHeaders } from '@folio/stripes-data-transfer-components';
 
 /**
  * Gets a profile snapshot.

@@ -233,6 +233,7 @@
   "validation.valueType": "Please enter an alphanumeric value",
   "validation.maxLength": "Invalid value. Maximum {maxLength} character(s) allowed",
   "validation.syntaxError": "Please correct the syntax to continue",
+  "validation.quotationError": "Non-MARC value must use quotation marks",
   "validation.cannotBeUpdated": "This field cannot be updated",
   "validation.chooseDifferentField": "Please choose a different field",
   "validation.chooseAtLeastOneValue": "One or more values must be added before the profile can be saved.",

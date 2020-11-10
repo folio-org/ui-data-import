@@ -9,6 +9,7 @@
 * Reuse `<JobsListAccordion>` component from `stripes-data-transfer-components` rep (UIDATIMP-574)
 * Reuse `<JobsLogs>` component from `stripes-data-transfer-components` rep (UIDATIMP-572)
 * Reuse `<Preloader>` component from `stripes-data-transfer-components` rep (UIDATIMP-580)
+* Reuse utils from `stripes-data-transfer-components` rep (UIDATIMP-576)
 * Reuse `<SearchResults>` component from `stripes-data-transfer-components` rep (UIDATIMP-581)
 
 ### Bugs fixed:
@@ -16,6 +17,7 @@
 * Fix Accessibility problems for settings/data-import/action-profiles?layer=create (Buttons must have discernible text) (UIDATIMP-448)
 * Fix Accessibility problems for settings/data-import/{...-profiles} (Form elements must have labels) (UIDATIMP-457)
 * Fix Accessibility problems in ProfileLinker Component (settings/data-import/job-profiles) (UIDATIMP-434)
+* Fix Validation for default data typed into a field mapping profile (UIDATIMP-746)
 
 ## [3.0.2](https://github.com/folio-org/ui-data-import/tree/v3.0.2) (2020-11-05)
 

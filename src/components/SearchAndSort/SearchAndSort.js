@@ -37,12 +37,12 @@ import {
   makeConnectedSource,
   buildUrl,
 } from '@folio/stripes/smart-components';
-
 import {
-  buildSortOrder,
   SORT_TYPES,
-  LAYER_TYPES,
-} from '../../utils';
+  buildSortOrder,
+} from '@folio/stripes-data-transfer-components/lib/utils';
+
+import { LAYER_TYPES } from '../../utils';
 
 import css from './SearchAndSort.css';
 import sharedCss from '../../shared.css';
