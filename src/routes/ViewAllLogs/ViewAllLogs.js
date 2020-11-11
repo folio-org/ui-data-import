@@ -159,11 +159,13 @@ class ViewAllLogs extends Component {
         lastName: item.runBy.lastName,
       }))
       .sort((userA, userB) => {
-        if (userA.firstName.localeCompare(userB.firstName) === 0) {
+        const name = userA.firstName || userA.lastName;
+
+        if (userA.firstName?.localeCompare(userB.firstName) === 0) {
           return userA.lastName.localeCompare(userB.lastName);
         }
 
-        return userA.firstName.localeCompare(userB.firstName);
+        return name.localeCompare(userB.firstName);
       });
 
     return resources.query

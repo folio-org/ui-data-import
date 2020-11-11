@@ -68,7 +68,7 @@ export const searchAndSortTemplate = intl => ({
     month: 'numeric',
     year: 'numeric',
   }),
-  jobProfileName: record => record.jobProfileInfo.name,
+  jobProfileName: record => record.jobProfileInfo?.name,
   totalRecords: record => record.progress.total,
   fileName: record => record.fileName,
 });
