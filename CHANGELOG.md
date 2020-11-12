@@ -19,6 +19,7 @@
 * Fix Accessibility problems for settings/data-import/{...-profiles} (Form elements must have labels) (UIDATIMP-457)
 * Fix Accessibility problems in ProfileLinker Component (settings/data-import/job-profiles) (UIDATIMP-434)
 * Fix Validation for default data typed into a field mapping profile (UIDATIMP-746)
+* Fix an error occurred while searching for associated profiles (UIDATIMP-769)
 
 ## [3.0.2](https://github.com/folio-org/ui-data-import/tree/v3.0.2) (2020-11-05)
 
