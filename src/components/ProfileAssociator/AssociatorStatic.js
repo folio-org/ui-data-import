@@ -61,8 +61,10 @@ export const AssociatorStatic = memo(({
     const newData = currentData.filter(item => {
       for (let i = 0; i < filterColumns.length; i++) {
         const col = filterColumns[i];
+        const currentDataItemValue = searchTemplate[col](item).toLowerCase();
+        const searchQuery = currentQuery.toLowerCase();
 
-        if (searchTemplate[col](item).includes(currentQuery)) {
+        if (currentDataItemValue.includes(searchQuery)) {
           return true;
         }
       }

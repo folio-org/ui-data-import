@@ -59,7 +59,7 @@ export const searchAndSortTemplate = intl => ({
 
     return intl.formatMessage(fullTranslationId);
   },
-  tags: record => record.tags.tagList.join(', '),
+  tags: record => record.tags?.tagList.join(', ') || '',
   updated: record => intl.formatDate(record.metadata.updatedDate),
   updatedBy: record => formatUserName(record.userInfo),
   runBy: record => `${record.firstName} ${record.lastName}`,

@@ -11,6 +11,7 @@
 * Reuse `<Preloader>` component from `stripes-data-transfer-components` rep (UIDATIMP-580)
 * Reuse utils from `stripes-data-transfer-components` rep (UIDATIMP-576)
 * Reuse `<SearchResults>` component from `stripes-data-transfer-components` rep (UIDATIMP-581)
+* Cover <BooleanActionField> component with tests (UIDATIMP-700)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
@@ -18,6 +19,7 @@
 * Fix Accessibility problems for settings/data-import/{...-profiles} (Form elements must have labels) (UIDATIMP-457)
 * Fix Accessibility problems in ProfileLinker Component (settings/data-import/job-profiles) (UIDATIMP-434)
 * Fix Validation for default data typed into a field mapping profile (UIDATIMP-746)
+* Fix an error occurred while searching for associated profiles (UIDATIMP-769)
 * 'Reset all' functionality leads to error page (UIDATIMP-754)
 
 ## [3.0.2](https://github.com/folio-org/ui-data-import/tree/v3.0.2) (2020-11-05)
