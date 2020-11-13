@@ -12,6 +12,7 @@
 * Reuse utils from `stripes-data-transfer-components` rep (UIDATIMP-576)
 * Reuse `<SearchResults>` component from `stripes-data-transfer-components` rep (UIDATIMP-581)
 * Cover <BooleanActionField> component with tests (UIDATIMP-700)
+* Reuse `<SearchForm>` component from `stripes-data-transfer-components` rep (UIDATIMP-582)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)

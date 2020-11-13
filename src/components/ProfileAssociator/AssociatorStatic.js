@@ -4,14 +4,10 @@ import React, {
   useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { noop } from 'lodash';
 
 import { SearchAndSortQuery } from '@folio/stripes/smart-components';
-import {
-  SearchField,
-  Button,
-} from '@folio/stripes/components';
+import { SearchForm } from '@folio/stripes-data-transfer-components';
 
 import {
   useCheckboxList,
@@ -20,8 +16,6 @@ import {
 import { searchAndSortTemplate } from '../ListTemplate';
 
 import { AssociatedList } from './AssociatedList';
-
-import searchAndSortCss from '../SearchAndSort/SearchAndSort.css';
 
 export const AssociatorStatic = memo(({
   intl,
@@ -83,46 +77,31 @@ export const AssociatorStatic = memo(({
     getSearchHandlers,
     onSubmitSearch,
   }) => {
+    const searchTerm = searchValue.query;
+    const onChangeSearch = getSearchHandlers().query;
+
     const onSubmit = event => {
       event.preventDefault();
-      setCurrentQuery(searchValue.query);
+      setCurrentQuery(searchTerm);
       onSubmitSearch(event);
       deselectAll();
     };
+    const onClearSearch = () => {
+      setCurrentData(contentData);
+      resetAll();
+    };
 
     return (
-      <form onSubmit={onSubmit}>
-        <div className={searchAndSortCss.searchWrap}>
-          <div className={searchAndSortCss.searchFiledWrap}>
-            <SearchField
-              id={`input-associated-${entityName}-search`}
-              clearSearchId={`input-associated-${entityName}-clear-search-button`}
-              loading={!hasLoaded}
-              aria-label={`associated ${entityName} search`}
-              marginBottom0
-              name="query"
-              value={searchValue.query}
-              onChange={getSearchHandlers().query}
-              onClear={() => {
-                setCurrentData(contentData);
-                resetAll();
-              }}
-            />
-          </div>
-          <div className={searchAndSortCss.searchButtonWrap}>
-            <Button
-              data-test-search-and-sort-submit
-              disabled={!searchValue.query}
-              type="submit"
-              buttonStyle="primary"
-              fullWidth
-              marginBottom0
-            >
-              <FormattedMessage id="stripes-smart-components.search" />
-            </Button>
-          </div>
-        </div>
-      </form>
+      <SearchForm
+        searchLabelKey={`ui-data-import.settings.${entityKey}.title`}
+        searchTerm={searchTerm}
+        isLoading={!hasLoaded}
+        handleChange={onChangeSearch}
+        handleClear={onClearSearch}
+        handleSubmit={onSubmit}
+        fieldName="query"
+        idKey={entityKey}
+      />
     );
   };
 
