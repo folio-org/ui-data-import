@@ -2,6 +2,10 @@
 
 ## **3.1.0** (in progress)
 
+## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
+* Fix Validation for default data typed into a field mapping profile (UIDATIMP-746)
+* 'Reset all' functionality leads to error page (UIDATIMP-754)
+
 ## [3.0.2](https://github.com/folio-org/ui-data-import/tree/v3.0.2) (2020-11-05)
 
 ### Bugs fixed:
