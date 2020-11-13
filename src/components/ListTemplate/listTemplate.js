@@ -150,7 +150,7 @@ export const listTemplate = ({
       },
     } = record;
 
-    return `${firstName} ${lastName}`;
+    return firstName ? `${firstName} ${lastName}` : `${lastName}`;
   },
   completedDate: record => {
     const { completedDate } = record;
