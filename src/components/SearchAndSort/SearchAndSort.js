@@ -16,17 +16,14 @@ import {
 } from 'lodash';
 
 import {
-  Button,
   Layer,
-  MultiColumnList,
   Pane,
   Paneset,
-  SearchField,
   SRStatus,
   PaneHeader,
 } from '@folio/stripes/components';
-import { Preloader } from '@folio/stripes-data-transfer-components';
 import { SearchResults } from '@folio/stripes-data-transfer-components/lib/SearchResults';
+import { SearchForm } from '@folio/stripes-data-transfer-components';
 import {
   withStripes,
   stripesShape,
@@ -45,7 +42,6 @@ import {
 import { LAYER_TYPES } from '../../utils';
 
 import css from './SearchAndSort.css';
-import sharedCss from '../../shared.css';
 
 @withRouter
 @withStripes
@@ -508,11 +504,11 @@ export class SearchAndSort extends Component {
 
   renderSearch(source) {
     const {
-      objectName,
-      onChangeIndex,
       searchableIndexes,
       selectedIndex,
       searchLabelKey,
+      onChangeIndex,
+      objectName,
     } = this.props;
     const { locallyChangedSearchTerm } = this.state;
 
@@ -520,48 +516,18 @@ export class SearchAndSort extends Component {
     const searchTerm = locallyChangedSearchTerm !== undefined ? locallyChangedSearchTerm : query;
 
     return (
-      <form onSubmit={this.onSubmitSearch}>
-        <div className={css.searchWrap}>
-          <div className={css.searchFiledWrap}>
-            <FormattedMessage id={searchLabelKey}>
-              {searchDetailsLabel => (
-                <FormattedMessage
-                  id="stripes-smart-components.searchFieldLabel"
-                  values={{ moduleName: searchDetailsLabel }}
-                >
-                  {ariaLabel => (
-                    <SearchField
-                      id={`input-${objectName}-search`}
-                      clearSearchId={`input-${objectName}-clear-search-button`}
-                      ariaLabel={ariaLabel.join('')}
-                      marginBottom0
-                      searchableIndexes={searchableIndexes}
-                      selectedIndex={selectedIndex}
-                      value={searchTerm}
-                      loading={source.pending()}
-                      onChangeIndex={onChangeIndex}
-                      onChange={this.onChangeSearch}
-                      onClear={this.onClearSearchQuery}
-                    />
-                  )}
-                </FormattedMessage>
-              )}
-            </FormattedMessage>
-          </div>
-          <div className={css.searchButtonWrap}>
-            <Button
-              data-test-search-and-sort-submit
-              type="submit"
-              buttonStyle="primary"
-              fullWidth
-              marginBottom0
-              disabled={!searchTerm}
-            >
-              <FormattedMessage id="stripes-smart-components.search" />
-            </Button>
-          </div>
-        </div>
-      </form>
+      <SearchForm
+        searchableIndexes={searchableIndexes}
+        selectedIndex={selectedIndex}
+        searchLabelKey={searchLabelKey}
+        searchTerm={searchTerm}
+        isLoading={source.pending()}
+        handleChangeIndex={onChangeIndex}
+        handleChange={this.onChangeSearch}
+        handleClear={this.onClearSearchQuery}
+        handleSubmit={this.onSubmitSearch}
+        idKey={objectName}
+      />
     );
   }
 
