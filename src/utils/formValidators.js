@@ -12,7 +12,6 @@ const REMOVE_OPTION_VALUE = '###REMOVE###';
  * Validates field inputs
  *
  * @param {string|*} value
- * @param {string|Object} [errorMessage] Validation error message
  * @return {null|*} Validation message
  */
 export const validateRequiredField = value => {
@@ -262,7 +261,7 @@ export const validateAcceptedValues = (acceptedValues, valueKey) => value => {
  *
  * @param {string|*} indicator1
  * @param {string|*} indicator2
- * @returns {function(...[*]=)}
+ * @returns {function(*): (*|null)}
  *
  * @example
  *
@@ -313,7 +312,9 @@ export const validateMarcIndicatorField = (field, indicator1, indicator2) => {
 /**
  * Validate MARC Field input value for Match Criterion
  *
- * @param {string|*} field
+ * @param {string|*} indicator1
+ * @param {string|*} indicator2
+ * @param {string|*} subfield
  * @returns {null|*}
  *
  * @example
@@ -361,7 +362,7 @@ export const validateSubfieldField = field => value => {
  * Validate field to move
  *
  * @param {string|*} field
- * @returns {function(...[*]=)}
+ * @returns {function(*): (*|null)}
  *
  * @example
  *
