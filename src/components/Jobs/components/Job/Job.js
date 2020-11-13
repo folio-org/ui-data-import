@@ -200,7 +200,7 @@ export class Job extends Component {
               <span>{hrId}</span>
               <FormattedMessage
                 id="ui-data-import.triggeredBy"
-                values={{ userName: `${firstName} ${lastName}` }}
+                values={{ userName: firstName ? `${firstName} ${lastName}` : `${lastName}` }}
                 tagName="span"
               />
             </div>

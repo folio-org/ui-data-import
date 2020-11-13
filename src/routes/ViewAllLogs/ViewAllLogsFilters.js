@@ -69,8 +69,8 @@ const ViewAllLogsFilters = ({
   users,
 }) => {
   const getJobProfileOptions = uniqBy(jobProfiles.map(jobProfile => ({
-    value: jobProfile.id,
-    label: jobProfile.name,
+    value: jobProfile?.id,
+    label: jobProfile?.name,
   })), 'value');
 
   const getUsersOptions = uniqBy(users.map(user => ({
