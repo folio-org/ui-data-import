@@ -1,7 +1,4 @@
-import React from 'react';
 import { get } from 'lodash';
-
-import { NoValue } from '@folio/stripes/components';
 
 import {
   capitalize,
@@ -49,7 +46,7 @@ export const searchAndSortTemplate = intl => ({
   },
   extension: record => record.extension,
   action: record => createActionLabel(intl, record.action, record.folioRecord),
-  mapping: record => record.mapping || <NoValue />,
+  mapping: record => record.mapping || '',
   folioRecord: record => intl.formatMessage({ id: FOLIO_RECORD_TYPES[record.existingRecordType].captionId }),
   dataTypes: record => (Array.isArray(record.dataTypes) ? record.dataTypes.join(', ') : ''),
   importBlocked: record => {

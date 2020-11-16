@@ -17,6 +17,8 @@ import { searchAndSortTemplate } from '../ListTemplate';
 
 import { AssociatedList } from './AssociatedList';
 
+const FILTER_COLUMNS = ['name', 'tags'];
+
 export const AssociatorStatic = memo(({
   intl,
   entityKey,
@@ -36,14 +38,7 @@ export const AssociatorStatic = memo(({
   const searchTemplate = searchAndSortTemplate(intl);
 
   const { deselectAll } = checkboxList;
-  const { visibleColumns } = profileShape;
 
-  const descIdx = visibleColumns.indexOf('description');
-  let filterColumns = visibleColumns;
-
-  if (descIdx >= 0) {
-    filterColumns = visibleColumns.splice(descIdx, 1);
-  }
   const entityName = stringToWords(entityKey).map(word => word.toLocaleLowerCase()).join('-');
   const dataAttrs = dataAttributes || { [`data-test-associated-${entityName}`]: true };
 
@@ -53,9 +48,9 @@ export const AssociatorStatic = memo(({
 
   useEffect(() => {
     const newData = currentData.filter(item => {
-      for (let i = 0; i < filterColumns.length; i++) {
-        const col = filterColumns[i];
-        const currentDataItemValue = searchTemplate[col](item).toLowerCase();
+      for (let i = 0; i < FILTER_COLUMNS.length; i++) {
+        const column = FILTER_COLUMNS[i];
+        const currentDataItemValue = searchTemplate[column](item).toLowerCase();
         const searchQuery = currentQuery.toLowerCase();
 
         if (currentDataItemValue.includes(searchQuery)) {
@@ -89,6 +84,7 @@ export const AssociatorStatic = memo(({
       deselectAll();
     };
     const onClearSearch = () => {
+      setCurrentQuery('');
       setCurrentData(contentData);
       resetAll();
     };
@@ -150,6 +146,7 @@ export const AssociatorStatic = memo(({
                 onSort={onSort}
                 isStatic
                 isMultiSelect={isMultiSelect}
+                searchTerm={currentQuery}
               />
             </>
           )}
