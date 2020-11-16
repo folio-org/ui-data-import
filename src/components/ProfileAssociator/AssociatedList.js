@@ -37,6 +37,7 @@ export const AssociatedList = memo(({
   className,
   onRemove,
   dataAttributes,
+  searchTerm,
 }) => {
   const nsSort = getNsKey('sort', namespaceKey);
   const nsQuery = getNsKey('query', namespaceKey);
@@ -52,10 +53,7 @@ export const AssociatedList = memo(({
     visibleColumns,
     renderHeaders,
   } = profileShape;
-  const {
-    [nsSort]: sortOrderQuery = initialQuery[nsSort],
-    [nsQuery]: searchTerm = initialQuery[nsQuery],
-  } = initialQuery;
+  const { [nsSort]: sortOrderQuery = initialQuery[nsSort] } = initialQuery;
 
   const sortDirection = sortOrderQuery.startsWith('-') ? SORT_TYPES.DESCENDING : SORT_TYPES.ASCENDING;
   const sortOrder = sortOrderQuery.replace(/^-/, '').replace(/,.*/, '');
@@ -159,6 +157,7 @@ AssociatedList.propTypes = {
   checkboxList: checkboxListShape,
   columnWidths: PropTypes.object,
   className: PropTypes.string || PropTypes.object,
+  searchTerm: PropTypes.string,
 };
 
 AssociatedList.defaultProps = {
@@ -167,4 +166,5 @@ AssociatedList.defaultProps = {
   dataAttributes: null,
   contentData: null,
   onRemove: noop,
+  searchTerm: '',
 };
