@@ -236,6 +236,7 @@
   "validation.quotationError": "Non-MARC value must use quotation marks",
   "validation.cannotBeUpdated": "This field cannot be updated",
   "validation.chooseDifferentField": "Please choose a different field",
+  "validation.selectAnAction": "Action must be selected before the profile can be saved",
   "validation.chooseAtLeastOneValue": "One or more values must be added before the profile can be saved.",
   "validation.enterAsteriskOrNumeric": "Please enter * or numeric value",
   "validation.enterAsteriskOrAlphanumeric": "Please enter * or alphanumeric value",

@@ -14,6 +14,7 @@
 * Cover <BooleanActionField> component with tests (UIDATIMP-700)
 * Reuse `<SearchForm>` component from `stripes-data-transfer-components` rep (UIDATIMP-582)
 * Cover `<ActionMenu>` component with tests (UIDATIMP-699)
+* Field mapping for repeatable fields needs a tweak to validation (UIDATIMP-768)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
