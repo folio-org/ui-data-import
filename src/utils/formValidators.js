@@ -230,6 +230,10 @@ export const validateRepeatableActionsField = (value, hasFields) => {
     return <FormattedMessage id="ui-data-import.validation.chooseAtLeastOneValue" />;
   }
 
+  if (isEmpty(val) && hasFields) {
+    return <FormattedMessage id="ui-data-import.validation.selectAnAction" />;
+  }
+
   return null;
 };
 
