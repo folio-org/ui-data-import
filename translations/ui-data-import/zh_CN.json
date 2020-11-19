@@ -764,5 +764,6 @@
     "settings.mappingProfiles.map.instance.subheader": "不能映射未激活字段，因为它们受系统或图书馆的MARC-实例映射配置文件控制",
     "match.qualifier.text": "限定词类型文字",
     "incomingRecordTypes.static.select": "选择静态值（仅子匹配项）",
-    "validation.quotationError": "Non-MARC value must use quotation marks"
+    "validation.quotationError": "Non-MARC value must use quotation marks",
+    "validation.selectAnAction": "Action must be selected before the profile can be saved"
 }
