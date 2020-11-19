@@ -764,5 +764,6 @@
     "settings.mappingProfiles.map.instance.subheader": "Inactive fields cannot be mapped because they are controlled by the system or by the library's MARC-Instance mapping profile",
     "match.qualifier.text": "Qualifier type text",
     "incomingRecordTypes.static.select": "Choose Static value (submatch only)",
-    "validation.quotationError": "Non-MARC value must use quotation marks"
+    "validation.quotationError": "Non-MARC value must use quotation marks",
+    "validation.selectAnAction": "Action must be selected before the profile can be saved"
 }
