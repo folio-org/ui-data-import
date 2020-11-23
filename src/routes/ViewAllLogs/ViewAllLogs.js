@@ -58,6 +58,7 @@ const visibleColumns = [
   'hrId',
 ];
 
+const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
 
 @stripesConnect
@@ -84,7 +85,7 @@ class ViewAllLogs extends Component {
         sort: '-completedDate',
       },
     },
-    resultCount: { initialValue: RESULT_COUNT_INCREMENT },
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
     records: {
       type: 'okapi',
       clear: true,
@@ -215,7 +216,7 @@ class ViewAllLogs extends Component {
           packageInfo={this.props.packageInfo || packageInfo}
           objectName="job-logs"
           baseRoute={packageInfo.stripes.route}
-          initialResultCount={RESULT_COUNT_INCREMENT}
+          initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={RESULT_COUNT_INCREMENT}
           visibleColumns={visibleColumns}
           columnMapping={columnMapping}
