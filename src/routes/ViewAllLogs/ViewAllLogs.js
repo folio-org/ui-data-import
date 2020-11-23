@@ -58,8 +58,8 @@ const visibleColumns = [
   'hrId',
 ];
 
-const INITIAL_RESULT_COUNT = 25;
-const RESULT_COUNT_INCREMENT = 25;
+const INITIAL_RESULT_COUNT = 100;
+const RESULT_COUNT_INCREMENT = 100;
 
 @stripesConnect
 class ViewAllLogs extends Component {
@@ -235,6 +235,8 @@ class ViewAllLogs extends Component {
           renderFilters={this.renderFilters}
           onFilterChange={this.handleFilterChange}
           onChangeIndex={this.changeSearchIndex}
+          pagingType="click"
+          pageAmount={RESULT_COUNT_INCREMENT}
           title={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
         />
       </div>
