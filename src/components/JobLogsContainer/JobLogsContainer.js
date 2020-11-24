@@ -44,7 +44,7 @@ export const JobLogsContainer = props => {
     <Button
       buttonStyle="link"
       marginBottom0
-      to={`/data-import/log/${record.id}`}
+      to={`/data-import/job-summary/${record.id}`}
       buttonClass={sharedCss.cellLink}
       target="_blank"
       onClick={e => e.stopPropagation()}

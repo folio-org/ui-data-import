@@ -1,8 +1,12 @@
 import React from 'react';
 
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+
 import '../../../test/jest/__mock__';
-import { reduxFormMock } from '../../../test/jest/__mock__/reduxForm.mock';
-import { renderWithIntl } from '../../../test/jest/helpers';
+import {
+  renderWithReduxForm,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 
 import { AcceptedValuesField } from './AcceptedValuesField';
 
@@ -33,7 +37,7 @@ const renderAcceptedValuesField = ({
     />
   );
 
-  return renderWithIntl(reduxFormMock(component));
+  return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
 global.fetch = jest.fn();

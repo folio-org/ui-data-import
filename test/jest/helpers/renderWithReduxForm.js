@@ -9,7 +9,7 @@ import {
 } from 'redux';
 import { Provider } from 'react-redux';
 
-export const reduxFormMock = (component, initialStateValues = {}, formFieldValues = {}) => {
+export const renderWithReduxForm = (component, initialStateValues = {}, formFieldValues = {}) => {
   const onSubmit = jest.fn();
   const fieldReducer = (state = initialStateValues) => state;
   const reducer = combineReducers({
