@@ -1,15 +1,18 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { createMemoryHistory } from 'history'
-import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
+
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../../test/jest/__mock__';
-import { renderWithIntl } from '../../../../test/jest/helpers';
+import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { LinkTo } from './LinkTo';
 
 const menu = { onToggle: jest.fn() };
 const history = createMemoryHistory();
+
 history.push = jest.fn();
 
 const renderLinkToItemTemplate = () => {
@@ -23,7 +26,7 @@ const renderLinkToItemTemplate = () => {
     </Router>
   );
 
-  return renderWithIntl(component);
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('Action menu LinkTo Item Template', () => {
