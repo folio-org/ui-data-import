@@ -764,5 +764,6 @@
     "settings.mappingProfiles.map.instance.subheader": "Os campos inativos não podem ser mapeados porque são controlados pelo sistema ou pelo perfil de mapeamento de instância MARC da biblioteca",
     "match.qualifier.text": "Texto do tipo de qualificador",
     "incomingRecordTypes.static.select": "Escolha o valor estático (apenas submatch)",
-    "validation.quotationError": "O valor não MARC deve usar aspas"
+    "validation.quotationError": "O valor não MARC deve usar aspas",
+    "validation.selectAnAction": "A ação deve ser selecionada antes que o perfil possa ser salvo"
 }
