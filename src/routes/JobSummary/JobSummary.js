@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { noop } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import {
@@ -12,22 +13,22 @@ import { NoValue } from '@folio/stripes/components';
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
 
-// TODO: Remove when the endpoint job summary is ready and retrieve it from props instead
-const resourcesMock = {
-  jobLog: {
-    hasLoaded: true,
-    isPending: false,
-    failed: false,
-    records: [{}],
-    other: { totalRecords: 1 },
-  },
-  resultCount: INITIAL_RESULT_COUNT,
-};
-
 const JobSummaryComponent = ({
   mutator,
   resources: { jobExecutions: { records } },
 }) => {
+  const totalRecords = records[0]?.progress.total || 0;
+  // TODO: Remove when the endpoint job summary is ready and retrieve it from props instead
+  const resourcesMock = {
+    jobLog: {
+      hasLoaded: true,
+      isPending: false,
+      failed: false,
+      records: Array(totalRecords).fill({}),
+      other: { totalRecords },
+    },
+    resultCount: INITIAL_RESULT_COUNT,
+  };
   const visibleColumns = [
     'recordNumber',
     'title',
@@ -84,6 +85,7 @@ const JobSummaryComponent = ({
       parentMutator={mutator}
       parentResources={resourcesMock}
       lastMenu={<></>}
+      searchResultsProps={{ onRowClick: noop }}
     />
   );
 };
@@ -107,7 +109,10 @@ JobSummaryComponent.propTypes = {
   resources: PropTypes.shape({
     jobExecutions: PropTypes.shape({
       records: PropTypes.arrayOf(
-        PropTypes.shape({ fileName: PropTypes.string.isRequired }),
+        PropTypes.shape({
+          fileName: PropTypes.string.isRequired,
+          progress: PropTypes.shape({ total: PropTypes.number.isRequired }).isRequired,
+        }),
       ).isRequired,
     }),
   }).isRequired,

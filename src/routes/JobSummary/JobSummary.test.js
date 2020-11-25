@@ -14,7 +14,10 @@ import { JobSummary } from './JobSummary';
 
 const resources = buildResources({
   resourceName: 'jobExecutions',
-  records: [{ fileName: 'testFileName' }],
+  records: [{
+    fileName: 'testFileName',
+    progress: { total: 10 },
+  }],
 });
 const mutator = buildMutator();
 
@@ -41,7 +44,7 @@ describe('Job summary page', () => {
   it('should have total number of records in the subheader', () => {
     const { getByText } = renderJobSummary();
 
-    expect(getByText('1 record found')).toBeDefined();
+    expect(getByText('10 records found')).toBeDefined();
   });
 
   describe('results table', () => {
