@@ -17,6 +17,7 @@
 * Cover `<ActionMenu>` component with tests (UIDATIMP-699)
 * Field mapping for repeatable fields needs a tweak to validation (UIDATIMP-768)
 * Cover `<Callout>` component with tests (UIDATIMP-701)
+* Cover `<DataFetcher>` component with tests (UIDATIMP-703)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
