@@ -1,7 +1,9 @@
 import React from 'react';
 
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+
 import '../../../test/jest/__mock__';
-import { renderWithIntl } from '../../../test/jest/helpers';
+import { translationsProperties } from '../../../test/jest/helpers';
 
 import { NetworkMessage } from './NetworkMessage';
 
@@ -19,7 +21,7 @@ const renderNetworkMessage = ({
     />
   );
 
-  return renderWithIntl(component);
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('NetworkMessage component', () => {
@@ -29,7 +31,7 @@ describe('NetworkMessage component', () => {
         type: 'error',
         record: {},
       });
-  
+
       expect(getByText('Server communication problem. Please try again')).toBeDefined();
     });
   });
@@ -40,9 +42,7 @@ describe('NetworkMessage component', () => {
         const { getByText } = renderNetworkMessage({
           messageId: 'fileExtensions.action',
           type: 'success',
-          record: {
-            name: 'test record name',
-          }
+          record: { name: 'test record name' },
         });
 
         expect(getByText('The file extension "test record name" was successfully created')).toBeDefined();
@@ -54,9 +54,7 @@ describe('NetworkMessage component', () => {
         const { getByText } = renderNetworkMessage({
           messageId: 'fileExtensions.action',
           type: 'success',
-          record: {
-            profile: { name: 'test profile name' },
-          }
+          record: { profile: { name: 'test profile name' } },
         });
 
         expect(getByText('The file extension "test profile name" was successfully created')).toBeDefined();
@@ -68,9 +66,7 @@ describe('NetworkMessage component', () => {
         const { getByText } = renderNetworkMessage({
           messageId: 'fileExtensions.action',
           type: 'success',
-          record: {
-            extension: 'test extension name',
-          }
+          record: { extension: 'test extension name' },
         });
 
         expect(getByText('The file extension "test extension name" was successfully created')).toBeDefined();

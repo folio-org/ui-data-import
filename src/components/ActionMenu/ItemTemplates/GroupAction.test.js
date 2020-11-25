@@ -1,8 +1,10 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+
 import '../../../../test/jest/__mock__';
-import { renderWithIntl } from '../../../../test/jest/helpers';
+import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { GroupAction } from './GroupAction';
 
@@ -18,7 +20,7 @@ const renderGroupActionItemTemplate = ({ selectedCount = 0 }) => {
     />
   );
 
-  return renderWithIntl(component);
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('Action menu GroupAction Item Template', () => {
@@ -42,7 +44,7 @@ describe('Action menu GroupAction Item Template', () => {
 
   describe('when button is clicked and `selectedCount` prop is passed', () => {
     it('then `onToggle` function should be called', () => {
-      const { getByText } = renderGroupActionItemTemplate({selectedCount: 1});
+      const { getByText } = renderGroupActionItemTemplate({ selectedCount: 1 });
 
       fireEvent.click(getByText('Run (1 item)'));
 
@@ -50,7 +52,7 @@ describe('Action menu GroupAction Item Template', () => {
     });
 
     it('then `selectedCount` should be shown', () => {
-      const { getByText } = renderGroupActionItemTemplate({selectedCount: 2});
+      const { getByText } = renderGroupActionItemTemplate({ selectedCount: 2 });
 
       expect(getByText('Run (2 items)')).toBeDefined();
     });

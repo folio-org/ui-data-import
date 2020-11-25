@@ -1,9 +1,13 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+
 import '../../../test/jest/__mock__';
-import { reduxFormMock } from '../../../test/jest/__mock__/reduxForm.mock';
-import { renderWithIntl } from '../../../test/jest/helpers';
+import {
+  renderWithReduxForm,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 
 import { MARCTableRow } from './MARCTableRow';
 
@@ -37,7 +41,7 @@ const renderMARCTableRow = () => {
     />
   );
 
-  return renderWithIntl(reduxFormMock(component));
+  return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
 describe('MARC modifications table row', () => {

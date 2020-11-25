@@ -1,38 +1,43 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { fireEvent } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+} from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
 import { menuTemplate } from './menuTemplate';
 
 jest.mock('./ItemTemplates', () => ({
-  LinkTo: () => <button>LinkTo</button>,
-  Default: ({ onClick }) => <button onClick={onClick}>Default</button>,
-  GroupAction: () => <button>GroupAction</button>,
+  LinkTo: () => <button type="button">LinkTo</button>,
+  Default: ({ onClick }) => (
+    <button
+      type="button"
+      onClick={onClick}
+    >
+      Default
+    </button>
+  ),
+  GroupAction: () => <button type="button">GroupAction</button>,
 }));
 
 const entity = {
   props: {
     ENTITY_KEY: 'test entity',
-    location: {
-      pathname: '/test-url',
-    },
+    location: { pathname: '/test-url' },
     checkboxList: {
-      selectedRecords: {
-        size: 1,
-      },
+      selectedRecords: { size: 1 },
       selectAll: jest.fn(),
       deselectAll: jest.fn(),
-    }
+    },
   },
   showRunConfirmation: jest.fn(),
   showDeleteConfirmation: jest.fn(),
   showRestoreConfirmation: jest.fn(),
 };
-const menu = { onToggle: jest.fn() }
+const menu = { onToggle: jest.fn() };
 
-const templates  = menuTemplate(entity, menu);
+const templates = menuTemplate(entity, menu);
 
 describe('Action menu menuTemplate', () => {
   afterEach(() => {

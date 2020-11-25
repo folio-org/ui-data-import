@@ -13,7 +13,7 @@ jest.mock('./menuTemplate', () => ({
 }));
 
 const entity = { props: { actionMenuItems: ['addNew', 'edit'] } };
-const menu = { onToggle: jest.fn() }
+const menu = { onToggle: jest.fn() };
 
 const renderActionMenu = () => {
   const component = (
@@ -36,5 +36,5 @@ describe('Action menu component', () => {
 
     expect(getByText('addNew')).toBeDefined();
     expect(getByText('edit')).toBeDefined();
-  })
+  });
 });

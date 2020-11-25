@@ -1,8 +1,10 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+
 import '../../../../test/jest/__mock__';
-import { renderWithIntl } from '../../../../test/jest/helpers';
+import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { Default } from './Default';
 
@@ -17,7 +19,7 @@ const renderDefaultItemTemplate = () => {
     />
   );
 
-  return renderWithIntl(component);
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('Action menu Default Item Template', () => {

@@ -10,6 +10,7 @@ import { stripesShape } from '@folio/stripes/core';
 import {
   Home,
   JobProfile,
+  JobSummary,
   ViewJobLog,
 } from './routes';
 import ViewAllLogs from './routes/ViewAllLogs';
@@ -51,6 +52,11 @@ class DataImport extends Component {
             path={`${path}/log/:id`}
             exact
             component={ViewJobLog}
+          />
+          <Route
+            path={`${path}/job-summary/:id`}
+            exact
+            component={JobSummary}
           />
           <Route
             path={`${path}/job-logs`}

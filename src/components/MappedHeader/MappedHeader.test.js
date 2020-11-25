@@ -1,7 +1,9 @@
 import React from 'react';
 
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+
 import '../../../test/jest/__mock__';
-import { renderWithIntl } from '../../../test/jest/helpers';
+import { translationsProperties } from '../../../test/jest/helpers';
 
 import { MappedHeader } from './MappedHeader';
 
@@ -15,7 +17,7 @@ jest.mock('..', () => ({
 const renderMappedHeader = ({ headersToSeparate }) => {
   const component = <MappedHeader headersToSeparate={headersToSeparate} />;
 
-  return renderWithIntl(component);
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('Mapped header component', () => {
