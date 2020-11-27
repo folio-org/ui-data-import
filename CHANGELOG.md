@@ -19,6 +19,7 @@
 * Cover `<Callout>` component with tests (UIDATIMP-701)
 * Cover `<DataFetcher>` component with tests (UIDATIMP-703)
 * Add "Load more" button to an Individual job's log details page (UIDATIMP-756)
+* Log lite - import job summary page, from View all page (UIDATIMP-762)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)

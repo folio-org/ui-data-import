@@ -121,13 +121,6 @@ class ViewAllLogs extends Component {
     this.getActiveFilters = getActiveFilters.bind(this);
     this.handleFilterChange = handleFilterChange.bind(this);
     this.changeSearchIndex = changeSearchIndex.bind(this);
-    this.onRowClick = this.onRowClick.bind(this);
-  }
-
-  onRowClick(e, meta) {
-    const path = `/data-import/log/${meta.id}`;
-
-    window.open(path, '_blank').focus();
   }
 
   getSearchableIndexes() {
@@ -198,7 +191,8 @@ class ViewAllLogs extends Component {
           buttonStyle="link"
           marginBottom0
           buttonClass={sharedCss.cellLink}
-          target="_blank"
+          to={`/data-import/job-summary/${record.id}`}
+          onClick={e => e.stopPropagation()}
         >
           {record.fileName}
         </Button>
@@ -222,7 +216,7 @@ class ViewAllLogs extends Component {
           columnMapping={columnMapping}
           resultsFormatter={resultsFormatter}
           viewRecordComponent={noop}
-          onSelectRow={this.onRowClick}
+          onSelectRow={noop}
           viewRecordPerms="metadata-provider.jobexecutions.get"
           parentResources={resources}
           parentMutator={mutator}
