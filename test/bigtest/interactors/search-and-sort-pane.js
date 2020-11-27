@@ -11,7 +11,6 @@ import {
 } from '@bigtest/interactor';
 
 import SearchAndSortInteractor from '@folio/stripes-smart-components/lib/SearchAndSort/tests/interactor';
-import SearchFieldInteractor from '@folio/stripes-components/lib/SearchField/tests/interactor';
 import SelectInteractor from '@folio/stripes-components/lib/Selection/tests/interactor';
 import css from '@folio/stripes-components/lib/Accordion/Accordion.css';
 
@@ -48,8 +47,6 @@ class FiltersInteractor {
 }
 
 class SearchAndSortPane extends SearchAndSortInteractor {
-  resetButton = new Button('#clickable-reset-all');
-  searchField = new SearchFieldInteractor();
   filters = new FiltersInteractor();
 }
 

@@ -47,11 +47,11 @@ describe('View all logs', () => {
     });
 
     it('has a resetAll button', () => {
-      expect(searchAndSort.resetButton.isPresent).to.be.true;
+      expect(searchAndSort.resetAll.isPresent).to.be.true;
     });
 
     it('resetAll button is disable by default', () => {
-      expect(searchAndSort.resetButton.isDisabled).to.be.true;
+      expect(searchAndSort.resetAll.isDisabled).to.be.true;
     });
 
     describe('Search pane', () => {
@@ -62,7 +62,7 @@ describe('View all logs', () => {
         });
 
         it('resetAll button is active', () => {
-          expect(searchAndSort.resetButton.isDisabled).to.be.false;
+          expect(searchAndSort.resetAll.isDisabled).to.be.false;
         });
       });
     });

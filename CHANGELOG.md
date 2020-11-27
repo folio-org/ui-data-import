@@ -17,6 +17,7 @@
 * Cover `<ActionMenu>` component with tests (UIDATIMP-699)
 * Field mapping for repeatable fields needs a tweak to validation (UIDATIMP-768)
 * Cover `<Callout>` component with tests (UIDATIMP-701)
+* Cover `<DataFetcher>` component with tests (UIDATIMP-703)
 * Add "Load more" button to an Individual job's log details page (UIDATIMP-756)
 
 ### Bugs fixed:
