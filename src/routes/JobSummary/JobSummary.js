@@ -24,7 +24,7 @@ const JobSummaryComponent = ({
       hasLoaded: true,
       isPending: false,
       failed: false,
-      records: Array(totalRecords).fill({}),
+      records: Array(totalRecords < INITIAL_RESULT_COUNT ? totalRecords : INITIAL_RESULT_COUNT).fill({}),
       other: { totalRecords },
     },
     resultCount: INITIAL_RESULT_COUNT,
@@ -85,22 +85,24 @@ const JobSummaryComponent = ({
       parentMutator={mutator}
       parentResources={resourcesMock}
       lastMenu={<></>}
-      searchResultsProps={{ onRowClick: noop }}
+      searchResultsProps={{
+        onRowClick: noop,
+        pagingType: 'click',
+        pageAmount: RESULT_COUNT_INCREMENT,
+      }}
     />
   );
 };
 
 // TODO: Refactor the manifest when the endpoint for job summary is ready.
-// For now it makes call to the `metadata-provider/jobExecutions` to get
+// For now it makes call to the `change-manager/jobExecutions` to get
 // the file name to display it in the pane header
 JobSummaryComponent.manifest = Object.freeze({
   resultCount: { initialValue: INITIAL_RESULT_COUNT },
   jobExecutions: {
     type: 'okapi',
-    path: 'metadata-provider/jobExecutions',
-    records: 'jobExecutions',
+    path: 'change-manager/jobExecutions/:{id}',
     throwsErrors: false,
-    params: { query: 'progress.jobExecutionId==":{id}"' },
   },
 });
 
