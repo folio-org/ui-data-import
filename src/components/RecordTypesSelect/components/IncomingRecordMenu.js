@@ -29,7 +29,7 @@ export const IncomingRecordMenu = ({
   >
     {Object.keys(MATCH_INCOMING_RECORD_TYPES).map((recordType, i) => {
       // TODO: Disabling options should be removed after implentation is done
-      const isOptionDisabled = INCOMING_RECORD_TYPES_TO_DISABLE.some(option => option === recordType);
+      const isOptionDisabled = [...INCOMING_RECORD_TYPES_TO_DISABLE, 'EDIFACT_INVOICE'].some(option => option === recordType);
 
       return (
         <Button

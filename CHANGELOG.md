@@ -20,6 +20,7 @@
 * Cover `<DataFetcher>` component with tests (UIDATIMP-703)
 * Add "Load more" button to an Individual job's log details page (UIDATIMP-756)
 * Log lite - import job summary page, from View all page (UIDATIMP-762)
+* Enable EDIFACT invoice options in various settings (UIDATIMP-778)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
