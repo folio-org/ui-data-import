@@ -59,7 +59,7 @@ export const RecordItem = memo(({
   );
 
   // TODO: Disabling options should be removed after implentation is done
-  const isOptionDisabled = FOLIO_RECORD_TYPES_TO_DISABLE.some(option => option === item.type);
+  const isOptionDisabled = [...FOLIO_RECORD_TYPES_TO_DISABLE, 'INVOICE'].some(option => option === item.type);
 
   const initialButton = (
     <div // eslint-disable-line jsx-a11y/click-events-have-key-events

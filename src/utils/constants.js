@@ -611,5 +611,5 @@ export const MARC_FIELD_PROTECTION_SOURCE = {
 
 // TODO: Options to disable until functionality is not implemented.
 // Should be removed in the future
-export const FOLIO_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'ORDER', 'INVOICE', 'MARC_AUTHORITY'];
-export const INCOMING_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'MARC_AUTHORITY', 'EDIFACT_INVOICE'];
+export const FOLIO_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'ORDER', 'MARC_AUTHORITY'];
+export const INCOMING_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'MARC_AUTHORITY'];

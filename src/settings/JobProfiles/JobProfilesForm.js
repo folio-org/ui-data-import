@@ -40,8 +40,6 @@ const formName = 'jobProfilesForm';
 const dataTypes = DATA_TYPES.map(dataType => ({
   value: dataType,
   label: dataType,
-  // TODO: Disabling options should be removed after implentation is done
-  disabled: dataType === 'EDIFACT',
 }));
 
 export const JobProfilesFormComponent = ({
