@@ -29,6 +29,7 @@
 * Fix Accessibility problems in ProfileLinker Component (settings/data-import/job-profiles) (UIDATIMP-434)
 * Fix an error occurred while searching for associated profiles (UIDATIMP-769)
 * Add "Load more" button to View all log page (UIDATIMP-755)
+* Status descending sort on Data Import home page not working. Fixed (UIDATIMP-758)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
 
