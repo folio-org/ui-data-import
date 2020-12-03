@@ -18,7 +18,7 @@ const sortColumns = {
   },
   status: {
     sortFn: sortStrings,
-    useFormatterFn: false,
+    useFormatterFn: true,
   },
 };
 
