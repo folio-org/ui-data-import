@@ -21,6 +21,8 @@
 * Add "Load more" button to an Individual job's log details page (UIDATIMP-756)
 * Log lite - import job summary page, from View all page (UIDATIMP-762)
 * Enable EDIFACT invoice options in various settings (UIDATIMP-778)
+* Add "Load more" button to View all log page (UIDATIMP-755)
+* Update the UI permission names for current Data import permissions (UIDATIMP-781)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
@@ -28,7 +30,6 @@
 * Fix Accessibility problems for settings/data-import/{...-profiles} (Form elements must have labels) (UIDATIMP-457)
 * Fix Accessibility problems in ProfileLinker Component (settings/data-import/job-profiles) (UIDATIMP-434)
 * Fix an error occurred while searching for associated profiles (UIDATIMP-769)
-* Add "Load more" button to View all log page (UIDATIMP-755)
 * Status descending sort on Data Import home page not working. Fixed (UIDATIMP-758)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)

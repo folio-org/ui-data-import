@@ -179,7 +179,7 @@
     "permissionSets": [
       {
         "permissionName": "module.data-import.enabled",
-        "displayName": "UI: ui-data-import module is enabled",
+        "displayName": "Data import: all permissions",
         "subPermissions": [
           "metadata-provider.log.get",
           "metadata-provider.jobexecutions.get",
@@ -196,7 +196,7 @@
       },
       {
         "permissionName": "settings.data-import.enabled",
-        "displayName": "Settings (data-import): display list of settings pages",
+        "displayName": "Settings (Data import): Can view, create, edit, and remove",
         "subPermissions": [
           "settings.enabled",
           "data-import.fileExtensions.get",
