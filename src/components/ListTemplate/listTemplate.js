@@ -15,7 +15,7 @@ import {
 import {
   formatUserName,
   ENTITY_KEYS,
-  STATUS_ERROR,
+  FILE_STATUSES,
 } from '../../utils';
 
 /**
@@ -126,7 +126,7 @@ export const listTemplate = ({
       progress,
     } = record;
 
-    if (status === STATUS_ERROR) {
+    if (status === FILE_STATUSES.ERROR) {
       if (progress && progress.current > 0) {
         return <FormattedMessage id="ui-data-import.completedWithErrors" />;
       }
