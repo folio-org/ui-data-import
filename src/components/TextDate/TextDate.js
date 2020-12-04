@@ -232,6 +232,7 @@ const TextDateField = ({
 
   return (
     <div
+      data-testid="date-picker"
       className={css.container}
       {...pickDataProps(props)}
     >

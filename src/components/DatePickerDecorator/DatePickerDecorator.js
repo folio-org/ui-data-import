@@ -117,6 +117,7 @@ export const DatePickerDecorator = memo(props => {
   return (
     <div
       data-test-date-picker
+      data-testid="date-picker-decorator"
       className={styles.decorator}
     >
       <Component
