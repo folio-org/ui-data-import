@@ -21,6 +21,7 @@
 * Add "Load more" button to an Individual job's log details page (UIDATIMP-756)
 * Log lite - import job summary page, from View all page (UIDATIMP-762)
 * Enable EDIFACT invoice options in various settings (UIDATIMP-778)
+* Cover `<DatePickerDecorator>` component with tests (UIDATIMP-704)
 * Add "Load more" button to View all log page (UIDATIMP-755)
 * Update the UI permission names for current Data import permissions (UIDATIMP-781)
 
