@@ -24,6 +24,7 @@
 * Cover `<DatePickerDecorator>` component with tests (UIDATIMP-704)
 * Add "Load more" button to View all log page (UIDATIMP-755)
 * Update the UI permission names for current Data import permissions (UIDATIMP-781)
+* Suppress Inventory single record MARC imports from data import log on landing page (UIDATIMP-659)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
