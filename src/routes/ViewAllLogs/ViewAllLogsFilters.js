@@ -152,8 +152,22 @@ const ViewAllLogsFilters = ({
                 />
               )}
             </FormattedMessage>
-
           </div>
+        </Accordion>
+        <Accordion
+          id={FILTERS.SINGLE_RECORD_IMPORTS}
+          closedByDefault={closedByDefault}
+          displayClearButton={!!activeFilters[FILTERS.SINGLE_RECORD_IMPORTS]}
+          header={FilterAccordionHeader}
+          label={<FormattedMessage id="ui-data-import.filter.singleRecordImports" />}
+          onClearFilter={createClearFilterHandler(onChange, FILTERS.SINGLE_RECORD_IMPORTS)}
+        >
+          <CheckboxFilter
+            dataOptions={FILTER_OPTIONS.SINGLE_RECORD_IMPORTS}
+            name={FILTERS.SINGLE_RECORD_IMPORTS}
+            onChange={onChange}
+            selectedValues={activeFilters[FILTERS.SINGLE_RECORD_IMPORTS]}
+          />
         </Accordion>
       </AccordionSet>
     </div>
