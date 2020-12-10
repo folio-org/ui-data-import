@@ -1,4 +1,7 @@
-import { FILE_STATUSES } from '../../utils/constants';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
+import { FILE_STATUSES } from '../../utils';
 
 const {
   COMMITTED,
@@ -10,17 +13,28 @@ export const FILTERS = {
   DATE: 'completedDate',
   JOB_PROFILE: 'jobProfileInfo',
   USER: 'userId',
+  SINGLE_RECORD_IMPORTS: 'singleRecordImports',
 };
 
 export const FILTER_OPTIONS = {
   ERRORS: [
     {
       value: COMMITTED,
-      label: 'No',
+      label: <FormattedMessage id="ui-data-import.filter.option.no" />,
     },
     {
       value: ERROR,
-      label: 'Yes',
+      label: <FormattedMessage id="ui-data-import.filter.option.yes" />,
+    },
+  ],
+  SINGLE_RECORD_IMPORTS: [
+    {
+      value: 'no',
+      label: <FormattedMessage id="ui-data-import.filter.option.no" />,
+    },
+    {
+      value: 'yes',
+      label: <FormattedMessage id="ui-data-import.filter.option.yes" />,
     },
   ],
 };
