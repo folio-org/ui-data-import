@@ -190,7 +190,8 @@
           "data-import.upload.file.post",
           "source-storage.records.get",
           "data-import.uploaddefinitions.files.post",
-          "change-manager.records.delete"
+          "change-manager.records.delete",
+          "change-manager.jobexecutions.get"
         ],
         "visible": true
       },
@@ -249,7 +250,11 @@
           "mapping-rules.update",
           "mapping-rules.restore",
           "tags.collection.get",
-          "tags.item.post"
+          "tags.item.post",
+          "acquisitions-units.units.collection.get",
+          "batch-groups.collection.get",
+          "finance.funds.collection.get",
+          "finance.expense-classes.collection.get"
         ],
         "visible": true
       }

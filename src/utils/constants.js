@@ -229,6 +229,11 @@ export const REPEATABLE_ACTIONS = {
   DELETE_INCOMING: 'DELETE_INCOMING',
 };
 
+export const FUND_DISTRIBUTION_SOURCE = {
+  USE_FUND_DISTRIBUTION_FROM_POL: 'USE_FUND_DISTRIBUTION_FROM_POL',
+  USE_FUND_DISTRIBUTION_FIELD_MAPPINGS: 'USE_FUND_DISTRIBUTION_FIELD_MAPPINGS',
+};
+
 export const STATIC_VALUE_TYPES = {
   TEXT: 'TEXT',
   NUMBER: 'NUMBER',
@@ -337,6 +342,18 @@ export const MAPPING_REPEATABLE_FIELD_ACTIONS = [
   {
     label: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions.deleteIncoming',
     value: REPEATABLE_ACTIONS.DELETE_INCOMING,
+  },
+];
+
+export const MAPPING_FUND_DISTRIBUTION_FIELD_SOURCES = [
+  {
+    label: 'ui-data-import.settings.mappingProfiles.map.wrapper.fundDistributionSource.useFundDistributionFromPOL',
+    value: FUND_DISTRIBUTION_SOURCE.USE_FUND_DISTRIBUTION_FROM_POL,
+  },
+  {
+    label: 'ui-data-import.settings.mappingProfiles.map.wrapper.fundDistributionSource.useFundDistributionFieldMappings',
+    value: FUND_DISTRIBUTION_SOURCE.USE_FUND_DISTRIBUTION_FIELD_MAPPINGS,
+
   },
 ];
 
@@ -558,6 +575,35 @@ export const ITEM_STATUS_OPTIONS = [
   }, {
     value: 'Withdrawn',
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.withdrawn',
+  },
+];
+
+export const INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS = [
+  {
+    value: 'By line',
+    label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.ByLine',
+  }, {
+    value: 'By amount',
+    label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.ByAmount',
+  }, {
+    value: 'By quantity',
+    label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.ByQuantity',
+  }, {
+    value: 'Not prorated',
+    label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.NotProrated',
+  },
+];
+
+export const INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS = [
+  {
+    value: 'In addition to',
+    label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.InAdditionTo',
+  }, {
+    value: 'Included in',
+    label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.IncludedIn',
+  }, {
+    value: 'Separate from',
+    label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.SeparateFrom',
   },
 ];
 

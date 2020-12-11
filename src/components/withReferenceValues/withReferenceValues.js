@@ -97,7 +97,7 @@ withReferenceValues.propTypes = {
   dataOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
-  wrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
+  wrappedComponent: PropTypes.oneOfType([PropTypes.elementType, PropTypes.func]).isRequired,
   input: PropTypes.shape({
     onBlur: PropTypes.func,
     onChange: PropTypes.func,

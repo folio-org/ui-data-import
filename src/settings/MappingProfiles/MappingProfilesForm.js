@@ -45,6 +45,7 @@ import {
   MappingHoldingsDetails,
   MappingItemDetails,
   MappingMARCBibDetails,
+  MappingInvoiceDetails,
 } from './detailsSections/edit';
 
 import {
@@ -274,6 +275,7 @@ export const MappingProfilesFormComponent = ({
     HOLDINGS: <MappingHoldingsDetails {...detailsProps} />,
     ITEM: <MappingItemDetails {...detailsProps} />,
     MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCDetailsProps} />,
+    INVOICE: <MappingInvoiceDetails {...detailsProps} />,
   };
 
   return (
