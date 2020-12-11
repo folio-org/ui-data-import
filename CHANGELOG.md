@@ -26,6 +26,7 @@
 * Update the UI permission names for current Data import permissions (UIDATIMP-781)
 * Suppress Inventory single record MARC imports from data import log on landing page (UIDATIMP-659)
 * Add filter for Inventory single record imports to the View all log screen (UIDATIMP-671)
+* Match profile: Add validation to "Existing record" details (UIDATIMP-782)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
