@@ -48,7 +48,6 @@ export const MatchCriterion = ({
   existingRecordFields,
   onStaticValueTypeChange,
   onQualifierSectionChange,
-  dispatchFormChange,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -130,9 +129,7 @@ export const MatchCriterion = ({
       repeatableIndex={repeatableIndex}
       existingRecordFieldLabel={existingRecordFieldLbl}
       existingRecordFields={existingRecordFields}
-      existingRecordFieldsValue={existingMatchExpression.fields}
       existingRecordType={existingRecordType}
-      dispatchFormChange={dispatchFormChange}
     />
   );
   const existingQualifierSectionElement = (
@@ -264,7 +261,6 @@ MatchCriterion.propTypes = {
   existingRecordLabel: PropTypes.string,
   onStaticValueTypeChange: PropTypes.func,
   onQualifierSectionChange: PropTypes.func,
-  dispatchFormChange: PropTypes.func,
 };
 
 MatchCriterion.defaultProps = {
@@ -275,5 +271,4 @@ MatchCriterion.defaultProps = {
   existingRecordLabel: '',
   onStaticValueTypeChange: noop,
   onQualifierSectionChange: noop,
-  dispatchFormChange: noop,
 };
