@@ -27,6 +27,7 @@
 * Suppress Inventory single record MARC imports from data import log on landing page (UIDATIMP-659)
 * Add filter for Inventory single record imports to the View all log screen (UIDATIMP-671)
 * Match profile: Add validation to "Existing record" details (UIDATIMP-782)
+* Data Import Field Mapping Profile details: Create/Edit Invoice and Invoice line from EDIFACT Invoice (UIDATIMP-296)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)

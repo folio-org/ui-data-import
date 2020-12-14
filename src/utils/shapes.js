@@ -6,6 +6,7 @@ import {
   MAPPING_DETAILS_POSITION,
   BOOLEAN_ACTIONS,
   REPEATABLE_ACTIONS,
+  FUND_DISTRIBUTION_SOURCE,
   CRITERION_TYPES,
   COMPARISON_PARTS,
   QUALIFIER_TYPES,
@@ -64,7 +65,7 @@ export const mappingMARCViewFieldShape = PropTypes.shape({
   position: PropTypes.oneOf([...Object.values(MAPPING_DETAILS_POSITION)]),
 });
 
-export const mappingProfileSubfieldShape = PropTypes.shape({
+export const mappingProfileInnerSubfieldShape = {
   order: PropTypes.number.isRequired,
   path: PropTypes.string.isRequired,
   fields: PropTypes.arrayOf(PropTypes.shape({
@@ -73,9 +74,20 @@ export const mappingProfileSubfieldShape = PropTypes.shape({
     value: PropTypes.string,
     enabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     booleanFieldAction: PropTypes.oneOf(Object.values(BOOLEAN_ACTIONS)),
-    repeatableFieldAction: PropTypes.oneOf(Object.values(REPEATABLE_ACTIONS)),
+    repeatableFieldAction: PropTypes.oneOf([
+      ...Object.values(REPEATABLE_ACTIONS),
+      ...Object.values(FUND_DISTRIBUTION_SOURCE),
+    ]),
     acceptedValues: PropTypes.object,
   })),
+};
+
+export const mappingProfileSubfieldShape = PropTypes.shape({
+  ...mappingProfileInnerSubfieldShape,
+  fields: {
+    ...mappingProfileInnerSubfieldShape.fields,
+    subfields: PropTypes.arrayOf(mappingProfileInnerSubfieldShape),
+  },
 });
 
 export const mappingProfileFieldShape = PropTypes.shape({
@@ -84,7 +96,10 @@ export const mappingProfileFieldShape = PropTypes.shape({
   value: PropTypes.string,
   enabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   booleanFieldAction: PropTypes.oneOf(Object.values(BOOLEAN_ACTIONS)),
-  repeatableFieldAction: PropTypes.oneOf(Object.values(REPEATABLE_ACTIONS)),
+  repeatableFieldAction: PropTypes.oneOf([
+    ...Object.values(REPEATABLE_ACTIONS),
+    ...Object.values(FUND_DISTRIBUTION_SOURCE),
+  ]),
   acceptedValues: PropTypes.object,
   subfields: PropTypes.arrayOf(mappingProfileSubfieldShape),
 });
@@ -213,4 +228,9 @@ export const staticValueDetailsShape = PropTypes.shape({
   exactDate: PropTypes.string,
   fromDate: PropTypes.string,
   toDate: PropTypes.string,
+});
+
+export const repeatableFieldActionShape = PropTypes.shape({
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
 });
