@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   useIntl,
@@ -26,6 +26,7 @@ import {
   getSubfieldName,
   getInnerSubfieldName,
   getInnerRepeatableAcceptedValuesPath,
+  getFundDistributionFieldsPath,
   updateInitialFields,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
@@ -33,6 +34,7 @@ import {
   createOptionsList,
   mappingProfileSubfieldShape,
   okapiShape,
+  PRORATE_OPTIONS,
   INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS,
   INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS,
 } from '../../../../../utils';
@@ -47,8 +49,19 @@ export const InvoiceAdjustments = ({
 }) => {
   const { formatMessage } = useIntl();
 
+  const [isFundDistribution, setIsFundDistribution] = useState(false);
+
   const prorateList = createOptionsList(INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS, formatMessage);
   const relationToTotalList = createOptionsList(INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS, formatMessage);
+
+  const handleProRateChange = index => value => {
+    if (value === `"${PRORATE_OPTIONS.NOT_PRORATED}"`) {
+      setIsFundDistribution(true);
+    } else {
+      setIsFundDistribution(false);
+      setReferenceTables(getFundDistributionFieldsPath(15, index, 6), []);
+    }
+  };
 
   const renderFundDistributionFields = (mappingFieldIndex, mappingSubfieldFieldIndex, mappingSubfieldIndex) => {
     const currentInitialFundDistribution = initialFundDistribution[mappingSubfieldFieldIndex];
@@ -56,7 +69,7 @@ export const InvoiceAdjustments = ({
     const fundDistributions = adjustments[mappingSubfieldIndex].fields[mappingSubfieldFieldIndex].subfields;
     const fundDistributionInitialFields = { [currentInitialFundDistribution.name]: currentInitialFundDistribution.subfields[0] };
 
-    const getActualPath = curentIndex => `profile.mappingDetails.mappingFields[${mappingFieldIndex}].subfields[${mappingSubfieldIndex}].fields[${curentIndex}].subfields`;
+    const getActualPath = curentIndex => getFundDistributionFieldsPath(mappingFieldIndex, mappingSubfieldIndex, curentIndex);
 
     return (
       <RepeatableField
@@ -64,6 +77,7 @@ export const InvoiceAdjustments = ({
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.addLabel`} />}
         onAdd={() => onAdd(fundDistributions, 'fundDistributions', mappingSubfieldFieldIndex, fundDistributionInitialFields, setReferenceTables, 'order', getActualPath)}
         onRemove={index => onRemove(index, fundDistributions, mappingSubfieldFieldIndex, setReferenceTables, 'order', getActualPath)}
+        canAdd={isFundDistribution}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={3}>
@@ -186,6 +200,7 @@ export const InvoiceAdjustments = ({
               isRemoveValueAllowed
               wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
               acceptedValuesList={prorateList}
+              onChange={handleProRateChange(index)}
               okapi={okapi}
             />
           </Col>

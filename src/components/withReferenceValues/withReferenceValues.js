@@ -21,7 +21,7 @@ export const withReferenceValues = memo(({
   id,
   input,
   value,
-  onChange,
+  onFieldChange,
   dataOptions,
   optionValue,
   optionLabel,
@@ -45,8 +45,8 @@ export const withReferenceValues = memo(({
       input.onChange(e);
     }
 
-    if (typeof onChange === 'function') {
-      onChange(val);
+    if (typeof onFieldChange === 'function') {
+      onFieldChange(val);
     }
   };
 
@@ -107,7 +107,7 @@ withReferenceValues.propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onChange: PropTypes.func,
+  onFieldChange: PropTypes.func,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
   disabled: PropTypes.bool,

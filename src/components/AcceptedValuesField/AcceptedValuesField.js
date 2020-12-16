@@ -131,6 +131,7 @@ export const AcceptedValuesField = ({
       wrappedComponent={component}
       wrapperLabel={wrapperLabel}
       validate={[validateAcceptedValueField, memoizedValidation]}
+      onFieldChange={onChange}
       {...dataAttributes}
     />
   );
@@ -143,7 +144,7 @@ export const AcceptedValuesField = ({
         wrappedComponent={component}
         dataOptions={listOptions}
         value={componentValue}
-        onChange={onChange}
+        onFieldChange={onChange}
         label={label}
         wrapperLabel={wrapperLabel}
         optionValue={optionValue}
