@@ -34,6 +34,7 @@ import {
 
 export const InvoiceLineFundDistribution = ({
   fundDistributions,
+  currency,
   initialFields,
   getRepeatableFieldAction,
   setReferenceTables,
@@ -113,6 +114,7 @@ export const InvoiceLineFundDistribution = ({
                         component={TypeToggle}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.type`} />}
                         name={getSubfieldName(40, 3, index)}
+                        currency={currency}
                       />
                     </Col>
                     <Col xs={2}>
@@ -140,4 +142,7 @@ InvoiceLineFundDistribution.propTypes = {
   getRepeatableFieldAction: PropTypes.func.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  currency: PropTypes.string,
 };
+
+InvoiceLineFundDistribution.defaultProps = { currency: '' };

@@ -262,6 +262,11 @@ export const MappingProfilesFormComponent = ({
     onUpdateFieldAdd: setInitialValuesForMARCUpdates,
     setReferenceTables: setFormFieldValue,
   };
+
+  const invoiceDetailsProps = {
+    ...detailsProps,
+    mappingDetails,
+  };
   const fieldMappingsForMARCOptions = createOptionsList(FIELD_MAPPINGS_FOR_MARC_OPTIONS, formatMessage);
   const fieldMappingsForMARCPreviousOption = fieldMappingsForMARC && formatMessage(
     { id: FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label },
@@ -275,7 +280,7 @@ export const MappingProfilesFormComponent = ({
     HOLDINGS: <MappingHoldingsDetails {...detailsProps} />,
     ITEM: <MappingItemDetails {...detailsProps} />,
     MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCDetailsProps} />,
-    INVOICE: <MappingInvoiceDetails {...detailsProps} />,
+    INVOICE: <MappingInvoiceDetails {...invoiceDetailsProps} />,
   };
 
   return (

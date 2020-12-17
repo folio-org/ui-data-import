@@ -17,9 +17,11 @@ import {
   mappingItemInitialFieldsShape,
   mappingItemRefTablesShape,
   okapiShape,
+  CURRENCY_FIELD,
 } from '../../../../utils';
 
 export const MappingInvoiceDetails = ({
+  mappingDetails,
   initialFields,
   referenceTables,
   setReferenceTables,
@@ -29,6 +31,10 @@ export const MappingInvoiceDetails = ({
   const adjustments = referenceTables?.adjustments || [];
   const fundDistributions = referenceTables?.fundDistributions || [];
   const lineAdjustments = referenceTables?.lineAdjustments || [];
+  const currencyFromDetails = mappingDetails
+    ?.mappingFields
+    ?.find(item => (item.name === CURRENCY_FIELD))?.value
+    .replace(/['"]+/g, '');
 
   return (
     <AccordionSet>
@@ -38,6 +44,7 @@ export const MappingInvoiceDetails = ({
       />
       <InvoiceAdjustments
         adjustments={adjustments}
+        currency={currencyFromDetails}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
@@ -52,6 +59,7 @@ export const MappingInvoiceDetails = ({
       />
       <InvoiceLineFundDistribution
         fundDistributions={fundDistributions}
+        currency={currencyFromDetails}
         initialFields={initialFields}
         getRepeatableFieldAction={getRepeatableFieldAction}
         setReferenceTables={setReferenceTables}
@@ -59,6 +67,7 @@ export const MappingInvoiceDetails = ({
       />
       <InvoiceLineAdjustments
         lineAdjustments={lineAdjustments}
+        currency={currencyFromDetails}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
@@ -73,4 +82,5 @@ MappingInvoiceDetails.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  mappingDetails: PropTypes.object,
 };

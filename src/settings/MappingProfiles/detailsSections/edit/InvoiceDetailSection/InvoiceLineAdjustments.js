@@ -35,6 +35,7 @@ import {
 
 export const InvoiceLineAdjustments = ({
   lineAdjustments,
+  currency,
   initialFields,
   setReferenceTables,
   okapi,
@@ -86,6 +87,7 @@ export const InvoiceLineAdjustments = ({
               component={TypeToggle}
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.type`} />}
               name={getSubfieldName(41, 2, index)}
+              currency={currency}
             />
           </Col>
           <Col xs={3}>
@@ -141,4 +143,7 @@ InvoiceLineAdjustments.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  currency: PropTypes.string,
 };
+
+InvoiceLineAdjustments.defaultProps = { currency: '' };

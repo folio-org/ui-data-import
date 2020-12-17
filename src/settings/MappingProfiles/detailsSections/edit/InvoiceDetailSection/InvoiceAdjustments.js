@@ -39,6 +39,7 @@ import {
 
 export const InvoiceAdjustments = ({
   adjustments,
+  currency,
   initialFields,
   initialFields: { adjustments: { fields: initialFundDistribution } },
   setReferenceTables,
@@ -112,6 +113,7 @@ export const InvoiceAdjustments = ({
                 component={TypeToggle}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.type`} />}
                 name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, index, 3)}
+                currency={currency}
               />
             </Col>
             <Col xs={2}>
@@ -171,7 +173,7 @@ export const InvoiceAdjustments = ({
               component={TypeToggle}
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.type`} />}
               name={getSubfieldName(15, 2, index)}
-              currency={undefined}
+              currency={currency}
             />
           </Col>
           <Col xs={2}>
@@ -254,4 +256,7 @@ InvoiceAdjustments.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  currency: PropTypes.string,
 };
+
+InvoiceAdjustments.defaultProps = { currency: '' };

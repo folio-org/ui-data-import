@@ -65,35 +65,37 @@ export const mappingMARCViewFieldShape = PropTypes.shape({
   position: PropTypes.oneOf([...Object.values(MAPPING_DETAILS_POSITION)]),
 });
 
+export const mappingProfileSubfieldFieldShape = {
+  name: PropTypes.string.isRequired,
+  path: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  enabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  booleanFieldAction: PropTypes.oneOf(Object.values(BOOLEAN_ACTIONS)),
+  repeatableFieldAction: PropTypes.oneOf([
+    ...Object.values(REPEATABLE_ACTIONS),
+    ...Object.values(FUND_DISTRIBUTION_SOURCE),
+  ]),
+  acceptedValues: PropTypes.object,
+};
+
 export const mappingProfileInnerSubfieldShape = {
   order: PropTypes.number.isRequired,
   path: PropTypes.string.isRequired,
-  fields: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    path: PropTypes.string,
-    value: PropTypes.string,
-    enabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    booleanFieldAction: PropTypes.oneOf(Object.values(BOOLEAN_ACTIONS)),
-    repeatableFieldAction: PropTypes.oneOf([
-      ...Object.values(REPEATABLE_ACTIONS),
-      ...Object.values(FUND_DISTRIBUTION_SOURCE),
-    ]),
-    acceptedValues: PropTypes.object,
-  })),
+  fields: PropTypes.arrayOf(PropTypes.shape(mappingProfileSubfieldFieldShape)),
 };
 
 export const mappingProfileSubfieldShape = PropTypes.shape({
   ...mappingProfileInnerSubfieldShape,
-  fields: {
-    ...mappingProfileInnerSubfieldShape.fields,
-    subfields: PropTypes.arrayOf(mappingProfileInnerSubfieldShape),
-  },
+  fields: PropTypes.arrayOf(PropTypes.shape({
+    ...mappingProfileSubfieldFieldShape,
+    subfields: PropTypes.arrayOf(PropTypes.shape(mappingProfileInnerSubfieldShape)),
+  })),
 });
 
 export const mappingProfileFieldShape = PropTypes.shape({
   name: PropTypes.string.isRequired,
   path: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   enabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   booleanFieldAction: PropTypes.oneOf(Object.values(BOOLEAN_ACTIONS)),
   repeatableFieldAction: PropTypes.oneOf([
