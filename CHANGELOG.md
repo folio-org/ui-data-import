@@ -29,6 +29,7 @@
 * Match profile: Add validation to "Existing record" details (UIDATIMP-782)
 * Data Import Field Mapping Profile details: Create/Edit Invoice and Invoice line from EDIFACT Invoice (UIDATIMP-296)
 * Data Import Field Mapping Profile details: Toggles should display currency selected in Currency select in Extended information accordion(UIDATIMP-801)
+* Data Import Field Mapping Profile details: Fund distribution section should be visible only when "Not prorated" option in Pro rate select is selected (UIDATIMP-802)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)

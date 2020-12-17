@@ -477,6 +477,13 @@ export const MAPPING_DETAILS_POSITION = {
   NEW_SUBFIELD: 'NEW_SUBFIELD',
 };
 
+export const PRORATE_OPTIONS = {
+  BY_LINE: 'By line',
+  BY_AMOUNT: 'By amount',
+  BY_QUANTITY: 'By quantity',
+  NOT_PRORATED: 'Not prorated',
+};
+
 export const ACTION_OPTIONS = [
   {
     value: MAPPING_DETAILS_ACTIONS.ADD,
@@ -582,16 +589,16 @@ export const ITEM_STATUS_OPTIONS = [
 
 export const INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS = [
   {
-    value: 'By line',
+    value: PRORATE_OPTIONS.BY_LINE,
     label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.ByLine',
   }, {
-    value: 'By amount',
+    value: PRORATE_OPTIONS.BY_AMOUNT,
     label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.ByAmount',
   }, {
-    value: 'By quantity',
+    value: PRORATE_OPTIONS.BY_QUANTITY,
     label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.ByQuantity',
   }, {
-    value: 'Not prorated',
+    value: PRORATE_OPTIONS.NOT_PRORATED,
     label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.NotProrated',
   },
 ];
