@@ -43,6 +43,7 @@ export const AcceptedValuesField = ({
   onChange,
   isDirty,
   isFormField,
+  isMultiSelection,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
 
@@ -115,8 +116,9 @@ export const AcceptedValuesField = ({
   );
 
   const validateAcceptedValueField = useCallback(
-    value => validateMARCWithElse(value, isRemoveValueAllowed),
-    [isRemoveValueAllowed],
+    // TODO: Should be refactored while implementing validation for EDIFACT Invoice
+    value => !isMultiSelection && validateMARCWithElse(value, isRemoveValueAllowed),
+    [isMultiSelection, isRemoveValueAllowed],
   );
 
   const renderFormField = () => (
@@ -132,6 +134,7 @@ export const AcceptedValuesField = ({
       wrapperLabel={wrapperLabel}
       validate={[validateAcceptedValueField, memoizedValidation]}
       onFieldChange={onChange}
+      isMultiSelection={isMultiSelection}
       {...dataAttributes}
     />
   );
@@ -150,6 +153,7 @@ export const AcceptedValuesField = ({
         optionValue={optionValue}
         optionLabel={optionLabel}
         dirty={isDirty}
+        isMultiSelection={isMultiSelection}
         okapi={okapi}
       />
     );
@@ -180,6 +184,7 @@ AcceptedValuesField.propTypes = {
   isRemoveValueAllowed: PropTypes.bool,
   onChange: PropTypes.func,
   componentValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isMultiSelection: PropTypes.bool,
   isDirty: PropTypes.bool,
   isFormField: PropTypes.bool,
   parsedOptionValue: PropTypes.string,
@@ -190,6 +195,7 @@ AcceptedValuesField.defaultProps = {
   acceptedValuesList: [],
   isRemoveValueAllowed: false,
   isFormField: true,
+  isMultiSelection: false,
   parsedOptionValue: '',
   parsedOptionLabel: '',
 };
