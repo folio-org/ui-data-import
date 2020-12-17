@@ -28,15 +28,19 @@ export const ExistingSectionFolio = ({
   existingRecordFieldLabel,
   existingRecordFields,
   existingRecordType,
+  dispatchFormChange,
 }) => {
-  const fieldToChangeName = `profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields`;
+  const fieldToChangeName = `profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields[0].value`;
 
   const handleFieldSearch = (value, dataOptions) => {
     return dataOptions.filter(o => new RegExp(`${value}`, 'i').test(o.label));
   };
 
-  const handleExistingRecordSelect = value => {
-    const fieldId = existingRecordFields.find(item => item.value === value)?.id;
+  const handleExistingRecordSelect = (event, newValue) => {
+    event.preventDefault();
+
+    const fieldToChange = `profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields`;
+    const fieldId = existingRecordFields.find(item => item.value === newValue)?.id;
     const fieldFromConfig = fieldsConfig.find(item => item.id === fieldId && item.recordType === existingRecordType);
     const fieldToChangeValue = [{
       label: MARC_FIELD_CONSTITUENT.FIELD,
@@ -48,15 +52,17 @@ export const ExistingSectionFolio = ({
 
       fieldToChangeValue.push({
         label: fromResources.labelToSend,
-        value,
+        value: newValue,
       });
     }
 
-    return fieldToChangeValue;
+    dispatchFormChange(fieldToChange, fieldToChangeValue);
   };
 
   const formatExistingRecordValue = useCallback(
     value => {
+      if (!value) return '';
+
       const fieldValue = value[0].value;
       const fieldFromConfig = fieldsConfig.find(item => item.value === fieldValue && item.recordType === existingRecordType);
 
@@ -64,14 +70,11 @@ export const ExistingSectionFolio = ({
         return last(value).value;
       }
 
-      return existingRecordFields.find(item => item.id === fieldFromConfig?.id)?.value;
+      const existingRecordField = existingRecordFields.find(item => item.id === fieldFromConfig?.id)?.value;
+
+      return existingRecordField || '';
     },
     [existingRecordFields, existingRecordType],
-  );
-
-  const validateExistingFieldValue = useCallback(
-    value => validateRequiredField(last(value).value),
-    [],
   );
 
   return (
@@ -88,10 +91,9 @@ export const ExistingSectionFolio = ({
             name={fieldToChangeName}
             dataOptions={existingRecordFields}
             format={formatExistingRecordValue}
-            parse={handleExistingRecordSelect}
+            onChange={handleExistingRecordSelect}
             onFilter={handleFieldSearch}
-            onBlur={e => e.preventDefault()}
-            validate={[validateExistingFieldValue]}
+            validate={[validateRequiredField]}
           />
         </Col>
       </Row>
@@ -102,6 +104,7 @@ export const ExistingSectionFolio = ({
 ExistingSectionFolio.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
   existingRecordType: PropTypes.oneOf(Object.keys(FOLIO_RECORD_TYPES)).isRequired,
+  dispatchFormChange: PropTypes.func.isRequired,
   existingRecordFields: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
