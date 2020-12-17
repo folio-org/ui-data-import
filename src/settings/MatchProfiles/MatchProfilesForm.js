@@ -269,6 +269,7 @@ export const MatchProfilesFormComponent = memo(({
                         existingRecordFields={isEmpty(existingRecordFields) ? getInitialFields(matchFields, getDropdownOptions) : existingRecordFields}
                         onStaticValueTypeChange={(event, newValue) => handleStaticValueTypeChange(newValue)}
                         onQualifierSectionChange={handleQualifierSectionChange}
+                        dispatchFormChange={dispatchFormChange}
                       />
                     )}
                   />
