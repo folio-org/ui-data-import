@@ -151,7 +151,7 @@ DatePickerDecorator.propTypes = {
     onFocus: PropTypes.func.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   }).isRequired,
-  wrappedComponent: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
+  wrappedComponent: PropTypes.oneOfType([PropTypes.elementType, PropTypes.func]).isRequired,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
 };

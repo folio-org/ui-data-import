@@ -2,10 +2,9 @@
 
 .mappingForm {
   max-width: 100%;
-  & [for|="checkbox"] {
-    & [class|="inner"] {
-      min-height: 35px;
-    }
+
+  & [class|="kvRoot"] {
+    margin-bottom: 0;
   }
 }
 

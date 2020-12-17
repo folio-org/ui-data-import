@@ -19,6 +19,7 @@ import {
   MAPPING_REPEATABLE_FIELD_ACTIONS,
   REPEATABLE_ACTIONS,
   validateRepeatableActionsField,
+  repeatableFieldActionShape,
 } from '../../utils';
 
 import styles from './RepeatableActionsField.css';
@@ -31,32 +32,31 @@ export const RepeatableActionsField = memo(({
   repeatableFieldIndex,
   hasRepeatableFields,
   onRepeatableActionChange,
+  actions,
+  actionToClearFields,
   disabled,
   children,
 }) => {
-  const { DELETE_EXISTING } = REPEATABLE_ACTIONS;
-
   const [isAddButtonDisabled, setIsAddButtonDisabled] = useState(false);
 
   useEffect(() => {
-    setIsAddButtonDisabled(repeatableFieldAction === DELETE_EXISTING);
-  }, [DELETE_EXISTING, repeatableFieldAction]);
+    setIsAddButtonDisabled(repeatableFieldAction === actionToClearFields);
+  }, [actionToClearFields, repeatableFieldAction]);
 
   const intl = useIntl();
 
-  const actions = MAPPING_REPEATABLE_FIELD_ACTIONS;
   const dataOptions = actions.map(action => ({
     value: action.value,
     label: intl.formatMessage({ id: action.label }),
   }));
 
   const validateRepeatableActions = useCallback(
-    value => (value !== DELETE_EXISTING) && validateRepeatableActionsField(value, hasRepeatableFields),
-    [DELETE_EXISTING, hasRepeatableFields],
+    value => (value !== actionToClearFields) && validateRepeatableActionsField(value, hasRepeatableFields),
+    [actionToClearFields, hasRepeatableFields],
   );
 
   const handleRepeatableActionChange = e => {
-    if (e.target.value === DELETE_EXISTING) {
+    if (e.target.value === actionToClearFields) {
       onRepeatableActionChange(`profile.mappingDetails.mappingFields[${repeatableFieldIndex}].subfields`, []);
     }
   };
@@ -90,7 +90,7 @@ export const RepeatableActionsField = memo(({
               disabled={disabled}
               onChange={handleRepeatableActionChange}
               validate={[validateRepeatableActions]}
-              aria-label={legend || intl.formatMessage({ id: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions' })}
+              aria-label={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions' })}
             />
           )}
         </WithTranslation>
@@ -110,9 +110,13 @@ RepeatableActionsField.propTypes = {
   repeatableFieldIndex: PropTypes.number.isRequired,
   hasRepeatableFields: PropTypes.bool.isRequired,
   onRepeatableActionChange: PropTypes.func.isRequired,
+  actions: PropTypes.arrayOf(repeatableFieldActionShape),
+  actionToClearFields: PropTypes.string,
 };
 
 RepeatableActionsField.defaultProps = {
   disabled: false,
   wrapperPlaceholder: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions',
+  actions: MAPPING_REPEATABLE_FIELD_ACTIONS,
+  actionToClearFields: REPEATABLE_ACTIONS.DELETE_EXISTING,
 };

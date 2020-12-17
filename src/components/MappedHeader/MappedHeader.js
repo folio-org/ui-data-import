@@ -21,7 +21,10 @@ export const MappedHeader = ({
         const needSeparator = i < headers.length - 1;
 
         return (
-          <WithTranslation wrapperLabel={header}>
+          <WithTranslation
+            wrapperLabel={header}
+            key={i}
+          >
             {label => (
               <>
                 {label}

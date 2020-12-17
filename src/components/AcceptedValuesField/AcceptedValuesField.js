@@ -28,6 +28,8 @@ export const AcceptedValuesField = ({
   component,
   optionValue,
   optionLabel,
+  parsedOptionValue,
+  parsedOptionLabel,
   wrapperLabel,
   acceptedValuesList,
   wrapperSources,
@@ -48,19 +50,33 @@ export const AcceptedValuesField = ({
     let acceptedValues = {};
 
     data.forEach(item => {
+      let currentOptionValue = optionTemplate ? updateValueWithTemplate(item, optionTemplate) : item[optionValue];
+
+      if (parsedOptionValue) {
+        currentOptionValue = JSON.parse(currentOptionValue)[parsedOptionValue];
+      }
+
       acceptedValues = {
         ...acceptedValues,
-        [item.id]: optionTemplate ? updateValueWithTemplate(item, optionTemplate) : item[optionValue],
+        [item.id]: currentOptionValue,
       };
     });
 
     return acceptedValues;
   };
 
-  const updateListOptions = data => data.map(option => ({
-    ...option,
-    name: optionTemplate ? updateValueWithTemplate(option, optionTemplate) : option.name,
-  }));
+  const updateListOptions = data => data.map(option => {
+    let currentOption = optionTemplate ? updateValueWithTemplate(option, optionTemplate) : option[optionLabel];
+
+    if (parsedOptionLabel) {
+      currentOption = JSON.parse(currentOption)[parsedOptionLabel];
+    }
+
+    return {
+      ...option,
+      [optionLabel]: currentOption,
+    };
+  });
 
   const extendDataWithStatisticalCodeType = (arrToExtend, arrWithExtendedField) => {
     const extendedData = sortCollection(arrToExtend, ['code']).map(item => {
@@ -142,7 +158,7 @@ export const AcceptedValuesField = ({
 };
 
 AcceptedValuesField.propTypes = {
-  component: PropTypes.oneOfType([React.Component, PropTypes.func]).isRequired,
+  component: PropTypes.oneOfType([PropTypes.elementType, PropTypes.func]).isRequired,
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
   okapi: okapiShape.isRequired,
@@ -165,10 +181,14 @@ AcceptedValuesField.propTypes = {
   componentValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isDirty: PropTypes.bool,
   isFormField: PropTypes.bool,
+  parsedOptionValue: PropTypes.string,
+  parsedOptionLabel: PropTypes.string,
 };
 
 AcceptedValuesField.defaultProps = {
   acceptedValuesList: [],
   isRemoveValueAllowed: false,
   isFormField: true,
+  parsedOptionValue: '',
+  parsedOptionLabel: '',
 };
