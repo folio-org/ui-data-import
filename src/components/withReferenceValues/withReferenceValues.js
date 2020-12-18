@@ -28,6 +28,7 @@ export const withReferenceValues = memo(({
   wrappedComponent,
   wrapperLabel,
   disabled,
+  isMultiSelection,
   ...rest
 }) => {
   const currentValue = input?.value || value;
@@ -51,7 +52,7 @@ export const withReferenceValues = memo(({
   };
 
   const onValueSelect = wrapperValue => {
-    const newValue = wrapperValue ? formatDecoratorValue(currentValue, wrapperValue, decoratorValueRegExp, true) : '';
+    const newValue = wrapperValue ? formatDecoratorValue(currentValue, wrapperValue, decoratorValueRegExp, true, isMultiSelection) : '';
 
     if (newValue) {
       handleChange(newValue);
@@ -110,6 +111,7 @@ withReferenceValues.propTypes = {
   onFieldChange: PropTypes.func,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
+  isMultiSelection: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 
@@ -117,4 +119,5 @@ withReferenceValues.defaultProps = {
   id: null,
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
   disabled: false,
+  isMultiSelection: false,
 };

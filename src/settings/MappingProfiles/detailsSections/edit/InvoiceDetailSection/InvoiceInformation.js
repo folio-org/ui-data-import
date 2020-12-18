@@ -102,6 +102,7 @@ export const InvoiceInformation = ({
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(6)}
+            isMultiSelection
             okapi={okapi}
           />
         </Col>
