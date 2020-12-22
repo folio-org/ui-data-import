@@ -660,3 +660,10 @@ export const INCOMING_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'MARC_AUTHORIT
 
 export const OCLC_CREATE_INSTANCE_ID = 'd0ebb7b0-2f0f-11eb-adc1-0242ac120002';
 export const OCLC_UPDATE_INSTANCE_ID = '91f9b8d6-d80e-4727-9783-73fb53e3c786';
+
+export const RECORD_ACTION_STATUS_LABEL_IDS = {
+  CREATED: 'ui-data-import.logLight.actionStatus.created',
+  UPDATED: 'ui-data-import.logLight.actionStatus.updated',
+  MULTIPLE: 'ui-data-import.logLight.actionStatus.multiple',
+  DISCARDED: 'ui-data-import.logLight.actionStatus.discarded',
+};
