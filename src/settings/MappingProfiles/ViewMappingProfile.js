@@ -161,7 +161,7 @@ export class ViewMappingProfile extends Component {
       <ActionMenu
         entity={this}
         menu={menu}
-        recordId={record.id}
+        recordId={record?.id}
       />
     );
   };

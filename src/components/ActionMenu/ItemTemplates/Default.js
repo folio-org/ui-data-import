@@ -33,3 +33,5 @@ Default.propTypes = {
   dataAttributes: PropTypes.object,
   isDisabled: PropTypes.bool,
 };
+
+Default.defaultProps = { isDisabled: false };

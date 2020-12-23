@@ -45,3 +45,5 @@ LinkTo.propTypes = {
   dataAttributes: PropTypes.object,
   isDisabled: PropTypes.bool,
 };
+
+LinkTo.defaultProps = { isDisabled: false };

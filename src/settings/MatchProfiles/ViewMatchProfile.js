@@ -145,7 +145,7 @@ export class ViewMatchProfile extends Component {
       <ActionMenu
         entity={this}
         menu={menu}
-        recordId={record.id}
+        recordId={record?.id}
       />
     );
   };
