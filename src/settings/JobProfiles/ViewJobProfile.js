@@ -300,12 +300,17 @@ export class ViewJobProfile extends Component {
     this.loadRecords(record);
   }
 
-  renderActionMenu = menu => (
-    <ActionMenu
-      entity={this}
-      menu={menu}
-    />
-  );
+  renderActionMenu = menu => {
+    const { record } = this.jobProfileData;
+
+    return (
+      <ActionMenu
+        entity={this}
+        menu={menu}
+        recordId={record.id}
+      />
+    );
+  };
 
   renderPaneHeader = renderProps => {
     const {

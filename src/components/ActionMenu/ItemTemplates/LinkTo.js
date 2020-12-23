@@ -15,11 +15,13 @@ export const LinkTo = memo(({
   menu,
   location,
   dataAttributes = {},
+  isDisabled,
 }) => (
   <Button
     to={location}
     buttonStyle="dropdownItem"
     buttonClass={sharedCss.linkButton}
+    disabled={isDisabled}
     onClick={menu.onToggle}
     {...dataAttributes}
   >
@@ -41,4 +43,5 @@ LinkTo.propTypes = {
     PropTypes.string.isRequired,
   ]),
   dataAttributes: PropTypes.object,
+  isDisabled: PropTypes.bool,
 };
