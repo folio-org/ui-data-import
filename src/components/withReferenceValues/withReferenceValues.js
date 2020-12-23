@@ -1,10 +1,5 @@
-import React, {
-  useState,
-  useEffect,
-  memo,
-} from 'react';
+import React, { memo } from 'react';
 import { PropTypes } from 'prop-types';
-import { isEmpty } from 'lodash';
 
 import {
   WithTranslation,
@@ -29,15 +24,10 @@ export const withReferenceValues = memo(({
   wrapperLabel,
   disabled,
   isMultiSelection,
+  hasLoaded,
   ...rest
 }) => {
   const currentValue = input?.value || value;
-
-  const [hasLoaded, setHasLoaded] = useState(false);
-
-  useEffect(() => {
-    setHasLoaded(!isEmpty(dataOptions));
-  }, [dataOptions]);
 
   const handleChange = e => {
     const val = e.target ? e.target.value : e;
@@ -70,7 +60,7 @@ export const withReferenceValues = memo(({
         onDragStart={input?.onDragStart}
         onDrop={input?.onDrop}
         onFocus={input?.onFocus}
-        loading={!hasLoaded}
+        loading={!disabled ? !hasLoaded : false}
         disabled={disabled}
         {...rest}
       />
@@ -112,6 +102,7 @@ withReferenceValues.propTypes = {
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
   isMultiSelection: PropTypes.bool,
+  hasLoaded: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 
@@ -120,4 +111,5 @@ withReferenceValues.defaultProps = {
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
   disabled: false,
   isMultiSelection: false,
+  hasLoaded: false,
 };

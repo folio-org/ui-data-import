@@ -3,6 +3,7 @@ export * from './ActionMenu';
 export * from './BooleanActionField';
 export * from './CodeHighlight';
 export * from './Callout';
+export * from './FieldOrganization';
 export * from './ListView';
 export * from './ListTemplate';
 export * from './DataFetcher';
