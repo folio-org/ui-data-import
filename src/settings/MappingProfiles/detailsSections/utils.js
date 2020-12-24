@@ -1,6 +1,9 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { isEmpty } from 'lodash';
+import {
+  isEmpty,
+  get,
+} from 'lodash';
 
 import { NoValue } from '@folio/stripes/components';
 
@@ -135,4 +138,40 @@ export const updateInitialFields = initials => {
   });
 
   return updatedInitRow;
+};
+
+export const getFieldValueFromDetails = (path, fieldName) => path
+  ?.find(item => (item.name === fieldName))?.value
+  ?.replace(/['"]+/g, '');
+
+export const getAccountingCodeOptions = vendor => {
+  const accounts = get(vendor, 'accounts', []).filter(({ appSystemNo }) => Boolean(appSystemNo));
+  const options = accounts.map(({
+    accountNo,
+    appSystemNo,
+  }) => ({
+    label: `${accountNo} (${appSystemNo})`,
+    value: appSystemNo,
+  }));
+  const erpCode = get(vendor, 'erpCode');
+  const defaultOption = erpCode
+    ? [{
+      label: `Default (${erpCode})`,
+      value: erpCode,
+    }]
+    : [];
+
+  return [
+    ...defaultOption,
+    ...options,
+  ];
+};
+
+export const getAccountingNumberOptions = vendor => {
+  const accounts = get(vendor, 'accounts', []).filter(({ accountNo }) => Boolean(accountNo));
+
+  return accounts.map(({ accountNo }) => ({
+    label: accountNo,
+    value: accountNo,
+  }));
 };

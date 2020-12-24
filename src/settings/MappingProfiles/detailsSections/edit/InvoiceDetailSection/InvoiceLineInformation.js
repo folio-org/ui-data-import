@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
+
+import { isEmpty } from 'lodash';
 
 import {
   Accordion,
@@ -19,7 +22,10 @@ import { getFieldName } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { okapiShape } from '../../../../../utils';
 
-export const InvoiceLineInformation = ({ okapi }) => {
+export const InvoiceLineInformation = ({
+  accountingNumberOptions,
+  okapi,
+}) => {
   return (
     <Accordion
       id="invoice-line-information"
@@ -111,8 +117,7 @@ export const InvoiceLineInformation = ({ okapi }) => {
         </Col>
         <Col xs={3}>
           {
-            // TODO: will be implemented in scope of UIDATIMP-800
-            'record' ? (
+            isEmpty(accountingNumberOptions) ? (
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.accountNumber`} />}
@@ -126,7 +131,7 @@ export const InvoiceLineInformation = ({ okapi }) => {
                 optionValue="value"
                 optionLabel="label"
                 wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                acceptedValuesList={[]}
+                acceptedValuesList={accountingNumberOptions}
                 okapi={okapi}
               />
             )
@@ -161,4 +166,9 @@ export const InvoiceLineInformation = ({ okapi }) => {
   );
 };
 
-InvoiceLineInformation.propTypes = { okapi: okapiShape.isRequired };
+InvoiceLineInformation.propTypes = {
+  accountingNumberOptions: PropTypes.arrayOf(PropTypes.object),
+  okapi: okapiShape.isRequired,
+};
+
+InvoiceLineInformation.defaultProps = { accountingNumberOptions: [] };
