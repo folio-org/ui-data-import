@@ -1,7 +1,9 @@
 import React from 'react';
 
-import { createLayerURL } from '../../utils';
-import { LAYER_TYPES } from '../../utils/constants';
+import {
+  createLayerURL,
+  LAYER_TYPES,
+} from '../../utils';
 
 import {
   LinkTo,
@@ -14,8 +16,9 @@ import {
  *
  * @param {Component} entity
  * @param {object} menu
+ * @param {boolean} isDefaultProfile
  */
-export const menuTemplate = (entity, menu) => {
+export const menuTemplate = (entity, menu, isDefaultProfile) => {
   const {
     props: {
       ENTITY_KEY,
@@ -41,6 +44,7 @@ export const menuTemplate = (entity, menu) => {
         caption="ui-data-import.edit"
         icon="edit"
         menu={menu}
+        isDisabled={isDefaultProfile}
         location={createLayerURL(location, LAYER_TYPES.EDIT)}
         dataAttributes={{ 'data-test-edit-item-menu-button': '' }}
       />
@@ -143,6 +147,7 @@ export const menuTemplate = (entity, menu) => {
           caption="ui-data-import.delete"
           icon="trash"
           dataAttributes={{ 'data-test-delete-item-menu-button': '' }}
+          isDisabled={isDefaultProfile}
           onClick={handleDelete}
         />
       );

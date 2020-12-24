@@ -134,12 +134,17 @@ export class ViewActionProfile extends Component {
     });
   }
 
-  renderActionMenu = menu => (
-    <ActionMenu
-      entity={this}
-      menu={menu}
-    />
-  );
+  renderActionMenu = menu => {
+    const { record } = this.actionProfileData;
+
+    return (
+      <ActionMenu
+        entity={this}
+        menu={menu}
+        recordId={record?.id}
+      />
+    );
+  };
 
   renderPaneHeader = renderProps => {
     const { onClose } = this.props;
