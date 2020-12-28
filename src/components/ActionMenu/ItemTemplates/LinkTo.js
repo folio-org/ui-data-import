@@ -18,7 +18,7 @@ export const LinkTo = memo(({
   isDisabled,
 }) => (
   <Button
-    to={location}
+    to={isDisabled ? null : location}
     buttonStyle="dropdownItem"
     buttonClass={sharedCss.linkButton}
     disabled={isDisabled}
