@@ -62,7 +62,7 @@ export class ImportJobs extends Component {
   };
 
   componentDidMount() {
-    this.fetchUploadDefinition();
+    setTimeout(() => { this.fetchUploadDefinition(); }, 1000);
   }
 
   calloutRef = createRef();
