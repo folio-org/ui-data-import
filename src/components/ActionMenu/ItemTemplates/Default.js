@@ -12,10 +12,12 @@ export const Default = memo(({
   icon,
   onClick,
   dataAttributes,
+  isDisabled,
 }) => (
   <Button
     buttonStyle="dropdownItem"
     onClick={onClick}
+    disabled={isDisabled}
     {...dataAttributes}
   >
     <Icon icon={icon}>
@@ -29,4 +31,7 @@ Default.propTypes = {
   icon: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   dataAttributes: PropTypes.object,
+  isDisabled: PropTypes.bool,
 };
+
+Default.defaultProps = { isDisabled: false };

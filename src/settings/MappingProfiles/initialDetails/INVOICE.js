@@ -178,14 +178,11 @@ const INVOICE = {
     value: '',
     subfields: [],
   }, {
-    // TODO: Re-check this field with backend , Doesn't exist in schema
-    name: 'vendorName',
-    enabled: false,
-    path: 'invoice.vendorName',
+    name: 'vendorId',
+    enabled: true,
+    path: 'invoice.vendorId',
     value: '',
-    subfields: [],
   }, {
-    // TODO: Re-check. Value is string with code, ex: "G64758-74828"
     name: 'accountingCode',
     enabled: true,
     path: 'invoice.accountingCode',
@@ -293,13 +290,11 @@ const INVOICE = {
     value: '',
     subfields: [],
   }, {
-    // TODO: Display free text or "with ref values" component for that field (UIDATIMP-800)
     name: 'accountNumber',
     enabled: true,
     path: 'invoice_line.accountNumber',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'quantity',
     enabled: true,

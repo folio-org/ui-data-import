@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 
 import { isEmpty } from 'lodash';
@@ -21,6 +22,7 @@ export const OptionsList = ({
   className,
   disabled,
   onSelect,
+  emptyMessage,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -44,7 +46,7 @@ export const OptionsList = ({
         role="menu"
       >
         <ul className={styles.dropdownList}>
-          {!isEmpty(dataOptions) && dataOptions.map(option => (
+          {!isEmpty(dataOptions) ? dataOptions.map(option => (
             <li key={option?.[optionValue]}>
               <Button
                 buttonStyle="dropdownItem"
@@ -59,7 +61,20 @@ export const OptionsList = ({
                 {option?.[optionLabel]}
               </Button>
             </li>
-          ))}
+          )) : (
+            <li>
+              <Button
+                buttonStyle="dropdownItem"
+                role="menuitem"
+                align="start"
+                onClick={e => e.preventDefault()}
+                fullWidth
+              >
+                {emptyMessage}
+              </Button>
+            </li>
+          )
+          }
         </ul>
       </DropdownMenu>
     </Dropdown>
@@ -67,9 +82,10 @@ export const OptionsList = ({
 };
 
 OptionsList.propTypes = {
-  label: PropTypes.oneOfType([PropTypes.string, Node]).isRequired,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   dataOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSelect: PropTypes.func.isRequired,
+  emptyMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   className: PropTypes.string,
   optionValue: PropTypes.string,
@@ -83,4 +99,8 @@ OptionsList.defaultProps = {
   optionLabel: 'label',
   className: null,
   disabled: false,
+  emptyMessage: <FormattedMessage
+    id="ui-data-import.emptyMessage"
+    values={{ type: <FormattedMessage id="ui-data-import.list" /> }}
+  />,
 };

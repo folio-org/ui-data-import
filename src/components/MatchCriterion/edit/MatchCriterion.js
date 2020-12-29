@@ -48,6 +48,7 @@ export const MatchCriterion = ({
   existingRecordFields,
   onStaticValueTypeChange,
   onQualifierSectionChange,
+  dispatchFormChange,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -130,6 +131,7 @@ export const MatchCriterion = ({
       existingRecordFieldLabel={existingRecordFieldLbl}
       existingRecordFields={existingRecordFields}
       existingRecordType={existingRecordType}
+      dispatchFormChange={dispatchFormChange}
     />
   );
   const existingQualifierSectionElement = (
@@ -254,6 +256,7 @@ MatchCriterion.propTypes = {
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   })).isRequired,
+  dispatchFormChange: PropTypes.func.isRequired,
   incomingRecordType: PropTypes.oneOf([...Object.keys(MATCH_INCOMING_RECORD_TYPES), '']),
   existingRecordType: PropTypes.oneOf([...Object.keys(FOLIO_RECORD_TYPES), '']),
   staticValueType: PropTypes.oneOf([...Object.keys(STATIC_VALUE_TYPES), '']),

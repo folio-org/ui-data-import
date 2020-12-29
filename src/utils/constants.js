@@ -55,6 +55,9 @@ export const DEFAULT_JOB_LOG_COLUMNS = [
 export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
 export const SYSTEM_USER_NAME = 'System';
 
+export const CURRENCY_FIELD = 'currency';
+export const VENDOR_ID_FIELD = 'vendorId';
+
 export const DATA_TYPES = [
   'MARC',
   'EDIFACT',
@@ -475,6 +478,13 @@ export const MAPPING_DETAILS_POSITION = {
   NEW_SUBFIELD: 'NEW_SUBFIELD',
 };
 
+export const PRORATE_OPTIONS = {
+  BY_LINE: 'By line',
+  BY_AMOUNT: 'By amount',
+  BY_QUANTITY: 'By quantity',
+  NOT_PRORATED: 'Not prorated',
+};
+
 export const ACTION_OPTIONS = [
   {
     value: MAPPING_DETAILS_ACTIONS.ADD,
@@ -580,16 +590,16 @@ export const ITEM_STATUS_OPTIONS = [
 
 export const INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS = [
   {
-    value: 'By line',
+    value: PRORATE_OPTIONS.BY_LINE,
     label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.ByLine',
   }, {
-    value: 'By amount',
+    value: PRORATE_OPTIONS.BY_AMOUNT,
     label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.ByAmount',
   }, {
-    value: 'By quantity',
+    value: PRORATE_OPTIONS.BY_QUANTITY,
     label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.ByQuantity',
   }, {
-    value: 'Not prorated',
+    value: PRORATE_OPTIONS.NOT_PRORATED,
     label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.NotProrated',
   },
 ];
@@ -660,6 +670,19 @@ export const INCOMING_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'MARC_AUTHORIT
 
 export const OCLC_CREATE_INSTANCE_ID = 'd0ebb7b0-2f0f-11eb-adc1-0242ac120002';
 export const OCLC_UPDATE_INSTANCE_ID = '91f9b8d6-d80e-4727-9783-73fb53e3c786';
+
+export const OCLC_DEFAULT_PROFILE_IDS = [
+  OCLC_CREATE_INSTANCE_ID,
+  OCLC_UPDATE_INSTANCE_ID,
+  'd27d71ce-8a1e-44c6-acea-96961b5592c6',
+  '31dbb554-0826-48ec-a0a4-3c55293d4dee',
+  'd0ebba8a-2f0f-11eb-adc1-0242ac120002',
+  'cddff0e1-233c-47ba-8be5-553c632709d9',
+  '6aa8e98b-0d9f-41dd-b26f-15658d07eb52',
+  'd0ebbc2e-2f0f-11eb-adc1-0242ac120002',
+  '862000b9-84ea-4cae-a223-5fc0552f2b42',
+  'f90864ef-8030-480f-a43f-8cdd21233252',
+];
 
 export const RECORD_ACTION_STATUS_LABEL_IDS = {
   CREATED: 'ui-data-import.logLight.actionStatus.created',

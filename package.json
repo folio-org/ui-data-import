@@ -87,6 +87,9 @@
   "resolutions": {
     "moment": "~2.24.0"
   },
+  "optionalDependencies": {
+    "@folio/plugin-find-organization": "*"
+  },
   "stripes": {
     "stripesDeps": [
       "@folio/stripes-acq-components",

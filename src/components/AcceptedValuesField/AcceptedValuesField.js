@@ -6,7 +6,10 @@ import React, {
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import { isEmpty } from 'lodash';
+import {
+  isEmpty,
+  isEqual,
+} from 'lodash';
 
 import { sortCollection } from '@folio/stripes-data-transfer-components';
 
@@ -43,8 +46,11 @@ export const AcceptedValuesField = ({
   onChange,
   isDirty,
   isFormField,
+  isMultiSelection,
+  disabled,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
+  const [hasOptions, setHasOptions] = useState(!isEmpty(listOptions));
 
   const getAcceptedValuesObj = data => {
     let acceptedValues = {};
@@ -105,9 +111,15 @@ export const AcceptedValuesField = ({
 
         setListOptions(updatedListOptions);
         setAcceptedValues(acceptedValuesPath, acceptedValues);
+        setHasOptions(true);
       });
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    if (!isEqual(listOptions, acceptedValuesList)) {
+      setListOptions(acceptedValuesList);
+      setHasOptions(true);
+    }
+  }, [acceptedValuesList]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const memoizedValidation = useCallback(
     validateAcceptedValues(listOptions, optionValue),
@@ -115,8 +127,9 @@ export const AcceptedValuesField = ({
   );
 
   const validateAcceptedValueField = useCallback(
-    value => validateMARCWithElse(value, isRemoveValueAllowed),
-    [isRemoveValueAllowed],
+    // TODO: Should be refactored while implementing validation for EDIFACT Invoice
+    value => !isMultiSelection && validateMARCWithElse(value, isRemoveValueAllowed),
+    [isMultiSelection, isRemoveValueAllowed],
   );
 
   const renderFormField = () => (
@@ -131,6 +144,10 @@ export const AcceptedValuesField = ({
       wrappedComponent={component}
       wrapperLabel={wrapperLabel}
       validate={[validateAcceptedValueField, memoizedValidation]}
+      onFieldChange={onChange}
+      isMultiSelection={isMultiSelection}
+      disabled={disabled}
+      hasLoaded={hasOptions}
       {...dataAttributes}
     />
   );
@@ -143,12 +160,13 @@ export const AcceptedValuesField = ({
         wrappedComponent={component}
         dataOptions={listOptions}
         value={componentValue}
-        onChange={onChange}
+        onFieldChange={onChange}
         label={label}
         wrapperLabel={wrapperLabel}
         optionValue={optionValue}
         optionLabel={optionLabel}
         dirty={isDirty}
+        isMultiSelection={isMultiSelection}
         okapi={okapi}
       />
     );
@@ -179,6 +197,8 @@ AcceptedValuesField.propTypes = {
   isRemoveValueAllowed: PropTypes.bool,
   onChange: PropTypes.func,
   componentValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isMultiSelection: PropTypes.bool,
+  disabled: PropTypes.bool,
   isDirty: PropTypes.bool,
   isFormField: PropTypes.bool,
   parsedOptionValue: PropTypes.string,
@@ -189,6 +209,8 @@ AcceptedValuesField.defaultProps = {
   acceptedValuesList: [],
   isRemoveValueAllowed: false,
   isFormField: true,
+  isMultiSelection: false,
   parsedOptionValue: '',
   parsedOptionLabel: '',
+  disabled: false,
 };

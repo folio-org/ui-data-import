@@ -1,6 +1,9 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { isEmpty } from 'lodash';
+import {
+  isEmpty,
+  get,
+} from 'lodash';
 
 import { NoValue } from '@folio/stripes/components';
 
@@ -46,6 +49,10 @@ export const getRepeatableAcceptedValuesPath = (mappingFieldIndex, fieldIndex, s
 
 export const getInnerRepeatableAcceptedValuesPath = (mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, innerSubfieldIndex, innerFieldIndex) => {
   return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${mappingSubfieldIndex}].fields[${mappingSubfieldFieldIndex}].subfields[${innerSubfieldIndex}].fields[${innerFieldIndex}].acceptedValues`;
+};
+
+export const getFundDistributionFieldsPath = (mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex) => {
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${mappingSubfieldIndex}].fields[${mappingSubfieldFieldIndex}].subfields`;
 };
 
 export const onAdd = (refTable, fieldName, fieldIndex, initialFields, callback, incrementalField, getPath) => {
@@ -131,4 +138,40 @@ export const updateInitialFields = initials => {
   });
 
   return updatedInitRow;
+};
+
+export const getFieldValueFromDetails = (path, fieldName) => path
+  ?.find(item => (item.name === fieldName))?.value
+  ?.replace(/['"]+/g, '');
+
+export const getAccountingCodeOptions = vendor => {
+  const accounts = get(vendor, 'accounts', []).filter(({ appSystemNo }) => Boolean(appSystemNo));
+  const options = accounts.map(({
+    accountNo,
+    appSystemNo,
+  }) => ({
+    label: `${accountNo} (${appSystemNo})`,
+    value: appSystemNo,
+  }));
+  const erpCode = get(vendor, 'erpCode');
+  const defaultOption = erpCode
+    ? [{
+      label: `Default (${erpCode})`,
+      value: erpCode,
+    }]
+    : [];
+
+  return [
+    ...defaultOption,
+    ...options,
+  ];
+};
+
+export const getAccountingNumberOptions = vendor => {
+  const accounts = get(vendor, 'accounts', []).filter(({ accountNo }) => Boolean(accountNo));
+
+  return accounts.map(({ accountNo }) => ({
+    label: accountNo,
+    value: accountNo,
+  }));
 };

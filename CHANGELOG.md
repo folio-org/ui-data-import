@@ -28,6 +28,11 @@
 * Add filter for Inventory single record imports to the View all log screen (UIDATIMP-671)
 * Match profile: Add validation to "Existing record" details (UIDATIMP-782)
 * Data Import Field Mapping Profile details: Create/Edit Invoice and Invoice line from EDIFACT Invoice (UIDATIMP-296)
+* Data Import Field Mapping Profile details: Toggles should display currency selected in Currency select in Extended information accordion(UIDATIMP-801)
+* Data Import Field Mapping Profile details: Fund distribution section should be visible only when "Not prorated" option in Pro rate select is selected (UIDATIMP-802)
+* Data Import Field Mapping Profile details: Extend functionality of AcceptedValuesField component to be able to choose several option (UIDATIMP-803)
+* Disallow UI edit & deletion of the System-supplied default OCLC single record import profiles (UIDATIMP-784)
+* Data Import Field Mapping Profile details: Create functionality for "Vendor name" and "Accounting code" fields for Vendor information accordion (UIDATIMP-800)
 * Connect the Log light page to the server (UIDATIMP-763)
 
 ### Bugs fixed:
@@ -37,6 +42,7 @@
 * Fix Accessibility problems in ProfileLinker Component (settings/data-import/job-profiles) (UIDATIMP-434)
 * Fix an error occurred while searching for associated profiles (UIDATIMP-769)
 * Status descending sort on Data Import home page not working. Fixed (UIDATIMP-758)
+* Fix an error on switching existing record types on Match profile Create/edit screen (UIDATIMP-804)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
 

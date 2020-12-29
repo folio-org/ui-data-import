@@ -1,10 +1,5 @@
-import React, {
-  useState,
-  useEffect,
-  memo,
-} from 'react';
+import React, { memo } from 'react';
 import { PropTypes } from 'prop-types';
-import { isEmpty } from 'lodash';
 
 import {
   WithTranslation,
@@ -21,22 +16,18 @@ export const withReferenceValues = memo(({
   id,
   input,
   value,
-  onChange,
+  onFieldChange,
   dataOptions,
   optionValue,
   optionLabel,
   wrappedComponent,
   wrapperLabel,
   disabled,
+  isMultiSelection,
+  hasLoaded,
   ...rest
 }) => {
   const currentValue = input?.value || value;
-
-  const [hasLoaded, setHasLoaded] = useState(false);
-
-  useEffect(() => {
-    setHasLoaded(!isEmpty(dataOptions));
-  }, [dataOptions]);
 
   const handleChange = e => {
     const val = e.target ? e.target.value : e;
@@ -45,13 +36,13 @@ export const withReferenceValues = memo(({
       input.onChange(e);
     }
 
-    if (typeof onChange === 'function') {
-      onChange(val);
+    if (typeof onFieldChange === 'function') {
+      onFieldChange(val);
     }
   };
 
   const onValueSelect = wrapperValue => {
-    const newValue = wrapperValue ? formatDecoratorValue(currentValue, wrapperValue, decoratorValueRegExp, true) : '';
+    const newValue = wrapperValue ? formatDecoratorValue(currentValue, wrapperValue, decoratorValueRegExp, true, isMultiSelection) : '';
 
     if (newValue) {
       handleChange(newValue);
@@ -69,7 +60,7 @@ export const withReferenceValues = memo(({
         onDragStart={input?.onDragStart}
         onDrop={input?.onDrop}
         onFocus={input?.onFocus}
-        loading={!hasLoaded}
+        loading={!disabled ? !hasLoaded : false}
         disabled={disabled}
         {...rest}
       />
@@ -107,9 +98,11 @@ withReferenceValues.propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onChange: PropTypes.func,
+  onFieldChange: PropTypes.func,
   id: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
+  isMultiSelection: PropTypes.bool,
+  hasLoaded: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 
@@ -117,4 +110,6 @@ withReferenceValues.defaultProps = {
   id: null,
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
   disabled: false,
+  isMultiSelection: false,
+  hasLoaded: false,
 };
