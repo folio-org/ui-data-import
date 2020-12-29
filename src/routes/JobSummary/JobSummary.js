@@ -4,32 +4,31 @@ import { FormattedMessage } from 'react-intl';
 import { noop } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
-import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   SearchAndSortPane,
   SettingsLabel,
 } from '@folio/stripes-data-transfer-components';
-
 import { NoValue } from '@folio/stripes/components';
 
-import {
-  RECORD_ACTION_STATUS_LABEL_IDS,
-  FIND_ALL_CQL,
-} from '../../utils';
+import { RECORD_ACTION_STATUS_LABEL_IDS } from '../../utils';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
 
-const queryTemplate = '(sortby "%{query.query}")';
+const SORT_TYPE = {
+  DESCENDING: 'desc',
+  ASCENDING: 'asc',
+};
+
 const sortMap = {
-  recordNumber: 'sourceRecordOrder',
-  title: 'sourceRecordTitle',
-  srsMarcBibStatus: 'sourceRecordActionStatus',
-  instanceStatus: 'instanceActionStatus',
-  holdingsStatus: 'holdingsActionStatus',
-  itemStatus: 'itemActionStatus',
-  orderStatus: 'orderActionStatus',
-  invoiceStatus: 'invoiceActionStatus',
+  recordNumber: 'source_record_order',
+  title: 'title',
+  srsMarcBibStatus: 'source_record_action_status',
+  instanceStatus: 'instance_action_status',
+  holdingsStatus: 'holdings_action_status',
+  itemStatus: 'item_action_status',
+  orderStatus: 'order_action_status',
+  invoiceStatus: 'invoice_action_status',
   error: 'error',
 };
 
@@ -117,21 +116,34 @@ JobSummaryComponent.manifest = Object.freeze({
   initializedFilterConfig: { initialValue: false },
   query: { initialValue: {} },
   resultCount: { initialValue: INITIAL_RESULT_COUNT },
+  resultOffset: { initialValue: 0 },
   jobLogEntries: {
     type: 'okapi',
+    records: 'entries',
+    resultOffset: '%{resultOffset}',
     perRequest: RESULT_COUNT_INCREMENT,
     path: 'metadata-provider/jobLogEntries/:{id}',
-    records: 'entries',
     clientGeneratePk: false,
     throwsErrors: false,
     GET: {
       params: {
-        query: makeQueryFunction(
-          FIND_ALL_CQL,
-          queryTemplate,
-          sortMap,
-          [],
-        ),
+        sortBy: queryParams => {
+          const { sort: sortsFromQuery } = queryParams;
+
+          const sorts = sortsFromQuery ? sortsFromQuery.split(',') : [];
+          const mainSort = sorts[0] || '';
+          const sort = mainSort.replace(/^-/, '');
+
+          return sortMap[sort];
+        },
+        order: queryParams => {
+          const { sort: sortsFromQuery } = queryParams;
+
+          const sorts = sortsFromQuery ? sortsFromQuery.split(',') : [];
+          const mainSort = sorts[0] || '';
+
+          return mainSort.startsWith('-') ? SORT_TYPE.DESCENDING : SORT_TYPE.ASCENDING;
+        },
       },
       staticFallback: { params: {} },
     },
