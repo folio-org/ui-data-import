@@ -683,3 +683,10 @@ export const OCLC_DEFAULT_PROFILE_IDS = [
   '862000b9-84ea-4cae-a223-5fc0552f2b42',
   'f90864ef-8030-480f-a43f-8cdd21233252',
 ];
+
+export const RECORD_ACTION_STATUS_LABEL_IDS = {
+  CREATED: 'ui-data-import.logLight.actionStatus.created',
+  UPDATED: 'ui-data-import.logLight.actionStatus.updated',
+  MULTIPLE: 'ui-data-import.logLight.actionStatus.multiple',
+  DISCARDED: 'ui-data-import.logLight.actionStatus.discarded',
+};

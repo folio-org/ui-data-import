@@ -10,56 +10,73 @@ import {
 } from '@folio/stripes-data-transfer-components';
 import { NoValue } from '@folio/stripes/components';
 
+import { RECORD_ACTION_STATUS_LABEL_IDS } from '../../utils';
+
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
 
+const SORT_TYPE = {
+  DESCENDING: 'desc',
+  ASCENDING: 'asc',
+};
+
+const sortMap = {
+  recordNumber: 'source_record_order',
+  title: 'title',
+  srsMarcBibStatus: 'source_record_action_status',
+  instanceStatus: 'instance_action_status',
+  holdingsStatus: 'holdings_action_status',
+  itemStatus: 'item_action_status',
+  orderStatus: 'order_action_status',
+  invoiceStatus: 'invoice_action_status',
+  error: 'error',
+};
+
 const JobSummaryComponent = ({
   mutator,
+  resources,
   resources: { jobExecutions: { records } },
 }) => {
-  const totalRecords = records[0]?.progress.total || 0;
-  // TODO: Remove when the endpoint job summary is ready and retrieve it from props instead
-  const resourcesMock = {
-    jobLog: {
-      hasLoaded: true,
-      isPending: false,
-      failed: false,
-      records: Array(totalRecords < INITIAL_RESULT_COUNT ? totalRecords : INITIAL_RESULT_COUNT).fill({}),
-      other: { totalRecords },
-    },
-    resultCount: INITIAL_RESULT_COUNT,
+  const getRecordActionStatusLabel = recordType => {
+    if (!recordType) return <NoValue />;
+
+    const labelId = RECORD_ACTION_STATUS_LABEL_IDS[recordType];
+
+    return <FormattedMessage id={labelId} />;
   };
+
   const visibleColumns = [
     'recordNumber',
     'title',
-    'srsMarcBib',
-    'instance',
-    'holdings',
-    'item',
-    'order',
-    'invoice',
+    'srsMarcBibStatus',
+    'instanceStatus',
+    'holdingsStatus',
+    'itemStatus',
+    'orderStatus',
+    'invoiceStatus',
     'error',
   ];
   const columnMapping = {
     recordNumber: <FormattedMessage id="ui-data-import.record" />,
     title: <FormattedMessage id="ui-data-import.title" />,
-    srsMarcBib: <FormattedMessage id="ui-data-import.recordTypes.srsMarcBib" />,
-    instance: <FormattedMessage id="ui-data-import.recordTypes.instance" />,
-    holdings: <FormattedMessage id="ui-data-import.recordTypes.holdings" />,
-    item: <FormattedMessage id="ui-data-import.recordTypes.item" />,
-    order: <FormattedMessage id="ui-data-import.recordTypes.order" />,
-    invoice: <FormattedMessage id="ui-data-import.recordTypes.invoice" />,
+    srsMarcBibStatus: <FormattedMessage id="ui-data-import.recordTypes.srsMarcBib" />,
+    instanceStatus: <FormattedMessage id="ui-data-import.recordTypes.instance" />,
+    holdingsStatus: <FormattedMessage id="ui-data-import.recordTypes.holdings" />,
+    itemStatus: <FormattedMessage id="ui-data-import.recordTypes.item" />,
+    orderStatus: <FormattedMessage id="ui-data-import.recordTypes.order" />,
+    invoiceStatus: <FormattedMessage id="ui-data-import.recordTypes.invoice" />,
     error: <FormattedMessage id="ui-data-import.error" />,
   };
-  // TODO: Refactor the formatter for the real data when the endpoint for job summary is ready
   const resultsFormatter = {
-    recordNumber: x => x.rowIndex + 1,
-    srsMarcBib: () => <NoValue />,
-    instance: () => <NoValue />,
-    holdings: () => <NoValue />,
-    item: () => <NoValue />,
-    order: () => <NoValue />,
-    invoice: () => <NoValue />,
+    recordNumber: ({ sourceRecordOrder }) => sourceRecordOrder + 1,
+    title: ({ sourceRecordTitle }) => sourceRecordTitle,
+    srsMarcBibStatus: ({ sourceRecordActionStatus }) => getRecordActionStatusLabel(sourceRecordActionStatus),
+    instanceStatus: ({ instanceActionStatus }) => getRecordActionStatusLabel(instanceActionStatus),
+    holdingsStatus: ({ holdingsActionStatus }) => getRecordActionStatusLabel(holdingsActionStatus),
+    itemStatus: ({ itemActionStatus }) => getRecordActionStatusLabel(itemActionStatus),
+    orderStatus: ({ orderActionStatus }) => getRecordActionStatusLabel(orderActionStatus),
+    invoiceStatus: ({ invoiceActionStatus }) => getRecordActionStatusLabel(invoiceActionStatus),
+    error: ({ error }) => (error ? <FormattedMessage id="ui-data-import.error" /> : ''),
   };
   const label = (
     <SettingsLabel
@@ -77,28 +94,60 @@ const JobSummaryComponent = ({
       visibleColumns={visibleColumns}
       columnMapping={columnMapping}
       resultsFormatter={resultsFormatter}
-      resourceName="jobLog"
+      resourceName="jobLogEntries"
       initialResultCount={INITIAL_RESULT_COUNT}
       resultCountIncrement={RESULT_COUNT_INCREMENT}
       hasSearchForm={false}
       defaultSort="recordNumber"
       parentMutator={mutator}
-      parentResources={resourcesMock}
+      parentResources={resources}
       lastMenu={<></>}
       searchResultsProps={{
         onRowClick: noop,
         pagingType: 'click',
         pageAmount: RESULT_COUNT_INCREMENT,
+        columnWidths: { title: '30%' },
       }}
     />
   );
 };
 
-// TODO: Refactor the manifest when the endpoint for job summary is ready.
-// For now it makes call to the `change-manager/jobExecutions` to get
-// the file name to display it in the pane header
 JobSummaryComponent.manifest = Object.freeze({
+  initializedFilterConfig: { initialValue: false },
+  query: { initialValue: {} },
   resultCount: { initialValue: INITIAL_RESULT_COUNT },
+  resultOffset: { initialValue: 0 },
+  jobLogEntries: {
+    type: 'okapi',
+    records: 'entries',
+    resultOffset: '%{resultOffset}',
+    perRequest: RESULT_COUNT_INCREMENT,
+    path: 'metadata-provider/jobLogEntries/:{id}',
+    clientGeneratePk: false,
+    throwsErrors: false,
+    GET: {
+      params: {
+        sortBy: queryParams => {
+          const { sort: sortsFromQuery } = queryParams;
+
+          const sorts = sortsFromQuery ? sortsFromQuery.split(',') : [];
+          const mainSort = sorts[0] || '';
+          const sort = mainSort.replace(/^-/, '');
+
+          return sortMap[sort];
+        },
+        order: queryParams => {
+          const { sort: sortsFromQuery } = queryParams;
+
+          const sorts = sortsFromQuery ? sortsFromQuery.split(',') : [];
+          const mainSort = sorts[0] || '';
+
+          return mainSort.startsWith('-') ? SORT_TYPE.DESCENDING : SORT_TYPE.ASCENDING;
+        },
+      },
+      staticFallback: { params: {} },
+    },
+  },
   jobExecutions: {
     type: 'okapi',
     path: 'change-manager/jobExecutions/:{id}',
