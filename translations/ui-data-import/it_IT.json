@@ -850,5 +850,18 @@
     "logLight.actionStatus.created": "Created",
     "logLight.actionStatus.updated": "Updated",
     "logLight.actionStatus.multiple": "Multiple",
-    "logLight.actionStatus.discarded": "Discarded"
+    "logLight.actionStatus.discarded": "Discarded",
+    "importPaneTitle": "",
+    "combine": "",
+    "replace": "",
+    "incomingRecordTypes.delimited": "",
+    "actionSelect.combine": "",
+    "actionSelect.replace": "",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote": "",
+    "noValueAllowed": "",
+    "settings.mappingProfiles.map.item.status.awaitingPickup": "",
+    "settings.mappingProfiles.map.item.status.awaitingDelivery": "",
+    "settings.mappingProfiles.map.item.status.paged": "",
+    "settings.mappingProfiles.map.item.status.declareLost": "",
+    "settings.mappingProfiles.map.item.status.claimedReturned": ""
 }

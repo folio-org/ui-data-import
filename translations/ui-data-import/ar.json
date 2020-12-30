@@ -850,5 +850,18 @@
     "logLight.actionStatus.created": "تم إنشاؤه",
     "logLight.actionStatus.updated": "محدّث",
     "logLight.actionStatus.multiple": "متعدد",
-    "logLight.actionStatus.discarded": "تم تجاهله"
+    "logLight.actionStatus.discarded": "تم تجاهله",
+    "importPaneTitle": "",
+    "combine": "",
+    "replace": "",
+    "incomingRecordTypes.delimited": "",
+    "actionSelect.combine": "",
+    "actionSelect.replace": "",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote": "",
+    "noValueAllowed": "",
+    "settings.mappingProfiles.map.item.status.awaitingPickup": "",
+    "settings.mappingProfiles.map.item.status.awaitingDelivery": "",
+    "settings.mappingProfiles.map.item.status.paged": "",
+    "settings.mappingProfiles.map.item.status.declareLost": "",
+    "settings.mappingProfiles.map.item.status.claimedReturned": ""
 }
