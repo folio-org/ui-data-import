@@ -846,5 +846,9 @@
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.releaseEncumbrance": "إصدار التكاليف",
     "settings.mappingProfiles.map.invoice.invoiceLineFundDistribution.section": "توزيع تمويل سطر الفاتورة",
     "settings.mappingProfiles.map.invoice.invoiceLineFundDistribution.field.fundDistributionSource.legend": "مصدر توزيع التمويل",
-    "settings.mappingProfiles.map.invoice.invoiceLineAdjustments.section": "تعديلات سطر الفاتورة"
+    "settings.mappingProfiles.map.invoice.invoiceLineAdjustments.section": "تعديلات سطر الفاتورة",
+    "logLight.actionStatus.created": "تم إنشاؤه",
+    "logLight.actionStatus.updated": "محدّث",
+    "logLight.actionStatus.multiple": "متعدد",
+    "logLight.actionStatus.discarded": "تم تجاهله"
 }

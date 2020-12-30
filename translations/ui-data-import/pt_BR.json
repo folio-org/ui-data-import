@@ -846,5 +846,9 @@
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.releaseEncumbrance": "Liberar alocação",
     "settings.mappingProfiles.map.invoice.invoiceLineFundDistribution.section": "Distribuição de fundos da linha de faturamento",
     "settings.mappingProfiles.map.invoice.invoiceLineFundDistribution.field.fundDistributionSource.legend": "Fonte de distribuição de fundos",
-    "settings.mappingProfiles.map.invoice.invoiceLineAdjustments.section": "Ajustes de linha de fatura"
+    "settings.mappingProfiles.map.invoice.invoiceLineAdjustments.section": "Ajustes de linha de fatura",
+    "logLight.actionStatus.created": "Criado",
+    "logLight.actionStatus.updated": "Atualizado",
+    "logLight.actionStatus.multiple": "Múltiplo",
+    "logLight.actionStatus.discarded": "Descartado"
 }
