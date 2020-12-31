@@ -850,18 +850,5 @@
     "logLight.actionStatus.created": "Created",
     "logLight.actionStatus.updated": "Updated",
     "logLight.actionStatus.multiple": "Multiple",
-    "logLight.actionStatus.discarded": "Discarded",
-    "importPaneTitle": "Importar",
-    "combine": "Combinar",
-    "replace": "Reemplazar",
-    "incomingRecordTypes.delimited": "Delimitado",
-    "actionSelect.combine": "Combinar (todos los tipos de registro excepto Pedidos)",
-    "actionSelect.replace": "Reemplazar (todos los tipos de registro excepto Pedidos, Facturas)",
-    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementNote": "Nota de mención",
-    "noValueAllowed": "No se permite ningún valor",
-    "settings.mappingProfiles.map.item.status.awaitingPickup": "Esperando recogida",
-    "settings.mappingProfiles.map.item.status.awaitingDelivery": "Esperando envío",
-    "settings.mappingProfiles.map.item.status.paged": "Paged",
-    "settings.mappingProfiles.map.item.status.declareLost": "Declarado perdido",
-    "settings.mappingProfiles.map.item.status.claimedReturned": "Reclamación devuelta"
+    "logLight.actionStatus.discarded": "Discarded"
 }
