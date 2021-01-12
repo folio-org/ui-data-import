@@ -11,7 +11,6 @@ import {
   map,
   omit,
   some,
-  every,
   get,
 } from 'lodash';
 
@@ -26,7 +25,6 @@ import {
   Layout,
   Callout,
   ConfirmationModal,
-  Button,
 } from '@folio/stripes/components';
 import {
   Preloader,
@@ -43,7 +41,6 @@ import {
   generateSettingsLabel,
   DEFAULT_TIMEOUT_BEFORE_FILE_DELETION,
   FILE_STATUSES,
-  loadRecords,
 } from '../../utils';
 import * as API from '../../utils/upload';
 import { createJobProfiles } from '../../settings/JobProfiles';
@@ -483,43 +480,6 @@ export class UploadingJobsDisplay extends Component {
     this.setState({ renderLeaveModal: false });
   };
 
-  // TODO: this is temporary way (will be changed/removed) to initiate loading of MARC BIB files (UIDATIMP-185)
-  loadMarcRecords = async menu => {
-    const {
-      stripes: { okapi },
-      history,
-    } = this.props;
-    const { uploadDefinition } = this.context;
-
-    // `jobProfileInfo` is hardcoded to point to the default job profile (MODSOURMAN-113)
-    // later jobProfile will be picked through UI
-    const jobProfileInfo = {
-      id: '22fafcc3-f582-493d-88b0-3c538480cd83',
-      name: 'Create MARC Bibs',
-      dataType: 'MARC',
-    };
-
-    try {
-      await loadRecords({
-        okapi,
-        uploadDefinitionId: uploadDefinition.id,
-        jobProfileInfo,
-        defaultMapping: true,
-      });
-
-      history.push('/data-import');
-    } catch (error) {
-      menu.onToggle();
-      this.calloutRef.current.sendCallout({
-        type: 'error',
-        message: <FormattedMessage id="ui-data-import.communicationProblem" />,
-      });
-
-      this.setState({ recordsLoadingInProgress: false });
-      console.error(error); // eslint-disable-line no-console
-    }
-  };
-
   /** @returns {Promise<string[]>} */
   async getDataTypes() {
     const { stripes: { okapi } } = this.props;
@@ -547,48 +507,10 @@ export class UploadingJobsDisplay extends Component {
     this.setState({ JobProfilesComponent: createJobProfiles(true, dataTypeQuery) });
   }
 
-  // TODO: this is temporary way (will be changed/removed) of deciding whether to allow to initiate
-  // the process of loading MARC BIB files (UIDATIMP-185)
-  renderLoadMarcButton = menu => {
-    const {
-      files = {},
-      recordsLoadingInProgress,
-    } = this.state;
-
-    const areMarcFiles = every(files, file => file && file.name && file.name.match(/\.(marc|mrc)$/i));
-
-    if (!areMarcFiles || isEmpty(files)) {
-      return null;
-    }
-
-    const handleLoadRecordsButtonClick = () => {
-      this.setState({ recordsLoadingInProgress: true });
-
-      if (recordsLoadingInProgress) {
-        return;
-      }
-
-      this.loadMarcRecords(menu);
-    };
-
-    return (
-      <Button
-        data-test-load-records
-        buttonStyle="dropdownItem"
-        onClick={handleLoadRecordsButtonClick}
-      >
-        <FormattedMessage id="ui-data-import.loadMarcRecords" />
-      </Button>
-    );
-  };
-
-  renderActionMenu = menu => this.renderLoadMarcButton(menu);
-
   renderHeader = headerProps => (
     <PaneHeader
       {...headerProps}
       paneTitle={<FormattedMessage id="ui-data-import.uploadingPaneTitle" />}
-      actionMenu={this.renderActionMenu}
     />
   );
 
