@@ -705,7 +705,7 @@
   "settings.mappingProfiles.map.invoice.invoiceInformation.field.invoiceDate": "Invoice date",
   "settings.mappingProfiles.map.invoice.invoiceInformation.field.status": "Status",
   "settings.mappingProfiles.map.invoice.invoiceInformation.field.paymentDue": "Payment due",
-  "settings.mappingProfiles.map.invoice.invoiceInformation.field.paymentTerms": "Term",
+  "settings.mappingProfiles.map.invoice.invoiceInformation.field.paymentTerms": "Terms",
   "settings.mappingProfiles.map.invoice.invoiceInformation.field.approvalDate": "Approval date",
   "settings.mappingProfiles.map.invoice.invoiceInformation.field.approvedBy": "Approved by",
   "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds": "Acquisitions units",
