@@ -34,6 +34,7 @@
 * Disallow UI edit & deletion of the System-supplied default OCLC single record import profiles (UIDATIMP-784)
 * Data Import Field Mapping Profile details: Create functionality for "Vendor name" and "Accounting code" fields for Vendor information accordion (UIDATIMP-800)
 * Connect the Log light page to the server (UIDATIMP-763)
+* Remove "secret button" from Choose jobs screen (UIDATIMP-812)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
