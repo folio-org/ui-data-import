@@ -342,7 +342,7 @@ const INVOICE = {
         name: 'distributionType',
         enabled: true,
         path: 'invoice_line.fundDistributions[].distributionType',
-        value: 'amount',
+        value: 'percentage',
       }, {
         name: 'amount',
         enabled: false,
@@ -372,7 +372,7 @@ const INVOICE = {
         name: 'type',
         enabled: true,
         path: 'invoice_line.adjustments[].type',
-        value: 'percentage',
+        value: 'amount',
       }, {
         name: 'relationToTotal',
         enabled: true,
