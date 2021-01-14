@@ -623,7 +623,7 @@
     "settings.matchProfiles.createdOn": "Criado em",
     "settings.matchProfiles.assignedTo": "Atribuído a",
     "settings.matchProfiles.manual": "Manual",
-    "settings.matchProfiles.reEncumber": "Re-hipotecar",
+    "settings.matchProfiles.reEncumber": "Alocar novamente",
     "settings.matchProfiles.orderType": "Tipo de pedido",
     "settings.matchProfiles.acquisitionUnits": "Unidades de aquisição",
     "settings.matchProfiles.billTo": "Cobrança para",
@@ -780,7 +780,7 @@
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.invoiceDate": "Data da fatura",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.status": "Status",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.paymentDue": "Pagamento devido",
-    "settings.mappingProfiles.map.invoice.invoiceInformation.field.paymentTerms": "Termo",
+    "settings.mappingProfiles.map.invoice.invoiceInformation.field.paymentTerms": "Termos",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.approvalDate": "Data de aprovação",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.approvedBy": "Aprovado por",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds": "Unidades de aquisição",
@@ -846,5 +846,9 @@
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.releaseEncumbrance": "Liberar alocação",
     "settings.mappingProfiles.map.invoice.invoiceLineFundDistribution.section": "Distribuição de fundos da linha de faturamento",
     "settings.mappingProfiles.map.invoice.invoiceLineFundDistribution.field.fundDistributionSource.legend": "Fonte de distribuição de fundos",
-    "settings.mappingProfiles.map.invoice.invoiceLineAdjustments.section": "Ajustes de linha de fatura"
+    "settings.mappingProfiles.map.invoice.invoiceLineAdjustments.section": "Ajustes de linha de fatura",
+    "logLight.actionStatus.created": "Criado",
+    "logLight.actionStatus.updated": "Atualizado",
+    "logLight.actionStatus.multiple": "Múltiplo",
+    "logLight.actionStatus.discarded": "Descartado"
 }

@@ -356,8 +356,8 @@
     "settings.mappingProfiles.map.item.itemCondition.field.missingPieces": "Missing pieces",
     "settings.mappingProfiles.map.item.itemCondition.field.missingPiecesDate": "Date",
     "settings.mappingProfiles.map.item.field.notes.addLabel": "Add item note",
-    "settings.mappingProfiles.map.item.field.circulationNotes.legend": "Circulation notes",
-    "settings.mappingProfiles.map.item.field.circulationNotes.addLabel": "Add circulation note",
+    "settings.mappingProfiles.map.item.field.circulationNotes.legend": "Check in / Check out notes",
+    "settings.mappingProfiles.map.item.field.circulationNotes.addLabel": "Add check in / check out note",
     "settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatus": "Item damaged status",
     "settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatusDate": "Date",
     "settings.mappingProfiles.map.item.itemNotes.section": "Item notes",
@@ -846,5 +846,9 @@
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.releaseEncumbrance": "Release encumbrance",
     "settings.mappingProfiles.map.invoice.invoiceLineFundDistribution.section": "Invoice line fund distribution",
     "settings.mappingProfiles.map.invoice.invoiceLineFundDistribution.field.fundDistributionSource.legend": "Fund distribution source",
-    "settings.mappingProfiles.map.invoice.invoiceLineAdjustments.section": "Invoice line adjustments"
+    "settings.mappingProfiles.map.invoice.invoiceLineAdjustments.section": "Invoice line adjustments",
+    "logLight.actionStatus.created": "Created",
+    "logLight.actionStatus.updated": "Updated",
+    "logLight.actionStatus.multiple": "Multiple",
+    "logLight.actionStatus.discarded": "Discarded"
 }

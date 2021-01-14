@@ -846,5 +846,9 @@
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.releaseEncumbrance": "释放预支",
     "settings.mappingProfiles.map.invoice.invoiceLineFundDistribution.section": "发票行经费分配",
     "settings.mappingProfiles.map.invoice.invoiceLineFundDistribution.field.fundDistributionSource.legend": "经费分配来源",
-    "settings.mappingProfiles.map.invoice.invoiceLineAdjustments.section": "发票行调整"
+    "settings.mappingProfiles.map.invoice.invoiceLineAdjustments.section": "发票行调整",
+    "logLight.actionStatus.created": "Created",
+    "logLight.actionStatus.updated": "Updated",
+    "logLight.actionStatus.multiple": "Multiple",
+    "logLight.actionStatus.discarded": "Discarded"
 }
