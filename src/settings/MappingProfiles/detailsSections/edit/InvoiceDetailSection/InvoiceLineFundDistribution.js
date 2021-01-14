@@ -76,7 +76,7 @@ export const InvoiceLineFundDistribution = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: '/finance/funds',
+                          wrapperSourceLink: '/finance/funds?limit=1000&query=cql.allRecords=1 sortby name',
                           wrapperSourcePath: 'funds',
                         }]}
                         optionTemplate="**name** (**code**)"
