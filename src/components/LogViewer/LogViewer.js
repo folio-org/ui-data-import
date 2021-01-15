@@ -2,8 +2,12 @@ import React, {
   memo,
   useState,
 } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 
 import {
   ButtonGroup,
@@ -11,13 +15,14 @@ import {
   Select,
 } from '@folio/stripes/components';
 
-import { LOG_VIEWER } from '../../utils/constants';
-import { CodeHighlight } from '../CodeHighlight';
-import { LANGUAGES } from '../CodeHighlight/Languages';
 import {
   THEMES,
   themes,
-} from '../CodeHighlight/Themes';
+  CodeHighlight,
+} from '../CodeHighlight';
+import { LANGUAGES } from '../CodeHighlight/Languages';
+
+import { LOG_VIEWER } from '../../utils';
 
 import css from './LogViewer.css';
 
@@ -25,14 +30,25 @@ const { FILTER: { OPTIONS } } = LOG_VIEWER;
 
 const filterOptions = [
   {
-    id: OPTIONS.ALL,
-    caption: 'ui-data-import.logViewer.filter.all',
+    id: OPTIONS.SRS_MARC_BIB,
+    caption: 'ui-data-import.logViewer.filter.srsMARCBib',
   }, {
-    id: OPTIONS.INFO,
-    caption: 'ui-data-import.logViewer.filter.info',
+    id: OPTIONS.INSTANCE,
+    caption: 'ui-data-import.logViewer.filter.instance',
   }, {
-    id: OPTIONS.ERRORS,
-    caption: 'ui-data-import.logViewer.filter.errors',
+    id: OPTIONS.HOLDINGS,
+    caption: 'ui-data-import.logViewer.filter.holdings',
+  }, {
+    id: OPTIONS.ITEM,
+    caption: 'ui-data-import.logViewer.filter.item',
+  }, {
+    id: OPTIONS.ORDER,
+    caption: 'ui-data-import.logViewer.filter.order',
+    disabled: true,
+  }, {
+    id: OPTIONS.INVOICE,
+    caption: 'ui-data-import.logViewer.filter.invoice',
+    disabled: true,
   },
 ];
 const themesPresent = [
@@ -46,7 +62,7 @@ const themesPresent = [
 ];
 
 export const LogViewer = memo(({
-  code = '',
+  logs = {},
   language = LANGUAGES.RAW,
   theme = THEMES.COY,
   errorDetector,
@@ -56,41 +72,21 @@ export const LogViewer = memo(({
     showThemes = true,
   } = {},
 }) => {
-  const [currentFilter, setCurrentFilter] = useState(OPTIONS.ALL);
+  const { formatMessage } = useIntl();
+
+  const [currentFilter, setCurrentFilter] = useState(OPTIONS.SRS_MARC_BIB);
   const [currentTheme, setCurrentTheme] = useState(theme);
 
+  const noRecord = isEmpty(logs[currentFilter]);
+  const code = logs[currentFilter] || '';
   const codePortion = Array.isArray(code) ? code : [code];
   const themeModule = themes[currentTheme];
-
-  const recordsCount = codePortion.length;
-  const errorsCount = codePortion.filter(item => errorDetector(item)).length;
-
-  const entries = (
-    <span className={css.header__entries}>
-      <FormattedMessage
-        id="ui-data-import.recordsCount"
-        values={{ count: recordsCount }}
-      />
-    </span>
-  );
-  const errors = (
-    <span>
-      &#40;
-      <span className={css.header__errors}>
-        <FormattedMessage
-          id="ui-data-import.errorsCount"
-          values={{ count: errorsCount }}
-        />
-      </span>
-      &#41;
-    </span>
-  );
 
   return (
     <>
       {visible && (
         <div className={css.toolbar}>
-          <div className={css.header}>{message}&nbsp;{entries}&nbsp;{(errorsCount > 0) && errors}</div>
+          <div className={css.header}>{message}</div>
           <div className={css.filter}>
             <span className={css.filter__label}>
               <FormattedMessage id="ui-data-import.logViewer.filter.label" />:
@@ -111,6 +107,7 @@ export const LogViewer = memo(({
                   data-test-logs-filter-option={option.id}
                   marginBottom0
                   onClick={() => setCurrentFilter(option.id)}
+                  disabled={option.disabled}
                 >
                   <FormattedMessage id={option.caption} />
                 </Button>
@@ -145,19 +142,17 @@ export const LogViewer = memo(({
         className={currentTheme}
       >
         {codePortion.map(item => {
-          const codeString = JSON.stringify(item, null, 2);
-          const hasError = errorDetector(item);
-          const showErrors = hasError && OPTIONS.ERRORS === currentFilter;
-          const showInfo = !hasError && OPTIONS.INFO === currentFilter;
-          const showAll = OPTIONS.ALL === currentFilter;
+          const codeString = !noRecord
+            ? JSON.stringify(item, null, 2)
+            : formatMessage({ id: 'ui-data-import.noRecord' });
 
-          return (showAll || showErrors || showInfo) && (
+          return (
             <CodeHighlight
               key={`snippet-${item.id}`}
               code={codeString}
               language={language}
               theme={currentTheme}
-              className={hasError ? themeModule.error : themeModule.info}
+              className={themeModule.info}
             />
           );
         })}
@@ -167,10 +162,10 @@ export const LogViewer = memo(({
 });
 
 LogViewer.propTypes = {
-  code: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
+  errorDetector: PropTypes.func.isRequired,
+  logs: PropTypes.object,
   language: PropTypes.string,
   theme: PropTypes.string,
-  errorDetector: PropTypes.func.isRequired,
   toolbar: PropTypes.shape({
     visible: PropTypes.bool,
     message: PropTypes.node,

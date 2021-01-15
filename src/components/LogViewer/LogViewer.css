@@ -3,8 +3,9 @@
   left: 0;
   top: 5px;
   display: flex;
+  justify-content: space-between;
   width: auto;
-  height: 35px;
+  height: auto;
   margin: 5px;
   background-color: #ffffff;
   outline: 1px solid #242725;
@@ -29,7 +30,7 @@
     }
   }
   & .filter {
-    min-width: 200px;
+    min-width: 700px;
     & .filter__label {
       margin-right: 5px;
       font-weight: bold;

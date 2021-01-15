@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { noop } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import {
@@ -87,6 +86,14 @@ const JobSummaryComponent = ({
     </SettingsLabel>
   );
 
+  const handleRowClick = (e, row) => {
+    const path = `/data-import/log/${row.jobExecutionId}/${row.sourceRecordId}`;
+
+    const jobLogWindow = window.open(path, '_blank');
+
+    jobLogWindow.focus();
+  };
+
   return (
     <SearchAndSortPane
       label={label}
@@ -103,7 +110,7 @@ const JobSummaryComponent = ({
       parentResources={resources}
       lastMenu={<></>}
       searchResultsProps={{
-        onRowClick: noop,
+        onRowClick: handleRowClick,
         pagingType: 'click',
         pageAmount: RESULT_COUNT_INCREMENT,
         columnWidths: { title: '30%' },

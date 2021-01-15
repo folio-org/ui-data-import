@@ -125,9 +125,12 @@ export const PROFILE_LABEL_IDS = {
 export const LOG_VIEWER = {
   FILTER: {
     OPTIONS: {
-      ALL: 0,
-      INFO: 1,
-      ERRORS: 2,
+      SRS_MARC_BIB: 0,
+      INSTANCE: 1,
+      HOLDINGS: 2,
+      ITEM: 3,
+      ORDER: 4,
+      INVOICE: 5,
     },
   },
 };
