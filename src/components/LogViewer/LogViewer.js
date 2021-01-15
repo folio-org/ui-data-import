@@ -78,6 +78,7 @@ export const LogViewer = memo(({
   const [currentTheme, setCurrentTheme] = useState(theme);
 
   const noRecord = isEmpty(logs[currentFilter]);
+  const hasError = !!errorDetector(currentFilter);
   const code = logs[currentFilter] || '';
   const codePortion = Array.isArray(code) ? code : [code];
   const themeModule = themes[currentTheme];
@@ -109,7 +110,9 @@ export const LogViewer = memo(({
                   onClick={() => setCurrentFilter(option.id)}
                   disabled={option.disabled}
                 >
-                  <FormattedMessage id={option.caption} />
+                  <FormattedMessage id={option.caption}>
+                    {label => (errorDetector(option.id) ? `${label}*` : label)}
+                  </FormattedMessage>
                 </Button>
               ))}
             </ButtonGroup>
@@ -141,6 +144,14 @@ export const LogViewer = memo(({
         id="logs-pane"
         className={currentTheme}
       >
+        {hasError && (
+          <CodeHighlight
+            code={errorDetector(currentFilter)}
+            language={language}
+            theme={currentTheme}
+            className={themeModule.error}
+          />
+        )}
         {codePortion.map(item => {
           const codeString = !noRecord
             ? JSON.stringify(item, null, 2)

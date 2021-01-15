@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { noop } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { Preloader } from '@folio/stripes-data-transfer-components';
@@ -180,6 +179,35 @@ export class ViewJobLog extends Component {
     };
   }
 
+  getErrorMessage(entityOption) {
+    const {
+      hasLoaded,
+      record,
+    } = this.jobLogData;
+
+    if (!hasLoaded) return '';
+
+    const {
+      error,
+      relatedInstanceInfo,
+      relatedHoldingsInfo,
+      relatedItemInfo,
+      relatedOrderInfo,
+      relatedInvoiceInfo,
+    } = record;
+
+    const errors = {
+      [OPTIONS.SRS_MARC_BIB]: error,
+      [OPTIONS.INSTANCE]: relatedInstanceInfo.error,
+      [OPTIONS.HOLDINGS]: relatedHoldingsInfo.error,
+      [OPTIONS.ITEM]: relatedItemInfo.error,
+      [OPTIONS.ORDER]: relatedOrderInfo.error,
+      [OPTIONS.INVOICE]: relatedInvoiceInfo.error,
+    };
+
+    return errors[entityOption];
+  }
+
   render() {
     const {
       hasLoaded,
@@ -232,7 +260,7 @@ export class ViewJobLog extends Component {
           language={LANGUAGES.JSON}
           theme={THEMES.COY}
           toolbar={toolbar}
-          errorDetector={noop}
+          errorDetector={entityOption => this.getErrorMessage(entityOption)}
         />
       </div>
     );
