@@ -173,10 +173,10 @@ export const LogViewer = memo(({
 });
 
 LogViewer.propTypes = {
-  logs: PropTypes.objectOf([PropTypes.string, PropTypes.object, PropTypes.array]),
+  errorDetector: PropTypes.func.isRequired,
+  logs: PropTypes.object,
   language: PropTypes.string,
   theme: PropTypes.string,
-  errorDetector: PropTypes.func.isRequired,
   toolbar: PropTypes.shape({
     visible: PropTypes.bool,
     message: PropTypes.node,
