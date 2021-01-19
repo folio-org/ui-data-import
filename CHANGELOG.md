@@ -36,6 +36,7 @@
 * Connect the Log light page to the server (UIDATIMP-763)
 * Remove "secret button" from Choose jobs screen (UIDATIMP-812)
 * Log lite - revised JSON screen (UIDATIMP-751)
+* Suppress OCLC Single record import job profiles from the Choose jobs list (UIDATIMP-819)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
