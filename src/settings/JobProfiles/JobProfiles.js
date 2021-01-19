@@ -9,18 +9,17 @@ import {
 } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
-import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import {
   withCheckboxList,
   checkboxListShape,
   getSortQuery,
   getSearchQuery,
-} from '../../utils';
-import {
   ENTITY_KEYS,
   FIND_ALL_CQL,
-} from '../../utils/constants';
+  OCLC_CREATE_INSTANCE_ID,
+  OCLC_UPDATE_INSTANCE_ID,
+} from '../../utils';
 import { ListView } from '../../components/ListView';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
 
@@ -119,20 +118,7 @@ export const jobProfilesShape = {
 };
 
 // TODO: this code could possibly be rewritten when https://issues.folio.org/browse/STCON-86 is done
-export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '') => {
-  const findAll = (chooseJobProfile && dataTypeQuery !== '')
-    ? `dataType==${dataTypeQuery}`
-    : FIND_ALL_CQL;
-  const queryTemplate = chooseJobProfile
-    ? `dataType==${dataTypeQuery === '' ? '*' : dataTypeQuery} AND (name="%{query.query}*" OR tags.tagList="%{query.query}*" OR description="%{query.query}*")`
-    : '(name="%{query.query}*" OR tags.tagList="%{query.query}*")';
-
-  const sortMap = {
-    name: 'name',
-    tags: 'tags.tagList',
-    updated: 'metadata.updatedDate',
-    updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
-  };
+export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', hideDefaultProfiles = false) => {
   const visibleColumns = chooseJobProfile
     ? jobProfilesShape.visibleColumns : [
       'selected',
@@ -142,10 +128,6 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '') 
       'updatedBy',
     ];
   const columnWidths = { selected: '40px' };
-
-  if (chooseJobProfile) {
-    sortMap.description = 'description';
-  }
 
   const mapStateToProps = state => {
     const {
@@ -177,16 +159,34 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '') 
         path: 'data-import-profiles/jobProfiles',
         clientGeneratePk: false,
         throwErrors: false,
-        GET: {
-          params: {
-            query: makeQueryFunction(
-              findAll,
-              queryTemplate,
-              sortMap,
-              [],
-            ),
-          },
-          staticFallback: { params: {} },
+        params: (_q, _p, _r, _l) => {
+          const findAll = (chooseJobProfile && dataTypeQuery !== '')
+            ? `dataType==${dataTypeQuery}`
+            : FIND_ALL_CQL;
+          const withoutDefaultProfiles = hideDefaultProfiles
+            ? `AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_ID}")`
+            : '';
+          const queryTemplate = chooseJobProfile
+            ? 'AND (name="%{query.query}*" OR tags.tagList="%{query.query}*" OR description="%{query.query}*")'
+            : '(name="%{query.query}*" OR tags.tagList="%{query.query}*")';
+          const sortMap = {
+            name: 'name',
+            tags: 'tags.tagList',
+            updated: 'metadata.updatedDate',
+            updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
+          };
+
+          if (chooseJobProfile) {
+            sortMap.description = 'description';
+          }
+
+          const sort = _r?.query?.sort;
+          const search = _r?.query?.query;
+          const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
+          const searchQuery = search ? `${chooseJobProfile ? '' : 'AND '}${getSearchQuery(queryTemplate, search)}` : '';
+          const query = `${findAll} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
+
+          return { query };
         },
       },
     });

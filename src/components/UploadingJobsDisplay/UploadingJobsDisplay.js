@@ -504,7 +504,7 @@ export class UploadingJobsDisplay extends Component {
       ? `(${dataTypes.map(dataType => `"${dataType}"`).join(' OR ')})`
       : '';
 
-    this.setState({ JobProfilesComponent: createJobProfiles(true, dataTypeQuery) });
+    this.setState({ JobProfilesComponent: createJobProfiles(true, dataTypeQuery, true) });
   }
 
   renderHeader = headerProps => (
