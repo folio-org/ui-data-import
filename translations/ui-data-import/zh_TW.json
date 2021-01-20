@@ -171,10 +171,6 @@
     "error.actionProfiles.action": "操作配置文件\"{name}”未被 {action}",
     "success.actionProfiles.action": "操作配置文件“ {name}”已成功{action}",
     "logViewer.filter.label": "显示",
-    "logViewer.filter.all": "所有",
-    "logViewer.filter.info": "信息",
-    "logViewer.filter.errors": "錯誤",
-    "logViewer.themes.label": "使用主题",
     "mappingProfileName": "字段映射配置文件",
     "incomingRecordType": "輸入的紀錄類型",
     "folioRecordType": "FOLIO 紀錄類型",
@@ -850,5 +846,12 @@
     "logLight.actionStatus.created": "Created",
     "logLight.actionStatus.updated": "Updated",
     "logLight.actionStatus.multiple": "Multiple",
-    "logLight.actionStatus.discarded": "Discarded"
+    "logLight.actionStatus.discarded": "Discarded",
+    "noRecord": "No record",
+    "logViewer.filter.srsMARCBib": "SRS MARC Bib",
+    "logViewer.filter.instance": "Instance",
+    "logViewer.filter.holdings": "Holdings",
+    "logViewer.filter.item": "Item",
+    "logViewer.filter.order": "Order",
+    "logViewer.filter.invoice": "Invoice"
 }
