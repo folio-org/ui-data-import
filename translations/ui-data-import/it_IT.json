@@ -118,7 +118,7 @@
     "settings.matchProfiles.confirmEditModal.message": "These match profile edit will affect {amount, number} associated job {amount, plural, one {profile} other {profiles}}. Please confirm",
     "settings.jobProfiles.new": "Nuovo profilo di procedura",
     "settings.matchProfiles.new": "Nuovo profilo di corrispondenza",
-    "import-log": "Import Log for Job ",
+    "import-log": "Import Log for Record <b>{recordOrder} ({recordTitle})</b>",
     "errorsCount": "{count, plural, one {errore} other {errori}}",
     "modal.matchProfile.delete.header": "Delete \"{name}\" match profile?",
     "modal.matchProfile.delete.message": "Eliminare il profilo di corrispondenza?",
@@ -171,10 +171,6 @@
     "error.actionProfiles.action": "Il profilo di azione \"{name}\" non era {action}",
     "success.actionProfiles.action": "Il profilo di azione \"{name}\" è stato {action} con successo",
     "logViewer.filter.label": "Mostra",
-    "logViewer.filter.all": "Tutto",
-    "logViewer.filter.info": "Info",
-    "logViewer.filter.errors": "Errori",
-    "logViewer.themes.label": "Usa il tema",
     "mappingProfileName": "Profilo di mappatura del campo",
     "incomingRecordType": "Tipo di record in entrata",
     "folioRecordType": "Tipo di record FOLIO",
@@ -850,5 +846,12 @@
     "logLight.actionStatus.created": "Created",
     "logLight.actionStatus.updated": "Updated",
     "logLight.actionStatus.multiple": "Multiple",
-    "logLight.actionStatus.discarded": "Discarded"
+    "logLight.actionStatus.discarded": "Discarded",
+    "noRecord": "No record",
+    "logViewer.filter.srsMARCBib": "SRS MARC Bib",
+    "logViewer.filter.instance": "Instance",
+    "logViewer.filter.holdings": "Holdings",
+    "logViewer.filter.item": "Item",
+    "logViewer.filter.order": "Order",
+    "logViewer.filter.invoice": "Invoice"
 }

@@ -171,10 +171,6 @@
     "error.actionProfiles.action": "The action profile \"{name}\" was not {action}",
     "success.actionProfiles.action": "The action profile \"{name}\" was successfully {action}",
     "logViewer.filter.label": "Show",
-    "logViewer.filter.all": "全部",
-    "logViewer.filter.info": "情報",
-    "logViewer.filter.errors": "エラー",
-    "logViewer.themes.label": "テーマを使用する",
     "mappingProfileName": "フィールド・マッピング・プロファイル",
     "incomingRecordType": "Incoming record type",
     "folioRecordType": "FOLIOレコードタイプ",
@@ -850,5 +846,12 @@
     "logLight.actionStatus.created": "Created",
     "logLight.actionStatus.updated": "Updated",
     "logLight.actionStatus.multiple": "Multiple",
-    "logLight.actionStatus.discarded": "Discarded"
+    "logLight.actionStatus.discarded": "Discarded",
+    "noRecord": "No record",
+    "logViewer.filter.srsMARCBib": "SRS MARC Bib",
+    "logViewer.filter.instance": "Instance",
+    "logViewer.filter.holdings": "Holdings",
+    "logViewer.filter.item": "Item",
+    "logViewer.filter.order": "Order",
+    "logViewer.filter.invoice": "Invoice"
 }

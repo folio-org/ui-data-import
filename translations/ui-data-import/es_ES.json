@@ -171,10 +171,6 @@
     "error.actionProfiles.action": "El perfil de acción \"{name}\" no era {action}",
     "success.actionProfiles.action": "El perfil de acción \"{name}\" fue exitosamente {action}",
     "logViewer.filter.label": "Mostrar",
-    "logViewer.filter.all": "Todo",
-    "logViewer.filter.info": "Info",
-    "logViewer.filter.errors": "Errores",
-    "logViewer.themes.label": "Usar termina",
     "mappingProfileName": "Perfil de mapeo de campo",
     "incomingRecordType": "Tipo de registro entrante",
     "folioRecordType": "Tipo de registro FOLIO",
@@ -850,5 +846,12 @@
     "logLight.actionStatus.created": "Created",
     "logLight.actionStatus.updated": "Updated",
     "logLight.actionStatus.multiple": "Multiple",
-    "logLight.actionStatus.discarded": "Discarded"
+    "logLight.actionStatus.discarded": "Discarded",
+    "noRecord": "No record",
+    "logViewer.filter.srsMARCBib": "SRS MARC Bib",
+    "logViewer.filter.instance": "Instance",
+    "logViewer.filter.holdings": "Holdings",
+    "logViewer.filter.item": "Item",
+    "logViewer.filter.order": "Order",
+    "logViewer.filter.invoice": "Invoice"
 }
