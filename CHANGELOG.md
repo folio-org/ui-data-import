@@ -48,6 +48,7 @@
 * Fix an error on switching existing record types on Match profile Create/edit screen (UIDATIMP-804)
 * File upload in progress displays when it shouldn't. Fixed (UIDATIMP-742)
 * A few updates to the invoice field mapping screen (UIDATIMP-811)
+* Fix possibility to create match profile (UIDATIMP-821)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
 
