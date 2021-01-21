@@ -36,9 +36,7 @@ export const ExistingSectionFolio = ({
     return dataOptions.filter(o => new RegExp(`${value}`, 'i').test(o.label));
   };
 
-  const handleExistingRecordSelect = (event, newValue) => {
-    event.preventDefault();
-
+  const handleExistingRecordSelect = newValue => {
     const fieldToChange = `profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields`;
     const fieldId = existingRecordFields.find(item => item.value === newValue)?.id;
     const fieldFromConfig = fieldsConfig.find(item => item.id === fieldId && item.recordType === existingRecordType);
@@ -103,7 +101,7 @@ export const ExistingSectionFolio = ({
 
 ExistingSectionFolio.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
-  existingRecordType: PropTypes.oneOf(Object.keys(FOLIO_RECORD_TYPES)).isRequired,
+  existingRecordType: PropTypes.oneOf([...Object.keys(FOLIO_RECORD_TYPES), '']).isRequired,
   dispatchFormChange: PropTypes.func.isRequired,
   existingRecordFields: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
