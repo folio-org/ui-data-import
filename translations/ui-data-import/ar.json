@@ -171,10 +171,6 @@
     "error.actionProfiles.action": "لم يتم {action} وضع الإجراء \"{name}\"",
     "success.actionProfiles.action": "تم {action} وضع الإجراء \"{name}\"  بنجاح",
     "logViewer.filter.label": "عرض",
-    "logViewer.filter.all": "الكل",
-    "logViewer.filter.info": "معلومات",
-    "logViewer.filter.errors": "أخطاء",
-    "logViewer.themes.label": "استخدم الثيمة",
     "mappingProfileName": "وضع تخطيط الحقل",
     "incomingRecordType": "نوع التسجيلة الواردة",
     "folioRecordType": "نوع تسجيلة فوليو",
@@ -850,5 +846,12 @@
     "logLight.actionStatus.created": "تم إنشاؤه",
     "logLight.actionStatus.updated": "محدّث",
     "logLight.actionStatus.multiple": "متعدد",
-    "logLight.actionStatus.discarded": "تم تجاهله"
+    "logLight.actionStatus.discarded": "تم تجاهله",
+    "noRecord": "لا توجد تسجيلة",
+    "logViewer.filter.srsMARCBib": "SRS مارك البيبلوغرافية",
+    "logViewer.filter.instance": "الوعاء",
+    "logViewer.filter.holdings": "المقتنيات",
+    "logViewer.filter.item": "المادة",
+    "logViewer.filter.order": "طلبية",
+    "logViewer.filter.invoice": "الفاتورة"
 }
