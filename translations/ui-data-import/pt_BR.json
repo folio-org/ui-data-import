@@ -118,7 +118,7 @@
     "settings.matchProfiles.confirmEditModal.message": "Essa edição do perfil de correspondência afetará {amount, number} job associado {amount, plural, one {perfil} other {perfis}} . Por favor confirme",
     "settings.jobProfiles.new": "Novo perfil de job",
     "settings.matchProfiles.new": "Novo perfil de correspondência",
-    "import-log": "Importar log para o job ",
+    "import-log": "Log de importação para registro <b>{recordOrder} ({recordTitle})</b>",
     "errorsCount": "{count, plural, one {# erro} other {# erros}}",
     "modal.matchProfile.delete.header": "Excluir o perfil de correspondência \"{name}\"?",
     "modal.matchProfile.delete.message": "Excluir perfil de correspondência?",
@@ -852,6 +852,6 @@
     "logViewer.filter.instance": "Instância",
     "logViewer.filter.holdings": "Holdings",
     "logViewer.filter.item": "Item",
-    "logViewer.filter.order": "Order",
+    "logViewer.filter.order": "Pedido",
     "logViewer.filter.invoice": "Fatura"
 }
