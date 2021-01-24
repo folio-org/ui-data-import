@@ -40,7 +40,12 @@ const jobLogResources = hasLoaded => buildResources({
   records: [{
     relatedInstanceInfo: { idList: [faker.random.uuid()] },
     relatedHoldingsInfo: { idList: [faker.random.uuid()] },
-    relatedItemInfo: { idList: [faker.random.uuid()] },
+    relatedItemInfo: {
+      error: 'Error message',
+      idList: [faker.random.uuid()],
+    },
+    relatedOrderInfo: { idList: [faker.random.uuid()] },
+    relatedInvoiceInfo: { idList: [faker.random.uuid()] },
     sourceRecordOrder: 0,
     sourceRecordTitle: 'Test record title',
   }],
@@ -152,7 +157,7 @@ describe('View job log page', () => {
     describe('when log for SRS MARC Bib has loaded', () => {
       it('should display SRS MARC Bib JSON details on the screen', () => {
         const { container } = renderViewJobLog();
-        const codeElement = container.querySelector('code');
+        const codeElement = container.querySelector('code.info');
 
         expect(JSON.parse(codeElement.textContent)).toEqual(SRSMARCBibJSONData);
       });
@@ -165,7 +170,7 @@ describe('View job log page', () => {
           } = renderViewJobLog();
 
           fireEvent.click(getByText('Instance'));
-          const codeElement = container.querySelector('code');
+          const codeElement = container.querySelector('code.info');
 
           expect(JSON.parse(codeElement.textContent)).toEqual(instanceJSONData);
         });
@@ -179,7 +184,7 @@ describe('View job log page', () => {
           } = renderViewJobLog();
 
           fireEvent.click(getByText('Holdings'));
-          const codeElement = container.querySelector('code');
+          const codeElement = container.querySelector('code.info');
 
           expect(JSON.parse(codeElement.textContent)).toEqual(holdingsJSONData);
         });
@@ -192,11 +197,29 @@ describe('View job log page', () => {
             getByText,
           } = renderViewJobLog();
 
-          fireEvent.click(getByText('Item'));
-          const codeElement = container.querySelector('code');
+          fireEvent.click(getByText('Item*'));
+          const codeElement = container.querySelector('code.info');
 
           expect(JSON.parse(codeElement.textContent)).toEqual(itemsJSONData);
         });
+      });
+    });
+  });
+
+  describe('rendering error details', () => {
+    it('should render a tab with an asterisk', () => {
+      const { getByText } = renderViewJobLog();
+
+      expect(getByText('Item*')).toBeDefined();
+    });
+
+    describe('when clicking on the tab with an error', () => {
+      it('should show an error message', () => {
+        const { getByText } = renderViewJobLog();
+
+        fireEvent.click(getByText('Item*'));
+
+        expect(getByText('Error message')).toBeDefined();
       });
     });
   });
