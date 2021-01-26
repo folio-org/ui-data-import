@@ -517,7 +517,7 @@
     "settings.mappingProfile.marcTable.deleteField": "Delete this field",
     "settings.mappingProfiles.map.item.status.available": "Available",
     "settings.mappingProfiles.map.item.status.checkedOut": "Checked out",
-    "settings.mappingProfiles.map.item.status.inProcess": "In process",
+    "settings.mappingProfiles.map.item.status.inProcess": "In Bearbeitung",
     "settings.mappingProfiles.map.item.status.inTransit": "In transit",
     "settings.mappingProfiles.map.item.status.missing": "Missing",
     "settings.mappingProfiles.map.item.status.onOrder": "On order",
