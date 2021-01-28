@@ -17,6 +17,9 @@ import {
   getSearchQuery,
   ENTITY_KEYS,
   FIND_ALL_CQL,
+  OCLC_CREATE_INSTANCE_ACTION_ID,
+  OCLC_UPDATE_INSTANCE_ACTION_ID,
+  OCLC_CREATE_MARC_BIB_ACTION_ID,
 } from '../../utils';
 import { ListView } from '../../components';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
@@ -62,7 +65,8 @@ export const actionProfilesShape = {
         const search = _r?.query?.query;
         const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
         const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
-        const query = `${FIND_ALL_CQL} ${searchQuery} ${sortQuery}`;
+        const withoutDefaultProfiles = `AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_ACTION_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_ACTION_ID}") AND (id="" NOT id=="${OCLC_CREATE_MARC_BIB_ACTION_ID}")`;
+        const query = `${FIND_ALL_CQL} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
 
         return { query };
       },

@@ -17,8 +17,8 @@ import {
   getSearchQuery,
   ENTITY_KEYS,
   FIND_ALL_CQL,
-  OCLC_CREATE_INSTANCE_ID,
-  OCLC_UPDATE_INSTANCE_ID,
+  OCLC_CREATE_INSTANCE_JOB_ID,
+  OCLC_UPDATE_INSTANCE_JOB_ID,
 } from '../../utils';
 import { ListView } from '../../components/ListView';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
@@ -164,7 +164,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
             ? `dataType==${dataTypeQuery}`
             : FIND_ALL_CQL;
           const withoutDefaultProfiles = hideDefaultProfiles
-            ? `AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_ID}")`
+            ? `AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_JOB_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_JOB_ID}")`
             : '';
           const queryTemplate = chooseJobProfile
             ? 'AND (name="%{query.query}*" OR tags.tagList="%{query.query}*" OR description="%{query.query}*")'

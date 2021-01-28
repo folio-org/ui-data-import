@@ -11,8 +11,8 @@ import { DataFetcherContext } from '../DataFetcher';
 import { JobLogsContainer } from '../JobLogsContainer';
 
 import {
-  OCLC_CREATE_INSTANCE_ID,
-  OCLC_UPDATE_INSTANCE_ID,
+  OCLC_CREATE_INSTANCE_JOB_ID,
+  OCLC_UPDATE_INSTANCE_JOB_ID,
 } from '../../utils';
 
 const sortColumns = {
@@ -36,7 +36,7 @@ const RecentJobLogsComponent = () => {
   const filteredFromOCLCLogs = logs?.filter(log => {
     const { jobProfileInfo: { id: jobProfileId } } = log;
 
-    return jobProfileId !== OCLC_CREATE_INSTANCE_ID && jobProfileId !== OCLC_UPDATE_INSTANCE_ID;
+    return jobProfileId !== OCLC_CREATE_INSTANCE_JOB_ID && jobProfileId !== OCLC_UPDATE_INSTANCE_JOB_ID;
   });
 
   return (

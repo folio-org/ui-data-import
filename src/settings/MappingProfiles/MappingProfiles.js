@@ -16,11 +16,12 @@ import {
   getSortQuery,
   getSearchQuery,
   marcFieldProtectionSettingsShape,
-} from '../../utils';
-import {
+  OCLC_CREATE_INSTANCE_MAPPING_ID,
+  OCLC_UPDATE_INSTANCE_MAPPING_ID,
+  OCLC_CREATE_MARC_BIB_MAPPING_ID,
   ENTITY_KEYS,
   FIND_ALL_CQL,
-} from '../../utils/constants';
+} from '../../utils';
 import { ListView } from '../../components';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
 
@@ -63,7 +64,8 @@ export const mappingProfilesShape = {
         const search = _r?.query?.query;
         const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
         const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
-        const query = `${FIND_ALL_CQL} ${searchQuery} ${sortQuery}`;
+        const withoutDefaultProfiles = `AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_MAPPING_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_MAPPING_ID}") AND (id="" NOT id=="${OCLC_CREATE_MARC_BIB_MAPPING_ID}")`;
+        const query = `${FIND_ALL_CQL} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
 
         return { query };
       },

@@ -3,8 +3,8 @@ import {
   LOGS_FILTER,
 } from './constants';
 import {
-  OCLC_CREATE_INSTANCE_ID,
-  OCLC_UPDATE_INSTANCE_ID,
+  OCLC_CREATE_INSTANCE_JOB_ID,
+  OCLC_UPDATE_INSTANCE_JOB_ID,
 } from '../../utils';
 
 export const filterConfig = [
@@ -37,12 +37,12 @@ export const filterConfig = [
     values: [
       {
         name: 'no',
-        cql: `\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="${OCLC_CREATE_INSTANCE_ID}") 
-        AND (jobProfileInfo="\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="${OCLC_UPDATE_INSTANCE_ID}"`,
+        cql: `\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="${OCLC_CREATE_INSTANCE_JOB_ID}") 
+        AND (jobProfileInfo="\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="${OCLC_UPDATE_INSTANCE_JOB_ID}"`,
       },
       {
         name: 'yes',
-        cql: `\\“id\\“==${OCLC_CREATE_INSTANCE_ID}") OR (jobProfileInfo="\\“id\\“==${OCLC_UPDATE_INSTANCE_ID}`,
+        cql: `\\“id\\“==${OCLC_CREATE_INSTANCE_JOB_ID}") OR (jobProfileInfo="\\“id\\“==${OCLC_UPDATE_INSTANCE_JOB_ID}`,
       },
     ],
   },
