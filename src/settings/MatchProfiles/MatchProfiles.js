@@ -20,8 +20,6 @@ import {
   handleAllRequests,
   getSearchQuery,
   getSortQuery,
-} from '../../utils';
-import {
   ENTITY_KEYS,
   INSTANCE_RESOURCE_PATHS,
   HOLDINGS_RESOURCE_PATHS,
@@ -31,7 +29,9 @@ import {
   INVOICE_RESOURCE_PATHS,
   SRM_RESOURCE_PATHS,
   FIND_ALL_CQL,
-} from '../../utils/constants';
+  OCLC_MATCH_EXISTING_SRS_RECORD_ID,
+  OCLC_MATCH_NO_SRS_RECORD_ID,
+} from '../../utils';
 import { ListView } from '../../components';
 import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
 import { ViewMatchProfile } from './ViewMatchProfile';
@@ -179,7 +179,8 @@ export const matchProfilesShape = {
         const search = _r?.query?.query;
         const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
         const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
-        const query = `${props.filterParams?.manifest?.query || FIND_ALL_CQL} ${searchQuery} ${sortQuery}`;
+        const withoutDefaultProfiles = `AND (id="" NOT id=="${OCLC_MATCH_EXISTING_SRS_RECORD_ID}") AND (id="" NOT id=="${OCLC_MATCH_NO_SRS_RECORD_ID}")`;
+        const query = `${props.filterParams?.manifest?.query || FIND_ALL_CQL} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
 
         return { query };
       },
