@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  Field,
-  touch,
-  change,
-  untouch,
-} from 'redux-form';
+import { Field } from 'react-final-form';
 import { identity } from 'lodash';
 
 import {
@@ -18,18 +13,17 @@ import {
   OptionSegment,
 } from '@folio/stripes/components';
 import { FullScreenForm } from '@folio/stripes-data-transfer-components';
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes-final-form';
 
 import {
   validateDataTypes,
   validateFileExtension,
   validateRequiredField,
+  composeValidators,
   DATA_TYPES,
 } from '../../utils';
 
 import css from './FileExtensionForm.css';
-
-const formName = 'fileExtensionForm';
 
 const MultiSelectItem = ({
   option,
@@ -44,28 +38,24 @@ MultiSelectItem.propTypes = {
 const FileExtensionFormComponent = ({
   pristine,
   submitting,
+  transitionToParams,
+  form,
   initialValues,
   handleSubmit,
   onCancel,
-  dispatch,
+  match: { path },
 }) => {
   const isEditMode = Boolean(initialValues.id);
 
   const [dataTypesRequired, setDataTypesRequired] = useState(isEditMode ? !initialValues.importBlocked : true);
 
-  const handleImportBlockedChange = (meta, value) => {
-    if (value) {
-      dispatch(change(formName, 'dataTypes', []));
-      dispatch(untouch(formName, 'dataTypes'));
-    }
+  const handleImportBlockedChange = (event, input) => {
+    const value = event.target.value === 'true';
 
-    setDataTypesRequired(!value);
-  };
+    input.onChange(event);
+    form.change('dataTypes', []);
 
-  const handleMultiSelectBlur = e => {
-    e.preventDefault();
-
-    dispatch(touch(formName, 'dataTypes'));
+    setDataTypesRequired(value);
   };
 
   const filterMultiSelect = (filterText, list) => {
@@ -92,6 +82,16 @@ const FileExtensionFormComponent = ({
     ? initialValues.extension
     : <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />;
 
+  const onSubmit = async event => {
+    const record = await handleSubmit(event);
+
+    form.reset();
+    transitionToParams({
+      _path: `${path}/view/${record.id}`,
+      layer: null,
+    });
+  };
+
   return (
     <FullScreenForm
       id="file-extensions-form"
@@ -99,7 +99,7 @@ const FileExtensionFormComponent = ({
       submitButtonText={<FormattedMessage id="ui-data-import.saveAsFileExtension" />}
       cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
       isSubmitButtonDisabled={isSubmitDisabled}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       onCancel={onCancel}
     >
       <Headline
@@ -122,10 +122,7 @@ const FileExtensionFormComponent = ({
           name="extension"
           required
           component={TextField}
-          validate={[
-            validateRequiredField,
-            validateFileExtension,
-          ]}
+          validate={composeValidators(validateRequiredField, validateFileExtension)}
         />
       </div>
       <div data-test-blocked-field>
@@ -133,27 +130,38 @@ const FileExtensionFormComponent = ({
           <FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />
         </p>
         <Field
-          label={<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />}
           name="importBlocked"
           type="checkbox"
-          component={Checkbox}
-          onChange={handleImportBlockedChange}
+          render={importBlockedFieldProps => (
+            <Checkbox
+              {...importBlockedFieldProps}
+              value={form.getState().values?.importBlocked}
+              label={<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />}
+              onChange={event => handleImportBlockedChange(event, importBlockedFieldProps.input)}
+            />
+          )}
         />
       </div>
       <div data-test-types-field>
         <Field
-          label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}
           name="dataTypes"
-          component={MultiSelection}
-          dataOptions={DATA_TYPES}
-          required={dataTypesRequired}
-          disabled={!dataTypesRequired}
+          validate={validateDataTypes}
           validationEnabled
-          itemToString={identity}
-          validate={[validateDataTypes]}
-          filter={filterMultiSelect}
-          formatter={MultiSelectItem}
-          onBlur={handleMultiSelectBlur}
+          render={dataTypesFieldProps => (
+            <MultiSelection
+              {...dataTypesFieldProps}
+              label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}
+              dataOptions={DATA_TYPES}
+              required={dataTypesRequired}
+              disabled={!dataTypesRequired}
+              itemToString={identity}
+              filter={filterMultiSelect}
+              formatter={MultiSelectItem}
+              value={dataTypesFieldProps.input.value}
+              onChange={selectedItems => dataTypesFieldProps.input.onChange(selectedItems)}
+              onBlur={event => dataTypesFieldProps.input.onBlur(event)}
+            />
+          )}
         />
       </div>
     </FullScreenForm>
@@ -162,15 +170,19 @@ const FileExtensionFormComponent = ({
 
 FileExtensionFormComponent.propTypes = {
   initialValues: PropTypes.object.isRequired,
+  form: PropTypes.shape({
+    getState: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+    getFieldState: PropTypes.func.isRequired,
+    batch: PropTypes.func.isRequired,
+    change: PropTypes.func.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  transitionToParams: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
 };
 
-export const FileExtensionForm = stripesForm({
-  form: formName,
-  navigationCheck: true,
-  enableReinitialize: true,
-})(FileExtensionFormComponent);
+export const FileExtensionForm = stripesFinalForm({ navigationCheck: true })(FileExtensionFormComponent);

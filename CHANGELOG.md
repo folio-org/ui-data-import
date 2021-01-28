@@ -39,6 +39,7 @@
 * Log lite - Error handling for revised JSON screen (UIDATIMP-765)
 * Update stripes to v6 (UIDATIMP-815)
 * Suppress OCLC Single record import job profiles from the Choose jobs list (UIDATIMP-819)
+* Refactor File Extensions view to use final-form instead of redux-form (UIDATIMP-825)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
