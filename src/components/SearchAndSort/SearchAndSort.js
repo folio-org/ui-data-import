@@ -626,6 +626,7 @@ export class SearchAndSort extends Component {
       parentMutator,
       location: { search },
       fullWidthContainer,
+      match,
     } = this.props;
 
     if (!EditRecordComponent) {
@@ -651,6 +652,8 @@ export class SearchAndSort extends Component {
           connectedSource={source}
           parentMutator={parentMutator}
           onCancel={this.closeNewRecord}
+          transitionToParams={values => this.transitionToParams(values)}
+          match={match}
           {...detailProps}
           {...this.getLayerProps(layer)}
         />

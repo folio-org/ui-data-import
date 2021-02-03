@@ -141,3 +141,12 @@ export const formatDecoratorValue = (currentValue, newValue, pattern, isNeedToWr
 
   return `${currentValue} ${updatedValue}`;
 };
+
+/**
+ * Composes and runs array of validation function
+ *
+ * @param {array} validatorFns
+ * @returns {undefined|object|string|Node}
+ */
+export const composeValidators = (...validatorFns) => value => validatorFns
+  .reduce((error, validator) => error || validator(value), undefined);
