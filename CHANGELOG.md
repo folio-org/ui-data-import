@@ -40,6 +40,7 @@
 * Update stripes to v6 (UIDATIMP-815)
 * Suppress OCLC Single record import job profiles from the Choose jobs list (UIDATIMP-819)
 * Refactor File Extensions view to use final-form instead of redux-form (UIDATIMP-825)
+* Allow 005 to be a protected field (UIDATIMP-835)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)

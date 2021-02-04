@@ -8,14 +8,17 @@ import {
 import { stripesConnect } from '@folio/stripes/core';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 
-import { MARC_FIELD_PROTECTION_SOURCE } from '../../utils';
+import {
+  MARC_FIELD_PROTECTION_SOURCE,
+  MARC_FIELD_PROTECTION_ALLOWED_FIELD_VALUES,
+} from '../../utils';
 
 const validateField = value => {
   const checkFieldRange = () => {
     return value.length === 3 && parseInt(value, 10) >= 10 && parseInt(value, 10) <= 999;
   };
 
-  if (value && (value === '*' || checkFieldRange())) {
+  if (value && (MARC_FIELD_PROTECTION_ALLOWED_FIELD_VALUES.includes(value) || checkFieldRange())) {
     return null;
   }
 
