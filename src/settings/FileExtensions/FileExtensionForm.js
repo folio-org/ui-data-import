@@ -21,6 +21,7 @@ import {
   validateRequiredField,
   composeValidators,
   DATA_TYPES,
+  isFieldPristine,
 } from '../../utils';
 
 import css from './FileExtensionForm.css';
@@ -114,6 +115,7 @@ const FileExtensionFormComponent = ({
           label={<FormattedMessage id="ui-data-import.description" />}
           name="description"
           component={TextArea}
+          isEqual={isFieldPristine}
         />
       </div>
       <div data-test-extension-field>
@@ -123,6 +125,7 @@ const FileExtensionFormComponent = ({
           required
           component={TextField}
           validate={composeValidators(validateRequiredField, validateFileExtension)}
+          isEqual={isFieldPristine}
         />
       </div>
       <div data-test-blocked-field>
@@ -147,6 +150,7 @@ const FileExtensionFormComponent = ({
           name="dataTypes"
           validate={validateDataTypes}
           validationEnabled
+          isEqual={isFieldPristine}
           render={dataTypesFieldProps => (
             <MultiSelection
               {...dataTypesFieldProps}
@@ -160,6 +164,7 @@ const FileExtensionFormComponent = ({
               value={dataTypesFieldProps.input.value}
               onChange={selectedItems => dataTypesFieldProps.input.onChange(selectedItems)}
               onBlur={event => dataTypesFieldProps.input.onBlur(event)}
+              dirty={dataTypesFieldProps.meta.dirty}
             />
           )}
         />

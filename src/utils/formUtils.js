@@ -4,19 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import {
   get,
   isEmpty,
+  isEqual,
 } from 'lodash';
 
 import { FormattedDate } from '@folio/stripes/components';
-
-import * as validators from './formValidators';
-
-/**
- * Retrieves and returns a list of form control validators based on the list of keys given
- *
- * @param {array} validation
- * @returns {Array|Uint8Array|BigInt64Array|*[]}
- */
-export const getValidation = validation => validation.map(val => validators[val]);
 
 /**
  * Augments given param name with augment value using augment key as a splitter
@@ -145,8 +136,22 @@ export const formatDecoratorValue = (currentValue, newValue, pattern, isNeedToWr
 /**
  * Composes and runs array of validation function
  *
- * @param {array} validatorFns
+ * @param {...function} validatorFns
  * @returns {undefined|object|string|Node}
  */
 export const composeValidators = (...validatorFns) => value => validatorFns
   .reduce((error, validator) => error || validator(value), undefined);
+
+/**
+ * Check whether the initial field value is equal to the current field value
+ * in the final-form field
+ *
+ * @param {string|undefined} initialValue
+ * @param {string|undefined} currentValue
+ * @returns {boolean}
+ */
+export const isFieldPristine = (initialValue, currentValue) => {
+  if (isEmpty(initialValue) && isEmpty(currentValue)) return true;
+
+  return isEqual(initialValue, currentValue);
+};
