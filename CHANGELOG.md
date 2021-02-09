@@ -40,6 +40,8 @@
 * Update stripes to v6 (UIDATIMP-815)
 * Suppress OCLC Single record import job profiles from the Choose jobs list (UIDATIMP-819)
 * Refactor File Extensions view to use final-form instead of redux-form (UIDATIMP-825)
+* Allow 005 to be a protected field (UIDATIMP-835)
+* Update stripes-cli to v2 (UIDATIMP-840)
 * Refactor Job profiles to use final-form instead of redux-form (UIDATIMP-829)
 
 ### Bugs fixed:
