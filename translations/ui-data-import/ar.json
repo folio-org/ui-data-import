@@ -118,7 +118,7 @@
     "settings.matchProfiles.confirmEditModal.message": "ستؤثر تعديلات وضع المطابقة على {amount, number} وظيفة مرتبطة  {amount, plural, one {وضعًا} other {وضعًا}}. يرجى التأكيد",
     "settings.jobProfiles.new": "وضع وظيفة جديد",
     "settings.matchProfiles.new": "وضع مطابقة جديد",
-    "import-log": "سجل الاستيراد للوظيفة",
+    "import-log": "استيراد السجل للتسجيلة <b>{recordOrder} ({recordTitle})</b>",
     "errorsCount": "{count, plural, zero {} one {# خطأ} two {} few {} many {} other {# خطأ}}",
     "modal.matchProfile.delete.header": "حذف وضع المطابقة \"{name}\"؟",
     "modal.matchProfile.delete.message": "حذف وضع المطابقة؟",
