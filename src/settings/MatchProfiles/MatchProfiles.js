@@ -378,7 +378,7 @@ export class MatchProfiles extends Component {
       const ordersModuleVersion = getModuleVersion(records, 'Orders Business Logic Module');
       const notesModuleVersion = getModuleVersion(records, 'Notes');
       const invoiceModuleVersion = getModuleVersion(records, 'Invoice business logic module');
-      const SRMModuleVersion = getModuleVersion(records, 'Source Record Manager Module');
+      // const SRMModuleVersion = getModuleVersion(records, 'Source Record Manager Module');
 
       const requestsToInstance = INSTANCE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
       const requestsToHoldings = HOLDINGS_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
@@ -386,10 +386,10 @@ export class MatchProfiles extends Component {
       const requestsToOrder = ORDER_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
       const requestsToNotes = NOTES_RESOURCE_PATHS.map(path => fetchJsonSchema(path, notesModuleVersion, okapi));
       const requestsToInvoice = INVOICE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, invoiceModuleVersion, okapi));
-      const requestsToSRM = SRM_RESOURCE_PATHS.map(path => fetchJsonSchema(path, SRMModuleVersion, okapi));
+      // const requestsToSRM = SRM_RESOURCE_PATHS.map(path => fetchJsonSchema(path, SRMModuleVersion, okapi));
 
       await handleAllRequests(requestsToInstance, 'INSTANCE', this.addToState);
-      await handleAllRequests(requestsToSRM, 'INSTANCE', this.addToState);
+      // await handleAllRequests(requestsToSRM, 'INSTANCE', this.addToState);
       await handleAllRequests(requestsToHoldings, 'HOLDINGS', this.addToState);
       await handleAllRequests(requestsToItem, 'ITEM', this.addToState);
       await handleAllRequests(requestsToOrder, 'ORDER', this.addToState);
