@@ -5,7 +5,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import classnames from 'classnames';
 
 import {
@@ -23,6 +23,7 @@ import {
   validateValueLength1,
   validateMARCFieldInMatchCriterion,
   RESTRICTED_MATCHING_MARC_FIELD_VALUE,
+  composeValidators,
 } from '../../../../utils';
 
 import css from '../MatchCriterions.css';
@@ -89,11 +90,20 @@ export const MARCFieldSection = ({
           xs={3}
         >
           <Field
-            component={TextField}
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[0].value`}
-            label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-main`} />}
-            validate={[validateRequiredField, validateAlphanumericOrAllowedValue, validateValueLength3]}
-            onChange={e => setFieldValue(e.target.value)}
+            validate={composeValidators(validateRequiredField, validateAlphanumericOrAllowedValue, validateValueLength3)}
+            render={mainFieldProps => (
+              <TextField
+                {...mainFieldProps}
+                label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-main`} />}
+                onChange={event => {
+                  const value = event.target.value;
+
+                  mainFieldProps.input.onChange(value);
+                  setFieldValue(value);
+                }}
+              />
+            )}
           />
         </Col>
         <Col
@@ -101,11 +111,20 @@ export const MARCFieldSection = ({
           xs={2}
         >
           <Field
-            component={TextField}
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[1].value`}
-            label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-in1`} />}
-            validate={[validateIndicator]}
-            onChange={e => setIndicator1Value(e.target.value)}
+            validate={validateIndicator}
+            render={in1FieldProps => (
+              <TextField
+                {...in1FieldProps}
+                label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-in1`} />}
+                onChange={event => {
+                  const value = event.target.value;
+
+                  in1FieldProps.input.onChange(value);
+                  setIndicator1Value(value);
+                }}
+              />
+            )}
           />
         </Col>
         <Col
@@ -113,11 +132,20 @@ export const MARCFieldSection = ({
           xs={2}
         >
           <Field
-            component={TextField}
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[2].value`}
-            label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-in2`} />}
-            validate={[validateIndicator]}
-            onChange={e => setIndicator2Value(e.target.value)}
+            validate={validateIndicator}
+            render={in2FieldProps => (
+              <TextField
+                {...in2FieldProps}
+                label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-in2`} />}
+                onChange={event => {
+                  const value = event.target.value;
+
+                  in2FieldProps.input.onChange(value);
+                  setIndicator2Value(value);
+                }}
+              />
+            )}
           />
         </Col>
         <Col
@@ -125,11 +153,20 @@ export const MARCFieldSection = ({
           xs={5}
         >
           <Field
-            component={TextField}
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[3].value`}
-            label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-subfield`} />}
-            validate={[validateSubfield]}
-            onChange={e => setSubfieldValue(e.target.value)}
+            validate={validateSubfield}
+            render={subfieldFieldProps => (
+              <TextField
+                {...subfieldFieldProps}
+                label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-subfield`} />}
+                onChange={event => {
+                  const value = event.target.value;
+
+                  subfieldFieldProps.input.onChange(value);
+                  setSubfieldValue(value);
+                }}
+              />
+            )}
           />
         </Col>
       </Row>

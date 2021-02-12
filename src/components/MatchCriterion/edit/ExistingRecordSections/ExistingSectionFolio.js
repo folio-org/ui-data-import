@@ -1,8 +1,11 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import classnames from 'classnames';
-import { last } from 'lodash';
+import {
+  last, isEmpty,
+  isEqual,
+} from 'lodash';
 
 import {
   Row,
@@ -28,15 +31,24 @@ export const ExistingSectionFolio = ({
   existingRecordFieldLabel,
   existingRecordFields,
   existingRecordType,
-  dispatchFormChange,
+  changeFormState,
+  formValues,
 }) => {
+  // TODO: import from '../../utils' after UIDATIMP-829 merged
+  const isFieldPristine = (initialValue, currentValue) => {
+    if (isEmpty(initialValue) && isEmpty(currentValue)) return true;
+
+    return isEqual(initialValue, currentValue);
+  };
+
   const fieldToChangeName = `profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields[0].value`;
+  // const fieldToChangeName = `profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields`;
 
   const handleFieldSearch = (value, dataOptions) => {
     return dataOptions.filter(o => new RegExp(`${value}`, 'i').test(o.label));
   };
 
-  const handleExistingRecordSelect = newValue => {
+  const handleExistingRecordSelect = (newValue, fieldProps) => {
     const fieldToChange = `profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields`;
     const fieldId = existingRecordFields.find(item => item.value === newValue)?.id;
     const fieldFromConfig = fieldsConfig.find(item => item.id === fieldId && item.recordType === existingRecordType);
@@ -54,26 +66,33 @@ export const ExistingSectionFolio = ({
       });
     }
 
-    dispatchFormChange(fieldToChange, fieldToChangeValue);
+    fieldProps.input.onChange(newValue);
+    changeFormState(fieldToChange, fieldToChangeValue);
+
+    // fieldProps.input.onChange(fieldToChangeValue);
   };
 
   const formatExistingRecordValue = useCallback(
     value => {
       if (!value) return '';
 
-      const fieldValue = value[0].value;
+      const valueFromState = formValues.profile.matchDetails[repeatableIndex].existingMatchExpression.fields;
+
+      const fieldValue = valueFromState[0].value;
       const fieldFromConfig = fieldsConfig.find(item => item.value === fieldValue && item.recordType === existingRecordType);
 
       if (fieldFromConfig?.fromResources) {
-        return last(value).value;
+        return last(valueFromState).value;
       }
 
       const existingRecordField = existingRecordFields.find(item => item.id === fieldFromConfig?.id)?.value;
 
       return existingRecordField || '';
     },
-    [existingRecordFields, existingRecordType],
+    [existingRecordFields, existingRecordType, formValues.profile.matchDetails, repeatableIndex],
   );
+
+  const validateCriterionField = useCallback(value => validateRequiredField(value[0].value), []);
 
   return (
     <Section
@@ -84,14 +103,20 @@ export const ExistingSectionFolio = ({
         <Col xs={12}>
           <Field
             id="criterion-value-type"
-            aria-label={existingRecordFieldLabel}
-            component={Selection}
             name={fieldToChangeName}
-            dataOptions={existingRecordFields}
+            // validate={validateCriterionField}
+            validate={validateRequiredField}
             format={formatExistingRecordValue}
-            onChange={handleExistingRecordSelect}
-            onFilter={handleFieldSearch}
-            validate={[validateRequiredField]}
+            // isEqual={isFieldPristine}
+            render={criterionFieldProps => (
+              <Selection
+                {...criterionFieldProps}
+                aria-label={existingRecordFieldLabel}
+                dataOptions={existingRecordFields}
+                onFilter={handleFieldSearch}
+                onChange={value => handleExistingRecordSelect(value, criterionFieldProps)}
+              />
+            )}
           />
         </Col>
       </Row>
@@ -102,12 +127,13 @@ export const ExistingSectionFolio = ({
 ExistingSectionFolio.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
   existingRecordType: PropTypes.oneOf([...Object.keys(FOLIO_RECORD_TYPES), '']).isRequired,
-  dispatchFormChange: PropTypes.func.isRequired,
+  changeFormState: PropTypes.func.isRequired,
   existingRecordFields: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   })),
   existingRecordFieldLabel: PropTypes.string,
+  formValues: PropTypes.object,
 };
 
 ExistingSectionFolio.defaultProps = {
