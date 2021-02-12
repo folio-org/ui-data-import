@@ -20,8 +20,10 @@ import {
   OCLC_CREATE_INSTANCE_JOB_ID,
   OCLC_UPDATE_INSTANCE_JOB_ID,
 } from '../../utils';
-import { ListView } from '../../components/ListView';
-import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
+import {
+  ListView,
+  CheckboxHeader,
+} from '../../components';
 
 import { ViewJobProfile } from './ViewJobProfile';
 import { JobProfilesForm } from './JobProfilesForm';
