@@ -69,7 +69,7 @@ export const InvoiceAdjustments = ({
     const fundDistributions = adjustments[mappingSubfieldIndex].fields[mappingSubfieldFieldIndex].subfields;
     const fundDistributionInitialFields = { [currentInitialFundDistribution.name]: currentInitialFundDistribution.subfields[0] };
 
-    const getActualPath = curentIndex => getFundDistributionFieldsPath(mappingFieldIndex, mappingSubfieldIndex, curentIndex);
+    const getActualPath = currentIndex => getFundDistributionFieldsPath(mappingFieldIndex, mappingSubfieldIndex, currentIndex);
 
     return (
       <RepeatableField

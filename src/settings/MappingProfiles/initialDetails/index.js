@@ -41,8 +41,8 @@ export const getInitialDetails = (entity, stripRepeatableFields = false) => {
   }
 
   const fields = currentEntity.mappingFields.map(field => ({
-    ...field,
     subfields: [],
+    ...field,
   }));
 
   return {

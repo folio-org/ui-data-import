@@ -24,6 +24,8 @@ import {
   onAdd,
   onRemove,
   getSubfieldName,
+  getFundDistributionFieldsPath,
+  getInnerSubfieldName,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -44,12 +46,16 @@ export const InvoiceLineAdjustments = ({
 
   const relationToTotalList = createOptionsList(INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS, formatMessage);
 
+  const getActualPath = function (currentIndex) {
+    getFundDistributionFieldsPath(currentIndex, 0, 14);
+  };
+
   const renderLineAdjustment = (field, index) => {
     const trashButton = (
       <IconButton
         data-test-repeatable-field-remove-item-button
         icon="trash"
-        onClick={() => onRemove(index, lineAdjustments, 41, setReferenceTables, 'order')}
+        onClick={() => onRemove(index, lineAdjustments, 14, setReferenceTables, 'order', getActualPath)}
         size="medium"
         ariaLabel={formatMessage({ id: 'stripes-components.deleteThisItem' })}
       />
@@ -72,43 +78,7 @@ export const InvoiceLineAdjustments = ({
             <Field
               component={TextField}
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.description`} />}
-              name={getSubfieldName(41, 0, index)}
-            />
-          </Col>
-          <Col xs={2}>
-            <Field
-              component={TextField}
-              label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.amount`} />}
-              name={getSubfieldName(41, 1, index)}
-            />
-          </Col>
-          <Col xs={2}>
-            <Field
-              component={TypeToggle}
-              label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.type`} />}
-              name={getSubfieldName(41, 2, index)}
-              currency={currency}
-            />
-          </Col>
-          <Col xs={3}>
-            <AcceptedValuesField
-              component={TextField}
-              name={getSubfieldName(41, 3, index)}
-              label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.relationToTotal`} />}
-              optionValue="value"
-              optionLabel="label"
-              isRemoveValueAllowed
-              wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-              acceptedValuesList={relationToTotalList}
-              okapi={okapi}
-            />
-          </Col>
-          <Col xs={2}>
-            <Field
-              component={Checkbox}
-              vertical
-              label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.exportToAccounting`} />}
-              name={getSubfieldName(41, 4, index)}
+              name={getInnerSubfieldName(26, 0, 14, 0, index)}
             />
           </Col>
         </Row>
@@ -128,7 +98,7 @@ export const InvoiceLineAdjustments = ({
           <RepeatableField
             fields={lineAdjustments}
             addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.addLabel`} />}
-            onAdd={() => onAdd(lineAdjustments, 'lineAdjustments', 41, initialFields, setReferenceTables, 'order')}
+            onAdd={() => onAdd(lineAdjustments, 'lineAdjustments', 26, initialFields, setReferenceTables, 'order', getActualPath)}
             onRemove={null}
             renderField={renderLineAdjustment}
           />

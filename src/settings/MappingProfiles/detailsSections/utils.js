@@ -56,6 +56,7 @@ export const getFundDistributionFieldsPath = (mappingFieldIndex, mappingSubfield
 };
 
 export const onAdd = (refTable, fieldName, fieldIndex, initialFields, callback, incrementalField, getPath) => {
+  console.log(getPath);
   const fieldsPath = getPath ? getPath(fieldIndex) : `profile.mappingDetails.mappingFields[${fieldIndex}].subfields`;
   let newInitRow = { ...initialFields[fieldName] };
 
@@ -126,8 +127,8 @@ export const updateInitialFields = initials => {
 
     const updatedFields = fieldToUpdate.fields.map(field => {
       return {
-        ...field,
         subfields: [],
+        ...field,
       };
     });
 

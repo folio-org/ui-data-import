@@ -20,6 +20,7 @@ import {
 import {
   getFieldName,
   getAcceptedValuesPath,
+  getSubfieldName,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { okapiShape } from '../../../../../utils';
@@ -90,7 +91,7 @@ export const InvoiceInformation = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(6)}
+            name={getSubfieldName(6, 0, 0)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.acqUnitIds`} />}
             optionValue="name"
             optionLabel="name"

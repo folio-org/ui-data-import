@@ -92,14 +92,6 @@ export const MappingInvoiceDetails = ({
         okapi={okapi}
         accountingNumberOptions={accountingNumberOptions}
       />
-      <InvoiceLineFundDistribution
-        fundDistributions={fundDistributions}
-        currency={currencyFromDetails}
-        initialFields={initialFields}
-        getRepeatableFieldAction={getRepeatableFieldAction}
-        setReferenceTables={setReferenceTables}
-        okapi={okapi}
-      />
       <InvoiceLineAdjustments
         lineAdjustments={lineAdjustments}
         currency={currencyFromDetails}
