@@ -24,8 +24,12 @@ import {
   onAdd,
   onRemove,
   getSubfieldName,
-  getFundDistributionFieldsPath,
+  getInnerSubfieldsPath,
   getInnerSubfieldName,
+  getInnerRepeatableFieldPath,
+  getInnerBooleanFieldPath,
+  handleRepeatableFieldAndActionAdd,
+  handleRepeatableFieldAndActionClean,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -33,12 +37,14 @@ import {
   mappingProfileSubfieldShape,
   okapiShape,
   INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS,
+  BOOLEAN_ACTIONS,
 } from '../../../../../utils';
 
 export const InvoiceLineAdjustments = ({
   lineAdjustments,
   currency,
   initialFields,
+  mappingFields,
   setReferenceTables,
   okapi,
 }) => {
@@ -46,8 +52,18 @@ export const InvoiceLineAdjustments = ({
 
   const relationToTotalList = createOptionsList(INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS, formatMessage);
 
-  const getActualPath = function (currentIndex) {
-    getFundDistributionFieldsPath(currentIndex, 0, 14);
+  const getPathToAddField = currentIndex => getInnerSubfieldsPath(currentIndex, 0, 15);
+  const getPathToClearRepeatableAction = currentIndex => getSubfieldName(currentIndex, 15, 0);
+
+  const onAdjustmentAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+    const repeatableFieldActionPath = getInnerRepeatableFieldPath(fieldIndex, 0, 15);
+
+    handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+  };
+  const onAdjustmentsClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+    const repeatableFieldActionPath = getInnerRepeatableFieldPath(fieldIndex, 0, 15);
+
+    handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
   };
 
   const renderLineAdjustment = (field, index) => {
@@ -55,7 +71,7 @@ export const InvoiceLineAdjustments = ({
       <IconButton
         data-test-repeatable-field-remove-item-button
         icon="trash"
-        onClick={() => onRemove(index, lineAdjustments, 14, setReferenceTables, 'order', getActualPath)}
+        onClick={() => onRemove(index, lineAdjustments, 26, onAdjustmentsClean, 'order', getPathToAddField, getPathToClearRepeatableAction)}
         size="medium"
         ariaLabel={formatMessage({ id: 'stripes-components.deleteThisItem' })}
       />
@@ -68,6 +84,8 @@ export const InvoiceLineAdjustments = ({
       />
     );
 
+    const exportToAccountingCheckbox = mappingFields?.[26].subfields[0].fields[15].subfields[index].fields[4].booleanFieldAction;
+
     return (
       <Card
         headerEnd={trashButton}
@@ -78,7 +96,45 @@ export const InvoiceLineAdjustments = ({
             <Field
               component={TextField}
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.description`} />}
-              name={getInnerSubfieldName(26, 0, 14, 0, index)}
+              name={getInnerSubfieldName(26, 0, 15, 0, index)}
+            />
+          </Col>
+          <Col xs={2}>
+            <Field
+              component={TextField}
+              label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.amount`} />}
+              name={getInnerSubfieldName(26, 0, 15, 1, index)}
+            />
+          </Col>
+          <Col xs={2}>
+            <Field
+              component={TypeToggle}
+              label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.type`} />}
+              name={getInnerSubfieldName(26, 0, 15, 2, index)}
+              currency={currency}
+            />
+          </Col>
+          <Col xs={3}>
+            <AcceptedValuesField
+              component={TextField}
+              name={getInnerSubfieldName(26, 0, 15, 3, index)}
+              label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.relationToTotal`} />}
+              optionValue="value"
+              optionLabel="label"
+              isRemoveValueAllowed
+              wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+              acceptedValuesList={relationToTotalList}
+              okapi={okapi}
+            />
+          </Col>
+          <Col xs={2}>
+            <Field
+              component={Checkbox}
+              vertical
+              label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.exportToAccounting`} />}
+              name={getInnerBooleanFieldPath(26, 0, 15, 4, index)}
+              parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
+              checked={exportToAccountingCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
             />
           </Col>
         </Row>
@@ -98,7 +154,7 @@ export const InvoiceLineAdjustments = ({
           <RepeatableField
             fields={lineAdjustments}
             addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.addLabel`} />}
-            onAdd={() => onAdd(lineAdjustments, 'lineAdjustments', 26, initialFields, setReferenceTables, 'order', getActualPath)}
+            onAdd={() => onAdd(lineAdjustments, 'invoiceLines.fields[15].subfields[0]', 26, initialFields, onAdjustmentAdd, 'order', getPathToAddField)}
             onRemove={null}
             renderField={renderLineAdjustment}
           />
@@ -113,6 +169,7 @@ InvoiceLineAdjustments.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  mappingFields: PropTypes.arrayOf(PropTypes.object),
   currency: PropTypes.string,
 };
 

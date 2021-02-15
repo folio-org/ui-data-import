@@ -8,6 +8,7 @@ import MARC_HOLDINGS from './MARC_HOLDINGS';
 import MARC_AUTHORITY from './MARC_AUTHORITY';
 
 import { isMARCType } from '../../../utils';
+import { FOLIO_RECORD_TYPES } from '../../../components';
 
 const initialValues = {
   ITEM,
@@ -18,6 +19,26 @@ const initialValues = {
   MARC_BIBLIOGRAPHIC,
   MARC_HOLDINGS,
   MARC_AUTHORITY,
+};
+
+const modifyInvoiceLinesFieldDetails = field => {
+  const invoiceLineSubfield = { ...field.subfields[0] };
+
+  invoiceLineSubfield.fields = invoiceLineSubfield.fields.map(subfieldsField => {
+    if (subfieldsField.subfields) {
+      return {
+        ...subfieldsField,
+        subfields: [],
+      };
+    }
+
+    return subfieldsField;
+  });
+
+  return {
+    ...field,
+    subfields: [invoiceLineSubfield],
+  };
 };
 
 /**
@@ -34,16 +55,29 @@ export const getInitialDetails = (entity, stripRepeatableFields = false) => {
   }
 
   const entityIsMARC = isMARCType(entity);
+  const entityIsInvoice = entity === FOLIO_RECORD_TYPES.INVOICE.type;
   const currentEntity = initialValues[entity];
 
   if (entityIsMARC || !stripRepeatableFields) {
     return currentEntity;
   }
 
-  const fields = currentEntity.mappingFields.map(field => ({
-    subfields: [],
-    ...field,
-  }));
+  const fields = currentEntity.mappingFields.map(field => {
+    if (entityIsInvoice) {
+      if (field.name === 'invoiceLines') {
+        return modifyInvoiceLinesFieldDetails(field);
+      }
+
+      if (field.name === 'acqUnitIds') {
+        return field;
+      }
+    }
+
+    return {
+      ...field,
+      subfields: [],
+    };
+  });
 
   return {
     ...currentEntity,

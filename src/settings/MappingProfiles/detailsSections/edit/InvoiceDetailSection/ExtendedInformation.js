@@ -18,14 +18,19 @@ import { PAYMENT_METHOD_OPTIONS } from '@folio/stripes-acq-components';
 
 import { AcceptedValuesField } from '../../../../../components';
 
-import { getFieldName } from '../../utils';
+import {
+  getFieldName,
+  getBoolFieldName,
+} from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   okapiShape,
   createOptionsList,
+  BOOLEAN_ACTIONS,
 } from '../../../../../utils';
 
 export const ExtendedInformation = ({
+  mappingFields,
   okapi,
   setReferenceTables,
 }) => {
@@ -34,6 +39,9 @@ export const ExtendedInformation = ({
   const { formatMessage } = useIntl();
   const paymentMethodsList = createOptionsList(PAYMENT_METHOD_OPTIONS, formatMessage, 'labelId');
   const currenciesList = useCurrencyOptions();
+
+  const exportToAccountingCheckbox = mappingFields?.[22].booleanFieldAction;
+  const checkSubscriptionOverlapCheckbox = mappingFields?.[21].booleanFieldAction;
 
   return (
     <Accordion
@@ -67,7 +75,9 @@ export const ExtendedInformation = ({
             component={Checkbox}
             vertical
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.field.checkSubscriptionOverlap`} />}
-            name={getFieldName(21)}
+            name={getBoolFieldName(21)}
+            parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
+            checked={checkSubscriptionOverlapCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
           />
         </Col>
         <Col xs={3}>
@@ -75,7 +85,9 @@ export const ExtendedInformation = ({
             component={Checkbox}
             vertical
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.field.exportToAccounting`} />}
-            name={getFieldName(22)}
+            name={getBoolFieldName(22)}
+            parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
+            checked={exportToAccountingCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
           />
         </Col>
       </Row>
@@ -130,4 +142,5 @@ export const ExtendedInformation = ({
 ExtendedInformation.propTypes = {
   okapi: okapiShape.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
+  mappingFields: PropTypes.arrayOf(PropTypes.object),
 };

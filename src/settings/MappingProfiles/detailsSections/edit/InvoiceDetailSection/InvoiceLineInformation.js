@@ -18,14 +18,23 @@ import {
   DatePickerDecorator,
 } from '../../../../../components';
 
-import { getSubfieldName } from '../../utils';
+import {
+  getSubfieldName,
+  getBoolSubfieldName,
+} from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { okapiShape } from '../../../../../utils';
+import {
+  BOOLEAN_ACTIONS,
+  okapiShape,
+} from '../../../../../utils';
 
 export const InvoiceLineInformation = ({
   accountingNumberOptions,
+  mappingFields,
   okapi,
 }) => {
+  const releaseEncumbranceCheckbox = mappingFields?.[26].subfields[0].fields[13].booleanFieldAction;
+
   return (
     <Accordion
       id="invoice-line-information"
@@ -157,8 +166,10 @@ export const InvoiceLineInformation = ({
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.releaseEncumbrance`} />}
-            name={getSubfieldName(26, 13, 0)}
+            name={getBoolSubfieldName(26, 13, 0)}
             vertical
+            parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
+            checked={releaseEncumbranceCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
           />
         </Col>
       </Row>
@@ -169,6 +180,7 @@ export const InvoiceLineInformation = ({
 InvoiceLineInformation.propTypes = {
   accountingNumberOptions: PropTypes.arrayOf(PropTypes.object),
   okapi: okapiShape.isRequired,
+  mappingFields: PropTypes.arrayOf(PropTypes.object),
 };
 
 InvoiceLineInformation.defaultProps = { accountingNumberOptions: [] };

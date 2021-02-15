@@ -13,6 +13,7 @@ import { FIELD_NAME_PREFIX } from './constants';
 import {
   ENTITY_KEYS,
   FORMS_SETTINGS,
+  REPEATABLE_ACTIONS,
 } from '../../../utils';
 
 export const getFieldName = mappingFieldIndex => {
@@ -31,7 +32,7 @@ export const getSubfieldName = (mappingFieldIndex, fieldIndex, subfieldIndex) =>
   return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].value`;
 };
 
-export const getInnerSubfieldName = (mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, innerSubfieldIndex, innerFieldIndex) => {
+export const getInnerSubfieldName = (mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, innerFieldIndex, innerSubfieldIndex) => {
   return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${mappingSubfieldIndex}].fields[${mappingSubfieldFieldIndex}].subfields[${innerSubfieldIndex}].fields[${innerFieldIndex}].value`;
 };
 
@@ -47,18 +48,41 @@ export const getRepeatableAcceptedValuesPath = (mappingFieldIndex, fieldIndex, s
   return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].acceptedValues`;
 };
 
-export const getInnerRepeatableAcceptedValuesPath = (mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, innerSubfieldIndex, innerFieldIndex) => {
+export const getInnerRepeatableAcceptedValuesPath = (mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, innerFieldIndex, innerSubfieldIndex) => {
   return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${mappingSubfieldIndex}].fields[${mappingSubfieldFieldIndex}].subfields[${innerSubfieldIndex}].fields[${innerFieldIndex}].acceptedValues`;
 };
 
-export const getFundDistributionFieldsPath = (mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex) => {
+export const getInnerSubfieldsPath = (mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex) => {
   return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${mappingSubfieldIndex}].fields[${mappingSubfieldFieldIndex}].subfields`;
 };
 
+export const getInnerBooleanFieldPath = (mappingFieldIndex, subfieldIndex, fieldIndex, innerFieldIndex, innerSubfieldIndex) => {
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].subfields[${innerSubfieldIndex}].fields[${innerFieldIndex}].booleanFieldAction`;
+};
+
+export const getInnerRepeatableFieldPath = (mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex) => {
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${mappingSubfieldIndex}].fields[${mappingSubfieldFieldIndex}].repeatableFieldAction`;
+};
+
+export const handleRepeatableFieldAndActionAdd = (repeatableFieldActionPath, fieldsToAddPath, refTable, setReferenceTables, isFirstSubfield) => {
+  setReferenceTables(fieldsToAddPath, refTable);
+
+  if (isFirstSubfield) {
+    setReferenceTables(repeatableFieldActionPath, REPEATABLE_ACTIONS.EXTEND_EXISTING);
+  }
+};
+export const handleRepeatableFieldAndActionClean = (repeatableFieldActionPath, fieldsToAddPath, refTable, setReferenceTables, isLastSubfield) => {
+  setReferenceTables(fieldsToAddPath, refTable);
+
+  if (isLastSubfield) {
+    setReferenceTables(repeatableFieldActionPath, null);
+  }
+};
+
 export const onAdd = (refTable, fieldName, fieldIndex, initialFields, callback, incrementalField, getPath) => {
-  console.log(getPath);
   const fieldsPath = getPath ? getPath(fieldIndex) : `profile.mappingDetails.mappingFields[${fieldIndex}].subfields`;
-  let newInitRow = { ...initialFields[fieldName] };
+  let newInitRow = { ...get(initialFields, fieldName) };
+  const isFirstSubfield = isEmpty(refTable);
 
   if (incrementalField) {
     newInitRow = {
@@ -68,10 +92,10 @@ export const onAdd = (refTable, fieldName, fieldIndex, initialFields, callback, 
   }
 
   refTable.push(newInitRow);
-  callback(fieldsPath, refTable);
+  callback(fieldsPath, refTable, fieldIndex, isFirstSubfield);
 };
 
-export const onRemove = (index, refTable, fieldIndex, callback, incrementalField, getPath) => {
+export const onRemove = (index, refTable, fieldIndex, callback, incrementalField, getPath, getRepeatableActionFieldPath) => {
   const fieldsPath = getPath ? getPath(fieldIndex) : `profile.mappingDetails.mappingFields[${fieldIndex}].subfields`;
   let newRefTable = [...refTable];
 
@@ -84,13 +108,17 @@ export const onRemove = (index, refTable, fieldIndex, callback, incrementalField
     }));
   }
 
-  if (newRefTable.length === 0) {
-    const repeatableActionFieldPath = getRepeatableFieldName(fieldIndex);
+  const isLastSubfield = newRefTable.length === 0;
 
-    callback(repeatableActionFieldPath, null);
+  if (isLastSubfield) {
+    const repeatableActionFieldPath = getRepeatableActionFieldPath
+      ? getRepeatableActionFieldPath(fieldIndex)
+      : getRepeatableFieldName(fieldIndex);
+
+    callback(repeatableActionFieldPath, null, fieldIndex, isLastSubfield);
   }
 
-  callback(fieldsPath, newRefTable);
+  callback(fieldsPath, newRefTable, fieldIndex, isLastSubfield);
 };
 
 export const getFieldValue = (details, fieldName, key) => details.find(item => item.name === fieldName)?.[key];
@@ -127,8 +155,8 @@ export const updateInitialFields = initials => {
 
     const updatedFields = fieldToUpdate.fields.map(field => {
       return {
-        subfields: [],
         ...field,
+        subfields: [],
       };
     });
 

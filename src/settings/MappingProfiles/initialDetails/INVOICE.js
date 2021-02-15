@@ -41,6 +41,7 @@ const INVOICE = {
     name: 'acqUnitIds',
     enabled: true,
     path: 'invoice.acqUnitIds[]',
+    repeatableFieldAction: 'EXTEND_EXISTING',
     value: '',
     subfields: [{
       order: 0,
@@ -107,6 +108,7 @@ const INVOICE = {
     name: 'adjustments',
     enabled: true,
     path: 'invoice.adjustments[]',
+    repeatableFieldAction: null,
     value: '',
     subfields: [{
       order: 0,
@@ -140,11 +142,13 @@ const INVOICE = {
         name: 'exportToAccounting',
         enabled: true,
         path: 'invoice.adjustments[].exportToAccounting',
-        value: false,
+        value: null,
+        booleanFieldAction: 'ALL_FALSE',
       }, {
         name: 'fundDistributions',
         enabled: true,
         path: 'invoice.adjustments[].fundDistributions[]',
+        repeatableFieldAction: null,
         value: '',
         subfields: [{
           order: 0,
@@ -213,12 +217,14 @@ const INVOICE = {
     name: 'chkSubscriptionOverlap',
     enabled: true,
     path: 'invoice.chkSubscriptionOverlap',
-    value: false,
+    value: null,
+    booleanFieldAction: 'ALL_FALSE',
   }, {
     name: 'exportToAccounting',
     enabled: true,
     path: 'invoice.exportToAccounting',
-    value: false,
+    value: null,
+    booleanFieldAction: 'ALL_FALSE',
   }, {
     name: 'currency',
     enabled: true,
@@ -241,6 +247,7 @@ const INVOICE = {
     name: 'invoiceLines',
     enabled: true,
     path: 'invoice.invoiceLines[]',
+    repeatableFieldAction: 'EXTEND_EXISTING',
     value: '',
     subfields: [{
       order: 0,
@@ -250,8 +257,7 @@ const INVOICE = {
         enabled: true,
         path: 'invoice.invoiceLines[].description',
         value: '',
-      },
-      {
+      }, {
         name: 'poLineId',
         enabled: true,
         path: 'invoice.invoiceLines[].poLineId',
@@ -262,25 +268,10 @@ const INVOICE = {
         path: 'invoice.invoiceLines[].invoiceLineNumber',
         value: '',
       }, {
-        name: 'referenceNumbers',
+        name: 'vendorRefNo',
         enabled: true,
-        order: 0,
-        path: 'invoice.invoiceLines[].referenceNumbers',
+        path: 'invoice.invoiceLines[].vendorRefNo',
         value: '',
-        subfields: [{
-          order: 0,
-          fields: [{
-            name: 'invoiceLineNumber',
-            enabled: false,
-            path: 'invoice.invoiceLines[].refNumber',
-            value: '',
-          }, {
-            name: 'invoiceLineNumber',
-            enabled: false,
-            path: 'invoice.invoiceLines[].refNumberType',
-            value: '',
-          }],
-        }],
       }, {
         name: 'invoiceLineStatus',
         enabled: false,
@@ -330,11 +321,51 @@ const INVOICE = {
         name: 'releaseEncumbrance',
         enabled: true,
         path: 'invoice.invoiceLines[].releaseEncumbrance',
-        value: false,
+        value: null,
+        booleanFieldAction: 'ALL_FALSE',
+      }, {
+        name: 'fundDistributions',
+        enabled: true,
+        path: 'invoice.invoiceLines[].fundDistributions[]',
+        repeatableFieldAction: null,
+        value: '',
+        subfields: [{
+          order: 0,
+          path: 'invoice.invoiceLines[].fundDistributions[]',
+          fields: [{
+            name: 'fundId',
+            enabled: true,
+            path: 'invoice.invoiceLines[].fundDistributions[].fundId',
+            value: '',
+            acceptedValues: {},
+          }, {
+            name: 'expenseClassId',
+            enabled: true,
+            path: 'invoice.invoiceLines[].fundDistributions[].expenseClassId',
+            value: '',
+            acceptedValues: {},
+          }, {
+            name: 'value',
+            enabled: true,
+            path: 'invoice.invoiceLines[].fundDistributions[].value',
+            value: '',
+          }, {
+            name: 'distributionType',
+            enabled: true,
+            path: 'invoice.invoiceLines[].fundDistributions[].distributionType',
+            value: 'percentage',
+          }, {
+            name: 'amount',
+            enabled: false,
+            path: 'invoice.invoiceLines[].fundDistributions[].amount',
+            value: '',
+          }],
+        }],
       }, {
         name: 'lineAdjustments',
         enabled: true,
         path: 'invoice.invoiceLines[].adjustments[]',
+        repeatableFieldAction: null,
         value: '',
         subfields: [{
           order: 0,
@@ -363,7 +394,8 @@ const INVOICE = {
             name: 'exportToAccounting',
             enabled: true,
             path: 'invoice.invoiceLines[].adjustments[].exportToAccounting',
-            value: false,
+            value: null,
+            booleanFieldAction: 'ALL_FALSE',
           }],
         }],
       }],

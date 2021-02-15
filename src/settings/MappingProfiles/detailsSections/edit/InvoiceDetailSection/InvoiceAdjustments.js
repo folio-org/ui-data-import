@@ -24,10 +24,14 @@ import {
   onAdd,
   onRemove,
   getSubfieldName,
+  getBoolSubfieldName,
   getInnerSubfieldName,
   getInnerRepeatableAcceptedValuesPath,
-  getFundDistributionFieldsPath,
+  getInnerSubfieldsPath,
   updateInitialFields,
+  getRepeatableFieldName,
+  handleRepeatableFieldAndActionAdd,
+  handleRepeatableFieldAndActionClean,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -37,6 +41,7 @@ import {
   PRORATE_OPTIONS,
   INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS,
   INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS,
+  BOOLEAN_ACTIONS,
 } from '../../../../../utils';
 
 export const InvoiceAdjustments = ({
@@ -44,6 +49,7 @@ export const InvoiceAdjustments = ({
   currency,
   initialFields,
   initialFields: { adjustments: { fields: initialFundDistribution } },
+  mappingFields,
   setReferenceTables,
   okapi,
 }) => {
@@ -59,8 +65,19 @@ export const InvoiceAdjustments = ({
       setIsFundDistribution(true);
     } else {
       setIsFundDistribution(false);
-      setReferenceTables(getFundDistributionFieldsPath(15, index, 6), []);
+      setReferenceTables(getInnerSubfieldsPath(15, index, 6), []);
     }
+  };
+
+  const onAdjustmentAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+    const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+    handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+  };
+  const onAdjustmentsClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+    const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+    handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
   };
 
   const renderFundDistributionFields = (mappingFieldIndex, mappingSubfieldFieldIndex, mappingSubfieldIndex) => {
@@ -69,21 +86,31 @@ export const InvoiceAdjustments = ({
     const fundDistributions = adjustments[mappingSubfieldIndex].fields[mappingSubfieldFieldIndex].subfields;
     const fundDistributionInitialFields = { [currentInitialFundDistribution.name]: currentInitialFundDistribution.subfields[0] };
 
-    const getActualPath = currentIndex => getFundDistributionFieldsPath(mappingFieldIndex, mappingSubfieldIndex, currentIndex);
+    const getActualPath = currentIndex => getInnerSubfieldsPath(mappingFieldIndex, mappingSubfieldIndex, currentIndex);
+    const onFundDistributionAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+      const repeatableFieldActionPath = `profile.mappingDetails.mappingFields[${mappingFieldIndex}].subfields[${mappingSubfieldIndex}].fields[${fieldIndex}].repeatableFieldAction`;
+
+      handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+    };
+    const onFundDistributionsClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+      const repeatableFieldActionPath = `profile.mappingDetails.mappingFields[${mappingFieldIndex}].subfields[${mappingSubfieldIndex}].fields[${fieldIndex}].repeatableFieldAction`;
+
+      handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+    };
 
     return (
       <RepeatableField
         fields={fundDistributions}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.addLabel`} />}
-        onAdd={() => onAdd(fundDistributions, 'fundDistributions', mappingSubfieldFieldIndex, fundDistributionInitialFields, setReferenceTables, 'order', getActualPath)}
-        onRemove={index => onRemove(index, fundDistributions, mappingSubfieldFieldIndex, setReferenceTables, 'order', getActualPath)}
+        onAdd={() => onAdd(fundDistributions, 'fundDistributions', mappingSubfieldFieldIndex, fundDistributionInitialFields, onFundDistributionAdd, 'order', getActualPath)}
+        onRemove={index => onRemove(index, fundDistributions, mappingSubfieldFieldIndex, onFundDistributionsClean, 'order', getActualPath)}
         canAdd={isFundDistribution}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={3}>
               <AcceptedValuesField
                 component={TextField}
-                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, index, 0)}
+                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 0, index)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.fundId`} />}
                 optionValue="name"
                 optionLabel="name"
@@ -94,14 +121,14 @@ export const InvoiceAdjustments = ({
                 }]}
                 optionTemplate="**name** (**code**)"
                 setAcceptedValues={setReferenceTables}
-                acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, index, 0)}
+                acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 0, index)}
                 okapi={okapi}
               />
             </Col>
             <Col xs={3}>
               <AcceptedValuesField
                 component={TextField}
-                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, index, 1)}
+                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 1, index)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.expenseClass`} />}
                 optionValue="name"
                 optionLabel="name"
@@ -111,7 +138,7 @@ export const InvoiceAdjustments = ({
                   wrapperSourcePath: 'expenseClasses',
                 }]}
                 setAcceptedValues={setReferenceTables}
-                acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, index, 1)}
+                acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 1, index)}
                 okapi={okapi}
               />
             </Col>
@@ -119,14 +146,14 @@ export const InvoiceAdjustments = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.value`} />}
-                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, index, 2)}
+                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 2, index)}
               />
             </Col>
             <Col xs={2}>
               <Field
                 component={TypeToggle}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.type`} />}
-                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, index, 3)}
+                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 3, index)}
                 currency={currency}
               />
             </Col>
@@ -134,7 +161,7 @@ export const InvoiceAdjustments = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.amount`} />}
-                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, index, 4)}
+                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 4, index)}
                 disabled
               />
             </Col>
@@ -149,7 +176,7 @@ export const InvoiceAdjustments = ({
       <IconButton
         data-test-repeatable-field-remove-item-button
         icon="trash"
-        onClick={() => onRemove(index, adjustments, 15, setReferenceTables, 'order')}
+        onClick={() => onRemove(index, adjustments, 15, onAdjustmentsClean, 'order')}
         size="medium"
         ariaLabel={formatMessage({ id: 'stripes-components.deleteThisItem' })}
       />
@@ -161,6 +188,8 @@ export const InvoiceAdjustments = ({
         values={{ index: index + 1 }}
       />
     );
+
+    const exportToAccountingCheckbox = mappingFields?.[15].subfields[index].fields[5].booleanFieldAction;
 
     return (
       <Card
@@ -222,7 +251,9 @@ export const InvoiceAdjustments = ({
               component={Checkbox}
               vertical
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.exportToAccounting`} />}
-              name={getSubfieldName(15, 5, index)}
+              name={getBoolSubfieldName(15, 5, index)}
+              parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
+              checked={exportToAccountingCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
             />
           </Col>
         </Row>
@@ -255,7 +286,7 @@ export const InvoiceAdjustments = ({
             onAdd={() => {
               const updatedInitialFields = updateInitialFields(initialFields);
 
-              onAdd(adjustments, 'adjustments', 15, updatedInitialFields, setReferenceTables, 'order');
+              onAdd(adjustments, 'adjustments', 15, updatedInitialFields, onAdjustmentAdd, 'order');
             }}
             onRemove={null}
             renderField={renderAdjustment}
@@ -271,6 +302,7 @@ InvoiceAdjustments.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  mappingFields: PropTypes.arrayOf(PropTypes.object),
   currency: PropTypes.string,
 };
 
