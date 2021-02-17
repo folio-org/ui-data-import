@@ -46,6 +46,7 @@
 * Invoice mapping screen, FE updates according last BE changes (UIDATIMP-842)
 * Update invoice status value in field mapping profile (UIDATIMP-830)
 * Match profiles: Remove EDIFACT (UIDATIMP-844)
+* Settings > Data import. Learn more button leads to empty page on Confluence (UIDATIMP-838)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
