@@ -17,8 +17,6 @@ import {
 } from './InvoiceDetailSection';
 
 import {
-  mappingItemInitialFieldsShape,
-  mappingItemRefTablesShape,
   okapiShape,
   CURRENCY_FIELD,
   VENDOR_ID_FIELD,
@@ -36,7 +34,7 @@ export const MappingInvoiceDetails = ({
   initialFields,
   referenceTables,
   setReferenceTables,
-  getRepeatableFieldAction,
+  getMappingSubfieldsFieldValue,
   okapi,
 }) => {
   const [selectedVendor, setSelectedVendor] = useState({});
@@ -44,8 +42,8 @@ export const MappingInvoiceDetails = ({
   const [accountingNumberOptions, setAccountingNumberOptions] = useState([]);
 
   const adjustments = referenceTables?.adjustments || [];
-  const fundDistributions = referenceTables?.fundDistributions || [];
-  const lineAdjustments = referenceTables?.lineAdjustments || [];
+  const fundDistributions = referenceTables?.invoiceLines?.[0].fields[14]?.subfields || [];
+  const lineAdjustments = referenceTables?.invoiceLines?.[0].fields[15]?.subfields || [];
   const currencyFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, CURRENCY_FIELD);
   const filledVendorId = getFieldValueFromDetails(mappingDetails?.mappingFields, VENDOR_ID_FIELD);
 
@@ -74,6 +72,7 @@ export const MappingInvoiceDetails = ({
         adjustments={adjustments}
         currency={currencyFromDetails}
         initialFields={initialFields}
+        mappingFields={mappingDetails?.mappingFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
@@ -86,17 +85,19 @@ export const MappingInvoiceDetails = ({
       />
       <ExtendedInformation
         setReferenceTables={setReferenceTables}
+        mappingFields={mappingDetails?.mappingFields}
         okapi={okapi}
       />
       <InvoiceLineInformation
         okapi={okapi}
         accountingNumberOptions={accountingNumberOptions}
+        mappingFields={mappingDetails?.mappingFields}
       />
       <InvoiceLineFundDistribution
         fundDistributions={fundDistributions}
         currency={currencyFromDetails}
         initialFields={initialFields}
-        getRepeatableFieldAction={getRepeatableFieldAction}
+        getMappingSubfieldsFieldValue={getMappingSubfieldsFieldValue}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
@@ -104,6 +105,7 @@ export const MappingInvoiceDetails = ({
         lineAdjustments={lineAdjustments}
         currency={currencyFromDetails}
         initialFields={initialFields}
+        mappingFields={mappingDetails?.mappingFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
@@ -112,10 +114,10 @@ export const MappingInvoiceDetails = ({
 };
 
 MappingInvoiceDetails.propTypes = {
-  initialFields: mappingItemInitialFieldsShape.isRequired,
-  referenceTables: mappingItemRefTablesShape.isRequired,
+  initialFields: PropTypes.object.isRequired,
+  referenceTables: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
-  getRepeatableFieldAction: PropTypes.func.isRequired,
+  getMappingSubfieldsFieldValue: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
   mappingDetails: PropTypes.object,
 };
