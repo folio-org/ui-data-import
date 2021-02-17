@@ -44,6 +44,8 @@
 * Update stripes-cli to v2 (UIDATIMP-840)
 * Refactor Job profiles to use final-form instead of redux-form (UIDATIMP-829)
 * Invoice mapping screen, FE updates according last BE changes (UIDATIMP-842)
+* Update invoice status value in field mapping profile (UIDATIMP-830)
+* Match profiles: Remove EDIFACT (UIDATIMP-844)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
