@@ -43,6 +43,9 @@
 * Allow 005 to be a protected field (UIDATIMP-835)
 * Update stripes-cli to v2 (UIDATIMP-840)
 * Refactor Job profiles to use final-form instead of redux-form (UIDATIMP-829)
+* Invoice mapping screen, FE updates according last BE changes (UIDATIMP-842)
+* Update invoice status value in field mapping profile (UIDATIMP-830)
+* Match profiles: Remove EDIFACT (UIDATIMP-844)
 * Settings > Data import. Learn more button leads to empty page on Confluence (UIDATIMP-838)
 
 ### Bugs fixed:

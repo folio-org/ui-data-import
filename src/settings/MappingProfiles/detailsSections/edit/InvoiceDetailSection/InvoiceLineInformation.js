@@ -18,14 +18,23 @@ import {
   DatePickerDecorator,
 } from '../../../../../components';
 
-import { getFieldName } from '../../utils';
+import {
+  getSubfieldName,
+  getBoolSubfieldName,
+} from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { okapiShape } from '../../../../../utils';
+import {
+  BOOLEAN_ACTIONS,
+  okapiShape,
+} from '../../../../../utils';
 
 export const InvoiceLineInformation = ({
   accountingNumberOptions,
+  mappingFields,
   okapi,
 }) => {
+  const releaseEncumbranceCheckbox = mappingFields?.[26].subfields[0].fields[13].booleanFieldAction;
+
   return (
     <Accordion
       id="invoice-line-information"
@@ -36,7 +45,7 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.description`} />}
-            name={getFieldName(26)}
+            name={getSubfieldName(26, 0, 0)}
           />
         </Col>
       </Row>
@@ -45,14 +54,14 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.POLineNumber`} />}
-            name={getFieldName(27)}
+            name={getSubfieldName(26, 1, 0)}
           />
         </Col>
         <Col xs={3}>
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.invoiceLineNumber`} />}
-            name={getFieldName(28)}
+            name={getSubfieldName(26, 2, 0)}
             disabled
           />
         </Col>
@@ -60,14 +69,14 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.vendorRefNo`} />}
-            name={getFieldName(29)}
+            name={getSubfieldName(26, 3, 0)}
           />
         </Col>
         <Col xs={3}>
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.invoiceLineStatus`} />}
-            name={getFieldName(30)}
+            name={getSubfieldName(26, 4, 0)}
             disabled
           />
         </Col>
@@ -77,14 +86,14 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.subscriptionInfo`} />}
-            name={getFieldName(31)}
+            name={getSubfieldName(26, 5, 0)}
           />
         </Col>
         <Col xs={3}>
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.subscriptionStartDate`} />}
-            name={getFieldName(32)}
+            name={getSubfieldName(26, 6, 0)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
           />
@@ -93,7 +102,7 @@ export const InvoiceLineInformation = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.subscriptionEndDate`} />}
-            name={getFieldName(33)}
+            name={getSubfieldName(26, 7, 0)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
           />
@@ -102,7 +111,7 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.comment`} />}
-            name={getFieldName(34)}
+            name={getSubfieldName(26, 8, 0)}
           />
         </Col>
       </Row>
@@ -111,7 +120,7 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.accountingCode`} />}
-            name={getFieldName(35)}
+            name={getSubfieldName(26, 9, 0)}
             disabled
           />
         </Col>
@@ -121,12 +130,12 @@ export const InvoiceLineInformation = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.accountNumber`} />}
-                name={getFieldName(36)}
+                name={getSubfieldName(26, 10, 0)}
               />
             ) : (
               <AcceptedValuesField
                 component={TextField}
-                name={getFieldName(36)}
+                name={getSubfieldName(26, 10, 0)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.accountNumber`} />}
                 optionValue="value"
                 optionLabel="label"
@@ -141,14 +150,14 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.quantity`} />}
-            name={getFieldName(37)}
+            name={getSubfieldName(26, 11, 0)}
           />
         </Col>
         <Col xs={3}>
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.subTotal`} />}
-            name={getFieldName(38)}
+            name={getSubfieldName(26, 12, 0)}
           />
         </Col>
       </Row>
@@ -157,8 +166,10 @@ export const InvoiceLineInformation = ({
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.releaseEncumbrance`} />}
-            name={getFieldName(39)}
+            name={getBoolSubfieldName(26, 13, 0)}
             vertical
+            parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
+            checked={releaseEncumbranceCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
           />
         </Col>
       </Row>
@@ -169,6 +180,7 @@ export const InvoiceLineInformation = ({
 InvoiceLineInformation.propTypes = {
   accountingNumberOptions: PropTypes.arrayOf(PropTypes.object),
   okapi: okapiShape.isRequired,
+  mappingFields: PropTypes.arrayOf(PropTypes.object),
 };
 
 InvoiceLineInformation.defaultProps = { accountingNumberOptions: [] };

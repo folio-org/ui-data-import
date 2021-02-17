@@ -21,8 +21,12 @@ import {
   onAdd,
   onRemove,
   getSubfieldName,
-  getRepeatableAcceptedValuesPath,
-  getRepeatableFieldName,
+  getInnerSubfieldsPath,
+  getInnerSubfieldName,
+  getInnerRepeatableAcceptedValuesPath,
+  getInnerRepeatableFieldPath,
+  handleRepeatableFieldAndActionAdd,
+  handleRepeatableFieldAndActionClean,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -36,10 +40,24 @@ export const InvoiceLineFundDistribution = ({
   fundDistributions,
   currency,
   initialFields,
-  getRepeatableFieldAction,
+  getMappingSubfieldsFieldValue,
   setReferenceTables,
   okapi,
 }) => {
+  const getPathToAddField = currentIndex => getInnerSubfieldsPath(currentIndex, 0, 14);
+  const getPathToClearRepeatableAction = currentIndex => getSubfieldName(currentIndex, 14, 0);
+
+  const onFundDistributionAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+    const repeatableFieldActionPath = getInnerRepeatableFieldPath(fieldIndex, 0, 14);
+
+    handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+  };
+  const onFundDistributionsClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+    const repeatableFieldActionPath = getInnerRepeatableFieldPath(fieldIndex, 0, 14);
+
+    handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+  };
+
   return (
     <Accordion
       id="invoice-line-fund-distribution"
@@ -48,29 +66,30 @@ export const InvoiceLineFundDistribution = ({
       <Row left="xs">
         <Col xs={12}>
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(40)}
+            wrapperFieldName={getSubfieldName(26, 14, 0)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineFundDistribution.field.fundDistributionSource.legend`} />}
-            repeatableFieldAction={getRepeatableFieldAction(40)}
-            repeatableFieldIndex={40}
+            repeatableFieldAction={getMappingSubfieldsFieldValue(26, 0, 14)}
+            repeatableFieldIndex={26}
             hasRepeatableFields={!!fundDistributions.length}
             onRepeatableActionChange={setReferenceTables}
             wrapperPlaceholder="ui-data-import.settings.mappingProfiles.map.wrapper.fundDistributionSource"
             actions={MAPPING_FUND_DISTRIBUTION_FIELD_SOURCES}
             actionToClearFields={FUND_DISTRIBUTION_SOURCE.USE_FUND_DISTRIBUTION_FROM_POL}
+            subfieldsToClearPath={getInnerSubfieldsPath(26, 0, 14)}
           >
             {isDisabled => (
               <RepeatableField
                 fields={fundDistributions}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.addLabel`} />}
-                onAdd={() => onAdd(fundDistributions, 'fundDistributions', 40, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, fundDistributions, 40, setReferenceTables, 'order')}
+                onAdd={() => onAdd(fundDistributions, 'invoiceLines.fields[14].subfields[0]', 26, initialFields, onFundDistributionAdd, 'order', getPathToAddField)}
+                onRemove={index => onRemove(index, fundDistributions, 26, onFundDistributionsClean, 'order', getPathToAddField, getPathToClearRepeatableAction)}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
                     <Col xs={3}>
                       <AcceptedValuesField
                         component={TextField}
-                        name={getSubfieldName(40, 0, index)}
+                        name={getInnerSubfieldName(26, 0, 14, 0, index)}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.fundId`} />}
                         optionValue="name"
                         optionLabel="name"
@@ -81,14 +100,14 @@ export const InvoiceLineFundDistribution = ({
                         }]}
                         optionTemplate="**name** (**code**)"
                         setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(40, 0, index)}
+                        acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(26, 0, 14, 0, index)}
                         okapi={okapi}
                       />
                     </Col>
                     <Col xs={3}>
                       <AcceptedValuesField
                         component={TextField}
-                        name={getSubfieldName(40, 1, index)}
+                        name={getInnerSubfieldName(26, 0, 14, 1, index)}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.expenseClass`} />}
                         optionValue="name"
                         optionLabel="name"
@@ -98,7 +117,7 @@ export const InvoiceLineFundDistribution = ({
                           wrapperSourcePath: 'expenseClasses',
                         }]}
                         setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(40, 1, index)}
+                        acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(26, 0, 14, 1, index)}
                         okapi={okapi}
                       />
                     </Col>
@@ -106,14 +125,14 @@ export const InvoiceLineFundDistribution = ({
                       <Field
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.value`} />}
-                        name={getSubfieldName(40, 2, index)}
+                        name={getInnerSubfieldName(26, 0, 14, 2, index)}
                       />
                     </Col>
                     <Col xs={2}>
                       <Field
                         component={TypeToggle}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.type`} />}
-                        name={getSubfieldName(40, 3, index)}
+                        name={getInnerSubfieldName(26, 0, 14, 3, index)}
                         currency={currency}
                       />
                     </Col>
@@ -121,7 +140,7 @@ export const InvoiceLineFundDistribution = ({
                       <Field
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.amount`} />}
-                        name={getSubfieldName(40, 4, index)}
+                        name={getInnerSubfieldName(26, 0, 14, 4, index)}
                         disabled
                       />
                     </Col>
@@ -139,7 +158,7 @@ export const InvoiceLineFundDistribution = ({
 InvoiceLineFundDistribution.propTypes = {
   fundDistributions: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
-  getRepeatableFieldAction: PropTypes.func.isRequired,
+  getMappingSubfieldsFieldValue: PropTypes.func.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
   currency: PropTypes.string,
