@@ -62,7 +62,7 @@ export class DataImportSettings extends Component {
   ];
 
   renderProfilesLabel() {
-    const profilesLink = 'https://wiki.folio.org/display/FOLIOtips/Creating+and+using+profiles';
+    const profilesLink = 'https://wiki.folio.org/display/FOLIOtips/2-Creating+and+using+profiles';
 
     return (
       <div className={css.profilesLabel}>
