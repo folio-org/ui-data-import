@@ -43,6 +43,7 @@
 * Allow 005 to be a protected field (UIDATIMP-835)
 * Update stripes-cli to v2 (UIDATIMP-840)
 * Refactor Job profiles to use final-form instead of redux-form (UIDATIMP-829)
+* Invoice mapping screen, FE updates according last BE changes (UIDATIMP-842)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
