@@ -403,7 +403,7 @@ describe('Action Profile View', () => {
           await actionProfileForm.nameField.fillAndBlur('Changed name');
           await actionProfileForm.descriptionField.fillAndBlur('Changed description');
           await actionProfileForm.actionField.select.selectAndBlur('Create (all record types)');
-          await actionProfileForm.folioRecordTypeField.select.selectAndBlur('MARC Authority [will affect SRS and MARCcat]');
+          await actionProfileForm.folioRecordTypeField.select.selectAndBlur('MARC Authority');
           await actionProfileForm.submitFormButton.click();
         });
 
