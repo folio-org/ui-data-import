@@ -113,14 +113,14 @@ export const MARCFieldSection = ({
           <Field
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[1].value`}
             validate={validateIndicator}
-            render={in1FieldProps => (
+            render={indicator1FieldProps => (
               <TextField
-                {...in1FieldProps}
+                {...indicator1FieldProps}
                 label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-in1`} />}
                 onChange={event => {
                   const value = event.target.value;
 
-                  in1FieldProps.input.onChange(value);
+                  indicator1FieldProps.input.onChange(value);
                   setIndicator1Value(value);
                 }}
               />
@@ -134,14 +134,14 @@ export const MARCFieldSection = ({
           <Field
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[2].value`}
             validate={validateIndicator}
-            render={in2FieldProps => (
+            render={indicator2FieldProps => (
               <TextField
-                {...in2FieldProps}
+                {...indicator2FieldProps}
                 label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.MARC.field-in2`} />}
                 onChange={event => {
                   const value = event.target.value;
 
-                  in2FieldProps.input.onChange(value);
+                  indicator2FieldProps.input.onChange(value);
                   setIndicator2Value(value);
                 }}
               />

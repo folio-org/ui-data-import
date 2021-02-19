@@ -175,16 +175,8 @@ export const MatchProfilesFormComponent = memo(({
     setExistingRecordFields(options);
     changeFormState('profile.existingRecordType', type);
     matchDetails.forEach((item, i) => {
-      // console.log(form.getState());
-      // if (form.getState().touched.profile.matchDetails[i].existingMatchExpression) {
-      //   console.log('formState val', form.getState().values.profile.matchDetails[0].existingMatchExpression);
-      // }
       changeFormState(`profile.matchDetails[${i}].existingMatchExpression`, getSectionInitialValues(type));
       changeFormState(`profile.matchDetails[${i}].existingRecordType`, type);
-
-      // form.mutators.setValue(`profile.matchDetails[${i}].existingMatchExpression`, getSectionInitialValues(type));
-      // form.mutators.resetField(`profile.matchDetails[${i}].existingMatchExpression`);
-      // form.mutators.setValue(`profile.matchDetails[${i}].existingRecordType`, type);
     });
   };
 
@@ -372,16 +364,7 @@ export const MatchProfilesForm = compose(
   withProfileWrapper,
   stripesFinalForm({
     navigationCheck: true,
-    mutators: {
-      setValue: ([field, value], state, { changeValue }) => {
-        changeValue(state, field, () => value);
-      },
-      resetField: ([field], state, { resetFieldState }) => {
-        resetFieldState(field);
-      },
-    },
     destroyOnUnregister: true,
-    debug: state => console.log(state),
   }),
   connect(mapStateToProps),
 )(MatchProfilesFormComponent);

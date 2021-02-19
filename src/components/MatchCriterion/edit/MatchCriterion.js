@@ -115,7 +115,6 @@ export const MatchCriterion = ({
       onChange={onQualifierSectionChange}
     />
   );
-  // TODO: need to be refactored
   const existingMARCSectionElement = (
     <MARCFieldSection
       repeatableIndex={repeatableIndex}

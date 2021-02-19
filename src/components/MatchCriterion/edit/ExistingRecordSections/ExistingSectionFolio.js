@@ -2,10 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import classnames from 'classnames';
-import {
-  last, isEmpty,
-  isEqual,
-} from 'lodash';
+import { last } from 'lodash';
 
 import {
   Row,
@@ -34,15 +31,7 @@ export const ExistingSectionFolio = ({
   changeFormState,
   formValues,
 }) => {
-  // TODO: import from '../../utils' after UIDATIMP-829 merged
-  const isFieldPristine = (initialValue, currentValue) => {
-    if (isEmpty(initialValue) && isEmpty(currentValue)) return true;
-
-    return isEqual(initialValue, currentValue);
-  };
-
   const fieldToChangeName = `profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields[0].value`;
-  // const fieldToChangeName = `profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields`;
 
   const handleFieldSearch = (value, dataOptions) => {
     return dataOptions.filter(o => new RegExp(`${value}`, 'i').test(o.label));
@@ -68,8 +57,6 @@ export const ExistingSectionFolio = ({
 
     fieldProps.input.onChange(newValue);
     changeFormState(fieldToChange, fieldToChangeValue);
-
-    // fieldProps.input.onChange(fieldToChangeValue);
   };
 
   const formatExistingRecordValue = useCallback(
@@ -92,8 +79,6 @@ export const ExistingSectionFolio = ({
     [existingRecordFields, existingRecordType, formValues.profile.matchDetails, repeatableIndex],
   );
 
-  const validateCriterionField = useCallback(value => validateRequiredField(value[0].value), []);
-
   return (
     <Section
       label={existingRecordFieldLabel}
@@ -104,10 +89,8 @@ export const ExistingSectionFolio = ({
           <Field
             id="criterion-value-type"
             name={fieldToChangeName}
-            // validate={validateCriterionField}
             validate={validateRequiredField}
             format={formatExistingRecordValue}
-            // isEqual={isFieldPristine}
             render={criterionFieldProps => (
               <Selection
                 {...criterionFieldProps}
