@@ -9,17 +9,14 @@ import {
   useIntl,
 } from 'react-intl';
 import { connect } from 'react-redux';
-import {
-  Field,
-  change,
-} from 'redux-form';
+import { Field } from 'react-final-form';
 import {
   get,
   isEmpty,
   noop,
 } from 'lodash';
 
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes-final-form';
 
 import {
   Headline,
@@ -51,19 +48,18 @@ import {
 
 import { getSectionInitialValues } from './MatchProfiles';
 
-const formName = 'matchProfilesForm';
-
 export const MatchProfilesFormComponent = memo(({
   pristine,
   submitting,
   initialValues,
   handleSubmit,
   location: { search },
-  currentStaticValueType,
   associatedJobProfilesAmount,
   onCancel,
   jsonSchemas,
-  dispatch,
+  form,
+  transitionToParams,
+  match: { path },
 }) => {
   const { formatMessage } = useIntl();
 
@@ -78,6 +74,8 @@ export const MatchProfilesFormComponent = memo(({
 
   const isEditMode = layer === LAYER_TYPES.EDIT;
   const staticValueTypes = FORMS_SETTINGS[ENTITY_KEYS.MATCH_PROFILES].MATCHING.STATIC_VALUE_TYPES;
+
+  const currentStaticValueType = get(form.getState(), ['values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
 
   const [incomingRecord, setIncomingRecord] = useState(MATCH_INCOMING_RECORD_TYPES[incomingRecordType]);
   const [existingRecord, setExistingRecord] = useState(isEditMode ? existingRecordType : '');
@@ -108,17 +106,25 @@ export const MatchProfilesFormComponent = memo(({
     return [];
   };
 
-  const onSubmit = e => {
+  const onSubmit = async event => {
     if (editWithModal) {
-      e.preventDefault();
+      event.preventDefault();
       setConfirmModalOpen(true);
     } else {
-      handleSubmit(e);
+      const record = await handleSubmit(event);
+
+      if (record) {
+        form.reset();
+        transitionToParams({
+          _path: `${path}/view/${record.id}`,
+          layer: null,
+        });
+      }
     }
   };
 
-  const dispatchFormChange = (fieldName, fieldValue) => {
-    dispatch(change(formName, fieldName, fieldValue));
+  const changeFormState = (fieldName, fieldValue) => {
+    form.change(fieldName, fieldValue);
   };
 
   const handleStaticValueTypeChange = selectedStaticType => {
@@ -134,7 +140,7 @@ export const MatchProfilesFormComponent = memo(({
     const changeFormFields = staticType => {
       staticTypeFields[staticType].forEach(field => {
         matchDetails.forEach((item, i) => {
-          dispatchFormChange(`profile.matchDetails[${i}].incomingMatchExpression.staticValueDetails.${field}`, null);
+          changeFormState(`profile.matchDetails[${i}].incomingMatchExpression.staticValueDetails.${field}`, null);
         });
       });
     };
@@ -148,10 +154,10 @@ export const MatchProfilesFormComponent = memo(({
 
   const handleIncomingRecordChange = record => {
     setIncomingRecord(record);
-    dispatchFormChange('profile.incomingRecordType', record.type);
+    changeFormState('profile.incomingRecordType', record.type);
     matchDetails.forEach((item, i) => {
-      dispatchFormChange(`profile.matchDetails[${i}].incomingMatchExpression`, getSectionInitialValues(record.type));
-      dispatchFormChange(`profile.matchDetails[${i}].incomingRecordType`, record.type);
+      changeFormState(`profile.matchDetails[${i}].incomingMatchExpression`, getSectionInitialValues(record.type));
+      changeFormState(`profile.matchDetails[${i}].incomingRecordType`, record.type);
     });
 
     if (record.type === MATCH_INCOMING_RECORD_TYPES.STATIC_VALUE.type) {
@@ -167,17 +173,17 @@ export const MatchProfilesFormComponent = memo(({
 
     setExistingRecord(type);
     setExistingRecordFields(options);
-    dispatchFormChange('profile.existingRecordType', type);
+    changeFormState('profile.existingRecordType', type);
     matchDetails.forEach((item, i) => {
-      dispatchFormChange(`profile.matchDetails[${i}].existingMatchExpression`, getSectionInitialValues(type));
-      dispatchFormChange(`profile.matchDetails[${i}].existingRecordType`, type);
+      changeFormState(`profile.matchDetails[${i}].existingMatchExpression`, getSectionInitialValues(type));
+      changeFormState(`profile.matchDetails[${i}].existingRecordType`, type);
     });
   };
 
   const handleQualifierSectionChange = (isChecked, matchDetailsIdx, expressionType, fieldsToClear) => {
     if (!isChecked) {
       fieldsToClear.forEach(field => {
-        dispatchFormChange(`profile.matchDetails[${matchDetailsIdx}].${expressionType}.qualifier.${field}`, null);
+        changeFormState(`profile.matchDetails[${matchDetailsIdx}].${expressionType}.qualifier.${field}`, null);
       });
     }
   };
@@ -212,13 +218,24 @@ export const MatchProfilesFormComponent = memo(({
           label={<FormattedMessage id="ui-data-import.summary" />}
           separator={false}
         >
+          {/* Register known field names to ensure form.change usages behave as expected */}
+          <Field
+            name="profile.incomingRecordType"
+            render={() => null}
+          />
+          <Field
+            name="profile.existingRecordType"
+            render={() => null}
+          />
+          {/* End of Registering known field names */}
+
           <div data-test-name-field>
             <Field
               label={<FormattedMessage id="ui-data-import.name" />}
               name="profile.name"
               required
               component={TextField}
-              validate={[validateRequiredField]}
+              validate={validateRequiredField}
             />
           </div>
           <div data-test-description-field>
@@ -267,9 +284,10 @@ export const MatchProfilesFormComponent = memo(({
                         incomingRecordLabel={incomingRecordLabel}
                         existingRecordLabel={existingRecordLabel}
                         existingRecordFields={isEmpty(existingRecordFields) ? getInitialFields(matchFields, getDropdownOptions) : existingRecordFields}
-                        onStaticValueTypeChange={(event, newValue) => handleStaticValueTypeChange(newValue)}
+                        onStaticValueTypeChange={handleStaticValueTypeChange}
                         onQualifierSectionChange={handleQualifierSectionChange}
-                        dispatchFormChange={dispatchFormChange}
+                        changeFormState={changeFormState}
+                        formValues={form.getState().values}
                       />
                     )}
                   />
@@ -314,7 +332,6 @@ MatchProfilesFormComponent.propTypes = {
   ]),
   associatedJobProfilesAmount: PropTypes.number.isRequired,
   onCancel: PropTypes.func.isRequired,
-  currentStaticValueType: PropTypes.string,
   jsonSchemas: PropTypes.shape({
     INSTANCE: PropTypes.object,
     HOLDINGS: PropTypes.object,
@@ -322,7 +339,15 @@ MatchProfilesFormComponent.propTypes = {
     ORDER: PropTypes.object,
     INVOICE: PropTypes.object,
   }).isRequired,
-  dispatch: PropTypes.func.isRequired,
+  form: PropTypes.shape({
+    getState: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+    getFieldState: PropTypes.func.isRequired,
+    batch: PropTypes.func.isRequired,
+    change: PropTypes.func.isRequired,
+  }).isRequired,
+  transitionToParams: PropTypes.func.isRequired,
+  match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
 };
 
 const mapStateToProps = state => {
@@ -331,24 +356,15 @@ const mapStateToProps = state => {
     ['folio_data_import_associated_jobprofiles', 'records', 0, 'childSnapshotWrappers'],
     [],
   );
-  const currentStaticValueType = get(
-    state,
-    ['form', formName, 'values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'],
-    null,
-  );
 
-  return {
-    currentStaticValueType,
-    associatedJobProfilesAmount,
-  };
+  return { associatedJobProfilesAmount };
 };
 
 export const MatchProfilesForm = compose(
   withProfileWrapper,
-  stripesForm({
-    form: formName,
+  stripesFinalForm({
     navigationCheck: true,
-    enableReinitialize: true,
+    destroyOnUnregister: true,
   }),
   connect(mapStateToProps),
 )(MatchProfilesFormComponent);

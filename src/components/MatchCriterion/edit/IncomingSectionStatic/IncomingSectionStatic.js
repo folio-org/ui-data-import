@@ -4,7 +4,7 @@ import {
   useIntl,
   FormattedMessage,
 } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import classnames from 'classnames';
 import { noop } from 'lodash';
 
@@ -67,10 +67,19 @@ export const IncomingSectionStatic = ({
             {([ariaLabel]) => (
               <Field
                 name={`profile.matchDetails[${repeatableIndex}].incomingMatchExpression.staticValueDetails.staticValueType`}
-                component={Select}
-                dataOptions={dataOptions}
-                onChange={onTypeChange}
-                aria-label={ariaLabel}
+                render={staticValueSelectProps => (
+                  <Select
+                    {...staticValueSelectProps}
+                    dataOptions={dataOptions}
+                    aria-label={ariaLabel}
+                    onChange={event => {
+                      const value = event.target.value;
+
+                      staticValueSelectProps.input.onChange(value);
+                      onTypeChange(value);
+                    }}
+                  />
+                )}
               />
             )}
           </FormattedMessage>

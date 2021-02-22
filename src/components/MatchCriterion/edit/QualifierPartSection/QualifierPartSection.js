@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import {
   FormattedMessage,
   useIntl,
@@ -34,32 +34,38 @@ export const QualifierPartSection = ({
   const expressionType = `${recordFieldType}MatchExpression`;
 
   return (
-    <Section
-      data-test-qualifier-part
-      label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.part`} />}
-      optional
-      isOpen={isOpen}
-      onChange={isChecked => {
-        onChange(isChecked, repeatableIndex, expressionType, ['comparisonPart']);
-      }}
-      className={css.inputContainer}
-    >
-      <Row>
-        <Col xs={4}>
-          <FormattedMessage id="ui-data-import.match.comparison-part.placeholder">
-            {([placeholder]) => (
-              <Field
-                component={Select}
-                name={`profile.matchDetails[${repeatableIndex}].${expressionType}.qualifier.comparisonPart`}
-                placeholder={placeholder}
-                dataOptions={dataOptions}
-                aria-label={placeholder}
-              />
-            )}
-          </FormattedMessage>
-        </Col>
-      </Row>
-    </Section>
+    <>
+      <Section
+        data-test-qualifier-part
+        label={<FormattedMessage id={`ui-data-import.match.${recordFieldType}.part`} />}
+        optional
+        isOpen={isOpen}
+        onChange={isChecked => {
+          onChange(isChecked, repeatableIndex, expressionType, ['comparisonPart']);
+        }}
+        className={css.inputContainer}
+      >
+        <Row>
+          <Col xs={4}>
+            <FormattedMessage id="ui-data-import.match.comparison-part.placeholder">
+              {([placeholder]) => (
+                <Field
+                  component={Select}
+                  name={`profile.matchDetails[${repeatableIndex}].${expressionType}.qualifier.comparisonPart`}
+                  placeholder={placeholder}
+                  dataOptions={dataOptions}
+                  aria-label={placeholder}
+                />
+              )}
+            </FormattedMessage>
+          </Col>
+        </Row>
+      </Section>
+      <Field
+        name={`profile.matchDetails[${repeatableIndex}].${expressionType}.qualifier.comparisonPart`}
+        render={() => null}
+      />
+    </>
   );
 };
 

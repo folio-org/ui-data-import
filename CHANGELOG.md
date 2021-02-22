@@ -46,6 +46,7 @@
 * Invoice mapping screen, FE updates according last BE changes (UIDATIMP-842)
 * Update invoice status value in field mapping profile (UIDATIMP-830)
 * Action profiles: Remove MARCcat qualifier from MARC record types (UIDATIMP-843)
+* Refactor Match profiles to use final-form instead of redux-form (UIDATIMP-828)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)

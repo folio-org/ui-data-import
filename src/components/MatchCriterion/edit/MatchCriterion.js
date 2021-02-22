@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import {
   FormattedMessage,
   useIntl,
@@ -48,7 +48,8 @@ export const MatchCriterion = ({
   existingRecordFields,
   onStaticValueTypeChange,
   onQualifierSectionChange,
-  dispatchFormChange,
+  changeFormState,
+  formValues,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -131,7 +132,8 @@ export const MatchCriterion = ({
       existingRecordFieldLabel={existingRecordFieldLbl}
       existingRecordFields={existingRecordFields}
       existingRecordType={existingRecordType}
-      dispatchFormChange={dispatchFormChange}
+      changeFormState={changeFormState}
+      formValues={formValues}
     />
   );
   const existingQualifierSectionElement = (
@@ -256,7 +258,7 @@ MatchCriterion.propTypes = {
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   })).isRequired,
-  dispatchFormChange: PropTypes.func.isRequired,
+  changeFormState: PropTypes.func.isRequired,
   incomingRecordType: PropTypes.oneOf([...Object.keys(MATCH_INCOMING_RECORD_TYPES), '']),
   existingRecordType: PropTypes.oneOf([...Object.keys(FOLIO_RECORD_TYPES), '']),
   staticValueType: PropTypes.oneOf([...Object.keys(STATIC_VALUE_TYPES), '']),
@@ -264,6 +266,7 @@ MatchCriterion.propTypes = {
   existingRecordLabel: PropTypes.string,
   onStaticValueTypeChange: PropTypes.func,
   onQualifierSectionChange: PropTypes.func,
+  formValues: PropTypes.object,
 };
 
 MatchCriterion.defaultProps = {
