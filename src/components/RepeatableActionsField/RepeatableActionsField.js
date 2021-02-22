@@ -34,6 +34,7 @@ export const RepeatableActionsField = memo(({
   onRepeatableActionChange,
   actions,
   actionToClearFields,
+  subfieldsToClearPath,
   disabled,
   children,
 }) => {
@@ -57,7 +58,7 @@ export const RepeatableActionsField = memo(({
 
   const handleRepeatableActionChange = e => {
     if (e.target.value === actionToClearFields) {
-      onRepeatableActionChange(`profile.mappingDetails.mappingFields[${repeatableFieldIndex}].subfields`, []);
+      onRepeatableActionChange(subfieldsToClearPath || `profile.mappingDetails.mappingFields[${repeatableFieldIndex}].subfields`, []);
     }
   };
 
@@ -112,6 +113,7 @@ RepeatableActionsField.propTypes = {
   onRepeatableActionChange: PropTypes.func.isRequired,
   actions: PropTypes.arrayOf(repeatableFieldActionShape),
   actionToClearFields: PropTypes.string,
+  subfieldsToClearPath: PropTypes.string,
 };
 
 RepeatableActionsField.defaultProps = {
@@ -119,4 +121,5 @@ RepeatableActionsField.defaultProps = {
   wrapperPlaceholder: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions',
   actions: MAPPING_REPEATABLE_FIELD_ACTIONS,
   actionToClearFields: REPEATABLE_ACTIONS.DELETE_EXISTING,
+  subfieldsToClearPath: '',
 };

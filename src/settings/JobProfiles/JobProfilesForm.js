@@ -1,19 +1,16 @@
 import React, {
-  useState,
-  useEffect,
+  memo,
   useMemo,
+  useCallback,
 } from 'react';
-import { FormattedMessage } from 'react-intl';
-import {
-  Field,
-  change,
-} from 'redux-form';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import { FormattedMessage } from 'react-intl';
+import { Field } from 'react-final-form';
+import { connect } from 'react-redux';
 import {
   identity,
   get,
+  isEqual,
 } from 'lodash';
 
 import {
@@ -25,7 +22,9 @@ import {
   AccordionSet,
 } from '@folio/stripes/components';
 import { FullScreenForm } from '@folio/stripes-data-transfer-components';
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes-final-form';
+
+import { ProfileTree } from '../../components';
 
 import {
   compose,
@@ -33,25 +32,26 @@ import {
   withProfileWrapper,
   DATA_TYPES,
   PROFILE_LINKING_RULES,
+  isFieldPristine,
 } from '../../utils';
-import { ProfileTree } from '../../components';
 
-const formName = 'jobProfilesForm';
 const dataTypes = DATA_TYPES.map(dataType => ({
   value: dataType,
   label: dataType,
 }));
 
-export const JobProfilesFormComponent = ({
+export const JobProfilesFormComponent = memo(({
   pristine,
   submitting,
   initialValues,
   childWrappers,
   handleSubmit,
+  form,
   onCancel,
-  dispatch,
   stripes,
   parentResources,
+  transitionToParams,
+  match: { path },
 }) => {
   const { okapi } = stripes;
   const { profile } = initialValues;
@@ -60,16 +60,17 @@ export const JobProfilesFormComponent = ({
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const profileTreeData = useMemo(() => (isEditMode ? childWrappers : []), [isEditMode]);
-  const [addedRelations, setAddedRelations] = useState([]);
-  const [deletedRelations, setDeletedRelations] = useState([]);
 
-  useEffect(() => {
-    dispatch(change(formName, 'addedRelations', addedRelations));
-  }, [addedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
+  const addedRelations = form.getState().values.addedRelations;
+  const deletedRelations = form.getState().values.deletedRelations;
 
-  useEffect(() => {
-    dispatch(change(formName, 'deletedRelations', deletedRelations));
-  }, [deletedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
+  const addRelations = useCallback(relations => {
+    form.change('addedRelations', relations);
+  }, [form]);
+
+  const deleteRelations = useCallback(relations => {
+    form.change('deletedRelations', relations);
+  }, [form]);
 
   const paneTitle = isEditMode ? (
     <FormattedMessage id="ui-data-import.edit">
@@ -88,6 +89,19 @@ export const JobProfilesFormComponent = ({
       }
     }
   };
+  const onSubmit = async event => {
+    const record = await handleSubmit(event);
+
+    if (record) {
+      clearStorage();
+
+      form.reset();
+      transitionToParams({
+        _path: `${path}/view/${record.id}`,
+        layer: null,
+      });
+    }
+  };
 
   return (
     <FullScreenForm
@@ -96,10 +110,7 @@ export const JobProfilesFormComponent = ({
       submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
       cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
       isSubmitButtonDisabled={isSubmitDisabled}
-      onSubmit={record => {
-        clearStorage();
-        handleSubmit(record);
-      }}
+      onSubmit={onSubmit}
       onCancel={() => {
         clearStorage();
         onCancel();
@@ -124,7 +135,8 @@ export const JobProfilesFormComponent = ({
               name="profile.name"
               required
               component={TextField}
-              validate={[validateRequiredField]}
+              validate={validateRequiredField}
+              isEqual={isFieldPristine}
             />
           </div>
           <div data-test-accepted-data-types-field>
@@ -136,7 +148,7 @@ export const JobProfilesFormComponent = ({
                   component={Select}
                   required
                   itemToString={identity}
-                  validate={[validateRequiredField]}
+                  validate={validateRequiredField}
                   dataOptions={dataTypes}
                   placeholder={placeholder}
                 />
@@ -148,6 +160,7 @@ export const JobProfilesFormComponent = ({
               label={<FormattedMessage id="ui-data-import.description" />}
               name="profile.description"
               component={TextArea}
+              isEqual={isFieldPristine}
             />
           </div>
         </Accordion>
@@ -163,25 +176,37 @@ export const JobProfilesFormComponent = ({
               hasLoaded
               relationsToAdd={addedRelations}
               relationsToDelete={deletedRelations}
-              onLink={setAddedRelations}
-              onUnlink={setDeletedRelations}
+              onLink={addRelations}
+              onUnlink={deleteRelations}
               okapi={okapi}
               resources={parentResources}
+            />
+            <Field
+              name="addedRelations"
+              component={() => null}
+            />
+            <Field
+              name="deletedRelations"
+              component={() => null}
             />
           </Accordion>
         </div>
       </AccordionSet>
     </FullScreenForm>
   );
-};
+});
 
 JobProfilesFormComponent.propTypes = {
   initialValues: PropTypes.object.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  form: PropTypes.shape({
+    change: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+    getState: PropTypes.func.isRequired,
+  }).isRequired,
   onCancel: PropTypes.func.isRequired,
-  dispatch: PropTypes.func.isRequired,
   stripes: PropTypes.object.isRequired,
   childWrappers: PropTypes.arrayOf(
     PropTypes.shape({
@@ -198,6 +223,8 @@ JobProfilesFormComponent.propTypes = {
     }),
   ).isRequired,
   parentResources: PropTypes.object.isRequired,
+  transitionToParams: PropTypes.func.isRequired,
+  match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
 };
 
 const mapStateToProps = state => {
@@ -212,10 +239,9 @@ const mapStateToProps = state => {
 
 export const JobProfilesForm = compose(
   withProfileWrapper,
-  stripesForm({
-    form: formName,
+  stripesFinalForm({
     navigationCheck: true,
-    enableReinitialize: true,
+    initialValuesEqual: isEqual,
   }),
   connect(mapStateToProps),
 )(JobProfilesFormComponent);

@@ -41,6 +41,11 @@
 * Suppress OCLC Single record import job profiles from the Choose jobs list (UIDATIMP-819)
 * Refactor File Extensions view to use final-form instead of redux-form (UIDATIMP-825)
 * Allow 005 to be a protected field (UIDATIMP-835)
+* Update stripes-cli to v2 (UIDATIMP-840)
+* Refactor Job profiles to use final-form instead of redux-form (UIDATIMP-829)
+* Invoice mapping screen, FE updates according last BE changes (UIDATIMP-842)
+* Update invoice status value in field mapping profile (UIDATIMP-830)
+* Action profiles: Remove MARCcat qualifier from MARC record types (UIDATIMP-843)
 * Refactor Match profiles to use final-form instead of redux-form (UIDATIMP-828)
 
 ### Bugs fixed:
@@ -54,6 +59,8 @@
 * File upload in progress displays when it shouldn't. Fixed (UIDATIMP-742)
 * A few updates to the invoice field mapping screen (UIDATIMP-811)
 * Fix possibility to create match profile (UIDATIMP-821)
+* Match profiles: Remove EDIFACT (UIDATIMP-844)
+* Settings > Data import. Learn more button leads to empty page on Confluence (UIDATIMP-838)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
 

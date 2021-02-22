@@ -203,6 +203,10 @@ export const MappingProfilesFormComponent = ({
     return mappingDetails?.mappingFields?.[mappingFieldIndex]?.repeatableFieldAction || '';
   };
 
+  const getMappingSubfieldsFieldValue = (mappingFieldIndex, subfieldIndex, fieldIndex) => {
+    return mappingDetails?.mappingFields?.[mappingFieldIndex]?.subfields[subfieldIndex]?.fields[fieldIndex]?.value || '';
+  };
+
   const setInitialValuesForMARCUpdates = () => {
     const initialMARCMappingDetails = fillEmptyFieldsWithValue({},
       ['field.indicator1', 'field.indicator2', 'field.subfields[0].subfield'], '*');
@@ -250,6 +254,7 @@ export const MappingProfilesFormComponent = ({
     initialFields,
     referenceTables,
     getRepeatableFieldAction,
+    getMappingSubfieldsFieldValue,
     setReferenceTables: setFormFieldValue,
     okapi,
   };
