@@ -397,6 +397,7 @@ export const INSTANCE_RESOURCE_PATHS = [
   'raml-util/schemas/metadata.schema',
   'instance.json',
   'instancerelationship.json',
+  'instanceprecedingsucceedingtitle.json',
 ];
 
 export const HOLDINGS_RESOURCE_PATHS = [
@@ -436,8 +437,6 @@ export const INVOICE_RESOURCE_PATHS = [
   'acq-models/mod-invoice-storage/schemas/invoice_line.json',
   'acq-models/mod-invoice-storage/schemas/fund_distribution.json',
 ];
-
-export const SRM_RESOURCE_PATHS = ['instance.json'];
 
 export const FILTER_QUERY_PARAMS = {
   DEFAULT: 'cql.allRecords=1',

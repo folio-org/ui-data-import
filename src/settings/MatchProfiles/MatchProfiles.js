@@ -27,13 +27,14 @@ import {
   ORDER_RESOURCE_PATHS,
   NOTES_RESOURCE_PATHS,
   INVOICE_RESOURCE_PATHS,
-  SRM_RESOURCE_PATHS,
   FIND_ALL_CQL,
   OCLC_MATCH_EXISTING_SRS_RECORD_ID,
   OCLC_MATCH_NO_SRS_RECORD_ID,
 } from '../../utils';
-import { ListView } from '../../components';
-import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
+import {
+  ListView,
+  CheckboxHeader,
+} from '../../components';
 import { ViewMatchProfile } from './ViewMatchProfile';
 import { MatchProfilesForm } from './MatchProfilesForm';
 
@@ -378,7 +379,6 @@ export class MatchProfiles extends Component {
       const ordersModuleVersion = getModuleVersion(records, 'Orders Business Logic Module');
       const notesModuleVersion = getModuleVersion(records, 'Notes');
       const invoiceModuleVersion = getModuleVersion(records, 'Invoice business logic module');
-      // const SRMModuleVersion = getModuleVersion(records, 'Source Record Manager Module');
 
       const requestsToInstance = INSTANCE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
       const requestsToHoldings = HOLDINGS_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
@@ -386,10 +386,8 @@ export class MatchProfiles extends Component {
       const requestsToOrder = ORDER_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
       const requestsToNotes = NOTES_RESOURCE_PATHS.map(path => fetchJsonSchema(path, notesModuleVersion, okapi));
       const requestsToInvoice = INVOICE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, invoiceModuleVersion, okapi));
-      // const requestsToSRM = SRM_RESOURCE_PATHS.map(path => fetchJsonSchema(path, SRMModuleVersion, okapi));
 
       await handleAllRequests(requestsToInstance, 'INSTANCE', this.addToState);
-      // await handleAllRequests(requestsToSRM, 'INSTANCE', this.addToState);
       await handleAllRequests(requestsToHoldings, 'HOLDINGS', this.addToState);
       await handleAllRequests(requestsToItem, 'ITEM', this.addToState);
       await handleAllRequests(requestsToOrder, 'ORDER', this.addToState);

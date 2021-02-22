@@ -124,16 +124,16 @@ export const fieldsConfig = [
     value: 'instance.series',
     recordType: 'INSTANCE',
   }, {
-    id: 'parentInstances.items.properties.superInstanceId',
+    id: 'precedingInstanceId',
     label: 'ui-data-import.settings.matchProfiles.precedingTitle',
     categoryId: 'title-data',
-    value: 'instance.parentInstances[].superInstanceId',
+    value: 'instanceprecedingsucceedingtitle.precedingInstanceId',
     recordType: 'INSTANCE',
   }, {
-    id: 'childInstances.items.properties.subInstanceId',
+    id: 'succeedingInstanceId',
     label: 'ui-data-import.settings.matchProfiles.succeedingTitle',
     categoryId: 'title-data',
-    value: 'instance.childInstances[].subInstanceId',
+    value: 'instanceprecedingsucceedingtitle.succeedingInstanceId',
     recordType: 'INSTANCE',
   },
   /* Instance Identifier */
@@ -700,10 +700,10 @@ export const fieldsConfig = [
     value: 'item.materialTypeId',
     recordType: 'ITEM',
   }, {
-    id: 'copyNumbers',
+    id: 'copyNumber',
     label: 'ui-data-import.settings.mappingProfiles.map.field.copyNumber',
     categoryId: 'item-data',
-    value: 'item.copyNumbers[]',
+    value: 'item.copyNumber',
     recordType: 'ITEM',
   }, {
     id: 'itemLevelCallNumberTypeId',
