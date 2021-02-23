@@ -48,6 +48,7 @@ export const AcceptedValuesField = ({
   isFormField,
   isMultiSelection,
   disabled,
+  validation,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
   const [hasOptions, setHasOptions] = useState(!isEmpty(listOptions));
@@ -125,12 +126,13 @@ export const AcceptedValuesField = ({
     validateAcceptedValues(listOptions, optionValue),
     [listOptions],
   );
-
   const validateAcceptedValueField = useCallback(
-    // TODO: Should be refactored while implementing validation for EDIFACT Invoice
     value => !isMultiSelection && validateMARCWithElse(value, isRemoveValueAllowed),
     [isMultiSelection, isRemoveValueAllowed],
   );
+  const customValidation = useCallback(validation, []);
+
+  const fieldValidation = [customValidation || validateAcceptedValueField, memoizedValidation];
 
   const renderFormField = () => (
     <Field
@@ -143,7 +145,7 @@ export const AcceptedValuesField = ({
       optionLabel={optionLabel}
       wrappedComponent={component}
       wrapperLabel={wrapperLabel}
-      validate={[validateAcceptedValueField, memoizedValidation]}
+      validate={fieldValidation}
       onFieldChange={onChange}
       isMultiSelection={isMultiSelection}
       disabled={disabled}
@@ -203,6 +205,7 @@ AcceptedValuesField.propTypes = {
   isFormField: PropTypes.bool,
   parsedOptionValue: PropTypes.string,
   parsedOptionLabel: PropTypes.string,
+  validation: PropTypes.func,
 };
 
 AcceptedValuesField.defaultProps = {
