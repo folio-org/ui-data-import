@@ -5,6 +5,7 @@ import {
   FormattedMessage,
 } from 'react-intl';
 import { Field } from 'redux-form';
+import { noop } from 'lodash';
 
 import {
   Accordion,
@@ -122,6 +123,7 @@ export const InvoiceAdjustments = ({
                 optionTemplate="**name** (**code**)"
                 setAcceptedValues={setReferenceTables}
                 acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 0, index)}
+                validation={noop}
                 okapi={okapi}
               />
             </Col>
@@ -139,6 +141,7 @@ export const InvoiceAdjustments = ({
                 }]}
                 setAcceptedValues={setReferenceTables}
                 acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 1, index)}
+                validation={noop}
                 okapi={okapi}
               />
             </Col>
