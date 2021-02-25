@@ -61,6 +61,7 @@
 * Fix possibility to create match profile (UIDATIMP-821)
 * Match profiles: Remove EDIFACT (UIDATIMP-844)
 * Settings > Data import. Learn more button leads to empty page on Confluence (UIDATIMP-838)
+* Invoice field mapping profile: Adjust vendor reference number (UIDATIMP-845)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
 
