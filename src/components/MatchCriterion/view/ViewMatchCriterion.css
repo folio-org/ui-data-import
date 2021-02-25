@@ -49,16 +49,6 @@
 .matchCriteria {
   & > :last-child > :last-child > :first-child {
     border-top: none;
-
-    & button {
-      & span {
-        color: #b2b2b2;
-      }
-
-      & div {
-        color: var(--bg);
-      }
-    }
   }
 
   & .inputContainer > div:last-child:not(:first-child) > :first-child {

@@ -5,6 +5,16 @@
     margin-top: 0;
   }
 
+  & [class|="headerInner"] {
+    & > span {
+        color: #b2b2b2;
+    }
+
+    & > div {
+      color: #ffffff;
+    }
+  }
+
   & .matchCriterion {
     padding: 0;
     border: none;
