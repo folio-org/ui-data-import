@@ -194,7 +194,7 @@ class ViewAllLogs extends Component {
           to={`/data-import/job-summary/${record.id}`}
           onClick={e => e.stopPropagation()}
         >
-          {record.fileName}
+          {record.fileName || <FormattedMessage id="ui-data-import.noFileName" />}
         </Button>
       ),
       status: listTemplate({ intl }).status,
