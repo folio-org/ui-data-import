@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
+import { noop } from 'lodash';
 
 import {
   Accordion,
@@ -101,6 +102,7 @@ export const InvoiceLineFundDistribution = ({
                         optionTemplate="**name** (**code**)"
                         setAcceptedValues={setReferenceTables}
                         acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(26, 0, 14, 0, index)}
+                        validation={noop}
                         okapi={okapi}
                       />
                     </Col>
@@ -118,6 +120,7 @@ export const InvoiceLineFundDistribution = ({
                         }]}
                         setAcceptedValues={setReferenceTables}
                         acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(26, 0, 14, 1, index)}
+                        validation={noop}
                         okapi={okapi}
                       />
                     </Col>

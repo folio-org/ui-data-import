@@ -111,6 +111,7 @@ export const getEntityTags = props => {
  * @param {string} newValue
  * @param {RegExp} pattern
  * @param {boolean} isNeedToWrapInQuotes
+ * @param {boolean} isMultiSelection
  * @return {string} Decorated input value
  */
 export const formatDecoratorValue = (currentValue, newValue, pattern, isNeedToWrapInQuotes, isMultiSelection = false) => {

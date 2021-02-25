@@ -47,6 +47,7 @@
 * Update invoice status value in field mapping profile (UIDATIMP-830)
 * Action profiles: Remove MARCcat qualifier from MARC record types (UIDATIMP-843)
 * Refactor Match profiles to use final-form instead of redux-form (UIDATIMP-828)
+* Invoice field mapping profile: Adjust vendor reference number (UIDATIMP-845)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
@@ -61,7 +62,7 @@
 * Fix possibility to create match profile (UIDATIMP-821)
 * Match profiles: Remove EDIFACT (UIDATIMP-844)
 * Settings > Data import. Learn more button leads to empty page on Confluence (UIDATIMP-838)
-* Invoice field mapping profile: Adjust vendor reference number (UIDATIMP-845)
+* Remove validation error message from invoice field mapping screen (UIDATIMP-814)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
 
