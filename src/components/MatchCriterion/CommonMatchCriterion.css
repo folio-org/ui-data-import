@@ -11,7 +11,7 @@
     }
 
     & > div {
-      color: #ffffff;
+      color: var(--bg);
     }
   }
 
