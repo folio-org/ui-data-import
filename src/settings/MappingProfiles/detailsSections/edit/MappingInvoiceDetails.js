@@ -41,6 +41,7 @@ export const MappingInvoiceDetails = ({
   const [accountingCodeOptions, setAccountingCodeOptions] = useState([]);
   const [accountingNumberOptions, setAccountingNumberOptions] = useState([]);
 
+  const vendorReferenceNumbers = referenceTables?.invoiceLines?.[0].fields[4]?.subfields || [];
   const adjustments = referenceTables?.adjustments || [];
   const fundDistributions = referenceTables?.invoiceLines?.[0].fields[14]?.subfields || [];
   const lineAdjustments = referenceTables?.invoiceLines?.[0].fields[15]?.subfields || [];
@@ -89,6 +90,9 @@ export const MappingInvoiceDetails = ({
         okapi={okapi}
       />
       <InvoiceLineInformation
+        vendorReferenceNumbers={vendorReferenceNumbers}
+        initialFields={initialFields}
+        setReferenceTables={setReferenceTables}
         okapi={okapi}
         accountingNumberOptions={accountingNumberOptions}
         mappingFields={mappingDetails?.mappingFields}
