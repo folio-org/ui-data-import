@@ -56,8 +56,8 @@
 
 .disabledItem {
   background-color: #ccc;
-  color: var(--color-text-p2);
-  opacity: 0.5;
+  color: var(--color-text);
+  opacity: 0.6;
   pointer-events: none;
 }
 
