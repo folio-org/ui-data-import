@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { Field } from 'redux-form';
 
 import { isEmpty } from 'lodash';
@@ -11,7 +14,9 @@ import {
   Col,
   TextField,
   Checkbox,
+  RepeatableField,
 } from '@folio/stripes/components';
+import { REF_NUMBER_TYPE_OPTIONS } from '@folio/stripes-acq-components';
 
 import {
   AcceptedValuesField,
@@ -21,19 +26,46 @@ import {
 import {
   getSubfieldName,
   getBoolSubfieldName,
+  onAdd,
+  onRemove,
+  getInnerSubfieldName,
+  getInnerSubfieldsPath,
+  getInnerRepeatableFieldPath,
+  handleRepeatableFieldAndActionAdd,
+  handleRepeatableFieldAndActionClean,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   BOOLEAN_ACTIONS,
+  createOptionsList,
+  mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
 
 export const InvoiceLineInformation = ({
+  vendorReferenceNumbers,
   accountingNumberOptions,
+  initialFields,
   mappingFields,
+  setReferenceTables,
   okapi,
 }) => {
+  const { formatMessage } = useIntl();
+
   const releaseEncumbranceCheckbox = mappingFields?.[26].subfields[0].fields[13].booleanFieldAction;
+  const vendorRefTypesList = createOptionsList(REF_NUMBER_TYPE_OPTIONS, formatMessage, 'labelId');
+
+  const getPathToAddField = currentIndex => getInnerSubfieldsPath(currentIndex, 0, 4);
+  const onVendorRefNumberAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+    const repeatableFieldActionPath = getInnerRepeatableFieldPath(fieldIndex, 0, 4);
+
+    handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+  };
+  const onVendorRefNumbersClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+    const repeatableFieldActionPath = getInnerRepeatableFieldPath(fieldIndex, 0, 4);
+
+    handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+  };
 
   return (
     <Accordion
@@ -50,14 +82,14 @@ export const InvoiceLineInformation = ({
         </Col>
       </Row>
       <Row left="xs">
-        <Col xs={3}>
+        <Col xs={4}>
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.POLineNumber`} />}
             name={getSubfieldName(26, 1, 0)}
           />
         </Col>
-        <Col xs={3}>
+        <Col xs={4}>
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.invoiceLineNumber`} />}
@@ -65,22 +97,45 @@ export const InvoiceLineInformation = ({
             disabled
           />
         </Col>
-        <Col xs={3}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.vendorRefNo`} />}
-            name={getSubfieldName(26, 3, 0)}
-          />
-        </Col>
-        <Col xs={3}>
+        <Col xs={4}>
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.invoiceLineStatus`} />}
-            name={getSubfieldName(26, 4, 0)}
+            name={getSubfieldName(26, 3, 0)}
             disabled
           />
         </Col>
       </Row>
+      <RepeatableField
+        fields={vendorReferenceNumbers}
+        addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.vendorRefNumber.addLabel`} />}
+        onAdd={() => onAdd(vendorReferenceNumbers, 'invoiceLines.fields[4].subfields[0]', 26, initialFields, onVendorRefNumberAdd, 'order', getPathToAddField)}
+        onRemove={index => onRemove(index, vendorReferenceNumbers, 26, onVendorRefNumbersClean, 'order', getPathToAddField)}
+        renderField={(field, index) => (
+          <Row left="xs">
+            <Col xs={6}>
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.vendorRefNo`} />}
+                name={getInnerSubfieldName(26, 0, 4, 0, index)}
+              />
+            </Col>
+            <Col xs={6}>
+              <AcceptedValuesField
+                component={TextField}
+                name={getInnerSubfieldName(26, 0, 4, 1, index)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.vendorRefType`} />}
+                optionValue="value"
+                optionLabel="label"
+                isRemoveValueAllowed
+                wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+                acceptedValuesList={vendorRefTypesList}
+                okapi={okapi}
+              />
+            </Col>
+          </Row>
+        )}
+      />
       <Row left="xs">
         <Col xs={3}>
           <Field
@@ -178,6 +233,9 @@ export const InvoiceLineInformation = ({
 };
 
 InvoiceLineInformation.propTypes = {
+  vendorReferenceNumbers: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  initialFields: PropTypes.object.isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
   accountingNumberOptions: PropTypes.arrayOf(PropTypes.object),
   okapi: okapiShape.isRequired,
   mappingFields: PropTypes.arrayOf(PropTypes.object),
