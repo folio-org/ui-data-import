@@ -853,5 +853,8 @@
     "logViewer.filter.holdings": "Holdings",
     "logViewer.filter.item": "Item",
     "logViewer.filter.order": "Order",
-    "logViewer.filter.invoice": "Invoice"
+    "logViewer.filter.invoice": "Invoice",
+    "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.vendorRefType": "Vendor reference type",
+    "settings.mappingProfiles.map.invoice.invoiceLineInformation.vendorRefNumber.addLabel": "Add vendor reference number",
+    "noFileName": "No file name"
 }

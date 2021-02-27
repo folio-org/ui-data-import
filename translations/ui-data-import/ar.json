@@ -332,7 +332,7 @@
     "settings.mappingProfiles.map.item": "المادة",
     "settings.mappingProfiles.map.administrativeData.section": "البيانات الإدارية",
     "settings.mappingProfiles.map.item.administrativeData.field.hrid": "رقم التعريف القابل للقراءة بشريًا للمادة",
-    "settings.mappingProfiles.map.item.administrativeData.field.barcode": "باركود",
+    "settings.mappingProfiles.map.item.administrativeData.field.barcode": "الباركود",
     "settings.mappingProfiles.map.item.administrativeData.field.accessionNumber": "رقم الانضمام",
     "settings.mappingProfiles.map.identifiers.section": "المعرّف",
     "settings.mappingProfiles.map.item.administrativeData.field.itemIdentifier": "معرّف المادة",
@@ -853,5 +853,8 @@
     "logViewer.filter.holdings": "المقتنيات",
     "logViewer.filter.item": "المادة",
     "logViewer.filter.order": "طلبية",
-    "logViewer.filter.invoice": "الفاتورة"
+    "logViewer.filter.invoice": "الفاتورة",
+    "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.vendorRefType": "Vendor reference type",
+    "settings.mappingProfiles.map.invoice.invoiceLineInformation.vendorRefNumber.addLabel": "Add vendor reference number",
+    "noFileName": "No file name"
 }
