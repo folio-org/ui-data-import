@@ -829,7 +829,7 @@
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.description": "Description",
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.POLineNumber": "PO line number",
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.invoiceLineNumber": "Invoice line number",
-    "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.vendorRefNo": "Vendor ref no",
+    "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.vendorRefNo": "Vendor reference number",
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.invoiceLineStatus": "Invoice line status",
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.subscriptionInfo": "Subscription info",
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.subscriptionStartDate": "Subscription start date",
@@ -853,5 +853,8 @@
     "logViewer.filter.holdings": "Holdings",
     "logViewer.filter.item": "Item",
     "logViewer.filter.order": "Order",
-    "logViewer.filter.invoice": "Invoice"
+    "logViewer.filter.invoice": "Invoice",
+    "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.vendorRefType": "Vendor reference type",
+    "settings.mappingProfiles.map.invoice.invoiceLineInformation.vendorRefNumber.addLabel": "Add vendor reference number",
+    "noFileName": "No file name"
 }

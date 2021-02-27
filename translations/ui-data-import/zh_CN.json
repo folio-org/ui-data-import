@@ -853,5 +853,8 @@
     "logViewer.filter.holdings": "馆藏",
     "logViewer.filter.item": "单件",
     "logViewer.filter.order": "订购",
-    "logViewer.filter.invoice": "发票"
+    "logViewer.filter.invoice": "发票",
+    "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.vendorRefType": "Vendor reference type",
+    "settings.mappingProfiles.map.invoice.invoiceLineInformation.vendorRefNumber.addLabel": "Add vendor reference number",
+    "noFileName": "No file name"
 }
