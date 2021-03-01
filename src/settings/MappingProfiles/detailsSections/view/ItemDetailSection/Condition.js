@@ -6,7 +6,6 @@ import {
   Accordion,
   Row,
   Col,
-  NoValue,
   KeyValue,
 } from '@folio/stripes/components';
 
@@ -15,8 +14,6 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const Condition = ({ mappingDetails }) => {
-  const noValueElement = <NoValue />;
-
   const numberOfMissingPieces = getFieldValue(mappingDetails, 'numberOfMissingPieces', 'value');
   const missingPieces = getFieldValue(mappingDetails, 'missingPieces', 'value');
   const missingPiecesDate = getFieldValue(mappingDetails, 'missingPiecesDate', 'value');
@@ -35,7 +32,7 @@ export const Condition = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.numberOfMissingPieces`} />}
-            value={numberOfMissingPieces || noValueElement}
+            value={numberOfMissingPieces}
           />
         </Col>
         <Col
@@ -44,7 +41,7 @@ export const Condition = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.missingPieces`} />}
-            value={missingPieces || noValueElement}
+            value={missingPieces}
           />
         </Col>
         <Col
@@ -53,7 +50,7 @@ export const Condition = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.missingPiecesDate`} />}
-            value={missingPiecesDate || noValueElement}
+            value={missingPiecesDate}
           />
         </Col>
       </Row>
@@ -64,7 +61,7 @@ export const Condition = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.itemDamagedStatus`} />}
-            value={itemDamagedStatus || noValueElement}
+            value={itemDamagedStatus}
           />
         </Col>
         <Col
@@ -73,7 +70,7 @@ export const Condition = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.itemDamagedStatusDate`} />}
-            value={itemDamagedStatusDate || noValueElement}
+            value={itemDamagedStatusDate}
           />
         </Col>
       </Row>

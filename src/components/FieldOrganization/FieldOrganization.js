@@ -125,7 +125,6 @@ FieldOrganization.manifest = {
   fieldOrganizationOrg: {
     type: 'okapi',
     path: 'organizations/organizations/!{id}',
-    records: 'organizations',
     throwErrors: false,
     perRequest: 1000,
     accumulate: true,

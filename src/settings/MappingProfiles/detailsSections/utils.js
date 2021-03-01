@@ -5,15 +5,23 @@ import {
   get,
 } from 'lodash';
 
-import { NoValue } from '@folio/stripes/components';
+import {
+  NoValue,
+  Checkbox,
+} from '@folio/stripes/components';
+import { CurrencySymbol } from '@folio/stripes-acq-components';
 
 import { ProhibitionIcon } from '../../../components';
 
-import { FIELD_NAME_PREFIX } from './constants';
+import {
+  FIELD_NAME_PREFIX,
+  TRANSLATION_ID_PREFIX,
+} from './constants';
 import {
   ENTITY_KEYS,
   FORMS_SETTINGS,
   REPEATABLE_ACTIONS,
+  BOOLEAN_ACTIONS,
 } from '../../../utils';
 
 export const getFieldName = mappingFieldIndex => {
@@ -80,6 +88,7 @@ export const handleRepeatableFieldAndActionClean = (repeatableFieldActionPath, f
 };
 
 export const onAdd = (refTable, fieldName, fieldIndex, initialFields, callback, incrementalField, getPath) => {
+  const newRefTable = [...refTable];
   const fieldsPath = getPath ? getPath(fieldIndex) : `profile.mappingDetails.mappingFields[${fieldIndex}].subfields`;
   let newInitRow = { ...get(initialFields, fieldName) };
   const isFirstSubfield = isEmpty(refTable);
@@ -91,8 +100,8 @@ export const onAdd = (refTable, fieldName, fieldIndex, initialFields, callback, 
     };
   }
 
-  refTable.push(newInitRow);
-  callback(fieldsPath, refTable, fieldIndex, isFirstSubfield);
+  newRefTable.push(newInitRow);
+  callback(fieldsPath, newRefTable, fieldIndex, isFirstSubfield);
 };
 
 export const onRemove = (index, refTable, fieldIndex, callback, incrementalField, getPath, getRepeatableActionFieldPath) => {
@@ -204,3 +213,23 @@ export const getAccountingNumberOptions = vendor => {
     value: accountNo,
   }));
 };
+
+export const renderAmountValue = (amounValue, amountType, currency) => {
+  const amountSymbol = amountType === 'percentage' ?
+    <FormattedMessage id="stripes-acq-components.fundDistribution.type.sign.percent" /> :
+    <CurrencySymbol currency={currency} />;
+
+  return <> {amounValue}{amountSymbol} </>;
+};
+
+export const renderCheckbox = (labelPathId, fieldValue) => (
+  <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.${labelPathId}`}>
+    {([ariaLabel]) => (
+      <Checkbox
+        checked={fieldValue === BOOLEAN_ACTIONS.ALL_TRUE}
+        aria-label={ariaLabel}
+        disabled
+      />
+    )}
+  </FormattedMessage>
+);

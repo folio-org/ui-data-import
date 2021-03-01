@@ -99,7 +99,7 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanTypePermanentRequired`} />}
-            value={permanentLoanType || noValueElement}
+            value={permanentLoanType}
           />
         </Col>
       </Row>
@@ -110,7 +110,7 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanTypeTemporary`} />}
-            value={temporaryLoanType || noValueElement}
+            value={temporaryLoanType}
           />
         </Col>
       </Row>
@@ -121,7 +121,7 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanStatus`} />}
-            value={status || noValueElement}
+            value={status}
           />
         </Col>
       </Row>

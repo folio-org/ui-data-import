@@ -6,7 +6,6 @@ import {
   Accordion,
   Row,
   Col,
-  NoValue,
   KeyValue,
 } from '@folio/stripes/components';
 
@@ -15,8 +14,6 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const ItemData = ({ mappingDetails }) => {
-  const noValueElement = <NoValue />;
-
   const materialType = getFieldValue(mappingDetails, 'materialType.id', 'value');
   const copyNumber = getFieldValue(mappingDetails, 'copyNumber', 'value');
   const callNumberType = getFieldValue(mappingDetails, 'itemLevelCallNumberTypeId', 'value');
@@ -38,7 +35,7 @@ export const ItemData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.materialType`} />}
-            value={materialType || noValueElement}
+            value={materialType}
           />
         </Col>
       </Row>
@@ -49,7 +46,7 @@ export const ItemData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.copyNumber`} />}
-            value={copyNumber || noValueElement}
+            value={copyNumber}
           />
         </Col>
       </Row>
@@ -60,7 +57,7 @@ export const ItemData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberType`} />}
-            value={callNumberType || noValueElement}
+            value={callNumberType}
           />
         </Col>
         <Col
@@ -69,7 +66,7 @@ export const ItemData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberPrefix`} />}
-            value={callNumberPrefix || noValueElement}
+            value={callNumberPrefix}
           />
         </Col>
         <Col
@@ -78,7 +75,7 @@ export const ItemData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumber`} />}
-            value={callNumber || noValueElement}
+            value={callNumber}
           />
         </Col>
         <Col
@@ -87,7 +84,7 @@ export const ItemData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberSuffix`} />}
-            value={callNumberSuffix || noValueElement}
+            value={callNumberSuffix}
           />
         </Col>
       </Row>
@@ -98,7 +95,7 @@ export const ItemData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.numberOfPieces`} />}
-            value={numberOfPieces || noValueElement}
+            value={numberOfPieces}
           />
         </Col>
         <Col
@@ -107,7 +104,7 @@ export const ItemData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.descriptionOfPieces`} />}
-            value={descriptionOfPieces || noValueElement}
+            value={descriptionOfPieces}
           />
         </Col>
       </Row>

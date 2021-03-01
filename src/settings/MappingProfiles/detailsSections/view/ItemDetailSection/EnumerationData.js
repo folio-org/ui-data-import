@@ -56,7 +56,7 @@ export const EnumerationData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
-            value={enumeration || noValueElement}
+            value={enumeration}
           />
         </Col>
         <Col
@@ -65,7 +65,7 @@ export const EnumerationData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
-            value={chronology || noValueElement}
+            value={chronology}
           />
         </Col>
       </Row>
@@ -76,7 +76,7 @@ export const EnumerationData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.volume`} />}
-            value={volume || noValueElement}
+            value={volume}
           />
         </Col>
       </Row>

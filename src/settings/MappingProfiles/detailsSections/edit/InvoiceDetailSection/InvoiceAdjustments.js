@@ -5,7 +5,10 @@ import {
   FormattedMessage,
 } from 'react-intl';
 import { Field } from 'redux-form';
-import { noop } from 'lodash';
+import {
+  isEmpty,
+  noop,
+} from 'lodash';
 
 import {
   Accordion,
@@ -105,7 +108,7 @@ export const InvoiceAdjustments = ({
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.addLabel`} />}
         onAdd={() => onAdd(fundDistributions, 'fundDistributions', mappingSubfieldFieldIndex, fundDistributionInitialFields, onFundDistributionAdd, 'order', getActualPath)}
         onRemove={index => onRemove(index, fundDistributions, mappingSubfieldFieldIndex, onFundDistributionsClean, 'order', getActualPath)}
-        canAdd={isFundDistribution}
+        canAdd={isFundDistribution || !isEmpty(fundDistributions)}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={3}>

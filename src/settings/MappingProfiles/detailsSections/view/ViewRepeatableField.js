@@ -10,19 +10,22 @@ import {
 import {
   MAPPING_REPEATABLE_FIELD_ACTIONS,
   REPEATABLE_ACTIONS,
+  repeatableFieldActionShape,
 } from '../../../../utils';
 import { getContentData } from '../utils';
 
 export const ViewRepeatableField = ({
   repeatableAction,
+  repeatableFieldActions,
+  repeatableActionToDelete,
   fieldData,
   visibleColumns,
   columnMapping,
   formatter,
   labelId,
 }) => {
-  const repeatableActionValue = MAPPING_REPEATABLE_FIELD_ACTIONS.find(action => action.value === repeatableAction)?.label;
-  const isTableVisible = repeatableAction !== REPEATABLE_ACTIONS.DELETE_EXISTING;
+  const repeatableActionValue = repeatableFieldActions.find(action => action.value === repeatableAction)?.label;
+  const isTableVisible = repeatableAction !== repeatableActionToDelete;
 
   const renderTable = () => (
     <MultiColumnList
@@ -34,7 +37,7 @@ export const ViewRepeatableField = ({
   );
 
   return (
-    <KeyValue label={<FormattedMessage id={labelId} />}>
+    <KeyValue label={labelId && <FormattedMessage id={labelId} />}>
       {repeatableActionValue && <FormattedMessage id={repeatableActionValue} />}
       {isTableVisible && renderTable()}
     </KeyValue>
@@ -44,8 +47,15 @@ export const ViewRepeatableField = ({
 ViewRepeatableField.propTypes = {
   visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   columnMapping: PropTypes.object.isRequired,
-  labelId: PropTypes.string.isRequired,
+  labelId: PropTypes.string,
   repeatableAction: PropTypes.string,
+  repeatableActionToDelete: PropTypes.string,
+  repeatableFieldActions: PropTypes.arrayOf(repeatableFieldActionShape),
   fieldData: PropTypes.arrayOf(PropTypes.object),
   formatter: PropTypes.object,
+};
+
+ViewRepeatableField.defaultProps = {
+  repeatableFieldActions: MAPPING_REPEATABLE_FIELD_ACTIONS,
+  repeatableActionToDelete: REPEATABLE_ACTIONS.DELETE_EXISTING,
 };
