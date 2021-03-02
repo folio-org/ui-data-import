@@ -65,6 +65,7 @@
 * Remove validation error message from invoice field mapping screen (UIDATIMP-814)
 * Cannot view log for OCLC Single record import jobs. Fixed (UIDATIMP-848)
 * Create/Edit Match Profile WCAG 2.1 AA - Color Contrast violation (UIDATIMP-818)
+* Protection fields in field mapping profile only lists 10. Fixed (UIDATIMP-849)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
 

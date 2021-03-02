@@ -171,7 +171,7 @@ export class MappingProfiles extends Component {
       path: 'field-protection-settings/marc',
       records: 'marcFieldProtectionSettings',
       throwErrors: false,
-      GET: { path: 'field-protection-settings/marc?query=source=USER' },
+      GET: { path: 'field-protection-settings/marc?query=source=USER&limit=1000' },
     },
   });
 
