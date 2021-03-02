@@ -246,6 +246,7 @@ export const InvoiceAdjustments = ({
               isRemoveValueAllowed
               wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
               acceptedValuesList={relationToTotalList}
+              validation={noop}
               okapi={okapi}
             />
           </Col>
