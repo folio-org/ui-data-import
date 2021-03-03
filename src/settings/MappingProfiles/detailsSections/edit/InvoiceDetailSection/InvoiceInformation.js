@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
+import { noop } from 'lodash';
 
 import {
   Accordion,
@@ -126,6 +127,7 @@ export const InvoiceInformation = ({
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(7)}
+            validation={noop}
             okapi={okapi}
           />
         </Col>
@@ -152,6 +154,7 @@ export const InvoiceInformation = ({
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(9)}
+            validation={noop}
             okapi={okapi}
           />
         </Col>

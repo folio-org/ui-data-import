@@ -5,6 +5,7 @@ import {
   FormattedMessage,
 } from 'react-intl';
 import { Field } from 'redux-form';
+import { noop } from 'lodash';
 
 import {
   Accordion,
@@ -124,6 +125,7 @@ export const InvoiceLineAdjustments = ({
               isRemoveValueAllowed
               wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
               acceptedValuesList={relationToTotalList}
+              validation={noop}
               okapi={okapi}
             />
           </Col>

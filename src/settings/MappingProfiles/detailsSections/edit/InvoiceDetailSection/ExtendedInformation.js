@@ -5,6 +5,7 @@ import {
   FormattedMessage,
 } from 'react-intl';
 import { Field } from 'redux-form';
+import { noop } from 'lodash';
 
 import {
   Accordion,
@@ -67,6 +68,7 @@ export const ExtendedInformation = ({
             isRemoveValueAllowed
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={paymentMethodsList}
+            validation={noop}
             okapi={okapi}
           />
         </Col>
@@ -102,6 +104,7 @@ export const ExtendedInformation = ({
             isRemoveValueAllowed
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={currenciesList}
+            validation={noop}
             okapi={okapi}
           />
         </Col>
