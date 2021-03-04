@@ -103,7 +103,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.barcode`} />}
-            value={barcode || noValueElement}
+            value={barcode}
           />
         </Col>
         <Col
@@ -112,7 +112,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.accessionNumber`} />}
-            value={accessionNumber || noValueElement}
+            value={accessionNumber}
           />
         </Col>
         <Col
@@ -121,7 +121,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.itemIdentifier`} />}
-            value={itemIdentifier || noValueElement}
+            value={itemIdentifier}
           />
         </Col>
       </Row>

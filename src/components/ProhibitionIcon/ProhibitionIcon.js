@@ -52,7 +52,7 @@ export const ProhibitionIcon = ({
 
     return (
       <FormattedMessage id={translationId}>
-        {getIcon}
+        {([message]) => getIcon(message)}
       </FormattedMessage>
     );
   };

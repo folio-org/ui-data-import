@@ -142,7 +142,7 @@ export const HoldingsDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.details.field.numberOfItems`} />}
-            value={numberOfItems || noValueElement}
+            value={numberOfItems}
           />
         </Col>
       </Row>
@@ -204,7 +204,7 @@ export const HoldingsDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.illPolicy`} />}
-            value={illPolicy || noValueElement}
+            value={illPolicy}
           />
         </Col>
         <Col
@@ -213,7 +213,7 @@ export const HoldingsDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.digitizationPolicy`} />}
-            value={digitizationPolicy || noValueElement}
+            value={digitizationPolicy}
           />
         </Col>
         <Col
@@ -222,7 +222,7 @@ export const HoldingsDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.retentionPolicy`} />}
-            value={retentionPolicy || noValueElement}
+            value={retentionPolicy}
           />
         </Col>
       </Row>

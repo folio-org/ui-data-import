@@ -6,7 +6,6 @@ import {
   Accordion,
   Row,
   Col,
-  NoValue,
   KeyValue,
 } from '@folio/stripes/components';
 
@@ -16,8 +15,6 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const Acquisition = ({ mappingDetails }) => {
-  const noValueElement = <NoValue />;
-
   const acquisitionMethod = getFieldValue(mappingDetails, 'acquisitionMethod', 'value');
   const orderFormat = getFieldValue(mappingDetails, 'acquisitionFormat', 'value');
   const receiptStatus = getFieldValue(mappingDetails, 'receiptStatus', 'value');
@@ -34,7 +31,7 @@ export const Acquisition = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.acquisitionMethod`} />}
-            value={acquisitionMethod || noValueElement}
+            value={acquisitionMethod}
           />
         </Col>
         <Col
@@ -43,7 +40,7 @@ export const Acquisition = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.orderFormat`} />}
-            value={orderFormat || noValueElement}
+            value={orderFormat}
           />
         </Col>
         <Col
@@ -52,7 +49,7 @@ export const Acquisition = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.receiptStatus`} />}
-            value={receiptStatus || noValueElement}
+            value={receiptStatus}
           />
         </Col>
       </Row>

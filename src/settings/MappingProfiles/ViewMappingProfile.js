@@ -43,6 +43,7 @@ import {
   MappingItemDetails,
   MappingHoldingsDetails,
   MappingMARCBibDetails,
+  MappingInvoiceDetails,
 } from './detailsSections/view';
 
 import {
@@ -219,7 +220,7 @@ export class ViewMappingProfile extends Component {
       incomingRecordType,
       existingRecordType,
       mappingDetails,
-      mappingDetails: { marcMappingOption },
+      mappingDetails: { marcMappingOption = '' },
       marcFieldProtectionSettings: mappingMarcFieldProtectionFields,
     } = mappingProfile;
 
@@ -243,6 +244,7 @@ export class ViewMappingProfile extends Component {
       INSTANCE: <MappingInstanceDetails mappingDetails={mappingDetails?.mappingFields} />,
       HOLDINGS: <MappingHoldingsDetails mappingDetails={mappingDetails?.mappingFields} />,
       ITEM: <MappingItemDetails mappingDetails={mappingDetails?.mappingFields} />,
+      INVOICE: <MappingInvoiceDetails mappingDetails={mappingDetails?.mappingFields} />,
       MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCBibDetailsProps} />,
     };
 

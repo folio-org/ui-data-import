@@ -121,7 +121,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.catalogedDate`} />}
-            value={catalogedDate || noValueElement}
+            value={catalogedDate}
           />
         </Col>
       </Row>
@@ -132,7 +132,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.administrationData.field.statusId`} />}
-            value={statusTerm || noValueElement}
+            value={statusTerm}
           />
         </Col>
       </Row>
