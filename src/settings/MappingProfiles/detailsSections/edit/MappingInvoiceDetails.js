@@ -20,6 +20,7 @@ import {
   okapiShape,
   CURRENCY_FIELD,
   VENDOR_ID_FIELD,
+  LOCK_TOTAL_FIELD,
 } from '../../../../utils';
 
 import {
@@ -46,6 +47,7 @@ export const MappingInvoiceDetails = ({
   const fundDistributions = referenceTables?.invoiceLines?.[0].fields[14]?.subfields || [];
   const lineAdjustments = referenceTables?.invoiceLines?.[0].fields[15]?.subfields || [];
   const currencyFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, CURRENCY_FIELD);
+  const lockTotalFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, LOCK_TOTAL_FIELD);
   const filledVendorId = getFieldValueFromDetails(mappingDetails?.mappingFields, VENDOR_ID_FIELD);
 
   const selectVendor = useCallback(vendor => {
@@ -66,6 +68,7 @@ export const MappingInvoiceDetails = ({
   return (
     <AccordionSet>
       <InvoiceInformation
+        hasLockTotal={!!lockTotalFromDetails}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
