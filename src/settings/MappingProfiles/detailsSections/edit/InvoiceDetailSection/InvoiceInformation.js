@@ -27,10 +27,11 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { okapiShape } from '../../../../../utils';
 
 export const InvoiceInformation = ({
+  hasLockTotal,
   setReferenceTables,
   okapi,
 }) => {
-  const [isLockTotal, setIsLockTotal] = useState(false);
+  const [isLockTotal, setIsLockTotal] = useState(hasLockTotal);
 
   return (
     <Accordion
@@ -222,4 +223,5 @@ export const InvoiceInformation = ({
 InvoiceInformation.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  hasLockTotal: PropTypes.bool.isRequired,
 };

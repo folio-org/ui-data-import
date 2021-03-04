@@ -68,6 +68,7 @@
 * Create/Edit Match Profile WCAG 2.1 AA - Color Contrast violation (UIDATIMP-818)
 * Invoice field mapping screen: Remove validation from fields with reference values (UIDATIMP-855)
 * Protection fields in field mapping profile only lists 10. Fixed (UIDATIMP-849)
+* Invoice field mapping: Lock total checkbox is not working properly. Fixed (UIDATIMP-857)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
 
