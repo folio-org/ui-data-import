@@ -856,5 +856,5 @@
     "logViewer.filter.invoice": "Fatura",
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.vendorRefType": "Vendor reference type",
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.vendorRefNumber.addLabel": "Add vendor reference number",
-    "noFileName": "No file name"
+    "noFileName": "Sem nome de arquivo"
 }
