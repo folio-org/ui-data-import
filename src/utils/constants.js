@@ -58,6 +58,7 @@ export const SYSTEM_USER_NAME = 'System';
 export const CURRENCY_FIELD = 'currency';
 export const VENDOR_ID_FIELD = 'vendorId';
 export const LOCK_TOTAL_FIELD = 'lockTotal';
+export const EXCHANGE_RATE_FIELD = 'exchangeRate';
 
 export const DATA_TYPES = [
   'MARC',
