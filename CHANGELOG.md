@@ -69,6 +69,7 @@
 * Invoice field mapping screen: Remove validation from fields with reference values (UIDATIMP-855)
 * Protection fields in field mapping profile only lists 10. Fixed (UIDATIMP-849)
 * Invoice field mapping: Lock total checkbox is not working properly. Fixed (UIDATIMP-857)
+* Invoice field mapping: Exchange rate checkbox is not being saved. Fixed (UIDATIMP-864)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
 
