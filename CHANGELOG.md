@@ -49,6 +49,7 @@
 * Refactor Match profiles to use final-form instead of redux-form (UIDATIMP-828)
 * Invoice field mapping profile: Adjust vendor reference number (UIDATIMP-845)
 * Data Import Field Mapping Profile View: Invoice and Invoice line from EDIFACT Invoice (UIDATIMP-783)
+* Refactor Action profiles to use final-form instead of redux-form (UIDATIMP-827)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)

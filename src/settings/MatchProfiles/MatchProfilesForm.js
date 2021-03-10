@@ -8,7 +8,6 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import { connect } from 'react-redux';
 import { Field } from 'react-final-form';
 import {
   get,
@@ -44,6 +43,7 @@ import {
   FORMS_SETTINGS,
   ENTITY_KEYS,
   validateRequiredField,
+  handleProfileSave,
 } from '../../utils';
 
 import { getSectionInitialValues } from './MatchProfiles';
@@ -54,7 +54,6 @@ export const MatchProfilesFormComponent = memo(({
   initialValues,
   handleSubmit,
   location: { search },
-  associatedJobProfilesAmount,
   onCancel,
   jsonSchemas,
   form,
@@ -70,6 +69,8 @@ export const MatchProfilesFormComponent = memo(({
     name,
     matchDetails,
   } = profile;
+  const associatedJobProfiles = profile.parentProfiles || [];
+  const associatedJobProfilesAmount = associatedJobProfiles.length;
   const { layer } = queryString.parse(search);
 
   const isEditMode = layer === LAYER_TYPES.EDIT;
@@ -105,21 +106,12 @@ export const MatchProfilesFormComponent = memo(({
 
     return [];
   };
-
   const onSubmit = async event => {
     if (editWithModal) {
       event.preventDefault();
       setConfirmModalOpen(true);
     } else {
-      const record = await handleSubmit(event);
-
-      if (record) {
-        form.reset();
-        transitionToParams({
-          _path: `${path}/view/${record.id}`,
-          layer: null,
-        });
-      }
+      await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)(event);
     }
   };
 
@@ -308,8 +300,8 @@ export const MatchProfilesFormComponent = memo(({
           />
         )}
         confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
-        onConfirm={() => {
-          handleSubmit();
+        onConfirm={async () => {
+          await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)();
           setConfirmModalOpen(false);
         }}
         onCancel={() => setConfirmModalOpen(false)}
@@ -330,7 +322,6 @@ MatchProfilesFormComponent.propTypes = {
     }).isRequired,
     PropTypes.string.isRequired,
   ]),
-  associatedJobProfilesAmount: PropTypes.number.isRequired,
   onCancel: PropTypes.func.isRequired,
   jsonSchemas: PropTypes.shape({
     INSTANCE: PropTypes.object,
@@ -350,21 +341,10 @@ MatchProfilesFormComponent.propTypes = {
   match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
 };
 
-const mapStateToProps = state => {
-  const { length: associatedJobProfilesAmount } = get(
-    state,
-    ['folio_data_import_associated_jobprofiles', 'records', 0, 'childSnapshotWrappers'],
-    [],
-  );
-
-  return { associatedJobProfilesAmount };
-};
-
 export const MatchProfilesForm = compose(
   withProfileWrapper,
   stripesFinalForm({
     navigationCheck: true,
     destroyOnUnregister: true,
   }),
-  connect(mapStateToProps),
 )(MatchProfilesFormComponent);
