@@ -347,6 +347,7 @@ export const MappingProfilesFormComponent = ({
                     setFolioRecordType(e.target.value);
                     setFieldMappingsForMARC('');
                   }}
+                  formType="redux-form"
                 />
               </Col>
               {folioRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC && (
