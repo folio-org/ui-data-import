@@ -1,12 +1,16 @@
 @import "@folio/stripes-components/lib/variables.css";
 
+.decoratorWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .decorator {
   display: flex;
   align-items: flex-start;
   & .options-dropdown {
     display: flex;
     height: 100%;
-    margin: 25.5px 0 0 -1px;
     & button {
       min-width: 143px;
       height: 23px;

@@ -1,5 +1,11 @@
-import React, { memo } from 'react';
+import React, {
+  memo,
+  useMemo,
+} from 'react';
 import { PropTypes } from 'prop-types';
+import uniqueId from 'lodash/uniqueId';
+
+import { Label } from '@folio/stripes-components';
 
 import {
   WithTranslation,
@@ -16,6 +22,7 @@ export const withReferenceValues = memo(({
   id,
   input,
   value,
+  label,
   onFieldChange,
   dataOptions,
   optionValue,
@@ -23,11 +30,14 @@ export const withReferenceValues = memo(({
   wrappedComponent,
   wrapperLabel,
   disabled,
+  required,
+  readOnly,
   isMultiSelection,
   hasLoaded,
   ...rest
 }) => {
   const currentValue = input?.value || value;
+  const fieldId = useMemo(() => uniqueId('decorated-field-'), []);
 
   const handleChange = e => {
     const val = e.target ? e.target.value : e;
@@ -52,34 +62,47 @@ export const withReferenceValues = memo(({
   const Component = wrappedComponent;
 
   return (
-    <div className={styles.decorator}>
-      <Component
-        value={currentValue}
-        onBlur={input?.onBlur}
-        onChange={handleChange}
-        onDragStart={input?.onDragStart}
-        onDrop={input?.onDrop}
-        onFocus={input?.onFocus}
-        loading={!disabled ? !hasLoaded : false}
-        disabled={disabled}
-        {...rest}
-      />
-      <WithTranslation
-        wrapperLabel={wrapperLabel}
-      >
-        {label => (
-          <OptionsList
-            id={id}
-            label={label}
-            dataOptions={dataOptions}
-            optionValue={optionValue}
-            optionLabel={optionLabel}
-            className={styles['options-dropdown']}
-            disabled={!hasLoaded || disabled}
-            onSelect={onValueSelect}
-          />
-        )}
-      </WithTranslation>
+    <div className={styles.decoratorWrapper}>
+      {label && (
+        <Label
+          htmlFor={fieldId}
+          required={required}
+          readOnly={readOnly}
+        >
+          {label}
+        </Label>
+      )}
+      <div className={styles.decorator}>
+        <Component
+          id={fieldId}
+          value={currentValue}
+          onBlur={input?.onBlur}
+          onChange={handleChange}
+          onDragStart={input?.onDragStart}
+          onDrop={input?.onDrop}
+          onFocus={input?.onFocus}
+          loading={!disabled ? !hasLoaded : false}
+          disabled={disabled}
+          readOnly={readOnly}
+          {...rest}
+        />
+        <WithTranslation
+          wrapperLabel={wrapperLabel}
+        >
+          {listLabel => (
+            <OptionsList
+              id={id}
+              label={listLabel}
+              dataOptions={dataOptions}
+              optionValue={optionValue}
+              optionLabel={optionLabel}
+              className={styles['options-dropdown']}
+              disabled={!hasLoaded || disabled}
+              onSelect={onValueSelect}
+            />
+          )}
+        </WithTranslation>
+      </div>
     </div>
   );
 });
@@ -100,10 +123,13 @@ withReferenceValues.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onFieldChange: PropTypes.func,
   id: PropTypes.string,
-  wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  wrapperLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   isMultiSelection: PropTypes.bool,
   hasLoaded: PropTypes.bool,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
+  readOnly: PropTypes.bool,
 };
 
 withReferenceValues.defaultProps = {
@@ -112,4 +138,6 @@ withReferenceValues.defaultProps = {
   disabled: false,
   isMultiSelection: false,
   hasLoaded: false,
+  required: false,
+  readOnly: false,
 };

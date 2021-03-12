@@ -1,3 +1,7 @@
+.decoratorWrapper {
+  composes: decoratorWrapper from "@folio/data-import/src/components/withReferenceValues/withReferenceValues.css";
+}
+
 .decorator {
   composes: decorator from "@folio/data-import/src/components/withReferenceValues/withReferenceValues.css";
 }
