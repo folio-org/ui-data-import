@@ -38,6 +38,7 @@ export const AssociatedList = memo(({
   onRemove,
   dataAttributes,
   searchTerm,
+  isEditMode,
 }) => {
   const nsSort = getNsKey('sort', namespaceKey);
   const nsQuery = getNsKey('query', namespaceKey);
@@ -125,9 +126,12 @@ export const AssociatedList = memo(({
     intl,
   });
 
+  const editModeIdPrefix = isEditMode ? 'edit-' : '';
+
   return (
     <MultiColumnList
-      id={`associated-${entityKey}-list`}
+      id={`${editModeIdPrefix}associated-${entityKey}-list`}
+      columnIdPrefix={`${editModeIdPrefix}associated-${entityKey}`}
       visibleColumns={columns}
       columnWidths={columnWidths}
       columnMapping={columnHeaders}
@@ -158,10 +162,12 @@ AssociatedList.propTypes = {
   columnWidths: PropTypes.object,
   className: PropTypes.string || PropTypes.object,
   searchTerm: PropTypes.string,
+  isEditMode: PropTypes.bool,
 };
 
 AssociatedList.defaultProps = {
   isMultiSelect: false,
+  isEditMode: false,
   isStatic: true,
   dataAttributes: null,
   contentData: null,

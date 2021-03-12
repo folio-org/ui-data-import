@@ -55,7 +55,7 @@ export const InvoiceLineFundDistribution = ({
     fundId: x => x?.fundId || noValueElement,
     expenseClassId: x => x?.expenseClassId || noValueElement,
     value: x => (x.value ? renderAmountValue(x.value, x.distributionType, currency) : noValueElement),
-    amount: x => x?.amount || <ProhibitionIcon fieldName="invoice-line-fund-distributions-amount" />,
+    amount: x => x?.amount || <ProhibitionIcon fieldName={`invoice-line-fund-distributions-amount-${x.rowIndex}`} />,
   };
   const fundDistributionsFieldsMap = [
     {
@@ -79,7 +79,7 @@ export const InvoiceLineFundDistribution = ({
 
   return (
     <Accordion
-      id="invoice-line-fund-distribution"
+      id="view-invoice-line-fund-distribution"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineFundDistribution.section`} />}
     >
       <Row left="xs">
@@ -88,6 +88,7 @@ export const InvoiceLineFundDistribution = ({
           xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="invoice-line-fund-distribution"
             repeatableAction={fundDistributionsRepeatableAction}
             repeatableFieldActions={MAPPING_FUND_DISTRIBUTION_FIELD_SOURCES}
             repeatableActionToDelete={FUND_DISTRIBUTION_SOURCE.USE_FUND_DISTRIBUTION_FROM_POL}

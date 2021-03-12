@@ -19,9 +19,9 @@ class MappingProfilesInteractor {
   list = new MultiColumnListInteractor('#mapping-profiles-list');
   selectAllCheckBox = new CheckboxInteractor('[data-test-select-all-checkbox]');
   checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);
-  searchField = new TextFieldInteractor('#input-mapping-profiles-search');
-  searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
-  searchSubmitButtonDisabled = property('[data-test-search-and-sort-submit]', 'disabled');
+  searchField = new TextFieldInteractor('[data-test-search-form-field]');
+  searchSubmitButton = new ButtonInteractor('[data-test-search-form-submit]');
+  searchSubmitButtonDisabled = property('[data-test-search-form-submit]', 'disabled');
   exceptionModal = new ModalInteractor('#delete-mappingProfiles-exception-modal');
   exceptionModalCloseButton = new ButtonInteractor('[data-test-exception-modal-close-button]');
 }

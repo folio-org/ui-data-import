@@ -34,7 +34,7 @@ export const ExtendedInformation = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="extended-information"
+      id="view-extended-information"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.section`} />}
     >
       <Row left="xs">

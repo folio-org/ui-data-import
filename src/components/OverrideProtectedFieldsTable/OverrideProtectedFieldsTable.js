@@ -86,6 +86,7 @@ export const OverrideProtectedFieldsTable = ({
       );
     },
   };
+  const editModeIdPrefix = isEditable ? 'edit-' : '';
 
   return (
     <>
@@ -114,6 +115,7 @@ export const OverrideProtectedFieldsTable = ({
         </Col>
       </Row>
       <MultiColumnList
+        columnIdPrefix={`${editModeIdPrefix}override-protected`}
         contentData={protectedFields}
         columnMapping={columnMapping}
         visibleColumns={visibleColumns}

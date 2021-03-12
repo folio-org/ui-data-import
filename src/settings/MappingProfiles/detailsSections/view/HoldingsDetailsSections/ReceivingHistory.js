@@ -64,16 +64,16 @@ export const ReceivingHistory = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="holdings-receiving-history"
+      id="view-holdings-receiving-history"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.receivingHistory.section`} />}
     >
       <Row left="xs">
         <Col
           data-test-receiving-history-note
-          id="section-receiving-history"
           xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="receiving-history"
             repeatableAction={receivingHistoryRepeatableAction}
             fieldData={receivingHistoryData}
             visibleColumns={receivingHistoryVisibleColumns}

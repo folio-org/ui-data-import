@@ -80,7 +80,7 @@ export const InstanceRelationship = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="instance-relationship"
+      id="view-instance-relationship"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.relationship.section`} />}
     >
       <Row left="xs">
@@ -90,6 +90,7 @@ export const InstanceRelationship = ({ mappingDetails }) => {
           className={css.colWithTable}
         >
           <ViewRepeatableField
+            columnIdPrefix="parent-instances"
             repeatableAction={parentInstancesRepeatableAction}
             fieldData={parentInstancesData}
             visibleColumns={parentInstancesVisibleColumns}
@@ -105,6 +106,7 @@ export const InstanceRelationship = ({ mappingDetails }) => {
           xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="child-instances"
             repeatableAction={childInstancesRepeatableAction}
             fieldData={childInstancesData}
             visibleColumns={childInstancesVisibleColumns}

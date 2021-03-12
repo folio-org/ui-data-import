@@ -89,7 +89,7 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="item-loans"
+      id="view-item-loans"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemLoans.section`} />}
     >
       <Row left="xs">
@@ -128,10 +128,10 @@ export const LoanAndAvailability = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-circulation-notes
-          id="section-circulation-notes"
           xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="circulation-notes"
             repeatableAction={circulationNotesRepeatableAction}
             fieldData={circulationNotesData}
             visibleColumns={circulationNotesVisibleColumns}

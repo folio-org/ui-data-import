@@ -25,7 +25,7 @@ class MappingProfileFormInteractor extends FullScreenFormInteractor {
   marcDetailsTable = new MARCTableInteractor('#mapping-profiles-form');
   confirmEditModal = new ConfirmationModalInteractor('#confirm-edit-action-profile-modal');
   associatedActionProfilesAccordion = new AccordionInteractor('#mappingProfileFormAssociatedActionProfileAccordion');
-  associatedActionProfiles = new AssociatedActionProfiles('[data-test-full-screen-form] #associated-actionProfiles-list');
+  associatedActionProfiles = new AssociatedActionProfiles('[data-test-full-screen-form] #edit-associated-actionProfiles-list');
 }
 
 export const mappingProfileForm = new MappingProfileFormInteractor('[data-test-full-screen-form]');

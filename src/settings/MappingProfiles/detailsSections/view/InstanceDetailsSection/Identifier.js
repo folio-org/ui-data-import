@@ -36,8 +36,8 @@ export const Identifier = ({ mappingDetails }) => {
     ),
   };
   const identifiersFormatter = {
-    identifierTypeId: x => x?.identifierTypeId || prohibitionIconElement('identifier-type-id'),
-    value: x => x?.value || prohibitionIconElement('identifier-value'),
+    identifierTypeId: x => x?.identifierTypeId || prohibitionIconElement(`identifier-type-id-${x.rowIndex}`),
+    value: x => x?.value || prohibitionIconElement(`identifier-value-${x.rowIndex}`),
   };
   const identifiersFieldsMap = [
     {
@@ -52,7 +52,7 @@ export const Identifier = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="identifiers"
+      id="view-identifiers"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.identifiers.section`} />}
     >
       <Row left="xs">
@@ -62,6 +62,7 @@ export const Identifier = ({ mappingDetails }) => {
           className={css.colWithTable}
         >
           <MultiColumnList
+            columnIdPrefix="identifiers"
             contentData={getContentData(identifiersData)}
             visibleColumns={identifiersVisibleColumns}
             columnMapping={identifiersMapping}

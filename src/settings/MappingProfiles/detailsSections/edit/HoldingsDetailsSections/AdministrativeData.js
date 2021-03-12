@@ -74,7 +74,6 @@ export const AdministrativeData = ({
       <Row left="xs">
         <Col
           data-test-former-ids
-          id="section-former-ids"
           xs={12}
         >
           <RepeatableActionsField
@@ -139,7 +138,6 @@ export const AdministrativeData = ({
       <Row left="xs">
         <Col
           data-test-statistical-codes
-          id="section-statistical-code-ids"
           xs={12}
         >
           <RepeatableActionsField

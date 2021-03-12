@@ -37,6 +37,7 @@ export const AssociatorEditable = memo(({
   relationsToDelete,
   onLink,
   onUnlink,
+  isEditMode,
 }) => {
   const [currentData, setCurrentData] = useState([]);
   const [current, setCurrent] = useState(null);
@@ -121,6 +122,7 @@ export const AssociatorEditable = memo(({
         }}
         className={css['list-editable']}
         isStatic={false}
+        isEditMode={isEditMode}
         isMultiSelect
         {...dataAttributes}
       />
@@ -189,12 +191,14 @@ AssociatorEditable.propTypes = {
   relationsToDelete: PropTypes.arrayOf(PropTypes.object),
   onLink: PropTypes.func,
   onUnlink: PropTypes.func,
+  isEditMode: PropTypes.bool,
 };
 
 AssociatorEditable.defaultProps = {
   parentId: null,
   contentData: [],
   isMultiSelect: true,
+  isEditMode: false,
   isMultiLink: true,
   dataAttributes: null,
   relationsToAdd: [],

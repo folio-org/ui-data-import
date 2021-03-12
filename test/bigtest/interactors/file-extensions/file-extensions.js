@@ -1,4 +1,7 @@
-import { interactor } from '@bigtest/interactor';
+import {
+  interactor,
+  property,
+} from '@bigtest/interactor';
 
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
@@ -12,8 +15,9 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   list = new MultiColumnListInteractor('#file-extensions-list');
   confirmationModal = new ConfirmationModalInteractor('#restore-default-records-modal');
   callout = new CalloutInteractor();
-  searchFiled = new TextFieldInteractor('#input-file-extensions-search');
-  searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
+  searchFiled = new TextFieldInteractor('[data-test-search-form-field]');
+  searchSubmitButton = new ButtonInteractor('[data-test-search-form-submit]');
+  searchSubmitButtonDisabled = property('[data-test-search-form-submit]', 'disabled');
 }
 
 export const fileExtensions = new FileExtensionsInteractor();

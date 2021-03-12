@@ -265,7 +265,7 @@ export class ViewMappingProfile extends Component {
         </Headline>
         <AccordionSet>
           <Accordion
-            id="summary"
+            id="view-summary"
             label={<FormattedMessage id="ui-data-import.summary" />}
           >
             <ViewMetaData
@@ -312,7 +312,7 @@ export class ViewMappingProfile extends Component {
             </div>
           )}
           <Accordion
-            id="mapping-profile-details"
+            id="view-mapping-profile-details"
             label={<FormattedMessage id="ui-data-import.details" />}
           >
             {existingRecordType && (
@@ -344,7 +344,7 @@ export class ViewMappingProfile extends Component {
             )}
           </Accordion>
           <Accordion
-            id="mappingProfileFormAssociatedActionProfileAccordion"
+            id="view-mappingProfileFormAssociatedActionProfileAccordion"
             label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
           >
             <ProfileAssociator
