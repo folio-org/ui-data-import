@@ -1,5 +1,6 @@
 import React, {
   memo,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -8,7 +9,9 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
+import uniqueId from 'lodash/uniqueId';
 
+import { Label } from '@folio/stripes-components';
 import { DATE_FORMAT } from '@folio/stripes-acq-components';
 
 import {
@@ -25,14 +28,16 @@ import {
 
 import styles from './DatePickerDecorator.css';
 
-export const DatePickerDecorator = memo(props => {
-  const {
-    id,
-    input,
-    wrapperLabel,
-    wrappedComponent,
-    ...rest
-  } = props;
+export const DatePickerDecorator = memo(({
+  id,
+  input,
+  label,
+  required,
+  readOnly,
+  wrapperLabel,
+  wrappedComponent,
+  ...rest
+}) => {
   const {
     TODAY,
     CHOOSE_DATE,
@@ -40,6 +45,7 @@ export const DatePickerDecorator = memo(props => {
 
   const [currentValue, setCurrentValue] = useState(input.value || '');
   const [isDatepicker, setIsDatepicker] = useState(false);
+  const fieldId = useMemo(() => uniqueId('decorated-field-'), []);
 
   const currentInput = useRef(input);
   const intl = useIntl();
@@ -95,8 +101,10 @@ export const DatePickerDecorator = memo(props => {
   } = input;
 
   const commonProps = {
+    id: fieldId,
     value: currentValue,
     inputRef: currentInput,
+    readOnly,
     onBlur,
     onChange: handleChange,
     onDragStart,
@@ -118,26 +126,37 @@ export const DatePickerDecorator = memo(props => {
     <div
       data-test-date-picker
       data-testid="date-picker-decorator"
-      className={styles.decorator}
+      className={styles.decoratorWrapper}
     >
-      <Component
-        {...wrappedComponentProps}
-      />
-      <WithTranslation
-        wrapperLabel={wrapperLabel}
-      >
-        {label => (
-          <OptionsList
-            id={id}
-            label={label}
-            dataOptions={dataOptions}
-            optionValue="value"
-            optionLabel="name"
-            className={styles['options-dropdown']}
-            onSelect={handleChangeWrapperValue}
-          />
-        )}
-      </WithTranslation>
+      {label && (
+        <Label
+          htmlFor={fieldId}
+          required={required}
+          readOnly={readOnly}
+        >
+          {label}
+        </Label>
+      )}
+      <div className={styles.decorator}>
+        <Component
+          {...wrappedComponentProps}
+        />
+        <WithTranslation
+          wrapperLabel={wrapperLabel}
+        >
+          {listLabel => (
+            <OptionsList
+              id={id}
+              label={listLabel}
+              dataOptions={dataOptions}
+              optionValue="value"
+              optionLabel="name"
+              className={styles['options-dropdown']}
+              onSelect={handleChangeWrapperValue}
+            />
+          )}
+        </WithTranslation>
+      </div>
     </div>
   );
 });
@@ -153,10 +172,15 @@ DatePickerDecorator.propTypes = {
   }).isRequired,
   wrappedComponent: PropTypes.oneOfType([PropTypes.elementType, PropTypes.func]).isRequired,
   id: PropTypes.string,
-  wrapperLabel: PropTypes.oneOfType([PropTypes.string, Node]),
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  wrapperLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  required: PropTypes.bool,
+  readOnly: PropTypes.bool,
 };
 
 DatePickerDecorator.defaultProps = {
   id: '',
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+  required: false,
+  readOnly: false,
 };
