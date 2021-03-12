@@ -12,6 +12,7 @@ import { Field } from 'react-final-form';
 import {
   get,
   isEmpty,
+  isEqual,
   noop,
 } from 'lodash';
 
@@ -346,5 +347,6 @@ export const MatchProfilesForm = compose(
   stripesFinalForm({
     navigationCheck: true,
     destroyOnUnregister: true,
+    initialValuesEqual: isEqual,
   }),
 )(MatchProfilesFormComponent);
