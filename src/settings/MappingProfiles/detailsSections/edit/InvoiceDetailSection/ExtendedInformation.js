@@ -34,8 +34,9 @@ export const ExtendedInformation = ({
   mappingFields,
   okapi,
   setReferenceTables,
+  hasExchangeRate,
 }) => {
-  const [isUseSetExchangeRate, setIsUseSetExchangeRate] = useState(false);
+  const [isUseSetExchangeRate, setIsUseSetExchangeRate] = useState(hasExchangeRate);
 
   const { formatMessage } = useIntl();
   const paymentMethodsList = createOptionsList(PAYMENT_METHOD_OPTIONS, formatMessage, 'labelId');
@@ -146,4 +147,5 @@ ExtendedInformation.propTypes = {
   okapi: okapiShape.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   mappingFields: PropTypes.arrayOf(PropTypes.object),
+  hasExchangeRate: PropTypes.bool.isRequired,
 };

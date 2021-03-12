@@ -1,28 +1,21 @@
 import React, {
   useState,
   useMemo,
-  useEffect,
+  useCallback,
 } from 'react';
+import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import {
-  Field,
-  formValueSelector,
-  change,
-} from 'redux-form';
-import { connect } from 'react-redux';
-
-import PropTypes from 'prop-types';
-import queryString from 'query-string';
-
+import { Field } from 'react-final-form';
 import {
   get,
-  identity,
+  isEqual,
   omit,
   pick,
 } from 'lodash';
+import queryString from 'query-string';
 
 import {
   Headline,
@@ -34,12 +27,14 @@ import {
   Select,
 } from '@folio/stripes/components';
 import { FullScreenForm } from '@folio/stripes-data-transfer-components';
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes-final-form';
 
 import {
   compose,
   withProfileWrapper,
   validateRequiredField,
+  isFieldPristine,
+  handleProfileSave,
   ENTITY_KEYS,
   LAYER_TYPES,
   PROFILE_TYPES,
@@ -52,34 +47,42 @@ import {
   ProfileAssociator,
 } from '../../components';
 
-const formName = 'actionProfilesForm';
-
 export const ActionProfilesFormComponent = ({
   intl: { formatMessage },
   pristine,
   submitting,
   initialValues,
   handleSubmit,
+  form,
   location: { search },
-  associatedJobProfilesAmount,
   onCancel,
-  action,
-  folioRecord,
-  dispatch,
+  transitionToParams,
+  match: { path },
 }) => {
-  const { profile } = initialValues;
+  const {
+    profile,
+    addedRelations: initialAddedRelations,
+    deletedRelations: initialDeletedRelations,
+  } = initialValues;
+  const associatedJobProfiles = profile.parentProfiles || [];
+  const associatedJobProfilesAmount = associatedJobProfiles.length;
+
+  const [action, setAction] = useState(profile.action || '');
+  const [folioRecord, setFolioRecord] = useState(profile.folioRecord || '');
+  const [addedRelations, setAddedRelations] = useState(initialAddedRelations || []);
+  const [deletedRelations, setDeletedRelations] = useState(initialDeletedRelations || []);
 
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
-  const [addedRelations, setAddedRelations] = useState([]);
-  const [deletedRelations, setDeletedRelations] = useState([]);
 
-  useEffect(() => {
-    dispatch(change(formName, 'addedRelations', addedRelations));
-  }, [addedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
+  const addRelations = useCallback(relations => {
+    form.change('addedRelations', relations);
+    setAddedRelations(relations);
+  }, [form]);
 
-  useEffect(() => {
-    dispatch(change(formName, 'deletedRelations', deletedRelations));
-  }, [deletedRelations]); // eslint-disable-line react-hooks/exhaustive-deps
+  const deleteRelations = useCallback(relations => {
+    form.change('deletedRelations', relations);
+    setDeletedRelations(relations);
+  }, [form]);
 
   const getFilteredActions = () => {
     switch (folioRecord) {
@@ -133,7 +136,7 @@ export const ActionProfilesFormComponent = ({
 
   const getFolioRecordTypesDataOptions = () => Object.entries(getFilteredFolioRecordTypes())
     .map(([recordType, { captionId }]) => {
-      // TODO: Disabling options should be removed after implentation is done
+      // TODO: Disabling options should be removed after implementation is done
       const isOptionDisabled = FOLIO_RECORD_TYPES_TO_DISABLE.some(option => option === recordType);
 
       return {
@@ -161,12 +164,12 @@ export const ActionProfilesFormComponent = ({
     ...get(initialValues, ['profile', 'childProfiles'], []),
   ];
 
-  const onSubmit = e => {
+  const onSubmit = async event => {
     if (editWithModal) {
-      e.preventDefault();
+      event.preventDefault();
       setConfirmModalOpen(true);
     } else {
-      handleSubmit(e);
+      await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)(event);
     }
   };
 
@@ -198,7 +201,8 @@ export const ActionProfilesFormComponent = ({
               name="profile.name"
               required
               component={TextField}
-              validate={[validateRequiredField]}
+              validate={validateRequiredField}
+              isEqual={isFieldPristine}
             />
           </div>
           <div data-test-description-field>
@@ -206,6 +210,7 @@ export const ActionProfilesFormComponent = ({
               label={<FormattedMessage id="ui-data-import.description" />}
               name="profile.description"
               component={TextArea}
+              isEqual={isFieldPristine}
             />
           </div>
         </Accordion>
@@ -217,14 +222,23 @@ export const ActionProfilesFormComponent = ({
             <FormattedMessage id="ui-data-import.selectAction">
               {([placeholder]) => (
                 <Field
-                  label={<FormattedMessage id="ui-data-import.action" />}
                   name="profile.action"
-                  component={Select}
-                  required
-                  itemToString={identity}
-                  validate={[validateRequiredField]}
-                  dataOptions={actionsDataOptions}
-                  placeholder={placeholder}
+                  validate={validateRequiredField}
+                  render={fieldProps => (
+                    <Select
+                      {...fieldProps}
+                      label={<FormattedMessage id="ui-data-import.action" />}
+                      dataOptions={actionsDataOptions}
+                      placeholder={placeholder}
+                      onChange={event => {
+                        const value = event.target.value;
+
+                        fieldProps.input.onChange(value);
+                        setAction(value);
+                      }}
+                      required
+                    />
+                  )}
                 />
               )}
             </FormattedMessage>
@@ -232,6 +246,7 @@ export const ActionProfilesFormComponent = ({
           <FolioRecordTypeSelect
             fieldName="folioRecord"
             dataOptions={folioRecordTypesDataOptions}
+            onRecordSelect={setFolioRecord}
           />
         </Accordion>
         <Accordion
@@ -253,8 +268,16 @@ export const ActionProfilesFormComponent = ({
             isMultiLink
             relationsToAdd={addedRelations}
             relationsToDelete={deletedRelations}
-            onLink={setAddedRelations}
-            onUnlink={setDeletedRelations}
+            onLink={addRelations}
+            onUnlink={deleteRelations}
+          />
+          <Field
+            name="addedRelations"
+            component={() => null}
+          />
+          <Field
+            name="deletedRelations"
+            component={() => null}
           />
         </Accordion>
         {isEditMode && (
@@ -292,8 +315,9 @@ export const ActionProfilesFormComponent = ({
           />
         )}
         confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
-        onConfirm={() => {
-          handleSubmit();
+        onConfirm={async () => {
+          await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)();
+
           setConfirmModalOpen(false);
         }}
         onCancel={() => setConfirmModalOpen(false)}
@@ -308,6 +332,13 @@ ActionProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  form: PropTypes.shape({
+    change: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+  }).isRequired,
+  transitionToParams: PropTypes.func.isRequired,
+  match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
+  onCancel: PropTypes.func.isRequired,
   location: PropTypes.oneOfType([
     PropTypes.shape({
       search: PropTypes.string.isRequired,
@@ -315,38 +346,13 @@ ActionProfilesFormComponent.propTypes = {
     }).isRequired,
     PropTypes.string.isRequired,
   ]),
-  associatedJobProfilesAmount: PropTypes.number.isRequired,
-  action: PropTypes.string,
-  folioRecord: PropTypes.string,
-  onCancel: PropTypes.func.isRequired,
-  dispatch: PropTypes.func.isRequired,
-};
-
-const selector = formValueSelector(formName);
-
-const mapStateToProps = state => {
-  const { length: associatedJobProfilesAmount } = get(
-    state,
-    ['folio_data_import_associated_jobprofiles', 'records', 0, 'childSnapshotWrappers'],
-    [],
-  );
-  const action = selector(state, 'profile.action');
-  const folioRecord = selector(state, 'profile.folioRecord');
-
-  return {
-    associatedJobProfilesAmount,
-    action,
-    folioRecord,
-  };
 };
 
 export const ActionProfilesForm = compose(
   injectIntl,
   withProfileWrapper,
-  stripesForm({
-    form: formName,
+  stripesFinalForm({
     navigationCheck: true,
-    enableReinitialize: true,
+    initialValuesEqual: isEqual,
   }),
-  connect(mapStateToProps),
 )(ActionProfilesFormComponent);

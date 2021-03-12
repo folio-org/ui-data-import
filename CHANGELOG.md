@@ -49,6 +49,8 @@
 * Refactor Match profiles to use final-form instead of redux-form (UIDATIMP-828)
 * Invoice field mapping profile: Adjust vendor reference number (UIDATIMP-845)
 * Data Import Field Mapping Profile View: Invoice and Invoice line from EDIFACT Invoice (UIDATIMP-783)
+* Refactor Action profiles to use final-form instead of redux-form (UIDATIMP-827)
+* Add personal data disclosure form (UIDATIMP-786)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
@@ -69,6 +71,7 @@
 * Invoice field mapping screen: Remove validation from fields with reference values (UIDATIMP-855)
 * Protection fields in field mapping profile only lists 10. Fixed (UIDATIMP-849)
 * Invoice field mapping: Lock total checkbox is not working properly. Fixed (UIDATIMP-857)
+* Invoice field mapping: Exchange rate checkbox is not being saved. Fixed (UIDATIMP-864)
 * Invoice field mapping profile: Subscription start date field misaligned (UIDATIMP-850)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)

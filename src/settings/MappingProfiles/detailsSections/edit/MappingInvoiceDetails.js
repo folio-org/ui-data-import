@@ -21,6 +21,7 @@ import {
   CURRENCY_FIELD,
   VENDOR_ID_FIELD,
   LOCK_TOTAL_FIELD,
+  EXCHANGE_RATE_FIELD,
 } from '../../../../utils';
 
 import {
@@ -48,6 +49,7 @@ export const MappingInvoiceDetails = ({
   const lineAdjustments = referenceTables?.invoiceLines?.[0].fields[15]?.subfields || [];
   const currencyFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, CURRENCY_FIELD);
   const lockTotalFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, LOCK_TOTAL_FIELD);
+  const exchangeRateFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, EXCHANGE_RATE_FIELD);
   const filledVendorId = getFieldValueFromDetails(mappingDetails?.mappingFields, VENDOR_ID_FIELD);
 
   const selectVendor = useCallback(vendor => {
@@ -88,6 +90,7 @@ export const MappingInvoiceDetails = ({
         okapi={okapi}
       />
       <ExtendedInformation
+        hasExchangeRate={!!exchangeRateFromDetails}
         setReferenceTables={setReferenceTables}
         mappingFields={mappingDetails?.mappingFields}
         okapi={okapi}

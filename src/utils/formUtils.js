@@ -156,3 +156,15 @@ export const isFieldPristine = (initialValue, currentValue) => {
 
   return isEqual(initialValue, currentValue);
 };
+
+export const handleProfileSave = (handleSubmit, resetForm, transitionToParams, path) => async event => {
+  const record = await handleSubmit(event);
+
+  if (record) {
+    resetForm();
+    transitionToParams({
+      _path: `${path}/view/${record.id}`,
+      layer: null,
+    });
+  }
+};
