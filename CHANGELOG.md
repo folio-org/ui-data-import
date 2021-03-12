@@ -73,6 +73,7 @@
 * Invoice field mapping: Lock total checkbox is not working properly. Fixed (UIDATIMP-857)
 * Invoice field mapping: Exchange rate checkbox is not being saved. Fixed (UIDATIMP-864)
 * Invoice field mapping profile: Subscription start date field misaligned (UIDATIMP-850)
+* Match profile: form values are reset on page resize (UIDATIMP-867)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
 
