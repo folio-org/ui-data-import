@@ -23,12 +23,14 @@ export const ViewRepeatableField = ({
   columnMapping,
   formatter,
   labelId,
+  columnIdPrefix,
 }) => {
   const repeatableActionValue = repeatableFieldActions.find(action => action.value === repeatableAction)?.label;
   const isTableVisible = repeatableAction !== repeatableActionToDelete;
 
   const renderTable = () => (
     <MultiColumnList
+      columnIdPrefix={columnIdPrefix}
       contentData={getContentData(fieldData)}
       visibleColumns={visibleColumns}
       columnMapping={columnMapping}
@@ -53,6 +55,7 @@ ViewRepeatableField.propTypes = {
   repeatableFieldActions: PropTypes.arrayOf(repeatableFieldActionShape),
   fieldData: PropTypes.arrayOf(PropTypes.object),
   formatter: PropTypes.object,
+  columnIdPrefix: PropTypes.string,
 };
 
 ViewRepeatableField.defaultProps = {

@@ -9,3 +9,13 @@
 .searchResults {
   flex-grow: 1;
 }
+
+.searchResultsRow {
+  flex: 1;
+}
+
+.searchResultsInnerRow {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+}

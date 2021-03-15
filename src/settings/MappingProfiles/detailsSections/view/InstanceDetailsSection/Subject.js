@@ -30,7 +30,7 @@ export const Subject = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.subjects`} />
     ),
   };
-  const subjectsFormatter = { subject: x => x?.noteType || prohibitionIconElement('subject-note-type') };
+  const subjectsFormatter = { subject: x => x?.noteType || prohibitionIconElement(`subject-note-type-${x.rowIndex}`) };
   const subjectsFieldsMap = [
     {
       field: 'subject',
@@ -41,7 +41,7 @@ export const Subject = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="subjects"
+      id="view-subjects"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.subject.section`} />}
     >
       <Row left="xs">
@@ -50,6 +50,7 @@ export const Subject = ({ mappingDetails }) => {
           xs={12}
         >
           <MultiColumnList
+            columnIdPrefix="subjects"
             contentData={getContentData(subjectsData)}
             visibleColumns={subjectsVisibleColumns}
             columnMapping={subjectsMapping}

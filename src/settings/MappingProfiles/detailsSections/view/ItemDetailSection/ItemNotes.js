@@ -63,16 +63,16 @@ export const ItemNotes = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="item-notes"
+      id="view-item-notes"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemNotes.section`} />}
     >
       <Row left="xs">
         <Col
           data-test-item-notes
-          id="section-item-notes"
           xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="item-notes"
             repeatableAction={notesRepeatableAction}
             fieldData={notesData}
             visibleColumns={notesVisibleColumns}

@@ -270,6 +270,7 @@ export const ActionProfilesFormComponent = ({
             relationsToDelete={deletedRelations}
             onLink={addRelations}
             onUnlink={deleteRelations}
+            isEditMode={isEditMode}
           />
           <Field
             name="addedRelations"
@@ -300,6 +301,7 @@ export const ActionProfilesFormComponent = ({
               isMultiSelect={false}
               isMultiLink
               useSearch={false}
+              isEditMode={isEditMode}
             />
           </Accordion>
         )}

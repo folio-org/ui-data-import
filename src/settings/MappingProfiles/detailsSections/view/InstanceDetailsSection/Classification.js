@@ -34,8 +34,8 @@ export const Classification = ({ mappingDetails }) => {
     ),
   };
   const classificationsFormatter = {
-    classificationTypeId: x => x?.classificationTypeId || prohibitionIconElement('classification-type-id'),
-    classificationNumber: x => x?.classificationNumber || prohibitionIconElement('classification-number'),
+    classificationTypeId: x => x?.classificationTypeId || prohibitionIconElement(`classification-type-id-${x.rowIndex}`),
+    classificationNumber: x => x?.classificationNumber || prohibitionIconElement(`classification-number-${x.rowIndex}`),
   };
   const classificationsFieldsMap = [
     {
@@ -50,7 +50,7 @@ export const Classification = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="classification"
+      id="view-classification"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.classifications.section`} />}
     >
       <Row left="xs">
@@ -59,6 +59,7 @@ export const Classification = ({ mappingDetails }) => {
           xs={12}
         >
           <MultiColumnList
+            columnIdPrefix="classifications"
             contentData={getContentData(classificationsData)}
             visibleColumns={classificationsVisibleColumns}
             columnMapping={classificationsMapping}

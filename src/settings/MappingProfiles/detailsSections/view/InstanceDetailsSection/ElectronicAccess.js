@@ -45,11 +45,11 @@ export const ElectronicAccess = ({ mappingDetails }) => {
     ),
   };
   const electronicAccessFormatter = {
-    relationshipId: x => x?.relationshipId || prohibitionIconElement('electronic-access-relationship-id'),
-    uri: x => x?.uri || prohibitionIconElement('electronic-access-uri'),
-    linkText: x => x?.linkText || prohibitionIconElement('electronic-access-link-text'),
-    materialsSpecification: x => x?.materialsSpecification || prohibitionIconElement('electronic-materials-specification'),
-    publicNote: x => x?.publicNote || prohibitionIconElement('electronic-public-note'),
+    relationshipId: x => x?.relationshipId || prohibitionIconElement(`electronic-access-relationship-id-${x.rowIndex}`),
+    uri: x => x?.uri || prohibitionIconElement(`electronic-access-uri-${x.rowIndex}`),
+    linkText: x => x?.linkText || prohibitionIconElement(`electronic-access-link-text-${x.rowIndex}`),
+    materialsSpecification: x => x?.materialsSpecification || prohibitionIconElement(`electronic-materials-specification-${x.rowIndex}`),
+    publicNote: x => x?.publicNote || prohibitionIconElement(`electronic-public-note-${x.rowIndex}`),
   };
   const electronicAccessFieldsMap = [
     {
@@ -73,7 +73,7 @@ export const ElectronicAccess = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="instance-electronic-access"
+      id="view-instance-electronic-access"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.section`} />}
     >
       <Row left="xs">
@@ -83,6 +83,7 @@ export const ElectronicAccess = ({ mappingDetails }) => {
           className={css.colWithTable}
         >
           <MultiColumnList
+            columnIdPrefix="electronic-access"
             contentData={getContentData(electronicAccessData)}
             visibleColumns={electronicAccessVisibleColumns}
             columnMapping={electronicAccessMapping}

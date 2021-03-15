@@ -245,7 +245,7 @@ export class ViewMatchProfile extends Component {
           )}
           <div className={styles.details}>
             <Accordion
-              id="match-profile-details"
+              id="view-match-profile-details"
               label={<FormattedMessage id="ui-data-import.details" />}
             >
               <RecordTypesSelect
@@ -255,7 +255,7 @@ export class ViewMatchProfile extends Component {
                 isEditable={false}
               />
               <Accordion
-                id="match-criteria"
+                id="view-match-criteria"
                 label={<FormattedMessage id="ui-data-import.match.criteria" />}
                 separator={false}
               >

@@ -70,7 +70,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="administrative-data"
+      id="view-administrative-data"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.section`} />}
     >
       <Row left="xs">
@@ -97,11 +97,11 @@ export const AdministrativeData = ({ mappingDetails }) => {
       </Row>
       <Row left="xs">
         <Col
-          id="section-former-ids"
-          xs={12}
           className={css.colWithTable}
+          xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="former-ids"
             repeatableAction={formerIdsRepeatableAction}
             fieldData={formerIdsData}
             visibleColumns={formerIdsVisibleColumns}
@@ -125,10 +125,10 @@ export const AdministrativeData = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-statistical-codes
-          id="section-statistical-code-ids"
           xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="fstatistical-code-ids"
             repeatableAction={statisticalCodesRepeatableAction}
             fieldData={statisticalCodesData}
             visibleColumns={statisticalCodesVisibleColumns}

@@ -89,7 +89,6 @@ export const EnumerationData = ({
       <Row left="xs">
         <Col
           data-test-years-and-captions
-          id="section-year-caption"
           xs={12}
         >
           <RepeatableActionsField

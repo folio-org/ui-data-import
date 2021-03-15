@@ -118,7 +118,6 @@ export const AdministrativeData = ({
       <Row left="xs">
         <Col
           data-test-former-ids
-          id="section-former-ids"
           xs={12}
         >
           <RepeatableActionsField
