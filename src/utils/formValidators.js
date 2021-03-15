@@ -12,7 +12,6 @@ const REMOVE_OPTION_VALUE = '###REMOVE###';
  * Validates field inputs
  *
  * @param {string|*} value
- * @param {string|Object} [errorMessage] Validation error message
  * @return {null|*} Validation message
  */
 export const validateRequiredField = value => {
@@ -90,6 +89,21 @@ export const validateAlphanumericOrAllowedValue = (value, allowedValue) => {
   return <FormattedMessage id="ui-data-import.validation.valueType" />;
 };
 
+/**
+ * Validate a max length of the input value
+ *
+ * @param {string|*} value
+ * @param {number} maxLength
+ * @returns {JSX.Element|null}
+ *
+ * @example
+ *
+ * validateValueLength('value', 5)
+ * // => null
+ *
+ * validateValueLength('value', 1)
+ * // => Translated string (en = 'Invalid value. Maximum 1 character(s) allowed')
+ */
 export const validateValueLength = (value, maxLength) => {
   const val = getTrimmedValue(value);
 
@@ -105,8 +119,36 @@ export const validateValueLength = (value, maxLength) => {
   );
 };
 
+/**
+ * Validate the input value length equals 1 character
+ *
+ * @param {string|*} value
+ * @returns {JSX.Element|null}
+ *
+ * @example
+ *
+ * validateValueLength1('a')
+ * // => null
+ *
+ * validateValueLength1('value')
+ * // => Translated string (en = 'Invalid value. Maximum 1 character(s) allowed')
+ */
 export const validateValueLength1 = value => validateValueLength(value, 1);
 
+/**
+ * Validate the input value length equals 3 characters
+ *
+ * @param {string|*} value
+ * @returns {JSX.Element|null}
+ *
+ * @example
+ *
+ * validateValueLength3('abs')
+ * // => null
+ *
+ * validateValueLength3('value')
+ * // => Translated string (en = 'Invalid value. Maximum 3 character(s) allowed')
+ */
 export const validateValueLength3 = value => validateValueLength(value, 3);
 
 /**
@@ -223,6 +265,24 @@ export const validateMARCWithDate = (value, isRemoveValueProhibited) => {
   return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
 };
 
+/**
+ * Validate repeatable action field value
+ *
+ * @param {string|*} value
+ * @param {boolean} hasFields
+ * @returns {JSX.Element|null}
+ *
+ * @example
+ *
+ * validateRepeatableActionsField('Add these to existing', true)
+ * // => null
+ *
+ * validateRepeatableActionsField('Add these to existing', false)
+ * // => Translated string (en = 'One or more values must be added before the profile can be saved.')
+ *
+ * validateRepeatableActionsField('', true)
+ * // => Translated string (en = 'Action must be selected before the profile can be saved')
+ */
 export const validateRepeatableActionsField = (value, hasFields) => {
   const val = getTrimmedValue(value);
 
@@ -237,6 +297,21 @@ export const validateRepeatableActionsField = (value, hasFields) => {
   return null;
 };
 
+/**
+ * Validate input field with accepted values
+ *
+ * @param {Array<Object>} acceptedValues
+ * @param {string} valueKey
+ * @returns {function(*=): (null|*)}
+ *
+ * @example
+ *
+ * validateAcceptedValues([{ key: 'value' }], 'key')('"value"')
+ * // => null
+ *
+ * validateAcceptedValues([{ key: 'value' }], 'key')('"test"')
+ * // => Translated string (en = 'Please correct the syntax to continue')
+ */
 export const validateAcceptedValues = (acceptedValues, valueKey) => value => {
   const pattern = /"[^"]+"/g;
 
@@ -317,7 +392,9 @@ export const validateMarcIndicatorField = (field, indicator1, indicator2) => {
 /**
  * Validate MARC Field input value for Match Criterion
  *
- * @param {string|*} field
+ * @param {string|*} indicator1
+ * @param {string|*} indicator2
+ * @param {string|*} subfield
  * @returns {null|*}
  *
  * @example
