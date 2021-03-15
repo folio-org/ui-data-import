@@ -40,8 +40,8 @@ export const InstanceNotes = ({ mappingDetails }) => {
     ),
   };
   const notesFormatter = {
-    noteType: x => x?.noteType || prohibitionIconElement('notes-note-type'),
-    note: x => x?.note || prohibitionIconElement('notes-note'),
+    noteType: x => x?.noteType || prohibitionIconElement(`notes-note-type-${x.rowIndex}`),
+    note: x => x?.note || prohibitionIconElement(`notes-note-${x.rowIndex}`),
     staffOnly: x => {
       const staffOnlyLabelId = getBooleanLabelId(x?.staffOnly);
 
@@ -64,7 +64,7 @@ export const InstanceNotes = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="instance-notes"
+      id="view-instance-notes"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.instanceNotes.section`} />}
     >
       <Row left="xs">
@@ -74,6 +74,7 @@ export const InstanceNotes = ({ mappingDetails }) => {
           className={css.colWithTable}
         >
           <MultiColumnList
+            columnIdPrefix="instance-notes"
             contentData={getContentData(notesData)}
             visibleColumns={notesVisibleColumns}
             columnMapping={notesMapping}

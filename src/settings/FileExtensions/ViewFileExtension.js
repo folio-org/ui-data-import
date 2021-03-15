@@ -167,6 +167,7 @@ export class ViewFileExtension extends Component {
               metadata={record.metadata}
               systemId={SYSTEM_USER_ID}
               systemUser={SYSTEM_USER_NAME}
+              headingLevel={3}
             />
           </Col>
         </Row>

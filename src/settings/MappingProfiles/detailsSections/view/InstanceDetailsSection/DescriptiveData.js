@@ -56,10 +56,10 @@ export const DescriptiveData = ({ mappingDetails }) => {
     ),
   };
   const publicationsFormatter = {
-    publisher: x => x?.publisher || prohibitionIconElement('publication-publisher'),
-    role: x => x?.role || prohibitionIconElement('publication-role'),
-    place: x => x?.place || prohibitionIconElement('publication-place'),
-    dateOfPublication: x => x?.dateOfPublication || prohibitionIconElement('publication-date-of-publication'),
+    publisher: x => x?.publisher || prohibitionIconElement(`publication-publisher-${x.rowIndex}`),
+    role: x => x?.role || prohibitionIconElement(`publication-role-${x.rowIndex}`),
+    place: x => x?.place || prohibitionIconElement(`publication-place-${x.rowIndex}`),
+    dateOfPublication: x => x?.dateOfPublication || prohibitionIconElement(`publication-date-of-publication-${x.rowIndex}`),
   };
   const publicationsFieldsMap = [
     {
@@ -84,7 +84,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.edition`} />
     ),
   };
-  const editionsFormatter = { edition: x => x?.edition || prohibitionIconElement('edition') };
+  const editionsFormatter = { edition: x => x?.edition || prohibitionIconElement(`edition-${x.rowIndex}`) };
   const editionsFieldsMap = [
     {
       field: 'edition',
@@ -99,7 +99,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.physicalDescription`} />
     ),
   };
-  const physicalDescriptionsFormatter = { physicalDescription: x => x?.physicalDescription || prohibitionIconElement('physical-description') };
+  const physicalDescriptionsFormatter = { physicalDescription: x => x?.physicalDescription || prohibitionIconElement(`physical-description-${x.rowIndex}`) };
   const physicalDescriptionsFieldsMap = [
     {
       field: 'physicalDescription',
@@ -129,7 +129,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.instanceFormatId`} />
     ),
   };
-  const formatsFormatter = { instanceFormatId: x => x?.instanceFormatId || prohibitionIconElement('instance-format-id') };
+  const formatsFormatter = { instanceFormatId: x => x?.instanceFormatId || prohibitionIconElement(`instance-format-id-${x.rowIndex}`) };
   const formatsFieldsMap = [
     {
       field: 'instanceFormatId',
@@ -144,7 +144,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.languageId`} />
     ),
   };
-  const languagesFormatter = { languageId: x => x?.languageId || prohibitionIconElement('language-id') };
+  const languagesFormatter = { languageId: x => x?.languageId || prohibitionIconElement(`language-id-${x.rowIndex}`) };
   const languagesFieldsMap = [
     {
       field: 'languageId',
@@ -159,7 +159,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publicationFrequency`} />
     ),
   };
-  const publicationFrequenciesFormatter = { publicationFrequency: x => x?.publicationFrequency || prohibitionIconElement('publication-frequency') };
+  const publicationFrequenciesFormatter = { publicationFrequency: x => x?.publicationFrequency || prohibitionIconElement(`publication-frequency-${x.rowIndex}`) };
   const publicationFrequenciesFieldsMap = [
     {
       field: 'publicationFrequency',
@@ -174,7 +174,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publicationRange`} />
     ),
   };
-  const publicationRangeFormatter = { publicationRange: x => x?.publicationRange || prohibitionIconElement('publication-range') };
+  const publicationRangeFormatter = { publicationRange: x => x?.publicationRange || prohibitionIconElement(`publication-range-${x.rowIndex}`) };
   const publicationRangeFieldsMap = [
     {
       field: 'publicationRange',
@@ -185,7 +185,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="descriptive-data"
+      id="view-descriptive-data"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.section`} />}
     >
       <Row left="xs">
@@ -196,6 +196,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
         >
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publications.legend`} />}>
             <MultiColumnList
+              columnIdPrefix="publications"
               contentData={getContentData(publicationsData)}
               visibleColumns={publicationsVisibleColumns}
               columnMapping={publicationsMapping}
@@ -212,6 +213,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
         >
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.editions.legend`} />}>
             <MultiColumnList
+              columnIdPrefix="editions"
               contentData={getContentData(editionsData)}
               visibleColumns={editionsVisibleColumns}
               columnMapping={editionsMapping}
@@ -228,6 +230,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
         >
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.physicalDescriptions.legend`} />}>
             <MultiColumnList
+              columnIdPrefix="physical-descriptions"
               contentData={getContentData(physicalDescriptionsData)}
               visibleColumns={physicalDescriptionsVisibleColumns}
               columnMapping={physicalDescriptionsMapping}
@@ -254,6 +257,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
           className={css.colWithTable}
         >
           <ViewRepeatableField
+            columnIdPrefix="nature-of-content-terms"
             repeatableAction={natureOfContentTermsRepeatableAction}
             fieldData={natureOfContentTermsData}
             visibleColumns={natureOfContentTermsVisibleColumns}
@@ -271,6 +275,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
         >
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.instanceFormatIds.legend`} />}>
             <MultiColumnList
+              columnIdPrefix="formats"
               contentData={getContentData(formatsData)}
               visibleColumns={formatsVisibleColumns}
               columnMapping={formatsMapping}
@@ -287,6 +292,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
         >
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.languages.legend`} />}>
             <MultiColumnList
+              columnIdPrefix="languages"
               contentData={getContentData(languagesData)}
               visibleColumns={languagesVisibleColumns}
               columnMapping={languagesMapping}
@@ -303,6 +309,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
         >
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publicationFrequency.legend`} />}>
             <MultiColumnList
+              columnIdPrefix="publication-frequencies"
               contentData={getContentData(publicationFrequenciesData)}
               visibleColumns={publicationFrequenciesVisibleColumns}
               columnMapping={publicationFrequenciesMapping}
@@ -319,6 +326,7 @@ export const DescriptiveData = ({ mappingDetails }) => {
         >
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publicationRange.legend`} />}>
             <MultiColumnList
+              columnIdPrefix="publication-ranges"
               contentData={getContentData(publicationRangeData)}
               visibleColumns={publicationRangeVisibleColumns}
               columnMapping={publicationRangeMapping}

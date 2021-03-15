@@ -445,6 +445,7 @@ export const MappingProfilesFormComponent = ({
               relationsToDelete={deletedRelations}
               onLink={setAddedRelations}
               onUnlink={setDeletedRelations}
+              isEditMode={isEditMode}
             />
           </Accordion>
         </AccordionSet>

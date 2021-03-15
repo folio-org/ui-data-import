@@ -21,7 +21,7 @@ export const Acquisition = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="holdings-acquisition"
+      id="view-holdings-acquisition"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.acquisition.section`} />}
     >
       <Row left="xs">

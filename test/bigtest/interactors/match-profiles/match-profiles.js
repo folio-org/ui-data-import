@@ -18,9 +18,9 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   list = new MultiColumnListInteractor('#match-profiles-list');
   selectAllCheckBox = new CheckboxInteractor('[data-test-select-all-checkbox]');
   checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);
-  searchField = new TextFieldInteractor('#input-match-profiles-search');
-  searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
-  searchSubmitButtonDisabled = property('[data-test-search-and-sort-submit]', 'disabled');
+  searchField = new TextFieldInteractor('[data-test-search-form-field]');
+  searchSubmitButton = new ButtonInteractor('[data-test-search-form-submit]');
+  searchSubmitButtonDisabled = property('[data-test-search-form-submit]', 'disabled');
   exceptionModal = new ModalInteractor('#delete-matchProfiles-exception-modal');
   exceptionModalCloseButton = new ButtonInteractor('[data-test-exception-modal-close-button]');
 }

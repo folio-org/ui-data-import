@@ -46,7 +46,7 @@ export const EnumerationData = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="enumeration-data"
+      id="view-enumeration-data"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.section`} />}
     >
       <Row left="xs">
@@ -83,10 +83,10 @@ export const EnumerationData = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-years-and-captions
-          id="section-year-caption"
           xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="years-and-captions"
             repeatableAction={yearsAndCaptionsRepeatableAction}
             fieldData={yearsAndCaptionsData}
             visibleColumns={yearsAndCaptionsVisibleColumns}
