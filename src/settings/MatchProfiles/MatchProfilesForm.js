@@ -75,7 +75,9 @@ const validate = values => {
     } else {
       const fieldValidation = composeValidators(validateAlphanumericOrAllowedValue, validateValueLength3)(existingRecordFields[0].value);
 
-      set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[0].value`, fieldValidation);
+      if (fieldValidation) {
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[0].value`, fieldValidation);
+      }
     }
 
     if (isRestrictedValue) {
@@ -84,9 +86,11 @@ const validate = values => {
       const subfieldValue = recordFields[3]?.value;
       const validation = validateMARCFieldInMatchCriterion(indicator1Value, indicator2Value, subfieldValue);
 
-      set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[1].value`, validation);
-      set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[2].value`, validation);
-      set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[3].value`, validation);
+      if (validation) {
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[1].value`, validation);
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[2].value`, validation);
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[3].value`, validation);
+      }
     } else {
       const indicator1Value = recordFields[1]?.value;
       const indicator2Value = recordFields[2]?.value;
@@ -98,9 +102,17 @@ const validate = values => {
       const subfieldValidation = validateRequiredField(subfieldValue)
         || validateAlphanumericOrAllowedValue(subfieldValue) || validateValueLength1(subfieldValue);
 
-      set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[1].value`, indicator1Validation);
-      set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[2].value`, indicator2Validation);
-      set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[3].value`, subfieldValidation);
+      if (indicator1Validation) {
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[1].value`, indicator1Validation);
+      }
+
+      if (indicator2Validation) {
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[2].value`, indicator2Validation);
+      }
+
+      if (subfieldValidation) {
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[3].value`, subfieldValidation);
+      }
     }
   };
 
