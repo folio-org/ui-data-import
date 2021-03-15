@@ -47,7 +47,6 @@ import {
   RESTRICTED_MATCHING_MARC_FIELD_VALUE,
   handleProfileSave,
   isMARCType,
-  composeValidators,
   validateRequiredField,
   validateAlphanumericOrAllowedValue,
   validateValueLength3,
@@ -68,12 +67,17 @@ const validate = values => {
   const incomingRecordFields = values.profile.matchDetails[0].incomingMatchExpression.fields;
 
   const validateMARCRecordFields = (recordFieldType, recordFields) => {
-    const isRestrictedValue = RESTRICTED_MATCHING_MARC_FIELD_VALUE.some(value => value === recordFields[0].value);
+    const fieldValue = recordFields[0].value;
+    const indicator1Value = recordFields[1]?.value;
+    const indicator2Value = recordFields[2]?.value;
+    const subfieldValue = recordFields[3]?.value;
 
-    if (!recordFields[0].value) {
+    const isRestrictedValue = RESTRICTED_MATCHING_MARC_FIELD_VALUE.some(value => value === fieldValue);
+
+    if (!fieldValue) {
       set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[0].value`, enterValueMessage);
     } else {
-      const fieldValidation = composeValidators(validateAlphanumericOrAllowedValue, validateValueLength3)(existingRecordFields[0].value);
+      const fieldValidation = validateAlphanumericOrAllowedValue(fieldValue) || validateValueLength3(fieldValue);
 
       if (fieldValidation) {
         set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[0].value`, fieldValidation);
@@ -81,9 +85,6 @@ const validate = values => {
     }
 
     if (isRestrictedValue) {
-      const indicator1Value = recordFields[1]?.value;
-      const indicator2Value = recordFields[2]?.value;
-      const subfieldValue = recordFields[3]?.value;
       const validation = validateMARCFieldInMatchCriterion(indicator1Value, indicator2Value, subfieldValue);
 
       if (validation) {
@@ -92,9 +93,6 @@ const validate = values => {
         set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[3].value`, validation);
       }
     } else {
-      const indicator1Value = recordFields[1]?.value;
-      const indicator2Value = recordFields[2]?.value;
-      const subfieldValue = recordFields[3]?.value;
       const indicator1Validation = validateAlphanumericOrAllowedValue(indicator1Value, '*')
         || validateValueLength1(indicator1Value);
       const indicator2Validation = validateAlphanumericOrAllowedValue(indicator2Value, '*')
