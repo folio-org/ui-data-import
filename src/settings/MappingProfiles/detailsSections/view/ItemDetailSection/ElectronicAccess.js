@@ -72,16 +72,16 @@ export const ElectronicAccess = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="item-electronic-access"
+      id="view-item-electronic-access"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.section`} />}
     >
       <Row left="xs">
         <Col
           data-test-electronic-access
-          id="section-electronic-access"
           xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="electronic-access"
             repeatableAction={electronicAccessRepeatableAction}
             fieldData={electronicAccessData}
             visibleColumns={electronicAccessVisibleColumns}

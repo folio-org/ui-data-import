@@ -47,7 +47,6 @@ export const HoldingsNotes = ({
       <Row left="xs">
         <Col
           data-test-notes
-          id="section-holding-statements"
           xs={12}
         >
           <RepeatableActionsField

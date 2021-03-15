@@ -141,7 +141,6 @@ export const LoanAndAvailability = ({
       <Row left="xs">
         <Col
           data-test-circulation-notes
-          id="section-circulation-notes"
           xs={12}
         >
           <RepeatableActionsField

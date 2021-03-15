@@ -20,15 +20,23 @@ describe('File extensions', () => {
       expect(fileExtensions.list.rowCount).to.equal(3);
     });
 
-    describe('upon search', () => {
+    describe('search form after enter data in search field', () => {
       beforeEach(async () => {
         await fileExtensions.searchFiled.fill('marc');
-        await fileExtensions.searchFiled.fill('mar');
-        await fileExtensions.searchSubmitButton.click();
       });
 
-      it('renders proper amount of items', () => {
-        expect(fileExtensions.list.rowCount).to.equal(1);
+      it('search button is active', () => {
+        expect(fileExtensions.searchSubmitButtonDisabled).to.be.false;
+      });
+
+      describe('and after click on search button', () => {
+        beforeEach(async () => {
+          await fileExtensions.searchSubmitButton.click();
+        });
+
+        it('renders proper amount of items', () => {
+          expect(fileExtensions.list.rowCount).to.equal(1);
+        });
       });
     });
 

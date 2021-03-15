@@ -62,7 +62,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="administrative-data"
+      id="view-administrative-data"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.section`} />}
     >
       <Row left="xs">
@@ -153,6 +153,7 @@ export const AdministrativeData = ({ mappingDetails }) => {
           xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="statistical-codes"
             repeatableAction={statisticalCodesRepeatableAction}
             fieldData={statisticalCodesData}
             visibleColumns={statisticalCodesVisibleColumns}

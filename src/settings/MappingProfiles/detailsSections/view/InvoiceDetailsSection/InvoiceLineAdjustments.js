@@ -76,7 +76,7 @@ export const InvoiceLineAdjustments = ({
 
   return (
     <Accordion
-      id="invoice-line-adjustments"
+      id="view-invoice-line-adjustments"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineAdjustments.section`} />}
     >
       <Row left="xs">
@@ -85,6 +85,7 @@ export const InvoiceLineAdjustments = ({
           xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="invoice-line-adjustments"
             fieldData={lineAdjustmentsData}
             visibleColumns={lineAdjustmentsVisibleColumns}
             columnMapping={lineAdjustmentsMapping}

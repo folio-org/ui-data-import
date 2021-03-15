@@ -74,7 +74,7 @@ export const InvoiceAdjustments = ({ mappingDetails }) => {
       expenseClassId: x => x?.expenseClassId || noValueElement,
       distributionType: x => x.value,
       value: x => (x.value ? renderAmountValue(x.value, x.distributionType, currency) : noValueElement),
-      amount: x => x?.amount || prohibitionIconElement('amount'),
+      amount: x => x?.amount || prohibitionIconElement(`amount-${index}-${x.rowIndex}`),
     };
     const fundDistributionsFieldsMap = [
       {
@@ -155,6 +155,7 @@ export const InvoiceAdjustments = ({ mappingDetails }) => {
               xs={12}
             >
               <ViewRepeatableField
+                columnIdPrefix={`adjustment-fund-distributions-${index}`}
                 fieldData={fundDistributionsData}
                 visibleColumns={fundDistributionsVisibleColumns}
                 columnMapping={fundDistributionsMapping}
@@ -169,7 +170,7 @@ export const InvoiceAdjustments = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="invoice-adjustments"
+      id="view-invoice-adjustments"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.section`} />}
     >
       {!isEmpty(adjustments) && adjustments.map(renderAdjustment)}

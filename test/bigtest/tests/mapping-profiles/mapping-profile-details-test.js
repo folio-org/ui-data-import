@@ -1875,7 +1875,7 @@ describe('Mapping Profile View', () => {
       });
     });
 
-    describe('when form is submitted and the response contains', () => {
+    describe.skip('when form is submitted and the response contains', () => {
       describe('error message', () => {
         beforeEach(async function () {
           await setupFormSubmitErrorScenario('post', this.server, {

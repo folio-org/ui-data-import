@@ -45,7 +45,6 @@ export const ElectronicAccess = ({
       <Row left="xs">
         <Col
           data-test-electronic-access
-          id="section-electronic-access"
           xs={12}
         >
           <RepeatableActionsField

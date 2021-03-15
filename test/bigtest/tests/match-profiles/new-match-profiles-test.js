@@ -76,9 +76,9 @@ describe('Match profile form', () => {
       });
     });
 
-    describe('details accordion', () => {
+    describe.skip('details accordion', () => {
       // eslint-disable-next-line no-only-tests/no-only-tests
-      describe.skip('"Record types select" component', () => {
+      describe('"Record types select" component', () => {
         it('should render', () => {
           expect(matchProfileForm.recordTypesSelect.isPresent).to.be.true;
         });

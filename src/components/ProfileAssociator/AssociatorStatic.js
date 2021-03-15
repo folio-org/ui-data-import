@@ -29,6 +29,7 @@ export const AssociatorStatic = memo(({
   contentData,
   hasLoaded,
   useSearch,
+  isEditMode,
 }) => {
   const [currentData, setCurrentData] = useState([]);
   const [currentQuery, setCurrentQuery] = useState('');
@@ -146,6 +147,7 @@ export const AssociatorStatic = memo(({
                 onSort={onSort}
                 isStatic
                 isMultiSelect={isMultiSelect}
+                isEditMode={isEditMode}
                 searchTerm={currentQuery}
               />
             </>
@@ -167,6 +169,7 @@ export const AssociatorStatic = memo(({
         contentData={currentData}
         onSort={noop}
         isMultiSelect={isMultiSelect}
+        isEditMode={isEditMode}
       />
     </div>
   );
@@ -182,11 +185,13 @@ AssociatorStatic.propTypes = {
   contentData: PropTypes.arrayOf(PropTypes.object),
   hasLoaded: PropTypes.bool,
   useSearch: PropTypes.bool,
+  isEditMode: PropTypes.bool,
   history: PropTypes.shape({ push: PropTypes.func.isRequired }),
 };
 
 AssociatorStatic.defaultProps = {
   isMultiSelect: true,
+  isEditMode: false,
   dataAttributes: null,
   contentData: null,
   hasLoaded: false,

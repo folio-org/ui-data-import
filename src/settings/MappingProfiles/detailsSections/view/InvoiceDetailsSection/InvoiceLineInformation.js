@@ -66,7 +66,7 @@ export const InvoiceLineInformation = ({ invoiceLineMappingDetails }) => {
 
   return (
     <Accordion
-      id="invoice-line-information"
+      id="view-invoice-line-information"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.section`} />}
     >
       <Row left="xs">
@@ -115,6 +115,7 @@ export const InvoiceLineInformation = ({ invoiceLineMappingDetails }) => {
           xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="invoice-line-vendor-reference-numbers"
             fieldData={referenceNumbersData}
             visibleColumns={referenceNumbersVisibleColumns}
             columnMapping={referenceNumbersMapping}

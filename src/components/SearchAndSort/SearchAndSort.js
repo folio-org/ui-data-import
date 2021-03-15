@@ -389,7 +389,6 @@ export class SearchAndSort extends Component {
       rowData,
       cells,
       rowProps,
-      labelStrings,
     } = row;
 
     return (
@@ -397,17 +396,23 @@ export class SearchAndSort extends Component {
         role="gridcell"
         key={`row-${rowIndex}`}
       >
-        <div role="grid">
-          <a
-            href={this.getRowURL(rowData.id)}
-            aria-label={labelStrings && labelStrings.join('...')}
-            className={rowClass}
-            {...rowProps}
-            role="row"
+        <a
+          href={this.getRowURL(rowData.id)}
+          className={rowClass}
+          {...rowProps}
+        >
+          <div
+            className={css.searchResultsRow}
+            role="grid"
           >
-            {cells}
-          </a>
-        </div>
+            <div
+              className={css.searchResultsInnerRow}
+              role="row"
+            >
+              {cells}
+            </div>
+          </div>
+        </a>
       </div>
     );
   };
