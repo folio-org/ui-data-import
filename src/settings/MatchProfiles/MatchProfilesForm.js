@@ -11,6 +11,7 @@ import {
 import { Field } from 'react-final-form';
 import {
   get,
+  set,
   isEmpty,
   isEqual,
   noop,
@@ -43,11 +44,88 @@ import {
   LAYER_TYPES,
   FORMS_SETTINGS,
   ENTITY_KEYS,
-  validateRequiredField,
+  RESTRICTED_MATCHING_MARC_FIELD_VALUE,
   handleProfileSave,
+  isMARCType,
+  validateRequiredField,
+  validateAlphanumericOrAllowedValue,
+  validateValueLength3,
+  validateMARCFieldInMatchCriterion,
+  validateValueLength1,
 } from '../../utils';
 
 import { getSectionInitialValues } from './MatchProfiles';
+
+const validate = values => {
+  const errors = {};
+
+  const enterValueMessage = <FormattedMessage id="ui-data-import.validation.enterValue" />;
+
+  const existingRecordType = values.profile.existingRecordType;
+  const incomingRecordType = values.profile.incomingRecordType;
+  const existingRecordFields = values.profile.matchDetails[0].existingMatchExpression.fields;
+  const incomingRecordFields = values.profile.matchDetails[0].incomingMatchExpression.fields;
+
+  const validateMARCRecordFields = (recordFieldType, recordFields) => {
+    const fieldValue = recordFields[0].value;
+    const indicator1Value = recordFields[1]?.value;
+    const indicator2Value = recordFields[2]?.value;
+    const subfieldValue = recordFields[3]?.value;
+
+    const isRestrictedValue = RESTRICTED_MATCHING_MARC_FIELD_VALUE.some(value => value === fieldValue);
+
+    if (!fieldValue) {
+      set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[0].value`, enterValueMessage);
+    } else {
+      const fieldValidation = validateAlphanumericOrAllowedValue(fieldValue) || validateValueLength3(fieldValue);
+
+      if (fieldValidation) {
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[0].value`, fieldValidation);
+      }
+    }
+
+    if (isRestrictedValue) {
+      const validation = validateMARCFieldInMatchCriterion(indicator1Value, indicator2Value, subfieldValue);
+
+      if (validation) {
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[1].value`, validation);
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[2].value`, validation);
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[3].value`, validation);
+      }
+    } else {
+      const indicator1Validation = validateAlphanumericOrAllowedValue(indicator1Value, '*')
+        || validateValueLength1(indicator1Value);
+      const indicator2Validation = validateAlphanumericOrAllowedValue(indicator2Value, '*')
+        || validateValueLength1(indicator2Value);
+      const subfieldValidation = validateRequiredField(subfieldValue)
+        || validateAlphanumericOrAllowedValue(subfieldValue) || validateValueLength1(subfieldValue);
+
+      if (indicator1Validation) {
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[1].value`, indicator1Validation);
+      }
+
+      if (indicator2Validation) {
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[2].value`, indicator2Validation);
+      }
+
+      if (subfieldValidation) {
+        set(errors, `profile.matchDetails[0].${recordFieldType}MatchExpression.fields[3].value`, subfieldValidation);
+      }
+    }
+  };
+
+  if (isMARCType(incomingRecordType)) {
+    validateMARCRecordFields('incoming', incomingRecordFields);
+  }
+
+  if (isMARCType(existingRecordType)) {
+    validateMARCRecordFields('existing', existingRecordFields);
+  } else if (!existingRecordFields[0].value) {
+    set(errors, 'profile.matchDetails[0].existingMatchExpression.fields[0].value', enterValueMessage);
+  }
+
+  return errors;
+};
 
 export const MatchProfilesFormComponent = memo(({
   pristine,
@@ -348,5 +426,6 @@ export const MatchProfilesForm = compose(
     navigationCheck: true,
     destroyOnUnregister: true,
     initialValuesEqual: isEqual,
+    validate,
   }),
 )(MatchProfilesFormComponent);
