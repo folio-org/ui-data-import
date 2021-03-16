@@ -60,9 +60,6 @@ export const MatchCriterion = ({
 
   const matchCriterionOptions = createOptionsList(CRITERION_TYPES_OPTIONS, formatMessage);
 
-  const getMARCFieldValue = (typeExpression, fieldName) => typeExpression?.fields
-    .find(field => field.label === fieldName)?.value;
-
   const incomingRecordLbl = formatMessage(
     { id: 'ui-data-import.match.incoming.record' },
     { recordType: incomingRecordLabel },
