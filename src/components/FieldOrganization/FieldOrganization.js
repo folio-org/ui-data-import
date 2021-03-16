@@ -34,7 +34,7 @@ const FieldOrganization = ({
 
     setSelectedOrganization(organization);
 
-    setReferenceTables(name, organization.id);
+    setReferenceTables(name, `"${organization.id}"`);
   }, [name]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {

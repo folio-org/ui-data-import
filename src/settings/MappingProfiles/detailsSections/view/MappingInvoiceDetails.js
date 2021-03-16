@@ -18,6 +18,7 @@ import { getFieldValue } from '../utils';
 
 export const MappingInvoiceDetails = ({ mappingDetails }) => {
   const invoiceLineMappingDetails = getFieldValue(mappingDetails, 'invoiceLines', 'subfields')?.[0]?.fields;
+  const vendorId = getFieldValue(mappingDetails, 'vendorId', 'value').replace(/['"]+/g, '');
 
   return (
     <AccordionSet>
@@ -25,7 +26,7 @@ export const MappingInvoiceDetails = ({ mappingDetails }) => {
       <InvoiceAdjustments mappingDetails={mappingDetails} />
       <VendorInformation
         mappingDetails={mappingDetails}
-        vendorId={getFieldValue(mappingDetails, 'vendorId', 'value')}
+        vendorId={vendorId}
       />
       <ExtendedInformation mappingDetails={mappingDetails} />
       <InvoiceLineInformation invoiceLineMappingDetails={invoiceLineMappingDetails} />
