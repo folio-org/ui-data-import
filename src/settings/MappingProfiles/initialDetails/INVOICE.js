@@ -8,7 +8,7 @@ const INVOICE = {
     value: '',
   }, {
     name: 'status',
-    enabled: false,
+    enabled: true,
     path: 'invoice.status',
     value: '"Open"',
   }, {
