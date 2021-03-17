@@ -188,7 +188,7 @@
         "permissionName": "module.data-import.enabled",
         "displayName": "Data import: all permissions",
         "subPermissions": [
-          "metadata-provider.log.get",
+          "metadata-provider.logs.get",
           "metadata-provider.jobexecutions.get",
           "data-import.uploaddefinitions.get",
           "data-import.uploaddefinitions.post",
