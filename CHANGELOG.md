@@ -77,6 +77,7 @@
 * Match profile: form values are reset on page resize (UIDATIMP-867)
 * Fix Accessibility problems for settings/data-import/{...-profiles} (id attribute value must be unique) (UIDATIMP-462)
 * Match profile: existing record value not working for MARC 001 (UIDATIMP-865)
+* Update module permission for logs retrieving (UIDATIMP-872)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
 
