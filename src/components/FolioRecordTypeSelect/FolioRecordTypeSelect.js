@@ -47,6 +47,7 @@ export const FolioRecordTypeSelect = ({
             render={fieldProps => (
               <Select
                 {...fieldProps}
+                data-testid="folio-record-type-select"
                 label={<FormattedMessage id="ui-data-import.folioRecordType" />}
                 dataOptions={dataOptions}
                 placeholder={placeholder}
