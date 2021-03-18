@@ -1875,6 +1875,7 @@ describe('Mapping Profile View', () => {
       });
     });
 
+    // eslint-disable-next-line no-only-tests/no-only-tests
     describe.skip('when form is submitted and the response contains', () => {
       describe('error message', () => {
         beforeEach(async function () {
