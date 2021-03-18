@@ -62,8 +62,8 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^2.0.0",
-    "@folio/stripes-acq-components": ">=2.2.0",
-    "@folio/stripes-data-transfer-components": "^3.0.0",
+    "@folio/stripes-acq-components": "~2.3.0",
+    "@folio/stripes-data-transfer-components": "^4.0.0",
     "@folio/stripes-final-form": "^5.0.0",
     "classnames": "^2.2.5",
     "dom-helpers": "^5.2.0",
@@ -179,7 +179,7 @@
       }
     ],
     "okapiInterfaces": {
-      "data-import": "3.0",
+      "data-import": "4.0",
       "source-manager-job-executions": "1.0",
       "data-import-converter-storage": "1.2"
     },
