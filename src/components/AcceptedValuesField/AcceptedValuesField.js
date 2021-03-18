@@ -170,6 +170,7 @@ export const AcceptedValuesField = ({
         dirty={isDirty}
         isMultiSelection={isMultiSelection}
         okapi={okapi}
+        hasLoaded={hasOptions}
       />
     );
   };
