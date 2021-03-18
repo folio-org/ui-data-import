@@ -1,6 +1,8 @@
 # Change history for ui-data-import
 
-## **3.1.0** (in progress)
+## **4.1.0** (in progress)
+
+## [4.0.0](https://github.com/folio-org/ui-data-import/tree/v4.0.0) (2021-03-18)
 
 ### Features added:
 * Reuse `<JobsList>` component from `stripes-data-transfer-components` rep (UIDATIMP-573)
