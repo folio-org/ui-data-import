@@ -2,6 +2,7 @@ import {
   interactor,
   collection,
   scoped,
+  property,
 } from '@bigtest/interactor';
 
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
@@ -17,9 +18,10 @@ import { ActionMenuInteractor } from '../action-menu-interactor';
   list = new MultiColumnListInteractor('#job-profiles-list');
   selectAllCheckBox = new CheckboxInteractor('[data-test-select-all-checkbox]');
   checkBoxes = collection('[data-test-select-item]', CheckboxInteractor);
-  searchFiled = new TextFieldInteractor('#input-job-profiles-search');
-  searchSubmitButton = new ButtonInteractor('[data-test-search-and-sort-submit]');
-  clearSearchButton = new ButtonInteractor('#input-job-profiles-clear-search-button');
+  searchFiled = new TextFieldInteractor('[data-test-search-form-field]');
+  searchSubmitButton = new ButtonInteractor('[data-test-search-form-submit]');
+  searchSubmitButtonDisabled = property('[data-test-search-form-submit]', 'disabled');
+  clearSearchButton = new ButtonInteractor('#input-job-profiles-search-field-clear-button');
   callout = new CalloutInteractor();
 
   async clearSearchButtonClick() {

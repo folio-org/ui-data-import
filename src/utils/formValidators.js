@@ -12,31 +12,24 @@ const REMOVE_OPTION_VALUE = '###REMOVE###';
  * Validates field inputs
  *
  * @param {string|*} value
- * @param {string|Object} [errorMessage] Validation error message
- * @return {null|*} Validation message
+ * @return {undefined|JSX.Element} Validation message
  */
-export const validateRequiredField = value => {
-  const isValid = !isEmpty(value);
-
-  if (isValid) {
-    return null;
-  }
-
-  return <FormattedMessage id="ui-data-import.validation.enterValue" />;
-};
+export const validateRequiredField = value => (
+  !isEmpty(value) ? undefined : <FormattedMessage id="ui-data-import.validation.enterValue" />
+);
 
 /**
  * Validates Data Types from form inputs
  *
  * @param {string|*} value
  * @param {Object} formValues
- * @return {null|*}
+ * @return {undefined|JSX.Element}
  */
 export const validateDataTypes = (value, formValues) => {
   const { importBlocked } = formValues;
 
   if (importBlocked) {
-    return null;
+    return undefined;
   }
 
   return validateRequiredField(value);
@@ -46,13 +39,13 @@ export const validateDataTypes = (value, formValues) => {
  * Validates file extensions from form input
  *
  * @param {string|*} value
- * @return {null|*}
+ * @return {undefined|JSX.Element}
  */
 export const validateFileExtension = value => {
   const pattern = /^\.(\w+)$/;
 
   if (value.match(pattern)) {
-    return null;
+    return undefined;
   }
 
   return <FormattedMessage id="ui-data-import.validation.fileExtension" />;
@@ -63,18 +56,18 @@ export const validateFileExtension = value => {
  *
  * @param {string|*} value
  * @param {string?} allowedValue
- * @returns {null|*}
+ * @returns {undefined|JSX.Element}
  *
  * @example
  *
  * validateAlphanumericOrAllowedValue('value')
- * // => null
+ * // => undefined
  *
  * validateAlphanumericOrAllowedValue('123')
- * // => null
+ * // => undefined
  *
  * validateAlphanumericOrAllowedValue('*', '*')
- * // => null
+ * // => undefined
  *
  * validateAlphanumericOrAllowedValue('*')
  * // => Translated string (en = 'Please enter an alphanumeric value')
@@ -84,17 +77,32 @@ export const validateAlphanumericOrAllowedValue = (value, allowedValue) => {
   const val = getTrimmedValue(value);
 
   if (isEmpty(val) || val === allowedValue || val.match(pattern)) {
-    return null;
+    return undefined;
   }
 
   return <FormattedMessage id="ui-data-import.validation.valueType" />;
 };
 
+/**
+ * Validate a max length of the input value
+ *
+ * @param {string|*} value
+ * @param {number} maxLength
+ * @returns {undefined|JSX.Element}
+ *
+ * @example
+ *
+ * validateValueLength('value', 5)
+ * // => undefined
+ *
+ * validateValueLength('value', 1)
+ * // => Translated string (en = 'Invalid value. Maximum 1 character(s) allowed')
+ */
 export const validateValueLength = (value, maxLength) => {
   const val = getTrimmedValue(value);
 
   if (!val || !val.length || val.length <= maxLength) {
-    return null;
+    return undefined;
   }
 
   return (
@@ -105,8 +113,36 @@ export const validateValueLength = (value, maxLength) => {
   );
 };
 
+/**
+ * Validate the input value length equals 1 character
+ *
+ * @param {string|*} value
+ * @returns {undefined|JSX.Element}
+ *
+ * @example
+ *
+ * validateValueLength1('a')
+ * // => undefined
+ *
+ * validateValueLength1('value')
+ * // => Translated string (en = 'Invalid value. Maximum 1 character(s) allowed')
+ */
 export const validateValueLength1 = value => validateValueLength(value, 1);
 
+/**
+ * Validate the input value length equals 3 characters
+ *
+ * @param {string|*} value
+ * @returns {undefined|JSX.Element}
+ *
+ * @example
+ *
+ * validateValueLength3('abs')
+ * // => undefined
+ *
+ * validateValueLength3('value')
+ * // => Translated string (en = 'Invalid value. Maximum 3 character(s) allowed')
+ */
 export const validateValueLength3 = value => validateValueLength(value, 3);
 
 /**
@@ -142,11 +178,11 @@ const validateQuotedStringOrMarcPathPattern = (value, isRemoveValueAllowed) => {
  * `910$a "text"`, `910$a; else "text"; else 910`,
  * @param value
  * @param {boolean} isRemoveValueAllowed
- * @returns {null|*}
+ * @returns {undefined|JSX.Element}
  *
  * @example
  * validateMARCWithElse('###REMOVE###', true)
- * // => null
+ * // => undefined
  *
  * validateMARCWithElse('###REMOVE###', false)
  * // => Translated string (en = 'Please correct the syntax to continue')
@@ -154,9 +190,7 @@ const validateQuotedStringOrMarcPathPattern = (value, isRemoveValueAllowed) => {
 export const validateMARCWithElse = (value, isRemoveValueAllowed) => {
   const isValid = validateQuotedStringOrMarcPathPattern(value, isRemoveValueAllowed);
 
-  if (isValid) { return null; }
-
-  return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
+  return isValid ? undefined : <FormattedMessage id="ui-data-import.validation.syntaxError" />;
 };
 
 /**
@@ -164,11 +198,11 @@ export const validateMARCWithElse = (value, isRemoveValueAllowed) => {
  * `910$a "text"`, `910$a; else "text"; else 910`,
  * @param value
  * @param {boolean} isRemoveValueAllowed
- * @returns {null|*}
+ * @returns {undefined|JSX.Element}
  *
  * @example
  * validateQuotedStringOrMarcPath('###REMOVE###', true)
- * // => null
+ * // => undefined
  *
  * validateQuotedStringOrMarcPath('###REMOVE###', false)
  * // => Translated string (en = 'Non-MARC value must use quotation marks')
@@ -176,19 +210,21 @@ export const validateMARCWithElse = (value, isRemoveValueAllowed) => {
 export const validateQuotedStringOrMarcPath = (value, isRemoveValueAllowed) => {
   const isValid = validateQuotedStringOrMarcPathPattern(value, isRemoveValueAllowed);
 
-  if (isValid) { return null; }
-
-  return <FormattedMessage id="ui-data-import.validation.quotationError" />;
+  return isValid ? undefined : <FormattedMessage id="ui-data-import.validation.quotationError" />;
 };
 
 /**
  * Validate MARC path, quoted date, `today` constant and else condition. Match `910`, `910$a`, `###TODAY###`,
  * `"2020-01-01"`, `910$a "2020-01-01"`, `910$a; else ###TODAY###; else "2020-01-01"`,
- * validateMARCWithElse('###REMOVE###', false)
- * // => null
+ *
  * @param value
  * @param {boolean?} isRemoveValueProhibited
- * @returns {null|*}
+ * @returns {undefined|JSX.Element}
+ *
+ * @example
+ *
+ * validateMARCWithDate('###REMOVE###', false)
+ * // => undefined
  */
 export const validateMARCWithDate = (value, isRemoveValueProhibited) => {
   const allowedValue = isRemoveValueProhibited ? '' : REMOVE_OPTION_VALUE;
@@ -201,7 +237,7 @@ export const validateMARCWithDate = (value, isRemoveValueProhibited) => {
     `((?<=(; else ))${todayOrDatePattern})))*$`].join(''));
 
   if (isEmpty(value) || value === allowedValue) {
-    return null;
+    return undefined;
   }
 
   if (value.match(pattern)) {
@@ -217,12 +253,30 @@ export const validateMARCWithDate = (value, isRemoveValueProhibited) => {
       }
     }
 
-    return null;
+    return undefined;
   }
 
   return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
 };
 
+/**
+ * Validate repeatable action field value
+ *
+ * @param {string|*} value
+ * @param {boolean} hasFields
+ * @returns {undefined|JSX.Element}
+ *
+ * @example
+ *
+ * validateRepeatableActionsField('Add these to existing', true)
+ * // => undefined
+ *
+ * validateRepeatableActionsField('Add these to existing', false)
+ * // => Translated string (en = 'One or more values must be added before the profile can be saved.')
+ *
+ * validateRepeatableActionsField('', true)
+ * // => Translated string (en = 'Action must be selected before the profile can be saved')
+ */
 export const validateRepeatableActionsField = (value, hasFields) => {
   const val = getTrimmedValue(value);
 
@@ -234,14 +288,29 @@ export const validateRepeatableActionsField = (value, hasFields) => {
     return <FormattedMessage id="ui-data-import.validation.selectAnAction" />;
   }
 
-  return null;
+  return undefined;
 };
 
+/**
+ * Validate input field with accepted values
+ *
+ * @param {Array<Object>} acceptedValues
+ * @param {string} valueKey
+ * @returns {function(*=): (undefined|JSX.Element)}
+ *
+ * @example
+ *
+ * validateAcceptedValues([{ key: 'value' }], 'key')('"value"')
+ * // => undefined
+ *
+ * validateAcceptedValues([{ key: 'value' }], 'key')('"test"')
+ * // => Translated string (en = 'Please correct the syntax to continue')
+ */
 export const validateAcceptedValues = (acceptedValues, valueKey) => value => {
   const pattern = /"[^"]+"/g;
 
   if (!value || !value.length || !acceptedValues.length) {
-    return null;
+    return undefined;
   }
 
   const matches = value.match(pattern);
@@ -258,7 +327,7 @@ export const validateAcceptedValues = (acceptedValues, valueKey) => value => {
     }
   }
 
-  return null;
+  return undefined;
 };
 
 /**
@@ -271,7 +340,7 @@ export const validateAcceptedValues = (acceptedValues, valueKey) => value => {
  * @example
  *
  * validateMarcTagField('', '')('910')
- * // => null
+ * // => undefined
  *
  * validateMarcTagField('', '')('001')
  * // => Translated string (en = 'This field cannot be updated')
@@ -287,7 +356,7 @@ export const validateMarcTagField = (indicator1, indicator2) => value => {
     return <FormattedMessage id="ui-data-import.validation.cannotBeUpdated" />;
   }
 
-  return null;
+  return undefined;
 };
 
 /**
@@ -296,12 +365,12 @@ export const validateMarcTagField = (indicator1, indicator2) => value => {
  * @param {string|*} field
  * @param {string|*} indicator1
  * @param {string|*} indicator2
- * @returns {null|*}
+ * @returns {undefined|JSX.Element}
  *
  * @example
  *
  * validateMarcIndicatorField('910', 'a', 'a')
- * // => null
+ * // => undefined
  *
  * validateMarcIndicatorField('999', 'f', 'f')
  * // => Translated string (en = 'This field cannot be updated')
@@ -311,19 +380,21 @@ export const validateMarcIndicatorField = (field, indicator1, indicator2) => {
     return <FormattedMessage id="ui-data-import.validation.cannotBeUpdated" />;
   }
 
-  return null;
+  return undefined;
 };
 
 /**
  * Validate MARC Field input value for Match Criterion
  *
- * @param {string|*} field
- * @returns {null|*}
+ * @param {string|*} indicator1
+ * @param {string|*} indicator2
+ * @param {string|*} subfield
+ * @returns {undefined|JSX.Element}
  *
  * @example
  *
  * validateMarcFieldInMatchCriterion('011')
- * // => null
+ * // => undefined
  *
  * validateMarcFieldInMatchCriterion('002')
  * // => Translated string (en = 'This field cannot be updated')
@@ -333,7 +404,7 @@ export const validateMARCFieldInMatchCriterion = (indicator1, indicator2, subfie
     return <FormattedMessage id="ui-data-import.validation.cannotBeUpdated" />;
   }
 
-  return null;
+  return undefined;
 };
 
 /**
@@ -345,10 +416,10 @@ export const validateMARCFieldInMatchCriterion = (indicator1, indicator2, subfie
  * @example
  *
  * validateSubfieldField('910')('a')
- * // => null
+ * // => undefined
  *
  * validateSubfieldField('006')('')
- * // => null
+ * // => undefined
  *
  * validateSubfieldField('910')('')
  * // => Translated string (en = 'Please enter a value')
@@ -358,7 +429,7 @@ export const validateSubfieldField = field => value => {
     return <FormattedMessage id="ui-data-import.validation.enterValue" />;
   }
 
-  return null;
+  return undefined;
 };
 
 /**
@@ -370,7 +441,7 @@ export const validateSubfieldField = field => value => {
  * @example
  *
  * validateMoveField('900')('910')
- * // => null
+ * // => undefined
  *
  * validateMoveField('900')('900')
  * // => Translated string (en = 'Please choose a different field')
@@ -380,5 +451,5 @@ export const validateMoveField = field => fieldToMove => {
     return <FormattedMessage id="ui-data-import.validation.chooseDifferentField" />;
   }
 
-  return null;
+  return undefined;
 };

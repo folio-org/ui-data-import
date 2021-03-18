@@ -25,7 +25,7 @@ export const ItemData = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="item-data"
+      id="view-item-data"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.section`} />}
     >
       <Row left="xs">

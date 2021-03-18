@@ -19,7 +19,7 @@ export const Location = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="item-location"
+      id="view-item-location"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.location.section`} />}
     >
       <Row left="xs">

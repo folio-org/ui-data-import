@@ -35,6 +35,7 @@ export const ProfileAssociator = memo(({
   onLink,
   onUnlink,
   dataAttributes,
+  isEditMode,
 }) => {
   const profiles = {
     [ENTITY_KEYS.JOB_PROFILES]: jobProfilesShape,
@@ -68,6 +69,7 @@ export const ProfileAssociator = memo(({
               dataAttributes={dataAttributes}
               isMultiSelect={isMultiSelect}
               useSearch={useSearch}
+              isEditMode={isEditMode}
             />
           ) : (
             <AssociatorEditable
@@ -89,6 +91,7 @@ export const ProfileAssociator = memo(({
               onLink={onLink}
               onUnlink={onUnlink}
               dataAttributes={dataAttributes}
+              isEditMode={isEditMode}
             />
           )}
         </>
@@ -111,6 +114,7 @@ ProfileAssociator.propTypes = {
   dataAttributes: PropTypes.shape(PropTypes.object),
   isMultiSelect: PropTypes.bool,
   isMultiLink: PropTypes.bool,
+  isEditMode: PropTypes.bool,
   useSearch: PropTypes.bool,
   relationsToAdd: PropTypes.arrayOf(PropTypes.object),
   relationsToDelete: PropTypes.arrayOf(PropTypes.object),
@@ -124,6 +128,7 @@ ProfileAssociator.defaultProps = {
   record: null,
   dataAttributes: null,
   isMultiSelect: true,
+  isEditMode: false,
   isMultiLink: true,
   useSearch: true,
   relationsToAdd: [],

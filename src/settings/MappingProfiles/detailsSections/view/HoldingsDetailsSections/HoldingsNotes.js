@@ -63,16 +63,16 @@ export const HoldingsNotes = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="holdings-notes"
+      id="view-holdings-notes"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.holdingsNotes.section`} />}
     >
       <Row left="xs">
         <Col
           data-test-notes
-          id="section-holding-statements"
           xs={12}
         >
           <ViewRepeatableField
+            columnIdPrefix="holding-notes"
             repeatableAction={notesRepeatableAction}
             fieldData={notesData}
             visibleColumns={notesVisibleColumns}

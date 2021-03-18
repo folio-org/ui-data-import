@@ -41,7 +41,6 @@ export const ReceivingHistory = ({
       <Row left="xs">
         <Col
           data-test-receiving-history-note
-          id="section-receiving-history"
           xs={12}
         >
           <RepeatableActionsField

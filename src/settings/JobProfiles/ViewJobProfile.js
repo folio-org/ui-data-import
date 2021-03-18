@@ -457,6 +457,7 @@ export class ViewJobProfile extends Component {
             {jobsUsingThisProfileDataHasLoaded ? (
               <MultiColumnList
                 id="jobs-using-this-profile"
+                columnIdPrefix="jobs-using-this-profile"
                 totalCount={jobsUsingThisProfileData.length}
                 contentData={jobsUsingThisProfileData}
                 columnMapping={{

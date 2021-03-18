@@ -42,8 +42,8 @@ export const TitleData = ({ mappingDetails }) => {
     ),
   };
   const alternativeTitlesFormatter = {
-    alternativeTitleTypeId: x => x?.alternativeTitleTypeId || prohibitionIconElement('alternative-title-type-id'),
-    alternativeTitle: x => x?.alternativeTitle || prohibitionIconElement('alternative-title'),
+    alternativeTitleTypeId: x => x?.alternativeTitleTypeId || prohibitionIconElement(`alternative-title-type-id-${x.rowIndex}`),
+    alternativeTitle: x => x?.alternativeTitle || prohibitionIconElement(`alternative-title-${x.rowIndex}`),
   };
   const alternativeTitlesFieldsMap = [
     {
@@ -62,7 +62,7 @@ export const TitleData = ({ mappingDetails }) => {
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.series.field.series`} />
     ),
   };
-  const seriesStatementsFormatter = { source: x => x?.source || prohibitionIconElement('series-statements-source') };
+  const seriesStatementsFormatter = { source: x => x?.source || prohibitionIconElement(`series-statements-source-${x.rowIndex}`) };
   const seriesStatementsFieldsMap = [
     {
       field: 'source',
@@ -88,10 +88,10 @@ export const TitleData = ({ mappingDetails }) => {
     ),
   };
   const precedingTitlesFormatter = {
-    precedingTitlesTitle: x => x?.precedingTitlesTitle || prohibitionIconElement('preceding-titles-title'),
-    precedingTitlesHrid: x => x?.precedingTitlesHrid || prohibitionIconElement('preceding-titles-hrid'),
-    precedingTitlesIsbn: x => x?.precedingTitlesIsbn || prohibitionIconElement('preceding-titles-isbn'),
-    precedingTitlesIssn: x => x?.precedingTitlesIssn || prohibitionIconElement('preceding-titles-issn'),
+    precedingTitlesTitle: x => x?.precedingTitlesTitle || prohibitionIconElement(`preceding-titles-title-${x.rowIndex}`),
+    precedingTitlesHrid: x => x?.precedingTitlesHrid || prohibitionIconElement(`preceding-titles-hrid-${x.rowIndex}`),
+    precedingTitlesIsbn: x => x?.precedingTitlesIsbn || prohibitionIconElement(`preceding-titles-isbn-${x.rowIndex}`),
+    precedingTitlesIssn: x => x?.precedingTitlesIssn || prohibitionIconElement(`preceding-titles-issn-${x.rowIndex}`),
   };
   const precedingTitlesFieldsMap = [
     {
@@ -127,10 +127,10 @@ export const TitleData = ({ mappingDetails }) => {
     ),
   };
   const succeedingTitlesFormatter = {
-    succeedingTitlesTitle: x => x?.succeedingTitlesTitle || prohibitionIconElement('succeeding-titles-title'),
-    succeedingTitlesHrid: x => x?.succeedingTitlesHrid || prohibitionIconElement('succeeding-titles-hrid'),
-    succeedingTitlesIsbn: x => x?.succeedingTitlesIsbn || prohibitionIconElement('succeeding-titles-isbn'),
-    succeedingTitlesIssn: x => x?.succeedingTitlesIssn || prohibitionIconElement('succeeding-titles-issn'),
+    succeedingTitlesTitle: x => x?.succeedingTitlesTitle || prohibitionIconElement(`succeeding-titles-title-${x.rowIndex}`),
+    succeedingTitlesHrid: x => x?.succeedingTitlesHrid || prohibitionIconElement(`succeeding-titles-hrid-${x.rowIndex}`),
+    succeedingTitlesIsbn: x => x?.succeedingTitlesIsbn || prohibitionIconElement(`succeeding-titles-isbn-${x.rowIndex}`),
+    succeedingTitlesIssn: x => x?.succeedingTitlesIssn || prohibitionIconElement(`succeeding-titles-issn-${x.rowIndex}`),
   };
   const succeedingTitlesFieldsMap = [
     {
@@ -151,7 +151,7 @@ export const TitleData = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="title-data"
+      id="view-title-data"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.titleData.section`} />}
     >
       <Row left="xs">
@@ -173,6 +173,7 @@ export const TitleData = ({ mappingDetails }) => {
         >
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.alternativeTitles.legend`} />}>
             <MultiColumnList
+              columnIdPrefix="alternative-titles"
               contentData={getContentData(alternativeTitlesData)}
               visibleColumns={alternativeTitlesVisibleColumns}
               columnMapping={alternativeTitlesMapping}
@@ -201,6 +202,7 @@ export const TitleData = ({ mappingDetails }) => {
         >
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.series.legend`} />}>
             <MultiColumnList
+              columnIdPrefix="series-statements"
               contentData={getContentData(seriesStatementsData)}
               visibleColumns={seriesStatementsVisibleColumns}
               columnMapping={seriesStatementsMapping}
@@ -217,6 +219,7 @@ export const TitleData = ({ mappingDetails }) => {
         >
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.precedingTitles.legend`} />}>
             <MultiColumnList
+              columnIdPrefix="preceding-titles"
               contentData={getContentData(precedingTitlesData)}
               visibleColumns={precedingTitlesVisibleColumns}
               columnMapping={precedingTitlesMapping}
@@ -233,6 +236,7 @@ export const TitleData = ({ mappingDetails }) => {
         >
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.succeedingTitles.legend`} />}>
             <MultiColumnList
+              columnIdPrefix="succeeding-titles"
               contentData={getContentData(succeedingTitlesData)}
               visibleColumns={succeedingTitlesVisibleColumns}
               columnMapping={succeedingTitlesMapping}

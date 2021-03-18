@@ -21,7 +21,6 @@ export const LinkerTrigger = ({
       buttonStyle="default"
       ref={triggerRef}
       aria-labelledby={`${id}-text`}
-      aria-describedby={`${id}-sub`}
       onClick={onClick}
       onKeyDown={keyHandler}
       {...ariaProps}

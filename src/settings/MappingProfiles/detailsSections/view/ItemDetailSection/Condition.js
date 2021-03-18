@@ -22,7 +22,7 @@ export const Condition = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="item-condition"
+      id="view-item-condition"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.section`} />}
     >
       <Row left="xs">

@@ -18,7 +18,6 @@ import {
 import {
   fieldsConfig,
   MARC_FIELD_CONSTITUENT,
-  validateRequiredField,
 } from '../../../../utils';
 
 import css from '../MatchCriterions.css';
@@ -89,7 +88,6 @@ export const ExistingSectionFolio = ({
           <Field
             id="criterion-value-type"
             name={fieldToChangeName}
-            validate={validateRequiredField}
             format={formatExistingRecordValue}
             render={criterionFieldProps => (
               <Selection

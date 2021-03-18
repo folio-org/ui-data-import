@@ -47,7 +47,6 @@ export const ItemNotes = ({
       <Row left="xs">
         <Col
           data-test-item-notes
-          id="section-item-notes"
           xs={12}
         >
           <RepeatableActionsField

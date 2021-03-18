@@ -39,7 +39,7 @@ const VendorInformation = ({
 
   return (
     <Accordion
-      id="vendor-information"
+      id="view-vendor-information"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.vendorInformation.section`} />}
     >
       <Row left="xs">

@@ -48,10 +48,10 @@ export const Contributor = ({ mappingDetails }) => {
     ),
   };
   const contributorsFormatter = {
-    contributorName: x => x?.contributorName || prohibitionIconElement('contributor-name'),
-    contributorNameTypeId: x => x?.contributorNameTypeId || prohibitionIconElement('contributor-name-type-id'),
-    contributorTypeId: x => x?.contributorTypeId || prohibitionIconElement('contributor-type-id'),
-    contributorTypeText: x => x?.contributorTypeText || prohibitionIconElement('contributor-type-text'),
+    contributorName: x => x?.contributorName || prohibitionIconElement(`contributor-name-${x.rowIndex}`),
+    contributorNameTypeId: x => x?.contributorNameTypeId || prohibitionIconElement(`contributor-name-type-id-${x.rowIndex}`),
+    contributorTypeId: x => x?.contributorTypeId || prohibitionIconElement(`contributor-type-id-${x.rowIndex}`),
+    contributorTypeText: x => x?.contributorTypeText || prohibitionIconElement(`contributor-type-text-${x.rowIndex}`),
     primary: x => {
       const primaryLabelId = getBooleanLabelId(x?.primary);
 
@@ -74,7 +74,7 @@ export const Contributor = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="contributors"
+      id="view-contributors"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.contributors.section`} />}
     >
       <Row left="xs">
@@ -84,6 +84,7 @@ export const Contributor = ({ mappingDetails }) => {
           className={css.colWithTable}
         >
           <MultiColumnList
+            columnIdPrefix="contributors"
             contentData={getContentData(contributorsData)}
             visibleColumns={contributorsVisibleColumns}
             columnMapping={contributorsMapping}

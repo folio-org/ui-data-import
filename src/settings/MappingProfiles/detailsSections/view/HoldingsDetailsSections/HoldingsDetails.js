@@ -132,7 +132,7 @@ export const HoldingsDetails = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="holdings-details"
+      id="view-holdings-details"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.details.section`} />}
     >
       <Row left="xs">
@@ -149,11 +149,11 @@ export const HoldingsDetails = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-statements
-          id="section-holding-statements"
           xs={12}
           className={css.colWithTable}
         >
           <ViewRepeatableField
+            columnIdPrefix="holding-statements"
             repeatableAction={statementsRepeatableAction}
             fieldData={statementsData}
             visibleColumns={statementsVisibleColumns}
@@ -166,11 +166,11 @@ export const HoldingsDetails = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-statements-for-supplement
-          id="section-holding-statements-for-supplements"
           xs={12}
           className={css.colWithTable}
         >
           <ViewRepeatableField
+            columnIdPrefix="holding-statements-for-supplements"
             repeatableAction={statementsForSupplementRepeatableAction}
             fieldData={statementsForSupplementData}
             visibleColumns={statementsForSupplementVisibleColumns}
@@ -183,11 +183,11 @@ export const HoldingsDetails = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-statements-for-indexes
-          id="section-holding-statements-for-indexes"
           xs={12}
           className={css.colWithTable}
         >
           <ViewRepeatableField
+            columnIdPrefix="holding-statements-for-indexes"
             repeatableAction={statementsForIndexesRepeatableAction}
             fieldData={statementsForIndexesData}
             visibleColumns={statementsForIndexesVisibleColumns}

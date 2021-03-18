@@ -32,14 +32,23 @@ describe('Job profiles', () => {
       expect(jobProfiles.list.headers(4).text).to.equal(translation.updatedBy);
     });
 
-    describe('upon search', () => {
+    describe('search form after enter data in search field', () => {
       beforeEach(async () => {
         await jobProfiles.searchFiled.fill('acq');
-        await jobProfiles.searchSubmitButton.click();
       });
 
-      it('renders proper amount of items', () => {
-        expect(jobProfiles.list.rowCount).to.equal(2);
+      it('search button is active', () => {
+        expect(jobProfiles.searchSubmitButtonDisabled).to.be.false;
+      });
+
+      describe('and after click on search button', () => {
+        beforeEach(async () => {
+          await jobProfiles.searchSubmitButton.click();
+        });
+
+        it('renders proper amount of items', () => {
+          expect(jobProfiles.list.rowCount).to.equal(2);
+        });
       });
     });
 

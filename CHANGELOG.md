@@ -51,6 +51,8 @@
 * Data Import Field Mapping Profile View: Invoice and Invoice line from EDIFACT Invoice (UIDATIMP-783)
 * Refactor Action profiles to use final-form instead of redux-form (UIDATIMP-827)
 * Add personal data disclosure form (UIDATIMP-786)
+* Adjust "vendor name" field value (UIDATIMP-868)
+* Cover `<FolioRecordTypeSelect>` component with tests (UIDATIMP-705)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
@@ -74,7 +76,10 @@
 * Invoice field mapping: Exchange rate checkbox is not being saved. Fixed (UIDATIMP-864)
 * Invoice field mapping profile: Subscription start date field misaligned (UIDATIMP-850)
 * Match profile: form values are reset on page resize (UIDATIMP-867)
-* Cover `<FolioRecordTypeSelect>` component with tests (UIDATIMP-705)
+* Fix Accessibility problems for settings/data-import/{...-profiles} (id attribute value must be unique) (UIDATIMP-462)
+* Match profile: existing record value not working for MARC 001 (UIDATIMP-865)
+* Update module permission for logs retrieving (UIDATIMP-872)
+* Field mapping profiles. Note type dropdown not loaded for item entity (UIDATIMP-866)
 
 ## [3.0.3](https://github.com/folio-org/ui-data-import/tree/v3.0.3) (2020-11-13)
 

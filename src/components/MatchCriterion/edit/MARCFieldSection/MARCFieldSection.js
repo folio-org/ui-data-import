@@ -1,8 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
@@ -16,69 +12,13 @@ import {
 
 import { Section } from '../../..';
 
-import {
-  validateAlphanumericOrAllowedValue,
-  validateRequiredField,
-  validateValueLength3,
-  validateValueLength1,
-  validateMARCFieldInMatchCriterion,
-  RESTRICTED_MATCHING_MARC_FIELD_VALUE,
-  composeValidators,
-} from '../../../../utils';
-
 import css from '../MatchCriterions.css';
 
 export const MARCFieldSection = ({
   repeatableIndex,
   recordFieldSectionLabel,
   recordFieldType,
-  field,
-  indicator1,
-  indicator2,
-  subfield,
 }) => {
-  const [fieldValue, setFieldValue] = useState('');
-  const [indicator1Value, setIndicator1Value] = useState('');
-  const [indicator2Value, setIndicator2Value] = useState('');
-  const [subfieldValue, setSubfieldValue] = useState('');
-
-  useEffect(() => {
-    setFieldValue(field);
-  }, [field]);
-  useEffect(() => {
-    setIndicator1Value(indicator1);
-  }, [indicator1]);
-  useEffect(() => {
-    setIndicator2Value(indicator2);
-  }, [indicator2]);
-  useEffect(() => {
-    setSubfieldValue(subfield);
-  }, [subfield]);
-
-  const isRestrictedValue = RESTRICTED_MATCHING_MARC_FIELD_VALUE.some(value => value === fieldValue);
-
-  const validateIndicator = useCallback(
-    value => {
-      if (isRestrictedValue) {
-        return validateMARCFieldInMatchCriterion(indicator1Value, indicator2Value, subfieldValue);
-      }
-
-      return validateAlphanumericOrAllowedValue(value, '*') || validateValueLength1(value);
-    },
-    [isRestrictedValue, indicator1Value, indicator2Value, subfieldValue],
-  );
-
-  const validateSubfield = useCallback(
-    value => {
-      if (isRestrictedValue) {
-        return validateMARCFieldInMatchCriterion(indicator1Value, indicator2Value, subfieldValue);
-      }
-
-      return validateRequiredField(value) || validateAlphanumericOrAllowedValue(value) || validateValueLength1(value);
-    },
-    [isRestrictedValue, indicator1Value, indicator2Value, subfieldValue],
-  );
-
   return (
     <Section
       label={recordFieldSectionLabel}
@@ -91,7 +31,6 @@ export const MARCFieldSection = ({
         >
           <Field
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[0].value`}
-            validate={composeValidators(validateRequiredField, validateAlphanumericOrAllowedValue, validateValueLength3)}
             render={mainFieldProps => (
               <TextField
                 {...mainFieldProps}
@@ -100,7 +39,6 @@ export const MARCFieldSection = ({
                   const value = event.target.value;
 
                   mainFieldProps.input.onChange(value);
-                  setFieldValue(value);
                 }}
               />
             )}
@@ -112,7 +50,6 @@ export const MARCFieldSection = ({
         >
           <Field
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[1].value`}
-            validate={validateIndicator}
             render={indicator1FieldProps => (
               <TextField
                 {...indicator1FieldProps}
@@ -121,7 +58,6 @@ export const MARCFieldSection = ({
                   const value = event.target.value;
 
                   indicator1FieldProps.input.onChange(value);
-                  setIndicator1Value(value);
                 }}
               />
             )}
@@ -133,7 +69,6 @@ export const MARCFieldSection = ({
         >
           <Field
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[2].value`}
-            validate={validateIndicator}
             render={indicator2FieldProps => (
               <TextField
                 {...indicator2FieldProps}
@@ -142,7 +77,6 @@ export const MARCFieldSection = ({
                   const value = event.target.value;
 
                   indicator2FieldProps.input.onChange(value);
-                  setIndicator2Value(value);
                 }}
               />
             )}
@@ -154,7 +88,6 @@ export const MARCFieldSection = ({
         >
           <Field
             name={`profile.matchDetails[${repeatableIndex}].${recordFieldType}MatchExpression.fields[3].value`}
-            validate={validateSubfield}
             render={subfieldFieldProps => (
               <TextField
                 {...subfieldFieldProps}
@@ -163,7 +96,6 @@ export const MARCFieldSection = ({
                   const value = event.target.value;
 
                   subfieldFieldProps.input.onChange(value);
-                  setSubfieldValue(value);
                 }}
               />
             )}
@@ -178,16 +110,6 @@ MARCFieldSection.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
   recordFieldType: PropTypes.oneOf(['incoming', 'existing']).isRequired,
   recordFieldSectionLabel: PropTypes.string,
-  field: PropTypes.string,
-  indicator1: PropTypes.string,
-  indicator2: PropTypes.string,
-  subfield: PropTypes.string,
 };
 
-MARCFieldSection.defaultProps = {
-  recordFieldSectionLabel: '',
-  field: '',
-  indicator1: '',
-  indicator2: '',
-  subfield: '',
-};
+MARCFieldSection.defaultProps = { recordFieldSectionLabel: '' };
