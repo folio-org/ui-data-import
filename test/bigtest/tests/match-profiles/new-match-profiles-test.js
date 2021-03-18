@@ -76,6 +76,7 @@ describe('Match profile form', () => {
       });
     });
 
+    // eslint-disable-next-line no-only-tests/no-only-tests
     describe.skip('details accordion', () => {
       // eslint-disable-next-line no-only-tests/no-only-tests
       describe('"Record types select" component', () => {
