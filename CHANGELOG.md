@@ -1,6 +1,9 @@
 # Change history for ui-data-import
 
 ## **4.1.0** (in progress)
+### Features added:
+* Adjust the UI for action profiles when linked to job profiles (UIDATIMP-749)
+* Adjust the UI for action profiles when linked to field mapping profiles (UIDATIMP-870)
 
 ## [4.0.0](https://github.com/folio-org/ui-data-import/tree/v4.0.0) (2021-03-18)
 
