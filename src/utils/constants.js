@@ -382,7 +382,6 @@ export const PROFILE_LINKING_RULES = {
     [ENTITY_KEYS.ACTION_PROFILES]: [
       'name',
       'action',
-      'mapping',
     ],
   },
   childrenAllowed: [ENTITY_KEYS.MATCH_PROFILES],
