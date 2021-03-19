@@ -18,7 +18,13 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   background-color: var(--color-fill);
-  & .record-container {padding: 7px;}
+  & .record-container {
+      padding: 7px;
+      & [class|=button] {
+          text-align: left;
+          white-space: normal;
+      }
+  }
   & .buttons-container {
     display: flex;
     justify-content: space-between;

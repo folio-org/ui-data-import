@@ -33,13 +33,11 @@ const queryTemplate = `(
   name="%{query.query}*" OR
   action="%{query.query}*" OR
   folioRecord="%{query.query}*" OR
-  mapping="%{query.query}*" OR
   tags.tagList="%{query.query}*"
 )`;
 const sortMap = {
   name: 'name',
   action: 'action folioRecord',
-  mapping: 'mapping',
   tags: 'tags.tagList',
   updated: 'metadata.updatedDate',
   updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
@@ -75,7 +73,6 @@ export const actionProfilesShape = {
   visibleColumns: [
     'name',
     'action',
-    'mapping',
     'tags',
     'updated',
     'updatedBy',
@@ -93,7 +90,6 @@ export const actionProfilesShape = {
     let headers = {
       name: <FormattedMessage id="ui-data-import.name" />,
       action: <FormattedMessage id="ui-data-import.action" />,
-      mapping: <FormattedMessage id="ui-data-import.mapping" />,
       tags: <FormattedMessage id="ui-data-import.tags" />,
       updated: <FormattedMessage id="ui-data-import.updated" />,
       updatedBy: <FormattedMessage id="ui-data-import.updatedBy" />,

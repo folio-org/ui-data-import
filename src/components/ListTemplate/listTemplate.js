@@ -14,7 +14,6 @@ import {
 } from './ColumnTemplates';
 import {
   formatUserName,
-  ENTITY_KEYS,
   FILE_STATUSES,
 } from '../../utils';
 
@@ -76,13 +75,6 @@ export const listTemplate = ({
   action: record => (
     <ActionColumn
       record={record}
-      searchTerm={searchTerm}
-    />
-  ),
-  mapping: record => (
-    <DefaultColumn
-      iconKey={ENTITY_KEYS.MAPPING_PROFILES}
-      value={record.mapping || ''}
       searchTerm={searchTerm}
     />
   ),
