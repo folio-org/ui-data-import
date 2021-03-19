@@ -57,6 +57,7 @@
 * Refactor Action profiles to use final-form instead of redux-form (UIDATIMP-827)
 * Add personal data disclosure form (UIDATIMP-786)
 * Adjust "vendor name" field value (UIDATIMP-868)
+* Cover `<FolioRecordTypeSelect>` component with tests (UIDATIMP-705)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
