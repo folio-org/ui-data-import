@@ -314,6 +314,7 @@ export class ViewMappingProfile extends Component {
           <Accordion
             id="view-mapping-profile-details"
             label={<FormattedMessage id="ui-data-import.details" />}
+            separator={false}
           >
             {existingRecordType && (
               <AccordionStatus>
@@ -321,22 +322,24 @@ export class ViewMappingProfile extends Component {
                   between="xs"
                   style={{ margin: 0 }}
                 >
-                  <Col>
-                    <MappedHeader
-                      headersToSeparate={[
-                        'ui-data-import.settings.profiles.select.mappingProfiles',
-                        MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId,
-                        marcMappingOptionLabel,
-                      ]}
-                      headlineProps={{ margin: 'small' }}
-                    />
-                  </Col>
                   {!isMARCRecord && (
-                    <Col>
-                      <div data-test-expand-all-button>
-                        <ExpandAllButton />
-                      </div>
-                    </Col>
+                    <>
+                      <Col>
+                        <MappedHeader
+                          headersToSeparate={[
+                            'ui-data-import.settings.profiles.select.mappingProfiles',
+                            MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId,
+                            marcMappingOptionLabel,
+                          ]}
+                          headlineProps={{ margin: 'small' }}
+                        />
+                      </Col>
+                      <Col>
+                        <div data-test-expand-all-button>
+                          <ExpandAllButton />
+                        </div>
+                      </Col>
+                    </>
                   )}
                 </Row>
                 {renderDetails[existingRecordType]}

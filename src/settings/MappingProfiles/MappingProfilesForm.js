@@ -395,28 +395,24 @@ export const MappingProfilesFormComponent = ({
                     between="xs"
                     style={{ margin: 0 }}
                   >
-                    <Col>
-                      <MappedHeader
-                        headersToSeparate={[
-                          'ui-data-import.settings.profiles.select.mappingProfiles',
-                          MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId,
-                          FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label,
-                        ]}
-                        headlineProps={{ margin: 'small' }}
-                      />
-
-                      {(fieldMappingsForMARC === FIELD_MAPPINGS_FOR_MARC.UPDATES) && (
-                        <span>
-                          <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updates.subtext" />
-                        </span>
-                      )}
-                    </Col>
                     {!isMARCType(folioRecordType) && (
-                      <Col>
-                        <div data-test-expand-all-button>
-                          <ExpandAllButton />
-                        </div>
-                      </Col>
+                      <>
+                        <Col>
+                          <MappedHeader
+                            headersToSeparate={[
+                              'ui-data-import.settings.profiles.select.mappingProfiles',
+                              MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId,
+                              FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label,
+                            ]}
+                            headlineProps={{ margin: 'small' }}
+                          />
+                        </Col>
+                        <Col>
+                          <div data-test-expand-all-button>
+                            <ExpandAllButton />
+                          </div>
+                        </Col>
+                      </>
                     )}
                   </Row>
                   {renderDetails[folioRecordType]}
