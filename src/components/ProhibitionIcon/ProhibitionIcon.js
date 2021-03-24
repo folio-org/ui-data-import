@@ -36,7 +36,6 @@ export const ProhibitionIcon = ({
             aria-labelledby={ariaIds.text}
             ref={ref}
             className={css.noValueAllowed}
-            data-test-no-value-allowed
           >
             &#8416;
           </span>
