@@ -14,6 +14,7 @@ import {
   MultiColumnList,
   Checkbox,
   NoValue,
+  Accordion,
 } from '@folio/stripes/components';
 
 import { MappedHeader } from '..';
@@ -88,25 +89,28 @@ export const OverrideProtectedFieldsTable = ({
   };
   const editModeIdPrefix = isEditable ? 'edit-' : '';
 
+  const header = (
+    <MappedHeader
+      headersToSeparate={[
+        'ui-data-import.settings.profiles.select.mappingProfiles',
+        MAPPING_DETAILS_HEADLINE.MARC_BIBLIOGRAPHIC.labelId,
+        'ui-data-import.fieldMappingsForMarc.overrideProtected',
+      ]}
+    />
+  );
+
   return (
-    <>
+    <Accordion
+      id={`${editModeIdPrefix}override-protected-section`}
+      label={header}
+      separator={false}
+      closedByDefault={!isEditable && noProtectedFieldsDefined}
+    >
       <Row
         between="xs"
-        style={{
-          marginTop: '20px',
-          marginLeft: 0,
-          marginRight: 0,
-        }}
+        style={{ margin: 0 }}
       >
         <Col>
-          <MappedHeader
-            headersToSeparate={[
-              'ui-data-import.settings.profiles.select.mappingProfiles',
-              MAPPING_DETAILS_HEADLINE.MARC_BIBLIOGRAPHIC.labelId,
-              'ui-data-import.fieldMappingsForMarc.overrideProtected',
-            ]}
-            headlineProps={{ margin: 'small' }}
-          />
           {isEditable && !noProtectedFieldsDefined && (
             <span>
               <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.subtext" />
@@ -122,7 +126,7 @@ export const OverrideProtectedFieldsTable = ({
         formatter={formatter}
         isEmptyMessage={emptyTableMessage}
       />
-    </>
+    </Accordion>
   );
 };
 

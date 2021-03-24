@@ -2,15 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 
-import { NoValue } from '@folio/stripes/components';
+import {
+  AccordionSet,
+  Accordion,
+  NoValue,
+} from '@folio/stripes/components';
 
 import {
   MARCTableView,
   OverrideProtectedFieldsTable,
+  MappedHeader,
 } from '../../../../components';
 
 import {
   FIELD_MAPPINGS_FOR_MARC,
+  MAPPING_DETAILS_HEADLINE,
+  FIELD_MAPPINGS_FOR_MARC_OPTIONS,
   marcFieldProtectionSettingsShape,
   mappingMARCFieldShape,
 } from '../../../../utils';
@@ -24,6 +31,16 @@ export const MappingMARCBibDetails = ({
   const defaultFieldMappingForMARCColumns = ['action', 'field', 'indicator1', 'indicator2',
     'subfield', 'subaction', 'data', 'position'];
 
+  const header = (
+    <MappedHeader
+      headersToSeparate={[
+        'ui-data-import.settings.profiles.select.mappingProfiles',
+        MAPPING_DETAILS_HEADLINE.MARC_BIBLIOGRAPHIC.labelId,
+        FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === marcMappingOption)?.label,
+      ]}
+    />
+  );
+
   const renderUpdatesDetails = () => {
     const updatesFieldMappingForMARCColumns = ['field', 'indicator1', 'indicator2', 'subfield'];
 
@@ -36,7 +53,13 @@ export const MappingMARCBibDetails = ({
 
     return (
       <>
-        {!isEmpty(marcMappingDetails) ? renderMARCUpdatesTable() : <NoValue />}
+        <Accordion
+          id="view-field-mappings-for-marc-updates"
+          label={header}
+          separator={false}
+        >
+          {!isEmpty(marcMappingDetails) ? renderMARCUpdatesTable() : <NoValue />}
+        </Accordion>
         <OverrideProtectedFieldsTable
           marcFieldProtectionFields={marcFieldProtectionFields}
           mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
@@ -51,14 +74,24 @@ export const MappingMARCBibDetails = ({
     }
 
     return (
-      <MARCTableView
-        columns={defaultFieldMappingForMARCColumns}
-        fields={marcMappingDetails}
-      />
+      <Accordion
+        id="view-field-mappings-for-marc-modifications"
+        label={header}
+        separator={false}
+      >
+        <MARCTableView
+          columns={defaultFieldMappingForMARCColumns}
+          fields={marcMappingDetails}
+        />
+      </Accordion>
     );
   };
 
-  return renderMappingMARCBibDetails();
+  return (
+    <AccordionSet>
+      {renderMappingMARCBibDetails()}
+    </AccordionSet>
+  );
 };
 
 MappingMARCBibDetails.propTypes = {
