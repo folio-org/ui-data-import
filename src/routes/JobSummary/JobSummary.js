@@ -9,7 +9,12 @@ import {
 } from '@folio/stripes-data-transfer-components';
 import { NoValue } from '@folio/stripes/components';
 
-import { RECORD_ACTION_STATUS_LABEL_IDS } from '../../utils';
+import { FOLIO_RECORD_TYPES } from '../../components';
+
+import {
+  DATA_TYPES,
+  RECORD_ACTION_STATUS_LABEL_IDS,
+} from '../../utils';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -36,6 +41,8 @@ const JobSummaryComponent = ({
   resources,
   resources: { jobExecutions: { records } },
 }) => {
+  const dataType = records[0]?.jobProfileInfo.dataType;
+  const isEdifactType = dataType === DATA_TYPES[1];
   const getRecordActionStatusLabel = recordType => {
     if (!recordType) return <NoValue />;
 
@@ -67,7 +74,11 @@ const JobSummaryComponent = ({
     error: <FormattedMessage id="ui-data-import.error" />,
   };
   const resultsFormatter = {
-    recordNumber: ({ sourceRecordOrder }) => sourceRecordOrder + 1,
+    recordNumber: ({ sourceRecordOrder }) => {
+      if (isEdifactType) return sourceRecordOrder;
+
+      return parseInt(sourceRecordOrder, 10) + 1;
+    },
     title: ({ sourceRecordTitle }) => sourceRecordTitle,
     srsMarcBibStatus: ({ sourceRecordActionStatus }) => getRecordActionStatusLabel(sourceRecordActionStatus),
     instanceStatus: ({ instanceActionStatus }) => getRecordActionStatusLabel(instanceActionStatus),
@@ -79,7 +90,7 @@ const JobSummaryComponent = ({
   };
   const label = (
     <SettingsLabel
-      iconKey="app"
+      iconKey={isEdifactType ? FOLIO_RECORD_TYPES.INVOICE.iconKey : 'app'}
       app="data-import"
     >
       <>{records[0]?.fileName}</>
@@ -170,6 +181,7 @@ JobSummaryComponent.propTypes = {
         PropTypes.shape({
           fileName: PropTypes.string.isRequired,
           progress: PropTypes.shape({ total: PropTypes.number.isRequired }).isRequired,
+          jobProfileInfo: PropTypes.shape({ dataType: PropTypes.string.isRequired }).isRequired,
         }),
       ).isRequired,
     }),
