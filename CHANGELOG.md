@@ -6,6 +6,7 @@
 * Adjust the UI for action profiles when linked to field mapping profiles (UIDATIMP-870)
 * Cover `<ProhibitionIcon>` component with unit tests (UIDATIMP-719)
 * MARC Updates field mapping profile: be able to collapse/expand accordions (UIDATIMP-858)
+* Ensure file name info for records posted direct via API on landing page (UIDATIMP-873)
 
 ## [4.0.0](https://github.com/folio-org/ui-data-import/tree/v4.0.0) (2021-03-18)
 

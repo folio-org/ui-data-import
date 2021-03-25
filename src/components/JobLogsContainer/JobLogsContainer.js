@@ -49,7 +49,7 @@ export const JobLogsContainer = props => {
       buttonClass={sharedCss.cellLink}
       onClick={e => e.stopPropagation()}
     >
-      {record.fileName}
+      {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
     </Button>
   );
 
