@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -33,6 +36,18 @@ export const OverrideProtectedFieldsTable = ({
   const protectedFields = unionBy(mappingMarcFieldProtectionFields, marcFieldProtectionFields, 'id')
     .sort((a, b) => a.field.localeCompare(b.field));
   const noProtectedFieldsDefined = isEmpty(protectedFields);
+  const hasOverrideProtectedFields = protectedFields.some(field => field.override);
+
+  const [isOpen, setIsOpen] = useState(isEditable || hasOverrideProtectedFields);
+
+  useEffect(() => {
+    if (isEditable || hasOverrideProtectedFields) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  }, [hasOverrideProtectedFields, isEditable]);
+
   const emptyTableMessage = (
     <div style={{ margin: '-1rem' }}>
       {isEditable
@@ -104,7 +119,8 @@ export const OverrideProtectedFieldsTable = ({
       id={`${editModeIdPrefix}override-protected-section`}
       label={header}
       separator={false}
-      closedByDefault={!isEditable && noProtectedFieldsDefined}
+      open={isOpen}
+      onToggle={() => setIsOpen(!isOpen)}
     >
       <Row
         between="xs"
