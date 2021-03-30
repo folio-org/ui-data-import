@@ -855,6 +855,6 @@
     "logViewer.filter.order": "Pedido",
     "logViewer.filter.invoice": "Fatura",
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.vendorRefType": "Tipo de referência do fornecedor",
-    "settings.mappingProfiles.map.invoice.invoiceLineInformation.vendorRefNumber.addLabel": "Add vendor reference number",
+    "settings.mappingProfiles.map.invoice.invoiceLineInformation.vendorRefNumber.addLabel": "Adicionar número de referência do fornecedor",
     "noFileName": "Sem nome de arquivo"
 }
