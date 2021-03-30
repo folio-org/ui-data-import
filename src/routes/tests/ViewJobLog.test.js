@@ -34,6 +34,14 @@ const itemsJSONData = {
   id: faker.random.uuid(),
   title: 'Test item title',
 };
+const invoiceJSONData = {
+  id: faker.random.uuid(),
+  title: 'Test invoice title',
+};
+const invoiceLineJSONData = {
+  id: faker.random.uuid(),
+  title: 'Test invoice line title',
+};
 
 const jobLogResources = hasLoaded => buildResources({
   resourceName: 'jobLog',
@@ -46,6 +54,7 @@ const jobLogResources = hasLoaded => buildResources({
     },
     relatedOrderInfo: { idList: [faker.random.uuid()] },
     relatedInvoiceInfo: { idList: [faker.random.uuid()] },
+    relatedInvoiceLineInfo: { fullInvoiceLineNumber: '1' },
     sourceRecordOrder: 0,
     sourceRecordTitle: 'Test record title',
   }],
@@ -67,18 +76,31 @@ const itemsResources = buildResources({
   resourceName: 'items',
   records: [itemsJSONData],
 });
+const invoiceResources = buildResources({
+  resourceName: 'invoice',
+  records: [invoiceJSONData],
+});
+const invoiceLineResources = buildResources({
+  resourceName: 'invoiceLine',
+  records: [invoiceLineJSONData],
+});
+
 const getResources = jobLogHasLoaded => ({
   ...jobLogResources(jobLogHasLoaded),
   ...srsMarcBibResources,
   ...instancesResources,
   ...holdingsResources,
   ...itemsResources,
+  ...invoiceResources,
+  ...invoiceLineResources,
 });
 
 const mutator = buildMutator({
   instances: { GET: jest.fn() },
   holdings: { GET: jest.fn() },
   items: { GET: jest.fn() },
+  invoice: { GET: jest.fn() },
+  invoiceLine: { GET: jest.fn() },
 });
 
 const getViewJobLogComponent = (jobLogHasLoaded = true) => (
@@ -111,6 +133,8 @@ describe('View job log page', () => {
       expect(mutator.instances.GET).toHaveBeenCalled();
       expect(mutator.holdings.GET).toHaveBeenCalled();
       expect(mutator.items.GET).toHaveBeenCalled();
+      expect(mutator.invoice.GET).toHaveBeenCalled();
+      expect(mutator.invoiceLine.GET).toHaveBeenCalled();
     });
   });
 
@@ -201,6 +225,23 @@ describe('View job log page', () => {
           const codeElement = container.querySelector('code.info');
 
           expect(JSON.parse(codeElement.textContent)).toEqual(itemsJSONData);
+        });
+      });
+
+      describe('and Invoice tag is active', () => {
+        it('should display Invoice JSON details on the screen', () => {
+          const {
+            container,
+            getByText,
+          } = renderViewJobLog();
+
+          fireEvent.click(getByText('Invoice*'));
+          const invoiceLineCodeElement = container.querySelectorAll('code.info')[0];
+          const invoiceCodeElement = container.querySelectorAll('code.info')[1];
+
+          expect(JSON.parse(invoiceLineCodeElement.textContent)).toEqual(invoiceLineJSONData);
+
+          expect(JSON.parse(invoiceCodeElement.textContent)).toEqual(invoiceJSONData);
         });
       });
     });
