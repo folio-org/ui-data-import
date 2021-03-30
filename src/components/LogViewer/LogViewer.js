@@ -1,5 +1,6 @@
 import React, {
   memo,
+  useEffect,
   useState,
 } from 'react';
 import {
@@ -48,7 +49,6 @@ const filterOptions = [
   }, {
     id: OPTIONS.INVOICE,
     caption: 'ui-data-import.logViewer.filter.invoice',
-    disabled: true,
   },
 ];
 const themesPresent = [
@@ -70,12 +70,17 @@ export const LogViewer = memo(({
     visible = true,
     message = '',
     showThemes = true,
+    activeFilter = OPTIONS.SRS_MARC_BIB,
   } = {},
 }) => {
   const { formatMessage } = useIntl();
 
-  const [currentFilter, setCurrentFilter] = useState(OPTIONS.SRS_MARC_BIB);
+  const [currentFilter, setCurrentFilter] = useState(activeFilter);
   const [currentTheme, setCurrentTheme] = useState(theme);
+
+  useEffect(() => {
+    setCurrentFilter(activeFilter);
+  }, [activeFilter]);
 
   const noRecord = isEmpty(logs[currentFilter]);
   const hasError = !!errorDetector(currentFilter);

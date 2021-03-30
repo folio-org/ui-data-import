@@ -10,7 +10,10 @@ import { LogViewer } from '../components/LogViewer';
 import { LANGUAGES } from '../components/CodeHighlight/Languages';
 import { THEMES } from '../components';
 
-import { LOG_VIEWER } from '../utils';
+import {
+  DATA_TYPES,
+  LOG_VIEWER,
+} from '../utils';
 
 import sharedCss from '../shared.css';
 
@@ -21,8 +24,12 @@ export class ViewJobLog extends Component {
   static manifest = Object.freeze({
     jobLog: {
       type: 'okapi',
-      path: 'metadata-provider/jobLogEntries/:{id}/records/:{recordId}',
       throwsErrors: false,
+      path: (_q, _p) => {
+        const recordId = _q.instanceLineId || _p.recordId;
+
+        return `metadata-provider/jobLogEntries/${_p.id}/records/${recordId}`;
+      },
     },
     srsMarcBib: {
       type: 'okapi',
@@ -44,6 +51,18 @@ export class ViewJobLog extends Component {
     items: {
       type: 'okapi',
       path: 'inventory/items',
+      throwsErrors: false,
+      accumulate: true,
+    },
+    invoice: {
+      type: 'okapi',
+      path: 'invoice-storage/invoices',
+      throwsErrors: false,
+      accumulate: true,
+    },
+    invoiceLine: {
+      type: 'okapi',
+      path: 'invoice-storage/invoice-lines',
       throwsErrors: false,
       accumulate: true,
     },
@@ -92,6 +111,8 @@ export class ViewJobLog extends Component {
       this.fetchInstancesData();
       this.fetchHoldingsData();
       this.fetchItemsData();
+      this.fetchInvoiceData();
+      this.fetchInvoiceLineData();
     }
   }
 
@@ -119,14 +140,31 @@ export class ViewJobLog extends Component {
     });
   }
 
+  fetchInvoiceData() {
+    const invoiceIds = this.props.resources.jobLog.records[0]?.relatedInvoiceInfo.idList || [];
+
+    invoiceIds.forEach(invoiceId => {
+      this.props.mutator.invoice.GET({ path: `invoice-storage/invoices/${invoiceId}` });
+    });
+  }
+
+  fetchInvoiceLineData() {
+    const invoiceLineId = this.props.resources.jobLog.records[0]?.relatedInvoiceLineInfo.id;
+
+    this.props.mutator.invoiceLine.GET({ path: `invoice-storage/invoice-lines/${invoiceLineId}` });
+  }
+
   get jobLogData() {
     const { resources } = this.props;
 
     const jobLog = resources.jobLog || {};
+    const srsMarcBibLog = resources.srsMarcBib || {};
     const [record] = jobLog.records || [];
+    const recordType = srsMarcBibLog.records[0]?.recordType;
 
     return {
       hasLoaded: jobLog.hasLoaded,
+      recordType,
       record,
     };
   }
@@ -179,6 +217,30 @@ export class ViewJobLog extends Component {
     };
   }
 
+  get invoiceData() {
+    const { resources } = this.props;
+
+    const invoice = resources.invoice || {};
+    const [record] = invoice.records || [];
+
+    return {
+      hasLoaded: invoice.hasLoaded,
+      record,
+    };
+  }
+
+  get invoiceLineData() {
+    const { resources } = this.props;
+
+    const invoiceLine = resources.invoiceLine || {};
+    const [record] = invoiceLine.records || [];
+
+    return {
+      hasLoaded: invoiceLine.hasLoaded,
+      record,
+    };
+  }
+
   getErrorMessage(entityOption) {
     const {
       hasLoaded,
@@ -211,6 +273,7 @@ export class ViewJobLog extends Component {
   render() {
     const {
       hasLoaded,
+      recordType,
       record,
     } = this.jobLogData;
 
@@ -227,8 +290,10 @@ export class ViewJobLog extends Component {
     const {
       sourceRecordOrder,
       sourceRecordTitle,
+      relatedInvoiceLineInfo: { fullInvoiceLineNumber },
     } = record;
 
+    const isEdifactType = recordType === DATA_TYPES[1];
     const toolbar = {
       visible: true,
       message: (
@@ -236,12 +301,13 @@ export class ViewJobLog extends Component {
           id="ui-data-import.import-log"
           tagName="span"
           values={{
-            recordOrder: sourceRecordOrder + 1,
+            recordOrder: isEdifactType ? fullInvoiceLineNumber : sourceRecordOrder + 1,
             recordTitle: sourceRecordTitle,
           }}
         />
       ),
       showThemes: false,
+      activeFilter: isEdifactType ? OPTIONS.INVOICE : OPTIONS.SRS_MARC_BIB,
     };
 
     const logs = {
@@ -250,7 +316,7 @@ export class ViewJobLog extends Component {
       [OPTIONS.HOLDINGS]: this.holdingsData.record,
       [OPTIONS.ITEM]: this.itemData.record,
       [OPTIONS.ORDER]: {},
-      [OPTIONS.INVOICE]: {},
+      [OPTIONS.INVOICE]: this.invoiceData.record,
     };
 
     return (
