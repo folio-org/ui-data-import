@@ -54,8 +54,6 @@
 }
 
 pre {
-  display: inline-block;
-  width: auto;
   overflow: visible;
   margin: 0;
   & code {
@@ -67,4 +65,9 @@ pre {
     outline: 1px solid #cccccc;
     font-size: 12px;
   }
+}
+
+.codeBlockTitle {
+  display: block;
+  margin: 0 0 10px;
 }

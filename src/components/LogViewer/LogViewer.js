@@ -1,5 +1,6 @@
 import React, {
   memo,
+  useEffect,
   useState,
 } from 'react';
 import {
@@ -48,7 +49,6 @@ const filterOptions = [
   }, {
     id: OPTIONS.INVOICE,
     caption: 'ui-data-import.logViewer.filter.invoice',
-    disabled: true,
   },
 ];
 const themesPresent = [
@@ -70,18 +70,44 @@ export const LogViewer = memo(({
     visible = true,
     message = '',
     showThemes = true,
+    activeFilter = OPTIONS.SRS_MARC_BIB,
   } = {},
 }) => {
   const { formatMessage } = useIntl();
 
-  const [currentFilter, setCurrentFilter] = useState(OPTIONS.SRS_MARC_BIB);
+  const [currentFilter, setCurrentFilter] = useState(activeFilter);
   const [currentTheme, setCurrentTheme] = useState(theme);
+
+  useEffect(() => {
+    setCurrentFilter(activeFilter);
+  }, [activeFilter]);
 
   const noRecord = isEmpty(logs[currentFilter]);
   const hasError = !!errorDetector(currentFilter);
+  const hasInvoiceError = !!errorDetector(currentFilter)?.invoiceInfo;
+  const hasInvoiceLineError = !!errorDetector(currentFilter)?.invoiceLineInfo;
   const code = logs[currentFilter] || '';
   const codePortion = Array.isArray(code) ? code : [code];
   const themeModule = themes[currentTheme];
+  const isEdifactType = currentFilter === OPTIONS.INVOICE;
+
+  const getCodeString = item => (
+    !noRecord
+      ? JSON.stringify(item, null, 2)
+      : formatMessage({ id: 'ui-data-import.noRecord' })
+  );
+
+  const renderCodeHighlight = (id, codeString, className) => (
+    codeString && (
+      <CodeHighlight
+        key={`snippet-${id}`}
+        code={codeString}
+        language={language}
+        theme={currentTheme}
+        className={className}
+      />
+    )
+  );
 
   return (
     <>
@@ -144,29 +170,40 @@ export const LogViewer = memo(({
         id="logs-pane"
         className={currentTheme}
       >
-        {hasError && (
-          <CodeHighlight
-            code={errorDetector(currentFilter)}
-            language={language}
-            theme={currentTheme}
-            className={themeModule.error}
-          />
-        )}
-        {codePortion.map(item => {
-          const codeString = !noRecord
-            ? JSON.stringify(item, null, 2)
-            : formatMessage({ id: 'ui-data-import.noRecord' });
+        {isEdifactType ? (
+          <>
+            <FormattedMessage id="ui-data-import.logViewer.invoiceLine">
+              {title => <strong className={css.codeBlockTitle}>{title}:</strong>}
+            </FormattedMessage>
+            {hasInvoiceLineError && renderCodeHighlight('invoice-line-error', errorDetector(currentFilter).invoiceLineInfo, themeModule.error)}
+            {codePortion.map(item => {
+              const invoiceLineCodeString = getCodeString(item.invoiceLineData);
+              const invoiceLineDataId = `invoiceLine-${item?.invoiceLineData?.id}`;
 
-          return (
-            <CodeHighlight
-              key={`snippet-${item.id}`}
-              code={codeString}
-              language={language}
-              theme={currentTheme}
-              className={themeModule.info}
-            />
-          );
-        })}
+              return renderCodeHighlight(invoiceLineDataId, invoiceLineCodeString, themeModule.info);
+            })}
+            <FormattedMessage id="ui-data-import.logViewer.invoice">
+              {title => <strong className={css.codeBlockTitle}>{title}:</strong>}
+            </FormattedMessage>
+            {hasInvoiceError && renderCodeHighlight('invoice-error', errorDetector(currentFilter).invoiceInfo, themeModule.error)}
+            {codePortion.map(item => {
+              const invoiceCodeString = getCodeString(item.invoiceData);
+              const invoiceDataId = `invoice-${item?.invoiceData?.id}`;
+
+              return renderCodeHighlight(invoiceDataId, invoiceCodeString, themeModule.info);
+            })}
+          </>
+        ) : (
+          <>
+            {hasError && renderCodeHighlight('error', errorDetector(currentFilter), themeModule.error)}
+            {codePortion.map(item => {
+              const codeString = getCodeString(item);
+              const dataId = item.id;
+
+              return renderCodeHighlight(dataId, codeString, themeModule.info);
+            })}
+          </>
+        )}
       </pre>
     </>
   );
