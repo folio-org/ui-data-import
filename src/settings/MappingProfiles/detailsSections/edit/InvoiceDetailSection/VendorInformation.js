@@ -16,7 +16,10 @@ import {
 } from '../../../../../components';
 
 import { getFieldName } from '../../utils';
-import { okapiShape } from '../../../../../utils';
+import {
+  okapiShape,
+  validateRequiredField,
+} from '../../../../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 
 export const VendorInformation = ({
@@ -37,6 +40,8 @@ export const VendorInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.vendorInformation.field.vendorInvoiceNumber`} />}
             name={getFieldName(16)}
+            validate={validateRequiredField}
+            required
           />
         </Col>
         <Col xs={4}>
@@ -46,6 +51,8 @@ export const VendorInformation = ({
             name={getFieldName(17)}
             onSelect={onSelectVendor}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.vendorInformation.field.vendorName`} />}
+            validate={validateRequiredField}
+            required
           />
         </Col>
         <Col xs={4}>

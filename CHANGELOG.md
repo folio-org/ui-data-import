@@ -64,6 +64,7 @@
 * Adjust "vendor name" field value (UIDATIMP-868)
 * Cover `<FolioRecordTypeSelect>` component with tests (UIDATIMP-705)
 * Cover `<CodeHighlight>` component with tests (UIDATIMP-702)
+* Add required field indication and validation to invoice field mapping profile (UIDATIMP-877)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)

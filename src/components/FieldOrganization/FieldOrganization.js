@@ -26,6 +26,7 @@ const FieldOrganization = ({
   required,
   id,
   mutator,
+  validate,
 }) => {
   const [selectedOrganization, setSelectedOrganization] = useState({});
 
@@ -80,6 +81,7 @@ const FieldOrganization = ({
         label={label}
         name={name}
         required={required}
+        validate={validate}
         format={() => selectedOrganization.name}
       />
 
@@ -114,6 +116,7 @@ FieldOrganization.propTypes = {
   name: PropTypes.string,
   required: PropTypes.bool,
   mutator: PropTypes.object.isRequired,
+  validate: PropTypes.func,
 };
 
 FieldOrganization.defaultProps = {
