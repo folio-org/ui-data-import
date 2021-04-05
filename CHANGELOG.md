@@ -1,6 +1,12 @@
 # Change history for ui-data-import
 
 ## **4.1.0** (in progress)
+
+### Features added:
+* Add required field indication and validation to invoice field mapping profile (UIDATIMP-877)
+
+## [4.0.1](https://github.com/folio-org/ui-data-import/tree/v4.0.1) (2021-04-02)
+
 ### Features added:
 * Adjust the UI for action profiles when linked to job profiles (UIDATIMP-749)
 * Adjust the UI for action profiles when linked to field mapping profiles (UIDATIMP-870)
@@ -8,6 +14,8 @@
 * MARC Updates field mapping profile: be able to collapse/expand accordions (UIDATIMP-858)
 * Ensure file name info for records posted direct via API on landing page (UIDATIMP-873)
 * Log lite: Import job summary for EDIFACT invoices (UIDATIMP-816)
+* Cover `<CodeHighlight>` component with tests (UIDATIMP-702)
+* Cover `<FolioRecordTypeSelect>` component with tests (UIDATIMP-705)
 * Cover `<JobLogsContainer>` component with tests (UIDATIMP-713)
 
 ## [4.0.0](https://github.com/folio-org/ui-data-import/tree/v4.0.0) (2021-03-18)
@@ -62,9 +70,6 @@
 * Refactor Action profiles to use final-form instead of redux-form (UIDATIMP-827)
 * Add personal data disclosure form (UIDATIMP-786)
 * Adjust "vendor name" field value (UIDATIMP-868)
-* Cover `<FolioRecordTypeSelect>` component with tests (UIDATIMP-705)
-* Cover `<CodeHighlight>` component with tests (UIDATIMP-702)
-* Add required field indication and validation to invoice field mapping profile (UIDATIMP-877)
 
 ### Bugs fixed:
 * Fix Accessibility problems for settings/data-import/match-profiles (lists must only directly contain li elements) (UIDATIMP-452)
