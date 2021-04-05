@@ -20,13 +20,15 @@ export const searchAndSortTemplate = intl => ({
   description: record => record.description,
   match: record => {
     const fieldSource = (record.field || record.existingRecordType || '').replace(/_/g, ' ');
-    const fieldsMatched = get(record, 'matchDetails[0].existingMatchExpression.fields', []).map(item => (item ? item.value || '' : ''));
+    const fieldsMatched = get(record, 'matchDetails[0].existingMatchExpression.fields', []);
+
+    const fieldsMatchedValues = fieldsMatched.map(item => (item ? item.value || '' : ''));
 
     if (document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT) {
       fieldsMatched.reverse();
     }
 
-    const fieldMatched = fieldsMatched.join('.');
+    const fieldMatched = fieldsMatchedValues.join('.');
 
     let part1;
     let part2;
@@ -35,7 +37,7 @@ export const searchAndSortTemplate = intl => ({
     if (document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT) {
       part1 = intl.formatMessage({ id: FOLIO_RECORD_TYPES[record.existingRecordType].captionId });
       part2 = capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS);
-      part3 = getFieldMatched(fieldMatched, fieldSource, intl.formatMessage);
+      part3 = getFieldMatched(fieldsMatched, fieldSource, intl.formatMessage);
     } else {
       part1 = capitalize(fieldMatched, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS);
       part2 = capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS);
