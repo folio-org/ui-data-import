@@ -24,7 +24,10 @@ import {
   getSubfieldName,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { okapiShape } from '../../../../../utils';
+import {
+  okapiShape,
+  validateRequiredField,
+} from '../../../../../utils';
 
 export const InvoiceInformation = ({
   hasLockTotal,
@@ -46,6 +49,8 @@ export const InvoiceInformation = ({
             name={getFieldName(0)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+            validate={validateRequiredField}
+            required
           />
         </Col>
         <Col xs={3}>
@@ -53,6 +58,8 @@ export const InvoiceInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.status`} />}
             name={getFieldName(1)}
+            validate={validateRequiredField}
+            required
             disabled
           />
         </Col>
@@ -155,7 +162,8 @@ export const InvoiceInformation = ({
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(9)}
-            validation={noop}
+            validation={validateRequiredField}
+            required
             okapi={okapi}
           />
         </Col>

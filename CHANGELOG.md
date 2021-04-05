@@ -2,6 +2,9 @@
 
 ## **4.1.0** (in progress)
 
+### Features added:
+* Add required field indication and validation to invoice field mapping profile (UIDATIMP-877)
+
 ## [4.0.1](https://github.com/folio-org/ui-data-import/tree/v4.0.1) (2021-04-02)
 
 ### Features added:
