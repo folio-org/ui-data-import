@@ -161,7 +161,7 @@ export const validateValueLength3 = value => validateValueLength(value, 3);
  */
 const validateQuotedStringOrMarcPathPattern = (value, isRemoveValueAllowed) => {
   const allowedValue = isRemoveValueAllowed ? REMOVE_OPTION_VALUE : '';
-  const quotedStringOrMarcPathPattern = '(("[^"]+")|((005|006|007|008|LDR)[\\w\\/\\-]*)|([0-9]{3}(\\$[a-z])?))';
+  const quotedStringOrMarcPathPattern = '(("[^"]+")|((005|006|007|008|LDR)[\\w\\/\\-]*)|([0-9]{3}(\\$[a-z0-9])?))';
 
   const pattern = new RegExp([
     `^${quotedStringOrMarcPathPattern}`,
@@ -228,7 +228,7 @@ export const validateQuotedStringOrMarcPath = (value, isRemoveValueAllowed) => {
  */
 export const validateMARCWithDate = (value, isRemoveValueProhibited) => {
   const allowedValue = isRemoveValueProhibited ? '' : REMOVE_OPTION_VALUE;
-  const todayOrDatePattern = '((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z])?))';
+  const todayOrDatePattern = '((###TODAY###)|("\\d{4}-\\d{2}-\\d{2}")|([0-9]{3}(\\$[a-z0-9])?))';
   const pattern = new RegExp([
     `^${todayOrDatePattern}`,
     `(((\\s(?=${todayOrDatePattern}))`,

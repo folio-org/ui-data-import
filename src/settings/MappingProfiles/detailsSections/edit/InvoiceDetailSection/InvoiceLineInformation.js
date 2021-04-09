@@ -38,6 +38,7 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   BOOLEAN_ACTIONS,
   createOptionsList,
+  validateRequiredField,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
@@ -78,6 +79,8 @@ export const InvoiceLineInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.description`} />}
             name={getSubfieldName(26, 0, 0)}
+            validate={validateRequiredField}
+            required
           />
         </Col>
       </Row>
@@ -206,6 +209,8 @@ export const InvoiceLineInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.quantity`} />}
             name={getSubfieldName(26, 11, 0)}
+            validate={validateRequiredField}
+            required
           />
         </Col>
         <Col xs={3}>
@@ -213,6 +218,8 @@ export const InvoiceLineInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.subTotal`} />}
             name={getSubfieldName(26, 12, 0)}
+            validate={validateRequiredField}
+            required
           />
         </Col>
       </Row>

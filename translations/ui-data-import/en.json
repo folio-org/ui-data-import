@@ -836,6 +836,8 @@
   "modal.leavePage.cancel": "Close & lose partial uploads",
   "modal.leavePage.actionButton": "Keep uploading",
   "validation.enterValue": "Please enter a value",
+  "logViewer.invoice": "Invoice",
+  "logViewer.invoiceLine": "Invoice Line",
   "logViewer.filter.label": "Show",
   "logViewer.filter.srsMARCBib": "SRS MARC Bib",
   "logViewer.filter.instance": "Instance",

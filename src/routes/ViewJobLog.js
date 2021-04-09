@@ -90,11 +90,21 @@ export class ViewJobLog extends Component {
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
       }),
+      invoice: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+      }),
+      invoiceLine: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+      }),
     }).isRequired,
     mutator: PropTypes.shape({
       instances: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
       holdings: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
       items: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
+      invoice: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
+      invoiceLine: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
     }).isRequired,
   };
 
@@ -256,6 +266,7 @@ export class ViewJobLog extends Component {
       relatedItemInfo,
       relatedOrderInfo,
       relatedInvoiceInfo,
+      relatedInvoiceLineInfo,
     } = record;
 
     const errors = {
@@ -264,7 +275,10 @@ export class ViewJobLog extends Component {
       [OPTIONS.HOLDINGS]: relatedHoldingsInfo.error,
       [OPTIONS.ITEM]: relatedItemInfo.error,
       [OPTIONS.ORDER]: relatedOrderInfo.error,
-      [OPTIONS.INVOICE]: relatedInvoiceInfo.error,
+      [OPTIONS.INVOICE]: {
+        invoiceInfo: relatedInvoiceInfo.error,
+        invoiceLineInfo: relatedInvoiceLineInfo.error,
+      },
     };
 
     return errors[entityOption];
@@ -317,6 +331,10 @@ export class ViewJobLog extends Component {
       [OPTIONS.ITEM]: this.itemData.record,
       [OPTIONS.ORDER]: {},
       [OPTIONS.INVOICE]: this.invoiceData.record,
+      [OPTIONS.INVOICE]: {
+        invoiceData: this.invoiceData.record,
+        invoiceLineData: this.invoiceLineData.record,
+      },
     };
 
     return (

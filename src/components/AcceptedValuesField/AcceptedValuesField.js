@@ -48,6 +48,7 @@ export const AcceptedValuesField = ({
   isFormField,
   isMultiSelection,
   disabled,
+  required,
   validation,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
@@ -149,6 +150,7 @@ export const AcceptedValuesField = ({
       onFieldChange={onChange}
       isMultiSelection={isMultiSelection}
       disabled={disabled}
+      required={required}
       hasLoaded={hasOptions}
       {...dataAttributes}
     />
@@ -202,6 +204,7 @@ AcceptedValuesField.propTypes = {
   componentValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isMultiSelection: PropTypes.bool,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
   isDirty: PropTypes.bool,
   isFormField: PropTypes.bool,
   parsedOptionValue: PropTypes.string,
@@ -216,5 +219,6 @@ AcceptedValuesField.defaultProps = {
   isMultiSelection: false,
   parsedOptionValue: '',
   parsedOptionLabel: '',
+  required: false,
   disabled: false,
 };
