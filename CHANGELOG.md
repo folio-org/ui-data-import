@@ -4,7 +4,10 @@
 
 ### Features added:
 * Add required field indication and validation to invoice field mapping profile (UIDATIMP-877)
+
+### Bugs fixed:
 * Numeric subfield mappings are not working. Fixed (UIDATIMP-885)
+* FOLIO record type dropdown issue. Fixed (UIDATIMP-887)
 
 ## [4.0.1](https://github.com/folio-org/ui-data-import/tree/v4.0.1) (2021-04-02)
 
