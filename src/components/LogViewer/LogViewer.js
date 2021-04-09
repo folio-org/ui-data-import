@@ -82,14 +82,8 @@ export const LogViewer = memo(({
     setCurrentFilter(activeFilter);
   }, [activeFilter]);
 
-  const noRecord = isEmpty(logs[currentFilter]);
-  const hasError = !!errorDetector(currentFilter);
-  const hasInvoiceError = !!errorDetector(currentFilter)?.invoiceInfo;
-  const hasInvoiceLineError = !!errorDetector(currentFilter)?.invoiceLineInfo;
-  const code = logs[currentFilter] || '';
-  const codePortion = Array.isArray(code) ? code : [code];
+  const noRecord = logs[currentFilter].every(item => isEmpty(item.logs));
   const themeModule = themes[currentTheme];
-  const isEdifactType = currentFilter === OPTIONS.INVOICE;
 
   const getCodeString = item => (
     !noRecord
@@ -170,40 +164,25 @@ export const LogViewer = memo(({
         id="logs-pane"
         className={currentTheme}
       >
-        {isEdifactType ? (
-          <>
-            <FormattedMessage id="ui-data-import.logViewer.invoiceLine">
-              {title => <strong className={css.codeBlockTitle}>{title}:</strong>}
-            </FormattedMessage>
-            {hasInvoiceLineError && renderCodeHighlight('invoice-line-error', errorDetector(currentFilter).invoiceLineInfo, themeModule.error)}
-            {codePortion.map(item => {
-              const invoiceLineCodeString = getCodeString(item.invoiceLineData);
-              const invoiceLineDataId = `invoiceLine-${item?.invoiceLineData?.id}`;
+        <>
+          {logs[currentFilter].map(item => {
+            const code = item.logs || '';
+            const codePortion = Array.isArray(code) ? code : [code];
 
-              return renderCodeHighlight(invoiceLineDataId, invoiceLineCodeString, themeModule.info);
-            })}
-            <FormattedMessage id="ui-data-import.logViewer.invoice">
-              {title => <strong className={css.codeBlockTitle}>{title}:</strong>}
-            </FormattedMessage>
-            {hasInvoiceError && renderCodeHighlight('invoice-error', errorDetector(currentFilter).invoiceInfo, themeModule.error)}
-            {codePortion.map(item => {
-              const invoiceCodeString = getCodeString(item.invoiceData);
-              const invoiceDataId = `invoice-${item?.invoiceData?.id}`;
+            return codePortion.map(portion => {
+              const codeString = getCodeString(portion);
+              const dataId = portion.id;
 
-              return renderCodeHighlight(invoiceDataId, invoiceCodeString, themeModule.info);
-            })}
-          </>
-        ) : (
-          <>
-            {hasError && renderCodeHighlight('error', errorDetector(currentFilter), themeModule.error)}
-            {codePortion.map(item => {
-              const codeString = getCodeString(item);
-              const dataId = item.id;
-
-              return renderCodeHighlight(dataId, codeString, themeModule.info);
-            })}
-          </>
-        )}
+              return (
+                <>
+                  {item.label}
+                  {item.error && renderCodeHighlight(item.errorBlockId || 'error', item.error, themeModule.error)}
+                  {code && renderCodeHighlight(dataId, codeString, themeModule.info)}
+                </>
+              );
+            });
+          })}
+        </>
       </pre>
     </>
   );

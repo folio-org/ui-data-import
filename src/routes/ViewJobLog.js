@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { Headline } from '@folio/stripes/components';
 import { Preloader } from '@folio/stripes-data-transfer-components';
 
 import { LogViewer } from '../components/LogViewer';
@@ -154,14 +155,18 @@ export class ViewJobLog extends Component {
     const invoiceIds = this.props.resources.jobLog.records[0]?.relatedInvoiceInfo.idList || [];
 
     invoiceIds.forEach(invoiceId => {
-      this.props.mutator.invoice.GET({ path: `invoice-storage/invoices/${invoiceId}` });
+      if (invoiceId) {
+        this.props.mutator.invoice.GET({ path: `invoice-storage/invoices/${invoiceId}` });
+      }
     });
   }
 
   fetchInvoiceLineData() {
     const invoiceLineId = this.props.resources.jobLog.records[0]?.relatedInvoiceLineInfo.id;
 
-    this.props.mutator.invoiceLine.GET({ path: `invoice-storage/invoice-lines/${invoiceLineId}` });
+    if (invoiceLineId) {
+      this.props.mutator.invoiceLine.GET({ path: `invoice-storage/invoice-lines/${invoiceLineId}` });
+    }
   }
 
   get jobLogData() {
@@ -325,15 +330,50 @@ export class ViewJobLog extends Component {
     };
 
     const logs = {
-      [OPTIONS.SRS_MARC_BIB]: this.srsMarcBibData.record,
-      [OPTIONS.INSTANCE]: this.instanceData.record,
-      [OPTIONS.HOLDINGS]: this.holdingsData.record,
-      [OPTIONS.ITEM]: this.itemData.record,
-      [OPTIONS.ORDER]: {},
-      [OPTIONS.INVOICE]: {
-        invoiceData: this.invoiceData.record,
-        invoiceLineData: this.invoiceLineData.record,
-      },
+      [OPTIONS.SRS_MARC_BIB]: [{
+        label: '',
+        logs: this.srsMarcBibData.record,
+        error: this.getErrorMessage(OPTIONS.SRS_MARC_BIB),
+        errorBlockId: 'srs-marc-bib-error',
+      }],
+      [OPTIONS.INSTANCE]: [{
+        label: '',
+        logs: this.instanceData.record,
+        error: this.getErrorMessage(OPTIONS.INSTANCE),
+        errorBlockId: 'instance-error',
+      }],
+      [OPTIONS.HOLDINGS]: [{
+        label: '',
+        logs: this.holdingsData.record,
+        error: this.getErrorMessage(OPTIONS.HOLDINGS),
+        errorBlockId: 'holdings-error',
+      }],
+      [OPTIONS.ITEM]: [{
+        label: '',
+        logs: this.itemData.record,
+        error: this.getErrorMessage(OPTIONS.ITEM),
+        errorBlockId: 'item-error',
+      }],
+      [OPTIONS.ORDER]: [{}],
+      [OPTIONS.INVOICE]: [{
+        label: (
+          <Headline margin="none">
+            <FormattedMessage id="ui-data-import.logViewer.invoiceLine" />
+          </Headline>
+        ),
+        logs: this.invoiceData.record,
+        error: this.getErrorMessage(OPTIONS.INVOICE).invoiceInfo,
+        errorBlockId: 'invoice-line-error',
+      }, {
+        label: (
+          <Headline margin="none">
+            <FormattedMessage id="ui-data-import.logViewer.invoice" />
+          </Headline>
+        ),
+        logs: this.invoiceLineData.record,
+        error: this.getErrorMessage(OPTIONS.INVOICE).invoiceLineInfo,
+        errorBlockId: 'invoice-error',
+      }],
     };
 
     return (
