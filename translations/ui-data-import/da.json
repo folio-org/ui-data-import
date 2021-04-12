@@ -115,7 +115,7 @@
     "matchProfileName": "Match profile",
     "confirm": "Confirm",
     "settings.matchProfiles.confirmEditModal.heading": "Bekræft ændringer af matchprofil",
-    "settings.matchProfiles.confirmEditModal.message": "Redigering i matchprofil ændrer {beløb, antal} tilknyttet job {beløb, flertal, én {profil} other {profiles}}. Bekræft venligst",
+    "settings.matchProfiles.confirmEditModal.message": "Redigering i matchprofil ændrer {amount, number} tilknyttet job {amount, plural, one {profil} other {profiles}}. Bekræft venligst",
     "settings.jobProfiles.new": "New job profile",
     "settings.matchProfiles.new": "New match profile",
     "import-log": "Import Log for Record <b>{recordOrder} ({recordTitle})</b>",

@@ -155,14 +155,18 @@ export class ViewJobLog extends Component {
     const invoiceIds = this.props.resources.jobLog.records[0]?.relatedInvoiceInfo.idList || [];
 
     invoiceIds.forEach(invoiceId => {
-      this.props.mutator.invoice.GET({ path: `invoice-storage/invoices/${invoiceId}` });
+      if (invoiceId) {
+        this.props.mutator.invoice.GET({ path: `invoice-storage/invoices/${invoiceId}` });
+      }
     });
   }
 
   fetchInvoiceLineData() {
     const invoiceLineId = this.props.resources.jobLog.records[0]?.relatedInvoiceLineInfo.id;
 
-    this.props.mutator.invoiceLine.GET({ path: `invoice-storage/invoice-lines/${invoiceLineId}` });
+    if (invoiceLineId) {
+      this.props.mutator.invoiceLine.GET({ path: `invoice-storage/invoice-lines/${invoiceLineId}` });
+    }
   }
 
   get jobLogData() {
@@ -354,7 +358,7 @@ export class ViewJobLog extends Component {
       [OPTIONS.INVOICE]: [{
         label: (
           <Headline margin="none">
-            <FormattedMessage id="ui-data-import.logViewer.invoiceLineJSON" />
+            <FormattedMessage id="ui-data-import.logViewer.invoiceLine" />
           </Headline>
         ),
         logs: this.invoiceData.record,
@@ -363,7 +367,7 @@ export class ViewJobLog extends Component {
       }, {
         label: (
           <Headline margin="none">
-            <FormattedMessage id="ui-data-import.logViewer.invoiceJSON" />
+            <FormattedMessage id="ui-data-import.logViewer.invoice" />
           </Headline>
         ),
         logs: this.invoiceLineData.record,

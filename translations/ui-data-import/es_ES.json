@@ -118,7 +118,7 @@
     "settings.matchProfiles.confirmEditModal.message": "Esta edición del perfil de coincidencia afectará a {amount, number} trabajo asociado {amount, plural, one { perfil } other { perfiles }} . Por favor confirmar",
     "settings.jobProfiles.new": "Nuevo perfil de trabajo",
     "settings.matchProfiles.new": "Nuevo perfil de coincidencia",
-    "import-log": "Importar Log para el proceso",
+    "import-log": "Importar Log para el proceso <b>{recordOrder} ({recordTitle})</b>",
     "errorsCount": "{count, plural, one {error} other {errores}}",
     "modal.matchProfile.delete.header": "Eliminar perfil de coincidencia \"{name}\"?",
     "modal.matchProfile.delete.message": "Eliminar perfil de coincidencia?",

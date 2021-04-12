@@ -118,7 +118,7 @@
     "settings.matchProfiles.confirmEditModal.message": "These match profile edit will affect {amount, number} associated job {amount, plural, one {profile} other {profiles}}. Please confirm",
     "settings.jobProfiles.new": "New job profile",
     "settings.matchProfiles.new": "New match profile",
-    "import-log": "작업에 대한 반입 로그",
+    "import-log": "Import Log for Record <b>{recordOrder} ({recordTitle})</b>",
     "errorsCount": "{count, plural, one {# error} other {# errors}}",
     "modal.matchProfile.delete.header": "Delete \"{name}\" match profile?",
     "modal.matchProfile.delete.message": "Delete match profile?",

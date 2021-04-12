@@ -83,7 +83,6 @@ export const LogViewer = memo(({
   }, [activeFilter]);
 
   const noRecord = logs[currentFilter].every(item => isEmpty(item.logs));
-  const hasError = !!errorDetector(currentFilter);
   const themeModule = themes[currentTheme];
 
   const getCodeString = item => (
@@ -177,8 +176,8 @@ export const LogViewer = memo(({
               return (
                 <>
                   {item.label}
-                  {hasError && renderCodeHighlight(item.errorBlockId || 'error', item.errorDetector, themeModule.error)}
-                  {renderCodeHighlight(dataId, codeString, themeModule.info)}
+                  {item.error && renderCodeHighlight(item.errorBlockId || 'error', item.error, themeModule.error)}
+                  {code && renderCodeHighlight(dataId, codeString, themeModule.info)}
                 </>
               );
             });
