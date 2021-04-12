@@ -65,7 +65,6 @@ export const LogViewer = memo(({
   logs = {},
   language = LANGUAGES.RAW,
   theme = THEMES.COY,
-  errorDetector,
   toolbar: {
     visible = true,
     message = '',
@@ -131,7 +130,7 @@ export const LogViewer = memo(({
                   disabled={option.disabled}
                 >
                   <FormattedMessage id={option.caption}>
-                    {label => (errorDetector(option.id) ? `${label}*` : label)}
+                    {label => (logs[option.id].some(item => !isEmpty(item.error)) ? `${label}*` : label)}
                   </FormattedMessage>
                 </Button>
               ))}
@@ -189,7 +188,6 @@ export const LogViewer = memo(({
 });
 
 LogViewer.propTypes = {
-  errorDetector: PropTypes.func.isRequired,
   logs: PropTypes.object,
   language: PropTypes.string,
   theme: PropTypes.string,

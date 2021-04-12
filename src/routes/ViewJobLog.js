@@ -361,8 +361,8 @@ export class ViewJobLog extends Component {
             <FormattedMessage id="ui-data-import.logViewer.invoiceLine" />
           </Headline>
         ),
-        logs: this.invoiceData.record,
-        error: this.getErrorMessage(OPTIONS.INVOICE).invoiceInfo,
+        logs: this.invoiceLineData.record,
+        error: this.getErrorMessage(OPTIONS.INVOICE).invoiceLineInfo,
         errorBlockId: 'invoice-line-error',
       }, {
         label: (
@@ -370,8 +370,8 @@ export class ViewJobLog extends Component {
             <FormattedMessage id="ui-data-import.logViewer.invoice" />
           </Headline>
         ),
-        logs: this.invoiceLineData.record,
-        error: this.getErrorMessage(OPTIONS.INVOICE).invoiceLineInfo,
+        logs: this.invoiceData.record,
+        error: this.getErrorMessage(OPTIONS.INVOICE).invoiceInfo,
         errorBlockId: 'invoice-error',
       }],
     };
@@ -383,7 +383,6 @@ export class ViewJobLog extends Component {
           language={LANGUAGES.JSON}
           theme={THEMES.COY}
           toolbar={toolbar}
-          errorDetector={entityOption => this.getErrorMessage(entityOption)}
         />
       </div>
     );

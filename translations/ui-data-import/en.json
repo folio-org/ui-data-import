@@ -837,7 +837,7 @@
   "modal.leavePage.actionButton": "Keep uploading",
   "validation.enterValue": "Please enter a value",
   "logViewer.invoice": "Invoice",
-  "logViewer.invoiceLine": "Invoice Line",
+  "logViewer.invoiceLine": "Invoice line",
   "logViewer.filter.label": "Show",
   "logViewer.filter.srsMARCBib": "SRS MARC Bib",
   "logViewer.filter.instance": "Instance",
