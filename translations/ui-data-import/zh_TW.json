@@ -118,7 +118,7 @@
     "settings.matchProfiles.confirmEditModal.message": "这些匹配配置文件编辑会影响{amount, number}关联任务{amount, plural, one { 配置文件 } other { 配置文件 }} 。请确认",
     "settings.jobProfiles.new": "新增任務概要",
     "settings.matchProfiles.new": "新匹配配置文件",
-    "import-log": "匯入任務日誌",
+    "import-log": "Import Log for Record <b>{recordOrder} ({recordTitle})</b>",
     "errorsCount": "{count, plural, other {錯誤}}",
     "modal.matchProfile.delete.header": "删除“ {name} ”匹配配置文件？",
     "modal.matchProfile.delete.message": "删除匹配配置文件？",
