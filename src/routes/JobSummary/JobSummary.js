@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { stripesConnect } from '@folio/stripes/core';
 import {
+  createUrl,
   SearchAndSortPane,
   SettingsLabel,
 } from '@folio/stripes-data-transfer-components';
@@ -98,7 +99,8 @@ const JobSummaryComponent = ({
   );
 
   const handleRowClick = (e, row) => {
-    const path = `/data-import/log/${row.jobExecutionId}/${row.sourceRecordId}`;
+    const queryParams = isEdifactType ? { instanceLineId: row.invoiceLineJournalRecordId } : {};
+    const path = createUrl(`/data-import/log/${row.jobExecutionId}/${row.sourceRecordId}`, queryParams);
 
     const jobLogWindow = window.open(path, '_blank');
 

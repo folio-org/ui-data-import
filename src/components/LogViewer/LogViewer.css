@@ -54,8 +54,6 @@
 }
 
 pre {
-  display: inline-block;
-  width: auto;
   overflow: visible;
   margin: 0;
   & code {

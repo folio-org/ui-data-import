@@ -22,6 +22,7 @@
 * Cover `<FolioRecordTypeSelect>` component with tests (UIDATIMP-705)
 * Cover `<JobLogsContainer>` component with tests (UIDATIMP-713)
 * Cover`<ListTemplate>` component with tests (UIDATIMP-707)
+* Log lite - Invoice JSON screen (UIDATIMP-817)
 
 ## [4.0.0](https://github.com/folio-org/ui-data-import/tree/v4.0.0) (2021-03-18)
 

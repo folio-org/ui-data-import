@@ -1,5 +1,6 @@
 import React, {
   memo,
+  useEffect,
   useState,
 } from 'react';
 import {
@@ -48,7 +49,6 @@ const filterOptions = [
   }, {
     id: OPTIONS.INVOICE,
     caption: 'ui-data-import.logViewer.filter.invoice',
-    disabled: true,
   },
 ];
 const themesPresent = [
@@ -65,23 +65,42 @@ export const LogViewer = memo(({
   logs = {},
   language = LANGUAGES.RAW,
   theme = THEMES.COY,
-  errorDetector,
   toolbar: {
     visible = true,
     message = '',
     showThemes = true,
+    activeFilter = OPTIONS.SRS_MARC_BIB,
   } = {},
 }) => {
   const { formatMessage } = useIntl();
 
-  const [currentFilter, setCurrentFilter] = useState(OPTIONS.SRS_MARC_BIB);
+  const [currentFilter, setCurrentFilter] = useState(activeFilter);
   const [currentTheme, setCurrentTheme] = useState(theme);
 
-  const noRecord = isEmpty(logs[currentFilter]);
-  const hasError = !!errorDetector(currentFilter);
-  const code = logs[currentFilter] || '';
-  const codePortion = Array.isArray(code) ? code : [code];
+  useEffect(() => {
+    setCurrentFilter(activeFilter);
+  }, [activeFilter]);
+
+  const noRecord = logs[currentFilter].every(item => isEmpty(item.logs));
   const themeModule = themes[currentTheme];
+
+  const getCodeString = item => (
+    !noRecord
+      ? JSON.stringify(item, null, 2)
+      : formatMessage({ id: 'ui-data-import.noRecord' })
+  );
+
+  const renderCodeHighlight = (id, codeString, className) => (
+    codeString && (
+      <CodeHighlight
+        key={`snippet-${id}`}
+        code={codeString}
+        language={language}
+        theme={currentTheme}
+        className={className}
+      />
+    )
+  );
 
   return (
     <>
@@ -111,7 +130,7 @@ export const LogViewer = memo(({
                   disabled={option.disabled}
                 >
                   <FormattedMessage id={option.caption}>
-                    {label => (errorDetector(option.id) ? `${label}*` : label)}
+                    {label => (logs[option.id].some(item => !isEmpty(item.error)) ? `${label}*` : label)}
                   </FormattedMessage>
                 </Button>
               ))}
@@ -144,36 +163,31 @@ export const LogViewer = memo(({
         id="logs-pane"
         className={currentTheme}
       >
-        {hasError && (
-          <CodeHighlight
-            code={errorDetector(currentFilter)}
-            language={language}
-            theme={currentTheme}
-            className={themeModule.error}
-          />
-        )}
-        {codePortion.map(item => {
-          const codeString = !noRecord
-            ? JSON.stringify(item, null, 2)
-            : formatMessage({ id: 'ui-data-import.noRecord' });
+        <>
+          {logs[currentFilter].map(item => {
+            const code = item.logs || '';
+            const codePortion = Array.isArray(code) ? code : [code];
 
-          return (
-            <CodeHighlight
-              key={`snippet-${item.id}`}
-              code={codeString}
-              language={language}
-              theme={currentTheme}
-              className={themeModule.info}
-            />
-          );
-        })}
+            return codePortion.map(portion => {
+              const codeString = getCodeString(portion);
+              const dataId = portion.id;
+
+              return (
+                <>
+                  {item.label}
+                  {item.error && renderCodeHighlight(item.errorBlockId || 'error', item.error, themeModule.error)}
+                  {code && renderCodeHighlight(dataId, codeString, themeModule.info)}
+                </>
+              );
+            });
+          })}
+        </>
       </pre>
     </>
   );
 });
 
 LogViewer.propTypes = {
-  errorDetector: PropTypes.func.isRequired,
   logs: PropTypes.object,
   language: PropTypes.string,
   theme: PropTypes.string,
