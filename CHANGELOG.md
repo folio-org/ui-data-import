@@ -4,6 +4,7 @@
 
 ### Features added:
 * Add required field indication and validation to invoice field mapping profile (UIDATIMP-877)
+* Cover `<ImportJobs>` component with unit tests (UIDATIMP-706)
 
 ### Bugs fixed:
 * Numeric subfield mappings are not working. Fixed (UIDATIMP-885)
