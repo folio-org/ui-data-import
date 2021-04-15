@@ -19,6 +19,7 @@ import {
   OCLC_CREATE_INSTANCE_MAPPING_ID,
   OCLC_UPDATE_INSTANCE_MAPPING_ID,
   OCLC_CREATE_MARC_BIB_MAPPING_ID,
+  QUICKMARK_DERIVE_CREATE_MAPPING_ID,
   ENTITY_KEYS,
   FIND_ALL_CQL,
 } from '../../utils';
@@ -64,7 +65,7 @@ export const mappingProfilesShape = {
         const search = _r?.query?.query;
         const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
         const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
-        const withoutDefaultProfiles = `AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_MAPPING_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_MAPPING_ID}") AND (id="" NOT id=="${OCLC_CREATE_MARC_BIB_MAPPING_ID}")`;
+        const withoutDefaultProfiles = `AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_MAPPING_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_MAPPING_ID}") AND (id="" NOT id=="${OCLC_CREATE_MARC_BIB_MAPPING_ID}") AND (id="" NOT id=="${QUICKMARK_DERIVE_CREATE_MAPPING_ID}")`;
         const query = `${FIND_ALL_CQL} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
 
         return { query };
