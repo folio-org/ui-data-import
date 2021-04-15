@@ -5,6 +5,7 @@
 ### Features added:
 * Update the UI options for the repurposed quickMARC derive profile (UIDATIMP-890)
 * Suppress quickMARC derive action and field mapping profiles from each other's associated profiles (UIDATIMP-891)
+* Suppress quickMARC derive action profile from Job profile create/update (UIDATIMP-892)
 
 ## [4.0.2](https://github.com/folio-org/ui-data-import/tree/v4.0.2) (2021-04-14)
 
