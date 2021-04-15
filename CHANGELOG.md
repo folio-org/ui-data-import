@@ -2,10 +2,14 @@
 
 ## **4.1.0** (in progress)
 
+### Features added:
+* Update the UI options for the repurposed quickMARC derive profile (UIDATIMP-890)
+
 ## [4.0.2](https://github.com/folio-org/ui-data-import/tree/v4.0.2) (2021-04-14)
 
 ### Features added:
 * Add required field indication and validation to invoice field mapping profile (UIDATIMP-877)
+* Cover`<ListTemplate>` component with tests (UIDATIMP-707)
 * Log lite - Invoice JSON screen (UIDATIMP-817)
 * Cover `<ImportJobs>` component with unit tests (UIDATIMP-706)
 
@@ -25,7 +29,6 @@
 * Cover `<CodeHighlight>` component with tests (UIDATIMP-702)
 * Cover `<FolioRecordTypeSelect>` component with tests (UIDATIMP-705)
 * Cover `<JobLogsContainer>` component with tests (UIDATIMP-713)
-* Cover`<ListTemplate>` component with tests (UIDATIMP-707)
 
 ## [4.0.0](https://github.com/folio-org/ui-data-import/tree/v4.0.0) (2021-03-18)
 

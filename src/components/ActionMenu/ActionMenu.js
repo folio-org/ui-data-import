@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import { menuTemplate } from './menuTemplate';
-import { OCLC_DEFAULT_PROFILE_IDS } from '../../utils';
+import { DEFAULT_PROFILE_IDS } from '../../utils';
 
 export const ActionMenu = memo(({
   entity,
@@ -10,7 +10,7 @@ export const ActionMenu = memo(({
   menu,
   recordId,
 }) => {
-  const isDefaultProfile = OCLC_DEFAULT_PROFILE_IDS.includes(recordId);
+  const isDefaultProfile = DEFAULT_PROFILE_IDS.includes(recordId);
 
   const templates = menuTemplate(entity, menu, isDefaultProfile);
 
