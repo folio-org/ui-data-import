@@ -4,6 +4,8 @@
 
 ### Features added:
 * Update the UI options for the repurposed quickMARC derive profile (UIDATIMP-890)
+* Suppress quickMARC derive action and field mapping profiles from each other's associated profiles (UIDATIMP-891)
+* Suppress quickMARC derive action profile from Job profile create/update (UIDATIMP-892)
 
 ### Bugs fixed:
 * Iris Bugfest: Error when trying to view the record-level details in the import log (UIDATIMP-903)
