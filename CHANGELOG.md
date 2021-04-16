@@ -8,6 +8,9 @@
 * Suppress quickMARC derive action profile from Job profile create/update (UIDATIMP-892)
 * Suppress quickMARC derive job profile from the Choose jobs list (UIDATIMP-893)
 
+### Bugs fixed:
+* Iris Bugfest: Error when trying to view the record-level details in the import log (UIDATIMP-903)
+
 ## [4.0.2](https://github.com/folio-org/ui-data-import/tree/v4.0.2) (2021-04-14)
 
 ### Features added:

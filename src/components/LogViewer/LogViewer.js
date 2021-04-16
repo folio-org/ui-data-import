@@ -176,7 +176,7 @@ export const LogViewer = memo(({
                 <>
                   {item.label}
                   {item.error && renderCodeHighlight(item.errorBlockId || 'error', item.error, themeModule.error)}
-                  {code && renderCodeHighlight(dataId, codeString, themeModule.info)}
+                  {renderCodeHighlight(dataId, codeString, themeModule.info)}
                 </>
               );
             });
