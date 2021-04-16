@@ -19,6 +19,7 @@ import {
   FIND_ALL_CQL,
   OCLC_CREATE_INSTANCE_JOB_ID,
   OCLC_UPDATE_INSTANCE_JOB_ID,
+  QUICKMARK_DERIVE_CREATE_JOB_ID,
 } from '../../utils';
 import {
   ListView,
@@ -166,7 +167,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
             ? `dataType==${dataTypeQuery}`
             : FIND_ALL_CQL;
           const withoutDefaultProfiles = hideDefaultProfiles
-            ? `AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_JOB_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_JOB_ID}")`
+            ? `AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_JOB_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_JOB_ID}") AND (id="" NOT id=="${QUICKMARK_DERIVE_CREATE_JOB_ID}")`
             : '';
           const queryTemplate = chooseJobProfile
             ? 'AND (name="%{query.query}*" OR tags.tagList="%{query.query}*" OR description="%{query.query}*")'
