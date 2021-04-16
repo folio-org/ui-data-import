@@ -166,7 +166,14 @@ export class ImportJobs extends Component {
       return;
     }
 
+    const haveFilesNoExtension = this.checkFilesHaveNoExtension(acceptedFiles);
     const haveFilesSameExtension = this.checkFilesHaveSameExtension(acceptedFiles);
+
+    if (haveFilesNoExtension) {
+      this.showFilesExtensionsModal({ type: ERROR_MODAL_META_TYPES.NO_EXTENSION });
+
+      return;
+    }
 
     if (!haveFilesSameExtension) {
       this.showFilesExtensionsModal({ type: ERROR_MODAL_META_TYPES.INCONSISTENT });
@@ -234,6 +241,12 @@ export class ImportJobs extends Component {
     const baseFileExtension = fileExtensions[0];
 
     return fileExtensions.every(fileExtension => fileExtension === baseFileExtension);
+  }
+
+  checkFilesHaveNoExtension(files = []) {
+    const fileExtensions = files.map(getFileExtension);
+
+    return fileExtensions.some(fileExtension => !fileExtension);
   }
 
   showFilesExtensionsModal(payload) {
