@@ -68,7 +68,7 @@ export const actionProfilesShape = {
         const notIdOclcUpdateInstanceAction = `(id="" NOT id=="${OCLC_UPDATE_INSTANCE_ACTION_ID}")`;
         const notIdMarcBibCreateAction = `(id="" NOT id=="${OCLC_CREATE_MARC_BIB_ACTION_ID}")`;
         const notIdQuickMarcDeriveCreateAction = `(id="" NOT id=="${QUICKMARK_DERIVE_CREATE_ACTION_ID}")`;
-        
+
         const withoutDefaultProfiles = `AND ${notIdOclcCreateInstanceAction} AND ${notIdOclcUpdateInstanceAction} 
         AND ${notIdMarcBibCreateAction} AND ${notIdQuickMarcDeriveCreateAction}`;
         const query = `${FIND_ALL_CQL} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
