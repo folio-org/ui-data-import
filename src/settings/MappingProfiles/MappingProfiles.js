@@ -70,8 +70,7 @@ export const mappingProfilesShape = {
         const notIdMarcBibCreateMapping = `(id="" NOT id=="${OCLC_CREATE_MARC_BIB_MAPPING_ID}")`;
         const notIdQuickMarcDeriveCreateMapping = `(id="" NOT id=="${QUICKMARK_DERIVE_CREATE_MAPPING_ID}")`;
 
-        const withoutDefaultProfiles = `AND ${notIdOclcCreateInstanceMapping} AND ${notIdOclcUpdateInstanceMapping} 
-        AND ${notIdMarcBibCreateMapping} AND ${notIdQuickMarcDeriveCreateMapping}`;
+        const withoutDefaultProfiles = `AND ${notIdOclcCreateInstanceMapping} AND ${notIdOclcUpdateInstanceMapping} AND ${notIdMarcBibCreateMapping} AND ${notIdQuickMarcDeriveCreateMapping}`;
         const query = `${FIND_ALL_CQL} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
 
         return { query };
