@@ -7,6 +7,7 @@
 * Suppress quickMARC derive action and field mapping profiles from each other's associated profiles (UIDATIMP-891)
 * Suppress quickMARC derive action profile from Job profile create/update (UIDATIMP-892)
 * Suppress quickMARC derive job profile from the Choose jobs list (UIDATIMP-893)
+* Cover `<ImportJobs>` component with unit tests (UIDATIMP-706)
 
 ## [4.0.2](https://github.com/folio-org/ui-data-import/tree/v4.0.2) (2021-04-14)
 
@@ -14,7 +15,6 @@
 * Add required field indication and validation to invoice field mapping profile (UIDATIMP-877)
 * Cover`<ListTemplate>` component with tests (UIDATIMP-707)
 * Log lite - Invoice JSON screen (UIDATIMP-817)
-* Cover `<ImportJobs>` component with unit tests (UIDATIMP-706)
 
 ### Bugs fixed:
 * Numeric subfield mappings are not working. Fixed (UIDATIMP-885)
