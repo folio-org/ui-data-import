@@ -11,6 +11,7 @@
 
 ### Bugs fixed:
 * Iris Bugfest: Error when trying to view the record-level details in the import log (UIDATIMP-903)
+* Error popup displays when trying to view log when there is an error (UIDATIMP-905)
 
 ## [4.0.2](https://github.com/folio-org/ui-data-import/tree/v4.0.2) (2021-04-14)
 
