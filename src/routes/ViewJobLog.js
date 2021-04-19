@@ -25,7 +25,7 @@ export class ViewJobLog extends Component {
   static manifest = Object.freeze({
     jobLog: {
       type: 'okapi',
-      throwsErrors: false,
+      throwErrors: false,
       path: (_q, _p) => {
         const recordId = _q.instanceLineId || _p.recordId;
 
@@ -35,36 +35,36 @@ export class ViewJobLog extends Component {
     srsMarcBib: {
       type: 'okapi',
       path: 'source-storage/records/:{recordId}',
-      throwsErrors: false,
+      throwErrors: false,
     },
     instances: {
       type: 'okapi',
       path: 'inventory/instances',
-      throwsErrors: false,
+      throwErrors: false,
       accumulate: true,
     },
     holdings: {
       type: 'okapi',
       path: 'holdings-storage/holdings',
-      throwsErrors: false,
+      throwErrors: false,
       accumulate: true,
     },
     items: {
       type: 'okapi',
       path: 'inventory/items',
-      throwsErrors: false,
+      throwErrors: false,
       accumulate: true,
     },
     invoice: {
       type: 'okapi',
       path: 'invoice-storage/invoices',
-      throwsErrors: false,
+      throwErrors: false,
       accumulate: true,
     },
     invoiceLine: {
       type: 'okapi',
       path: 'invoice-storage/invoice-lines',
-      throwsErrors: false,
+      throwErrors: false,
       accumulate: true,
     },
   });
