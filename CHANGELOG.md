@@ -2,6 +2,8 @@
 
 ## **4.1.0** (in progress)
 
+## [4.0.3](https://github.com/folio-org/ui-data-import/tree/v4.0.3) (2021-04-20)
+
 ### Features added:
 * Update the UI options for the repurposed quickMARC derive profile (UIDATIMP-890)
 * Suppress quickMARC derive action and field mapping profiles from each other's associated profiles (UIDATIMP-891)
