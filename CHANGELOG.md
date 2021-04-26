@@ -2,6 +2,9 @@
 
 ## **4.1.0** (in progress)
 
+### Features added:
+* Cover `<ImportJobs>` component with unit tests (UIDATIMP-706)
+
 ## [4.0.3](https://github.com/folio-org/ui-data-import/tree/v4.0.3) (2021-04-20)
 
 ### Features added:
