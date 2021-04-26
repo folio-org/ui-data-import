@@ -21,6 +21,10 @@ import {
   Paneset,
   SRStatus,
   PaneHeader,
+  HasCommand,
+  checkScope,
+  expandAllSections,
+  collapseAllSections,
 } from '@folio/stripes/components';
 import { SearchResults } from '@folio/stripes-data-transfer-components/lib/SearchResults';
 import { SearchForm } from '@folio/stripes-data-transfer-components';
@@ -39,7 +43,10 @@ import {
   buildSortOrder,
 } from '@folio/stripes-data-transfer-components/lib/utils';
 
-import { LAYER_TYPES } from '../../utils';
+import {
+  createLayerURL,
+  LAYER_TYPES,
+} from '../../utils';
 
 import css from './SearchAndSort.css';
 
@@ -60,7 +67,7 @@ export class SearchAndSort extends Component {
         pathname: PropTypes.string.isRequired,
       }).isRequired,
       PropTypes.string.isRequired,
-    ]),
+    ]).isRequired,
     history: PropTypes.shape({ // provided by withRouter
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -170,6 +177,31 @@ export class SearchAndSort extends Component {
 
     this.lastNonNullResultCount = undefined;
     this.initialQuery = queryString.parse(routePath);
+    this.searchInputRef = createRef();
+    this.accordionStatusRef = createRef();
+    this.keyCommands = [
+      {
+        name: 'new',
+        handler: () => {
+          const {
+            history,
+            location,
+          } = this.props;
+          const url = createLayerURL(location, LAYER_TYPES.CREATE);
+
+          history.push(url);
+        },
+      }, {
+        name: 'expandAllSections',
+        handler: e => expandAllSections(e, this.accordionStatusRef),
+      }, {
+        name: 'collapseAllSections',
+        handler: e => collapseAllSections(e, this.accordionStatusRef),
+      }, {
+        name: 'search',
+        handler: this.focusSearchField,
+      },
+    ];
   }
 
   componentDidMount() {
@@ -240,6 +272,10 @@ export class SearchAndSort extends Component {
 
     this.transitionToParams({ sort: sortOrder });
   }
+
+  focusSearchField = () => {
+    this.searchInputRef.current.focus();
+  };
 
   onChangeSearch = e => {
     const query = e.target.value;
@@ -467,6 +503,7 @@ export class SearchAndSort extends Component {
       handleEditSuccess,
       ViewRecordComponent,
       isFullScreen,
+      location,
       location: { pathname },
     } = this.props;
 
@@ -476,12 +513,14 @@ export class SearchAndSort extends Component {
       editContainer: fullWidthContainer,
       parentResources,
       connectedSource: source,
-      parentMutato: parentMutator,
+      parentMutator,
       onClose: this.collapseRecordDetails,
       onCloseEdit: this.onCloseEditRecord,
       onEdit: this.editRecord,
       onDelete: this.deleteRecord,
       onEditSuccess: handleEditSuccess,
+      accordionStatusRef: this.accordionStatusRef,
+      location,
     };
 
     const narrowViewScreenProps = {
@@ -532,6 +571,7 @@ export class SearchAndSort extends Component {
         handleClear={this.onClearSearchQuery}
         handleSubmit={this.onSubmitSearch}
         idKey={objectName}
+        searchInputRef={this.searchInputRef}
       />
     );
   }
@@ -659,6 +699,7 @@ export class SearchAndSort extends Component {
           onCancel={this.closeNewRecord}
           transitionToParams={values => this.transitionToParams(values)}
           match={match}
+          accordionStatusRef={this.accordionStatusRef}
           {...detailProps}
           {...this.getLayerProps(layer)}
         />
@@ -710,26 +751,32 @@ export class SearchAndSort extends Component {
 
     return (
       <>
-        <Paneset>
-          <SRStatus ref={this.SRStatusRef} />
-          <Pane
-            id="pane-results"
-            defaultWidth="fill"
-            noOverflow
-            padContent={false}
-            renderHeader={this.renderPaneHeader}
-          >
-            <div className={css.paneBody}>
-              {this.renderSearch(source)}
-              <div className={css.searchResults}>
-                {this.renderSearchResults(source)}
+        <HasCommand
+          commands={this.keyCommands}
+          isWithinScope={checkScope}
+          scope={document.body}
+        >
+          <Paneset>
+            <SRStatus ref={this.SRStatusRef} />
+            <Pane
+              id="pane-results"
+              defaultWidth="fill"
+              noOverflow
+              padContent={false}
+              renderHeader={this.renderPaneHeader}
+            >
+              <div className={css.paneBody}>
+                {this.renderSearch(source)}
+                <div className={css.searchResults}>
+                  {this.renderSearchResults(source)}
+                </div>
               </div>
-            </div>
-          </Pane>
-          {!isFullScreen && this.renderDetailsPane(source)}
-          {this.renderCreateRecordLayer(source)}
-        </Paneset>
-        {isFullScreen && this.renderDetailsPane(source)}
+            </Pane>
+            {!isFullScreen && this.renderDetailsPane(source)}
+            {this.renderCreateRecordLayer(source)}
+          </Paneset>
+          {isFullScreen && this.renderDetailsPane(source)}
+        </HasCommand>
       </>
     );
   }
