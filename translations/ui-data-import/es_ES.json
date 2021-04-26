@@ -136,7 +136,7 @@
     "recordTypes.marc-bib": "MARC Bibliográfico",
     "recordTypes.marc-auth": "MARC de Autoridades",
     "recordTypes.marc-hold": "MARC de Fondos",
-    "settings.actionProfiles.count": "{count, number} acción {count, plural, one {profile} otro {profiles}}",
+    "settings.actionProfiles.count": "{count, number} acción {count, plural, one { perfil } other { perfiles }}",
     "settings.mappingProfiles.title": "Perfiles de mapeo de campo",
     "settings.actionProfiles.new": "Nuevo perfil de acción",
     "none": "Ninguno",

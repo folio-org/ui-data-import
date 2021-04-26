@@ -25,7 +25,7 @@ export class ViewJobLog extends Component {
   static manifest = Object.freeze({
     jobLog: {
       type: 'okapi',
-      throwsErrors: false,
+      throwErrors: false,
       path: (_q, _p) => {
         const recordId = _q.instanceLineId || _p.recordId;
 
@@ -35,36 +35,36 @@ export class ViewJobLog extends Component {
     srsMarcBib: {
       type: 'okapi',
       path: 'source-storage/records/:{recordId}',
-      throwsErrors: false,
+      throwErrors: false,
     },
     instances: {
       type: 'okapi',
       path: 'inventory/instances',
-      throwsErrors: false,
+      throwErrors: false,
       accumulate: true,
     },
     holdings: {
       type: 'okapi',
       path: 'holdings-storage/holdings',
-      throwsErrors: false,
+      throwErrors: false,
       accumulate: true,
     },
     items: {
       type: 'okapi',
       path: 'inventory/items',
-      throwsErrors: false,
+      throwErrors: false,
       accumulate: true,
     },
     invoice: {
       type: 'okapi',
       path: 'invoice-storage/invoices',
-      throwsErrors: false,
+      throwErrors: false,
       accumulate: true,
     },
     invoiceLine: {
       type: 'okapi',
       path: 'invoice-storage/invoice-lines',
-      throwsErrors: false,
+      throwErrors: false,
       accumulate: true,
     },
   });
@@ -162,7 +162,7 @@ export class ViewJobLog extends Component {
   }
 
   fetchInvoiceLineData() {
-    const invoiceLineId = this.props.resources.jobLog.records[0]?.relatedInvoiceLineInfo.id;
+    const invoiceLineId = this.props.resources.jobLog.records[0]?.relatedInvoiceLineInfo?.id;
 
     if (invoiceLineId) {
       this.props.mutator.invoiceLine.GET({ path: `invoice-storage/invoice-lines/${invoiceLineId}` });
@@ -275,14 +275,14 @@ export class ViewJobLog extends Component {
     } = record;
 
     const errors = {
-      [OPTIONS.SRS_MARC_BIB]: error,
-      [OPTIONS.INSTANCE]: relatedInstanceInfo.error,
-      [OPTIONS.HOLDINGS]: relatedHoldingsInfo.error,
-      [OPTIONS.ITEM]: relatedItemInfo.error,
-      [OPTIONS.ORDER]: relatedOrderInfo.error,
+      [OPTIONS.SRS_MARC_BIB]: error || '',
+      [OPTIONS.INSTANCE]: relatedInstanceInfo.error || '',
+      [OPTIONS.HOLDINGS]: relatedHoldingsInfo.error || '',
+      [OPTIONS.ITEM]: relatedItemInfo.error || '',
+      [OPTIONS.ORDER]: relatedOrderInfo.error || '',
       [OPTIONS.INVOICE]: {
-        invoiceInfo: relatedInvoiceInfo.error,
-        invoiceLineInfo: relatedInvoiceLineInfo.error,
+        invoiceInfo: relatedInvoiceInfo.error || '',
+        invoiceLineInfo: relatedInvoiceLineInfo?.error || '',
       },
     };
 
@@ -309,10 +309,11 @@ export class ViewJobLog extends Component {
     const {
       sourceRecordOrder,
       sourceRecordTitle,
-      relatedInvoiceLineInfo: { fullInvoiceLineNumber },
+      relatedInvoiceLineInfo,
     } = record;
 
     const isEdifactType = recordType === DATA_TYPES[1];
+    const recordOrder = isEdifactType ? relatedInvoiceLineInfo.fullInvoiceLineNumber : sourceRecordOrder + 1;
     const toolbar = {
       visible: true,
       message: (
@@ -320,7 +321,7 @@ export class ViewJobLog extends Component {
           id="ui-data-import.import-log"
           tagName="span"
           values={{
-            recordOrder: isEdifactType ? fullInvoiceLineNumber : sourceRecordOrder + 1,
+            recordOrder,
             recordTitle: sourceRecordTitle,
           }}
         />

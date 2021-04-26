@@ -3,11 +3,20 @@
 ## **4.1.0** (in progress)
 
 ### Features added:
+* Cover `<ImportJobs>` component with unit tests (UIDATIMP-706)
+
+## [4.0.3](https://github.com/folio-org/ui-data-import/tree/v4.0.3) (2021-04-20)
+
+### Features added:
 * Update the UI options for the repurposed quickMARC derive profile (UIDATIMP-890)
 * Suppress quickMARC derive action and field mapping profiles from each other's associated profiles (UIDATIMP-891)
 * Suppress quickMARC derive action profile from Job profile create/update (UIDATIMP-892)
 * Suppress quickMARC derive job profile from the Choose jobs list (UIDATIMP-893)
-* Cover `<ImportJobs>` component with unit tests (UIDATIMP-706)
+* Disallow the upload of files without file extensions (UIDATIMP-896)
+
+### Bugs fixed:
+* Iris Bugfest: Error when trying to view the record-level details in the import log (UIDATIMP-903)
+* Error popup displays when trying to view log when there is an error (UIDATIMP-905)
 
 ## [4.0.2](https://github.com/folio-org/ui-data-import/tree/v4.0.2) (2021-04-14)
 

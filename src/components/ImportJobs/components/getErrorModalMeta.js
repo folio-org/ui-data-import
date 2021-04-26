@@ -8,6 +8,7 @@ export const ERROR_MODAL_META_TYPES = {
   BLOCKED: 'blocked',
   MEMORY_LIMIT: 'memoryLimit',
   INCONSISTENT: 'inconsistent',
+  NO_EXTENSION: 'noExtension',
   DEFAULT: 'default',
 };
 
@@ -47,6 +48,12 @@ const errorModalMetaTypes = {
     return {
       heading: <FormattedMessage id="ui-data-import.modal.fileExtensions.inconsistent.header" />,
       message: invalidFilesMessage,
+    };
+  },
+  [ERROR_MODAL_META_TYPES.NO_EXTENSION]() {
+    return {
+      heading: <FormattedMessage id="ui-data-import.modal.fileExtensions.blocked.header" />,
+      message: <FormattedMessage id="ui-data-import.modal.fileExtensions.noExtension.message" />,
     };
   },
   [ERROR_MODAL_META_TYPES.DEFAULT]() {

@@ -144,7 +144,7 @@ JobSummaryComponent.manifest = Object.freeze({
     perRequest: RESULT_COUNT_INCREMENT,
     path: 'metadata-provider/jobLogEntries/:{id}',
     clientGeneratePk: false,
-    throwsErrors: false,
+    throwErrors: false,
     GET: {
       params: {
         sortBy: queryParams => {
@@ -171,7 +171,7 @@ JobSummaryComponent.manifest = Object.freeze({
   jobExecutions: {
     type: 'okapi',
     path: 'change-manager/jobExecutions/:{id}',
-    throwsErrors: false,
+    throwErrors: false,
   },
 });
 

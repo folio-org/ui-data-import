@@ -229,6 +229,7 @@
   "modal.fileExtensions.reset.header": "Reset all file extension mappings",
   "modal.fileExtensions.reset.message": "This will reset the file extension mappings to the system defaults",
   "modal.fileExtensions.reset.actionButton": "Reset all",
+  "modal.fileExtensions.noExtension.message": "You cannot upload a file without a file extension",
   "settings.fileExtension.title": "File extension",
   "settings.fileExtension.extension": "Extension",
   "settings.fileExtension.dataTypes": "Data type(s)",
