@@ -14,7 +14,6 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-data-import ./translations/ui-data-import/compiled",
     "test:unit": "jest --ci --coverage",
     "test:e2e": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
     "test": "yarn run test:unit && yarn run test:e2e",
@@ -35,7 +34,6 @@
     "@folio/stripes-components": "^9.0.0",
     "@folio/stripes-core": "^7.0.0",
     "@folio/stripes-smart-components": "^6.0.0",
-    "@formatjs/cli": "^4.2.10",
     "@testing-library/react": "^10.4.7",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^26.1.0",
