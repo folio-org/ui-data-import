@@ -17,7 +17,7 @@ import {
   noop,
 } from 'lodash';
 
-import stripesFinalForm from '@folio/stripes-final-form';
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import {
   Headline,
