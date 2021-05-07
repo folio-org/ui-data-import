@@ -6,6 +6,7 @@
 * Cover `<ImportJobs>` component with unit tests (UIDATIMP-706)
 * Data Import Settings > Apply baseline shortcut keys for Job profile (UIDATIMP-898)
 * Data Import Settings > Apply baseline shortcut keys for Action profile (UIDATIMP-900)
+* Data Import Settings > Apply baseline shortcut keys for Match profile (UIDATIMP-899)
 
 ## [4.0.3](https://github.com/folio-org/ui-data-import/tree/v4.0.3) (2021-04-20)
 

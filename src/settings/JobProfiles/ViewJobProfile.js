@@ -407,6 +407,7 @@ export class ViewJobProfile extends Component {
       <DetailsKeyShortcutsWrapper
         history={history}
         location={location}
+        recordId={record?.id}
       >
         <Pane
           data-test-pane-job-profile-details
