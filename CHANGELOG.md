@@ -4,7 +4,7 @@
 
 ### Features added:
 * Cover `<ImportJobs>` component with unit tests (UIDATIMP-706)
-* Compile Translation Files into AST Format (UIDATIMP-888)
+* Update import for stripes-final-form (UIDATIMP-912)
 
 ## [4.0.3](https://github.com/folio-org/ui-data-import/tree/v4.0.3) (2021-04-20)
 

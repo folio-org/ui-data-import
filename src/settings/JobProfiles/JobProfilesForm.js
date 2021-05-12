@@ -22,7 +22,7 @@ import {
   AccordionSet,
 } from '@folio/stripes/components';
 import { FullScreenForm } from '@folio/stripes-data-transfer-components';
-import stripesFinalForm from '@folio/stripes-final-form';
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import { ProfileTree } from '../../components';
 
