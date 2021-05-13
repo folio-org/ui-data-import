@@ -66,7 +66,6 @@
     "@folio/react-intl-safe-html": "^2.0.0",
     "@folio/stripes-acq-components": "~2.3.0",
     "@folio/stripes-data-transfer-components": "^4.0.0",
-    "@folio/stripes-final-form": "^5.0.0",
     "classnames": "^2.2.5",
     "dom-helpers": "^5.2.0",
     "faker": "^4.1.0",
