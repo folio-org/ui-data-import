@@ -18,7 +18,8 @@
     "test:e2e": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
     "test": "yarn run test:unit && yarn run test:e2e",
     "lint": "eslint .",
-    "lintfix": "eslint . --fix"
+    "lintfix": "eslint . --fix",
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-data-import ./translations/ui-data-import/compiled"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -34,6 +35,7 @@
     "@folio/stripes-components": "^9.0.0",
     "@folio/stripes-core": "^7.0.0",
     "@folio/stripes-smart-components": "^6.0.0",
+    "@formatjs/cli": "^4.2.10",
     "@testing-library/react": "^10.4.7",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^26.1.0",
@@ -67,16 +69,16 @@
     "classnames": "^2.2.5",
     "dom-helpers": "^5.2.0",
     "faker": "^4.1.0",
+    "final-form": "^4.18.2",
     "inflected": "^2.0.4",
     "lodash": "^4.16.4",
     "miragejs": "^0.1.40",
     "moment": "~2.24.0",
     "prop-types": "^15.6.0",
-    "final-form": "^4.18.2",
     "react-dropzone": "^7.0.1",
+    "react-final-form": "^6.3.0",
     "react-highlighter": "^0.4.3",
-    "redux-form": "^8.3.7",
-    "react-final-form": "^6.3.0"
+    "redux-form": "^8.3.7"
   },
   "peerDependencies": {
     "@folio/stripes": "^6.0.0",
