@@ -18,6 +18,7 @@ import {
   ConfirmationModal,
   Callout,
   PaneHeader,
+  AccordionStatus,
 } from '@folio/stripes/components';
 import {
   withTags,
@@ -71,6 +72,7 @@ const ViewJobProfileComponent = props => {
     onDelete,
     onClose,
     actionMenuItems,
+    accordionStatusRef,
   } = props;
 
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -265,42 +267,74 @@ const ViewJobProfileComponent = props => {
         >
           {record.name}
         </Headline>
-        <AccordionSet>
-          <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
-            <ViewMetaData
-              metadata={record.metadata}
-              systemId={SYSTEM_USER_ID}
-              systemUser={SYSTEM_USER_NAME}
-            />
-            <KeyValue label={<FormattedMessage id="ui-data-import.settings.jobProfiles.acceptedDataType" />}>
-              <div data-test-accepted-data-type>{record.dataType}</div>
-            </KeyValue>
-            <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
-              <div data-test-description>{record.description || <NoValue />}</div>
-            </KeyValue>
-          </Accordion>
-          {tagsEnabled && (
-            <div data-test-tags-accordion>
-              <TagsAccordion
-                link={tagsEntityLink}
-                getEntity={getEntity}
-                getEntityTags={getEntityTags}
-                entityTagsPath="profile.tags"
+        <AccordionStatus ref={accordionStatusRef}>
+          <AccordionSet>
+            <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
+              <ViewMetaData
+                metadata={record.metadata}
+                systemId={SYSTEM_USER_ID}
+                systemUser={SYSTEM_USER_NAME}
               />
+              <KeyValue label={<FormattedMessage id="ui-data-import.settings.jobProfiles.acceptedDataType" />}>
+                <div data-test-accepted-data-type>{record.dataType}</div>
+              </KeyValue>
+              <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
+                <div data-test-description>{record.description || <NoValue />}</div>
+              </KeyValue>
+            </Accordion>
+            {tagsEnabled && (
+              <div data-test-tags-accordion>
+                <TagsAccordion
+                  link={tagsEntityLink}
+                  getEntity={getEntity}
+                  getEntityTags={getEntityTags}
+                  entityTagsPath="profile.tags"
+                />
+              </div>
+            )}
+            <div data-test-job-profile-overview-details>
+              <Accordion
+                label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
+              >
+                {wrappersLoaded ? (
+                  <ProfileTree
+                    linkingRules={PROFILE_LINKING_RULES}
+                    contentData={wrappers}
+                    record={record}
+                    resources={resources}
+                    okapi={okapi}
+                    showLabelsAsHotLink
+                  />
+                ) : (
+                  <Preloader
+                    message={<FormattedMessage id="ui-data-import.loading" />}
+                    size="medium"
+                    preloaderClassName={sharedCss.preloader}
+                  />
+                )}
+              </Accordion>
             </div>
-          )}
-          <div data-test-job-profile-overview-details>
-            <Accordion
-              label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
-            >
-              {wrappersLoaded ? (
-                <ProfileTree
-                  linkingRules={PROFILE_LINKING_RULES}
-                  contentData={wrappers}
-                  record={record}
-                  resources={resources}
-                  okapi={okapi}
-                  showLabelsAsHotLink
+            <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.jobsUsingThisProfile" />}>
+              {jobsUsingThisProfileDataHasLoaded ? (
+                <MultiColumnList
+                  id="jobs-using-this-profile"
+                  columnIdPrefix="jobs-using-this-profile"
+                  totalCount={jobsUsingThisProfileData.length}
+                  contentData={jobsUsingThisProfileData}
+                  columnMapping={{
+                    fileName: <FormattedMessage id="ui-data-import.fileName" />,
+                    hrId: <FormattedMessage id="ui-data-import.settings.jobProfiles.jobID" />,
+                    completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
+                    runBy: <FormattedMessage id="ui-data-import.runBy" />,
+                  }}
+                  visibleColumns={[
+                    'fileName',
+                    'hrId',
+                    'completedDate',
+                    'runBy',
+                  ]}
+                  formatter={jobsUsingThisProfileFormatter}
+                  width="100%"
                 />
               ) : (
                 <Preloader
@@ -310,38 +344,8 @@ const ViewJobProfileComponent = props => {
                 />
               )}
             </Accordion>
-          </div>
-          <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.jobsUsingThisProfile" />}>
-            {jobsUsingThisProfileDataHasLoaded ? (
-              <MultiColumnList
-                id="jobs-using-this-profile"
-                columnIdPrefix="jobs-using-this-profile"
-                totalCount={jobsUsingThisProfileData.length}
-                contentData={jobsUsingThisProfileData}
-                columnMapping={{
-                  fileName: <FormattedMessage id="ui-data-import.fileName" />,
-                  hrId: <FormattedMessage id="ui-data-import.settings.jobProfiles.jobID" />,
-                  completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
-                  runBy: <FormattedMessage id="ui-data-import.runBy" />,
-                }}
-                visibleColumns={[
-                  'fileName',
-                  'hrId',
-                  'completedDate',
-                  'runBy',
-                ]}
-                formatter={jobsUsingThisProfileFormatter}
-                width="100%"
-              />
-            ) : (
-              <Preloader
-                message={<FormattedMessage id="ui-data-import.loading" />}
-                size="medium"
-                preloaderClassName={sharedCss.preloader}
-              />
-            )}
-          </Accordion>
-        </AccordionSet>
+          </AccordionSet>
+        </AccordionStatus>
         <EndOfItem
           className={sharedCss.endOfRecord}
           title={<FormattedMessage id="ui-data-import.endOfRecord" />}
@@ -487,6 +491,7 @@ ViewJobProfileComponent.propTypes = {
   onDelete: PropTypes.func.isRequired,
   ENTITY_KEY: PropTypes.string, // eslint-disable-line
   actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
+  accordionStatusRef: PropTypes.object,
 };
 ViewJobProfileComponent.defaultProps = {
   ENTITY_KEY: ENTITY_KEYS.JOB_PROFILES,

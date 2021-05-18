@@ -39,12 +39,10 @@ import {
   ActionMenu,
   ProfileAssociator,
   RecordTypesSelect,
-} from '../../components';
-import { ViewMatchCriterion } from '../../components/MatchCriterion/view';
-import {
   FOLIO_RECORD_TYPES,
   MATCH_INCOMING_RECORD_TYPES,
-} from '../../components/ListTemplate';
+} from '../../components';
+import { ViewMatchCriterion } from '../../components/MatchCriterion/view';
 
 import sharedCss from '../../shared.css';
 import styles from './MatchProfiles.css';
