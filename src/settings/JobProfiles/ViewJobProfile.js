@@ -101,11 +101,11 @@ const ViewJobProfileComponent = props => {
 
   const getJobsUsingThisProfileData = () => {
     const jobsUsingThisProfile = resources.jobsUsingThisProfile || {};
-    const [{ jobExecutions: jobsUsingThisProfileData } = {}] = jobsUsingThisProfile.records || [];
+    const [{ jobExecutions } = {}] = jobsUsingThisProfile.records || [];
 
     return {
       hasLoaded: jobsUsingThisProfile.hasLoaded,
-      jobsUsingThisProfileData,
+      jobExecutions,
     };
   };
 
@@ -223,7 +223,7 @@ const ViewJobProfileComponent = props => {
 
   const {
     hasLoaded,
-    record,
+    record: jobProfileRecord,
   } = jobProfileData();
   const {
     wrappers,
@@ -231,10 +231,10 @@ const ViewJobProfileComponent = props => {
   } = getChildWrappers();
   const {
     hasLoaded: jobsUsingThisProfileDataHasLoaded,
-    jobsUsingThisProfileData,
+    jobExecutions: jobsUsingThisProfileData,
   } = getJobsUsingThisProfileData();
 
-  if (!record || !hasLoaded) {
+  if (!jobProfileRecord || !hasLoaded) {
     return (
       <Spinner
         data-test-pane-job-profile-details
@@ -243,10 +243,10 @@ const ViewJobProfileComponent = props => {
     );
   }
 
-  setRecordMetadata(record);
+  setRecordMetadata(jobProfileRecord);
 
   const jobsUsingThisProfileFormatter = listTemplate({});
-  const tagsEntityLink = `data-import-profiles/jobProfiles/${record.id}`;
+  const tagsEntityLink = `data-import-profiles/jobProfiles/${jobProfileRecord.id}`;
 
   return (
     <DetailsKeyShortcutsWrapper
@@ -259,27 +259,27 @@ const ViewJobProfileComponent = props => {
         fluidContentWidth
         renderHeader={renderPaneHeader}
       >
-        <TitleManager record={record.name} />
+        <TitleManager record={jobProfileRecord.name} />
         <Headline
           data-test-headline
           size="xx-large"
           tag="h2"
         >
-          {record.name}
+          {jobProfileRecord.name}
         </Headline>
         <AccordionStatus ref={accordionStatusRef}>
           <AccordionSet>
             <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
               <ViewMetaData
-                metadata={record.metadata}
+                metadata={jobProfileRecord.metadata}
                 systemId={SYSTEM_USER_ID}
                 systemUser={SYSTEM_USER_NAME}
               />
               <KeyValue label={<FormattedMessage id="ui-data-import.settings.jobProfiles.acceptedDataType" />}>
-                <div data-test-accepted-data-type>{record.dataType}</div>
+                <div data-test-accepted-data-type>{jobProfileRecord.dataType}</div>
               </KeyValue>
               <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
-                <div data-test-description>{record.description || <NoValue />}</div>
+                <div data-test-description>{jobProfileRecord.description || <NoValue />}</div>
               </KeyValue>
             </Accordion>
             {tagsEnabled && (
@@ -300,7 +300,7 @@ const ViewJobProfileComponent = props => {
                   <ProfileTree
                     linkingRules={PROFILE_LINKING_RULES}
                     contentData={wrappers}
-                    record={record}
+                    record={jobProfileRecord}
                     resources={resources}
                     okapi={okapi}
                     showLabelsAsHotLink
@@ -356,13 +356,13 @@ const ViewJobProfileComponent = props => {
           heading={(
             <FormattedMessage
               id="ui-data-import.modal.jobProfile.delete.header"
-              values={{ name: record.name }}
+              values={{ name: jobProfileRecord.name }}
             />
           )}
           message={<FormattedMessage id="ui-data-import.modal.jobProfile.delete.message" />}
           confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
           cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
-          onConfirm={() => handleDelete(record)}
+          onConfirm={() => handleDelete(jobProfileRecord)}
           onCancel={hideDeleteConfirmation}
         />
         <ConfirmationModal
@@ -372,12 +372,12 @@ const ViewJobProfileComponent = props => {
           message={(
             <SafeHTMLMessage
               id="ui-data-import.modal.jobProfile.run.message"
-              values={{ name: record.name }}
+              values={{ name: jobProfileRecord.name }}
             />
           )}
           confirmLabel={<FormattedMessage id="ui-data-import.run" />}
           onCancel={() => setShowRunConfirmation(false)}
-          onConfirm={() => handleRun(record)}
+          onConfirm={() => handleRun(jobProfileRecord)}
         />
         <Callout ref={calloutRef} />
       </Pane>
