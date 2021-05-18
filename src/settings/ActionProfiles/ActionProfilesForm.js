@@ -25,6 +25,7 @@ import {
   AccordionSet,
   ConfirmationModal,
   Select,
+  AccordionStatus,
 } from '@folio/stripes/components';
 import { FullScreenForm } from '@folio/stripes-data-transfer-components';
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -41,6 +42,7 @@ import {
   FOLIO_RECORD_TYPES_TO_DISABLE,
 } from '../../utils';
 import {
+  EditKeyShortcutsWrapper,
   FolioRecordTypeSelect,
   ACTION_TYPES_SELECT,
   ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES,
@@ -58,6 +60,7 @@ export const ActionProfilesFormComponent = ({
   onCancel,
   transitionToParams,
   match: { path },
+  accordionStatusRef,
 }) => {
   const {
     profile,
@@ -174,157 +177,161 @@ export const ActionProfilesFormComponent = ({
   };
 
   return (
-    <FullScreenForm
-      id="action-profiles-form"
-      paneTitle={paneTitle}
-      submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
-      cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
-      isSubmitButtonDisabled={isSubmitDisabled}
-      onSubmit={onSubmit}
-      onCancel={onCancel}
-    >
-      <Headline
-        size="xx-large"
-        tag="h2"
-        data-test-header-title
+    <EditKeyShortcutsWrapper onSubmit={onSubmit}>
+      <FullScreenForm
+        id="action-profiles-form"
+        paneTitle={paneTitle}
+        submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
+        cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
+        isSubmitButtonDisabled={isSubmitDisabled}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
       >
-        {headLine}
-      </Headline>
-      <AccordionSet>
-        <Accordion
-          label={<FormattedMessage id="ui-data-import.summary" />}
-          separator={false}
+        <Headline
+          size="xx-large"
+          tag="h2"
+          data-test-header-title
         >
-          <div data-test-name-field>
-            <Field
-              label={<FormattedMessage id="ui-data-import.name" />}
-              name="profile.name"
-              required
-              component={TextField}
-              validate={validateRequiredField}
-              isEqual={isFieldPristine}
-            />
-          </div>
-          <div data-test-description-field>
-            <Field
-              label={<FormattedMessage id="ui-data-import.description" />}
-              name="profile.description"
-              component={TextArea}
-              isEqual={isFieldPristine}
-            />
-          </div>
-        </Accordion>
-        <Accordion
-          label={<FormattedMessage id="ui-data-import.details" />}
-          separator={false}
-        >
-          <div data-test-action-field>
-            <FormattedMessage id="ui-data-import.selectAction">
-              {([placeholder]) => (
+          {headLine}
+        </Headline>
+        <AccordionStatus ref={accordionStatusRef}>
+          <AccordionSet>
+            <Accordion
+              label={<FormattedMessage id="ui-data-import.summary" />}
+              separator={false}
+            >
+              <div data-test-name-field>
                 <Field
-                  name="profile.action"
+                  label={<FormattedMessage id="ui-data-import.name" />}
+                  name="profile.name"
+                  required
+                  component={TextField}
                   validate={validateRequiredField}
-                  render={fieldProps => (
-                    <Select
-                      {...fieldProps}
-                      label={<FormattedMessage id="ui-data-import.action" />}
-                      dataOptions={actionsDataOptions}
-                      placeholder={placeholder}
-                      onChange={event => {
-                        const value = event.target.value;
+                  isEqual={isFieldPristine}
+                />
+              </div>
+              <div data-test-description-field>
+                <Field
+                  label={<FormattedMessage id="ui-data-import.description" />}
+                  name="profile.description"
+                  component={TextArea}
+                  isEqual={isFieldPristine}
+                />
+              </div>
+            </Accordion>
+            <Accordion
+              label={<FormattedMessage id="ui-data-import.details" />}
+              separator={false}
+            >
+              <div data-test-action-field>
+                <FormattedMessage id="ui-data-import.selectAction">
+                  {([placeholder]) => (
+                    <Field
+                      name="profile.action"
+                      validate={validateRequiredField}
+                      render={fieldProps => (
+                        <Select
+                          {...fieldProps}
+                          label={<FormattedMessage id="ui-data-import.action" />}
+                          dataOptions={actionsDataOptions}
+                          placeholder={placeholder}
+                          onChange={event => {
+                            const value = event.target.value;
 
-                        fieldProps.input.onChange(value);
-                        setAction(value);
-                      }}
-                      required
+                            fieldProps.input.onChange(value);
+                            setAction(value);
+                          }}
+                          required
+                        />
+                      )}
                     />
                   )}
+                </FormattedMessage>
+              </div>
+              <FolioRecordTypeSelect
+                fieldName="folioRecord"
+                dataOptions={folioRecordTypesDataOptions}
+                onRecordSelect={setFolioRecord}
+              />
+            </Accordion>
+            <Accordion
+              id="actionProfileFormAssociatedMappingProfileAccordion"
+              label={<FormattedMessage id="ui-data-import.settings.associatedMappingProfile" />}
+              separator={false}
+            >
+              <ProfileAssociator
+                entityKey={ENTITY_KEYS.MAPPING_PROFILES}
+                namespaceKey="AMP"
+                parentId={profile.id}
+                parentType={PROFILE_TYPES.ACTION_PROFILE}
+                masterType={PROFILE_TYPES.ACTION_PROFILE}
+                detailType={PROFILE_TYPES.MAPPING_PROFILE}
+                profileName={profile.name}
+                contentData={associations}
+                hasLoaded
+                isMultiSelect={false}
+                isMultiLink
+                relationsToAdd={addedRelations}
+                relationsToDelete={deletedRelations}
+                onLink={addRelations}
+                onUnlink={deleteRelations}
+                isEditMode={isEditMode}
+              />
+              <Field
+                name="addedRelations"
+                component={() => null}
+              />
+              <Field
+                name="deletedRelations"
+                component={() => null}
+              />
+            </Accordion>
+            {isEditMode && (
+              <Accordion
+                id="actionProfileFormAssociatedJobProfileAccordion"
+                label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
+                separator={false}
+              >
+                <ProfileAssociator
+                  entityKey={ENTITY_KEYS.JOB_PROFILES}
+                  namespaceKey="AJP"
+                  parentId={profile.id}
+                  parentType={PROFILE_TYPES.ACTION_PROFILE}
+                  masterType={PROFILE_TYPES.JOB_PROFILE}
+                  detailType={PROFILE_TYPES.ACTION_PROFILE}
+                  profileName={profile.name}
+                  contentData={associations}
+                  record={initialValues}
+                  hasLoaded
+                  isMultiSelect={false}
+                  isMultiLink
+                  useSearch={false}
+                  isEditMode={isEditMode}
                 />
-              )}
-            </FormattedMessage>
-          </div>
-          <FolioRecordTypeSelect
-            fieldName="folioRecord"
-            dataOptions={folioRecordTypesDataOptions}
-            onRecordSelect={setFolioRecord}
-          />
-        </Accordion>
-        <Accordion
-          id="actionProfileFormAssociatedMappingProfileAccordion"
-          label={<FormattedMessage id="ui-data-import.settings.associatedMappingProfile" />}
-          separator={false}
-        >
-          <ProfileAssociator
-            entityKey={ENTITY_KEYS.MAPPING_PROFILES}
-            namespaceKey="AMP"
-            parentId={profile.id}
-            parentType={PROFILE_TYPES.ACTION_PROFILE}
-            masterType={PROFILE_TYPES.ACTION_PROFILE}
-            detailType={PROFILE_TYPES.MAPPING_PROFILE}
-            profileName={profile.name}
-            contentData={associations}
-            hasLoaded
-            isMultiSelect={false}
-            isMultiLink
-            relationsToAdd={addedRelations}
-            relationsToDelete={deletedRelations}
-            onLink={addRelations}
-            onUnlink={deleteRelations}
-            isEditMode={isEditMode}
-          />
-          <Field
-            name="addedRelations"
-            component={() => null}
-          />
-          <Field
-            name="deletedRelations"
-            component={() => null}
-          />
-        </Accordion>
-        {isEditMode && (
-          <Accordion
-            id="actionProfileFormAssociatedJobProfileAccordion"
-            label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
-            separator={false}
-          >
-            <ProfileAssociator
-              entityKey={ENTITY_KEYS.JOB_PROFILES}
-              namespaceKey="AJP"
-              parentId={profile.id}
-              parentType={PROFILE_TYPES.ACTION_PROFILE}
-              masterType={PROFILE_TYPES.JOB_PROFILE}
-              detailType={PROFILE_TYPES.ACTION_PROFILE}
-              profileName={profile.name}
-              contentData={associations}
-              record={initialValues}
-              hasLoaded
-              isMultiSelect={false}
-              isMultiLink
-              useSearch={false}
-              isEditMode={isEditMode}
+              </Accordion>
+            )}
+          </AccordionSet>
+        </AccordionStatus>
+        <ConfirmationModal
+          id="confirm-edit-action-profile-modal"
+          open={isConfirmEditModalOpen}
+          heading={<FormattedMessage id="ui-data-import.settings.actionProfiles.confirmEditModal.heading" />}
+          message={(
+            <FormattedMessage
+              id="ui-data-import.settings.actionProfiles.confirmEditModal.message"
+              values={{ amount: associatedJobProfilesAmount }}
             />
-          </Accordion>
-        )}
-      </AccordionSet>
-      <ConfirmationModal
-        id="confirm-edit-action-profile-modal"
-        open={isConfirmEditModalOpen}
-        heading={<FormattedMessage id="ui-data-import.settings.actionProfiles.confirmEditModal.heading" />}
-        message={(
-          <FormattedMessage
-            id="ui-data-import.settings.actionProfiles.confirmEditModal.message"
-            values={{ amount: associatedJobProfilesAmount }}
-          />
-        )}
-        confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
-        onConfirm={async () => {
-          await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)();
+          )}
+          confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
+          onConfirm={async () => {
+            await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)();
 
-          setConfirmModalOpen(false);
-        }}
-        onCancel={() => setConfirmModalOpen(false)}
-      />
-    </FullScreenForm>
+            setConfirmModalOpen(false);
+          }}
+          onCancel={() => setConfirmModalOpen(false)}
+        />
+      </FullScreenForm>
+    </EditKeyShortcutsWrapper>
   );
 };
 
@@ -348,6 +355,7 @@ ActionProfilesFormComponent.propTypes = {
     }).isRequired,
     PropTypes.string.isRequired,
   ]),
+  accordionStatusRef: PropTypes.object,
 };
 
 export const ActionProfilesForm = compose(

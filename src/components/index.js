@@ -2,6 +2,8 @@ export * from './AcceptedValuesField';
 export * from './ActionMenu';
 export * from './BooleanActionField';
 export * from './CodeHighlight';
+export * from './DetailsKeyShortcutsWrapper';
+export * from './EditKeyShortcutsWrapper';
 export * from './Callout';
 export * from './FieldOrganization';
 export * from './ListView';
