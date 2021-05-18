@@ -7,6 +7,9 @@
 * Data Import Settings > Apply baseline shortcut keys for Job profile (UIDATIMP-898)
 * Data Import Settings > Apply baseline shortcut keys for Action profile (UIDATIMP-900)
 
+### Bugs fixed:
+* folio-testing UI is completely broken for all apps (UIDATIMP-915)
+
 ## [4.0.3](https://github.com/folio-org/ui-data-import/tree/v4.0.3) (2021-04-20)
 
 ### Features added:
