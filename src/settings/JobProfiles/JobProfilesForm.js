@@ -20,15 +20,11 @@ import {
   Select,
   Accordion,
   AccordionSet,
-  AccordionStatus,
 } from '@folio/stripes/components';
 import { FullScreenForm } from '@folio/stripes-data-transfer-components';
-import stripesFinalForm from '@folio/stripes-final-form';
+import stripesFinalForm from '@folio/stripes/final-form';
 
-import {
-  EditKeyShortcutsWrapper,
-  ProfileTree,
-} from '../../components';
+import { ProfileTree } from '../../components';
 
 import {
   compose,
@@ -56,7 +52,6 @@ export const JobProfilesFormComponent = memo(({
   parentResources,
   transitionToParams,
   match: { path },
-  accordionStatusRef,
 }) => {
   const { okapi } = stripes;
   const { profile } = initialValues;
@@ -109,99 +104,95 @@ export const JobProfilesFormComponent = memo(({
   };
 
   return (
-    <EditKeyShortcutsWrapper onSubmit={onSubmit}>
-      <FullScreenForm
-        id="job-profiles-form"
-        paneTitle={paneTitle}
-        submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
-        cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
-        isSubmitButtonDisabled={isSubmitDisabled}
-        onSubmit={onSubmit}
-        onCancel={() => {
-          clearStorage();
-          onCancel();
-        }}
+    <FullScreenForm
+      id="job-profiles-form"
+      paneTitle={paneTitle}
+      submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
+      cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
+      isSubmitButtonDisabled={isSubmitDisabled}
+      onSubmit={onSubmit}
+      onCancel={() => {
+        clearStorage();
+        onCancel();
+      }}
+    >
+      <Headline
+        size="xx-large"
+        tag="h2"
+        data-test-header-title
       >
-        <Headline
-          size="xx-large"
-          tag="h2"
-          data-test-header-title
+        {headLine}
+      </Headline>
+      <AccordionSet>
+        <Accordion
+          id="job-profile-summary"
+          label={<FormattedMessage id="ui-data-import.summary" />}
+          separator={false}
         >
-          {headLine}
-        </Headline>
-        <AccordionStatus ref={accordionStatusRef}>
-          <AccordionSet>
-            <Accordion
-              id="job-profile-summary"
-              label={<FormattedMessage id="ui-data-import.summary" />}
-              separator={false}
-            >
-              <div data-test-name-field>
+          <div data-test-name-field>
+            <Field
+              label={<FormattedMessage id="ui-data-import.name" />}
+              name="profile.name"
+              required
+              component={TextField}
+              validate={validateRequiredField}
+              isEqual={isFieldPristine}
+            />
+          </div>
+          <div data-test-accepted-data-types-field>
+            <FormattedMessage id="ui-data-import.settings.jobProfiles.chooseAcceptedDataType">
+              {([placeholder]) => (
                 <Field
-                  label={<FormattedMessage id="ui-data-import.name" />}
-                  name="profile.name"
+                  label={<FormattedMessage id="ui-data-import.settings.jobProfiles.acceptedDataType" />}
+                  name="profile.dataType"
+                  component={Select}
                   required
-                  component={TextField}
+                  itemToString={identity}
                   validate={validateRequiredField}
-                  isEqual={isFieldPristine}
+                  dataOptions={dataTypes}
+                  placeholder={placeholder}
                 />
-              </div>
-              <div data-test-accepted-data-types-field>
-                <FormattedMessage id="ui-data-import.settings.jobProfiles.chooseAcceptedDataType">
-                  {([placeholder]) => (
-                    <Field
-                      label={<FormattedMessage id="ui-data-import.settings.jobProfiles.acceptedDataType" />}
-                      name="profile.dataType"
-                      component={Select}
-                      required
-                      itemToString={identity}
-                      validate={validateRequiredField}
-                      dataOptions={dataTypes}
-                      placeholder={placeholder}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-              <div data-test-description-field>
-                <Field
-                  label={<FormattedMessage id="ui-data-import.description" />}
-                  name="profile.description"
-                  component={TextArea}
-                  isEqual={isFieldPristine}
-                />
-              </div>
-            </Accordion>
-            <div data-test-job-profile-overview>
-              <Accordion
-                label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
-                separator={false}
-              >
-                <ProfileTree
-                  parentId={profile.id}
-                  linkingRules={PROFILE_LINKING_RULES}
-                  contentData={profileTreeData}
-                  hasLoaded
-                  relationsToAdd={addedRelations}
-                  relationsToDelete={deletedRelations}
-                  onLink={addRelations}
-                  onUnlink={deleteRelations}
-                  okapi={okapi}
-                  resources={parentResources}
-                />
-                <Field
-                  name="addedRelations"
-                  component={() => null}
-                />
-                <Field
-                  name="deletedRelations"
-                  component={() => null}
-                />
-              </Accordion>
-            </div>
-          </AccordionSet>
-        </AccordionStatus>
-      </FullScreenForm>
-    </EditKeyShortcutsWrapper>
+              )}
+            </FormattedMessage>
+          </div>
+          <div data-test-description-field>
+            <Field
+              label={<FormattedMessage id="ui-data-import.description" />}
+              name="profile.description"
+              component={TextArea}
+              isEqual={isFieldPristine}
+            />
+          </div>
+        </Accordion>
+        <div data-test-job-profile-overview>
+          <Accordion
+            label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
+            separator={false}
+          >
+            <ProfileTree
+              parentId={profile.id}
+              linkingRules={PROFILE_LINKING_RULES}
+              contentData={profileTreeData}
+              hasLoaded
+              relationsToAdd={addedRelations}
+              relationsToDelete={deletedRelations}
+              onLink={addRelations}
+              onUnlink={deleteRelations}
+              okapi={okapi}
+              resources={parentResources}
+            />
+            <Field
+              name="addedRelations"
+              component={() => null}
+            />
+            <Field
+              name="deletedRelations"
+              component={() => null}
+            />
+          </Accordion>
+        </div>
+      </AccordionSet>
+    </FullScreenForm>
   );
 });
 
@@ -234,7 +225,6 @@ JobProfilesFormComponent.propTypes = {
   parentResources: PropTypes.object.isRequired,
   transitionToParams: PropTypes.func.isRequired,
   match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
-  accordionStatusRef: PropTypes.object,
 };
 
 const mapStateToProps = state => {

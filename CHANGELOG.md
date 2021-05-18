@@ -4,8 +4,8 @@
 
 ### Features added:
 * Cover `<ImportJobs>` component with unit tests (UIDATIMP-706)
-* Data Import Settings > Apply baseline shortcut keys for Job profile (UIDATIMP-898)
-* Data Import Settings > Apply baseline shortcut keys for Action profile (UIDATIMP-900)
+* Update import for stripes-final-form (UIDATIMP-912)
+* Compile Translation Files into AST Format (UIDATIMP-888)
 
 ### Bugs fixed:
 * folio-testing UI is completely broken for all apps (UIDATIMP-915)

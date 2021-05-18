@@ -19,7 +19,6 @@ import {
   AccordionSet,
   ConfirmationModal,
   PaneHeader,
-  AccordionStatus,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -37,7 +36,6 @@ import {
   getEntityTags,
 } from '../../utils';
 import {
-  DetailsKeyShortcutsWrapper,
   Spinner,
   ActionMenu,
   FOLIO_RECORD_TYPES,
@@ -78,19 +76,11 @@ export class ViewActionProfile extends Component {
       }),
     }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
-    location: PropTypes.oneOfType([
-      PropTypes.shape({
-        search: PropTypes.string.isRequired,
-        pathname: PropTypes.string.isRequired,
-      }).isRequired,
-      PropTypes.string.isRequired,
-    ]).isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
-    accordionStatusRef: PropTypes.object,
   };
 
   static defaultProps = {
@@ -183,12 +173,7 @@ export class ViewActionProfile extends Component {
   };
 
   render() {
-    const {
-      tagsEnabled,
-      history,
-      location,
-      accordionStatusRef,
-    } = this.props;
+    const { tagsEnabled } = this.props;
     const { showDeleteConfirmation } = this.state;
     const {
       hasLoaded,
@@ -221,123 +206,116 @@ export class ViewActionProfile extends Component {
     const associations = [...[], ...actionProfile.parentProfiles, ...actionProfile.childProfiles];
 
     return (
-      <DetailsKeyShortcutsWrapper
-        history={history}
-        location={location}
+      <Pane
+        data-test-pane-action-profile-details
+        defaultWidth="fill"
+        fluidContentWidth
+        renderHeader={this.renderPaneHeader}
       >
-        <Pane
-          data-test-pane-action-profile-details
-          defaultWidth="fill"
-          fluidContentWidth
-          renderHeader={this.renderPaneHeader}
+        <TitleManager record={actionProfile.name} />
+        <Headline
+          data-test-headline
+          size="xx-large"
+          tag="h2"
         >
-          <TitleManager record={actionProfile.name} />
-          <Headline
-            data-test-headline
-            size="xx-large"
-            tag="h2"
-          >
-            {actionProfile.name}
-          </Headline>
-          <AccordionStatus ref={accordionStatusRef}>
-            <AccordionSet>
-              <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
-                <ViewMetaData
-                  metadata={actionProfile.metadata}
-                  systemId={SYSTEM_USER_ID}
-                  systemUser={SYSTEM_USER_NAME}
-                />
-                <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
-                  <div data-test-description>{actionProfile.description || <NoValue />}</div>
-                </KeyValue>
-              </Accordion>
-              {tagsEnabled && (
-                <div data-test-tags-accordion>
-                  <TagsAccordion
-                    link={tagsEntityLink}
-                    getEntity={getEntity}
-                    getEntityTags={getEntityTags}
-                    entityTagsPath="profile.tags"
-                  />
-                </div>
-              )}
-              <Accordion label={<FormattedMessage id="ui-data-import.details" />}>
-                <KeyValue label={<FormattedMessage id="ui-data-import.action" />}>
-                  <div data-test-action>
-                    <FormattedMessage id={ACTION_TYPES[actionProfile.action].captionId} />
-                  </div>
-                </KeyValue>
-                <KeyValue label={<FormattedMessage id="ui-data-import.folioRecordType" />}>
-                  <div data-test-folio-record>
-                    <FormattedMessage id={FOLIO_RECORD_TYPES[actionProfile.folioRecord].captionId} />
-                  </div>
-                </KeyValue>
-              </Accordion>
-              <Accordion
-                label={<FormattedMessage id="ui-data-import.settings.associatedMappingProfile" />}
-                displayWhenOpen={(
-                  <Button>
-                    <FormattedMessage id="ui-data-import.options" />
-                  </Button>
-                )}
-              >
-                <ProfileAssociator
-                  entityKey={ENTITY_KEYS.MAPPING_PROFILES}
-                  namespaceKey="AMP"
-                  parentType={PROFILE_TYPES.ACTION_PROFILE}
-                  masterType={PROFILE_TYPES.ACTION_PROFILE}
-                  detailType={PROFILE_TYPES.MAPPING_PROFILE}
-                  contentData={associations}
-                  hasLoaded={hasLoaded}
-                  record={actionProfile}
-                  isMultiSelect={false}
-                  isMultiLink
-                />
-              </Accordion>
-              <Accordion
-                label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
-                displayWhenOpen={(
-                  <Button>
-                    <FormattedMessage id="ui-data-import.options" />
-                  </Button>
-                )}
-              >
-                <ProfileAssociator
-                  entityKey={ENTITY_KEYS.JOB_PROFILES}
-                  namespaceKey="AJP"
-                  parentType={PROFILE_TYPES.ACTION_PROFILE}
-                  masterType={PROFILE_TYPES.JOB_PROFILE}
-                  detailType={PROFILE_TYPES.ACTION_PROFILE}
-                  contentData={associations}
-                  hasLoaded={hasLoaded}
-                  record={actionProfile}
-                  isMultiSelect
-                  isMultiLink
-                />
-              </Accordion>
-            </AccordionSet>
-          </AccordionStatus>
-          <EndOfItem
-            className={sharedCss.endOfRecord}
-            title={<FormattedMessage id="ui-data-import.endOfRecord" />}
-          />
-          <ConfirmationModal
-            id="delete-action-profile-modal"
-            open={showDeleteConfirmation}
-            heading={(
-              <FormattedMessage
-                id="ui-data-import.modal.actionProfile.delete.header"
-                values={{ name: actionProfile.name }}
+          {actionProfile.name}
+        </Headline>
+        <AccordionSet>
+          <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
+            <ViewMetaData
+              metadata={actionProfile.metadata}
+              systemId={SYSTEM_USER_ID}
+              systemUser={SYSTEM_USER_NAME}
+            />
+            <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
+              <div data-test-description>{actionProfile.description || <NoValue />}</div>
+            </KeyValue>
+          </Accordion>
+          {tagsEnabled && (
+            <div data-test-tags-accordion>
+              <TagsAccordion
+                link={tagsEntityLink}
+                getEntity={getEntity}
+                getEntityTags={getEntityTags}
+                entityTagsPath="profile.tags"
               />
+            </div>
+          )}
+          <Accordion label={<FormattedMessage id="ui-data-import.details" />}>
+            <KeyValue label={<FormattedMessage id="ui-data-import.action" />}>
+              <div data-test-action>
+                <FormattedMessage id={ACTION_TYPES[actionProfile.action].captionId} />
+              </div>
+            </KeyValue>
+            <KeyValue label={<FormattedMessage id="ui-data-import.folioRecordType" />}>
+              <div data-test-folio-record>
+                <FormattedMessage id={FOLIO_RECORD_TYPES[actionProfile.folioRecord].captionId} />
+              </div>
+            </KeyValue>
+          </Accordion>
+          <Accordion
+            label={<FormattedMessage id="ui-data-import.settings.associatedMappingProfile" />}
+            displayWhenOpen={(
+              <Button>
+                <FormattedMessage id="ui-data-import.options" />
+              </Button>
             )}
-            message={<FormattedMessage id="ui-data-import.modal.actionProfile.delete.message" />}
-            confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
-            cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
-            onConfirm={() => this.handleDelete(actionProfile)}
-            onCancel={this.hideDeleteConfirmation}
-          />
-        </Pane>
-      </DetailsKeyShortcutsWrapper>
+          >
+            <ProfileAssociator
+              entityKey={ENTITY_KEYS.MAPPING_PROFILES}
+              namespaceKey="AMP"
+              parentType={PROFILE_TYPES.ACTION_PROFILE}
+              masterType={PROFILE_TYPES.ACTION_PROFILE}
+              detailType={PROFILE_TYPES.MAPPING_PROFILE}
+              contentData={associations}
+              hasLoaded={hasLoaded}
+              record={actionProfile}
+              isMultiSelect={false}
+              isMultiLink
+            />
+          </Accordion>
+          <Accordion
+            label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
+            displayWhenOpen={(
+              <Button>
+                <FormattedMessage id="ui-data-import.options" />
+              </Button>
+            )}
+          >
+            <ProfileAssociator
+              entityKey={ENTITY_KEYS.JOB_PROFILES}
+              namespaceKey="AJP"
+              parentType={PROFILE_TYPES.ACTION_PROFILE}
+              masterType={PROFILE_TYPES.JOB_PROFILE}
+              detailType={PROFILE_TYPES.ACTION_PROFILE}
+              contentData={associations}
+              hasLoaded={hasLoaded}
+              record={actionProfile}
+              isMultiSelect
+              isMultiLink
+            />
+          </Accordion>
+        </AccordionSet>
+        <EndOfItem
+          className={sharedCss.endOfRecord}
+          title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+        />
+        <ConfirmationModal
+          id="delete-action-profile-modal"
+          open={showDeleteConfirmation}
+          heading={(
+            <FormattedMessage
+              id="ui-data-import.modal.actionProfile.delete.header"
+              values={{ name: actionProfile.name }}
+            />
+          )}
+          message={<FormattedMessage id="ui-data-import.modal.actionProfile.delete.message" />}
+          confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
+          onConfirm={() => this.handleDelete(actionProfile)}
+          onCancel={this.hideDeleteConfirmation}
+        />
+      </Pane>
     );
   }
 }
