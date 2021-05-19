@@ -6,6 +6,10 @@ import {
 } from 'react-router-dom';
 
 import { stripesShape } from '@folio/stripes/core';
+import {
+  CommandList,
+  defaultKeyboardShortcuts as keyboardCommands,
+} from '@folio/stripes/components';
 
 import {
   Home,
@@ -33,37 +37,43 @@ class DataImport extends Component {
     } = this.props;
 
     if (showSettings) {
-      return <DataImportSettings {...this.props} />;
+      return (
+        <CommandList commands={keyboardCommands}>
+          <DataImportSettings {...this.props} />
+        </CommandList>
+      );
     }
 
     return (
-      <UploadingJobsContextProvider>
-        <Switch>
-          <Route
-            path={path}
-            exact
-            component={Home}
-          />
-          <Route
-            path={`${path}/job-profile`}
-            component={JobProfile}
-          />
-          <Route
-            path={`${path}/log/:id/:recordId`}
-            exact
-            component={ViewJobLog}
-          />
-          <Route
-            path={`${path}/job-summary/:id`}
-            exact
-            component={JobSummary}
-          />
-          <Route
-            path={`${path}/job-logs`}
-            component={ViewAllLogs}
-          />
-        </Switch>
-      </UploadingJobsContextProvider>
+      <CommandList commands={keyboardCommands}>
+        <UploadingJobsContextProvider>
+          <Switch>
+            <Route
+              path={path}
+              exact
+              component={Home}
+            />
+            <Route
+              path={`${path}/job-profile`}
+              component={JobProfile}
+            />
+            <Route
+              path={`${path}/log/:id/:recordId`}
+              exact
+              component={ViewJobLog}
+            />
+            <Route
+              path={`${path}/job-summary/:id`}
+              exact
+              component={JobSummary}
+            />
+            <Route
+              path={`${path}/job-logs`}
+              component={ViewAllLogs}
+            />
+          </Switch>
+        </UploadingJobsContextProvider>
+      </CommandList>
     );
   }
 }

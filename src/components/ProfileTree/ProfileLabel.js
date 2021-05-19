@@ -95,10 +95,10 @@ export const ProfileLabel = memo(({
           const needSeparator = i < columns.length - 1;
 
           return (
-            <>
-              <span key={`${recordType}-label-item-${i}`}>{templates[item](recordData.content)}</span>
+            <span key={`${recordType}-label-item-${i}`}>
+              {templates[item](recordData.content)}
               {needSeparator && <span>&nbsp;&middot;&nbsp;</span>}
-            </>
+            </span>
           );
         })}
       </div>
