@@ -12,6 +12,7 @@
 
 ### Bugs fixed:
 * folio-testing UI is completely broken for all apps (UIDATIMP-915)
+* Cannot run a data import job in any of the hosted ref envs (UIDATIMP-925)
 
 ## [4.0.3](https://github.com/folio-org/ui-data-import/tree/v4.0.3) (2021-04-20)
 
