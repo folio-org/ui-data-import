@@ -171,7 +171,11 @@ const ViewJobProfileComponent = props => {
 
     return (
       <ActionMenu
-        entity={{ props }}
+        entity={{
+          props,
+          showRunConfirmation: () => setShowRunConfirmation(true),
+          showDeleteConfirmation: () => setShowDeleteConfirmation(true),
+        }}
         menu={menu}
         recordId={record?.id}
       />
