@@ -312,7 +312,7 @@ export class ViewJobLog extends Component {
       relatedInvoiceLineInfo,
     } = record;
 
-    const isEdifactType = recordType === DATA_TYPES[1];
+    const isEdifactType = recordType === DATA_TYPES[1].value;
     const recordOrder = isEdifactType ? relatedInvoiceLineInfo.fullInvoiceLineNumber : sourceRecordOrder + 1;
     const toolbar = {
       visible: true,
