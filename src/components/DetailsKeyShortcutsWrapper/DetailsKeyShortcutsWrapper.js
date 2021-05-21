@@ -8,18 +8,24 @@ import {
 
 import {
   createLayerURL,
+  DEFAULT_PROFILE_IDS,
   LAYER_TYPES,
 } from '../../utils';
 
 export const DetailsKeyShortcutsWrapper = ({
   children,
+  recordId,
   history,
   location,
 }) => {
+  const isDefaultProfile = DEFAULT_PROFILE_IDS.includes(recordId);
+
   const keyCommands = [
     {
       name: 'edit',
       handler: () => {
+        if (isDefaultProfile) return;
+
         const url = createLayerURL(location, LAYER_TYPES.EDIT);
 
         history.push(url);
@@ -51,6 +57,7 @@ DetailsKeyShortcutsWrapper.propTypes = {
     PropTypes.node,
     PropTypes.func,
   ]).isRequired,
+  recordId: PropTypes.string.isRequired,
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
   location: PropTypes.oneOfType([
     PropTypes.shape({

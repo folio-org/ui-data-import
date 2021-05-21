@@ -224,6 +224,7 @@ export class ViewActionProfile extends Component {
       <DetailsKeyShortcutsWrapper
         history={history}
         location={location}
+        recordId={actionProfile?.id}
       >
         <Pane
           data-test-pane-action-profile-details

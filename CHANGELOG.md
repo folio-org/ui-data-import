@@ -8,6 +8,7 @@
 * Compile Translation Files into AST Format (UIDATIMP-888)
 * Data Import Settings > Apply baseline shortcut keys for Job profile (UIDATIMP-898)
 * Data Import Settings > Apply baseline shortcut keys for Action profile (UIDATIMP-900)
+* Data Import Settings > Apply baseline shortcut keys for Match profile (UIDATIMP-899)
 
 ### Bugs fixed:
 * folio-testing UI is completely broken for all apps (UIDATIMP-915)
