@@ -18,6 +18,7 @@ import {
   AccordionSet,
   ConfirmationModal,
   PaneHeader,
+  AccordionStatus,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -35,12 +36,13 @@ import {
   getEntityTags,
 } from '../../utils';
 import {
+  DetailsKeyShortcutsWrapper,
   Spinner,
   ActionMenu,
-  ProfileAssociator,
-  RecordTypesSelect,
   FOLIO_RECORD_TYPES,
   MATCH_INCOMING_RECORD_TYPES,
+  ProfileAssociator,
+  RecordTypesSelect,
 } from '../../components';
 import { ViewMatchCriterion } from '../../components/MatchCriterion/view';
 
@@ -77,12 +79,21 @@ export class ViewMatchProfile extends Component {
       }),
     }).isRequired,
     match: PropTypes.shape({ params: PropTypes.shape({ id: PropTypes.string }).isRequired }).isRequired,
+    history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+    location: PropTypes.oneOfType([
+      PropTypes.shape({
+        search: PropTypes.string.isRequired,
+        pathname: PropTypes.string.isRequired,
+      }).isRequired,
+      PropTypes.string.isRequired,
+    ]).isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     parentResources: PropTypes.object,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
+    accordionStatusRef: PropTypes.object,
   };
 
   static defaultProps = {
@@ -179,6 +190,9 @@ export class ViewMatchProfile extends Component {
     const {
       tagsEnabled,
       parentResources,
+      history,
+      location,
+      accordionStatusRef,
     } = this.props;
     const { showDeleteConfirmation } = this.state;
 
@@ -206,111 +220,119 @@ export class ViewMatchProfile extends Component {
       : '';
 
     return (
-      <Pane
-        data-test-pane-match-profile-details
-        renderHeader={this.renderPaneHeader}
-        defaultWidth="620px"
-        fluidContentWidth
+      <DetailsKeyShortcutsWrapper
+        history={history}
+        location={location}
+        recordId={matchProfile?.id}
       >
-        <TitleManager record={matchProfile.name} />
-        <Headline
-          data-test-headline
-          size="xx-large"
-          tag="h2"
+        <Pane
+          data-test-pane-match-profile-details
+          renderHeader={this.renderPaneHeader}
+          defaultWidth="620px"
+          fluidContentWidth
         >
-          {matchProfile.name}
-        </Headline>
-        <AccordionSet>
-          <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
-            <ViewMetaData
-              metadata={matchProfile.metadata}
-              systemId={SYSTEM_USER_ID}
-              systemUser={SYSTEM_USER_NAME}
-            />
-            <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
-              <div data-test-description>{matchProfile.description || <NoValue />}</div>
-            </KeyValue>
-          </Accordion>
-          {tagsEnabled && (
-            <div data-test-tags-accordion>
-              <TagsAccordion
-                link={tagsEntityLink}
-                getEntity={getEntity}
-                getEntityTags={getEntityTags}
-                entityTagsPath="profile.tags"
-              />
-            </div>
-          )}
-          <div className={styles.details}>
-            <Accordion
-              id="view-match-profile-details"
-              label={<FormattedMessage id="ui-data-import.details" />}
-            >
-              <RecordTypesSelect
-                id="panel-existing-view"
-                existingRecordType={matchProfile.existingRecordType}
-                incomingRecordType={matchProfile.incomingRecordType}
-                isEditable={false}
-              />
-              <Accordion
-                id="view-match-criteria"
-                label={<FormattedMessage id="ui-data-import.match.criteria" />}
-                separator={false}
-              >
-                {matchProfile.matchDetails.map((item, i) => (
-                  <ViewMatchCriterion
-                    key={i}
-                    matchDetails={item}
-                    incomingRecordLabel={incomingRecordLabel}
-                    existingRecordLabel={existingRecordLabel}
-                    resources={parentResources}
-                  />
-                ))}
-              </Accordion>
-            </Accordion>
-          </div>
-          <Accordion
-            label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
-            displayWhenOpen={(
-              <Button>
-                <FormattedMessage id="ui-data-import.options" />
-              </Button>
-            )}
+          <TitleManager record={matchProfile.name} />
+          <Headline
+            data-test-headline
+            size="xx-large"
+            tag="h2"
           >
-            <ProfileAssociator
-              entityKey={ENTITY_KEYS.JOB_PROFILES}
-              namespaceKey="AJP"
-              parentType={PROFILE_TYPES.MATCH_PROFILE}
-              masterType={PROFILE_TYPES.JOB_PROFILE}
-              detailType={PROFILE_TYPES.MATCH_PROFILE}
-              contentData={associations}
-              hasLoaded={hasLoaded}
-              record={matchProfile}
-              isMultiSelect
-              isMultiLink
-            />
-          </Accordion>
-        </AccordionSet>
-        <EndOfItem
-          className={sharedCss.endOfRecord}
-          title={<FormattedMessage id="ui-data-import.endOfRecord" />}
-        />
-        <ConfirmationModal
-          id="delete-match-profile-modal"
-          open={showDeleteConfirmation}
-          heading={(
-            <FormattedMessage
-              id="ui-data-import.modal.matchProfile.delete.header"
-              values={{ name: matchProfile.name }}
-            />
-          )}
-          message={<FormattedMessage id="ui-data-import.modal.matchProfile.delete.message" />}
-          confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
-          cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
-          onConfirm={() => this.handleDelete(matchProfile)}
-          onCancel={this.hideDeleteConfirmation}
-        />
-      </Pane>
+            {matchProfile.name}
+          </Headline>
+          <AccordionStatus ref={accordionStatusRef}>
+            <AccordionSet>
+              <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
+                <ViewMetaData
+                  metadata={matchProfile.metadata}
+                  systemId={SYSTEM_USER_ID}
+                  systemUser={SYSTEM_USER_NAME}
+                />
+                <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
+                  <div data-test-description>{matchProfile.description || <NoValue />}</div>
+                </KeyValue>
+              </Accordion>
+              {tagsEnabled && (
+                <div data-test-tags-accordion>
+                  <TagsAccordion
+                    link={tagsEntityLink}
+                    getEntity={getEntity}
+                    getEntityTags={getEntityTags}
+                    entityTagsPath="profile.tags"
+                  />
+                </div>
+              )}
+              <div className={styles.details}>
+                <Accordion
+                  id="view-match-profile-details"
+                  label={<FormattedMessage id="ui-data-import.details" />}
+                >
+                  <RecordTypesSelect
+                    id="panel-existing-view"
+                    existingRecordType={matchProfile.existingRecordType}
+                    incomingRecordType={matchProfile.incomingRecordType}
+                    isEditable={false}
+                  />
+                  <Accordion
+                    id="view-match-criteria"
+                    label={<FormattedMessage id="ui-data-import.match.criteria" />}
+                    separator={false}
+                  >
+                    {matchProfile.matchDetails.map((item, i) => (
+                      <ViewMatchCriterion
+                        key={i}
+                        matchDetails={item}
+                        incomingRecordLabel={incomingRecordLabel}
+                        existingRecordLabel={existingRecordLabel}
+                        resources={parentResources}
+                      />
+                    ))}
+                  </Accordion>
+                </Accordion>
+              </div>
+              <Accordion
+                label={<FormattedMessage id="ui-data-import.settings.associatedJobProfiles" />}
+                displayWhenOpen={(
+                  <Button>
+                    <FormattedMessage id="ui-data-import.options" />
+                  </Button>
+                )}
+              >
+                <ProfileAssociator
+                  entityKey={ENTITY_KEYS.JOB_PROFILES}
+                  namespaceKey="AJP"
+                  parentType={PROFILE_TYPES.MATCH_PROFILE}
+                  masterType={PROFILE_TYPES.JOB_PROFILE}
+                  detailType={PROFILE_TYPES.MATCH_PROFILE}
+                  contentData={associations}
+                  hasLoaded={hasLoaded}
+                  record={matchProfile}
+                  isMultiSelect
+                  isMultiLink
+                />
+              </Accordion>
+            </AccordionSet>
+          </AccordionStatus>
+          <EndOfItem
+            className={sharedCss.endOfRecord}
+            title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+          />
+          <ConfirmationModal
+            id="delete-match-profile-modal"
+            open={showDeleteConfirmation}
+            heading={(
+              <FormattedMessage
+                id="ui-data-import.modal.matchProfile.delete.header"
+                values={{ name: matchProfile.name }}
+              />
+            )}
+            message={<FormattedMessage id="ui-data-import.modal.matchProfile.delete.message" />}
+            confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
+            cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
+            onConfirm={() => this.handleDelete(matchProfile)}
+            onCancel={this.hideDeleteConfirmation}
+          />
+        </Pane>
+      </DetailsKeyShortcutsWrapper>
     );
   }
 }

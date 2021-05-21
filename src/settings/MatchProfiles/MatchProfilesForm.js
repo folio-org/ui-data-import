@@ -27,10 +27,12 @@ import {
   TextArea,
   RepeatableField,
   ConfirmationModal,
+  AccordionStatus,
 } from '@folio/stripes/components';
 import { FullScreenForm } from '@folio/stripes-data-transfer-components';
 
 import {
+  EditKeyShortcutsWrapper,
   FOLIO_RECORD_TYPES,
   MATCH_INCOMING_RECORD_TYPES,
   RecordTypesSelect,
@@ -138,6 +140,7 @@ export const MatchProfilesFormComponent = memo(({
   form,
   transitionToParams,
   match: { path },
+  accordionStatusRef,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -267,125 +270,129 @@ export const MatchProfilesFormComponent = memo(({
     : '';
 
   return (
-    <FullScreenForm
-      id="match-profiles-form"
-      paneTitle={paneTitle}
-      submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
-      cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
-      isSubmitButtonDisabled={isSubmitDisabled}
-      onSubmit={onSubmit}
-      onCancel={onCancel}
-    >
-      <Headline
-        size="xx-large"
-        tag="h2"
-        data-test-header-title
+    <EditKeyShortcutsWrapper onSubmit={onSubmit}>
+      <FullScreenForm
+        id="match-profiles-form"
+        paneTitle={paneTitle}
+        submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
+        cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
+        isSubmitButtonDisabled={isSubmitDisabled}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
       >
-        {headLine}
-      </Headline>
-      <AccordionSet>
-        <Accordion
-          id="summary"
-          label={<FormattedMessage id="ui-data-import.summary" />}
-          separator={false}
+        <Headline
+          size="xx-large"
+          tag="h2"
+          data-test-header-title
         >
-          {/* Register known field names to ensure form.change usages behave as expected */}
-          <Field
-            name="profile.incomingRecordType"
-            render={() => null}
-          />
-          <Field
-            name="profile.existingRecordType"
-            render={() => null}
-          />
-          {/* End of Registering known field names */}
+          {headLine}
+        </Headline>
+        <AccordionStatus ref={accordionStatusRef}>
+          <AccordionSet>
+            <Accordion
+              id="summary"
+              label={<FormattedMessage id="ui-data-import.summary" />}
+              separator={false}
+            >
+              {/* Register known field names to ensure form.change usages behave as expected */}
+              <Field
+                name="profile.incomingRecordType"
+                render={() => null}
+              />
+              <Field
+                name="profile.existingRecordType"
+                render={() => null}
+              />
+              {/* End of Registering known field names */}
 
-          <div data-test-name-field>
-            <Field
-              label={<FormattedMessage id="ui-data-import.name" />}
-              name="profile.name"
-              required
-              component={TextField}
-              validate={validateRequiredField}
-            />
-          </div>
-          <div data-test-description-field>
-            <Field
-              label={<FormattedMessage id="ui-data-import.description" />}
-              name="profile.description"
-              component={TextArea}
-            />
-          </div>
-        </Accordion>
-        <Accordion
-          id="match-profile-details"
-          label={<FormattedMessage id="ui-data-import.details" />}
-          separator={false}
-        >
-          <MatchingFieldsManager>
-            {({
-              matchFields,
-              getDropdownOptions,
-            }) => (
-              <>
-                <RecordTypesSelect
-                  id="panel-existing-edit"
-                  existingRecordType={existingRecordType}
-                  incomingRecordType={incomingRecordType}
-                  onExistingSelect={({ type }) => handleExistingRecordChange(type, matchFields, getDropdownOptions)}
-                  onIncomingSelect={handleIncomingRecordChange}
+              <div data-test-name-field>
+                <Field
+                  label={<FormattedMessage id="ui-data-import.name" />}
+                  name="profile.name"
+                  required
+                  component={TextField}
+                  validate={validateRequiredField}
                 />
-                <Accordion
-                  id="match-criteria"
-                  label={<FormattedMessage id="ui-data-import.match.criteria" />}
-                  separator={false}
-                >
-                  <RepeatableField
-                    fields={matchDetails}
-                    canAdd={false}
-                    canRemove={false}
-                    onAdd={noop}
-                    renderField={(field, index) => (
-                      <MatchCriterion
-                        repeatableIndex={index}
-                        matchDetails={field}
-                        incomingRecordType={incomingRecord.type}
-                        existingRecordType={existingRecord}
-                        staticValueType={staticValueType}
-                        incomingRecordLabel={incomingRecordLabel}
-                        existingRecordLabel={existingRecordLabel}
-                        existingRecordFields={isEmpty(existingRecordFields) ? getInitialFields(matchFields, getDropdownOptions) : existingRecordFields}
-                        onStaticValueTypeChange={handleStaticValueTypeChange}
-                        onQualifierSectionChange={handleQualifierSectionChange}
-                        changeFormState={changeFormState}
-                        formValues={form.getState().values}
+              </div>
+              <div data-test-description-field>
+                <Field
+                  label={<FormattedMessage id="ui-data-import.description" />}
+                  name="profile.description"
+                  component={TextArea}
+                />
+              </div>
+            </Accordion>
+            <Accordion
+              id="match-profile-details"
+              label={<FormattedMessage id="ui-data-import.details" />}
+              separator={false}
+            >
+              <MatchingFieldsManager>
+                {({
+                  matchFields,
+                  getDropdownOptions,
+                }) => (
+                  <>
+                    <RecordTypesSelect
+                      id="panel-existing-edit"
+                      existingRecordType={existingRecordType}
+                      incomingRecordType={incomingRecordType}
+                      onExistingSelect={({ type }) => handleExistingRecordChange(type, matchFields, getDropdownOptions)}
+                      onIncomingSelect={handleIncomingRecordChange}
+                    />
+                    <Accordion
+                      id="match-criteria"
+                      label={<FormattedMessage id="ui-data-import.match.criteria" />}
+                      separator={false}
+                    >
+                      <RepeatableField
+                        fields={matchDetails}
+                        canAdd={false}
+                        canRemove={false}
+                        onAdd={noop}
+                        renderField={(field, index) => (
+                          <MatchCriterion
+                            repeatableIndex={index}
+                            matchDetails={field}
+                            incomingRecordType={incomingRecord.type}
+                            existingRecordType={existingRecord}
+                            staticValueType={staticValueType}
+                            incomingRecordLabel={incomingRecordLabel}
+                            existingRecordLabel={existingRecordLabel}
+                            existingRecordFields={isEmpty(existingRecordFields) ? getInitialFields(matchFields, getDropdownOptions) : existingRecordFields}
+                            onStaticValueTypeChange={handleStaticValueTypeChange}
+                            onQualifierSectionChange={handleQualifierSectionChange}
+                            changeFormState={changeFormState}
+                            formValues={form.getState().values}
+                          />
+                        )}
                       />
-                    )}
-                  />
-                </Accordion>
-              </>
-            )}
-          </MatchingFieldsManager>
-        </Accordion>
-      </AccordionSet>
-      <ConfirmationModal
-        id="confirm-edit-match-profile-modal"
-        open={isConfirmEditModalOpen}
-        heading={<FormattedMessage id="ui-data-import.settings.matchProfiles.confirmEditModal.heading" />}
-        message={(
-          <FormattedMessage
-            id="ui-data-import.settings.matchProfiles.confirmEditModal.message"
-            values={{ amount: associatedJobProfilesAmount }}
-          />
-        )}
-        confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
-        onConfirm={async () => {
-          await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)();
-          setConfirmModalOpen(false);
-        }}
-        onCancel={() => setConfirmModalOpen(false)}
-      />
-    </FullScreenForm>
+                    </Accordion>
+                  </>
+                )}
+              </MatchingFieldsManager>
+            </Accordion>
+          </AccordionSet>
+        </AccordionStatus>
+        <ConfirmationModal
+          id="confirm-edit-match-profile-modal"
+          open={isConfirmEditModalOpen}
+          heading={<FormattedMessage id="ui-data-import.settings.matchProfiles.confirmEditModal.heading" />}
+          message={(
+            <FormattedMessage
+              id="ui-data-import.settings.matchProfiles.confirmEditModal.message"
+              values={{ amount: associatedJobProfilesAmount }}
+            />
+          )}
+          confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
+          onConfirm={async () => {
+            await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)();
+            setConfirmModalOpen(false);
+          }}
+          onCancel={() => setConfirmModalOpen(false)}
+        />
+      </FullScreenForm>
+    </EditKeyShortcutsWrapper>
   );
 });
 
@@ -418,6 +425,7 @@ MatchProfilesFormComponent.propTypes = {
   }).isRequired,
   transitionToParams: PropTypes.func.isRequired,
   match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
+  accordionStatusRef: PropTypes.object,
 };
 
 export const MatchProfilesForm = compose(
