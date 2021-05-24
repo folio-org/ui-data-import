@@ -31,6 +31,7 @@ import {
 } from '@folio/stripes-data-transfer-components';
 
 import {
+  DetailsKeyShortcutsWrapper,
   Spinner,
   ActionMenu,
   ProfileAssociator,
@@ -92,11 +93,19 @@ export class ViewMappingProfile extends Component {
     }).isRequired,
     parentResources: PropTypes.shape({ marcFieldProtectionSettings: PropTypes.shape({ records: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired }).isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+    location: PropTypes.oneOfType([
+      PropTypes.shape({
+        search: PropTypes.string.isRequired,
+        pathname: PropTypes.string.isRequired,
+      }).isRequired,
+      PropTypes.string.isRequired,
+    ]).isRequired,
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
+    accordionStatusRef: PropTypes.object,
   };
 
   static defaultProps = {
@@ -195,7 +204,12 @@ export class ViewMappingProfile extends Component {
   };
 
   render() {
-    const { tagsEnabled } = this.props;
+    const {
+      tagsEnabled,
+      history,
+      location,
+      accordionStatusRef,
+    } = this.props;
     const { showDeleteConfirmation } = this.state;
 
     const {
@@ -249,143 +263,151 @@ export class ViewMappingProfile extends Component {
     };
 
     return (
-      <FullScreenView
-        data-test-mapping-profile-details
-        contentLabel="Mapping profile details"
-        renderHeader={this.renderPaneHeader}
-        centerContent={false}
+      <DetailsKeyShortcutsWrapper
+        history={history}
+        location={location}
+        recordId={id}
       >
-        <TitleManager record={name} />
-        <Headline
-          data-test-headline
-          size="xx-large"
-          tag="h2"
+        <FullScreenView
+          data-test-mapping-profile-details
+          contentLabel="Mapping profile details"
+          renderHeader={this.renderPaneHeader}
+          centerContent={false}
         >
-          {name}
-        </Headline>
-        <AccordionSet>
-          <Accordion
-            id="view-summary"
-            label={<FormattedMessage id="ui-data-import.summary" />}
+          <TitleManager record={name} />
+          <Headline
+            data-test-headline
+            size="xx-large"
+            tag="h2"
           >
-            <ViewMetaData
-              metadata={mappingProfile.metadata}
-              systemId={SYSTEM_USER_ID}
-              systemUser={SYSTEM_USER_NAME}
-            />
-            <div data-test-name-field>
-              <KeyValue
-                value={name}
-                label={<FormattedMessage id="ui-data-import.name" />}
-              />
-            </div>
-            <KeyValue label={<FormattedMessage id="ui-data-import.incomingRecordType" />}>
-              <div data-test-incoming-record-type>
-                <FormattedMessage id={INCOMING_RECORD_TYPES[incomingRecordType].captionId} />
-              </div>
-            </KeyValue>
-            <KeyValue label={<FormattedMessage id="ui-data-import.folioRecordType" />}>
-              <div data-test-folio-record-type>
-                <FormattedMessage id={FOLIO_RECORD_TYPES[existingRecordType].captionId} />
-              </div>
-            </KeyValue>
-            {isMARCRecord && (
-              <KeyValue label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}>
-                <div data-test-field-mapping-for-marc-field>
-                  <FormattedMessage id={marcMappingOptionLabel} />
+            {name}
+          </Headline>
+          <AccordionStatus ref={accordionStatusRef}>
+            <AccordionSet>
+              <Accordion
+                id="view-summary"
+                label={<FormattedMessage id="ui-data-import.summary" />}
+              >
+                <ViewMetaData
+                  metadata={mappingProfile.metadata}
+                  systemId={SYSTEM_USER_ID}
+                  systemUser={SYSTEM_USER_NAME}
+                />
+                <div data-test-name-field>
+                  <KeyValue
+                    value={name}
+                    label={<FormattedMessage id="ui-data-import.name" />}
+                  />
                 </div>
-              </KeyValue>
-            )}
-            <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
-              <div data-test-description>{mappingProfile.description || <NoValue />}</div>
-            </KeyValue>
-          </Accordion>
-          {tagsEnabled && (
-            <div data-test-tags-accordion>
-              <TagsAccordion
-                link={`data-import-profiles/mappingProfiles/${id}`}
-                getEntity={getEntity}
-                getEntityTags={getEntityTags}
-                entityTagsPath="profile.tags"
-                renderForbidden={!tagsEnabled}
+                <KeyValue label={<FormattedMessage id="ui-data-import.incomingRecordType" />}>
+                  <div data-test-incoming-record-type>
+                    <FormattedMessage id={INCOMING_RECORD_TYPES[incomingRecordType].captionId} />
+                  </div>
+                </KeyValue>
+                <KeyValue label={<FormattedMessage id="ui-data-import.folioRecordType" />}>
+                  <div data-test-folio-record-type>
+                    <FormattedMessage id={FOLIO_RECORD_TYPES[existingRecordType].captionId} />
+                  </div>
+                </KeyValue>
+                {isMARCRecord && (
+                  <KeyValue label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}>
+                    <div data-test-field-mapping-for-marc-field>
+                      <FormattedMessage id={marcMappingOptionLabel} />
+                    </div>
+                  </KeyValue>
+                )}
+                <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
+                  <div data-test-description>{mappingProfile.description || <NoValue />}</div>
+                </KeyValue>
+              </Accordion>
+              {tagsEnabled && (
+                <div data-test-tags-accordion>
+                  <TagsAccordion
+                    link={`data-import-profiles/mappingProfiles/${id}`}
+                    getEntity={getEntity}
+                    getEntityTags={getEntityTags}
+                    entityTagsPath="profile.tags"
+                    renderForbidden={!tagsEnabled}
+                  />
+                </div>
+              )}
+              <Accordion
+                id="view-mapping-profile-details"
+                label={<FormattedMessage id="ui-data-import.details" />}
+                separator={false}
+              >
+                {existingRecordType && (
+                  <AccordionStatus>
+                    <Row
+                      between="xs"
+                      style={{ margin: 0 }}
+                    >
+                      {!isMARCRecord && (
+                        <>
+                          <Col>
+                            <MappedHeader
+                              headersToSeparate={[
+                                'ui-data-import.settings.profiles.select.mappingProfiles',
+                                MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId,
+                                marcMappingOptionLabel,
+                              ]}
+                              headlineProps={{ margin: 'small' }}
+                            />
+                          </Col>
+                          <Col>
+                            <div data-test-expand-all-button>
+                              <ExpandAllButton />
+                            </div>
+                          </Col>
+                        </>
+                      )}
+                    </Row>
+                    {renderDetails[existingRecordType]}
+                  </AccordionStatus>
+                )}
+              </Accordion>
+              <Accordion
+                id="view-mappingProfileFormAssociatedActionProfileAccordion"
+                label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
+              >
+                <ProfileAssociator
+                  entityKey={ENTITY_KEYS.ACTION_PROFILES}
+                  namespaceKey="AAP"
+                  parentId={id}
+                  parentType={PROFILE_TYPES.MAPPING_PROFILE}
+                  masterType={PROFILE_TYPES.ACTION_PROFILE}
+                  detailType={PROFILE_TYPES.MAPPING_PROFILE}
+                  profileName={name}
+                  contentData={associations}
+                  hasLoaded={hasLoaded}
+                  record={mappingProfile}
+                  isMultiSelect
+                  isMultiLink={false}
+                />
+              </Accordion>
+            </AccordionSet>
+          </AccordionStatus>
+          <EndOfItem
+            className={sharedCss.endOfRecord}
+            title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+          />
+          <ConfirmationModal
+            id="delete-mapping-profile-modal"
+            open={showDeleteConfirmation}
+            heading={(
+              <FormattedMessage
+                id="ui-data-import.modal.mappingProfile.delete.header"
+                values={{ name }}
               />
-            </div>
-          )}
-          <Accordion
-            id="view-mapping-profile-details"
-            label={<FormattedMessage id="ui-data-import.details" />}
-            separator={false}
-          >
-            {existingRecordType && (
-              <AccordionStatus>
-                <Row
-                  between="xs"
-                  style={{ margin: 0 }}
-                >
-                  {!isMARCRecord && (
-                    <>
-                      <Col>
-                        <MappedHeader
-                          headersToSeparate={[
-                            'ui-data-import.settings.profiles.select.mappingProfiles',
-                            MAPPING_DETAILS_HEADLINE[existingRecordType]?.labelId,
-                            marcMappingOptionLabel,
-                          ]}
-                          headlineProps={{ margin: 'small' }}
-                        />
-                      </Col>
-                      <Col>
-                        <div data-test-expand-all-button>
-                          <ExpandAllButton />
-                        </div>
-                      </Col>
-                    </>
-                  )}
-                </Row>
-                {renderDetails[existingRecordType]}
-              </AccordionStatus>
-            )}
-          </Accordion>
-          <Accordion
-            id="view-mappingProfileFormAssociatedActionProfileAccordion"
-            label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
-          >
-            <ProfileAssociator
-              entityKey={ENTITY_KEYS.ACTION_PROFILES}
-              namespaceKey="AAP"
-              parentId={id}
-              parentType={PROFILE_TYPES.MAPPING_PROFILE}
-              masterType={PROFILE_TYPES.ACTION_PROFILE}
-              detailType={PROFILE_TYPES.MAPPING_PROFILE}
-              profileName={name}
-              contentData={associations}
-              hasLoaded={hasLoaded}
-              record={mappingProfile}
-              isMultiSelect
-              isMultiLink={false}
-            />
-          </Accordion>
-        </AccordionSet>
-        <EndOfItem
-          className={sharedCss.endOfRecord}
-          title={<FormattedMessage id="ui-data-import.endOfRecord" />}
-        />
-        <ConfirmationModal
-          id="delete-mapping-profile-modal"
-          open={showDeleteConfirmation}
-          heading={(
-            <FormattedMessage
-              id="ui-data-import.modal.mappingProfile.delete.header"
-              values={{ name }}
-            />
-            )}
-          message={<FormattedMessage id="ui-data-import.modal.mappingProfile.delete.message" />}
-          confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
-          cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
-          onConfirm={() => this.handleDelete(mappingProfile)}
-          onCancel={this.hideDeleteConfirmation}
-        />
-      </FullScreenView>
+              )}
+            message={<FormattedMessage id="ui-data-import.modal.mappingProfile.delete.message" />}
+            confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
+            cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
+            onConfirm={() => this.handleDelete(mappingProfile)}
+            onCancel={this.hideDeleteConfirmation}
+          />
+        </FullScreenView>
+      </DetailsKeyShortcutsWrapper>
     );
   }
 }
