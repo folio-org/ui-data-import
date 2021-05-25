@@ -256,6 +256,7 @@ const ViewJobProfileComponent = props => {
     <DetailsKeyShortcutsWrapper
       history={history}
       location={location}
+      recordId={jobProfileRecord.id}
     >
       <Pane
         data-test-pane-job-profile-details
