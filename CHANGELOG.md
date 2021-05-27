@@ -9,6 +9,7 @@
 * Data Import Settings > Apply baseline shortcut keys for Job profile (UIDATIMP-898)
 * Data Import Settings > Apply baseline shortcut keys for Action profile (UIDATIMP-900)
 * Data Import Settings > Apply baseline shortcut keys for Match profile (UIDATIMP-899)
+* Data Import Settings > Apply baseline shortcut keys for Field Mapping profile (UIDATIMP-901)
 * Rename constant "MARC" to "MARC_BIB" (UIDATIMP-917)
 
 ### Bugs fixed:

@@ -39,6 +39,7 @@ import {
   FolioRecordTypeSelect,
   ProfileAssociator,
   MappedHeader,
+  EditKeyShortcutsWrapper,
 } from '../../components';
 import {
   MappingInstanceDetails,
@@ -91,6 +92,7 @@ export const MappingProfilesFormComponent = ({
   onCancel,
   dispatch,
   intl,
+  accordionStatusRef,
 }) => {
   const { formatMessage } = intl;
   const {
@@ -290,186 +292,190 @@ export const MappingProfilesFormComponent = ({
 
   return (
     <>
-      <FullScreenForm
-        id="mapping-profiles-form"
-        paneTitle={paneTitle}
-        submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
-        cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
-        isSubmitButtonDisabled={isSubmitDisabled}
-        onSubmit={handleSubmit}
-        onCancel={onCancel}
-        contentClassName={styles.mappingForm}
-      >
-        <Headline
-          data-test-header-title
-          id="profile-headline"
-          size="xx-large"
-          tag="h2"
+      <EditKeyShortcutsWrapper onSubmit={handleSubmit}>
+        <FullScreenForm
+          id="mapping-profiles-form"
+          paneTitle={paneTitle}
+          submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
+          cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
+          isSubmitButtonDisabled={isSubmitDisabled}
+          onSubmit={handleSubmit}
+          onCancel={onCancel}
+          contentClassName={styles.mappingForm}
         >
-          {headLine}
-        </Headline>
-        <AccordionSet>
-          <Accordion
-            id="summary"
-            label={<FormattedMessage id="ui-data-import.summary" />}
-            separator
+          <Headline
+            data-test-header-title
+            id="profile-headline"
+            size="xx-large"
+            tag="h2"
           >
-            <div data-test-name-field>
-              <Field
-                label={<FormattedMessage id="ui-data-import.name" />}
-                name="profile.name"
-                required
-                component={TextField}
-                validate={[validateRequiredField]}
-              />
-            </div>
-            <div data-test-incoming-record-type-field>
-              <FormattedMessage id="ui-data-import.chooseIncomingRecordType">
-                {([placeholder]) => (
+            {headLine}
+          </Headline>
+          <AccordionStatus ref={accordionStatusRef}>
+            <AccordionSet>
+              <Accordion
+                id="summary"
+                label={<FormattedMessage id="ui-data-import.summary" />}
+                separator
+              >
+                <div data-test-name-field>
                   <Field
-                    label={<FormattedMessage id="ui-data-import.incomingRecordType" />}
-                    name="profile.incomingRecordType"
-                    component={Select}
+                    label={<FormattedMessage id="ui-data-import.name" />}
+                    name="profile.name"
                     required
+                    component={TextField}
                     validate={[validateRequiredField]}
-                    dataOptions={incomingRecordTypesDataOptions}
-                    placeholder={placeholder}
                   />
-                )}
-              </FormattedMessage>
-            </div>
-            <Row>
-              <Col xs={6}>
-                <FolioRecordTypeSelect
-                  fieldName="existingRecordType"
-                  dataOptions={folioRecordTypesDataOptions}
-                  onRecordSelect={e => {
-                    setFolioRecordType(e.target.value);
-                    setFieldMappingsForMARC('');
-                  }}
-                  formType="redux-form"
-                />
-              </Col>
-              {folioRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC && (
-                <Col xs={6}>
-                  <FormattedMessage id="ui-data-import.fieldMappingsForMarc.placeholder">
+                </div>
+                <div data-test-incoming-record-type-field>
+                  <FormattedMessage id="ui-data-import.chooseIncomingRecordType">
                     {([placeholder]) => (
-                      <div data-test-field-mapping-foer-marc-field>
-                        <Field
-                          label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}
-                          name="profile.mappingDetails.marcMappingOption"
-                          component={Select}
-                          validate={[validateRequiredField]}
-                          dataOptions={fieldMappingsForMARCOptions}
-                          placeholder={placeholder}
-                          onChange={handleFieldMappingsForMARCTypeChange}
-                          required
-                        />
-                      </div>
+                      <Field
+                        label={<FormattedMessage id="ui-data-import.incomingRecordType" />}
+                        name="profile.incomingRecordType"
+                        component={Select}
+                        required
+                        validate={[validateRequiredField]}
+                        dataOptions={incomingRecordTypesDataOptions}
+                        placeholder={placeholder}
+                      />
                     )}
                   </FormattedMessage>
-                </Col>
-              )}
-            </Row>
-            <div data-test-description-field>
-              <Field
-                label={<FormattedMessage id="ui-data-import.description" />}
-                name="profile.description"
-                component={TextArea}
-              />
-            </div>
-          </Accordion>
-          <Accordion
-            id="mapping-profile-details"
-            label={<FormattedMessage id="ui-data-import.details" />}
-            separator={false}
-          >
-            {/*
-              Fragment is added to avoid warnings in a case when there is no data in the details section
-              since the `children` prop is required for the `Accordion` component
-            */}
-            <>
-              {folioRecordType && (
-                <AccordionStatus>
-                  <Row
-                    between="xs"
-                    style={{ margin: 0 }}
-                  >
-                    {!isMARCType(folioRecordType) && (
-                      <>
-                        <Col>
-                          <MappedHeader
-                            headersToSeparate={[
-                              'ui-data-import.settings.profiles.select.mappingProfiles',
-                              MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId,
-                              FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label,
-                            ]}
-                            headlineProps={{ margin: 'small' }}
-                          />
-                        </Col>
-                        <Col>
-                          <div data-test-expand-all-button>
-                            <ExpandAllButton />
+                </div>
+                <Row>
+                  <Col xs={6}>
+                    <FolioRecordTypeSelect
+                      fieldName="existingRecordType"
+                      dataOptions={folioRecordTypesDataOptions}
+                      onRecordSelect={e => {
+                        setFolioRecordType(e.target.value);
+                        setFieldMappingsForMARC('');
+                      }}
+                      formType="redux-form"
+                    />
+                  </Col>
+                  {folioRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC && (
+                    <Col xs={6}>
+                      <FormattedMessage id="ui-data-import.fieldMappingsForMarc.placeholder">
+                        {([placeholder]) => (
+                          <div data-test-field-mapping-foer-marc-field>
+                            <Field
+                              label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}
+                              name="profile.mappingDetails.marcMappingOption"
+                              component={Select}
+                              validate={[validateRequiredField]}
+                              dataOptions={fieldMappingsForMARCOptions}
+                              placeholder={placeholder}
+                              onChange={handleFieldMappingsForMARCTypeChange}
+                              required
+                            />
                           </div>
-                        </Col>
-                      </>
-                    )}
-                  </Row>
-                  {renderDetails[folioRecordType]}
-                </AccordionStatus>
-              )}
-            </>
-          </Accordion>
-          <Accordion
-            id="mappingProfileFormAssociatedActionProfileAccordion"
-            label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
-            separator
-          >
-            <ProfileAssociator
-              entityKey={ENTITY_KEYS.ACTION_PROFILES}
-              namespaceKey="AAP"
-              parentId={id}
-              parentType={PROFILE_TYPES.MAPPING_PROFILE}
-              masterType={PROFILE_TYPES.ACTION_PROFILE}
-              detailType={PROFILE_TYPES.MAPPING_PROFILE}
-              profileName={name}
-              contentData={associations}
-              hasLoaded
-              isMultiSelect
-              isMultiLink={false}
-              relationsToAdd={addedRelations}
-              relationsToDelete={deletedRelations}
-              onLink={setAddedRelations}
-              onUnlink={setDeletedRelations}
-              isEditMode={isEditMode}
-            />
-          </Accordion>
-        </AccordionSet>
-        <ConfirmationModal
-          id="confirm-marc-type-change"
-          open={isConfirmEditModalOpen}
-          heading={<FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.header" />}
-          message={(
-            <FormattedMessage
-              id="ui-data-import.settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.message"
-              values={{
-                previousType: fieldMappingsForMARCPreviousOption,
-                currentType: fieldMappingsForMARCCurrentOption,
-              }}
-            />
-          )}
-          confirmLabel={<FormattedMessage id="ui-data-import.continue" />}
-          onConfirm={() => {
-            setInitialMARCMappingDetails(fieldMappingsForMARCSelectedOption);
-            setFieldMappingsForMARC(fieldMappingsForMARCSelectedOption);
-            setConfirmModalOpen(false);
-          }}
-          onCancel={() => {
-            setFormFieldValue('profile.mappingDetails.marcMappingOption', fieldMappingsForMARC);
-            setConfirmModalOpen(false);
-          }}
-        />
-      </FullScreenForm>
+                        )}
+                      </FormattedMessage>
+                    </Col>
+                  )}
+                </Row>
+                <div data-test-description-field>
+                  <Field
+                    label={<FormattedMessage id="ui-data-import.description" />}
+                    name="profile.description"
+                    component={TextArea}
+                  />
+                </div>
+              </Accordion>
+              <Accordion
+                id="mapping-profile-details"
+                label={<FormattedMessage id="ui-data-import.details" />}
+                separator={false}
+              >
+                {/*
+                  Fragment is added to avoid warnings in a case when there is no data in the details section
+                  since the `children` prop is required for the `Accordion` component
+                */}
+                <>
+                  {folioRecordType && (
+                    <AccordionStatus>
+                      <Row
+                        between="xs"
+                        style={{ margin: 0 }}
+                      >
+                        {!isMARCType(folioRecordType) && (
+                          <>
+                            <Col>
+                              <MappedHeader
+                                headersToSeparate={[
+                                  'ui-data-import.settings.profiles.select.mappingProfiles',
+                                  MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId,
+                                  FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label,
+                                ]}
+                                headlineProps={{ margin: 'small' }}
+                              />
+                            </Col>
+                            <Col>
+                              <div data-test-expand-all-button>
+                                <ExpandAllButton />
+                              </div>
+                            </Col>
+                          </>
+                        )}
+                      </Row>
+                      {renderDetails[folioRecordType]}
+                    </AccordionStatus>
+                  )}
+                </>
+              </Accordion>
+              <Accordion
+                id="mappingProfileFormAssociatedActionProfileAccordion"
+                label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
+                separator
+              >
+                <ProfileAssociator
+                  entityKey={ENTITY_KEYS.ACTION_PROFILES}
+                  namespaceKey="AAP"
+                  parentId={id}
+                  parentType={PROFILE_TYPES.MAPPING_PROFILE}
+                  masterType={PROFILE_TYPES.ACTION_PROFILE}
+                  detailType={PROFILE_TYPES.MAPPING_PROFILE}
+                  profileName={name}
+                  contentData={associations}
+                  hasLoaded
+                  isMultiSelect
+                  isMultiLink={false}
+                  relationsToAdd={addedRelations}
+                  relationsToDelete={deletedRelations}
+                  onLink={setAddedRelations}
+                  onUnlink={setDeletedRelations}
+                  isEditMode={isEditMode}
+                />
+              </Accordion>
+            </AccordionSet>
+          </AccordionStatus>
+          <ConfirmationModal
+            id="confirm-marc-type-change"
+            open={isConfirmEditModalOpen}
+            heading={<FormattedMessage id="ui-data-import.settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.header" />}
+            message={(
+              <FormattedMessage
+                id="ui-data-import.settings.mappingProfile.marcTable.MARCTypeChange.confirmationModal.message"
+                values={{
+                  previousType: fieldMappingsForMARCPreviousOption,
+                  currentType: fieldMappingsForMARCCurrentOption,
+                }}
+              />
+            )}
+            confirmLabel={<FormattedMessage id="ui-data-import.continue" />}
+            onConfirm={() => {
+              setInitialMARCMappingDetails(fieldMappingsForMARCSelectedOption);
+              setFieldMappingsForMARC(fieldMappingsForMARCSelectedOption);
+              setConfirmModalOpen(false);
+            }}
+            onCancel={() => {
+              setFormFieldValue('profile.mappingDetails.marcMappingOption', fieldMappingsForMARC);
+              setConfirmModalOpen(false);
+            }}
+          />
+        </FullScreenForm>
+      </EditKeyShortcutsWrapper>
     </>
   );
 };
@@ -493,6 +499,7 @@ MappingProfilesFormComponent.propTypes = {
   intl: PropTypes.object.isRequired,
   mappingDetails: PropTypes.object,
   parentResources: PropTypes.object,
+  accordionStatusRef: PropTypes.object,
 };
 
 const mapStateToProps = state => {
