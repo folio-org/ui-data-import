@@ -10,6 +10,7 @@
 * Data Import Settings > Apply baseline shortcut keys for Action profile (UIDATIMP-900)
 * Data Import Settings > Apply baseline shortcut keys for Match profile (UIDATIMP-899)
 * Data Import Settings > Apply baseline shortcut keys for Field Mapping profile (UIDATIMP-901)
+* Update jest-related configs (UIDATIMP-928)
 
 ### Bugs fixed:
 * folio-testing UI is completely broken for all apps (UIDATIMP-915)
