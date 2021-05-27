@@ -1,7 +1,6 @@
 import React, {
   memo,
   useMemo,
-  useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -69,13 +68,13 @@ export const JobProfilesFormComponent = memo(({
   const addedRelations = form.getState().values.addedRelations;
   const deletedRelations = form.getState().values.deletedRelations;
 
-  const addRelations = useCallback(relations => {
+  const addRelations = relations => {
     form.change('addedRelations', relations);
-  }, [form]);
+  };
 
-  const deleteRelations = useCallback(relations => {
+  const deleteRelations = relations => {
     form.change('deletedRelations', relations);
-  }, [form]);
+  };
 
   const paneTitle = isEditMode ? (
     <FormattedMessage id="ui-data-import.edit">

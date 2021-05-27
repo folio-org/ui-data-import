@@ -51,6 +51,8 @@ export const ProfileTree = memo(({
   };
 
   const [data, setData] = useState([]);
+  const [addedRelations, setAddedRelations] = useState(relationsToAdd);
+  const [deletedRelations, setDeletedRelations] = useState(relationsToDelete);
 
   useEffect(() => {
     const getData = JSON.parse(sessionStorage.getItem(dataKey)) || contentData;
@@ -101,9 +103,10 @@ export const ProfileTree = memo(({
     const newData = [...initialData, ...getLines(linesToAdd, detailType, order, reactTo)];
 
     if (linesToAdd && linesToAdd.length) {
-      const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo, order)];
+      const relsToAdd = [...addedRelations, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo, order)];
 
       onLink(relsToAdd);
+      setAddedRelations(relsToAdd);
     }
 
     sessionStorage.setItem(localDataKey, JSON.stringify(newData));
@@ -112,18 +115,20 @@ export const ProfileTree = memo(({
 
   const unlink = (parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey) => {
     const index = parentData.findIndex(item => item.profileId === line.profileId);
-    const newIdx = findRelIndex(relationsToAdd, masterId, line);
+    const newIdx = findRelIndex(addedRelations, masterId, line);
 
     if (newIdx < 0) {
       const newRels = composeRelations([line], masterId, masterType, detailType, reactTo);
-      const relsToDel = [...relationsToDelete, ...newRels];
+      const relsToDel = [...deletedRelations, ...newRels];
 
       onUnlink(relsToDel);
+      setDeletedRelations(relsToDel);
     } else {
-      const relsToAdd = [...relationsToAdd];
+      const relsToAdd = [...addedRelations];
 
       relsToAdd.splice(newIdx, 1);
       onLink(relsToAdd);
+      setAddedRelations(relsToAdd);
     }
 
     const newData = [...parentData];
