@@ -60,10 +60,13 @@ export const VENDOR_ID_FIELD = 'vendorId';
 export const LOCK_TOTAL_FIELD = 'lockTotal';
 export const EXCHANGE_RATE_FIELD = 'exchangeRate';
 
-export const DATA_TYPES = [
-  'MARC',
-  'EDIFACT',
-];
+export const DATA_TYPES = [{
+  value: 'MARC_BIB',
+  label: 'MARC',
+}, {
+  value: 'EDIFACT',
+  label: 'EDIFACT',
+}];
 
 export const MARC_TYPES = {
   MARC_BIBLIOGRAPHIC: 'MARC_BIBLIOGRAPHIC',
