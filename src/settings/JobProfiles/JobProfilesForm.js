@@ -39,11 +39,6 @@ import {
   isFieldPristine,
 } from '../../utils';
 
-const dataTypes = DATA_TYPES.map(dataType => ({
-  value: dataType,
-  label: dataType,
-}));
-
 export const JobProfilesFormComponent = memo(({
   pristine,
   submitting,
@@ -156,7 +151,7 @@ export const JobProfilesFormComponent = memo(({
                       required
                       itemToString={identity}
                       validate={validateRequiredField}
-                      dataOptions={dataTypes}
+                      dataOptions={DATA_TYPES}
                       placeholder={placeholder}
                     />
                   )}
