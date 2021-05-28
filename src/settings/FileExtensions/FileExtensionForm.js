@@ -23,6 +23,7 @@ import {
   DATA_TYPES,
   isFieldPristine,
 } from '../../utils';
+import { EditKeyShortcutsWrapper } from '../../components';
 
 import css from './FileExtensionForm.css';
 
@@ -102,83 +103,85 @@ const FileExtensionFormComponent = ({
   };
 
   return (
-    <FullScreenForm
-      id="file-extensions-form"
-      paneTitle={paneTitle}
-      submitButtonText={<FormattedMessage id="ui-data-import.saveAsFileExtension" />}
-      cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
-      isSubmitButtonDisabled={isSubmitDisabled}
-      onSubmit={onSubmit}
-      onCancel={onCancel}
-    >
-      <Headline
-        size="xx-large"
-        tag="h2"
-        data-test-header-title
+    <EditKeyShortcutsWrapper onSubmit={onSubmit}>
+      <FullScreenForm
+        id="file-extensions-form"
+        paneTitle={paneTitle}
+        submitButtonText={<FormattedMessage id="ui-data-import.saveAsFileExtension" />}
+        cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
+        isSubmitButtonDisabled={isSubmitDisabled}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
       >
-        {headLine}
-      </Headline>
-      <div data-test-description-field>
-        <Field
-          label={<FormattedMessage id="ui-data-import.description" />}
-          name="description"
-          component={TextArea}
-          isEqual={isFieldPristine}
-        />
-      </div>
-      <div data-test-extension-field>
-        <Field
-          label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
-          name="extension"
-          required
-          component={TextField}
-          validate={composeValidators(validateRequiredField, validateFileExtension)}
-          isEqual={isFieldPristine}
-        />
-      </div>
-      <div data-test-blocked-field>
-        <p className={css.checkBoxLabel}>
-          <FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />
-        </p>
-        <Field
-          name="importBlocked"
-          type="checkbox"
-          render={importBlockedFieldProps => (
-            <Checkbox
-              {...importBlockedFieldProps}
-              value={form.getState().values?.importBlocked}
-              label={<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />}
-              onChange={event => handleImportBlockedChange(event, importBlockedFieldProps.input)}
-            />
-          )}
-        />
-      </div>
-      <div data-test-types-field>
-        <Field
-          name="dataTypes"
-          validate={validateDataTypes}
-          validationEnabled
-          isEqual={isFieldPristine}
-          parse={parseDataTypesValue}
-          format={formatDataTypesValue}
-          render={dataTypesFieldProps => (
-            <MultiSelection
-              {...dataTypesFieldProps}
-              label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}
-              dataOptions={DATA_TYPES.map(option => option.label)}
-              required={dataTypesRequired}
-              disabled={!dataTypesRequired}
-              itemToString={identity}
-              filter={filterMultiSelect}
-              formatter={MultiSelectItem}
-              onChange={selectedItems => dataTypesFieldProps.input.onChange(selectedItems)}
-              onBlur={event => dataTypesFieldProps.input.onBlur(event)}
-              dirty={dataTypesFieldProps.meta.dirty}
-            />
-          )}
-        />
-      </div>
-    </FullScreenForm>
+        <Headline
+          size="xx-large"
+          tag="h2"
+          data-test-header-title
+        >
+          {headLine}
+        </Headline>
+        <div data-test-description-field>
+          <Field
+            label={<FormattedMessage id="ui-data-import.description" />}
+            name="description"
+            component={TextArea}
+            isEqual={isFieldPristine}
+          />
+        </div>
+        <div data-test-extension-field>
+          <Field
+            label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
+            name="extension"
+            required
+            component={TextField}
+            validate={composeValidators(validateRequiredField, validateFileExtension)}
+            isEqual={isFieldPristine}
+          />
+        </div>
+        <div data-test-blocked-field>
+          <p className={css.checkBoxLabel}>
+            <FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />
+          </p>
+          <Field
+            name="importBlocked"
+            type="checkbox"
+            render={importBlockedFieldProps => (
+              <Checkbox
+                {...importBlockedFieldProps}
+                value={form.getState().values?.importBlocked}
+                label={<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />}
+                onChange={event => handleImportBlockedChange(event, importBlockedFieldProps.input)}
+              />
+            )}
+          />
+        </div>
+        <div data-test-types-field>
+          <Field
+            name="dataTypes"
+            validate={validateDataTypes}
+            validationEnabled
+            isEqual={isFieldPristine}
+            parse={parseDataTypesValue}
+            format={formatDataTypesValue}
+            render={dataTypesFieldProps => (
+              <MultiSelection
+                {...dataTypesFieldProps}
+                label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}
+                dataOptions={DATA_TYPES.map(option => option.label)}
+                required={dataTypesRequired}
+                disabled={!dataTypesRequired}
+                itemToString={identity}
+                filter={filterMultiSelect}
+                formatter={MultiSelectItem}
+                onChange={selectedItems => dataTypesFieldProps.input.onChange(selectedItems)}
+                onBlur={event => dataTypesFieldProps.input.onBlur(event)}
+                dirty={dataTypesFieldProps.meta.dirty}
+              />
+            )}
+          />
+        </div>
+      </FullScreenForm>
+    </EditKeyShortcutsWrapper>
   );
 };
 
