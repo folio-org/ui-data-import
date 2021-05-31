@@ -25,6 +25,7 @@ import {
   SYSTEM_USER_NAME,
 } from '../../utils';
 import {
+  DetailsKeyShortcutsWrapper,
   ActionMenu,
   Spinner,
 } from '../../components';
@@ -64,6 +65,14 @@ export class ViewFileExtension extends Component {
         id: PropTypes.string,
       }).isRequired,
     }).isRequired,
+    history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+    location: PropTypes.oneOfType([
+      PropTypes.shape({
+        search: PropTypes.string.isRequired,
+        pathname: PropTypes.string.isRequired,
+      }).isRequired,
+      PropTypes.string.isRequired,
+    ]).isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
@@ -144,90 +153,100 @@ export class ViewFileExtension extends Component {
   };
 
   renderFileExtension(record) {
+    const {
+      history,
+      location,
+    } = this.props;
     const { showDeleteConfirmation } = this.state;
 
     return (
-      <Pane
-        data-test-pane-file-extension-details
-        defaultWidth="fill"
-        fluidContentWidth
-        renderHeader={this.renderPaneHeader}
+      <DetailsKeyShortcutsWrapper
+        history={history}
+        location={location}
+        recordId={record.id}
       >
-        <TitleManager record={record.extension} />
-        <Headline
-          data-test-headline
-          size="xx-large"
-          tag="h2"
+        <Pane
+          data-test-pane-file-extension-details
+          defaultWidth="fill"
+          fluidContentWidth
+          renderHeader={this.renderPaneHeader}
         >
-          {record.extension}
-        </Headline>
-        <Row>
-          <Col xs={12}>
-            <ViewMetaData
-              metadata={record.metadata}
-              systemId={SYSTEM_USER_ID}
-              systemUser={SYSTEM_USER_NAME}
-              headingLevel={3}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
-              <div data-test-description>{record.description || <NoValue />}</div>
-            </KeyValue>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={4}>
-            <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}>
-              <div data-test-extension>{record.extension}</div>
-            </KeyValue>
-          </Col>
-          {record.importBlocked && (
-            <Col xs={4}>
-              <label htmlFor="import-blocked">
-                <input
-                  id="import-blocked"
-                  className={sharedCss.checkbox}
-                  data-test-import-blocked
-                  type="checkbox"
-                  checked
-                  disabled
-                />
-                &nbsp;<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />
-              </label>
+          <TitleManager record={record.extension} />
+          <Headline
+            data-test-headline
+            size="xx-large"
+            tag="h2"
+          >
+            {record.extension}
+          </Headline>
+          <Row>
+            <Col xs={12}>
+              <ViewMetaData
+                metadata={record.metadata}
+                systemId={SYSTEM_USER_ID}
+                systemUser={SYSTEM_USER_NAME}
+                headingLevel={3}
+              />
             </Col>
-          )}
-          {!record.importBlocked && (
-            <Col xs={4}>
-              <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}>
-                <div data-test-data-types>{record.dataTypes.join(', ')}</div>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={<FormattedMessage id="ui-data-import.description" />}>
+                <div data-test-description>{record.description || <NoValue />}</div>
               </KeyValue>
             </Col>
-          )}
-        </Row>
-        <EndOfItem
-          className={sharedCss.endOfRecord}
-          title={<FormattedMessage id="ui-data-import.endOfRecord" />}
-        />
-        <ConfirmationModal
-          id="delete-file-extension-modal"
-          open={showDeleteConfirmation}
-          heading={(
-            <FormattedMessage
-              id="ui-data-import.modal.fileExtension.delete.header"
-              values={{ extension: record.extension }}
-            />
-          )}
-          message={<FormattedMessage id="ui-data-import.modal.fileExtension.delete.message" />}
-          confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
-          cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
-          onConfirm={() => this.handleDeleteExtension(record)}
-          onCancel={this.hideDeleteConfirmation}
-        />
-      </Pane>
+          </Row>
+
+          <Row>
+            <Col xs={4}>
+              <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}>
+                <div data-test-extension>{record.extension}</div>
+              </KeyValue>
+            </Col>
+            {record.importBlocked && (
+              <Col xs={4}>
+                <label htmlFor="import-blocked">
+                  <input
+                    id="import-blocked"
+                    className={sharedCss.checkbox}
+                    data-test-import-blocked
+                    type="checkbox"
+                    checked
+                    disabled
+                  />
+                  &nbsp;<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />
+                </label>
+              </Col>
+            )}
+            {!record.importBlocked && (
+              <Col xs={4}>
+                <KeyValue label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}>
+                  <div data-test-data-types>{record.dataTypes.join(', ')}</div>
+                </KeyValue>
+              </Col>
+            )}
+          </Row>
+          <EndOfItem
+            className={sharedCss.endOfRecord}
+            title={<FormattedMessage id="ui-data-import.endOfRecord" />}
+          />
+          <ConfirmationModal
+            id="delete-file-extension-modal"
+            open={showDeleteConfirmation}
+            heading={(
+              <FormattedMessage
+                id="ui-data-import.modal.fileExtension.delete.header"
+                values={{ extension: record.extension }}
+              />
+            )}
+            message={<FormattedMessage id="ui-data-import.modal.fileExtension.delete.message" />}
+            confirmLabel={<FormattedMessage id="ui-data-import.delete" />}
+            cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
+            onConfirm={() => this.handleDeleteExtension(record)}
+            onCancel={this.hideDeleteConfirmation}
+          />
+        </Pane>
+      </DetailsKeyShortcutsWrapper>
     );
   }
 
