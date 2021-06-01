@@ -9,7 +9,7 @@
     "previewNow": "Preview now",
     "triggeredBy": "Triggered by {userName}",
     "beganRunning": "Began {time}",
-    "endedRunning": "종료 {시간}",
+    "endedRunning": "Ended {time}",
     "progressRunning": "In progress",
     "uploadTitle": "Drag and drop to start a new data import job",
     "activeUploadTitle": "Drop to start import",
