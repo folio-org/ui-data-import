@@ -13,6 +13,7 @@
 * Update jest-related configs (UIDATIMP-928)
 * Rename constant "MARC" to "MARC_BIB" (UIDATIMP-917)
 * Data Import Settings > Apply baseline shortcut keys for File Extension (UIDATIMP-879)
+* Import log summary: add a way to navigate back to the Landing page or View all page (UIDATIMP-913)
 
 ### Bugs fixed:
 * folio-testing UI is completely broken for all apps (UIDATIMP-915)
