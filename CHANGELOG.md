@@ -13,6 +13,7 @@
 * Update jest-related configs (UIDATIMP-928)
 * Rename constant "MARC" to "MARC_BIB" (UIDATIMP-917)
 * Data Import Settings > Apply baseline shortcut keys for File Extension (UIDATIMP-879)
+* Update version of interfaces due to supporting MARC Authority records (UIDATIMP-933)
 
 ### Bugs fixed:
 * folio-testing UI is completely broken for all apps (UIDATIMP-915)
