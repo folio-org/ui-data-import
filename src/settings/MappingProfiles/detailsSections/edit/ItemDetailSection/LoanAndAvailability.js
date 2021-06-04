@@ -197,6 +197,7 @@ export const LoanAndAvailability = ({
                       <BooleanActionField
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.staffOnly`} />}
                         name={getBoolSubfieldName(28, 2, index)}
+                        required
                       />
                     </Col>
                   </Row>

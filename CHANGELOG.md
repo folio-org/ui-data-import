@@ -14,6 +14,7 @@
 * Rename constant "MARC" to "MARC_BIB" (UIDATIMP-917)
 * Data Import Settings > Apply baseline shortcut keys for File Extension (UIDATIMP-879)
 * Update version of interfaces due to supporting MARC Authority records (UIDATIMP-933)
+* Field Mapping profiles: For Holdings and Items, add validation for the "Staff only" field (UIDATIMP-920)
 
 ### Bugs fixed:
 * folio-testing UI is completely broken for all apps (UIDATIMP-915)

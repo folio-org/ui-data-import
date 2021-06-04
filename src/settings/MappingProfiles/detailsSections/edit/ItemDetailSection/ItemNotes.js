@@ -104,6 +104,7 @@ export const ItemNotes = ({
                       <BooleanActionField
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.staffOnly`} />}
                         name={getBoolSubfieldName(24, 2, index)}
+                        required
                       />
                     </Col>
                   </Row>
