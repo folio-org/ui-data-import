@@ -8,7 +8,11 @@ import {
   SearchAndSortPane,
   SettingsLabel,
 } from '@folio/stripes-data-transfer-components';
-import { NoValue } from '@folio/stripes/components';
+import {
+  NoValue,
+  PaneMenu,
+  PaneCloseLink,
+} from '@folio/stripes/components';
 
 import { FOLIO_RECORD_TYPES } from '../../components';
 
@@ -41,6 +45,7 @@ const JobSummaryComponent = ({
   mutator,
   resources,
   resources: { jobExecutions: { records } },
+  history,
 }) => {
   const dataType = records[0]?.jobProfileInfo.dataType;
   const isEdifactType = dataType === DATA_TYPES[1].value;
@@ -97,6 +102,11 @@ const JobSummaryComponent = ({
       <>{records[0]?.fileName}</>
     </SettingsLabel>
   );
+  const firstMenu = (
+    <PaneMenu>
+      <PaneCloseLink onClick={() => history.go(-2)} />
+    </PaneMenu>
+  );
 
   const handleRowClick = (e, row) => {
     const queryParams = isEdifactType ? { instanceLineId: row.invoiceLineJournalRecordId } : {};
@@ -122,6 +132,7 @@ const JobSummaryComponent = ({
       parentMutator={mutator}
       parentResources={resources}
       lastMenu={<></>}
+      firstMenu={firstMenu}
       searchResultsProps={{
         onRowClick: handleRowClick,
         pagingType: 'click',
@@ -188,6 +199,7 @@ JobSummaryComponent.propTypes = {
       ).isRequired,
     }),
   }).isRequired,
+  history: PropTypes.shape({ go: PropTypes.func.isRequired }).isRequired,
 };
 
 export const JobSummary = stripesConnect(JobSummaryComponent);
