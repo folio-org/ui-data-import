@@ -14,6 +14,7 @@
 * Rename constant "MARC" to "MARC_BIB" (UIDATIMP-917)
 * Data Import Settings > Apply baseline shortcut keys for File Extension (UIDATIMP-879)
 * Update version of interfaces due to supporting MARC Authority records (UIDATIMP-933)
+* Import log summary: add a way to navigate back to the Landing page or View all page (UIDATIMP-913)
 * Field Mapping profiles: For Holdings and Items, add validation for the "Staff only" field (UIDATIMP-920)
 
 ### Bugs fixed:
