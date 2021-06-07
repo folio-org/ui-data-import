@@ -15,6 +15,7 @@ export const BooleanActionField = ({
   name,
   label,
   placeholder,
+  required,
   disabled,
 }) => {
   const intl = useIntl();
@@ -36,6 +37,7 @@ export const BooleanActionField = ({
       label={label}
       placeholder={checkboxPlaceholder}
       dataOptions={dataOptions}
+      required={required}
       disabled={disabled}
     />
   );
@@ -46,6 +48,7 @@ BooleanActionField.propTypes = {
   id: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   placeholder: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  required: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 
@@ -53,5 +56,6 @@ BooleanActionField.defaultProps = {
   id: '',
   label: '',
   placeholder: '',
+  required: false,
   disabled: false,
 };
