@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   KeyValue,
   MultiColumnList,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import {
   MAPPING_REPEATABLE_FIELD_ACTIONS,

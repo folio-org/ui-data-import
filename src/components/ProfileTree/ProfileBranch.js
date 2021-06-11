@@ -13,7 +13,7 @@ import {
 } from 'lodash';
 import classNames from 'classnames';
 
-import { Accordion } from '@folio/stripes-components';
+import { Accordion } from '@folio/stripes/components';
 
 import { TreeLine } from '../TreeLine';
 
@@ -27,7 +27,7 @@ import css from './ProfileTree.css';
 import {
   PROFILE_LABEL_IDS,
   PROFILE_RELATION_TYPES,
-} from '../../utils/constants';
+} from '../../utils';
 
 export const ProfileBranch = memo(({
   reactTo,
