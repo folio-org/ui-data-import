@@ -15,12 +15,12 @@ import classNames from 'classnames';
 import {
   ConfirmationModal,
   IconButton,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import {
   PROFILE_RELATION_TYPES,
   PROFILE_TYPES,
-} from '../../utils/constants';
+} from '../../utils';
 
 import { listTemplate } from '../ListTemplate';
 

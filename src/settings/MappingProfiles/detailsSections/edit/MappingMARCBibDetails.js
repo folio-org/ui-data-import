@@ -7,7 +7,7 @@ import {
   AccordionSet,
   Accordion,
   Button,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import {
   MARCTable,
