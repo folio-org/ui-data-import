@@ -5,7 +5,7 @@ import React, {
 import { PropTypes } from 'prop-types';
 import uniqueId from 'lodash/uniqueId';
 
-import { Label } from '@folio/stripes-components';
+import { Label } from '@folio/stripes/components';
 
 import {
   WithTranslation,
