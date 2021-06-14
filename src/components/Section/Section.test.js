@@ -14,9 +14,19 @@ const childElement = (
 );
 const sectionWithLabel = {
     label: 'test label',
+    optional: false
+};
+const sectionWithLabelAndDataTestAttribute = {
+    label: 'test label',
+    rest: 'data-test-tester'
 };
 const sectionWithChildElements = {
-    children: childElement
+    children: childElement,
+    optional: true
+};
+const sectionWithoutHeadline = {
+    children: childElement,
+    optional: false
 };
 const sectionWithCheckboxAndLabel = {
     label: 'test label',
@@ -25,12 +35,13 @@ const sectionWithCheckboxAndLabel = {
     children: [childElement]
 };
 
-const renderSectionContainer = ({ label, optional, children, isOpen }) => {
+const renderSectionContainer = ({ label, optional, children, isOpen, rest }) => {
     const component = (
         <Section
             label={label}
             optional={optional}
             isOpen={isOpen}
+            {...rest}
         >
             {children}
         </Section>
@@ -45,6 +56,24 @@ describe('Section', () => {
 
         expect(getByText('test label')).toBeDefined();
     }); 
+    it('should be rendered without headline', ()=> {
+        const { container } = renderSectionContainer(sectionWithoutHeadline);
+        const element = container.querySelector('h3');
+
+        expect(element).toBeNull();
+    });
+    it('should be rendered without optional headline', ()=> {
+        const { container } = renderSectionContainer(sectionWithChildElements);
+        const element = container.querySelector('h3');
+
+        expect(element).toBeNull();
+    });
+    it('should be rendered with data-test- attribute', () => {
+        const { container } = renderSectionContainer(sectionWithLabelAndDataTestAttribute);
+        const element = container.querySelector('[data-test-tester="true]');
+
+        expect(element).toBeDefined();
+    });
     it('should render only with child elements', () => {
         const { getByText } = renderSectionContainer(sectionWithChildElements);
         
