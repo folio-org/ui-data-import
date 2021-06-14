@@ -7,7 +7,7 @@ import { noop } from 'lodash';
 import {
   DropdownMenu,
   MenuSection,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import { LinkerButton } from '.';
 

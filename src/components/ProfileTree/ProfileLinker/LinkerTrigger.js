@@ -6,7 +6,7 @@ import {
   Button,
   Icon,
   Tooltip,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 export const LinkerTrigger = ({
   title,

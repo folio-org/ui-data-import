@@ -21,9 +21,9 @@ import {
   TextField,
 } from '@folio/stripes/components';
 import { getLocalFormat } from '@folio/stripes-components/lib/Datepicker/Datepicker';
-import { AVAILABLE_PLACEMENTS } from '@folio/stripes-components/lib/Popper';
 import Calendar from '@folio/stripes-components/lib/Datepicker/Calendar';
 import css from '@folio/stripes-components/lib/Datepicker/Calendar.css';
+import { AVAILABLE_PLACEMENTS } from '../../utils';
 
 const pickDataProps = props => pick(props, (v, key) => key.indexOf('data-test') !== -1);
 

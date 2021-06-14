@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {
   Button,
   DropdownMenu,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import { INCOMING_RECORD_TYPES_TO_DISABLE } from '../../../utils';
 

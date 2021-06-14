@@ -10,6 +10,21 @@ export const STRING_CAPITALIZATION_MODES = {
   WORDS: 2,
 };
 
+export const AVAILABLE_PLACEMENTS = [
+  'bottom',
+  'top',
+  'left',
+  'right',
+  'top-start',
+  'top-end',
+  'bottom-start',
+  'bottom-end',
+  'left-start',
+  'left-end',
+  'right-start',
+  'right-end',
+];
+
 export const STRING_CAPITALIZATION_EXCLUSIONS = [
   'ID', 'HRID', 'MARC', 'ISBN', 'PO', 'TBD',
 ];
