@@ -78,7 +78,7 @@ describe('Section', () => {
   });
   it('should render only with child elements', () => {
     const { getByText } = renderSectionContainer(sectionWithChildElements);
-    
+
     expect(getByText('child component')).toBeDefined();
   });
   it('should render with label and disabled checkbox', () => {
