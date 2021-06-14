@@ -35,7 +35,7 @@ const sectionWithCheckboxAndLabel = {
   children: [childElement],
 };
 
-const renderSectionContainer = ({ 
+const renderSectionContainer = ({
   label, optional, children, isOpen, rest,
 }) => {
   const component = (
@@ -78,13 +78,12 @@ describe('Section', () => {
   });
   it('should render only with child elements', () => {
     const { getByText } = renderSectionContainer(sectionWithChildElements);
-    
     expect(getByText('child component')).toBeDefined();
   });
   it('should render with label and disabled checkbox', () => {
     const {
-      getByText, 
-      getByRole
+      getByText,
+      getByRole,
     } = renderSectionContainer(sectionWithCheckboxAndLabel);
     const checkbox = getByRole('checkbox');
     const label = getByText('test label');
@@ -94,7 +93,7 @@ describe('Section', () => {
   it('show children by clicking checkbox', () => {
     const {
       getByText,
-      getByRole 
+      getByRole,
     } = renderSectionContainer(sectionWithCheckboxAndLabel);
     const checkbox = getByRole('checkbox');
 
