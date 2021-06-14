@@ -36,8 +36,8 @@ const sectionWithCheckboxAndLabel = {
 };
 
 const renderSectionContainer = ({ 
-  label, optional, children, isOpen, rest
-  }) => {
+  label, optional, children, isOpen, rest,
+}) => {
   const component = (
     <Section
       label={label}
@@ -49,7 +49,7 @@ const renderSectionContainer = ({
     </Section>
   );
 
-  return renderWithIntl(component, translationsProperties); 
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('Section', () => {
@@ -57,7 +57,7 @@ describe('Section', () => {
     const { getByText } = renderSectionContainer(sectionWithLabel);
 
     expect(getByText('test label')).toBeDefined();
-  }); 
+  });
   it('should be rendered without headline', () => {
     const { container } = renderSectionContainer(sectionWithoutHeadline);
     const element = container.querySelector('h3');
@@ -78,19 +78,26 @@ describe('Section', () => {
   });
   it('should render only with child elements', () => {
     const { getByText } = renderSectionContainer(sectionWithChildElements);
-       
+    
     expect(getByText('child component')).toBeDefined();
   });
   it('should render with label and disabled checkbox', () => {
-    const { getByText, getByRole } = renderSectionContainer(sectionWithCheckboxAndLabel);
+    const {
+      getByText, 
+      getByRole
+    } = renderSectionContainer(sectionWithCheckboxAndLabel);
     const checkbox = getByRole('checkbox');
     const label = getByText('test label');
 
     expect(checkbox && label).toBeDefined();
   });
   it('show children by clicking checkbox', () => {
-    const { getByText, getByRole } = renderSectionContainer(sectionWithCheckboxAndLabel);
+    const {
+      getByText,
+      getByRole 
+    } = renderSectionContainer(sectionWithCheckboxAndLabel);
     const checkbox = getByRole('checkbox');
+
     fireEvent.click(checkbox);
 
     expect(getByText('child component')).toBeDefined();
