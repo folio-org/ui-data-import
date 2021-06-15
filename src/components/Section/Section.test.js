@@ -1,8 +1,8 @@
 import React from 'react';
+import { fireEvent } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
-import { fireEvent } from '@testing-library/dom';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { Section } from './Section';
@@ -18,7 +18,7 @@ const sectionWithLabel = {
 };
 const sectionWithLabelAndDataTestAttribute = {
   label: 'test label',
-  rest: 'data-test-tester',
+  'data-test-tester': true,
 };
 const sectionWithChildElements = {
   children: childElement,
@@ -35,8 +35,12 @@ const sectionWithCheckboxAndLabel = {
   children: [childElement],
 };
 
-const renderSectionContainer = ({
-  label, optional, children, isOpen, rest,
+const renderSection = ({
+  label,
+  optional,
+  children,
+  isOpen,
+  rest,
 }) => {
   const component = (
     <Section
@@ -54,52 +58,60 @@ const renderSectionContainer = ({
 
 describe('Section', () => {
   it('should be rendered only with label', () => {
-    const { getByText } = renderSectionContainer(sectionWithLabel);
+    const { getByText } = renderSection(sectionWithLabel);
 
     expect(getByText('test label')).toBeDefined();
   });
+
   it('should be rendered without headline', () => {
-    const { container } = renderSectionContainer(sectionWithoutHeadline);
-    const element = container.querySelector('h3');
+    const { container } = renderSection(sectionWithoutHeadline);
+    const headlineElement = container.querySelector('h3');
 
-    expect(element).toBeNull();
+    expect(headlineElement).toBeNull();
   });
+
   it('should be rendered without optional headline', () => {
-    const { container } = renderSectionContainer(sectionWithChildElements);
-    const element = container.querySelector('h3');
+    const { container } = renderSection(sectionWithChildElements);
+    const headlineElement = container.querySelector('h3');
 
-    expect(element).toBeNull();
+    expect(headlineElement).toBeNull();
   });
+
   it('should be rendered with data-test- attribute', () => {
-    const { container } = renderSectionContainer(sectionWithLabelAndDataTestAttribute);
-    const element = container.querySelector('[data-test-tester="true]');
+    const { container } = renderSection(sectionWithLabelAndDataTestAttribute);
+    const dataTestAttribute = container.querySelector('[data-test-tester="true]');
 
-    expect(element).toBeDefined();
+    expect(dataTestAttribute).toBeDefined();
   });
-  it('should render only with child elements', () => {
-    const { getByText } = renderSectionContainer(sectionWithChildElements);
+
+  it('should be rendered only with child elements', () => {
+    const { getByText } = renderSection(sectionWithChildElements);
 
     expect(getByText('child component')).toBeDefined();
   });
-  it('should render with label and disabled checkbox', () => {
+
+  it('should be rendered with label and disabled checkbox', () => {
     const {
       getByText,
       getByRole,
-    } = renderSectionContainer(sectionWithCheckboxAndLabel);
+    } = renderSection(sectionWithCheckboxAndLabel);
     const checkbox = getByRole('checkbox');
     const label = getByText('test label');
 
     expect(checkbox && label).toBeDefined();
   });
+
   it('show children by clicking checkbox', () => {
     const {
-      getByText,
+      queryByText,
       getByRole,
-    } = renderSectionContainer(sectionWithCheckboxAndLabel);
+    } = renderSection(sectionWithCheckboxAndLabel);
     const checkbox = getByRole('checkbox');
+
+    expect(queryByText('child component')).toBeNull();
 
     fireEvent.click(checkbox);
 
-    expect(getByText('child component')).toBeDefined();
+    expect(queryByText('child component')).toBeDefined();
   });
 });
