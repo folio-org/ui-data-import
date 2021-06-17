@@ -1,6 +1,8 @@
 # Change history for ui-data-import
 
-## **4.1.0** (in progress)
+## **4.2.0** (in progress)
+
+## [4.1.0](https://github.com/folio-org/ui-data-import/tree/v4.1.0) (2021-06-17)
 
 ### Features added:
 * Cover `<ImportJobs>` component with unit tests (UIDATIMP-706)
