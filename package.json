@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "4.0.3",
+  "version": "4.1.0",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -181,7 +181,7 @@
     ],
     "okapiInterfaces": {
       "data-import": "3.0",
-      "source-manager-job-executions": "2.0",
+      "source-manager-job-executions": "1.0 2.0",
       "data-import-converter-storage": "1.2"
     },
     "permissionSets": [
