@@ -1,14 +1,15 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import ResizeObserver from '../../utils/resizeObserver';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import ResizeObserver from '../../utils/resizeObserver';
 import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { TreeLine } from './TreeLine';
 
 const parentContainer = (
-  <div id="test" className="tester">
+  <div id="test"
+    className="tester">
     <div data-id="HOLDINGS">testFrom</div>
     <div data-id="INSTANCE">testTo</div>
   </div>
@@ -86,12 +87,15 @@ const renderTreeLine = ({
       toAnchorOffset={toAnchorOffset}
     />
   );
+
   return renderWithIntl(component, translationsProperties);
 };
 
 describe('TreeLine', () => {
   it('should be rendered inside container', () => {
-    const {container} = render(parentContainer);
+    window.ResizeObserver = ResizeObserver;
+    const { container } = render(parentContainer);
+
     renderTreeLine(treeLineWithContainer);
     const line = container.children[0].children.length;
 
@@ -99,14 +103,15 @@ describe('TreeLine', () => {
   });
 
   it('should be rendered inside document.body', () => {
-    const {container} = renderTreeLine(treeLineWithoutContainer);
+    const { container } = renderTreeLine(treeLineWithoutContainer);
     const line = container.children;
 
     expect(line).toBeDefined();
   });
 
   it('should be rendered vertically', () => {
-    const {container} = render(parentContainer);
+    const { container } = render(parentContainer);
+
     renderTreeLine(treeLineVertical);
     const line = container.children[0].children.length;
 
@@ -114,7 +119,8 @@ describe('TreeLine', () => {
   });
 
   it('should be rendered horizontally', () => {
-    const {container} = render(parentContainer);
+    const { container } = render(parentContainer);
+
     renderTreeLine(treeLineHorizontal);
     const line = container.children[0].children.length;
 
@@ -122,7 +128,8 @@ describe('TreeLine', () => {
   });
 
   it('should be rendered one line', () => {
-    const {container} = render(parentContainer);
+    const { container } = render(parentContainer);
+
     renderTreeLine(oneTreeLine);
     const line = container.children[0].children.length;
 

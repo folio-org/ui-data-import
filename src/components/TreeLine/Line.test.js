@@ -6,7 +6,7 @@ import { translationsProperties } from '../../../test/jest/helpers';
 
 import { Line } from './Line';
 
-const parentContainer = <div></div>;
+const parentContainer = <div>{' '}</div>;
 
 const lineWithParentContainer = {
   x0: 0,
@@ -47,6 +47,7 @@ const renderLine = ({
       zIndex={zIndex}
     />
   );
+
   return renderWithIntl(component, translationsProperties);
 };
 
