@@ -8,8 +8,10 @@ import { translationsProperties } from '../../../test/jest/helpers';
 import { TreeLine } from './TreeLine';
 
 const parentContainer = (
-  <div id="test"
-    className="tester">
+  <div 
+    id="test"
+    className="tester"
+  >
     <div data-id="HOLDINGS">testFrom</div>
     <div data-id="INSTANCE">testTo</div>
   </div>
