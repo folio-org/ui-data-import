@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { render } from '@testing-library/react';
+
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
 
 import { Line } from './Line';
 
@@ -48,7 +48,7 @@ const renderLine = ({
     />
   );
 
-  return renderWithIntl(component, translationsProperties);
+  return render(component);
 };
 
 describe('Line', () => {

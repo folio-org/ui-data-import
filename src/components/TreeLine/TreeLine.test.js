@@ -1,14 +1,13 @@
 import React from 'react';
+
 import { render } from '@testing-library/react';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import ResizeObserver from '../../utils/resizeObserver';
+
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
 
 import { TreeLine } from './TreeLine';
 
 const parentContainer = (
-  <div 
+  <div
     id="test"
     className="tester"
   >
@@ -26,6 +25,7 @@ const treeLineWithContainer = {
   orientation: 'horizontal',
   fromAnchorOffset: '10px 10px',
   toAnchorOffset: '13px 13px',
+  className: 'test',
 };
 const treeLineHorizontal = {
   from: '[data-id=HOLDINGS]',
@@ -37,6 +37,7 @@ const treeLineHorizontal = {
   orientation: 'horizontal',
   fromAnchorOffset: '10px 10px',
   toAnchorOffset: '13px 13px',
+  className: 'horizontal',
 };
 const treeLineVertical = {
   from: '[data-id=HOLDINGS]',
@@ -48,6 +49,7 @@ const treeLineVertical = {
   orientation: 'vertical',
   fromAnchorOffset: '10px 10px',
   toAnchorOffset: '13px 13px',
+  className: 'vertical',
 };
 const oneTreeLine = {
   from: '[data-id=HOLDINGS]',
@@ -57,6 +59,7 @@ const oneTreeLine = {
   toAnchor: 'left',
   fromAnchorOffset: '10px 10px',
   toAnchorOffset: '10px 10px',
+  className: 'one-line',
 };
 const treeLineWithoutContainer = {
   from: '[data-id=HOLDINGS]',
@@ -64,6 +67,7 @@ const treeLineWithoutContainer = {
   container: null,
   fromAnchor: '12px 12px',
   toAnchor: '13px 13px',
+  className: 'test',
 };
 const renderTreeLine = ({
   from,
@@ -75,6 +79,7 @@ const renderTreeLine = ({
   orientation,
   fromAnchorOffset,
   toAnchorOffset,
+  className,
 }) => {
   const component = (
     <TreeLine
@@ -87,54 +92,67 @@ const renderTreeLine = ({
       orientation={orientation}
       fromAnchorOffset={fromAnchorOffset}
       toAnchorOffset={toAnchorOffset}
+      className={className}
     />
   );
 
-  return renderWithIntl(component, translationsProperties);
+  return render(component);
 };
 
+window.ResizeObserver = jest.fn();
+window.ResizeObserver.mockImplementation(() => {
+  return {
+    observe() {},
+    unobserve() {},
+  };
+});
+
 describe('TreeLine', () => {
+
+  afterAll(() => {
+    delete window.ResizeObserver;
+  });
+
   it('should be rendered inside container', () => {
-    window.ResizeObserver = ResizeObserver;
     const { container } = render(parentContainer);
 
     renderTreeLine(treeLineWithContainer);
-    const line = container.children[0].children.length;
+    const element = container.querySelector('.test');
 
-    expect(line).toBeGreaterThan(2);
+    expect(element).toBeDefined();
   });
 
-  it('should be rendered inside document.body', () => {
+  it('should be rendered inside document.body when container is not defined', () => {
     const { container } = renderTreeLine(treeLineWithoutContainer);
-    const line = container.children;
+    const element = container.querySelector('.test');
 
-    expect(line).toBeDefined();
+    expect(element).toBeDefined();
   });
 
   it('should be rendered vertically', () => {
     const { container } = render(parentContainer);
 
     renderTreeLine(treeLineVertical);
-    const line = container.children[0].children.length;
+    const element = container.querySelector('.vertical');
 
-    expect(line).toBeGreaterThan(2);
+    expect(element).toBeDefined();
   });
 
   it('should be rendered horizontally', () => {
     const { container } = render(parentContainer);
 
     renderTreeLine(treeLineHorizontal);
-    const line = container.children[0].children.length;
+    const element = container.querySelector('.horizontal');
 
-    expect(line).toBeGreaterThan(2);
+    expect(element).toBeDefined();
   });
 
   it('should be rendered one line', () => {
     const { container } = render(parentContainer);
 
     renderTreeLine(oneTreeLine);
-    const line = container.children[0].children.length;
+    const element = container.querySelector('.one-line');
 
-    expect(line).toBeGreaterThan(2);
+    expect(element).toBeDefined();
   });
 });
