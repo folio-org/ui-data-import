@@ -164,7 +164,7 @@
     "settings.reset.error": "Échec de la réinitialisation de l'instance aux valeurs par défaut:",
     "error.fileExtensions.action": "L'extension de fichier \" {name} \" n'a pas été {action}",
     "success.fileExtensions.action": "L'extension de fichier \" {name} \" a été {action} avec succès",
-    "error.jobProfiles.action": "Le profil de tâche \"{nom}\" n'a pas été {action}",
+    "error.jobProfiles.action": "Le profil de tâche \"{name}\" n'a pas été {action}",
     "success.jobProfiles.action": "Le profil de tâche \" {name} \" a été {action} avec succès",
     "error.matchProfiles.action": "Le profil de correspondance \" {name} \" n'était pas {action}",
     "success.matchProfiles.action": "Le profil de correspondance \" {name} \" a été {action} avec succès",
