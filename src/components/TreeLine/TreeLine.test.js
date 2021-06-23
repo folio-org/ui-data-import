@@ -108,7 +108,6 @@ window.ResizeObserver.mockImplementation(() => {
 });
 
 describe('TreeLine', () => {
-
   afterAll(() => {
     delete window.ResizeObserver;
   });
