@@ -69,6 +69,7 @@ const treeLineWithoutContainer = {
   toAnchor: '13px 13px',
   className: 'test',
 };
+
 const renderTreeLine = ({
   from,
   to,
@@ -99,13 +100,10 @@ const renderTreeLine = ({
   return render(component);
 };
 
-window.ResizeObserver = jest.fn();
-window.ResizeObserver.mockImplementation(() => {
-  return {
-    observe() {},
-    unobserve() {},
-  };
-});
+window.ResizeObserver = jest.fn(() => ({
+  observe() {},
+  unobserve() {},
+}));
 
 describe('TreeLine', () => {
   afterAll(() => {
