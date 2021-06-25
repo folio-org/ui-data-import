@@ -4,6 +4,7 @@
 
 ### Features added:
 * Expand module permissions with permissions for preceding and succeeding titles (UIDATIMP-943)
+* Change "MARC_BIB" type to "MARC" (UIDATIMP-944)
 
 ## [4.1.0](https://github.com/folio-org/ui-data-import/tree/v4.1.0) (2021-06-17)
 
