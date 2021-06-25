@@ -199,7 +199,12 @@
           "source-storage.records.get",
           "data-import.uploaddefinitions.files.post",
           "change-manager.records.delete",
-          "change-manager.jobexecutions.get"
+          "change-manager.jobexecutions.get",
+          "inventory-storage.preceding-succeeding-titles.collection.get",
+          "inventory-storage.preceding-succeeding-titles.item.get",
+          "inventory-storage.preceding-succeeding-titles.item.post",
+          "inventory-storage.preceding-succeeding-titles.item.put",
+          "inventory-storage.preceding-succeeding-titles.item.delete"
         ],
         "visible": true
       },
