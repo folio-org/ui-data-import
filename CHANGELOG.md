@@ -3,6 +3,11 @@
 ## **4.2.0** (in progress)
 
 ### Features added:
+* Cover `<TreeLine>` component with unit tests (UIDATIMP-727)
+
+## [4.1.1](https://github.com/folio-org/ui-data-import/tree/v4.1.1) (2021-06-25)
+
+### Features added:
 * Expand module permissions with permissions for preceding and succeeding titles (UIDATIMP-943)
 * Change "MARC_BIB" type to "MARC" (UIDATIMP-944)
 
@@ -23,7 +28,6 @@
 * Import log summary: add a way to navigate back to the Landing page or View all page (UIDATIMP-913)
 * Field Mapping profiles: For Holdings and Items, add validation for the "Staff only" field (UIDATIMP-920)
 * Cover `<Section>` component with unit tests (UIDATIMP-724)
-* Cover `<TreeLine>` component with unit tests (UIDATIMP-727)
 
 ### Bugs fixed:
 * folio-testing UI is completely broken for all apps (UIDATIMP-915)
