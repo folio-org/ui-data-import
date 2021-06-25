@@ -48,7 +48,7 @@ const JobSummaryComponent = ({
   history,
 }) => {
   const dataType = records[0]?.jobProfileInfo.dataType;
-  const isEdifactType = dataType === DATA_TYPES[1].value;
+  const isEdifactType = dataType === DATA_TYPES[1];
   const getRecordActionStatusLabel = recordType => {
     if (!recordType) return <NoValue />;
 
