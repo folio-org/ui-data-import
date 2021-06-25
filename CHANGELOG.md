@@ -2,6 +2,11 @@
 
 ## **4.1.0** (in progress)
 
+## [4.0.4](https://github.com/folio-org/ui-data-import/tree/v4.0.4) (2021-06-25)
+
+### Features added:
+* Expand module permissions with permissions for preceding and succeeding titles (UIDATIMP-943)
+
 ## [4.0.3](https://github.com/folio-org/ui-data-import/tree/v4.0.3) (2021-04-20)
 
 ### Features added:
