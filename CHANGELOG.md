@@ -1,6 +1,18 @@
 # Change history for ui-data-import
 
-## **4.1.0** (in progress)
+## **4.2.0** (in progress)
+
+### Features added:
+* Cover `<TreeLine>` component with unit tests (UIDATIMP-727)
+* Refactor away from react-intl-safe-html (UIDATIMP-932)
+
+## [4.1.1](https://github.com/folio-org/ui-data-import/tree/v4.1.1) (2021-06-25)
+
+### Features added:
+* Expand module permissions with permissions for preceding and succeeding titles (UIDATIMP-943)
+* Change "MARC_BIB" type to "MARC" (UIDATIMP-944)
+
+## [4.1.0](https://github.com/folio-org/ui-data-import/tree/v4.1.0) (2021-06-17)
 
 ### Features added:
 * Cover `<ImportJobs>` component with unit tests (UIDATIMP-706)
@@ -16,7 +28,7 @@
 * Update version of interfaces due to supporting MARC Authority records (UIDATIMP-933)
 * Import log summary: add a way to navigate back to the Landing page or View all page (UIDATIMP-913)
 * Field Mapping profiles: For Holdings and Items, add validation for the "Staff only" field (UIDATIMP-920)
-* Refactor away from react-intl-safe-html (UIDATIMP-932)
+* Cover `<Section>` component with unit tests (UIDATIMP-724)
 
 ### Bugs fixed:
 * folio-testing UI is completely broken for all apps (UIDATIMP-915)

@@ -11,7 +11,7 @@ import {
 } from 'react-intl';
 import uniqueId from 'lodash/uniqueId';
 
-import { Label } from '@folio/stripes-components';
+import { Label } from '@folio/stripes/components';
 import { DATE_FORMAT } from '@folio/stripes-acq-components';
 
 import {

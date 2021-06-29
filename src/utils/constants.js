@@ -10,6 +10,21 @@ export const STRING_CAPITALIZATION_MODES = {
   WORDS: 2,
 };
 
+export const AVAILABLE_PLACEMENTS = [
+  'bottom',
+  'top',
+  'left',
+  'right',
+  'top-start',
+  'top-end',
+  'bottom-start',
+  'bottom-end',
+  'left-start',
+  'left-end',
+  'right-start',
+  'right-end',
+];
+
 export const STRING_CAPITALIZATION_EXCLUSIONS = [
   'ID', 'HRID', 'MARC', 'ISBN', 'PO', 'TBD',
 ];
@@ -60,13 +75,10 @@ export const VENDOR_ID_FIELD = 'vendorId';
 export const LOCK_TOTAL_FIELD = 'lockTotal';
 export const EXCHANGE_RATE_FIELD = 'exchangeRate';
 
-export const DATA_TYPES = [{
-  value: 'MARC_BIB',
-  label: 'MARC',
-}, {
-  value: 'EDIFACT',
-  label: 'EDIFACT',
-}];
+export const DATA_TYPES = [
+  'MARC',
+  'EDIFACT',
+];
 
 export const MARC_TYPES = {
   MARC_BIBLIOGRAPHIC: 'MARC_BIBLIOGRAPHIC',

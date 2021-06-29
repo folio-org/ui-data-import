@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Tooltip } from '@folio/stripes-components';
+import { Tooltip } from '@folio/stripes/components';
 
 import css from './ProhibitionIcon.css';
 

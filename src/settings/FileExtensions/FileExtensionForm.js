@@ -94,14 +94,6 @@ const FileExtensionFormComponent = ({
     });
   };
 
-  const parseDataTypesValue = value => {
-    return value?.map(option => DATA_TYPES.find(dataType => dataType.label === option)?.value);
-  };
-
-  const formatDataTypesValue = value => {
-    return value?.map(option => DATA_TYPES.find(dataType => dataType.value === option)?.label || option || '');
-  };
-
   return (
     <EditKeyShortcutsWrapper onSubmit={onSubmit}>
       <FullScreenForm
@@ -161,13 +153,11 @@ const FileExtensionFormComponent = ({
             validate={validateDataTypes}
             validationEnabled
             isEqual={isFieldPristine}
-            parse={parseDataTypesValue}
-            format={formatDataTypesValue}
             render={dataTypesFieldProps => (
               <MultiSelection
                 {...dataTypesFieldProps}
                 label={<FormattedMessage id="ui-data-import.settings.fileExtension.dataTypes" />}
-                dataOptions={DATA_TYPES.map(option => option.label)}
+                dataOptions={DATA_TYPES}
                 required={dataTypesRequired}
                 disabled={!dataTypesRequired}
                 itemToString={identity}

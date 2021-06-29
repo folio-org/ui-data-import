@@ -37,7 +37,7 @@
     "upload.invalid": "Erro: upload de ficheiro",
     "upload.fileSize.invalid": "Erro: não há espaço suficiente para armazenar o ficheiro. Entre em contato com o administrador do sistema",
     "returnToAssign.message": "Projeto em andamento",
-    "returnToAssign.subMessage": "{filesAmount} arquivos enviados",
+    "returnToAssign.subMessage": "{filesAmount, plural, one {# file} other {# files}} uploaded",
     "returnToAssign.resume": "Currículo",
     "returnToAssign.deleteFiles": "Eliminar ficheiros",
     "modal.fileExtensions.messageHighlightedText": "extensões diferentes",
