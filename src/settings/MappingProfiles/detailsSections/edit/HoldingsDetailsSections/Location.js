@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -9,7 +9,10 @@ import {
   Col,
   TextField,
 } from '@folio/stripes/components';
-import { okapiShape } from '../../../../../utils';
+import {
+  isFieldPristine,
+  okapiShape,
+} from '../../../../../utils';
 
 import {
   AcceptedValuesField,
@@ -69,6 +72,7 @@ export const Location = ({
               wrapperSourcePath: 'locations',
             }]}
             isRemoveValueAllowed
+            isFieldValueEqual={isFieldPristine}
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(6)}
             optionTemplate="**name** (**code**)"
@@ -85,6 +89,7 @@ export const Location = ({
             component={TextField}
             name={getFieldName(7)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingOrder`} />}
+            isEqual={isFieldPristine}
             disabled
           />
         </Col>
@@ -98,7 +103,8 @@ export const Location = ({
                 component={TextField}
                 name={getFieldName(8)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingTitle`} />}
-                validate={[validation]}
+                isEqual={isFieldPristine}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -115,7 +121,8 @@ export const Location = ({
                 component={TextField}
                 name={getFieldName(9)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.copyNumber`} />}
-                validate={[validation]}
+                isEqual={isFieldPristine}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -138,6 +145,7 @@ export const Location = ({
               wrapperSourcePath: 'callNumberTypes',
             }]}
             isRemoveValueAllowed
+            isFieldValueEqual={isFieldPristine}
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(10)}
             okapi={okapi}
@@ -153,7 +161,8 @@ export const Location = ({
                 component={TextField}
                 name={getFieldName(11)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberPrefix`} />}
-                validate={[validation]}
+                isEqual={isFieldPristine}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -168,7 +177,8 @@ export const Location = ({
                 component={TextField}
                 name={getFieldName(12)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumber`} />}
-                validate={[validation]}
+                isEqual={isFieldPristine}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -184,7 +194,8 @@ export const Location = ({
                 component={TextField}
                 name={getFieldName(13)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberSuffix`} />}
-                validate={[validation]}
+                isEqual={isFieldPristine}
+                validate={validation}
               />
             )}
           </WithValidation>

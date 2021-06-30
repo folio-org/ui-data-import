@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -25,7 +25,10 @@ import {
   getRepeatableFieldName,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileSubfieldShape } from '../../../../../utils';
+import {
+  isFieldPristine,
+  mappingProfileSubfieldShape,
+} from '../../../../../utils';
 
 export const ReceivingHistory = ({
   receivingHistory,
@@ -75,7 +78,8 @@ export const ReceivingHistory = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
                             name={getSubfieldName(26, 1, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -90,7 +94,8 @@ export const ReceivingHistory = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
                             name={getSubfieldName(26, 2, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>

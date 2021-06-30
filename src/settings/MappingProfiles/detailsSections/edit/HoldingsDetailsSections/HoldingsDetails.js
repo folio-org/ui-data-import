@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -27,6 +27,7 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  isFieldPristine,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
@@ -56,7 +57,8 @@ export const HoldingsDetails = ({
                 component={TextField}
                 name={getFieldName(14)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.details.field.numberOfItems`} />}
-                validate={[validation]}
+                validate={validation}
+                isEqual={isFieldPristine}
               />
             )}
           </WithValidation>
@@ -92,7 +94,8 @@ export const HoldingsDetails = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />}
                             name={getSubfieldName(15, 0, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -104,7 +107,8 @@ export const HoldingsDetails = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
                             name={getSubfieldName(15, 1, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -116,7 +120,8 @@ export const HoldingsDetails = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
                             name={getSubfieldName(15, 2, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -158,7 +163,8 @@ export const HoldingsDetails = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />}
                             name={getSubfieldName(16, 0, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -170,7 +176,8 @@ export const HoldingsDetails = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
                             name={getSubfieldName(16, 1, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -182,7 +189,8 @@ export const HoldingsDetails = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
                             name={getSubfieldName(16, 2, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -224,7 +232,8 @@ export const HoldingsDetails = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />}
                             name={getSubfieldName(17, 0, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -236,7 +245,8 @@ export const HoldingsDetails = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
                             name={getSubfieldName(17, 1, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -248,7 +258,8 @@ export const HoldingsDetails = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
                             name={getSubfieldName(17, 2, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -277,6 +288,7 @@ export const HoldingsDetails = ({
               wrapperSourcePath: 'illPolicies',
             }]}
             isRemoveValueAllowed
+            isFieldValueEqual={isFieldPristine}
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(18)}
             okapi={okapi}
@@ -292,7 +304,8 @@ export const HoldingsDetails = ({
                 component={TextField}
                 name={getFieldName(19)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.digitizationPolicy`} />}
-                validate={[validation]}
+                validate={validation}
+                isEqual={isFieldPristine}
               />
             )}
           </WithValidation>
@@ -307,7 +320,8 @@ export const HoldingsDetails = ({
                 component={TextField}
                 name={getFieldName(20)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.retentionPolicy`} />}
-                validate={[validation]}
+                validate={validation}
+                isEqual={isFieldPristine}
               />
             )}
           </WithValidation>

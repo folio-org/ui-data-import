@@ -4,7 +4,7 @@ import {
   useIntl,
   FormattedMessage,
 } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -24,6 +24,7 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  isFieldPristine,
   okapiShape,
   createOptionsList,
   validateRequiredField,
@@ -56,6 +57,7 @@ export const ExtendedInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.field.folioInvoiceNumber`} />}
             name={getFieldName(19)}
+            isEqual={isFieldPristine}
             disabled
           />
         </Col>
@@ -70,6 +72,7 @@ export const ExtendedInformation = ({
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={paymentMethodsList}
             validation={validateRequiredField}
+            isFieldValueEqual={isFieldPristine}
             required
             okapi={okapi}
           />
@@ -82,6 +85,7 @@ export const ExtendedInformation = ({
             name={getBoolFieldName(21)}
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={checkSubscriptionOverlapCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
+            isEqual={isFieldPristine}
           />
         </Col>
         <Col xs={3}>
@@ -92,6 +96,7 @@ export const ExtendedInformation = ({
             name={getBoolFieldName(22)}
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={exportToAccountingCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
+            isEqual={isFieldPristine}
           />
         </Col>
       </Row>
@@ -107,6 +112,7 @@ export const ExtendedInformation = ({
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={currenciesList}
             validation={validateRequiredField}
+            isFieldValueEqual={isFieldPristine}
             required
             okapi={okapi}
           />
@@ -116,6 +122,7 @@ export const ExtendedInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.field.currentExchangeRate`} />}
             name={getFieldName(24)}
+            isEqual={isFieldPristine}
             disabled
           />
         </Col>
@@ -137,6 +144,7 @@ export const ExtendedInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.field.setExchangeRate`} />}
             name={getFieldName(25)}
+            isEqual={isFieldPristine}
             disabled={!isUseSetExchangeRate}
           />
         </Col>

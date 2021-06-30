@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -23,7 +23,7 @@ import {
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   validateMARCWithDate,
-  okapiShape,
+  okapiShape, isFieldPristine,
 } from '../../../../../utils';
 
 export const Condition = ({
@@ -46,7 +46,7 @@ export const Condition = ({
                 component={TextField}
                 name={getFieldName(19)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.numberOfMissingPieces`} />}
-                validate={[validation]}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -61,7 +61,7 @@ export const Condition = ({
                 component={TextField}
                 name={getFieldName(20)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.missingPieces`} />}
-                validate={[validation]}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -76,7 +76,7 @@ export const Condition = ({
             name={getFieldName(21)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            validate={[validateMARCWithDate]}
+            validate={validateMARCWithDate}
           />
         </Col>
       </Row>
@@ -99,6 +99,7 @@ export const Condition = ({
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(22)}
+            isFieldValueEqual={isFieldPristine}
             okapi={okapi}
           />
         </Col>
@@ -112,7 +113,7 @@ export const Condition = ({
             name={getFieldName(23)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            validate={[validateMARCWithDate]}
+            validate={validateMARCWithDate}
           />
         </Col>
       </Row>

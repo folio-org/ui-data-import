@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import { noop } from 'lodash';
 
 import {
@@ -14,7 +14,10 @@ import {
 
 import { getSubfieldName } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileSubfieldShape } from '../../../../../utils';
+import {
+  isFieldPristine,
+  mappingProfileSubfieldShape,
+} from '../../../../../utils';
 
 export const Subject = ({ subjects }) => {
   return (
@@ -40,6 +43,7 @@ export const Subject = ({ subjects }) => {
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.subjects`} />}
                     name={getSubfieldName(28, 0, index)}
+                    isEqual={isFieldPristine}
                     disabled
                   />
                 </Col>

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -21,7 +21,7 @@ import {
 import {
   validateMARCWithDate,
   mappingProfileSubfieldShape,
-  okapiShape,
+  okapiShape, isFieldPristine,
 } from '../../../../../utils';
 import {
   onAdd,
@@ -116,7 +116,7 @@ export const AdministrativeData = ({
             name={getFieldName(5)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            validate={[validateDatepickerFieldValue]}
+            validate={validateDatepickerFieldValue}
           />
         </Col>
       </Row>
@@ -138,6 +138,7 @@ export const AdministrativeData = ({
             }]}
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(6)}
+            isFieldValueEqual={isFieldPristine}
             okapi={okapi}
           />
         </Col>
@@ -200,6 +201,7 @@ export const AdministrativeData = ({
                         optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
                         setAcceptedValues={setReferenceTables}
                         acceptedValuesPath={getRepeatableAcceptedValuesPath(8, 0, index)}
+                        isFieldValueEqual={isFieldPristine}
                       />
                     </Col>
                   </Row>

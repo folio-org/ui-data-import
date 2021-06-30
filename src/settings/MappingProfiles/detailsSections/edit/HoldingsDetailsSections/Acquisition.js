@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -13,6 +13,7 @@ import { WithValidation } from '../../../../../components';
 
 import { getFieldName } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
+import { isFieldPristine } from '../../../../../utils';
 
 export const Acquisition = () => {
   return (
@@ -31,7 +32,8 @@ export const Acquisition = () => {
                 component={TextField}
                 name={getFieldName(23)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.acquisitionMethod`} />}
-                validate={[validation]}
+                validate={validation}
+                isEqual={isFieldPristine}
               />
             )}
           </WithValidation>
@@ -46,7 +48,8 @@ export const Acquisition = () => {
                 component={TextField}
                 name={getFieldName(24)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.orderFormat`} />}
-                validate={[validation]}
+                validate={validation}
+                isEqual={isFieldPristine}
               />
             )}
           </WithValidation>
@@ -61,7 +64,8 @@ export const Acquisition = () => {
                 component={TextField}
                 name={getFieldName(25)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.receiptStatus`} />}
-                validate={[validation]}
+                validate={validation}
+                isEqual={isFieldPristine}
               />
             )}
           </WithValidation>

@@ -22,6 +22,7 @@ import {
   composeValidators,
   DATA_TYPES,
   isFieldPristine,
+  handleProfileSave,
 } from '../../utils';
 import { EditKeyShortcutsWrapper } from '../../components';
 
@@ -85,13 +86,7 @@ const FileExtensionFormComponent = ({
     : <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />;
 
   const onSubmit = async event => {
-    const record = await handleSubmit(event);
-
-    form.reset();
-    transitionToParams({
-      _path: `${path}/view/${record.id}`,
-      layer: null,
-    });
+    await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)(event);
   };
 
   const parseDataTypesValue = value => {

@@ -4,7 +4,7 @@ import React, {
   useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   isEmpty,
@@ -17,6 +17,7 @@ import { withReferenceValues } from '..';
 
 import { fetchAcceptedValuesList } from './fetchAcceptedValuesList';
 import {
+  composeValidators,
   validateMARCWithElse,
   validateAcceptedValues,
   updateValueWithTemplate,
@@ -47,6 +48,7 @@ export const AcceptedValuesField = ({
   isDirty,
   isFormField,
   isMultiSelection,
+  isFieldValueEqual,
   disabled,
   required,
   validation,
@@ -133,7 +135,7 @@ export const AcceptedValuesField = ({
   );
   const customValidation = useCallback(validation, []);
 
-  const fieldValidation = [customValidation || validateAcceptedValueField, memoizedValidation];
+  const fieldValidation = composeValidators(customValidation || validateAcceptedValueField, memoizedValidation);
 
   const renderFormField = () => (
     <Field
@@ -149,6 +151,7 @@ export const AcceptedValuesField = ({
       validate={fieldValidation}
       onFieldChange={onChange}
       isMultiSelection={isMultiSelection}
+      isEqual={isFieldValueEqual}
       disabled={disabled}
       required={required}
       hasLoaded={hasOptions}
@@ -203,6 +206,7 @@ AcceptedValuesField.propTypes = {
   onChange: PropTypes.func,
   componentValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isMultiSelection: PropTypes.bool,
+  isFieldValueEqual: PropTypes.func,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   isDirty: PropTypes.bool,

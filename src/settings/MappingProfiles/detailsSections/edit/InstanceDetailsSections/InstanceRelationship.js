@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -26,6 +26,7 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  isFieldPristine,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
@@ -72,7 +73,8 @@ export const InstanceRelationship = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.parentInstances.field.superInstanceId`} />}
                             name={getSubfieldName(30, 0, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -96,6 +98,7 @@ export const InstanceRelationship = ({
                         }]}
                         setAcceptedValues={setReferenceTables}
                         acceptedValuesPath={getRepeatableAcceptedValuesPath(30, 1, index)}
+                        isFieldValueEqual={isFieldPristine}
                       />
                     </Col>
                   </Row>
@@ -134,7 +137,8 @@ export const InstanceRelationship = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.childInstances.field.subInstanceId`} />}
                             name={getSubfieldName(31, 0, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -157,6 +161,7 @@ export const InstanceRelationship = ({
                         }]}
                         setAcceptedValues={setReferenceTables}
                         acceptedValuesPath={getRepeatableAcceptedValuesPath(31, 1, index)}
+                        isFieldValueEqual={isFieldPristine}
                       />
                     </Col>
                   </Row>

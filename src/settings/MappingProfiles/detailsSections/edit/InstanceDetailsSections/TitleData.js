@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import { noop } from 'lodash';
 
 import {
@@ -20,7 +20,10 @@ import {
   getSubfieldName,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileSubfieldShape } from '../../../../../utils';
+import {
+  isFieldPristine,
+  mappingProfileSubfieldShape,
+} from '../../../../../utils';
 
 export const TitleData = ({
   alternativeTitles,
@@ -44,6 +47,7 @@ export const TitleData = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.titleData.field.title`} />}
             name={getFieldName(9)}
+            isEqual={isFieldPristine}
             disabled
           />
         </Col>
@@ -70,6 +74,7 @@ export const TitleData = ({
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.alternativeTitles.field.alternativeTitleTypeId`} />}
                     name={getSubfieldName(10, 0, index)}
+                    isEqual={isFieldPristine}
                     disabled
                   />
                 </Col>
@@ -81,6 +86,7 @@ export const TitleData = ({
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.alternativeTitles.field.alternativeTitle`} />}
                     name={getSubfieldName(10, 1, index)}
+                    isEqual={isFieldPristine}
                     disabled
                   />
                 </Col>
@@ -98,6 +104,7 @@ export const TitleData = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.titleData.field.indexTitle`} />}
             name={getFieldName(11)}
+            isEqual={isFieldPristine}
             disabled
           />
         </Col>
@@ -121,6 +128,7 @@ export const TitleData = ({
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.series.field.series`} />}
                     name={getSubfieldName(12, 0, index)}
+                    isEqual={isFieldPristine}
                     disabled
                   />
                 </Col>
@@ -157,6 +165,7 @@ export const TitleData = ({
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesTitle`} />}
                         name={getSubfieldName(13, 0, index)}
+                        isEqual={isFieldPristine}
                         disabled
                       />
                     </Col>
@@ -165,6 +174,7 @@ export const TitleData = ({
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesHrid`} />}
                         name={getSubfieldName(13, 1, index)}
+                        isEqual={isFieldPristine}
                         disabled
                       />
                     </Col>
@@ -173,6 +183,7 @@ export const TitleData = ({
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesIsbn`} />}
                         name={getSubfieldName(13, 2, index)}
+                        isEqual={isFieldPristine}
                         disabled
                       />
                     </Col>
@@ -181,6 +192,7 @@ export const TitleData = ({
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesIssn`} />}
                         name={getSubfieldName(13, 3, index)}
+                        isEqual={isFieldPristine}
                         disabled
                       />
                     </Col>
@@ -219,6 +231,7 @@ export const TitleData = ({
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesTitle`} />}
                         name={getSubfieldName(14, 0, index)}
+                        isEqual={isFieldPristine}
                         disabled
                       />
                     </Col>
@@ -227,6 +240,7 @@ export const TitleData = ({
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesHrid`} />}
                         name={getSubfieldName(14, 1, index)}
+                        isEqual={isFieldPristine}
                         disabled
                       />
                     </Col>
@@ -235,6 +249,7 @@ export const TitleData = ({
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesIsbn`} />}
                         name={getSubfieldName(14, 2, index)}
+                        isEqual={isFieldPristine}
                         disabled
                       />
                     </Col>
@@ -243,6 +258,7 @@ export const TitleData = ({
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesIssn`} />}
                         name={getSubfieldName(14, 3, index)}
+                        isEqual={isFieldPristine}
                         disabled
                       />
                     </Col>

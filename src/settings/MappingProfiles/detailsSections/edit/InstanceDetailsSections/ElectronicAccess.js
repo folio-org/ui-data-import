@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import { noop } from 'lodash';
 
 import {
@@ -17,6 +17,7 @@ import { AcceptedValuesField } from '../../../../../components';
 import { getSubfieldName } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  isFieldPristine,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
@@ -59,6 +60,7 @@ export const ElectronicAccess = ({
                       wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
                       wrapperSourcePath: 'electronicAccessRelationships',
                     }]}
+                    isFieldValueEqual={isFieldPristine}
                     disabled
                   />
                 </Col>
@@ -67,6 +69,7 @@ export const ElectronicAccess = ({
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.uri`} />}
                     name={getSubfieldName(27, 1, index)}
+                    isEqual={isFieldPristine}
                     disabled
                   />
                 </Col>
@@ -75,6 +78,7 @@ export const ElectronicAccess = ({
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.linkText`} />}
                     name={getSubfieldName(27, 2, index)}
+                    isEqual={isFieldPristine}
                     disabled
                   />
                 </Col>
@@ -83,6 +87,7 @@ export const ElectronicAccess = ({
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.materialsSpecified`} />}
                     name={getSubfieldName(27, 3, index)}
+                    isEqual={isFieldPristine}
                     disabled
                   />
                 </Col>
@@ -91,6 +96,7 @@ export const ElectronicAccess = ({
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.urlPublicNote`} />}
                     name={getSubfieldName(27, 4, index)}
+                    isEqual={isFieldPristine}
                     disabled
                   />
                 </Col>

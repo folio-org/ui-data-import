@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -27,7 +27,7 @@ import {
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   okapiShape,
-  mappingProfileSubfieldShape,
+  mappingProfileSubfieldShape, isFieldPristine,
 } from '../../../../../utils';
 
 export const ElectronicAccess = ({
@@ -80,6 +80,7 @@ export const ElectronicAccess = ({
                         }]}
                         setAcceptedValues={setReferenceTables}
                         acceptedValuesPath={getRepeatableAcceptedValuesPath(31, 0, index)}
+                        isFieldValueEqual={isFieldPristine}
                         okapi={okapi}
                       />
                     </Col>
@@ -90,7 +91,8 @@ export const ElectronicAccess = ({
                             component={TextField}
                             name={getSubfieldName(31, 1, index)}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.uri`} />}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -102,7 +104,8 @@ export const ElectronicAccess = ({
                             component={TextField}
                             name={getSubfieldName(31, 2, index)}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.linkText`} />}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -114,7 +117,8 @@ export const ElectronicAccess = ({
                             component={TextField}
                             name={getSubfieldName(31, 3, index)}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.materialsSpecified`} />}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -126,7 +130,8 @@ export const ElectronicAccess = ({
                             component={TextField}
                             name={getSubfieldName(31, 4, index)}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.urlPublicNote`} />}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>

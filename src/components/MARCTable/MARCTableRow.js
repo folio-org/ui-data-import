@@ -9,7 +9,7 @@ import {
   useIntl,
   FormattedMessage,
 } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import { isEmpty } from 'lodash';
 
@@ -341,13 +341,22 @@ export const MARCTableRow = ({
           <Field
             data-testid="marc-table-action"
             name={`${name}.action`}
-            component={Select}
-            dataOptions={dataOptions}
-            placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
-            onChange={handleActionChange}
-            validate={[validateRequiredField]}
-            aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.select' })}
-            marginBottom0
+            validate={validateRequiredField}
+            render={fieldProps => (
+              <Select
+                {...fieldProps}
+                dataOptions={dataOptions}
+                placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
+                aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.select' })}
+                onChange={e => {
+                  const value = e.target.value;
+
+                  handleActionChange(e);
+                  fieldProps.input.onChange(value);
+                }}
+                marginBottom0
+              />
+            )}
           />
         )}
       </div>
@@ -365,12 +374,21 @@ export const MARCTableRow = ({
       >
         <Field
           name={`${name}.field.field`}
-          component={TextField}
-          onChange={e => setFieldValue(e.target.value)}
-          validate={[validateTag]}
-          disabled={isSubline}
-          ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.field' })}
-          marginBottom0
+          validate={validateTag}
+          render={fieldProps => (
+            <TextField
+              {...fieldProps}
+              ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.field' })}
+              onChange={e => {
+                const value = e.target.value;
+
+                setFieldValue(value);
+                fieldProps.input.onChange(value);
+              }}
+              disabled={isSubline}
+              marginBottom0
+            />
+          )}
         />
       </div>
     );
@@ -389,7 +407,7 @@ export const MARCTableRow = ({
           name={`${name}.field.indicator1`}
           component={TextField}
           onChange={setIndicator1Value}
-          validate={[validateIndicator1]}
+          validate={validateIndicator1}
           disabled={isSubline}
           ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.indicator1' })}
           marginBottom0
@@ -411,7 +429,7 @@ export const MARCTableRow = ({
           name={`${name}.field.indicator2`}
           component={TextField}
           onChange={setIndicator2Value}
-          validate={[validateIndicator2]}
+          validate={validateIndicator2}
           disabled={isSubline}
           ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.indicator2' })}
           marginBottom0
@@ -432,7 +450,7 @@ export const MARCTableRow = ({
         <Field
           name={`${name}.field.subfields[${subfieldIndex}].subfield`}
           component={TextField}
-          validate={[validateSubfield]}
+          validate={validateSubfield}
           ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.subfield' })}
           marginBottom0
         />
@@ -457,13 +475,22 @@ export const MARCTableRow = ({
           <Field
             data-testid="marc-table-subaction"
             name={`${name}.field.subfields[${subfieldIndex}].subaction`}
-            component={Select}
-            dataOptions={dataOptions}
-            placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
-            onChange={handleSubActionChange}
-            validate={[validateSubaction]}
-            aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.subaction' })}
-            marginBottom0
+            validate={validateSubaction}
+            render={fieldProps => (
+              <Select
+                {...fieldProps}
+                dataOptions={dataOptions}
+                placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
+                aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.subaction' })}
+                onChange={e => {
+                  const value = e.target.value;
+
+                  handleSubActionChange(e);
+                  fieldProps.input.onChange(value);
+                }}
+                marginBottom0
+              />
+            )}
           />
         )}
       </div>
@@ -502,7 +529,7 @@ export const MARCTableRow = ({
                 name={`${name}.field.subfields[${subfieldIndex}].data.find`}
                 component={TextArea}
                 aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.find' })}
-                validate={[validateRequiredField]}
+                validate={validateRequiredField}
                 marginBottom0
                 fullWidth
               />
@@ -518,7 +545,7 @@ export const MARCTableRow = ({
                 name={`${name}.field.subfields[${subfieldIndex}].data.replaceWith`}
                 component={TextArea}
                 aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.replaceWith' })}
-                validate={[validateRequiredField]}
+                validate={validateRequiredField}
                 marginBottom0
                 fullWidth
               />
@@ -549,7 +576,7 @@ export const MARCTableRow = ({
                   onChange={value => setDataFieldValue(value, 'field')}
                   placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.field' })}
                   ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.field' })}
-                  validate={[validateDataField]}
+                  validate={validateDataField}
                   marginBottom0
                 />
               </div>
@@ -563,7 +590,7 @@ export const MARCTableRow = ({
                   onChange={value => setDataFieldValue(value, 'indicator1')}
                   placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator1' })}
                   ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator1' })}
-                  validate={[validateDataIndicator1]}
+                  validate={validateDataIndicator1}
                   marginBottom0
                 />
               </div>
@@ -577,7 +604,7 @@ export const MARCTableRow = ({
                   onChange={value => setDataFieldValue(value, 'indicator2')}
                   placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.indicator2' })}
                   ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.indicator2' })}
-                  validate={[validateDataIndicator2]}
+                  validate={validateDataIndicator2}
                   marginBottom0
                 />
               </div>
@@ -591,7 +618,7 @@ export const MARCTableRow = ({
                   onChange={value => setDataFieldValue(value, 'subfield')}
                   placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.header.subfield' })}
                   ariaLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.marcField.subfield' })}
-                  validate={[validateDataSubfield]}
+                  validate={validateDataSubfield}
                   marginBottom0
                 />
               </div>
@@ -607,7 +634,7 @@ export const MARCTableRow = ({
           <Field
             name={`${name}.field.subfields[${subfieldIndex}].data.text`}
             component={TextArea}
-            validate={[validateRequiredField]}
+            validate={validateRequiredField}
             aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.text' })}
             marginBottom0
           />
@@ -644,12 +671,16 @@ export const MARCTableRow = ({
           <Field
             data-testid="marc-table-position"
             name={`${name}.field.subfields[${subfieldIndex}].position`}
-            component={Select}
-            dataOptions={dataOptions}
-            placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
-            aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.position' })}
-            validate={[validateRequiredField]}
-            marginBottom0
+            validate={validateRequiredField}
+            render={fieldProps => (
+              <Select
+                {...fieldProps}
+                dataOptions={dataOptions}
+                placeholder={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.placeholder.select' })}
+                aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.position' })}
+                marginBottom0
+              />
+            )}
           />
         )}
       </div>

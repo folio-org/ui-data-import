@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -29,6 +29,7 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  isFieldPristine,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
@@ -79,7 +80,7 @@ export const AdministrativeData = ({
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.barcode`} />}
                 name={getFieldName(2)}
-                validate={[validation]}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -94,7 +95,7 @@ export const AdministrativeData = ({
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.accessionNumber`} />}
                 name={getFieldName(3)}
-                validate={[validation]}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -109,7 +110,7 @@ export const AdministrativeData = ({
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.itemIdentifier`} />}
                 name={getFieldName(4)}
-                validate={[validation]}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -144,7 +145,7 @@ export const AdministrativeData = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId`} />}
                             name={getSubfieldName(5, 0, index)}
-                            validate={[validation]}
+                            validate={validation}
                           />
                         )}
                       </WithValidation>
@@ -201,6 +202,7 @@ export const AdministrativeData = ({
                         optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
                         setAcceptedValues={setReferenceTables}
                         acceptedValuesPath={getRepeatableAcceptedValuesPath(6, 0, index)}
+                        isFieldValueEqual={isFieldPristine}
                         okapi={okapi}
                       />
                     </Col>

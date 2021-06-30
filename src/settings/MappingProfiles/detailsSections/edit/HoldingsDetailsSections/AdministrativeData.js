@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -30,6 +30,7 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  isFieldPristine,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
@@ -67,6 +68,7 @@ export const AdministrativeData = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.hrid`} />}
             name={getFieldName(1)}
+            isEqual={isFieldPristine}
             disabled
           />
         </Col>
@@ -100,7 +102,8 @@ export const AdministrativeData = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.administrativeData.field.formerId`} />}
                             name={getSubfieldName(2, 0, index)}
-                            validate={[validation]}
+                            validate={validation}
+                            isEqual={isFieldPristine}
                           />
                         )}
                       </WithValidation>
@@ -179,6 +182,7 @@ export const AdministrativeData = ({
                         optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
                         setAcceptedValues={setReferenceTables}
                         acceptedValuesPath={getRepeatableAcceptedValuesPath(4, 0, index)}
+                        isFieldValueEqual={isFieldPristine}
                         okapi={okapi}
                       />
                     </Col>

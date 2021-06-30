@@ -5,17 +5,13 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 
 import '../../../test/jest/__mock__';
 import {
-  renderWithReduxForm,
   renderWithFinalForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
 
 import { FolioRecordTypeSelect } from './FolioRecordTypeSelect';
 
-const renderFolioRecordTypeSelect = ({
-  formType,
-  onRecordSelect,
-}) => {
+const renderFolioRecordTypeSelect = onRecordSelect => {
   const dataOptions = [{
     label: 'option_1',
     value: 'value_1',
@@ -29,39 +25,23 @@ const renderFolioRecordTypeSelect = ({
       fieldName="folioRecord"
       dataOptions={dataOptions}
       onRecordSelect={onRecordSelect}
-      formType={formType}
     />
   );
 
-  const componentWithForm = formType === 'redux-form' ? renderWithReduxForm(component) : renderWithFinalForm(component);
-
-  return renderWithIntl(componentWithForm, translationsProperties);
+  return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
 describe('FolioRecordTypeSelect component', () => {
-  describe('inside the redux-form', () => {
-    it('should be rendered', () => {
-      const { getByText } = renderFolioRecordTypeSelect({ formType: 'redux-form' });
+  it('should be rendered', () => {
+    const { getByText } = renderFolioRecordTypeSelect();
 
-      expect(getByText('FOLIO record type')).toBeDefined();
-    });
-  });
-
-  describe('inside the final-form', () => {
-    it('should be rendered', () => {
-      const { getByText } = renderFolioRecordTypeSelect({ formType: 'final-form' });
-
-      expect(getByText('FOLIO record type')).toBeDefined();
-    });
+    expect(getByText('FOLIO record type')).toBeDefined();
   });
 
   describe('when "onRecordSelect" prop is passed', () => {
     it('should be called on field change', () => {
       const onRecordSelect = jest.fn();
-      const { getByTestId } = renderFolioRecordTypeSelect({
-        formType: 'final-form',
-        onRecordSelect,
-      });
+      const { getByTestId } = renderFolioRecordTypeSelect(onRecordSelect);
 
       const selectElement = getByTestId('folio-record-type-select');
 

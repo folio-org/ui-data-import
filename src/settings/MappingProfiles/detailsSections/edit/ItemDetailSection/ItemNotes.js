@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -29,7 +29,7 @@ import {
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   okapiShape,
-  mappingProfileSubfieldShape,
+  mappingProfileSubfieldShape, isFieldPristine,
 } from '../../../../../utils';
 
 export const ItemNotes = ({
@@ -82,6 +82,7 @@ export const ItemNotes = ({
                         }]}
                         setAcceptedValues={setReferenceTables}
                         acceptedValuesPath={getRepeatableAcceptedValuesPath(24, 0, index)}
+                        isFieldValueEqual={isFieldPristine}
                         okapi={okapi}
                       />
                     </Col>
@@ -92,7 +93,7 @@ export const ItemNotes = ({
                             component={TextField}
                             name={getSubfieldName(24, 1, index)}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
-                            validate={[validation]}
+                            validate={validation}
                           />
                         )}
                       </WithValidation>

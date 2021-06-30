@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { PropTypes } from 'prop-types';
 import { useIntl } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Select,
@@ -20,6 +20,7 @@ import {
   REPEATABLE_ACTIONS,
   validateRepeatableActionsField,
   repeatableFieldActionShape,
+  isFieldPristine,
 } from '../../utils';
 
 import styles from './RepeatableActionsField.css';
@@ -56,8 +57,8 @@ export const RepeatableActionsField = memo(({
     [actionToClearFields, hasRepeatableFields],
   );
 
-  const handleRepeatableActionChange = e => {
-    if (e.target.value === actionToClearFields) {
+  const handleRepeatableActionChange = value => {
+    if (value === actionToClearFields) {
       onRepeatableActionChange(subfieldsToClearPath || `profile.mappingDetails.mappingFields[${repeatableFieldIndex}].subfields`, []);
     }
   };
@@ -85,13 +86,23 @@ export const RepeatableActionsField = memo(({
           {placeholder => (
             <Field
               name={wrapperFieldName}
-              component={Select}
-              dataOptions={dataOptions}
-              placeholder={placeholder}
+              validate={validateRepeatableActions}
               disabled={disabled}
-              onChange={handleRepeatableActionChange}
-              validate={[validateRepeatableActions]}
-              aria-label={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions' })}
+              isEqual={isFieldPristine}
+              render={fieldProps => (
+                <Select
+                  {...fieldProps}
+                  dataOptions={dataOptions}
+                  placeholder={placeholder}
+                  aria-label={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions' })}
+                  onChange={e => {
+                    const value = e.target.value;
+
+                    handleRepeatableActionChange(value);
+                    fieldProps.input.onChange(value);
+                  }}
+                />
+              )}
             />
           )}
         </WithTranslation>

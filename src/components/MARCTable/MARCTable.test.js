@@ -5,7 +5,7 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 
 import '../../../test/jest/__mock__';
 import {
-  renderWithReduxForm,
+  renderWithFinalForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
 
@@ -31,7 +31,7 @@ const renderMARCTable = (fields, columns) => {
     />
   );
 
-  return renderWithIntl(renderWithReduxForm(component), translationsProperties);
+  return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
 describe('MARC modifications table', () => {

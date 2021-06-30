@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -24,7 +24,10 @@ import {
   onRemove,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileSubfieldShape } from '../../../../../utils';
+import {
+  isFieldPristine,
+  mappingProfileSubfieldShape,
+} from '../../../../../utils';
 
 export const EnumerationData = ({
   yearCaption,
@@ -48,7 +51,8 @@ export const EnumerationData = ({
                 component={TextField}
                 name={getFieldName(15)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
-                validate={[validation]}
+                validate={validation}
+                isEqual={isFieldPristine}
               />
             )}
           </WithValidation>
@@ -63,7 +67,8 @@ export const EnumerationData = ({
                 component={TextField}
                 name={getFieldName(16)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
-                validate={[validation]}
+                validate={validation}
+                isEqual={isFieldPristine}
               />
             )}
           </WithValidation>
@@ -80,7 +85,7 @@ export const EnumerationData = ({
                 component={TextField}
                 name={getFieldName(17)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.volume`} />}
-                validate={[validation]}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -115,7 +120,7 @@ export const EnumerationData = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />}
                             name={getSubfieldName(18, 0, index)}
-                            validate={[validation]}
+                            validate={validation}
                           />
                         )}
                       </WithValidation>

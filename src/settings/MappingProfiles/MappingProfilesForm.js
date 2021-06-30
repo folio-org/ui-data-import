@@ -1,7 +1,7 @@
 import React, {
   useMemo,
   useState,
-  useEffect,
+  useCallback,
   useLayoutEffect,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -10,14 +10,14 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import { connect } from 'react-redux';
+import { Field } from 'react-final-form';
 import {
-  Field,
-  change,
-} from 'redux-form';
-import { isEmpty } from 'lodash';
+  isEmpty,
+  isEqual,
+} from 'lodash';
 
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes/final-form';
+import { stripesShape } from '@folio/stripes/core';
 import {
   Headline,
   AccordionSet,
@@ -55,11 +55,11 @@ import {
   getReferenceTables,
 } from './initialDetails';
 import {
+  handleProfileSave,
   compose,
   withProfileWrapper,
   validateRequiredField,
   isMARCType,
-  okapiShape,
   ENTITY_KEYS,
   LAYER_TYPES,
   PROFILE_TYPES,
@@ -68,33 +68,32 @@ import {
   FIELD_MAPPINGS_FOR_MARC,
   FIELD_MAPPINGS_FOR_MARC_OPTIONS,
   fillEmptyFieldsWithValue,
-  marcFieldProtectionSettingsShape,
   createOptionsList,
+  isFieldPristine,
   FOLIO_RECORD_TYPES_TO_DISABLE,
   INCOMING_RECORD_TYPES_TO_DISABLE,
 } from '../../utils';
 
 import styles from './MappingProfiles.css';
 
-const formName = 'mappingProfilesForm';
-
 export const MappingProfilesFormComponent = ({
   pristine,
   submitting,
-  initialValues,
-  mappingDetails,
-  mappingDetails: { marcMappingOption },
   parentResources: { marcFieldProtectionSettings: { records: marcFieldProtectionSettings = [] } },
-  mappingMarcFieldProtectionFields,
-  okapi,
+  stripes: { okapi },
   location: { search },
+  initialValues,
   handleSubmit,
+  form,
   onCancel,
-  dispatch,
   intl,
   accordionStatusRef,
+  transitionToParams,
+  match: { path },
 }) => {
   const { formatMessage } = intl;
+  const { layer } = queryString.parse(search);
+
   const {
     profile,
     profile: {
@@ -104,8 +103,13 @@ export const MappingProfilesFormComponent = ({
       parentProfiles = [],
       childProfiles = [],
     },
+    addedRelations: initialAddedRelations,
+    deletedRelations: initialDeletedRelations,
   } = initialValues;
-  const { layer } = queryString.parse(search);
+  const mappingDetails = form.getState().values.profile?.mappingDetails;
+  const marcMappingOption = mappingDetails?.marcMappingOption;
+  const mappingMarcFieldProtectionFields = form.getState().values.profile?.mappingMarcFieldProtectionFields || [];
+  const referenceTables = getReferenceTables(mappingDetails?.mappingFields || []);
 
   const isEditMode = layer === LAYER_TYPES.EDIT;
   const isSubmitDisabled = pristine || submitting;
@@ -113,8 +117,8 @@ export const MappingProfilesFormComponent = ({
   const [folioRecordType, setFolioRecordType] = useState(existingRecordType || null);
   const [fieldMappingsForMARCSelectedOption, setFieldMappingsForMARCSelectedOption] = useState('');
   const [fieldMappingsForMARC, setFieldMappingsForMARC] = useState(marcMappingOption || '');
-  const [addedRelations, setAddedRelations] = useState([]);
-  const [deletedRelations, setDeletedRelations] = useState([]);
+  const [addedRelations, setAddedRelations] = useState(initialAddedRelations || []);
+  const [deletedRelations, setDeletedRelations] = useState(initialDeletedRelations || []);
   const [prevExistingRecordType, setPrevExistingRecordType] = useState(existingRecordType);
   const [initials, setInitials] = useState({
     ...profile,
@@ -123,8 +127,8 @@ export const MappingProfilesFormComponent = ({
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   useLayoutEffect(() => {
-    const isEqual = folioRecordType === prevExistingRecordType;
-    const needsUpdate = !id || (id && (!isEqual || isEmpty(mappingDetails)));
+    const isRecordTypeTheSame = folioRecordType === prevExistingRecordType;
+    const needsUpdate = !id || (id && (!isRecordTypeTheSame || isEmpty(mappingDetails)));
 
     if (!needsUpdate) {
       return;
@@ -140,18 +144,12 @@ export const MappingProfilesFormComponent = ({
     };
 
     setInitials(newInitials);
-    dispatch(change(formName, 'profile.mappingDetails', newInitDetails));
+    form.change('profile.mappingDetails', newInitDetails);
 
-    if (!isEqual) {
+    if (!isRecordTypeTheSame) {
       setPrevExistingRecordType(folioRecordType);
     }
   }, [folioRecordType]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    dispatch(change(formName, 'addedRelations', addedRelations));
-  }, [addedRelations, dispatch]);
-  useEffect(() => {
-    dispatch(change(formName, 'deletedRelations', deletedRelations));
-  }, [deletedRelations, dispatch]);
 
   const paneTitle = isEditMode
     ? (
@@ -168,12 +166,11 @@ export const MappingProfilesFormComponent = ({
     ...childProfiles,
   ];
 
-  const referenceTables = getReferenceTables(mappingDetails?.mappingFields || []);
   const initialFields = getInitialFields(folioRecordType);
 
   const getIncomingRecordTypesDataOptions = () => Object.entries(INCOMING_RECORD_TYPES)
     .map(([recordType, { captionId }]) => {
-      // TODO: Disabling options should be removed after implentation is done
+      // TODO: Disabling options should be removed after implementation is done
       const isOptionDisabled = INCOMING_RECORD_TYPES_TO_DISABLE.some(option => option === recordType);
 
       return {
@@ -184,7 +181,7 @@ export const MappingProfilesFormComponent = ({
     });
   const getFolioRecordTypesDataOptions = () => Object.entries(FOLIO_RECORD_TYPES)
     .map(([recordType, { captionId }]) => {
-      // TODO: Disabling options should be removed after implentation is done
+      // TODO: Disabling options should be removed after implementation is done
       const isOptionDisabled = FOLIO_RECORD_TYPES_TO_DISABLE.some(option => option === recordType);
 
       return {
@@ -197,8 +194,22 @@ export const MappingProfilesFormComponent = ({
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, []);
   const incomingRecordTypesDataOptions = useMemo(getIncomingRecordTypesDataOptions, []);
 
+  const onSubmit = async event => {
+    await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)(event);
+  };
+
+  const addRelations = useCallback(relations => {
+    form.change('addedRelations', relations);
+    setAddedRelations(relations);
+  }, [form]);
+
+  const deleteRelations = useCallback(relations => {
+    form.change('deletedRelations', relations);
+    setDeletedRelations(relations);
+  }, [form]);
+
   const setFormFieldValue = (fieldsPath, updatedValue) => {
-    dispatch(change(formName, fieldsPath, updatedValue));
+    form.change(fieldsPath, updatedValue);
   };
 
   const getRepeatableFieldAction = mappingFieldIndex => {
@@ -240,9 +251,7 @@ export const MappingProfilesFormComponent = ({
     }
   };
 
-  const handleFieldMappingsForMARCTypeChange = e => {
-    const value = e.target.value;
-
+  const handleFieldMappingsForMARCTypeChange = value => {
     if (fieldMappingsForMARC && value !== fieldMappingsForMARC) {
       setFieldMappingsForMARCSelectedOption(value);
       setConfirmModalOpen(true);
@@ -260,7 +269,6 @@ export const MappingProfilesFormComponent = ({
     setReferenceTables: setFormFieldValue,
     okapi,
   };
-
   const MARCDetailsProps = {
     marcMappingDetails: mappingDetails?.marcMappingDetails,
     marcFieldProtectionFields: marcFieldProtectionSettings,
@@ -269,11 +277,11 @@ export const MappingProfilesFormComponent = ({
     onUpdateFieldAdd: setInitialValuesForMARCUpdates,
     setReferenceTables: setFormFieldValue,
   };
-
   const invoiceDetailsProps = {
     ...detailsProps,
     mappingDetails,
   };
+
   const fieldMappingsForMARCOptions = createOptionsList(FIELD_MAPPINGS_FOR_MARC_OPTIONS, formatMessage);
   const fieldMappingsForMARCPreviousOption = fieldMappingsForMARC && formatMessage(
     { id: FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label },
@@ -292,14 +300,14 @@ export const MappingProfilesFormComponent = ({
 
   return (
     <>
-      <EditKeyShortcutsWrapper onSubmit={handleSubmit}>
+      <EditKeyShortcutsWrapper onSubmit={onSubmit}>
         <FullScreenForm
           id="mapping-profiles-form"
           paneTitle={paneTitle}
           submitButtonText={<FormattedMessage id="ui-data-import.saveAsProfile" />}
           cancelButtonText={<FormattedMessage id="ui-data-import.close" />}
           isSubmitButtonDisabled={isSubmitDisabled}
-          onSubmit={handleSubmit}
+          onSubmit={onSubmit}
           onCancel={onCancel}
           contentClassName={styles.mappingForm}
         >
@@ -324,7 +332,8 @@ export const MappingProfilesFormComponent = ({
                     name="profile.name"
                     required
                     component={TextField}
-                    validate={[validateRequiredField]}
+                    validate={validateRequiredField}
+                    isEqual={isFieldPristine}
                   />
                 </div>
                 <div data-test-incoming-record-type-field>
@@ -335,9 +344,10 @@ export const MappingProfilesFormComponent = ({
                         name="profile.incomingRecordType"
                         component={Select}
                         required
-                        validate={[validateRequiredField]}
+                        validate={validateRequiredField}
                         dataOptions={incomingRecordTypesDataOptions}
                         placeholder={placeholder}
+                        isEqual={isFieldPristine}
                       />
                     )}
                   </FormattedMessage>
@@ -347,11 +357,10 @@ export const MappingProfilesFormComponent = ({
                     <FolioRecordTypeSelect
                       fieldName="existingRecordType"
                       dataOptions={folioRecordTypesDataOptions}
-                      onRecordSelect={e => {
-                        setFolioRecordType(e.target.value);
+                      onRecordSelect={value => {
+                        setFolioRecordType(value);
                         setFieldMappingsForMARC('');
                       }}
-                      formType="redux-form"
                     />
                   </Col>
                   {folioRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC && (
@@ -360,13 +369,23 @@ export const MappingProfilesFormComponent = ({
                         {([placeholder]) => (
                           <div data-test-field-mapping-foer-marc-field>
                             <Field
-                              label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}
                               name="profile.mappingDetails.marcMappingOption"
-                              component={Select}
-                              validate={[validateRequiredField]}
-                              dataOptions={fieldMappingsForMARCOptions}
-                              placeholder={placeholder}
-                              onChange={handleFieldMappingsForMARCTypeChange}
+                              validate={validateRequiredField}
+                              isEqual={isFieldPristine}
+                              render={fieldProps => (
+                                <Select
+                                  {...fieldProps}
+                                  label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}
+                                  dataOptions={fieldMappingsForMARCOptions}
+                                  placeholder={placeholder}
+                                  onChange={e => {
+                                    const value = e.target.value;
+
+                                    fieldProps.input.onChange(value);
+                                    handleFieldMappingsForMARCTypeChange(value);
+                                  }}
+                                />
+                              )}
                               required
                             />
                           </div>
@@ -380,6 +399,7 @@ export const MappingProfilesFormComponent = ({
                     label={<FormattedMessage id="ui-data-import.description" />}
                     name="profile.description"
                     component={TextArea}
+                    isEqual={isFieldPristine}
                   />
                 </div>
               </Accordion>
@@ -443,9 +463,17 @@ export const MappingProfilesFormComponent = ({
                   isMultiLink={false}
                   relationsToAdd={addedRelations}
                   relationsToDelete={deletedRelations}
-                  onLink={setAddedRelations}
-                  onUnlink={setDeletedRelations}
+                  onLink={addRelations}
+                  onUnlink={deleteRelations}
                   isEditMode={isEditMode}
+                />
+                <Field
+                  name="addedRelations"
+                  component={() => null}
+                />
+                <Field
+                  name="deletedRelations"
+                  component={() => null}
                 />
               </Accordion>
             </AccordionSet>
@@ -485,6 +513,16 @@ MappingProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  form: PropTypes.shape({
+    getState: PropTypes.func.isRequired,
+    change: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+  }).isRequired,
+  onCancel: PropTypes.func.isRequired,
+  intl: PropTypes.object.isRequired,
+  stripes: stripesShape.isRequired,
+  transitionToParams: PropTypes.func.isRequired,
+  match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   location: PropTypes.oneOfType([
     PropTypes.shape({
       search: PropTypes.string.isRequired,
@@ -492,35 +530,16 @@ MappingProfilesFormComponent.propTypes = {
     }).isRequired,
     PropTypes.string.isRequired,
   ]),
-  okapi: okapiShape.isRequired,
-  mappingMarcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
-  onCancel: PropTypes.func.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  intl: PropTypes.object.isRequired,
-  mappingDetails: PropTypes.object,
   parentResources: PropTypes.object,
   accordionStatusRef: PropTypes.object,
-};
-
-const mapStateToProps = state => {
-  const okapi = state.okapi || null;
-  const mappingDetails = state.form[formName]?.values.profile?.mappingDetails || {};
-  const mappingMarcFieldProtectionFields = state.form[formName]?.values.profile?.marcFieldProtectionSettings || [];
-
-  return {
-    okapi,
-    mappingDetails,
-    mappingMarcFieldProtectionFields,
-  };
 };
 
 export const MappingProfilesForm = compose(
   injectIntl,
   withProfileWrapper,
-  stripesForm({
-    form: formName,
+  stripesFinalForm({
     navigationCheck: true,
-    enableReinitialize: true,
+    destroyOnUnregister: true,
+    initialValuesEqual: isEqual,
   }),
-  connect(mapStateToProps),
 )(MappingProfilesFormComponent);

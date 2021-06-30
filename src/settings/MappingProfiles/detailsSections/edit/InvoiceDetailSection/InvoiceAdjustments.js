@@ -4,7 +4,7 @@ import {
   useIntl,
   FormattedMessage,
 } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import {
   isEmpty,
   noop,
@@ -45,7 +45,7 @@ import {
   PRORATE_OPTIONS,
   INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS,
   INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS,
-  BOOLEAN_ACTIONS,
+  BOOLEAN_ACTIONS, isFieldPristine,
 } from '../../../../../utils';
 
 export const InvoiceAdjustments = ({
@@ -127,6 +127,7 @@ export const InvoiceAdjustments = ({
                 setAcceptedValues={setReferenceTables}
                 acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 0, index)}
                 validation={noop}
+                isFieldValueEqual={isFieldPristine}
                 okapi={okapi}
               />
             </Col>
@@ -145,6 +146,7 @@ export const InvoiceAdjustments = ({
                 setAcceptedValues={setReferenceTables}
                 acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 1, index)}
                 validation={noop}
+                isFieldValueEqual={isFieldPristine}
                 okapi={okapi}
               />
             </Col>
@@ -236,6 +238,7 @@ export const InvoiceAdjustments = ({
               wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
               acceptedValuesList={prorateList}
               onChange={handleProRateChange(index)}
+              isFieldValueEqual={isFieldPristine}
               okapi={okapi}
             />
           </Col>
@@ -250,6 +253,7 @@ export const InvoiceAdjustments = ({
               wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
               acceptedValuesList={relationToTotalList}
               validation={noop}
+              isFieldValueEqual={isFieldPristine}
               okapi={okapi}
             />
           </Col>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -18,6 +18,7 @@ import {
 import { getFieldName } from '../../utils';
 import {
   okapiShape,
+  isFieldPristine,
   validateRequiredField,
 } from '../../../../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
@@ -41,6 +42,7 @@ export const VendorInformation = ({
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.vendorInformation.field.vendorInvoiceNumber`} />}
             name={getFieldName(16)}
             validate={validateRequiredField}
+            isEqual={isFieldPristine}
             required
           />
         </Col>
@@ -52,6 +54,7 @@ export const VendorInformation = ({
             onSelect={onSelectVendor}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.vendorInformation.field.vendorName`} />}
             validate={validateRequiredField}
+            isEqual={isFieldPristine}
             required
           />
         </Col>
@@ -65,6 +68,7 @@ export const VendorInformation = ({
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={accountingCodeOptions}
             disabled={!accountingCodeOptions.length}
+            isFieldValueEqual={isFieldPristine}
             okapi={okapi}
           />
         </Col>

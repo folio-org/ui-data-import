@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import { noop } from 'lodash';
 
 import {
@@ -34,7 +34,7 @@ import {
   MAPPING_FUND_DISTRIBUTION_FIELD_SOURCES,
   FUND_DISTRIBUTION_SOURCE,
   mappingProfileSubfieldShape,
-  okapiShape,
+  okapiShape, isFieldPristine,
 } from '../../../../../utils';
 
 export const InvoiceLineFundDistribution = ({
@@ -103,6 +103,7 @@ export const InvoiceLineFundDistribution = ({
                         setAcceptedValues={setReferenceTables}
                         acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(26, 0, 14, 0, index)}
                         validation={noop}
+                        isFieldValueEqual={isFieldPristine}
                         okapi={okapi}
                       />
                     </Col>
@@ -121,6 +122,7 @@ export const InvoiceLineFundDistribution = ({
                         setAcceptedValues={setReferenceTables}
                         acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(26, 0, 14, 1, index)}
                         validation={noop}
+                        isFieldValueEqual={isFieldPristine}
                         okapi={okapi}
                       />
                     </Col>
@@ -129,6 +131,7 @@ export const InvoiceLineFundDistribution = ({
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.value`} />}
                         name={getInnerSubfieldName(26, 0, 14, 2, index)}
+                        isEqual={isFieldPristine}
                       />
                     </Col>
                     <Col xs={2}>
@@ -137,6 +140,7 @@ export const InvoiceLineFundDistribution = ({
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.type`} />}
                         name={getInnerSubfieldName(26, 0, 14, 3, index)}
                         currency={currency}
+                        isEqual={isFieldPristine}
                       />
                     </Col>
                     <Col xs={2}>
@@ -144,6 +148,7 @@ export const InvoiceLineFundDistribution = ({
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.amount`} />}
                         name={getInnerSubfieldName(26, 0, 14, 4, index)}
+                        isEqual={isFieldPristine}
                         disabled
                       />
                     </Col>

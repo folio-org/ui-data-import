@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import { noop } from 'lodash';
 
 import {
@@ -27,6 +27,7 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   okapiShape,
   validateRequiredField,
+  isFieldPristine,
 } from '../../../../../utils';
 
 export const InvoiceInformation = ({
@@ -50,6 +51,7 @@ export const InvoiceInformation = ({
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={validateRequiredField}
+            isEqual={isFieldPristine}
             required
           />
         </Col>
@@ -59,6 +61,7 @@ export const InvoiceInformation = ({
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.status`} />}
             name={getFieldName(1)}
             validate={validateRequiredField}
+            isEqual={isFieldPristine}
             required
             disabled
           />
@@ -70,6 +73,7 @@ export const InvoiceInformation = ({
             name={getFieldName(2)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+            isEqual={isFieldPristine}
           />
         </Col>
         <Col xs={3}>
@@ -77,6 +81,7 @@ export const InvoiceInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.paymentTerms`} />}
             name={getFieldName(3)}
+            isEqual={isFieldPristine}
           />
         </Col>
       </Row>
@@ -86,6 +91,7 @@ export const InvoiceInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.approvalDate`} />}
             name={getFieldName(4)}
+            isEqual={isFieldPristine}
             disabled
           />
         </Col>
@@ -94,6 +100,7 @@ export const InvoiceInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.approvedBy`} />}
             name={getFieldName(5)}
+            isEqual={isFieldPristine}
             disabled
           />
         </Col>
@@ -110,6 +117,7 @@ export const InvoiceInformation = ({
               wrapperSourcePath: 'acquisitionsUnits',
             }]}
             isRemoveValueAllowed
+            isFieldValueEqual={isFieldPristine}
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(6)}
             isMultiSelection
@@ -133,6 +141,7 @@ export const InvoiceInformation = ({
               wrapperSourcePath: 'configs',
             }]}
             isRemoveValueAllowed
+            isFieldValueEqual={isFieldPristine}
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(7)}
             validation={noop}
@@ -144,6 +153,7 @@ export const InvoiceInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.billToAddress`} />}
             name={getFieldName(8)}
+            isEqual={isFieldPristine}
             disabled
           />
         </Col>
@@ -164,6 +174,7 @@ export const InvoiceInformation = ({
             acceptedValuesPath={getAcceptedValuesPath(9)}
             validation={validateRequiredField}
             required
+            isFieldValueEqual={isFieldPristine}
             okapi={okapi}
           />
         </Col>
@@ -174,6 +185,7 @@ export const InvoiceInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.subTotal`} />}
             name={getFieldName(10)}
+            isEqual={isFieldPristine}
             disabled
           />
         </Col>
@@ -182,6 +194,7 @@ export const InvoiceInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.adjustmentsTotal`} />}
             name={getFieldName(11)}
+            isEqual={isFieldPristine}
             disabled
           />
         </Col>
@@ -190,6 +203,7 @@ export const InvoiceInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.total`} />}
             name={getFieldName(12)}
+            isEqual={isFieldPristine}
             disabled
           />
         </Col>
@@ -211,6 +225,7 @@ export const InvoiceInformation = ({
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.lockTotal`} />}
             name={getFieldName(13)}
+            isEqual={isFieldPristine}
             disabled={!isLockTotal}
           />
         </Col>
@@ -221,6 +236,7 @@ export const InvoiceInformation = ({
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.note`} />}
             component={TextArea}
             name={getFieldName(14)}
+            isEqual={isFieldPristine}
           />
         </Col>
       </Row>

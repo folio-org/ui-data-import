@@ -16,7 +16,10 @@ import {
   getFieldName,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { okapiShape } from '../../../../../utils';
+import {
+  isFieldPristine,
+  okapiShape,
+} from '../../../../../utils';
 
 export const Location = ({
   setReferenceTables,
@@ -47,6 +50,7 @@ export const Location = ({
             optionTemplate="**name** (**code**)"
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(29)}
+            isFieldValueEqual={isFieldPristine}
             okapi={okapi}
           />
         </Col>
@@ -66,6 +70,7 @@ export const Location = ({
               wrapperSourcePath: 'locations',
             }]}
             isRemoveValueAllowed
+            isFieldValueEqual={isFieldPristine}
             optionTemplate="**name** (**code**)"
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(30)}

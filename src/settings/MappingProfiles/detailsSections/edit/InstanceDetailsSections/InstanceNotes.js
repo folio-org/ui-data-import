@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import { noop } from 'lodash';
 
 import {
@@ -19,7 +19,10 @@ import {
   getBoolSubfieldName,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileSubfieldShape } from '../../../../../utils';
+import {
+  isFieldPristine,
+  mappingProfileSubfieldShape,
+} from '../../../../../utils';
 
 export const InstanceNotes = ({ notes }) => {
   return (
@@ -45,6 +48,7 @@ export const InstanceNotes = ({ notes }) => {
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.noteType`} />}
                     name={getSubfieldName(26, 0, index)}
+                    isEqual={isFieldPristine}
                     disabled
                   />
                 </Col>
@@ -53,6 +57,7 @@ export const InstanceNotes = ({ notes }) => {
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
                     name={getSubfieldName(26, 1, index)}
+                    isEqual={isFieldPristine}
                     disabled
                   />
                 </Col>

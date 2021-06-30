@@ -4,7 +4,7 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -36,7 +36,7 @@ import {
   ITEM_STATUS_OPTIONS,
   ITEM_CIRCULATION_NOTES_OPTIONS,
   mappingProfileSubfieldShape,
-  okapiShape,
+  okapiShape, isFieldPristine,
 } from '../../../../../utils';
 
 export const LoanAndAvailability = ({
@@ -94,6 +94,7 @@ export const LoanAndAvailability = ({
             }]}
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(25)}
+            isFieldValueEqual={isFieldPristine}
             okapi={okapi}
           />
         </Col>
@@ -117,6 +118,7 @@ export const LoanAndAvailability = ({
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(26)}
+            isFieldValueEqual={isFieldPristine}
             okapi={okapi}
           />
         </Col>
@@ -134,6 +136,7 @@ export const LoanAndAvailability = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={statusesList}
+            isFieldValueEqual={isFieldPristine}
             okapi={okapi}
           />
         </Col>
@@ -185,7 +188,7 @@ export const LoanAndAvailability = ({
                             component={TextField}
                             name={getSubfieldName(28, 1, index)}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
-                            validate={[validation]}
+                            validate={validation}
                           />
                         )}
                       </WithValidation>

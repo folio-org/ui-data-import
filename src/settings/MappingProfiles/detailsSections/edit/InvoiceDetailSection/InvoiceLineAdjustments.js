@@ -4,7 +4,7 @@ import {
   useIntl,
   FormattedMessage,
 } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import { noop } from 'lodash';
 
 import {
@@ -38,7 +38,7 @@ import {
   mappingProfileSubfieldShape,
   okapiShape,
   INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS,
-  BOOLEAN_ACTIONS,
+  BOOLEAN_ACTIONS, isFieldPristine,
 } from '../../../../../utils';
 
 export const InvoiceLineAdjustments = ({
@@ -98,6 +98,7 @@ export const InvoiceLineAdjustments = ({
               component={TextField}
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.description`} />}
               name={getInnerSubfieldName(26, 0, 15, 0, index)}
+              isEqual={isFieldPristine}
             />
           </Col>
           <Col xs={2}>
@@ -105,6 +106,7 @@ export const InvoiceLineAdjustments = ({
               component={TextField}
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.amount`} />}
               name={getInnerSubfieldName(26, 0, 15, 1, index)}
+              isEqual={isFieldPristine}
             />
           </Col>
           <Col xs={2}>
@@ -113,6 +115,7 @@ export const InvoiceLineAdjustments = ({
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.type`} />}
               name={getInnerSubfieldName(26, 0, 15, 2, index)}
               currency={currency}
+              isEqual={isFieldPristine}
             />
           </Col>
           <Col xs={3}>
@@ -123,6 +126,7 @@ export const InvoiceLineAdjustments = ({
               optionValue="value"
               optionLabel="label"
               isRemoveValueAllowed
+              isFieldValueEqual={isFieldPristine}
               wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
               acceptedValuesList={relationToTotalList}
               validation={noop}
@@ -137,6 +141,7 @@ export const InvoiceLineAdjustments = ({
               name={getInnerBooleanFieldPath(26, 0, 15, 4, index)}
               parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
               checked={exportToAccountingCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
+              isEqual={isFieldPristine}
             />
           </Col>
         </Row>

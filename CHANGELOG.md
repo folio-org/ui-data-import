@@ -17,6 +17,7 @@
 * Import log summary: add a way to navigate back to the Landing page or View all page (UIDATIMP-913)
 * Field Mapping profiles: For Holdings and Items, add validation for the "Staff only" field (UIDATIMP-920)
 * Cover `<Section>` component with unit tests (UIDATIMP-724)
+* Refactor Field mapping profiles to use final-form instead of redux-form (UIDATIMP-826)
 
 ### Bugs fixed:
 * folio-testing UI is completely broken for all apps (UIDATIMP-915)

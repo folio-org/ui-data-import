@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -20,7 +20,10 @@ import {
   getFieldName,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { okapiShape } from '../../../../../utils';
+import {
+  isFieldPristine,
+  okapiShape,
+} from '../../../../../utils';
 
 export const ItemData = ({
   setReferenceTables,
@@ -49,6 +52,7 @@ export const ItemData = ({
             }]}
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(7)}
+            isFieldValueEqual={isFieldPristine}
             okapi={okapi}
           />
         </Col>
@@ -64,7 +68,7 @@ export const ItemData = ({
                 component={TextField}
                 name={getFieldName(8)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.copyNumber`} />}
-                validate={[validation]}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -87,6 +91,7 @@ export const ItemData = ({
               wrapperSourcePath: 'callNumberTypes',
             }]}
             isRemoveValueAllowed
+            isFieldValueEqual={isFieldPristine}
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(9)}
             okapi={okapi}
@@ -102,7 +107,7 @@ export const ItemData = ({
                 component={TextField}
                 name={getFieldName(10)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberPrefix`} />}
-                validate={[validation]}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -117,7 +122,7 @@ export const ItemData = ({
                 component={TextField}
                 name={getFieldName(11)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumber`} />}
-                validate={[validation]}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -132,7 +137,7 @@ export const ItemData = ({
                 component={TextField}
                 name={getFieldName(12)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberSuffix`} />}
-                validate={[validation]}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -149,7 +154,7 @@ export const ItemData = ({
                 component={TextField}
                 name={getFieldName(13)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.numberOfPieces`} />}
-                validate={[validation]}
+                validate={validation}
               />
             )}
           </WithValidation>
@@ -164,7 +169,7 @@ export const ItemData = ({
                 component={TextField}
                 name={getFieldName(14)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.descriptionOfPieces`} />}
-                validate={[validation]}
+                validate={validation}
               />
             )}
           </WithValidation>
