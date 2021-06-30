@@ -166,10 +166,10 @@ describe('View job log page', () => {
   describe('rendering header', () => {
     describe('when record type is MARC', () => {
       it('should display record title', () => {
-        const { getByText } = renderViewJobLog({ recordType: 'MARC' });
+        const { queryByText } = renderViewJobLog({ recordType: 'MARC' });
 
-        expect(getByText('Import Log for Record')).toBeDefined();
-        expect(getByText('1 (Test record title)')).toBeDefined();
+        expect(queryByText('Import Log for Record')).toBeDefined();
+        expect(queryByText('1 (Test record title)')).toBeDefined();
       });
 
       it('"SRS MARC Bib" tab should be active by default', () => {
@@ -185,10 +185,10 @@ describe('View job log page', () => {
 
     describe('when record type is EDIFACT', () => {
       it('should display record title', () => {
-        const { getByText } = renderViewJobLog({ recordType: 'EDIFACT' });
+        const { queryByText } = renderViewJobLog({ recordType: 'EDIFACT' });
 
-        expect(getByText('Import Log for Record')).toBeDefined();
-        expect(getByText('1024200-1 (Test record title)')).toBeDefined();
+        expect(queryByText('Import Log for Record')).toBeDefined();
+        expect(queryByText('1024200-1 (Test record title)')).toBeDefined();
       });
 
       it('"Invoice" tab should be active by default', () => {

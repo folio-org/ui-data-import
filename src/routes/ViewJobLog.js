@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { Headline } from '@folio/stripes/components';
@@ -317,7 +316,7 @@ export class ViewJobLog extends Component {
     const toolbar = {
       visible: true,
       message: (
-        <SafeHTMLMessage
+        <FormattedMessage
           id="ui-data-import.import-log"
           tagName="span"
           values={{

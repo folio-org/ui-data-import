@@ -36,7 +36,6 @@ import {
   stripesConnect,
   stripesShape,
 } from '@folio/stripes/core';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import {
   UploadingJobsContext,
@@ -375,7 +374,7 @@ const ViewJobProfileComponent = props => {
           open={showRunConfirmation}
           heading={<FormattedMessage id="ui-data-import.modal.jobProfile.run.header" />}
           message={(
-            <SafeHTMLMessage
+            <FormattedMessage
               id="ui-data-import.modal.jobProfile.run.message"
               values={{ name: jobProfileRecord.name }}
             />
