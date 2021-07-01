@@ -20,4 +20,5 @@ module.exports = {
   },
   testMatch: ['**/(lib|src)/**/?(*.)test.{js,jsx}'],
   testPathIgnorePatterns: ['/node_modules/'],
+  setupFilesAfterEnv: [path.join(__dirname, './test/jest/jest.setup.js')],
 };
