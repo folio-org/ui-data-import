@@ -23,7 +23,7 @@ const notEmptyOptionsList = {
   optionLabel: 'optionLabel',
   className: 'className',
   disabled: false,
-  onSelect : func,
+  onSelect: func,
 };
 const emptyOptionsList = {
   id: 'testId',
@@ -33,7 +33,7 @@ const emptyOptionsList = {
   optionLabel: 'test optionLabel',
   className: 'testClassName',
   disabled: false,
-  onSelect : func,
+  onSelect: func,
   emptyMessage: 'emptyMessage',
 };
 
@@ -49,7 +49,7 @@ const renderOptionsList = ({
   emptyMessage,
 }) => {
   const component = (
-    <OptionsList 
+    <OptionsList
       id={id}
       label={label}
       dataOptions={dataOptions}
