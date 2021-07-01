@@ -11,6 +11,7 @@
 
 ### Features added:
 * Ensure that the most recent 25 import logs display on the Data Import Landing Page (UIDATIMP-950)
+* prefer @folio/stripes exports to private paths when importing TextDate component (UIDATIMP-941)
 
 ### Bugs fixed:
 * When closing the log summary, user sometimes goes to unexpected place (UIDATIMP-949)
