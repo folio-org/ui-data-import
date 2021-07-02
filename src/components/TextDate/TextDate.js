@@ -20,7 +20,6 @@ import {
   RootCloseWrapper,
   TextField,
 } from '@folio/stripes/components';
-import { getLocalFormat } from '@folio/stripes-components/lib/Datepicker/Datepicker';
 import Calendar from '@folio/stripes-components/lib/Datepicker/Calendar';
 import css from '@folio/stripes-components/lib/Datepicker/Calendar.css';
 import { AVAILABLE_PLACEMENTS } from '../../utils';
@@ -87,11 +86,7 @@ const TextDateField = ({
   value: valueProp,
   ...props
 }) => {
-  const format = useRef(dateFormat || getLocalFormat({
-    intlLocale: intl.locale,
-    localeProp: locale,
-    intl,
-  })).current;
+  const format = useRef(dateFormat).current;
   const [dateString, setDateString] = useState('');
   const [showCalendar, setShowCalendar] = useState(showCalendarProp);
 
