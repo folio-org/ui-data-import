@@ -89,16 +89,13 @@ describe('OptionsList', () => {
   it('shouldn`t be changed after clicking on the empty message', () => {
     const { queryByText } = renderOptionsList(emptyOptionsListProps);
     const button = queryByText('emptyMessage');
+    const isPrevented = fireEvent.click(button);
 
-    expect(button).toBeDefined();
-
-    fireEvent.click(button);
-
-    expect(button).toBeDefined();
+    expect(isPrevented).toBe(false);
   });
 
   describe('when clicking on dropdown', () => {
-    it('should be shown by clicking on dropdown', () => {
+    it('dropdown options should appear', () => {
       const { getByText } = renderOptionsList(notEmptyOptionsListProps);
       const dropdownButton = getByText('testLabel');
 
@@ -109,19 +106,21 @@ describe('OptionsList', () => {
       expect(getByText('name1')).toBeVisible();
     });
 
-    it('should be hidden by clicking on dropdown', () => {
-      const { getByText } = renderOptionsList(notEmptyOptionsListProps);
-      const dropdownButton = getByText('testLabel');
+    describe('when clicking on open dropdown', () => {
+      it('dropdown options should be hidden', () => {
+        const { getByText } = renderOptionsList(notEmptyOptionsListProps);
+        const dropdownButton = getByText('testLabel');
 
-      expect(getByText('name1')).not.toBeVisible();
+        expect(getByText('name1')).not.toBeVisible();
 
-      fireEvent.click(dropdownButton);
+        fireEvent.click(dropdownButton);
 
-      expect(getByText('name1')).toBeVisible();
+        expect(getByText('name1')).toBeVisible();
 
-      fireEvent.click(dropdownButton);
+        fireEvent.click(dropdownButton);
 
-      expect(getByText('name1')).not.toBeVisible();
+        expect(getByText('name1')).not.toBeVisible();
+      });
     });
   });
 
