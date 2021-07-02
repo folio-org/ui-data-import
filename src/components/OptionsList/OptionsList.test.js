@@ -101,11 +101,11 @@ describe('OptionsList', () => {
     it('should be shown by clicking on dropdown', () => {
       const { getByText } = renderOptionsList(notEmptyOptionsListProps);
       const dropdownButton = getByText('testLabel');
-  
+
       expect(getByText('name1')).not.toBeVisible();
-  
+
       fireEvent.click(dropdownButton);
-  
+
       expect(getByText('name1')).toBeVisible();
     });
 
@@ -114,13 +114,13 @@ describe('OptionsList', () => {
       const dropdownButton = getByText('testLabel');
 
       expect(getByText('name1')).not.toBeVisible();
-  
+
       fireEvent.click(dropdownButton);
 
       expect(getByText('name1')).toBeVisible();
-  
+
       fireEvent.click(dropdownButton);
-  
+
       expect(getByText('name1')).not.toBeVisible();
     });
   });
