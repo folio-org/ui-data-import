@@ -7,6 +7,7 @@
 * Refactor away from react-intl-safe-html (UIDATIMP-932)
 * prefer @folio/stripes exports to private paths when importing components (UIDATIMP-927)
 * prefer @folio/stripes exports to private paths when importing TextDate component (UIDATIMP-941)
+* Cover `<WithTranslation>` component with unit tests (UIDATIMP-733)
 
 ## [4.1.1](https://github.com/folio-org/ui-data-import/tree/v4.1.1) (2021-06-25)
 
