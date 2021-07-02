@@ -7,15 +7,14 @@ import { translationsProperties } from '../../../test/jest/helpers';
 
 import { OptionsList } from './OptionsList';
 
-const func = text => text;
-const notEmptyOptionsList = {
+const onSelectMock = jest.fn(value => value);
+const notEmptyOptionsListProps = {
   id: 'testId',
   label: 'testLabel',
   dataOptions: [{
     optionValue: 'value1',
     optionLabel: 'name1',
-  },
-  {
+  }, {
     optionValue: '',
     optionLabel: 'name2',
   }],
@@ -23,9 +22,9 @@ const notEmptyOptionsList = {
   optionLabel: 'optionLabel',
   className: 'className',
   disabled: false,
-  onSelect: func,
+  onSelect: onSelectMock,
 };
-const emptyOptionsList = {
+const emptyOptionsListProps = {
   id: 'testId',
   label: 'test label',
   dataOptions: [],
@@ -33,7 +32,7 @@ const emptyOptionsList = {
   optionLabel: 'test optionLabel',
   className: 'testClassName',
   disabled: false,
-  onSelect: func,
+  onSelect: onSelectMock,
   emptyMessage: 'emptyMessage',
 };
 
@@ -66,20 +65,29 @@ const renderOptionsList = ({
 };
 
 describe('OptionsList', () => {
-  it('should be rendered with option list', () => {
-    const { getByText } = renderOptionsList(notEmptyOptionsList);
-
-    expect(getByText('name1')).toBeDefined();
+  afterAll(() => {
+    onSelectMock.mockClear();
   });
 
-  it('should be rendered with an empty message', () => {
-    const { getByText } = renderOptionsList(emptyOptionsList);
+  describe('when there are options', () => {
+    it('should be rendered with options list', () => {
+      const { getByText } = renderOptionsList(notEmptyOptionsListProps);
 
-    expect(getByText('emptyMessage')).toBeDefined();
+      expect(getByText('name1')).toBeDefined();
+      expect(getByText('name2')).toBeDefined();
+    });
+  });
+
+  describe('when there is no options', () => {
+    it('should be rendered with an empty message', () => {
+      const { getByText } = renderOptionsList(emptyOptionsListProps);
+
+      expect(getByText('emptyMessage')).toBeDefined();
+    });
   });
 
   it('shouldn`t be changed after clicking on the empty message', () => {
-    const { queryByText } = renderOptionsList(emptyOptionsList);
+    const { queryByText } = renderOptionsList(emptyOptionsListProps);
     const button = queryByText('emptyMessage');
 
     expect(button).toBeDefined();
@@ -89,23 +97,36 @@ describe('OptionsList', () => {
     expect(button).toBeDefined();
   });
 
-  it('should be shown and then hidden by clicking on dropdown', () => {
-    const { getByText } = renderOptionsList(notEmptyOptionsList);
-    const dropdownButton = getByText('testLabel');
+  describe('when clicking on dropdown', () => {
+    it('should be shown by clicking on dropdown', () => {
+      const { getByText } = renderOptionsList(notEmptyOptionsListProps);
+      const dropdownButton = getByText('testLabel');
+  
+      expect(getByText('name1')).not.toBeVisible();
+  
+      fireEvent.click(dropdownButton);
+  
+      expect(getByText('name1')).toBeVisible();
+    });
 
-    expect(getByText('name1')).not.toBeVisible();
+    it('should be hidden by clicking on dropdown', () => {
+      const { getByText } = renderOptionsList(notEmptyOptionsListProps);
+      const dropdownButton = getByText('testLabel');
 
-    fireEvent.click(dropdownButton);
+      expect(getByText('name1')).not.toBeVisible();
+  
+      fireEvent.click(dropdownButton);
 
-    expect(getByText('name1')).toBeVisible();
-
-    fireEvent.click(dropdownButton);
-
-    expect(getByText('name1')).not.toBeVisible();
+      expect(getByText('name1')).toBeVisible();
+  
+      fireEvent.click(dropdownButton);
+  
+      expect(getByText('name1')).not.toBeVisible();
+    });
   });
 
   it('should be closed after clicking on element button with value and label', () => {
-    const { getByText } = renderOptionsList(notEmptyOptionsList);
+    const { getByText } = renderOptionsList(notEmptyOptionsListProps);
 
     fireEvent.click(getByText('name1'));
 
@@ -113,7 +134,7 @@ describe('OptionsList', () => {
   });
 
   it('should be closed after clicking on element button only with label', () => {
-    const { getByText } = renderOptionsList(notEmptyOptionsList);
+    const { getByText } = renderOptionsList(notEmptyOptionsListProps);
 
     fireEvent.click(getByText('name2'));
 

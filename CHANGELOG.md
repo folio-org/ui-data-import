@@ -5,6 +5,7 @@
 ### Features added:
 * Cover `<TreeLine>` component with unit tests (UIDATIMP-727)
 * Refactor away from react-intl-safe-html (UIDATIMP-932)
+* Cover `<OptionsList>` component with unit tests (UIDATIMP-714)
 
 ## [4.1.1](https://github.com/folio-org/ui-data-import/tree/v4.1.1) (2021-06-25)
 
