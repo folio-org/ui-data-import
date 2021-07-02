@@ -5,12 +5,10 @@
 ### Features added:
 * Cover `<TreeLine>` component with unit tests (UIDATIMP-727)
 * Refactor away from react-intl-safe-html (UIDATIMP-932)
-<<<<<<< HEAD
-* Cover `<OptionsList>` component with unit tests (UIDATIMP-714)
-=======
 * prefer @folio/stripes exports to private paths when importing components (UIDATIMP-927)
 * prefer @folio/stripes exports to private paths when importing TextDate component (UIDATIMP-941)
->>>>>>> a0af105fdf802363d81a492f9a2d372b668695be
+* Cover `<OptionsList>` component with unit tests (UIDATIMP-714)
+
 
 ## [4.1.1](https://github.com/folio-org/ui-data-import/tree/v4.1.1) (2021-06-25)
 
