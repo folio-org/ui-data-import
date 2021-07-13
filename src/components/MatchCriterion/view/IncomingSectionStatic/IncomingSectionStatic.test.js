@@ -105,9 +105,9 @@ describe('IncomingSectionStatic view', () => {
 
   describe('when choose EXACT_DATE static value type', () => {
     it('should be rendered EXACT_DATE static value type', () => {
-      const { getByText } = renderIncomingSectionStatic(incomingSectionStaticWithDate);
+      const { queryByText } = renderIncomingSectionStatic(incomingSectionStaticWithDate);
 
-      expect(getByText('12/30/2010')).toBeDefined();
+      expect(queryByText('12/30/2010')).toBeDefined();
     });
 
     it('should be rendered with empty EXACT_DATE static value type', () => {
