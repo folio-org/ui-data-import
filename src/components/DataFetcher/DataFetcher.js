@@ -35,7 +35,10 @@ const jobsUrl = createUrl('metadata-provider/jobExecutions', {
 }, false);
 
 const logsUrl = createUrl('metadata-provider/jobExecutions', {
-  query: `(status any "${COMMITTED} ${ERROR}") sortBy completedDate/sort.descending`,
+  query: `(status any "${COMMITTED} ${ERROR}") 
+  AND (jobProfileInfo="\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="d0ebb7b0-2f0f-11eb-adc1-0242ac120002") 
+  AND (jobProfileInfo="\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="91f9b8d6-d80e-4727-9783-73fb53e3c786"") 
+  sortBy completedDate/sort.descending`,
   limit: 25,
 }, false);
 
