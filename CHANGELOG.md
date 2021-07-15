@@ -2,7 +2,13 @@
 
 ## **4.2.0** (in progress)
 
+## [4.1.2](https://github.com/folio-org/ui-data-import/tree/v4.1.2) (2021-07-29)
+
+### Features added:
+* Ensure that the most recent 25 import logs display on the Data Import Landing Page (UIDATIMP-950)
+
 ## [4.1.1](https://github.com/folio-org/ui-data-import/tree/v4.1.1) (2021-06-25)
+
 ### Features added:
 * Expand module permissions with permissions for preceding and succeeding titles (UIDATIMP-943)
 * Change "MARC_BIB" type to "MARC" (UIDATIMP-944)
