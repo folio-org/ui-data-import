@@ -10,11 +10,6 @@ import { stripesConnect } from '@folio/stripes/core';
 import { DataFetcherContext } from '../DataFetcher';
 import { JobLogsContainer } from '../JobLogsContainer';
 
-import {
-  OCLC_CREATE_INSTANCE_JOB_ID,
-  OCLC_UPDATE_INSTANCE_JOB_ID,
-} from '../../utils';
-
 const sortColumns = {
   ...DEFAULT_JOB_LOGS_SORT_COLUMNS,
   fileName: {
@@ -33,19 +28,13 @@ const RecentJobLogsComponent = () => {
     hasLoaded,
   } = useContext(DataFetcherContext);
 
-  const filteredFromOCLCLogs = logs?.filter(log => {
-    const { jobProfileInfo: { id: jobProfileId } } = log;
-
-    return jobProfileId !== OCLC_CREATE_INSTANCE_JOB_ID && jobProfileId !== OCLC_UPDATE_INSTANCE_JOB_ID;
-  });
-
   return (
     <JobLogsContainer>
       {({ listProps }) => (
         <JobLogs
           sortColumns={sortColumns}
           hasLoaded={hasLoaded}
-          contentData={filteredFromOCLCLogs}
+          contentData={logs}
           formatter={listProps.resultsFormatter}
           {...listProps}
         />
