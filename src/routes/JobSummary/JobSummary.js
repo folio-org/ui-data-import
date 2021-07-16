@@ -104,7 +104,7 @@ const JobSummaryComponent = ({
   );
   const firstMenu = (
     <PaneMenu>
-      <PaneCloseLink onClick={() => history.go(-2)} />
+      <PaneCloseLink to="/data-import" />
     </PaneMenu>
   );
 

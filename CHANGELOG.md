@@ -11,6 +11,9 @@
 * Cover `<OptionsList>` component with unit tests (UIDATIMP-714)
 * Ensure that the most recent 25 import logs display on the Data Import Landing Page (UIDATIMP-950)
 
+### Bugs fixed:
+* When closing the log summary, user sometimes goes to unexpected place (UIDATIMP-949)
+
 ## [4.1.1](https://github.com/folio-org/ui-data-import/tree/v4.1.1) (2021-06-25)
 
 ### Features added:
