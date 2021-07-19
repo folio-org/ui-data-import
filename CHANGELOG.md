@@ -10,6 +10,7 @@
 * Cover `<WithTranslation>` component with unit tests (UIDATIMP-733)
 * Cover `<OptionsList>` component with unit tests (UIDATIMP-714)
 * Ensure that the most recent 25 import logs display on the Data Import Landing Page (UIDATIMP-950)
+* Cover `<MatchCriterion>` component with unit tests (UIDATIMP-711)
 
 ### Bugs fixed:
 * When closing the log summary, user sometimes goes to unexpected place (UIDATIMP-949)
