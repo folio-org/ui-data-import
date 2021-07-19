@@ -68,11 +68,11 @@ const renderExistingSectionFolio = ({
 };
 
 describe('ExistingSectionFolio edit', () => {
-  afterAll(() => {
+  afterEach(() => {
     onChangeFormStateMock.mockClear();
   });
 
-  it('should be rendered with options', () => {
+  it('should render data options', () => {
     const { getByText } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
 
     expect(getByText('test label1')).toBeDefined();
@@ -80,35 +80,53 @@ describe('ExistingSectionFolio edit', () => {
   });
 
   describe('when clicking on options element', () => {
-    it('with correct data', () => {
-      const { getByText } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
-      const element = getByText('test label1');
+    it('with correct data, single value shouldn`t be added', () => {
+      const {
+        container,
+        getByText,
+      } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
+      const optionsElement = getByText('test label1');
 
-      fireEvent.click(element);
+      fireEvent.click(optionsElement);
 
-      expect(element).toBeDefined();
+      const singleValueContainer = container.querySelector('.singleValue');
+
+      expect(singleValueContainer).not.toHaveTextContent('test label1');
+      expect(onChangeFormStateMock).toHaveBeenCalledTimes(1);
     });
 
-    it('with incorrect data', () => {
-      const { getByText } = renderExistingSectionFolio(existingSectionFolioWithWrongData);
-      const element = getByText('test label2');
+    it('with incorrect data, single value should be added', () => {
+      const {
+        container,
+        getByText,
+      } = renderExistingSectionFolio(existingSectionFolioWithWrongData);
+      const optionsElement = getByText('test label2');
 
-      fireEvent.click(element);
+      fireEvent.click(optionsElement);
 
-      expect(element).toBeDefined();
+      const singleValueContainer = container.querySelector('.singleValue');
+
+      expect(singleValueContainer).toHaveTextContent('test label2');
+      expect(onChangeFormStateMock).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe('when input text to search', () => {
-    it('input change its value', () => {
-      const { getByLabelText } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
-      const element = getByLabelText('options filter');
+  describe('when searching for an option', () => {
+    it('should filter data options', () => {
+      const {
+        getByRole,
+        getByLabelText,
+      } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
+      const filterElement = getByLabelText('options filter');
 
-      expect(element).toHaveValue('');
+      expect(filterElement).toHaveValue('');
 
-      fireEvent.change(element, { target: { value: 'test value1' } });
+      fireEvent.change(filterElement, { target: { value: 'test label1' } });
 
-      expect(element).toHaveValue('test value1');
+      const dropdownOptionsAmount = getByRole('listbox').children.length;
+
+      expect(filterElement).toHaveValue('test label1');
+      expect(dropdownOptionsAmount).toEqual(1);
     });
   });
 });

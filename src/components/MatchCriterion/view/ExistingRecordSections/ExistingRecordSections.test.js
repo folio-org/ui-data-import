@@ -29,7 +29,7 @@ const renderExistingSectionFolio = ({
 };
 
 describe('ExistingRecordSections view', () => {
-  it('should be rendered with existing field label', () => {
+  it('should render a correct label', () => {
     const { getByText } = renderExistingSectionFolio(existingSectionFolio);
 
     expect(getByText('Test label')).toBeDefined();

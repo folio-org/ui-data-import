@@ -10,7 +10,26 @@ const marcFieldSection = {
   expressionDetails: {
     fields: [{
       label: 'field',
-      value: 'test value',
+      value: 'test value1',
+    }, {
+      label: 'indicator1',
+      value: 'test value2',
+    }, {
+      label: 'indicator2',
+      value: 'test value3',
+    }, {
+      label: 'recordSubfield',
+      value: 'test value4',
+    }],
+  },
+  recordFieldType: 'incoming',
+  recordFieldSectionLabel: <span>Test label</span>,
+};
+const marcFieldSectionWithoutValue = {
+  expressionDetails: {
+    fields: [{
+      label: 'field',
+      value: '',
     }],
   },
   recordFieldType: 'incoming',
@@ -38,5 +57,35 @@ describe('MARCFieldSection view', () => {
     const { getByText } = renderMARCFieldSection(marcFieldSection);
 
     expect(getByText('Test label')).toBeDefined();
+  });
+
+  it('should be rendered with value for Field label', () => {
+    const { getByText } = renderMARCFieldSection(marcFieldSection);
+
+    expect(getByText('test value1')).toBeDefined();
+  });
+
+  it('should be rendered with value for In. 1 label', () => {
+    const { getByText } = renderMARCFieldSection(marcFieldSection);
+
+    expect(getByText('test value2')).toBeDefined();
+  });
+
+  it('should be rendered with value for In. 2 label', () => {
+    const { getByText } = renderMARCFieldSection(marcFieldSection);
+
+    expect(getByText('test value3')).toBeDefined();
+  });
+
+  it('should be rendered with value for Subfield label', () => {
+    const { getByText } = renderMARCFieldSection(marcFieldSection);
+
+    expect(getByText('test value4')).toBeDefined();
+  });
+
+  it('should be rendered with no value (simple dash -)', () => {
+    const { getAllByText } = renderMARCFieldSection(marcFieldSectionWithoutValue);
+
+    expect(getAllByText('-')).toBeDefined();
   });
 });

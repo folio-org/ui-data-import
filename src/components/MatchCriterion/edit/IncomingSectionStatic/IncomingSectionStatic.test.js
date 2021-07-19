@@ -10,7 +10,7 @@ import {
 
 import { IncomingSectionStatic } from './IncomingSectionStatic';
 
-const onTypeChangeMock = jest.fn(value => value);
+const onTypeChangeMock = jest.fn().mockImplementation(text => text);
 const textIncomingSectionStatic = {
   repeatableIndex: 0,
   staticValueType: 'TEXT',
@@ -48,42 +48,51 @@ const renderIncomingSectionStatic = ({
 };
 
 describe('IncomingSectionStatic edit', () => {
-  afterAll(() => {
+  afterEach(() => {
     onTypeChangeMock.mockClear();
   });
 
-  it('should be rendered with TEXT value type', () => {
-    const { getByLabelText } = renderIncomingSectionStatic(textIncomingSectionStatic);
+  describe('dropdown with static values', () => {
+    it('sholud be rendered', () => {
+      const { container } = renderIncomingSectionStatic(textIncomingSectionStatic);
+      const dropdown = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.staticValueDetails.staticValueType"]');
 
-    expect(getByLabelText('Text')).toBeDefined();
+      expect(dropdown).toBeDefined();
+    });
+
+    it('should contain Text option', () => {
+      const { getByLabelText } = renderIncomingSectionStatic(textIncomingSectionStatic);
+
+      expect(getByLabelText('Text')).toBeDefined();
+    });
+
+    it('should contain Number option', () => {
+      const { getByLabelText } = renderIncomingSectionStatic(numberIncomingSectionStatic);
+
+      expect(getByLabelText('Number')).toBeDefined();
+    });
+
+    it('should contain Date option', () => {
+      const { getByLabelText } = renderIncomingSectionStatic(dateIncomingSectionStatic);
+
+      expect(getByLabelText('Date')).toBeDefined();
+    });
+
+    it('should contain Date range option', () => {
+      const { getAllByLabelText } = renderIncomingSectionStatic(dateRangeIncomingSectionStatic);
+
+      expect(getAllByLabelText('Date range')).toBeDefined();
+    });
   });
 
-  it('should be rendered with NUMBER value type', () => {
-    const { getByLabelText } = renderIncomingSectionStatic(numberIncomingSectionStatic);
+  describe('when picking an option', () => {
+    it('input should change its type', () => {
+      const { container } = renderIncomingSectionStatic(dateIncomingSectionStatic);
+      const staticValueContainer = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.staticValueDetails.staticValueType"]');
 
-    expect(getByLabelText('Number')).toBeDefined();
-  });
+      fireEvent.change(staticValueContainer, { target: { value: 'TEXT' } });
 
-  it('should be rendered with EXACT_DATE value type', () => {
-    const { getByLabelText } = renderIncomingSectionStatic(dateIncomingSectionStatic);
-
-    expect(getByLabelText('Date')).toBeDefined();
-  });
-
-  it('should be rendered with DATE_RANGE value type', () => {
-    const { getAllByLabelText } = renderIncomingSectionStatic(dateRangeIncomingSectionStatic);
-
-    expect(getAllByLabelText('Date range')).toBeDefined();
-  });
-
-  describe('when input text to search', () => {
-    it('input change its value', () => {
-      const { container } = renderIncomingSectionStatic(dateRangeIncomingSectionStatic);
-      const element = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.staticValueDetails.staticValueType"]');
-
-      fireEvent.change(element, { target: { value: 'NUMBER' } });
-
-      expect(element).toHaveValue('NUMBER');
+      expect(staticValueContainer).toHaveValue('TEXT');
     });
   });
 });

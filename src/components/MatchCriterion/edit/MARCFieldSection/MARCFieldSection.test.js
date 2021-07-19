@@ -33,62 +33,83 @@ const renderMARCFieldSection = ({
 };
 
 describe('MARCFieldSection edit', () => {
-  it('should be rendered with fields', () => {
-    const {
-      container,
-      getByText,
-    } = renderMARCFieldSection(marcFieldSection);
+  it('should render a correct section title', () => {
+    const { getByText } = renderMARCFieldSection(marcFieldSection);
 
     expect(getByText('Test')).toBeDefined();
-    expect(container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[0].value"]')).toBeDefined();
-    expect(container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[1].value"]')).toBeDefined();
-    expect(container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[2].value"]')).toBeDefined();
-    expect(container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[3].value"]')).toBeDefined();
   });
 
-  describe('when input text to search', () => {
+  it('should render Field field', () => {
+    const { container } = renderMARCFieldSection(marcFieldSection);
+    const fieldContainer = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[0].value"]');
+
+    expect(fieldContainer).toBeDefined();
+  });
+
+  it('should render In. 1 field', () => {
+    const { container } = renderMARCFieldSection(marcFieldSection);
+    const fieldContainer = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[1].value"]');
+
+    expect(fieldContainer).toBeDefined();
+  });
+
+  it('should render In. 2 field', () => {
+    const { container } = renderMARCFieldSection(marcFieldSection);
+    const fieldContainer = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[2].value"]');
+
+    expect(fieldContainer).toBeDefined();
+  });
+
+  it('should render Subfield field', () => {
+    const { container } = renderMARCFieldSection(marcFieldSection);
+    const fieldContainer = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[3].value"]');
+
+    expect(fieldContainer).toBeDefined();
+  });
+
+  describe('when input text to a field', () => {
     it('field input change its value', () => {
       const { container } = renderMARCFieldSection(marcFieldSection);
-      const element = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[0].value"]');
+      const containerField = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[0].value"]');
 
-      expect(element).toHaveValue('');
+      expect(containerField).toHaveValue('');
 
-      fireEvent.change(element, { target: { value: 'NUMBER' } });
+      fireEvent.change(containerField, { target: { value: '999' } });
 
-      expect(element).toHaveValue('NUMBER');
+      expect(containerField).toHaveValue('999');
     });
 
     it('In. 1 input change its value', () => {
       const { container } = renderMARCFieldSection(marcFieldSection);
-      const element = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[1].value"]');
+      const containerIn1 = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[1].value"]');
 
-      expect(element).toHaveValue('');
+      expect(containerIn1).toHaveValue('');
 
-      fireEvent.change(element, { target: { value: 'NUMBER' } });
+      fireEvent.change(containerIn1, { target: { value: 'test' } });
 
-      expect(element).toHaveValue('NUMBER');
+      expect(containerIn1).toHaveValue('test');
     });
 
     it('In. 2 input change its value', () => {
       const { container } = renderMARCFieldSection(marcFieldSection);
-      const element = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[2].value"]');
+      const containerIn2 = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[2].value"]');
 
-      expect(element).toHaveValue('');
+      expect(containerIn2).toHaveValue('');
 
-      fireEvent.change(element, { target: { value: 'NUMBER' } });
+      fireEvent.change(containerIn2, { target: { value: 'test' } });
 
-      expect(element).toHaveValue('NUMBER');
+      expect(containerIn2).toHaveValue('test');
     });
 
     it('Subfield input change its value', () => {
       const { container } = renderMARCFieldSection(marcFieldSection);
-      const element = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[3].value"]');
+      const containerSubfield = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[3].value"]');
 
-      expect(element).toHaveValue('');
+      expect(containerSubfield).toHaveValue('');
 
-      fireEvent.change(element, { target: { value: 'NUMBER' } });
+      fireEvent.change(containerSubfield, { target: { value: 'test' } });
 
-      expect(element).toHaveValue('NUMBER');
+      expect(containerSubfield).toHaveValue('test');
     });
   });
 });

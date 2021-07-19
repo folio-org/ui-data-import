@@ -6,77 +6,43 @@ import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { ViewMatchCriterion } from './ViewMatchCriterion';
 
-const viewMatchCriterion = {
-  matchDetails: {
-    existingMatchExpression: {
-      dataValueType: 'testDataValueType_1',
-      fields: [{
-        label: 'testLabel_1',
-        value: 'testValue_1',
-      }],
-      qualifier: {
-        comparisonPart: 'NUMERICS_ONLY',
-        qualifierType: 'BEGINS_WITH',
-        qualifierValue: 'testQualifierValue_1',
+const viewMatchCriterionProps = matchCriterion => {
+  return {
+    matchDetails: {
+      existingMatchExpression: {
+        dataValueType: 'testDataValueType_1',
+        fields: [{
+          label: 'testLabel_1',
+          value: 'testValue_1',
+        }],
+        qualifier: {
+          comparisonPart: 'NUMERICS_ONLY',
+          qualifierType: 'BEGINS_WITH',
+          qualifierValue: 'testQualifierValue_1',
+        },
       },
-    },
-    existingRecordType: 'HOLDINGS',
-    incomingMatchExpression: {
-      dataValueType: 'testDataValueType_2',
-      fields: [{
-        label: 'testLabel_2',
-        value: 'testValue_2',
-      }],
-      qualifier: {
-        comparisonPart: 'NUMERICS_ONLY',
-        qualifierType: 'BEGINS_WITH',
-        qualifierValue: 'testQualifierValue_2',
+      existingRecordType: 'HOLDINGS',
+      incomingMatchExpression: {
+        dataValueType: 'testDataValueType_2',
+        fields: [{
+          label: 'testLabel_2',
+          value: 'testValue_2',
+        }],
+        qualifier: {
+          comparisonPart: 'NUMERICS_ONLY',
+          qualifierType: 'BEGINS_WITH',
+          qualifierValue: 'testQualifierValue_2',
+        },
       },
+      incomingRecordType: 'INSTANCE',
+      matchCriterion,
     },
-    incomingRecordType: 'INSTANCE',
-    matchCriterion: 'EXACTLY_MATCHES',
-  },
-  incomingRecordType: 'MARC_BIBLIOGRAPHIC',
-  existingRecordType: 'INSTANCE',
-  incomingRecordLabel: 'testIncomingRecordLabel',
-  existingRecordLabel: 'testExistingRecordLabel',
-  resources: {},
-};
-const viewMatchCriterionWithoutMatchCriterion = {
-  matchDetails: {
-    existingMatchExpression: {
-      dataValueType: 'testDataValueType_1',
-      fields: [{
-        label: 'testLabel_1',
-        value: 'testValue_1',
-      }],
-      qualifier: {
-        comparisonPart: 'NUMERICS_ONLY',
-        qualifierType: 'BEGINS_WITH',
-        qualifierValue: 'testQualifierValue_1',
-      },
-    },
-    existingRecordType: 'HOLDINGS',
-    incomingMatchExpression: {
-      dataValueType: 'testDataValueType_2',
-      fields: [{
-        label: 'testLabel_2',
-        value: 'testValue_2',
-      }],
-      qualifier: {
-        comparisonPart: 'NUMERICS_ONLY',
-        qualifierType: 'BEGINS_WITH',
-        qualifierValue: 'testQualifierValue_2',
-      },
-    },
-    incomingRecordType: 'INSTANCE',
-    matchCriterion: '',
-  },
-  incomingRecordType: 'MARC_BIBLIOGRAPHIC',
-  existingRecordType: 'INSTANCE',
-  incomingRecordLabel: 'testIncomingRecordLabel',
-  existingRecordLabel: 'testExistingRecordLabel',
-  resources: {},
+    incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+    existingRecordType: 'INSTANCE',
+    incomingRecordLabel: 'testIncomingRecordLabel',
+    existingRecordLabel: 'testExistingRecordLabel',
+    resources: {},
+  };
 };
 
 const renderViewMatchCriterion = ({
@@ -103,14 +69,14 @@ const renderViewMatchCriterion = ({
 
 describe('ViewMatchCriterion', () => {
   it('should be rendered with a qualifier type', () => {
-    const { getByText } = renderViewMatchCriterion(viewMatchCriterion);
+    const { getByText } = renderViewMatchCriterion({ ...viewMatchCriterionProps('EXACTLY_MATCHES') });
 
     expect(getByText('Incoming testIncomingRecordLabel record')).toBeDefined();
     expect(getByText('Existing testExistingRecordLabel record')).toBeDefined();
   });
 
   it('should be rendered without a qualifier type', () => {
-    const { getByText } = renderViewMatchCriterion(viewMatchCriterionWithoutMatchCriterion);
+    const { getByText } = renderViewMatchCriterion({ ...viewMatchCriterionProps('') });
 
     expect(getByText('Existing testExistingRecordLabel record')).toBeDefined();
     expect(getByText('Incoming testIncomingRecordLabel record')).toBeDefined();

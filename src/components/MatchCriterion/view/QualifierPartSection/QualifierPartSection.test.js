@@ -38,17 +38,21 @@ const renderQualifierPartSection = ({
 };
 
 describe('QualifierPartSection view', () => {
-  it('should be rendered with additional content', () => {
-    const { container } = renderQualifierPartSection(qualifierPartSection);
-    const element = container.querySelector('.content');
+  describe('when there is a value', () => {
+    it('should be rendered with additional content', () => {
+      const { container } = renderQualifierPartSection(qualifierPartSection);
+      const additionalContent = container.querySelector('.content');
 
-    expect(element).toBeDefined();
+      expect(additionalContent).toBeDefined();
+    });
   });
 
-  it('should be rendered without additional content', () => {
-    const { container } = renderQualifierPartSection(qualifierPartSectionWithoutValue);
-    const element = container.querySelector('.content');
+  describe('when there is no value', () => {
+    it('should be rendered without additional content', () => {
+      const { container } = renderQualifierPartSection(qualifierPartSectionWithoutValue);
+      const additionalContent = container.querySelector('.content');
 
-    expect(element).toBeNull();
+      expect(additionalContent).toBeNull();
+    });
   });
 });

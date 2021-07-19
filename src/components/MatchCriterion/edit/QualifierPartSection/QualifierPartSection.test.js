@@ -10,11 +10,17 @@ import {
 
 import { QualifierPartSection } from './QualifierPartSection';
 
-const onChangeMock = jest.fn(value => value);
+const onChangeMock = jest.fn();
 const qualifierPartSection = {
   repeatableIndex: 0,
   recordFieldType: 'incoming',
   isOpen: false,
+  onChange: onChangeMock,
+};
+const openedQualifierPartSection = {
+  repeatableIndex: 0,
+  recordFieldType: 'incoming',
+  isOpen: true,
   onChange: onChangeMock,
 };
 
@@ -41,23 +47,45 @@ describe('QualifierPartSection edit', () => {
     onChangeMock.mockClear();
   });
 
-  it('should be rendered with closed additional content', () => {
-    const { container } = renderQualifierPartSection(qualifierPartSection);
-    const additionalContent = container.querySelector('.content');
+  it('should have a correct title', () => {
+    const { getByText } = renderQualifierPartSection(qualifierPartSection);
 
-    expect(additionalContent).toBeNull();
+    expect(getByText('Only compare part of the value')).toBeDefined();
   });
 
-  describe('when click on checkbox', () => {
-    it('additional content should be opened', () => {
+  it('should be closed when section is unchecked', () => {
+    const { container } = renderQualifierPartSection(qualifierPartSection);
+    const sectionContent = container.querySelector('.content');
+
+    expect(sectionContent).toBeNull();
+  });
+
+  describe('when clicking on the section checkbox', () => {
+    it('section content should be expanded', () => {
       const { container } = renderQualifierPartSection(qualifierPartSection);
-      const element = container.querySelector('input[type="checkbox"]');
+      const openCheckbox = container.querySelector('input[type="checkbox"]');
 
-      fireEvent.click(element);
+      fireEvent.click(openCheckbox);
 
-      const additionalContent = container.querySelector('.content');
+      const sectionContent = container.querySelector('.content');
 
-      expect(additionalContent).toBeDefined();
+      expect(sectionContent).toBeDefined();
+    });
+  });
+
+  describe('Qualifier part section content', () => {
+    it('should have a dropdown with correct options', () => {
+      const {
+        container,
+        getByText,
+      } = renderQualifierPartSection(openedQualifierPartSection);
+      const dropdown = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.qualifier.comparisonPart"]');
+      const option1 = getByText('Numerics only');
+      const option2 = getByText('Alphanumerics only');
+
+      expect(dropdown).toBeDefined();
+      expect(option1).toBeDefined();
+      expect(option2).toBeDefined();
     });
   });
 });
