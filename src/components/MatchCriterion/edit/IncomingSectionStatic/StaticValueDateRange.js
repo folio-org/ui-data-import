@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
+import moment from 'moment';
 
 import {
   Layout,
@@ -9,9 +10,20 @@ import {
   Headline,
 } from '@folio/stripes/components';
 
+import { isFieldPristine } from '../../../../utils';
+
 import css from '../MatchCriterions.css';
 
+const DATE_FORMAT = 'YYYY-MM-DD';
+
 export const StaticValueDateRange = ({ repeatableIndex }) => {
+  const getDatesEqualState = (initialDate, newDate) => {
+    const initialFormattedDate = moment.utc(initialDate, DATE_FORMAT).format();
+    const newFormattedDate = moment.utc(newDate, DATE_FORMAT).format();
+
+    return isFieldPristine(initialFormattedDate, newFormattedDate);
+  };
+
   return (
     <Layout
       data-test-static-date-range-field
@@ -28,9 +40,15 @@ export const StaticValueDateRange = ({ repeatableIndex }) => {
         {([ariaLabel]) => (
           <Field
             name={`profile.matchDetails[${repeatableIndex}].incomingMatchExpression.staticValueDetails.fromDate`}
-            component={Datepicker}
-            dateFormat="YYYY-MM-DD"
-            aria-label={ariaLabel}
+            isEqual={getDatesEqualState}
+            render={fieldProps => (
+              <Datepicker
+                {...fieldProps}
+                aria-label={ariaLabel}
+                dateFormat={DATE_FORMAT}
+                dirty={fieldProps.meta.dirty}
+              />
+            )}
           />
         )}
       </FormattedMessage>
@@ -46,9 +64,15 @@ export const StaticValueDateRange = ({ repeatableIndex }) => {
         {([ariaLabel]) => (
           <Field
             name={`profile.matchDetails[${repeatableIndex}].incomingMatchExpression.staticValueDetails.toDate`}
-            component={Datepicker}
-            dateFormat="YYYY-MM-DD"
-            aria-label={ariaLabel}
+            isEqual={getDatesEqualState}
+            render={fieldProps => (
+              <Datepicker
+                {...fieldProps}
+                aria-label={ariaLabel}
+                dateFormat={DATE_FORMAT}
+                dirty={fieldProps.meta.dirty}
+              />
+            )}
           />
         )}
       </FormattedMessage>
