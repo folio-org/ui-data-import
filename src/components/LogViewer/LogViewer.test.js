@@ -11,7 +11,7 @@ const logViewerLogsProps = {
   logs: {
     0: [{
       label: 'test label',
-      logs: [{ name: 'test' }],
+      logs: ["{ name: 'test' }"],
       errorBlockId: 'srs-marc-bib-error',
     }],
     1: [{
@@ -20,18 +20,18 @@ const logViewerLogsProps = {
     }],
     2: [{
       label: 'test label',
-      logs: [{ name: 'test' }],
+      logs: ["{ name: 'test' }"],
       errorBlockId: 'holdings-error',
     }],
     3: [{
       label: 'test label',
-      logs: [{ name: 'test' }],
+      logs: ["{ name: 'test' }"],
       errorBlockId: 'item-error',
     }],
     4: [{}],
     5: [{
       label: 'test label',
-      logs: [{ name: 'test' }],
+      logs: ["{ name: 'test' }"],
       errorBlockId: 'invoice-error',
     }, {
       label: 'test label',

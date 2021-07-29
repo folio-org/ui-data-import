@@ -844,6 +844,7 @@
   "logViewer.filter.instance": "Instance",
   "logViewer.filter.holdings": "Holdings",
   "logViewer.filter.item": "Item",
+  "logViewer.themes.label": "Themes Label",
   "logViewer.filter.order": "Order",
   "logViewer.filter.invoice": "Invoice",
   "logLight.actionStatus.created": "Created",
