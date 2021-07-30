@@ -732,7 +732,7 @@
     "fieldMappingsForMarc.placeholder": "Select field mappings for MARC",
     "update": "Actualizar",
     "actionSelect.update": "Actualización (todos los tipos de registros excepto pedidos)",
-    "settings.mappingProfiles.map.item.status.withdrawn": "Withdrawn",
+    "settings.mappingProfiles.map.item.status.withdrawn": "Retirado",
     "settings.marcFieldProtection.system": "Sistema",
     "settings.marcFieldProtection.user": "User",
     "settings.mappingProfiles.canNotBeMapped": "No se puede mapear",
