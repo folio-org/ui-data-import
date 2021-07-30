@@ -157,6 +157,16 @@ export const isFieldPristine = (initialValue, currentValue) => {
   return isEqual(initialValue, currentValue);
 };
 
+/**
+ * Handles profile form saving
+ *
+ * @param {function} handleSubmit react-final-form render prop. Handles a form submit.
+ * @param {function} resetForm react-final-form prop. Resets the values back to the initial values
+ * the form was initialized with.
+ * @param {function} transitionToParams Builds URL with passed params.
+ * @param {string} path URL basic path.
+ * @returns {(function(*=): Promise<void>)|*}
+ */
 export const handleProfileSave = (handleSubmit, resetForm, transitionToParams, path) => async event => {
   const record = await handleSubmit(event);
 
