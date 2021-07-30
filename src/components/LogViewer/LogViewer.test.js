@@ -11,7 +11,10 @@ const logViewerLogsProps = {
   logs: {
     0: [{
       label: 'srs-marc-bib label',
-      logs: [{ "id":"0", "name": "test" }],
+      logs: [{
+        id: '0',
+        name: 'test',
+      }],
       errorBlockId: 'srs-marc-bib-error',
     }],
     1: [{
@@ -21,23 +24,31 @@ const logViewerLogsProps = {
     }],
     2: [{
       label: 'holdings label',
-      logs: [{ "id":"2", "name": "test" }],
+      logs: [{
+        id: '2',
+        name: 'test',
+      }],
       errorBlockId: 'holdings-error',
     }],
     3: [{
       label: 'item label',
-      logs: [{ "id":"3", "name": "test" }],
+      logs: [{
+        id: '3',
+        name: 'test',
+      }],
       errorBlockId: 'item-error',
     }],
     4: [{}],
     5: [{
       label: 'invoice label',
-      logs: [{ "id":"5", "name": "test" }],
+      logs: [{
+        id: '5',
+        name: 'test',
+      }],
       errorBlockId: 'invoice-error',
     }, {
       label: 'invoice-line label',
-      logs: [],
-      errorBlockId: 'invoice-line-error',
+      error: 'test error',
     }],
   },
 };
@@ -179,7 +190,7 @@ describe('LogViewer', () => {
           ...logViewerLogsProps,
           ...logViewerOtherProps,
         });
-        const invoiceButton = getByText('Invoice').parentNode;
+        const invoiceButton = getByText('Invoice*').parentNode;
 
         fireEvent.click(invoiceButton);
 
@@ -192,7 +203,7 @@ describe('LogViewer', () => {
     it('should change value', () => {
       const {
         container,
-        getByText, debug
+        getByText,
       } = renderLogViewer({
         ...logViewerLogsProps,
         ...logViewerOtherProps,
@@ -201,7 +212,7 @@ describe('LogViewer', () => {
       const selectControl = container.querySelector('.selectControl');
 
       fireEvent.change(selectControl, { target: { value: 'coy' } });
-debug();
+
       expect(preElement).toHaveClass('coy');
     });
   });
