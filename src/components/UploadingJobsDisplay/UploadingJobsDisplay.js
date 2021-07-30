@@ -20,6 +20,7 @@ import {
 } from '@folio/stripes/core';
 import {
   Pane,
+  Paneset,
   PaneHeader,
   Layout,
   Callout,
@@ -32,7 +33,6 @@ import {
   createUrl,
   getFileExtension,
 } from '@folio/stripes-data-transfer-components';
-import { PersistedPaneset } from '@folio/stripes-smart-components';
 
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 import { FileItem } from './components';
@@ -549,7 +549,7 @@ export class UploadingJobsDisplay extends Component {
     );
 
     return (
-      <PersistedPaneset appId="@folio/data-import" id="settings-paneset">
+      <Paneset>
         <div
           className={css.uploadingJobs}
           data-test-uploading-jobs-display
@@ -597,7 +597,7 @@ export class UploadingJobsDisplay extends Component {
             </Pane>
           )
         }
-      </PersistedPaneset>
+      </Paneset>
     );
   }
 }

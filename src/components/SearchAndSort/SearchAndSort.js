@@ -18,6 +18,7 @@ import {
 import {
   Layer,
   Pane,
+  Paneset,
   SRStatus,
   PaneHeader,
   HasCommand,
@@ -36,7 +37,6 @@ import {
   getNsKey,
   makeConnectedSource,
   buildUrl,
-  PersistedPaneset,
 } from '@folio/stripes/smart-components';
 import {
   SORT_TYPES,
@@ -756,7 +756,7 @@ export class SearchAndSort extends Component {
           isWithinScope={checkScope}
           scope={document.body}
         >
-          <PersistedPaneset appId="@folio/data-import" id="search-and-sort-paneset">
+          <Paneset>
             <SRStatus ref={this.SRStatusRef} />
             <Pane
               id="pane-results"
@@ -774,7 +774,7 @@ export class SearchAndSort extends Component {
             </Pane>
             {!isFullScreen && this.renderDetailsPane(source)}
             {this.renderCreateRecordLayer(source)}
-          </PersistedPaneset>
+          </Paneset>
           {isFullScreen && this.renderDetailsPane(source)}
         </HasCommand>
       </>
