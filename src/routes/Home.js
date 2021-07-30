@@ -4,8 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import {
   Button,
   Pane,
-  Paneset,
 } from '@folio/stripes/components';
+
+import { PersistedPaneset } from '@folio/stripes-smart-components';
 
 import {
   Jobs,
@@ -45,9 +46,13 @@ export class Home extends Component {
 
   render() {
     return (
-      <Paneset>
+      <PersistedPaneset
+        appId="@folio/data-import"
+        id="home-paneset"
+      >
         <DataFetcher>
           <Pane
+            id="pane-jobs-title"
             data-test-jobs-pane
             defaultWidth="320px"
             paneTitle={(
@@ -63,6 +68,7 @@ export class Home extends Component {
             <Jobs />
           </Pane>
           <Pane
+            id="pane-logs-title"
             defaultWidth="fill"
             paneTitle={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
             lastMenu={this.addViewAllLogs()}
@@ -71,7 +77,7 @@ export class Home extends Component {
             <RecentJobLogs />
           </Pane>
         </DataFetcher>
-      </Paneset>
+      </PersistedPaneset>
     );
   }
 }

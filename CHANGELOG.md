@@ -11,6 +11,7 @@
 * Cover `<OptionsList>` component with unit tests (UIDATIMP-714)
 * Ensure that the most recent 25 import logs display on the Data Import Landing Page (UIDATIMP-950)
 * Cover `<MatchCriterion>` component with unit tests (UIDATIMP-711)
+* Use `<PersistedPaneset>` smart component for Data Import landing page (UIDATIMP-884)
 * Cover `<LogViewer>` component with unit tests (UIDATIMP-710)
 
 ### Bugs fixed:

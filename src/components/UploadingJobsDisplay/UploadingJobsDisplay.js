@@ -19,8 +19,8 @@ import {
   stripesShape,
 } from '@folio/stripes/core';
 import {
-  Paneset,
   Pane,
+  Paneset,
   PaneHeader,
   Layout,
   Callout,
@@ -585,6 +585,7 @@ export class UploadingJobsDisplay extends Component {
           )
           : (
             <Pane
+              id="pane-loading"
               paneTitle={jobProfilesLabel}
               defaultWidth="fill"
             >
