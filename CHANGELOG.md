@@ -2,7 +2,7 @@
 
 ## **4.2.0** (in progress)
 
-## [4.1.2](https://github.com/folio-org/ui-data-import/tree/v4.1.2) (2021-07-29)
+## [4.1.2](https://github.com/folio-org/ui-data-import/tree/v4.1.2) (2021-07-30)
 
 ### Features added:
 * Ensure that the most recent 25 import logs display on the Data Import Landing Page (UIDATIMP-950)
