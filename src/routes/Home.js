@@ -46,7 +46,10 @@ export class Home extends Component {
 
   render() {
     return (
-      <PersistedPaneset appId="@folio/data-import" id="home-paneset">
+      <PersistedPaneset
+        appId="@folio/data-import"
+        id="home-paneset"
+      >
         <DataFetcher>
           <Pane
             id="pane-jobs-title"
