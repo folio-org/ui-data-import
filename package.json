@@ -16,7 +16,7 @@
     "build": "stripes build --output ./output",
     "test:unit": "jest --ci --coverage",
     "test:e2e": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
-    "test": "yarn run test:unit && yarn run test:e2e",
+    "test": "yarn run test:unit",
     "lint": "eslint .",
     "lintfix": "eslint . --fix",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-data-import ./translations/ui-data-import/compiled"
