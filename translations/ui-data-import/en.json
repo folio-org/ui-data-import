@@ -840,7 +840,6 @@
   "logViewer.invoice": "Invoice",
   "logViewer.invoiceLine": "Invoice line",
   "logViewer.filter.label": "Show",
-  "logViewer.themes.label": "Themes",
   "logViewer.filter.srsMARCBib": "SRS MARC Bib",
   "logViewer.filter.instance": "Instance",
   "logViewer.filter.holdings": "Holdings",
