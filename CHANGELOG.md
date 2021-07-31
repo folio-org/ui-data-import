@@ -9,9 +9,13 @@
 * prefer @folio/stripes exports to private paths when importing TextDate component (UIDATIMP-941)
 * Cover `<WithTranslation>` component with unit tests (UIDATIMP-733)
 * Cover `<OptionsList>` component with unit tests (UIDATIMP-714)
-* Ensure that the most recent 25 import logs display on the Data Import Landing Page (UIDATIMP-950)
 * Cover `<MatchCriterion>` component with unit tests (UIDATIMP-711)
 * Use `<PersistedPaneset>` smart component for Data Import landing page (UIDATIMP-884)
+
+## [4.1.2](https://github.com/folio-org/ui-data-import/tree/v4.1.2) (2021-07-31)
+
+### Features added:
+* Ensure that the most recent 25 import logs display on the Data Import Landing Page (UIDATIMP-950)
 
 ### Bugs fixed:
 * When closing the log summary, user sometimes goes to unexpected place (UIDATIMP-949)
