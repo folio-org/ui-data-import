@@ -112,9 +112,23 @@ describe('LogViewer', () => {
     });
   });
 
-  describe('when click on button from button group', () => {
-    describe('when click on Instance button', () => {
-      it('should be chosen as filter', () => {
+  describe('when there is an error in the logs', () => {
+    it('an asterisk should be displayed next to the record type button name', () => {
+      const { getByText } = renderLogViewer({
+        ...logViewerLogsProps,
+        ...logViewerOtherProps,
+      });
+      const instanceButtonWithError = getByText('Instance*');
+      const invoiceButtonWithError = getByText('Invoice*');
+
+      expect(instanceButtonWithError).toBeDefined();
+      expect(invoiceButtonWithError).toBeDefined();
+    });
+  });
+
+  describe('when clicking on button from button group', () => {
+    describe('when clicking on Instance button', () => {
+      it('Instance button should be active', () => {
         const { getByText } = renderLogViewer({
           ...logViewerLogsProps,
           ...logViewerOtherProps,
@@ -128,8 +142,8 @@ describe('LogViewer', () => {
       });
     });
 
-    describe('when click on SRS MARC Bib button', () => {
-      it('should be chosen as filter', () => {
+    describe('when clicking on SRS MARC Bib button', () => {
+      it('SRS MARC Bib button should be active', () => {
         const { getByText } = renderLogViewer({
           ...logViewerLogsProps,
           ...logViewerOtherProps,
@@ -142,8 +156,8 @@ describe('LogViewer', () => {
       });
     });
 
-    describe('when click on Holdings button', () => {
-      it('should be chosen as filter', () => {
+    describe('when clicking on Holdings button', () => {
+      it('Holdings button should be active', () => {
         const { getByText } = renderLogViewer({
           ...logViewerLogsProps,
           ...logViewerOtherProps,
@@ -156,8 +170,8 @@ describe('LogViewer', () => {
       });
     });
 
-    describe('when click on Item button', () => {
-      it('should be chosen as filter', () => {
+    describe('when clicking on Item button', () => {
+      it('Item button should be active', () => {
         const { getByText } = renderLogViewer({
           ...logViewerLogsProps,
           ...logViewerOtherProps,
@@ -170,8 +184,8 @@ describe('LogViewer', () => {
       });
     });
 
-    describe('when click on Order button', () => {
-      it('should not be chosen as filter', () => {
+    describe('when clicking on Order button', () => {
+      it('Order button should be active', () => {
         const { getByText } = renderLogViewer({
           ...logViewerLogsProps,
           ...logViewerOtherProps,
@@ -184,8 +198,8 @@ describe('LogViewer', () => {
       });
     });
 
-    describe('when click on Invoice button', () => {
-      it('should be chosen as filter', () => {
+    describe('when clicking on Invoice button', () => {
+      it('Invoice button should be active', () => {
         const { getByText } = renderLogViewer({
           ...logViewerLogsProps,
           ...logViewerOtherProps,
