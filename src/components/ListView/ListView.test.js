@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 import { createMemoryHistory } from 'history';
 
@@ -20,12 +20,12 @@ jest.mock('../ViewContainer/getCRUDActions', () => ({
     onEdit: () => 'success!',
     onDelete: () => 'success!',
     onRestoreDefaults: () => 'success!',
-  })
+  }),
 }));
 
-const func = jest.fn();
-let mySet = new Set();
-mySet.add('testId1');
+const testSet = new Set();
+
+testSet.add('testId1');
 
 const listViewPropsActionProfiles = {
   resources: {
@@ -36,56 +36,48 @@ const listViewPropsActionProfiles = {
     records: {
       hasLoaded: true,
       isPending: false,
-      other: {
-        totalRecords: 1,
-      },
-      successfulMutations: [{
-        record: {
-          id: 'testId1'
-        }
-      }]
+      other: { totalRecords: 1 },
+      successfulMutations: [{ record: { id: 'testId1' } }],
     },
     actionProfiles: {
       records: [{
         fileName: 'test name',
-  name: 'test name',
-  id: 'testId1',
-  description: 'test description',
-  extension: 'test extension',
-  dataTypes: '',
-  importBlocked: false,
-  metadata: { updatedDate: '2021-03-31' },
-  status: 'COMMITTED',
-  progress: {
-    current: 0,
-    total: 0,
-  },
-  userInfo: {
-    firstName: 'firstName',
-    lastName: 'lastName',
-    userName: 'userName',
-  },
-  runBy: {
-    firstName: 'firstName',
-    lastName: 'lastName',
-  },
-  completedDate: '2021-03-31',
-  jobProfileInfo: { name: 'test name' },
-      },]
-    }
+        name: 'test name',
+        id: 'testId1',
+        description: 'test description',
+        extension: 'test extension',
+        dataTypes: '',
+        importBlocked: false,
+        metadata: { updatedDate: '2021-03-31' },
+        status: 'COMMITTED',
+        progress: {
+          current: 0,
+          total: 0,
+        },
+        userInfo: {
+          firstName: 'firstName',
+          lastName: 'lastName',
+          userName: 'userName',
+        },
+        runBy: {
+          firstName: 'firstName',
+          lastName: 'lastName',
+        },
+        completedDate: '2021-03-31',
+        jobProfileInfo: { name: 'test name' },
+      }],
+    },
   },
   objectName: 'actionProfiles',
   mutator: {
     query: {
-      replace: func,
-      update: func,
+      replace: jest.fn(),
+      update: jest.fn(),
     },
-    resultCount: {
-      replace: func,
-    },
+    resultCount: { replace: jest.fn() },
     actionProfiles: {
-      POST: func,
-      PUT: func,
+      POST: jest.fn(),
+      PUT: jest.fn(),
     },
   },
   location: {
@@ -93,7 +85,6 @@ const listViewPropsActionProfiles = {
     pathname: '/action-profiles-path',
   },
   match: { path: '/action-profiles-path' },
-  history: history.push,
   selectedRecord: {
     record: {
       id: 'testId1',
@@ -102,13 +93,16 @@ const listViewPropsActionProfiles = {
     },
     hasLoaded: true,
   },
+  setList: jest.fn(),
+  RecordView: jest.fn(),
+  history: { push: history.push },
   checkboxList: {
-    selectedRecords: mySet,
+    selectedRecords: testSet,
     isAllSelected: false,
-    selectRecord: func,
-    selectAll: func,
-    deselectAll: func,
-    handleSelectAllCheckbox: func,
+    selectRecord: jest.fn(),
+    selectAll: jest.fn(),
+    deselectAll: jest.fn(),
+    handleSelectAllCheckbox: jest.fn(),
   },
   actionMenuItems: [
     'addNew',
@@ -117,10 +111,8 @@ const listViewPropsActionProfiles = {
     'deselectAll',
   ],
   label: <span>Action Profiles Label</span>,
-  setList: func,
-  RecordView: func,
   ENTITY_KEY: 'actionProfiles',
-  visibleColumns: [ 
+  visibleColumns: [
     'name',
     'action',
     'tags',
@@ -139,7 +131,15 @@ const listViewPropsActionProfiles = {
     name: '',
     description: '',
   },
-  renderHeaders: func,
+  renderHeaders: () => {
+    return {
+      name: 'Name',
+      action: 'Action',
+      tags: 'Tags',
+      updated: 'Updated',
+      updatedBy: 'Updated By',
+    };
+  },
 };
 
 const listViewPropsFileExtensions = {
@@ -151,43 +151,30 @@ const listViewPropsFileExtensions = {
     records: {
       hasLoaded: true,
       isPending: false,
-      other: {
-        totalRecords: 1,
-      },
-      successfulMutations: [{
-        record: {
-          id: 'testId1'
-        }
-      }]
+      other: { totalRecords: 1 },
+      successfulMutations: [{ record: { id: 'testId1' } }],
     },
-    actionProfiles: {
-      records: ['test1', 'test2']
-    }
+    actionProfiles: { records: ['test1', 'test2'] },
   },
   objectName: 'fileExtensions',
   mutator: {
     query: {
-      replace: func,
-      update: func,
+      replace: jest.fn(),
+      update: jest.fn(),
     },
-    resultCount: {
-      replace: func,
-    },
+    resultCount: { replace: jest.fn() },
     fileExtensions: {
-      POST: func,
-      PUT: func,
-      DELETE: func,
+      POST: jest.fn(),
+      PUT: jest.fn(),
+      DELETE: jest.fn(),
     },
-    restoreDefaults: {
-      POST: func,
-    }
+    restoreDefaults: { POST: jest.fn() },
   },
   location: {
     search: '/file-extensions-search',
     pathname: '/file-extensions-path',
   },
   match: { path: '/file-extensions-path' },
-  history: history.push,
   selectedRecord: {
     record: {
       id: 'testId1',
@@ -196,23 +183,24 @@ const listViewPropsFileExtensions = {
     },
     hasLoaded: true,
   },
+  setList: jest.fn(),
+  RecordView: jest.fn(),
+  history: { push: history.push },
   checkboxList: {
-    selectedRecords: mySet,
+    selectedRecords: testSet,
     isAllSelected: false,
-    selectRecord: func,
-    selectAll: func,
-    deselectAll: func,
-    handleSelectAllCheckbox: func,
+    selectRecord: jest.fn(),
+    selectAll: jest.fn(),
+    deselectAll: jest.fn(),
+    handleSelectAllCheckbox: jest.fn(),
   },
   actionMenuItems: [
     'addNew',
     'restoreDefaults',
   ],
   label: <span>File Extensions Label</span>,
-  setList: func,
-  RecordView: func,
   ENTITY_KEY: 'fileExtensions',
-  visibleColumns: [ 
+  visibleColumns: [
     'extension',
     'importBlocked',
     'dataTypes',
@@ -226,7 +214,15 @@ const listViewPropsFileExtensions = {
     extension: '',
     dataTypes: [],
   },
-  renderHeaders: func,
+  renderHeaders: () => {
+    return {
+      extension: 'Extensions',
+      importBlocked: 'Import Blocked',
+      dataTypes: 'Data types',
+      updated: 'Updated',
+      updatedBy: 'Updated By',
+    };
+  },
 };
 
 const renderListView = ({
@@ -234,7 +230,6 @@ const renderListView = ({
   mutator,
   location,
   match,
-  history,
   checkboxList,
   actionMenuItems,
   label,
@@ -248,7 +243,7 @@ const renderListView = ({
 }) => {
   const component = (
     <Router>
-      <ListView 
+      <ListView
         resources={resources}
         mutator={mutator}
         location={location}
@@ -293,45 +288,50 @@ describe('ListView', () => {
       it('dropdown should be shown', () => {
         const { getByText } = renderListView(listViewPropsFileExtensions);
         const actionsButton = getByText('Actions');
-        
+
         const resetAll = getByText('Reset all extension mappings to system defaults');
-  
+
         fireEvent.click(actionsButton);
-  
+
         expect(resetAll).toBeDefined();
       });
     });
 
     describe('when click on Reset All File Extensions', () => {
       it('modal should be shown', () => {
-        const { container, getByText, debug } = renderListView(listViewPropsFileExtensions);
+        const {
+          container,
+          getByText,
+        } = renderListView(listViewPropsFileExtensions);
         const actionsButton = getByText('Actions');
-        const resetAll = container.querySelector('button.button.dropdownItem');
-        
-        fireEvent.click(actionsButton);
-  
-        fireEvent.click(resetAll);
-        
-        const modalHeading = container.querySelector('.modalLabel');
 
-        expect(modalHeading).toBeDefined();
+        fireEvent.click(actionsButton);
+
+        const resetAll = getByText('Reset all extension mappings to system defaults');
+
+        fireEvent.click(resetAll);
+
+        const modalContent = getByText('This will reset the file extension mappings to the system defaults');
+
+        expect(modalContent).toBeDefined();
       });
 
       describe('when modal is opened', () => {
         it('should close modal', () => {
-          const { container, getByText, debug } = renderListView(listViewPropsFileExtensions);
+          const { getByText, debug } = renderListView(listViewPropsFileExtensions);
           const actionsButton = getByText('Actions');
-          const resetAll = container.querySelector('button.button.dropdownItem');
-          
-          fireEvent.click(actionsButton);
-    
-          fireEvent.click(resetAll);
-          debug();
-          const modalHeading = container.querySelector('.modalLabel');
-          const closeModal = getByText('Reset all');
-          
-          fireEvent.click(closeModal);
 
+          fireEvent.click(actionsButton);
+
+          const resetAll = getByText('Reset all extension mappings to system defaults');
+
+          fireEvent.click(resetAll);
+
+          const modalHeading = getByText('Reset all file extension mappings');
+          const closeModal = getByText('Reset all');
+
+          fireEvent.click(closeModal);
+debug();
           expect(modalHeading).toBeNull();
         });
       });
