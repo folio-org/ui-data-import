@@ -11,6 +11,7 @@
 * Cover `<OptionsList>` component with unit tests (UIDATIMP-714)
 * Cover `<MatchCriterion>` component with unit tests (UIDATIMP-711)
 * Use `<PersistedPaneset>` smart component for Data Import landing page (UIDATIMP-884)
+* Cover `<LogViewer>` component with unit tests (UIDATIMP-710)
 
 ## [4.1.2](https://github.com/folio-org/ui-data-import/tree/v4.1.2) (2021-07-31)
 
