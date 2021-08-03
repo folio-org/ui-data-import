@@ -91,8 +91,9 @@ export const AssociatorEditable = memo(({
   const remove = row => {
     const index = currentData.findIndex(item => item.id === row.id);
     const newIdx = findRelIndex(relationsToAdd, row);
+    const needsToBeUnlinked = newIdx < 0;
 
-    if (newIdx < 0) {
+    if (needsToBeUnlinked) {
       const relsToDel = [...relationsToDelete, ...composeRelations([row])];
 
       onUnlink(relsToDel);
@@ -102,6 +103,7 @@ export const AssociatorEditable = memo(({
 
     newData.splice(index, 1);
     setCurrentData(newData);
+    onLink(newData);
     setPluginDisabled(isPluginDisabled(newData));
   };
 
