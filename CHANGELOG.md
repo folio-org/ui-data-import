@@ -13,6 +13,9 @@
 * Use `<PersistedPaneset>` smart component for Data Import landing page (UIDATIMP-884)
 * Cover `<LogViewer>` component with unit tests (UIDATIMP-710)
 
+### Bugs fixed:
+* Job profile fails because 1 action profile has 2 field mappings attached to it (UIDATIMP-931)
+
 ## [4.1.2](https://github.com/folio-org/ui-data-import/tree/v4.1.2) (2021-07-31)
 
 ### Features added:
