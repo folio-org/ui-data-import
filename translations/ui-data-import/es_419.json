@@ -854,7 +854,7 @@
     "logViewer.filter.item": "Item",
     "logViewer.filter.order": "Order",
     "logViewer.filter.invoice": "Invoice",
-    "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.vendorRefType": "Vendor reference type",
-    "settings.mappingProfiles.map.invoice.invoiceLineInformation.vendorRefNumber.addLabel": "Add vendor reference number",
-    "noFileName": "No file name"
+    "settings.mappingProfiles.map.invoice.invoiceLineInformation.field.vendorRefType": "Tipo de referencia del proveedor",
+    "settings.mappingProfiles.map.invoice.invoiceLineInformation.vendorRefNumber.addLabel": "Agregar el número de referencia del proveedor",
+    "noFileName": "No hay nombre de archivo"
 }
