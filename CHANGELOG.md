@@ -12,6 +12,7 @@
 * Cover `<MatchCriterion>` component with unit tests (UIDATIMP-711)
 * Use `<PersistedPaneset>` smart component for Data Import landing page (UIDATIMP-884)
 * Cover `<LogViewer>` component with unit tests (UIDATIMP-710)
+* Cover `<FileItem>` component with unit tests (UIDATIMP-716)
 
 ### Bugs fixed:
 * Job profile fails because 1 action profile has 2 field mappings attached to it (UIDATIMP-931)

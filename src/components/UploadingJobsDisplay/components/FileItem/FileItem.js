@@ -5,7 +5,7 @@ import { noop } from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
 
-import { FILE_STATUSES } from '../../../../utils/constants';
+import { FILE_STATUSES } from '../../../../utils';
 import { getFileItemMeta } from './getFileItemMeta';
 
 import css from './FileItem.css';
