@@ -1,11 +1,12 @@
 import React from 'react';
+import { fireEvent } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
+import { Pluggable } from '@folio/stripes/core';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { ProfileTree } from './ProfileTree';
-import { fireEvent } from '@testing-library/react';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -38,12 +39,13 @@ window.ResizeObserver = jest.fn(() => ({
   unobserve() {},
 }));
 
-const onUnlink = jest.fn();
-const onDelete = jest.fn();
-
-const profileTreeProps = ({ allowUnlink, allowDelete, record }) => {
+const profileTreeProps = ({
+  allowUnlink,
+  allowDelete,
+  record,
+}) => {
   return {
-    linkingRules: { 
+    linkingRules: {
       allowUnlink,
       allowDelete,
       profilesAllowed: ['matchProfiles', 'actionProfiles'],
@@ -65,35 +67,35 @@ const profileTreeProps = ({ allowUnlink, allowDelete, record }) => {
       records: [{
         id: 'testId',
         profileId: 'testProfileId',
-          contentType: 'matchProfile',
-          content: {
-            id: 'testId',
-            name: 'testName',
-            description: 'testDescription1',
-            tags: { tagList: ['testTag'] },
-            match: 'testMatch',
-          },
-          description: 'testDescription2',
+        contentType: 'matchProfile',
+        content: {
+          id: 'testId',
+          name: 'testName',
+          description: 'testDescription1',
+          tags: { tagList: ['testTag'] },
+          match: 'testMatch',
+        },
+        description: 'testDescription2',
       }],
       contentType: 'matchProfile',
       content: {
         id: 'testId',
-        name: 'testName'
+        name: 'testName',
       },
-      childSnapshotWrappers: [{ 
+      childSnapshotWrappers: [{
         reactTo: 'MATCH',
         contentType: 'matchProfile',
         content: {
           id: 'testId',
-          name: 'testName'
+          name: 'testName',
         },
         childSnapshotWrappers: [],
-      }, { 
+      }, {
         reactTo: 'NON_MATCH',
         contentType: 'matchProfile',
         content: {
           id: 'testId',
-          name: 'testName'
+          name: 'testName',
         },
         childSnapshotWrappers: [],
       }],
@@ -115,7 +117,7 @@ const profileTreeProps = ({ allowUnlink, allowDelete, record }) => {
           },
           description: 'testDescription',
         }],
-      }
+      },
     },
     record,
   };
@@ -133,8 +135,6 @@ const renderProfileTree = ({
       linkingRules={linkingRules}
       contentData={contentData}
       okapi={okapi}
-      onUnlink={onUnlink}
-      onDelete={onDelete}
       resources={resources}
       record={record}
     />
@@ -144,27 +144,17 @@ const renderProfileTree = ({
 };
 
 describe('ProfileTree', () => {
-  afterAll(() => {
+  afterEach(() => {
     delete window.ResizeObserver;
-    onUnlink.mockClear();
-    onDelete.mockClear();
-  });
-
-  it('should be rendered', () => {
-    const { container, getByText, getAllByText, debug } = renderProfileTree(profileTreeProps({
-      allowUnlink: true,
-      allowDelete: false,
-      record: null,
-    }));
-
-    expect(getAllByText('Match profile: "testName"')).toBeDefined();
-    expect(getAllByText('For matches')).toBeDefined();
-    expect(getAllByText('For non-matches')).toBeDefined();
+    Pluggable.mockClear();
   });
 
   describe('when clicking on delete button', () => {
-    it('should called deleting function', () => {
-      const { container, getByText, getAllByText, debug } = renderProfileTree(profileTreeProps({
+    it('modal window shod be closed', () => {
+      const {
+        container,
+        getByText,
+      } = renderProfileTree(profileTreeProps({
         allowUnlink: false,
         allowDelete: true,
         record: null,
@@ -177,26 +167,19 @@ describe('ProfileTree', () => {
 
       fireEvent.click(deleteButtonModal);
 
-      expect(onDelete).toHaveBeenCalledTimes(1);
+      expect(deleteButtonModal).not.toBeVisible();
     });
   });
 
-  describe('when clicking on unlink button', () => {
-    it('should called unlinking function', () => {
-      const { container, getByText, getAllByText, debug } = renderProfileTree(profileTreeProps({
-        allowUnlink: true,
-        allowDelete: false,
-        record: null,
-      }));
-      const unlinkButton = container.querySelector('button[data-test-profile-unlink="true"]');
-      debug(container, 300000);
-      fireEvent.click(unlinkButton);
+  it('should be rendered', () => {
+    const { getByText } = renderProfileTree(profileTreeProps({
+      allowUnlink: true,
+      allowDelete: false,
+      record: null,
+    }));
 
-      const unlink = getByText('Confirm');
+    Pluggable.mock.calls[0][0].onLink([{ id: 'testId' }]);
 
-      fireEvent.click(unlink);
-
-      expect(onUnlink).toHaveBeenCalledTimes(1);
-    });
+    expect(getByText('This list contains no items')).toBeDefined();
   });
 });

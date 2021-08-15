@@ -47,9 +47,7 @@ describe('LinkerTrigger', () => {
   });
 
   it('should be rendered with FormattedMessage type title', () => {
-    const { getByText } = renderLinkerTrigger({
-      ...linkerTriggerProps,
-    });
+    const { getByText } = renderLinkerTrigger({ ...linkerTriggerProps });
 
     expect(getByText('Click here to get started')).toBeDefined();
   });

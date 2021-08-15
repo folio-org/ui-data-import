@@ -1,11 +1,11 @@
 import React from 'react';
+import { fireEvent } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { ProfileBranch } from './ProfileBranch';
-import { fireEvent } from '@testing-library/react';
 
 window.ResizeObserver = jest.fn(() => ({
   observe() {},
@@ -31,22 +31,22 @@ const profileBranchProps = {
     contentType: 'matchProfile',
     content: {
       id: 'testId',
-      name: 'testName'
+      name: 'testName',
     },
-    childSnapshotWrappers: [{ 
+    childSnapshotWrappers: [{
       reactTo: 'MATCH',
       contentType: 'matchProfile',
       content: {
         id: 'testId',
-        name: 'testName'
+        name: 'testName',
       },
       childSnapshotWrappers: [],
-    }, { 
+    }, {
       reactTo: 'NON_MATCH',
       contentType: 'matchProfile',
       content: {
         id: 'testId',
-        name: 'testName'
+        name: 'testName',
       },
       childSnapshotWrappers: [],
     }],
@@ -55,7 +55,7 @@ const profileBranchProps = {
     contentType: 'matchProfile',
     content: {
       id: 'testId',
-      name: 'testName'
+      name: 'testName',
     },
     childSnapshotWrappers: [{ reactTo: 'MATCH' }, { reactTo: 'NON_MATCH' }],
   },
@@ -80,7 +80,7 @@ const profileBranchProps = {
         },
         description: 'testDescription',
       }],
-    }
+    },
   },
 };
 
@@ -93,7 +93,7 @@ const renderProfileBranch = ({
   setParentSectionData,
   resources,
   okapi,
-  record
+  record,
 }) => {
   const component = (
     <ProfileBranch
@@ -116,7 +116,7 @@ describe('ProfileBranch', () => {
   afterAll(() => {
     delete window.ResizeObserver;
   });
-  
+
   it('should be rendered', () => {
     const { getAllByText } = renderProfileBranch(profileBranchProps);
 
@@ -136,13 +136,12 @@ describe('ProfileBranch', () => {
       fireEvent.click(button);
 
       expect(expandedBlock).not.toHaveClass('expanded');
-
     });
   });
 
   describe('when clicking on For non matches button', () => {
     it('content block should be expanded', () => {
-      const { container, getByText, debug } = renderProfileBranch(profileBranchProps);
+      const { container } = renderProfileBranch(profileBranchProps);
       const button = container.querySelector('[aria-controls="accordion32"]');
       const expandedBlock = container.querySelector('#accordion32');
 

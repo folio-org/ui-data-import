@@ -1,11 +1,11 @@
 import React from 'react';
+import { fireEvent } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { ProfileLabel } from './ProfileLabel';
-import { fireEvent } from '@testing-library/react';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -33,7 +33,11 @@ jest.mock('@folio/stripes/components', () => ({
   ) : null)),
 }));
 
-const profileLabelProps = ({ allowUnlink, allowDelete, record }) => {
+const profileLabelProps = ({
+  allowUnlink,
+  allowDelete,
+  record,
+}) => {
   return {
     linkingRules: {
       columnsAllowed: {
@@ -47,7 +51,7 @@ const profileLabelProps = ({ allowUnlink, allowDelete, record }) => {
       contentType: 'matchProfile',
       content: {
         id: 'testId',
-        name: 'testName'
+        name: 'testName',
       },
       childSnapshotWrappers: [{ contentType: 'mapping-profiles' }],
     },
@@ -109,27 +113,34 @@ describe('ProfileLabel', () => {
 
   describe('when clicking on unlink icon', () => {
     it('unlink modal window should be rendered', () => {
-      const { container, getByText } = renderProfileLabel(profileLabelProps({
+      const {
+        container,
+        getByText,
+      } = renderProfileLabel(profileLabelProps({
         allowUnlink: true,
         allowDelete: false,
         record: null,
       }));
       const unlinkButton = container.querySelector('[data-test-profile-unlink="true"]');
-  
+
       fireEvent.click(unlinkButton);
-  
+
       expect(getByText('Confirmation modal')).toBeDefined();
     });
 
     describe('when clicking on Cancel button', () => {
       it('unlink modal window should be closed', () => {
-        const { container, getByText, queryByText, debug } = renderProfileLabel(profileLabelProps({
+        const {
+          container,
+          getByText,
+          queryByText,
+        } = renderProfileLabel(profileLabelProps({
           allowUnlink: true,
           allowDelete: false,
           record: null,
         }));
         const unlinkButton = container.querySelector('[data-test-profile-unlink="true"]');
-  
+
         fireEvent.click(unlinkButton);
 
         const cancel = getByText('Cancel');
@@ -138,31 +149,37 @@ describe('ProfileLabel', () => {
 
         expect(queryByText('Confirmation modal')).toBeNull();
       });
-    }); 
+    });
 
     describe('when clicking on Confirm button', () => {
       it('unlink modal window should be closed', () => {
-        const { container, getByText, queryByText, debug } = renderProfileLabel(profileLabelProps({
+        const {
+          container,
+          queryByText,
+        } = renderProfileLabel(profileLabelProps({
           allowUnlink: true,
           allowDelete: false,
           record: null,
         }));
         const unlinkButton = container.querySelector('[data-test-profile-unlink="true"]');
-  
+
         fireEvent.click(unlinkButton);
 
         const unlink = container.querySelector('#confirmButton');
-debug();
+
         fireEvent.click(unlink);
 
         expect(queryByText('Confirmation modal')).toBeNull();
       });
-    }); 
+    });
   });
 
   describe('when clicking on Delete icon', () => {
     it('unlink modal window should be rendered', () => {
-      const { container, getByText, debug } = renderProfileLabel(profileLabelProps({
+      const {
+        container,
+        getByText,
+      } = renderProfileLabel(profileLabelProps({
         allowUnlink: false,
         allowDelete: true,
         record: null,
@@ -176,13 +193,17 @@ debug();
 
     describe('when clicking on Cancel button', () => {
       it('unlink modal window should be closed', () => {
-        const { container, getByText, queryByText } = renderProfileLabel(profileLabelProps({
+        const {
+          container,
+          getByText,
+          queryByText,
+        } = renderProfileLabel(profileLabelProps({
           allowUnlink: false,
           allowDelete: true,
           record: null,
         }));
         const deleteButton = container.querySelector('[data-test-profile-delete="true"]');
-  
+
         fireEvent.click(deleteButton);
 
         const cancel = getByText('Cancel');
@@ -191,17 +212,20 @@ debug();
 
         expect(queryByText('Confirmation modal')).toBeNull();
       });
-    }); 
+    });
 
     describe('when clicking on Confirm button', () => {
       it('unlink modal window should be closed', () => {
-        const { container, getByText, queryByText, debug } = renderProfileLabel(profileLabelProps({
+        const {
+          container,
+          queryByText,
+        } = renderProfileLabel(profileLabelProps({
           allowUnlink: false,
           allowDelete: true,
           record: null,
         }));
         const deleteButton = container.querySelector('[data-test-profile-delete="true"]');
-  
+
         fireEvent.click(deleteButton);
 
         const deleteModalButton = container.querySelector('#confirmButton');
@@ -210,6 +234,6 @@ debug();
 
         expect(queryByText('Confirmation modal')).toBeNull();
       });
-    }); 
-  })
+    });
+  });
 });

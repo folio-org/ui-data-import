@@ -53,8 +53,8 @@ describe('LinkerMenu', () => {
   });
 
   it('should be rendered with dropdown buttons', () => {
-    const { getByText, debug } = renderLinkerMenu(linkerMenuProps);
-    debug();
+    const { getByText } = renderLinkerMenu(linkerMenuProps);
+
     expect(getByText('Match')).toBeDefined();
     expect(getByText('Action')).toBeDefined();
   });

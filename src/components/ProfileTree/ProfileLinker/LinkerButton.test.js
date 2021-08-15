@@ -1,11 +1,11 @@
 import React from 'react';
+import { fireEvent } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { LinkerButton } from './LinkerButton';
-import { fireEvent } from '@testing-library/react';
 
 const onClick = jest.fn();
 const linkerButtonProps = {
@@ -43,10 +43,10 @@ describe('LinkerButton', () => {
 
   it('should be rendered with FormattedMessage title', () => {
     const { getByText } = renderLinkerButton(linkerButtonProps);
-    
+
     expect(getByText('Job')).toBeDefined();
   });
-  
+
   it('should be rendered with text type title', () => {
     const { getByText } = renderLinkerButton({
       ...linkerButtonProps,
@@ -73,9 +73,9 @@ describe('LinkerButton', () => {
           searchLabel: <span>test label</span>,
           isButtonDisabled: true,
         });
-        
+
         fireEvent.click(getByText('test label'));
-  
+
         expect(onClick).toHaveBeenCalledTimes(0);
       });
     });
@@ -85,7 +85,7 @@ describe('LinkerButton', () => {
           ...linkerButtonProps,
           searchLabel: <span>test label</span>,
         });
-        
+
         fireEvent.click(getByText('test label'));
 
         expect(onClick).toHaveBeenCalledTimes(1);

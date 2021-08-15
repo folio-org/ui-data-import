@@ -3,25 +3,16 @@ import { fireEvent } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
+import { Pluggable } from '@folio/stripes/core';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { ProfileLinker } from './ProfileLinker';
 
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  Pluggable: jest.fn(({ onLink, renderTrigger }) =>
-    <span
-      onLink={onLink}
-      renderTrigger={renderTrigger}
-    >
-      test
-    </span>),
-}));
+const onLink = jest.fn();
 
 const profileLinkerProps = {
   id: 'testId',
-  parentType: 'jobProfiles',
-  onLink: jest.fn(),
+  parentType: 'matchProfiles',
   linkingRules: { profilesAllowed: ['matchProfiles', 'actionProfiles'] },
   dataKey: 'testDataKey',
   initialData: [{}],
@@ -31,12 +22,12 @@ const profileLinkerProps = {
     token: 'test-token',
     url: 'test-url',
   },
+  title: <span>test title</span>,
 };
 
 const renderProfileLinker = ({
   id,
   parentType,
-  onLink,
   linkingRules,
   dataKey,
   initialData,
@@ -60,9 +51,12 @@ const renderProfileLinker = ({
 };
 
 describe('ProfileLinker', () => {
-  it('should be rendered', () => {
-    const { getByText, debug } = renderProfileLinker(profileLinkerProps);
+  afterEach(() => {
+    Pluggable.mockClear();
+  });
 
+  it('should be rendered', () => {
+    const { getByText } = renderProfileLinker(profileLinkerProps);
 
     expect(getByText('Click here to get started')).toBeDefined();
   });
@@ -86,19 +80,14 @@ describe('ProfileLinker', () => {
       expect(getByText('Match')).not.toBeVisible();
       expect(getByText('Action')).not.toBeVisible();
     });
+  });
 
-    describe('when clicking on Match option', () => {
-      it('modal window should appear', () => {
-        const { container, getByText, debug } = renderProfileLinker(profileLinkerProps);
+  it('plugin info should be rendered', async () => {
+    const { getAllByText } = renderProfileLinker(profileLinkerProps);
 
-        fireEvent.click(getByText('Icon'));
+    await Pluggable.mock.calls[0][0].renderTrigger({ buttonRefs: 'asd' });
+    await Pluggable.mock.calls[0][0].onLink([{ id: 'testId' }]);
 
-        expect(getByText('Match')).toBeDefined();
-        fireEvent.click(container.querySelector('[data-test-no-plugin-available="true"]'));
-        console.log(container.querySelector('[data-test-no-plugin-available="true"]'));
-
-        fireEvent.click(getByText('Match'));
-      });
-    });
+    expect(getAllByText('Find Import Profile Plugin is not available now')).toBeDefined();
   });
 });
