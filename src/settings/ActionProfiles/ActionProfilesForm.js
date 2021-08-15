@@ -1,7 +1,6 @@
 import React, {
   useState,
   useMemo,
-  useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -62,30 +61,24 @@ export const ActionProfilesFormComponent = ({
   match: { path },
   accordionStatusRef,
 }) => {
-  const {
-    profile,
-    addedRelations: initialAddedRelations,
-    deletedRelations: initialDeletedRelations,
-  } = initialValues;
+  const { profile } = initialValues;
   const associatedJobProfiles = profile.parentProfiles || [];
   const associatedJobProfilesAmount = associatedJobProfiles.length;
 
   const [action, setAction] = useState(profile.action || '');
   const [folioRecord, setFolioRecord] = useState(profile.folioRecord || '');
-  const [addedRelations, setAddedRelations] = useState(initialAddedRelations || []);
-  const [deletedRelations, setDeletedRelations] = useState(initialDeletedRelations || []);
-
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
-  const addRelations = useCallback(relations => {
-    form.change('addedRelations', relations);
-    setAddedRelations(relations);
-  }, [form]);
+  const addedRelations = form.getState().values.addedRelations || [];
+  const deletedRelations = form.getState().values.deletedRelations || [];
 
-  const deleteRelations = useCallback(relations => {
+  const addRelations = relations => {
+    form.change('addedRelations', relations);
+  };
+
+  const deleteRelations = relations => {
     form.change('deletedRelations', relations);
-    setDeletedRelations(relations);
-  }, [form]);
+  };
 
   const getFilteredActions = () => {
     switch (folioRecord) {
@@ -342,6 +335,7 @@ ActionProfilesFormComponent.propTypes = {
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   form: PropTypes.shape({
+    getState: PropTypes.func.isRequired,
     change: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
   }).isRequired,

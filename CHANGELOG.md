@@ -14,6 +14,9 @@
 * Cover `<LogViewer>` component with unit tests (UIDATIMP-710)
 * Cover `<ProfileTree>` component with unit tests (UIDATIMP-718)
 
+### Bugs fixed:
+* Job profile fails because 1 action profile has 2 field mappings attached to it (UIDATIMP-931)
+
 ## [4.1.2](https://github.com/folio-org/ui-data-import/tree/v4.1.2) (2021-07-31)
 
 ### Features added:
