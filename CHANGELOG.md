@@ -12,6 +12,7 @@
 * Cover `<MatchCriterion>` component with unit tests (UIDATIMP-711)
 * Use `<PersistedPaneset>` smart component for Data Import landing page (UIDATIMP-884)
 * Cover `<LogViewer>` component with unit tests (UIDATIMP-710)
+* Cover `<FileItem>` component with unit tests (UIDATIMP-716)
 * Cover `<ProfileTree>` component with unit tests (UIDATIMP-718)
 
 ### Bugs fixed:
