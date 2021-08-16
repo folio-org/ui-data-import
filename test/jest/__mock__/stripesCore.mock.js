@@ -13,5 +13,5 @@ jest.mock('@folio/stripes/core', () => ({
       {...props}
     />
   ),
-  Pluggable: props => <>{props.children}</>,
+  Pluggable: jest.fn(props => <>{props.children}</>),
 }), { virtual: true });
