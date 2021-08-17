@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { fireEvent, waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 
 import { createMemoryHistory } from 'history';
 
@@ -22,10 +25,50 @@ jest.mock('../ViewContainer/getCRUDActions', () => ({
     onRestoreDefaults: () => 'success!',
   }),
 }));
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  ConfirmationModal: jest.fn(({
+    open,
+    onCancel,
+    onConfirm,
+  }) => (open ? (
+    <div>
+      <span>Confirmation modal</span>
+      <button
+        type="button"
+        onClick={onCancel}
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        id="confirmButton"
+        onClick={onConfirm}
+      >
+        Confirm
+      </button>
+    </div>
+  ) : null)),
+}));
 
-const testSet = new Set();
+const testSet = new Set(['testId1']);
 
-testSet.add('testId1');
+const listViewProps = listViewFilterProps => {
+  return {
+    ...listViewFilterProps,
+    selectedRecord: {
+      record: {
+        id: 'testId1',
+        parentProfiles: 'testParent',
+        childProfiles: 'testChild',
+      },
+      hasLoaded: true,
+    },
+    setList: jest.fn(),
+    RecordView: jest.fn(),
+    history: { push: history.push },
+  };
+};
 
 const listViewPropsActionProfiles = {
   resources: {
@@ -85,31 +128,6 @@ const listViewPropsActionProfiles = {
     pathname: '/action-profiles-path',
   },
   match: { path: '/action-profiles-path' },
-  selectedRecord: {
-    record: {
-      id: 'testId1',
-      parentProfiles: 'testParent',
-      childProfiles: 'testChild',
-    },
-    hasLoaded: true,
-  },
-  setList: jest.fn(),
-  RecordView: jest.fn(),
-  history: { push: history.push },
-  checkboxList: {
-    selectedRecords: testSet,
-    isAllSelected: false,
-    selectRecord: jest.fn(),
-    selectAll: jest.fn(),
-    deselectAll: jest.fn(),
-    handleSelectAllCheckbox: jest.fn(),
-  },
-  actionMenuItems: [
-    'addNew',
-    'exportSelected',
-    'selectAll',
-    'deselectAll',
-  ],
   label: <span>Action Profiles Label</span>,
   ENTITY_KEY: 'actionProfiles',
   visibleColumns: [
@@ -119,17 +137,13 @@ const listViewPropsActionProfiles = {
     'updated',
     'updatedBy',
   ],
-  columnWidths: {
-    isChecked: '35px',
-    name: '300px',
-    action: '200px',
-    tags: '150px',
-    updated: '100px',
-    updatedBy: '250px',
-  },
-  initialValues: {
-    name: '',
-    description: '',
+  checkboxList: {
+    selectedRecords: testSet,
+    isAllSelected: false,
+    selectRecord: jest.fn(),
+    selectAll: jest.fn(),
+    deselectAll: jest.fn(),
+    handleSelectAllCheckbox: jest.fn(),
   },
   renderHeaders: () => {
     return {
@@ -175,25 +189,6 @@ const listViewPropsFileExtensions = {
     pathname: '/file-extensions-path',
   },
   match: { path: '/file-extensions-path' },
-  selectedRecord: {
-    record: {
-      id: 'testId1',
-      parentProfiles: 'testParent',
-      childProfiles: 'testChild',
-    },
-    hasLoaded: true,
-  },
-  setList: jest.fn(),
-  RecordView: jest.fn(),
-  history: { push: history.push },
-  checkboxList: {
-    selectedRecords: testSet,
-    isAllSelected: false,
-    selectRecord: jest.fn(),
-    selectAll: jest.fn(),
-    deselectAll: jest.fn(),
-    handleSelectAllCheckbox: jest.fn(),
-  },
   actionMenuItems: [
     'addNew',
     'restoreDefaults',
@@ -207,13 +202,6 @@ const listViewPropsFileExtensions = {
     'updated',
     'updatedBy',
   ],
-  columnWidths: {},
-  initialValues: {
-    importBlocked: false,
-    description: '',
-    extension: '',
-    dataTypes: [],
-  },
   renderHeaders: () => {
     return {
       extension: 'Extensions',
@@ -237,8 +225,6 @@ const renderListView = ({
   RecordView,
   ENTITY_KEY,
   visibleColumns,
-  columnWidths,
-  initialValues,
   renderHeaders,
 }) => {
   const component = (
@@ -256,8 +242,6 @@ const renderListView = ({
         RecordView={RecordView}
         ENTITY_KEY={ENTITY_KEY}
         visibleColumns={visibleColumns}
-        columnWidths={columnWidths}
-        initialValues={initialValues}
         renderHeaders={renderHeaders}
       />
     </Router>
@@ -272,13 +256,13 @@ describe('ListView', () => {
   });
 
   it('should be rendered as File Extensions', () => {
-    const { getByText } = renderListView(listViewPropsFileExtensions);
+    const { getByText } = renderListView(listViewProps(listViewPropsFileExtensions));
 
     expect(getByText('File Extensions Label')).toBeDefined();
   });
 
   it('should be rendered as Action Profiles', () => {
-    const { getByText } = renderListView(listViewPropsActionProfiles);
+    const { getByText } = renderListView(listViewProps(listViewPropsActionProfiles));
 
     expect(getByText('Action Profiles Label')).toBeDefined();
   });
@@ -286,7 +270,7 @@ describe('ListView', () => {
   describe('when click on show Restore Modal', () => {
     describe('when click on Actions button', () => {
       it('dropdown should be shown', () => {
-        const { getByText } = renderListView(listViewPropsFileExtensions);
+        const { getByText } = renderListView(listViewProps(listViewPropsFileExtensions));
         const actionsButton = getByText('Actions');
 
         const resetAll = getByText('Reset all extension mappings to system defaults');
@@ -299,10 +283,7 @@ describe('ListView', () => {
 
     describe('when click on Reset All File Extensions', () => {
       it('modal should be shown', () => {
-        const {
-          container,
-          getByText,
-        } = renderListView(listViewPropsFileExtensions);
+        const { getByText } = renderListView(listViewProps(listViewPropsFileExtensions));
         const actionsButton = getByText('Actions');
 
         fireEvent.click(actionsButton);
@@ -311,14 +292,14 @@ describe('ListView', () => {
 
         fireEvent.click(resetAll);
 
-        const modalContent = getByText('This will reset the file extension mappings to the system defaults');
+        const modalContent = getByText('Confirmation modal');
 
         expect(modalContent).toBeDefined();
       });
 
       describe('when modal is opened', () => {
-        it('should close modal', () => {
-          const { getByText, debug } = renderListView(listViewPropsFileExtensions);
+        it('should close modal', async () => {
+          const { getByText } = renderListView(listViewProps(listViewPropsFileExtensions));
           const actionsButton = getByText('Actions');
 
           fireEvent.click(actionsButton);
@@ -327,12 +308,12 @@ describe('ListView', () => {
 
           fireEvent.click(resetAll);
 
-          const modalHeading = getByText('Reset all file extension mappings');
-          const closeModal = getByText('Reset all');
+          const modalHeading = getByText('Confirmation modal');
+          const closeModal = getByText('Confirm');
 
-          fireEvent.click(closeModal);
-debug();
-          expect(modalHeading).toBeNull();
+          await waitFor(() => fireEvent.click(closeModal));
+
+          expect(modalHeading).not.toBeVisible();
         });
       });
     });
