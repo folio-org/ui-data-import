@@ -28,11 +28,6 @@
 * When closing the log summary, user sometimes goes to unexpected place (UIDATIMP-949)
 * After editing the match profile the data does not change (UIDATIMP-951)
 
-
-
-
-
-
 ## [4.1.1](https://github.com/folio-org/ui-data-import/tree/v4.1.1) (2021-06-25)
 
 ### Features added:
