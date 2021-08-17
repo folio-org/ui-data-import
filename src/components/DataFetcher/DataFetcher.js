@@ -13,6 +13,8 @@ import { jobExecutionPropTypes } from '../Jobs/components/Job/jobExecutionPropTy
 import {
   JOB_STATUSES,
   FILE_STATUSES,
+  OCLC_CREATE_INSTANCE_JOB_ID,
+  OCLC_UPDATE_INSTANCE_JOB_ID,
 } from '../../utils';
 
 import { DataFetcherContext } from '.';
@@ -35,7 +37,10 @@ const jobsUrl = createUrl('metadata-provider/jobExecutions', {
 }, false);
 
 const logsUrl = createUrl('metadata-provider/jobExecutions', {
-  query: `(status any "${COMMITTED} ${ERROR}") sortBy completedDate/sort.descending`,
+  query: `(status any "${COMMITTED} ${ERROR}") 
+  AND (jobProfileInfo="\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="${OCLC_CREATE_INSTANCE_JOB_ID}") 
+  AND (jobProfileInfo="\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="${OCLC_UPDATE_INSTANCE_JOB_ID}") 
+  sortBy completedDate/sort.descending`,
   limit: 25,
 }, false);
 

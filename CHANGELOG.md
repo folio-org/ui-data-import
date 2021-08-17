@@ -9,6 +9,23 @@
 * prefer @folio/stripes exports to private paths when importing TextDate component (UIDATIMP-941)
 * Cover `<WithTranslation>` component with unit tests (UIDATIMP-733)
 * Cover `<OptionsList>` component with unit tests (UIDATIMP-714)
+* Cover `<MatchCriterion>` component with unit tests (UIDATIMP-711)
+* Use `<PersistedPaneset>` smart component for Data Import landing page (UIDATIMP-884)
+* Cover `<LogViewer>` component with unit tests (UIDATIMP-710)
+* Cover `<FileItem>` component with unit tests (UIDATIMP-716)
+* Cover `<ProfileTree>` component with unit tests (UIDATIMP-718)
+
+### Bugs fixed:
+* Job profile fails because 1 action profile has 2 field mappings attached to it (UIDATIMP-931)
+
+## [4.1.2](https://github.com/folio-org/ui-data-import/tree/v4.1.2) (2021-07-31)
+
+### Features added:
+* Ensure that the most recent 25 import logs display on the Data Import Landing Page (UIDATIMP-950)
+
+### Bugs fixed:
+* When closing the log summary, user sometimes goes to unexpected place (UIDATIMP-949)
+* After editing the match profile the data does not change (UIDATIMP-951)
 
 ## [4.1.1](https://github.com/folio-org/ui-data-import/tree/v4.1.1) (2021-06-25)
 
