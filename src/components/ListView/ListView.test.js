@@ -5,6 +5,11 @@ import {
   waitFor,
 } from '@testing-library/react';
 
+import {
+  buildResources,
+  buildMutator,
+} from '@folio/stripes-data-transfer-components/test/helpers';
+
 import { createMemoryHistory } from 'history';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -13,18 +18,43 @@ import { translationsProperties } from '../../../test/jest/helpers';
 
 import { ListView } from './ListView';
 
+const mutator = buildMutator({
+  query: {
+    replace: jest.fn(),
+    update: jest.fn(),
+  },
+  resultCount: { replace: jest.fn() },
+  actionProfiles: {
+    POST: jest.fn(),
+    PUT: jest.fn(),
+  },
+  fileExtensions: {
+    POST: jest.fn(),
+    PUT: jest.fn(),
+    DELETE: jest.fn(),
+  },
+  restoreDefaults: { POST: jest.fn().mockImplementation() },
+});
+
+const resources = buildResources({
+  query: {
+    filters: 'testFilter',
+    notes: true,
+  },
+  records: {
+    hasLoaded: true,
+    isPending: false,
+    other: { totalRecords: 1 },
+    successfulMutations: [{ record: { id: 'testId1' } }],
+  },
+  actionProfiles: { records: ['test1', 'test2'] },
+});
+
 const history = createMemoryHistory();
 
 history.push = jest.fn();
 
-jest.mock('../ViewContainer/getCRUDActions', () => ({
-  getCRUDActions: () => ({
-    onCreate: () => 'success!',
-    onEdit: () => 'success!',
-    onDelete: () => 'success!',
-    onRestoreDefaults: () => 'success!',
-  }),
-}));
+jest.mock('../ViewContainer/getCRUDActions', () => ({ getCRUDActions: () => ({ onRestoreDefaults: jest.fn() }) }));
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   ConfirmationModal: jest.fn(({
@@ -53,76 +83,32 @@ jest.mock('@folio/stripes/components', () => ({
 
 const testSet = new Set(['testId1']);
 
-const listViewProps = listViewFilterProps => {
-  return {
-    ...listViewFilterProps,
-    selectedRecord: {
-      record: {
-        id: 'testId1',
-        parentProfiles: 'testParent',
-        childProfiles: 'testChild',
-      },
-      hasLoaded: true,
+const listViewProps = {
+  selectedRecord: {
+    record: {
+      id: 'testId1',
+      parentProfiles: 'testParent',
+      childProfiles: 'testChild',
     },
-    setList: jest.fn(),
-    RecordView: jest.fn(),
-    history: { push: history.push },
-  };
+    hasLoaded: true,
+  },
+  checkboxList: {
+    selectedRecords: testSet,
+    isAllSelected: false,
+    selectRecord: jest.fn(),
+    selectAll: jest.fn(),
+    deselectAll: jest.fn(),
+    handleSelectAllCheckbox: jest.fn(),
+  },
+  objectName: 'actionProfiles',
+  setList: jest.fn(),
+  RecordView: jest.fn(),
+  history: { push: history.push },
+  columnWidths: {},
+  initialValues: {},
 };
 
 const listViewPropsActionProfiles = {
-  resources: {
-    query: {
-      filters: 'actionProfilesFilter',
-      notes: true,
-    },
-    records: {
-      hasLoaded: true,
-      isPending: false,
-      other: { totalRecords: 1 },
-      successfulMutations: [{ record: { id: 'testId1' } }],
-    },
-    actionProfiles: {
-      records: [{
-        fileName: 'test name',
-        name: 'test name',
-        id: 'testId1',
-        description: 'test description',
-        extension: 'test extension',
-        dataTypes: '',
-        importBlocked: false,
-        metadata: { updatedDate: '2021-03-31' },
-        status: 'COMMITTED',
-        progress: {
-          current: 0,
-          total: 0,
-        },
-        userInfo: {
-          firstName: 'firstName',
-          lastName: 'lastName',
-          userName: 'userName',
-        },
-        runBy: {
-          firstName: 'firstName',
-          lastName: 'lastName',
-        },
-        completedDate: '2021-03-31',
-        jobProfileInfo: { name: 'test name' },
-      }],
-    },
-  },
-  objectName: 'actionProfiles',
-  mutator: {
-    query: {
-      replace: jest.fn(),
-      update: jest.fn(),
-    },
-    resultCount: { replace: jest.fn() },
-    actionProfiles: {
-      POST: jest.fn(),
-      PUT: jest.fn(),
-    },
-  },
   location: {
     search: '/action-profiles-search',
     pathname: '/action-profiles-path',
@@ -137,53 +123,16 @@ const listViewPropsActionProfiles = {
     'updated',
     'updatedBy',
   ],
-  checkboxList: {
-    selectedRecords: testSet,
-    isAllSelected: false,
-    selectRecord: jest.fn(),
-    selectAll: jest.fn(),
-    deselectAll: jest.fn(),
-    handleSelectAllCheckbox: jest.fn(),
-  },
-  renderHeaders: () => {
-    return {
-      name: 'Name',
-      action: 'Action',
-      tags: 'Tags',
-      updated: 'Updated',
-      updatedBy: 'Updated By',
-    };
-  },
+  renderHeaders: () => ({
+    name: 'Name',
+    action: 'Action',
+    tags: 'Tags',
+    updated: 'Updated',
+    updatedBy: 'Updated By',
+  }),
 };
 
 const listViewPropsFileExtensions = {
-  resources: {
-    query: {
-      filters: 'fileExtensionsFilter',
-      notes: true,
-    },
-    records: {
-      hasLoaded: true,
-      isPending: false,
-      other: { totalRecords: 1 },
-      successfulMutations: [{ record: { id: 'testId1' } }],
-    },
-    actionProfiles: { records: ['test1', 'test2'] },
-  },
-  objectName: 'fileExtensions',
-  mutator: {
-    query: {
-      replace: jest.fn(),
-      update: jest.fn(),
-    },
-    resultCount: { replace: jest.fn() },
-    fileExtensions: {
-      POST: jest.fn(),
-      PUT: jest.fn(),
-      DELETE: jest.fn(),
-    },
-    restoreDefaults: { POST: jest.fn() },
-  },
   location: {
     search: '/file-extensions-search',
     pathname: '/file-extensions-path',
@@ -202,20 +151,16 @@ const listViewPropsFileExtensions = {
     'updated',
     'updatedBy',
   ],
-  renderHeaders: () => {
-    return {
-      extension: 'Extensions',
-      importBlocked: 'Import Blocked',
-      dataTypes: 'Data types',
-      updated: 'Updated',
-      updatedBy: 'Updated By',
-    };
-  },
+  renderHeaders: () => ({
+    extension: 'Extensions',
+    importBlocked: 'Import Blocked',
+    dataTypes: 'Data types',
+    updated: 'Updated',
+    updatedBy: 'Updated By',
+  }),
 };
 
 const renderListView = ({
-  resources,
-  mutator,
   location,
   match,
   checkboxList,
@@ -226,6 +171,9 @@ const renderListView = ({
   ENTITY_KEY,
   visibleColumns,
   renderHeaders,
+  initialValues,
+  columnWidths,
+  objectName,
 }) => {
   const component = (
     <Router>
@@ -243,6 +191,9 @@ const renderListView = ({
         ENTITY_KEY={ENTITY_KEY}
         visibleColumns={visibleColumns}
         renderHeaders={renderHeaders}
+        initialValues={initialValues}
+        columnWidths={columnWidths}
+        objectName={objectName}
       />
     </Router>
   );
@@ -255,58 +206,77 @@ describe('ListView', () => {
     history.push.mockClear();
   });
 
-  it('should be rendered as File Extensions', () => {
-    const { getByText } = renderListView(listViewProps(listViewPropsFileExtensions));
+  describe('when profile type is Action Profiles', () => {
+    it('should render correct label', () => {
+      const { getByText } = renderListView({
+        ...listViewProps,
+        ...listViewPropsActionProfiles,
+      });
 
-    expect(getByText('File Extensions Label')).toBeDefined();
+      expect(getByText('Action Profiles Label')).toBeDefined();
+    });
   });
 
-  it('should be rendered as Action Profiles', () => {
-    const { getByText } = renderListView(listViewProps(listViewPropsActionProfiles));
+  describe('when profile type is File extention', () => {
+    it('should render correct label', () => {
+      const { getByText } = renderListView({
+        ...listViewProps,
+        ...listViewPropsFileExtensions,
+      });
 
-    expect(getByText('Action Profiles Label')).toBeDefined();
+      expect(getByText('File Extensions Label')).toBeDefined();
+    });
   });
 
-  describe('when click on show Restore Modal', () => {
-    describe('when click on Actions button', () => {
+  describe('when clicking on show Restore Modal', () => {
+    describe('when clicking on Actions button', () => {
       it('dropdown should be shown', () => {
-        const { getByText } = renderListView(listViewProps(listViewPropsFileExtensions));
+        const { getByText } = renderListView({
+          ...listViewProps,
+          ...listViewPropsFileExtensions,
+        });
         const actionsButton = getByText('Actions');
 
-        const resetAll = getByText('Reset all extension mappings to system defaults');
+        const resetAllItem = getByText('Reset all extension mappings to system defaults');
 
         fireEvent.click(actionsButton);
 
-        expect(resetAll).toBeDefined();
+        expect(resetAllItem).toBeDefined();
       });
     });
 
     describe('when click on Reset All File Extensions', () => {
-      it('modal should be shown', () => {
-        const { getByText } = renderListView(listViewProps(listViewPropsFileExtensions));
+      it('modal window should be shown', () => {
+        const { getByText } = renderListView({
+          ...listViewProps,
+          ...listViewPropsFileExtensions,
+        });
         const actionsButton = getByText('Actions');
 
         fireEvent.click(actionsButton);
 
-        const resetAll = getByText('Reset all extension mappings to system defaults');
+        const resetAllItem = getByText('Reset all extension mappings to system defaults');
 
-        fireEvent.click(resetAll);
+        fireEvent.click(resetAllItem);
 
         const modalContent = getByText('Confirmation modal');
 
         expect(modalContent).toBeDefined();
       });
 
-      describe('when modal is opened', () => {
-        it('should close modal', async () => {
-          const { getByText } = renderListView(listViewProps(listViewPropsFileExtensions));
+      describe('when clicking on modal close button', () => {
+        it('modal window should be closed', async () => {
+          const { getByText } = renderListView({
+            ...listViewProps,
+            ...listViewPropsFileExtensions,
+          });
           const actionsButton = getByText('Actions');
 
           fireEvent.click(actionsButton);
 
-          const resetAll = getByText('Reset all extension mappings to system defaults');
+          const resetAllItem = getByText('Reset all extension mappings to system defaults');
 
-          fireEvent.click(resetAll);
+          fireEvent.click(resetAllItem);
 
           const modalHeading = getByText('Confirmation modal');
           const closeModal = getByText('Confirm');
