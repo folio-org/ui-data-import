@@ -4,6 +4,7 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
+import { noop } from 'lodash';
 
 import { createMemoryHistory } from 'history';
 
@@ -11,7 +12,6 @@ import {
   buildResources,
   buildMutator,
 } from '@folio/stripes-data-transfer-components/test/helpers';
-
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
@@ -20,20 +20,20 @@ import { ListView } from './ListView';
 
 const mutator = buildMutator({
   query: {
-    replace: jest.fn(),
-    update: jest.fn(),
+    replace: noop,
+    update: noop,
   },
-  resultCount: { replace: jest.fn() },
+  resultCount: { replace: noop },
   actionProfiles: {
-    POST: jest.fn(),
-    PUT: jest.fn(),
+    POST: noop,
+    PUT: noop,
   },
   fileExtensions: {
-    POST: jest.fn(),
-    PUT: jest.fn(),
-    DELETE: jest.fn(),
+    POST: noop,
+    PUT: noop,
+    DELETE: noop,
   },
-  restoreDefaults: { POST: jest.fn() },
+  restoreDefaults: { POST: noop },
 });
 
 const resources = buildResources({
@@ -95,14 +95,14 @@ const listViewProps = {
   checkboxList: {
     selectedRecords: testSet,
     isAllSelected: false,
-    selectRecord: jest.fn(),
-    selectAll: jest.fn(),
-    deselectAll: jest.fn(),
-    handleSelectAllCheckbox: jest.fn(),
+    selectRecord: noop,
+    selectAll: noop,
+    deselectAll: noop,
+    handleSelectAllCheckbox: noop,
   },
   objectName: 'actionProfiles',
-  setList: jest.fn(),
-  RecordView: jest.fn(),
+  setList: noop,
+  RecordView: noop,
   history: { push: history.push },
   columnWidths: {},
   initialValues: {},
