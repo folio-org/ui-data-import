@@ -5,12 +5,12 @@ import {
   waitFor,
 } from '@testing-library/react';
 
+import { createMemoryHistory } from 'history';
+
 import {
   buildResources,
   buildMutator,
 } from '@folio/stripes-data-transfer-components/test/helpers';
-
-import { createMemoryHistory } from 'history';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -33,7 +33,7 @@ const mutator = buildMutator({
     PUT: jest.fn(),
     DELETE: jest.fn(),
   },
-  restoreDefaults: { POST: jest.fn().mockImplementation() },
+  restoreDefaults: { POST: jest.fn() },
 });
 
 const resources = buildResources({
