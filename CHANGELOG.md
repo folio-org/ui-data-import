@@ -14,6 +14,7 @@
 * Cover `<LogViewer>` component with unit tests (UIDATIMP-710)
 * Cover `<FileItem>` component with unit tests (UIDATIMP-716)
 * Cover `<ProfileTree>` component with unit tests (UIDATIMP-718)
+* Cover `<Spinner>` component with unit tests (UIDATIMP-725)
 * Cover `<ListView>` component with unit tests (UIDATIMP-709)
 
 ### Bugs fixed:
