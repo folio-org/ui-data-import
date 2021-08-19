@@ -5,7 +5,6 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { noop } from 'lodash';
-
 import { createMemoryHistory } from 'history';
 
 import {
