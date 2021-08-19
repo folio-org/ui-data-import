@@ -15,6 +15,7 @@
 * Cover `<FileItem>` component with unit tests (UIDATIMP-716)
 * Cover `<ProfileTree>` component with unit tests (UIDATIMP-718)
 * Cover `<Spinner>` component with unit tests (UIDATIMP-725)
+* Cover `<ListView>` component with unit tests (UIDATIMP-709)
 
 ### Bugs fixed:
 * Job profile fails because 1 action profile has 2 field mappings attached to it (UIDATIMP-931)
