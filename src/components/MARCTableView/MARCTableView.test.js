@@ -12,7 +12,7 @@ const MARCTableViewProps = {
     order: 0,
     field: {
       subfields: [{
-        subfield: 'testSubfield',
+        subfield: 'Test Subfield',
         data: {
           text: 'testText',
           find: 'testFind',
@@ -27,7 +27,7 @@ const MARCTableViewProps = {
         subaction: 'ADD_SUBFIELD',
         position: 'BEFORE_STRING',
       }, {
-        subfield: 'testSubfield2',
+        subfield: 'Test Subfield',
         data: {
           text: 'testText2',
           find: 'testFind2',
@@ -42,11 +42,11 @@ const MARCTableViewProps = {
         subaction: 'ADD_SUBFIELD',
         position: 'BEFORE_STRING',
       }],
-      field: 'testField',
-      indicator1: 'testIndicator1',
-      indicator2: 'testIndicator2',
+      field: 'Test Field',
+      indicator1: 'Test Indicator1',
+      indicator2: 'Test Indicator2',
     },
-    action: 'ADD_SUBFIELD',
+    action: 'ADD',
   }],
   columnWidths: {
     action: '90px',
@@ -77,8 +77,21 @@ const renderMARCTableView = ({
 };
 
 describe('MARCTableView', () => {
-  it('should be rendered', () => {
-    const { debug } = renderMARCTableView(MARCTableViewProps);
-    debug();
+  it('MARC table header should be rendered', () => {
+    const { getByText } = renderMARCTableView(MARCTableViewProps);
+
+    expect(getByText('Field')).toBeDefined();
+    expect(getByText('In.1')).toBeDefined();
+    expect(getByText('In.2')).toBeDefined();
+    expect(getByText('Subfield')).toBeDefined();
+  });
+
+  it('should be rendered with correct cells', () => {
+    const { getAllByText } = renderMARCTableView(MARCTableViewProps);
+
+    expect(getAllByText('Test Field')).toBeDefined();
+    expect(getAllByText('Test Indicator1')).toBeDefined();
+    expect(getAllByText('Test Indicator2')).toBeDefined();
+    expect(getAllByText('Test Subfield')).toBeDefined();
   });
 });

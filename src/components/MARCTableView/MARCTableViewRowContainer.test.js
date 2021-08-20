@@ -12,13 +12,13 @@ const MARCTableViewRowContainerProps = {
     order: 0,
     field: {
       subfields: [{
-        subfield: 'testSubfield',
+        subfield: 'Subfield',
         data: {
           text: 'testText',
           find: 'testFind',
           replaceWith: 'testReplaceWith',
           marcField: {
-            field: 'testField',
+            field: 'testField1',
             indicator1: 'testIndicator1',
             indicator2: 'testIndicator2',
             subfields: [{ subfield: 'testSubfield' }],
@@ -27,26 +27,26 @@ const MARCTableViewRowContainerProps = {
         subaction: 'ADD_SUBFIELD',
         position: 'BEFORE_STRING',
       }, {
-        subfield: 'testSubfield2',
+        subfield: 'Subfield',
         data: {
           text: 'testText2',
           find: 'testFind2',
           replaceWith: 'testReplaceWith2',
           marcField: {
-            field: 'testField2',
+            field: 'testField1_2',
             indicator1: 'testIndicator1_2',
             indicator2: 'testIndicator2_2',
-            subfields: [{ subfield: 'testSubfield2' }],
+            subfields: [{ subfield: 'testSubfield2_2' }],
           },
         },
         subaction: 'ADD_SUBFIELD',
         position: 'BEFORE_STRING',
       }],
-      field: 'testField',
-      indicator1: 'testIndicator1',
-      indicator2: 'testIndicator2',
+      field: 'Field',
+      indicator1: 'Indicator1',
+      indicator2: 'Indicator2',
     },
-    action: 'ADD_SUBFIELD',
+    action: 'ADD',
   }],
   columnWidths: {
     action: '90px',
@@ -77,8 +77,12 @@ const renderMARCTableViewRowContainer = ({
 };
 
 describe('MARCTableViewRowContainer', () => {
-  it('should be rendered', () => {
-    const { debug } = renderMARCTableViewRowContainer(MARCTableViewRowContainerProps);
-    //debug();
+  it('should be rendered with correct cells', () => {
+    const { getAllByText } = renderMARCTableViewRowContainer(MARCTableViewRowContainerProps);
+
+    expect(getAllByText('Field')).toBeDefined();
+    expect(getAllByText('Indicator1')).toBeDefined();
+    expect(getAllByText('Indicator2')).toBeDefined();
+    expect(getAllByText('Subfield')).toBeDefined();
   });
 });
