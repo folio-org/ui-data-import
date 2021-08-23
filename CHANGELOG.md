@@ -2,6 +2,11 @@
 
 ## **4.2.0** (in progress)
 
+## [4.1.4](https://github.com/folio-org/ui-data-import/tree/v4.1.4) (2021-08-23)
+
+### Features added:
+* prefer @folio/stripes exports to private paths when importing TextDate component (UIDATIMP-941)
+
 ## [4.1.3](https://github.com/folio-org/ui-data-import/tree/v4.1.3) (2021-08-03)
 
 ### Bugs fixed:
@@ -11,7 +16,6 @@
 
 ### Features added:
 * Ensure that the most recent 25 import logs display on the Data Import Landing Page (UIDATIMP-950)
-* prefer @folio/stripes exports to private paths when importing TextDate component (UIDATIMP-941)
 
 ### Bugs fixed:
 * When closing the log summary, user sometimes goes to unexpected place (UIDATIMP-949)
