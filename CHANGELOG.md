@@ -1,12 +1,21 @@
 # Change history for ui-data-import
 
-## **4.2.0** (in progress)
+## **5.0.0** (in progress)
+
+## [4.1.4](https://github.com/folio-org/ui-data-import/tree/v4.1.4) (2021-08-23)
+
+### Features added:
+* prefer @folio/stripes exports to private paths when importing TextDate component (UIDATIMP-941)
+
+## [4.1.3](https://github.com/folio-org/ui-data-import/tree/v4.1.3) (2021-08-03)
+
+### Bugs fixed:
+* Job profile fails because 1 action profile has 2 field mappings attached to it (UIDATIMP-931)
 
 ### Features added:
 * Cover `<TreeLine>` component with unit tests (UIDATIMP-727)
 * Refactor away from react-intl-safe-html (UIDATIMP-932)
 * prefer @folio/stripes exports to private paths when importing components (UIDATIMP-927)
-* prefer @folio/stripes exports to private paths when importing TextDate component (UIDATIMP-941)
 * Cover `<WithTranslation>` component with unit tests (UIDATIMP-733)
 * Cover `<OptionsList>` component with unit tests (UIDATIMP-714)
 * Cover `<MatchCriterion>` component with unit tests (UIDATIMP-711)
@@ -16,9 +25,6 @@
 * Cover `<ProfileTree>` component with unit tests (UIDATIMP-718)
 * Cover `<Spinner>` component with unit tests (UIDATIMP-725)
 * Cover `<ListView>` component with unit tests (UIDATIMP-709)
-
-### Bugs fixed:
-* Job profile fails because 1 action profile has 2 field mappings attached to it (UIDATIMP-931)
 
 ## [4.1.2](https://github.com/folio-org/ui-data-import/tree/v4.1.2) (2021-07-31)
 
