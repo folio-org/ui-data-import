@@ -9,7 +9,6 @@ import {
   HoldingsDetails,
   HoldingsNotes,
   ElectronicAccess,
-  Acquisition,
   ReceivingHistory,
 } from './HoldingsDetailsSections';
 
@@ -72,7 +71,6 @@ export const MappingHoldingsDetails = ({
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
-      <Acquisition />
       <ReceivingHistory
         receivingHistory={receivingHistory}
         getRepeatableFieldAction={getRepeatableFieldAction}

@@ -65,12 +65,6 @@ class ElectronicAccessAccordion extends AccordionInteractor {
   relationshipAcceptedValues = new DropdownInteractor('#mapping-profile-details [data-test-electronic-relationship] [data-test-accepted-values-list]');
 }
 
-class AcquisitionAccordion extends AccordionInteractor {
-  acquisitionMethod = new TextFieldInteractor('#mapping-profiles-form [data-test-acquisition-method]');
-  orderFormat = new TextFieldInteractor('#mapping-profiles-form [data-test-order-format]');
-  receiptStatus = new TextFieldInteractor('#mapping-profiles-form [data-test-receipt-status]');
-}
-
 class ReceivingHistoryAccordion extends AccordionInteractor {
   publicDisplay = new SelectInteractor('#mapping-profiles-form [data-test-public-display]');
   note = new RepeatableFieldInteractor('#mapping-profiles-form [data-test-receiving-history-note]');
@@ -83,6 +77,5 @@ export class HoldingsDetailsAccordion extends DetailsSection {
   holdingsDetailsAccordion = new DetailsAccordion('#holdings-details');
   holdingsNotesAccordion = new NotesAccordion('#holdings-notes');
   electronicAccessAccordion = new ElectronicAccessAccordion('#holdings-electronic-access');
-  acquisitionAccordion = new AcquisitionAccordion('#holdings-acquisition');
   receivingHistoryAccordion = new ReceivingHistoryAccordion('#holdings-receiving-history');
 }
