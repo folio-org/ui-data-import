@@ -9,7 +9,6 @@ import {
   HoldingsDetails,
   HoldingsNotes,
   ElectronicAccess,
-  Acquisition,
   ReceivingHistory,
 } from './HoldingsDetailsSections';
 
@@ -23,7 +22,6 @@ export const MappingHoldingsDetails = ({ mappingDetails }) => {
       <HoldingsDetails mappingDetails={mappingDetails} />
       <HoldingsNotes mappingDetails={mappingDetails} />
       <ElectronicAccess mappingDetails={mappingDetails} />
-      <Acquisition mappingDetails={mappingDetails} />
       <ReceivingHistory mappingDetails={mappingDetails} />
     </AccordionSet>
   );
