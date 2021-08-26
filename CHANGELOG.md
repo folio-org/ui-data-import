@@ -15,6 +15,7 @@
 * Cover `<ProfileTree>` component with unit tests (UIDATIMP-718)
 * Cover `<Spinner>` component with unit tests (UIDATIMP-725)
 * Cover `<ListView>` component with unit tests (UIDATIMP-709)
+* Cover `<OverrideProtectedFieldsTable>` component with unit tests (UIDATIMP-715)
 
 ## [4.1.4](https://github.com/folio-org/ui-data-import/tree/v4.1.4) (2021-08-23)
 
