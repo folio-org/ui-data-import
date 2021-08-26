@@ -577,26 +577,6 @@ export const fieldsConfig = [
     value: 'holdingsrecord.electronicAccess[].publicNote',
     recordType: 'HOLDINGS',
   },
-  /* Holdings Acquisition */
-  {
-    id: 'acquisitionMethod',
-    label: 'ui-data-import.settings.mappingProfiles.map.field.acquisitionMethod',
-    categoryId: 'acquisition',
-    value: 'holdingsrecord.acquisitionMethod',
-    recordType: 'HOLDINGS',
-  }, {
-    id: 'acquisitionFormat',
-    label: 'ui-data-import.settings.mappingProfiles.map.field.orderFormat',
-    categoryId: 'acquisition',
-    value: 'holdingsrecord.acquisitionFormat',
-    recordType: 'HOLDINGS',
-  }, {
-    id: 'receiptStatus',
-    label: 'ui-data-import.settings.mappingProfiles.map.field.receiptStatus',
-    categoryId: 'acquisition',
-    value: 'holdingsrecord.receiptStatus',
-    recordType: 'HOLDINGS',
-  },
   /* Holdings Receiving history */
   {
     id: 'receivingHistory.properties.entries.items.properties.publicDisplay',

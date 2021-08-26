@@ -45,12 +45,6 @@ class ElectronicAccessAccordion extends AccordionInteractor {
   electronicAccess = new MultiColumnListInteractor('#section-electronic-access');
 }
 
-class AcquisitionAccordion extends AccordionInteractor {
-  acquisitionMethod = new KeyValueInteractor('[data-test-acquisition-method]');
-  orderFormat = new KeyValueInteractor('[data-test-order-format]');
-  receiptStatus = new KeyValueInteractor('[data-test-receipt-status]');
-}
-
 class ReceivingHistoryAccordion extends AccordionInteractor {
   receivingHistory = new MultiColumnListInteractor('#section-receiving-history');
 }
@@ -62,6 +56,5 @@ export class HoldingsDetailsAccordion extends AccordionSetInteractor {
   holdingsDetailsAccordion = new DetailsAccordion('#holdings-details');
   holdingsNotesAccordion = new HoldingsNotesAccordion('#holdings-notes');
   electronicAccessAccordion = new ElectronicAccessAccordion('#holdings-electronic-access');
-  acquisitionAccordion = new AcquisitionAccordion('#holdings-acquisition');
   receivingHistoryAccordion = new ReceivingHistoryAccordion('#holdings-receiving-history');
 }
