@@ -3,7 +3,10 @@ import { fireEvent } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
+import {
+  translationsProperties,
+  renderWithFinalForm,
+} from '../../../test/jest/helpers';
 
 import { OverrideProtectedFieldsTable } from './OverrideProtectedFieldsTable';
 
@@ -42,7 +45,7 @@ const renderOverrideProtectedFieldsTable = ({
   mappingMarcFieldProtectionFields,
   isEditable,
 }) => {
-  const component = (
+  const component = () => (
     <OverrideProtectedFieldsTable
       marcFieldProtectionFields={marcFieldProtectionFields}
       mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
@@ -51,7 +54,7 @@ const renderOverrideProtectedFieldsTable = ({
     />
   );
 
-  return renderWithIntl(component, translationsProperties);
+  return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
 describe('OverrideProtectedFieldsTable', () => {
@@ -60,7 +63,7 @@ describe('OverrideProtectedFieldsTable', () => {
   });
 
   describe('when override protected fields table is editable', () => {
-    it('additional information should be shown', () => {
+    it('warning text should be shown', () => {
       const { getAllByText } = renderOverrideProtectedFieldsTable(overrideProtectedFieldsTableProps({
         isEditable: true,
         marcFieldProtectionFieldsOverride: false,
@@ -69,10 +72,44 @@ describe('OverrideProtectedFieldsTable', () => {
 
       expect(getAllByText('If any protected field should be updated by this profile, check the appropriate box here')).toBeDefined();
     });
+
+    describe('when MARC field Protection Field overriding is allowed', () => {
+      describe('when clicking on MARC field Protection Field override checkbox', () => {
+        it('form should be upated', () => {
+          const { container } = renderOverrideProtectedFieldsTable(overrideProtectedFieldsTableProps({
+            isEditable: true,
+            marcFieldProtectionFieldsOverride: true,
+            mappingMarcFieldProtectionFieldsOverride: false,
+          }));
+          const element = container.querySelector('#checkbox-5');
+
+          fireEvent.click(element);
+
+          expect(onChangeEvent.mock.calls[0][1].length).toEqual(1);
+        });
+      });
+    });
+
+    describe('when MARC field Protection Field overriding is not allowed', () => {
+      describe('when clicking on MARC field Protection Field override checkbox', () => {
+        it('form should be upated', () => {
+          const { container } = renderOverrideProtectedFieldsTable(overrideProtectedFieldsTableProps({
+            isEditable: true,
+            marcFieldProtectionFieldsOverride: false,
+            mappingMarcFieldProtectionFieldsOverride: false,
+          }));
+          const element = container.querySelector('#checkbox-8');
+
+          fireEvent.click(element);
+
+          expect(onChangeEvent.mock.calls[0][1].length).toEqual(2);
+        });
+      });
+    });
   });
 
   describe('when override protected fields table is not editable', () => {
-    it('additional information should be hidden', () => {
+    it('warning text should be hidden', () => {
       const { queryByText } = renderOverrideProtectedFieldsTable(overrideProtectedFieldsTableProps({
         isEditable: false,
         marcFieldProtectionFieldsOverride: false,
@@ -98,40 +135,6 @@ describe('OverrideProtectedFieldsTable', () => {
       fireEvent.click(accordion);
 
       expect(contentBox).not.toHaveClass('expanded');
-    });
-  });
-
-  describe('when MARC field Protection Field overriding is allowed', () => {
-    describe('when clicking on MARC field Protection Field override checkbox', () => {
-      it('should be called function for updating form', () => {
-        const { container } = renderOverrideProtectedFieldsTable(overrideProtectedFieldsTableProps({
-          isEditable: true,
-          marcFieldProtectionFieldsOverride: true,
-          mappingMarcFieldProtectionFieldsOverride: false,
-        }));
-        const element = container.querySelector('#checkbox-11');
-
-        fireEvent.click(element);
-
-        expect(onChangeEvent.mock.calls.length).toEqual(1);
-      });
-    });
-  });
-
-  describe('when MARC field Protection Field overriding is not allowed', () => {
-    describe('when clicking on MARC field Protection Field override checkbox', () => {
-      it('should be called function for updating form', () => {
-        const { container } = renderOverrideProtectedFieldsTable(overrideProtectedFieldsTableProps({
-          isEditable: true,
-          marcFieldProtectionFieldsOverride: false,
-          mappingMarcFieldProtectionFieldsOverride: false,
-        }));
-        const element = container.querySelector('#checkbox-14');
-
-        fireEvent.click(element);
-
-        expect(onChangeEvent.mock.calls.length).toEqual(1);
-      });
     });
   });
 });
