@@ -12,38 +12,32 @@ import { OverrideProtectedFieldsTable } from './OverrideProtectedFieldsTable';
 
 const onChangeEvent = jest.fn();
 
-const overrideProtectedFieldsTableProps = ({
-  isEditable,
-  marcFieldProtectionFieldsOverride,
-  mappingMarcFieldProtectionFieldsOverride,
-}) => ({
-  marcFieldProtectionFields: [{
-    data: 'test data1',
-    field: 'test field1',
-    id: 'testId1',
-    indicator1: 'test indicator1_1',
-    indicator2: 'test indicator2_1',
-    override: marcFieldProtectionFieldsOverride,
-    source: 'test source1',
-    subfield: 'test subfield1',
-  }],
-  mappingMarcFieldProtectionFields: [{
-    data: 'test data2',
-    field: 'test field2',
-    id: 'testId2',
-    indicator1: 'test indicator1_2',
-    indicator2: 'test indicator2_2',
-    override: mappingMarcFieldProtectionFieldsOverride,
-    source: 'test source2',
-    subfield: 'test subfield2',
-  }],
-  isEditable,
-});
+const marcFieldProtectionFieldsProps = override => ([{
+  data: 'test data1',
+  field: 'test field1',
+  id: 'testId1',
+  indicator1: 'test indicator1_1',
+  indicator2: 'test indicator2_1',
+  override,
+  source: 'test source1',
+  subfield: 'test subfield1',
+}]);
+
+const mappingMarcFieldProtectionFieldsProps = [{
+  data: 'test data2',
+  field: 'test field2',
+  id: 'testId2',
+  indicator1: 'test indicator1_2',
+  indicator2: 'test indicator2_2',
+  override: false,
+  source: 'test source2',
+  subfield: 'test subfield2',
+}];
 
 const renderOverrideProtectedFieldsTable = ({
+  isEditable,
   marcFieldProtectionFields,
   mappingMarcFieldProtectionFields,
-  isEditable,
 }) => {
   const component = () => (
     <OverrideProtectedFieldsTable
@@ -64,11 +58,11 @@ describe('OverrideProtectedFieldsTable', () => {
 
   describe('when override protected fields table is editable', () => {
     it('warning text should be shown', () => {
-      const { getAllByText } = renderOverrideProtectedFieldsTable(overrideProtectedFieldsTableProps({
+      const { getAllByText } = renderOverrideProtectedFieldsTable({
         isEditable: true,
-        marcFieldProtectionFieldsOverride: false,
-        mappingMarcFieldProtectionFieldsOverride: false,
-      }));
+        marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
+        mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
+      });
 
       expect(getAllByText('If any protected field should be updated by this profile, check the appropriate box here')).toBeDefined();
     });
@@ -76,16 +70,17 @@ describe('OverrideProtectedFieldsTable', () => {
     describe('when MARC field Protection Field overriding is allowed', () => {
       describe('when clicking on MARC field Protection Field override checkbox', () => {
         it('form should be upated', () => {
-          const { container } = renderOverrideProtectedFieldsTable(overrideProtectedFieldsTableProps({
+          const fieldToRemove = [...mappingMarcFieldProtectionFieldsProps];
+          const { container } = renderOverrideProtectedFieldsTable({
             isEditable: true,
-            marcFieldProtectionFieldsOverride: true,
-            mappingMarcFieldProtectionFieldsOverride: false,
-          }));
+            marcFieldProtectionFields: marcFieldProtectionFieldsProps(true),
+            mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
+          });
           const element = container.querySelector('#checkbox-5');
 
           fireEvent.click(element);
 
-          expect(onChangeEvent.mock.calls[0][1].length).toEqual(1);
+          expect(onChangeEvent.mock.calls[0][1]).toEqual(fieldToRemove);
         });
       });
     });
@@ -93,16 +88,17 @@ describe('OverrideProtectedFieldsTable', () => {
     describe('when MARC field Protection Field overriding is not allowed', () => {
       describe('when clicking on MARC field Protection Field override checkbox', () => {
         it('form should be upated', () => {
-          const { container } = renderOverrideProtectedFieldsTable(overrideProtectedFieldsTableProps({
+          const fieldsToAdd = [...mappingMarcFieldProtectionFieldsProps, ...marcFieldProtectionFieldsProps(true)];
+          const { container } = renderOverrideProtectedFieldsTable({
             isEditable: true,
-            marcFieldProtectionFieldsOverride: false,
-            mappingMarcFieldProtectionFieldsOverride: false,
-          }));
+            marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
+            mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
+          });
           const element = container.querySelector('#checkbox-8');
 
           fireEvent.click(element);
 
-          expect(onChangeEvent.mock.calls[0][1].length).toEqual(2);
+          expect(onChangeEvent.mock.calls[0][1]).toEqual(fieldsToAdd);
         });
       });
     });
@@ -110,11 +106,11 @@ describe('OverrideProtectedFieldsTable', () => {
 
   describe('when override protected fields table is not editable', () => {
     it('warning text should be hidden', () => {
-      const { queryByText } = renderOverrideProtectedFieldsTable(overrideProtectedFieldsTableProps({
+      const { queryByText } = renderOverrideProtectedFieldsTable({
         isEditable: false,
-        marcFieldProtectionFieldsOverride: false,
-        mappingMarcFieldProtectionFieldsOverride: false,
-      }));
+        marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
+        mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
+      });
 
       expect(queryByText('If any protected field should be updated by this profile, check the appropriate box here')).toBeNull();
     });
@@ -122,11 +118,11 @@ describe('OverrideProtectedFieldsTable', () => {
 
   describe('when clicking on accordion', () => {
     it('table with information should be hidden', () => {
-      const { container } = renderOverrideProtectedFieldsTable(overrideProtectedFieldsTableProps({
+      const { container } = renderOverrideProtectedFieldsTable({
         isEditable: true,
-        marcFieldProtectionFieldsOverride: false,
-        mappingMarcFieldProtectionFieldsOverride: false,
-      }));
+        marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
+        mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
+      });
       const accordion = container.querySelector('.defaultCollapseButton');
       const contentBox = container.querySelector('.content-wrap');
 
