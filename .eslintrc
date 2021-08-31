@@ -9,11 +9,7 @@
       "legacyDecorators": true
     }
   },
-  "plugins": [
-    "babel",
-    "no-only-tests",
-    "react-hooks"
-  ],
+  "plugins": ["babel", "no-only-tests", "react-hooks"],
   "root": true,
   "rules": {
     "key-spacing": [
@@ -28,29 +24,18 @@
       "error",
       {
         "blankLine": "always",
-        "prev": [
-          "const",
-          "let"
-        ],
+        "prev": ["const", "let"],
         "next": "*"
       },
       {
         "blankLine": "any",
-        "prev": [
-          "const",
-          "let"
-        ],
-        "next": [
-          "const",
-          "let"
-        ]
+        "prev": ["const", "let"],
+        "next": ["const", "let"]
       },
       {
         "blankLine": "always",
         "prev": "*",
-        "next": [
-          "return"
-        ]
+        "next": ["return"]
       }
     ],
     "semi": "off",
@@ -83,9 +68,7 @@
       }
     ],
     "react/jsx-one-expression-per-line": 0,
-    "react/jsx-wrap-multilines": [
-      "error"
-    ],
+    "react/jsx-wrap-multilines": ["error"],
     "react/jsx-max-props-per-line": [
       "error",
       {
@@ -94,36 +77,18 @@
       }
     ],
     "no-void": "off",
-    "comma-dangle": [
-      "error",
-      "always-multiline"
-    ],
-    "arrow-parens": [
-      "error",
-      "as-needed"
-    ],
-    "quote-props": [
-      "error",
-      "as-needed"
-    ],
+    "comma-dangle": ["error", "always-multiline"],
+    "arrow-parens": ["error", "as-needed"],
+    "quote-props": ["error", "as-needed"],
     "prefer-template": "error",
     "no-else-return": "error",
     "newline-per-chained-call": "error",
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
+    "linebreak-style": ["error", "unix"],
     "no-only-tests/no-only-tests": [
       "warn",
       {
-        "block": [
-          "describe",
-          "it"
-        ],
-        "focus": [
-          "only",
-          "skip"
-        ]
+        "block": ["describe", "it"],
+        "focus": ["only", "skip"]
       }
     ],
     "react-hooks/rules-of-hooks": "error",
