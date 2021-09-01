@@ -42,7 +42,7 @@
     "returnToAssign.deleteFiles": "删除文件",
     "modal.fileExtensions.messageHighlightedText": "不同的扩展",
     "modal.fileExtensions.actionButton": "选择要上传的其他文件",
-    "modal.leavePage.header": "离开页面",
+    "modal.leavePage.header": "离开本页",
     "modal.leavePage.message": "有{highlightedText} 。如果您想完成所有上传，请按“保持上传”按钮。",
     "modal.leavePage.messageHighlightedText": "未完成的上传",
     "modal.leavePage.cancel": "关闭并丢失部分上传内容",
