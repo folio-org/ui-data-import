@@ -19,6 +19,9 @@
 * Remove Acquisitions accordion from the holdings field mapping screen (UIDATIMP-820)
 * Cover `<OverrideProtectedFieldsTable>` component with unit tests (UIDATIMP-715)
 
+### Bugs fixed:
+* Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
+
 ## [4.1.4](https://github.com/folio-org/ui-data-import/tree/v4.1.4) (2021-08-23)
 
 ### Features added:
