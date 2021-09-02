@@ -718,9 +718,16 @@ export const DEFAULT_PROFILE_IDS = [
   QUICKMARK_DERIVE_CREATE_MAPPING_ID,
 ];
 
+export const RECORD_ACTION_STATUS = {
+  CREATED: 'CREATED',
+  UPDATED: 'UPDATED',
+  MULTIPLE: 'MULTIPLE',
+  DISCARDED: 'DISCARDED',
+};
+
 export const RECORD_ACTION_STATUS_LABEL_IDS = {
-  CREATED: 'ui-data-import.logLight.actionStatus.created',
-  UPDATED: 'ui-data-import.logLight.actionStatus.updated',
-  MULTIPLE: 'ui-data-import.logLight.actionStatus.multiple',
-  DISCARDED: 'ui-data-import.logLight.actionStatus.discarded',
+  [RECORD_ACTION_STATUS.CREATED]: 'ui-data-import.logLight.actionStatus.created',
+  [RECORD_ACTION_STATUS.UPDATED]: 'ui-data-import.logLight.actionStatus.updated',
+  [RECORD_ACTION_STATUS.MULTIPLE]: 'ui-data-import.logLight.actionStatus.multiple',
+  [RECORD_ACTION_STATUS.DISCARDED]: 'ui-data-import.logLight.actionStatus.discarded',
 };
