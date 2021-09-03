@@ -271,24 +271,6 @@ const HOLDINGS = {
       }],
     }],
   }, {
-    name: 'acquisitionMethod',
-    enabled: true,
-    path: 'holdings.acquisitionMethod',
-    value: '',
-    subfields: [],
-  }, {
-    name: 'acquisitionFormat',
-    enabled: true,
-    path: 'holdings.acquisitionFormat',
-    value: '',
-    subfields: [],
-  }, {
-    name: 'receiptStatus',
-    enabled: true,
-    path: 'holdings.receiptStatus',
-    value: '',
-    subfields: [],
-  }, {
     name: 'receivingHistory.entries',
     enabled: true,
     path: 'holdings.receivingHistory.entries[]',

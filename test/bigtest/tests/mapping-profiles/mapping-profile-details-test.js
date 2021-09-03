@@ -1004,20 +1004,6 @@ describe('Mapping Profile View', () => {
               5, ['Relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']);
           });
 
-          describe('Acquisition accordion', () => {
-            it('renders', () => {
-              expect(mappingProfileDetails.holdingsDetails.acquisitionAccordion.label).to.equal('Acquisition');
-            });
-
-            it('is open by default', () => {
-              expect(mappingProfileDetails.holdingsDetails.acquisitionAccordion.isOpen).to.be.true;
-            });
-
-            hasField('holdingsDetails', 'acquisitionAccordion', 'acquisitionMethod', 'Acquisition method');
-            hasField('holdingsDetails', 'acquisitionAccordion', 'orderFormat', 'Order format');
-            hasField('holdingsDetails', 'acquisitionAccordion', 'receiptStatus', 'Receipt status');
-          });
-
           describe('Receiving history accordion', () => {
             it('renders', () => {
               expect(mappingProfileDetails.holdingsDetails.receivingHistoryAccordion.label).to.equal('Receiving history');
@@ -1519,20 +1505,6 @@ describe('Mapping Profile View', () => {
             hasRepeatableField('holdingsDetails', 'electronicAccessAccordion', 'electronicAccess', '');
             hasRepeatableFieldDecorator('holdingsDetails', 'electronicAccessAccordion', 'electronicAccessRepeatable');
             hasReferenceValuesDecorator('holdingsDetails', 'electronicAccessAccordion', 'relationship', 'Relationship', 'relationshipAcceptedValues', true, 'electronicAccess', ['"name 1"', '910', '910', '910', '910']);
-          });
-
-          describe('Acquisition accordion', () => {
-            it('renders', () => {
-              expect(mappingProfileForm.holdingsDetails.acquisitionAccordion.label).to.equal('Acquisition');
-            });
-
-            it('is open by default', () => {
-              expect(mappingProfileForm.holdingsDetails.acquisitionAccordion.isOpen).to.be.true;
-            });
-
-            hasInput('holdingsDetails', 'acquisitionAccordion', 'acquisitionMethod', 'Acquisition method');
-            hasInput('holdingsDetails', 'acquisitionAccordion', 'orderFormat', 'Order format');
-            hasInput('holdingsDetails', 'acquisitionAccordion', 'receiptStatus', 'Receipt status');
           });
 
           describe('Receiving history accordion', () => {
