@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent } from 'testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
