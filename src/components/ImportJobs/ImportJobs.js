@@ -284,7 +284,6 @@ export class ImportJobs extends Component {
       files,
       redirect,
       hasLoaded,
-      showErrorMessage,
       isDropZoneActive,
       prohibitFilesUploading,
       filesExtensionsModalOpen,
