@@ -38,7 +38,6 @@ import {
   ERROR_MODAL_META_TYPES,
 } from './components/getErrorModalMeta';
 
-import css from './ImportJobs.css';
 import sharedCss from '../../shared.css';
 
 @withRouter
@@ -325,16 +324,12 @@ export class ImportJobs extends Component {
     const modalMeta = getErrorModalMeta(filesExtensionsModalType);
     const titleText = this.getMessageById(titleMessageIdEnding);
     const uploadButtonText = this.getMessageById('uploadBtnText');
-    const errorMessage = showErrorMessage && this.getMessageById('importJobs.errorMessage');
 
     return (
       <FileUploader
         title={titleText}
         uploadButtonText={uploadButtonText}
-        errorMessage={errorMessage}
         isDropZoneActive={isDropZoneActive}
-        className={css.upload}
-        activeClassName={css.activeUpload}
         onDragEnter={this.onDragEnter}
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
