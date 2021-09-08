@@ -19,6 +19,7 @@
 * Remove Acquisitions accordion from the holdings field mapping screen (UIDATIMP-820)
 * Cover `<OverrideProtectedFieldsTable>` component with unit tests (UIDATIMP-715)
 * Cover `<TextDate>` component with unit tests (UIDATIMP-726)
+* Add hotlinks to the Import log summary for MARC imports (UIDATIMP-988)
 
 ## [4.1.4](https://github.com/folio-org/ui-data-import/tree/v4.1.4) (2021-08-23)
 
