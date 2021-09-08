@@ -152,7 +152,6 @@ describe('TextDate', () => {
       const calendarIcon = container.querySelector('#datepicker-toggle-calendar-button-testId');
 
       fireEvent.click(calendarIcon);
-
       fireEvent.click(getByText('23'));
       const clearIcon = container.querySelector('#datepicker-clear-button-testId');
 
@@ -186,7 +185,6 @@ describe('TextDate', () => {
       const calendarContainer = container.querySelector('.calendar');
 
       fireEvent.click(calendarContainer);
-
       fireEvent.click(calendarIcon);
 
       expect(calendarContainer).not.toBeVisible();
