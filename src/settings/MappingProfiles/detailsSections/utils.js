@@ -104,7 +104,7 @@ export const onAdd = (refTable, fieldName, fieldIndex, initialFields, callback, 
   callback(fieldsPath, newRefTable, fieldIndex, isFirstSubfield);
 };
 
-export const onRemove = (index, refTable, fieldIndex, callback, incrementalField, getPath, getRepeatableActionFieldPath, keepRepeatableAction) => {
+export const onRemove = (index, refTable, fieldIndex, callback, incrementalField, getPath, getRepeatableActionFieldPath) => {
   const fieldsPath = getPath ? getPath(fieldIndex) : `profile.mappingDetails.mappingFields[${fieldIndex}].subfields`;
   let newRefTable = [...refTable];
 
@@ -118,14 +118,13 @@ export const onRemove = (index, refTable, fieldIndex, callback, incrementalField
   }
 
   const isLastSubfield = newRefTable.length === 0;
-  const repeatableAction = keepRepeatableAction ? REPEATABLE_ACTIONS.EXTEND_EXISTING : null;
 
   if (isLastSubfield) {
     const repeatableActionFieldPath = getRepeatableActionFieldPath
       ? getRepeatableActionFieldPath(fieldIndex)
       : getRepeatableFieldName(fieldIndex);
 
-    callback(repeatableActionFieldPath, repeatableAction, fieldIndex, isLastSubfield);
+    callback(repeatableActionFieldPath, null, fieldIndex, isLastSubfield);
   }
 
   callback(fieldsPath, newRefTable, fieldIndex, isLastSubfield);

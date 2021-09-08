@@ -41,6 +41,7 @@ import {
   validateRequiredField,
   mappingProfileSubfieldShape,
   okapiShape,
+  REPEATABLE_ACTIONS,
 } from '../../../../../utils';
 
 export const InvoiceLineInformation = ({
@@ -65,7 +66,11 @@ export const InvoiceLineInformation = ({
   const onVendorRefNumbersClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
     const repeatableFieldActionPath = getInnerRepeatableFieldPath(fieldIndex, 0, 4);
 
-    handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+    if (isLastSubfield) {
+      handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, REPEATABLE_ACTIONS.EXTEND_EXISTING, setReferenceTables, isLastSubfield);
+    } else {
+      handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+    }
   };
 
   return (
@@ -113,7 +118,7 @@ export const InvoiceLineInformation = ({
         fields={vendorReferenceNumbers}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.vendorRefNumber.addLabel`} />}
         onAdd={() => onAdd(vendorReferenceNumbers, 'invoiceLines.fields[4].subfields[0]', 26, initialFields, onVendorRefNumberAdd, 'order', getPathToAddField)}
-        onRemove={index => onRemove(index, vendorReferenceNumbers, 26, onVendorRefNumbersClean, 'order', getPathToAddField, false, true)}
+        onRemove={index => onRemove(index, vendorReferenceNumbers, 26, onVendorRefNumbersClean, 'order', getPathToAddField)}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={6}>
