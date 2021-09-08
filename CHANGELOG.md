@@ -18,6 +18,7 @@
 * Cover `<MARCTableView>` component with unit tests (UIDATIMP-962)
 * Remove Acquisitions accordion from the holdings field mapping screen (UIDATIMP-820)
 * Cover `<OverrideProtectedFieldsTable>` component with unit tests (UIDATIMP-715)
+* Cover `<TextDate>` component with unit tests (UIDATIMP-726)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
