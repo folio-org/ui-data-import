@@ -196,10 +196,6 @@ const JobSummaryComponent = ({
     </PaneMenu>
   );
 
-  const handleRowClick = e => {
-    e.stopPropagation();
-  };
-
   return (
     <SearchAndSortPane
       label={label}
@@ -217,10 +213,10 @@ const JobSummaryComponent = ({
       lastMenu={<></>}
       firstMenu={firstMenu}
       searchResultsProps={{
-        onRowClick: handleRowClick,
         pagingType: 'click',
         pageAmount: RESULT_COUNT_INCREMENT,
         columnWidths: { title: '30%' },
+        rowProps: {},
       }}
     />
   );
