@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -9,6 +9,7 @@ import {
   SettingsLabel,
 } from '@folio/stripes-data-transfer-components';
 import {
+  Button,
   NoValue,
   PaneMenu,
   PaneCloseLink,
@@ -18,8 +19,11 @@ import { FOLIO_RECORD_TYPES } from '../../components';
 
 import {
   DATA_TYPES,
+  RECORD_ACTION_STATUS,
   RECORD_ACTION_STATUS_LABEL_IDS,
 } from '../../utils';
+
+import sharedCss from '../../shared.css';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -41,20 +45,51 @@ const sortMap = {
   error: 'error',
 };
 
+const getRecordActionStatusLabel = recordType => {
+  if (!recordType) return <NoValue />;
+
+  const labelId = RECORD_ACTION_STATUS_LABEL_IDS[recordType];
+
+  return <FormattedMessage id={labelId} />;
+};
+
 const JobSummaryComponent = ({
   mutator,
   resources,
-  resources: { jobExecutions: { records } },
-  history,
+  resources: {
+    jobExecutions: { records: jobExecutionsRecords },
+    jobLogEntries: { records: jobLogEntriesRecords },
+    jobLog: { records: jobLogRecords },
+  },
 }) => {
-  const dataType = records[0]?.jobProfileInfo.dataType;
+  const dataType = jobExecutionsRecords[0]?.jobProfileInfo.dataType;
   const isEdifactType = dataType === DATA_TYPES[1];
-  const getRecordActionStatusLabel = recordType => {
-    if (!recordType) return <NoValue />;
+  const jobExecutionsId = jobExecutionsRecords[0]?.id;
 
-    const labelId = RECORD_ACTION_STATUS_LABEL_IDS[recordType];
+  useEffect(() => {
+    if (jobExecutionsId) {
+      jobLogEntriesRecords.map(entry => {
+        return mutator.jobLog.GET({ path: `metadata-provider/jobLogEntries/${jobExecutionsId}/records/${entry.sourceRecordId}` });
+      });
+    }
+  }, [jobExecutionsId, jobLogEntriesRecords, mutator.jobLog]);
 
-    return <FormattedMessage id={labelId} />;
+  const getHotlinkCellFormatter = (actionStatus, entityLabel, path, isPathCorrect, entity) => {
+    if (isPathCorrect && (actionStatus === RECORD_ACTION_STATUS.CREATED || actionStatus === RECORD_ACTION_STATUS.UPDATED)) {
+      return (
+        <Button
+          data-test-entity-name={entity}
+          buttonStyle="link"
+          to={path}
+          marginBottom0
+          buttonClass={sharedCss.cellLink}
+        >
+          {entityLabel}
+        </Button>
+      );
+    }
+
+    return entityLabel;
   };
 
   const visibleColumns = [
@@ -85,11 +120,64 @@ const JobSummaryComponent = ({
 
       return parseInt(sourceRecordOrder, 10) + 1;
     },
-    title: ({ sourceRecordTitle }) => sourceRecordTitle,
+    title: ({
+      sourceRecordTitle,
+      sourceRecordId,
+    }) => {
+      const jobExecutionId = resources.jobLogEntries.records[0].jobExecutionId;
+      const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`, {});
+
+      return (
+        <Button
+          buttonStyle="link"
+          target="_blank"
+          marginBottom0
+          to={path}
+          buttonClass={sharedCss.cellLink}
+        >
+          {sourceRecordTitle}
+        </Button>
+      );
+    },
     srsMarcBibStatus: ({ sourceRecordActionStatus }) => getRecordActionStatusLabel(sourceRecordActionStatus),
-    instanceStatus: ({ instanceActionStatus }) => getRecordActionStatusLabel(instanceActionStatus),
-    holdingsStatus: ({ holdingsActionStatus }) => getRecordActionStatusLabel(holdingsActionStatus),
-    itemStatus: ({ itemActionStatus }) => getRecordActionStatusLabel(itemActionStatus),
+    instanceStatus: ({
+      instanceActionStatus,
+      sourceRecordId,
+    }) => {
+      const entityLabel = getRecordActionStatusLabel(instanceActionStatus);
+      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
+      const entityId = sourceRecord?.relatedInstanceInfo.idList[0];
+      const path = `/inventory/view/${entityId}`;
+
+      return getHotlinkCellFormatter(instanceActionStatus, entityLabel, path, !!entityId, 'instance');
+    },
+    holdingsStatus: ({
+      holdingsActionStatus,
+      sourceRecordId,
+    }) => {
+      const entityLabel = getRecordActionStatusLabel(holdingsActionStatus);
+      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
+      const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
+      const holdingsId = sourceRecord?.relatedHoldingsInfo.idList[0];
+      const path = `/inventory/view/${instanceId}/${holdingsId}`;
+      const isPathCorrect = !!(instanceId && holdingsId);
+
+      return getHotlinkCellFormatter(holdingsActionStatus, entityLabel, path, isPathCorrect, 'holdings');
+    },
+    itemStatus: ({
+      itemActionStatus,
+      sourceRecordId,
+    }) => {
+      const entityLabel = getRecordActionStatusLabel(itemActionStatus);
+      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
+      const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
+      const holdingsId = sourceRecord?.relatedHoldingsInfo.idList[0];
+      const itemId = sourceRecord?.relatedItemInfo.idList[0];
+      const path = `/inventory/view/${instanceId}/${holdingsId}/${itemId}`;
+      const isPathCorrect = !!(instanceId && holdingsId && itemId);
+
+      return getHotlinkCellFormatter(itemActionStatus, entityLabel, path, isPathCorrect, 'item');
+    },
     orderStatus: ({ orderActionStatus }) => getRecordActionStatusLabel(orderActionStatus),
     invoiceStatus: ({ invoiceActionStatus }) => getRecordActionStatusLabel(invoiceActionStatus),
     error: ({ error }) => (error ? <FormattedMessage id="ui-data-import.error" /> : ''),
@@ -99,7 +187,7 @@ const JobSummaryComponent = ({
       iconKey={isEdifactType ? FOLIO_RECORD_TYPES.INVOICE.iconKey : 'app'}
       app="data-import"
     >
-      <>{records[0]?.fileName}</>
+      <>{jobExecutionsRecords[0]?.fileName}</>
     </SettingsLabel>
   );
   const firstMenu = (
@@ -107,15 +195,6 @@ const JobSummaryComponent = ({
       <PaneCloseLink to="/data-import" />
     </PaneMenu>
   );
-
-  const handleRowClick = (e, row) => {
-    const queryParams = isEdifactType ? { instanceLineId: row.invoiceLineJournalRecordId } : {};
-    const path = createUrl(`/data-import/log/${row.jobExecutionId}/${row.sourceRecordId}`, queryParams);
-
-    const jobLogWindow = window.open(path, '_blank');
-
-    jobLogWindow.focus();
-  };
 
   return (
     <SearchAndSortPane
@@ -134,10 +213,10 @@ const JobSummaryComponent = ({
       lastMenu={<></>}
       firstMenu={firstMenu}
       searchResultsProps={{
-        onRowClick: handleRowClick,
         pagingType: 'click',
         pageAmount: RESULT_COUNT_INCREMENT,
         columnWidths: { title: '30%' },
+        rowProps: {},
       }}
     />
   );
@@ -179,6 +258,12 @@ JobSummaryComponent.manifest = Object.freeze({
       staticFallback: { params: {} },
     },
   },
+  jobLog: {
+    type: 'okapi',
+    path: 'metadata-provider/jobLogEntries/:{id}/records/:{recordId}',
+    throwErrors: false,
+    accumulate: true,
+  },
   jobExecutions: {
     type: 'okapi',
     path: 'change-manager/jobExecutions/:{id}',
@@ -198,8 +283,9 @@ JobSummaryComponent.propTypes = {
         }),
       ).isRequired,
     }),
+    jobLogEntries: PropTypes.shape({ records: PropTypes.array.isRequired }),
+    jobLog: PropTypes.shape({ records: PropTypes.array.isRequired }),
   }).isRequired,
-  history: PropTypes.shape({ go: PropTypes.func.isRequired }).isRequired,
 };
 
 export const JobSummary = stripesConnect(JobSummaryComponent);
