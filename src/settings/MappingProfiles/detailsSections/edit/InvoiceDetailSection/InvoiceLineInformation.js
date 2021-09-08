@@ -37,7 +37,6 @@ import {
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   BOOLEAN_ACTIONS,
-  REPEATABLE_ACTIONS,
   createOptionsList,
   validateRequiredField,
   mappingProfileSubfieldShape,
@@ -114,7 +113,7 @@ export const InvoiceLineInformation = ({
         fields={vendorReferenceNumbers}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.vendorRefNumber.addLabel`} />}
         onAdd={() => onAdd(vendorReferenceNumbers, 'invoiceLines.fields[4].subfields[0]', 26, initialFields, onVendorRefNumberAdd, 'order', getPathToAddField)}
-        onRemove={index => onRemove(index, vendorReferenceNumbers, 26, onVendorRefNumbersClean, 'order', getPathToAddField, REPEATABLE_ACTIONS.EXCHANGE_EXISTING)}
+        onRemove={index => onRemove(index, vendorReferenceNumbers, 26, onVendorRefNumbersClean, 'order', getPathToAddField, false, true)}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={6}>
