@@ -41,6 +41,7 @@ import {
   validateRequiredField,
   mappingProfileSubfieldShape,
   okapiShape,
+  REPEATABLE_ACTIONS,
 } from '../../../../../utils';
 
 export const InvoiceLineInformation = ({
@@ -65,7 +66,11 @@ export const InvoiceLineInformation = ({
   const onVendorRefNumbersClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
     const repeatableFieldActionPath = getInnerRepeatableFieldPath(fieldIndex, 0, 4);
 
-    handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+    if (isLastSubfield && !refTable) {
+      handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, REPEATABLE_ACTIONS.EXTEND_EXISTING, setReferenceTables, isLastSubfield);
+    } else {
+      handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+    }
   };
 
   return (
