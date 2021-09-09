@@ -66,7 +66,7 @@ export const InvoiceLineInformation = ({
   const onVendorRefNumbersClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
     const repeatableFieldActionPath = getInnerRepeatableFieldPath(fieldIndex, 0, 4);
 
-    if (isLastSubfield) {
+    if (isLastSubfield && !refTable) {
       handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, REPEATABLE_ACTIONS.EXTEND_EXISTING, setReferenceTables, isLastSubfield);
     } else {
       handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
