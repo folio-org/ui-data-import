@@ -1,5 +1,4 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -8,29 +7,32 @@ import { translationsProperties } from '../../../test/jest/helpers';
 import { RecentJobLogs } from './RecentJobLogs';
 
 jest.mock('../JobLogsContainer', () => ({
-  JobLogsContainer: () => <span>JobLogsContainer</span>
+  JobLogsContainer: ({ children }) => (
+    <div>
+      {children({ listProps: { resultsFormatter: { status: 'COMMITTED' } } })}
+      <span>JobLogsContainer</span>
+    </div>
+  ),
+}));
+jest.mock('@folio/stripes-data-transfer-components', () => ({
+  ...jest.requireActual('@folio/stripes-data-transfer-components'),
+  JobLogs: () => <span>JobLogs</span>,
 }));
 
-//const recentJobLogsProps = () => 'text';
-
 const renderRecentJobLogs = () => {
-  const childComponent = (
-      <div>
-        <span>child component</span>
-      </div>
-  );
-  const component = (
-    <RecentJobLogs>
-      {childComponent}
-    </RecentJobLogs>
-  );
-
-  return renderWithIntl(component, translationsProperties);
+  return renderWithIntl(<RecentJobLogs />, translationsProperties);
 };
 
 describe('RecentJobLogs', () => {
-  it('should be rendered', () => {
-    const { debug } = renderRecentJobLogs();
-    debug();
+  it('JobLogsContainer should be rendered', () => {
+    const { getByText } = renderRecentJobLogs();
+
+    expect(getByText('JobLogsContainer')).toBeDefined();
+  });
+
+  it('JobLogs should be rendered', () => {
+    const { getByText } = renderRecentJobLogs();
+
+    expect(getByText('JobLogs')).toBeDefined();
   });
 });
