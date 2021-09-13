@@ -18,7 +18,14 @@ window.open = jest.fn();
 window.open.mockReturnValue({ focus: jest.fn() });
 
 const firstRecordJobExecutionId = faker.random.uuid();
-const firstRecordSourceRecordId = faker.random.uuid();
+const sourceRecordsIds = [
+  faker.random.uuid(),
+  faker.random.uuid(),
+  faker.random.uuid(),
+  faker.random.uuid(),
+];
+const instanceId = faker.random.uuid();
+
 const getJobExecutionsResources = dataType => buildResources({
   resourceName: 'jobExecutions',
   records: [{
@@ -31,34 +38,104 @@ const jobLogEntriesResources = buildResources({
   resourceName: 'jobLogEntries',
   records: [{
     sourceRecordActionStatus: 'CREATED',
+    instanceActionStatus: 'CREATED',
     jobExecutionId: firstRecordJobExecutionId,
-    sourceRecordId: firstRecordSourceRecordId,
+    sourceRecordId: sourceRecordsIds[0],
     sourceRecordOrder: '0',
     sourceRecordTitle: 'Test item 1',
   }, {
     instanceActionStatus: 'UPDATED',
     jobExecutionId: faker.random.uuid(),
-    sourceRecordId: faker.random.uuid(),
+    sourceRecordId: sourceRecordsIds[1],
     sourceRecordOrder: '1',
     sourceRecordTitle: 'Test item 2',
   }, {
     holdingsActionStatus: 'MULTIPLE',
     jobExecutionId: faker.random.uuid(),
-    sourceRecordId: faker.random.uuid(),
+    sourceRecordId: sourceRecordsIds[2],
     sourceRecordOrder: '2',
     sourceRecordTitle: 'Test item 3',
   }, {
-    itemStatus: 'DISCARDED',
+    itemActionStatus: 'DISCARDED',
     jobExecutionId: faker.random.uuid(),
-    sourceRecordId: faker.random.uuid(),
+    sourceRecordId: sourceRecordsIds[3],
     sourceRecordOrder: '3',
     sourceRecordTitle: 'Test item 4',
     error: 'Error message',
   }],
 });
+const jobLogResources = buildResources({
+  resourceName: 'jobLog',
+  records: [{
+    sourceRecordId: sourceRecordsIds[0],
+    sourceRecordOrder: '0',
+    sourceRecordTitle: 'Test item 1',
+    relatedInstanceInfo: {
+      actionStatus: 'CREATED',
+      idList: [instanceId],
+    },
+    relatedHoldingsInfo: {
+      actionStatus: 'CREATED',
+      idList: [faker.random.uuid()],
+    },
+    relatedItemInfo: {
+      actionStatus: 'CREATED',
+      idList: [faker.random.uuid()],
+    },
+  }, {
+    sourceRecordId: sourceRecordsIds[1],
+    sourceRecordOrder: '1',
+    sourceRecordTitle: 'Test item 2',
+    relatedInstanceInfo: {
+      actionStatus: 'UPDATED',
+      idList: [instanceId],
+    },
+    relatedHoldingsInfo: {
+      actionStatus: 'UPDATED',
+      idList: [faker.random.uuid()],
+    },
+    relatedItemInfo: {
+      actionStatus: 'UPDATED',
+      idList: [faker.random.uuid()],
+    },
+  }, {
+    sourceRecordId: sourceRecordsIds[2],
+    sourceRecordOrder: '2',
+    sourceRecordTitle: 'Test item 1',
+    relatedInstanceInfo: {
+      actionStatus: 'MULTIPLE',
+      idList: [faker.random.uuid()],
+    },
+    relatedHoldingsInfo: {
+      actionStatus: 'MULTIPLE',
+      idList: [faker.random.uuid()],
+    },
+    relatedItemInfo: {
+      actionStatus: 'MULTIPLE',
+      idList: [faker.random.uuid()],
+    },
+  }, {
+    sourceRecordId: sourceRecordsIds[3],
+    sourceRecordOrder: '3',
+    sourceRecordTitle: 'Test item 4',
+    relatedInstanceInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [faker.random.uuid()],
+    },
+    relatedHoldingsInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [faker.random.uuid()],
+    },
+    relatedItemInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [faker.random.uuid()],
+    },
+  }],
+});
 const getResources = dataType => ({
   ...getJobExecutionsResources(dataType),
   ...jobLogEntriesResources,
+  ...jobLogResources,
 });
 
 const mutator = buildMutator();
@@ -138,15 +215,47 @@ describe('Job summary page', () => {
     });
   });
 
-  describe('when clicking on a row', () => {
+  describe('when clicking on a record title', () => {
     it('should navigate to the log details screen', () => {
+      const { getByText } = renderJobSummary();
+
+      expect(getByText('Test item 1').href).toContain(`/data-import/log/${firstRecordJobExecutionId}/${sourceRecordsIds[0]}`);
+    });
+  });
+
+  describe('when action status is CREATED', () => {
+    it('the value should be a hotlink', () => {
       const { container } = renderJobSummary();
 
-      const firstRow = container.querySelector('[data-row-inner="0"]');
+      fireEvent.click(container.querySelector('[data-row-index="row-0"] [data-test-entity-name="instance"]'));
 
-      fireEvent.click(firstRow);
+      expect(window.location.href).toContain(`/inventory/view/${instanceId}`);
+    });
+  });
 
-      expect(window.open).toHaveBeenCalledWith(`/data-import/log/${firstRecordJobExecutionId}/${firstRecordSourceRecordId}`, '_blank');
+  describe('when action status is UPDATED', () => {
+    it('the value should be a hotlink', () => {
+      const { container } = renderJobSummary();
+
+      fireEvent.click(container.querySelector('[data-row-index="row-1"] [data-test-entity-name="instance"]'));
+
+      expect(window.location.href).toContain(`/inventory/view/${instanceId}`);
+    });
+  });
+
+  describe('when action status is MULTIPLE', () => {
+    it('the value should be a text', () => {
+      const { getByText } = renderJobSummary();
+
+      expect(getByText('Multiple')).not.toHaveAttribute('href');
+    });
+  });
+
+  describe('when action status is DISCARDED', () => {
+    it('the value should be a text', () => {
+      const { getByText } = renderJobSummary();
+
+      expect(getByText('Discarded')).not.toHaveAttribute('href');
     });
   });
 });
