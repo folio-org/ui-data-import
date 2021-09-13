@@ -100,7 +100,6 @@ const renderMarcFieldProtection = () => {
 };
 
 describe('MARCFieldProtection component', () => {
-
   it('Render the component as wrapped component with connect method', () => {
     waitFor(() => expect(renderMarcFieldProtection()).toBeDefined());
   });
