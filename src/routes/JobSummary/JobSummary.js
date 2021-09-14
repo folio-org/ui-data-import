@@ -283,8 +283,8 @@ JobSummaryComponent.propTypes = {
         }),
       ).isRequired,
     }),
-    jobLogEntries: PropTypes.shape({ records: PropTypes.array.isRequired }),
-    jobLog: PropTypes.shape({ records: PropTypes.array.isRequired }),
+    jobLogEntries: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
+    jobLog: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
   }).isRequired,
 };
 

@@ -57,7 +57,6 @@ export class ImportJobs extends Component {
     redirect: false,
     hasLoaded: false,
     prohibitFilesUploading: false,
-    showErrorMessage: false,
   };
 
   componentDidMount() {
@@ -146,10 +145,7 @@ export class ImportJobs extends Component {
 
     const { url: host } = okapi;
 
-    this.setState({
-      isDropZoneActive: false,
-      showErrorMessage: false,
-    });
+    this.setState({ isDropZoneActive: false });
 
     try {
       const uploadDefinition = await updateUploadDefinition();
@@ -160,8 +156,6 @@ export class ImportJobs extends Component {
         return;
       }
     } catch (error) {
-      this.setState({ showErrorMessage: true });
-
       return;
     }
 
@@ -210,8 +204,6 @@ export class ImportJobs extends Component {
 
     if (knownErrorModalType) {
       this.showFilesExtensionsModal({ type: knownErrorModalType });
-
-      this.setState({ showErrorMessage: true });
     }
   }
 
