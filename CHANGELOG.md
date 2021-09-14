@@ -20,6 +20,7 @@
 * Cover `<OverrideProtectedFieldsTable>` component with unit tests (UIDATIMP-715)
 * Cover `<TextDate>` component with unit tests (UIDATIMP-726)
 * Add hotlinks to the Import log summary for MARC imports (UIDATIMP-988)
+* Cover `<RecentJobLogs>` component with unit tests (UIDATIMP-720)
 * increment stripes to v7 (UIDATIMP-983)
 
 ### Bugs fixed:
