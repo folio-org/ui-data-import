@@ -3,10 +3,14 @@ import React, { forwardRef } from 'react';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../test/jest/__mock__';
-import { renderWithReduxForm, translationsProperties } from '../../../test/jest/helpers';
+import {
+  screen, render,
+} from '@testing-library/react';
+import {
+  renderWithReduxForm, translationsProperties,
+} from '../../../test/jest/helpers';
 
 import { ViewContainer } from './ViewContainer';
-import { screen, render } from '@testing-library/react';
 
 // jest.mock('@folio/stripes/components', () => {
 //   const MockedCallOut = forwardRef((props, ref) => {
@@ -20,7 +24,7 @@ import { screen, render } from '@testing-library/react';
 
 const viewContainerProps = {
   entityKey: 'test-jobProfiles',
-  children: (props) => {
+  children: props => {
     return JSON.stringify(props);
   },
   mutator: {},
@@ -31,16 +35,17 @@ const viewContainerProps = {
   selectRecord: () => {},
 };
 
-const renderViewContainer = (props) => {
+const renderViewContainer = props => {
   const component = () => <ViewContainer {...props} />;
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
 describe('ViewContainer Component', () => {
-  it('should have not an element with ref attritube', () => {
+  it('should have not an element with ref attribute', () => {
     const { container } = render(<ViewContainer {...viewContainerProps} />);
     const elementWithRefAttr = container.querySelector('[ref]');
+
     expect(elementWithRefAttr).toBeNull();
   });
   it('should not render ExceptionModal component by default (renders only when an error occurs)', () => {
@@ -48,6 +53,7 @@ describe('ViewContainer Component', () => {
     const { container } = renderViewContainer(viewContainerProps);
     // act
     const exceptionModalDiv = container.querySelector('#delete-test-jobProfiles-exception-modal');
+
     // assert
     expect(exceptionModalDiv).toBeNull();
   });
@@ -56,6 +62,7 @@ describe('ViewContainer Component', () => {
     const { container } = renderViewContainer(viewContainerProps);
     // act
     const fullWidthAndHeightContainerClass = container.querySelector('.fullWidthAndHeightContainer');
+
     // assert
     expect(fullWidthAndHeightContainerClass).toBeInTheDocument();
   });
