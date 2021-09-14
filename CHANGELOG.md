@@ -21,6 +21,7 @@
 * Cover `<TextDate>` component with unit tests (UIDATIMP-726)
 * Add hotlinks to the Import log summary for MARC imports (UIDATIMP-988)
 * Cover `<RecentJobLogs>` component with unit tests (UIDATIMP-720)
+* increment stripes to v7 (UIDATIMP-983)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
