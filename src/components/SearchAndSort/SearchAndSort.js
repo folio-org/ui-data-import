@@ -208,7 +208,7 @@ export class SearchAndSort extends Component {
     this.setInitialSortQueryParam();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line react/no-deprecated
+  componentWillReceiveProps(nextProps) { // eslint-disable-line react/no-deprecated
     const {
       stripes: { logger },
       finishedResourceName,
