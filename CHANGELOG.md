@@ -23,6 +23,7 @@
 * Cover `<RecentJobLogs>` component with unit tests (UIDATIMP-720)
 * increment stripes to v7 (UIDATIMP-983)
 * Cover `<MARCFieldProtection>` settings with tests (UIDATIMP-976)
+* Cover `<WithValidation>` component with tests (UIDATIMP-961)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
