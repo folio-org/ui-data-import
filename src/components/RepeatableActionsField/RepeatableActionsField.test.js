@@ -1,14 +1,12 @@
 import React from 'react';
 
+import { fireEvent } from '@testing-library/react';
+
 import { noop } from 'lodash';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../test/jest/__mock__';
-
-import { fireEvent } from '@testing-library/react';
-
-import { RepeatableActionsField } from './RepeatableActionsField';
 
 import {
   MAPPING_REPEATABLE_FIELD_ACTIONS, REPEATABLE_ACTIONS,
@@ -17,6 +15,8 @@ import {
 import {
   renderWithReduxForm, translationsProperties,
 } from '../../../test/jest/helpers';
+
+import { RepeatableActionsField } from './RepeatableActionsField';
 
 const renderRepeatableActionsField = ({
   wrapperFieldName,
@@ -82,12 +82,9 @@ const repeatableActionsFieldProps = {
 
 describe('RepeatableActionsField component', () => {
   it('should be rendered with child component', () => {
-    const { getByText } = renderRepeatableActionsField(
-      { ...repeatableActionsFieldProps },
-    );
+    const { getByText } = renderRepeatableActionsField(repeatableActionsFieldProps);
 
-    expect(getByText('Repeatable field component'))
-      .toBeDefined();
+    expect(getByText('Repeatable field component')).toBeDefined();
   });
 
   describe('when click on Select action', () => {
@@ -96,13 +93,13 @@ describe('RepeatableActionsField component', () => {
         const {
           container,
           getByText,
-        } = renderRepeatableActionsField({ ...repeatableActionsFieldProps });
-        const select = container.querySelector('select');
-        const button = getByText('+Add');
+        } = renderRepeatableActionsField(repeatableActionsFieldProps);
 
-        fireEvent.change(select, { target: { value: 'DELETE_EXISTING' } });
-        expect(button)
-          .toBeDisabled();
+        const selectRepeatableAction = container.querySelector('select');
+        const addFieldButton = getByText('+Add');
+
+        fireEvent.change(selectRepeatableAction, { target: { value: 'DELETE_EXISTING' } });
+        expect(addFieldButton).toBeDisabled();
       });
     });
   });
