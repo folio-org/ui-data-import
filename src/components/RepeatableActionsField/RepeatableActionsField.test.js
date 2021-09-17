@@ -1,12 +1,15 @@
 import React from 'react';
+
 import { noop } from 'lodash';
+
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../test/jest/__mock__';
-import {
-  fireEvent, screen,
-} from '@testing-library/react';
+
+import { fireEvent } from '@testing-library/react';
+
 import { RepeatableActionsField } from './RepeatableActionsField';
+
 import {
   MAPPING_REPEATABLE_FIELD_ACTIONS, REPEATABLE_ACTIONS,
 } from '../../utils';
@@ -41,6 +44,7 @@ const renderRepeatableActionsField = ({
       </div>
     );
   };
+
   const component = () => (
     <RepeatableActionsField
       legend={legend}
@@ -62,7 +66,7 @@ const renderRepeatableActionsField = ({
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-const RepeatableActionsFieldProps = {
+const repeatableActionsFieldProps = {
   wrapperFieldName: '',
   legend: 'Repeatable Actions',
   disabled: false,
@@ -77,25 +81,29 @@ const RepeatableActionsFieldProps = {
 };
 
 describe('RepeatableActionsField component', () => {
-  test('should be rendered with child component', () => {
-    const { getByText } = renderRepeatableActionsField({ ...RepeatableActionsFieldProps });
+  it('should be rendered with child component', () => {
+    const { getByText } = renderRepeatableActionsField(
+      { ...repeatableActionsFieldProps },
+    );
 
-    screen.debug();
     expect(getByText('Repeatable field component'))
       .toBeDefined();
   });
-  describe('when click on Select action, if selected action and clear action are equal', () => {
-    test('Add button should be disabled', () => {
-      const {
-        container,
-        getByText,
-      } = renderRepeatableActionsField({ ...RepeatableActionsFieldProps });
-      const select = container.querySelector('select');
-      const button = getByText('+Add');
 
-      fireEvent.change(select, { target: { value: 'DELETE_EXISTING' } });
-      expect(button)
-        .toBeDisabled();
+  describe('when click on Select action', () => {
+    describe('if selected action and clear action are equal', () => {
+      it('Add button should be disabled', () => {
+        const {
+          container,
+          getByText,
+        } = renderRepeatableActionsField({ ...repeatableActionsFieldProps });
+        const select = container.querySelector('select');
+        const button = getByText('+Add');
+
+        fireEvent.change(select, { target: { value: 'DELETE_EXISTING' } });
+        expect(button)
+          .toBeDisabled();
+      });
     });
   });
 });
