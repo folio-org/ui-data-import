@@ -18,6 +18,20 @@ import {
 
 import { RepeatableActionsField } from './RepeatableActionsField';
 
+const repeatableActionsFieldProps = {
+  wrapperFieldName: '',
+  legend: 'Repeatable Actions',
+  disabled: false,
+  wrapperPlaceholder: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions',
+  actions: MAPPING_REPEATABLE_FIELD_ACTIONS,
+  actionToClearFields: REPEATABLE_ACTIONS.DELETE_EXISTING,
+  subfieldsToClearPath: '',
+  repeatableFieldIndex: 15,
+  hasRepeatableFields: true,
+  repeatableFieldAction: REPEATABLE_ACTIONS.EXTEND_EXISTING,
+  onRepeatableActionChange: noop,
+};
+
 const renderRepeatableActionsField = ({
   wrapperFieldName,
   disabled,
@@ -64,20 +78,6 @@ const renderRepeatableActionsField = ({
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
-};
-
-const repeatableActionsFieldProps = {
-  wrapperFieldName: '',
-  legend: 'Repeatable Actions',
-  disabled: false,
-  wrapperPlaceholder: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions',
-  actions: MAPPING_REPEATABLE_FIELD_ACTIONS,
-  actionToClearFields: REPEATABLE_ACTIONS.DELETE_EXISTING,
-  subfieldsToClearPath: '',
-  repeatableFieldIndex: 15,
-  hasRepeatableFields: true,
-  repeatableFieldAction: REPEATABLE_ACTIONS.EXTEND_EXISTING,
-  onRepeatableActionChange: noop,
 };
 
 describe('RepeatableActionsField component', () => {
