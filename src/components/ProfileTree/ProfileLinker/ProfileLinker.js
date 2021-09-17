@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { noop } from 'lodash';
 
 import classNames from 'classnames';
 
@@ -110,7 +111,7 @@ export const ProfileLinker = ({
           id={`type-selector-dropdown-${id}`}
           className={classNames(css['linker-button'], className)}
           open={typeSelectorOpen}
-          onToggle={() => setTypeSelectorOpen(!typeSelectorOpen)}
+          onToggle={noop}
           renderTrigger={trigger}
           renderMenu={menu}
           usePortal={false}
