@@ -2,8 +2,6 @@ import React from 'react';
 
 import { fireEvent } from '@testing-library/react';
 
-import { noop } from 'lodash';
-
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../test/jest/__mock__';
@@ -14,12 +12,16 @@ import {
 
 import { withReferenceValues } from './withReferenceValues';
 
+const mockOnFieldChange = jest.fn();
+
+const mockInputOnchange = jest.fn();
+
 const withReferenceValuesProps = {
   label: 'withReferenceValues label',
   value: 'test value',
   id: null,
-  input: <input />,
-  onFieldChange: noop,
+  input: { onChange: mockInputOnchange },
+  onFieldChange: mockOnFieldChange,
   dataOptions: [{
     optionValue: 'value1',
     optionLabel: 'name1',
@@ -41,8 +43,10 @@ const renderWithReferenceValues = ({
   label,
   value,
   id,
+  input,
   wrapperLabel,
   dataOptions,
+  onFieldChange,
   disabled,
   isMultiSelection,
   optionLabel,
@@ -51,7 +55,7 @@ const renderWithReferenceValues = ({
   required,
   readOnly,
 }) => {
-  const WithReferenceValues = withReferenceValues;
+  const WithReferenceValuesElement = withReferenceValues;
 
   const wrappedComponent = ({ onChange }) => (
     <input
@@ -63,11 +67,13 @@ const renderWithReferenceValues = ({
   );
 
   const component = () => (
-    <WithReferenceValues
+    <WithReferenceValuesElement
       label={label}
       value={value}
+      input={input}
       id={id}
       wrappedComponent={wrappedComponent}
+      onFieldChange={onFieldChange}
       dataOptions={dataOptions}
       wrapperLabel={wrapperLabel}
       optionLabel={optionLabel}
@@ -84,10 +90,33 @@ const renderWithReferenceValues = ({
 };
 
 describe('withReferenceValues component', () => {
-  it('should render wrapped component correctly', () => {
-    const { container } = renderWithReferenceValues(withReferenceValuesProps);
+  afterAll(() => {
+    mockOnFieldChange.mockClear();
 
-    expect(container.querySelector('input')).toBeDefined();
+    mockInputOnchange.mockClear();
+  });
+
+  it('should render wrapped component correctly', () => {
+    const { getByRole } = renderWithReferenceValues(withReferenceValuesProps);
+
+    expect(getByRole('textbox')).toBeInTheDocument();
+  });
+
+  describe('when type into input field', () => {
+    it('should invoke onFieldChange prop', () => {
+      const { getByRole } = renderWithReferenceValues(withReferenceValuesProps);
+
+      fireEvent.change(getByRole('textbox'), { target: { value: 'test input' } });
+      expect(mockOnFieldChange).toHaveBeenCalled();
+    });
+
+    it('should invoke onChange method of input prop', () => {
+      const { getByRole } = renderWithReferenceValues(withReferenceValuesProps);
+
+      fireEvent.change(getByRole('textbox'), { target: { value: 'test input' } });
+
+      expect(mockInputOnchange).toHaveBeenCalled();
+    });
   });
 
   describe('when clicked on dropdown', () => {
