@@ -9,11 +9,13 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 import '../../../test/jest/__mock__';
 
 import {
-  MAPPING_REPEATABLE_FIELD_ACTIONS, REPEATABLE_ACTIONS,
+  MAPPING_REPEATABLE_FIELD_ACTIONS,
+  REPEATABLE_ACTIONS,
 } from '../../utils';
 
 import {
-  renderWithReduxForm, translationsProperties,
+  renderWithReduxForm,
+  translationsProperties,
 } from '../../../test/jest/helpers';
 
 import { RepeatableActionsField } from './RepeatableActionsField';
