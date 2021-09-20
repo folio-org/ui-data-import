@@ -7,7 +7,8 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 import '../../../test/jest/__mock__';
 
 import {
-  renderWithReduxForm, translationsProperties,
+  renderWithReduxForm,
+  translationsProperties,
 } from '../../../test/jest/helpers';
 
 import { withReferenceValues } from './withReferenceValues';
