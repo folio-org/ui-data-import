@@ -61,7 +61,7 @@ describe('RecordItem', () => {
       });
     });
 
-    describe('when initial button no icon', () => {
+    describe('when initial button has no icon', () => {
       it('icon shoud not be rendered', () => {
         const { container } = renderRecordItem({
           ...recordItemProps(),
@@ -95,7 +95,7 @@ describe('RecordItem', () => {
 
         fireEvent.click(getByText('Holdings'));
 
-        expect(onClick.mock.calls).toEqual([]);
+        expect(onClick.mock.calls).toHaveLength(0);
       });
     });
   });

@@ -59,4 +59,33 @@ describe('IncomingRecordMenu', () => {
       expect(onClick.mock.calls[0][0].type).toEqual('STATIC_VALUE');
     });
   });
+
+  describe('when clicking on disabled option', () => {
+    it('MARC Holdings record type should not be chosen', () => {
+      const { getByText } = renderIncomingRecordMenu({ open: true });
+
+      fireEvent.click(getByText('MARC Holdings'));
+
+      expect(onClick.mock.calls).toHaveLength(0);
+    });
+
+    it('MARC Authority record type should not be chosen', () => {
+      const { getByText } = renderIncomingRecordMenu({ open: true });
+
+      fireEvent.click(getByText('MARC Authority'));
+
+      expect(onClick.mock.calls).toHaveLength(0);
+    });
+  });
+
+  describe('when clicking on existing record type', () => {
+    it('existing record type should be chosen', () => {
+      const { getByText } = renderIncomingRecordMenu({ open: true });
+
+      fireEvent.click(getByText('Static value (submatch only)'));
+      fireEvent.click(getByText('Static value (submatch only)'));
+
+      expect(onClick.mock.calls[0][0].type).toEqual('STATIC_VALUE');
+    });
+  });
 });

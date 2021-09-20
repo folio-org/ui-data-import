@@ -39,30 +39,34 @@ const renderCompareRecordSelect = ({
 };
 
 describe('CompareRecordSelect', () => {
-  it('should be rendered on the left side', () => {
-    const {
-      container,
-      getByText,
-    } = renderCompareRecordSelect(compareRecordSelectProps);
-    const compareContainer = container.querySelector('.borderLeft');
+  describe('when current language is LTR', () => {
+    it('diraction should be rendered correctly', () => {
+      const {
+        container,
+        getByText,
+      } = renderCompareRecordSelect(compareRecordSelectProps);
+      const compareContainer = container.querySelector('.borderLeft');
 
-    expect(getByText('Incoming records')).toBeDefined();
-    expect(getByText('Existing records')).toBeDefined();
-    expect(compareContainer).toBeDefined();
+      expect(getByText('Incoming records')).toBeDefined();
+      expect(getByText('Existing records')).toBeDefined();
+      expect(compareContainer).toBeDefined();
+    });
   });
 
-  it('should be rendered on the right side', () => {
-    const {
-      container,
-      getByText,
-    } = renderCompareRecordSelect({
-      ...compareRecordSelectProps,
-      isLocalLTR: false,
-    });
-    const compareContainer = container.querySelector('.borderRight');
+  describe('when current language is RLT', () => {
+    it('diraction should be rendered correctly', () => {
+      const {
+        container,
+        getByText,
+      } = renderCompareRecordSelect({
+        ...compareRecordSelectProps,
+        isLocalLTR: false,
+      });
+      const compareContainer = container.querySelector('.borderRight');
 
-    expect(getByText('Incoming records')).toBeDefined();
-    expect(getByText('Existing records')).toBeDefined();
-    expect(compareContainer).toBeDefined();
+      expect(getByText('Incoming records')).toBeDefined();
+      expect(getByText('Existing records')).toBeDefined();
+      expect(compareContainer).toBeDefined();
+    });
   });
 });
