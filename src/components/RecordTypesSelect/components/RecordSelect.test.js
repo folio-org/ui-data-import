@@ -2,6 +2,7 @@ import React from 'react';
 import { noop } from 'lodash';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+
 import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
@@ -32,16 +33,17 @@ describe('RecordSelect', () => {
     expect(getByText('Invoice')).toBeDefined();
     expect(getByText('MARC Authority')).toBeDefined();
   });
-  describe('when it renders on the right side', () => {
-    it('container should be rendered with appropriate class', () => {
+
+  describe('when current language is RTL', () => {
+    it('direction should be rendered correctly', () => {
       const { container } = renderRecordSelect({ isLocalLTR: false });
 
       expect(container.querySelector('treeViewRTL')).toBeDefined();
     });
   });
 
-  describe('when it renders on the left side', () => {
-    it('container should be rendered with appropriate class', () => {
+  describe('when current language is LTR', () => {
+    it('direction should be rendered correctly', () => {
       const { container } = renderRecordSelect({ isLocalLTR: true });
 
       expect(container.querySelector('treeViewLTR')).toBeDefined();

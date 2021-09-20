@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+
 import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
@@ -40,7 +41,7 @@ const renderCompareRecordSelect = ({
 
 describe('CompareRecordSelect', () => {
   describe('when current language is LTR', () => {
-    it('diraction should be rendered correctly', () => {
+    it('direction should be rendered correctly', () => {
       const {
         container,
         getByText,
@@ -54,7 +55,7 @@ describe('CompareRecordSelect', () => {
   });
 
   describe('when current language is RLT', () => {
-    it('diraction should be rendered correctly', () => {
+    it('direction should be rendered correctly', () => {
       const {
         container,
         getByText,
