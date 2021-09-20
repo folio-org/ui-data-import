@@ -1,8 +1,10 @@
 import React from 'react';
 
-import {
-  render, screen,
-} from '@testing-library/react';
+import { screen } from '@testing-library/react';
+
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+
+import { translationsProperties } from '../../../test/jest/helpers';
 
 import '../../../test/jest/__mock__';
 
@@ -39,62 +41,50 @@ const recordsData = {
 
 const renderItemData = item => { return <div>{item.itemMeta.type}</div>; };
 
-const renderTreeView = ({
-  data,
-  indentation,
-  spacing,
-  isLocalLTR,
-  className,
-  renderItem,
-}) => {
+const mockProps = {
+  data: recordsData,
+  indentation: 40,
+  spacing: '1rem',
+  isLocalLTR: false,
+  className: css.treeViewRTL,
+  renderItem: renderItemData,
+};
+
+const mockSpacingProps = {
+  data: recordsData,
+  className: css.treeViewLTR,
+};
+
+const renderTreeView = treeViewProps => {
   const component = (
     <TreeView
-      data={data}
-      indentation={indentation}
-      spacing={spacing}
-      isLocalLTR={isLocalLTR}
-      className={className}
-      renderItem={renderItem}
+      data={treeViewProps.data}
+      indentation={treeViewProps.indentation}
+      spacing={treeViewProps.spacing}
+      isLocalLTR={treeViewProps.isLocalLTR}
+      className={treeViewProps.className}
+      renderItem={treeViewProps.renderItem}
     />
   );
 
-  return render(component);
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('Tree View component', () => {
   it('Should be rendered', () => {
-    expect(renderTreeView({
-      data: recordsData,
-      className: css.treeViewLTR,
-    })).toBeDefined();
+    expect(renderTreeView(mockSpacingProps)).toBeDefined();
   });
 });
 
 describe('When meta data is passed it', () => {
   it('should have a length of 3', () => {
-    const { debug } = renderTreeView({
-      data: recordsData,
-      indentation: 40,
-      spacing: '1rem',
-      isLocalLTR: false,
-      className: css.treeViewRTL,
-      renderItem: renderItemData,
-    });
-
-    debug();
+    renderTreeView(mockProps);
     const listItems = screen.getAllByRole('list');
 
     expect(listItems.length).toBe(3);
   });
   it('should contain the required fields', () => {
-    const { getByText } = renderTreeView({
-      data: recordsData,
-      indentation: 40,
-      spacing: '1rem',
-      isLocalLTR: false,
-      className: css.treeViewRTL,
-      renderItem: renderItemData,
-    });
+    const { getByText } = renderTreeView(mockProps);
 
     expect(getByText('MARC_AUTHORITY')).toBeDefined();
     expect(getByText('MARC_BIBLIOGRAPHIC')).toBeDefined();
