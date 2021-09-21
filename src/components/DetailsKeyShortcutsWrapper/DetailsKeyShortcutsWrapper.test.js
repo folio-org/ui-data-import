@@ -29,7 +29,7 @@ const renderDetailsKeyShortcutsWrapper = ({
   history,
   location,
 }) => {
-  const childElement = <input data-testId="childElement" />;
+  const childElement = <input data-testid="childElement" />;
 
   const component = () => (
     <DetailsKeyShortcutsWrapper
@@ -48,7 +48,7 @@ describe('DetailsKeyShortcutsWrapper component', () => {
   it('should render children correctly', () => {
     const { getByTestId } = renderDetailsKeyShortcutsWrapper(detailsKeyShortcutsWrapperProps);
 
-    expect(getByTestId('childElement'));
+    expect(getByTestId('childElement')).toBeInTheDocument();
   });
   it('calls the correct handler when a key is pressed that matches the keyMap', () => {
     const { getByTestId } = renderDetailsKeyShortcutsWrapper(detailsKeyShortcutsWrapperProps);
