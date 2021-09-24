@@ -26,7 +26,6 @@
 * Cover `<TreeView>` component with tests (UIDATIMP-728)
 * Cover `<RecordTypesSelect>` component with unit tests (UIDATIMP-721)
 
-
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
 * Cannot add matches or actions to a job profile (UIDATIMP-1002)
