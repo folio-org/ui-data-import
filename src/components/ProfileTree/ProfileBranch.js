@@ -74,8 +74,8 @@ export const ProfileBranch = memo(({
 
   const [matchSectionOpen, setMatchSectionOpen] = useState(getSectionStatus('match'));
   const [nonMatchSectionOpen, setNonMatchSectionOpen] = useState(getSectionStatus('nonMatch'));
-  const [matchData, setMatchData] = useState(undefined);
-  const [nonMatchData, setNonMatchData] = useState(undefined);
+  const [matchData, setMatchData] = useState([]);
+  const [nonMatchData, setNonMatchData] = useState([]);
 
   useEffect(() => {
     const getSectionData = section => {
