@@ -26,6 +26,7 @@
 * Cover `<withReferenceValues>` component with unit tests (UIDATIMP-732)
 * Cover `<TreeView>` component with tests (UIDATIMP-728)
 * Cover `<RecordTypesSelect>` component with unit tests (UIDATIMP-721)
+* Field mappings: Item - update reference dropdown list for Item status to include new statuses (UIDATIMP-641)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
