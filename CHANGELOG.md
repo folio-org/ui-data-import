@@ -26,6 +26,8 @@
 * Cover `<withReferenceValues>` component with unit tests (UIDATIMP-732)
 * Cover `<TreeView>` component with tests (UIDATIMP-728)
 * Cover `<RecordTypesSelect>` component with unit tests (UIDATIMP-721)
+* Field mappings: Item - update reference dropdown list for Item status to include new statuses (UIDATIMP-641)
+* Expand module permissions with permissions for retrieving invoice and invoice lines (UIDATIMP-1003)
 * Validate action profile has a field mapping profile before attaching to job profile (UIDATIMP-990)
 
 ### Bugs fixed:
