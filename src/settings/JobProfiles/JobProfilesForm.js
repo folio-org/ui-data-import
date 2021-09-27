@@ -1,6 +1,7 @@
 import React, {
   memo,
-  useMemo,
+  useEffect,
+  useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -10,6 +11,7 @@ import {
   identity,
   get,
   isEqual,
+  isEmpty,
 } from 'lodash';
 
 import {
@@ -20,8 +22,13 @@ import {
   Accordion,
   AccordionSet,
   AccordionStatus,
+  ConfirmationModal,
 } from '@folio/stripes/components';
-import { FullScreenForm } from '@folio/stripes-data-transfer-components';
+import {
+  createOkapiHeaders,
+  createUrl,
+  FullScreenForm,
+} from '@folio/stripes-data-transfer-components';
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import {
@@ -35,6 +42,8 @@ import {
   withProfileWrapper,
   DATA_TYPES,
   PROFILE_LINKING_RULES,
+  ASSOCIATION_TYPES,
+  PROFILE_TYPES,
   isFieldPristine,
 } from '../../utils';
 
@@ -42,6 +51,19 @@ const dataTypes = DATA_TYPES.map(dataType => ({
   value: dataType,
   label: dataType,
 }));
+
+export const fetchAssociations = async (okapi, profileId) => {
+  const { url } = okapi;
+  const baseUrl = `${url}/data-import-profiles/profileAssociations/${profileId}/details`;
+
+  const response = await fetch(
+    createUrl(baseUrl, { masterType: ASSOCIATION_TYPES.actionProfiles }, false),
+    { headers: { ...createOkapiHeaders(okapi) } },
+  );
+  const body = await response.json();
+
+  return get(body, 'childSnapshotWrappers', []);
+};
 
 export const JobProfilesFormComponent = memo(({
   pristine,
@@ -61,9 +83,17 @@ export const JobProfilesFormComponent = memo(({
   const { profile } = initialValues;
   const isEditMode = Boolean(profile.id);
   const isSubmitDisabled = pristine || submitting;
+  const dataKey = 'jobProfiles.current';
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const profileTreeData = useMemo(() => (isEditMode ? childWrappers : []), [isEditMode]);
+  const [isModalOpen, showModal] = useState(false);
+  const [profileTreeData, setProfileTreeData] = useState([]);
+
+  useEffect(() => {
+    const contentData = isEditMode ? childWrappers : [];
+    const getData = JSON.parse(sessionStorage.getItem(dataKey)) || contentData;
+
+    setProfileTreeData(getData);
+  }, [isEditMode, childWrappers]);
 
   const addedRelations = form.getState().values.addedRelations;
   const deletedRelations = form.getState().values.deletedRelations;
@@ -94,16 +124,28 @@ export const JobProfilesFormComponent = memo(({
     }
   };
   const onSubmit = async event => {
-    const record = await handleSubmit(event);
+    event.preventDefault();
 
-    if (record) {
-      clearStorage();
+    const requests = profileTreeData
+      .filter(record => record.contentType === PROFILE_TYPES.ACTION_PROFILE)
+      .map(record => fetchAssociations(okapi, record.profileId));
 
-      form.reset();
-      transitionToParams({
-        _path: `${path}/view/${record.id}`,
-        layer: null,
-      });
+    const associations = await Promise.all(requests);
+
+    if (associations.some(isEmpty)) {
+      showModal(true);
+    } else {
+      const record = await handleSubmit(event);
+
+      if (record) {
+        clearStorage();
+
+        form.reset();
+        transitionToParams({
+          _path: `${path}/view/${record.id}`,
+          layer: null,
+        });
+      }
     }
   };
 
@@ -184,6 +226,7 @@ export const JobProfilesFormComponent = memo(({
                   relationsToDelete={deletedRelations}
                   onLink={addRelations}
                   onUnlink={deleteRelations}
+                  setData={setProfileTreeData}
                   okapi={okapi}
                   resources={parentResources}
                 />
@@ -199,6 +242,15 @@ export const JobProfilesFormComponent = memo(({
             </div>
           </AccordionSet>
         </AccordionStatus>
+        <ConfirmationModal
+          confirmLabel={<FormattedMessage id="ui-data-import.ok" />}
+          bodyTag="div"
+          heading={<FormattedMessage id="ui-data-import.settings.jobProfile.confirmationModal.heading" />}
+          message={<FormattedMessage id="ui-data-import.settings.jobProfile.confirmationModal.body" />}
+          onCancel={() => showModal(false)}
+          onConfirm={() => showModal(false)}
+          open={isModalOpen}
+        />
       </FullScreenForm>
     </EditKeyShortcutsWrapper>
   );
