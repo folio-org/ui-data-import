@@ -1,6 +1,5 @@
 import React, {
   memo,
-  useEffect,
   useState,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
