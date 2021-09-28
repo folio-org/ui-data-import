@@ -1,6 +1,5 @@
 import React, {
   memo,
-  useEffect,
   useState,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -35,6 +34,7 @@ export const ProfileTree = memo(({
   okapi,
   onLink,
   onUnlink,
+  setData,
   record,
   className,
   dataAttributes,
@@ -50,15 +50,8 @@ export const ProfileTree = memo(({
     contentType: PROFILE_TYPES.JOB_PROFILE,
   };
 
-  const [data, setData] = useState([]);
   const [addedRelations, setAddedRelations] = useState(relationsToAdd);
   const [deletedRelations, setDeletedRelations] = useState(relationsToDelete);
-
-  useEffect(() => {
-    const getData = JSON.parse(sessionStorage.getItem(dataKey)) || contentData;
-
-    setData(getData);
-  }, [contentData]);
 
   const isSnakeCase = str => str && str.includes('_');
 
@@ -146,8 +139,8 @@ export const ProfileTree = memo(({
     <div>
       <div className={classNames(css['profile-tree'], className)}>
         <div className={css['profile-tree-container']}>
-          {data && data.length ? (
-            data.map((item, i) => (
+          {contentData && contentData.length ? (
+            contentData.map((item, i) => (
               <ProfileBranch
                 key={`profile-branch-${item.profileId}-${i}`}
                 index={i}
@@ -157,7 +150,7 @@ export const ProfileTree = memo(({
                 record={record}
                 parentRecordData={parentRecordData}
                 parentSectionKey={dataKey}
-                parentSectionData={data}
+                parentSectionData={contentData}
                 setParentSectionData={setData}
                 rootId={parentRecordData.id}
                 onLink={link}
@@ -184,9 +177,9 @@ export const ProfileTree = memo(({
             rootId={parentRecordData.id}
             parentType={ENTITY_KEYS.JOB_PROFILES}
             linkingRules={linkingRules}
-            disabledOptions={getDisabledOptions(data, siblingsProhibited)}
+            disabledOptions={getDisabledOptions(contentData, siblingsProhibited)}
             dataKey={dataKey}
-            initialData={data}
+            initialData={contentData}
             setInitialData={setData}
             onLink={link}
             okapi={okapi}
@@ -212,6 +205,7 @@ ProfileTree.propTypes = {
   relationsToDelete: PropTypes.arrayOf(PropTypes.object),
   onLink: PropTypes.func,
   onUnlink: PropTypes.func,
+  setData: PropTypes.func,
   record: PropTypes.object,
   className: PropTypes.string,
   dataAttributes: PropTypes.object,
@@ -224,6 +218,7 @@ ProfileTree.defaultProps = {
   relationsToDelete: [],
   onLink: noop,
   onUnlink: noop,
+  setData: noop,
   record: null,
   className: null,
   dataAttributes: null,
