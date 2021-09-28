@@ -30,6 +30,7 @@ import {
   getAccountingCodeOptions,
   getAccountingNumberOptions,
 } from '../utils';
+import { FIELD_NAME_PREFIX } from '../constants';
 
 export const MappingInvoiceDetails = ({
   mappingDetails,
@@ -64,6 +65,7 @@ export const MappingInvoiceDetails = ({
 
       setReferenceTables(getFieldName(18), vendorAccountingCode ? `"${vendorAccountingCode}"` : '');
       setReferenceTables(getFieldName(36), '');
+      setReferenceTables(`${FIELD_NAME_PREFIX}[18].enabled`, !!vendorAccountingCode);
     }
   }, [selectedVendor, setReferenceTables]);
 
