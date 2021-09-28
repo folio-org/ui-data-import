@@ -29,6 +29,7 @@
 * Field mappings: Item - update reference dropdown list for Item status to include new statuses (UIDATIMP-641)
 * Expand module permissions with permissions for retrieving invoice and invoice lines (UIDATIMP-1003)
 * Validate action profile has a field mapping profile before attaching to job profile (UIDATIMP-990)
+* Cover `<WithValidation>` component with tests (UIDATIMP-961)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
