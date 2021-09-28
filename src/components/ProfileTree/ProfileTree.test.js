@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { noop } from 'lodash';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -45,6 +46,7 @@ const profileTreeProps = ({
   record,
 }) => {
   return {
+    setData: noop,
     linkingRules: {
       allowUnlink,
       allowDelete,
@@ -126,6 +128,7 @@ const profileTreeProps = ({
 const renderProfileTree = ({
   linkingRules,
   contentData,
+  setData,
   okapi,
   resources,
   record,
@@ -137,6 +140,7 @@ const renderProfileTree = ({
       okapi={okapi}
       resources={resources}
       record={record}
+      setData={setData}
     />
   );
 
@@ -144,8 +148,11 @@ const renderProfileTree = ({
 };
 
 describe('ProfileTree', () => {
-  afterEach(() => {
+  afterAll(() => {
     delete window.ResizeObserver;
+  });
+
+  afterEach(() => {
     Pluggable.mockClear();
   });
 
@@ -172,7 +179,7 @@ describe('ProfileTree', () => {
   });
 
   it('should be rendered', () => {
-    const { getByText } = renderProfileTree(profileTreeProps({
+    const { getAllByText } = renderProfileTree(profileTreeProps({
       allowUnlink: true,
       allowDelete: false,
       record: null,
@@ -180,6 +187,6 @@ describe('ProfileTree', () => {
 
     Pluggable.mock.calls[0][0].onLink([{ id: 'testId' }]);
 
-    expect(getByText('This list contains no items')).toBeDefined();
+    expect(getAllByText('Match profile: "testName"')).toBeDefined();
   });
 });
