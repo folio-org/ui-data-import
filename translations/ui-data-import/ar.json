@@ -140,7 +140,7 @@
     "settings.mappingProfiles.title": "أوضاع تخطيط الحقل",
     "settings.actionProfiles.new": "وضع إجراء جديد",
     "none": "لا شيء",
-    "actionProfileName": "بوفايل الإجراءات",
+    "actionProfileName": "بروفايل الإجراء",
     "settings.associatedJobProfiles": "بروفايلات المهام المرتبطة",
     "settings.associatedMappingProfile": "وضع تخطيط الحقل المرتبط",
     "settings.actionProfiles.confirmEditModal.heading": "تأكيد تغييرات وضع الإجراءات",
