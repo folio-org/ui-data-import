@@ -18,7 +18,22 @@
 * Cover `<MARCTableView>` component with unit tests (UIDATIMP-962)
 * Remove Acquisitions accordion from the holdings field mapping screen (UIDATIMP-820)
 * Cover `<OverrideProtectedFieldsTable>` component with unit tests (UIDATIMP-715)
+* Cover `<TextDate>` component with unit tests (UIDATIMP-726)
+* Add hotlinks to the Import log summary for MARC imports (UIDATIMP-988)
+* Cover `<RecentJobLogs>` component with unit tests (UIDATIMP-720)
+* increment stripes to v7 (UIDATIMP-983)
+* Cover `<RepeatableActionsField>` with unit tests (UIDATIMP-722)
+* Cover `<withReferenceValues>` component with unit tests (UIDATIMP-732)
+* Cover `<TreeView>` component with tests (UIDATIMP-728)
+* Cover `<RecordTypesSelect>` component with unit tests (UIDATIMP-721)
+* Field mappings: Item - update reference dropdown list for Item status to include new statuses (UIDATIMP-641)
+* Expand module permissions with permissions for retrieving invoice and invoice lines (UIDATIMP-1003)
+* Validate action profile has a field mapping profile before attaching to job profile (UIDATIMP-990)
 * Strict removing default job profile for quick-marc derive for Holdings (UIDATIMP-1012)
+
+### Bugs fixed:
+* Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
+* Cannot add matches or actions to a job profile (UIDATIMP-1002)
 
 ## [4.1.4](https://github.com/folio-org/ui-data-import/tree/v4.1.4) (2021-08-23)
 

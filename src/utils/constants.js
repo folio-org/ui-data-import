@@ -589,8 +589,17 @@ export const ITEM_STATUS_OPTIONS = [
     value: 'In process',
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.inProcess',
   }, {
+    value: 'In process (non-requestable)',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.inProcessNonRequestable',
+  }, {
     value: 'In transit',
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.inTransit',
+  }, {
+    value: 'Intellectual item',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.intellectualItem',
+  }, {
+    value: 'Long missing',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.longMissing',
   }, {
     value: 'Missing',
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.missing',
@@ -600,6 +609,15 @@ export const ITEM_STATUS_OPTIONS = [
   }, {
     value: 'Order closed',
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.orderClosed',
+  }, {
+    value: 'Restricted',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.restricted',
+  }, {
+    value: 'Unavailable',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.unavailable',
+  }, {
+    value: 'Unknown',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.unknown',
   }, {
     value: 'Withdrawn',
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.withdrawn',
@@ -724,9 +742,16 @@ export const DEFAULT_PROFILE_IDS = [
   QUICKMARK_DERIVE_CREATE_HOLDINGS_MAPPING_ID,
 ];
 
+export const RECORD_ACTION_STATUS = {
+  CREATED: 'CREATED',
+  UPDATED: 'UPDATED',
+  MULTIPLE: 'MULTIPLE',
+  DISCARDED: 'DISCARDED',
+};
+
 export const RECORD_ACTION_STATUS_LABEL_IDS = {
-  CREATED: 'ui-data-import.logLight.actionStatus.created',
-  UPDATED: 'ui-data-import.logLight.actionStatus.updated',
-  MULTIPLE: 'ui-data-import.logLight.actionStatus.multiple',
-  DISCARDED: 'ui-data-import.logLight.actionStatus.discarded',
+  [RECORD_ACTION_STATUS.CREATED]: 'ui-data-import.logLight.actionStatus.created',
+  [RECORD_ACTION_STATUS.UPDATED]: 'ui-data-import.logLight.actionStatus.updated',
+  [RECORD_ACTION_STATUS.MULTIPLE]: 'ui-data-import.logLight.actionStatus.multiple',
+  [RECORD_ACTION_STATUS.DISCARDED]: 'ui-data-import.logLight.actionStatus.discarded',
 };
