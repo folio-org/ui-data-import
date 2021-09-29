@@ -34,6 +34,7 @@ export const ProfileLinker = ({
   parentId,
   rootId,
   parentType,
+  profileType,
   onLink,
   okapi,
   linkingRules: { profilesAllowed },
@@ -127,6 +128,7 @@ export const ProfileLinker = ({
             entityKey={entityKey}
             dataKey={entityKey}
             parentType={parentType}
+            profileType={profileType}
             disabled={false} // @TODO: Change this to actual value from LinkingRules object
             isSingleSelect
             isMultiLink
@@ -147,6 +149,7 @@ export const ProfileLinker = ({
 ProfileLinker.propTypes = {
   id: PropTypes.string.isRequired,
   parentType: PropTypes.string.isRequired,
+  profileType: PropTypes.string.isRequired,
   onLink: PropTypes.func.isRequired,
   linkingRules: PropTypes.object.isRequired,
   dataKey: PropTypes.string.isRequired,

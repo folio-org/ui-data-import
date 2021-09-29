@@ -23,6 +23,7 @@ export const ProfileAssociator = memo(({
   parentType,
   masterType,
   detailType,
+  profileType,
   profileName,
   isMultiSelect,
   isMultiLink,
@@ -85,6 +86,7 @@ export const ProfileAssociator = memo(({
               parentType={parentType}
               masterType={masterType}
               detailType={detailType}
+              profileType={profileType}
               profileName={profileName}
               relationsToAdd={relationsToAdd}
               relationsToDelete={relationsToDelete}
@@ -106,6 +108,7 @@ ProfileAssociator.propTypes = {
   parentType: PropTypes.string.isRequired,
   masterType: PropTypes.string.isRequired,
   detailType: PropTypes.string.isRequired,
+  profileType: PropTypes.string.isRequired,
   contentData: PropTypes.arrayOf(PropTypes.object).isRequired,
   profileName: PropTypes.string,
   parentId: PropTypes.string || PropTypes.number,
