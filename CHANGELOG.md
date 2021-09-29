@@ -35,6 +35,7 @@
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
 * Cannot add matches or actions to a job profile (UIDATIMP-1002)
 * EDIFACT invoices fail to import properly due to invalid "value" retrieving for vendor's accountingCode - Juniper env (UIDATIMP-1005)
+* Invoice field mapping profile only displays first 10 acq unit values (UIDATIMP-1008)
 
 ## [4.1.4](https://github.com/folio-org/ui-data-import/tree/v4.1.4) (2021-08-23)
 
