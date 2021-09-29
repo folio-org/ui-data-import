@@ -204,7 +204,9 @@
           "inventory-storage.preceding-succeeding-titles.item.get",
           "inventory-storage.preceding-succeeding-titles.item.post",
           "inventory-storage.preceding-succeeding-titles.item.put",
-          "inventory-storage.preceding-succeeding-titles.item.delete"
+          "inventory-storage.preceding-succeeding-titles.item.delete",
+          "invoice-storage.invoices.item.get",
+          "invoice-storage.invoice-lines.item.get"
         ],
         "visible": true
       },
