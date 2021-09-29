@@ -36,7 +36,7 @@ const SORT_TYPE = {
 const sortMap = {
   recordNumber: 'source_record_order',
   title: 'title',
-  srsMarcBibStatus: 'source_record_action_status',
+  srsMarcStatus: 'source_record_action_status',
   instanceStatus: 'instance_action_status',
   holdingsStatus: 'holdings_action_status',
   itemStatus: 'item_action_status',
@@ -95,7 +95,7 @@ const JobSummaryComponent = ({
   const visibleColumns = [
     'recordNumber',
     'title',
-    'srsMarcBibStatus',
+    'srsMarcStatus',
     'instanceStatus',
     'holdingsStatus',
     'itemStatus',
@@ -106,7 +106,7 @@ const JobSummaryComponent = ({
   const columnMapping = {
     recordNumber: <FormattedMessage id="ui-data-import.record" />,
     title: <FormattedMessage id="ui-data-import.title" />,
-    srsMarcBibStatus: <FormattedMessage id="ui-data-import.recordTypes.srsMarcBib" />,
+    srsMarcStatus: <FormattedMessage id="ui-data-import.recordTypes.srsMarc" />,
     instanceStatus: <FormattedMessage id="ui-data-import.recordTypes.instance" />,
     holdingsStatus: <FormattedMessage id="ui-data-import.recordTypes.holdings" />,
     itemStatus: <FormattedMessage id="ui-data-import.recordTypes.item" />,
@@ -139,7 +139,7 @@ const JobSummaryComponent = ({
         </Button>
       );
     },
-    srsMarcBibStatus: ({ sourceRecordActionStatus }) => getRecordActionStatusLabel(sourceRecordActionStatus),
+    srsMarcStatus: ({ sourceRecordActionStatus }) => getRecordActionStatusLabel(sourceRecordActionStatus),
     instanceStatus: ({
       instanceActionStatus,
       sourceRecordId,
