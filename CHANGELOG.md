@@ -26,6 +26,7 @@
 * Cover `<withReferenceValues>` component with unit tests (UIDATIMP-732)
 * Cover `<TreeView>` component with tests (UIDATIMP-728)
 * Cover `<RecordTypesSelect>` component with unit tests (UIDATIMP-721)
+* Cover `<ListTemplate>` subcomponent with tests (UIDATIMP-708)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
