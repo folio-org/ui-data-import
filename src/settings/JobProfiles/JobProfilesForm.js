@@ -145,7 +145,7 @@ export const JobProfilesFormComponent = memo(({
   };
   const onSubmit = async event => {
     event.preventDefault();
-    
+
     const profileTreeContent = JSON.parse(sessionStorage.getItem(profileTreeKey));
 
     const requests = profileTreeContent

@@ -136,7 +136,7 @@ export const ProfileTree = memo(({
 
     const getNewProfileTreeData = function buildData(array, lineToCompare) {
       return array.filter(item => {
-        if (lineToCompare.childSnapshotWrappers.length) {
+        if (lineToCompare.childSnapshotWrappers?.length) {
           return buildData(lineToCompare.childSnapshotWrappers, item).length;
         }
 
