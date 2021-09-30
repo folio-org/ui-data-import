@@ -17,9 +17,9 @@ const renderDateColumn = value => {
 
 describe('DateColumn', () => {
   it('should be rendered', () => {
-    const { getByText } = renderDateColumn('12/12/2021');
+    const { getByText } = renderDateColumn('2021-08-24T13:36:06.537+00:00');
 
     expect(getByText('Icon')).toBeDefined();
-    expect(getByText('12/11/2021')).toBeDefined();
+    expect(getByText('8/24/2021')).toBeDefined();
   });
 });
