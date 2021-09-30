@@ -32,6 +32,7 @@
 * Validate action profile has a field mapping profile before attaching to job profile (UIDATIMP-990)
 * Cover `<WithValidation>` component with tests (UIDATIMP-961)
 * Strict removing default job profile for quick-marc derive for Holdings (UIDATIMP-1012)
+* Add hotlinks to the Import log summary for EDIFACT imports (UIDATIMP-989)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
