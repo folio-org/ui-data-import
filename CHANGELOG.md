@@ -22,6 +22,7 @@
 * Add hotlinks to the Import log summary for MARC imports (UIDATIMP-988)
 * Cover `<RecentJobLogs>` component with unit tests (UIDATIMP-720)
 * increment stripes to v7 (UIDATIMP-983)
+* Cover `<MARCFieldProtection>` settings with tests (UIDATIMP-976)
 * Cover `<RepeatableActionsField>` with unit tests (UIDATIMP-722)
 * Cover `<withReferenceValues>` component with unit tests (UIDATIMP-732)
 * Cover `<TreeView>` component with tests (UIDATIMP-728)
@@ -38,6 +39,7 @@
 * Cannot add matches or actions to a job profile (UIDATIMP-1002)
 * EDIFACT invoices fail to import properly due to invalid "value" retrieving for vendor's accountingCode - Juniper env (UIDATIMP-1005)
 * Invoice field mapping profile only displays first 10 acq unit values (UIDATIMP-1008)
+* Imported Invoice JSON log screen does not display (UIDATIMP-1010)
 
 ## [4.1.4](https://github.com/folio-org/ui-data-import/tree/v4.1.4) (2021-08-23)
 
