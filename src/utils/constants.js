@@ -589,8 +589,17 @@ export const ITEM_STATUS_OPTIONS = [
     value: 'In process',
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.inProcess',
   }, {
+    value: 'In process (non-requestable)',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.inProcessNonRequestable',
+  }, {
     value: 'In transit',
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.inTransit',
+  }, {
+    value: 'Intellectual item',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.intellectualItem',
+  }, {
+    value: 'Long missing',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.longMissing',
   }, {
     value: 'Missing',
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.missing',
@@ -600,6 +609,15 @@ export const ITEM_STATUS_OPTIONS = [
   }, {
     value: 'Order closed',
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.orderClosed',
+  }, {
+    value: 'Restricted',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.restricted',
+  }, {
+    value: 'Unavailable',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.unavailable',
+  }, {
+    value: 'Unknown',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.status.unknown',
   }, {
     value: 'Withdrawn',
     label: 'ui-data-import.settings.mappingProfiles.map.item.status.withdrawn',
@@ -698,9 +716,12 @@ export const OCLC_CREATE_MARC_BIB_ACTION_ID = '6aa8e98b-0d9f-41dd-b26f-15658d07e
 export const OCLC_CREATE_INSTANCE_MAPPING_ID = 'd0ebbc2e-2f0f-11eb-adc1-0242ac120002';
 export const OCLC_UPDATE_INSTANCE_MAPPING_ID = '862000b9-84ea-4cae-a223-5fc0552f2b42';
 export const OCLC_CREATE_MARC_BIB_MAPPING_ID = 'f90864ef-8030-480f-a43f-8cdd21233252';
-export const QUICKMARK_DERIVE_CREATE_JOB_ID = '6409dcff-71fa-433a-bc6a-e70ad38a9604';
-export const QUICKMARK_DERIVE_CREATE_ACTION_ID = 'f8e58651-f651-485d-aead-d2fa8700e2d1';
-export const QUICKMARK_DERIVE_CREATE_MAPPING_ID = '991c0300-44a6-47e3-8ea2-b01bb56a38cc';
+export const QUICKMARK_DERIVE_CREATE_BIB_JOB_ID = '6409dcff-71fa-433a-bc6a-e70ad38a9604';
+export const QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID = 'f8e58651-f651-485d-aead-d2fa8700e2d1';
+export const QUICKMARK_DERIVE_CREATE_BIB_MAPPING_ID = '991c0300-44a6-47e3-8ea2-b01bb56a38cc';
+export const QUICKMARK_DERIVE_CREATE_HOLDINGS_JOB_ID = 'fa0262c7-5816-48d0-b9b3-7b7a862a5bc7';
+export const QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID = 'adbe1e5c-7796-4902-b18e-794b1d58caac';
+export const QUICKMARK_DERIVE_CREATE_HOLDINGS_MAPPING_ID = 'e0fbaad5-10c0-40d5-9228-498b351dbbaa';
 
 export const DEFAULT_PROFILE_IDS = [
   OCLC_CREATE_INSTANCE_JOB_ID,
@@ -713,9 +734,12 @@ export const DEFAULT_PROFILE_IDS = [
   OCLC_CREATE_INSTANCE_MAPPING_ID,
   OCLC_UPDATE_INSTANCE_MAPPING_ID,
   OCLC_CREATE_MARC_BIB_MAPPING_ID,
-  QUICKMARK_DERIVE_CREATE_JOB_ID,
-  QUICKMARK_DERIVE_CREATE_ACTION_ID,
-  QUICKMARK_DERIVE_CREATE_MAPPING_ID,
+  QUICKMARK_DERIVE_CREATE_BIB_JOB_ID,
+  QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID,
+  QUICKMARK_DERIVE_CREATE_BIB_MAPPING_ID,
+  QUICKMARK_DERIVE_CREATE_HOLDINGS_JOB_ID,
+  QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID,
+  QUICKMARK_DERIVE_CREATE_HOLDINGS_MAPPING_ID,
 ];
 
 export const RECORD_ACTION_STATUS = {

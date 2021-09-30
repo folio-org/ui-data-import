@@ -106,7 +106,7 @@ export const InvoiceInformation = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/acquisitions-units/units',
+              wrapperSourceLink: '/acquisitions-units/units?limit=1000',
               wrapperSourcePath: 'acquisitionsUnits',
             }]}
             isRemoveValueAllowed
