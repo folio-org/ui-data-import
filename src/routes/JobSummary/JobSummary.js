@@ -69,10 +69,12 @@ const JobSummaryComponent = ({
   useEffect(() => {
     if (jobExecutionsId) {
       jobLogEntriesRecords.map(entry => {
-        return mutator.jobLog.GET({ path: `metadata-provider/jobLogEntries/${jobExecutionsId}/records/${entry.sourceRecordId}` });
+        const recordId = isEdifactType ? entry.invoiceLineJournalRecordId : entry.sourceRecordId;
+
+        return mutator.jobLog.GET({ path: `metadata-provider/jobLogEntries/${jobExecutionsId}/records/${recordId}` });
       });
     }
-  }, [jobExecutionsId, jobLogEntriesRecords, mutator.jobLog]);
+  }, [jobExecutionsId]);
 
   const getHotlinkCellFormatter = (actionStatus, entityLabel, path, isPathCorrect, entity) => {
     if (isPathCorrect && (actionStatus === RECORD_ACTION_STATUS.CREATED || actionStatus === RECORD_ACTION_STATUS.UPDATED)) {
@@ -123,9 +125,10 @@ const JobSummaryComponent = ({
     title: ({
       sourceRecordTitle,
       sourceRecordId,
+      invoiceLineJournalRecordId,
     }) => {
       const jobExecutionId = resources.jobLogEntries.records[0].jobExecutionId;
-      const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`, {});
+      const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`, { instanceLineId: invoiceLineJournalRecordId });
 
       return (
         <Button
