@@ -33,6 +33,7 @@
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
 * Cannot add matches or actions to a job profile (UIDATIMP-1002)
+* Imported Invoice JSON log screen does not display (UIDATIMP-1010)
 
 ## [4.1.4](https://github.com/folio-org/ui-data-import/tree/v4.1.4) (2021-08-23)
 
