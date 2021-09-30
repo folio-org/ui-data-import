@@ -19,7 +19,8 @@ import {
   OCLC_CREATE_INSTANCE_MAPPING_ID,
   OCLC_UPDATE_INSTANCE_MAPPING_ID,
   OCLC_CREATE_MARC_BIB_MAPPING_ID,
-  QUICKMARK_DERIVE_CREATE_MAPPING_ID,
+  QUICKMARK_DERIVE_CREATE_BIB_MAPPING_ID,
+  QUICKMARK_DERIVE_CREATE_HOLDINGS_MAPPING_ID,
   ENTITY_KEYS,
   FIND_ALL_CQL,
 } from '../../utils';
@@ -68,9 +69,10 @@ export const mappingProfilesShape = {
         const notIdOclcCreateInstanceMapping = `(id="" NOT id=="${OCLC_CREATE_INSTANCE_MAPPING_ID}")`;
         const notIdOclcUpdateInstanceMapping = `(id="" NOT id=="${OCLC_UPDATE_INSTANCE_MAPPING_ID}")`;
         const notIdMarcBibCreateMapping = `(id="" NOT id=="${OCLC_CREATE_MARC_BIB_MAPPING_ID}")`;
-        const notIdQuickMarcDeriveCreateMapping = `(id="" NOT id=="${QUICKMARK_DERIVE_CREATE_MAPPING_ID}")`;
+        const notIdQuickMarcBibDeriveCreateMapping = `(id="" NOT id=="${QUICKMARK_DERIVE_CREATE_BIB_MAPPING_ID}")`;
+        const notIdQuickMarcHoldingsDeriveCreateMapping = `(id="" NOT id=="${QUICKMARK_DERIVE_CREATE_HOLDINGS_MAPPING_ID}")`;
 
-        const withoutDefaultProfiles = `AND ${notIdOclcCreateInstanceMapping} AND ${notIdOclcUpdateInstanceMapping} AND ${notIdMarcBibCreateMapping} AND ${notIdQuickMarcDeriveCreateMapping}`;
+        const withoutDefaultProfiles = `AND ${notIdOclcCreateInstanceMapping} AND ${notIdOclcUpdateInstanceMapping} AND ${notIdMarcBibCreateMapping} AND ${notIdQuickMarcBibDeriveCreateMapping} AND ${notIdQuickMarcHoldingsDeriveCreateMapping}`;
         const query = `${FIND_ALL_CQL} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
 
         return { query };
