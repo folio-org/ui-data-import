@@ -128,7 +128,8 @@ const JobSummaryComponent = ({
       invoiceLineJournalRecordId,
     }) => {
       const jobExecutionId = resources.jobLogEntries.records[0].jobExecutionId;
-      const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`, { instanceLineId: invoiceLineJournalRecordId });
+      const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
+        isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
 
       return (
         <Button
