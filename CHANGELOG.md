@@ -1,6 +1,8 @@
 # Change history for ui-data-import
 
-## **4.1.5** (in progress)
+## **4.2.0** (in progress)
+
+## [4.1.5](https://github.com/folio-org/ui-data-import/tree/v4.1.5) (2021-10-01)
 
 ### Bugs fixed:
 * EDIFACT invoices fail to import properly due to invalid "value" retrieving for vendor's accountingCode - Juniper env (UIDATIMP-1005)
