@@ -33,6 +33,7 @@
 * Cover `<WithValidation>` component with tests (UIDATIMP-961)
 * Strict removing default job profile for quick-marc derive for Holdings (UIDATIMP-1012)
 * Cover `<ListTemplate>` subcomponent with tests (UIDATIMP-708)
+* Change MARC SRS bib column header and toggle (UIDATIMP-1011)
 * Add hotlinks to the Import log summary for EDIFACT imports (UIDATIMP-989)
 
 ### Bugs fixed:

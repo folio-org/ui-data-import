@@ -32,7 +32,7 @@ const { FILTER: { OPTIONS } } = LOG_VIEWER;
 const filterOptions = [
   {
     id: OPTIONS.SRS_MARC_BIB,
-    caption: 'ui-data-import.logViewer.filter.srsMARCBib',
+    caption: 'ui-data-import.logViewer.filter.srsMARC',
   }, {
     id: OPTIONS.INSTANCE,
     caption: 'ui-data-import.logViewer.filter.instance',
