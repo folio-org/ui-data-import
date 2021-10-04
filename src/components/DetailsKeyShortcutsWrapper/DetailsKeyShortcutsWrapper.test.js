@@ -1,12 +1,8 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+
 import { createMemoryHistory } from 'history';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import {
-  CommandList,
-  defaultKeyboardShortcuts,
-} from '@folio/stripes/components';
 
 import '../../../test/jest/__mock__';
 
@@ -15,14 +11,36 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
+import {
+  duplicateRecordShortcut,
+  openEditShortcut,
+} from '../../../test/jest/helpers/shortcuts';
+
+import { OCLC_UPDATE_INSTANCE_JOB_ID } from '../../utils';
+
 import { DetailsKeyShortcutsWrapper } from './DetailsKeyShortcutsWrapper';
+
+const {
+  CommandList,
+  defaultKeyboardShortcuts,
+} = require('@folio/stripes/components');
 
 const history = createMemoryHistory();
 
 history.push = jest.fn();
 
-const detailsKeyShortcutsWrapperProps = {
+jest.mock('@folio/stripes/smart-components', () => ({ ...jest.requireActual('@folio/stripes/smart-components') }), { virtual: true });
+
+const detailsKeyShortcutsWrapperPropsWithoutDefaultRecordId = {
   recordId: 'testId',
+  location: {
+    search: '',
+    pathname: '',
+  },
+};
+
+const detailsKeyShortcutsWrapperPropsWithDefaultRecordId = {
+  recordId: OCLC_UPDATE_INSTANCE_JOB_ID,
   location: {
     search: '',
     pathname: '',
@@ -56,40 +74,46 @@ describe('DetailsKeyShortcutsWrapper component', () => {
   });
 
   it('should render children correctly', () => {
-    const { getByTestId } = renderDetailsKeyShortcutsWrapper(detailsKeyShortcutsWrapperProps);
+    const { getByTestId } = renderDetailsKeyShortcutsWrapper(detailsKeyShortcutsWrapperPropsWithoutDefaultRecordId);
 
     expect(getByTestId('childElement')).toBeInTheDocument();
   });
 
-  it('calls the correct handler when a key is pressed that matches the keyMap', () => {
-    const { getByTestId } = renderDetailsKeyShortcutsWrapper(detailsKeyShortcutsWrapperProps);
+  it('should not call the handler for edit shortcut on a default record', () => {
+    const { getByTestId } = renderDetailsKeyShortcutsWrapper(detailsKeyShortcutsWrapperPropsWithDefaultRecordId);
 
     const childElement = getByTestId('childElement');
 
     childElement.focus();
 
-    // TODO: move all those events to a separate test/jest/helpers/shortcuts.js file
-    fireEvent.keyDown(childElement, {
-      key: 'Ctrl',
-      code: 'CtrlLeft',
-      which: 17,
-      keyCode: 17,
-    });
-    fireEvent.keyDown(childElement, {
-      key: 'Alt',
-      code: 'AltLeft',
-      which: 18,
-      keyCode: 18,
-      ctrlKey: true,
-    });
-    fireEvent.keyDown(childElement, {
-      key: 'e',
-      keyCode: 69,
-      which: 69,
-      altKey: true,
-      ctrlKey: true,
+    openEditShortcut(childElement);
+
+    expect(history.push).not.toHaveBeenCalled();
+  });
+
+  describe('calls the correct handler when a key is pressed that', () => {
+    it('matches edit shortcut', () => {
+      const { getByTestId } = renderDetailsKeyShortcutsWrapper(detailsKeyShortcutsWrapperPropsWithoutDefaultRecordId);
+
+      const childElement = getByTestId('childElement');
+
+      childElement.focus();
+
+      openEditShortcut(childElement);
+
+      expect(history.push).toHaveBeenCalled();
     });
 
-    expect(history.push).toHaveBeenCalled();
+    it('matches duplicateRecord shortcut pressed', () => {
+      const { getByTestId } = renderDetailsKeyShortcutsWrapper(detailsKeyShortcutsWrapperPropsWithoutDefaultRecordId);
+
+      const childElement = getByTestId('childElement');
+
+      childElement.focus();
+
+      duplicateRecordShortcut(childElement);
+
+      expect(history.push).toHaveBeenCalled();
+    });
   });
 });
