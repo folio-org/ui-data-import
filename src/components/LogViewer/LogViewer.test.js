@@ -142,13 +142,13 @@ describe('LogViewer', () => {
       });
     });
 
-    describe('when clicking on SRS MARC Bib button', () => {
-      it('SRS MARC Bib button should be active', () => {
+    describe('when clicking on SRS MARC button', () => {
+      it('SRS MARC button should be active', () => {
         const { getByText } = renderLogViewer({
           ...logViewerLogsProps,
           ...logViewerOtherProps,
         });
-        const srsMARCBibButton = getByText('SRS MARC Bib').parentNode;
+        const srsMARCBibButton = getByText('SRS MARC').parentNode;
 
         fireEvent.click(srsMARCBibButton);
 
