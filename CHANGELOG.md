@@ -22,6 +22,7 @@
 * Add hotlinks to the Import log summary for MARC imports (UIDATIMP-988)
 * Cover `<RecentJobLogs>` component with unit tests (UIDATIMP-720)
 * increment stripes to v7 (UIDATIMP-983)
+* Cover `<MARCFieldProtection>` settings with tests (UIDATIMP-976)
 * Cover `<RepeatableActionsField>` with unit tests (UIDATIMP-722)
 * Cover `<withReferenceValues>` component with unit tests (UIDATIMP-732)
 * Cover `<TreeView>` component with tests (UIDATIMP-728)
@@ -31,12 +32,19 @@
 * Validate action profile has a field mapping profile before attaching to job profile (UIDATIMP-990)
 * Cover `<WithValidation>` component with tests (UIDATIMP-961)
 * Strict removing default job profile for quick-marc derive for Holdings (UIDATIMP-1012)
+* Cover `<ListTemplate>` subcomponent with tests (UIDATIMP-708)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
 * Cannot add matches or actions to a job profile (UIDATIMP-1002)
-* EDIFACT invoices fail to import properly due to invalid "value" retrieving for vendor's accountingCode - Juniper env (UIDATIMP-1005)
 * Invoice field mapping profile only displays first 10 acq unit values (UIDATIMP-1008)
+* Imported Invoice JSON log screen does not display (UIDATIMP-1010)
+* Error getting metadata for record (UIDATIMP-1018)
+
+## [4.1.5](https://github.com/folio-org/ui-data-import/tree/v4.1.5) (2021-10-01)
+
+### Bugs fixed:
+* EDIFACT invoices fail to import properly due to invalid "value" retrieving for vendor's accountingCode - Juniper env (UIDATIMP-1005)
 
 ## [4.1.4](https://github.com/folio-org/ui-data-import/tree/v4.1.4) (2021-08-23)
 
