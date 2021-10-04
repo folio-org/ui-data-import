@@ -6,8 +6,9 @@ import { TreeView } from '../../TreeView';
 import { RecordItem } from './RecordItem';
 
 import { FOLIO_RECORD_TYPES } from '../../ListTemplate';
-import { rootListContainer } from '../../TreeView/TreeView.css';
-import css from '../RecordTypesSelect.css';
+
+import treeViewStyles from '../../TreeView/TreeView.css';
+import recordTypeSelectStyles from '../RecordTypesSelect.css';
 
 const recordsData = {
   connections: [
@@ -43,7 +44,7 @@ const recordsData = {
 export const RecordSelect = ({
   id,
   onSelect,
-  container = `#${id} .${rootListContainer}`,
+  container = `#${id} .${treeViewStyles.rootListContainer}`,
   treeData = recordsData,
   isEditable,
   isLocalLTR,
@@ -51,7 +52,7 @@ export const RecordSelect = ({
   <>
     <TreeView
       data={treeData}
-      className={isLocalLTR ? css.treeViewLTR : css.treeViewRTL}
+      className={isLocalLTR ? recordTypeSelectStyles.treeViewLTR : recordTypeSelectStyles.treeViewRTL}
       isLocalLTR={isLocalLTR}
       renderItem={item => (
         <RecordItem
