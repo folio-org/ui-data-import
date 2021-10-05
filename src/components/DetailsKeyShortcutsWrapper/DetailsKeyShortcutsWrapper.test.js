@@ -6,19 +6,18 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 
 import '../../../test/jest/__mock__';
 
+import faker from 'faker';
+
 import {
   renderWithReduxForm,
   translationsProperties,
-} from '../../../test/jest/helpers';
-
-import {
   duplicateRecordShortcut,
   openEditShortcut,
-} from '../../../test/jest/helpers/shortcuts';
-
-import { OCLC_UPDATE_INSTANCE_JOB_ID } from '../../utils';
+} from '../../../test/jest/helpers';
 
 import { DetailsKeyShortcutsWrapper } from './DetailsKeyShortcutsWrapper';
+
+import { OCLC_UPDATE_INSTANCE_JOB_ID } from '../../utils';
 
 const {
   CommandList,
@@ -31,20 +30,11 @@ history.push = jest.fn();
 
 jest.mock('@folio/stripes/smart-components', () => ({ ...jest.requireActual('@folio/stripes/smart-components') }), { virtual: true });
 
-const detailsKeyShortcutsWrapperPropsWithoutDefaultRecordId = {
-  recordId: 'testId',
-  location: {
-    search: '',
-    pathname: '',
-  },
-};
+const recordIdProp = faker.random.uuid;
 
-const detailsKeyShortcutsWrapperPropsWithDefaultRecordId = {
-  recordId: OCLC_UPDATE_INSTANCE_JOB_ID,
-  location: {
-    search: '',
-    pathname: '',
-  },
+const locationProp = {
+  search: '',
+  pathname: '',
 };
 
 const renderDetailsKeyShortcutsWrapper = ({
@@ -74,13 +64,19 @@ describe('DetailsKeyShortcutsWrapper component', () => {
   });
 
   it('should render children correctly', () => {
-    const { getByTestId } = renderDetailsKeyShortcutsWrapper(detailsKeyShortcutsWrapperPropsWithoutDefaultRecordId);
+    const { getByTestId } = renderDetailsKeyShortcutsWrapper({
+      recordId: recordIdProp(),
+      location: locationProp,
+    });
 
     expect(getByTestId('childElement')).toBeInTheDocument();
   });
 
   it('should not call the handler for edit shortcut on a default record', () => {
-    const { getByTestId } = renderDetailsKeyShortcutsWrapper(detailsKeyShortcutsWrapperPropsWithDefaultRecordId);
+    const { getByTestId } = renderDetailsKeyShortcutsWrapper({
+      recordId: OCLC_UPDATE_INSTANCE_JOB_ID,
+      location: locationProp,
+    });
 
     const childElement = getByTestId('childElement');
 
@@ -93,7 +89,10 @@ describe('DetailsKeyShortcutsWrapper component', () => {
 
   describe('calls the correct handler when a key is pressed that', () => {
     it('matches edit shortcut', () => {
-      const { getByTestId } = renderDetailsKeyShortcutsWrapper(detailsKeyShortcutsWrapperPropsWithoutDefaultRecordId);
+      const { getByTestId } = renderDetailsKeyShortcutsWrapper({
+        recordId: recordIdProp(),
+        location: locationProp,
+      });
 
       const childElement = getByTestId('childElement');
 
@@ -105,12 +104,14 @@ describe('DetailsKeyShortcutsWrapper component', () => {
     });
 
     it('matches duplicateRecord shortcut pressed', () => {
-      const { getByTestId } = renderDetailsKeyShortcutsWrapper(detailsKeyShortcutsWrapperPropsWithoutDefaultRecordId);
+      const { getByTestId } = renderDetailsKeyShortcutsWrapper({
+        recordId: recordIdProp(),
+        location: locationProp,
+      });
 
       const childElement = getByTestId('childElement');
 
       childElement.focus();
-
       duplicateRecordShortcut(childElement);
 
       expect(history.push).toHaveBeenCalled();
