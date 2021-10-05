@@ -36,7 +36,7 @@ const SORT_TYPE = {
 const sortMap = {
   recordNumber: 'source_record_order',
   title: 'title',
-  srsMarcBibStatus: 'source_record_action_status',
+  srsMarcStatus: 'source_record_action_status',
   instanceStatus: 'instance_action_status',
   holdingsStatus: 'holdings_action_status',
   itemStatus: 'item_action_status',
@@ -74,10 +74,10 @@ const JobSummaryComponent = ({
         return mutator.jobLog.GET({ path: `metadata-provider/jobLogEntries/${jobExecutionsId}/records/${recordId}` });
       });
     }
-  }, [jobExecutionsId]);
+  }, [jobExecutionsId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const getHotlinkCellFormatter = (actionStatus, entityLabel, path, isPathCorrect, entity) => {
-    if (isPathCorrect && (actionStatus === RECORD_ACTION_STATUS.CREATED || actionStatus === RECORD_ACTION_STATUS.UPDATED)) {
+  const getHotlinkCellFormatter = (isHotlink, entityLabel, path, entity) => {
+    if (isHotlink) {
       return (
         <Button
           data-test-entity-name={entity}
@@ -97,7 +97,7 @@ const JobSummaryComponent = ({
   const visibleColumns = [
     'recordNumber',
     'title',
-    'srsMarcBibStatus',
+    'srsMarcStatus',
     'instanceStatus',
     'holdingsStatus',
     'itemStatus',
@@ -108,7 +108,7 @@ const JobSummaryComponent = ({
   const columnMapping = {
     recordNumber: <FormattedMessage id="ui-data-import.record" />,
     title: <FormattedMessage id="ui-data-import.title" />,
-    srsMarcBibStatus: <FormattedMessage id="ui-data-import.recordTypes.srsMarcBib" />,
+    srsMarcStatus: <FormattedMessage id="ui-data-import.recordTypes.srsMarc" />,
     instanceStatus: <FormattedMessage id="ui-data-import.recordTypes.instance" />,
     holdingsStatus: <FormattedMessage id="ui-data-import.recordTypes.holdings" />,
     itemStatus: <FormattedMessage id="ui-data-import.recordTypes.item" />,
@@ -128,7 +128,8 @@ const JobSummaryComponent = ({
       invoiceLineJournalRecordId,
     }) => {
       const jobExecutionId = resources.jobLogEntries.records[0].jobExecutionId;
-      const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`, { instanceLineId: invoiceLineJournalRecordId });
+      const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
+        isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
 
       return (
         <Button
@@ -142,7 +143,7 @@ const JobSummaryComponent = ({
         </Button>
       );
     },
-    srsMarcBibStatus: ({ sourceRecordActionStatus }) => getRecordActionStatusLabel(sourceRecordActionStatus),
+    srsMarcStatus: ({ sourceRecordActionStatus }) => getRecordActionStatusLabel(sourceRecordActionStatus),
     instanceStatus: ({
       instanceActionStatus,
       sourceRecordId,
@@ -152,7 +153,11 @@ const JobSummaryComponent = ({
       const entityId = sourceRecord?.relatedInstanceInfo.idList[0];
       const path = `/inventory/view/${entityId}`;
 
-      return getHotlinkCellFormatter(instanceActionStatus, entityLabel, path, !!entityId, 'instance');
+      const isPathCorrect = !!entityId;
+      const isHotlink = isPathCorrect && (instanceActionStatus === RECORD_ACTION_STATUS.CREATED
+        || instanceActionStatus === RECORD_ACTION_STATUS.UPDATED);
+
+      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'instance');
     },
     holdingsStatus: ({
       holdingsActionStatus,
@@ -163,9 +168,12 @@ const JobSummaryComponent = ({
       const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
       const holdingsId = sourceRecord?.relatedHoldingsInfo.idList[0];
       const path = `/inventory/view/${instanceId}/${holdingsId}`;
-      const isPathCorrect = !!(instanceId && holdingsId);
 
-      return getHotlinkCellFormatter(holdingsActionStatus, entityLabel, path, isPathCorrect, 'holdings');
+      const isPathCorrect = !!(instanceId && holdingsId);
+      const isHotlink = isPathCorrect && (holdingsActionStatus === RECORD_ACTION_STATUS.CREATED
+        || holdingsActionStatus === RECORD_ACTION_STATUS.UPDATED);
+
+      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'holdings');
     },
     itemStatus: ({
       itemActionStatus,
@@ -177,12 +185,35 @@ const JobSummaryComponent = ({
       const holdingsId = sourceRecord?.relatedHoldingsInfo.idList[0];
       const itemId = sourceRecord?.relatedItemInfo.idList[0];
       const path = `/inventory/view/${instanceId}/${holdingsId}/${itemId}`;
-      const isPathCorrect = !!(instanceId && holdingsId && itemId);
 
-      return getHotlinkCellFormatter(itemActionStatus, entityLabel, path, isPathCorrect, 'item');
+      const isPathCorrect = !!(instanceId && holdingsId && itemId);
+      const isHotlink = isPathCorrect && (itemActionStatus === RECORD_ACTION_STATUS.CREATED
+        || itemActionStatus === RECORD_ACTION_STATUS.UPDATED);
+
+      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'item');
     },
     orderStatus: ({ orderActionStatus }) => getRecordActionStatusLabel(orderActionStatus),
-    invoiceStatus: ({ invoiceActionStatus }) => getRecordActionStatusLabel(invoiceActionStatus),
+    invoiceStatus: ({
+      invoiceActionStatus,
+      sourceRecordId,
+      sourceRecordOrder,
+    }) => {
+      const entityLabel = getRecordActionStatusLabel(invoiceActionStatus);
+      const sourceRecord = jobLogRecords.find(item => {
+        const isIdEqual = item.sourceRecordId === sourceRecordId;
+        const isOrderEqual = item.relatedInvoiceLineInfo?.fullInvoiceLineNumber === sourceRecordOrder;
+
+        return isIdEqual && isOrderEqual;
+      });
+      const invoiceId = sourceRecord?.relatedInvoiceInfo.idList[0];
+      const invoiceLineId = sourceRecord?.relatedInvoiceLineInfo.id;
+      const path = `/invoice/view/${invoiceId}/line/${invoiceLineId}/view`;
+
+      const isPathCorrect = !!(invoiceId && invoiceLineId);
+      const isHotlink = isPathCorrect && (invoiceActionStatus === RECORD_ACTION_STATUS.CREATED);
+
+      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'invoice');
+    },
     error: ({ error }) => (error ? <FormattedMessage id="ui-data-import.error" /> : ''),
   };
   const label = (
