@@ -36,6 +36,7 @@
 * Change MARC SRS bib column header and toggle (UIDATIMP-1011)
 * Add hotlinks to the Import log summary for EDIFACT imports (UIDATIMP-989)
 * Cover `<DetailsKeyShortcutsWrapper>` component with tests (UIDATIMP-956)
+* Get rid of outdated componentWillReceiveProps method in SearchAndSort component (UIDATIMP-1001)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)

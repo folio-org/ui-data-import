@@ -208,14 +208,14 @@ export class SearchAndSort extends Component {
     this.setInitialSortQueryParam();
   }
 
-  componentWillReceiveProps(nextProps) { // eslint-disable-line react/no-deprecated
+  componentDidUpdate(prevProps) {
     const {
       stripes: { logger },
       finishedResourceName,
-    } = this.props;
+    } = prevProps;
 
-    const oldState = makeConnectedSource(this.props, logger, finishedResourceName);
-    const newState = makeConnectedSource(nextProps, logger, finishedResourceName);
+    const oldState = makeConnectedSource(prevProps, logger, finishedResourceName);
+    const newState = makeConnectedSource(this.props, this.props.stripes.logger, this.props.finishedResourceName);
 
     const isSearchComplete = oldState.pending() && !newState.pending();
 
@@ -230,7 +230,7 @@ export class SearchAndSort extends Component {
       ));
     }
 
-    const showSingleResult = nextProps.showSingleResult &&
+    const showSingleResult = this.props.showSingleResult &&
       newState.totalCount() === 1 && this.lastNonNullResultCount > 1;
 
     if (showSingleResult) {
