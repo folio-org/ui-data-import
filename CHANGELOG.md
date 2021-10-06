@@ -43,6 +43,7 @@
 * Invoice field mapping profile only displays first 10 acq unit values (UIDATIMP-1008)
 * Imported Invoice JSON log screen does not display (UIDATIMP-1010)
 * Error getting metadata for record (UIDATIMP-1018)
+* Dropdown component not working properly after updating to React v17 (UIDATIMP-1006)
 
 ## [4.1.5](https://github.com/folio-org/ui-data-import/tree/v4.1.5) (2021-10-01)
 
