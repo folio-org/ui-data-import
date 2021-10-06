@@ -288,6 +288,7 @@ export class ViewActionProfile extends Component {
                   parentType={PROFILE_TYPES.ACTION_PROFILE}
                   masterType={PROFILE_TYPES.ACTION_PROFILE}
                   detailType={PROFILE_TYPES.MAPPING_PROFILE}
+                  profileType={ENTITY_KEYS.ACTION_PROFILES}
                   contentData={associations}
                   hasLoaded={hasLoaded}
                   record={actionProfile}
@@ -309,6 +310,7 @@ export class ViewActionProfile extends Component {
                   parentType={PROFILE_TYPES.ACTION_PROFILE}
                   masterType={PROFILE_TYPES.JOB_PROFILE}
                   detailType={PROFILE_TYPES.ACTION_PROFILE}
+                  profileType={ENTITY_KEYS.ACTION_PROFILES}
                   contentData={associations}
                   hasLoaded={hasLoaded}
                   record={actionProfile}

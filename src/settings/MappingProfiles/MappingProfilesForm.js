@@ -436,6 +436,7 @@ export const MappingProfilesFormComponent = ({
                   parentType={PROFILE_TYPES.MAPPING_PROFILE}
                   masterType={PROFILE_TYPES.ACTION_PROFILE}
                   detailType={PROFILE_TYPES.MAPPING_PROFILE}
+                  profileType={ENTITY_KEYS.MAPPING_PROFILES}
                   profileName={name}
                   contentData={associations}
                   hasLoaded

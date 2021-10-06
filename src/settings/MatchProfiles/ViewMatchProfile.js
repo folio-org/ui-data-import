@@ -303,6 +303,7 @@ export class ViewMatchProfile extends Component {
                   parentType={PROFILE_TYPES.MATCH_PROFILE}
                   masterType={PROFILE_TYPES.JOB_PROFILE}
                   detailType={PROFILE_TYPES.MATCH_PROFILE}
+                  profileType={ENTITY_KEYS.MATCH_PROFILES}
                   contentData={associations}
                   hasLoaded={hasLoaded}
                   record={matchProfile}
