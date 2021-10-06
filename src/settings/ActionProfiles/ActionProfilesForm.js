@@ -259,6 +259,7 @@ export const ActionProfilesFormComponent = ({
                 parentType={PROFILE_TYPES.ACTION_PROFILE}
                 masterType={PROFILE_TYPES.ACTION_PROFILE}
                 detailType={PROFILE_TYPES.MAPPING_PROFILE}
+                profileType={ENTITY_KEYS.ACTION_PROFILES}
                 profileName={profile.name}
                 contentData={associations}
                 hasLoaded
@@ -292,6 +293,7 @@ export const ActionProfilesFormComponent = ({
                   parentType={PROFILE_TYPES.ACTION_PROFILE}
                   masterType={PROFILE_TYPES.JOB_PROFILE}
                   detailType={PROFILE_TYPES.ACTION_PROFILE}
+                  profileType={ENTITY_KEYS.ACTION_PROFILES}
                   profileName={profile.name}
                   contentData={associations}
                   record={initialValues}

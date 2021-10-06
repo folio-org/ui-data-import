@@ -34,6 +34,7 @@ export const ProfileBranch = memo(({
   linkingRules,
   recordData,
   record,
+  profileType,
   okapi,
   parentRecordData,
   parentSectionKey,
@@ -153,6 +154,7 @@ export const ProfileBranch = memo(({
                     linkingRules={linkingRules}
                     recordData={item}
                     record={record}
+                    profileType={profileType}
                     okapi={okapi}
                     parentRecordData={recordData}
                     parentSectionKey={matchSectionKey}
@@ -192,6 +194,7 @@ export const ProfileBranch = memo(({
                 parentId={currentRecord.id}
                 rootId={rootId}
                 parentType={entityKey}
+                profileType={profileType}
                 dataKey={matchSectionKey}
                 initialData={matchData}
                 setInitialData={setMatchData}
@@ -221,6 +224,7 @@ export const ProfileBranch = memo(({
                     linkingRules={linkingRules}
                     recordData={item}
                     record={record}
+                    profileType={profileType}
                     okapi={okapi}
                     parentRecordData={recordData}
                     parentSectionKey={nonMatchSectionKey}
@@ -260,6 +264,7 @@ export const ProfileBranch = memo(({
                 parentId={currentRecord.id}
                 rootId={rootId}
                 parentType={entityKey}
+                profileType={profileType}
                 dataKey={nonMatchSectionKey}
                 initialData={nonMatchData}
                 setInitialData={setNonMatchData}
@@ -289,6 +294,7 @@ ProfileBranch.propTypes = {
     url: PropTypes.string.isRequired,
   }).isRequired,
   resources: PropTypes.object.isRequired,
+  profileType: PropTypes.string.isRequired,
   reactTo: PropTypes.oneOf(Object.values(PROFILE_RELATION_TYPES)),
   rootId: PropTypes.string,
   record: PropTypes.object,
