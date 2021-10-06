@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { noop } from 'lodash';
 
 import classNames from 'classnames';
 
@@ -34,6 +33,7 @@ export const ProfileLinker = ({
   parentId,
   rootId,
   parentType,
+  profileType,
   onLink,
   okapi,
   linkingRules: { profilesAllowed },
@@ -111,7 +111,7 @@ export const ProfileLinker = ({
           id={`type-selector-dropdown-${id}`}
           className={classNames(css['linker-button'], className)}
           open={typeSelectorOpen}
-          onToggle={noop}
+          onToggle={() => setTypeSelectorOpen(!typeSelectorOpen)}
           renderTrigger={trigger}
           renderMenu={menu}
           usePortal={false}
@@ -127,6 +127,7 @@ export const ProfileLinker = ({
             entityKey={entityKey}
             dataKey={entityKey}
             parentType={parentType}
+            profileType={profileType}
             disabled={false} // @TODO: Change this to actual value from LinkingRules object
             isSingleSelect
             isMultiLink
@@ -147,6 +148,7 @@ export const ProfileLinker = ({
 ProfileLinker.propTypes = {
   id: PropTypes.string.isRequired,
   parentType: PropTypes.string.isRequired,
+  profileType: PropTypes.string.isRequired,
   onLink: PropTypes.func.isRequired,
   linkingRules: PropTypes.object.isRequired,
   dataKey: PropTypes.string.isRequired,
