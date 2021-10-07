@@ -172,10 +172,10 @@ describe('View job log page', () => {
         expect(queryByText('1 (Test record title)')).toBeDefined();
       });
 
-      it('"SRS MARC Bib" tab should be active by default', () => {
+      it('"SRS MARC" tab should be active by default', () => {
         const { getByRole } = renderViewJobLog({ recordType: 'MARC' });
         const srsMarcBibTabElement = getByRole('tab', {
-          name: 'SRS MARC Bib',
+          name: 'SRS MARC',
           selected: true,
         });
 
@@ -216,7 +216,7 @@ describe('View job log page', () => {
   });
 
   describe('rendering JSON screens', () => {
-    describe('when log for SRS MARC Bib has not loaded', () => {
+    describe('when log for SRS MARC has not loaded', () => {
       it('should render preloader component instead', () => {
         const { getByText } = renderViewJobLog({
           recordType: 'MARC',
@@ -227,8 +227,8 @@ describe('View job log page', () => {
       });
     });
 
-    describe('when log for SRS MARC Bib has loaded', () => {
-      it('should display SRS MARC Bib JSON details on the screen', () => {
+    describe('when log for SRS MARC has loaded', () => {
+      it('should display SRS MARC JSON details on the screen', () => {
         const { container } = renderViewJobLog({ recordType: 'MARC' });
         const codeElement = container.querySelector('code.info');
 

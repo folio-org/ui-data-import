@@ -148,8 +148,13 @@ const renderProfileTree = ({
 };
 
 describe('ProfileTree', () => {
+  beforeAll(() => {
+    window.sessionStorage.setItem('profileTreeData', JSON.stringify([{ childSnapshotWrappers: [] }]));
+  });
+
   afterAll(() => {
     delete window.ResizeObserver;
+    window.sessionStorage.clear();
   });
 
   afterEach(() => {

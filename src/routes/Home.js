@@ -5,8 +5,7 @@ import {
   Button,
   Pane,
 } from '@folio/stripes/components';
-
-import { PersistedPaneset } from '@folio/stripes-smart-components';
+import { PersistedPaneset } from '@folio/stripes/smart-components';
 
 import {
   Jobs,

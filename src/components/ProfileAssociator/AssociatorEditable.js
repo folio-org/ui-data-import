@@ -27,6 +27,7 @@ export const AssociatorEditable = memo(({
   parentType,
   masterType,
   detailType,
+  profileType,
   profileName,
   contentData,
   dataAttributes,
@@ -139,6 +140,7 @@ export const AssociatorEditable = memo(({
         entityKey={entityKey}
         parentType={parentType}
         masterType={masterType}
+        profileType={profileType}
         profileName={profileName}
         dataKey={entityKey}
         disabled={pluginDisabled}
@@ -182,6 +184,7 @@ AssociatorEditable.propTypes = {
   parentType: PropTypes.string.isRequired,
   masterType: PropTypes.string.isRequired,
   detailType: PropTypes.string.isRequired,
+  profileType: PropTypes.string.isRequired,
   profileShape: PropTypes.object.isRequired,
   parentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   profileName: PropTypes.string,
