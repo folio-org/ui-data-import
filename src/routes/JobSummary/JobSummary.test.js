@@ -181,7 +181,7 @@ describe('Job summary page', () => {
 
       expect(getByText('Record')).toBeDefined();
       expect(getByText('Title')).toBeDefined();
-      expect(getByText('SRS MARC Bib')).toBeDefined();
+      expect(getByText('SRS MARC')).toBeDefined();
       expect(getByText('Instance')).toBeDefined();
       expect(getByText('Holdings')).toBeDefined();
       expect(getByText('Item')).toBeDefined();

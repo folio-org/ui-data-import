@@ -65,6 +65,18 @@ export const fetchAssociations = async (okapi, profileId) => {
   return get(body, 'childSnapshotWrappers', []);
 };
 
+const getFlattenProfileTreeContent = function buildData(array) {
+  return array.reduce((acc, item) => {
+    if (item.childSnapshotWrappers.length) {
+      const children = buildData(item.childSnapshotWrappers);
+
+      return [...acc, item, ...children];
+    }
+
+    return [...acc, item];
+  }, []);
+};
+
 export const JobProfilesFormComponent = memo(({
   pristine,
   submitting,
@@ -84,6 +96,7 @@ export const JobProfilesFormComponent = memo(({
   const isEditMode = Boolean(profile.id);
   const isSubmitDisabled = pristine || submitting;
   const dataKey = 'jobProfiles.current';
+  const profileTreeKey = 'profileTreeData';
 
   const [isModalOpen, showModal] = useState(false);
   const [profileTreeData, setProfileTreeData] = useState([]);
@@ -94,6 +107,13 @@ export const JobProfilesFormComponent = memo(({
 
     setProfileTreeData(getData);
   }, [isEditMode, childWrappers]);
+
+  useEffect(() => {
+    const profileTreeContent = getFlattenProfileTreeContent(childWrappers)
+      .filter(item => item.contentType === PROFILE_TYPES.ACTION_PROFILE || item.contentType === PROFILE_TYPES.MATCH_PROFILE);
+
+    sessionStorage.setItem(profileTreeKey, JSON.stringify(profileTreeContent));
+  }, [childWrappers]);
 
   const addedRelations = form.getState().values.addedRelations;
   const deletedRelations = form.getState().values.deletedRelations;
@@ -126,7 +146,9 @@ export const JobProfilesFormComponent = memo(({
   const onSubmit = async event => {
     event.preventDefault();
 
-    const requests = profileTreeData
+    const profileTreeContent = JSON.parse(sessionStorage.getItem(profileTreeKey));
+
+    const requests = profileTreeContent
       .filter(record => record.contentType === PROFILE_TYPES.ACTION_PROFILE)
       .map(record => fetchAssociations(okapi, record.profileId));
 

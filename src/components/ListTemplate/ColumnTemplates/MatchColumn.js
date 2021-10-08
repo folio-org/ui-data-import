@@ -39,7 +39,7 @@ export const MatchColumn = memo(({
     return <span>-</span>;
   }
 
-  const fieldSource = (field || existingRecordType || '').replace(/_/g, ' ');
+  const fieldSource = (field || existingRecordType).replace(/_/g, ' ');
   const fields = get(record, 'matchDetails[0].existingMatchExpression.fields', []);
 
   return (

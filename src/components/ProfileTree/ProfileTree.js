@@ -44,6 +44,8 @@ export const ProfileTree = memo(({
   const { siblingsProhibited } = linkingRules;
 
   const dataKey = 'jobProfiles.current';
+  const profileTreeKey = 'profileTreeData';
+
   const parentRecordData = {
     id: parentId,
     profileId: parentId,
@@ -94,6 +96,7 @@ export const ProfileTree = memo(({
     const order = initialData.length ? (last(initialData).order + 1) : 0;
     const linesToAdd = lines.filter(line => line.profileId !== masterId);
     const newData = [...initialData, ...getLines(linesToAdd, detailType, order, reactTo)];
+    const profileTreeData = JSON.parse(sessionStorage.getItem(profileTreeKey));
 
     if (linesToAdd && linesToAdd.length) {
       const relsToAdd = [...addedRelations, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo, order)];
@@ -103,12 +106,14 @@ export const ProfileTree = memo(({
     }
 
     sessionStorage.setItem(localDataKey, JSON.stringify(newData));
+    sessionStorage.setItem(profileTreeKey, JSON.stringify([...profileTreeData, linesToAdd]));
     setInitialData(newData);
   };
 
   const unlink = (parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey) => {
     const index = parentData.findIndex(item => item.profileId === line.profileId);
     const newIdx = findRelIndex(addedRelations, masterId, line);
+    const profileTreeData = JSON.parse(sessionStorage.getItem(profileTreeKey));
 
     if (newIdx < 0) {
       const newRels = composeRelations([line], masterId, masterType, detailType, reactTo);
@@ -128,7 +133,19 @@ export const ProfileTree = memo(({
 
     newData.splice(index, 1);
     setParentData(newData);
+
+    const getNewProfileTreeData = function buildData(array, lineToCompare) {
+      return array.filter(item => {
+        if (lineToCompare.childSnapshotWrappers?.length) {
+          return buildData(lineToCompare.childSnapshotWrappers, item).length;
+        }
+
+        return item.id !== lineToCompare.id;
+      });
+    };
+
     sessionStorage.setItem(localDataKey, JSON.stringify(newData));
+    sessionStorage.setItem(profileTreeKey, JSON.stringify(getNewProfileTreeData(profileTreeData, line)));
   };
 
   const remove = (parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey) => {
@@ -148,6 +165,7 @@ export const ProfileTree = memo(({
                 linkingRules={linkingRules}
                 recordData={item}
                 record={record}
+                profileType={ENTITY_KEYS.JOB_PROFILES}
                 parentRecordData={parentRecordData}
                 parentSectionKey={dataKey}
                 parentSectionData={contentData}
@@ -176,6 +194,7 @@ export const ProfileTree = memo(({
             parentId={parentId}
             rootId={parentRecordData.id}
             parentType={ENTITY_KEYS.JOB_PROFILES}
+            profileType={ENTITY_KEYS.JOB_PROFILES}
             linkingRules={linkingRules}
             disabledOptions={getDisabledOptions(contentData, siblingsProhibited)}
             dataKey={dataKey}
