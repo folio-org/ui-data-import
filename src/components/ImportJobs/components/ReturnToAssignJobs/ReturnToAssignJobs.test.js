@@ -57,7 +57,8 @@ describe('ReturnToAssignJobs component', () => {
 
   it('should render correctly', () => {
     const {
-      getByText, getByRole,
+      getByText,
+      getByRole,
     } = renderReturnToAssignJobs();
 
     const resumeButton = getByRole('button', { name: /resume/i });
