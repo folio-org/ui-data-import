@@ -1,13 +1,13 @@
 import React from 'react';
 
+import { waitFor } from '@testing-library/react';
+
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../test/jest/__mock__';
 
-import { waitFor } from '@testing-library/react';
-
 import {
-  renderWithReduxForm,
+  renderWithFinalForm,
   translationsProperties,
   saveShortcut,
 } from '../../../test/jest/helpers';
@@ -19,7 +19,7 @@ const {
   defaultKeyboardShortcuts,
 } = require('@folio/stripes/components');
 
-const mockOnSubmitProp = jest.fn(async () => 'test value');
+const mockOnSubmitProp = jest.fn(() => Promise.resolve('test value'));
 
 jest.mock('@folio/stripes/smart-components', () => ({ ...jest.requireActual('@folio/stripes/smart-components') }), { virtual: true });
 
@@ -28,15 +28,13 @@ const renderEditKeyShortcutsWrapper = ({ onSubmit }) => {
 
   const component = () => (
     <CommandList commands={defaultKeyboardShortcuts}>
-      <EditKeyShortcutsWrapper
-        onSubmit={onSubmit}
-      >
+      <EditKeyShortcutsWrapper onSubmit={onSubmit}>
         {childElement}
       </EditKeyShortcutsWrapper>
     </CommandList>
   );
 
-  return renderWithIntl(renderWithReduxForm(component), translationsProperties);
+  return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
 describe('EditKeyShortcutsWrapper component', () => {
