@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { noop } from 'lodash';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+
 import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
@@ -62,7 +63,11 @@ const renderMatchingFieldsManager = ({
 describe('MatchingFieldsManager', () => {
   describe('when matchFileds function is called', () => {
     it('should be rendered', () => {
-      const matchFieldsChildren = record => <span><FormattedMessage id={record.matchFields(resources, 'INSTANCE')[0].label} /></span>;
+      const matchFieldsChildren = record => {
+        const labelId = record.matchFields(resources, 'INSTANCE')[0].label;
+
+        return <span><FormattedMessage id={labelId} /></span>;
+      };
       const { getByText } = renderMatchingFieldsManager({ children: matchFieldsChildren });
 
       expect(getByText('Updated date and time')).toBeDefined();
@@ -90,8 +95,9 @@ describe('MatchingFieldsManager', () => {
         it('empty title should be rendered', () => {
           const getFieldMatchedChildrenWithFromResources = record => <span>{record.getFieldMatched(resourcesWithFromResources, 'INSTANCE')}</span>;
           const { container } = renderMatchingFieldsManager({ children: getFieldMatchedChildrenWithFromResources });
+          const titleElement = container.querySelector('span').innerHTML;
 
-          expect(container.querySelector('span').innerHTML).toEqual('');
+          expect(titleElement).toEqual('');
         });
       });
 
@@ -100,7 +106,9 @@ describe('MatchingFieldsManager', () => {
           const getFieldMatchedWithCategoryChildrenWithoutRecordType = record => <span>{record.getFieldMatchedWithCategory(fieldsWithLabel, null)}</span>;
           const { container } = renderMatchingFieldsManager({ children: getFieldMatchedWithCategoryChildrenWithoutRecordType });
 
-          expect(container.querySelector('span').innerHTML).toEqual('');
+          const titleElement = container.querySelector('span').innerHTML;
+
+          expect(titleElement).toEqual('');
         });
       });
     });
@@ -130,7 +138,9 @@ describe('MatchingFieldsManager', () => {
         const getFieldMatchedWithCategoryChildrenWithoutLabel = record => <span>{record.getFieldMatchedWithCategory(fieldsWithoutLabel, 'INSTANCE')}</span>;
         const { container } = renderMatchingFieldsManager({ children: getFieldMatchedWithCategoryChildrenWithoutLabel });
 
-        expect(container.querySelector('span').innerHTML).toEqual('');
+        const titleElement = container.querySelector('span').innerHTML;
+
+        expect(titleElement).toEqual('');
       });
     });
   });
