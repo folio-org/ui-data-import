@@ -1,6 +1,8 @@
 # Change history for ui-data-import
 
-## **5.0.0** (in progress)
+## **5.1.0** (in progress)
+
+## [5.0.0](https://github.com/folio-org/ui-data-import/tree/v5.0.0) (2021-10-08)
 
 ### Features added:
 * Cover `<TreeLine>` component with unit tests (UIDATIMP-727)
