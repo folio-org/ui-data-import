@@ -2,6 +2,10 @@
 
 ## **5.1.0** (in progress)
 
+### Features added:
+* Cover `<MatchingFieldsManager>` component with tests (UIDATIMP-712)
+* Cover `<EditKeyShortcutsWrapper` component with tests (UIDATIMP-957)
+
 ## [5.0.0](https://github.com/folio-org/ui-data-import/tree/v5.0.0) (2021-10-08)
 
 ### Features added:
@@ -40,7 +44,6 @@
 * Cover `<DetailsKeyShortcutsWrapper>` component with tests (UIDATIMP-956)
 * Get rid of outdated componentWillReceiveProps method in SearchAndSort component (UIDATIMP-1001)
 * refactor psets away from backend ".all" permissions (UIDATIMP-1017)
-* Cover `<MatchingFieldsManager>` component with tests (UIDATIMP-712)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
