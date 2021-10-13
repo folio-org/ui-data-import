@@ -59,7 +59,7 @@ export class MatchingFieldsManager extends Component {
     const { intl: { formatMessage } } = this.props;
 
     if (!fields.length || !recordType) {
-      return undefined;
+      return {};
     }
 
     const fieldValue = fields.find(field => field.label === MARC_FIELD_CONSTITUENT.FIELD)?.value;

@@ -40,3 +40,19 @@ export const duplicateRecordShortcut = element => {
     altKey: true,
   });
 };
+
+export const saveShortcut = element => {
+  fireEvent.keyDown(element, {
+    key: 'Ctrl',
+    code: 'CtrlLeft',
+    which: 17,
+    keyCode: 17,
+  });
+
+  fireEvent.keyDown(element, {
+    key: 's',
+    keyCode: 83,
+    which: 83,
+    ctrlKey: true,
+  });
+};
