@@ -8,10 +8,7 @@ import '../../../../../test/jest/__mock__';
 
 import { FILE_STATUSES } from '../../../../utils';
 
-import {
-  renderWithFinalForm,
-  translationsProperties,
-} from '../../../../../test/jest/helpers';
+import { translationsProperties } from '../../../../../test/jest/helpers';
 
 import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
 
@@ -37,7 +34,7 @@ const defaultContext = {
 };
 
 const renderReturnToAssignJobs = () => {
-  const component = () => (
+  const component = (
     <UploadingJobsContext.Provider value={defaultContext}>
       <ReturnToAssignJobs
         onResume={mockOnResumeProp}
@@ -46,7 +43,7 @@ const renderReturnToAssignJobs = () => {
     </UploadingJobsContext.Provider>
   );
 
-  return renderWithIntl(renderWithFinalForm(component), translationsProperties);
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('ReturnToAssignJobs component', () => {
