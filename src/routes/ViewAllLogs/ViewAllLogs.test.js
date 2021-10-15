@@ -1,21 +1,13 @@
 import React from 'react';
-
-import {
-  fireEvent,
-  render,
-} from '@testing-library/react';
-
+import { fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { noop } from 'lodash';
 
-import {
-  buildMutator,
-  Harness,
-} from '@folio/stripes-data-transfer-components/test/helpers';
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
 
 import '../../../test/jest/__mock__';
-
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import ViewAllLogs from './ViewAllLogs';
@@ -35,20 +27,17 @@ const mutator = buildMutator({
     PUT: noop,
     cancel: noop,
   },
-  resultOffset: { replace: noop },
-  resultCount: {
-    replace: noop,
-    update: noop,
-  },
 });
 
-const resources = {
-  resourceName: 'jobLog',
-  query: {
-    filters: '',
-    query: '',
-    sort: '-completedDate',
-  },
+const defaultQuery = {
+  filters: '',
+  query: '',
+  sort: '-completedDate',
+};
+
+const getResources = query => ({
+  resourceName: 'jobLogs',
+  query,
   resultCount: 100,
   records: {
     hasLoaded: true,
@@ -106,53 +95,51 @@ const resources = {
     ],
     totalRecords: 100,
   },
-};
+});
 
-const renderViewAllLogs = () => {
+const renderViewAllLogs = query => {
   const component = (
-    <Harness translations={translationsProperties}>
-      <Router>
-        <ViewAllLogs
-          mutator={mutator}
-          resources={resources}
-          disableRecordCreation={false}
-          history={{ push: noop }}
-          intl={{ formatMessage: noop }}
-          stripes={{
-            hasPerm: noop,
-            connect: noop,
-            logger: { log: noop },
-          }}
-        />
-      </Router>
-    </Harness>
+    <Router>
+      <ViewAllLogs
+        mutator={mutator}
+        resources={getResources(query)}
+        disableRecordCreation={false}
+        history={{ push: noop }}
+        intl={{ formatMessage: noop }}
+        stripes={{
+          hasPerm: noop,
+          connect: noop,
+          logger: { log: noop },
+        }}
+      />
+    </Router>
   );
 
-  return render(component);
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('ViewAllLogs component', () => {
   it('should render correct number of records', () => {
-    const { getByText } = renderViewAllLogs();
+    const { getByText } = renderViewAllLogs(defaultQuery);
 
     expect(getByText(/3 records found/i)).toBeInTheDocument();
   });
 
   describe('SearchAndSort pane', () => {
-    it('should render correctly', () => {
-      const { getByText } = renderViewAllLogs();
+    it('should contain Search and filter section', () => {
+      const { getByText } = renderViewAllLogs(defaultQuery);
 
       expect(getByText('Search & filter')).toBeInTheDocument();
     });
 
     it('should have a resetAll button', () => {
-      const { getByText } = renderViewAllLogs();
+      const { getByText } = renderViewAllLogs(defaultQuery);
 
       expect(getByText('Reset all')).toBeInTheDocument();
     });
 
     it('should have resetAll button is disabled by default', () => {
-      const { container } = renderViewAllLogs();
+      const { container } = renderViewAllLogs(defaultQuery);
 
       const resetAllButton = container.querySelector('#clickable-reset-all');
 
@@ -160,12 +147,26 @@ describe('ViewAllLogs component', () => {
     });
 
     describe('Search pane', () => {
+      describe('when default "filters" provided', () => {
+        it('resetAll button is active by default', () => {
+          const { container } = renderViewAllLogs({
+            filters: 'completedDate.2021-10-01:2021-10-28,jobProfileInfo.test123,userId.test123',
+            query: '',
+            sort: '-completedDate',
+          });
+
+          const resetAllButton = container.querySelector('#clickable-reset-all');
+
+          expect(resetAllButton).toBeEnabled();
+        });
+      });
+
       describe('when filled search input', () => {
         it('resetAll button is active', () => {
           const {
             getByRole,
             container,
-          } = renderViewAllLogs();
+          } = renderViewAllLogs(defaultQuery);
 
           const searchInput = getByRole('searchbox', { name: /search/i });
 
@@ -179,9 +180,21 @@ describe('ViewAllLogs component', () => {
     });
   });
 
+  describe('"Log filters" is not displayed', () => {
+    it('when no query filters provided', () => {
+      const { queryByText } = renderViewAllLogs();
+
+      expect(queryByText(/errors in import/i)).toBeNull();
+      expect(queryByText(/date/i)).toBeNull();
+      expect(queryByText(queryByText(/job profile/i))).toBeNull();
+      expect(queryByText(/user/i)).toBeNull();
+      expect(queryByText(/inventory single record imports/i)).toBeNull();
+    });
+  });
+
   describe('Filter pane', () => {
     it('"Errors in import" section is opened by default', () => {
-      const { getByRole } = renderViewAllLogs();
+      const { getByRole } = renderViewAllLogs(defaultQuery);
 
       const errorsFilterButton = getByRole('button', {
         name: /errors in import filter list/i,
@@ -198,7 +211,7 @@ describe('ViewAllLogs component', () => {
         const {
           getByRole,
           getAllByText,
-        } = renderViewAllLogs();
+        } = renderViewAllLogs(defaultQuery);
 
         const dateFrom = getByRole('textbox', { name: /from/i });
         const dateTo = getByRole('textbox', { name: /to/i });
@@ -211,11 +224,30 @@ describe('ViewAllLogs component', () => {
         expect(getAllByText(/please enter a valid date/i).length).toBe(2);
       });
     });
+
+    describe('when entered valid value to date fields', () => {
+      it('should load without errors', async () => {
+        const {
+          getByRole,
+          findByText,
+        } = renderViewAllLogs(defaultQuery);
+
+        const dateFrom = getByRole('textbox', { name: /from/i });
+        const dateTo = getByRole('textbox', { name: /to/i });
+        const applyButton = getByRole('button', { name: /apply/i });
+
+        fireEvent.change(dateFrom, { target: { value: '2021-10-01' } });
+        fireEvent.change(dateTo, { target: { value: '2021-10-12' } });
+        fireEvent.click(applyButton);
+
+        expect(await findByText(/3 records found/i)).toBeInTheDocument();
+      });
+    });
   });
 
   describe('"Job profiles" selection', () => {
     it('renders dropdown button', () => {
-      const { getByRole } = renderViewAllLogs();
+      const { getByRole } = renderViewAllLogs(defaultQuery);
 
       expect(getByRole('button', { name: /choose job profile/i })).toBeInTheDocument();
     });
@@ -223,7 +255,7 @@ describe('ViewAllLogs component', () => {
 
   describe('"Users" selection', () => {
     it('should render dropdown button', () => {
-      const { getByRole } = renderViewAllLogs();
+      const { getByRole } = renderViewAllLogs(defaultQuery);
 
       expect(getByRole('button', { name: /choose user/i })).toBeInTheDocument();
     });
@@ -231,7 +263,7 @@ describe('ViewAllLogs component', () => {
 
   describe('Logs section', () => {
     it('should have clickable file names', () => {
-      const { getByRole } = renderViewAllLogs();
+      const { getByRole } = renderViewAllLogs(defaultQuery);
 
       const fileLink = getByRole('button', { name: /testfile1/i });
 
