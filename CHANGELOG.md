@@ -6,6 +6,7 @@
 * Cover `<MatchingFieldsManager>` component with tests (UIDATIMP-712)
 * Cover `<EditKeyShortcutsWrapper` component with tests (UIDATIMP-957)
 * Cover `<ViewAllLogs>` component with tests (UIDATIMP-969)
+* Cover `<ReturnToAssignJobs>` component with tests (UIDATIMP-960)
 
 ## [5.0.0](https://github.com/folio-org/ui-data-import/tree/v5.0.0) (2021-10-08)
 
