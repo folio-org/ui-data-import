@@ -11,6 +11,9 @@
 * Cover `<FieldOrganization>` component with tests (UIDATIMP-958)
 * Add AUTHORITY type into folioRecordTypes (UIDATIMP-1021)
 
+### Bugs fixed:
+* Illegal character in query for mod-source-record-manager (UIDATIMP-1004)
+
 ## [5.0.0](https://github.com/folio-org/ui-data-import/tree/v5.0.0) (2021-10-08)
 
 ### Features added:

@@ -42,7 +42,7 @@ const logsUrl = createUrl('metadata-provider/jobExecutions', {
   AND (jobProfileInfo="\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="${OCLC_UPDATE_INSTANCE_JOB_ID}") 
   sortBy completedDate/sort.descending`,
   limit: 25,
-}, false);
+}, true);
 
 @stripesConnect
 export class DataFetcher extends Component {
