@@ -5,14 +5,12 @@ import { noop } from 'lodash';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../../../test/jest/__mock__';
-
-import { FILE_STATUSES } from '../../../../utils';
-
 import { translationsProperties } from '../../../../../test/jest/helpers';
 
 import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
-
 import { ReturnToAssignJobs } from './ReturnToAssignJobs';
+
+import { FILE_STATUSES } from '../../../../utils';
 
 jest.mock('@folio/stripes-data-transfer-components', () => ({ Preloader: () => <span>Preloader</span> }));
 
