@@ -45,6 +45,8 @@
 * Cover `<DetailsKeyShortcutsWrapper>` component with tests (UIDATIMP-956)
 * Get rid of outdated componentWillReceiveProps method in SearchAndSort component (UIDATIMP-1001)
 * refactor psets away from backend ".all" permissions (UIDATIMP-1017)
+* Cover `<MatchingFieldsManager>` component with tests (UIDATIMP-712)
+* Cover `<FieldOrganization>` component with tests (UIDATIMP-958)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)

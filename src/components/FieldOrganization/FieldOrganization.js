@@ -105,8 +105,9 @@ const FieldOrganization = ({
 };
 
 FieldOrganization.propTypes = {
-  onSelect: PropTypes.func,
   setReferenceTables: PropTypes.func.isRequired,
+  mutator: PropTypes.object.isRequired,
+  onSelect: PropTypes.func,
   disabled: PropTypes.bool,
   id: PropTypes.string,
   label: PropTypes.oneOfType([
@@ -115,7 +116,6 @@ FieldOrganization.propTypes = {
   ]),
   name: PropTypes.string,
   required: PropTypes.bool,
-  mutator: PropTypes.object.isRequired,
   validate: PropTypes.func,
 };
 
