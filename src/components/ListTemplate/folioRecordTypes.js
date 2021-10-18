@@ -39,4 +39,9 @@ export const FOLIO_RECORD_TYPES = {
     captionId: 'ui-data-import.recordTypes.marc-auth',
     iconKey: 'marcAuthorities',
   },
+  AUTHORITY: {
+    type: 'AUTHORITY',
+    captionId: 'ui-data-import.recordTypes.authority',
+    iconKey: 'marcAuthorities',
+  },
 };

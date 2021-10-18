@@ -7,6 +7,9 @@
 * Cover `<EditKeyShortcutsWrapper` component with tests (UIDATIMP-957)
 * Cover `<ViewAllLogs>` component with tests (UIDATIMP-969)
 * Cover `<ReturnToAssignJobs>` component with tests (UIDATIMP-960)
+* Cover `<MatchingFieldsManager>` component with tests (UIDATIMP-712)
+* Cover `<FieldOrganization>` component with tests (UIDATIMP-958)
+* Add AUTHORITY type into folioRecordTypes (UIDATIMP-1021)
 
 ## [5.0.0](https://github.com/folio-org/ui-data-import/tree/v5.0.0) (2021-10-08)
 
@@ -46,8 +49,6 @@
 * Cover `<DetailsKeyShortcutsWrapper>` component with tests (UIDATIMP-956)
 * Get rid of outdated componentWillReceiveProps method in SearchAndSort component (UIDATIMP-1001)
 * refactor psets away from backend ".all" permissions (UIDATIMP-1017)
-* Cover `<MatchingFieldsManager>` component with tests (UIDATIMP-712)
-* Cover `<FieldOrganization>` component with tests (UIDATIMP-958)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
