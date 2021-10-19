@@ -2,6 +2,11 @@
 
 ## **5.1.0** (in progress)
 
+## [5.0.1](https://github.com/folio-org/ui-data-import/tree/v5.0.1) (2021-10-19)
+
+### Bugs fixed:
+* Illegal character in query for mod-source-record-manager (UIDATIMP-1004)
+
 ## [5.0.0](https://github.com/folio-org/ui-data-import/tree/v5.0.0) (2021-10-08)
 
 ### Features added:
