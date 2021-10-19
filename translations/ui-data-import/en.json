@@ -478,6 +478,7 @@
   "recordTypes.marc-auth": "MARC Authority",
   "recordTypes.marc-hold": "MARC Holdings",
   "recordTypes.srsMarc": "SRS MARC",
+  "recordTypes.authority": "Authority",
   "actionProfilesForm.recordTypes.marc-bib": "MARC Bibliographic",
   "actionProfilesForm.recordTypes.marc-auth": "MARC Authority",
   "actionProfilesForm.recordTypes.marc-hold": "MARC Holdings",
