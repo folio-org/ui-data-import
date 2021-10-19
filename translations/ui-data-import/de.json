@@ -620,7 +620,7 @@
     "settings.matchProfiles.assignedTo": "Zugewiesen an",
     "settings.matchProfiles.manual": "Manuell",
     "settings.matchProfiles.reEncumber": "Erneut belasten",
-    "settings.matchProfiles.orderType": "Bestelltyp",
+    "settings.matchProfiles.orderType": "Bestellungstyp",
     "settings.matchProfiles.acquisitionUnits": "Erwerbungsteams",
     "settings.matchProfiles.billTo": "Rechnungsadresse",
     "settings.matchProfiles.shipTo": "Lieferadresse",
