@@ -2,14 +2,7 @@
 
 ## **5.1.0** (in progress)
 
-### Features added:
-* Cover `<MatchingFieldsManager>` component with tests (UIDATIMP-712)
-* Cover `<EditKeyShortcutsWrapper` component with tests (UIDATIMP-957)
-* Cover `<ViewAllLogs>` component with tests (UIDATIMP-969)
-* Cover `<ReturnToAssignJobs>` component with tests (UIDATIMP-960)
-* Cover `<MatchingFieldsManager>` component with tests (UIDATIMP-712)
-* Cover `<FieldOrganization>` component with tests (UIDATIMP-958)
-* Add AUTHORITY type into folioRecordTypes (UIDATIMP-1021)
+## [5.0.1](https://github.com/folio-org/ui-data-import/tree/v5.0.1) (2021-10-19)
 
 ### Bugs fixed:
 * Illegal character in query for mod-source-record-manager (UIDATIMP-1004)
