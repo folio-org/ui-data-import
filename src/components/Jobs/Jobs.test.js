@@ -131,8 +131,6 @@ describe('<Jobs>', () => {
         fireEvent.click(getAllByRole('button', { name: /delete/i })[0]);
 
         expect(getByText('has been stopped', { exact: false })).toBeInTheDocument();
-
-        fireEvent.click(getAllByRole('button', { name: /undo/i })[0]);
       });
     });
 
