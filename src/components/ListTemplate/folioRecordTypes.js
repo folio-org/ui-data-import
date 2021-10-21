@@ -14,6 +14,11 @@ export const FOLIO_RECORD_TYPES = {
     captionId: 'ui-data-import.recordTypes.item',
     iconKey: 'items',
   },
+  AUTHORITY: {
+    type: 'AUTHORITY',
+    captionId: 'ui-data-import.recordTypes.authority',
+    iconKey: 'marcAuthorities',
+  },
   ORDER: {
     type: 'ORDER',
     captionId: 'ui-data-import.recordTypes.order',
@@ -37,11 +42,6 @@ export const FOLIO_RECORD_TYPES = {
   MARC_AUTHORITY: {
     type: 'MARC_AUTHORITY',
     captionId: 'ui-data-import.recordTypes.marc-auth',
-    iconKey: 'marcAuthorities',
-  },
-  AUTHORITY: {
-    type: 'AUTHORITY',
-    captionId: 'ui-data-import.recordTypes.authority',
     iconKey: 'marcAuthorities',
   },
 };
