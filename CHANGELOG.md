@@ -12,6 +12,7 @@
 * Add AUTHORITY type into folioRecordTypes (UIDATIMP-1021)
 * Adjust the FOLIO record type in the field mapping profile (UIDATIMP-1027)
 * Adjust the FOLIO record type in the action profile (UIDATIMP-1028)
+* Cover `<ActionProfiles>` settings with tests (UIDATIMP-971)
 
 ## [5.0.1](https://github.com/folio-org/ui-data-import/tree/v5.0.1) (2021-10-19)
 
@@ -55,7 +56,6 @@
 * Add hotlinks to the Import log summary for EDIFACT imports (UIDATIMP-989)
 * Cover `<DetailsKeyShortcutsWrapper>` component with tests (UIDATIMP-956)
 * Get rid of outdated componentWillReceiveProps method in SearchAndSort component (UIDATIMP-1001)
-* refactor psets away from backend ".all" permissions (UIDATIMP-1017)
 
 ### Bugs fixed:
 * Auxiliary "repeatableFieldAction" property disappear while removing "vendor reference number" field mapping (UIDATIMP-987)
