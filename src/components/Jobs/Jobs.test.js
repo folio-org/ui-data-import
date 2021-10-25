@@ -8,13 +8,12 @@ import {
   jobExecutions,
   jobsLogs,
 } from '../../../test/bigtest/mocks';
-
 import { translationsProperties } from '../../../test/jest/helpers';
-import { DEFAULT_TIMEOUT_BEFORE_JOB_DELETION } from '../../utils';
 
 import { DataFetcherContext } from '../DataFetcher';
-
 import { Jobs } from './Jobs';
+
+import { DEFAULT_TIMEOUT_BEFORE_JOB_DELETION } from '../../utils';
 
 const defaultContext = {
   hasLoaded: true,
@@ -32,28 +31,22 @@ const renderJobs = (context = defaultContext) => {
   return renderWithIntl(component, translationsProperties);
 };
 
-const unMockedFetch = global.fetch;
+global.fetch = jest.fn();
 
 jest.spyOn(console, 'error').mockImplementation(() => {});
 
 describe('<Jobs>', () => {
-  beforeAll(() => {
-    global.fetch = () => Promise.resolve({
-      json: () => Promise.resolve('test value'),
-      ok: false,
-    });
-  });
-
   beforeEach(() => {
     jest.setTimeout(10 * DEFAULT_TIMEOUT_BEFORE_JOB_DELETION);
   });
 
   afterEach(() => {
     jest.clearAllTimers();
+    global.fetch.mockClear();
   });
 
   afterAll(() => {
-    global.fetch = unMockedFetch;
+    delete global.fetch;
   });
 
   it('should contain "Previews" and "Running" section', () => {
@@ -145,7 +138,6 @@ describe('<Jobs>', () => {
         });
 
         fireEvent.click(getAllByRole('button', { name: /delete/i })[0]);
-
         fireEvent.click(getAllByRole('button', { name: /undo/i })[0]);
 
         expect(queryByText('has been stopped', { exact: false })).toBeNull();
