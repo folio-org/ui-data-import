@@ -12,6 +12,7 @@
 * Add AUTHORITY type into folioRecordTypes (UIDATIMP-1021)
 * Adjust the FOLIO record type in the field mapping profile (UIDATIMP-1027)
 * Adjust the FOLIO record type in the action profile (UIDATIMP-1028)
+* Cover `<ViewContainer>` component with tests (UIDATIMP-731)
 
 ## [5.0.1](https://github.com/folio-org/ui-data-import/tree/v5.0.1) (2021-10-19)
 
