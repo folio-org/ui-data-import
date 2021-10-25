@@ -14,7 +14,6 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-
 import { actionProfilesShape } from '.';
 import { ActionProfiles } from './ActionProfiles';
 
@@ -124,17 +123,12 @@ describe('ActionProfiles', () => {
   describe('query string', () => {
     describe('when sort and query params are set', () => {
       it('should return correct query string', () => {
-        const expectedQuery = 'cql.allRecords=1 AND ' +
-        '(id="" NOT id=="' + OCLC_CREATE_INSTANCE_ACTION_ID + '") AND ' +
-        '(id="" NOT id=="' + OCLC_UPDATE_INSTANCE_ACTION_ID + '") AND ' +
-        '(id="" NOT id=="' + OCLC_CREATE_MARC_BIB_ACTION_ID + '") AND ' +
-        '(id="" NOT id=="' + QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID + '") AND ' +
-        '(id="" NOT id=="' + QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID + '") AND (\n' +
-        '  name="testQuery*" OR\n' +
-        '  action="testQuery*" OR\n' +
-        '  folioRecord="testQuery*" OR\n' +
-        '  tags.tagList="testQuery*"\n' +
-        ') sortBy name';
+        const expectedQuery = `cql.allRecords=1 AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_ACTION_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_ACTION_ID}") AND (id="" NOT id=="${OCLC_CREATE_MARC_BIB_ACTION_ID}") AND (id="" NOT id=="${QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID}") AND (id="" NOT id=="${QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID}") AND (
+  name="testQuery*" OR
+  action="testQuery*" OR
+  folioRecord="testQuery*" OR
+  tags.tagList="testQuery*"
+) sortBy name`;
         const queryData = {
           query: {
             sort: 'name',
@@ -149,12 +143,7 @@ describe('ActionProfiles', () => {
 
     describe('when sort and query params are  not set', () => {
       it('should return correct query string', () => {
-        const expectedQuery = 'cql.allRecords=1 AND ' +
-        '(id="" NOT id=="' + OCLC_CREATE_INSTANCE_ACTION_ID + '") AND ' +
-        '(id="" NOT id=="' + OCLC_UPDATE_INSTANCE_ACTION_ID + '") AND ' +
-        '(id="" NOT id=="' + OCLC_CREATE_MARC_BIB_ACTION_ID + '") AND ' +
-        '(id="" NOT id=="' + QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID + '") AND ' +
-        '(id="" NOT id=="' + QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID + '")';
+        const expectedQuery = `cql.allRecords=1 AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_ACTION_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_ACTION_ID}") AND (id="" NOT id=="${OCLC_CREATE_MARC_BIB_ACTION_ID}") AND (id="" NOT id=="${QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID}") AND (id="" NOT id=="${QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID}")`;
         const { query } = actionProfilesShape.manifest.records.params();
 
         expect(query.trim()).toEqual(expectedQuery);
