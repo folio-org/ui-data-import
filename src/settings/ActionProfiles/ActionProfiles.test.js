@@ -7,7 +7,6 @@ import {
   buildResources,
   buildMutator,
 } from '@folio/stripes-data-transfer-components/test/helpers';
-
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
 import {
@@ -15,8 +14,17 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
+
 import { actionProfilesShape } from '.';
 import { ActionProfiles } from './ActionProfiles';
+
+import {
+  OCLC_CREATE_INSTANCE_ACTION_ID,
+  OCLC_UPDATE_INSTANCE_ACTION_ID,
+  OCLC_CREATE_MARC_BIB_ACTION_ID,
+  QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID,
+  QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID,
+} from '../../utils';
 
 const testSet = new Set(['testId1']);
 
@@ -105,6 +113,7 @@ describe('ActionProfiles', () => {
   afterEach(() => {
     history.push.mockClear();
   });
+
   it('should be rendered', () => {
     const { getByText } = renderActionProfiles(actionProfilesProps);
 
@@ -116,11 +125,11 @@ describe('ActionProfiles', () => {
     describe('when sort and query params are set', () => {
       it('should return correct query string', () => {
         const expectedQuery = 'cql.allRecords=1 AND ' +
-        '(id="" NOT id=="d0ebba8a-2f0f-11eb-adc1-0242ac120002") AND ' +
-        '(id="" NOT id=="cddff0e1-233c-47ba-8be5-553c632709d9") AND ' +
-        '(id="" NOT id=="6aa8e98b-0d9f-41dd-b26f-15658d07eb52") AND ' +
-        '(id="" NOT id=="f8e58651-f651-485d-aead-d2fa8700e2d1") AND ' +
-        '(id="" NOT id=="adbe1e5c-7796-4902-b18e-794b1d58caac") AND (\n' +
+        '(id="" NOT id=="' + OCLC_CREATE_INSTANCE_ACTION_ID + '") AND ' +
+        '(id="" NOT id=="' + OCLC_UPDATE_INSTANCE_ACTION_ID + '") AND ' +
+        '(id="" NOT id=="' + OCLC_CREATE_MARC_BIB_ACTION_ID + '") AND ' +
+        '(id="" NOT id=="' + QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID + '") AND ' +
+        '(id="" NOT id=="' + QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID + '") AND (\n' +
         '  name="testQuery*" OR\n' +
         '  action="testQuery*" OR\n' +
         '  folioRecord="testQuery*" OR\n' +
@@ -141,11 +150,11 @@ describe('ActionProfiles', () => {
     describe('when sort and query params are  not set', () => {
       it('should return correct query string', () => {
         const expectedQuery = 'cql.allRecords=1 AND ' +
-        '(id="" NOT id=="d0ebba8a-2f0f-11eb-adc1-0242ac120002") AND ' +
-        '(id="" NOT id=="cddff0e1-233c-47ba-8be5-553c632709d9") AND ' +
-        '(id="" NOT id=="6aa8e98b-0d9f-41dd-b26f-15658d07eb52") AND ' +
-        '(id="" NOT id=="f8e58651-f651-485d-aead-d2fa8700e2d1") AND ' +
-        '(id="" NOT id=="adbe1e5c-7796-4902-b18e-794b1d58caac")';
+        '(id="" NOT id=="' + OCLC_CREATE_INSTANCE_ACTION_ID + '") AND ' +
+        '(id="" NOT id=="' + OCLC_UPDATE_INSTANCE_ACTION_ID + '") AND ' +
+        '(id="" NOT id=="' + OCLC_CREATE_MARC_BIB_ACTION_ID + '") AND ' +
+        '(id="" NOT id=="' + QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID + '") AND ' +
+        '(id="" NOT id=="' + QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID + '")';
         const { query } = actionProfilesShape.manifest.records.params();
 
         expect(query.trim()).toEqual(expectedQuery);

@@ -4,19 +4,20 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
-
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+
 import '../../../test/jest/__mock__';
 import {
   renderWithFinalForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-import * as utils from '../../utils/formUtils';
 import { ActionProfilesFormComponent } from './ActionProfilesForm';
+
+import * as utils from '../../utils/formUtils';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
