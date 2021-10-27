@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { fireEvent } from '@testing-library/react';
+import {
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
@@ -9,6 +12,7 @@ import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpe
 
 import '../../../../test/jest/__mock__';
 import {
+  buildStripes,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../test/jest/helpers';
@@ -20,9 +24,7 @@ import {
 
 const history = createMemoryHistory();
 
-history.push = jest.fn();
-
-global.fetch = jest.fn();
+const stripes = buildStripes();
 
 const mutator = buildMutator({
   jobProfiles: {
@@ -37,7 +39,10 @@ const mutator = buildMutator({
 });
 
 const resources = {
-  query: { sort: '-name' },
+  query: {
+    query: '',
+    sort: '-name',
+  },
   jobProfiles: {
     failed: false,
     hasLoaded: true,
@@ -68,34 +73,27 @@ const resources = {
     ],
     resource: 'jobProfiles',
   },
+
 };
 
 const jobProfilesProps = {
   checkBoxList: {
-    selectedRecords: new Set(['1']),
+    selectedRecords: new Set(),
     isAllChecked: false,
     selectAll: noop,
     deselectAll: noop,
     selectedRecord: noop,
     handleSelectAllCheckbox: noop,
   },
-  match: {
-    path: '/settings/data-import/job-profiles',
-    url: '/settings/data-import/job-profiles',
-  },
+  match: { path: '/settings/data-import/job-profiles' },
   location: {
     pathname: '/settings/data-import/job-profiles',
     search: '?sort=name',
   },
-  stripes: {
-    okapi: { url: '' },
-    connect: noop,
-    hasPerm: noop,
-  },
   okapi: {
-    tenant: 'diku',
+    tenant: 'tenant',
     token: 'token',
-    url: 'https://folio-snapshot-okapi.dev.folio.org',
+    url: '',
   },
   selectedRecord: {
     record: {},
@@ -113,7 +111,6 @@ const renderJobProfiles = ({
   checkBoxList,
   label,
   okapi,
-  stripes,
   refreshRemote,
 }) => {
   const JobProfiles = createJobProfiles();
@@ -142,14 +139,6 @@ const renderJobProfiles = ({
 };
 
 describe('<JobProfiles>', () => {
-  afterEach(() => {
-    global.fetch.mockClear();
-  });
-
-  afterAll(() => {
-    delete global.fetch;
-  });
-
   it('should render correct amount of items', () => {
     const { getByText } = renderJobProfiles(jobProfilesProps);
 
@@ -217,6 +206,23 @@ describe('<JobProfiles>', () => {
       fireEvent.click(selectAll);
 
       expect(selectAll).toBeChecked();
+    });
+  });
+
+  describe('when creating new job profile if user close', () => {
+    it('confirmation modal should appear', async () => {
+      const {
+        getByRole,
+        getByText,
+      } = renderJobProfiles(jobProfilesProps);
+      const actionsButton = getByRole('button', { name: /actions/i });
+
+      fireEvent.click(actionsButton);
+      await waitFor(() => fireEvent.click(getByText('New job profile')));
+      fireEvent.change(getByRole('textbox', { name: /name/i }), { target: { value: 'test value' } });
+      await waitFor(() => fireEvent.click(getByText('Close')));
+
+      await waitFor(() => expect(getByText(/areyousure/i)).toBeInTheDocument());
     });
   });
 });
