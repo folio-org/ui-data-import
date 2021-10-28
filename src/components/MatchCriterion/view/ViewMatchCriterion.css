@@ -1,41 +1,41 @@
 @import "@folio/stripes-components/lib/variables.css";
 
 .matchCriteria {
-  composes: matchCriteria from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+  composes: matchCriteria from "~@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
 }
 
 .matchCriterion {
-  composes: matchCriterion from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+  composes: matchCriterion from "~@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
 }
 
 .inputContainer {
-  composes: inputContainer from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+  composes: inputContainer from "~@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
 }
 
 .dateRangeLabel {
-  composes: dateRangeLabel from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+  composes: dateRangeLabel from "~@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
 }
 
 .criterionSection {
-  composes: criterionSection from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+  composes: criterionSection from "~@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
 }
 
 .incoming {
-  composes: incoming from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+  composes: incoming from "~@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
 }
 
 .existing {
-  composes: existing from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+  composes: existing from "~@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
 }
 
 .field,
 .qualifier,
 .part {
-  composes: field from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+  composes: field from "~@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
 }
 
 .staticSection {
-  composes: staticSection from "@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
+  composes: staticSection from "~@folio/data-import/src/components/MatchCriterion/CommonMatchCriterion.css";
   & > div:first-child {
     color: var(--color-text);
 
