@@ -62,7 +62,7 @@
 }
 
 .headingCell {
-  composes: display-flex centerContent from "@folio/stripes-components/lib/Layout/Layout.css";
+  composes: display-flex centerContent from "~@folio/stripes-components/lib/Layout/Layout.css";
   border-bottom: 1px solid var(--color-border);
   padding: .5rem;
 }
@@ -98,7 +98,7 @@
 }
 
 .selectedLine {
-  composes: display-flex justify-end from "@folio/stripes-components/lib/Layout/Layout.css";
+  composes: display-flex justify-end from "~@folio/stripes-components/lib/Layout/Layout.css";
   position: absolute;
   left: var(--selected-line-margin);
   right: var(--selected-line-margin);
@@ -110,7 +110,7 @@
 }
 
 .hint {
-  composes: display-flex flex-align-items-center centerContent textCentered from "@folio/stripes-components/lib/Layout/Layout.css";
+  composes: display-flex flex-align-items-center centerContent textCentered from "~@folio/stripes-components/lib/Layout/Layout.css";
   pointer-events: all !important;
 }
 
@@ -126,7 +126,7 @@
 }
 
 .incomingRecord {
-  composes: display-flex flex-align-items-center from "@folio/stripes-components/lib/Layout/Layout.css";
+  composes: display-flex flex-align-items-center from "~@folio/stripes-components/lib/Layout/Layout.css";
   width: 100%;
   line-height: .9;
   white-space: normal;
@@ -142,7 +142,7 @@
 }
 
 .compare {
-  composes: display-flex flex-align-items-center from "@folio/stripes-components/lib/Layout/Layout.css";
+  composes: display-flex flex-align-items-center from "~@folio/stripes-components/lib/Layout/Layout.css";
   position: absolute;
   top: 9px;
   transform: translate(50%);
