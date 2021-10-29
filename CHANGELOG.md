@@ -15,6 +15,7 @@
 * Cover `<ViewContainer>` component with tests (UIDATIMP-731)
 * Cover `<ActionProfiles>` settings with tests (UIDATIMP-971)
 * Use correct `css-loader` syntax (UIDATIMP-1037)
+* Setting: Updates to Action profiles (UIDATIMP-1026)
 
 ## [5.0.1](https://github.com/folio-org/ui-data-import/tree/v5.0.1) (2021-10-19)
 
