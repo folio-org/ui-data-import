@@ -14,6 +14,16 @@ import { DataFetcherContext } from '../DataFetcher';
 import { Jobs } from './Jobs';
 
 import { DEFAULT_TIMEOUT_BEFORE_JOB_DELETION } from '../../utils';
+import { deleteFile } from '../../utils/upload';
+
+jest.mock('../../utils/upload', () => ({
+  ...jest.requireActual('../../utils/upload'),
+  deleteFile: jest.fn(() => Promise.reject(new Error('Something went wrong!'))),
+}));
+
+jest.spyOn(console, 'error').mockImplementation(() => {});
+
+global.fetch = jest.fn();
 
 const defaultContext = {
   hasLoaded: true,
@@ -30,10 +40,6 @@ const renderJobs = (context = defaultContext) => {
 
   return renderWithIntl(component, translationsProperties);
 };
-
-global.fetch = jest.fn();
-
-jest.spyOn(console, 'error').mockImplementation(() => {});
 
 describe('<Jobs>', () => {
   beforeEach(() => {
@@ -95,7 +101,7 @@ describe('<Jobs>', () => {
     });
 
     describe('when clicked delete button', () => {
-      it('should handle deletion errors', done => {
+      it('should handle deletion errors', async done => {
         const { getAllByRole } = renderJobs({
           ...defaultContext,
           jobs: jobExecutions,
@@ -103,13 +109,12 @@ describe('<Jobs>', () => {
 
         fireEvent.click(getAllByRole('button', { name: /delete/i })[0]);
 
-        new Promise(r => setTimeout(r, DEFAULT_TIMEOUT_BEFORE_JOB_DELETION))
-          .then(done)
-          .catch(e => {
+        new Promise(r => setTimeout(r, DEFAULT_TIMEOUT_BEFORE_JOB_DELETION)).then(() => {
+          expect(deleteFile).toHaveBeenCalled();
           // eslint-disable-next-line no-console
-            expect(console.error).toHaveBeenCalled();
-            done(e);
-          });
+          expect(console.error).toHaveBeenCalledWith(new Error('Something went wrong!'));
+          done();
+        });
       });
 
       it('correct text should be rendered', () => {
