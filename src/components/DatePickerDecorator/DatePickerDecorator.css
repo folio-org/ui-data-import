@@ -1,11 +1,11 @@
 .decoratorWrapper {
-  composes: decoratorWrapper from "@folio/data-import/src/components/withReferenceValues/withReferenceValues.css";
+  composes: decoratorWrapper from "~@folio/data-import/src/components/withReferenceValues/withReferenceValues.css";
 }
 
 .decorator {
-  composes: decorator from "@folio/data-import/src/components/withReferenceValues/withReferenceValues.css";
+  composes: decorator from "~@folio/data-import/src/components/withReferenceValues/withReferenceValues.css";
 }
 
 .options-dropdown {
-  composes: options-dropdown from "@folio/data-import/src/components/withReferenceValues/withReferenceValues.css";
+  composes: options-dropdown from "~@folio/data-import/src/components/withReferenceValues/withReferenceValues.css";
 }
