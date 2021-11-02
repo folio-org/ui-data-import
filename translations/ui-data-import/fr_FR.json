@@ -864,9 +864,10 @@
     "settings.mappingProfiles.map.item.status.intellectualItem": "Intellectual item",
     "settings.mappingProfiles.map.item.status.longMissing": "Long missing",
     "settings.mappingProfiles.map.item.status.restricted": "Restricted",
-    "settings.mappingProfiles.map.item.status.unavailable": "Unavailable",
-    "settings.mappingProfiles.map.item.status.unknown": "Unknown",
-    "logViewer.invoice": "Invoice",
-    "logViewer.invoiceLine": "Invoice line",
-    "logViewer.filter.srsMARC": "SRS MARC"
+    "settings.mappingProfiles.map.item.status.unavailable": "Indisponible",
+    "settings.mappingProfiles.map.item.status.unknown": "Inconnu",
+    "logViewer.invoice": "Facture",
+    "logViewer.invoiceLine": "Ligne de facturation",
+    "logViewer.filter.srsMARC": "SRS MARC",
+    "recordTypes.authority": "Authority"
 }
