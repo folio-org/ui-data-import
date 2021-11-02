@@ -99,15 +99,13 @@ describe('<UploadingjobsDisplay>', () => {
     delete global.fetch;
   });
 
-  describe('when there is no upload definition', () => {
-    it('renders empty message', async () => {
-      const { findByText } = renderUploadingJobsDisplay(defaultContext);
+  it('renders correctly', async () => {
+    const { findByText } = renderUploadingJobsDisplay(defaultContext);
 
-      expect(await findByText('No files to show')).toBeDefined();
-    });
+    expect(await findByText('Files')).toBeDefined();
   });
 
-  describe('when cannot upload file definition', () => {
+  describe('when cannot update file definition', () => {
     it('handles error correctly', async () => {
       renderUploadingJobsDisplay({
         ...defaultContext,
@@ -242,7 +240,7 @@ describe('<UploadingjobsDisplay>', () => {
     });
   });
 
-  describe('when there is no upload definition', () => {
+  describe('when there is no upload definition nor location state', () => {
     it('should handle error correctly', async () => {
       renderUploadingJobsDisplay({
         ...defaultContext,
