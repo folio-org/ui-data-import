@@ -16,6 +16,7 @@
 * Cover `<ActionProfiles>` settings with tests (UIDATIMP-971)
 * Use correct `css-loader` syntax (UIDATIMP-1037)
 * Cover `getCRUDActions` with tests (UIDATIMP-1032)
+* Cover `<UploadingJobsContextProvider>` component with tests (UIDATIMP-729)
 
 ## [5.0.1](https://github.com/folio-org/ui-data-import/tree/v5.0.1) (2021-10-19)
 
