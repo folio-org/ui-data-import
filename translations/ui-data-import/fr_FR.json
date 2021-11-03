@@ -868,5 +868,6 @@
     "settings.mappingProfiles.map.item.status.unknown": "Inconnu",
     "logViewer.invoice": "Facture",
     "logViewer.invoiceLine": "Ligne de facturation",
-    "logViewer.filter.srsMARC": "SRS MARC"
+    "logViewer.filter.srsMARC": "SRS MARC",
+    "recordTypes.authority": "Authority"
 }
