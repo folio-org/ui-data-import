@@ -12,21 +12,25 @@ import { ViewContainer } from './ViewContainer';
 
 import { ENTITY_KEYS } from '../../utils';
 
+jest.mock('../Callout', () => ({ createNetworkMessage: () => () => 'message' }));
+
 const history = createMemoryHistory();
 
 history.push = jest.fn();
 
-const getMutator = entity => buildMutator({
-  [entity]: {
-    POST: noop,
-    PUT: noop,
-    DELETE: noop,
+const profileEntityKey = ENTITY_KEYS.MATCH_PROFILES;
+
+const mutatorMock = buildMutator({
+  [profileEntityKey]: {
+    POST: jest.fn().mockReturnValue(Promise.resolve()),
+    PUT: jest.fn().mockReturnValue(Promise.resolve()),
+    DELETE: jest.fn().mockReturnValue(Promise.resolve()),
   },
-  restoreDefaults: { POST: noop },
+  restoreDefaults: { POST: jest.fn().mockReturnValue(Promise.resolve()) },
 });
 
 const viewContainerProps = {
-  entityKey: ENTITY_KEYS.MATCH_PROFILES,
+  entityKey: profileEntityKey,
   location: {
     search: '',
     pathname: '',
@@ -44,7 +48,7 @@ const renderViewContainer = ({
   const component = (
     <ViewContainer
       entityKey={entityKey}
-      mutator={getMutator(entityKey)}
+      mutator={mutatorMock}
       history={history}
       match={{ path: '' }}
       location={location}
@@ -59,6 +63,8 @@ const renderViewContainer = ({
 };
 
 describe('ViewContainer component', () => {
+  const children = jest.fn().mockReturnValue('Children');
+
   afterEach(() => {
     history.push.mockClear();
   });
@@ -66,7 +72,7 @@ describe('ViewContainer component', () => {
   it('should render children', () => {
     const { getByText } = renderViewContainer({
       ...viewContainerProps,
-      children: () => <>Children</>,
+      children,
     });
 
     expect(getByText('Children')).toBeDefined();
@@ -74,14 +80,8 @@ describe('ViewContainer component', () => {
 
   describe('when creating a profile', () => {
     const resetForm = jest.fn();
-    const children = ({ handleCreateSuccess }) => {
-      const record = { id: 'test-id' };
-      const properties = { reset: resetForm };
-
-      handleCreateSuccess(record, noop, properties);
-
-      return <>Children</>;
-    };
+    const record = { id: 'test-id' };
+    const properties = { reset: resetForm };
 
     afterEach(() => {
       resetForm.mockClear();
@@ -93,6 +93,8 @@ describe('ViewContainer component', () => {
         children,
       });
 
+      children.mock.calls[0][0].handleCreateSuccess(record, noop, properties);
+
       expect(resetForm).toHaveBeenCalled();
     });
 
@@ -102,19 +104,92 @@ describe('ViewContainer component', () => {
         children,
       });
 
+      children.mock.calls[0][0].handleCreateSuccess(record, noop, properties);
+
       expect(history.push).toHaveBeenCalledWith('/view/test-id');
+    });
+
+    describe('successfully', () => {
+      it('should create the profile', async () => {
+        renderViewContainer({
+          ...viewContainerProps,
+          children,
+        });
+
+        await children.mock.calls[0][0].onCreate();
+
+        expect(mutatorMock[profileEntityKey].POST).toHaveBeenCalled();
+      });
+    });
+
+    describe('unsuccessfully', () => {
+      it('should cause an error', async () => {
+        mutatorMock[profileEntityKey].POST
+          .mockClear()
+          .mockImplementation(() => Promise.reject(new Error('Something went wrong')));
+
+        renderViewContainer({
+          ...viewContainerProps,
+          children,
+        });
+
+        try {
+          await children.mock.calls[0][0].onCreate();
+        } catch (e) {
+          await expect(mutatorMock[profileEntityKey].POST).rejects.toThrow();
+        }
+      });
+    });
+  });
+
+  describe('when editing a profile', () => {
+    describe('successfully', () => {
+      it('should update the profile', async () => {
+        renderViewContainer({
+          ...viewContainerProps,
+          children,
+        });
+
+        await children.mock.calls[0][0].onEdit();
+
+        expect(mutatorMock[profileEntityKey].PUT).toHaveBeenCalled();
+      });
+    });
+
+    describe('unsuccessfully', () => {
+      it('should cause an error', async () => {
+        mutatorMock[profileEntityKey].PUT
+          .mockClear()
+          .mockImplementation(() => Promise.reject(new Error('Something went wrong')));
+
+        renderViewContainer({
+          ...viewContainerProps,
+          children,
+        });
+
+        try {
+          await children.mock.calls[0][0].onEdit();
+        } catch (e) {
+          await expect(mutatorMock[profileEntityKey].PUT).rejects.toThrow();
+        }
+      });
     });
   });
 
   describe('when deleting a profile', () => {
     describe('successfully', () => {
-      const children = ({ handleDeleteSuccess }) => {
-        const record = { id: '1' };
+      const record = { id: '1' };
 
-        handleDeleteSuccess(record);
+      it('should delete the profile', async () => {
+        renderViewContainer({
+          ...viewContainerProps,
+          children,
+        });
 
-        return <>Children</>;
-      };
+        await children.mock.calls[0][0].onDelete();
+
+        expect(mutatorMock[profileEntityKey].DELETE).toHaveBeenCalled();
+      });
 
       it('should navigate to the view pane', () => {
         renderViewContainer({
@@ -122,17 +197,24 @@ describe('ViewContainer component', () => {
           children,
         });
 
+        children.mock.calls[0][0].handleDeleteSuccess(record);
+
         expect(history.push).toHaveBeenCalledWith('/view');
       });
 
       describe('when record is selected', () => {
         it('should deselect deleted profile', () => {
           const selectRecord = jest.fn();
+          const child = ({ handleDeleteSuccess }) => {
+            handleDeleteSuccess(record);
+
+            return 'Children';
+          };
 
           renderViewContainer({
             ...viewContainerProps,
             selectRecord,
-            children,
+            children: child,
           });
 
           expect(selectRecord).toHaveBeenCalledWith('1');
@@ -150,30 +232,79 @@ describe('ViewContainer component', () => {
             children,
           });
 
+          children.mock.calls[0][0].handleDeleteSuccess(record);
+
           expect(selectRecord).not.toHaveBeenCalled();
         });
       });
     });
 
     describe('unsuccessfully', () => {
+      it('should cause an error', async () => {
+        mutatorMock[profileEntityKey].DELETE
+          .mockClear()
+          .mockImplementation(() => Promise.reject(new Error('Something went wrong')));
+
+        renderViewContainer({
+          ...viewContainerProps,
+          children,
+        });
+
+        try {
+          await children.mock.calls[0][0].onDelete();
+        } catch (e) {
+          await expect(mutatorMock[profileEntityKey].DELETE).rejects.toThrow();
+        }
+      });
+
       describe('and error status is not 409', () => {
         it('should not show exception modal', () => {
-          const children = ({ handleDeleteError }) => {
-            const record = { id: '1' };
-            const error = { status: 400 };
-
-            handleDeleteError(record, error);
-
-            return <>Children</>;
-          };
-
           const { queryByText } = renderViewContainer({
             ...viewContainerProps,
             children,
           });
 
+          const record = { id: '1' };
+          const error = { status: 400 };
+
+          children.mock.calls[0][0].handleDeleteError(record, error);
+
           expect(queryByText('This match profile cannot be deleted, as it is in use by one or more job profiles.')).toBeNull();
         });
+      });
+    });
+  });
+
+  describe('when restoring a profile', () => {
+    describe('successfully', () => {
+      it('should restore the profile', async () => {
+        renderViewContainer({
+          ...viewContainerProps,
+          children,
+        });
+
+        await children.mock.calls[0][0].onRestoreDefaults();
+
+        expect(mutatorMock.restoreDefaults.POST).toHaveBeenCalled();
+      });
+    });
+
+    describe('unsuccessfully', () => {
+      it('should cause an error', async () => {
+        mutatorMock.restoreDefaults.POST
+          .mockClear()
+          .mockImplementation(() => Promise.reject(new Error('Something went wrong')));
+
+        renderViewContainer({
+          ...viewContainerProps,
+          children,
+        });
+
+        try {
+          await children.mock.calls[0][0].onRestoreDefaults();
+        } catch (e) {
+          await expect(mutatorMock.restoreDefaults.POST).rejects.toThrow();
+        }
       });
     });
   });
