@@ -1,10 +1,7 @@
 import React from 'react';
 import queryString from 'query-string';
 import { BrowserRouter as Router } from 'react-router-dom';
-import {
-  fireEvent,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
@@ -16,13 +13,14 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-import { MatchProfilesForm, MatchProfilesFormComponent } from './MatchProfilesForm';
+import {
+  MatchProfilesForm,
+  MatchProfilesFormComponent,
+} from './MatchProfilesForm';
 
 import { LAYER_TYPES } from '../../utils';
 
 import * as utils from '../../utils/formUtils';
-
-//jest.mock('../../components/MatchCriterion/edit', () => ({ MatchCriterion: () => <span>MatchCriterion</span> }));
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -56,9 +54,7 @@ history.push = jest.fn();
 
 const handleProfileSave = jest.spyOn(utils, 'handleProfileSave');
 
-const matchProfilesFormProps = (
-  search = '?layer=create',
-  ) => ({
+const matchProfilesFormProps = (search = '?layer=create') => ({
   initialValues: {
     profile: {
       parentProfiles: [{
@@ -128,7 +124,7 @@ const matchProfilesFormProps = (
       },
     }],
     incomingRecordType: 'MARC_BIBLIOGRAPHIC',
-    existingRecordType: 'MARC_AUTHORITY',
+    existingRecordType: 'INSTANCE',
   },
   pristine: true,
   submitting: true,
@@ -202,6 +198,7 @@ const renderMatchProfilesForm = ({
     </Router>
   );
   const component = isEditMode ? editModeComponent : createModeComponent;
+
   return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
@@ -211,10 +208,36 @@ describe('MatchProfilesForm', () => {
   });
 
   describe('when form is in creating new record mode', () => {
-    it('should be rendered', () => {
-      const { getAllByText } = renderMatchProfilesForm(matchProfilesFormProps());
-      
-      expect(getAllByText('New match profile')).toBeDefined();
+    describe('when select static value incoming record', () => {
+      it('Incoming Static value record should be rendered', () => {
+        const {
+          container,
+          getByText,
+        } = renderMatchProfilesForm(matchProfilesFormProps());
+
+        fireEvent.click(getByText('Static value (submatch only)'));
+        const dateRange = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.staticValueDetails.staticValueType"]');
+
+        fireEvent.change(dateRange, { target: { value: 'DATE_RANGE' } });
+
+        expect(getByText('Incoming Static value (submatch only) record')).toBeDefined();
+        expect(getByText('Choose Static value (submatch only)')).toBeDefined();
+      });
+    });
+
+    describe('when select MARC Bibliographic incoming record', () => {
+      it('Incoming MARC Bibliographic record should be rendered', () => {
+        const {
+          getByText,
+          getAllByText,
+        } = renderMatchProfilesForm(matchProfilesFormProps());
+        const MARCBibliographicButton = getAllByText('MARC Bibliographic')[1];
+
+        fireEvent.click(MARCBibliographicButton);
+
+        expect(getByText('Incoming MARC Bibliographic record')).toBeDefined();
+        expect(getByText('MARC Bibliographic field in incoming record')).toBeDefined();
+      });
     });
 
     describe('when name is set', () => {
@@ -249,15 +272,27 @@ describe('MatchProfilesForm', () => {
       });
     });
 
-    describe('', () => {
-      it('', () => {
-        
+    describe('Use a qualifier', () => {
+      it('should be closed after double click', () => {
+        const {
+          queryByText,
+          getByText,
+        } = renderMatchProfilesForm(matchProfilesFormProps());
+        const qualifier = getByText('Use a qualifier');
+
+        fireEvent.click(qualifier);
+        fireEvent.click(qualifier);
+
+        expect(queryByText('Select qualifier type')).toBeNull();
       });
     });
 
     describe('when form has data to create record', () => {
       it('record should be saved', () => {
-        const { container, getByText, debug } = renderMatchProfilesForm(matchProfilesFormProps());
+        const {
+          container,
+          getByText,
+        } = renderMatchProfilesForm(matchProfilesFormProps());
         const nameInput = container.querySelector('[name="profile.name"]');
         const fieldInput = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[0].value"]');
         const in1Input = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[1].value"]');
@@ -269,7 +304,7 @@ describe('MatchProfilesForm', () => {
         fireEvent.change(in1Input, { target: { value: '**' } });
         fireEvent.change(in2Input, { target: { value: '**' } });
         fireEvent.change(subfield, { target: { value: '*' } });
-//debug(container, 400000);
+
         fireEvent.click(getByText('Save as profile & Close'));
 
         expect(handleProfileSave).toHaveBeenCalledTimes(1);
@@ -278,13 +313,10 @@ describe('MatchProfilesForm', () => {
   });
 
   describe('when form is in edit mode', () => {
-    it('should be rendered', async () => {
-      const { container, getByText, debug } = renderMatchProfilesForm(matchProfilesFormProps('?layer=edit'));
-      const nameInput = container.querySelector('[name="profile.name"]');
-      fireEvent.change(nameInput, { target: { value: 'test' } });
-      await waitFor(() => fireEvent.click(getByText('Save as profile & Close')));
+    it('should be rendered', () => {
+      const { getByText } = renderMatchProfilesForm(matchProfilesFormProps('?layer=edit'));
+
       expect(getByText('Edit testName')).toBeDefined();
-      //debug(container, 18000);
     });
   });
 });

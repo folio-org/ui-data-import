@@ -1,15 +1,16 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+} from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import {
-  buildResources,
   buildMutator,
   Harness,
 } from '@folio/stripes-data-transfer-components/test/helpers';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
 import {
   renderWithReduxForm,
@@ -24,23 +25,10 @@ import {
 import { matchProfilesShape } from '.';
 import { MatchProfiles } from './MatchProfiles';
 
-/* jest.mock('../../components', () => ({
-  ...jest.requireActual('../../components'),
-  ListView: jest.fn(() => <span>ListView</span>),
-})); */
-
 const history = createMemoryHistory();
 
 history.push = jest.fn();
 
-const resources = buildResources({
-  modules: {
-    records: [{
-      name: 'Inventory Storage Module',
-      id: 'testId',
-    }],
-  },
-});
 const mutator = buildMutator({
   matchProfiles: {
     POST: noop,
@@ -86,18 +74,14 @@ const matchProfilesProps = {
     handleSelectAllCheckbox: noop,
   },
 };
-/* const matchProfilesProps2 = {
-  resources: {
-    modules: {
-      records: []
-    },
-  },
+const matchProfilesProps2 = {
+  resources: { modules: { records: [] } },
   stripes: {
     okapi: {
       tenant: 'test-tenant',
       token: 'test-token',
       url: 'test-url',
-    }
+    },
   },
   location: {
     search: 'data-import-profiles/matchProfiles',
@@ -117,17 +101,16 @@ const matchProfilesProps = {
     deselectAll: noop,
     handleSelectAllCheckbox: noop,
   },
-}; */
-const MatchProfilesComponent = (props) => {
-  const {
-    stripes,
-    location,
-    label,
-    selectedRecord,
-    checkboxList,
-  } = props;
-
-  return renderWithReduxForm(
+};
+const getMatchProfileComponent = ({
+  resources,
+  stripes,
+  location,
+  label,
+  selectedRecord,
+  checkboxList,
+}) => {
+  return (
     <Harness translations={translationsProperties}>
       <Router>
         <MatchProfiles
@@ -136,7 +119,7 @@ const MatchProfilesComponent = (props) => {
           stripes={stripes}
           location={location}
           match={{ path: 'data-import-profiles/matchProfiles' }}
-          unlink={true}
+          unlink
           history={history}
           label={label}
           selectedRecord={selectedRecord}
@@ -147,30 +130,23 @@ const MatchProfilesComponent = (props) => {
     </Harness>
   );
 };
-const renderMatchProfiles = ({
-  stripes,
-  location,
-  label,
-  selectedRecord,
-  checkboxList,
-}) => {
-  return render(
-    <MatchProfilesComponent
-      stripes={stripes}
-      location={location}
-      label={label}
-      selectedRecord={selectedRecord}
-      checkboxList={checkboxList}
-    />);
+const renderMatchProfiles = props => {
+  const component = () => getMatchProfileComponent(props);
+
+  return render(renderWithReduxForm(component));
 };
 
 describe('MatchProfiles', () => {
-  it('should be rendered', () => {
-    const { rerender, debug } = renderMatchProfiles(matchProfilesProps);
+  it('should be rendered', async () => {
+    const {
+      rerender,
+      getByText,
+    } = renderMatchProfiles(matchProfilesProps);
+    const component = () => getMatchProfileComponent(matchProfilesProps2);
 
-    debug();
+    rerender(renderWithReduxForm(component));
 
-  rerender(renderMatchProfiles(matchProfilesProps));
+    await waitFor(() => expect(getByText('Match Profiles')).toBeDefined());
   });
 
   describe('query string', () => {

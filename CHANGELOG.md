@@ -14,6 +14,7 @@
 * Adjust the FOLIO record type in the action profile (UIDATIMP-1028)
 * Cover `<ViewContainer>` component with tests (UIDATIMP-731)
 * Cover `<ActionProfiles>` settings with tests (UIDATIMP-971)
+* Cover `<MatchProfiles>` settings with tests (UIDATIMP-975)
 
 ## [5.0.1](https://github.com/folio-org/ui-data-import/tree/v5.0.1) (2021-10-19)
 
