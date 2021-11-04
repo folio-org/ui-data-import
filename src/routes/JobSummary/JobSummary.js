@@ -134,16 +134,13 @@ const JobSummaryComponent = ({
       const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
         isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
 
-      const isMARCBibRecord = sourceRecordType === FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type;
-      const isMARCHoldingsRecord = sourceRecordType === FOLIO_RECORD_TYPES.MARC_HOLDINGS.type;
+      const isHoldingsRecordImportFailed = sourceRecordType === FOLIO_RECORD_TYPES.MARC_HOLDINGS.type
+        && (sourceRecordActionStatus === RECORD_ACTION_STATUS.DISCARDED
+        || holdingsActionStatus === RECORD_ACTION_STATUS.DISCARDED);
 
-      const isHoldingsRecordImported = isMARCHoldingsRecord
-        && sourceRecordActionStatus === RECORD_ACTION_STATUS.CREATED
-        && holdingsActionStatus === RECORD_ACTION_STATUS.CREATED;
-
-      const title = isMARCBibRecord || isHoldingsRecordImported
-        ? sourceRecordTitle
-        : 'Holdings';
+      const title = isHoldingsRecordImportFailed
+        ? 'Holdings'
+        : sourceRecordTitle;
 
       return (
         <Button
