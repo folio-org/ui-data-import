@@ -15,104 +15,70 @@ import {
   translationsProperties,
 } from '../../../../test/jest/helpers';
 
-import { JobProfilesForm } from '../JobProfilesForm';
+import {
+  JobProfilesForm,
+  fetchAssociations,
+} from '../JobProfilesForm';
+import { PROFILE_TYPES } from '../../../utils';
 
-const jobProfilesFormProps = id => ({
-  pristine: false,
-  initialValues: {
-    id,
-    profile: {
-      id,
-      dataType: 'MARC',
-      deleted: false,
-      description: 'test description',
-      name: 'Default - Name',
-    },
-  },
-  parentResources: {
-    query: {
-      layer: 'edit',
-      query: '',
-      sort: 'name',
-    },
-    jobProfiles: {
-      hasLoaded: true,
-      failed: false,
-      isPending: false,
-      pendingMutations: [],
-      failedMutations: [],
-      successfulMutations: [],
-      other: { totalRecords: 1 },
-      records: [{
-        childProfiles: [],
-        dataType: 'MARC',
-        deleted: false,
-        description: 'test description 1',
-        id: 'id1',
-        metadata: {
-          createdDate: '2021-01-14T14:00:00.000+00:00',
-          createdByUserId: '00000000-0000-0000-0000-000000000000',
-          updatedDate: '2021-01-14T15:00:00.462+00:00',
-          updatedByUserId: '00000000-0000-0000-0000-000000000000',
-        },
-        name: 'name1',
-        parentProfiles: [],
-        userInfo: {
-          firstName: 'System',
-          lastName: 'System',
-          userName: 'System',
-        },
-      }],
-    },
-  },
-  match: { path: '/settings/data-import/job-profiles' },
-  onCancel: noop,
-  handleSubmit: noop,
-  childWrappers: [{
+global.fetch = jest.fn();
+
+const childWrappers = [
+  {
     childSnapshotWrappers: [
       {
         childSnapshotWrappers: [],
-        content: {
-          id: 'id2',
-          name: 'name2',
-          description: 'description',
-          incomingRecordType: 'MARC_BIBLIOGRAPHIC',
-          existingRecordType: 'INSTANCE',
-        },
-        contentType: 'MAPPING_PROFILE',
-        id: 'id3',
+        content: {},
+        contentType: PROFILE_TYPES.MAPPING_PROFILE,
+        id: 'f04b6d63-01cc-4ff7-9d06-2e7cd601443f',
         order: 0,
-        profileId: 'id3',
+        profileId: '13cf7adf-c7a7-4c2e-838f-14d0ac36ec0a',
       },
     ],
-    content: {
-      id: 'id4',
-      name: 'name4',
-      description: 'description',
-      action: 'EDIT',
-      folioRecord: 'INSTANCE',
-      metadata: {
-        createdByUserId: '00000000-0000-0000-0000-000000000000',
-        createdDate: '2021-01-14T14:00:00.000+00:00',
-        updatedByUserId: '00000000-0000-0000-0000-000000000000',
-        updatedDate: '2021-01-14T15:00:00.462+00:00',
-      },
-    },
-    contentType: 'ACTION_PROFILE',
-    id: 'id5',
+    content: {},
+    contentType: PROFILE_TYPES.ACTION_PROFILE,
+    id: '5b63b391-f667-4dbc-b9d7-da82c0c2ac0f',
     order: 0,
-    profileId: 'id6',
-  }],
-  form: {
-    change: noop,
-    reset: noop,
-    getState: jest.fn(() => ({
-      values: {
-        addedRelations: [],
-        deletedRelations: [],
-      },
-    })),
+    profileId: '8aa0b850-9182-4005-8435-340b704b2a19',
   },
+];
+
+const parentResources = {
+  jobProfiles: {},
+  query: {
+    layer: 'duplicate',
+    query: '',
+    sort: 'name',
+  },
+};
+
+const form = {
+  change: noop,
+  reset: noop,
+  getState: jest.fn(() => ({
+    values: {
+      addedRelations: [],
+      deletedRelations: [],
+    },
+  })),
+};
+
+const jobProfilesFormProps = idField => ({
+  pristine: false,
+  initialValues: {
+    addedRelations: [],
+    deletedRelations: [],
+    id: idField,
+    profile: {
+      id: idField,
+      dataType: 'MARC',
+      deleted: false,
+      description: 'test description',
+      name: 'test name',
+    },
+    tags: { tagList: [] },
+  },
+  match: { path: '/settings/data-import/job-profiles' },
   submitting: false,
   stripes: {
     okapi: {
@@ -125,12 +91,7 @@ const jobProfilesFormProps = id => ({
 const renderJobProfilesForm = ({
   submitting,
   initialValues,
-  childWrappers,
-  handleSubmit,
-  form,
-  onCancel,
   stripes,
-  parentResources,
   match,
 }) => {
   const component = () => (
@@ -139,9 +100,9 @@ const renderJobProfilesForm = ({
         submitting={submitting}
         initialValues={initialValues}
         childWrappers={childWrappers}
-        handleSubmit={handleSubmit}
+        handleSubmit={noop}
         form={form}
-        onCancel={onCancel}
+        onCancel={noop}
         stripes={stripes}
         parentResources={parentResources}
         transitionToParams={noop}
@@ -156,7 +117,11 @@ const renderJobProfilesForm = ({
 
 describe('<JobProfilesForm>', () => {
   afterEach(() => {
-    jest.clearAllTimers();
+    global.fetch.mockClear();
+  });
+
+  afterAll(() => {
+    delete global.fetch;
   });
 
   describe('should display correct title', () => {
@@ -171,6 +136,18 @@ describe('<JobProfilesForm>', () => {
 
       expect(getAllByText(/edit/i, { exact: false })).toBeDefined();
     });
+  });
+
+  it('fetches associated jobs correctly', async () => {
+    const expected = [{ contentType: PROFILE_TYPES.ACTION_PROFILE }];
+
+    global.fetch.mockReturnValueOnce(Promise.resolve({
+      status: 200,
+      ok: true,
+      json: () => Promise.resolve({ childSnapshotWrappers: expected }),
+    }));
+
+    expect(await fetchAssociations({ url: '/test-path' }, 'testId')).toEqual(expected);
   });
 
   it('User can change "Accepted data type"', async () => {

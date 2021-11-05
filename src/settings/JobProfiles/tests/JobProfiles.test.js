@@ -47,7 +47,7 @@ const resources = {
     failed: false,
     hasLoaded: true,
     isPending: false,
-    other: { totalRecords: 3 },
+    other: { totalRecords: 1 },
     records: [
       {
         childProfiles: [],
@@ -142,7 +142,7 @@ describe('<JobProfiles>', () => {
   it('should render correct amount of items', () => {
     const { getByText } = renderJobProfiles(jobProfilesProps);
 
-    expect(getByText(/3 job profiles/i)).toBeInTheDocument();
+    expect(getByText(/1 job profile/i)).toBeInTheDocument();
   });
 
   describe('query string', () => {
