@@ -20,6 +20,7 @@
 * Setting: Updates to Action profiles (UIDATIMP-1026)
 * Adjust the FOLIO record type in the match profile (UIDATIMP-1029)
 * Settings : Updates to default SRS Holdings job profile (UIDATIMP-1023)
+* Cover `<JobProfiles` component with tests (UIDATIMP-974)
 
 ## [5.0.1](https://github.com/folio-org/ui-data-import/tree/v5.0.1) (2021-10-19)
 
