@@ -23,6 +23,8 @@ const sourceRecordsIds = [
   faker.random.uuid(),
   faker.random.uuid(),
   faker.random.uuid(),
+  faker.random.uuid(),
+  faker.random.uuid(),
 ];
 const instanceId = faker.random.uuid();
 
@@ -38,6 +40,7 @@ const jobLogEntriesResources = buildResources({
   resourceName: 'jobLogEntries',
   records: [{
     sourceRecordActionStatus: 'CREATED',
+    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
     instanceActionStatus: 'CREATED',
     jobExecutionId: firstRecordJobExecutionId,
     sourceRecordId: sourceRecordsIds[0],
@@ -45,23 +48,44 @@ const jobLogEntriesResources = buildResources({
     sourceRecordTitle: 'Test item 1',
   }, {
     instanceActionStatus: 'UPDATED',
+    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
     jobExecutionId: faker.random.uuid(),
     sourceRecordId: sourceRecordsIds[1],
     sourceRecordOrder: '1',
     sourceRecordTitle: 'Test item 2',
   }, {
     holdingsActionStatus: 'MULTIPLE',
+    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
     jobExecutionId: faker.random.uuid(),
     sourceRecordId: sourceRecordsIds[2],
     sourceRecordOrder: '2',
     sourceRecordTitle: 'Test item 3',
   }, {
     itemActionStatus: 'DISCARDED',
+    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
     jobExecutionId: faker.random.uuid(),
     sourceRecordId: sourceRecordsIds[3],
     sourceRecordOrder: '3',
     sourceRecordTitle: 'Test item 4',
     error: 'Error message',
+  }, {
+    sourceRecordActionStatus: 'CREATED',
+    holdingsActionStatus: 'CREATED',
+    holdingsRecordHridList: ['holdingsHrid1'],
+    sourceRecordType: 'MARC_HOLDINGS',
+    jobExecutionId: faker.random.uuid(),
+    sourceRecordId: sourceRecordsIds[4],
+    sourceRecordOrder: '4',
+    sourceRecordTitle: 'Test item 5',
+  }, {
+    sourceRecordActionStatus: 'DISCARDED',
+    holdingsActionStatus: 'DISCARDED',
+    holdingsRecordHridList: ['holdingsHrid2'],
+    sourceRecordType: 'MARC_HOLDINGS',
+    jobExecutionId: faker.random.uuid(),
+    sourceRecordId: sourceRecordsIds[5],
+    sourceRecordOrder: '5',
+    sourceRecordTitle: 'Test item 6',
   }],
 });
 const jobLogResources = buildResources({
@@ -167,23 +191,24 @@ describe('Job summary page', () => {
   it('should have total number of records in the subheader', () => {
     const { getByText } = renderJobSummary();
 
-    expect(getByText('4 records found')).toBeDefined();
+    expect(getByText('6 records found')).toBeDefined();
   });
 
   describe('results table', () => {
     it('should have proper columns', () => {
       const { getByText } = renderJobSummary();
       /*
-       * Get "Error" label by query selector instead of by "getByText" because there are
-       * "Error" column label and "Error" messages in cells on the page
+       * Get "Holdings" and "Error" labels by query selector instead of by "getByText" because there are
+       * "Holdings" / "Error" column labels and "Holdings" / "Error" messages in cells on the page
        */
+      const holdingsColumn = document.querySelector('#list-column-holdingsstatus div[class^="mclHeaderInner"] > div');
       const errorColumn = document.querySelector('#list-column-error div[class^="mclHeaderInner"] > div');
 
       expect(getByText('Record')).toBeDefined();
       expect(getByText('Title')).toBeDefined();
       expect(getByText('SRS MARC')).toBeDefined();
       expect(getByText('Instance')).toBeDefined();
-      expect(getByText('Holdings')).toBeDefined();
+      expect(holdingsColumn.innerHTML).toEqual('Holdings');
       expect(getByText('Item')).toBeDefined();
       expect(getByText('Order')).toBeDefined();
       expect(getByText('Invoice')).toBeDefined();
@@ -253,9 +278,13 @@ describe('Job summary page', () => {
 
   describe('when action status is DISCARDED', () => {
     it('the value should be a text', () => {
-      const { getByText } = renderJobSummary();
+      const { getAllByText } = renderJobSummary();
 
-      expect(getByText('Discarded')).not.toHaveAttribute('href');
+      const discardedStatuses = getAllByText('Discarded');
+
+      discardedStatuses.forEach(status => {
+        expect(status).not.toHaveAttribute('href');
+      });
     });
   });
 });

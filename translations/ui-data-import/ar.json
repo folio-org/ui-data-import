@@ -868,5 +868,6 @@
     "settings.mappingProfiles.map.item.status.unknown": "غير معروف",
     "logViewer.invoice": "الفاتورة",
     "logViewer.invoiceLine": "سطر الفاتورة",
-    "logViewer.filter.srsMARC": "مارك SRS"
+    "logViewer.filter.srsMARC": "مارك SRS",
+    "recordTypes.authority": "Authority"
 }
