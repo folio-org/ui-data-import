@@ -43,7 +43,7 @@ const renderJobs = (context = defaultContext) => {
 
 describe('<Jobs>', () => {
   beforeEach(() => {
-    jest.setTimeout(10 * DEFAULT_TIMEOUT_BEFORE_JOB_DELETION);
+    jest.setTimeout(5 * DEFAULT_TIMEOUT_BEFORE_JOB_DELETION);
   });
 
   afterEach(() => {
