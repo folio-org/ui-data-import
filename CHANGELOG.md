@@ -22,6 +22,7 @@
 * Settings : Updates to default SRS Holdings job profile (UIDATIMP-1023)
 * Populate Record Log title column when imported record is MARC Holdings (UIDATIMP-1007)
 * Cover `<Jobs>` component with tests (UIDATIMP-959)
+* Cover `<UploadingJobsContextProvider>` component with tests (UIDATIMP-729)
 * Cover `<JobProfiles` component with tests (UIDATIMP-974)
 
 ## [5.0.1](https://github.com/folio-org/ui-data-import/tree/v5.0.1) (2021-10-19)
