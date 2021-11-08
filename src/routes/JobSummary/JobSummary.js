@@ -125,11 +125,22 @@ const JobSummaryComponent = ({
     title: ({
       sourceRecordTitle,
       sourceRecordId,
+      sourceRecordType,
+      sourceRecordActionStatus,
+      holdingsActionStatus,
       invoiceLineJournalRecordId,
     }) => {
       const jobExecutionId = resources.jobLogEntries.records[0].jobExecutionId;
       const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
         isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
+
+      const isHoldingsRecordImportFailed = sourceRecordType === FOLIO_RECORD_TYPES.MARC_HOLDINGS.type
+        && (sourceRecordActionStatus === RECORD_ACTION_STATUS.DISCARDED
+        || holdingsActionStatus === RECORD_ACTION_STATUS.DISCARDED);
+
+      const title = isHoldingsRecordImportFailed
+        ? 'Holdings'
+        : sourceRecordTitle;
 
       return (
         <Button
@@ -139,7 +150,7 @@ const JobSummaryComponent = ({
           to={path}
           buttonClass={sharedCss.cellLink}
         >
-          {sourceRecordTitle}
+          {title}
         </Button>
       );
     },
