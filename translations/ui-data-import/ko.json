@@ -640,7 +640,7 @@
     "settings.matchProfiles.qualifier": "Qualifier",
     "settings.matchProfiles.productIdType": "Product ID type",
     "settings.matchProfiles.receivingNote": "Receiving note",
-    "settings.matchProfiles.internalNote": "Internal note",
+    "settings.matchProfiles.internalNote": "내부용 메모",
     "settings.matchProfiles.polNumber": "POL number",
     "settings.matchProfiles.receiptDate": "Receipt date",
     "settings.matchProfiles.donor": "Donor",
