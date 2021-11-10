@@ -42,6 +42,8 @@ jest.mock('@folio/stripes/components', () => ({
   ) : null)),
 }));
 
+jest.spyOn(console, 'error').mockImplementation(() => {});
+
 const contentDataProp = [{
   contentType: PROFILE_TYPES.JOB_PROFILE,
   content: {
