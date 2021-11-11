@@ -699,8 +699,6 @@ export const MARC_FIELD_PROTECTION_SOURCE = {
   },
 };
 
-export const MARC_FIELD_PROTECTION_ALLOWED_FIELD_VALUES = ['*', '005'];
-
 // TODO: Options to disable until functionality is not implemented.
 // Should be removed in the future
 export const FOLIO_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'ORDER', 'MARC_AUTHORITY'];
