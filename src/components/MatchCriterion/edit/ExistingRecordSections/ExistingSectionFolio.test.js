@@ -111,7 +111,7 @@ describe('ExistingSectionFolio edit', () => {
     });
   });
 
-  describe('when searching for an option', () => {
+  describe.skip('when searching for an option', () => {
     it('should filter data options', () => {
       const {
         getByRole,
