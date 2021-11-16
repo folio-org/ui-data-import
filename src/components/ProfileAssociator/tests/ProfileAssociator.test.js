@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   waitFor,
-  fireEvent, act,
+  fireEvent,
+  act,
 } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -136,7 +137,7 @@ const renderProfileAssociator = ({
 };
 
 describe('<ProfileAssociator>', () => {
-  describe('when there is not associated profiles', () => {
+  describe('when there is no associated profiles', () => {
     it('renders empty message', () => {
       const { getByText } = renderProfileAssociator({
         record: {
@@ -167,7 +168,7 @@ describe('<ProfileAssociator>', () => {
     expect(getByRole('button', { name: /search/i })).toBeDisabled();
   });
 
-  describe('when input filed filled', () => {
+  describe('when input field is filled', () => {
     it('"Search" button is enabled', () => {
       const { getByRole } = renderProfileAssociator({
         record: {
@@ -186,7 +187,7 @@ describe('<ProfileAssociator>', () => {
       expect(getByRole('button', { name: /search/i })).toBeEnabled();
     });
 
-    it('user can clear it', async () => {
+    it('user can clear search box', async () => {
       const {
         getByRole,
         container,
@@ -296,7 +297,7 @@ describe('<ProfileAssociator>', () => {
     });
   });
 
-  it('profiles is sorted by "Name" by default', () => {
+  it('profiles are sorted by "Name" column by default', () => {
     const { container } = renderProfileAssociator({ isMultiSelect: true });
 
     const dataRows = container.querySelectorAll('[data-row-index]');
