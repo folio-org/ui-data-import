@@ -24,9 +24,13 @@
 * Cover `<Jobs>` component with tests (UIDATIMP-959)
 * Cover `<UploadingJobsContextProvider>` component with tests (UIDATIMP-729)
 * Cover `<UploadingJobsDisplay` component with tests (UIDATIMP-730)
-* Adjust UI for the Field protection create/edit screen (UIDATIMP-1043)
-* Cover `<ProfileAssociator>` component with tests (UIDATIMP-717)
 
+## [5.0.2](https://github.com/folio-org/ui-data-import/tree/v5.0.2) (2021-11-12)
+
+### Features added:
+* Adjust UI for the Field protection create/edit screen (UIDATIMP-1043)
+* Cover `<MatchProfiles>` settings with tests (UIDATIMP-975)
+* Cover `<ProfileAssociator>` component with tests (UIDATIMP-717)
 
 ## [5.0.1](https://github.com/folio-org/ui-data-import/tree/v5.0.1) (2021-10-19)
 

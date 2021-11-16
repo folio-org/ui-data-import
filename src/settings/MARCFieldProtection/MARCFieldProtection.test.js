@@ -246,6 +246,52 @@ describe('MARCFieldProtection component', () => {
 
         expect(getAllByText('Please enter other value').length).toEqual(2);
       });
+
+      it('should disallow asterisk to be entered to both indicators', () => {
+        const {
+          getByText,
+          getAllByText,
+          getByPlaceholderText,
+        } = renderMarcFieldProtection();
+
+        fireEvent.click(getByText('+ New'));
+
+        const field = getByPlaceholderText('field');
+        const indicator1 = getByPlaceholderText('indicator1');
+        const indicator2 = getByPlaceholderText('indicator2');
+
+        fireEvent.change(field, { target: { value: '999' } });
+        fireEvent.change(indicator1, { target: { value: '*' } });
+        fireEvent.change(indicator2, { target: { value: '*' } });
+
+        fireEvent.blur(indicator1);
+        fireEvent.blur(indicator2);
+
+        expect(getAllByText('Please enter other value').length).toEqual(2);
+      });
+
+      it('should allow asterisk to be entered to one of the indicators', () => {
+        const {
+          getByText,
+          queryAllByText,
+          getByPlaceholderText,
+        } = renderMarcFieldProtection();
+
+        fireEvent.click(getByText('+ New'));
+
+        const field = getByPlaceholderText('field');
+        const indicator1 = getByPlaceholderText('indicator1');
+        const indicator2 = getByPlaceholderText('indicator2');
+
+        fireEvent.change(field, { target: { value: '999' } });
+        fireEvent.change(indicator1, { target: { value: 'a' } });
+        fireEvent.change(indicator2, { target: { value: '*' } });
+
+        fireEvent.blur(indicator1);
+        fireEvent.blur(indicator2);
+
+        expect(queryAllByText('Please enter other value').length).toEqual(0);
+      });
     });
   });
 });

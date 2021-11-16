@@ -44,7 +44,7 @@ const validateAlphanumeric = value => {
 
   return <FormattedMessage id="ui-data-import.validation.enterAsteriskOrAlphanumeric" />;
 };
-const validateIndicator = (indicatorValue, fieldValue) => {
+const validateIndicator = (indicatorValue, fieldValue, indicator2Value) => {
   const checkFieldRange = () => {
     return parseInt(fieldValue, 10) >= 10 && parseInt(fieldValue, 10) <= 998;
   };
@@ -54,6 +54,10 @@ const validateIndicator = (indicatorValue, fieldValue) => {
   }
 
   if (fieldValue === DISABLED_FOR_F_INDICATOR_FIELD && indicatorValue === 'f') {
+    return <FormattedMessage id="ui-data-import.validation.enterOther" />;
+  }
+
+  if (fieldValue === DISABLED_FOR_F_INDICATOR_FIELD && indicatorValue === '*' && indicator2Value === '*') {
     return <FormattedMessage id="ui-data-import.validation.enterOther" />;
   }
 
@@ -193,8 +197,8 @@ export class MARCFieldProtection extends Component {
     data,
   }) => ({
     field: validateField(field),
-    indicator1: validateIndicator(indicator1, field),
-    indicator2: validateIndicator(indicator2, field),
+    indicator1: validateIndicator(indicator1, field, indicator2),
+    indicator2: validateIndicator(indicator2, field, indicator1),
     subfield: validateSubfield(subfield, field),
     data: validateData(data, field),
   });
