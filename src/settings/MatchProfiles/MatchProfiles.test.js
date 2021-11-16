@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, act, waitFor } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
@@ -21,25 +21,24 @@ import {
   OCLC_MATCH_EXISTING_SRS_RECORD_ID,
   OCLC_MATCH_NO_SRS_RECORD_ID,
 } from '../../utils';
+import * as utils from '../../utils/fetchJsonShemas';
 import { matchProfilesShape } from '.';
 import { MatchProfiles } from './MatchProfiles';
-
-/* jest.mock('../../components', () => ({
-  ...jest.requireActual('../../components'),
-  ListView: jest.fn(() => <span>ListView</span>),
-})); */
 
 const history = createMemoryHistory();
 
 history.push = jest.fn();
 
-const resources = buildResources({
-  modules: {
-    records: [{
-      name: 'Inventory Storage Module',
-      id: 'testId',
-    }],
-  },
+const resources1 = buildResources({
+  resourceName: 'modules',
+  records: [],
+});
+const resources2 = buildResources({
+  resourceName: 'modules',
+  records: [{
+    name: 'Inventory Storage Module',
+    id: 'testId',
+  }],
 });
 const mutator = buildMutator({
   matchProfiles: {
@@ -53,14 +52,6 @@ const mutator = buildMutator({
   resultCount: { replace: jest.fn() },
 });
 const matchProfilesProps = {
-  resources: {
-    modules: {
-      records: [{
-        name: 'Inventory Storage Module',
-        id: 'testId',
-      }],
-    },
-  },
   stripes: {
     okapi: {
       tenant: 'test-tenant',
@@ -86,91 +77,66 @@ const matchProfilesProps = {
     handleSelectAllCheckbox: noop,
   },
 };
-/* const matchProfilesProps2 = {
-  resources: {
-    modules: {
-      records: []
-    },
-  },
-  stripes: {
-    okapi: {
-      tenant: 'test-tenant',
-      token: 'test-token',
-      url: 'test-url',
-    }
-  },
-  location: {
-    search: 'data-import-profiles/matchProfiles',
-    pathname: 'data-import-profiles/matchProfiles',
-  },
-  match: { path: 'data-import-profiles/matchProfiles' },
-  label: <span>Match Profiles</span>,
-  selectedRecord: {
-    record: null,
-    hasLoaded: false,
-  },
-  checkboxList: {
-    selectedRecords: new Set(['testId1']),
-    isAllSelected: false,
-    selectRecord: noop,
-    selectAll: noop,
-    deselectAll: noop,
-    handleSelectAllCheckbox: noop,
-  },
-}; */
-const MatchProfilesComponent = (props) => {
-  const {
-    stripes,
-    location,
-    label,
-    selectedRecord,
-    checkboxList,
-  } = props;
 
-  return renderWithReduxForm(
-    <Harness translations={translationsProperties}>
-      <Router>
+const getMatchProfilesComponent = ({
+  stripes,
+  location,
+  label,
+  selectedRecord,
+  checkboxList,
+  resources,
+}) => {
+  const component = () => (
+    <Router>
+      <Harness translations={translationsProperties}>
         <MatchProfiles
           resources={resources}
           mutator={mutator}
           stripes={stripes}
           location={location}
           match={{ path: 'data-import-profiles/matchProfiles' }}
-          unlink={true}
+          unlink
           history={history}
           label={label}
           selectedRecord={selectedRecord}
           checkboxList={checkboxList}
           setList={noop}
         />
-      </Router>
-    </Harness>
+      </Harness>
+    </Router>
   );
+
+  return renderWithReduxForm(component);
 };
-const renderMatchProfiles = ({
-  stripes,
-  location,
-  label,
-  selectedRecord,
-  checkboxList,
-}) => {
-  return render(
-    <MatchProfilesComponent
-      stripes={stripes}
-      location={location}
-      label={label}
-      selectedRecord={selectedRecord}
-      checkboxList={checkboxList}
-    />);
-};
+const renderMatchProfiles = props => render(getMatchProfilesComponent(props));
 
 describe('MatchProfiles', () => {
-  it('should be rendered', () => {
-    const { rerender, debug } = renderMatchProfiles(matchProfilesProps);
+  it('should be rendered', async () => {
+    const getModuleVersion = jest.spyOn(utils, 'getModuleVersion');
 
-    debug();
+    // await act(async () => {
+    //   const { rerender, debug } = await renderMatchProfiles({
+    //     ...matchProfilesProps,
+    //     resources: { ...resources1 },
+    //   });
+    //
+    //   await rerender(getMatchProfilesComponent({
+    //     ...matchProfilesProps,
+    //     resources: { ...resources2 },
+    //   }));
+    // });
 
-  rerender(renderMatchProfiles(matchProfilesProps));
+    const { rerender } = renderMatchProfiles({
+      ...matchProfilesProps,
+      resources: { ...resources1 },
+    });
+
+    await rerender(getMatchProfilesComponent({
+      ...matchProfilesProps,
+      resources: { ...resources2 },
+    }));
+
+    await waitFor(() => expect(getModuleVersion).toHaveBeenCalledTimes(1));
   });
 
   describe('query string', () => {
