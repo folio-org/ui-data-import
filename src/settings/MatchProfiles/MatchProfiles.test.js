@@ -9,7 +9,6 @@ import {
   buildMutator,
   Harness,
 } from '@folio/stripes-data-transfer-components/test/helpers';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
 import {
   renderWithReduxForm,
@@ -63,6 +62,7 @@ const matchProfilesProps = {
     search: 'data-import-profiles/matchProfiles',
     pathname: 'data-import-profiles/matchProfiles',
   },
+  match: { path: 'data-import-profiles/matchProfiles' },
   label: <span>Match Profiles</span>,
   selectedRecord: {
     record: null,

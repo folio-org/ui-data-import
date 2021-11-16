@@ -12,12 +12,35 @@ import recordTypeSelectStyles from '../RecordTypesSelect.css';
 
 const recordsData = {
   connections: [
-    FOLIO_RECORD_TYPES.INSTANCE.type,
-    FOLIO_RECORD_TYPES.HOLDINGS.type,
-    FOLIO_RECORD_TYPES.ITEM.type,
-    FOLIO_RECORD_TYPES.ORDER.type,
-    FOLIO_RECORD_TYPES.INVOICE.type,
-  ].map(id => `[data-id="${id}"]`),
+    {
+      from: FOLIO_RECORD_TYPES.INSTANCE.type,
+      to: FOLIO_RECORD_TYPES.INSTANCE.type,
+    },
+    {
+      from: FOLIO_RECORD_TYPES.HOLDINGS.type,
+      to: FOLIO_RECORD_TYPES.INSTANCE.type,
+    },
+    {
+      from: FOLIO_RECORD_TYPES.ITEM.type,
+      to: FOLIO_RECORD_TYPES.INSTANCE.type,
+    },
+    {
+      from: FOLIO_RECORD_TYPES.ORDER.type,
+      to: FOLIO_RECORD_TYPES.INSTANCE.type,
+    },
+    {
+      from: FOLIO_RECORD_TYPES.INVOICE.type,
+      to: FOLIO_RECORD_TYPES.INSTANCE.type,
+    },
+    {
+      from: FOLIO_RECORD_TYPES.AUTHORITY.type,
+      to: FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
+    },
+    {
+      from: FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
+      to: FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
+    },
+  ],
   children: [
     {
       itemMeta: FOLIO_RECORD_TYPES.INSTANCE,
@@ -37,6 +60,7 @@ const recordsData = {
       },
     },
     { itemMeta: FOLIO_RECORD_TYPES.INVOICE },
+    { itemMeta: FOLIO_RECORD_TYPES.AUTHORITY },
     { itemMeta: FOLIO_RECORD_TYPES.MARC_AUTHORITY },
   ],
 };
@@ -62,18 +86,23 @@ export const RecordSelect = ({
         />
       )}
     />
-    {treeData.connections.map(element => (
-      <TreeLine
-        key={element}
-        from={element}
-        to={treeData.connections[0]}
-        fromAnchor={isLocalLTR ? 'right' : 'left'}
-        toAnchor={isLocalLTR ? 'right' : 'left'}
-        toAnchorOffset="20px"
-        container={container}
-        isLocalLTR={isLocalLTR}
-      />
-    ))}
+    {treeData.connections.map(element => {
+      const dataIdFrom = `[data-id="${element.from}"]`;
+      const dataIdTo = `[data-id="${element.to}"]`;
+
+      return (
+        <TreeLine
+          key={dataIdFrom}
+          from={dataIdFrom}
+          to={dataIdTo}
+          fromAnchor={isLocalLTR ? 'right' : 'left'}
+          toAnchor={isLocalLTR ? 'right' : 'left'}
+          toAnchorOffset="20px"
+          container={container}
+          isLocalLTR={isLocalLTR}
+        />
+      );
+    })}
   </>
 );
 
