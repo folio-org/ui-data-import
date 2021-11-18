@@ -24,6 +24,7 @@
 * Cover `<Jobs>` component with tests (UIDATIMP-959)
 * Cover `<UploadingJobsContextProvider>` component with tests (UIDATIMP-729)
 * Cover `<UploadingJobsDisplay` component with tests (UIDATIMP-730)
+* Cover `<MappingProfiles/detailsSections/edit>` settings with tests (UIDATIMP-978)
 
 ## [5.0.2](https://github.com/folio-org/ui-data-import/tree/v5.0.2) (2021-11-12)
 
