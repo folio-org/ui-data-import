@@ -10,6 +10,16 @@ import {
 } from '../../../../../../test/jest/helpers';
 
 import { MappingHoldingsDetails } from '../MappingHoldingsDetails';
+import {
+  onAdd,
+  onRemove,
+} from '../../utils';
+
+jest.mock('../../utils', () => ({
+  ...jest.requireActual('../../utils'),
+  onAdd: jest.fn(),
+  onRemove: jest.fn(),
+}));
 
 global.fetch = jest.fn();
 
@@ -218,7 +228,8 @@ describe('<MappingHoldingsDetails>', () => {
 
   afterEach(() => {
     global.fetch.mockClear();
-    setReferenceTablesMockProp.mockClear();
+    onAdd.mockClear();
+    onRemove.mockClear();
   });
 
   afterAll(() => {
@@ -256,7 +267,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('formerIds');
       expect(getByText('Former holdings ID')).toBeInTheDocument();
     });
 
@@ -267,7 +279,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(formerIds);
     });
   });
 
@@ -282,7 +295,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('statisticalCodeIds');
       expect(getByText('Statistical code')).toBeInTheDocument();
     });
 
@@ -293,7 +307,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(statisticalCodeIds);
     });
   });
 
@@ -308,7 +323,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('holdingsStatements');
       expect(getByText('Holdings statement')).toBeInTheDocument();
       expect(getByText('Statement public note')).toBeInTheDocument();
       expect(getByText('Statement staff note')).toBeInTheDocument();
@@ -321,7 +337,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(holdingsStatements);
     });
   });
 
@@ -336,7 +353,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('holdingsStatementsForSupplements');
       expect(getByText('Holdings statement')).toBeInTheDocument();
       expect(getByText('Statement public note')).toBeInTheDocument();
       expect(getByText('Statement staff note')).toBeInTheDocument();
@@ -349,7 +367,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(holdingsStatementsForSupplements);
     });
   });
 
@@ -364,7 +383,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('holdingsStatementsForIndexes');
       expect(getByText('Holdings statement')).toBeInTheDocument();
       expect(getByText('Statement public note')).toBeInTheDocument();
       expect(getByText('Statement staff note')).toBeInTheDocument();
@@ -377,7 +397,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(holdingsStatementsForIndexes);
     });
   });
 
@@ -392,7 +413,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('notes');
       expect(getByText('Note type')).toBeInTheDocument();
       expect(getByText('Note')).toBeInTheDocument();
       expect(getByText('Staff only')).toBeInTheDocument();
@@ -405,7 +427,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(notes);
     });
   });
 
@@ -420,7 +443,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('electronicAccess');
       expect(getByText('Relationship')).toBeInTheDocument();
       expect(getByText('URI')).toBeInTheDocument();
       expect(getByText('Link text')).toBeInTheDocument();
@@ -435,7 +459,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(electronicAccess);
     });
   });
 
@@ -450,7 +475,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('receivingHistory.entries');
       expect(getByText('Public display')).toBeInTheDocument();
       expect(getByText('Enumeration')).toBeInTheDocument();
       expect(getByText('Chronology')).toBeInTheDocument();
@@ -463,7 +489,8 @@ describe('<MappingHoldingsDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(receivingHistoryEntries);
     });
   });
 });

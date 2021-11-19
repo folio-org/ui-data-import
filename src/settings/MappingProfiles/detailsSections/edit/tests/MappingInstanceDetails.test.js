@@ -10,6 +10,16 @@ import {
 } from '../../../../../../test/jest/helpers';
 
 import { MappingInstanceDetails } from '../MappingInstanceDetails';
+import {
+  onAdd,
+  onRemove,
+} from '../../utils';
+
+jest.mock('../../utils', () => ({
+  ...jest.requireActual('../../utils'),
+  onAdd: jest.fn(),
+  onRemove: jest.fn(),
+}));
 
 global.fetch = jest.fn();
 
@@ -413,7 +423,8 @@ describe('<MappingInstanceDetails>', () => {
 
   afterEach(() => {
     global.fetch.mockClear();
-    setReferenceTablesMockProp.mockClear();
+    onAdd.mockClear();
+    onRemove.mockClear();
   });
 
   afterAll(() => {
@@ -476,7 +487,8 @@ describe('<MappingInstanceDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('statisticalCodeIds');
       expect(getByText('Statistical code')).toBeInTheDocument();
     });
 
@@ -492,7 +504,8 @@ describe('<MappingInstanceDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(statisticalCodeIds);
     });
   });
 
@@ -512,7 +525,8 @@ describe('<MappingInstanceDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('natureOfContentTermIds');
       expect(getByText('Nature of content term')).toBeInTheDocument();
     });
 
@@ -528,7 +542,8 @@ describe('<MappingInstanceDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(natureOfContentTermIds);
     });
   });
 
@@ -548,7 +563,8 @@ describe('<MappingInstanceDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('parentInstances');
       expect(getByText('Parent instance')).toBeInTheDocument();
       expect(getByText('Type of relation')).toBeInTheDocument();
     });
@@ -565,7 +581,8 @@ describe('<MappingInstanceDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(parentInstances);
     });
   });
 
@@ -585,7 +602,8 @@ describe('<MappingInstanceDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('childInstances');
       expect(getByText('Child instance')).toBeInTheDocument();
       expect(getByText('Type of relation')).toBeInTheDocument();
     });
@@ -602,7 +620,8 @@ describe('<MappingInstanceDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(childInstances);
     });
   });
 });

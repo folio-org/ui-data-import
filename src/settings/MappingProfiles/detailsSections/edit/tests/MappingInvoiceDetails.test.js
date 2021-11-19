@@ -10,6 +10,16 @@ import {
 } from '../../../../../../test/jest/helpers';
 
 import { MappingInvoiceDetails } from '../MappingInvoiceDetails';
+import {
+  onAdd,
+  onRemove,
+} from '../../utils';
+
+jest.mock('../../utils', () => ({
+  ...jest.requireActual('../../utils'),
+  onAdd: jest.fn(),
+  onRemove: jest.fn(),
+}));
 
 jest.mock('.../../../../../components/FieldOrganization/FieldOrganization', () => ({ onSelect }) => (
   <div>
@@ -438,12 +448,12 @@ const okapiProp = {
   translations: {},
 };
 
-const renderMappingInvoiceDetails = ({ referenceTables }) => {
+const renderMappingInvoiceDetails = () => {
   const component = () => (
     <MappingInvoiceDetails
       mappingDetails={mappingDetailsProp}
       initialFields={initialFieldsProp}
-      referenceTables={referenceTables || referenceTablesProp}
+      referenceTables={referenceTablesProp}
       setReferenceTables={setReferenceTablesMockProp}
       getMappingSubfieldsFieldValue={getMappingSubfieldsFieldValueProp}
       okapi={okapiProp}
@@ -470,7 +480,8 @@ describe('<MappingInvoiceDetails>', () => {
 
   afterEach(() => {
     global.fetch.mockClear();
-    setReferenceTablesMockProp.mockClear();
+    onAdd.mockClear();
+    onRemove.mockClear();
     consoleErrorSpy.mockRestore();
   });
 
@@ -483,7 +494,7 @@ describe('<MappingInvoiceDetails>', () => {
     const {
       findByRole,
       getByRole,
-    } = renderMappingInvoiceDetails({});
+    } = renderMappingInvoiceDetails();
 
     expect(await findByRole('button', {
       name: /invoice information/i,
@@ -516,7 +527,7 @@ describe('<MappingInvoiceDetails>', () => {
   });
 
   it('User can select vendor', async () => {
-    const { findByRole } = renderMappingInvoiceDetails({});
+    const { findByRole } = renderMappingInvoiceDetails();
 
     fireEvent.click(await findByRole('button', { name: /select vendor/i }));
 
@@ -525,62 +536,45 @@ describe('<MappingInvoiceDetails>', () => {
 
   describe('"Invoice adjustments" field', () => {
     it('User can add adjustments', async () => {
-      const {
-        findAllByRole,
-        getAllByText,
-        getAllByRole,
-      } = renderMappingInvoiceDetails({});
+      const { findAllByRole } = renderMappingInvoiceDetails();
 
       const buttons = await findAllByRole('button', { name: 'Add adjustment' });
 
       fireEvent.click(buttons[0]);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
-      expect(getAllByRole('textbox', { name: /description/i })[0]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /amount/i })[0]).toBeVisible();
-      expect(getAllByText('Type')[0]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /pro rate/i })[0]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /relation to total/i })[0]).toBeVisible();
-      expect(getAllByRole('checkbox', { name: /export to accounting/i })[0]).toBeVisible();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('adjustments');
     });
 
     it('User can delete adjustment', async () => {
-      const { findAllByRole } = renderMappingInvoiceDetails({});
+      const { findAllByRole } = renderMappingInvoiceDetails();
 
       const deleteButtons = await findAllByRole('button', { name: /delete this item/i });
 
       fireEvent.click(deleteButtons[0]);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
     });
 
     it('User can add fund distribution', async () => {
-      const {
-        findAllByRole,
-        getAllByText,
-        getAllByRole,
-      } = renderMappingInvoiceDetails({});
+      const { findAllByRole } = renderMappingInvoiceDetails();
 
       const buttons = await findAllByRole('button', { name: 'Add fund distribution' });
 
       fireEvent.click(buttons[0]);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
-      expect(getAllByRole('textbox', { name: /fund id/i })[0]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /expense class/i })[0]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /value/i })[0]).toBeVisible();
-      expect(getAllByText('Type')[1]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /amount/i })[1]).toBeVisible();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('fundDistributions');
     });
 
     it('User can delete fund distribution', async () => {
-      const { findAllByRole } = renderMappingInvoiceDetails({});
+      const { findAllByRole } = renderMappingInvoiceDetails();
 
       const deleteButtons = await findAllByRole('button', { name: /delete this item/i });
 
       fireEvent.click(deleteButtons[1]);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
     });
 
     it('User can change pro rate', async () => {
@@ -588,7 +582,7 @@ describe('<MappingInvoiceDetails>', () => {
         getByRole,
         findAllByRole,
         getByText,
-      } = renderMappingInvoiceDetails({});
+      } = renderMappingInvoiceDetails();
 
       const buttons = await findAllByRole('button', { name: /accepted values/i });
 
@@ -605,7 +599,7 @@ describe('<MappingInvoiceDetails>', () => {
         const {
           findByRole,
           getByRole,
-        } = renderMappingInvoiceDetails({});
+        } = renderMappingInvoiceDetails();
 
         fireEvent.click(await findByRole('checkbox', { name: /use set exchange rate/i }));
 
@@ -616,7 +610,7 @@ describe('<MappingInvoiceDetails>', () => {
         const {
           findByRole,
           getByRole,
-        } = renderMappingInvoiceDetails({});
+        } = renderMappingInvoiceDetails();
 
         fireEvent.click(await findByRole('checkbox', { name: /use set exchange rate/i }));
         fireEvent.click(await findByRole('checkbox', { name: /use set exchange rate/i }));
@@ -632,7 +626,7 @@ describe('<MappingInvoiceDetails>', () => {
         const {
           findByRole,
           getByRole,
-        } = renderMappingInvoiceDetails({});
+        } = renderMappingInvoiceDetails();
 
         fireEvent.click(await findByRole('checkbox', { name: /lock total/i }));
 
@@ -643,7 +637,7 @@ describe('<MappingInvoiceDetails>', () => {
         const {
           findByRole,
           getByRole,
-        } = renderMappingInvoiceDetails({});
+        } = renderMappingInvoiceDetails();
 
         fireEvent.click(await findByRole('checkbox', { name: /lock total/i }));
         fireEvent.click(await findByRole('checkbox', { name: /lock total/i }));
@@ -655,77 +649,57 @@ describe('<MappingInvoiceDetails>', () => {
 
   describe('"Invoice line information"', () => {
     it('User can add vendor reference number', async () => {
-      const { findByRole } = renderMappingInvoiceDetails({});
+      const { findByRole } = renderMappingInvoiceDetails();
 
       const buttons = await findByRole('button', { name: 'Add vendor reference number' });
 
       fireEvent.click(buttons);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
-      expect(await findByRole('textbox', { name: /vendor reference number/i })).toBeVisible();
-      expect(await findByRole('textbox', { name: /vendor reference type/i })).toBeVisible();
+      expect(onAdd).toHaveBeenCalledTimes(1);
     });
 
     it('User can remove vendor reference number', async () => {
-      const { findAllByRole } = renderMappingInvoiceDetails({});
+      const { findAllByRole } = renderMappingInvoiceDetails();
 
       const deleteButtons = await findAllByRole('button', { name: /delete this item/i });
 
       fireEvent.click(deleteButtons[2]);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('"Invoice line fund distribution"', () => {
     it('User can add invoice line fund distribution', async () => {
-      const {
-        findAllByRole,
-        getAllByRole,
-        getAllByText,
-      } = renderMappingInvoiceDetails({});
+      const { findAllByRole } = renderMappingInvoiceDetails();
 
       const buttons = await findAllByRole('button', { name: 'Add fund distribution' });
 
       fireEvent.click(buttons[1]);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
-      expect(getAllByRole('textbox', { name: /fund id/i })[1]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /expense class/i })[1]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /value/i })[1]).toBeVisible();
-      expect(getAllByText('Type')[2]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /amount/i })[2]).toBeVisible();
+      expect(onAdd).toHaveBeenCalledTimes(1);
     });
 
     it('User can remove invoice line fund distribution', async () => {
-      const { findAllByRole } = renderMappingInvoiceDetails({});
+      const { findAllByRole } = renderMappingInvoiceDetails();
 
       const deleteButtons = await findAllByRole('button', { name: /delete this item/i });
 
       fireEvent.click(deleteButtons[4]);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('"Invoice line adjustments"', () => {
     it('User can add invoice line adjustment', async () => {
-      const {
-        findAllByRole,
-        getAllByText,
-        getAllByRole,
-      } = renderMappingInvoiceDetails({});
+      const { findAllByRole } = renderMappingInvoiceDetails();
 
       const buttons = await findAllByRole('button', { name: 'Add adjustment' });
 
       fireEvent.click(buttons[1]);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
-      expect(getAllByRole('textbox', { name: /description/i })[2]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /amount/i })[3]).toBeVisible();
-      expect(getAllByText('Type')[3]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /relation to total/i })[1]).toBeVisible();
-      expect(getAllByRole('checkbox', { name: /export to accounting/i })[2]).toBeVisible();
+      expect(onAdd).toHaveBeenCalledTimes(1);
     });
 
     it('User can remove invoice line adjustment', async () => {
@@ -735,7 +709,7 @@ describe('<MappingInvoiceDetails>', () => {
 
       fireEvent.click(deleteButtons[3]);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
     });
   });
 });

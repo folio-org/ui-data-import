@@ -10,6 +10,16 @@ import {
 } from '../../../../../../test/jest/helpers';
 
 import { MappingItemDetails } from '../MappingItemDetails';
+import {
+  onAdd,
+  onRemove,
+} from '../../utils';
+
+jest.mock('../../utils', () => ({
+  ...jest.requireActual('../../utils'),
+  onAdd: jest.fn(),
+  onRemove: jest.fn(),
+}));
 
 global.fetch = jest.fn();
 
@@ -164,7 +174,8 @@ describe('<MappingItemDetails>', () => {
 
   afterEach(() => {
     global.fetch.mockClear();
-    setReferenceTablesMockProp.mockClear();
+    onAdd.mockClear();
+    onRemove.mockClear();
   });
 
   afterAll(() => {
@@ -178,8 +189,8 @@ describe('<MappingItemDetails>', () => {
     } = renderMappingItemDetails({});
 
     expect(await findByRole('button', { name: /administrative data/i })).toBeInTheDocument();
-    expect(getByRole('button', { name: /item data/i })).toBeInTheDocument();
     expect(getByRole('button', { name: /enumeration data/i })).toBeInTheDocument();
+    expect(getByRole('button', { name: /item data/i })).toBeInTheDocument();
     expect(getByRole('button', { name: /condition/i })).toBeInTheDocument();
     expect(getByRole('button', { name: /item notes/i })).toBeInTheDocument();
     expect(getByRole('button', { name: /loan and availability/i })).toBeInTheDocument();
@@ -201,7 +212,8 @@ describe('<MappingItemDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('formerIds');
       expect(getByText('Former Identifier')).toBeInTheDocument();
     });
 
@@ -212,7 +224,7 @@ describe('<MappingItemDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -227,7 +239,8 @@ describe('<MappingItemDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('statisticalCodeIds');
       expect(getByText('Statistical code')).toBeInTheDocument();
     });
 
@@ -238,7 +251,7 @@ describe('<MappingItemDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -253,7 +266,8 @@ describe('<MappingItemDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('yearCaption');
       expect(getByRole('textbox', { name: /year, caption/i })).toBeInTheDocument();
     });
 
@@ -264,7 +278,7 @@ describe('<MappingItemDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -279,20 +293,21 @@ describe('<MappingItemDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('notes');
       expect(getByRole('textbox', { name: 'Note type' })).toBeInTheDocument();
       expect(getByRole('textbox', { name: 'Note' })).toBeInTheDocument();
       expect(getByRole('combobox', { name: 'Staff only' })).toBeInTheDocument();
     });
 
-    it('User can delete "year, caption" field', async () => {
+    it('User can delete "notes" field', async () => {
       const { findByRole } = renderMappingItemDetails({ referenceTables: { notes } });
 
       const deleteButton = await findByRole('button', { name: /delete this item/i });
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -307,7 +322,8 @@ describe('<MappingItemDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('circulationNotes');
       expect(getByRole('textbox', { name: /note type/i })).toBeInTheDocument();
       expect(getByRole('textbox', { name: 'Note' })).toBeInTheDocument();
       expect(getByRole('combobox', { name: /staff only/i })).toBeInTheDocument();
@@ -320,7 +336,7 @@ describe('<MappingItemDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -335,7 +351,8 @@ describe('<MappingItemDetails>', () => {
 
       fireEvent.click(button);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('electronicAccess');
       expect(getByRole('textbox', { name: 'Relationship' })).toBeInTheDocument();
       expect(getByRole('textbox', { name: 'URI' })).toBeInTheDocument();
       expect(getByRole('textbox', { name: 'Link text' })).toBeInTheDocument();
@@ -350,7 +367,7 @@ describe('<MappingItemDetails>', () => {
 
       fireEvent.click(deleteButton);
 
-      expect(setReferenceTablesMockProp).toHaveBeenCalled();
+      expect(onRemove).toHaveBeenCalledTimes(1);
     });
   });
 });
