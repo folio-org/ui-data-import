@@ -14,6 +14,8 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
+import { getInitialFields } from '../../../initialDetails';
+import { FOLIO_RECORD_TYPES } from '../../../../../components';
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
@@ -184,16 +186,7 @@ const electronicAccess = [{
   path: 'holdings.electronicAccess[]',
 }];
 
-const initialFieldsProp = {
-  electronicAccess: electronicAccess[0],
-  formerIds: formerIds[0],
-  holdingsStatements: holdingsStatements[0],
-  holdingsStatementsForIndexes: holdingsStatementsForIndexes[0],
-  holdingsStatementsForSupplements: holdingsStatementsForSupplements[0],
-  notes: notes[0],
-  'receivingHistory.entries': receivingHistoryEntries[0],
-  statisticalCodes: statisticalCodeIds[0],
-};
+const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.HOLDINGS.type);
 const referenceTablesProp = {};
 const setReferenceTablesMockProp = jest.fn();
 const getRepeatableFieldActionProp = jest.fn(() => 'DELETE_INCOMING');

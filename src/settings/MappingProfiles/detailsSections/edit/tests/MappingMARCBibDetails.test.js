@@ -70,7 +70,8 @@ describe('<MappingMARCBibDetails>', () => {
   describe('when field mappings for MARC is "Modifications"', () => {
     it('should have correct fields', async () => {
       const {
-        findByRole, getByText,
+        findByRole,
+        getByText,
       } = renderMappingMARCBibDetails({
         fieldMappingsForMARCField: FIELD_MAPPINGS_FOR_MARC.MODIFICATIONS,
         marcMappingDetails: [{

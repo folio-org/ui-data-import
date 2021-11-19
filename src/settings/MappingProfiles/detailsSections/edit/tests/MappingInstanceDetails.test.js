@@ -14,6 +14,8 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
+import { getInitialFields } from '../../../initialDetails';
+import { FOLIO_RECORD_TYPES } from '../../../../../components';
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
@@ -366,28 +368,7 @@ const defaultReferenceTables = {
   succeedingTitles,
 };
 
-const initialFieldsProp = {
-  alternativeTitles: alternativeTitles[0],
-  childInstances: childInstances[0],
-  classifications: classifications[0],
-  contributors: contributors[0],
-  editions: editions[0],
-  identifiers: identifiers[0],
-  instanceFormatIds: instanceFormatIds[0],
-  languages: languages[0],
-  natureOfContentTermIds: natureOfContentTermIds[0],
-  notes: notes[0],
-  parentInstances: parentInstances[0],
-  physicalDescriptions: physicalDescriptions[0],
-  precedingTitles: precedingTitles[0],
-  publication: publication[0],
-  publicationFrequency: publicationFrequency[0],
-  publicationRange: publicationRange[0],
-  series: series[0],
-  statisticalCodeIds: statisticalCodeIds[0],
-  subjects: subjects[0],
-  succeedingTitles: succeedingTitles[0],
-};
+const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.INSTANCE.type);
 
 const referenceTablesProp = {};
 const setReferenceTablesMockProp = jest.fn();
