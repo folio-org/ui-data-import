@@ -25,21 +25,12 @@ global.fetch = jest.fn();
 
 const childWrappers = [
   {
-    childSnapshotWrappers: [
-      {
-        childSnapshotWrappers: [],
-        content: {},
-        contentType: PROFILE_TYPES.MAPPING_PROFILE,
-        id: 'f04b6d63-01cc-4ff7-9d06-2e7cd601443f',
-        order: 0,
-        profileId: '13cf7adf-c7a7-4c2e-838f-14d0ac36ec0a',
-      },
-    ],
+    childSnapshotWrappers: [],
     content: {},
     contentType: PROFILE_TYPES.ACTION_PROFILE,
-    id: '5b63b391-f667-4dbc-b9d7-da82c0c2ac0f',
+    id: 'testId',
     order: 0,
-    profileId: '8aa0b850-9182-4005-8435-340b704b2a19',
+    profileId: 'testProfileId',
   },
 ];
 
@@ -141,11 +132,11 @@ describe('<JobProfilesForm>', () => {
   it('fetches associated jobs correctly', async () => {
     const expected = [{ contentType: PROFILE_TYPES.ACTION_PROFILE }];
 
-    global.fetch.mockReturnValueOnce(Promise.resolve({
+    global.fetch.mockResolvedValueOnce({
       status: 200,
       ok: true,
-      json: () => Promise.resolve({ childSnapshotWrappers: expected }),
-    }));
+      json: async () => ({ childSnapshotWrappers: expected }),
+    });
 
     expect(await fetchAssociations({ url: '/test-path' }, 'testId')).toEqual(expected);
   });
@@ -156,8 +147,7 @@ describe('<JobProfilesForm>', () => {
       getByText,
     } = renderJobProfilesForm(jobProfilesFormProps());
 
-    fireEvent.change(getByRole('combobox', { name: /accepted data type/i }),
-      { target: { value: 'EDIFACT' } });
+    fireEvent.change(getByRole('combobox', { name: /accepted data type/i }), { target: { value: 'EDIFACT' } });
 
     await waitFor(() => expect(getByText('EDIFACT')).toBeInTheDocument());
   });
@@ -167,7 +157,7 @@ describe('<JobProfilesForm>', () => {
       const { getByRole } = renderJobProfilesForm(jobProfilesFormProps());
 
       fireEvent.change(getByRole('textbox', { name: /name/i }), { target: { value: 'test value' } });
-      await waitFor(() => fireEvent.click(getByRole('button', { name: /save as profile & close/i })));
+      fireEvent.click(getByRole('button', { name: /save as profile & close/i }));
 
       expect(getByRole('button', { name: /save as profile & close/i })).toBeEnabled();
     });

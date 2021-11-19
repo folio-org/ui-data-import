@@ -44,7 +44,7 @@ const jobProfile = {
   hasLoaded: true,
 };
 
-const viewJobProfileProps = profile => ({
+const viewJobProfileProps = (profile, actionMenuItems) => ({
   match: { params: { id: 'test id' } },
   resources: { jobProfile: profile },
   history: {
@@ -56,17 +56,15 @@ const viewJobProfileProps = profile => ({
     search: '',
     pathname: '',
   },
-  onClose: noop,
-  onDelete: noop,
+  actionMenuItems,
 });
 
 const renderViewJobProfile = ({
   history,
   match,
   location,
-  onClose,
-  onDelete,
   resources,
+  actionMenuItems,
 }) => {
   const component = () => (
     <Router>
@@ -76,8 +74,9 @@ const renderViewJobProfile = ({
         match={match}
         history={history}
         tagsEnabled
-        onClose={onClose}
-        onDelete={onDelete}
+        onClose={noop}
+        onDelete={noop}
+        actionMenuItems={actionMenuItems}
         stripes={{ okapi: { url: '' } }}
       />
     </Router>
@@ -127,7 +126,7 @@ describe('<ViewJobProfile>', () => {
   });
 
   describe('when clicked on "delete" action', () => {
-    it('delete confirmation modal should appear', () => {
+    it('confirmation modal should appear', () => {
       const {
         getByRole,
         getByText,
@@ -141,7 +140,7 @@ describe('<ViewJobProfile>', () => {
   });
 
   describe('when clicked on "cancel" button', () => {
-    it('open modal should be closed', async () => {
+    it('confirmation modal should be closed', async () => {
       const {
         getByRole,
         getByText,
@@ -152,11 +151,12 @@ describe('<ViewJobProfile>', () => {
       fireEvent.click(getByText('Delete'));
       fireEvent.click(getByText('Cancel'));
 
-      await waitFor(() => expect(queryByText('Delete job profile?')).toBeNull());
+      await waitFor(() => expect(queryByText('Delete job profile?')).not.toBeInTheDocument());
     });
   });
+
   describe('after deleting a profile', () => {
-    it('open modal should be closed', async () => {
+    it('confirmation modal should be closed', async () => {
       const {
         getByRole,
         getAllByText,
@@ -167,7 +167,55 @@ describe('<ViewJobProfile>', () => {
       fireEvent.click(getAllByText('Delete')[0]);
       fireEvent.click(getAllByText('Delete')[1]);
 
-      await waitFor(() => expect(queryByText('Delete job profile?')).toBeNull());
+      await waitFor(() => expect(queryByText('Delete job profile?')).not.toBeInTheDocument());
+    });
+  });
+
+  describe('when user run job profile', () => {
+    it('confirmation modal should appear', async () => {
+      const {
+        getByRole,
+        getAllByText,
+        queryByText,
+      } = renderViewJobProfile(viewJobProfileProps(jobProfile, ['run']));
+
+      fireEvent.click(getByRole('button', { name: /actions/i }));
+      fireEvent.click(getAllByText('Run')[0]);
+
+      await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).toBeInTheDocument());
+    });
+  });
+
+  describe('when user confirm running job profile', () => {
+    it('confirmation modal should be closed', async () => {
+      const {
+        getByRole,
+        getAllByText,
+        queryByText,
+      } = renderViewJobProfile(viewJobProfileProps(jobProfile, ['run']));
+
+      fireEvent.click(getByRole('button', { name: /actions/i }));
+      fireEvent.click(getAllByText('Run')[0]);
+      fireEvent.click(getAllByText('Run')[1]);
+      fireEvent.click(getAllByText('Run')[1]);
+
+      await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).not.toBeInTheDocument());
+    });
+  });
+
+  describe('when user cancel running job profile', () => {
+    it('confirmation modal should be closed', async () => {
+      const {
+        getByRole,
+        getAllByText,
+        queryByText,
+      } = renderViewJobProfile(viewJobProfileProps(jobProfile, ['run']));
+
+      fireEvent.click(getByRole('button', { name: /actions/i }));
+      fireEvent.click(getAllByText('Run')[0]);
+      fireEvent.click(getAllByText('Cancel')[0]);
+
+      await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).not.toBeInTheDocument());
     });
   });
 });
