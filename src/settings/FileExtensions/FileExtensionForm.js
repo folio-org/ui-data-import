@@ -37,7 +37,7 @@ MultiSelectItem.propTypes = {
   searchTerm: PropTypes.string,
 };
 
-const FileExtensionFormComponent = ({
+export const FileExtensionFormComponent = ({
   pristine,
   submitting,
   transitionToParams,
@@ -180,8 +180,6 @@ FileExtensionFormComponent.propTypes = {
   form: PropTypes.shape({
     getState: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
-    getFieldState: PropTypes.func.isRequired,
-    batch: PropTypes.func.isRequired,
     change: PropTypes.func.isRequired,
   }).isRequired,
   match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
