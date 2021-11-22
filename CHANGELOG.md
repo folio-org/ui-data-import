@@ -23,6 +23,8 @@
 * Populate Record Log title column when imported record is MARC Holdings (UIDATIMP-1007)
 * Cover `<Jobs>` component with tests (UIDATIMP-959)
 * Cover `<UploadingJobsContextProvider>` component with tests (UIDATIMP-729)
+* Cover `<UploadingJobsDisplay>` component with tests (UIDATIMP-730)
+* Cover `FileExtensions` components with tests (UIDATIMP-973)
 * Cover `<UploadingJobsDisplay` component with tests (UIDATIMP-730)
 * Cover `<JobProfiles` component with tests (UIDATIMP-974)
 
