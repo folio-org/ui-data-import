@@ -39,7 +39,6 @@ const fileExtensionFormProps = {
   match: { path: '/settings/data-import/file-extensions' },
   transitionToParams: noop,
   handleSubmit: handleFormSubmit,
-  onCancel: noop,
 };
 
 const renderFileExtensionForm = ({
@@ -48,7 +47,6 @@ const renderFileExtensionForm = ({
   form,
   initialValues,
   handleSubmit,
-  onCancel,
   transitionToParams,
   match,
 }) => {
@@ -61,7 +59,7 @@ const renderFileExtensionForm = ({
         match={match}
         initialValues={initialValues}
         handleSubmit={handleSubmit}
-        onCancel={onCancel}
+        onCancel={noop}
         transitionToParams={transitionToParams}
       />
     </Router>
