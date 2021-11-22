@@ -14,7 +14,11 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
-import { getInitialFields } from '../../../initialDetails';
+import {
+  getInitialDetails,
+  getInitialFields,
+  getReferenceTables,
+} from '../../../initialDetails';
 import { FOLIO_RECORD_TYPES } from '../../../../../components';
 
 jest.mock('../../utils', () => ({
@@ -26,14 +30,16 @@ jest.mock('../../utils', () => ({
 global.fetch = jest.fn();
 
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.HOLDINGS.type);
-const formerIds = [initialFieldsProp.formerIds];
-const statisticalCodeIds = [initialFieldsProp.statisticalCodeIds];
-const holdingsStatements = [initialFieldsProp.holdingsStatements];
-const holdingsStatementsForSupplements = [initialFieldsProp.holdingsStatementsForSupplements];
-const holdingsStatementsForIndexes = [initialFieldsProp.holdingsStatementsForIndexes];
-const notes = [initialFieldsProp.notes];
-const receivingHistoryEntries = [initialFieldsProp['receivingHistory.entries']];
-const electronicAccess = [initialFieldsProp.electronicAccess];
+const {
+  formerIds,
+  statisticalCodeIds,
+  holdingsStatements,
+  holdingsStatementsForSupplements,
+  holdingsStatementsForIndexes,
+  notes,
+  'receivingHistory.entries': receivingHistoryEntries,
+  electronicAccess,
+} = getReferenceTables(getInitialDetails(FOLIO_RECORD_TYPES.HOLDINGS.type).mappingFields);
 
 const referenceTablesProp = {};
 const setReferenceTablesMockProp = jest.fn();

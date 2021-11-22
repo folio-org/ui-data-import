@@ -14,7 +14,11 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
-import { getInitialFields } from '../../../initialDetails';
+import {
+  getInitialDetails,
+  getInitialFields,
+  getReferenceTables,
+} from '../../../initialDetails';
 import { FOLIO_RECORD_TYPES } from '../../../../../components';
 
 jest.mock('../../utils', () => ({
@@ -26,15 +30,19 @@ jest.mock('../../utils', () => ({
 global.fetch = jest.fn();
 
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.ITEM.type);
-const formerIds = [initialFieldsProp.formerIds];
-const statisticalCodeIds = [initialFieldsProp.statisticalCodeIds];
-const yearCaption = [initialFieldsProp.yearCaption];
-const notes = [initialFieldsProp.notes];
-const circulationNotes = [initialFieldsProp.circulationNotes];
-const electronicAccess = [initialFieldsProp.electronicAccess];
+
+const {
+  formerIds,
+  statisticalCodeIds,
+  yearCaption,
+  notes,
+  circulationNotes,
+  electronicAccess,
+} = getReferenceTables(getInitialDetails(FOLIO_RECORD_TYPES.ITEM.type).mappingFields);
+
 const referenceTablesProp = {};
 const setReferenceTablesMockProp = jest.fn();
-const getRepeatableFieldActionProp = jest.fn(() => 'DELETE_INCOMING');
+const getRepeatableFieldActionProp = jest.fn(() => '');
 
 const okapiProp = {
   tenant: 'testTenant',

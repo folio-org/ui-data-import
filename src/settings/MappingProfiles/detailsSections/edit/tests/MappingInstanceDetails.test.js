@@ -14,7 +14,11 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
-import { getInitialFields } from '../../../initialDetails';
+import {
+  getInitialDetails,
+  getInitialFields,
+  getReferenceTables,
+} from '../../../initialDetails';
 import { FOLIO_RECORD_TYPES } from '../../../../../components';
 
 jest.mock('../../utils', () => ({
@@ -27,28 +31,14 @@ global.fetch = jest.fn();
 
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.INSTANCE.type);
 
-const defaultReferenceTables = {
-  alternativeTitles: [initialFieldsProp.alternativeTitles],
-  classifications: [initialFieldsProp.classifications],
-  contributors: [initialFieldsProp.contributors],
-  editions: [initialFieldsProp.editions],
-  identifiers: [initialFieldsProp.identifiers],
-  instanceFormatIds: [initialFieldsProp.instanceFormatIds],
-  languages: [initialFieldsProp.languages],
-  notes: [initialFieldsProp.notes],
-  physicalDescriptions: [initialFieldsProp.physicalDescriptions],
-  precedingTitles: [initialFieldsProp.precedingTitles],
-  publication: [initialFieldsProp.publication],
-  publicationFrequency: [initialFieldsProp.publicationFrequency],
-  publicationRange: [initialFieldsProp.publicationRange],
-  series: [initialFieldsProp.series],
-  subjects: [initialFieldsProp.subjects],
-  succeedingTitles: [initialFieldsProp.succeedingTitles],
-};
-const statisticalCodeIds = [initialFieldsProp.statisticalCodeIds];
-const parentInstances = [initialFieldsProp.parentInstances];
-const childInstances = [initialFieldsProp.childInstances];
-const natureOfContentTermIds = [initialFieldsProp.natureOfContentTermIds];
+const {
+  electronicAccess,
+  statisticalCodeIds,
+  parentInstances,
+  childInstances,
+  natureOfContentTermIds,
+  ...defaultReferenceTables
+} = getReferenceTables(getInitialDetails(FOLIO_RECORD_TYPES.INSTANCE.type).mappingFields);
 
 const setReferenceTablesMockProp = jest.fn();
 const getRepeatableFieldActionProp = jest.fn(() => '');
@@ -58,11 +48,11 @@ const okapiProp = {
   url: 'https://folio-testing-okapi.dev.folio.org',
 };
 
-const renderMappingInstanceDetails = ({ referenceTables }) => {
+const renderMappingInstanceDetails = ({ referenceTables = defaultReferenceTables }) => {
   const component = () => (
     <MappingInstanceDetails
       initialFields={initialFieldsProp}
-      referenceTables={referenceTables || defaultReferenceTables}
+      referenceTables={referenceTables}
       setReferenceTables={setReferenceTablesMockProp}
       getRepeatableFieldAction={getRepeatableFieldActionProp}
       okapi={okapiProp}
@@ -93,8 +83,8 @@ describe('<MappingInstanceDetails>', () => {
 
   it('should have correct sections', async () => {
     const {
-      findByRole,
       getByRole,
+      findByRole,
     } = renderMappingInstanceDetails({});
 
     expect(await findByRole('button', { name: /administrative data/i })).toBeInTheDocument();
