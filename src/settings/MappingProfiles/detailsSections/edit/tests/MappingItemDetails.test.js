@@ -14,6 +14,8 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
+import { getInitialFields } from '../../../initialDetails';
+import { FOLIO_RECORD_TYPES } from '../../../../../components';
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
@@ -23,126 +25,17 @@ jest.mock('../../utils', () => ({
 
 global.fetch = jest.fn();
 
-const formerIds = [{
-  fields: [{
-    enabled: true,
-    name: 'formerId',
-    path: 'item.formerIds[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'item.formerIds[]',
-}];
-
-const statisticalCodeIds = [{
-  fields: [{
-    acceptedValues: {},
-    enabled: true,
-    name: 'statisticalCodeId',
-    path: 'item.statisticalCodeIds[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'item.statisticalCodeIds[]',
-}];
-
-const yearCaption = [{
-  fields: [{
-    enabled: true,
-    name: 'yearCaption',
-    path: 'item.yearCaption[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'item.yearCaption[]',
-}];
-
-const notes = [{
-  fields: [{
-    acceptedValues: {},
-    enabled: true,
-    name: 'itemNoteTypeId',
-    path: 'item.notes[].itemNoteTypeId',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'note',
-    path: 'item.notes[].note',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'staffOnly',
-    path: 'item.notes[].staffOnly',
-    value: null,
-  }],
-  order: 0,
-  path: 'item.notes[]',
-}];
-
-const circulationNotes = [{
-  fields: [{
-    enabled: true,
-    name: 'noteType',
-    path: 'item.circulationNotes[].noteType',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'note',
-    path: 'item.circulationNotes[].note',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'staffOnly',
-    path: 'item.circulationNotes[].staffOnly',
-    value: null,
-  }],
-  order: 0,
-  path: 'item.circulationNotes[]',
-}];
-
-const electronicAccess = [{
-  fields: [{
-    acceptedValues: {},
-    enabled: true,
-    name: 'relationshipId',
-    path: 'item.electronicAccess[].relationshipId',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'uri',
-    path: 'item.electronicAccess[].uri',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'linkText',
-    path: 'item.electronicAccess[].linkText',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'materialsSpecification',
-    path: 'item.electronicAccess[].materialsSpecification',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'publicNote',
-    path: 'item.electronicAccess[].publicNote',
-    value: '',
-  }],
-  order: 0,
-  path: 'item.electronicAccess[]',
-}];
-
-const initialFieldsProp = {
-  circulationNotes: circulationNotes[0],
-  electronicAccess: electronicAccess[0],
-  formerIds: formerIds[0],
-  notes: notes[0],
-  statisticalCodeIds: statisticalCodeIds[0],
-  yearCaption: yearCaption[0],
-};
+const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.ITEM.type);
+const formerIds = [initialFieldsProp.formerIds];
+const statisticalCodeIds = [initialFieldsProp.statisticalCodeIds];
+const yearCaption = [initialFieldsProp.yearCaption];
+const notes = [initialFieldsProp.notes];
+const circulationNotes = [initialFieldsProp.circulationNotes];
+const electronicAccess = [initialFieldsProp.electronicAccess];
 const referenceTablesProp = {};
 const setReferenceTablesMockProp = jest.fn();
 const getRepeatableFieldActionProp = jest.fn(() => 'DELETE_INCOMING');
+
 const okapiProp = {
   tenant: 'testTenant',
   token: 'token.for.test',

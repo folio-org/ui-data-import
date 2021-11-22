@@ -22,8 +22,8 @@ describe('getInitialDetails function', () => {
     });
   });
 
-  describe('when "entity" record type is MARC_HOLDINGS', () => {
-    it('should return appropriate MARC_HOlDINGS mapping details', () => {
+  describe('when "entity" record type is MARC', () => {
+    it('should return appropriate mapping details', () => {
       const actual = getInitialDetails(MARC_TYPES.MARC_HOLDINGS);
 
       expect(actual).toEqual(MARC_HOLDINGS);

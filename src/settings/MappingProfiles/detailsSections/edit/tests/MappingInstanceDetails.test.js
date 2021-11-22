@@ -25,352 +25,31 @@ jest.mock('../../utils', () => ({
 
 global.fetch = jest.fn();
 
-const statisticalCodeIds = [{
-  fields: [{
-    acceptedValues: { testId: 'testValue' },
-    enabled: true,
-    name: 'statisticalCodeId',
-    path: 'instance.statisticalCodeIds[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.statisticalCodeIds[]',
-}];
-
-const natureOfContentTermIds = [{
-  fields: [{
-    acceptedValues: { testId: 'testValue' },
-    enabled: true,
-    name: 'natureOfContentTermId',
-    path: 'instance.natureOfContentTermIds[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.natureOfContentTermIds[]',
-}];
-
-const parentInstances = [{
-  fields: [{
-    enabled: true,
-    name: 'superInstanceId',
-    path: 'instance.parentInstances[].superInstanceId',
-    value: '',
-  }, {
-    acceptedValues: {},
-    enabled: true,
-    name: 'instanceRelationshipTypeId',
-    path: 'instance.parentInstances[].instanceRelationshipTypeId',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.parentInstances[]',
-}];
-
-const childInstances = [{
-  fields: [{
-    enabled: true,
-    name: 'subInstanceId',
-    path: 'instance.childInstances[].subInstanceId',
-    value: '',
-  }, {
-    acceptedValues: { testId: 'testValue' },
-    enabled: true,
-    name: 'instanceRelationshipTypeId',
-    path: 'instance.childInstances[].instanceRelationshipTypeId',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.childInstances[]',
-}];
-
-const alternativeTitles = [{
-  fields: [{
-    enabled: true,
-    name: 'alternativeTitleTypeId',
-    path: 'instance.alternativeTitles[].alternativeTitleTypeId',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'alternativeTitle',
-    path: 'instance.alternativeTitles[].alternativeTitle',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.alternativeTitles[]',
-}];
-
-const classifications = [{
-  fields: [{
-    enabled: false,
-    name: 'classificationTypeId',
-    path: 'instance.classifications[].classificationTypeId',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'classificationNumber',
-    path: 'instance.classifications[].classificationNumber',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.classifications[]',
-}];
-
-const contributors = [{
-  fields: [{
-    enabled: false,
-    name: 'contributorName',
-    path: 'instance.contributors[].name',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'contributorNameTypeId',
-    path: 'instance.contributors[].contributorNameTypeId',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'contributorTypeId',
-    path: 'instance.contributors[].contributorTypeId',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'contributorTypeText',
-    path: 'instance.contributors[].contributorTypeText',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'primary',
-    path: 'instance.contributors[].primary',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.contributors[]',
-}];
-
-const editions = [{
-  fields: [{
-    enabled: false,
-    name: 'edition',
-    path: 'instance.editions[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.editions[]',
-}];
-
-const identifiers = [{
-  fields: [{
-    enabled: false,
-    name: 'identifierTypeId',
-    path: 'instance.identifiers[].identifierTypeId',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'value',
-    path: 'instance.identifiers[].value',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.identifiers[]',
-}];
-
-const instanceFormatIds = [{
-  fields: [{
-    enabled: false,
-    name: 'instanceFormatId',
-    path: 'instance.instanceFormatIds[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.instanceFormatIds[]',
-}];
-
-const languages = [{
-  fields: [{
-    enabled: false,
-    name: 'languageId',
-    path: 'instance.languages[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.languages[]',
-}];
-
-const notes = [{
-  fields: [{
-    enabled: false,
-    name: 'noteType',
-    path: 'instance.notes[].instanceNoteTypeId',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'note',
-    path: 'instance.notes[].note',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'staffOnly',
-    path: 'instance.notes[].staffOnly',
-    value: null,
-  }],
-  order: 0,
-  path: 'instance.notes[]',
-}];
-
-const physicalDescriptions = [{
-  fields: [{
-    enabled: false,
-    name: 'physicalDescription',
-    path: 'instance.physicalDescriptions[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.physicalDescriptions[]',
-}];
-
-const precedingTitles = [{
-  fields: [{
-    enabled: true,
-    name: 'precedingTitlesTitle',
-    path: 'instance.precedingTitles[].title',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'precedingTitlesHrid',
-    path: 'instance.precedingTitles[].hrid',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'precedingTitlesIsbn',
-    path: 'instance.precedingTitles[].identifiers[].value',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'precedingTitlesIssn',
-    path: 'instance.precedingTitles[].identifiers[].value',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.precedingTitles[]',
-}];
-
-const publication = [{
-  fields: [{
-    enabled: false,
-    name: 'publisher',
-    path: 'instance.publication[].publisher',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'role',
-    path: 'instance.publication[].role',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'place',
-    path: 'instance.publication[].place',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'dateOfPublication',
-    path: 'instance.publication[].dateOfPublication',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.publication[]',
-}];
-
-const publicationFrequency = [{
-  fields: [{
-    enabled: false,
-    name: 'publicationFrequency',
-    path: 'instance.publicationFrequency[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.publicationFrequency[]',
-}];
-
-const publicationRange = [{
-  fields: [{
-    enabled: false,
-    name: 'publicationRange',
-    path: 'instance.publicationRange[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.publicationRange[]',
-}];
-
-const series = [{
-  fields: [{
-    enabled: false,
-    name: 'source',
-    path: 'instance.series[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.series[]',
-}];
-
-const subjects = [{
-  fields: [{
-    enabled: false,
-    name: 'subject',
-    path: 'instance.subjects[]',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.subjects[]',
-}];
-
-const succeedingTitles = [{
-  fields: [{
-    enabled: true,
-    name: 'succeedingTitlesTitle',
-    path: 'instance.succeedingTitles[].title',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'succeedingTitlesHrid',
-    path: 'instance.succeedingTitles[].hrid',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'succeedingTitlesIsbn',
-    path: 'instance.succeedingTitles[].identifiers[].value',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'succeedingTitlesIssn',
-    path: 'instance.succeedingTitles[].identifiers[].value',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.succeedingTitles[]',
-}];
-
-const defaultReferenceTables = {
-  alternativeTitles,
-  classifications,
-  contributors,
-  editions,
-  identifiers,
-  instanceFormatIds,
-  languages,
-  notes,
-  physicalDescriptions,
-  precedingTitles,
-  publication,
-  publicationFrequency,
-  publicationRange,
-  series,
-  subjects,
-  succeedingTitles,
-};
-
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.INSTANCE.type);
 
-const referenceTablesProp = {};
+const defaultReferenceTables = {
+  alternativeTitles: [initialFieldsProp.alternativeTitles],
+  classifications: [initialFieldsProp.classifications],
+  contributors: [initialFieldsProp.contributors],
+  editions: [initialFieldsProp.editions],
+  identifiers: [initialFieldsProp.identifiers],
+  instanceFormatIds: [initialFieldsProp.instanceFormatIds],
+  languages: [initialFieldsProp.languages],
+  notes: [initialFieldsProp.notes],
+  physicalDescriptions: [initialFieldsProp.physicalDescriptions],
+  precedingTitles: [initialFieldsProp.precedingTitles],
+  publication: [initialFieldsProp.publication],
+  publicationFrequency: [initialFieldsProp.publicationFrequency],
+  publicationRange: [initialFieldsProp.publicationRange],
+  series: [initialFieldsProp.series],
+  subjects: [initialFieldsProp.subjects],
+  succeedingTitles: [initialFieldsProp.succeedingTitles],
+};
+const statisticalCodeIds = [initialFieldsProp.statisticalCodeIds];
+const parentInstances = [initialFieldsProp.parentInstances];
+const childInstances = [initialFieldsProp.childInstances];
+const natureOfContentTermIds = [initialFieldsProp.natureOfContentTermIds];
+
 const setReferenceTablesMockProp = jest.fn();
 const getRepeatableFieldActionProp = jest.fn(() => '');
 const okapiProp = {
@@ -383,7 +62,7 @@ const renderMappingInstanceDetails = ({ referenceTables }) => {
   const component = () => (
     <MappingInstanceDetails
       initialFields={initialFieldsProp}
-      referenceTables={referenceTables || referenceTablesProp}
+      referenceTables={referenceTables || defaultReferenceTables}
       setReferenceTables={setReferenceTablesMockProp}
       getRepeatableFieldAction={getRepeatableFieldActionProp}
       okapi={okapiProp}
@@ -457,12 +136,7 @@ describe('<MappingInstanceDetails>', () => {
       const {
         findByRole,
         getByText,
-      } = renderMappingInstanceDetails({
-        referenceTables: {
-          statisticalCodeIds,
-          ...defaultReferenceTables,
-        },
-      });
+      } = renderMappingInstanceDetails({ referenceTables: { statisticalCodeIds } });
 
       const button = await findByRole('button', { name: /add statistical code/i });
 
@@ -474,12 +148,7 @@ describe('<MappingInstanceDetails>', () => {
     });
 
     it('User can delete statistical code info', async () => {
-      const { findByRole } = renderMappingInstanceDetails({
-        referenceTables: {
-          ...defaultReferenceTables,
-          statisticalCodeIds,
-        },
-      });
+      const { findByRole } = renderMappingInstanceDetails({ referenceTables: { statisticalCodeIds } });
 
       const deleteButton = await findByRole('button', { name: /delete this item/i });
 
@@ -495,12 +164,7 @@ describe('<MappingInstanceDetails>', () => {
       const {
         findByRole,
         getByText,
-      } = renderMappingInstanceDetails({
-        referenceTables: {
-          ...defaultReferenceTables,
-          natureOfContentTermIds,
-        },
-      });
+      } = renderMappingInstanceDetails({ referenceTables: { natureOfContentTermIds } });
 
       const button = await findByRole('button', { name: /add nature of content term/i });
 
@@ -512,12 +176,7 @@ describe('<MappingInstanceDetails>', () => {
     });
 
     it('User can delete nature of content term info', async () => {
-      const { findByRole } = renderMappingInstanceDetails({
-        referenceTables: {
-          ...defaultReferenceTables,
-          natureOfContentTermIds,
-        },
-      });
+      const { findByRole } = renderMappingInstanceDetails({ referenceTables: { natureOfContentTermIds } });
 
       const deleteButton = await findByRole('button', { name: /delete this item/i });
 
@@ -533,12 +192,7 @@ describe('<MappingInstanceDetails>', () => {
       const {
         findByRole,
         getByText,
-      } = renderMappingInstanceDetails({
-        referenceTables: {
-          ...defaultReferenceTables,
-          parentInstances,
-        },
-      });
+      } = renderMappingInstanceDetails({ referenceTables: { parentInstances } });
 
       const button = await findByRole('button', { name: /add parent instance/i });
 
@@ -551,12 +205,7 @@ describe('<MappingInstanceDetails>', () => {
     });
 
     it('User can delete parent instance', async () => {
-      const { findByRole } = renderMappingInstanceDetails({
-        referenceTables: {
-          ...defaultReferenceTables,
-          parentInstances,
-        },
-      });
+      const { findByRole } = renderMappingInstanceDetails({ referenceTables: { parentInstances } });
 
       const deleteButton = await findByRole('button', { name: /delete this item/i });
 
@@ -572,12 +221,7 @@ describe('<MappingInstanceDetails>', () => {
       const {
         findByRole,
         getByText,
-      } = renderMappingInstanceDetails({
-        referenceTables: {
-          ...defaultReferenceTables,
-          childInstances,
-        },
-      });
+      } = renderMappingInstanceDetails({ referenceTables: { childInstances } });
 
       const button = await findByRole('button', { name: /add child instance/i });
 
@@ -590,12 +234,7 @@ describe('<MappingInstanceDetails>', () => {
     });
 
     it('User can delete child instance', async () => {
-      const { findByRole } = renderMappingInstanceDetails({
-        referenceTables: {
-          ...defaultReferenceTables,
-          childInstances,
-        },
-      });
+      const { findByRole } = renderMappingInstanceDetails({ referenceTables: { childInstances } });
 
       const deleteButton = await findByRole('button', { name: /delete this item/i });
 

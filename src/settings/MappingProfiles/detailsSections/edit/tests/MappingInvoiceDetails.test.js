@@ -10,7 +10,11 @@ import {
 } from '../../../../../../test/jest/helpers';
 
 import { MappingInvoiceDetails } from '../MappingInvoiceDetails';
-import INVOICE from '../../../initialDetails/INVOICE';
+import {
+  getInitialFields,
+  getInitialDetails,
+} from '../../../initialDetails';
+import { FOLIO_RECORD_TYPES } from '../../../../../components';
 
 jest.mock('.../../../../../components/FieldOrganization/FieldOrganization', () => ({ onSelect }) => (
   <div>
@@ -29,236 +33,25 @@ jest.mock('.../../../../../components/FieldOrganization/FieldOrganization', () =
 
 global.fetch = jest.fn();
 
-const invoiceLines = {
-  fields: [{
-    enabled: true,
-    name: 'description',
-    path: 'invoice.invoiceLines[].description',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'poLineId',
-    path: 'invoice.invoiceLines[].poLineId',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'invoiceLineNumber',
-    path: 'invoice.invoiceLines[].invoiceLineNumber',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'invoiceLineStatus',
-    path: 'invoice.invoiceLines[].invoiceLineStatus',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'referenceNumbers',
-    path: 'invoice.invoiceLines[].referenceNumbers[]',
-    repeatableFieldAction: null,
-    subfields: [{
-      fields: [{
-        enabled: true,
-        name: 'refNumber',
-        path: 'invoice.invoiceLines[].referenceNumbers[].refNumber',
-        value: '',
-      }, {
-        enabled: true,
-        name: 'refNumberType',
-        path: 'invoice.invoiceLines[].referenceNumbers[].refNumberType',
-        value: '',
-      }],
-      order: 0,
-      path: 'invoice.invoiceLines[].referenceNumbers[]',
-    }],
-    value: '',
-  }, {
-    enabled: true,
-    name: 'subscriptionInfo',
-    path: 'invoice.invoiceLines[].subscriptionInfo',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'subscriptionStart',
-    path: 'invoice.invoiceLines[].subscriptionStart',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'subscriptionEnd',
-    path: 'invoice.invoiceLines[].subscriptionEnd',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'comment',
-    path: 'invoice.invoiceLines[].comment',
-    value: '',
-  }, {
-    enabled: false,
-    name: 'lineAccountingCode',
-    path: 'invoice.invoiceLines[].accountingCode',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'accountNumber',
-    path: 'invoice.invoiceLines[].accountNumber',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'quantity',
-    path: 'invoice.invoiceLines[].quantity',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'lineSubTotal',
-    path: 'invoice.invoiceLines[].subTotal',
-    value: '',
-  }, {
-    booleanFieldAction: 'ALL_FALSE',
-    enabled: true,
-    name: 'releaseEncumbrance',
-    path: 'invoice.invoiceLines[].releaseEncumbrance',
-    value: null,
-  }, {
-    enabled: true,
-    name: 'fundDistributions',
-    path: 'invoice.invoiceLines[].fundDistributions[]',
-    repeatableFieldAction: 'EXTEND_EXISTING',
-    subfields: [{
-      fields: [],
-      order: 0,
-      path: 'invoice.invoiceLines[].fundDistributions[]',
-    }],
-    value: '',
-  }, {
-    enabled: true,
-    name: 'lineAdjustments',
-    path: 'invoice.invoiceLines[].adjustments[]',
-    repeatableFieldAction: null,
-    subfields: [{
-      fields: [{
-        enabled: true,
-        name: 'description',
-        path: 'invoice.invoiceLines[].adjustments[].description',
-        value: '',
-      }, {
-        enabled: true,
-        name: 'value',
-        path: 'invoice.invoiceLines[].adjustments[].value',
-        value: '',
-      }, {
-        enabled: true,
-        name: 'type',
-        path: 'invoice.invoiceLines[].adjustments[].type',
-        value: 'amount',
-      }, {
-        enabled: true,
-        name: 'relationToTotal',
-        path: 'invoice.invoiceLines[].adjustments[].relationToTotal',
-        value: '',
-      }, {
-        booleanFieldAction: 'ALL_FALSE',
-        enabled: true,
-        name: 'exportToAccounting',
-        path: 'invoice.invoiceLines[].adjustments[].exportToAccounting',
-        value: null,
-      }],
-      order: 0,
-      path: 'invoice.invoiceLines[].adjustments[]',
-    }],
-    value: '',
-  }],
-  order: 0,
-  path: 'invoice.invoiceLines[]',
-};
-
-const adjustments = {
-  fields: [{
-    enabled: true,
-    name: 'description',
-    path: 'invoice.adjustments[].description',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'value',
-    path: 'invoice.adjustments[].value',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'type',
-    path: 'invoice.adjustments[].type',
-    value: 'amount',
-  }, {
-    enabled: true,
-    name: 'prorate',
-    path: 'invoice.adjustments[].prorate',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'relationToTotal',
-    path: 'invoice.adjustments[].relationToTotal',
-    value: '',
-  }, {
-    booleanFieldAction: 'ALL_FALSE',
-    enabled: true,
-    name: 'exportToAccounting',
-    path: 'invoice.adjustments[].exportToAccounting',
-    value: null,
-  }, {
-    enabled: true,
-    name: 'fundDistributions',
-    path: 'invoice.adjustments[].fundDistributions[]',
-    repeatableFieldAction: null,
-    subfields: [{
-      fields: [],
-      order: 0,
-      path: 'invoice.adjustments[].fundDistributions[]',
-    }],
-    value: '',
-  }],
-  order: 0,
-  path: 'invoice.adjustments[]',
-};
-
-const initialFieldsProp = {
-  acqUnitIds: {
-    fields: [{
-      enabled: true,
-      name: 'acqUnitIds',
-      path: 'invoice.acqUnitIds[]',
-      value: '',
-    }],
-    order: 0,
-    path: 'invoice.acqUnitIds[]',
-  },
-  adjustments,
-  invoiceLines,
-};
+const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.INVOICE.type);
+const mappingDetailsProp = getInitialDetails(FOLIO_RECORD_TYPES.INVOICE.type);
 const referenceTablesProp = {
-  acqUnitIds: [{
-    fields: [{
-      enabled: true,
-      name: 'acqUnitIds',
-      path: 'invoice.acqUnitIds[]',
-      value: '',
-    }],
-    order: 0,
-    path: 'invoice.acqUnitIds[]',
-  }],
-  adjustments: [adjustments],
-  invoiceLines: [invoiceLines],
+  acqUnitIds: [initialFieldsProp.acqUnitIds],
+  adjustments: [initialFieldsProp.adjustments],
+  invoiceLines: [initialFieldsProp.invoiceLines],
 };
 const setReferenceTablesMockProp = jest.fn();
 const getMappingSubfieldsFieldValueProp = jest.fn(() => '');
 const okapiProp = {
-  tenant: 'diku',
+  tenant: 'testTenant',
   token: 'token.for.test',
   url: 'https://folio-testing-okapi.dev.folio.org',
-  translations: {},
 };
 
 const renderMappingInvoiceDetails = () => {
   const component = () => (
     <MappingInvoiceDetails
-      mappingDetails={INVOICE}
+      mappingDetails={mappingDetailsProp}
       initialFields={initialFieldsProp}
       referenceTables={referenceTablesProp}
       setReferenceTables={setReferenceTablesMockProp}
@@ -300,7 +93,7 @@ describe('<MappingInvoiceDetails>', () => {
     const {
       findByRole,
       getByRole,
-    } = renderMappingInvoiceDetails({});
+    } = renderMappingInvoiceDetails();
 
     expect(await findByRole('button', {
       name: /invoice information/i,
@@ -383,11 +176,11 @@ describe('<MappingInvoiceDetails>', () => {
       fireEvent.click(buttons[0]);
 
       expect(setReferenceTablesMockProp).toHaveBeenCalled();
-      expect(getAllByRole('textbox', { name: /fund id/i })[0]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /expense class/i })[0]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /value/i })[0]).toBeVisible();
+      expect(getAllByRole('textbox', { name: /fund id/i })[0]).toBeInTheDocument();
+      expect(getAllByRole('textbox', { name: /expense class/i })[0]).toBeInTheDocument();
+      expect(getAllByRole('textbox', { name: /value/i })[0]).toBeInTheDocument();
       expect(getAllByText('Type')[1]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /amount/i })[1]).toBeVisible();
+      expect(getAllByRole('textbox', { name: /amount/i })[1]).toBeInTheDocument();
     });
 
     it('User can delete fund distribution', async () => {
@@ -472,15 +265,18 @@ describe('<MappingInvoiceDetails>', () => {
 
   describe('"Invoice line information"', () => {
     it('User can add vendor reference number', async () => {
-      const { findByRole } = renderMappingInvoiceDetails();
+      const {
+        findByRole,
+        getByRole,
+      } = renderMappingInvoiceDetails();
 
-      const buttons = await findByRole('button', { name: 'Add vendor reference number' });
+      const button = await findByRole('button', { name: 'Add vendor reference number' });
 
-      fireEvent.click(buttons);
+      fireEvent.click(button);
 
       expect(setReferenceTablesMockProp).toHaveBeenCalled();
-      expect(await findByRole('textbox', { name: /vendor reference number/i })).toBeVisible();
-      expect(await findByRole('textbox', { name: /vendor reference type/i })).toBeVisible();
+      expect(getByRole('textbox', { name: /vendor reference number/i })).toBeInTheDocument();
+      expect(getByRole('textbox', { name: /vendor reference type/i })).toBeInTheDocument();
     });
 
     it('User can remove vendor reference number', async () => {
@@ -507,11 +303,11 @@ describe('<MappingInvoiceDetails>', () => {
       fireEvent.click(buttons[1]);
 
       expect(setReferenceTablesMockProp).toHaveBeenCalled();
-      expect(getAllByRole('textbox', { name: /fund id/i })[1]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /expense class/i })[1]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /value/i })[1]).toBeVisible();
+      expect(getAllByRole('textbox', { name: /fund id/i })[1]).toBeInTheDocument();
+      expect(getAllByRole('textbox', { name: /expense class/i })[1]).toBeInTheDocument();
+      expect(getAllByRole('textbox', { name: /value/i })[1]).toBeInTheDocument();
       expect(getAllByText('Type')[2]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /amount/i })[2]).toBeVisible();
+      expect(getAllByRole('textbox', { name: /amount/i })[2]).toBeInTheDocument();
     });
 
     it('User can remove invoice line fund distribution', async () => {
@@ -538,11 +334,11 @@ describe('<MappingInvoiceDetails>', () => {
       fireEvent.click(buttons[1]);
 
       expect(setReferenceTablesMockProp).toHaveBeenCalled();
-      expect(getAllByRole('textbox', { name: /description/i })[2]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /amount/i })[3]).toBeVisible();
+      expect(getAllByRole('textbox', { name: /description/i })[2]).toBeInTheDocument();
+      expect(getAllByRole('textbox', { name: /amount/i })[3]).toBeInTheDocument();
       expect(getAllByText('Type')[3]).toBeVisible();
-      expect(getAllByRole('textbox', { name: /relation to total/i })[1]).toBeVisible();
-      expect(getAllByRole('checkbox', { name: /export to accounting/i })[2]).toBeVisible();
+      expect(getAllByRole('textbox', { name: /relation to total/i })[1]).toBeInTheDocument();
+      expect(getAllByRole('checkbox', { name: /export to accounting/i })[2]).toBeInTheDocument();
     });
 
     it('User can remove invoice line adjustment', async () => {
