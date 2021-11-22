@@ -32,6 +32,7 @@
 * Adjust UI for the Field protection create/edit screen (UIDATIMP-1043)
 * Cover `<MatchProfiles>` settings with tests (UIDATIMP-975)
 * Cover `<ProfileAssociator>` component with tests (UIDATIMP-717)
+* Cover `<MappingProfiles/detailsSections/edit>` settings with tests (UIDATIMP-978)
 
 ## [5.0.1](https://github.com/folio-org/ui-data-import/tree/v5.0.1) (2021-10-19)
 
