@@ -332,7 +332,7 @@
     "settings.mappingProfiles.map.item": "館藏",
     "settings.mappingProfiles.map.administrativeData.section": "管理数据",
     "settings.mappingProfiles.map.item.administrativeData.field.hrid": "单件HRID",
-    "settings.mappingProfiles.map.item.administrativeData.field.barcode": "条码",
+    "settings.mappingProfiles.map.item.administrativeData.field.barcode": "條碼",
     "settings.mappingProfiles.map.item.administrativeData.field.accessionNumber": "Accession number",
     "settings.mappingProfiles.map.identifiers.section": "标识符",
     "settings.mappingProfiles.map.item.administrativeData.field.itemIdentifier": "单件标识符",
