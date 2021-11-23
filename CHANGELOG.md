@@ -26,6 +26,7 @@
 * Cover `<UploadingJobsDisplay>` component with tests (UIDATIMP-730)
 * Cover `FileExtensions` components with tests (UIDATIMP-973)
 * Cover `<JobProfiles` component with tests (UIDATIMP-974)
+* Add an Authority toggle and show response (UIDATIMP-1044)
 
 ## [5.0.2](https://github.com/folio-org/ui-data-import/tree/v5.0.2) (2021-11-12)
 

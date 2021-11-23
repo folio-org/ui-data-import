@@ -38,11 +38,19 @@ const logViewerLogsProps = {
       }],
       errorBlockId: 'item-error',
     }],
-    4: [{}],
-    5: [{
+    4: [{
+      label: 'authority label',
+      logs: [{
+        id: '4',
+        name: 'test',
+      }],
+      errorBlockId: 'authority-error',
+    }],
+    5: [{}],
+    6: [{
       label: 'invoice label',
       logs: [{
-        id: '5',
+        id: '6',
         name: 'test',
       }],
       errorBlockId: 'invoice-error',
