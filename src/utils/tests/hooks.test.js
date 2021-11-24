@@ -26,7 +26,7 @@ function TestComponent() {
   );
 }
 
-describe('usePrevious', () => {
+describe('usePrevious hook', () => {
   it('returns "null" during first call', () => {
     const { getByText } = render(<TestComponent />);
 
@@ -40,7 +40,7 @@ describe('usePrevious', () => {
       queryByText,
     } = render(<TestComponent />);
 
-    expect(queryByText('Before: 0')).not.toBeInTheDocument();
+    expect(queryByText('Previous: 0')).not.toBeInTheDocument();
 
     fireEvent.click(getByRole('button', { name: 'Increment' }));
 
