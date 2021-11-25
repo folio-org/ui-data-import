@@ -5,8 +5,13 @@ import { translationsProperties } from '../../../test/jest/helpers';
 
 import {
   validateAcceptedValues,
-  validateFileExtension, validateMarcIndicatorField, validateMarcTagField, validateMARCWithDate, validateMoveField,
-  validateRepeatableActionsField, validateSubfieldField,
+  validateFileExtension,
+  validateMarcIndicatorField,
+  validateMarcTagField,
+  validateMARCWithDate,
+  validateMoveField,
+  validateRepeatableActionsField,
+  validateSubfieldField,
 } from '../formValidators';
 
 describe('validateFileExtension function', () => {
