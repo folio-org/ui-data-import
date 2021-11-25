@@ -29,7 +29,7 @@ const validateField = value => {
     return value.length === 3 && parseInt(value, 10) <= 999;
   };
 
-  if (value && DISABLED_FOR_PROTECTING_FIELDS.every(field => field !== value) && checkFieldRange()) {
+  if (value && DISABLED_FOR_PROTECTING_FIELDS.every(field => field !== value) && (checkFieldRange() || value === '*')) {
     return null;
   }
 
