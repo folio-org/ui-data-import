@@ -22,18 +22,23 @@
 * Settings : Updates to default SRS Holdings job profile (UIDATIMP-1023)
 * Populate Record Log title column when imported record is MARC Holdings (UIDATIMP-1007)
 * Cover `<Jobs>` component with tests (UIDATIMP-959)
+* Cover `<MatchProfiles>` settings with tests (UIDATIMP-975)
+* Cover `<ProfileAssociator>` component with tests (UIDATIMP-717)
+* Cover `<MappingProfiles/detailsSections/edit>` settings with tests (UIDATIMP-978)
 * Cover `<UploadingJobsContextProvider>` component with tests (UIDATIMP-729)
 * Cover `<UploadingJobsDisplay>` component with tests (UIDATIMP-730)
 * Cover `FileExtensions` components with tests (UIDATIMP-973)
 * Cover `<JobProfiles` component with tests (UIDATIMP-974)
 
+## [5.0.3](https://github.com/folio-org/ui-data-import/tree/v5.0.3) (2021-11-25)
+
+### Features added:
+* Adjust UI for the Field protection create/edit screen. Extra scenario has been added (UIDATIMP-1043)
+
 ## [5.0.2](https://github.com/folio-org/ui-data-import/tree/v5.0.2) (2021-11-12)
 
 ### Features added:
 * Adjust UI for the Field protection create/edit screen (UIDATIMP-1043)
-* Cover `<MatchProfiles>` settings with tests (UIDATIMP-975)
-* Cover `<ProfileAssociator>` component with tests (UIDATIMP-717)
-* Cover `<MappingProfiles/detailsSections/edit>` settings with tests (UIDATIMP-978)
 
 ## [5.0.1](https://github.com/folio-org/ui-data-import/tree/v5.0.1) (2021-10-19)
 
