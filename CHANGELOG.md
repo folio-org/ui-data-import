@@ -2,6 +2,11 @@
 
 ## **5.1.0** (in progress)
 
+## [5.0.3](https://github.com/folio-org/ui-data-import/tree/v5.0.3) (2021-11-25)
+
+### Features added:
+* Adjust UI for the Field protection create/edit screen. Extra scenario has been added (UIDATIMP-1043)
+
 ## [5.0.2](https://github.com/folio-org/ui-data-import/tree/v5.0.2) (2021-11-12)
 
 ### Features added:
