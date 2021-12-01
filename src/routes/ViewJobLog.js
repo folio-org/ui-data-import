@@ -311,7 +311,7 @@ export class ViewJobLog extends Component {
       [OPTIONS.INSTANCE]: relatedInstanceInfo.error || '',
       [OPTIONS.HOLDINGS]: relatedHoldingsInfo.error || '',
       [OPTIONS.ITEM]: relatedItemInfo.error || '',
-      [OPTIONS.AUTHORITY]: relatedAuthorityInfo?.error || '',
+      [OPTIONS.AUTHORITY]: relatedAuthorityInfo.error || '',
       [OPTIONS.ORDER]: relatedOrderInfo.error || '',
       [OPTIONS.INVOICE]: {
         invoiceInfo: relatedInvoiceInfo.error || '',
