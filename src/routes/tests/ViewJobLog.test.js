@@ -289,7 +289,7 @@ describe('View job log page', () => {
         });
       });
 
-      describe('and Item tag is active', () => {
+      describe('and Authority tag is active', () => {
         it('should display Authority JSON details on the screen', () => {
           const {
             container,
