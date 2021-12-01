@@ -1,11 +1,16 @@
 import React from 'react';
-import { fireEvent, waitFor, screen } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
+import {
+  fireEvent,
+  waitFor,
+  render,
+} from '@testing-library/react';
 import { noop } from 'lodash';
 
-import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import {
+  buildMutator,
+  Harness,
+} from '@folio/stripes-data-transfer-components/test/helpers';
 
 import '../../../test/jest/__mock__';
 import {
@@ -13,19 +18,39 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-import { ViewJobProfile } from '../../settings/JobProfiles/ViewJobProfile';
 import { SearchAndSort } from './SearchAndSort';
-
-const history = createMemoryHistory();
 
 const onSubmitSearchMock = jest.fn();
 const onSelectRowMock = jest.fn();
+const EditRecordComponentMock = jest.fn(() => <span>EditRecordComponent</span>);
+const onCreateMock = jest.fn(() => Promise.resolve({ id: 'testId' }));
+const onEditMock = jest.fn();
 
 jest.useFakeTimers();
 
+const getHistory = search => ({
+  length: 1,
+  action: 'POP',
+  location: {
+    pathname: '/data-import/job-profile',
+    search,
+  },
+  block: noop,
+  push: noop,
+  replace: noop,
+  listen: noop,
+  createHref: noop,
+  go: noop,
+  goBack: noop,
+  goForward: noop,
+});
+
 const stripes = buildStripes();
 
-const resources = {
+const resources = (
+  totalRecords,
+  isPending,
+) => ({
   query: {
     query: '',
     sort: '-name',
@@ -34,8 +59,8 @@ const resources = {
   jobProfiles: {
     failed: false,
     hasLoaded: true,
-    isPending: false,
-    other: { totalRecords: 1 },
+    isPending,
+    other: { totalRecords },
     records: [
       {
         childProfiles: [],
@@ -51,7 +76,8 @@ const resources = {
     ],
     resource: 'jobProfiles',
   },
-};
+});
+
 const mutator = buildMutator({
   query: {
     replace: noop,
@@ -61,21 +87,19 @@ const mutator = buildMutator({
 });
 
 const searchAndSortProps = ({
+  parentResources,
   isFullScreen,
+  layer,
 }) => ({
+  history: getHistory(layer),
   objectName: 'testObjectName',
   resultsLabel: <span>Results Label</span>,
   searchLabelKey: 'ui-data-import.settings.jobProfiles.title',
   resultCountMessageKey: 'ui-data-import.settings.jobProfiles.count',
-  location: {
-    search: '?layer=create',
-    pathname: '',
-  },
   fullWidthContainer: <span>fullWidthContainer</span>,
   finishedResourceName: 'jobProfiles',
   actionMenu: jest.fn(() => <span>Add</span>),
   isFullScreen,
-  EditRecordComponent: jest.fn(() => <span>EditRecordComponent</span>),
   visibleColumns: [
     'name',
     'description',
@@ -83,72 +107,107 @@ const searchAndSortProps = ({
     'updatedBy',
   ],
   nsParams: 'sort',
-  onSelectRow: onSelectRowMock,
+  parentResources,
 });
 
-const renderSearchAndSort = ({
+const getSearchAndSortComponent = ({
   objectName,
   resultsLabel,
   searchLabelKey,
   resultCountMessageKey,
-  location,
   finishedResourceName,
   actionMenu,
   isFullScreen,
   fullWidthContainer,
-  EditRecordComponent,
+  parentResources,
   visibleColumns,
   nsParams,
-  onSelectRow,
-}) => {
-  const component = (
-    <Router>
+  history,
+}) => (
+  <Harness translations={translationsProperties}>
+    <Router history={history}>
       <SearchAndSort
         stripes={stripes}
-        history={history}
         objectName={objectName}
         resultsLabel={resultsLabel}
         initialResultCount={100}
         resultCountIncrement={10}
         searchLabelKey={searchLabelKey}
         resultCountMessageKey={resultCountMessageKey}
-        location={location}
+        showSingleResult
         fullWidthContainer={fullWidthContainer}
-        match={{ path: '/settings/data-import/job-profiles' }}
+        match={{ path: '' }}
         parentMutator={mutator}
-        parentResources={resources}
-        ViewRecordComponent={() => <div>ViewRecordComponent</div>}
+        parentResources={parentResources}
+        ViewRecordComponent={noop}
         finishedResourceName={finishedResourceName}
         actionMenu={actionMenu}
         isFullScreen={isFullScreen}
-        EditRecordComponent={EditRecordComponent}
+        EditRecordComponent={EditRecordComponentMock}
         visibleColumns={visibleColumns}
         nsParams={nsParams}
         onSubmitSearch={onSubmitSearchMock}
-        onSelectRow={onSelectRow}
+        onSelectRow={onSelectRowMock}
+        onCreate={onCreateMock}
+        onEdit={onEditMock}
       />
     </Router>
-  );
+  </Harness>
+);
 
-  return renderWithIntl(component, translationsProperties);
+const renderSearchAndSort = props => {
+  return render(getSearchAndSortComponent(props));
 };
 
 describe('SearchAndSort component', () => {
   afterEach(() => {
     onSubmitSearchMock.mockClear();
     onSelectRowMock.mockClear();
+    EditRecordComponentMock.mockClear();
+    onCreateMock.mockClear();
+    onEditMock.mockClear();
   });
 
-  it('should be rendered2', () => {
-    const { getByText, debug } = renderSearchAndSort(searchAndSortProps({ isFullScreen: false }));
-    debug()
+  it('should be rendered', () => {
+    const { getByText } = renderSearchAndSort(searchAndSortProps({
+      parentResources: resources(1, false),
+      isFullScreen: true,
+      layer: '?layer=create',
+    }));
+
+    expect(getByText('Results Label')).toBeDefined();
+    expect(getByText('1 job profile')).toBeDefined();
+  });
+
+  describe('after rerender', () => {
+    it('single record should be rendered', () => {
+      const {
+        getByText,
+        rerender,
+      } = renderSearchAndSort(searchAndSortProps({
+        parentResources: resources(2, undefined),
+        isFullScreen: false,
+        layer: '?layer=create',
+      }));
+
+      rerender(getSearchAndSortComponent(searchAndSortProps({
+        parentResources: resources(1, false),
+        isFullScreen: false,
+        layer: '?layer=create',
+      })));
+
+      expect(getByText('Test Name 1')).toBeDefined();
+    });
   });
 
   describe('when click on record', () => {
     it('onSelectRow function should be called', () => {
       const { getByText } = renderSearchAndSort({
-        ...searchAndSortProps({ isFullScreen: false }),
-        onSelectRow: onSelectRowMock,
+        ...searchAndSortProps({
+          parentResources: resources(1, false),
+          isFullScreen: false,
+          layer: '?layer=create',
+        }),
       });
 
       fireEvent.click(getByText('name'));
@@ -156,48 +215,39 @@ describe('SearchAndSort component', () => {
 
       expect(onSelectRowMock).toHaveBeenCalled();
     });
-
-    /* describe('when should fallback to regular record display', () => {
-      it('onSelectRow function should not be called', () => {
-        const { getByText } = renderSearchAndSort({
-          ...searchAndSortProps({ isFullScreen: false }),
-          onSelectRow: null,
-        });
-
-        fireEvent.click(getByText('Test Name 1'));
-
-        expect(onSelectRowMock).not.toHaveBeenCalled();
-      });
-    }); */
-  });
-
-  it('should be rendered', () => {
-    const { getByText } = renderSearchAndSort(searchAndSortProps({isFullScreen: true}));
-
-    expect(getByText('Results Label')).toBeDefined();
-    expect(getByText('1 job profile')).toBeDefined();
   });
 
   describe('when set search term', () => {
     it('search input should change the value', () => {
-      const { getByLabelText } = renderSearchAndSort(searchAndSortProps({isFullScreen: false}));
-        const searchInput = getByLabelText('Search Job profiles');
-        searchInput.focus();
+      const { getByLabelText } = renderSearchAndSort(searchAndSortProps({
+        parentResources: resources(1, false),
+        isFullScreen: false,
+        layer: '?layer=create',
+      }));
+      const searchInput = getByLabelText('Search Job profiles');
 
-        fireEvent.change(searchInput, { target: { value: 'test value' } });
+      searchInput.focus();
 
-        expect(searchInput.value).toEqual('test value');
+      fireEvent.change(searchInput, { target: { value: 'test value' } });
+
+      expect(searchInput.value).toEqual('test value');
     });
 
     describe('when click clean search button', () => {
       it('search input should be empty', () => {
-        const { getByLabelText } = renderSearchAndSort(searchAndSortProps({isFullScreen: true}));
+        const { getByLabelText } = renderSearchAndSort(searchAndSortProps({
+          parentResources: resources(1, false),
+          isFullScreen: true,
+          layer: '?layer=create',
+        }));
         const searchInput = getByLabelText('Search Job profiles');
+
         searchInput.focus();
 
         fireEvent.change(searchInput, { target: { value: 'test value' } });
 
         const clearButton = getByLabelText('Clear this field');
+
         fireEvent.click(clearButton);
 
         expect(searchInput.value).toEqual('');
@@ -206,15 +256,103 @@ describe('SearchAndSort component', () => {
 
     describe('when click Search button', () => {
       it('search function should be called', () => {
-        const { getByLabelText, getByText, } = renderSearchAndSort(searchAndSortProps({isFullScreen: true}));
+        const {
+          getByLabelText,
+          getByText,
+        } = renderSearchAndSort(searchAndSortProps({
+          parentResources: resources(1, false),
+          isFullScreen: true,
+          layer: '?layer=create',
+        }));
         const searchInput = getByLabelText('Search Job profiles');
+
         searchInput.focus();
 
         fireEvent.change(searchInput, { target: { value: 'test value' } });
         fireEvent.click(getByText('Search'));
         jest.runAllTimers();
 
-        expect(onSubmitSearchMock).toHaveBeenCalled;
+        expect(onSubmitSearchMock).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('EditRecordComponent', () => {
+    describe('when layer is create', () => {
+      it('should be rendered', () => {
+        const { getByText } = renderSearchAndSort(searchAndSortProps({
+          parentResources: resources(1, false),
+          isFullScreen: true,
+          layer: '?layer=create',
+        }));
+
+        expect(getByText('EditRecordComponent')).toBeDefined();
+      });
+
+      describe('when create new record', () => {
+        it('function for creating should be called', async () => {
+          renderSearchAndSort(searchAndSortProps({
+            parentResources: resources(1, false),
+            isFullScreen: true,
+            layer: '?layer=create',
+          }));
+
+          await waitFor(() => EditRecordComponentMock.mock.calls[0][0].onSubmit());
+
+          expect(onCreateMock).toHaveBeenCalled();
+        });
+      });
+    });
+
+    describe('when layer is edit', () => {
+      it('should be rendered', () => {
+        const { getByText } = renderSearchAndSort(searchAndSortProps({
+          parentResources: resources(1, false),
+          isFullScreen: true,
+          layer: '?layer=edit',
+        }));
+
+        expect(getByText('EditRecordComponent')).toBeDefined();
+      });
+
+      describe('when edit the record', () => {
+        it('function for editing should be called', async () => {
+          renderSearchAndSort(searchAndSortProps({
+            parentResources: resources(1, false),
+            isFullScreen: true,
+            layer: '?layer=edit',
+          }));
+
+          await waitFor(() => EditRecordComponentMock.mock.calls[0][0].onSubmit());
+
+          expect(onEditMock).toHaveBeenCalled();
+        });
+      });
+    });
+
+    describe('when layer is duplicate', () => {
+      it('should be rendered', () => {
+        const { getByText } = renderSearchAndSort(searchAndSortProps({
+          parentResources: resources(1, false),
+          isFullScreen: true,
+          layer: '?layer=duplicate',
+        }));
+
+        expect(getByText('EditRecordComponent')).toBeDefined();
+      });
+
+      describe('when duplicate the record', () => {
+        it('function for creating should be called', async () => {
+          renderSearchAndSort(searchAndSortProps({
+            parentResources: resources(1, false),
+            isFullScreen: true,
+            layer: '?layer=duplicate',
+          }));
+
+          await waitFor(() => EditRecordComponentMock.mock.calls[0][0].onSubmit());
+
+          expect(onCreateMock).toHaveBeenCalled();
+        });
       });
     });
   });
