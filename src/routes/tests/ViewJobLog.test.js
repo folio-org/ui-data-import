@@ -46,6 +46,10 @@ const invoiceLineJSONData = {
   id: faker.random.uuid(),
   title: 'Test invoice line title',
 };
+const authorityJSONData = {
+  id: faker.random.uuid(),
+  title: 'Test authority title',
+};
 
 const jobLogResources = hasLoaded => buildResources({
   resourceName: 'jobLog',
@@ -62,6 +66,7 @@ const jobLogResources = hasLoaded => buildResources({
       id: faker.random.uuid(),
       fullInvoiceLineNumber: '1024200-1',
     },
+    relatedAuthorityInfo: { idList: [faker.random.uuid()] },
     sourceRecordOrder: 0,
     sourceRecordTitle: 'Test record title',
   }],
@@ -91,6 +96,10 @@ const invoiceLineResources = buildResources({
   resourceName: 'invoiceLine',
   records: [invoiceLineJSONData],
 });
+const authoritiesResources = buildResources({
+  resourceName: 'authorities',
+  records: [authorityJSONData],
+});
 
 const getResources = ({
   recordType,
@@ -103,6 +112,7 @@ const getResources = ({
   ...itemsResources,
   ...invoiceResources,
   ...invoiceLineResources,
+  ...authoritiesResources,
 });
 
 const mutator = buildMutator({
@@ -111,6 +121,7 @@ const mutator = buildMutator({
   items: { GET: jest.fn() },
   invoice: { GET: jest.fn() },
   invoiceLine: { GET: jest.fn() },
+  authorities: { GET: jest.fn() },
 });
 
 const getViewJobLogComponent = ({
@@ -160,6 +171,7 @@ describe('View job log page', () => {
       expect(mutator.items.GET).toHaveBeenCalled();
       expect(mutator.invoice.GET).toHaveBeenCalled();
       expect(mutator.invoiceLine.GET).toHaveBeenCalled();
+      expect(mutator.authorities.GET).toHaveBeenCalled();
     });
   });
 
@@ -208,10 +220,10 @@ describe('View job log page', () => {
       expect(getByText('Show:')).toBeDefined();
     });
 
-    it('should have 6 tabs', () => {
+    it('should have 7 tabs', () => {
       const { getAllByRole } = renderViewJobLog({ recordType: 'MARC' });
 
-      expect(getAllByRole('tab').length).toEqual(6);
+      expect(getAllByRole('tab').length).toEqual(7);
     });
   });
 
@@ -274,6 +286,20 @@ describe('View job log page', () => {
           const codeElement = container.querySelector('code.info');
 
           expect(JSON.parse(codeElement.textContent)).toEqual(itemsJSONData);
+        });
+      });
+
+      describe('and Authority tag is active', () => {
+        it('should display Authority JSON details on the screen', () => {
+          const {
+            container,
+            getByText,
+          } = renderViewJobLog({ recordType: 'MARC' });
+
+          fireEvent.click(getByText('Authority'));
+          const codeElement = container.querySelector('code.info');
+
+          expect(JSON.parse(codeElement.textContent)).toEqual(authorityJSONData);
         });
       });
 
