@@ -146,8 +146,9 @@ export const LOG_VIEWER = {
       INSTANCE: 1,
       HOLDINGS: 2,
       ITEM: 3,
-      ORDER: 4,
-      INVOICE: 5,
+      AUTHORITY: 4,
+      ORDER: 5,
+      INVOICE: 6,
     },
   },
 };

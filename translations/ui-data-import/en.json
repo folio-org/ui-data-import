@@ -856,6 +856,7 @@
   "logViewer.filter.instance": "Instance",
   "logViewer.filter.holdings": "Holdings",
   "logViewer.filter.item": "Item",
+  "logViewer.filter.authority": "Authority",
   "logViewer.filter.order": "Order",
   "logViewer.filter.invoice": "Invoice",
   "logLight.actionStatus.created": "Created",
