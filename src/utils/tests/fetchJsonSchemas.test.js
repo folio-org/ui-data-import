@@ -38,10 +38,10 @@ describe('fetchJsonSchema function', () => {
       tenant: 'tenant',
       token: 'token',
     };
-
+    const expected = `${okapi.url}/_/jsonSchemas?path=${path}`;
     const data = await fetchJsonSchema(path, module, okapi);
 
-    expect(global.fetch.mock.calls[0][0]).toBe(`${okapi.url}/_/jsonSchemas?path=${path}`);
+    expect(global.fetch.mock.calls[0][0]).toBe(expected);
     expect(data).toEqual({ properties: 'testSchema' });
   });
 
@@ -59,11 +59,11 @@ describe('fetchJsonSchema function', () => {
       tenant: 'tenant',
       token: 'token',
     };
-
+    const expected = `Cannot fetch resources from "${path}"`;
     const data = await fetchJsonSchema(path, module, okapi);
 
     // eslint-disable-next-line no-console
-    expect(console.error.mock.calls[0][0].message).toBe(`Cannot fetch resources from "${path}"`);
+    expect(console.error.mock.calls[0][0].message).toBe(expected);
     expect(data).toEqual({});
 
     // eslint-disable-next-line no-console

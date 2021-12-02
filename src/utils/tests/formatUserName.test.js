@@ -10,9 +10,10 @@ describe('formatUserName function', () => {
       lastName: 'Doe',
       userName: 'admin',
     };
+    const expected = `${userInfo.firstName} ${userInfo.lastName} (@${userInfo.userName})`;
 
     expect(formatUserName(emptyUserInfo).trim()).toBe('');
     expect(formatUserName(systemUserInfo)).toBe(SYSTEM_USER_NAME);
-    expect(formatUserName(userInfo)).toBe(`${userInfo.firstName} ${userInfo.lastName} (@${userInfo.userName})`);
+    expect(formatUserName(userInfo)).toBe(expected);
   });
 });

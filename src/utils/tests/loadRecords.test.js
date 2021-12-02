@@ -29,8 +29,9 @@ describe('fetchUploadDefinition function', () => {
       okapi,
       id,
     });
+    const expected = `${okapi.url}/data-import/uploadDefinitions/${id}`;
 
-    expect(global.fetch.mock.calls[0][0]).toBe(`${okapi.url}/data-import/uploadDefinitions/${id}`);
+    expect(global.fetch.mock.calls[0][0]).toBe(expected);
     expect(data).toEqual({ id: 'uploadDefinitionId' });
   });
 
@@ -70,8 +71,9 @@ describe('fetchJobProfile function', () => {
       okapi,
       id,
     });
+    const expected = `${okapi.url}/data-import-profiles/jobProfiles/${id}`;
 
-    expect(global.fetch.mock.calls[0][0]).toBe(`${okapi.url}/data-import-profiles/jobProfiles/${id}`);
+    expect(global.fetch.mock.calls[0][0]).toBe(expected);
   });
 });
 
@@ -106,8 +108,9 @@ describe('loadRecords function', () => {
       jobProfileInfo,
       defaultMapping,
     });
+    const expected = `${okapi.url}/data-import/uploadDefinitions/${uploadDefinitionId}/processFiles?defaultMapping=${defaultMapping}`;
 
-    expect(global.fetch.mock.calls[1][0]).toBe(`${okapi.url}/data-import/uploadDefinitions/${uploadDefinitionId}/processFiles?defaultMapping=${defaultMapping}`);
+    expect(global.fetch.mock.calls[1][0]).toBe(expected);
     expect(data.status).toEqual(200);
     expect(data.ok).toBeTruthy();
     expect(await data.json()).toEqual({ id: 'testId' });

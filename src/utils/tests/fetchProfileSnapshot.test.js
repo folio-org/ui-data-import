@@ -25,10 +25,10 @@ describe('fetchProfileSnapshot function', () => {
       tenant: 'tenant',
       token: 'token',
     };
-
+    const expected = `${okapi.url}/data-import-profiles/profileSnapshots/${profileId}?profileType=${profileType}&jobProfileId=${jobProfileId}`;
     const data = await fetchProfileSnapshot(profileId, profileType, jobProfileId, okapi);
 
-    expect(global.fetch.mock.calls[0][0]).toBe(`${okapi.url}/data-import-profiles/profileSnapshots/${profileId}?profileType=${profileType}&jobProfileId=${jobProfileId}`);
+    expect(global.fetch.mock.calls[0][0]).toBe(expected);
     expect(data).toEqual({ id: 'snapshotId' });
   });
 
