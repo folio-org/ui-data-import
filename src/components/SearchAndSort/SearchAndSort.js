@@ -121,7 +121,6 @@ export class SearchAndSort extends Component {
     onCreate: PropTypes.func,
     onEdit: PropTypes.func,
     onDelete: PropTypes.func,
-    onRestoreDefaults: PropTypes.func,
     onSubmitSearch: PropTypes.func,
     handleCreateSuccess: PropTypes.func,
     handleEditSuccess: PropTypes.func,
@@ -154,7 +153,6 @@ export class SearchAndSort extends Component {
     onCreate: noop,
     onEdit: noop,
     onDelete: noop,
-    onRestoreDefaults: noop,
     onSubmitSearch: noop,
     handleCreateSuccess: noop,
     handleEditSuccess: noop,
@@ -386,23 +384,6 @@ export class SearchAndSort extends Component {
     }
   };
 
-  restoreDefaults = async record => {
-    const {
-      onRestoreDefaults,
-      handleRestoreSuccess,
-      handleRestoreError,
-    } = this.props;
-
-    const response = await onRestoreDefaults(record);
-
-    if (response.ok) {
-      this.setState({ selectedItem: null });
-      handleRestoreSuccess(record);
-    } else {
-      handleRestoreError(record, response);
-    }
-  };
-
   closeNewRecord = e => {
     if (e) {
       e.preventDefault();
@@ -485,12 +466,6 @@ export class SearchAndSort extends Component {
 
     return `${path}/view/${id}${search}`;
   }
-
-  closeDetails = () => {
-    const { match: { path } } = this.props;
-
-    this.transitionToParams({ _path: path });
-  };
 
   renderDetailsPane(source) {
     const {
