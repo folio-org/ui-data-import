@@ -43,6 +43,9 @@ const filterOptions = [
     id: OPTIONS.ITEM,
     caption: 'ui-data-import.logViewer.filter.item',
   }, {
+    id: OPTIONS.AUTHORITY,
+    caption: 'ui-data-import.logViewer.filter.authority',
+  }, {
     id: OPTIONS.ORDER,
     caption: 'ui-data-import.logViewer.filter.order',
     disabled: true,

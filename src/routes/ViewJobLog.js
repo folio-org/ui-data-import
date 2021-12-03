@@ -66,6 +66,12 @@ export class ViewJobLog extends Component {
       throwErrors: false,
       accumulate: true,
     },
+    authorities: {
+      type: 'okapi',
+      path: 'authority-storage/authorities',
+      throwErrors: false,
+      accumulate: true,
+    },
   });
 
   static propTypes = {
@@ -98,6 +104,10 @@ export class ViewJobLog extends Component {
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
       }),
+      authorities: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+      }),
     }).isRequired,
     mutator: PropTypes.shape({
       instances: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
@@ -105,6 +115,7 @@ export class ViewJobLog extends Component {
       items: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
       invoice: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
       invoiceLine: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
+      authorities: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
     }).isRequired,
   };
 
@@ -123,6 +134,7 @@ export class ViewJobLog extends Component {
       this.fetchItemsData();
       this.fetchInvoiceData();
       this.fetchInvoiceLineData();
+      this.fetchAuthorityData();
     }
   }
 
@@ -166,6 +178,14 @@ export class ViewJobLog extends Component {
     if (invoiceLineId) {
       this.props.mutator.invoiceLine.GET({ path: `invoice-storage/invoice-lines/${invoiceLineId}` });
     }
+  }
+
+  fetchAuthorityData() {
+    const authorityIds = this.props.resources.jobLog.records[0]?.relatedAuthorityInfo?.idList || [];
+
+    authorityIds.forEach(authorityId => {
+      this.props.mutator.authorities.GET({ path: `authority-storage/authorities/${authorityId}` });
+    });
   }
 
   get jobLogData() {
@@ -231,6 +251,18 @@ export class ViewJobLog extends Component {
     };
   }
 
+  get authorityData() {
+    const { resources } = this.props;
+
+    const authorities = resources.authorities || {};
+    const [record] = authorities.records || [];
+
+    return {
+      hasLoaded: authorities.hasLoaded,
+      record,
+    };
+  }
+
   get invoiceData() {
     const { resources } = this.props;
 
@@ -268,6 +300,7 @@ export class ViewJobLog extends Component {
       relatedInstanceInfo,
       relatedHoldingsInfo,
       relatedItemInfo,
+      relatedAuthorityInfo,
       relatedOrderInfo,
       relatedInvoiceInfo,
       relatedInvoiceLineInfo,
@@ -278,6 +311,7 @@ export class ViewJobLog extends Component {
       [OPTIONS.INSTANCE]: relatedInstanceInfo.error || '',
       [OPTIONS.HOLDINGS]: relatedHoldingsInfo.error || '',
       [OPTIONS.ITEM]: relatedItemInfo.error || '',
+      [OPTIONS.AUTHORITY]: relatedAuthorityInfo.error || '',
       [OPTIONS.ORDER]: relatedOrderInfo.error || '',
       [OPTIONS.INVOICE]: {
         invoiceInfo: relatedInvoiceInfo.error || '',
@@ -353,6 +387,12 @@ export class ViewJobLog extends Component {
         logs: this.itemData.record,
         error: this.getErrorMessage(OPTIONS.ITEM),
         errorBlockId: 'item-error',
+      }],
+      [OPTIONS.AUTHORITY]: [{
+        label: '',
+        logs: this.authorityData.record,
+        error: this.getErrorMessage(OPTIONS.AUTHORITY),
+        errorBlockId: 'authority-error',
       }],
       [OPTIONS.ORDER]: [{}],
       [OPTIONS.INVOICE]: [{
