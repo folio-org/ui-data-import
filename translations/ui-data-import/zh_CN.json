@@ -869,5 +869,5 @@
     "logViewer.invoice": "发票",
     "logViewer.invoiceLine": "发票行",
     "logViewer.filter.srsMARC": "SRS MARC",
-    "recordTypes.authority": "Authority"
+    "recordTypes.authority": "规范"
 }
