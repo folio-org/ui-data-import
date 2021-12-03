@@ -175,8 +175,8 @@ describe('SearchAndSort component', () => {
       layer: '?layer=create',
     }));
 
-    expect(getByText('Results Label')).toBeDefined();
-    expect(getByText('1 job profile')).toBeDefined();
+    expect(getByText('Results Label')).toBeInTheDocument();
+    expect(getByText('1 job profile')).toBeInTheDocument();
   });
 
   describe('after rerender', () => {
@@ -196,7 +196,7 @@ describe('SearchAndSort component', () => {
         layer: '?layer=create',
       })));
 
-      expect(getByText('Test Name 1')).toBeDefined();
+      expect(getByText('Test Name 1')).toBeInTheDocument();
     });
   });
 
@@ -286,7 +286,7 @@ describe('SearchAndSort component', () => {
           layer: '?layer=create',
         }));
 
-        expect(getByText('EditRecordComponent')).toBeDefined();
+        expect(getByText('EditRecordComponent')).toBeInTheDocument();
       });
 
       describe('when create new record', () => {
@@ -312,7 +312,7 @@ describe('SearchAndSort component', () => {
           layer: '?layer=edit',
         }));
 
-        expect(getByText('EditRecordComponent')).toBeDefined();
+        expect(getByText('EditRecordComponent')).toBeInTheDocument();
       });
 
       describe('when edit the record', () => {
@@ -338,7 +338,7 @@ describe('SearchAndSort component', () => {
           layer: '?layer=duplicate',
         }));
 
-        expect(getByText('EditRecordComponent')).toBeDefined();
+        expect(getByText('EditRecordComponent')).toBeInTheDocument();
       });
 
       describe('when duplicate the record', () => {
