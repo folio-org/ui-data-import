@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
 import {
+  BOOLEAN_ACTIONS,
   ENTITY_KEYS,
   FORMS_SETTINGS,
   isFormattedMessage,
@@ -12,9 +13,9 @@ import {
 
 export const getDecoratorValue = value => {
   const booleanActions = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'BOOLEAN_ACTIONS'], []);
-  const actionLabel = booleanActions.OPTIONS.find(item => item.value === value)?.label;
+  const actionLabel = booleanActions.find(item => item.value === value)?.label;
 
-  if (value === booleanActions.DEFAULT_OPTION) {
+  if (value === BOOLEAN_ACTIONS.AS_IS) {
     return '';
   }
 

@@ -32,6 +32,7 @@
 * Add an Authority toggle and show response (UIDATIMP-1044)
 * Cover `<SearchAndSort>` component with tests (UIDATIMP-723)
 * Cover `<DataImportSettings>` settings with tests (UIDATIMP-972)
+* Cover `src/utils` utils with tests (UIDATIMP-970)
 
 ## [5.0.3](https://github.com/folio-org/ui-data-import/tree/v5.0.3) (2021-11-25)
 
