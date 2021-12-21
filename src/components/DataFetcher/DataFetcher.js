@@ -6,7 +6,6 @@ import {
 } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
-import { createUrl } from '@folio/stripes-data-transfer-components';
 import { DEFAULT_FETCHER_UPDATE_INTERVAL } from '@folio/stripes-data-transfer-components/lib/utils';
 
 import { jobExecutionPropTypes } from '../Jobs/components/Job/jobExecutionPropTypes';
@@ -31,18 +30,32 @@ const {
   DISCARDED,
 } = FILE_STATUSES;
 
-const jobsUrl = createUrl('metadata-provider/jobExecutions', {
-  query: `(status="" NOT status=${DISCARDED}) AND (uiStatus==("${PREPARING_FOR_PREVIEW}" OR "${READY_FOR_PREVIEW}" OR "${RUNNING}"))`,
-  limit: 50,
-}, false);
+const createUrlFromArray = (url, queryParams = []) => {
+  const paramsString = queryParams.join('&');
 
-const logsUrl = createUrl('metadata-provider/jobExecutions', {
-  query: `(status any "${COMMITTED} ${ERROR}") 
-  AND (jobProfileInfo="\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="${OCLC_CREATE_INSTANCE_JOB_ID}") 
-  AND (jobProfileInfo="\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="${OCLC_UPDATE_INSTANCE_JOB_ID}") 
-  sortBy completedDate/sort.descending`,
-  limit: 25,
-}, true);
+  return `${url.endsWith('?') ? url.slice(0, -1) : url}?${paramsString}`;
+};
+
+const jobsUrlParams = [
+  `statusNot=${DISCARDED}`,
+  `uiStatusAny=${PREPARING_FOR_PREVIEW}`,
+  `uiStatusAny=${READY_FOR_PREVIEW}`,
+  `uiStatusAny=${RUNNING}`,
+  'limit=50',
+  'sortBy=completed_date,desc',
+];
+
+const logsUrlParams = [
+  `statusAny=${COMMITTED}`,
+  `statusAny=${ERROR}`,
+  `profileIdNotAny=${OCLC_CREATE_INSTANCE_JOB_ID}`,
+  `profileIdNotAny=${OCLC_UPDATE_INSTANCE_JOB_ID}`,
+  'limit=25',
+  'sortBy=completed_date,desc',
+];
+
+const jobsUrl = createUrlFromArray('metadata-provider/jobExecutions', jobsUrlParams);
+const logsUrl = createUrlFromArray('metadata-provider/jobExecutions', logsUrlParams);
 
 @stripesConnect
 export class DataFetcher extends Component {
