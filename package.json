@@ -181,7 +181,7 @@
     ],
     "okapiInterfaces": {
       "data-import": "3.0",
-      "source-manager-job-executions": "1.0 2.0",
+      "source-manager-job-executions": "3.0",
       "data-import-converter-storage": "1.2"
     },
     "permissionSets": [
