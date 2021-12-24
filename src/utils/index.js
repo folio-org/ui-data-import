@@ -29,3 +29,4 @@ export * from './getDecoratorValue';
 export * from './updateValueWithTemplate';
 export * from './fillEmptyFieldsWithValue';
 export * from './getTrimmedValue';
+export * from './createUrlFromArray';

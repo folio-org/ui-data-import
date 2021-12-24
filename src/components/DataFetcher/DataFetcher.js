@@ -14,6 +14,7 @@ import {
   FILE_STATUSES,
   OCLC_CREATE_INSTANCE_JOB_ID,
   OCLC_UPDATE_INSTANCE_JOB_ID,
+  createUrlFromArray,
 } from '../../utils';
 
 import { DataFetcherContext } from '.';
@@ -29,12 +30,6 @@ const {
   ERROR,
   DISCARDED,
 } = FILE_STATUSES;
-
-const createUrlFromArray = (url, queryParams = []) => {
-  const paramsString = queryParams.join('&');
-
-  return `${url.endsWith('?') ? url.slice(0, -1) : url}?${paramsString}`;
-};
 
 const jobsUrlParams = [
   `statusNot=${DISCARDED}`,
