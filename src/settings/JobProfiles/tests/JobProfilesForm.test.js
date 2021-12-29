@@ -141,7 +141,7 @@ describe('<JobProfilesForm>', () => {
     expect(await fetchAssociations({ url: '/test-path' }, 'testId')).toEqual(expected);
   });
 
-  it('User can change "Accepted data type"', async () => {
+  it('User can change "Accepted data type"', () => {
     const {
       container,
       getByRole,
