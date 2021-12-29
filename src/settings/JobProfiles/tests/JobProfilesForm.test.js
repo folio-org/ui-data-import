@@ -143,13 +143,13 @@ describe('<JobProfilesForm>', () => {
 
   it('User can change "Accepted data type"', async () => {
     const {
+      container,
       getByRole,
-      getByText,
     } = renderJobProfilesForm(jobProfilesFormProps());
 
     fireEvent.change(getByRole('combobox', { name: /accepted data type/i }), { target: { value: 'EDIFACT' } });
 
-    await waitFor(() => expect(getByText('EDIFACT')).toBeInTheDocument());
+    expect(container.querySelector('option[value="EDIFACT"]').selected).toBeTruthy();
   });
 
   describe('when input fields filled with values', () => {
