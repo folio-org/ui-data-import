@@ -10,11 +10,12 @@ import {
 } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
-  makeQueryFunction,
-  SearchAndSort,
-} from '@folio/stripes/smart-components';
-import { Button } from '@folio/stripes/components';
+  FILTER_SEPARATOR,
+  FILTER_GROUP_SEPARATOR,
+  Button,
+} from '@folio/stripes/components';
 import {
   changeSearchIndex,
   getActiveFilters,
@@ -27,9 +28,13 @@ import {
   logsSearchTemplate,
   searchableIndexes,
 } from './ViewAllLogsSearchConfig';
-import { listTemplate } from '../../components/ListTemplate';
+import { listTemplate } from '../../components';
 import packageInfo from '../../../package';
 import { FILE_STATUSES } from '../../utils';
+import {
+  FILTERS,
+  SORT_MAP,
+} from './constants';
 
 import sharedCss from '../../shared.css';
 
@@ -61,6 +66,129 @@ const visibleColumns = [
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
 
+const getQuery = (query, qindex) => {
+  if (query && qindex) {
+    return { [qindex]: logsSearchTemplate(query)[qindex] };
+  }
+
+  if (query) {
+    return logsSearchTemplate(query);
+  }
+
+  return {};
+};
+const getFilters = filters => {
+  const splitFiltersByGroups = () => {
+    const groups = {};
+
+    const fullNames = filters.split(FILTER_SEPARATOR);
+
+    for (const fullName of fullNames) {
+      if (fullName) {
+        const [groupName, fieldName] = fullName.split(FILTER_GROUP_SEPARATOR);
+
+        if (groups[groupName] === undefined) groups[groupName] = [];
+        groups[groupName].push(fieldName);
+      }
+    }
+
+    return groups;
+  };
+  const getMappedValues = (values, group) => {
+    return values.map(value => {
+      const obj = group.values.filter(f => typeof f === 'object' && f.name === value);
+
+      return (obj.length > 0) ? obj[0].cql : value;
+    });
+  };
+  const convertFiltersToQuery = filtersObj => {
+    const filterQueries = {};
+
+    for (const query of Object.keys(filtersObj)) {
+      filterQueries[query] = filtersObj[query].join(`&${query}=`);
+    }
+
+    return filterQueries;
+  };
+
+  if (filters) {
+    const groups = splitFiltersByGroups();
+    const filtersObj = {};
+
+    for (const groupName of Object.keys(groups)) {
+      const group = filterConfig.filter(g => g.name === groupName)[0];
+
+      if (group && group.cql) {
+        const cqlIndex = group.cql;
+
+        // values contains the selected filters
+        const values = groups[groupName];
+
+        const mappedValues = getMappedValues(values, group);
+
+        if (group.isRange) {
+          const { rangeSeparator = ':' } = group;
+          const [start, end] = mappedValues[0].split(rangeSeparator);
+
+          filtersObj.completedAfter = [start];
+          filtersObj.completedBefore = [end];
+        } else {
+          const {
+            noIndex,
+            values: groupValues,
+          } = group;
+
+          // fill in filters object
+          if (!noIndex) {
+            if (filtersObj[cqlIndex] === undefined) filtersObj[cqlIndex] = [];
+
+            filtersObj[cqlIndex] = [...filtersObj[cqlIndex], ...values];
+          } else {
+            values.forEach(value => {
+              const obj = groupValues.filter(f => typeof f === 'object' && f.name === value);
+
+              if (obj.length > 0) {
+                const groupIndex = obj[0].indexName;
+
+                if (filtersObj[groupIndex] === undefined) filtersObj[groupIndex] = [];
+
+                filtersObj[groupIndex] = [...filtersObj[groupIndex], obj[0].cql];
+              }
+            });
+          }
+        }
+      }
+    }
+
+    return convertFiltersToQuery(filtersObj);
+  }
+
+  return {};
+};
+const getSort = sort => {
+  const firstSortIndex = sort?.split(',')[0] || '';
+
+  if (!firstSortIndex) return {};
+
+  let reverse = false;
+  let sortValue = firstSortIndex;
+
+  if (firstSortIndex.startsWith('-')) {
+    sortValue = firstSortIndex.substr(1);
+    reverse = true;
+  }
+
+  let sortIndex = SORT_MAP[sortValue] || sortValue;
+
+  if (reverse) {
+    sortIndex = `${sortIndex.replace(' ', ',desc sortBy=')},desc`;
+  } else {
+    sortIndex = `${sortIndex.replace(' ', ',asc sortBy=')},asc`;
+  }
+
+  return { sortBy: sortIndex };
+};
+
 @stripesConnect
 class ViewAllLogs extends Component {
   static propTypes = {
@@ -80,7 +208,6 @@ class ViewAllLogs extends Component {
     initializedFilterConfig: { initialValue: false },
     query: {
       initialValue: {
-        query: '',
         filters: '',
         sort: '-completedDate',
       },
@@ -92,27 +219,30 @@ class ViewAllLogs extends Component {
       records: 'jobExecutions',
       recordsRequired: '%{resultCount}',
       path: 'metadata-provider/jobExecutions',
+      params: (queryParams, pathComponents, resourceData) => {
+        const {
+          qindex,
+          filters,
+          query,
+          sort,
+        } = resourceData.query || {};
+
+        const queryValue = getQuery(query, qindex);
+        const filtersValues = getFilters(filters);
+        const sortValue = getSort(sort);
+
+        if (!filtersValues[FILTERS.ERRORS]) {
+          filtersValues[FILTERS.ERRORS] = `${COMMITTED}&${FILTERS.ERRORS}=${ERROR}`;
+        }
+
+        return {
+          ...queryValue,
+          ...filtersValues,
+          ...sortValue,
+        };
+      },
       perRequest: RESULT_COUNT_INCREMENT,
       throwErrors: false,
-      GET: {
-        params: {
-          query: makeQueryFunction(
-            `(status any "${COMMITTED} ${ERROR}")`,
-            logsSearchTemplate,
-            {
-              fileName: 'fileName',
-              status: 'status',
-              hrId: 'hrId/number',
-              jobProfileName: 'jobProfileInfo.name',
-              totalRecords: 'progress.total/number',
-              completedDate: 'completedDate',
-              runBy: 'runBy.firstName runBy.lastName',
-            },
-            filterConfig,
-          ),
-        },
-        staticFallback: { params: {} },
-      },
     },
   });
 

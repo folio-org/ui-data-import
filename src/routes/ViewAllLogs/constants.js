@@ -9,9 +9,9 @@ const {
 } = FILE_STATUSES;
 
 export const FILTERS = {
-  ERRORS: 'status',
+  ERRORS: 'statusAny',
   DATE: 'completedDate',
-  JOB_PROFILE: 'jobProfileInfo',
+  JOB_PROFILE: 'profileIdAny',
   USER: 'userId',
   SINGLE_RECORD_IMPORTS: 'singleRecordImports',
 };
@@ -39,4 +39,12 @@ export const FILTER_OPTIONS = {
   ],
 };
 
-export const LOGS_FILTER = `(status any "${COMMITTED} ${ERROR}")`;
+export const SORT_MAP = {
+  fileName: 'file_name',
+  status: 'status',
+  hrId: 'hrid',
+  jobProfileName: 'job_profile_name',
+  totalRecords: 'progress_total',
+  completedDate: 'completed_date',
+  runBy: 'job_user_first_name job_user_last_name',
+};
