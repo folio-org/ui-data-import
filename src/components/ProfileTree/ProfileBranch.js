@@ -20,7 +20,7 @@ import { TreeLine } from '../TreeLine';
 import {
   ProfileLabel,
   ProfileLinker,
-  getDisabledOptions,
+  //getDisabledOptions,
 } from '.';
 
 import css from './ProfileTree.css';
@@ -55,7 +55,7 @@ export const ProfileBranch = memo(({
 }) => {
   const {
     childrenAllowed,
-    siblingsProhibited,
+    //siblingsProhibited,
   } = linkingRules;
   const {
     contentType,
@@ -190,7 +190,7 @@ export const ProfileBranch = memo(({
               <ProfileLinker
                 id={`${currentProfilesRelationTypes}-${currentRecord.id}-${currentIndex}-match`}
                 linkingRules={linkingRules}
-                disabledOptions={getDisabledOptions(matchData, siblingsProhibited)}
+                //disabledOptions={getDisabledOptions(matchData, siblingsProhibited)}
                 parentId={currentRecord.id}
                 rootId={rootId}
                 parentType={entityKey}
@@ -260,7 +260,7 @@ export const ProfileBranch = memo(({
               <ProfileLinker
                 id={`${currentProfilesRelationTypes}-${currentRecord.id}-${currentIndex}-non-match`}
                 linkingRules={linkingRules}
-                disabledOptions={getDisabledOptions(nonMatchData, siblingsProhibited)}
+                //disabledOptions={getDisabledOptions(nonMatchData, siblingsProhibited)}
                 parentId={currentRecord.id}
                 rootId={rootId}
                 parentType={entityKey}

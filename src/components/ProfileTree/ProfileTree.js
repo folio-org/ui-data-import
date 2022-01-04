@@ -20,7 +20,7 @@ import {
 import {
   ProfileBranch,
   ProfileLinker,
-  getDisabledOptions,
+  //getDisabledOptions,
 } from '.';
 
 import css from './ProfileTree.css';
@@ -41,7 +41,7 @@ export const ProfileTree = memo(({
   showLabelsAsHotLink,
   resources,
 }) => {
-  const { siblingsProhibited } = linkingRules;
+  //const { siblingsProhibited } = linkingRules;
 
   const dataKey = 'jobProfiles.current';
   const profileTreeKey = 'profileTreeData';
@@ -196,7 +196,7 @@ export const ProfileTree = memo(({
             parentType={ENTITY_KEYS.JOB_PROFILES}
             profileType={ENTITY_KEYS.JOB_PROFILES}
             linkingRules={linkingRules}
-            disabledOptions={getDisabledOptions(contentData, siblingsProhibited)}
+            //disabledOptions={getDisabledOptions(contentData, siblingsProhibited)}
             dataKey={dataKey}
             initialData={contentData}
             setInitialData={setData}

@@ -15,7 +15,7 @@ export const LinkerButton = memo(({
   onClick,
   searchLabel,
   className,
-  isButtonDisabled,
+  //isButtonDisabled,
   dataAttributes,
 }) => (
   <Button
@@ -27,7 +27,7 @@ export const LinkerButton = memo(({
     buttonClass={classNames(css['linker-button'], className)}
     marginBottom0
     onClick={() => onClick(entityKey)}
-    disabled={isButtonDisabled}
+    //disabled={isButtonDisabled}
     {...dataAttributes}
   >
     <AppIcon
@@ -46,13 +46,13 @@ LinkerButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   searchLabel: PropTypes.node || PropTypes.string,
   className: PropTypes.string,
-  isButtonDisabled: PropTypes.bool,
+  //isButtonDisabled: PropTypes.bool,
   dataAttributes: PropTypes.object,
 };
 
 LinkerButton.defaultProps = {
   className: '',
   searchLabel: '',
-  isButtonDisabled: false,
+  //isButtonDisabled: false,
   dataAttributes: null,
 };
