@@ -33,6 +33,7 @@
 * Cover `<SearchAndSort>` component with tests (UIDATIMP-723)
 * Cover `<DataImportSettings>` settings with tests (UIDATIMP-972)
 * Cover `src/utils` utils with tests (UIDATIMP-970)
+* Use new API for DataImport landing page (UIDATIMP-918)
 * Enable skipped test for <ExistingSection> component and check overall test coverage of ui-data-import (UIDATIMP-1065)
 
 ## [5.0.3](https://github.com/folio-org/ui-data-import/tree/v5.0.3) (2021-11-25)
