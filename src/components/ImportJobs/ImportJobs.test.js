@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { waitFor } from '@testing-library/react';
@@ -8,14 +8,55 @@ import '../../../test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { FileUploader } from '@folio/stripes-data-transfer-components';
 
+import { ConfirmationModal } from '@folio/stripes/components';
 import { ImportJobs } from './ImportJobs';
+import { ReturnToAssignJobs } from './components';
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 import { translationsProperties } from '../../../test/jest/helpers';
 
-jest.mock('./components', () => ({ ReturnToAssignJobs: () => <span>ReturnToAssignJobs</span> }));
+const mockOpenDialogWindow = jest.fn();
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  ConfirmationModal: jest.fn(({
+    open,
+    onCancel,
+    onConfirm,
+  }) => (open ? (
+    <div>
+      <span>Confirmation modal</span>
+      <button
+        type="button"
+        onClick={onCancel}
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        id="confirmButton"
+        onClick={onConfirm}
+      >
+        Confirm
+      </button>
+    </div>
+  ) : null)),
+}));
 jest.mock('@folio/stripes-data-transfer-components', () => ({
+  ...jest.requireActual('@folio/stripes-data-transfer-components'),
   Preloader: () => <span>Preloader</span>,
-  FileUploader: jest.fn(() => 'FileUploader'),
+  FileUploader: jest.fn(({ children }) => {
+    return (
+      <>
+        <div>FileUploader</div>
+        {children(mockOpenDialogWindow)}
+      </>
+    );
+  }),
+}));
+jest.mock('./components', () => ({ ReturnToAssignJobs: jest.fn().mockReturnValue('ReturnToAssignJobs') }));
+jest.mock('../../utils/upload', () => ({
+  mapFilesToUI: jest.fn(() => ({})),
+  createUploadDefinition: jest.fn(() => ([null, {}])),
 }));
 
 const history = createMemoryHistory();
@@ -24,17 +65,17 @@ history.push = jest.fn();
 
 const defaultContext = {
   uploadDefinition: {},
-  updateUploadDefinition: noop,
+  updateUploadDefinition: () => ({ uploadDefinition: { fileDefinitions: [] } }),
   deleteUploadDefinition: noop,
 };
 
 const renderImportJobs = context => {
   const component = (
-    <UploadingJobsContext.Provider value={context || defaultContext}>
-      <Router>
+    <Router>
+      <UploadingJobsContext.Provider value={context}>
         <ImportJobs />
-      </Router>
-    </UploadingJobsContext.Provider>
+      </UploadingJobsContext.Provider>
+    </Router>
   );
 
   return renderWithIntl(component, translationsProperties);
@@ -42,13 +83,12 @@ const renderImportJobs = context => {
 
 describe('Import Jobs component', () => {
   beforeEach(() => {
-    FileUploader.mockClear();
     history.push.mockClear();
   });
 
   describe('when is not loaded', () => {
     it('then it should render Preloader', () => {
-      const { getByText } = renderImportJobs();
+      const { getByText } = renderImportJobs(defaultContext);
 
       expect(getByText('Preloader')).toBeDefined();
     });
@@ -56,8 +96,7 @@ describe('Import Jobs component', () => {
 
   describe('when is loaded', () => {
     it('then it should render FileUploader', async () => {
-      FileUploader.mockImplementationOnce(() => 'FileUploader');
-      const { getByText } = await renderImportJobs();
+      const { getByText } = await renderImportJobs(defaultContext);
 
       await waitFor(() => expect(getByText('FileUploader')).toBeDefined());
     });
@@ -71,6 +110,19 @@ describe('Import Jobs component', () => {
       });
 
       await waitFor(() => expect(getByText('ReturnToAssignJobs')).toBeDefined());
+    });
+
+    describe('when assigned job is resumed', () => {
+      it('should redirect to job profile', async () => {
+        const { getByText } = await renderImportJobs({
+          ...defaultContext,
+          uploadDefinition: { fileDefinitions: [] },
+        });
+
+        ReturnToAssignJobs.mock.calls[0][0].onResume();
+
+        await waitFor(() => expect(getByText('Preloader')).toBeDefined());
+      });
     });
   });
 
@@ -92,14 +144,6 @@ describe('Import Jobs component', () => {
 
   describe('when onDragEnter method is called', () => {
     it('then it should render FileUploader with active drop zone', async () => {
-      FileUploader.mockImplementationOnce(({ onDragEnter }) => {
-        useEffect(() => {
-          onDragEnter();
-        }, [onDragEnter]);
-
-        return 'FileUploader';
-      });
-
       const context = {
         uploadDefinition: {},
         updateUploadDefinition: () => ({ uploadDefinition: { fileDefinitions: [] } }),
@@ -108,20 +152,14 @@ describe('Import Jobs component', () => {
 
       const { getByText } = await renderImportJobs(context);
 
+      FileUploader.mock.calls[0][0].onDragEnter();
+
       await waitFor(() => expect(getByText('FileUploader')).toBeDefined());
     });
   });
 
   describe('when onDragLeave method is called', () => {
     it('then it should render FileUploader with non-active drop zone', async () => {
-      FileUploader.mockImplementationOnce(({ onDragLeave }) => {
-        useEffect(() => {
-          onDragLeave();
-        }, [onDragLeave]);
-
-        return 'FileUploader';
-      });
-
       const context = {
         uploadDefinition: {},
         updateUploadDefinition: () => ({ uploadDefinition: { fileDefinitions: [] } }),
@@ -130,7 +168,29 @@ describe('Import Jobs component', () => {
 
       await renderImportJobs(context);
 
+      FileUploader.mock.calls[0][0].onDragLeave();
+
       await waitFor(() => expect(FileUploader.mock.calls[0][0].isDropZoneActive).toEqual(false));
+    });
+  });
+
+  describe('when onDrop method is called', () => {
+    it('should set drop zone inactive', async () => {
+      await renderImportJobs(defaultContext);
+
+      FileUploader.mock.calls[0][0].onDrop();
+
+      expect(FileUploader.mock.calls[0][0].isDropZoneActive).toBeFalsy();
+    });
+  });
+
+  describe('when confirmation modal is confirmed', () => {
+    it('should open dialog window', async () => {
+      await renderImportJobs(defaultContext);
+
+      ConfirmationModal.mock.calls[0][0].onConfirm();
+
+      expect(mockOpenDialogWindow).toHaveBeenCalled();
     });
   });
 });
