@@ -165,7 +165,7 @@ describe('<ViewMappingProfile>', () => {
       await waitFor(() => expect(getByText('Confirmation modal')).toBeInTheDocument());
     });
 
-    it('should be closed when cancelled', async () => {
+    it.skip('should be closed when cancelled', async () => {
       const {
         getByRole,
         getByText,
