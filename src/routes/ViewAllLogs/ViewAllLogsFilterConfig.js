@@ -1,7 +1,4 @@
-import {
-  FILTERS,
-  LOGS_FILTER,
-} from './constants';
+import { FILTERS } from './constants';
 import {
   OCLC_CREATE_INSTANCE_JOB_ID,
   OCLC_UPDATE_INSTANCE_JOB_ID,
