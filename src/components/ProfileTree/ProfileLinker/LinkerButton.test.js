@@ -66,30 +66,15 @@ describe('LinkerButton', () => {
   });
 
   describe('when clicking on button', () => {
-    describe('when button is disabled', () => {
-      it('should not be called onClick function', () => {
-        const { getByText } = renderLinkerButton({
-          ...linkerButtonProps,
-          searchLabel: <span>test label</span>,
-          isButtonDisabled: true,
-        });
-
-        fireEvent.click(getByText('test label'));
-
-        expect(onClick).toHaveBeenCalledTimes(0);
+    it('should be called onClick function', () => {
+      const { getByText } = renderLinkerButton({
+        ...linkerButtonProps,
+        searchLabel: <span>test label</span>,
       });
-    });
-    describe('when button is not disabled', () => {
-      it('should be called onClick function', () => {
-        const { getByText } = renderLinkerButton({
-          ...linkerButtonProps,
-          searchLabel: <span>test label</span>,
-        });
 
-        fireEvent.click(getByText('test label'));
+      fireEvent.click(getByText('test label'));
 
-        expect(onClick).toHaveBeenCalledTimes(1);
-      });
+      expect(onClick).toHaveBeenCalledTimes(1);
     });
   });
 });

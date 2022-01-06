@@ -19,7 +19,6 @@ export const LinkerMenu = ({
   onClick,
   keyHandler,
 }) => {
-
   return (
     <DropdownMenu
       placement="bottom-end"

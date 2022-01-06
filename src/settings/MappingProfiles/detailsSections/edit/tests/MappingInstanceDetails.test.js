@@ -32,7 +32,6 @@ global.fetch = jest.fn();
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.INSTANCE.type);
 
 const {
-  electronicAccess,
   statisticalCodeIds,
   parentInstances,
   childInstances,
