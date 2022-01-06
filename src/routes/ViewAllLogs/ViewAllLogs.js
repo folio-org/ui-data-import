@@ -101,15 +101,6 @@ const getFilters = filters => {
       return (obj.length > 0) ? obj[0].cql : value;
     });
   };
-  const convertFiltersToQuery = filtersObj => {
-    const filterQueries = {};
-
-    for (const query of Object.keys(filtersObj)) {
-      filterQueries[query] = filtersObj[query].join(`&${query}=`);
-    }
-
-    return filterQueries;
-  };
 
   if (filters) {
     const groups = splitFiltersByGroups();
@@ -152,7 +143,7 @@ const getFilters = filters => {
 
                 if (filtersObj[groupIndex] === undefined) filtersObj[groupIndex] = [];
 
-                filtersObj[groupIndex] = [...filtersObj[groupIndex], obj[0].cql];
+                filtersObj[groupIndex] = [...filtersObj[groupIndex], ...obj[0].cql];
               }
             });
           }
@@ -160,7 +151,7 @@ const getFilters = filters => {
       }
     }
 
-    return convertFiltersToQuery(filtersObj);
+    return filtersObj;
   }
 
   return {};
@@ -181,9 +172,9 @@ const getSort = sort => {
   let sortIndex = SORT_MAP[sortValue] || sortValue;
 
   if (reverse) {
-    sortIndex = `${sortIndex.replace(' ', ',desc sortBy=')},desc`;
+    sortIndex = sortIndex.split(' ').map(v => `${v},desc`);
   } else {
-    sortIndex = `${sortIndex.replace(' ', ',asc sortBy=')},asc`;
+    sortIndex = sortIndex.split(' ').map(v => `${v},asc`);
   }
 
   return { sortBy: sortIndex };
@@ -232,7 +223,7 @@ class ViewAllLogs extends Component {
         const sortValue = getSort(sort);
 
         if (!filtersValues[FILTERS.ERRORS]) {
-          filtersValues[FILTERS.ERRORS] = `${COMMITTED}&${FILTERS.ERRORS}=${ERROR}`;
+          filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR];
         }
 
         return {

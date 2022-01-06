@@ -35,12 +35,12 @@ export const filterConfig = [
     values: [
       {
         name: 'no',
-        cql: `${OCLC_CREATE_INSTANCE_JOB_ID}&profileIdNotAny=${OCLC_UPDATE_INSTANCE_JOB_ID}`,
+        cql: [OCLC_CREATE_INSTANCE_JOB_ID, OCLC_UPDATE_INSTANCE_JOB_ID],
         indexName: 'profileIdNotAny',
       },
       {
         name: 'yes',
-        cql: `${OCLC_CREATE_INSTANCE_JOB_ID}&profileIdAny=${OCLC_UPDATE_INSTANCE_JOB_ID}`,
+        cql: [OCLC_CREATE_INSTANCE_JOB_ID, OCLC_UPDATE_INSTANCE_JOB_ID],
         indexName: 'profileIdAny',
       },
     ],
