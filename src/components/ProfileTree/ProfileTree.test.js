@@ -52,7 +52,6 @@ const profileTreeProps = ({
       allowDelete,
       profilesAllowed: ['matchProfiles', 'actionProfiles'],
       childrenAllowed: ['actionProfiles', 'matchProfiles'],
-      siblingsProhibited: { actionProfiles: ['matchProfile'] },
       columnsAllowed: {
         matchProfiles: [
           'name',

@@ -17,10 +17,8 @@ export const LinkerMenu = ({
   entityKeys: [matchProfiles, actionProfiles],
   onToggle,
   onClick,
-  //disabledOptions,
   keyHandler,
 }) => {
-  //const getButtonState = entityKey => disabledOptions.findIndex(item => item === entityKey) !== -1;
 
   return (
     <DropdownMenu
@@ -40,13 +38,11 @@ export const LinkerMenu = ({
             id={`menu-link-match-${id}`}
             entityKey={matchProfiles}
             onClick={onClick}
-            //isButtonDisabled={getButtonState(matchProfiles)}
           />
           <LinkerButton
             id={`menu-link-action-${id}`}
             entityKey={actionProfiles}
             onClick={onClick}
-            //isButtonDisabled={getButtonState(actionProfiles)}
           />
         </div>
       </MenuSection>
@@ -61,10 +57,6 @@ LinkerMenu.propTypes = {
   onToggle: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   keyHandler: PropTypes.func,
-  //disabledOptions: PropTypes.arrayOf(PropTypes.string),
 };
 
-LinkerMenu.defaultProps = {
-  keyHandler: noop,
-  //disabledOptions: [],
-};
+LinkerMenu.defaultProps = { keyHandler: noop };
