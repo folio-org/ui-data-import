@@ -111,8 +111,7 @@ describe('ExistingSectionFolio edit', () => {
     });
   });
 
-  // eslint-disable-next-line no-only-tests/no-only-tests
-  describe.skip('when searching for an option', () => {
+  describe('when searching for an option', () => {
     it('should filter data options', () => {
       const {
         getByRole,

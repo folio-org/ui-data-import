@@ -1,7 +1,4 @@
-import {
-  FILTERS,
-  LOGS_FILTER,
-} from './constants';
+import { FILTERS } from './constants';
 import {
   OCLC_CREATE_INSTANCE_JOB_ID,
   OCLC_UPDATE_INSTANCE_JOB_ID,
@@ -15,34 +12,36 @@ export const filterConfig = [
   },
   {
     name: FILTERS.DATE,
-    cql: `${LOGS_FILTER} AND ${FILTERS.DATE}`,
+    cql: FILTERS.DATE,
     isRange: true,
     rangeSeparator: ':',
     values: [],
   },
   {
     name: FILTERS.JOB_PROFILE,
-    cql: `${LOGS_FILTER} AND ${FILTERS.JOB_PROFILE}.id`,
+    cql: FILTERS.JOB_PROFILE,
     values: [],
   },
   {
     name: FILTERS.USER,
-    cql: `${LOGS_FILTER} AND ${FILTERS.USER}`,
+    cql: FILTERS.USER,
     values: [],
   },
   {
     name: FILTERS.SINGLE_RECORD_IMPORTS,
     cql: FILTERS.JOB_PROFILE,
     operator: '=',
+    noIndex: true,
     values: [
       {
         name: 'no',
-        cql: `\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="${OCLC_CREATE_INSTANCE_JOB_ID}") 
-        AND (jobProfileInfo="\\“id\\“==" NOT jobProfileInfo="\\“id\\“=="${OCLC_UPDATE_INSTANCE_JOB_ID}"`,
+        cql: [OCLC_CREATE_INSTANCE_JOB_ID, OCLC_UPDATE_INSTANCE_JOB_ID],
+        indexName: 'profileIdNotAny',
       },
       {
         name: 'yes',
-        cql: `\\“id\\“==${OCLC_CREATE_INSTANCE_JOB_ID}") OR (jobProfileInfo="\\“id\\“==${OCLC_UPDATE_INSTANCE_JOB_ID}`,
+        cql: [OCLC_CREATE_INSTANCE_JOB_ID, OCLC_UPDATE_INSTANCE_JOB_ID],
+        indexName: 'profileIdAny',
       },
     ],
   },
