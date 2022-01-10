@@ -22,7 +22,7 @@ export const LinkerButton = memo(({
     role="menuitem"
     aria-haspopup="true"
     buttonStyle="dropdownItem"
-    id={`${id}-button-find-import-profile`}
+    id={`${id}-button-find-import-profile-${entityKey}`}
     buttonClass={classNames(css['linker-button'], className)}
     marginBottom0
     onClick={() => onClick(entityKey)}
