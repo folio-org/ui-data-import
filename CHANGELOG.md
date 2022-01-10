@@ -37,6 +37,9 @@
 * Enable skipped test for <ExistingSection> component and check overall test coverage of ui-data-import (UIDATIMP-1065)
 * Use new API for DataImport ViewAll page (UIDATIMP-1069)
 
+### Bugs fixed:
+* Need to be able to use the same match profile in the same job profile, with different actions (UIDATIMP-1067)
+
 ## [5.0.3](https://github.com/folio-org/ui-data-import/tree/v5.0.3) (2021-11-25)
 
 ### Features added:
