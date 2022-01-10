@@ -15,7 +15,6 @@ const profileBranchProps = {
   linkingRules: {
     profilesAllowed: ['matchProfiles', 'actionProfiles'],
     childrenAllowed: ['actionProfiles', 'matchProfiles'],
-    siblingsProhibited: { actionProfiles: ['matchProfile'] },
     columnsAllowed: {
       matchProfiles: [
         'name',

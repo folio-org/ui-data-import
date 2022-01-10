@@ -37,7 +37,6 @@ export const ProfileLinker = ({
   onLink,
   okapi,
   linkingRules: { profilesAllowed },
-  disabledOptions,
   dataKey,
   initialData,
   setInitialData,
@@ -67,7 +66,6 @@ export const ProfileLinker = ({
       id={`type-selector-menu-${id}`}
       entityKeys={profilesAllowed}
       onClick={handleMenuClick}
-      disabledOptions={disabledOptions}
       {...menuProps}
     />
   );
@@ -161,7 +159,6 @@ ProfileLinker.propTypes = {
   }).isRequired,
   rootId: PropTypes.string,
   parentId: PropTypes.string,
-  disabledOptions: PropTypes.arrayOf(PropTypes.string),
   reactTo: PropTypes.oneOf(Object.values(PROFILE_RELATION_TYPES)),
   title: PropTypes.node || PropTypes.string,
   className: PropTypes.string,
@@ -173,5 +170,4 @@ ProfileLinker.defaultProps = {
   title: '',
   className: '',
   reactTo: PROFILE_RELATION_TYPES.NONE,
-  disabledOptions: [],
 };
