@@ -2,6 +2,11 @@
 
 ## **5.1.0** (in progress)
 
+## [5.0.4](https://github.com/folio-org/ui-data-import/tree/v5.0.4) (2022-02-09)
+
+### Bugs fixed:
+* Need to be able to nest match profiles under action profiles (Kiwi HF) (UIDATIMP-1086)
+
 ## [5.0.3](https://github.com/folio-org/ui-data-import/tree/v5.0.3) (2021-11-25)
 
 ### Features added:
