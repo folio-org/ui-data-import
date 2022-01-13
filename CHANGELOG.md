@@ -36,6 +36,7 @@
 * Use new API for DataImport landing page (UIDATIMP-918)
 * Enable skipped test for <ExistingSection> component and check overall test coverage of ui-data-import (UIDATIMP-1065)
 * Use new API for DataImport ViewAll page (UIDATIMP-1069)
+* Remove 'react-dropzone' dependency (UIDATIMP-1072)
 
 ### Bugs fixed:
 * Need to be able to use the same match profile in the same job profile, with different actions (UIDATIMP-1067)
