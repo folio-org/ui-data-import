@@ -69,14 +69,6 @@ describe('IncomingRecordMenu', () => {
 
       expect(onClick.mock.calls).toHaveLength(0);
     });
-
-    it('MARC Authority record type should not be chosen', () => {
-      const { getByText } = renderIncomingRecordMenu({ open: true });
-
-      fireEvent.click(getByText('MARC Authority'));
-
-      expect(onClick.mock.calls).toHaveLength(0);
-    });
   });
 
   describe('when clicking on existing record type', () => {
