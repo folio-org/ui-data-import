@@ -173,7 +173,7 @@ describe('ActionProfilesForm', () => {
           expect(actionInput.value).toBe('CREATE');
         });
 
-        it('all record types except Order, MARC Authority and MARC Holdings should be available', () => {
+        it('all record types except Order and MARC Holdings should be available', () => {
           const { container } = renderActionProfilesForm(actionProfilesFormProps());
           const actionInput = container.querySelector('[name="profile.action"]');
 
@@ -185,7 +185,7 @@ describe('ActionProfilesForm', () => {
           expect(container.querySelector('[value="ORDER"]')).toBeDisabled();
           expect(container.querySelector('[value="INVOICE"]')).not.toBeDisabled();
           expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).not.toBeDisabled();
-          expect(container.querySelector('[value="MARC_AUTHORITY"]')).toBeDisabled();
+          expect(container.querySelector('[value="MARC_AUTHORITY"]')).not.toBeDisabled();
           expect(container.querySelector('[value="MARC_HOLDINGS"]')).toBeDisabled();
         });
       });
@@ -222,7 +222,7 @@ describe('ActionProfilesForm', () => {
           expect(actionInput.value).toBe('UPDATE');
         });
 
-        it('all record types except Orders, MARC Authority and MARC Holdings should be available', () => {
+        it('all record types except Orders and MARC Holdings should be available', () => {
           const { container } = renderActionProfilesForm(actionProfilesFormProps());
           const actionInput = container.querySelector('[name="profile.action"]');
 
@@ -233,7 +233,7 @@ describe('ActionProfilesForm', () => {
           expect(container.querySelector('[value="ITEM"]')).not.toBeDisabled();
           expect(container.querySelector('[value="INVOICE"]')).not.toBeDisabled();
           expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).not.toBeDisabled();
-          expect(container.querySelector('[value="MARC_AUTHORITY"]')).toBeDisabled();
+          expect(container.querySelector('[value="MARC_AUTHORITY"]')).not.toBeDisabled();
           expect(container.querySelector('[value="MARC_HOLDINGS"]')).toBeDisabled();
           expect(container.querySelector('[value="ORDER"]')).toBeNull();
         });
