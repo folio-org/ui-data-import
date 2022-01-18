@@ -38,6 +38,7 @@
 * Use new API for DataImport ViewAll page (UIDATIMP-1069)
 * Remove 'react-dropzone' dependency (UIDATIMP-1072)
 * Field mapping profiles created by auto tests couldn't be viewed (UIDATIMP-1073)
+* Enable Action profile action for incoming MARC Authorities: Update MARC Authority records (UIDATIMP-1055)
 
 ### Bugs fixed:
 * Need to be able to use the same match profile in the same job profile, with different actions (UIDATIMP-1067)

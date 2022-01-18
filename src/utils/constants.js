@@ -701,7 +701,7 @@ export const MARC_FIELD_PROTECTION_SOURCE = {
 
 // TODO: Options to disable until functionality is not implemented.
 // Should be removed in the future
-export const FOLIO_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'AUTHORITY', 'ORDER', 'MARC_AUTHORITY'];
+export const FOLIO_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'AUTHORITY', 'ORDER'];
 export const INCOMING_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'MARC_AUTHORITY'];
 
 export const OCLC_CREATE_INSTANCE_JOB_ID = 'd0ebb7b0-2f0f-11eb-adc1-0242ac120002';
