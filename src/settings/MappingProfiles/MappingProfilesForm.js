@@ -264,7 +264,6 @@ export const MappingProfilesFormComponent = ({
 
     if (value === MARC_TYPES.MARC_AUTHORITY) {
       setFieldMappingsForMARC(FIELD_MAPPINGS_FOR_MARC.UPDATES);
-      setFormFieldValue('profile.mappingDetails.marcMappingOption', FIELD_MAPPINGS_FOR_MARC.UPDATES);
     } else {
       setFieldMappingsForMARC('');
     }
@@ -406,47 +405,49 @@ export const MappingProfilesFormComponent = ({
                   />
                 </div>
               </Accordion>
-              <Accordion
-                id="mapping-profile-details"
-                label={<FormattedMessage id="ui-data-import.details" />}
-                separator={false}
-              >
-                {/*
-                  Fragment is added to avoid warnings in a case when there is no data in the details section
-                  since the `children` prop is required for the `Accordion` component
-                */}
-                <>
-                  {folioRecordType && (
-                    <AccordionStatus>
-                      <Row
-                        between="xs"
-                        style={{ margin: 0 }}
-                      >
-                        {!isMARCType(folioRecordType) && (
-                          <>
-                            <Col>
-                              <MappedHeader
-                                headersToSeparate={[
-                                  'ui-data-import.settings.profiles.select.mappingProfiles',
-                                  MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId,
-                                  FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label,
-                                ]}
-                                headlineProps={{ margin: 'small' }}
-                              />
-                            </Col>
-                            <Col>
-                              <div data-test-expand-all-button>
-                                <ExpandAllButton />
-                              </div>
-                            </Col>
-                          </>
-                        )}
-                      </Row>
-                      {renderDetails[folioRecordType]}
-                    </AccordionStatus>
-                  )}
-                </>
-              </Accordion>
+              {folioRecordType !== MARC_TYPES.MARC_AUTHORITY && (
+                <Accordion
+                  id="mapping-profile-details"
+                  label={<FormattedMessage id="ui-data-import.details" />}
+                  separator={false}
+                >
+                  {/*
+                    Fragment is added to avoid warnings in a case when there is no data in the details section
+                    since the `children` prop is required for the `Accordion` component
+                  */}
+                  <>
+                    {folioRecordType && (
+                      <AccordionStatus>
+                        <Row
+                          between="xs"
+                          style={{ margin: 0 }}
+                        >
+                          {!isMARCType(folioRecordType) && (
+                            <>
+                              <Col>
+                                <MappedHeader
+                                  headersToSeparate={[
+                                    'ui-data-import.settings.profiles.select.mappingProfiles',
+                                    MAPPING_DETAILS_HEADLINE[folioRecordType]?.labelId,
+                                    FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label,
+                                  ]}
+                                  headlineProps={{ margin: 'small' }}
+                                />
+                              </Col>
+                              <Col>
+                                <div data-test-expand-all-button>
+                                  <ExpandAllButton />
+                                </div>
+                              </Col>
+                            </>
+                          )}
+                        </Row>
+                        {renderDetails[folioRecordType]}
+                      </AccordionStatus>
+                    )}
+                  </>
+                </Accordion>
+              )}
               <Accordion
                 id="mappingProfileFormAssociatedActionProfileAccordion"
                 label={<FormattedMessage id="ui-data-import.settings.associatedActionProfiles" />}
