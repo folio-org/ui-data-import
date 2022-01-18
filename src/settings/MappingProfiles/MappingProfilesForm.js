@@ -15,7 +15,10 @@ import {
   Field,
   change,
 } from 'redux-form';
-import { isEmpty } from 'lodash';
+import {
+  isEmpty,
+  omit,
+} from 'lodash';
 
 import stripesForm from '@folio/stripes/form';
 import {
@@ -77,6 +80,8 @@ import {
 import styles from './MappingProfiles.css';
 
 const formName = 'mappingProfilesForm';
+
+const MAPPING_PROFILES_FORM_FOLIO_RECORD_TYPES = { ...omit(FOLIO_RECORD_TYPES, FOLIO_RECORD_TYPES.AUTHORITY.type) };
 
 export const MappingProfilesFormComponent = ({
   pristine,
@@ -182,7 +187,7 @@ export const MappingProfilesFormComponent = ({
         disabled: isOptionDisabled,
       };
     });
-  const getFolioRecordTypesDataOptions = () => Object.entries(FOLIO_RECORD_TYPES)
+  const getFolioRecordTypesDataOptions = () => Object.entries(MAPPING_PROFILES_FORM_FOLIO_RECORD_TYPES)
     .map(([recordType, { captionId }]) => {
       // TODO: Disabling options should be removed after implentation is done
       const isOptionDisabled = FOLIO_RECORD_TYPES_TO_DISABLE.some(option => option === recordType);
@@ -252,6 +257,19 @@ export const MappingProfilesFormComponent = ({
     }
   };
 
+  const handleFOLIORecordTypeChange = e => {
+    const value = e.target.value;
+
+    setFolioRecordType(value);
+
+    if (value === MARC_TYPES.MARC_AUTHORITY) {
+      setFieldMappingsForMARC(FIELD_MAPPINGS_FOR_MARC.UPDATES);
+      setFormFieldValue('profile.mappingDetails.marcMappingOption', FIELD_MAPPINGS_FOR_MARC.UPDATES);
+    } else {
+      setFieldMappingsForMARC('');
+    }
+  };
+
   const detailsProps = {
     initialFields,
     referenceTables,
@@ -274,7 +292,10 @@ export const MappingProfilesFormComponent = ({
     ...detailsProps,
     mappingDetails,
   };
-  const fieldMappingsForMARCOptions = createOptionsList(FIELD_MAPPINGS_FOR_MARC_OPTIONS, formatMessage);
+  const fieldMappingsForMARCBibOptions = createOptionsList(FIELD_MAPPINGS_FOR_MARC_OPTIONS, formatMessage);
+  const fieldMappingsForMARCAuthorityOptions = createOptionsList(FIELD_MAPPINGS_FOR_MARC_OPTIONS.filter(field => {
+    return field.value === FIELD_MAPPINGS_FOR_MARC.UPDATES;
+  }), formatMessage);
   const fieldMappingsForMARCPreviousOption = fieldMappingsForMARC && formatMessage(
     { id: FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === fieldMappingsForMARC)?.label },
   );
@@ -348,13 +369,12 @@ export const MappingProfilesFormComponent = ({
                       fieldName="existingRecordType"
                       dataOptions={folioRecordTypesDataOptions}
                       onRecordSelect={e => {
-                        setFolioRecordType(e.target.value);
-                        setFieldMappingsForMARC('');
+                        handleFOLIORecordTypeChange(e);
                       }}
                       formType="redux-form"
                     />
                   </Col>
-                  {folioRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC && (
+                  {(folioRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC || folioRecordType === MARC_TYPES.MARC_AUTHORITY) && (
                     <Col xs={6}>
                       <FormattedMessage id="ui-data-import.fieldMappingsForMarc.placeholder">
                         {([placeholder]) => (
@@ -364,7 +384,10 @@ export const MappingProfilesFormComponent = ({
                               name="profile.mappingDetails.marcMappingOption"
                               component={Select}
                               validate={[validateRequiredField]}
-                              dataOptions={fieldMappingsForMARCOptions}
+                              dataOptions={folioRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC
+                                ? fieldMappingsForMARCBibOptions
+                                : fieldMappingsForMARCAuthorityOptions
+                              }
                               placeholder={placeholder}
                               onChange={handleFieldMappingsForMARCTypeChange}
                               required
