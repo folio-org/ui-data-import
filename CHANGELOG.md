@@ -40,6 +40,7 @@
 * Field mapping profiles created by auto tests couldn't be viewed (UIDATIMP-1073)
 * Enable Action profile action for incoming MARC Authorities: Update MARC Authority records (UIDATIMP-1055)
 * Enable Matching profile for incoming MARC Authorities (UIDATIMP-1054)
+* Enable Field Mapping profile action for updating MARC Authorities records (UIDATIMP-1056)
 
 ### Bugs fixed:
 * Need to be able to use the same match profile in the same job profile, with different actions (UIDATIMP-1067)
