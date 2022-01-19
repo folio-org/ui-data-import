@@ -257,18 +257,6 @@ export const MappingProfilesFormComponent = ({
     }
   };
 
-  const handleFOLIORecordTypeChange = e => {
-    const value = e.target.value;
-
-    setFolioRecordType(value);
-
-    if (value === MARC_TYPES.MARC_AUTHORITY) {
-      setFieldMappingsForMARC(FIELD_MAPPINGS_FOR_MARC.UPDATES);
-    } else {
-      setFieldMappingsForMARC('');
-    }
-  };
-
   const detailsProps = {
     initialFields,
     referenceTables,
@@ -368,7 +356,8 @@ export const MappingProfilesFormComponent = ({
                       fieldName="existingRecordType"
                       dataOptions={folioRecordTypesDataOptions}
                       onRecordSelect={e => {
-                        handleFOLIORecordTypeChange(e);
+                        setFolioRecordType(e.target.value);
+                        setFieldMappingsForMARC('');
                       }}
                       formType="redux-form"
                     />
