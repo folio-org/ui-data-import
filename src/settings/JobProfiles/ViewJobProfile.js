@@ -56,7 +56,6 @@ import {
   getEntity,
   getEntityTags,
   compose,
-  createUrlFromArray,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
@@ -417,11 +416,11 @@ ViewJobProfileComponent.manifest = Object.freeze({
   },
   jobsUsingThisProfile: {
     type: 'okapi',
-    path: createUrlFromArray('metadata-provider/jobExecutions', [
-      'profileIdAny=:{id}',
-      'limit=25',
-      'sortBy=completed_date,desc',
-    ]),
+    path: createUrl('metadata-provider/jobExecutions', {
+      profileIdAny: ':{id}',
+      limit: 25,
+      sortBy: 'completed_date,desc',
+    }, false),
     throwErrors: false,
   },
 });
