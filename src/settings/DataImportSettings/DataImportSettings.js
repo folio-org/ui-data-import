@@ -1,4 +1,7 @@
-import React, { Component, createRef, } from 'react';
+import React, {
+  Component,
+  createRef,
+} from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { Settings } from '@folio/stripes/smart-components';
@@ -64,7 +67,6 @@ export class DataImportSettings extends Component {
   paneTitleRef = createRef();
 
   componentDidMount() {
-    console.log(this.paneTitleRef.current);
     if (this.paneTitleRef.current) {
       this.paneTitleRef.current.focus();
     }
