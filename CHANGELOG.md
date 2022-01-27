@@ -37,6 +37,7 @@
 * Enable skipped test for <ExistingSection> component and check overall test coverage of ui-data-import (UIDATIMP-1065)
 * Use new API for DataImport ViewAll page (UIDATIMP-1069)
 * Field mapping profiles created by auto tests couldn't be viewed (UIDATIMP-1073)
+* When duplicating job profile, retain the details from the profile being duplicated (UIDATIMP-1082)
 
 ### Bugs fixed:
 * Need to be able to use the same match profile in the same job profile, with different actions (UIDATIMP-1067)

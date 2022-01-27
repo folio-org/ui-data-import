@@ -613,6 +613,7 @@ export class SearchAndSort extends Component {
           initialValues: newRecordInitialValues,
           onSubmit: this.createNewRecord,
           onSubmitSuccess: handleCreateSuccess,
+          layerType: LAYER_TYPES.CREATE,
         };
       }
       case LAYER_TYPES.EDIT: {
@@ -620,6 +621,7 @@ export class SearchAndSort extends Component {
           initialValues: editRecordInitialValues,
           onSubmit: this.editRecord,
           onSubmitSuccess: handleEditSuccess,
+          layerType: LAYER_TYPES.EDIT,
         };
       }
       case LAYER_TYPES.DUPLICATE: {
@@ -627,6 +629,7 @@ export class SearchAndSort extends Component {
           initialValues: omit(editRecordInitialValues, ['id', 'parentProfiles', 'childProfiles']),
           onSubmit: this.createNewRecord,
           onSubmitSuccess: handleCreateSuccess,
+          layerType: LAYER_TYPES.DUPLICATE,
         };
       }
       default: {

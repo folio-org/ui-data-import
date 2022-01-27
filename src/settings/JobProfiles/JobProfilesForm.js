@@ -44,6 +44,7 @@ import {
   PROFILE_LINKING_RULES,
   ASSOCIATION_TYPES,
   PROFILE_TYPES,
+  LAYER_TYPES,
   isFieldPristine,
 } from '../../utils';
 
@@ -90,10 +91,12 @@ export const JobProfilesFormComponent = memo(({
   transitionToParams,
   match: { path },
   accordionStatusRef,
+  layerType,
 }) => {
   const { okapi } = stripes;
   const { profile } = initialValues;
   const isEditMode = Boolean(profile.id);
+  const isLayerCreate = layerType === LAYER_TYPES.CREATE;
   const isSubmitDisabled = pristine || submitting;
   const dataKey = 'jobProfiles.current';
   const profileTreeKey = 'profileTreeData';
@@ -102,11 +105,11 @@ export const JobProfilesFormComponent = memo(({
   const [profileTreeData, setProfileTreeData] = useState([]);
 
   useEffect(() => {
-    const contentData = isEditMode ? childWrappers : [];
+    const contentData = !isLayerCreate ? childWrappers : [];
     const getData = JSON.parse(sessionStorage.getItem(dataKey)) || contentData;
 
     setProfileTreeData(getData);
-  }, [isEditMode, childWrappers]);
+  }, [isLayerCreate, childWrappers]);
 
   useEffect(() => {
     const profileTreeContent = getFlattenProfileTreeContent(childWrappers)
@@ -114,6 +117,48 @@ export const JobProfilesFormComponent = memo(({
 
     sessionStorage.setItem(profileTreeKey, JSON.stringify(profileTreeContent));
   }, [childWrappers]);
+
+  useEffect(() => {
+    if (layerType === LAYER_TYPES.DUPLICATE && !isEmpty(childWrappers)) {
+      const relsToInitialize = [...childWrappers];
+
+      const composeRelations = (masterProfileId, masterProfileType) => (accumulator, currentValue) => {
+        const {
+          contentType,
+          profileId,
+          order,
+          reactTo,
+          childSnapshotWrappers,
+        } = currentValue;
+
+        if (contentType === PROFILE_TYPES.MAPPING_PROFILE) return accumulator;
+
+        const rel = {
+          masterProfileId,
+          masterProfileType,
+          detailProfileId: profileId,
+          detailProfileType: contentType,
+          order,
+          ...(reactTo && { reactTo }),
+        };
+
+        accumulator.push(rel);
+
+        if (!isEmpty(childSnapshotWrappers)) {
+          return childSnapshotWrappers.reduce(composeRelations(profileId, contentType), accumulator);
+        }
+
+        return accumulator;
+      };
+
+      form.initialize(values => {
+        return {
+          ...values,
+          addedRelations: relsToInitialize.reduce(composeRelations(null, PROFILE_TYPES.JOB_PROFILE), []),
+        };
+      });
+    }
+  }, [childWrappers, layerType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const addedRelations = form.getState().values.addedRelations;
   const deletedRelations = form.getState().values.deletedRelations;
@@ -287,6 +332,7 @@ JobProfilesFormComponent.propTypes = {
     change: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
     getState: PropTypes.func.isRequired,
+    initialize: PropTypes.func.isRequired,
   }).isRequired,
   onCancel: PropTypes.func.isRequired,
   stripes: PropTypes.object.isRequired,
@@ -308,6 +354,7 @@ JobProfilesFormComponent.propTypes = {
   transitionToParams: PropTypes.func.isRequired,
   match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   accordionStatusRef: PropTypes.object,
+  layerType: PropTypes.oneOfType(LAYER_TYPES),
 };
 
 const mapStateToProps = state => {
