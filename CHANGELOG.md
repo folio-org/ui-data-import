@@ -42,6 +42,7 @@
 * Enable Matching profile for incoming MARC Authorities (UIDATIMP-1054)
 * Enable Field Mapping profile action for updating MARC Authorities records (UIDATIMP-1056)
 * Job profiles are showing incorrect info for "Jobs using this profile" accordion (UIDATIMP-1081)
+* Settings > Data Import > change focus (UIDATIMP-1085)
 
 ### Bugs fixed:
 * Need to be able to use the same match profile in the same job profile, with different actions (UIDATIMP-1067)
