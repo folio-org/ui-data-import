@@ -869,5 +869,8 @@
     "logViewer.invoice": "Invoice",
     "logViewer.invoiceLine": "Invoice line",
     "logViewer.filter.srsMARC": "SRS MARC",
-    "recordTypes.authority": "Authority"
+    "recordTypes.authority": "Authority",
+    "validation.enterAsteriskOrOtherNumeric": "Please enter * or other numeric value",
+    "validation.enterOther": "Please enter other value",
+    "logViewer.filter.authority": "Authority"
 }

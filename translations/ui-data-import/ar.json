@@ -869,5 +869,8 @@
     "logViewer.invoice": "الفاتورة",
     "logViewer.invoiceLine": "سطر الفاتورة",
     "logViewer.filter.srsMARC": "مارك SRS",
-    "recordTypes.authority": "استناد"
+    "recordTypes.authority": "استناد",
+    "validation.enterAsteriskOrOtherNumeric": "يرجى إدخال * أو أي قيمة رقمية",
+    "validation.enterOther": "يرجى إدخال قيمة أخرى",
+    "logViewer.filter.authority": "استناد"
 }
