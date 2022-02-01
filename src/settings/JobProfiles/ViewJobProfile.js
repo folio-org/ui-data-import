@@ -417,8 +417,9 @@ ViewJobProfileComponent.manifest = Object.freeze({
   jobsUsingThisProfile: {
     type: 'okapi',
     path: createUrl('metadata-provider/jobExecutions', {
-      query: '(jobProfileInfo.id==":{id}") sortBy completedDate/sort.descending',
+      profileIdAny: ':{id}',
       limit: 25,
+      sortBy: 'completed_date,desc',
     }, false),
     throwErrors: false,
   },
