@@ -784,7 +784,7 @@
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.batchGroupId": "Batch group",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.subTotal": "Sub-total",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.adjustmentsTotal": "Total adjustments",
-    "settings.mappingProfiles.map.invoice.invoiceInformation.field.total": "Calculated total amount",
+    "settings.mappingProfiles.map.invoice.invoiceInformation.field.total": "Importo totale calcolato",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.isLockTotal": "Lock total",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.lockTotal": "Lock total amount",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.note": "Note",
@@ -869,5 +869,8 @@
     "logViewer.invoice": "Invoice",
     "logViewer.invoiceLine": "Invoice line",
     "logViewer.filter.srsMARC": "SRS MARC",
-    "recordTypes.authority": "Authority"
+    "recordTypes.authority": "Authority",
+    "validation.enterAsteriskOrOtherNumeric": "Please enter * or other numeric value",
+    "validation.enterOther": "Please enter other value",
+    "logViewer.filter.authority": "Authority"
 }
