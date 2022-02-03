@@ -869,5 +869,8 @@
     "logViewer.invoice": "发票",
     "logViewer.invoiceLine": "发票行",
     "logViewer.filter.srsMARC": "SRS MARC",
-    "recordTypes.authority": "规范"
+    "recordTypes.authority": "规范",
+    "validation.enterAsteriskOrOtherNumeric": "请输入*或其他数值",
+    "validation.enterOther": "请输入其他值",
+    "logViewer.filter.authority": "规范"
 }
