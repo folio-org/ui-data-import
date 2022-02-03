@@ -174,7 +174,14 @@ describe('<JobProfilesForm>', () => {
 
   describe('when input fields filled with values', () => {
     it('"Save as profile & Close" button should be active', async () => {
-      const { getByRole } = renderJobProfilesForm(jobProfilesFormProps({}));
+      global.fetch
+        .mockReturnValue(Promise.resolve({
+          status: 200,
+          ok: true,
+          json: async () => ({}),
+        }));
+
+      const { getByRole } = renderJobProfilesForm(jobProfilesFormProps({ layerType: LAYER_TYPES.EDIT }));
 
       fireEvent.change(getByRole('textbox', { name: /name/i }), { target: { value: 'test value' } });
       fireEvent.click(getByRole('button', { name: /save as profile & close/i }));
