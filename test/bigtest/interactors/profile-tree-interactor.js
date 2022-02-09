@@ -5,7 +5,6 @@ import {
   isPresent,
   clickable,
   attribute,
-  property,
   interactor,
 } from '@bigtest/interactor';
 
@@ -20,20 +19,19 @@ class ProfileLinkerInteractor {
   clickLinker = clickable('[aria-haspopup]');
   addMatchButton = new Button('[id^="matchProfiles-plugin-button-"]');
   addActionButton = new Button('[id^="actionProfiles-plugin-button-"]');
-  isMatchOptionDisabled = property('[id*="button-find-import-profile-matchProfiles"]', 'disabled');
 }
 
 @interactor
 class SubSection {
-  hasSubBranches = isPresent('[class*="branch-container---"]');
+  hasSubBranches = isPresent('[class*="branch-tree-container---"]');
   branches = collection('div[class^=profile-tree-container---] > [data-test-profile-branch]');
   branchesCount = count('[data-test-profile-branch]');
   plusSignButton = new ProfileLinkerInteractor('[data-test-plus-sign-button]');
 }
 
 @interactor
-export class ProfileBranchInteractor {
-  hasSubBranches = isPresent('[class*="branch-container---"]');
+class ProfileBranchInteractor {
+  hasSubBranches = isPresent('[class*="branch-tree-container---"]');
   matchesSection = new SubSection('[id^="accordion-match-"]');
   nonMatchesSection = new SubSection('[id^="accordion-non-match-"]');
 }

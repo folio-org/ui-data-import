@@ -400,7 +400,6 @@ export const PROFILE_LINKING_RULES = {
     ],
   },
   childrenAllowed: [ENTITY_KEYS.MATCH_PROFILES],
-  siblingsProhibited: { [ENTITY_KEYS.ACTION_PROFILES]: [ENTITY_KEYS.MATCH_PROFILES] },
 };
 
 export const PROFILE_RELATION_TYPES = {
