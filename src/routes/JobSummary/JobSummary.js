@@ -311,6 +311,7 @@ JobSummaryComponent.propTypes = {
     jobExecutions: PropTypes.shape({
       records: PropTypes.arrayOf(
         PropTypes.shape({
+          id: PropTypes.string.isRequired,
           fileName: PropTypes.string.isRequired,
           progress: PropTypes.shape({ total: PropTypes.number.isRequired }).isRequired,
           jobProfileInfo: PropTypes.shape({ dataType: PropTypes.string.isRequired }).isRequired,
