@@ -50,7 +50,6 @@
 * Need to be able to use the same match profile in the same job profile, with different actions (UIDATIMP-1067)
 
 ## [5.0.4](https://github.com/folio-org/ui-data-import/tree/v5.0.4) (2022-02-09)
-
 ### Bugs fixed:
 * Need to be able to nest match profiles under action profiles (Kiwi HF) (UIDATIMP-1086)
 
