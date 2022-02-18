@@ -780,7 +780,7 @@
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.approvedBy": "Approved by",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds": "Acquisitions units",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.billToName": "Bill to name",
-    "settings.mappingProfiles.map.invoice.invoiceInformation.field.billToAddress": "Bill to address",
+    "settings.mappingProfiles.map.invoice.invoiceInformation.field.billToAddress": "Dirección de facturación",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.batchGroupId": "Grupo de lotes",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.subTotal": "Sub-total",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.adjustmentsTotal": "Ajustes totales",
