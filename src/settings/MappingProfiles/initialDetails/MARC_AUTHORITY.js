@@ -1,6 +1,7 @@
 const MARC_AUTHORITY = {
   name: 'marcAuthority',
   recordType: 'MARC_AUTHORITY',
+  marcMappingOption: 'UPDATE',
   mappingFields: [{
     name: 'discoverySuppress',
     enabled: true,

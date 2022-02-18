@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  createRef,
+} from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { Settings } from '@folio/stripes/smart-components';
@@ -61,6 +64,14 @@ export class DataImportSettings extends Component {
     },
   ];
 
+  paneTitleRef = createRef();
+
+  componentDidMount() {
+    if (this.paneTitleRef.current) {
+      this.paneTitleRef.current.focus();
+    }
+  }
+
   renderProfilesLabel() {
     const profilesLink = 'https://wiki.folio.org/display/FOLIOtips/2-Creating+and+using+profiles';
 
@@ -84,6 +95,7 @@ export class DataImportSettings extends Component {
     return (
       <Settings
         {...this.props}
+        paneTitleRef={this.paneTitleRef}
         navPaneWidth="15%"
         sections={this.sections}
         paneTitle={generateSettingsLabel('index.paneTitle')}

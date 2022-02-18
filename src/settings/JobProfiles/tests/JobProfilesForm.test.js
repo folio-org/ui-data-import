@@ -16,14 +16,21 @@ import {
   JobProfilesForm,
   fetchAssociations,
 } from '../JobProfilesForm';
-import { PROFILE_TYPES } from '../../../utils';
+import {
+  LAYER_TYPES,
+  PROFILE_TYPES,
+} from '../../../utils';
 
 global.fetch = jest.fn();
 
 const childWrappers = [
   {
-    childSnapshotWrappers: [],
-    content: {},
+    childSnapshotWrappers: [{
+      childSnapshotWrappers: [],
+      content: {},
+      contentType: PROFILE_TYPES.MAPPING_PROFILE,
+    }],
+    content: { name: 'Attached action profile' },
     contentType: PROFILE_TYPES.ACTION_PROFILE,
     id: 'testId',
     order: 0,
@@ -51,7 +58,10 @@ const form = {
   })),
 };
 
-const jobProfilesFormProps = idField => ({
+const jobProfilesFormProps = ({
+  idField,
+  layerType,
+}) => ({
   pristine: false,
   initialValues: {
     addedRelations: [],
@@ -74,6 +84,7 @@ const jobProfilesFormProps = idField => ({
       tenant: '',
     },
   },
+  layerType,
 });
 
 const renderJobProfilesForm = ({
@@ -81,6 +92,7 @@ const renderJobProfilesForm = ({
   initialValues,
   stripes,
   match,
+  layerType,
 }) => {
   const component = () => (
     <Router>
@@ -96,11 +108,12 @@ const renderJobProfilesForm = ({
         transitionToParams={noop}
         match={match}
         onSubmit={jest.fn()}
+        layerType={layerType}
       />
     </Router>
   );
 
-  return renderWithIntl(renderWithReduxForm(component), translationsProperties);
+  return renderWithIntl(renderWithReduxForm(component, { folio_data_import_child_wrappers: () => ({ records: [{ childSnapshotWrappers: childWrappers }] }) }), translationsProperties);
 };
 
 describe('<JobProfilesForm>', () => {
@@ -112,15 +125,25 @@ describe('<JobProfilesForm>', () => {
     delete global.fetch;
   });
 
+  describe('when profile is duplicated', () => {
+    describe('and there are attached profiles', () => {
+      it('should initialize the form with these profiles', () => {
+        const { getByText } = renderJobProfilesForm(jobProfilesFormProps({ layerType: LAYER_TYPES.DUPLICATE }));
+
+        expect(getByText('Action profile: "Attached action profile"')).toBeDefined();
+      });
+    });
+  });
+
   describe('should display correct title', () => {
     it('when creating new profile', () => {
-      const { getAllByText } = renderJobProfilesForm(jobProfilesFormProps());
+      const { getAllByText } = renderJobProfilesForm(jobProfilesFormProps({}));
 
       expect(getAllByText(/new job profile/i)).toBeDefined();
     });
 
     it('when editing existing profile', () => {
-      const { getAllByText } = renderJobProfilesForm(jobProfilesFormProps('testId'));
+      const { getAllByText } = renderJobProfilesForm(jobProfilesFormProps({ idField: 'testId' }));
 
       expect(getAllByText(/edit/i, { exact: false })).toBeDefined();
     });
@@ -142,7 +165,7 @@ describe('<JobProfilesForm>', () => {
     const {
       container,
       getByRole,
-    } = renderJobProfilesForm(jobProfilesFormProps());
+    } = renderJobProfilesForm(jobProfilesFormProps({}));
 
     fireEvent.change(getByRole('combobox', { name: /accepted data type/i }), { target: { value: 'EDIFACT' } });
 
@@ -151,7 +174,14 @@ describe('<JobProfilesForm>', () => {
 
   describe('when input fields filled with values', () => {
     it('"Save as profile & Close" button should be active', async () => {
-      const { getByRole } = renderJobProfilesForm(jobProfilesFormProps());
+      global.fetch
+        .mockReturnValue(Promise.resolve({
+          status: 200,
+          ok: true,
+          json: async () => ({}),
+        }));
+
+      const { getByRole } = renderJobProfilesForm(jobProfilesFormProps({ layerType: LAYER_TYPES.EDIT }));
 
       fireEvent.change(getByRole('textbox', { name: /name/i }), { target: { value: 'test value' } });
       fireEvent.click(getByRole('button', { name: /save as profile & close/i }));

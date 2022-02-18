@@ -15,6 +15,7 @@ export const renderWithReduxForm = (component, initialStateValues = {}, formFiel
   const reducer = combineReducers({
     field: fieldReducer,
     form: formReducer,
+    ...initialStateValues,
   });
   const store = createStore(reducer);
 

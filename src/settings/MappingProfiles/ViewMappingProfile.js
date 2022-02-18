@@ -234,7 +234,7 @@ export class ViewMappingProfile extends Component {
       incomingRecordType,
       existingRecordType,
       mappingDetails,
-      mappingDetails: { marcMappingOption = '' },
+      mappingDetails: { marcMappingOption = '' } = {},
       marcFieldProtectionSettings: mappingMarcFieldProtectionFields,
     } = mappingProfile;
 
@@ -248,17 +248,19 @@ export class ViewMappingProfile extends Component {
     const marcMappingOptionLabel = FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === marcMappingOption)?.label;
 
     const MARCBibDetailsProps = {
-      marcMappingDetails: mappingDetails?.marcMappingDetails,
+      marcMappingDetails: mappingDetails?.marcMappingDetails || [],
       marcMappingOption,
       marcFieldProtectionFields,
       mappingMarcFieldProtectionFields,
     };
 
+    const mappingFields = mappingDetails?.mappingFields || [];
+
     const renderDetails = {
-      INSTANCE: <MappingInstanceDetails mappingDetails={mappingDetails?.mappingFields} />,
-      HOLDINGS: <MappingHoldingsDetails mappingDetails={mappingDetails?.mappingFields} />,
-      ITEM: <MappingItemDetails mappingDetails={mappingDetails?.mappingFields} />,
-      INVOICE: <MappingInvoiceDetails mappingDetails={mappingDetails?.mappingFields} />,
+      INSTANCE: <MappingInstanceDetails mappingDetails={mappingFields} />,
+      HOLDINGS: <MappingHoldingsDetails mappingDetails={mappingFields} />,
+      ITEM: <MappingItemDetails mappingDetails={mappingFields} />,
+      INVOICE: <MappingInvoiceDetails mappingDetails={mappingFields} />,
       MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCBibDetailsProps} />,
     };
 

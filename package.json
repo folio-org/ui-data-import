@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -75,7 +75,6 @@
     "miragejs": "^0.1.40",
     "moment": "~2.24.0",
     "prop-types": "^15.6.0",
-    "react-dropzone": "^7.0.1",
     "react-final-form": "^6.3.0",
     "react-highlighter": "^0.4.3",
     "redux-form": "^8.3.7"

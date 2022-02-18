@@ -32,14 +32,6 @@ const recordsData = {
       from: FOLIO_RECORD_TYPES.INVOICE.type,
       to: FOLIO_RECORD_TYPES.INSTANCE.type,
     },
-    {
-      from: FOLIO_RECORD_TYPES.AUTHORITY.type,
-      to: FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
-    },
-    {
-      from: FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
-      to: FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
-    },
   ],
   children: [
     {
@@ -60,7 +52,6 @@ const recordsData = {
       },
     },
     { itemMeta: FOLIO_RECORD_TYPES.INVOICE },
-    { itemMeta: FOLIO_RECORD_TYPES.AUTHORITY },
     { itemMeta: FOLIO_RECORD_TYPES.MARC_AUTHORITY },
   ],
 };
