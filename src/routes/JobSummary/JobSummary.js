@@ -68,13 +68,13 @@ const JobSummaryComponent = ({
 
   useEffect(() => {
     if (jobExecutionsId) {
-      jobLogEntriesRecords.map(entry => {
+      jobLogEntriesRecords.forEach(entry => {
         const recordId = isEdifactType ? entry.invoiceLineJournalRecordId : entry.sourceRecordId;
 
-        return mutator.jobLog.GET({ path: `metadata-provider/jobLogEntries/${jobExecutionsId}/records/${recordId}` });
+        mutator.jobLog.GET({ path: `metadata-provider/jobLogEntries/${jobExecutionsId}/records/${recordId}` });
       });
     }
-  }, [jobExecutionsId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [jobExecutionsId, jobLogEntriesRecords]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getHotlinkCellFormatter = (isHotlink, entityLabel, path, entity) => {
     if (isHotlink) {
