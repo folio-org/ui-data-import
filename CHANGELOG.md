@@ -45,6 +45,7 @@
 * Job profiles are showing incorrect info for "Jobs using this profile" accordion (UIDATIMP-1081)
 * Settings > Data Import > change focus (UIDATIMP-1085)
 * When duplicating job profile, retain the details from the profile being duplicated (UIDATIMP-1082)
+* Update Actions dropdown for several default profiles (UIDATIMP-1096)
 
 ### Bugs fixed:
 * Need to be able to use the same match profile in the same job profile, with different actions (UIDATIMP-1067)

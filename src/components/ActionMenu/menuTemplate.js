@@ -17,8 +17,14 @@ import {
  * @param {Component} entity
  * @param {object} menu
  * @param {boolean} isDefaultProfile
+ * @param {boolean} isDeriveButtonDisabled
  */
-export const menuTemplate = (entity, menu, isDefaultProfile) => {
+export const menuTemplate = ({
+  entity,
+  menu,
+  isDefaultProfile,
+  isDeriveButtonDisabled = false,
+}) => {
   const {
     props: {
       ENTITY_KEY,
@@ -65,6 +71,7 @@ export const menuTemplate = (entity, menu, isDefaultProfile) => {
         caption="ui-data-import.duplicate"
         icon="duplicate"
         menu={menu}
+        isDisabled={isDeriveButtonDisabled}
         location={createLayerURL(location, LAYER_TYPES.DUPLICATE)}
         dataAttributes={{ 'data-test-duplicate-item-menu-button': '' }}
       />
