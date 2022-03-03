@@ -49,6 +49,7 @@
 ### Bugs fixed:
 * Need to be able to use the same match profile in the same job profile, with different actions (UIDATIMP-1067)
 * The log hotlinks for Instance, Holdings, and/or Item record are not populated (UIDATIMP-1101)
+* Match Profile - Duplicate action does not display Existing record information (UIDATIMP-1102)
 
 ## [5.0.4](https://github.com/folio-org/ui-data-import/tree/v5.0.4) (2022-02-09)
 ### Bugs fixed:

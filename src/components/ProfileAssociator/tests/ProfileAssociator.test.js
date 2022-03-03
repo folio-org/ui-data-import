@@ -239,7 +239,7 @@ describe('<ProfileAssociator>', () => {
   describe('when "unlink" button is clicked', () => {
     it('Confirmation modal should appear', async () => {
       const {
-        getAllByRole,
+        getAllByTitle,
         findByText,
       } = renderProfileAssociator({
         isMultiSelect: false,
@@ -249,7 +249,9 @@ describe('<ProfileAssociator>', () => {
         detailType: PROFILE_TYPES.JOB_PROFILE,
       });
 
-      fireEvent.click(getAllByRole('button', { name: /unlink this profile/i })[0]);
+      const unlinkButton = getAllByTitle(/unlink this profile/i)[0];
+
+      fireEvent.click(unlinkButton);
 
       expect(await findByText('Confirmation modal')).toBeInTheDocument();
     });
@@ -257,7 +259,7 @@ describe('<ProfileAssociator>', () => {
     describe('when cancel button is clicked', () => {
       it('Confirmation modal should be closed', async () => {
         const {
-          getAllByRole,
+          getAllByTitle,
           findByText,
           queryByText,
         } = renderProfileAssociator({
@@ -265,7 +267,9 @@ describe('<ProfileAssociator>', () => {
           useSearch: false,
         });
 
-        fireEvent.click(getAllByRole('button', { name: /unlink this profile/i })[0]);
+        const unlinkButton = getAllByTitle(/unlink this profile/i)[0];
+
+        fireEvent.click(unlinkButton);
 
         const cancelButton = await findByText('Cancel');
 
@@ -278,7 +282,7 @@ describe('<ProfileAssociator>', () => {
     describe('when confirm button is clicked', () => {
       it('Confirmation modal should be closed', async () => {
         const {
-          getAllByRole,
+          getAllByTitle,
           findByText,
           queryByText,
         } = renderProfileAssociator({
@@ -286,7 +290,9 @@ describe('<ProfileAssociator>', () => {
           useSearch: false,
         });
 
-        fireEvent.click(getAllByRole('button', { name: /unlink this profile/i })[0]);
+        const unlinkButton = getAllByTitle(/unlink this profile/i)[0];
+
+        fireEvent.click(unlinkButton);
 
         const confirmButton = await findByText('Confirm');
 

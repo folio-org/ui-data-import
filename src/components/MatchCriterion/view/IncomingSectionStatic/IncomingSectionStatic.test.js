@@ -83,15 +83,15 @@ describe('IncomingSectionStatic view', () => {
       it('should be rendered TEXT static value type', () => {
         const { getByText } = renderIncomingSectionStatic(incomingSectionStaticWithText);
 
-        expect(getByText('test text')).toBeDefined();
+        expect(getByText('test text')).toBeInTheDocument();
       });
     });
 
     describe('and the text field is not filled', () => {
       it('should be rendered with empty TEXT static value type', () => {
-        const { getByLabelText } = renderIncomingSectionStatic(incomingSectionStaticWithoutText);
+        const { getByText } = renderIncomingSectionStatic(incomingSectionStaticWithoutText);
 
-        expect(getByLabelText('No value set')).toBeDefined();
+        expect(getByText('No value set')).toBeInTheDocument();
       });
     });
   });
@@ -101,15 +101,15 @@ describe('IncomingSectionStatic view', () => {
       it('should be rendered NUMBER static value type', () => {
         const { getByText } = renderIncomingSectionStatic(incomingSectionStaticWithNumber);
 
-        expect(getByText('test text')).toBeDefined();
+        expect(getByText('test text')).toBeInTheDocument();
       });
     });
 
     describe('and the number field is not filled', () => {
       it('should be rendered with empty NUMBER static value type', () => {
-        const { getByLabelText } = renderIncomingSectionStatic(incomingSectionStaticWithoutNumber);
+        const { getByText } = renderIncomingSectionStatic(incomingSectionStaticWithoutNumber);
 
-        expect(getByLabelText('No value set')).toBeDefined();
+        expect(getByText('No value set')).toBeInTheDocument();
       });
     });
   });
@@ -125,9 +125,9 @@ describe('IncomingSectionStatic view', () => {
 
     describe('and the date field is not filled', () => {
       it('should be rendered with empty EXACT_DATE static value type', () => {
-        const { getByLabelText } = renderIncomingSectionStatic(incomingSectionStaticWithoutDate);
+        const { getByText } = renderIncomingSectionStatic(incomingSectionStaticWithoutDate);
 
-        expect(getByLabelText('No value set')).toBeDefined();
+        expect(getByText('No value set')).toBeInTheDocument();
       });
     });
   });
@@ -144,9 +144,9 @@ describe('IncomingSectionStatic view', () => {
 
     describe('and the date range field is not filled', () => {
       it('should be rendered with empty DATE_RANGE static value type', () => {
-        const { getAllByLabelText } = renderIncomingSectionStatic(incomingSectionStaticWithoutDateRange);
+        const { getAllByText } = renderIncomingSectionStatic(incomingSectionStaticWithoutDateRange);
 
-        expect(getAllByLabelText('No value set')).toBeDefined();
+        expect(getAllByText('No value set').length).toBe(2);
       });
     });
   });
