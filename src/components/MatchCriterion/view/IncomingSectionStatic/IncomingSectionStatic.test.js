@@ -119,7 +119,7 @@ describe('IncomingSectionStatic view', () => {
       it('should be rendered EXACT_DATE static value type', () => {
         const { queryByText } = renderIncomingSectionStatic(incomingSectionStaticWithDate);
 
-        expect(queryByText('12/30/2010')).toBeInTheDocument();
+        expect(queryByText('12/30/2010')).toBeDefined();
       });
     });
 
