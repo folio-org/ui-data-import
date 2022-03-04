@@ -21,12 +21,6 @@ import css from './DataImportSettings.css';
 export class DataImportSettings extends Component {
   static propTypes = { stripes: stripesShape.isRequired };
 
-  componentDidMount() {
-    if (this.paneTitleRef.current) {
-      this.paneTitleRef.current.focus();
-    }
-  }
-
   sections = [
     {
       label: this.renderProfilesLabel(),
@@ -71,6 +65,12 @@ export class DataImportSettings extends Component {
   ];
 
   paneTitleRef = createRef();
+
+  componentDidMount() {
+    if (this.paneTitleRef.current) {
+      this.paneTitleRef.current.focus();
+    }
+  }
 
   renderProfilesLabel() {
     const profilesLink = 'https://wiki.folio.org/display/FOLIOtips/2-Creating+and+using+profiles';
