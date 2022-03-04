@@ -91,7 +91,7 @@ describe('IncomingSectionStatic view', () => {
       it('should be rendered with empty TEXT static value type', () => {
         const { getByText } = renderIncomingSectionStatic(incomingSectionStaticWithoutText);
 
-        expect(getByText('No value set')).toBeInTheDocument();
+        expect(getByText('-')).toBeInTheDocument();
       });
     });
   });
@@ -109,7 +109,7 @@ describe('IncomingSectionStatic view', () => {
       it('should be rendered with empty NUMBER static value type', () => {
         const { getByText } = renderIncomingSectionStatic(incomingSectionStaticWithoutNumber);
 
-        expect(getByText('No value set')).toBeInTheDocument();
+        expect(getByText('-')).toBeInTheDocument();
       });
     });
   });
@@ -127,7 +127,7 @@ describe('IncomingSectionStatic view', () => {
       it('should be rendered with empty EXACT_DATE static value type', () => {
         const { getByText } = renderIncomingSectionStatic(incomingSectionStaticWithoutDate);
 
-        expect(getByText('No value set')).toBeInTheDocument();
+        expect(getByText('-')).toBeInTheDocument();
       });
     });
   });
@@ -146,7 +146,7 @@ describe('IncomingSectionStatic view', () => {
       it('should be rendered with empty DATE_RANGE static value type', () => {
         const { getAllByText } = renderIncomingSectionStatic(incomingSectionStaticWithoutDateRange);
 
-        expect(getAllByText('No value set').length).toBe(2);
+        expect(getAllByText('-').length).toBe(2);
       });
     });
   });
