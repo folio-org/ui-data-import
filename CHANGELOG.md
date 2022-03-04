@@ -2,7 +2,7 @@
 
 ## **5.2.0** (in progress)
 
-## [5.1.0](https://github.com/folio-org/ui-data-import/tree/v5.1.0) (2022-03-04)
+## [5.1.1](https://github.com/folio-org/ui-data-import/tree/v5.1.1) (2022-03-04)
 
 ### Features added:
 * Cover `<MatchingFieldsManager>` component with tests (UIDATIMP-712)
