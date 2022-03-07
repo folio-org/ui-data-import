@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { menuTemplate } from './menuTemplate';
 import {
   DEFAULT_PROFILE_IDS,
-  PROFILE_IDS_WITH_DISABLED_DERIVE_BUTTON,
+  PROFILE_IDS_WITH_DISABLED_DUPLICATE_BUTTON,
 } from '../../utils';
 
 export const ActionMenu = memo(({
@@ -14,13 +14,13 @@ export const ActionMenu = memo(({
   recordId,
 }) => {
   const isDefaultProfile = DEFAULT_PROFILE_IDS.includes(recordId);
-  const isDeriveButtonDisabled = PROFILE_IDS_WITH_DISABLED_DERIVE_BUTTON.includes(recordId);
+  const isDuplicateButtonDisabled = PROFILE_IDS_WITH_DISABLED_DUPLICATE_BUTTON.includes(recordId);
 
   const templates = menuTemplate({
     entity,
     menu,
     isDefaultProfile,
-    isDeriveButtonDisabled,
+    isDuplicateButtonDisabled,
   });
 
   return (
