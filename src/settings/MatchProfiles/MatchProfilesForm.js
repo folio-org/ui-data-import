@@ -156,12 +156,13 @@ export const MatchProfilesFormComponent = memo(({
   const { layer } = queryString.parse(search);
 
   const isEditMode = layer === LAYER_TYPES.EDIT;
+  const isDuplicateMode = layer === LAYER_TYPES.DUPLICATE;
   const staticValueTypes = FORMS_SETTINGS[ENTITY_KEYS.MATCH_PROFILES].MATCHING.STATIC_VALUE_TYPES;
 
   const currentStaticValueType = get(form.getState(), ['values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
 
   const [incomingRecord, setIncomingRecord] = useState(MATCH_INCOMING_RECORD_TYPES[incomingRecordType]);
-  const [existingRecord, setExistingRecord] = useState(isEditMode ? existingRecordType : '');
+  const [existingRecord, setExistingRecord] = useState(existingRecordType || '');
   const [existingRecordFields, setExistingRecordFields] = useState([]);
   const [staticValueType, setStaticValueType] = useState(currentStaticValueType);
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
@@ -180,7 +181,7 @@ export const MatchProfilesFormComponent = memo(({
   const editWithModal = isEditMode && associatedJobProfilesAmount;
 
   const getInitialFields = (matchFields, getDropdownOptions) => {
-    if (isEditMode) {
+    if (isEditMode || isDuplicateMode) {
       const matches = matchFields(jsonSchemas[existingRecordType], existingRecordType);
 
       return getDropdownOptions(matches);
@@ -188,6 +189,7 @@ export const MatchProfilesFormComponent = memo(({
 
     return [];
   };
+
   const onSubmit = async event => {
     if (editWithModal) {
       event.preventDefault();
