@@ -276,9 +276,9 @@ describe('MatchProfilesForm', () => {
       it('should be closed after double click', () => {
         const {
           queryByText,
-          getByText,
+          getAllByText,
         } = renderMatchProfilesForm(matchProfilesFormProps());
-        const qualifier = getByText('Use a qualifier');
+        const qualifier = getAllByText('Use a qualifier')[0];
 
         fireEvent.click(qualifier);
         fireEvent.click(qualifier);
