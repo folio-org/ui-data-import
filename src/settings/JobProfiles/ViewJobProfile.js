@@ -56,9 +56,16 @@ import {
   getEntity,
   getEntityTags,
   compose,
+  createUrlFromArray,
+  FILE_STATUSES,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
+
+const {
+  COMMITTED,
+  ERROR,
+} = FILE_STATUSES;
 
 const ViewJobProfileComponent = props => {
   const {
@@ -416,11 +423,17 @@ ViewJobProfileComponent.manifest = Object.freeze({
   },
   jobsUsingThisProfile: {
     type: 'okapi',
-    path: createUrl('metadata-provider/jobExecutions', {
-      profileIdAny: ':{id}',
-      limit: 25,
-      sortBy: 'completed_date,desc',
-    }, false),
+    path: (_q, _p) => {
+      const { id } = _p;
+
+      return createUrlFromArray('metadata-provider/jobExecutions', [
+        `statusAny=${COMMITTED}`,
+        `statusAny=${ERROR}`,
+        `profileIdAny=${id}`,
+        'limit=25',
+        'sortBy=completed_date,desc',
+      ]);
+    },
     throwErrors: false,
   },
 });

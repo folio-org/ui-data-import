@@ -2,6 +2,9 @@
 
 ## **5.2.0** (in progress)
 
+### Bugs fixed:
+* Jobs always show up as current even though they were started months ago (UIDATIMP-1108)
+
 ## [5.1.1](https://github.com/folio-org/ui-data-import/tree/v5.1.1) (2022-03-04)
 
 ### Features added:
