@@ -167,6 +167,14 @@ export const ActionProfilesFormComponent = ({
     }
   };
 
+  const onRecordSelect = value => {
+    if (value === ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type) {
+      form.change('profile.action', ACTION_TYPES_SELECT.UPDATE.type);
+    }
+
+    setFolioRecord(value);
+  };
+
   return (
     <EditKeyShortcutsWrapper onSubmit={onSubmit}>
       <FullScreenForm
@@ -242,7 +250,7 @@ export const ActionProfilesFormComponent = ({
               <FolioRecordTypeSelect
                 fieldName="folioRecord"
                 dataOptions={folioRecordTypesDataOptions}
-                onRecordSelect={setFolioRecord}
+                onRecordSelect={onRecordSelect}
               />
             </Accordion>
             <Accordion
