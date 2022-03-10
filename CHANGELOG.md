@@ -1,7 +1,7 @@
 # Change history for ui-data-import
 
 ## **5.2.0** (in progress)
-
+* Modify instead of Update while creating new Action profile (UIDATIMP-1103)
 ## [5.1.1](https://github.com/folio-org/ui-data-import/tree/v5.1.1) (2022-03-04)
 
 ### Features added:
