@@ -46,7 +46,24 @@ const jobProfile = {
 
 const viewJobProfileProps = (profile, actionMenuItems) => ({
   match: { params: { id: 'test id' } },
-  resources: { jobProfile: profile },
+  resources: {
+    jobProfile: profile,
+    jobsUsingThisProfile: {
+      records: [{
+        jobExecutions: [{
+          fileName: 'jobUsingProfile.mrc',
+          hrId: 20,
+          completedDate: '2022-03-10T13:43:36.071+00:00',
+          runBy: {
+            firstName: 'firstName',
+            lastName: 'lastName',
+          },
+          status: 'ERROR',
+        }],
+      }],
+      hasLoaded: true,
+    },
+  },
   history: {
     block: noop,
     push: noop,
@@ -123,6 +140,14 @@ describe('<ViewJobProfile>', () => {
       name: /overview/i,
       expanded: true,
     }));
+  });
+
+  describe('Jobs using this profile section', () => {
+    it('should display correct jobs', () => {
+      const { getByText } = renderViewJobProfile(viewJobProfileProps(jobProfile));
+
+      expect(getByText('jobUsingProfile.mrc')).toBeDefined();
+    });
   });
 
   describe('when clicked on "delete" action', () => {
