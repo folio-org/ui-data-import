@@ -37,7 +37,10 @@ const entity = {
 };
 const menu = { onToggle: jest.fn() };
 
-const templates = menuTemplate(entity, menu);
+const templates = menuTemplate({
+  entity,
+  menu,
+});
 
 describe('Action menu menuTemplate', () => {
   afterEach(() => {
