@@ -870,7 +870,7 @@
     "logViewer.invoiceLine": "Linha de fatura",
     "logViewer.filter.srsMARC": "MARC SRS",
     "recordTypes.authority": "Autoridade",
-    "validation.enterAsteriskOrOtherNumeric": "Please enter * or other numeric value",
-    "validation.enterOther": "Please enter other value",
-    "logViewer.filter.authority": "Authority"
+    "validation.enterAsteriskOrOtherNumeric": "Por favor, insira * ou um valor numérico",
+    "validation.enterOther": "Por favor insira outro valor",
+    "logViewer.filter.authority": "Autoridade"
 }
