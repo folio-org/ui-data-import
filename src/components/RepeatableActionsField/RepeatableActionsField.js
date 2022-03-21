@@ -57,6 +57,8 @@ export const RepeatableActionsField = memo(({
   );
 
   const handleRepeatableActionChange = e => {
+    e.target.blur();
+
     if (e.target.value === actionToClearFields) {
       onRepeatableActionChange(subfieldsToClearPath || `profile.mappingDetails.mappingFields[${repeatableFieldIndex}].subfields`, []);
     }
