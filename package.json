@@ -200,7 +200,12 @@
           "change-manager.records.delete",
           "change-manager.jobexecutions.get",
           "invoice-storage.invoices.item.get",
-          "invoice-storage.invoice-lines.item.get"
+          "invoice-storage.invoice-lines.item.get",
+          "converter-storage.jobprofile.get",
+          "converter-storage.matchprofile.get",
+          "converter-storage.actionprofile.get",
+          "converter-storage.mappingprofile.get",
+          "converter-storage.profileassociation.get"
         ],
         "visible": true
       },
