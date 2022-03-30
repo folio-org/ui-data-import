@@ -185,7 +185,6 @@ export const AdministrativeData = ({ mappingDetails }) => {
       </Row>
       <Row left="xs">
         <Col
-          data-test-administrative-notes
           xs={12}
         >
           <ViewRepeatableField
