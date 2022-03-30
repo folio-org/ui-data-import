@@ -5,6 +5,8 @@
 ### Features added:
 * Add Admin note field to the Instance field mapping profile: Create/Edit (UIDATIMP-1118)
 
+## [5.1.2](https://github.com/folio-org/ui-data-import/tree/v5.1.2) (2022-03-24)
+
 ### Bugs fixed:
 * Modify instead of Update while creating new Action profile (UIDATIMP-1103)
 * Jobs always show up as current even though they were started months ago (UIDATIMP-1108)
