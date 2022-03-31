@@ -2,6 +2,9 @@
 
 ## **5.2.0** (in progress)
 
+### Features added
+* Add checkboxes and delete action to Data Import landing page (UIDATIMP-1077)
+
 ### Bugs fixed:
 * Modify instead of Update while creating new Action profile (UIDATIMP-1103)
 * Jobs always show up as current even though they were started months ago (UIDATIMP-1108)
