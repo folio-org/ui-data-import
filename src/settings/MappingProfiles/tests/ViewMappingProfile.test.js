@@ -165,6 +165,7 @@ describe('<ViewMappingProfile>', () => {
       await waitFor(() => expect(getByText('Confirmation modal')).toBeInTheDocument());
     });
 
+    // eslint-disable-next-line no-only-tests/no-only-tests
     it.skip('should be closed when cancelled', async () => {
       const {
         getByRole,

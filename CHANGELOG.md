@@ -5,10 +5,13 @@
 ### Features added
 * Add checkboxes and delete action to Data Import landing page (UIDATIMP-1077)
 
+## [5.1.2](https://github.com/folio-org/ui-data-import/tree/v5.1.2) (2022-03-24)
+
 ### Bugs fixed:
 * Modify instead of Update while creating new Action profile (UIDATIMP-1103)
 * Jobs always show up as current even though they were started months ago (UIDATIMP-1108)
 * When you try to add a statistic code while creating a New field mapping profile, the line to enter it is not added on the first click. (UIDATIMP-1110)
+* File import of the specific file is not works for a user with only "data-import" permissions set (UIDATIMP-1040)
 
 ## [5.1.1](https://github.com/folio-org/ui-data-import/tree/v5.1.1) (2022-03-04)
 
