@@ -3,6 +3,7 @@
 ## **5.2.0** (in progress)
 
 ### Features added:
+* Add Admin note field to the Instance field mapping profile: Create/Edit (UIDATIMP-1118)
 * Add Admin note field to the Instance field mapping profile: View (UIDATIMP-1121)
 
 ## [5.1.2](https://github.com/folio-org/ui-data-import/tree/v5.1.2) (2022-03-24)
