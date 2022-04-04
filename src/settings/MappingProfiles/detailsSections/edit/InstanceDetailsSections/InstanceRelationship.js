@@ -49,10 +49,10 @@ export const InstanceRelationship = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(30)}
+            wrapperFieldName={getRepeatableFieldName(31)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.parentInstances.legend`} />}
-            repeatableFieldAction={getRepeatableFieldAction(30)}
-            repeatableFieldIndex={30}
+            repeatableFieldAction={getRepeatableFieldAction(31)}
+            repeatableFieldIndex={31}
             hasRepeatableFields={!!parentInstances.length}
             onRepeatableActionChange={setReferenceTables}
           >
@@ -60,8 +60,8 @@ export const InstanceRelationship = ({
               <RepeatableField
                 fields={parentInstances}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.parentInstances.addLabel`} />}
-                onAdd={() => onAdd(parentInstances, 'parentInstances', 30, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, parentInstances, 30, setReferenceTables, 'order')}
+                onAdd={() => onAdd(parentInstances, 'parentInstances', 31, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, parentInstances, 31, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -71,7 +71,7 @@ export const InstanceRelationship = ({
                           <Field
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.parentInstances.field.superInstanceId`} />}
-                            name={getSubfieldName(30, 0, index)}
+                            name={getSubfieldName(31, 0, index)}
                             validate={[validation]}
                           />
                         )}
@@ -86,7 +86,7 @@ export const InstanceRelationship = ({
                         okapi={okapi}
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.parentInstances.field.instanceRelationshipTypeId`} />}
-                        name={getSubfieldName(30, 1, index)}
+                        name={getSubfieldName(31, 1, index)}
                         optionValue="name"
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -95,7 +95,7 @@ export const InstanceRelationship = ({
                           wrapperSourcePath: 'instanceRelationshipTypes',
                         }]}
                         setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(30, 1, index)}
+                        acceptedValuesPath={getRepeatableAcceptedValuesPath(31, 1, index)}
                       />
                     </Col>
                   </Row>
@@ -111,10 +111,10 @@ export const InstanceRelationship = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(31)}
+            wrapperFieldName={getRepeatableFieldName(32)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.childInstances.legend`} />}
-            repeatableFieldAction={getRepeatableFieldAction(31)}
-            repeatableFieldIndex={31}
+            repeatableFieldAction={getRepeatableFieldAction(32)}
+            repeatableFieldIndex={32}
             hasRepeatableFields={!!childInstances.length}
             onRepeatableActionChange={setReferenceTables}
           >
@@ -122,8 +122,8 @@ export const InstanceRelationship = ({
               <RepeatableField
                 fields={childInstances}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.field.childInstances.addLabel`} />}
-                onAdd={() => onAdd(childInstances, 'childInstances', 31, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, childInstances, 31, setReferenceTables, 'order')}
+                onAdd={() => onAdd(childInstances, 'childInstances', 32, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, childInstances, 32, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -133,7 +133,7 @@ export const InstanceRelationship = ({
                           <Field
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.childInstances.field.subInstanceId`} />}
-                            name={getSubfieldName(31, 0, index)}
+                            name={getSubfieldName(32, 0, index)}
                             validate={[validation]}
                           />
                         )}
@@ -147,7 +147,7 @@ export const InstanceRelationship = ({
                         okapi={okapi}
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.childInstances.field.instanceRelationshipTypeId`} />}
-                        name={getSubfieldName(31, 1, index)}
+                        name={getSubfieldName(32, 1, index)}
                         optionValue="name"
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -156,7 +156,7 @@ export const InstanceRelationship = ({
                           wrapperSourcePath: 'instanceRelationshipTypes',
                         }]}
                         setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(31, 1, index)}
+                        acceptedValuesPath={getRepeatableAcceptedValuesPath(32, 1, index)}
                       />
                     </Col>
                   </Row>

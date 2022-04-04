@@ -44,7 +44,7 @@ export const InstanceNotes = ({ notes }) => {
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.noteType`} />}
-                    name={getSubfieldName(26, 0, index)}
+                    name={getSubfieldName(27, 0, index)}
                     disabled
                   />
                 </Col>
@@ -52,7 +52,7 @@ export const InstanceNotes = ({ notes }) => {
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
-                    name={getSubfieldName(26, 1, index)}
+                    name={getSubfieldName(27, 1, index)}
                     disabled
                   />
                 </Col>
@@ -62,7 +62,7 @@ export const InstanceNotes = ({ notes }) => {
                 >
                   <BooleanActionField
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.staffOnly`} />}
-                    name={getBoolSubfieldName(26, 2, index)}
+                    name={getBoolSubfieldName(27, 2, index)}
                     disabled
                   />
                 </Col>

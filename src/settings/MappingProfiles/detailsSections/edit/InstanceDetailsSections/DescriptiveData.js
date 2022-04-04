@@ -68,7 +68,7 @@ export const DescriptiveData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publisher`} />}
-                    name={getSubfieldName(17, 0, index)}
+                    name={getSubfieldName(18, 0, index)}
                     disabled
                   />
                 </Col>
@@ -76,7 +76,7 @@ export const DescriptiveData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.role`} />}
-                    name={getSubfieldName(17, 1, index)}
+                    name={getSubfieldName(18, 1, index)}
                     disabled
                   />
                 </Col>
@@ -84,7 +84,7 @@ export const DescriptiveData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.place`} />}
-                    name={getSubfieldName(17, 2, index)}
+                    name={getSubfieldName(18, 2, index)}
                     disabled
                   />
                 </Col>
@@ -92,7 +92,7 @@ export const DescriptiveData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.dateOfPublication`} />}
-                    name={getSubfieldName(17, 3, index)}
+                    name={getSubfieldName(18, 3, index)}
                     disabled
                   />
                 </Col>
@@ -119,7 +119,7 @@ export const DescriptiveData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.edition`} />}
-                    name={getSubfieldName(18, 0, index)}
+                    name={getSubfieldName(19, 0, index)}
                     disabled
                   />
                 </Col>
@@ -146,7 +146,7 @@ export const DescriptiveData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.physicalDescription`} />}
-                    name={getSubfieldName(19, 0, index)}
+                    name={getSubfieldName(20, 0, index)}
                     disabled
                   />
                 </Col>
@@ -163,7 +163,7 @@ export const DescriptiveData = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.instanceTypeId`} />}
-            name={getFieldName(20)}
+            name={getFieldName(21)}
             disabled
           />
         </Col>
@@ -174,10 +174,10 @@ export const DescriptiveData = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(21)}
+            wrapperFieldName={getRepeatableFieldName(22)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermsIds.legend`} />}
-            repeatableFieldAction={getRepeatableFieldAction(21)}
-            repeatableFieldIndex={21}
+            repeatableFieldAction={getRepeatableFieldAction(22)}
+            repeatableFieldIndex={22}
             hasRepeatableFields={!!natureOfContentTermIds.length}
             onRepeatableActionChange={setReferenceTables}
           >
@@ -185,8 +185,8 @@ export const DescriptiveData = ({
               <RepeatableField
                 fields={natureOfContentTermIds}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermsIds.addLabel`} />}
-                onAdd={() => onAdd(natureOfContentTermIds, 'natureOfContentTermIds', 21, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, natureOfContentTermIds, 21, setReferenceTables, 'order')}
+                onAdd={() => onAdd(natureOfContentTermIds, 'natureOfContentTermIds', 22, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, natureOfContentTermIds, 22, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -198,7 +198,7 @@ export const DescriptiveData = ({
                         okapi={okapi}
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermId`} />}
-                        name={getSubfieldName(21, 0, index)}
+                        name={getSubfieldName(22, 0, index)}
                         optionValue="name"
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -207,7 +207,7 @@ export const DescriptiveData = ({
                           wrapperSourcePath: 'natureOfContentTerms',
                         }]}
                         setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(21, 0, index)}
+                        acceptedValuesPath={getRepeatableAcceptedValuesPath(22, 0, index)}
                       />
                     </Col>
                   </Row>
@@ -235,7 +235,7 @@ export const DescriptiveData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.instanceFormatId`} />}
-                    name={getSubfieldName(22, 0, index)}
+                    name={getSubfieldName(23, 0, index)}
                     disabled
                   />
                 </Col>
@@ -262,7 +262,7 @@ export const DescriptiveData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.languageId`} />}
-                    name={getSubfieldName(23, 0, index)}
+                    name={getSubfieldName(24, 0, index)}
                     disabled
                   />
                 </Col>
@@ -289,7 +289,7 @@ export const DescriptiveData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publicationFrequency`} />}
-                    name={getSubfieldName(24, 0, index)}
+                    name={getSubfieldName(25, 0, index)}
                     disabled
                   />
                 </Col>
@@ -316,7 +316,7 @@ export const DescriptiveData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.publicationRange`} />}
-                    name={getSubfieldName(25, 0, index)}
+                    name={getSubfieldName(26, 0, index)}
                     disabled
                   />
                 </Col>

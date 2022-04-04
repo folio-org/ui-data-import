@@ -39,7 +39,7 @@ export const Identifier = ({ identifiers }) => {
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.identifiers.field.identifierTypeId`} />}
-                    name={getSubfieldName(15, 0, index)}
+                    name={getSubfieldName(16, 0, index)}
                     disabled
                   />
                 </Col>
@@ -47,7 +47,7 @@ export const Identifier = ({ identifiers }) => {
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.identifiers.field.value`} />}
-                    name={getSubfieldName(15, 1, index)}
+                    name={getSubfieldName(16, 1, index)}
                     disabled
                   />
                 </Col>
