@@ -48,9 +48,9 @@ export const ElectronicAccess = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(22)}
-            repeatableFieldAction={getRepeatableFieldAction(22)}
-            repeatableFieldIndex={22}
+            wrapperFieldName={getRepeatableFieldName(23)}
+            repeatableFieldAction={getRepeatableFieldAction(23)}
+            repeatableFieldIndex={23}
             hasRepeatableFields={!!electronicAccess.length}
             onRepeatableActionChange={setReferenceTables}
           >
@@ -58,8 +58,8 @@ export const ElectronicAccess = ({
               <RepeatableField
                 fields={electronicAccess}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.EAccess.addLabel`} />}
-                onAdd={() => onAdd(electronicAccess, 'electronicAccess', 22, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, electronicAccess, 22, setReferenceTables, 'order')}
+                onAdd={() => onAdd(electronicAccess, 'electronicAccess', 23, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, electronicAccess, 23, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -69,7 +69,7 @@ export const ElectronicAccess = ({
                     >
                       <AcceptedValuesField
                         component={TextField}
-                        name={getSubfieldName(22, 0, index)}
+                        name={getSubfieldName(23, 0, index)}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.relationship`} />}
                         optionValue="name"
                         optionLabel="name"
@@ -79,7 +79,7 @@ export const ElectronicAccess = ({
                           wrapperSourcePath: 'electronicAccessRelationships',
                         }]}
                         setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(22, 0, index)}
+                        acceptedValuesPath={getRepeatableAcceptedValuesPath(23, 0, index)}
                         okapi={okapi}
                       />
                     </Col>
@@ -89,7 +89,7 @@ export const ElectronicAccess = ({
                           <Field
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.uri`} />}
-                            name={getSubfieldName(22, 1, index)}
+                            name={getSubfieldName(23, 1, index)}
                             validate={[validation]}
                           />
                         )}
@@ -101,7 +101,7 @@ export const ElectronicAccess = ({
                           <Field
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.linkText`} />}
-                            name={getSubfieldName(22, 2, index)}
+                            name={getSubfieldName(23, 2, index)}
                             validate={[validation]}
                           />
                         )}
@@ -113,7 +113,7 @@ export const ElectronicAccess = ({
                           <Field
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.materialsSpecified`} />}
-                            name={getSubfieldName(22, 3, index)}
+                            name={getSubfieldName(23, 3, index)}
                             validate={[validation]}
                           />
                         )}
@@ -125,7 +125,7 @@ export const ElectronicAccess = ({
                           <Field
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.urlPublicNote`} />}
-                            name={getSubfieldName(22, 4, index)}
+                            name={getSubfieldName(23, 4, index)}
                             validate={[validation]}
                           />
                         )}
