@@ -1,5 +1,6 @@
 import React from 'react';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { noop } from 'lodash';
 
 import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
@@ -21,6 +22,13 @@ const completedWithErrorsRecord = {
   progress: { current: 1 },
 };
 
+const checkboxListProp = {
+  isAllSelected: false,
+  handleSelectAllCheckbox: noop,
+  selectRecord: noop,
+  selectedRecords: new Set(),
+};
+
 const renderJobLogsContainer = record => {
   const childComponent = listProps => {
     listProps.resultsFormatter.status(record);
@@ -35,7 +43,7 @@ const renderJobLogsContainer = record => {
   };
 
   const component = (
-    <JobLogsContainer>
+    <JobLogsContainer checkboxList={checkboxListProp}>
       {({ listProps }) => childComponent(listProps)}
     </JobLogsContainer>
   );
