@@ -46,7 +46,7 @@ export const EnumerationData = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(15)}
+                name={getFieldName(16)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
                 validate={[validation]}
               />
@@ -61,7 +61,7 @@ export const EnumerationData = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(16)}
+                name={getFieldName(17)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
                 validate={[validation]}
               />
@@ -78,7 +78,7 @@ export const EnumerationData = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(17)}
+                name={getFieldName(18)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.volume`} />}
                 validate={[validation]}
               />
@@ -92,10 +92,10 @@ export const EnumerationData = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(18)}
+            wrapperFieldName={getRepeatableFieldName(19)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />}
-            repeatableFieldAction={getRepeatableFieldAction(18)}
-            repeatableFieldIndex={18}
+            repeatableFieldAction={getRepeatableFieldAction(19)}
+            repeatableFieldIndex={19}
             hasRepeatableFields={!!yearCaption.length}
             onRepeatableActionChange={setReferenceTables}
           >
@@ -103,8 +103,8 @@ export const EnumerationData = ({
               <RepeatableField
                 fields={yearCaption}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption.addLabel`} />}
-                onAdd={() => onAdd(yearCaption, 'yearCaption', 18, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, yearCaption, 18, setReferenceTables, 'order')}
+                onAdd={() => onAdd(yearCaption, 'yearCaption', 19, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, yearCaption, 19, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -114,7 +114,7 @@ export const EnumerationData = ({
                           <Field
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />}
-                            name={getSubfieldName(18, 0, index)}
+                            name={getSubfieldName(19, 0, index)}
                             validate={[validation]}
                           />
                         )}

@@ -50,9 +50,9 @@ export const ItemNotes = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(24)}
-            repeatableFieldAction={getRepeatableFieldAction(24)}
-            repeatableFieldIndex={24}
+            wrapperFieldName={getRepeatableFieldName(25)}
+            repeatableFieldAction={getRepeatableFieldAction(25)}
+            repeatableFieldIndex={25}
             hasRepeatableFields={!!notes.length}
             onRepeatableActionChange={setReferenceTables}
           >
@@ -60,8 +60,8 @@ export const ItemNotes = ({
               <RepeatableField
                 fields={notes}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.field.notes.addLabel`} />}
-                onAdd={() => onAdd(notes, 'notes', 24, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, notes, 24, setReferenceTables, 'order')}
+                onAdd={() => onAdd(notes, 'notes', 25, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, notes, 25, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -71,7 +71,7 @@ export const ItemNotes = ({
                     >
                       <AcceptedValuesField
                         component={TextField}
-                        name={getSubfieldName(24, 0, index)}
+                        name={getSubfieldName(25, 0, index)}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.noteType`} />}
                         optionValue="name"
                         optionLabel="name"
@@ -81,7 +81,7 @@ export const ItemNotes = ({
                           wrapperSourcePath: 'itemNoteTypes',
                         }]}
                         setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(24, 0, index)}
+                        acceptedValuesPath={getRepeatableAcceptedValuesPath(25, 0, index)}
                         okapi={okapi}
                       />
                     </Col>
@@ -90,7 +90,7 @@ export const ItemNotes = ({
                         {validation => (
                           <Field
                             component={TextField}
-                            name={getSubfieldName(24, 1, index)}
+                            name={getSubfieldName(25, 1, index)}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
                             validate={[validation]}
                           />
@@ -103,7 +103,7 @@ export const ItemNotes = ({
                     >
                       <BooleanActionField
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.staffOnly`} />}
-                        name={getBoolSubfieldName(24, 2, index)}
+                        name={getBoolSubfieldName(25, 2, index)}
                         required
                       />
                     </Col>
