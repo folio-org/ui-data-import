@@ -3,7 +3,7 @@
   "jobsPaneTitle": "Jobs",
   "logsPaneTitle": "Logs",
   "viewAllLogs": "View all logs",
-  "logsSelected": "{logsNumber} logs selected",
+  "logsSelected": "{logsNumber, number} {logsNumber, plural, one {log selected} other {logs selected}}",
   "manageJobs": "Manage",
   "previewJobs": "Previews",
   "runningJobs": "Running",
