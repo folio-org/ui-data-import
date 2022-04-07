@@ -6,120 +6,15 @@
       "files": [ "src/**/tests/*", "test/**/*" ]
     }
   ],
-  "root": true,
   "rules": {
-    "key-spacing": [
-      "error",
-      {
-        "beforeColon": false
-      }
-    ],
-    "import/prefer-default-export": 0,
-    "import/no-cycle": 0,
-    "padding-line-between-statements": [
-      "error",
-      {
-        "blankLine": "always",
-        "prev": [
-          "const",
-          "let"
-        ],
-        "next": "*"
-      },
-      {
-        "blankLine": "any",
-        "prev": [
-          "const",
-          "let"
-        ],
-        "next": [
-          "const",
-          "let"
-        ]
-      },
-      {
-        "blankLine": "always",
-        "prev": "*",
-        "next": [
-          "return"
-        ]
-      }
-    ],
-    "semi": "off",
-    "babel/semi": "error",
-    "object-curly-newline": [
-      "error",
-      {
-        "multiline": true,
-        "minProperties": 2
-      }
-    ],
-    "object-property-newline": [
-      "error",
-      {
-        "allowMultiplePropertiesPerLine": false
-      }
-    ],
-    "no-multiple-empty-lines": [
-      "error",
-      {
-        "max": 1,
-        "maxEOF": 0,
-        "maxBOF": 0
-      }
-    ],
+    "import/prefer-default-export": "off",
+    "import/no-cycle": "off",
     "react/prop-types": [
       "error",
       {
         "skipUndeclared": true
       }
-    ],
-    "react/jsx-one-expression-per-line": 0,
-    "react/jsx-wrap-multilines": [
-      "error"
-    ],
-    "react/jsx-max-props-per-line": [
-      "error",
-      {
-        "maximum": 1,
-        "when": "always"
-      }
-    ],
-    "no-void": "off",
-    "comma-dangle": [
-      "error",
-      "always-multiline"
-    ],
-    "arrow-parens": [
-      "error",
-      "as-needed"
-    ],
-    "quote-props": [
-      "error",
-      "as-needed"
-    ],
-    "prefer-template": "error",
-    "no-else-return": "error",
-    "newline-per-chained-call": "error",
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "no-only-tests/no-only-tests": [
-      "warn",
-      {
-        "block": [
-          "describe",
-          "it"
-        ],
-        "focus": [
-          "only",
-          "skip"
-        ]
-      }
-    ],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    ]
   },
   "env": {
     "jest": true
