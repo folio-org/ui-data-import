@@ -51,7 +51,7 @@ export const ElectronicAccess = ({
                     okapi={okapi}
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.relationship`} />}
-                    name={getSubfieldName(27, 0, index)}
+                    name={getSubfieldName(28, 0, index)}
                     optionValue="name"
                     optionLabel="name"
                     wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -66,7 +66,7 @@ export const ElectronicAccess = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.uri`} />}
-                    name={getSubfieldName(27, 1, index)}
+                    name={getSubfieldName(28, 1, index)}
                     disabled
                   />
                 </Col>
@@ -74,7 +74,7 @@ export const ElectronicAccess = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.linkText`} />}
-                    name={getSubfieldName(27, 2, index)}
+                    name={getSubfieldName(28, 2, index)}
                     disabled
                   />
                 </Col>
@@ -82,7 +82,7 @@ export const ElectronicAccess = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.materialsSpecified`} />}
-                    name={getSubfieldName(27, 3, index)}
+                    name={getSubfieldName(28, 3, index)}
                     disabled
                   />
                 </Col>
@@ -90,7 +90,7 @@ export const ElectronicAccess = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.EAccess.field.urlPublicNote`} />}
-                    name={getSubfieldName(27, 4, index)}
+                    name={getSubfieldName(28, 4, index)}
                     disabled
                   />
                 </Col>
