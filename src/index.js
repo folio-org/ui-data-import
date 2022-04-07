@@ -19,7 +19,10 @@ import {
 } from './routes';
 import ViewAllLogs from './routes/ViewAllLogs';
 import { DataImportSettings } from './settings';
-import { UploadingJobsContextProvider } from './components';
+import {
+  UploadingJobsContextProvider,
+  DataFetcher,
+} from './components';
 
 class DataImport extends Component {
   static propTypes = {
@@ -51,7 +54,11 @@ class DataImport extends Component {
             <Route
               path={path}
               exact
-              component={Home}
+              render={props => (
+                <DataFetcher>
+                  <Home {...props} />
+                </DataFetcher>
+              )}
             />
             <Route
               path={`${path}/job-profile`}

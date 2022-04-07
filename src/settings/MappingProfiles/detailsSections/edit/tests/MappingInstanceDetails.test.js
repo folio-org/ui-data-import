@@ -32,7 +32,7 @@ global.fetch = jest.fn();
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.INSTANCE.type);
 
 const {
-  electronicAccess,
+  electronicAccess, // eslint-disable-line no-unused-vars
   statisticalCodeIds,
   administrativeNotes,
   parentInstances,
