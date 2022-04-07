@@ -67,6 +67,21 @@ const INSTANCE = {
       }],
     }],
   }, {
+    name: 'administrativeNotes',
+    enabled: true,
+    path: 'instance.administrativeNotes[]',
+    value: '',
+    subfields: [{
+      order: 0,
+      path: 'instance.administrativeNotes[]',
+      fields: [{
+        name: 'administrativeNote',
+        enabled: true,
+        path: 'instance.administrativeNotes[]',
+        value: '',
+      }],
+    }],
+  }, {
     name: 'title',
     enabled: false,
     path: 'instance.title',
