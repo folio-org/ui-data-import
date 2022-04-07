@@ -5,13 +5,18 @@ import PropTypes from 'prop-types';
 import {
   useJobLogsProperties,
   useJobLogsListFormatter,
+  DEFAULT_JOB_LOGS_COLUMNS,
 } from '@folio/stripes-data-transfer-components';
 import { Button } from '@folio/stripes/components';
 
-import { listTemplate } from '../ListTemplate';
+import {
+  CheckboxHeader,
+  listTemplate,
+} from '../ListTemplate';
 import {
   DEFAULT_JOB_LOG_COLUMNS,
   FILE_STATUSES,
+  checkboxListShape,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
@@ -36,6 +41,12 @@ const customProperties = {
 export const JobLogsContainer = props => {
   const {
     children,
+    checkboxList: {
+      isAllSelected,
+      handleSelectAllCheckbox,
+      selectRecord,
+      selectedRecords,
+    },
     ...rest
   } = props;
 
@@ -70,11 +81,37 @@ export const JobLogsContainer = props => {
     return formatMessage({ id: 'ui-data-import.completed' });
   };
 
+  const visibleColumns = [
+    'selected',
+    ...DEFAULT_JOB_LOGS_COLUMNS,
+  ];
+  const columnMapping = {
+    selected: (
+      <CheckboxHeader
+        checked={isAllSelected}
+        onChange={handleSelectAllCheckbox}
+      />
+    ),
+    fileName: formatMessage({ id: 'stripes-data-transfer-components.fileName' }),
+    hrId: formatMessage({ id: 'stripes-data-transfer-components.jobExecutionHrId' }),
+    jobProfileName: formatMessage({ id: 'stripes-data-transfer-components.jobProfileName' }),
+    totalRecords: formatMessage({ id: 'stripes-data-transfer-components.records' }),
+    completedDate: formatMessage({ id: 'stripes-data-transfer-components.jobCompletedDate' }),
+    runBy: formatMessage({ id: 'stripes-data-transfer-components.runBy' }),
+  };
+  const columnWidths = { selected: '40px' };
+
   const listProps = {
     ...useJobLogsProperties(customProperties),
+    visibleColumns,
+    columnMapping,
+    columnWidths,
     resultsFormatter: useJobLogsListFormatter(
       {
-        ...listTemplate({}),
+        ...listTemplate({
+          selectRecord,
+          selectedRecords,
+        }),
         status: statusCellFormatter,
         fileName: fileNameCellFormatter,
       },
@@ -91,4 +128,7 @@ export const JobLogsContainer = props => {
   );
 };
 
-JobLogsContainer.propTypes = { children: PropTypes.func.isRequired };
+JobLogsContainer.propTypes = {
+  children: PropTypes.func.isRequired,
+  checkboxList: checkboxListShape.isRequired,
+};
