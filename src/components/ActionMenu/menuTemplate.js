@@ -175,5 +175,32 @@ export const menuTemplate = ({
         />
       );
     },
+    viewAllLogs: key => {
+      return (
+        <LinkTo
+          key={key}
+          caption="ui-data-import.viewAllLogs"
+          menu={menu}
+          icon="eye-open"
+          location="/data-import/job-logs?sort=-completedDate"
+        />
+      );
+    },
+    deleteSelectedLogs: key => {
+      const handleDelete = () => {
+        menu.onToggle();
+        entity.showDeleteConfirmation();
+      };
+
+      return (
+        <Default
+          key={key}
+          caption="ui-data-import.deleteSelectedLogs"
+          icon="trash"
+          isDisabled={entity.isDeleteAllLogsDisabled()}
+          onClick={handleDelete}
+        />
+      );
+    },
   };
 };

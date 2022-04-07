@@ -39,7 +39,7 @@ export const Subject = ({ subjects }) => {
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.subjects`} />}
-                    name={getSubfieldName(28, 0, index)}
+                    name={getSubfieldName(29, 0, index)}
                     disabled
                   />
                 </Col>

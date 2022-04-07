@@ -2,7 +2,8 @@
 
 ## **5.2.0** (in progress)
 
-### Features added:
+### Features added
+* Add checkboxes and delete action to Data Import landing page (UIDATIMP-1077)
 * Add Admin note field to the Instance field mapping profile: Create/Edit (UIDATIMP-1118)
 * Add Admin note field to the Item field mapping profile: Create/Edit (UIDATIMP-1120)
 

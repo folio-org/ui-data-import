@@ -14,7 +14,7 @@ import {
   injectIntl,
 } from 'react-intl';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { withStripes } from '@folio/stripes/core';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { TextField } from '@folio/stripes/components';
 
@@ -126,7 +126,7 @@ const selectFormValues = state => {
 };
 
 @injectIntl
-@stripesConnect
+@withStripes
 @connect(selectFormValues, mapDispatchToProps)
 export class MARCFieldProtection extends Component {
   static propTypes = {
