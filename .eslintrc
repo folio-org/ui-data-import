@@ -6,6 +6,16 @@
       "files": [ "src/**/tests/*", "test/**/*" ]
     }
   ],
+  "rules": {
+    "import/prefer-default-export": "off",
+    "import/no-cycle": "off",
+    "react/prop-types": [
+      "error",
+      {
+        "skipUndeclared": true
+      }
+    ]
+  },
   "env": {
     "jest": true
   },
