@@ -1,18 +1,10 @@
 {
-  "globals": {
-    "process": true
-  },
   "extends": "@folio/eslint-config-stripes",
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "legacyDecorators": true
+  "parser": "@babel/eslint-parser",
+  "overrides": [
+    {
+      "files": [ "src/**/tests/*", "test/**/*" ]
     }
-  },
-  "plugins": [
-    "babel",
-    "no-only-tests",
-    "react-hooks"
   ],
   "root": true,
   "rules": {
@@ -131,5 +123,16 @@
   },
   "env": {
     "jest": true
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["__mock__", "./test/jest/__mock__"],
+          ["fixtures", "./test/jest/fixtures"],
+          ["helpers", "./test/jest/helpers"]
+        ]
+      }
+    }
   }
 }
