@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "5.1.1",
+  "version": "5.1.2",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -203,7 +203,12 @@
           "change-manager.records.delete",
           "change-manager.jobexecutions.get",
           "invoice-storage.invoices.item.get",
-          "invoice-storage.invoice-lines.item.get"
+          "invoice-storage.invoice-lines.item.get",
+          "converter-storage.jobprofile.get",
+          "converter-storage.matchprofile.get",
+          "converter-storage.actionprofile.get",
+          "converter-storage.mappingprofile.get",
+          "converter-storage.profileassociation.get"
         ],
         "visible": true
       },
