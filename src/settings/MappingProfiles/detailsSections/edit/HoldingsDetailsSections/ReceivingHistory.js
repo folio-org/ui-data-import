@@ -44,9 +44,9 @@ export const ReceivingHistory = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(23)}
-            repeatableFieldAction={getRepeatableFieldAction(23)}
-            repeatableFieldIndex={23}
+            wrapperFieldName={getRepeatableFieldName(24)}
+            repeatableFieldAction={getRepeatableFieldAction(24)}
+            repeatableFieldIndex={24}
             hasRepeatableFields={!!receivingHistory.length}
             onRepeatableActionChange={setReferenceTables}
           >
@@ -54,8 +54,8 @@ export const ReceivingHistory = ({
               <RepeatableField
                 fields={receivingHistory}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.receivingHistory.addLabel`} />}
-                onAdd={() => onAdd(receivingHistory, 'receivingHistory.entries', 23, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, receivingHistory, 23, setReferenceTables, 'order')}
+                onAdd={() => onAdd(receivingHistory, 'receivingHistory.entries', 24, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, receivingHistory, 24, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -65,7 +65,7 @@ export const ReceivingHistory = ({
                     >
                       <BooleanActionField
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.publicDisplay`} />}
-                        name={getBoolSubfieldName(23, 0, index)}
+                        name={getBoolSubfieldName(24, 0, index)}
                       />
                     </Col>
                     <Col xs={4}>
@@ -74,7 +74,7 @@ export const ReceivingHistory = ({
                           <Field
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.enumeration`} />}
-                            name={getSubfieldName(23, 1, index)}
+                            name={getSubfieldName(24, 1, index)}
                             validate={[validation]}
                           />
                         )}
@@ -89,7 +89,7 @@ export const ReceivingHistory = ({
                           <Field
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.chronology`} />}
-                            name={getSubfieldName(23, 2, index)}
+                            name={getSubfieldName(24, 2, index)}
                             validate={[validation]}
                           />
                         )}
