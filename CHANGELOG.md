@@ -6,6 +6,7 @@
 * Add checkboxes and delete action to Data Import landing page (UIDATIMP-1077)
 * Add Admin note field to the Instance field mapping profile: Create/Edit (UIDATIMP-1118)
 * Add Admin note field to the Holdings field mapping profile: Create/Edit (UIDATIMP-1119)
+* Add Admin note field to the Instance field mapping profile: View (UIDATIMP-1121)
 
 ## [5.1.2](https://github.com/folio-org/ui-data-import/tree/v5.1.2) (2022-03-24)
 
