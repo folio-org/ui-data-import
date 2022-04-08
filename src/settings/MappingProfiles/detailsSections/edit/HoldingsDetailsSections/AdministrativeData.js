@@ -37,6 +37,7 @@ import {
 export const AdministrativeData = ({
   formerIds,
   statisticalCodeIds,
+  administrativeNotes,
   initialFields,
   setReferenceTables,
   getRepeatableFieldAction,
@@ -189,6 +190,45 @@ export const AdministrativeData = ({
           </RepeatableActionsField>
         </Col>
       </Row>
+      <Row left="xs">
+        <Col
+          data-test-admisitrative-notes
+          xs={12}
+        >
+          <RepeatableActionsField
+            wrapperFieldName={getRepeatableFieldName(5)}
+            legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.administrativeNotes.legend`} />}
+            repeatableFieldAction={getRepeatableFieldAction(5)}
+            repeatableFieldIndex={5}
+            hasRepeatableFields={!!administrativeNotes.length}
+            onRepeatableActionChange={setReferenceTables}
+          >
+            {isDisabled => (
+              <RepeatableField
+                fields={administrativeNotes}
+                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.administrativeNotes.addLabel`} />}
+                onAdd={() => onAdd(administrativeNotes, 'administrativeNotes', 5, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, administrativeNotes, 5, setReferenceTables, 'order')}
+                canAdd={!isDisabled}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col
+                      data-test-admisitrative-note
+                      xs={12}
+                    >
+                      <Field
+                        component={TextField}
+                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.administrativeNote`} />}
+                        name={getSubfieldName(5, 0, index)}
+                      />
+                    </Col>
+                  </Row>
+                )}
+              />
+            )}
+          </RepeatableActionsField>
+        </Col>
+      </Row>
     </Accordion>
   );
 };
@@ -196,6 +236,7 @@ export const AdministrativeData = ({
 AdministrativeData.propTypes = {
   formerIds: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   statisticalCodeIds: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  administrativeNotes: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   getRepeatableFieldAction: PropTypes.func.isRequired,

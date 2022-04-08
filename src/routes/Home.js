@@ -57,7 +57,7 @@ export class Home extends Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     if (this.context.logs && (prevState.allLogsNumber !== this.context.logs.length)) {
       this.setLogsList();
     }

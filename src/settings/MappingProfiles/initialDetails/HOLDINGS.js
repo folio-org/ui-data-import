@@ -52,6 +52,21 @@ const HOLDINGS = {
       }],
     }],
   }, {
+    name: 'administrativeNotes',
+    enabled: true,
+    path: 'holdings.administrativeNotes[]',
+    value: '',
+    subfields: [{
+      order: 0,
+      path: 'holdings.administrativeNotes[]',
+      fields: [{
+        name: 'administrativeNote',
+        enabled: true,
+        path: 'holdings.administrativeNotes[]',
+        value: '',
+      }],
+    }],
+  }, {
     name: 'permanentLocationId',
     enabled: true,
     path: 'holdings.permanentLocationId',

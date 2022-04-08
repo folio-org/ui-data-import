@@ -77,7 +77,7 @@ describe('Home component', () => {
 
       fireEvent.click(getAllByLabelText('select item')[0]);
 
-      expect(getByText('1 logs selected')).toBeDefined();
+      expect(getByText('1 log selected')).toBeDefined();
     });
   });
 
