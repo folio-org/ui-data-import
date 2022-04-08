@@ -34,6 +34,7 @@ const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.ITEM.type);
 const {
   formerIds,
   statisticalCodeIds,
+  administrativeNotes,
   yearCaption,
   notes,
   circulationNotes,
@@ -153,6 +154,34 @@ describe('<MappingItemDetails>', () => {
       fireEvent.click(deleteButton);
 
       expect(onRemove).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Administrative notes field', () => {
+    it('User can add administrative note info', async () => {
+      const {
+        findByRole,
+        getByText,
+      } = renderMappingItemDetails({ referenceTables: { administrativeNotes } });
+
+      const button = await findByRole('button', { name: /add administrative note/i });
+
+      fireEvent.click(button);
+
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('administrativeNotes');
+      expect(getByText('Administrative note')).toBeInTheDocument();
+    });
+
+    it('User can delete administrative note info', async () => {
+      const { findByRole } = renderMappingItemDetails({ referenceTables: { administrativeNotes } });
+
+      const deleteButton = await findByRole('button', { name: /delete this item/i });
+
+      fireEvent.click(deleteButton);
+
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(administrativeNotes);
     });
   });
 
