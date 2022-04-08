@@ -54,7 +54,7 @@ export const HoldingsDetails = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(14)}
+                name={getFieldName(15)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.details.field.numberOfItems`} />}
                 validate={[validation]}
               />
@@ -69,10 +69,10 @@ export const HoldingsDetails = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(15)}
+            wrapperFieldName={getRepeatableFieldName(16)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement.legend`} />}
-            repeatableFieldAction={getRepeatableFieldAction(15)}
-            repeatableFieldIndex={15}
+            repeatableFieldAction={getRepeatableFieldAction(16)}
+            repeatableFieldIndex={16}
             hasRepeatableFields={!!holdingsStatements.length}
             onRepeatableActionChange={setReferenceTables}
           >
@@ -80,74 +80,8 @@ export const HoldingsDetails = ({
               <RepeatableField
                 fields={holdingsStatements}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement.addLabel`} />}
-                onAdd={() => onAdd(holdingsStatements, 'holdingsStatements', 15, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, holdingsStatements, 15, setReferenceTables, 'order')}
-                canAdd={!isDisabled}
-                renderField={(field, index) => (
-                  <Row left="xs">
-                    <Col xs={4}>
-                      <WithValidation>
-                        {validation => (
-                          <Field
-                            component={TextField}
-                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />}
-                            name={getSubfieldName(15, 0, index)}
-                            validate={[validation]}
-                          />
-                        )}
-                      </WithValidation>
-                    </Col>
-                    <Col xs={4}>
-                      <WithValidation>
-                        {validation => (
-                          <Field
-                            component={TextField}
-                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
-                            name={getSubfieldName(15, 1, index)}
-                            validate={[validation]}
-                          />
-                        )}
-                      </WithValidation>
-                    </Col>
-                    <Col xs={4}>
-                      <WithValidation>
-                        {validation => (
-                          <Field
-                            component={TextField}
-                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
-                            name={getSubfieldName(15, 2, index)}
-                            validate={[validation]}
-                          />
-                        )}
-                      </WithValidation>
-                    </Col>
-                  </Row>
-                )}
-              />
-            )}
-          </RepeatableActionsField>
-        </Col>
-      </Row>
-      <Row left="xs">
-        <Col
-          data-test-statements-for-supplement
-          id="section-holding-statements-for-supplements"
-          xs={12}
-        >
-          <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(16)}
-            legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForSupplements.legend`} />}
-            repeatableFieldAction={getRepeatableFieldAction(16)}
-            repeatableFieldIndex={16}
-            hasRepeatableFields={!!holdingsStatementsForSupplements.length}
-            onRepeatableActionChange={setReferenceTables}
-          >
-            {isDisabled => (
-              <RepeatableField
-                fields={holdingsStatementsForSupplements}
-                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForSupplements.addLabel`} />}
-                onAdd={() => onAdd(holdingsStatementsForSupplements, 'holdingsStatementsForSupplements', 16, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, holdingsStatementsForSupplements, 16, setReferenceTables, 'order')}
+                onAdd={() => onAdd(holdingsStatements, 'holdingsStatements', 16, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, holdingsStatements, 16, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -196,24 +130,24 @@ export const HoldingsDetails = ({
       </Row>
       <Row left="xs">
         <Col
-          data-test-statements-for-indexes
-          id="section-holding-statements-for-indexes"
+          data-test-statements-for-supplement
+          id="section-holding-statements-for-supplements"
           xs={12}
         >
           <RepeatableActionsField
             wrapperFieldName={getRepeatableFieldName(17)}
-            legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForIndexes.legend`} />}
+            legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForSupplements.legend`} />}
             repeatableFieldAction={getRepeatableFieldAction(17)}
             repeatableFieldIndex={17}
-            hasRepeatableFields={!!holdingsStatementsForIndexes.length}
+            hasRepeatableFields={!!holdingsStatementsForSupplements.length}
             onRepeatableActionChange={setReferenceTables}
           >
             {isDisabled => (
               <RepeatableField
-                fields={holdingsStatementsForIndexes}
-                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForIndexes.addLabel`} />}
-                onAdd={() => onAdd(holdingsStatementsForIndexes, 'holdingsStatementsForIndexes', 17, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, holdingsStatementsForIndexes, 17, setReferenceTables, 'order')}
+                fields={holdingsStatementsForSupplements}
+                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForSupplements.addLabel`} />}
+                onAdd={() => onAdd(holdingsStatementsForSupplements, 'holdingsStatementsForSupplements', 17, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, holdingsStatementsForSupplements, 17, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -262,12 +196,78 @@ export const HoldingsDetails = ({
       </Row>
       <Row left="xs">
         <Col
+          data-test-statements-for-indexes
+          id="section-holding-statements-for-indexes"
+          xs={12}
+        >
+          <RepeatableActionsField
+            wrapperFieldName={getRepeatableFieldName(18)}
+            legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForIndexes.legend`} />}
+            repeatableFieldAction={getRepeatableFieldAction(18)}
+            repeatableFieldIndex={18}
+            hasRepeatableFields={!!holdingsStatementsForIndexes.length}
+            onRepeatableActionChange={setReferenceTables}
+          >
+            {isDisabled => (
+              <RepeatableField
+                fields={holdingsStatementsForIndexes}
+                addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.statements.field.holdingsStatementsForIndexes.addLabel`} />}
+                onAdd={() => onAdd(holdingsStatementsForIndexes, 'holdingsStatementsForIndexes', 18, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, holdingsStatementsForIndexes, 18, setReferenceTables, 'order')}
+                canAdd={!isDisabled}
+                renderField={(field, index) => (
+                  <Row left="xs">
+                    <Col xs={4}>
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatement`} />}
+                            name={getSubfieldName(18, 0, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
+                    </Col>
+                    <Col xs={4}>
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementPublicNote`} />}
+                            name={getSubfieldName(18, 1, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
+                    </Col>
+                    <Col xs={4}>
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.statements.field.holdingsStatementStaffNote`} />}
+                            name={getSubfieldName(18, 2, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
+                    </Col>
+                  </Row>
+                )}
+              />
+            )}
+          </RepeatableActionsField>
+        </Col>
+      </Row>
+      <Row left="xs">
+        <Col
           data-test-ill-policy
           xs={4}
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(18)}
+            name={getFieldName(19)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.illPolicy`} />}
             optionValue="name"
             optionLabel="name"
@@ -278,7 +278,7 @@ export const HoldingsDetails = ({
             }]}
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(18)}
+            acceptedValuesPath={getAcceptedValuesPath(19)}
             okapi={okapi}
           />
         </Col>
@@ -290,7 +290,7 @@ export const HoldingsDetails = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(19)}
+                name={getFieldName(20)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.digitizationPolicy`} />}
                 validate={[validation]}
               />
@@ -305,7 +305,7 @@ export const HoldingsDetails = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(20)}
+                name={getFieldName(21)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.field.retentionPolicy`} />}
                 validate={[validation]}
               />

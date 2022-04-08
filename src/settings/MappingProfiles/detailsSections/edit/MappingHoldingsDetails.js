@@ -27,6 +27,7 @@ export const MappingHoldingsDetails = ({
 }) => {
   const formerIds = referenceTables?.formerIds || [];
   const statisticalCodeIds = referenceTables?.statisticalCodeIds || [];
+  const administrativeNotes = referenceTables?.administrativeNotes || [];
   const holdingsStatements = referenceTables?.holdingsStatements || [];
   const holdingsStatementsForSupplements = referenceTables?.holdingsStatementsForSupplements || [];
   const holdingsStatementsForIndexes = referenceTables?.holdingsStatementsForIndexes || [];
@@ -39,6 +40,7 @@ export const MappingHoldingsDetails = ({
       <AdministrativeData
         formerIds={formerIds}
         statisticalCodeIds={statisticalCodeIds}
+        administrativeNotes={administrativeNotes}
         getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}

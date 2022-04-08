@@ -38,7 +38,7 @@ export const Location = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(5)}
+            name={getFieldName(6)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.location.field.permanent`} />}
             optionValue="name"
             optionLabel="name"
@@ -48,7 +48,7 @@ export const Location = ({
               wrapperSourcePath: 'locations',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(5)}
+            acceptedValuesPath={getAcceptedValuesPath(6)}
             optionTemplate="**name** (**code**)"
             okapi={okapi}
           />
@@ -59,7 +59,7 @@ export const Location = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(6)}
+            name={getFieldName(7)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.location.field.temporary`} />}
             optionValue="name"
             optionLabel="name"
@@ -70,7 +70,7 @@ export const Location = ({
             }]}
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(6)}
+            acceptedValuesPath={getAcceptedValuesPath(7)}
             optionTemplate="**name** (**code**)"
             okapi={okapi}
           />
@@ -83,7 +83,7 @@ export const Location = ({
         >
           <Field
             component={TextField}
-            name={getFieldName(7)}
+            name={getFieldName(8)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingOrder`} />}
             disabled
           />
@@ -96,7 +96,7 @@ export const Location = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(8)}
+                name={getFieldName(9)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingTitle`} />}
                 validate={[validation]}
               />
@@ -113,7 +113,7 @@ export const Location = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(9)}
+                name={getFieldName(10)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.copyNumber`} />}
                 validate={[validation]}
               />
@@ -128,7 +128,7 @@ export const Location = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(10)}
+            name={getFieldName(11)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberType`} />}
             optionValue="name"
             optionLabel="name"
@@ -139,7 +139,7 @@ export const Location = ({
             }]}
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(10)}
+            acceptedValuesPath={getAcceptedValuesPath(11)}
             okapi={okapi}
           />
         </Col>
@@ -151,7 +151,7 @@ export const Location = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(11)}
+                name={getFieldName(12)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberPrefix`} />}
                 validate={[validation]}
               />
@@ -166,7 +166,7 @@ export const Location = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(12)}
+                name={getFieldName(13)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumber`} />}
                 validate={[validation]}
               />
@@ -182,7 +182,7 @@ export const Location = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(13)}
+                name={getFieldName(14)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberSuffix`} />}
                 validate={[validation]}
               />
