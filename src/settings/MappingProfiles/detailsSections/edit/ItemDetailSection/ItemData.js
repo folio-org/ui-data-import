@@ -38,7 +38,7 @@ export const ItemData = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(7)}
+            name={getFieldName(8)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.materialType`} />}
             optionValue="name"
             optionLabel="name"
@@ -48,7 +48,7 @@ export const ItemData = ({
               wrapperSourcePath: 'mtypes',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(7)}
+            acceptedValuesPath={getAcceptedValuesPath(8)}
             okapi={okapi}
           />
         </Col>
@@ -62,7 +62,7 @@ export const ItemData = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(8)}
+                name={getFieldName(9)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.copyNumber`} />}
                 validate={[validation]}
               />
@@ -77,7 +77,7 @@ export const ItemData = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(9)}
+            name={getFieldName(10)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberType`} />}
             optionValue="name"
             optionLabel="name"
@@ -88,7 +88,7 @@ export const ItemData = ({
             }]}
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(9)}
+            acceptedValuesPath={getAcceptedValuesPath(10)}
             okapi={okapi}
           />
         </Col>
@@ -100,7 +100,7 @@ export const ItemData = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(10)}
+                name={getFieldName(11)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberPrefix`} />}
                 validate={[validation]}
               />
@@ -115,7 +115,7 @@ export const ItemData = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(11)}
+                name={getFieldName(12)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumber`} />}
                 validate={[validation]}
               />
@@ -130,7 +130,7 @@ export const ItemData = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(12)}
+                name={getFieldName(13)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberSuffix`} />}
                 validate={[validation]}
               />
@@ -147,7 +147,7 @@ export const ItemData = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(13)}
+                name={getFieldName(14)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.numberOfPieces`} />}
                 validate={[validation]}
               />
@@ -162,7 +162,7 @@ export const ItemData = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(14)}
+                name={getFieldName(15)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.descriptionOfPieces`} />}
                 validate={[validation]}
               />

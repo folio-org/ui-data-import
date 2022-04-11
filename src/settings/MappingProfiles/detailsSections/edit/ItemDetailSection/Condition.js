@@ -44,7 +44,7 @@ export const Condition = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(19)}
+                name={getFieldName(20)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.numberOfMissingPieces`} />}
                 validate={[validation]}
               />
@@ -59,7 +59,7 @@ export const Condition = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(20)}
+                name={getFieldName(21)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.missingPieces`} />}
                 validate={[validation]}
               />
@@ -73,7 +73,7 @@ export const Condition = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.missingPiecesDate`} />}
-            name={getFieldName(21)}
+            name={getFieldName(22)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateMARCWithDate]}
@@ -87,7 +87,7 @@ export const Condition = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(22)}
+            name={getFieldName(23)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.itemDamagedStatus`} />}
             optionValue="name"
             optionLabel="name"
@@ -98,7 +98,7 @@ export const Condition = ({
             }]}
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(22)}
+            acceptedValuesPath={getAcceptedValuesPath(23)}
             okapi={okapi}
           />
         </Col>
@@ -109,7 +109,7 @@ export const Condition = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemCondition.field.itemDamagedStatusDate`} />}
-            name={getFieldName(23)}
+            name={getFieldName(24)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateMARCWithDate]}

@@ -83,7 +83,7 @@ export const LoanAndAvailability = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(25)}
+            name={getFieldName(26)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanTypePermanentRequired`} />}
             optionValue="name"
             optionLabel="name"
@@ -93,7 +93,7 @@ export const LoanAndAvailability = ({
               wrapperSourcePath: 'loantypes',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(25)}
+            acceptedValuesPath={getAcceptedValuesPath(26)}
             okapi={okapi}
           />
         </Col>
@@ -105,7 +105,7 @@ export const LoanAndAvailability = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(26)}
+            name={getFieldName(27)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanTypeTemporary`} />}
             optionValue="name"
             optionLabel="name"
@@ -116,7 +116,7 @@ export const LoanAndAvailability = ({
             }]}
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(26)}
+            acceptedValuesPath={getAcceptedValuesPath(27)}
             okapi={okapi}
           />
         </Col>
@@ -128,7 +128,7 @@ export const LoanAndAvailability = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(27)}
+            name={getFieldName(28)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanStatus`} />}
             optionValue="value"
             optionLabel="label"
@@ -144,10 +144,10 @@ export const LoanAndAvailability = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(28)}
+            wrapperFieldName={getRepeatableFieldName(29)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.field.circulationNotes.legend`} />}
-            repeatableFieldAction={getRepeatableFieldAction(28)}
-            repeatableFieldIndex={28}
+            repeatableFieldAction={getRepeatableFieldAction(29)}
+            repeatableFieldIndex={29}
             hasRepeatableFields={!!circulationNotes.length}
             onRepeatableActionChange={setReferenceTables}
           >
@@ -155,8 +155,8 @@ export const LoanAndAvailability = ({
               <RepeatableField
                 fields={circulationNotes}
                 addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.field.circulationNotes.addLabel`} />}
-                onAdd={() => onAdd(circulationNotes, 'circulationNotes', 28, initialFields, setReferenceTables, 'order')}
-                onRemove={index => onRemove(index, circulationNotes, 28, setReferenceTables, 'order')}
+                onAdd={() => onAdd(circulationNotes, 'circulationNotes', 29, initialFields, setReferenceTables, 'order')}
+                onRemove={index => onRemove(index, circulationNotes, 29, setReferenceTables, 'order')}
                 canAdd={!isDisabled}
                 renderField={(field, index) => (
                   <Row left="xs">
@@ -183,7 +183,7 @@ export const LoanAndAvailability = ({
                         {validation => (
                           <Field
                             component={TextField}
-                            name={getSubfieldName(28, 1, index)}
+                            name={getSubfieldName(29, 1, index)}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.note`} />}
                             validate={[validation]}
                           />
@@ -196,7 +196,7 @@ export const LoanAndAvailability = ({
                     >
                       <BooleanActionField
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.staffOnly`} />}
-                        name={getBoolSubfieldName(28, 2, index)}
+                        name={getBoolSubfieldName(29, 2, index)}
                         required
                       />
                     </Col>

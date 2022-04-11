@@ -29,6 +29,7 @@ export const MappingItemDetails = ({
 }) => {
   const formerIds = referenceTables?.formerIds || [];
   const statisticalCodeIds = referenceTables?.statisticalCodeIds || [];
+  const administrativeNotes = referenceTables?.administrativeNotes || [];
   const yearCaption = referenceTables?.yearCaption || [];
   const notes = referenceTables?.notes || [];
   const circulationNotes = referenceTables?.circulationNotes || [];
@@ -39,6 +40,7 @@ export const MappingItemDetails = ({
       <AdministrativeData
         formerIds={formerIds}
         statisticalCodeIds={statisticalCodeIds}
+        administrativeNotes={administrativeNotes}
         getRepeatableFieldAction={getRepeatableFieldAction}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
