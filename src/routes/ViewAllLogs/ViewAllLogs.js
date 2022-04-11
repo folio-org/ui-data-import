@@ -46,6 +46,7 @@ import {
 } from './constants';
 
 import sharedCss from '../../shared.css';
+import { ConfirmationModal } from '@folio/stripes-components';
 
 const {
   COMMITTED,
@@ -246,6 +247,8 @@ class ViewAllLogs extends Component {
     },
   });
 
+  state = { showDeleteConfirmation: false };
+
   constructor(props) {
     super(props);
     this.getActiveFilters = getActiveFilters.bind(this);
@@ -333,6 +336,20 @@ class ViewAllLogs extends Component {
     );
   }
 
+  showDeleteConfirmation() {
+    this.setState({ showDeleteConfirmation: true });
+  }
+
+  hideDeleteConfirmation = () => {
+    this.setState({ showDeleteConfirmation: false });
+  };
+
+  deleteLogs() {
+    // TODO: replace this on logs deleting once API is ready
+    this.props.checkboxList.deselectAll();
+    this.hideDeleteConfirmation();
+  }
+
   isDeleteAllLogsDisabled() {
     const { checkboxList: { selectedRecords } } = this.props;
 
@@ -353,7 +370,8 @@ class ViewAllLogs extends Component {
       resources,
       stripes,
     } = this.props;
-    const hasLogsSelected = selectedRecords.size > 0;
+    const logsNumber = selectedRecords.size;
+    const hasLogsSelected = logsNumber > 0;
 
     const columnMapping = {
       selected: (
@@ -424,11 +442,30 @@ class ViewAllLogs extends Component {
             ? (
               <FormattedMessage
                 id="ui-data-import.logsSelected"
-                values={{ logsNumber: selectedRecords.size }}
+                values={{ logsNumber }}
               />
             )
             : null
           }
+        />
+        <ConfirmationModal
+          id="delete-selected-logs-modal"
+          open={this.state.showDeleteConfirmation}
+          heading={<FormattedMessage id="ui-data-import.modal.landing.delete.header" />}
+          message={(
+            <FormattedMessage
+              id="ui-data-import.modal.landing.delete.message"
+              values={{ logsNumber }}
+            />
+          )}
+          bodyTag="div"
+          confirmLabel={<FormattedMessage id="ui-data-import.modal.landing.delete" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.modal.landing.cancel" />}
+          onConfirm={() => this.deleteLogs()}
+          onCancel={() => {
+            this.props.checkboxList.deselectAll();
+            this.hideDeleteConfirmation();
+          }}
         />
       </div>
     );

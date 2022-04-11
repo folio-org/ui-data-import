@@ -115,15 +115,15 @@ export class Home extends Component {
     this.setState({ showDeleteConfirmation: true });
   }
 
+  hideDeleteConfirmation = () => {
+    this.setState({ showDeleteConfirmation: false });
+  };
+
   deleteLogs() {
     // TODO: replace this on logs deleting once API is ready
     this.props.checkboxList.deselectAll();
     this.hideDeleteConfirmation();
   }
-
-  hideDeleteConfirmation = () => {
-    this.setState({ showDeleteConfirmation: false });
-  };
 
   isDeleteAllLogsDisabled() {
     return this.state.selectedLogsNumber === 0;
