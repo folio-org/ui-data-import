@@ -34,7 +34,7 @@ export const Location = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(29)}
+            name={getFieldName(30)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.location.field.permanent`} />}
             optionValue="name"
             optionLabel="name"
@@ -46,7 +46,7 @@ export const Location = ({
             isRemoveValueAllowed
             optionTemplate="**name** (**code**)"
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(29)}
+            acceptedValuesPath={getAcceptedValuesPath(30)}
             okapi={okapi}
           />
         </Col>
@@ -56,7 +56,7 @@ export const Location = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(30)}
+            name={getFieldName(31)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.location.field.temporary`} />}
             optionValue="name"
             optionLabel="name"
@@ -68,7 +68,7 @@ export const Location = ({
             isRemoveValueAllowed
             optionTemplate="**name** (**code**)"
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(30)}
+            acceptedValuesPath={getAcceptedValuesPath(31)}
             okapi={okapi}
           />
         </Col>
