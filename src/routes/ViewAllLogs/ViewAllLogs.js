@@ -16,6 +16,7 @@ import {
   FILTER_SEPARATOR,
   FILTER_GROUP_SEPARATOR,
   Button,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import {
   changeSearchIndex,
@@ -46,7 +47,6 @@ import {
 } from './constants';
 
 import sharedCss from '../../shared.css';
-import { ConfirmationModal } from '@folio/stripes-components';
 
 const {
   COMMITTED,
