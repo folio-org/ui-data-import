@@ -255,6 +255,7 @@ class ViewAllLogs extends Component {
     this.handleFilterChange = handleFilterChange.bind(this);
     this.changeSearchIndex = changeSearchIndex.bind(this);
     this.renderActionMenu = this.renderActionMenu.bind(this);
+    this.setLogsList();
   }
 
   componentDidUpdate(prevProps) {
