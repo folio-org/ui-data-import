@@ -8,6 +8,7 @@
 * Add Admin note field to the Holdings field mapping profile: Create/Edit (UIDATIMP-1119)
 * Add Admin note field to the Instance field mapping profile: View (UIDATIMP-1121)
 * Add Admin note field to the Item field mapping profile: Create/Edit (UIDATIMP-1120)
+* Add checkboxes and delete action to Data Import view all page (UIDATIMP-1078)
 * Add Admin note field to the Holdings field mapping profile: View (UIDATIMP-1122)
 
 ### Bugs fixed:
