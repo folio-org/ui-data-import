@@ -58,6 +58,7 @@ export const JOB_STATUSES = {
 };
 
 export const DEFAULT_JOB_LOG_COLUMNS = [
+  'selected',
   'fileName',
   'status',
   'totalRecords',

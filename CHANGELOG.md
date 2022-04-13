@@ -10,6 +10,9 @@
 * Add Admin note field to the Item field mapping profile: Create/Edit (UIDATIMP-1120)
 * Add Admin note field to the Holdings field mapping profile: View (UIDATIMP-1122)
 
+### Bugs fixed:
+* Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
+
 ## [5.1.2](https://github.com/folio-org/ui-data-import/tree/v5.1.2) (2022-03-24)
 
 ### Bugs fixed:

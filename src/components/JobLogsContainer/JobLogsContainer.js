@@ -21,23 +21,6 @@ import {
 
 import sharedCss from '../../shared.css';
 
-const customProperties = {
-  visibleColumns: DEFAULT_JOB_LOG_COLUMNS,
-  columnWidths: {
-    hrId: '60px',
-    totalRecords: '80px',
-  },
-  columnMapping: {
-    fileName: 'ui-data-import.fileName',
-    status: 'ui-data-import.status',
-    jobExecutionHrId: 'ui-data-import.jobExecutionHrId',
-    jobProfileName: 'ui-data-import.jobProfileName',
-    records: 'ui-data-import.records',
-    jobCompletedDate: 'ui-data-import.jobCompletedDate',
-    runBy: 'ui-data-import.runBy',
-  },
-};
-
 export const JobLogsContainer = props => {
   const {
     children,
@@ -80,11 +63,14 @@ export const JobLogsContainer = props => {
 
     return formatMessage({ id: 'ui-data-import.completed' });
   };
-
-  const visibleColumns = [
-    'selected',
-    ...DEFAULT_JOB_LOGS_COLUMNS,
-  ];
+  const customProperties = {
+    visibleColumns: DEFAULT_JOB_LOG_COLUMNS,
+    columnWidths: {
+      selected: '40px',
+      hrId: '60px',
+      totalRecords: '80px',
+    },
+  };
   const columnMapping = {
     selected: (
       <CheckboxHeader
@@ -92,20 +78,18 @@ export const JobLogsContainer = props => {
         onChange={handleSelectAllCheckbox}
       />
     ),
-    fileName: formatMessage({ id: 'stripes-data-transfer-components.fileName' }),
-    hrId: formatMessage({ id: 'stripes-data-transfer-components.jobExecutionHrId' }),
-    jobProfileName: formatMessage({ id: 'stripes-data-transfer-components.jobProfileName' }),
-    totalRecords: formatMessage({ id: 'stripes-data-transfer-components.records' }),
-    completedDate: formatMessage({ id: 'stripes-data-transfer-components.jobCompletedDate' }),
-    runBy: formatMessage({ id: 'stripes-data-transfer-components.runBy' }),
+    fileName: formatMessage({ id: 'ui-data-import.fileName' }),
+    status: formatMessage({ id: 'ui-data-import.status' }),
+    totalRecords: formatMessage({ id: 'ui-data-import.records' }),
+    jobProfileName: formatMessage({ id: 'ui-data-import.jobProfileName' }),
+    completedDate: formatMessage({ id: 'ui-data-import.jobCompletedDate' }),
+    runBy: formatMessage({ id: 'ui-data-import.runBy' }),
+    hrId: formatMessage({ id: 'ui-data-import.jobExecutionHrId' }),
   };
-  const columnWidths = { selected: '40px' };
 
   const listProps = {
     ...useJobLogsProperties(customProperties),
-    visibleColumns,
     columnMapping,
-    columnWidths,
     resultsFormatter: useJobLogsListFormatter(
       {
         ...listTemplate({
