@@ -2,21 +2,17 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import {
-  useJobLogsProperties,
-  useJobLogsListFormatter,
-  DEFAULT_JOB_LOGS_COLUMNS,
-} from '@folio/stripes-data-transfer-components';
 import { Button } from '@folio/stripes/components';
+import { useJobLogsProperties } from '@folio/stripes-data-transfer-components';
+
+import { listTemplate } from '../ListTemplate';
 
 import {
-  CheckboxHeader,
-  listTemplate,
-} from '../ListTemplate';
-import {
   DEFAULT_JOB_LOG_COLUMNS,
+  DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
   FILE_STATUSES,
   checkboxListShape,
+  getJobLogsListColumnMapping,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
@@ -46,7 +42,6 @@ export const JobLogsContainer = props => {
       {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
     </Button>
   );
-
   const statusCellFormatter = record => {
     const {
       status,
@@ -63,43 +58,23 @@ export const JobLogsContainer = props => {
 
     return formatMessage({ id: 'ui-data-import.completed' });
   };
+
   const customProperties = {
     visibleColumns: DEFAULT_JOB_LOG_COLUMNS,
-    columnWidths: {
-      selected: '40px',
-      hrId: '60px',
-      totalRecords: '80px',
-    },
-  };
-  const columnMapping = {
-    selected: (
-      <CheckboxHeader
-        checked={isAllSelected}
-        onChange={handleSelectAllCheckbox}
-      />
-    ),
-    fileName: formatMessage({ id: 'ui-data-import.fileName' }),
-    status: formatMessage({ id: 'ui-data-import.status' }),
-    totalRecords: formatMessage({ id: 'ui-data-import.records' }),
-    jobProfileName: formatMessage({ id: 'ui-data-import.jobProfileName' }),
-    completedDate: formatMessage({ id: 'ui-data-import.jobCompletedDate' }),
-    runBy: formatMessage({ id: 'ui-data-import.runBy' }),
-    hrId: formatMessage({ id: 'ui-data-import.jobExecutionHrId' }),
+    columnWidths: DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
   };
 
   const listProps = {
     ...useJobLogsProperties(customProperties),
-    columnMapping,
-    resultsFormatter: useJobLogsListFormatter(
-      {
-        ...listTemplate({
-          selectRecord,
-          selectedRecords,
-        }),
-        status: statusCellFormatter,
-        fileName: fileNameCellFormatter,
-      },
-    ),
+    columnMapping: getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox }),
+    resultsFormatter: {
+      ...listTemplate({
+        selectRecord,
+        selectedRecords,
+      }),
+      fileName: fileNameCellFormatter,
+      status: statusCellFormatter,
+    },
   };
 
   return (

@@ -31,15 +31,17 @@ import {
   searchableIndexes,
 } from './ViewAllLogsSearchConfig';
 import {
-  CheckboxHeader,
   ActionMenu,
   listTemplate,
 } from '../../components';
 import packageInfo from '../../../package';
 import {
   checkboxListShape,
+  DEFAULT_JOB_LOG_COLUMNS,
+  DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
   FILE_STATUSES,
   withCheckboxList,
+  getJobLogsListColumnMapping,
 } from '../../utils';
 import {
   FILTERS,
@@ -52,17 +54,6 @@ const {
   COMMITTED,
   ERROR,
 } = FILE_STATUSES;
-
-const visibleColumns = [
-  'selected',
-  'fileName',
-  'status',
-  'totalRecords',
-  'jobProfileName',
-  'completedDate',
-  'runBy',
-  'hrId',
-];
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -247,8 +238,6 @@ class ViewAllLogs extends Component {
     },
   });
 
-  state = { showDeleteConfirmation: false };
-
   constructor(props) {
     super(props);
     this.getActiveFilters = getActiveFilters.bind(this);
@@ -257,6 +246,8 @@ class ViewAllLogs extends Component {
     this.renderActionMenu = this.renderActionMenu.bind(this);
     this.setLogsList();
   }
+
+  state = { showDeleteConfirmation: false };
 
   componentDidUpdate(prevProps) {
     const { resources: { records: { records: prevRecords } } } = prevProps;
@@ -357,13 +348,60 @@ class ViewAllLogs extends Component {
     return selectedRecords.size === 0;
   }
 
+  getResultsFormatter() {
+    const {
+      intl: { formatMessage },
+      checkboxList: {
+        selectedRecords,
+        selectRecord,
+      },
+    } = this.props;
+
+    const fileNameCellFormatter = record => (
+      <Button
+        buttonStyle="link"
+        marginBottom0
+        to={`/data-import/job-summary/${record.id}`}
+        buttonClass={sharedCss.cellLink}
+        onClick={e => e.stopPropagation()}
+      >
+        {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
+      </Button>
+    );
+    const statusCellFormatter = record => {
+      const {
+        status,
+        progress,
+      } = record;
+
+      if (status === FILE_STATUSES.ERROR) {
+        if (progress && progress.current > 0) {
+          return formatMessage({ id: 'ui-data-import.completedWithErrors' });
+        }
+
+        return formatMessage({ id: 'ui-data-import.failed' });
+      }
+
+      return formatMessage({ id: 'ui-data-import.completed' });
+    };
+
+    return {
+      ...listTemplate({
+        entityKey,
+        selectRecord,
+        selectedRecords,
+      }),
+      fileName: fileNameCellFormatter,
+      status: statusCellFormatter,
+    };
+  }
+
   render() {
     const {
       checkboxList: {
         isAllSelected,
         handleSelectAllCheckbox,
         selectedRecords,
-        selectRecord,
       },
       browseOnly,
       disableRecordCreation,
@@ -374,39 +412,8 @@ class ViewAllLogs extends Component {
     const logsNumber = selectedRecords.size;
     const hasLogsSelected = logsNumber > 0;
 
-    const columnMapping = {
-      selected: (
-        <CheckboxHeader
-          checked={isAllSelected}
-          onChange={handleSelectAllCheckbox}
-        />
-      ),
-      fileName: <FormattedMessage id="ui-data-import.fileName" />,
-      status: <FormattedMessage id="ui-data-import.status" />,
-      hrId: <FormattedMessage id="ui-data-import.jobExecutionHrId" />,
-      jobProfileName: <FormattedMessage id="ui-data-import.jobProfileName" />,
-      totalRecords: <FormattedMessage id="ui-data-import.records" />,
-      completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
-      runBy: <FormattedMessage id="ui-data-import.runBy" />,
-    };
-    const resultsFormatter = {
-      ...listTemplate({
-        entityKey,
-        selectedRecords,
-        selectRecord,
-      }),
-      fileName: record => (
-        <Button
-          buttonStyle="link"
-          marginBottom0
-          buttonClass={sharedCss.cellLink}
-          to={`/data-import/job-summary/${record.id}`}
-          onClick={e => e.stopPropagation()}
-        >
-          {record.fileName || <FormattedMessage id="ui-data-import.noFileName" />}
-        </Button>
-      ),
-    };
+    const resultsFormatter = this.getResultsFormatter();
+    const columnMapping = getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox });
 
     return (
       <div data-test-logs-list>
@@ -416,10 +423,10 @@ class ViewAllLogs extends Component {
           baseRoute={packageInfo.stripes.route}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={RESULT_COUNT_INCREMENT}
-          visibleColumns={visibleColumns}
+          visibleColumns={DEFAULT_JOB_LOG_COLUMNS}
           columnMapping={columnMapping}
           resultsFormatter={resultsFormatter}
-          columnWidths={{ selected: '40px' }}
+          columnWidths={DEFAULT_JOB_LOG_COLUMNS_WIDTHS}
           actionMenu={this.renderActionMenu}
           viewRecordComponent={noop}
           onSelectRow={noop}
