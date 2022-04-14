@@ -17,7 +17,8 @@ import PropTypes from 'prop-types';
 export const useCheckboxList = (list = []) => {
   const [selectedRecords, setSelectedRecords] = useState(new Set());
 
-  const isAllSelected = selectedRecords.size === list.length;
+  const listLength = list.length;
+  const isAllSelected = (listLength !== 0) && (selectedRecords.size === listLength);
 
   const selectRecord = id => {
     setSelectedRecords(selectedRecordsState => {
