@@ -29,7 +29,7 @@ describe('useCheckboxList hook', () => {
     const checkboxList = setup();
 
     expect(checkboxList.selectedRecords.size).toBe(0);
-    expect(checkboxList.isAllSelected).toBe(true);
+    expect(checkboxList.isAllSelected).toBe(false);
   });
 
   it('allows select record', async () => {
