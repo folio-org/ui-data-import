@@ -27,6 +27,7 @@ const sourceRecordsIds = [
   faker.random.uuid(),
 ];
 const instanceId = faker.random.uuid();
+const authorityId = faker.random.uuid();
 
 const getJobExecutionsResources = dataType => buildResources({
   resourceName: 'jobExecutions',
@@ -42,12 +43,14 @@ const jobLogEntriesResources = buildResources({
     sourceRecordActionStatus: 'CREATED',
     sourceRecordType: 'MARC_BIBLIOGRAPHIC',
     instanceActionStatus: 'CREATED',
+    authorityActionStatus: 'CREATED',
     jobExecutionId: firstRecordJobExecutionId,
     sourceRecordId: sourceRecordsIds[0],
     sourceRecordOrder: '0',
     sourceRecordTitle: 'Test item 1',
   }, {
     instanceActionStatus: 'UPDATED',
+    authorityActionStatus: 'UPDATED',
     sourceRecordType: 'MARC_BIBLIOGRAPHIC',
     jobExecutionId: faker.random.uuid(),
     sourceRecordId: sourceRecordsIds[1],
@@ -106,6 +109,10 @@ const jobLogResources = buildResources({
       actionStatus: 'CREATED',
       idList: [faker.random.uuid()],
     },
+    relatedAuthorityInfo: {
+      actionStatus: 'CREATED',
+      idList: [authorityId],
+    },
   }, {
     sourceRecordId: sourceRecordsIds[1],
     sourceRecordOrder: '1',
@@ -121,6 +128,10 @@ const jobLogResources = buildResources({
     relatedItemInfo: {
       actionStatus: 'UPDATED',
       idList: [faker.random.uuid()],
+    },
+    relatedAuthorityInfo: {
+      actionStatus: 'UPDATED',
+      idList: [authorityId],
     },
   }, {
     sourceRecordId: sourceRecordsIds[2],
@@ -138,6 +149,10 @@ const jobLogResources = buildResources({
       actionStatus: 'MULTIPLE',
       idList: [faker.random.uuid()],
     },
+    relatedAuthorityInfo: {
+      actionStatus: 'MULTIPLE',
+      idList: [faker.random.uuid()],
+    },
   }, {
     sourceRecordId: sourceRecordsIds[3],
     sourceRecordOrder: '3',
@@ -151,6 +166,10 @@ const jobLogResources = buildResources({
       idList: [faker.random.uuid()],
     },
     relatedItemInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [faker.random.uuid()],
+    },
+    relatedAuthorityInfo: {
       actionStatus: 'DISCARDED',
       idList: [faker.random.uuid()],
     },
@@ -210,6 +229,7 @@ describe('Job summary page', () => {
       expect(getByText('Instance')).toBeDefined();
       expect(holdingsColumn.innerHTML).toEqual('Holdings');
       expect(getByText('Item')).toBeDefined();
+      expect(getByText('Authority')).toBeDefined();
       expect(getByText('Order')).toBeDefined();
       expect(getByText('Invoice')).toBeDefined();
       expect(errorColumn.innerHTML).toEqual('Error');
@@ -249,22 +269,38 @@ describe('Job summary page', () => {
   });
 
   describe('when action status is CREATED', () => {
-    it('the value should be a hotlink', () => {
+    it('the instance value should be a hotlink', () => {
       const { container } = renderJobSummary();
 
       fireEvent.click(container.querySelector('[data-row-index="row-0"] [data-test-entity-name="instance"]'));
 
       expect(window.location.href).toContain(`/inventory/view/${instanceId}`);
     });
+
+    it('the authority value should be a hotlink', () => {
+      const { container } = renderJobSummary();
+
+      fireEvent.click(container.querySelector('[data-row-index="row-0"] [data-test-entity-name="authority"]'));
+
+      expect(window.location.href).toContain(`/marc-authorities/authorities/${authorityId}`);
+    });
   });
 
   describe('when action status is UPDATED', () => {
-    it('the value should be a hotlink', () => {
+    it('the instance value should be a hotlink', () => {
       const { container } = renderJobSummary();
 
       fireEvent.click(container.querySelector('[data-row-index="row-1"] [data-test-entity-name="instance"]'));
 
       expect(window.location.href).toContain(`/inventory/view/${instanceId}`);
+    });
+
+    it('the authority value should be a hotlink', () => {
+      const { container } = renderJobSummary();
+
+      fireEvent.click(container.querySelector('[data-row-index="row-1"] [data-test-entity-name="authority"]'));
+
+      expect(window.location.href).toContain(`/marc-authorities/authorities/${authorityId}`);
     });
   });
 
