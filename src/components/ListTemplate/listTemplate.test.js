@@ -22,7 +22,7 @@ const testRecord = {
   fileName: 'test name',
   name: 'test name',
   id: 'testId1',
-  hrid: 'testHRID',
+  hrId: 'testHRID',
   description: 'test description',
   extension: 'test extension',
   dataTypes: '',
@@ -244,7 +244,7 @@ describe('List template', () => {
 
   describe('when column is `hrid`', () => {
     it('then appropriate text should be rendered', () => {
-      const { getByText } = render(templates.hrid(testRecord));
+      const { getByText } = render(templates.hrId(testRecord));
 
       expect(getByText('testHRID')).toBeDefined();
     });
