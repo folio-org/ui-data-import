@@ -10,6 +10,8 @@
 * Add Admin note field to the Item field mapping profile: Create/Edit (UIDATIMP-1120)
 * Add checkboxes and delete action to Data Import view all page (UIDATIMP-1078)
 * Add Admin note field to the Holdings field mapping profile: View (UIDATIMP-1122)
+* Add Admin note field to the Item field mapping profile: View (UIDATIMP-1123)
+* Display Authority information on Data import log page: View (UIDATIMP-1053)
 
 ## [5.1.2](https://github.com/folio-org/ui-data-import/tree/v5.1.2) (2022-03-24)
 
