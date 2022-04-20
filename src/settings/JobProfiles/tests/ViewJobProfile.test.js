@@ -222,9 +222,9 @@ describe('<ViewJobProfile>', () => {
       fireEvent.click(getByRole('button', { name: /actions/i }));
       fireEvent.click(getAllByText('Run')[0]);
       fireEvent.click(getAllByText('Run')[1]);
-      fireEvent.click(getAllByText('Run')[1]);
+      fireEvent.click(getAllByText('Run')[2]);
 
-      await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).toBeInTheDocument());
+      await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).not.toBeInTheDocument());
     });
   });
 
