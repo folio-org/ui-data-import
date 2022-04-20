@@ -621,7 +621,7 @@
     "settings.matchProfiles.manual": "Manual",
     "settings.matchProfiles.reEncumber": "Ri-impegnato",
     "settings.matchProfiles.orderType": "Order type",
-    "settings.matchProfiles.acquisitionUnits": "Acquisition units",
+    "settings.matchProfiles.acquisitionUnits": "Unità di acquisizione",
     "settings.matchProfiles.billTo": "Fatturare a",
     "settings.matchProfiles.shipTo": "Ship to",
     "settings.matchProfiles.renewalInterval": "Renewal interval",
