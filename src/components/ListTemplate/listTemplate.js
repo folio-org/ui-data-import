@@ -12,10 +12,7 @@ import {
   TagsColumn,
   DateColumn,
 } from './ColumnTemplates';
-import {
-  formatUserName,
-  FILE_STATUSES,
-} from '../../utils';
+import { formatUserName } from '../../utils';
 
 /**
  * Retrieves and returns list of Column Templates renderProps
@@ -112,22 +109,6 @@ export const listTemplate = ({
 
     return <DateColumn value={updatedDate} />;
   },
-  status: record => {
-    const {
-      status,
-      progress,
-    } = record;
-
-    if (status === FILE_STATUSES.ERROR) {
-      if (progress && progress.current > 0) {
-        return <FormattedMessage id="ui-data-import.completedWithErrors" />;
-      }
-
-      return <FormattedMessage id="ui-data-import.failed" />;
-    }
-
-    return <FormattedMessage id="ui-data-import.completed" />;
-  },
   updatedBy: record => (
     <DefaultColumn
       value={formatUserName(record.userInfo)}
@@ -159,4 +140,5 @@ export const listTemplate = ({
   jobProfileName: record => record.jobProfileInfo?.name,
   totalRecords: record => record.progress.total,
   fileName: record => record.fileName,
+  hrId: record => record.hrId,
 });

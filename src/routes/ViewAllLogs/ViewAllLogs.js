@@ -6,6 +6,7 @@ import {
 } from 'react-intl';
 import {
   get,
+  isEqual,
   noop,
 } from 'lodash';
 
@@ -15,6 +16,7 @@ import {
   FILTER_SEPARATOR,
   FILTER_GROUP_SEPARATOR,
   Button,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import {
   changeSearchIndex,
@@ -28,9 +30,19 @@ import {
   logsSearchTemplate,
   searchableIndexes,
 } from './ViewAllLogsSearchConfig';
-import { listTemplate } from '../../components';
+import {
+  ActionMenu,
+  listTemplate,
+} from '../../components';
 import packageInfo from '../../../package';
-import { FILE_STATUSES } from '../../utils';
+import {
+  checkboxListShape,
+  DEFAULT_JOB_LOG_COLUMNS,
+  DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
+  FILE_STATUSES,
+  withCheckboxList,
+  getJobLogsListColumnMapping,
+} from '../../utils';
 import {
   FILTERS,
   SORT_MAP,
@@ -42,26 +54,6 @@ const {
   COMMITTED,
   ERROR,
 } = FILE_STATUSES;
-
-const columnMapping = {
-  fileName: <FormattedMessage id="ui-data-import.fileName" />,
-  status: <FormattedMessage id="ui-data-import.status" />,
-  hrId: <FormattedMessage id="ui-data-import.jobExecutionHrId" />,
-  jobProfileName: <FormattedMessage id="ui-data-import.jobProfileName" />,
-  totalRecords: <FormattedMessage id="ui-data-import.records" />,
-  completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
-  runBy: <FormattedMessage id="ui-data-import.runBy" />,
-};
-
-const visibleColumns = [
-  'fileName',
-  'status',
-  'totalRecords',
-  'jobProfileName',
-  'completedDate',
-  'runBy',
-  'hrId',
-];
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -179,21 +171,30 @@ const getSort = sort => {
 
   return { sortBy: sortIndex };
 };
+const entityKey = 'jobLogs';
 
+@withCheckboxList
 @stripesConnect
 class ViewAllLogs extends Component {
   static propTypes = {
     mutator: PropTypes.object.isRequired,
     resources: PropTypes.object.isRequired,
+    checkboxList: checkboxListShape.isRequired,
+    setList: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired,
     stripes: PropTypes.object,
     disableRecordCreation: PropTypes.bool,
     browseOnly: PropTypes.bool,
     packageInfo: PropTypes.object,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }),
-    intl: PropTypes.object.isRequired,
+    // eslint-disable-next-line react/no-unused-prop-types
+    actionMenuItems: PropTypes.arrayOf(PropTypes.string),
   };
 
-  static defaultProps = { browseOnly: false };
+  static defaultProps = {
+    browseOnly: false,
+    actionMenuItems: ['deleteSelectedLogs'],
+  };
 
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -242,6 +243,28 @@ class ViewAllLogs extends Component {
     this.getActiveFilters = getActiveFilters.bind(this);
     this.handleFilterChange = handleFilterChange.bind(this);
     this.changeSearchIndex = changeSearchIndex.bind(this);
+    this.renderActionMenu = this.renderActionMenu.bind(this);
+    this.setLogsList();
+  }
+
+  state = { showDeleteConfirmation: false };
+
+  componentDidUpdate(prevProps) {
+    const { resources: { records: { records: prevRecords } } } = prevProps;
+    const { resources: { records: { records } } } = this.props;
+
+    if (!isEqual(prevRecords, records)) {
+      this.setLogsList();
+    }
+  }
+
+  setLogsList() {
+    const {
+      resources: { records: { records } },
+      setList,
+    } = this.props;
+
+    setList(records);
   }
 
   getSearchableIndexes() {
@@ -296,34 +319,101 @@ class ViewAllLogs extends Component {
       : null;
   };
 
+  renderActionMenu(menu) {
+    return (
+      <ActionMenu
+        entity={this}
+        menu={menu}
+      />
+    );
+  }
+
+  showDeleteConfirmation() {
+    this.setState({ showDeleteConfirmation: true });
+  }
+
+  hideDeleteConfirmation = () => {
+    this.setState({ showDeleteConfirmation: false });
+  };
+
+  deleteLogs() {
+    // TODO: replace this on logs deleting once API is ready
+    this.props.checkboxList.deselectAll();
+    this.hideDeleteConfirmation();
+  }
+
+  isDeleteAllLogsDisabled() {
+    const { checkboxList: { selectedRecords } } = this.props;
+
+    return selectedRecords.size === 0;
+  }
+
+  getResultsFormatter() {
+    const {
+      intl: { formatMessage },
+      checkboxList: {
+        selectedRecords,
+        selectRecord,
+      },
+    } = this.props;
+
+    const fileNameCellFormatter = record => (
+      <Button
+        buttonStyle="link"
+        marginBottom0
+        to={`/data-import/job-summary/${record.id}`}
+        buttonClass={sharedCss.cellLink}
+        onClick={e => e.stopPropagation()}
+      >
+        {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
+      </Button>
+    );
+    const statusCellFormatter = record => {
+      const {
+        status,
+        progress,
+      } = record;
+
+      if (status === FILE_STATUSES.ERROR) {
+        if (progress && progress.current > 0) {
+          return formatMessage({ id: 'ui-data-import.completedWithErrors' });
+        }
+
+        return formatMessage({ id: 'ui-data-import.failed' });
+      }
+
+      return formatMessage({ id: 'ui-data-import.completed' });
+    };
+
+    return {
+      ...listTemplate({
+        entityKey,
+        selectRecord,
+        selectedRecords,
+      }),
+      fileName: fileNameCellFormatter,
+      status: statusCellFormatter,
+    };
+  }
+
   render() {
     const {
+      checkboxList: {
+        isAllSelected,
+        handleSelectAllCheckbox,
+        selectedRecords,
+      },
       browseOnly,
       disableRecordCreation,
       mutator,
       resources,
       stripes,
-      intl,
     } = this.props;
+    const logsNumber = selectedRecords.size;
+    const hasLogsSelected = logsNumber > 0;
 
-    const resultsFormatter = {
-      fileName: record => (
-        <Button
-          buttonStyle="link"
-          marginBottom0
-          buttonClass={sharedCss.cellLink}
-          to={`/data-import/job-summary/${record.id}`}
-          onClick={e => e.stopPropagation()}
-        >
-          {record.fileName || <FormattedMessage id="ui-data-import.noFileName" />}
-        </Button>
-      ),
-      status: listTemplate({ intl }).status,
-      runBy: listTemplate({ intl }).runBy,
-      completedDate: listTemplate({ intl }).completedDate,
-      jobProfileName: listTemplate({ intl }).jobProfileName,
-      totalRecords: listTemplate({ intl }).totalRecords,
-    };
+    const resultsFormatter = this.getResultsFormatter();
+    const columnMapping = getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox });
 
     return (
       <div data-test-logs-list>
@@ -333,9 +423,11 @@ class ViewAllLogs extends Component {
           baseRoute={packageInfo.stripes.route}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={RESULT_COUNT_INCREMENT}
-          visibleColumns={visibleColumns}
+          visibleColumns={DEFAULT_JOB_LOG_COLUMNS}
           columnMapping={columnMapping}
           resultsFormatter={resultsFormatter}
+          columnWidths={DEFAULT_JOB_LOG_COLUMNS_WIDTHS}
+          actionMenu={this.renderActionMenu}
           viewRecordComponent={noop}
           onSelectRow={noop}
           viewRecordPerms="metadata-provider.jobexecutions.get"
@@ -353,6 +445,35 @@ class ViewAllLogs extends Component {
           pagingType="click"
           pageAmount={RESULT_COUNT_INCREMENT}
           title={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
+          resultCountMessageKey="ui-data-import.logsPaneSubtitle"
+          customPaneSub={hasLogsSelected
+            ? (
+              <FormattedMessage
+                id="ui-data-import.logsSelected"
+                values={{ logsNumber }}
+              />
+            )
+            : null
+          }
+        />
+        <ConfirmationModal
+          id="delete-selected-logs-modal"
+          open={this.state.showDeleteConfirmation}
+          heading={<FormattedMessage id="ui-data-import.modal.landing.delete.header" />}
+          message={(
+            <FormattedMessage
+              id="ui-data-import.modal.landing.delete.message"
+              values={{ logsNumber }}
+            />
+          )}
+          bodyTag="div"
+          confirmLabel={<FormattedMessage id="ui-data-import.modal.landing.delete" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.modal.landing.cancel" />}
+          onConfirm={() => this.deleteLogs()}
+          onCancel={() => {
+            this.props.checkboxList.deselectAll();
+            this.hideDeleteConfirmation();
+          }}
         />
       </div>
     );
