@@ -224,7 +224,7 @@ describe('<ViewJobProfile>', () => {
       fireEvent.click(getAllByText('Run')[1]);
       fireEvent.click(getAllByText('Run')[1]);
 
-      await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).not.toBeInTheDocument());
+      await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).toBeInTheDocument());
     });
   });
 
