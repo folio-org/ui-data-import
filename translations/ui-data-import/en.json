@@ -4,6 +4,7 @@
   "logsPaneTitle": "Logs",
   "viewAllLogs": "View all logs",
   "logsSelected": "{logsNumber, number} {logsNumber, plural, one {log selected} other {logs selected}}",
+  "logsPaneSubtitle": "{count, number} {count, plural, one {log found} other {logs found}}",
   "manageJobs": "Manage",
   "previewJobs": "Previews",
   "runningJobs": "Running",

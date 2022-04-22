@@ -113,7 +113,7 @@
     "details": "详细信息",
     "options": "选项",
     "matchProfileName": "匹配配置文件",
-    "confirm": "确认",
+    "confirm": "確認",
     "settings.matchProfiles.confirmEditModal.heading": "确认匹配配置文件更改",
     "settings.matchProfiles.confirmEditModal.message": "这些匹配配置文件编辑会影响{amount, number}关联任务{amount, plural, one { 配置文件 } other { 配置文件 }} 。请确认",
     "settings.jobProfiles.new": "新增任務概要",

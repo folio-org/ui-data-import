@@ -40,6 +40,7 @@ const sortMap = {
   instanceStatus: 'instance_action_status',
   holdingsStatus: 'holdings_action_status',
   itemStatus: 'item_action_status',
+  authorityStatus: 'authority_action_status',
   orderStatus: 'order_action_status',
   invoiceStatus: 'invoice_action_status',
   error: 'error',
@@ -101,6 +102,7 @@ const JobSummaryComponent = ({
     'instanceStatus',
     'holdingsStatus',
     'itemStatus',
+    'authorityStatus',
     'orderStatus',
     'invoiceStatus',
     'error',
@@ -112,6 +114,7 @@ const JobSummaryComponent = ({
     instanceStatus: <FormattedMessage id="ui-data-import.recordTypes.instance" />,
     holdingsStatus: <FormattedMessage id="ui-data-import.recordTypes.holdings" />,
     itemStatus: <FormattedMessage id="ui-data-import.recordTypes.item" />,
+    authorityStatus: <FormattedMessage id="ui-data-import.recordTypes.authority" />,
     orderStatus: <FormattedMessage id="ui-data-import.recordTypes.order" />,
     invoiceStatus: <FormattedMessage id="ui-data-import.recordTypes.invoice" />,
     error: <FormattedMessage id="ui-data-import.error" />,
@@ -202,6 +205,21 @@ const JobSummaryComponent = ({
         || itemActionStatus === RECORD_ACTION_STATUS.UPDATED);
 
       return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'item');
+    },
+    authorityStatus: ({
+      authorityActionStatus,
+      sourceRecordId,
+    }) => {
+      const entityLabel = getRecordActionStatusLabel(authorityActionStatus);
+      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
+      const authorityId = sourceRecord?.relatedAuthorityInfo.idList[0];
+      const path = `/marc-authorities/authorities/${authorityId}`;
+
+      const isPathCorrect = !!authorityId;
+      const isHotlink = isPathCorrect && (authorityActionStatus === RECORD_ACTION_STATUS.CREATED
+        || authorityActionStatus === RECORD_ACTION_STATUS.UPDATED);
+
+      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'authority');
     },
     orderStatus: ({ orderActionStatus }) => getRecordActionStatusLabel(orderActionStatus),
     invoiceStatus: ({
