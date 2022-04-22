@@ -10,7 +10,7 @@ import {
   noop,
 } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { stripesConnect, withNamespace } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   FILTER_SEPARATOR,
@@ -31,15 +31,17 @@ import {
   searchableIndexes,
 } from './ViewAllLogsSearchConfig';
 import {
-  CheckboxHeader,
   ActionMenu,
   listTemplate,
 } from '../../components';
 import packageInfo from '../../../package';
 import {
   checkboxListShape,
+  DEFAULT_JOB_LOG_COLUMNS,
+  DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
   FILE_STATUSES,
   withCheckboxList,
+  getJobLogsListColumnMapping,
 } from '../../utils';
 import {
   FILTERS,
@@ -53,19 +55,8 @@ const {
   ERROR,
 } = FILE_STATUSES;
 
-const visibleColumns = [
-  'selected',
-  'fileName',
-  'status',
-  'totalRecords',
-  'jobProfileName',
-  'completedDate',
-  'runBy',
-  'hrId',
-];
-
-const INITIAL_RESULT_COUNT = 100;
-const RESULT_COUNT_INCREMENT = 100;
+const INITIAL_RESULT_COUNT = 10;
+const RESULT_COUNT_INCREMENT = 10;
 
 const getQuery = (query, qindex) => {
   if (query && qindex) {
@@ -213,10 +204,13 @@ class ViewAllLogs extends Component {
         sort: '-completedDate',
       },
     },
-    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    resultCount: { initialValue: 10 },
+    resultOffset: { initialValue: 0 },
     records: {
       type: 'okapi',
       clear: true,
+      resultDensity: 'dense',
+      resultOffset: '%{resultOffset}',
       records: 'jobExecutions',
       recordsRequired: '%{resultCount}',
       path: 'metadata-provider/jobExecutions',
@@ -247,8 +241,6 @@ class ViewAllLogs extends Component {
     },
   });
 
-  state = { showDeleteConfirmation: false };
-
   constructor(props) {
     super(props);
     this.getActiveFilters = getActiveFilters.bind(this);
@@ -258,10 +250,15 @@ class ViewAllLogs extends Component {
     this.setLogsList();
   }
 
+  state = { showDeleteConfirmation: false };
+
   componentDidUpdate(prevProps) {
     const { resources: { records: { records: prevRecords } } } = prevProps;
     const { resources: { records: { records } } } = this.props;
-
+    /* console.log('------------');
+    console.log('prevRecords', prevRecords);
+    console.log('records', records);
+    console.log('------------'); */
     if (!isEqual(prevRecords, records)) {
       this.setLogsList();
     }
@@ -272,7 +269,6 @@ class ViewAllLogs extends Component {
       resources: { records: { records } },
       setList,
     } = this.props;
-
     setList(records);
   }
 
@@ -357,13 +353,68 @@ class ViewAllLogs extends Component {
     return selectedRecords.size === 0;
   }
 
+  getResultsFormatter() {
+    const {
+      intl: { formatMessage },
+      checkboxList: {
+        selectedRecords,
+        selectRecord,
+      },
+    } = this.props;
+
+    const fileNameCellFormatter = record => (
+      <Button
+        buttonStyle="link"
+        marginBottom0
+        to={`/data-import/job-summary/${record.id}`}
+        buttonClass={sharedCss.cellLink}
+        onClick={e => e.stopPropagation()}
+      >
+        {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
+      </Button>
+    );
+    const statusCellFormatter = record => {
+      const {
+        status,
+        progress,
+      } = record;
+
+      if (status === FILE_STATUSES.ERROR) {
+        if (progress && progress.current > 0) {
+          return formatMessage({ id: 'ui-data-import.completedWithErrors' });
+        }
+
+        return formatMessage({ id: 'ui-data-import.failed' });
+      }
+
+      return formatMessage({ id: 'ui-data-import.completed' });
+    };
+
+    return {
+      ...listTemplate({
+        entityKey,
+        selectRecord,
+        selectedRecords,
+      }),
+      fileName: fileNameCellFormatter,
+      status: statusCellFormatter,
+    };
+  }
+
+  onMarkPosition = (position) => {
+    sessionStorage.setItem('@folio/data-import.position', JSON.stringify(position));
+  }
+
+  resetMarkedPosition = () => {
+    sessionStorage.setItem('@folio/data-import.position', null);
+  }
+
   render() {
     const {
       checkboxList: {
         isAllSelected,
         handleSelectAllCheckbox,
         selectedRecords,
-        selectRecord,
       },
       browseOnly,
       disableRecordCreation,
@@ -374,40 +425,10 @@ class ViewAllLogs extends Component {
     const logsNumber = selectedRecords.size;
     const hasLogsSelected = logsNumber > 0;
 
-    const columnMapping = {
-      selected: (
-        <CheckboxHeader
-          checked={isAllSelected}
-          onChange={handleSelectAllCheckbox}
-        />
-      ),
-      fileName: <FormattedMessage id="ui-data-import.fileName" />,
-      status: <FormattedMessage id="ui-data-import.status" />,
-      hrId: <FormattedMessage id="ui-data-import.jobExecutionHrId" />,
-      jobProfileName: <FormattedMessage id="ui-data-import.jobProfileName" />,
-      totalRecords: <FormattedMessage id="ui-data-import.records" />,
-      completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
-      runBy: <FormattedMessage id="ui-data-import.runBy" />,
-    };
-    const resultsFormatter = {
-      ...listTemplate({
-        entityKey,
-        selectedRecords,
-        selectRecord,
-      }),
-      fileName: record => (
-        <Button
-          buttonStyle="link"
-          marginBottom0
-          buttonClass={sharedCss.cellLink}
-          to={`/data-import/job-summary/${record.id}`}
-          onClick={e => e.stopPropagation()}
-        >
-          {record.fileName || <FormattedMessage id="ui-data-import.noFileName" />}
-        </Button>
-      ),
-    };
-
+    const resultsFormatter = this.getResultsFormatter();
+    const columnMapping = getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox });
+    const itemToView = sessionStorage.getItem('job-logs.position');
+    console.log('resources', resources);
     return (
       <div data-test-logs-list>
         <SearchAndSort
@@ -416,10 +437,10 @@ class ViewAllLogs extends Component {
           baseRoute={packageInfo.stripes.route}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={RESULT_COUNT_INCREMENT}
-          visibleColumns={visibleColumns}
+          visibleColumns={DEFAULT_JOB_LOG_COLUMNS}
           columnMapping={columnMapping}
           resultsFormatter={resultsFormatter}
-          columnWidths={{ selected: '40px' }}
+          columnWidths={DEFAULT_JOB_LOG_COLUMNS_WIDTHS}
           actionMenu={this.renderActionMenu}
           viewRecordComponent={noop}
           onSelectRow={noop}
@@ -435,7 +456,7 @@ class ViewAllLogs extends Component {
           renderFilters={this.renderFilters}
           onFilterChange={this.handleFilterChange}
           onChangeIndex={this.changeSearchIndex}
-          pagingType="click"
+          pagingType="prev-next"
           pageAmount={RESULT_COUNT_INCREMENT}
           title={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
           resultCountMessageKey="ui-data-import.logsPaneSubtitle"
@@ -448,6 +469,11 @@ class ViewAllLogs extends Component {
             )
             : null
           }
+          resultsVirtualize={false}
+          resultsOnMarkPosition={this.onMarkPosition}
+          resultsOnResetMarkedPosition={this.resetMarkedPosition}
+          resultsCachedPosition={itemToView}
+          // paginationBoundaries
         />
         <ConfirmationModal
           id="delete-selected-logs-modal"
@@ -473,4 +499,4 @@ class ViewAllLogs extends Component {
   }
 }
 
-export default injectIntl(ViewAllLogs);
+export default withNamespace(injectIntl(ViewAllLogs));
