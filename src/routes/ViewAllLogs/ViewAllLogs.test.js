@@ -6,11 +6,14 @@ import { noop } from 'lodash';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
+import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
 
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
+import { translationsProperties, buildStripes } from '../../../test/jest/helpers';
 
-import ViewAllLogs from './ViewAllLogs';
+
+
+import ViewAllLogs from './ViewAllLogs copy';
 
 const mutator = buildMutator({
   initializedFilterConfig: {
@@ -97,21 +100,58 @@ const getResources = query => ({
   },
 });
 
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  ConfirmationModal: jest.fn(({
+    open,
+    onCancel,
+    onConfirm,
+  }) => (open ? (
+    <div>
+      <span>Confirmation modal</span>
+      <button
+        type="button"
+        onClick={onCancel}
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        id="confirmButton"
+        onClick={onConfirm}
+      >
+        Confirm
+      </button>
+    </div>
+  ) : null)),
+}));
+
+const stripes = buildStripes();
+stripes.hasPerm = jest.fn(() => true);
+stripes.logger.log = jest.fn();
+stripes.connect = jest.fn(() => component => component);
+
 const renderViewAllLogs = query => {
   const component = (
     <Router>
-      <ViewAllLogs
-        mutator={mutator}
-        resources={getResources(query)}
-        disableRecordCreation={false}
-        history={{ push: noop }}
-        intl={{ formatMessage: noop }}
-        stripes={{
-          hasPerm: noop,
-          connect: noop,
-          logger: { log: noop },
-        }}
-      />
+      <ModuleHierarchyProvider module="@folio/data-import">
+        <ViewAllLogs
+          mutator={mutator}
+          resources={getResources(query)}
+          disableRecordCreation={false}
+          history={{ push: noop }}
+          intl={{ formatMessage: jest.fn(() => 'test') }}
+          stripes={stripes}
+          setList={jest.fn()}
+          checkboxList={{
+            isAllSelected: false,
+            handleSelectAllCheckbox: noop,
+            selectedRecords: [],
+            selectRecord: noop,
+          }}
+        />
+      </ModuleHierarchyProvider>
     </Router>
   );
 
@@ -119,11 +159,11 @@ const renderViewAllLogs = query => {
 };
 
 // eslint-disable-next-line no-only-tests/no-only-tests
-describe.skip('ViewAllLogs component', () => {
+describe('ViewAllLogs component', () => {
   it('should render correct number of records', () => {
     const { getByText } = renderViewAllLogs(defaultQuery);
 
-    expect(getByText(/3 records found/i)).toBeInTheDocument();
+    expect(getByText(/3 logs found/i)).toBeInTheDocument();
   });
 
   describe('SearchAndSort pane', () => {
@@ -241,7 +281,7 @@ describe.skip('ViewAllLogs component', () => {
         fireEvent.change(dateTo, { target: { value: '2021-10-12' } });
         fireEvent.click(applyButton);
 
-        expect(await findByText(/3 records found/i)).toBeInTheDocument();
+        expect(await findByText(/3 logs found/i)).toBeInTheDocument();
       });
     });
   });
@@ -271,6 +311,95 @@ describe.skip('ViewAllLogs component', () => {
       fireEvent.click(fileLink);
 
       expect(fileLink).toHaveAttribute('href');
+    });
+
+    describe('when selected logs', () => {
+      it('should render subheading with number of selected logs', async () => {
+        const { getAllByLabelText, getByText } = renderViewAllLogs(defaultQuery);
+
+        fireEvent.click(getAllByLabelText('select item')[0]);
+        fireEvent.click(getAllByLabelText('select item')[1]);
+
+        expect(getByText('2 logs selected')).toBeDefined();
+      });
+
+      it('should select all logs when click select all', async () => {
+        const { getByLabelText, getAllByLabelText } = renderViewAllLogs(defaultQuery);
+
+        const selectAllCheckbox = getByLabelText('select all items');
+        const allItemCheckboxes = getAllByLabelText('select item');
+
+        fireEvent.click(selectAllCheckbox);
+
+        expect(selectAllCheckbox.checked).toBe(true);
+        expect(allItemCheckboxes.every(checkbox => checkbox.checked)).toBe(true);
+      });
+    });
+  });
+
+  describe('Delete Modal', () => {
+    describe('when deleting selected logs', () => {
+      it('confirmation modal should appear', () => {
+        const {
+          getAllByLabelText,
+          getByText,
+        } = renderViewAllLogs(defaultQuery);
+
+        fireEvent.click(getAllByLabelText('select item')[0]);
+        fireEvent.click(getByText('Actions'));
+        fireEvent.click(getByText('Delete selected logs'));
+
+        expect(getByText('Confirmation modal')).toBeDefined();
+      });
+    });
+
+    describe('when confirm deleting logs', () => {
+      it('confirmation modal should disappear', () => {
+        const {
+          getAllByLabelText,
+          getByText,
+          queryByText,
+        } = renderViewAllLogs(defaultQuery);
+
+        fireEvent.click(getAllByLabelText('select item')[0]);
+        fireEvent.click(getByText('Actions'));
+        fireEvent.click(getByText('Delete selected logs'));
+        fireEvent.click(getByText('Confirm'));
+
+        expect(queryByText('Confirmation modal')).toBeNull();
+      });
+    });
+
+    describe('when cancel deleting logs', () => {
+      it('confirmation modal should disappear', () => {
+        const {
+          getAllByLabelText,
+          getByText,
+          queryByText,
+        } = renderViewAllLogs(defaultQuery);
+
+        fireEvent.click(getAllByLabelText('select item')[0]);
+        fireEvent.click(getByText('Actions'));
+        fireEvent.click(getByText('Delete selected logs'));
+        fireEvent.click(getByText('Cancel'));
+
+        expect(queryByText('Confirmation modal')).toBeNull();
+      });
+
+      it('should deselect all logs', () => {
+        const {
+          getByLabelText,
+          getAllByLabelText,
+          getByText,
+        } = renderViewAllLogs(defaultQuery);
+
+        fireEvent.click(getByLabelText('select all items'));
+        fireEvent.click(getByText('Actions'));
+        fireEvent.click(getByText('Delete selected logs'));
+        fireEvent.click(getByText('Cancel'));
+
+        expect(getAllByLabelText('select item').every(checkbox => !checkbox.checked)).toBe(true);
+      });
     });
   });
 });
