@@ -11,9 +11,12 @@ import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/Modu
 import '../../../test/jest/__mock__';
 import { translationsProperties, buildStripes } from '../../../test/jest/helpers';
 
-
-
-import ViewAllLogs from './ViewAllLogs copy';
+import ViewAllLogs, { ViewAllLogsManifest } from './ViewAllLogs';
+import { SORT_MAP } from './constants';
+import {
+  OCLC_CREATE_INSTANCE_JOB_ID,
+  OCLC_UPDATE_INSTANCE_JOB_ID,
+} from '../../utils';
 
 const mutator = buildMutator({
   initializedFilterConfig: {
@@ -313,8 +316,8 @@ describe('ViewAllLogs component', () => {
       expect(fileLink).toHaveAttribute('href');
     });
 
-    describe('when selected logs', () => {
-      it('should render subheading with number of selected logs', async () => {
+    describe('when select logs', () => {
+      it('should render a subheading with the number of selected logs', async () => {
         const { getAllByLabelText, getByText } = renderViewAllLogs(defaultQuery);
 
         fireEvent.click(getAllByLabelText('select item')[0]);
@@ -338,7 +341,7 @@ describe('ViewAllLogs component', () => {
   });
 
   describe('Delete Modal', () => {
-    describe('when deleting selected logs', () => {
+    describe('when delete selected logs', () => {
       it('confirmation modal should appear', () => {
         const {
           getAllByLabelText,
@@ -353,7 +356,7 @@ describe('ViewAllLogs component', () => {
       });
     });
 
-    describe('when confirm deleting logs', () => {
+    describe('when confirm delete logs', () => {
       it('confirmation modal should disappear', () => {
         const {
           getAllByLabelText,
@@ -399,6 +402,69 @@ describe('ViewAllLogs component', () => {
         fireEvent.click(getByText('Cancel'));
 
         expect(getAllByLabelText('select item').every(checkbox => !checkbox.checked)).toBe(true);
+      });
+    });
+  });
+
+  describe('params', () => {
+    describe('query', () => {
+      it('should return hrId with the given query', () => {
+        const expectedQuery = 'testQuery*';
+        const queryData = {
+          query: {
+            query: 'testQuery',
+            qindex: 'hrId',
+          },
+        };
+
+        const query = ViewAllLogsManifest.records.params(null, null, queryData);
+        expect(query.hrId).toEqual(expectedQuery);
+      });
+    });
+
+    describe('sort', () => {
+      it('should return sortBy object with desc order', () => {
+        const expectedSortBy = [`${SORT_MAP.completedDate},desc`];
+        const queryData = {
+          query: {
+            sort: '-completedDate',
+          },
+        };
+
+        const query = ViewAllLogsManifest.records.params(null, null, queryData);
+        expect(expectedSortBy).toEqual(query.sortBy);
+      });
+
+      it('should return sortBy object with asc order', () => {
+        const expectedSortBy = [`${SORT_MAP.jobProfileName},asc`];
+        const queryData = {
+          query: {
+            sort: 'jobProfileName',
+          },
+        };
+
+        const query = ViewAllLogsManifest.records.params(null, null, queryData);
+        expect(expectedSortBy).toEqual(query.sortBy);
+      });
+    });
+
+    describe('filter', () => {
+      it('should return an object as specified', () => {
+        const expected = {
+          profileIdAny: [OCLC_CREATE_INSTANCE_JOB_ID, OCLC_UPDATE_INSTANCE_JOB_ID],
+          statusAny: ['ERROR'],
+          completedAfter: ['2022-04-24'],
+          completedBefore: ['2022-04-26'],
+        };
+
+        const queryData = {
+          query: {
+            filters: 'singleRecordImports.yes,statusAny.ERROR,completedDate.2022-04-24:2022-04-26',
+          },
+        };
+
+        const query = ViewAllLogsManifest.records.params(null, null, queryData);
+        expect(query).toMatchObject(expected);
       });
     });
   });
