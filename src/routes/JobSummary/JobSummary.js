@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -14,6 +14,7 @@ import {
   PaneMenu,
   PaneCloseLink,
 } from '@folio/stripes/components';
+import { PrevNextPagination } from '@folio/stripes-acq-components';
 
 import { FOLIO_RECORD_TYPES } from '../../components';
 
@@ -24,6 +25,7 @@ import {
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
+import { useJobLogEntries } from './hooks/useJobLogEntries';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -259,29 +261,46 @@ const JobSummaryComponent = ({
     </PaneMenu>
   );
 
+  const [limit] = useState(RESULT_COUNT_INCREMENT);
+  const [offset, setOffset] = useState(0);
+
+  const { data, isLoading } = useJobLogEntries({ jobExecutionsId, limit, offset });
+
+  const onNeedMore = ({ offset: prev }) => {
+    setOffset(prev);
+  };
+
+  console.log({ entries: data.entries });
+
   return (
-    <SearchAndSortPane
-      label={label}
-      resultCountMessageId="stripes-smart-components.searchResultsCountHeader"
-      visibleColumns={visibleColumns}
-      columnMapping={columnMapping}
-      resultsFormatter={resultsFormatter}
-      resourceName="jobLogEntries"
-      initialResultCount={INITIAL_RESULT_COUNT}
-      resultCountIncrement={RESULT_COUNT_INCREMENT}
-      hasSearchForm={false}
-      defaultSort="recordNumber"
-      parentMutator={mutator}
-      parentResources={resources}
-      lastMenu={<></>}
-      firstMenu={firstMenu}
-      searchResultsProps={{
-        pagingType: 'click',
-        pageAmount: RESULT_COUNT_INCREMENT,
-        columnWidths: { title: '30%' },
-        rowProps: {},
-      }}
-    />
+    <>
+      <SearchAndSortPane
+        label={label}
+        resultCountMessageId="stripes-smart-components.searchResultsCountHeader"
+        visibleColumns={visibleColumns}
+        columnMapping={columnMapping}
+        resultsFormatter={resultsFormatter}
+        resourceName="jobLogEntries"
+        initialResultCount={INITIAL_RESULT_COUNT}
+        resultCountIncrement={RESULT_COUNT_INCREMENT}
+        hasSearchForm={false}
+        defaultSort="recordNumber"
+        parentMutator={mutator}
+        parentResources={resources}
+        lastMenu={<></>}
+        firstMenu={firstMenu}
+        searchResultsProps={{
+          pagingType: 'click',
+          pageAmount: limit,
+          // onNeedMoreData: onNeedMore,
+          // totalCount: data.totalRecords,
+          // contentData: data.entries,
+          columnWidths: { title: '30%' },
+          // loading: isLoading,
+          rowProps:{},
+        }}
+      />
+    </>
   );
 };
 
