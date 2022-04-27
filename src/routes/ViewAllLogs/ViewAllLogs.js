@@ -10,7 +10,7 @@ import {
   noop,
 } from 'lodash';
 
-import { stripesConnect, withNamespace } from '@folio/stripes/core';
+import { stripesConnect } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   FILTER_SEPARATOR,
@@ -204,12 +204,12 @@ class ViewAllLogs extends Component {
         sort: '-completedDate',
       },
     },
-    resultCount: { initialValue: 10 },
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
     resultOffset: { initialValue: 0 },
     records: {
       type: 'okapi',
       clear: true,
-      resultDensity: 'dense',
+      resultDensity: 'sparse',
       resultOffset: '%{resultOffset}',
       records: 'jobExecutions',
       recordsRequired: '%{resultCount}',
@@ -255,10 +255,7 @@ class ViewAllLogs extends Component {
   componentDidUpdate(prevProps) {
     const { resources: { records: { records: prevRecords } } } = prevProps;
     const { resources: { records: { records } } } = this.props;
-    /* console.log('------------');
-    console.log('prevRecords', prevRecords);
-    console.log('records', records);
-    console.log('------------'); */
+
     if (!isEqual(prevRecords, records)) {
       this.setLogsList();
     }
@@ -269,6 +266,7 @@ class ViewAllLogs extends Component {
       resources: { records: { records } },
       setList,
     } = this.props;
+
     setList(records);
   }
 
@@ -428,7 +426,7 @@ class ViewAllLogs extends Component {
     const resultsFormatter = this.getResultsFormatter();
     const columnMapping = getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox });
     const itemToView = sessionStorage.getItem('job-logs.position');
-    console.log('resources', resources);
+
     return (
       <div data-test-logs-list>
         <SearchAndSort
@@ -499,4 +497,4 @@ class ViewAllLogs extends Component {
   }
 }
 
-export default withNamespace(injectIntl(ViewAllLogs));
+export default injectIntl(ViewAllLogs);
