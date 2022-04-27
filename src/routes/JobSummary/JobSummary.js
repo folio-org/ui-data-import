@@ -69,7 +69,7 @@ const JobSummaryComponent = ({
 
   useEffect(() => {
     if (jobExecutionsId) {
-      jobLogEntriesRecords.forEach(entry => {
+      jobLogEntriesRecords.filter(el => el).forEach(entry => {
         const recordId = isEdifactType ? entry.invoiceLineJournalRecordId : entry.sourceRecordId;
 
         mutator.jobLog.GET({ path: `metadata-provider/jobLogEntries/${jobExecutionsId}/records/${recordId}` });
@@ -133,7 +133,7 @@ const JobSummaryComponent = ({
       holdingsActionStatus,
       invoiceLineJournalRecordId,
     }) => {
-      const jobExecutionId = resources.jobLogEntries.records[0].jobExecutionId;
+      const jobExecutionId = resources.jobLogEntries.records.filter(el => el)[0].jobExecutionId;
       const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
         isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
 
@@ -259,6 +259,18 @@ const JobSummaryComponent = ({
     </PaneMenu>
   );
 
+
+  // filter out empty slots from sparse records array
+  const customResources = {
+    ...resources,
+    jobLogEntries: {
+      ...resources.jobLogEntries,
+      records: resources.jobLogEntries?.records?.filter(record => !!record)
+    }
+  };
+
+  console.log({ resources });
+
   return (
     <SearchAndSortPane
       label={label}
@@ -267,17 +279,20 @@ const JobSummaryComponent = ({
       columnMapping={columnMapping}
       resultsFormatter={resultsFormatter}
       resourceName="jobLogEntries"
-      initialResultCount={INITIAL_RESULT_COUNT}
-      resultCountIncrement={RESULT_COUNT_INCREMENT}
+      // initialResultCount={INITIAL_RESULT_COUNT}
+      // resultCountIncrement={RESULT_COUNT_INCREMENT}
+      initialResultCount={10}
+      resultCountIncrement={10}
       hasSearchForm={false}
       defaultSort="recordNumber"
       parentMutator={mutator}
-      parentResources={resources}
+      parentResources={customResources}
       lastMenu={<></>}
       firstMenu={firstMenu}
       searchResultsProps={{
-        pagingType: 'click',
-        pageAmount: RESULT_COUNT_INCREMENT,
+        pagingType: 'prev-next',
+        // pageAmount: RESULT_COUNT_INCREMENT,
+        pageAmount: 10,
         columnWidths: { title: '30%' },
         rowProps: {},
       }}
@@ -288,13 +303,18 @@ const JobSummaryComponent = ({
 JobSummaryComponent.manifest = Object.freeze({
   initializedFilterConfig: { initialValue: false },
   query: { initialValue: {} },
-  resultCount: { initialValue: INITIAL_RESULT_COUNT },
+  // resultCount: { initialValue: INITIAL_RESULT_COUNT },
+  resultCount: { initialValue: 10 },
   resultOffset: { initialValue: 0 },
   jobLogEntries: {
     type: 'okapi',
     records: 'entries',
+    resultDensity: 'sparse',
     resultOffset: '%{resultOffset}',
-    perRequest: RESULT_COUNT_INCREMENT,
+    // resultCount: '%{resultCount}',
+    // perRequest: RESULT_COUNT_INCREMENT,
+    perRequest: 10,
+    // recordsRequired: '%{resultCount}',
     path: 'metadata-provider/jobLogEntries/:{id}',
     clientGeneratePk: false,
     throwErrors: false,
