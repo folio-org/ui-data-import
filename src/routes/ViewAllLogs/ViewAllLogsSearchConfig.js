@@ -22,6 +22,6 @@ export const searchableIndexes = [
 ];
 
 export const logsSearchTemplate = query => ({
-  hrId: `${query}*`,
+  hrId: `${query}`,
   fileName: `*${query}*`,
 });
