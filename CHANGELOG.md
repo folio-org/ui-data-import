@@ -11,6 +11,7 @@
 * Add checkboxes and delete action to Data Import view all page (UIDATIMP-1078)
 * Add Admin note field to the Holdings field mapping profile: View (UIDATIMP-1122)
 * Add Admin note field to the Item field mapping profile: View (UIDATIMP-1123)
+* For the Data Import View all page, change from Load more to Paginated (UIDATIMP-1147)
 
 ## [5.1.2](https://github.com/folio-org/ui-data-import/tree/v5.1.2) (2022-03-24)
 
