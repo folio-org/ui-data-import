@@ -2,28 +2,28 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { stripesConnect } from '@folio/stripes/core';
 import {
-  createUrl,
-  SearchAndSortPane,
-  SettingsLabel,
-} from '@folio/stripes-data-transfer-components';
+  stripesConnect,
+  stripesShape,
+} from '@folio/stripes/core';
+import { makeConnectedSource } from '@folio/stripes/smart-components';
+import { SettingsLabel } from '@folio/stripes-data-transfer-components';
 import {
-  Button,
-  NoValue,
   PaneMenu,
   PaneCloseLink,
+  Pane,
+  PaneHeader,
+  Paneset,
 } from '@folio/stripes/components';
-
-import { FOLIO_RECORD_TYPES } from '../../components';
+import css from '@folio/stripes-data-transfer-components/lib/SearchAndSortPane/SearchAndSortPane.css';
 
 import {
-  DATA_TYPES,
-  RECORD_ACTION_STATUS,
-  RECORD_ACTION_STATUS_LABEL_IDS,
-} from '../../utils';
+  SummaryTable,
+  RecordsTable,
+} from './components';
+import { FOLIO_RECORD_TYPES } from '../../components';
 
-import sharedCss from '../../shared.css';
+import { DATA_TYPES } from '../../utils';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -46,23 +46,19 @@ const sortMap = {
   error: 'error',
 };
 
-const getRecordActionStatusLabel = recordType => {
-  if (!recordType) return <NoValue />;
+const JobSummaryComponent = props => {
+  const {
+    stripes,
+    mutator,
+    resources,
+    resources: {
+      jobExecutions: { records: jobExecutionsRecords },
+      jobLogEntries: { records: jobLogEntriesRecords },
+    },
+    location,
+    history,
+  } = props;
 
-  const labelId = RECORD_ACTION_STATUS_LABEL_IDS[recordType];
-
-  return <FormattedMessage id={labelId} />;
-};
-
-const JobSummaryComponent = ({
-  mutator,
-  resources,
-  resources: {
-    jobExecutions: { records: jobExecutionsRecords },
-    jobLogEntries: { records: jobLogEntriesRecords },
-    jobLog: { records: jobLogRecords },
-  },
-}) => {
   const dataType = jobExecutionsRecords[0]?.jobProfileInfo.dataType;
   const isEdifactType = dataType === DATA_TYPES[1];
   const jobExecutionsId = jobExecutionsRecords[0]?.id;
@@ -77,211 +73,77 @@ const JobSummaryComponent = ({
     }
   }, [jobExecutionsId, jobLogEntriesRecords]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const getHotlinkCellFormatter = (isHotlink, entityLabel, path, entity) => {
-    if (isHotlink) {
-      return (
-        <Button
-          data-test-entity-name={entity}
-          buttonStyle="link"
-          to={path}
-          marginBottom0
-          buttonClass={sharedCss.cellLink}
-        >
-          {entityLabel}
-        </Button>
-      );
-    }
+  const getSource = () => {
+    const resourceName = 'jobLogEntries';
+    const parentResources = resources;
+    const connectedSourceProps = {
+      ...props,
+      parentResources,
+    };
 
-    return entityLabel;
+    return makeConnectedSource(connectedSourceProps, stripes.logger, resourceName);
   };
 
-  const visibleColumns = [
-    'recordNumber',
-    'title',
-    'srsMarcStatus',
-    'instanceStatus',
-    'holdingsStatus',
-    'itemStatus',
-    'authorityStatus',
-    'orderStatus',
-    'invoiceStatus',
-    'error',
-  ];
-  const columnMapping = {
-    recordNumber: <FormattedMessage id="ui-data-import.record" />,
-    title: <FormattedMessage id="ui-data-import.title" />,
-    srsMarcStatus: <FormattedMessage id="ui-data-import.recordTypes.srsMarc" />,
-    instanceStatus: <FormattedMessage id="ui-data-import.recordTypes.instance" />,
-    holdingsStatus: <FormattedMessage id="ui-data-import.recordTypes.holdings" />,
-    itemStatus: <FormattedMessage id="ui-data-import.recordTypes.item" />,
-    authorityStatus: <FormattedMessage id="ui-data-import.recordTypes.authority" />,
-    orderStatus: <FormattedMessage id="ui-data-import.recordTypes.order" />,
-    invoiceStatus: <FormattedMessage id="ui-data-import.recordTypes.invoice" />,
-    error: <FormattedMessage id="ui-data-import.error" />,
+  const renderHeader = renderProps => {
+    const resultCountMessageId = 'stripes-smart-components.searchResultsCountHeader';
+    const label = (
+      <SettingsLabel
+        iconKey={isEdifactType ? FOLIO_RECORD_TYPES.INVOICE.iconKey : 'app'}
+        app="data-import"
+      >
+        <>{jobExecutionsRecords[0]?.fileName}</>
+      </SettingsLabel>
+    );
+    const firstMenu = (
+      <PaneMenu>
+        <PaneCloseLink to="/data-import" />
+      </PaneMenu>
+    );
+
+    return (
+      <PaneHeader
+        {...renderProps}
+        paneTitle={label}
+        paneSub={(
+          <FormattedMessage
+            id={resultCountMessageId}
+            values={{ count: getSource().totalCount() }}
+          />
+        )}
+        firstMenu={firstMenu}
+      />
+    );
   };
-  const resultsFormatter = {
-    recordNumber: ({ sourceRecordOrder }) => {
-      if (isEdifactType) return sourceRecordOrder;
-
-      return parseInt(sourceRecordOrder, 10) + 1;
-    },
-    title: ({
-      sourceRecordTitle,
-      sourceRecordId,
-      sourceRecordType,
-      sourceRecordActionStatus,
-      holdingsActionStatus,
-      invoiceLineJournalRecordId,
-    }) => {
-      const jobExecutionId = resources.jobLogEntries.records[0].jobExecutionId;
-      const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
-        isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
-
-      const isHoldingsRecordImportFailed = sourceRecordType === FOLIO_RECORD_TYPES.MARC_HOLDINGS.type
-        && (sourceRecordActionStatus === RECORD_ACTION_STATUS.DISCARDED
-        || holdingsActionStatus === RECORD_ACTION_STATUS.DISCARDED);
-
-      const title = isHoldingsRecordImportFailed
-        ? 'Holdings'
-        : sourceRecordTitle;
-
-      return (
-        <Button
-          buttonStyle="link"
-          target="_blank"
-          marginBottom0
-          to={path}
-          buttonClass={sharedCss.cellLink}
-        >
-          {title}
-        </Button>
-      );
-    },
-    srsMarcStatus: ({ sourceRecordActionStatus }) => getRecordActionStatusLabel(sourceRecordActionStatus),
-    instanceStatus: ({
-      instanceActionStatus,
-      sourceRecordId,
-    }) => {
-      const entityLabel = getRecordActionStatusLabel(instanceActionStatus);
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const entityId = sourceRecord?.relatedInstanceInfo.idList[0];
-      const path = `/inventory/view/${entityId}`;
-
-      const isPathCorrect = !!entityId;
-      const isHotlink = isPathCorrect && (instanceActionStatus === RECORD_ACTION_STATUS.CREATED
-        || instanceActionStatus === RECORD_ACTION_STATUS.UPDATED);
-
-      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'instance');
-    },
-    holdingsStatus: ({
-      holdingsActionStatus,
-      sourceRecordId,
-    }) => {
-      const entityLabel = getRecordActionStatusLabel(holdingsActionStatus);
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
-      const holdingsId = sourceRecord?.relatedHoldingsInfo.idList[0];
-      const path = `/inventory/view/${instanceId}/${holdingsId}`;
-
-      const isPathCorrect = !!(instanceId && holdingsId);
-      const isHotlink = isPathCorrect && (holdingsActionStatus === RECORD_ACTION_STATUS.CREATED
-        || holdingsActionStatus === RECORD_ACTION_STATUS.UPDATED);
-
-      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'holdings');
-    },
-    itemStatus: ({
-      itemActionStatus,
-      sourceRecordId,
-    }) => {
-      const entityLabel = getRecordActionStatusLabel(itemActionStatus);
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
-      const holdingsId = sourceRecord?.relatedHoldingsInfo.idList[0];
-      const itemId = sourceRecord?.relatedItemInfo.idList[0];
-      const path = `/inventory/view/${instanceId}/${holdingsId}/${itemId}`;
-
-      const isPathCorrect = !!(instanceId && holdingsId && itemId);
-      const isHotlink = isPathCorrect && (itemActionStatus === RECORD_ACTION_STATUS.CREATED
-        || itemActionStatus === RECORD_ACTION_STATUS.UPDATED);
-
-      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'item');
-    },
-    authorityStatus: ({
-      authorityActionStatus,
-      sourceRecordId,
-    }) => {
-      const entityLabel = getRecordActionStatusLabel(authorityActionStatus);
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const authorityId = sourceRecord?.relatedAuthorityInfo.idList[0];
-      const path = `/marc-authorities/authorities/${authorityId}`;
-
-      const isPathCorrect = !!authorityId;
-      const isHotlink = isPathCorrect && (authorityActionStatus === RECORD_ACTION_STATUS.CREATED
-        || authorityActionStatus === RECORD_ACTION_STATUS.UPDATED);
-
-      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'authority');
-    },
-    orderStatus: ({ orderActionStatus }) => getRecordActionStatusLabel(orderActionStatus),
-    invoiceStatus: ({
-      invoiceActionStatus,
-      sourceRecordId,
-      sourceRecordOrder,
-    }) => {
-      const entityLabel = getRecordActionStatusLabel(invoiceActionStatus);
-      const sourceRecord = jobLogRecords.find(item => {
-        const isIdEqual = item.sourceRecordId === sourceRecordId;
-        const isOrderEqual = item.relatedInvoiceLineInfo?.fullInvoiceLineNumber === sourceRecordOrder;
-
-        return isIdEqual && isOrderEqual;
-      });
-      const invoiceId = sourceRecord?.relatedInvoiceInfo.idList[0];
-      const invoiceLineId = sourceRecord?.relatedInvoiceLineInfo.id;
-      const path = `/invoice/view/${invoiceId}/line/${invoiceLineId}/view`;
-
-      const isPathCorrect = !!(invoiceId && invoiceLineId);
-      const isHotlink = isPathCorrect && (invoiceActionStatus === RECORD_ACTION_STATUS.CREATED);
-
-      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'invoice');
-    },
-    error: ({ error }) => (error ? <FormattedMessage id="ui-data-import.error" /> : ''),
-  };
-  const label = (
-    <SettingsLabel
-      iconKey={isEdifactType ? FOLIO_RECORD_TYPES.INVOICE.iconKey : 'app'}
-      app="data-import"
-    >
-      <>{jobExecutionsRecords[0]?.fileName}</>
-    </SettingsLabel>
-  );
-  const firstMenu = (
-    <PaneMenu>
-      <PaneCloseLink to="/data-import" />
-    </PaneMenu>
-  );
 
   return (
-    <SearchAndSortPane
-      label={label}
-      resultCountMessageId="stripes-smart-components.searchResultsCountHeader"
-      visibleColumns={visibleColumns}
-      columnMapping={columnMapping}
-      resultsFormatter={resultsFormatter}
-      resourceName="jobLogEntries"
-      initialResultCount={INITIAL_RESULT_COUNT}
-      resultCountIncrement={RESULT_COUNT_INCREMENT}
-      hasSearchForm={false}
-      defaultSort="recordNumber"
-      parentMutator={mutator}
-      parentResources={resources}
-      lastMenu={<></>}
-      firstMenu={firstMenu}
-      searchResultsProps={{
-        pagingType: 'click',
-        pageAmount: RESULT_COUNT_INCREMENT,
-        columnWidths: { title: '30%' },
-        rowProps: {},
-      }}
-    />
+    <Paneset data-testid="pane">
+      <Pane
+        id="pane-results"
+        data-testid="pane-results"
+        defaultWidth="fill"
+        noOverflow
+        padContent={false}
+        renderHeader={renderHeader}
+      >
+        <div className={css.paneBody}>
+          <div>
+            <SummaryTable />
+          </div>
+          <div className={css.searchResults}>
+            <RecordsTable
+              resources={resources}
+              mutator={mutator}
+              location={location}
+              history={history}
+              source={getSource()}
+              isEdifactType={isEdifactType}
+              resultCountIncrement={RESULT_COUNT_INCREMENT}
+              pageAmount={RESULT_COUNT_INCREMENT}
+            />
+          </div>
+        </div>
+      </Pane>
+    </Paneset>
   );
 };
 
@@ -336,7 +198,9 @@ JobSummaryComponent.manifest = Object.freeze({
 
 JobSummaryComponent.propTypes = {
   mutator: PropTypes.object.isRequired,
+  stripes: stripesShape.isRequired,
   resources: PropTypes.shape({
+    query: PropTypes.object,
     jobExecutions: PropTypes.shape({
       records: PropTypes.arrayOf(
         PropTypes.shape({
@@ -349,6 +213,16 @@ JobSummaryComponent.propTypes = {
     }),
     jobLogEntries: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
     jobLog: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
+  }).isRequired,
+  location: PropTypes.oneOfType([
+    PropTypes.shape({
+      search: PropTypes.string.isRequired,
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+    PropTypes.string.isRequired,
+  ]).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
