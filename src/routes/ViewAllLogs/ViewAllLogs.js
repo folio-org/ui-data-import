@@ -471,7 +471,6 @@ class ViewAllLogs extends Component {
           resultsOnMarkPosition={this.onMarkPosition}
           resultsOnResetMarkedPosition={this.resetMarkedPosition}
           resultsCachedPosition={itemToView}
-          // paginationBoundaries
         />
         <ConfirmationModal
           id="delete-selected-logs-modal"
