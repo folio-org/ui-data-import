@@ -57,16 +57,6 @@ export const JOB_STATUSES = {
   RUNNING: 'RUNNING',
 };
 
-export const DEFAULT_JOB_LOG_COLUMNS = [
-  'fileName',
-  'status',
-  'totalRecords',
-  'jobProfileName',
-  'completedDate',
-  'runBy',
-  'hrId',
-];
-
 export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
 export const SYSTEM_USER_NAME = 'System';
 
