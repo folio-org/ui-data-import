@@ -46,6 +46,7 @@ import {
   INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS,
   INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS,
   BOOLEAN_ACTIONS,
+  validateQuotedString,
 } from '../../../../../utils';
 
 export const InvoiceAdjustments = ({
@@ -236,6 +237,7 @@ export const InvoiceAdjustments = ({
               wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
               acceptedValuesList={prorateList}
               onChange={handleProRateChange(index)}
+              validation={validateQuotedString}
               okapi={okapi}
             />
           </Col>
@@ -249,7 +251,7 @@ export const InvoiceAdjustments = ({
               isRemoveValueAllowed
               wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
               acceptedValuesList={relationToTotalList}
-              validation={noop}
+              validation={validateQuotedString}
               okapi={okapi}
             />
           </Col>
