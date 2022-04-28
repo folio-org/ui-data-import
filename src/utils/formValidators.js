@@ -453,3 +453,31 @@ export const validateMoveField = field => fieldToMove => {
 
   return undefined;
 };
+
+/**
+ * Validate quoted string
+ *
+ * @param {string|*} value
+ * @returns {JSX.Element|undefined}
+ *
+ * @example
+ *
+ * validateQuotedString('"test"')
+ * // => undefined
+ *
+ * validateQuotedString('test')
+ * // => Translated string (en = 'Please correct the syntax to continue')
+ */
+export const validateQuotedString = value => {
+  if (!value || !value.length) {
+    return undefined;
+  }
+
+  const pattern = /^"\w+"$/;
+
+  if (value.match(pattern)) {
+    return undefined;
+  }
+
+  return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
+};
