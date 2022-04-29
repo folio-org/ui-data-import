@@ -119,6 +119,8 @@ const renderViewMappingProfile = ({
 const spyConsoleError = jest.spyOn(console, 'error').mockImplementation(noop);
 
 describe('<ViewMappingProfile>', () => {
+  jest.setTimeout(30000);
+
   afterAll(() => {
     spyConsoleError.mockRestore();
   });

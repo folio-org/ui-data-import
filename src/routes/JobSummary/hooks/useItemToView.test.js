@@ -75,7 +75,7 @@ describe('useItemToView hook', () => {
 
     // remove the item from storage
     act(() => {
-      itemToViewData.deleteItemToView('@folio/data-import/entries');
+      itemToViewData.deleteItemToView();
     });
     expect(itemToViewData.itemToView).toBeNull();
     expect(global.Storage.prototype.removeItem).toHaveBeenLastCalledWith(storageKey);
@@ -115,7 +115,7 @@ describe('useItemToView hook', () => {
     const itemToViewData = setup(storageKey);
 
     act(() => {
-      itemToViewData.deleteItemToView('@folio/data-import/entries');
+      itemToViewData.deleteItemToView();
     });
 
     expect(mockConsoleWarn).toHaveBeenLastCalledWith('Error removing item from localStorage');
