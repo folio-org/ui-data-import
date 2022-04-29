@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { stripesConnect, useNamespace } from '@folio/stripes/core';
+import { stripesConnect } from '@folio/stripes/core';
 import {
   createUrl,
   SearchAndSortPane,
@@ -56,6 +56,8 @@ const getRecordActionStatusLabel = recordType => {
   return <FormattedMessage id={labelId} />;
 };
 
+const NAMESPACE = '@folio/data-import';
+
 const JobSummaryComponent = ({
   mutator,
   resources,
@@ -65,6 +67,8 @@ const JobSummaryComponent = ({
     jobLog: { records: jobLogRecords },
   },
 }) => {
+  const { itemToView, setItemToView, deleteItemToView } = useItemToView(`${NAMESPACE}/itemToView/job-log/entries`);
+
   const dataType = jobExecutionsRecords[0]?.jobProfileInfo.dataType;
   const isEdifactType = dataType === DATA_TYPES[1];
   const jobExecutionsId = jobExecutionsRecords[0]?.id;
@@ -264,9 +268,6 @@ const JobSummaryComponent = ({
       <PaneCloseLink to="/data-import" />
     </PaneMenu>
   );
-
-  const [namespace] = useNamespace();
-  const { itemToView, setItemToView, deleteItemToView } = useItemToView(`${namespace}/itemToView/job-log/entries`);
 
   return (
     <SearchAndSortPane
