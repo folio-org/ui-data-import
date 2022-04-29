@@ -46,6 +46,7 @@ import {
 import {
   FILTERS,
   SORT_MAP,
+  DATA_IMPORT_POSITION,
 } from './constants';
 
 import sharedCss from '../../shared.css';
@@ -400,11 +401,11 @@ class ViewAllLogs extends Component {
   }
 
   onMarkPosition = (position) => {
-    sessionStorage.setItem('@folio/data-import.position', JSON.stringify(position));
+    sessionStorage.setItem(DATA_IMPORT_POSITION, JSON.stringify(position));
   }
 
   resetMarkedPosition = () => {
-    sessionStorage.setItem('@folio/data-import.position', null);
+    sessionStorage.setItem(DATA_IMPORT_POSITION, null);
   }
 
   render() {
@@ -425,7 +426,7 @@ class ViewAllLogs extends Component {
 
     const resultsFormatter = this.getResultsFormatter();
     const columnMapping = getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox });
-    const itemToView = sessionStorage.getItem('job-logs.position');
+    const itemToView = JSON.parse(sessionStorage.getItem(DATA_IMPORT_POSITION));
 
     return (
       <div data-test-logs-list>
