@@ -15,6 +15,8 @@ describe('useItemToView hook', () => {
   const storageKey = '@folio/data-import/job-log/entries';
   let mockStorage = {};
 
+  const mockConsoleWarn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
   beforeAll(() => {
     global.Storage.prototype.setItem = jest.fn((key, value) => {
       mockStorage[key] = value;
@@ -25,6 +27,10 @@ describe('useItemToView hook', () => {
 
   beforeEach(() => {
     mockStorage = {};
+  });
+
+  afterEach(() => {
+    mockConsoleWarn.mockReset();
   });
 
   afterAll(() => {
@@ -74,5 +80,44 @@ describe('useItemToView hook', () => {
     expect(itemToViewData.itemToView).toBeNull();
     expect(global.Storage.prototype.removeItem).toHaveBeenLastCalledWith(storageKey);
     expect(mockStorage[storageKey]).toBeUndefined();
+  });
+
+  it('when there is error getting item, should handle correctly', () => {
+    global.Storage.prototype.getItem.mockImplementationOnce(() => {
+      throw new Error('Error getting item from localStorage');
+    });
+    setup(storageKey);
+
+    expect(mockConsoleWarn).toHaveBeenLastCalledWith('Error getting item from localStorage');
+  });
+
+  it('when there is error setting item, should handle correctly', () => {
+    global.Storage.prototype.setItem.mockImplementationOnce(() => {
+      throw new Error('Error setting item from localStorage');
+    });
+    const itemToViewData = setup(storageKey);
+    const storageValue = {
+      selector: `[aria-rowindex="${0}"]`,
+      localClientTop: 50
+    };
+
+    act(() => {
+      itemToViewData.setItemToView(storageValue);
+    });
+
+    expect(mockConsoleWarn).toHaveBeenLastCalledWith('Error setting item from localStorage');
+  });
+
+  it('when there is error removing item, should handle correctly', () => {
+    global.Storage.prototype.removeItem.mockImplementationOnce(() => {
+      throw new Error('Error removing item from localStorage');
+    });
+    const itemToViewData = setup(storageKey);
+
+    act(() => {
+      itemToViewData.deleteItemToView('@folio/data-import/entries');
+    });
+
+    expect(mockConsoleWarn).toHaveBeenLastCalledWith('Error removing item from localStorage');
   });
 });

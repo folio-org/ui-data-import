@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { noop } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import {
@@ -16,7 +17,6 @@ import {
 } from '@folio/stripes/components';
 import { pagingTypes } from '@folio/stripes-components/lib/MultiColumnList';
 
-import { noop } from 'lodash';
 import { FOLIO_RECORD_TYPES } from '../../components';
 import {
   DATA_TYPES,
