@@ -9,9 +9,13 @@ import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpe
 import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
 
 import '../../../test/jest/__mock__';
-import { translationsProperties, buildStripes } from '../../../test/jest/helpers';
+import {
+  translationsProperties,
+  buildStripes
+} from '../../../test/jest/helpers';
 
 import ViewAllLogs, { ViewAllLogsManifest } from './ViewAllLogs';
+
 import { SORT_MAP } from './constants';
 import {
   OCLC_CREATE_INSTANCE_JOB_ID,
@@ -161,7 +165,6 @@ const renderViewAllLogs = query => {
   return renderWithIntl(component, translationsProperties);
 };
 
-// eslint-disable-next-line no-only-tests/no-only-tests
 describe('ViewAllLogs component', () => {
   it('should render correct number of records', () => {
     const { getByText } = renderViewAllLogs(defaultQuery);
@@ -318,7 +321,10 @@ describe('ViewAllLogs component', () => {
 
     describe('when select logs', () => {
       it('should render a subheading with the number of selected logs', async () => {
-        const { getAllByLabelText, getByText } = renderViewAllLogs(defaultQuery);
+        const {
+          getAllByLabelText,
+          getByText
+        } = renderViewAllLogs(defaultQuery);
 
         fireEvent.click(getAllByLabelText('select item')[0]);
         fireEvent.click(getAllByLabelText('select item')[1]);
@@ -327,7 +333,10 @@ describe('ViewAllLogs component', () => {
       });
 
       it('should select all logs when click select all', async () => {
-        const { getByLabelText, getAllByLabelText } = renderViewAllLogs(defaultQuery);
+        const {
+          getByLabelText,
+          getAllByLabelText
+        } = renderViewAllLogs(defaultQuery);
 
         const selectAllCheckbox = getByLabelText('select all items');
         const allItemCheckboxes = getAllByLabelText('select item');
@@ -406,10 +415,10 @@ describe('ViewAllLogs component', () => {
     });
   });
 
-  describe('params', () => {
-    describe('query', () => {
+  describe('when filtering logs', () => {
+    describe('by query', () => {
       it('should return hrId with the given query', () => {
-        const expectedQuery = 'testQuery*';
+        const expectedQuery = 'testQuery';
         const queryData = {
           query: {
             query: 'testQuery',
@@ -422,33 +431,7 @@ describe('ViewAllLogs component', () => {
       });
     });
 
-    describe('sort', () => {
-      it('should return sortBy object with desc order', () => {
-        const expectedSortBy = [`${SORT_MAP.completedDate},desc`];
-        const queryData = {
-          query: {
-            sort: '-completedDate',
-          },
-        };
-
-        const query = ViewAllLogsManifest.records.params(null, null, queryData);
-        expect(expectedSortBy).toEqual(query.sortBy);
-      });
-
-      it('should return sortBy object with asc order', () => {
-        const expectedSortBy = [`${SORT_MAP.jobProfileName},asc`];
-        const queryData = {
-          query: {
-            sort: 'jobProfileName',
-          },
-        };
-
-        const query = ViewAllLogsManifest.records.params(null, null, queryData);
-        expect(expectedSortBy).toEqual(query.sortBy);
-      });
-    });
-
-    describe('filter', () => {
+    describe('by date, status and singleRecordImports', () => {
       it('should return an object as specified', () => {
         const expected = {
           profileIdAny: [OCLC_CREATE_INSTANCE_JOB_ID, OCLC_UPDATE_INSTANCE_JOB_ID],
@@ -466,6 +449,32 @@ describe('ViewAllLogs component', () => {
         const query = ViewAllLogsManifest.records.params(null, null, queryData);
         expect(query).toMatchObject(expected);
       });
+    });
+  });
+
+  describe('when sorting logs', () => {
+    it('should return sortBy object in desc order', () => {
+      const expectedSortBy = [`${SORT_MAP.completedDate},desc`];
+      const queryData = {
+        query: {
+          sort: '-completedDate',
+        },
+      };
+
+      const query = ViewAllLogsManifest.records.params(null, null, queryData);
+      expect(expectedSortBy).toEqual(query.sortBy);
+    });
+
+    it('should return sortBy object in asc order', () => {
+      const expectedSortBy = [`${SORT_MAP.jobProfileName},asc`];
+      const queryData = {
+        query: {
+          sort: 'jobProfileName',
+        },
+      };
+
+      const query = ViewAllLogsManifest.records.params(null, null, queryData);
+      expect(expectedSortBy).toEqual(query.sortBy);
     });
   });
 });

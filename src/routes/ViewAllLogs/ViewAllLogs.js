@@ -23,9 +23,7 @@ import {
 } from '@folio/stripes-acq-components';
 
 import ViewAllLogsFilters from './ViewAllLogsFilters';
-import {
-  searchableIndexes,
-} from './ViewAllLogsSearchConfig';
+import { searchableIndexes } from './ViewAllLogsSearchConfig';
 import {
   ActionMenu,
   listTemplate,
@@ -39,10 +37,12 @@ import {
   withCheckboxList,
   getJobLogsListColumnMapping,
 } from '../../utils';
+import { FILTERS } from './constants';
 import {
-  FILTERS,
-} from './constants';
-import { getQuery, getFilters, getSort } from './ViewAllLogsUtils';
+  getQuery,
+  getFilters,
+  getSort
+} from './ViewAllLogsUtils';
 
 import sharedCss from '../../shared.css';
 
@@ -97,8 +97,10 @@ export const ViewAllLogsManifest = Object.freeze({
     throwErrors: false,
   },
 });
+
 @withCheckboxList
 @stripesConnect
+@injectIntl
 class ViewAllLogs extends Component {
   static propTypes = {
     mutator: PropTypes.object.isRequired,
@@ -364,4 +366,4 @@ class ViewAllLogs extends Component {
   }
 }
 
-export default injectIntl(ViewAllLogs);
+export default ViewAllLogs;
