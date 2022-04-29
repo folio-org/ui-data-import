@@ -142,7 +142,7 @@ const JobSummaryComponent = ({
       holdingsActionStatus,
       invoiceLineJournalRecordId,
     }) => {
-      const jobExecutionId = filteredJobLogEntriesRecords?.at(0)?.jobExecutionId;
+      const jobExecutionId = filteredJobLogEntriesRecords[0]?.jobExecutionId;
       const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
         isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
 
