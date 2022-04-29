@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { stripesConnect, useNamespace } from '@folio/stripes/core';
 import {
   createUrl,
   SearchAndSortPane,
@@ -14,9 +14,10 @@ import {
   PaneMenu,
   PaneCloseLink,
 } from '@folio/stripes/components';
+import { pagingTypes } from '@folio/stripes-components/lib/MultiColumnList';
 
+import { noop } from 'lodash';
 import { FOLIO_RECORD_TYPES } from '../../components';
-
 import {
   DATA_TYPES,
   RECORD_ACTION_STATUS,
@@ -24,6 +25,7 @@ import {
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
+import { useItemToView } from './hooks/useItemToView';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -66,10 +68,13 @@ const JobSummaryComponent = ({
   const dataType = jobExecutionsRecords[0]?.jobProfileInfo.dataType;
   const isEdifactType = dataType === DATA_TYPES[1];
   const jobExecutionsId = jobExecutionsRecords[0]?.id;
+  // remove empty slots from sparse array
+  const filteredJobLogEntriesRecords = resources.jobLogEntries?.records?.filter(r => !!r);
+
 
   useEffect(() => {
     if (jobExecutionsId) {
-      jobLogEntriesRecords.filter(el => el).forEach(entry => {
+      jobLogEntriesRecords.forEach(entry => {
         const recordId = isEdifactType ? entry.invoiceLineJournalRecordId : entry.sourceRecordId;
 
         mutator.jobLog.GET({ path: `metadata-provider/jobLogEntries/${jobExecutionsId}/records/${recordId}` });
@@ -133,7 +138,7 @@ const JobSummaryComponent = ({
       holdingsActionStatus,
       invoiceLineJournalRecordId,
     }) => {
-      const jobExecutionId = resources.jobLogEntries.records.filter(el => el)[0].jobExecutionId;
+      const jobExecutionId = filteredJobLogEntriesRecords?.at(0)?.jobExecutionId;
       const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
         isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
 
@@ -152,6 +157,7 @@ const JobSummaryComponent = ({
           marginBottom0
           to={path}
           buttonClass={sharedCss.cellLink}
+          onClick={e => e.stopPropagation()}
         >
           {title}
         </Button>
@@ -259,17 +265,8 @@ const JobSummaryComponent = ({
     </PaneMenu>
   );
 
-
-  // filter out empty slots from sparse records array
-  const customResources = {
-    ...resources,
-    jobLogEntries: {
-      ...resources.jobLogEntries,
-      records: resources.jobLogEntries?.records?.filter(record => !!record)
-    }
-  };
-
-  console.log({ resources });
+  const [namespace] = useNamespace();
+  const { itemToView, setItemToView, deleteItemToView } = useItemToView(`${namespace}/itemToView/job-log/entries`);
 
   return (
     <SearchAndSortPane
@@ -279,20 +276,22 @@ const JobSummaryComponent = ({
       columnMapping={columnMapping}
       resultsFormatter={resultsFormatter}
       resourceName="jobLogEntries"
-      // initialResultCount={INITIAL_RESULT_COUNT}
-      // resultCountIncrement={RESULT_COUNT_INCREMENT}
-      initialResultCount={10}
-      resultCountIncrement={10}
+      initialResultCount={INITIAL_RESULT_COUNT}
+      resultCountIncrement={RESULT_COUNT_INCREMENT}
       hasSearchForm={false}
       defaultSort="recordNumber"
       parentMutator={mutator}
-      parentResources={customResources}
+      parentResources={resources}
       lastMenu={<></>}
       firstMenu={firstMenu}
       searchResultsProps={{
-        pagingType: 'prev-next',
-        // pageAmount: RESULT_COUNT_INCREMENT,
-        pageAmount: 10,
+        itemToView,
+        onMarkPosition: setItemToView,
+        onMarkReset: deleteItemToView,
+        onRowClick: noop,
+        virtualize: false,
+        pagingType: pagingTypes.PREV_NEXT,
+        pageAmount: RESULT_COUNT_INCREMENT,
         columnWidths: { title: '30%' },
         rowProps: {},
       }}
@@ -303,18 +302,14 @@ const JobSummaryComponent = ({
 JobSummaryComponent.manifest = Object.freeze({
   initializedFilterConfig: { initialValue: false },
   query: { initialValue: {} },
-  // resultCount: { initialValue: INITIAL_RESULT_COUNT },
-  resultCount: { initialValue: 10 },
+  resultCount: { initialValue: INITIAL_RESULT_COUNT },
   resultOffset: { initialValue: 0 },
   jobLogEntries: {
     type: 'okapi',
     records: 'entries',
     resultDensity: 'sparse',
     resultOffset: '%{resultOffset}',
-    // resultCount: '%{resultCount}',
-    // perRequest: RESULT_COUNT_INCREMENT,
-    perRequest: 10,
-    // recordsRequired: '%{resultCount}',
+    perRequest: RESULT_COUNT_INCREMENT,
     path: 'metadata-provider/jobLogEntries/:{id}',
     clientGeneratePk: false,
     throwErrors: false,
