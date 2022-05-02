@@ -14,6 +14,7 @@
 * Display Authority information on Data import log page: View (UIDATIMP-1053)
 * Add UI validation for some Invoice field mapping profile fields (UIDATIMP-1134)
 * Add summary at top of individual import job's log (UIDATIMP-1153)
+* For the Data Import View all page, change from Load more to Paginated (UIDATIMP-1147)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
