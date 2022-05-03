@@ -13,8 +13,6 @@ import {
 import { stripesConnect } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
-  FILTER_SEPARATOR,
-  FILTER_GROUP_SEPARATOR,
   Button,
   ConfirmationModal,
 } from '@folio/stripes/components';
@@ -24,12 +22,8 @@ import {
   handleFilterChange,
 } from '@folio/stripes-acq-components';
 
-import { filterConfig } from './ViewAllLogsFilterConfig';
 import ViewAllLogsFilters from './ViewAllLogsFilters';
-import {
-  logsSearchTemplate,
-  searchableIndexes,
-} from './ViewAllLogsSearchConfig';
+import { searchableIndexes } from './ViewAllLogsSearchConfig';
 import {
   ActionMenu,
   listTemplate,
@@ -45,9 +39,13 @@ import {
 } from '../../utils';
 import {
   FILTERS,
-  SORT_MAP,
   DATA_IMPORT_POSITION,
 } from './constants';
+import {
+  getQuery,
+  getFilters,
+  getSort
+} from './ViewAllLogsUtils';
 
 import sharedCss from '../../shared.css';
 
@@ -59,123 +57,56 @@ const {
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
 
-const getQuery = (query, qindex) => {
-  if (query && qindex) {
-    return { [qindex]: logsSearchTemplate(query)[qindex] };
-  }
-
-  if (query) {
-    return logsSearchTemplate(query);
-  }
-
-  return {};
-};
-const getFilters = filters => {
-  const splitFiltersByGroups = () => {
-    const groups = {};
-
-    const fullNames = filters.split(FILTER_SEPARATOR);
-
-    for (const fullName of fullNames) {
-      if (fullName) {
-        const [groupName, fieldName] = fullName.split(FILTER_GROUP_SEPARATOR);
-
-        if (groups[groupName] === undefined) groups[groupName] = [];
-        groups[groupName].push(fieldName);
-      }
-    }
-
-    return groups;
-  };
-  const getMappedValues = (values, group) => {
-    return values.map(value => {
-      const obj = group.values.filter(f => typeof f === 'object' && f.name === value);
-
-      return (obj.length > 0) ? obj[0].cql : value;
-    });
-  };
-
-  if (filters) {
-    const groups = splitFiltersByGroups();
-    const filtersObj = {};
-
-    for (const groupName of Object.keys(groups)) {
-      const group = filterConfig.filter(g => g.name === groupName)[0];
-
-      if (group && group.cql) {
-        const cqlIndex = group.cql;
-
-        // values contains the selected filters
-        const values = groups[groupName];
-
-        const mappedValues = getMappedValues(values, group);
-
-        if (group.isRange) {
-          const { rangeSeparator = ':' } = group;
-          const [start, end] = mappedValues[0].split(rangeSeparator);
-
-          filtersObj.completedAfter = [start];
-          filtersObj.completedBefore = [end];
-        } else {
-          const {
-            noIndex,
-            values: groupValues,
-          } = group;
-
-          // fill in filters object
-          if (!noIndex) {
-            if (filtersObj[cqlIndex] === undefined) filtersObj[cqlIndex] = [];
-
-            filtersObj[cqlIndex] = [...filtersObj[cqlIndex], ...values];
-          } else {
-            values.forEach(value => {
-              const obj = groupValues.filter(f => typeof f === 'object' && f.name === value);
-
-              if (obj.length > 0) {
-                const groupIndex = obj[0].indexName;
-
-                if (filtersObj[groupIndex] === undefined) filtersObj[groupIndex] = [];
-
-                filtersObj[groupIndex] = [...filtersObj[groupIndex], ...obj[0].cql];
-              }
-            });
-          }
-        }
-      }
-    }
-
-    return filtersObj;
-  }
-
-  return {};
-};
-const getSort = sort => {
-  const firstSortIndex = sort?.split(',')[0] || '';
-
-  if (!firstSortIndex) return {};
-
-  let reverse = false;
-  let sortValue = firstSortIndex;
-
-  if (firstSortIndex.startsWith('-')) {
-    sortValue = firstSortIndex.substr(1);
-    reverse = true;
-  }
-
-  let sortIndex = SORT_MAP[sortValue] || sortValue;
-
-  if (reverse) {
-    sortIndex = sortIndex.split(' ').map(v => `${v},desc`);
-  } else {
-    sortIndex = sortIndex.split(' ').map(v => `${v},asc`);
-  }
-
-  return { sortBy: sortIndex };
-};
 const entityKey = 'jobLogs';
+
+export const ViewAllLogsManifest = Object.freeze({
+  initializedFilterConfig: { initialValue: false },
+  query: {
+    initialValue: {
+      filters: '',
+      sort: '-completedDate',
+    },
+  },
+  resultCount: { initialValue: INITIAL_RESULT_COUNT },
+  resultOffset: { initialValue: 0 },
+  records: {
+    type: 'okapi',
+    clear: true,
+    resultDensity: 'sparse',
+    resultOffset: '%{resultOffset}',
+    records: 'jobExecutions',
+    recordsRequired: '%{resultCount}',
+    path: 'metadata-provider/jobExecutions',
+    params: (queryParams, pathComponents, resourceData) => {
+      const {
+        qindex,
+        filters,
+        query,
+        sort,
+      } = resourceData.query || {};
+
+      const queryValue = getQuery(query, qindex);
+      const filtersValues = getFilters(filters);
+      const sortValue = getSort(sort);
+
+      if (!filtersValues[FILTERS.ERRORS]) {
+        filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR];
+      }
+
+      return {
+        ...queryValue,
+        ...filtersValues,
+        ...sortValue,
+      };
+    },
+    perRequest: RESULT_COUNT_INCREMENT,
+    throwErrors: false,
+  },
+});
 
 @withCheckboxList
 @stripesConnect
+@injectIntl
 class ViewAllLogs extends Component {
   static propTypes = {
     mutator: PropTypes.object.isRequired,
@@ -197,50 +128,7 @@ class ViewAllLogs extends Component {
     actionMenuItems: ['deleteSelectedLogs'],
   };
 
-  static manifest = Object.freeze({
-    initializedFilterConfig: { initialValue: false },
-    query: {
-      initialValue: {
-        filters: '',
-        sort: '-completedDate',
-      },
-    },
-    resultCount: { initialValue: INITIAL_RESULT_COUNT },
-    resultOffset: { initialValue: 0 },
-    records: {
-      type: 'okapi',
-      clear: true,
-      resultDensity: 'sparse',
-      resultOffset: '%{resultOffset}',
-      records: 'jobExecutions',
-      recordsRequired: '%{resultCount}',
-      path: 'metadata-provider/jobExecutions',
-      params: (queryParams, pathComponents, resourceData) => {
-        const {
-          qindex,
-          filters,
-          query,
-          sort,
-        } = resourceData.query || {};
-
-        const queryValue = getQuery(query, qindex);
-        const filtersValues = getFilters(filters);
-        const sortValue = getSort(sort);
-
-        if (!filtersValues[FILTERS.ERRORS]) {
-          filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR];
-        }
-
-        return {
-          ...queryValue,
-          ...filtersValues,
-          ...sortValue,
-        };
-      },
-      perRequest: RESULT_COUNT_INCREMENT,
-      throwErrors: false,
-    },
-  });
+  static manifest = ViewAllLogsManifest;
 
   constructor(props) {
     super(props);
@@ -497,4 +385,4 @@ class ViewAllLogs extends Component {
   }
 }
 
-export default injectIntl(ViewAllLogs);
+export default ViewAllLogs;
