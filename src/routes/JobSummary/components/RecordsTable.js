@@ -85,10 +85,10 @@ export const RecordsTable = ({
     return get(query, nsKey);
   };
 
-  const handleSort = (e, meta) => {
-    const sortOrder = buildSortOrder(queryParam('sort') || defaultSort, meta.name, defaultSort, maxSortKeys);
+  const handleSort = (_e, meta) => {
+    const sort = buildSortOrder(queryParam('sort') || defaultSort, meta.name, defaultSort, maxSortKeys);
 
-    transitionToParams({ sort: sortOrder });
+    transitionToParams({ sort });
   };
 
   const sortOrderQuery = queryParam('sort') || defaultSort;
