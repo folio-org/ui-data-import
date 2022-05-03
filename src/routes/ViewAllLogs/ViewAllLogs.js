@@ -37,7 +37,10 @@ import {
   withCheckboxList,
   getJobLogsListColumnMapping,
 } from '../../utils';
-import { FILTERS } from './constants';
+import {
+  FILTERS,
+  DATA_IMPORT_POSITION,
+} from './constants';
 import {
   getQuery,
   getFilters,
@@ -65,9 +68,12 @@ export const ViewAllLogsManifest = Object.freeze({
     },
   },
   resultCount: { initialValue: INITIAL_RESULT_COUNT },
+  resultOffset: { initialValue: 0 },
   records: {
     type: 'okapi',
     clear: true,
+    resultDensity: 'sparse',
+    resultOffset: '%{resultOffset}',
     records: 'jobExecutions',
     recordsRequired: '%{resultCount}',
     path: 'metadata-provider/jobExecutions',
@@ -282,6 +288,14 @@ class ViewAllLogs extends Component {
     };
   }
 
+  onMarkPosition = (position) => {
+    sessionStorage.setItem(DATA_IMPORT_POSITION, JSON.stringify(position));
+  }
+
+  resetMarkedPosition = () => {
+    sessionStorage.setItem(DATA_IMPORT_POSITION, null);
+  }
+
   render() {
     const {
       checkboxList: {
@@ -300,6 +314,7 @@ class ViewAllLogs extends Component {
 
     const resultsFormatter = this.getResultsFormatter();
     const columnMapping = getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox });
+    const itemToView = JSON.parse(sessionStorage.getItem(DATA_IMPORT_POSITION));
 
     return (
       <div data-test-logs-list>
@@ -328,7 +343,7 @@ class ViewAllLogs extends Component {
           renderFilters={this.renderFilters}
           onFilterChange={this.handleFilterChange}
           onChangeIndex={this.changeSearchIndex}
-          pagingType="click"
+          pagingType="prev-next"
           pageAmount={RESULT_COUNT_INCREMENT}
           title={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
           resultCountMessageKey="ui-data-import.logsPaneSubtitle"
@@ -341,6 +356,10 @@ class ViewAllLogs extends Component {
             )
             : null
           }
+          resultsVirtualize={false}
+          resultsOnMarkPosition={this.onMarkPosition}
+          resultsOnResetMarkedPosition={this.resetMarkedPosition}
+          resultsCachedPosition={itemToView}
         />
         <ConfirmationModal
           id="delete-selected-logs-modal"
