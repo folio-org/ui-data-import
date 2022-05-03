@@ -14,6 +14,7 @@
 * Display Authority information on Data import log page: View (UIDATIMP-1053)
 * Fix and Cover ViewAllLogs component with unit tests: Test (UIDATIMP-1151)
 * Add UI validation for some Invoice field mapping profile fields (UIDATIMP-1134)
+* Add summary at top of individual import job's log (UIDATIMP-1153)
 * For the Data Import View all page, change from Load more to Paginated (UIDATIMP-1147)
 
 ### Bugs fixed:
