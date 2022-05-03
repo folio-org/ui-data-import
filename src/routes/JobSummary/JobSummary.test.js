@@ -64,10 +64,6 @@ const renderJobSummary = ({ dataType = 'MARC', resources }) => {
 };
 
 describe('Job summary page', () => {
-  afterEach(() => {
-    window.open.mockClear();
-  });
-
   it('should have a file name in the header', () => {
     const { getByText } = renderJobSummary({ dataType: 'EDIFACT' });
 
@@ -77,7 +73,7 @@ describe('Job summary page', () => {
   it('should have total number of records in the subheader', () => {
     const { getByText } = renderJobSummary({});
 
-    expect(getByText('1 records found')).toBeDefined();
+    expect(getByText('1 record found')).toBeDefined();
   });
 
   it('should render the summary table', () => {
