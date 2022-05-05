@@ -29,6 +29,7 @@ const {
   COMMITTED,
   ERROR,
   DISCARDED,
+  CANCELLED,
 } = FILE_STATUSES;
 
 const jobsUrlParams = [
@@ -43,6 +44,7 @@ const jobsUrlParams = [
 const logsUrlParams = [
   `statusAny=${COMMITTED}`,
   `statusAny=${ERROR}`,
+  `statusAny=${CANCELLED}`,
   `profileIdNotAny=${OCLC_CREATE_INSTANCE_JOB_ID}`,
   `profileIdNotAny=${OCLC_UPDATE_INSTANCE_JOB_ID}`,
   'limit=25',

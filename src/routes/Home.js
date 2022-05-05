@@ -136,6 +136,8 @@ export class Home extends Component {
     } = this.context;
     const { checkboxList } = this.props;
 
+    console.log({ logs });
+
     return (
       <PersistedPaneset
         appId="@folio/data-import"

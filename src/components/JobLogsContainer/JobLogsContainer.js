@@ -56,6 +56,10 @@ export const JobLogsContainer = props => {
       return formatMessage({ id: 'ui-data-import.failed' });
     }
 
+    if (status === FILE_STATUSES.CANCELLED) {
+      return formatMessage({ id: 'ui-data-import.stoppedByUser' });
+    }
+
     return formatMessage({ id: 'ui-data-import.completed' });
   };
 

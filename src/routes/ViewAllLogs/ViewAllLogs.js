@@ -52,6 +52,7 @@ import sharedCss from '../../shared.css';
 const {
   COMMITTED,
   ERROR,
+  CANCELLED,
 } = FILE_STATUSES;
 
 const INITIAL_RESULT_COUNT = 100;
@@ -90,7 +91,7 @@ export const ViewAllLogsManifest = Object.freeze({
       const sortValue = getSort(sort);
 
       if (!filtersValues[FILTERS.ERRORS]) {
-        filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR];
+        filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR, CANCELLED];
       }
 
       return {
@@ -272,6 +273,10 @@ class ViewAllLogs extends Component {
         }
 
         return formatMessage({ id: 'ui-data-import.failed' });
+      }
+
+      if (status === FILE_STATUSES.CANCELLED) {
+        return formatMessage({ id: 'ui-data-import.stoppedByUser' });
       }
 
       return formatMessage({ id: 'ui-data-import.completed' });
