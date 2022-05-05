@@ -8,6 +8,8 @@ const {
   ERROR,
 } = FILE_STATUSES;
 
+export const DATA_IMPORT_POSITION = '@folio/data-import.position';
+
 export const FILTERS = {
   ERRORS: 'statusAny',
   DATE: 'completedDate',
