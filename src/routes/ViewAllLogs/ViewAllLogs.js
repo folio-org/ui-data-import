@@ -36,6 +36,7 @@ import {
   FILE_STATUSES,
   withCheckboxList,
   getJobLogsListColumnMapping,
+  statusCellFormatter,
 } from '../../utils';
 import {
   FILTERS,
@@ -48,7 +49,6 @@ import {
 } from './ViewAllLogsUtils';
 
 import sharedCss from '../../shared.css';
-import { statusCellFormatter } from '../../utils/formatStatusCell';
 
 const {
   COMMITTED,

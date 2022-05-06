@@ -12,10 +12,10 @@ import {
   DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
   checkboxListShape,
   getJobLogsListColumnMapping,
+  statusCellFormatter,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
-import { statusCellFormatter } from '../../utils/formatStatusCell';
 
 export const JobLogsContainer = props => {
   const {

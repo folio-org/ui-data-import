@@ -31,3 +31,4 @@ export * from './updateValueWithTemplate';
 export * from './useForceUpdate';
 export * from './withProfileWrapper';
 export * from './xhr';
+export * from './formatStatusCell';
