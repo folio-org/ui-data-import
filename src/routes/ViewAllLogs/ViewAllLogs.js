@@ -48,6 +48,7 @@ import {
 } from './ViewAllLogsUtils';
 
 import sharedCss from '../../shared.css';
+import { statusCellFormatter } from '../../utils/formatStatusCell';
 
 const {
   COMMITTED,
@@ -261,26 +262,6 @@ class ViewAllLogs extends Component {
         {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
       </Button>
     );
-    const statusCellFormatter = record => {
-      const {
-        status,
-        progress,
-      } = record;
-
-      if (status === FILE_STATUSES.ERROR) {
-        if (progress && progress.current > 0) {
-          return formatMessage({ id: 'ui-data-import.completedWithErrors' });
-        }
-
-        return formatMessage({ id: 'ui-data-import.failed' });
-      }
-
-      if (status === FILE_STATUSES.CANCELLED) {
-        return formatMessage({ id: 'ui-data-import.stoppedByUser' });
-      }
-
-      return formatMessage({ id: 'ui-data-import.completed' });
-    };
 
     return {
       ...listTemplate({
@@ -289,7 +270,7 @@ class ViewAllLogs extends Component {
         selectedRecords,
       }),
       fileName: fileNameCellFormatter,
-      status: statusCellFormatter,
+      status: statusCellFormatter(formatMessage),
     };
   }
 

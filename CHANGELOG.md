@@ -16,6 +16,7 @@
 * Add UI validation for some Invoice field mapping profile fields (UIDATIMP-1134)
 * Add summary at top of individual import job's log (UIDATIMP-1153)
 * For the Data Import View all page, change from Load more to Paginated (UIDATIMP-1147)
+* Change the status message for import jobs that are stopped by users (UIDATIMP-1148)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
