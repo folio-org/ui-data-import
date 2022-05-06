@@ -2,41 +2,20 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import {
-  useJobLogsProperties,
-  useJobLogsListFormatter,
-  DEFAULT_JOB_LOGS_COLUMNS,
-} from '@folio/stripes-data-transfer-components';
 import { Button } from '@folio/stripes/components';
+import { useJobLogsProperties } from '@folio/stripes-data-transfer-components';
+
+import { listTemplate } from '../ListTemplate';
 
 import {
-  CheckboxHeader,
-  listTemplate,
-} from '../ListTemplate';
-import {
   DEFAULT_JOB_LOG_COLUMNS,
+  DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
   FILE_STATUSES,
   checkboxListShape,
+  getJobLogsListColumnMapping,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
-
-const customProperties = {
-  visibleColumns: DEFAULT_JOB_LOG_COLUMNS,
-  columnWidths: {
-    hrId: '60px',
-    totalRecords: '80px',
-  },
-  columnMapping: {
-    fileName: 'ui-data-import.fileName',
-    status: 'ui-data-import.status',
-    jobExecutionHrId: 'ui-data-import.jobExecutionHrId',
-    jobProfileName: 'ui-data-import.jobProfileName',
-    records: 'ui-data-import.records',
-    jobCompletedDate: 'ui-data-import.jobCompletedDate',
-    runBy: 'ui-data-import.runBy',
-  },
-};
 
 export const JobLogsContainer = props => {
   const {
@@ -63,7 +42,6 @@ export const JobLogsContainer = props => {
       {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
     </Button>
   );
-
   const statusCellFormatter = record => {
     const {
       status,
@@ -81,41 +59,22 @@ export const JobLogsContainer = props => {
     return formatMessage({ id: 'ui-data-import.completed' });
   };
 
-  const visibleColumns = [
-    'selected',
-    ...DEFAULT_JOB_LOGS_COLUMNS,
-  ];
-  const columnMapping = {
-    selected: (
-      <CheckboxHeader
-        checked={isAllSelected}
-        onChange={handleSelectAllCheckbox}
-      />
-    ),
-    fileName: formatMessage({ id: 'stripes-data-transfer-components.fileName' }),
-    hrId: formatMessage({ id: 'stripes-data-transfer-components.jobExecutionHrId' }),
-    jobProfileName: formatMessage({ id: 'stripes-data-transfer-components.jobProfileName' }),
-    totalRecords: formatMessage({ id: 'stripes-data-transfer-components.records' }),
-    completedDate: formatMessage({ id: 'stripes-data-transfer-components.jobCompletedDate' }),
-    runBy: formatMessage({ id: 'stripes-data-transfer-components.runBy' }),
+  const customProperties = {
+    visibleColumns: DEFAULT_JOB_LOG_COLUMNS,
+    columnWidths: DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
   };
-  const columnWidths = { selected: '40px' };
 
   const listProps = {
     ...useJobLogsProperties(customProperties),
-    visibleColumns,
-    columnMapping,
-    columnWidths,
-    resultsFormatter: useJobLogsListFormatter(
-      {
-        ...listTemplate({
-          selectRecord,
-          selectedRecords,
-        }),
-        status: statusCellFormatter,
-        fileName: fileNameCellFormatter,
-      },
-    ),
+    columnMapping: getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox }),
+    resultsFormatter: {
+      ...listTemplate({
+        selectRecord,
+        selectedRecords,
+      }),
+      fileName: fileNameCellFormatter,
+      status: statusCellFormatter,
+    },
   };
 
   return (

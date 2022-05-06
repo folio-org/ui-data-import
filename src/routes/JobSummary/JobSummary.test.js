@@ -1,7 +1,5 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import faker from 'faker';
 
 import {
   buildResources,
@@ -14,24 +12,16 @@ import { translationsProperties } from '../../../test/jest/helpers';
 
 import { JobSummary } from './JobSummary';
 
-window.open = jest.fn();
-window.open.mockReturnValue({ focus: jest.fn() });
-
-const firstRecordJobExecutionId = faker.random.uuid();
-const sourceRecordsIds = [
-  faker.random.uuid(),
-  faker.random.uuid(),
-  faker.random.uuid(),
-  faker.random.uuid(),
-  faker.random.uuid(),
-  faker.random.uuid(),
-];
-const instanceId = faker.random.uuid();
-const authorityId = faker.random.uuid();
+jest.mock('./components', () => ({
+  ...jest.requireActual('./components'),
+  SummaryTable: () => 'SummaryTable',
+  RecordsTable: () => 'RecordsTable',
+}));
 
 const getJobExecutionsResources = dataType => buildResources({
   resourceName: 'jobExecutions',
   records: [{
+    id: 'testId',
     fileName: 'testFileName',
     progress: { total: 10 },
     jobProfileInfo: { dataType },
@@ -39,141 +29,11 @@ const getJobExecutionsResources = dataType => buildResources({
 });
 const jobLogEntriesResources = buildResources({
   resourceName: 'jobLogEntries',
-  records: [{
-    sourceRecordActionStatus: 'CREATED',
-    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-    instanceActionStatus: 'CREATED',
-    authorityActionStatus: 'CREATED',
-    jobExecutionId: firstRecordJobExecutionId,
-    sourceRecordId: sourceRecordsIds[0],
-    sourceRecordOrder: '0',
-    sourceRecordTitle: 'Test item 1',
-  }, {
-    instanceActionStatus: 'UPDATED',
-    authorityActionStatus: 'UPDATED',
-    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-    jobExecutionId: faker.random.uuid(),
-    sourceRecordId: sourceRecordsIds[1],
-    sourceRecordOrder: '1',
-    sourceRecordTitle: 'Test item 2',
-  }, {
-    holdingsActionStatus: 'MULTIPLE',
-    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-    jobExecutionId: faker.random.uuid(),
-    sourceRecordId: sourceRecordsIds[2],
-    sourceRecordOrder: '2',
-    sourceRecordTitle: 'Test item 3',
-  }, {
-    itemActionStatus: 'DISCARDED',
-    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-    jobExecutionId: faker.random.uuid(),
-    sourceRecordId: sourceRecordsIds[3],
-    sourceRecordOrder: '3',
-    sourceRecordTitle: 'Test item 4',
-    error: 'Error message',
-  }, {
-    sourceRecordActionStatus: 'CREATED',
-    holdingsActionStatus: 'CREATED',
-    holdingsRecordHridList: ['holdingsHrid1'],
-    sourceRecordType: 'MARC_HOLDINGS',
-    jobExecutionId: faker.random.uuid(),
-    sourceRecordId: sourceRecordsIds[4],
-    sourceRecordOrder: '4',
-    sourceRecordTitle: 'Test item 5',
-  }, {
-    sourceRecordActionStatus: 'DISCARDED',
-    holdingsActionStatus: 'DISCARDED',
-    holdingsRecordHridList: ['holdingsHrid2'],
-    sourceRecordType: 'MARC_HOLDINGS',
-    jobExecutionId: faker.random.uuid(),
-    sourceRecordId: sourceRecordsIds[5],
-    sourceRecordOrder: '5',
-    sourceRecordTitle: 'Test item 6',
-  }],
+  records: [{}],
 });
 const jobLogResources = buildResources({
   resourceName: 'jobLog',
-  records: [{
-    sourceRecordId: sourceRecordsIds[0],
-    sourceRecordOrder: '0',
-    sourceRecordTitle: 'Test item 1',
-    relatedInstanceInfo: {
-      actionStatus: 'CREATED',
-      idList: [instanceId],
-    },
-    relatedHoldingsInfo: {
-      actionStatus: 'CREATED',
-      idList: [faker.random.uuid()],
-    },
-    relatedItemInfo: {
-      actionStatus: 'CREATED',
-      idList: [faker.random.uuid()],
-    },
-    relatedAuthorityInfo: {
-      actionStatus: 'CREATED',
-      idList: [authorityId],
-    },
-  }, {
-    sourceRecordId: sourceRecordsIds[1],
-    sourceRecordOrder: '1',
-    sourceRecordTitle: 'Test item 2',
-    relatedInstanceInfo: {
-      actionStatus: 'UPDATED',
-      idList: [instanceId],
-    },
-    relatedHoldingsInfo: {
-      actionStatus: 'UPDATED',
-      idList: [faker.random.uuid()],
-    },
-    relatedItemInfo: {
-      actionStatus: 'UPDATED',
-      idList: [faker.random.uuid()],
-    },
-    relatedAuthorityInfo: {
-      actionStatus: 'UPDATED',
-      idList: [authorityId],
-    },
-  }, {
-    sourceRecordId: sourceRecordsIds[2],
-    sourceRecordOrder: '2',
-    sourceRecordTitle: 'Test item 1',
-    relatedInstanceInfo: {
-      actionStatus: 'MULTIPLE',
-      idList: [faker.random.uuid()],
-    },
-    relatedHoldingsInfo: {
-      actionStatus: 'MULTIPLE',
-      idList: [faker.random.uuid()],
-    },
-    relatedItemInfo: {
-      actionStatus: 'MULTIPLE',
-      idList: [faker.random.uuid()],
-    },
-    relatedAuthorityInfo: {
-      actionStatus: 'MULTIPLE',
-      idList: [faker.random.uuid()],
-    },
-  }, {
-    sourceRecordId: sourceRecordsIds[3],
-    sourceRecordOrder: '3',
-    sourceRecordTitle: 'Test item 4',
-    relatedInstanceInfo: {
-      actionStatus: 'DISCARDED',
-      idList: [faker.random.uuid()],
-    },
-    relatedHoldingsInfo: {
-      actionStatus: 'DISCARDED',
-      idList: [faker.random.uuid()],
-    },
-    relatedItemInfo: {
-      actionStatus: 'DISCARDED',
-      idList: [faker.random.uuid()],
-    },
-    relatedAuthorityInfo: {
-      actionStatus: 'DISCARDED',
-      idList: [faker.random.uuid()],
-    },
-  }],
+  records: [{}],
 });
 const getResources = dataType => ({
   ...getJobExecutionsResources(dataType),
@@ -181,14 +41,21 @@ const getResources = dataType => ({
   ...jobLogResources,
 });
 
-const mutator = buildMutator();
+const mutator = buildMutator({
+  jobLog: { GET: jest.fn() },
+});
 
-const renderJobSummary = (dataType = 'MARC') => {
+const renderJobSummary = ({ dataType = 'MARC', resources }) => {
   const component = (
     <Router>
       <JobSummary
-        resources={getResources(dataType)}
+        resources={resources || getResources(dataType)}
         mutator={mutator}
+        location={{
+          search: '',
+          pathname: '',
+        }}
+        history={{ push: () => {} }}
       />
     </Router>
   );
@@ -197,130 +64,33 @@ const renderJobSummary = (dataType = 'MARC') => {
 };
 
 describe('Job summary page', () => {
-  afterEach(() => {
-    window.open.mockClear();
-  });
-
   it('should have a file name in the header', () => {
-    const { getByText } = renderJobSummary();
+    const { getByText } = renderJobSummary({ dataType: 'EDIFACT' });
 
     expect(getByText('testFileName')).toBeDefined();
   });
 
   it('should have total number of records in the subheader', () => {
-    const { getByText } = renderJobSummary();
+    const { getByText } = renderJobSummary({});
 
-    expect(getByText('6 records found')).toBeDefined();
+    expect(getByText('1 record found')).toBeDefined();
   });
 
-  describe('results table', () => {
-    it('should have proper columns', () => {
-      const { getByText } = renderJobSummary();
-      /*
-       * Get "Holdings" and "Error" labels by query selector instead of by "getByText" because there are
-       * "Holdings" / "Error" column labels and "Holdings" / "Error" messages in cells on the page
-       */
-      const holdingsColumn = document.querySelector('#list-column-holdingsstatus div[class^="mclHeaderInner"] > div');
-      const errorColumn = document.querySelector('#list-column-error div[class^="mclHeaderInner"] > div');
+  it('should render the summary table', () => {
+    const { getByText } = renderJobSummary({});
 
-      expect(getByText('Record')).toBeDefined();
-      expect(getByText('Title')).toBeDefined();
-      expect(getByText('SRS MARC')).toBeDefined();
-      expect(getByText('Instance')).toBeDefined();
-      expect(holdingsColumn.innerHTML).toEqual('Holdings');
-      expect(getByText('Item')).toBeDefined();
-      expect(getByText('Authority')).toBeDefined();
-      expect(getByText('Order')).toBeDefined();
-      expect(getByText('Invoice')).toBeDefined();
-      expect(errorColumn.innerHTML).toEqual('Error');
-    });
-
-    describe('record order field', () => {
-      describe('for EDIFACT data type', () => {
-        it('should display order as it is', () => {
-          const { container } = renderJobSummary('EDIFACT');
-
-          const cells = container.querySelectorAll('[role="gridcell"]');
-          const firstRowRecordOrder = cells[0].innerHTML;
-
-          expect(firstRowRecordOrder).toEqual('0');
-        });
-      });
-
-      describe('for MARC data type', () => {
-        it('should display incremented order', () => {
-          const { container } = renderJobSummary('MARC');
-
-          const cells = container.querySelectorAll('[role="gridcell"]');
-          const firstRowRecordOrder = cells[0].innerHTML;
-
-          expect(firstRowRecordOrder).toEqual('1');
-        });
-      });
-    });
+    expect(getByText('SummaryTable')).toBeDefined();
   });
 
-  describe('when clicking on a record title', () => {
-    it('should navigate to the log details screen', () => {
-      const { getByText } = renderJobSummary();
+  it('should render the records table', () => {
+    const { getByText } = renderJobSummary({});
 
-      expect(getByText('Test item 1').href).toContain(`/data-import/log/${firstRecordJobExecutionId}/${sourceRecordsIds[0]}`);
-    });
+    expect(getByText('RecordsTable')).toBeDefined();
   });
 
-  describe('when action status is CREATED', () => {
-    it('the instance value should be a hotlink', () => {
-      const { container } = renderJobSummary();
+  it('should fetch job logs once jobExecutionsId is known', () => {
+    renderJobSummary({});
 
-      fireEvent.click(container.querySelector('[data-row-index="row-0"] [data-test-entity-name="instance"]'));
-
-      expect(window.location.href).toContain(`/inventory/view/${instanceId}`);
-    });
-
-    it('the authority value should be a hotlink', () => {
-      const { container } = renderJobSummary();
-
-      fireEvent.click(container.querySelector('[data-row-index="row-0"] [data-test-entity-name="authority"]'));
-
-      expect(window.location.href).toContain(`/marc-authorities/authorities/${authorityId}`);
-    });
-  });
-
-  describe('when action status is UPDATED', () => {
-    it('the instance value should be a hotlink', () => {
-      const { container } = renderJobSummary();
-
-      fireEvent.click(container.querySelector('[data-row-index="row-1"] [data-test-entity-name="instance"]'));
-
-      expect(window.location.href).toContain(`/inventory/view/${instanceId}`);
-    });
-
-    it('the authority value should be a hotlink', () => {
-      const { container } = renderJobSummary();
-
-      fireEvent.click(container.querySelector('[data-row-index="row-1"] [data-test-entity-name="authority"]'));
-
-      expect(window.location.href).toContain(`/marc-authorities/authorities/${authorityId}`);
-    });
-  });
-
-  describe('when action status is MULTIPLE', () => {
-    it('the value should be a text', () => {
-      const { getByText } = renderJobSummary();
-
-      expect(getByText('Multiple')).not.toHaveAttribute('href');
-    });
-  });
-
-  describe('when action status is DISCARDED', () => {
-    it('the value should be a text', () => {
-      const { getAllByText } = renderJobSummary();
-
-      const discardedStatuses = getAllByText('Discarded');
-
-      discardedStatuses.forEach(status => {
-        expect(status).not.toHaveAttribute('href');
-      });
-    });
+    expect(mutator.jobLog.GET).toHaveBeenCalled();
   });
 });

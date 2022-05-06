@@ -261,7 +261,7 @@
     "settings.profile.unlink": "Verknüpfung dieses Profils aufheben",
     "modal.profile.unlink.heading": "Entfernen bestätigen",
     "modal.profile.unlink.message": "Verknüpfung von {profileType1} mit {profileType2} auflösen?",
-    "emptyMessage": "Dieser {typ} enthält keine Einträge",
+    "emptyMessage": "Dieser {type} enthält keine Einträge",
     "list": "list",
     "section": "Abschnitt",
     "settings.action.add": "Hinzufügen",
