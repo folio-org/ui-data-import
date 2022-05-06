@@ -44,4 +44,15 @@ describe('statusCellFormatter function', () => {
       });
     });
   });
+
+  describe('when job status is CANCELLED', () => {
+    it('should be called with appropriate arguments', () => {
+      const record = { status: FILE_STATUSES.CANCELLED };
+      const formatter = statusCellFormatter(formatMessage);
+
+      formatter(record);
+
+      expect(formatMessage).toHaveBeenCalledWith({ id: 'ui-data-import.stoppedByUser' });
+    });
+  });
 });
