@@ -406,7 +406,7 @@ export const INSTANCE_RESOURCE_PATHS = [
   'instanceprecedingsucceedingtitle.json',
 ];
 
-export const INSTANCE_RESOURCE_PATHS2 = [
+export const ACQ_DATA_RESOURCE_PATHS = [
   'acq-models/mod-orders-storage/schemas/po_line.json',
   'acq-models/mod-orders-storage/schemas/vendor_detail.json',
 ];
