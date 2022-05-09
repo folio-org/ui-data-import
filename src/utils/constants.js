@@ -49,7 +49,6 @@ export const FILE_STATUSES = {
   ERROR_DEFINITION: 'ERROR_DEFINITION',
   DELETING: 'DELETING',
   DISCARDED: 'DISCARDED',
-  CANCELLED: 'CANCELLED',
 };
 
 export const JOB_STATUSES = {
@@ -405,6 +404,11 @@ export const INSTANCE_RESOURCE_PATHS = [
   'instance.json',
   'instancerelationship.json',
   'instanceprecedingsucceedingtitle.json',
+];
+
+export const INSTANCE_RESOURCE_PATHS2 = [
+  'acq-models/mod-orders-storage/schemas/po_line.json',
+  'acq-models/mod-orders-storage/schemas/vendor_detail.json',
 ];
 
 export const HOLDINGS_RESOURCE_PATHS = [
