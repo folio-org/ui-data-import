@@ -36,6 +36,7 @@ import {
   FILE_STATUSES,
   withCheckboxList,
   getJobLogsListColumnMapping,
+  statusCellFormatter,
 } from '../../utils';
 import {
   FILTERS,
@@ -52,6 +53,7 @@ import sharedCss from '../../shared.css';
 const {
   COMMITTED,
   ERROR,
+  CANCELLED,
 } = FILE_STATUSES;
 
 const INITIAL_RESULT_COUNT = 100;
@@ -90,7 +92,7 @@ export const ViewAllLogsManifest = Object.freeze({
       const sortValue = getSort(sort);
 
       if (!filtersValues[FILTERS.ERRORS]) {
-        filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR];
+        filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR, CANCELLED];
       }
 
       return {
@@ -260,22 +262,6 @@ class ViewAllLogs extends Component {
         {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
       </Button>
     );
-    const statusCellFormatter = record => {
-      const {
-        status,
-        progress,
-      } = record;
-
-      if (status === FILE_STATUSES.ERROR) {
-        if (progress && progress.current > 0) {
-          return formatMessage({ id: 'ui-data-import.completedWithErrors' });
-        }
-
-        return formatMessage({ id: 'ui-data-import.failed' });
-      }
-
-      return formatMessage({ id: 'ui-data-import.completed' });
-    };
 
     return {
       ...listTemplate({
@@ -284,7 +270,7 @@ class ViewAllLogs extends Component {
         selectedRecords,
       }),
       fileName: fileNameCellFormatter,
-      status: statusCellFormatter,
+      status: statusCellFormatter(formatMessage),
     };
   }
 
