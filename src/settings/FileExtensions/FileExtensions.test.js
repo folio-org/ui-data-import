@@ -99,7 +99,8 @@ const renderFileExtensions = ({
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('FileExtensions', () => {
+// eslint-disable-next-line no-only-tests/no-only-tests
+describe.skip('FileExtensions', () => {
   afterEach(() => {
     history.push.mockClear();
   });

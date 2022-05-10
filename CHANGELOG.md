@@ -1,6 +1,9 @@
 # Change history for ui-data-import
 
-## **5.2.0** (in progress)
+## **5.1.3** (in progress)
+
+### Bugs fixed:
+* UI problem with Settings panes in Lotus Bugfest (UIDATIMP-1142)
 
 ## [5.1.2](https://github.com/folio-org/ui-data-import/tree/v5.1.2) (2022-03-24)
 
@@ -53,6 +56,7 @@
 * Job profiles are showing incorrect info for "Jobs using this profile" accordion (UIDATIMP-1081)
 * Settings > Data Import > change focus (UIDATIMP-1085)
 * When duplicating job profile, retain the details from the profile being duplicated (UIDATIMP-1082)
+* Update Actions dropdown for several default profiles (UIDATIMP-1096)
 
 ### Bugs fixed:
 * Need to be able to use the same match profile in the same job profile, with different actions (UIDATIMP-1067)
