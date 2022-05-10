@@ -18,7 +18,6 @@ import {
 import {
   Layer,
   Pane,
-  Paneset,
   SRStatus,
   PaneHeader,
   HasCommand,
