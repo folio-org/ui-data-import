@@ -161,6 +161,7 @@
   "failed": "Failed",
   "completed": "Completed",
   "completedWithErrors": "Completed with errors",
+  "stoppedByUser": "Stopped by user",
   "placeholder.jobExecutionHrId": "Search for ID",
   "placeholder.fileName": "Search for File name",
   "communicationProblem": "Server communication problem. Please try again",
