@@ -416,6 +416,11 @@ export const ITEM_RESOURCE_PATHS = [
   'item.json',
 ];
 
+export const ACQ_DATA_RESOURCE_PATHS = [
+  'acq-models/mod-orders-storage/schemas/po_line.json',
+  'acq-models/mod-orders-storage/schemas/vendor_detail.json',
+];
+
 export const ORDER_RESOURCE_PATHS = [
   'raml-util/schemas/metadata.schema',
   'acq-models/mod-orders-storage/schemas/purchase_order.json',

@@ -15,6 +15,7 @@
 * Fix and Cover ViewAllLogs component with unit tests: Test (UIDATIMP-1151)
 * Add UI validation for some Invoice field mapping profile fields (UIDATIMP-1134)
 * For the Data Import View all page, change from Load more to Paginated (UIDATIMP-1147)
+* Update match screen UI for Holdings (UIDATIMP-1047)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
