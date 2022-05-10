@@ -17,11 +17,13 @@
 * Add summary at top of individual import job's log (UIDATIMP-1153)
 * For the Data Import View all page, change from Load more to Paginated (UIDATIMP-1147)
 * Change the status message for import jobs that are stopped by users (UIDATIMP-1148)
+* For long Data import logs, change from Load more to Paginated (UIDATIMP-1146)
 * Update match screen UI for Instances (UIDATIMP-1046)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
 * Some issues with log searching in Juniper Bugfest/Smoke testing (UIDATIMP-1125)
+* UI problem with Settings panes in Lotus Bugfest (UIDATIMP-1142)
 
 ## [5.1.2](https://github.com/folio-org/ui-data-import/tree/v5.1.2) (2022-03-24)
 

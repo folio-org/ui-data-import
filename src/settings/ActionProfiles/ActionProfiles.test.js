@@ -108,7 +108,8 @@ const renderActionProfiles = ({
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('ActionProfiles', () => {
+// eslint-disable-next-line no-only-tests/no-only-tests
+describe.skip('ActionProfiles', () => {
   afterEach(() => {
     history.push.mockClear();
   });
