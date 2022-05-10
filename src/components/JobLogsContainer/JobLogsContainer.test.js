@@ -6,19 +6,25 @@ import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { JobLogsContainer } from './JobLogsContainer';
+import { FILE_STATUSES } from '../../utils';
 
 const successfulRecord = {
-  status: 'COMMITTED',
+  status: FILE_STATUSES.COMMITTED,
   progress: { current: 0 },
 };
 
 const failedRecord = {
-  status: 'ERROR',
+  status: FILE_STATUSES.ERROR,
   progress: { current: 0 },
 };
 
 const completedWithErrorsRecord = {
-  status: 'ERROR',
+  status: FILE_STATUSES.ERROR,
+  progress: { current: 1 },
+};
+
+const cancelledRecord = {
+  status: FILE_STATUSES.CANCELLED,
   progress: { current: 1 },
 };
 
@@ -27,6 +33,8 @@ const checkboxListProp = {
   handleSelectAllCheckbox: noop,
   selectRecord: noop,
   selectedRecords: new Set(),
+  selectAll: noop,
+  deselectAll: noop,
 };
 
 const renderJobLogsContainer = record => {
@@ -79,6 +87,14 @@ describe('Job Logs container', () => {
 
         expect(getByText('Completed with errors')).toBeDefined();
       });
+    });
+  });
+
+  describe('when job status is CANCELLED', () => {
+    it('then component should be rendered with appropriate text', () => {
+      const { getByText } = renderJobLogsContainer(cancelledRecord);
+
+      expect(getByText('Stopped by user')).toBeDefined();
     });
   });
 });
