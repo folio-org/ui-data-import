@@ -887,13 +887,13 @@ export const fieldsConfig = [
   /* Item acquisitions data */
   {
     id: 'poLineNumber',
-    label: 'ui-data-import.settings.mappingProfiles.map.item.acquisitionsData.field.purchaseOrderLineNumber',
+    label: 'ui-data-import.settings.mappingProfiles.map.acquisitionsData.field.purchaseOrderLineNumber',
     categoryId: 'acquisitions-data',
     value: 'item.purchaseOrderLineNumber',
     recordType: 'ITEM',
   }, {
     id: 'referenceNumbers',
-    label: 'ui-data-import.settings.mappingProfiles.map.item.acquisitionsData.field.vendorReferenceNumber',
+    label: 'ui-data-import.settings.mappingProfiles.map.acquisitionsData.field.vendorReferenceNumber',
     categoryId: 'acquisitions-data',
     value: 'item.vendorReferenceNumber',
     recordType: 'ITEM',
