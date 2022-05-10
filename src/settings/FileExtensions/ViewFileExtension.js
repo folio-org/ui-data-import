@@ -170,6 +170,7 @@ export class ViewFileExtension extends Component {
           defaultWidth="fill"
           fluidContentWidth
           renderHeader={this.renderPaneHeader}
+          id="view-file-extension-pane"
         >
           <TitleManager record={record.extension} />
           <Headline

@@ -18,7 +18,6 @@ import {
 import {
   Layer,
   Pane,
-  Paneset,
   SRStatus,
   PaneHeader,
   HasCommand,
@@ -734,25 +733,23 @@ export class SearchAndSort extends Component {
           isWithinScope={checkScope}
           scope={document.body}
         >
-          <Paneset>
-            <SRStatus ref={this.SRStatusRef} />
-            <Pane
-              id="pane-results"
-              defaultWidth="fill"
-              noOverflow
-              padContent={false}
-              renderHeader={this.renderPaneHeader}
-            >
-              <div className={css.paneBody}>
-                {this.renderSearch(source)}
-                <div className={css.searchResults}>
-                  {this.renderSearchResults(source)}
-                </div>
+          <SRStatus ref={this.SRStatusRef} />
+          <Pane
+            id="pane-results"
+            defaultWidth="fill"
+            noOverflow
+            padContent={false}
+            renderHeader={this.renderPaneHeader}
+          >
+            <div className={css.paneBody}>
+              {this.renderSearch(source)}
+              <div className={css.searchResults}>
+                {this.renderSearchResults(source)}
               </div>
-            </Pane>
-            {!isFullScreen && this.renderDetailsPane(source)}
-            {this.renderCreateRecordLayer(source)}
-          </Paneset>
+            </div>
+          </Pane>
+          {!isFullScreen && this.renderDetailsPane(source)}
+          {this.renderCreateRecordLayer(source)}
           {isFullScreen && this.renderDetailsPane(source)}
         </HasCommand>
       </>
