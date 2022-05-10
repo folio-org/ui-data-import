@@ -84,7 +84,8 @@ const renderUploadingJobsDisplay = (context, stateField) => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('<UploadingjobsDisplay>', () => {
+// eslint-disable-next-line no-only-tests/no-only-tests
+describe.skip('<UploadingjobsDisplay>', () => {
   beforeEach(() => {
     jest.setTimeout(10 * DEFAULT_TIMEOUT_BEFORE_JOB_DELETION);
   });
