@@ -54,7 +54,7 @@ export const RecordsTable = ({
   const { resultOffset } = mutator;
 
   // remove empty slots from sparse array
-  const filteredJobLogEntriesRecords = resources.jobLogEntries?.records?.filter(r => !!r);
+  const filteredJobLogEntriesRecords = resources.jobLogEntries?.records?.filter(record => !!record);
 
   const getHotlinkCellFormatter = (isHotlink, entityLabel, path, entity) => {
     if (isHotlink) {
