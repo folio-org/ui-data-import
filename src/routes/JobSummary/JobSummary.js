@@ -73,6 +73,11 @@ const JobSummaryComponent = props => {
     }
   }, [jobExecutionsId, jobLogEntriesRecords]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // TODO: Refactor this code after fix of UIDATIMP-1164
+  useEffect(() => {
+    mutator.resultOffset?.replace(0);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const getSource = () => {
     const resourceName = 'jobLogEntries';
     const parentResources = resources;

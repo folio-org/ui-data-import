@@ -18,8 +18,8 @@ import {
   Button,
   NoValue,
 } from '@folio/stripes/components';
-
 import { pagingTypes } from '@folio/stripes-components/lib/MultiColumnList';
+
 import { FOLIO_RECORD_TYPES } from '../../../components';
 
 import {
@@ -156,7 +156,6 @@ export const RecordsTable = ({
           marginBottom0
           to={path}
           buttonClass={sharedCss.cellLink}
-          onClick={e => e.stopPropagation()}
         >
           {title}
         </Button>
