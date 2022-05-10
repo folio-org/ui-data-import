@@ -884,6 +884,20 @@ export const fieldsConfig = [
     value: 'item.electronicAccess[].publicNote',
     recordType: 'ITEM',
   },
+  /* Item acquisitions data */
+  {
+    id: 'poLineNumber',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.acquisitionsData.field.purchaseOrderLineNumber',
+    categoryId: 'acquisitions-data',
+    value: 'item.purchaseOrderLineNumber',
+    recordType: 'ITEM',
+  }, {
+    id: 'referenceNumbers',
+    label: 'ui-data-import.settings.mappingProfiles.map.item.acquisitionsData.field.vendorReferenceNumber',
+    categoryId: 'acquisitions-data',
+    value: 'item.vendorReferenceNumber',
+    recordType: 'ITEM',
+  },
   /* Order PO admin data */
   {
     id: 'updatedDate',

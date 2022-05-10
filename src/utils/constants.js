@@ -407,6 +407,11 @@ export const INSTANCE_RESOURCE_PATHS = [
   'instanceprecedingsucceedingtitle.json',
 ];
 
+export const ACQ_DATA_RESOURCE_PATHS = [
+  'acq-models/mod-orders-storage/schemas/po_line.json',
+  'acq-models/mod-orders-storage/schemas/vendor_detail.json',
+];
+
 export const HOLDINGS_RESOURCE_PATHS = [
   'raml-util/schemas/metadata.schema',
   'holdingsrecord.json',

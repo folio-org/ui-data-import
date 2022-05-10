@@ -105,6 +105,11 @@ export const fieldCategoriesConfig = [
     label: 'ui-data-import.settings.matchProfiles.electronicAccess',
     moduleId: 'item',
   },
+  {
+    id: 'acquisitions-data',
+    label: 'ui-data-import.settings.matchProfiles.acquisitionsData',
+    moduleId: 'item',
+  },
   /* Order */
   {
     id: 'po-admin-data',
