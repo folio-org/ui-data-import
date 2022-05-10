@@ -18,6 +18,7 @@ import {
   Button,
   NoValue,
 } from '@folio/stripes/components';
+import { pagingTypes } from '@folio/stripes-components/lib/MultiColumnList';
 
 import { FOLIO_RECORD_TYPES } from '../../../components';
 
@@ -51,6 +52,9 @@ export const RecordsTable = ({
   isEdifactType,
 }) => {
   const { resultOffset } = mutator;
+
+  // remove empty slots from sparse array
+  const filteredJobLogEntriesRecords = resources.jobLogEntries?.records?.filter(record => !!record);
 
   const getHotlinkCellFormatter = (isHotlink, entityLabel, path, entity) => {
     if (isHotlink) {
@@ -133,7 +137,7 @@ export const RecordsTable = ({
       holdingsActionStatus,
       invoiceLineJournalRecordId,
     }) => {
-      const jobExecutionId = resources.jobLogEntries.records[0].jobExecutionId;
+      const jobExecutionId = filteredJobLogEntriesRecords[0]?.jobExecutionId;
       const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
         isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
 
@@ -257,7 +261,8 @@ export const RecordsTable = ({
       sortDirection={sortDirection}
       resultOffset={resultOffset}
       onHeaderClick={handleSort}
-      pagingType="click"
+      pagingType={pagingTypes.PREV_NEXT}
+      virtualize={false}
       pageAmount={pageAmount}
       columnWidths={{
         recordNumber: '90px',
