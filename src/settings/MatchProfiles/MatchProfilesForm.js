@@ -69,7 +69,7 @@ const validate = values => {
   const incomingRecordFields = values.profile.matchDetails[0].incomingMatchExpression.fields;
 
   const validateMARCRecordFields = (recordFieldType, recordFields) => {
-    const fieldValue = recordFields[0]?.value;
+    const fieldValue = recordFields[0].value;
     const indicator1Value = recordFields[1]?.value;
     const indicator2Value = recordFields[2]?.value;
     const subfieldValue = recordFields[3]?.value;
