@@ -473,7 +473,7 @@ export const validateQuotedString = value => {
     return undefined;
   }
 
-  const pattern = /^"\w+"$/;
+  const pattern = /^"[^"]+"$/;
 
   if (value.match(pattern)) {
     return undefined;

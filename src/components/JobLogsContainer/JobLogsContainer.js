@@ -10,9 +10,9 @@ import { listTemplate } from '../ListTemplate';
 import {
   DEFAULT_JOB_LOG_COLUMNS,
   DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
-  FILE_STATUSES,
   checkboxListShape,
   getJobLogsListColumnMapping,
+  statusCellFormatter,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
@@ -42,22 +42,6 @@ export const JobLogsContainer = props => {
       {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
     </Button>
   );
-  const statusCellFormatter = record => {
-    const {
-      status,
-      progress,
-    } = record;
-
-    if (status === FILE_STATUSES.ERROR) {
-      if (progress && progress.current > 0) {
-        return formatMessage({ id: 'ui-data-import.completedWithErrors' });
-      }
-
-      return formatMessage({ id: 'ui-data-import.failed' });
-    }
-
-    return formatMessage({ id: 'ui-data-import.completed' });
-  };
 
   const customProperties = {
     visibleColumns: DEFAULT_JOB_LOG_COLUMNS,
@@ -73,7 +57,7 @@ export const JobLogsContainer = props => {
         selectedRecords,
       }),
       fileName: fileNameCellFormatter,
-      status: statusCellFormatter,
+      status: statusCellFormatter(formatMessage),
     },
   };
 

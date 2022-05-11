@@ -269,6 +269,7 @@ const ViewJobProfileComponent = props => {
         defaultWidth="fill"
         fluidContentWidth
         renderHeader={renderPaneHeader}
+        id="view-job-profile-pane"
       >
         <TitleManager record={jobProfileRecord.name} />
         <Headline

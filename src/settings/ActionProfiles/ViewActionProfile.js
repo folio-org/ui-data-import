@@ -231,6 +231,7 @@ export class ViewActionProfile extends Component {
           defaultWidth="fill"
           fluidContentWidth
           renderHeader={this.renderPaneHeader}
+          id="view-action-profile-pane"
         >
           <TitleManager record={actionProfile.name} />
           <Headline

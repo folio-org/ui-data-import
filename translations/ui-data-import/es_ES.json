@@ -848,7 +848,7 @@
     "logLight.actionStatus.discarded": "Discarded",
     "noRecord": "No record",
     "logViewer.filter.instance": "Instance",
-    "logViewer.filter.holdings": "Holdings",
+    "logViewer.filter.holdings": "Fondos",
     "logViewer.filter.item": "Item",
     "logViewer.filter.order": "Order",
     "logViewer.filter.invoice": "Invoice",
