@@ -591,6 +591,8 @@
   "settings.mappingProfiles.map.item.field.circulationNotes.addLabel": "Add check in / check out note",
   "settings.mappingProfiles.map.item.field.circulationNotes.checkInNote": "Check in note",
   "settings.mappingProfiles.map.item.field.circulationNotes.checkOutNote": "Check out note",
+  "settings.mappingProfiles.map.item.acquisitionsData.field.purchaseOrderLineNumber": "Purchase order line (POL)",
+  "settings.mappingProfiles.map.item.acquisitionsData.field.vendorReferenceNumber": "Vendor reference number",
   "settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatus": "Item damaged status",
   "settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatusDate": "Date",
   "settings.mappingProfiles.map.item.itemNotes.section": "Item notes",

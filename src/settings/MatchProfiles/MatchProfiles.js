@@ -390,9 +390,10 @@ export class MatchProfiles extends Component {
       const requestsToInvoice = INVOICE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, invoiceModuleVersion, okapi));
 
       await handleAllRequests(requestsToInstance, 'INSTANCE', this.addToState);
-      await handleAllRequests(requestToAcquisitionsData, 'INSTANCE', this.addToState);
       await handleAllRequests(requestsToHoldings, 'HOLDINGS', this.addToState);
       await handleAllRequests(requestsToItem, 'ITEM', this.addToState);
+      await handleAllRequests(requestToAcquisitionsData, 'INSTANCE', this.addToState);
+      await handleAllRequests(requestToAcquisitionsData, 'ITEM', this.addToState);
       await handleAllRequests(requestsToOrder, 'ORDER', this.addToState);
       await handleAllRequests(requestsToNotes, 'ORDER', this.addToState);
       await handleAllRequests(requestsToInvoice, 'INVOICE', this.addToState);
