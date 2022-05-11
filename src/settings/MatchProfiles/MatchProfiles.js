@@ -385,15 +385,14 @@ export class MatchProfiles extends Component {
       const requestToAcquisitionsData = ACQ_DATA_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
       const requestsToHoldings = HOLDINGS_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
       const requestsToItem = ITEM_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
-      const requestToAcquisitionsData = ACQ_DATA_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
       const requestsToOrder = ORDER_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
       const requestsToNotes = NOTES_RESOURCE_PATHS.map(path => fetchJsonSchema(path, notesModuleVersion, okapi));
       const requestsToInvoice = INVOICE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, invoiceModuleVersion, okapi));
 
       await handleAllRequests(requestsToInstance, 'INSTANCE', this.addToState);
-      await handleAllRequests(requestToAcquisitionsData, 'INSTANCE', this.addToState);
       await handleAllRequests(requestsToHoldings, 'HOLDINGS', this.addToState);
       await handleAllRequests(requestsToItem, 'ITEM', this.addToState);
+      await handleAllRequests(requestToAcquisitionsData, 'INSTANCE', this.addToState);
       await handleAllRequests(requestToAcquisitionsData, 'ITEM', this.addToState);
       await handleAllRequests(requestsToOrder, 'ORDER', this.addToState);
       await handleAllRequests(requestsToNotes, 'ORDER', this.addToState);
