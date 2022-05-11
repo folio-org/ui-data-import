@@ -349,6 +349,18 @@ export const fieldsConfig = [
     categoryId: 'instance-relationship',
     value: 'instancerelationship.subInstanceId',
     recordType: 'INSTANCE',
+  }, {
+    id: 'poLineNumber',
+    label: 'ui-data-import.settings.mappingProfiles.map.instance.acquisitionsData.field.purchaseOrderLineNumber',
+    categoryId: 'acquisitions-data',
+    value: 'instance.purchaseOrderLineNumber',
+    recordType: 'INSTANCE',
+  }, {
+    id: 'referenceNumbers',
+    label: 'ui-data-import.settings.mappingProfiles.map.instance.acquisitionsData.field.vendorReferenceNumber',
+    categoryId: 'acquisitions-data',
+    value: 'instance.vendorReferenceNumber',
+    recordType: 'INSTANCE',
   },
   /* Holdings Admin data */
   {

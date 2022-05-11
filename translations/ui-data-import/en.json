@@ -701,6 +701,8 @@
   "settings.mappingProfiles.map.instance.field.childInstances.addLabel": "Add child instance",
   "settings.mappingProfiles.map.instance.childInstances.field.subInstanceId": "Child instance",
   "settings.mappingProfiles.map.instance.childInstances.field.instanceRelationshipTypeId": "Type of relation",
+  "settings.mappingProfiles.map.instance.acquisitionsData.field.purchaseOrderLineNumber": "Purchase order line (POL)",
+  "settings.mappingProfiles.map.instance.acquisitionsData.field.vendorReferenceNumber": "Vendor reference number",
   "settings.mappingProfiles.map.item.relatedInstances.section": "Related instances",
   "settings.mappingProfiles.map.holdings": "Holdings",
   "settings.mappingProfiles.map.holdings.administrativeData.field.id": "Holdings UUID",
