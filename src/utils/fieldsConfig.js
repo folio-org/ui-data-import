@@ -602,13 +602,13 @@ export const fieldsConfig = [
     id: 'poLineNumber',
     label: 'ui-data-import.settings.mappingProfiles.map.holdings.acquisitionsData.field.purchaseOrderLineNumber',
     categoryId: 'acquisitions-data',
-    value: 'holdings.purchaseOrderLineNumber',
+    value: 'holdingsrecord.purchaseOrderLineNumber',
     recordType: 'HOLDINGS',
   }, {
     id: 'referenceNumbers',
     label: 'ui-data-import.settings.mappingProfiles.map.holdings.acquisitionsData.field.vendorReferenceNumber',
     categoryId: 'acquisitions-data',
-    value: 'holdings.vendorReferenceNumber',
+    value: 'holdingsrecord.vendorReferenceNumber',
     recordType: 'HOLDINGS',
   },
   /* Item Admin data */
