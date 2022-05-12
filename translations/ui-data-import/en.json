@@ -223,6 +223,7 @@
   "filter.singleRecordImports": "Inventory single record imports",
   "filter.option.yes": "Yes",
   "filter.option.no": "No",
+  "landing.callout.success": "<b>{logsNumber}</b> data import logs have been successfully deleted.",
   "modal.landing.delete.header": "Delete data import logs?",
   "modal.landing.delete.message": "<p><b>Data import logs selected</b></p><p>{logsNumber}</p><p>Are you sure that you want to <b>delete these data import logs</b>? Deleted logs will be permanently removed and cannot be retrieved.</p>",
   "modal.landing.delete": "Yes, delete",
