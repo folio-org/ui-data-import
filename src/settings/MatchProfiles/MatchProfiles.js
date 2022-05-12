@@ -30,6 +30,7 @@ import {
   FIND_ALL_CQL,
   OCLC_MATCH_EXISTING_SRS_RECORD_ID,
   OCLC_MATCH_NO_SRS_RECORD_ID,
+  ACQ_DATA_RESOURCE_PATHS,
 } from '../../utils';
 import {
   ListView,
@@ -381,6 +382,7 @@ export class MatchProfiles extends Component {
       const invoiceModuleVersion = getModuleVersion(records, 'Invoice business logic module');
 
       const requestsToInstance = INSTANCE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
+      const requestToAcquisitionsData = ACQ_DATA_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
       const requestsToHoldings = HOLDINGS_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
       const requestsToItem = ITEM_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
       const requestsToOrder = ORDER_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
@@ -390,6 +392,8 @@ export class MatchProfiles extends Component {
       await handleAllRequests(requestsToInstance, 'INSTANCE', this.addToState);
       await handleAllRequests(requestsToHoldings, 'HOLDINGS', this.addToState);
       await handleAllRequests(requestsToItem, 'ITEM', this.addToState);
+      await handleAllRequests(requestToAcquisitionsData, 'INSTANCE', this.addToState);
+      await handleAllRequests(requestToAcquisitionsData, 'ITEM', this.addToState);
       await handleAllRequests(requestsToOrder, 'ORDER', this.addToState);
       await handleAllRequests(requestsToNotes, 'ORDER', this.addToState);
       await handleAllRequests(requestsToInvoice, 'INVOICE', this.addToState);
