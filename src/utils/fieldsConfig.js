@@ -609,6 +609,20 @@ export const fieldsConfig = [
     value: 'holdingsrecord.receivingHistory[].entries[].chronology',
     recordType: 'HOLDINGS',
   },
+  /* Holdings acquisitions data  */
+  {
+    id: 'poLineNumber',
+    label: 'ui-data-import.settings.mappingProfiles.map.holdings.acquisitionsData.field.purchaseOrderLineNumber',
+    categoryId: 'acquisitions-data',
+    value: 'holdingsrecord.purchaseOrderLineNumber',
+    recordType: 'HOLDINGS',
+  }, {
+    id: 'referenceNumbers',
+    label: 'ui-data-import.settings.mappingProfiles.map.holdings.acquisitionsData.field.vendorReferenceNumber',
+    categoryId: 'acquisitions-data',
+    value: 'holdingsrecord.vendorReferenceNumber',
+    recordType: 'HOLDINGS',
+  },
   /* Item Admin data */
   {
     id: 'id',

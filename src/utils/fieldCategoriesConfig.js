@@ -76,6 +76,11 @@ export const fieldCategoriesConfig = [
     label: 'ui-data-import.settings.matchProfiles.receivingHistory',
     moduleId: 'holdings',
   },
+  {
+    id: 'acquisitions-data',
+    label: 'ui-data-import.settings.matchProfiles.acquisitionsData',
+    moduleId: 'holdings',
+  },
   /* Item */
   {
     id: 'admin-data',
