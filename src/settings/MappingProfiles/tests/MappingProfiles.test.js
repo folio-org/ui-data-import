@@ -10,6 +10,7 @@ import {
 } from '@folio/stripes-data-transfer-components/test/helpers';
 
 import '../../../../test/jest/__mock__';
+import { Paneset } from '@folio/stripes-components';
 import {
   renderWithReduxForm,
   translationsProperties,
@@ -122,26 +123,27 @@ const renderMappingProfiles = ({
 }) => {
   const component = () => (
     <Router>
-      <MappingProfiles
-        resources={resources}
-        mutator={mutator}
-        location={location}
-        unlink={unlink}
-        match={match}
-        history={history}
-        label={label}
-        selectedRecord={selectedRecord}
-        checkboxList={checkboxList}
-        setList={setList}
-      />
+      <Paneset>
+        <MappingProfiles
+          resources={resources}
+          mutator={mutator}
+          location={location}
+          unlink={unlink}
+          match={match}
+          history={history}
+          label={label}
+          selectedRecord={selectedRecord}
+          checkboxList={checkboxList}
+          setList={setList}
+        />
+      </Paneset>
     </Router>
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-// eslint-disable-next-line no-only-tests/no-only-tests
-describe.skip('<MappingProfiles>', () => {
+describe('<MappingProfiles>', () => {
   it('renders correctly', async () => {
     const { getByText } = renderMappingProfiles(mappingProfilesProps);
     const numberOfMappingProfiles = resources.mappingProfiles.other.totalRecords;

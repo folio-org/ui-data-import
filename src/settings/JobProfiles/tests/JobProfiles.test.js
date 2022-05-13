@@ -11,6 +11,7 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
 
 import '../../../../test/jest/__mock__';
+import { Paneset } from '@folio/stripes-components';
 import {
   buildStripes,
   renderWithReduxForm,
@@ -117,34 +118,35 @@ const renderJobProfiles = ({
 
   const component = () => (
     <Router>
-      <JobProfiles
-        resources={resources}
-        mutator={mutator}
-        history={history}
-        match={match}
-        location={location}
-        selectedRecord={selectedRecord}
-        setList={setList}
-        checkboxList={checkBoxList}
-        label={label}
-        unlink
-        stripes={stripes}
-        okapi={okapi}
-        refreshRemote={refreshRemote}
-      />
+      <Paneset>
+        <JobProfiles
+          resources={resources}
+          mutator={mutator}
+          history={history}
+          match={match}
+          location={location}
+          selectedRecord={selectedRecord}
+          setList={setList}
+          checkboxList={checkBoxList}
+          label={label}
+          unlink
+          stripes={stripes}
+          okapi={okapi}
+          refreshRemote={refreshRemote}
+        />
+      </Paneset>
     </Router>
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
-// eslint-disable-next-line no-only-tests/no-only-tests
-describe.skip('<JobProfiles>', () => {
+
+describe('<JobProfiles>', () => {
   it('should render correct amount of items', () => {
     const { getByText } = renderJobProfiles(jobProfilesProps);
 
     expect(getByText(/1 job profile/i)).toBeInTheDocument();
   });
-
 
   describe('query string', () => {
     it('should return correct query string', () => {

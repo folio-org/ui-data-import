@@ -10,6 +10,7 @@ import {
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../test/jest/__mock__';
+import { Paneset } from '@folio/stripes-components';
 import {
   renderWithReduxForm,
   translationsProperties,
@@ -83,24 +84,25 @@ const renderFileExtensions = ({
 }) => {
   const component = () => (
     <Router>
-      <FileExtensions
-        location={location}
-        checkboxList={checkboxList}
-        history={history}
-        resources={resources}
-        selectedRecord={selectedRecord}
-        label={label}
-        match={match}
-        mutator={mutator}
-      />
+      <Paneset>
+        <FileExtensions
+          location={location}
+          checkboxList={checkboxList}
+          history={history}
+          resources={resources}
+          selectedRecord={selectedRecord}
+          label={label}
+          match={match}
+          mutator={mutator}
+        />
+      </Paneset>
     </Router>
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-// eslint-disable-next-line no-only-tests/no-only-tests
-describe.skip('FileExtensions', () => {
+describe('FileExtensions', () => {
   afterEach(() => {
     history.push.mockClear();
   });

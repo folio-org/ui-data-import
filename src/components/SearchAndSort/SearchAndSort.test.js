@@ -13,6 +13,7 @@ import {
 } from '@folio/stripes-data-transfer-components/test/helpers';
 
 import '../../../test/jest/__mock__';
+import { Paneset } from '@folio/stripes-components';
 import {
   buildStripes,
   translationsProperties,
@@ -126,31 +127,33 @@ const getSearchAndSortComponent = ({
 }) => (
   <Harness translations={translationsProperties}>
     <Router history={history}>
-      <SearchAndSort
-        stripes={stripes}
-        objectName={objectName}
-        resultsLabel={resultsLabel}
-        initialResultCount={100}
-        resultCountIncrement={10}
-        searchLabelKey={searchLabelKey}
-        resultCountMessageKey={resultCountMessageKey}
-        showSingleResult
-        fullWidthContainer={fullWidthContainer}
-        match={{ path: '' }}
-        parentMutator={mutator}
-        parentResources={parentResources}
-        ViewRecordComponent={noop}
-        finishedResourceName={finishedResourceName}
-        actionMenu={actionMenu}
-        isFullScreen={isFullScreen}
-        EditRecordComponent={EditRecordComponentMock}
-        visibleColumns={visibleColumns}
-        nsParams={nsParams}
-        onSubmitSearch={onSubmitSearchMock}
-        onSelectRow={onSelectRowMock}
-        onCreate={onCreateMock}
-        onEdit={onEditMock}
-      />
+      <Paneset>
+        <SearchAndSort
+          stripes={stripes}
+          objectName={objectName}
+          resultsLabel={resultsLabel}
+          initialResultCount={100}
+          resultCountIncrement={10}
+          searchLabelKey={searchLabelKey}
+          resultCountMessageKey={resultCountMessageKey}
+          showSingleResult
+          fullWidthContainer={fullWidthContainer}
+          match={{ path: '' }}
+          parentMutator={mutator}
+          parentResources={parentResources}
+          ViewRecordComponent={noop}
+          finishedResourceName={finishedResourceName}
+          actionMenu={actionMenu}
+          isFullScreen={isFullScreen}
+          EditRecordComponent={EditRecordComponentMock}
+          visibleColumns={visibleColumns}
+          nsParams={nsParams}
+          onSubmitSearch={onSubmitSearchMock}
+          onSelectRow={onSelectRowMock}
+          onCreate={onCreateMock}
+          onEdit={onEditMock}
+        />
+      </Paneset>
     </Router>
   </Harness>
 );
@@ -159,8 +162,7 @@ const renderSearchAndSort = props => {
   return render(getSearchAndSortComponent(props));
 };
 
-// eslint-disable-next-line no-only-tests/no-only-tests
-describe.skip('SearchAndSort component', () => {
+describe('SearchAndSort component', () => {
   afterEach(() => {
     onSubmitSearchMock.mockClear();
     onSelectRowMock.mockClear();
@@ -257,6 +259,7 @@ describe.skip('SearchAndSort component', () => {
 
     describe('when click Search button', () => {
       it('search function should be called', () => {
+        jest.useFakeTimers();
         const {
           getByLabelText,
           getByText,
@@ -271,7 +274,7 @@ describe.skip('SearchAndSort component', () => {
 
         fireEvent.change(searchInput, { target: { value: 'test value' } });
         fireEvent.click(getByText('Search'));
-        jest.runAllTimers();
+        jest.runOnlyPendingTimers();
 
         expect(onSubmitSearchMock).toHaveBeenCalled();
       });
