@@ -19,6 +19,10 @@
 * Change the status message for import jobs that are stopped by users (UIDATIMP-1148)
 * For long Data import logs, change from Load more to Paginated (UIDATIMP-1146)
 * Fix unit tests after update way of usage Pane component (UIDATIMP-1165)
+* Update match screen UI for Holdings (UIDATIMP-1047)
+* Update match screen UI for Instances (UIDATIMP-1046)
+* Update match screen UI for Items (UIDATIMP-1048)
+* Update the "Data Import: All permissions" permission (UIDATIMP-1143)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
