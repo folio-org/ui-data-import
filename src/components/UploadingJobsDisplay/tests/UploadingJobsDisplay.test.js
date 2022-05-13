@@ -9,7 +9,7 @@ import { noop } from 'lodash';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../../test/jest/__mock__';
-import { Paneset } from '@folio/stripes-components';
+import { Paneset } from '@folio/stripes/components';
 import {
   buildStripes,
   renderWithReduxForm,

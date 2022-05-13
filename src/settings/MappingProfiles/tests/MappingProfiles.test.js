@@ -10,7 +10,7 @@ import {
 } from '@folio/stripes-data-transfer-components/test/helpers';
 
 import '../../../../test/jest/__mock__';
-import { Paneset } from '@folio/stripes-components';
+import { Paneset } from '@folio/stripes/components';
 import {
   renderWithReduxForm,
   translationsProperties,
