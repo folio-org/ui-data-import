@@ -17,8 +17,8 @@ import {
 import {
   Button,
   NoValue,
+  MCLPagingTypes,
 } from '@folio/stripes/components';
-import { pagingTypes } from '@folio/stripes-components/lib/MultiColumnList';
 
 import { FOLIO_RECORD_TYPES } from '../../../components';
 
@@ -261,7 +261,7 @@ export const RecordsTable = ({
       sortDirection={sortDirection}
       resultOffset={resultOffset}
       onHeaderClick={handleSort}
-      pagingType={pagingTypes.PREV_NEXT}
+      pagingType={MCLPagingTypes.PREV_NEXT}
       virtualize={false}
       pageAmount={pageAmount}
       columnWidths={{

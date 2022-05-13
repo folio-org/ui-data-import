@@ -189,7 +189,7 @@
     "permissionSets": [
       {
         "permissionName": "module.data-import.enabled",
-        "displayName": "Data import: all permissions",
+        "displayName": "Data import: Can upload files, import, and view logs",
         "subPermissions": [
           "metadata-provider.logs.get",
           "metadata-provider.jobexecutions.get",
