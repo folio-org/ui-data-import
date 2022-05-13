@@ -36,16 +36,18 @@ export const SummaryTable = () => {
     <FormattedMessage id="ui-data-import.logLight.actionStatus.discarded" />,
     <FormattedMessage id="ui-data-import.error" />,
   ];
+  const checkLastRow = rowIndex => (rowIndex !== 3 ? <NoValue /> : null);
+
   const resultsFormatter = {
     summary: ({ rowIndex }) => summaryRows[rowIndex],
-    srsMarc: () => <NoValue />,
-    instance: () => <NoValue />,
-    holdings: () => <NoValue />,
-    item: () => <NoValue />,
-    order: () => <NoValue />,
-    authority: () => <NoValue />,
-    invoice: () => <NoValue />,
-    error: () => <NoValue />,
+    srsMarc: ({ rowIndex }) => checkLastRow(rowIndex),
+    instance: ({ rowIndex }) => checkLastRow(rowIndex),
+    holdings: ({ rowIndex }) => checkLastRow(rowIndex),
+    item: ({ rowIndex }) => checkLastRow(rowIndex),
+    order: ({ rowIndex }) => checkLastRow(rowIndex),
+    authority: ({ rowIndex }) => checkLastRow(rowIndex),
+    invoice: ({ rowIndex }) => checkLastRow(rowIndex),
+    error: () => null,
   };
 
   return (
