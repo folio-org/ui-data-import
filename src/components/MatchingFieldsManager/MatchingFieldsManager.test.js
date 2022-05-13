@@ -9,11 +9,22 @@ import { translationsProperties } from '../../../test/jest/helpers';
 
 import { MatchingFieldsManager } from './MatchingFieldsManager';
 
-const records = [{
-  categoryId: 'admin-data',
-  label: 'ui-data-import.settings.matchProfiles.adminData',
-  value: 'test value',
-}];
+const records = [
+  {
+    categoryId: 'admin-data',
+    label: 'ui-data-import.settings.matchProfiles.adminData',
+    value: 'test value',
+  },
+  {
+    categoryId: 'acquisitions-data',
+    label: 'ui-data-import.settings.mappingProfiles.map.holdings.acquisitionsData.field.purchaseOrderLineNumber',
+    value: 'holdings.purchaseOrderLineNumber',
+  }, {
+    categoryId: 'acquisitions-data',
+    label: 'ui-data-import.settings.mappingProfiles.map.holdings.acquisitionsData.field.vendorReferenceNumber',
+    value: 'holdings.vendorReferenceNumber',
+  },
+];
 const resourcesWithFromResources = [{
   id: 'identifiers.items.properties.value',
   label: 'field',
@@ -152,6 +163,24 @@ describe('MatchingFieldsManager', () => {
         const { getByText } = renderMatchingFieldsManager({ children: getDropdownOptionsChildren });
 
         expect(getByText('Admin data: Admin data')).toBeDefined();
+      });
+
+      it('should render Purchase Order Line POL', () => {
+        const getDropdownOptionsChildren = record => {
+          return record.getDropdownOptions(records).map(rec => <span>{rec.label}</span>);
+        };
+        const { getByText } = renderMatchingFieldsManager({ children: getDropdownOptionsChildren });
+
+        expect(getByText('Acquisitions data: Purchase order line (POL)')).toBeDefined();
+      });
+
+      it('should render Vendor reference number', () => {
+        const getDropdownOptionsChildren = record => {
+          return record.getDropdownOptions(records).map(rec => <span key={rec.categoryId}>{rec.label}</span>);
+        };
+        const { getByText } = renderMatchingFieldsManager({ children: getDropdownOptionsChildren });
+
+        expect(getByText('Acquisitions data: Vendor reference number')).toBeDefined();
       });
     });
 
