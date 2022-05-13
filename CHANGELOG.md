@@ -18,6 +18,7 @@
 * For the Data Import View all page, change from Load more to Paginated (UIDATIMP-1147)
 * Change the status message for import jobs that are stopped by users (UIDATIMP-1148)
 * For long Data import logs, change from Load more to Paginated (UIDATIMP-1146)
+* Update match screen UI for Holdings (UIDATIMP-1047)
 * Update match screen UI for Instances (UIDATIMP-1046)
 * Update match screen UI for Items (UIDATIMP-1048)
 * Use API for deleting data import logs on Data Import landing page (UIDATIMP-1126)
