@@ -214,9 +214,17 @@
       },
       {
         "permissionName": "settings.data-import.enabled",
+        "displayName": "Settings (Data import): Display list of settings pages for Data import",
+        "subPermissions": [
+          "settings.enabled"
+        ],
+        "visible": false
+      },
+      {
+        "permissionName": "ui-data-import.settings.manage",
         "displayName": "Settings (Data import): Can view, create, edit, and remove",
         "subPermissions": [
-          "settings.enabled",
+          "settings.data-import.enabled",
           "data-import.fileExtensions.get",
           "data-import.fileExtensions.post",
           "data-import.fileExtensions.put",
@@ -276,10 +284,10 @@
         "visible": true
       },
       {
-        "permissionName": "settings.data-import.enabled",
+        "permissionName": "ui-data-import.settings.readOnly",
         "displayName": "Settings (Data import): Can view only",
         "subPermissions": [
-          "settings.enabled",
+          "settings.data-import.enabled",
           "data-import.fileExtensions.get",
           "converter-storage.field-protection-settings.get",
           "converter-storage.jobprofilesnapshots.get",
