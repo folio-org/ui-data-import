@@ -14,8 +14,8 @@ export const SummaryTable = () => {
     'instance',
     'holdings',
     'item',
-    'order',
     'authority',
+    'order',
     'invoice',
     'error',
   ];
@@ -25,8 +25,8 @@ export const SummaryTable = () => {
     instance: <FormattedMessage id="ui-data-import.recordTypes.instance" />,
     holdings: <FormattedMessage id="ui-data-import.recordTypes.holdings" />,
     item: <FormattedMessage id="ui-data-import.recordTypes.item" />,
-    order: <FormattedMessage id="ui-data-import.recordTypes.order" />,
     authority: <FormattedMessage id="ui-data-import.recordTypes.authority" />,
+    order: <FormattedMessage id="ui-data-import.recordTypes.order" />,
     invoice: <FormattedMessage id="ui-data-import.recordTypes.invoice" />,
     error: <FormattedMessage id="ui-data-import.error" />,
   };
@@ -44,8 +44,8 @@ export const SummaryTable = () => {
     instance: ({ rowIndex }) => checkLastRow(rowIndex),
     holdings: ({ rowIndex }) => checkLastRow(rowIndex),
     item: ({ rowIndex }) => checkLastRow(rowIndex),
-    order: ({ rowIndex }) => checkLastRow(rowIndex),
     authority: ({ rowIndex }) => checkLastRow(rowIndex),
+    order: ({ rowIndex }) => checkLastRow(rowIndex),
     invoice: ({ rowIndex }) => checkLastRow(rowIndex),
     error: () => null,
   };
