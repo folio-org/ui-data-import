@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  createRef
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -6,8 +9,13 @@ import {
   Button,
   Pane,
   ConfirmationModal,
+  Callout,
 } from '@folio/stripes/components';
 import { PersistedPaneset } from '@folio/stripes/smart-components';
+import {
+  stripesShape,
+  withStripes
+} from '@folio/stripes/core';
 
 import {
   Jobs,
@@ -20,11 +28,14 @@ import {
 import {
   checkboxListShape,
   withCheckboxList,
+  deleteJobExecutions,
 } from '../utils';
 
+@withStripes
 @withCheckboxList
 export class Home extends Component {
   static propTypes = {
+    stripes: stripesShape.isRequired,
     checkboxList: checkboxListShape.isRequired,
     setList: PropTypes.func.isRequired,
     // eslint-disable-next-line react/no-unused-prop-types
@@ -50,6 +61,7 @@ export class Home extends Component {
 
     this.renderLogsPaneSub = this.renderLogsPaneSub.bind(this);
 
+    this.calloutRef = createRef();
     this.state = {
       allLogsNumber: null,
       selectedLogsNumber: 0,
@@ -119,10 +131,45 @@ export class Home extends Component {
     this.setState({ showDeleteConfirmation: false });
   };
 
+  showDeleteLogsSuccessfulMessage(logsNumber) {
+    this.calloutRef.current.sendCallout({
+      type: 'success',
+      message: (
+        <FormattedMessage
+          id="ui-data-import.landing.callout.success"
+          values={{ logsNumber }}
+        />
+      ),
+    });
+  }
+
+  showDeleteLogsErrorMessage() {
+    this.calloutRef.current.sendCallout({
+      type: 'error',
+      message: <FormattedMessage id="ui-data-import.communicationProblem" />,
+    });
+  }
+
   deleteLogs() {
-    // TODO: replace this on logs deleting once API is ready
-    this.props.checkboxList.deselectAll();
-    this.hideDeleteConfirmation();
+    const {
+      stripes: { okapi },
+      checkboxList: {
+        selectedRecords,
+        deselectAll,
+      },
+    } = this.props;
+
+    const onSuccess = result => {
+      const { jobExecutionDetails } = result;
+
+      deselectAll();
+      this.hideDeleteConfirmation();
+      this.showDeleteLogsSuccessfulMessage(jobExecutionDetails.length);
+    };
+
+    deleteJobExecutions(selectedRecords, okapi)
+      .then(onSuccess)
+      .catch(() => this.showDeleteLogsErrorMessage());
   }
 
   isDeleteAllLogsDisabled() {
@@ -190,6 +237,7 @@ export class Home extends Component {
             this.hideDeleteConfirmation();
           }}
         />
+        <Callout ref={this.calloutRef} />
       </PersistedPaneset>
     );
   }

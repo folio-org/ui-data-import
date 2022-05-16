@@ -24,6 +24,7 @@
 * Update match screen UI for Items (UIDATIMP-1048)
 * Update the "Data Import: All permissions" permission (UIDATIMP-1143)
 * Create a new Data import UI permission for only viewing settings (UIDATIMP-1145)
+* Use API for deleting data import logs on Data Import landing page (UIDATIMP-1126)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)

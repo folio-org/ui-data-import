@@ -241,7 +241,7 @@ describe('<UploadingjobsDisplay>', () => {
     });
   });
 
-  describe('when there is no upload definition nor location state', () => {
+  describe('when there is no upload definition for location state', () => {
     it('should handle error correctly', async () => {
       renderUploadingJobsDisplay({
         ...defaultContext,
