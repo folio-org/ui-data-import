@@ -221,7 +221,7 @@
         "visible": false
       },
       {
-        "permissionName": "settings.data-import.manage",
+        "permissionName": "ui-data-import.settings.manage",
         "displayName": "Settings (Data import): Can view, create, edit, and remove",
         "subPermissions": [
           "settings.data-import.enabled",
@@ -284,7 +284,7 @@
         "visible": true
       },
       {
-        "permissionName": "settings.data-import.readOnly",
+        "permissionName": "ui-data-import.settings.readOnly",
         "displayName": "Settings (Data import): Can view only",
         "subPermissions": [
           "settings.data-import.enabled",
