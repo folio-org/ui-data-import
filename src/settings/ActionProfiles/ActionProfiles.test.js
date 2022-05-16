@@ -9,6 +9,7 @@ import {
 } from '@folio/stripes-data-transfer-components/test/helpers';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
+import { Paneset } from '@folio/stripes/components';
 import {
   renderWithReduxForm,
   translationsProperties,
@@ -63,7 +64,7 @@ const actionProfilesProps = {
   },
   unlink: true,
   match: { path: 'data-import-profiles/actionProfiles' },
-  label: <span>Action Profiles</span>,
+  label:  <span>Action Profiles</span>,
   selectedRecord: {
     record: null,
     hasLoaded: false,
@@ -90,26 +91,27 @@ const renderActionProfiles = ({
 }) => {
   const component = () => (
     <Router>
-      <ActionProfiles
-        resources={resources}
-        mutator={mutator}
-        location={location}
-        unlink={unlink}
-        match={match}
-        history={history}
-        label={label}
-        selectedRecord={selectedRecord}
-        checkboxList={checkboxList}
-        setList={setList}
-      />
+      <Paneset>
+        <ActionProfiles
+          resources={resources}
+          mutator={mutator}
+          location={location}
+          unlink={unlink}
+          match={match}
+          history={history}
+          label={label}
+          selectedRecord={selectedRecord}
+          checkboxList={checkboxList}
+          setList={setList}
+        />
+      </Paneset>
     </Router>
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-// eslint-disable-next-line no-only-tests/no-only-tests
-describe.skip('ActionProfiles', () => {
+describe('ActionProfiles', () => {
   afterEach(() => {
     history.push.mockClear();
   });
