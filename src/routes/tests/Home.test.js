@@ -1,5 +1,8 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import {
+  fireEvent,
+  waitFor
+} from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -10,6 +13,7 @@ import { translationsProperties } from '../../../test/jest/helpers';
 import { DataFetcherContext } from '../../components';
 import { Home } from '../Home';
 import { jobsLogs } from '../../../test/bigtest/mocks';
+import * as utils from '../../utils/deleteJobExecutions';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -36,6 +40,7 @@ jest.mock('@folio/stripes/components', () => ({
     </div>
   ) : null)),
 }));
+const deleteJobExecutionsSpy = jest.spyOn(utils, 'deleteJobExecutions');
 
 const defaultContext = {
   hasLoaded: true,
@@ -56,6 +61,10 @@ const renderHome = (context = defaultContext) => {
 };
 
 describe('Home component', () => {
+  afterAll(() => {
+    deleteJobExecutionsSpy.mockClear();
+  });
+
   it('should be rendered', () => {
     const { getByText } = renderHome();
 
@@ -96,7 +105,9 @@ describe('Home component', () => {
     });
 
     describe('when confirm deleting logs', () => {
-      it('confirmation modal should disappear', () => {
+      it('confirmation modal should disappear', async () => {
+        deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
+
         const {
           getAllByLabelText,
           getByText,
@@ -108,7 +119,7 @@ describe('Home component', () => {
         fireEvent.click(getByText('Delete selected logs'));
         fireEvent.click(getByText('Confirm'));
 
-        expect(queryByText('Confirmation modal')).toBeNull();
+        await waitFor(() => expect(queryByText('Confirmation modal')).not.toBeInTheDocument());
       });
     });
 

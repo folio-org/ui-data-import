@@ -241,7 +241,7 @@ describe('<UploadingjobsDisplay>', () => {
     });
   });
 
-  describe('when there is no upload definition nor location state', () => {
+  describe('when there is no upload definition for location state', () => {
     it('should handle error correctly', async () => {
       renderUploadingJobsDisplay({
         ...defaultContext,
@@ -249,7 +249,7 @@ describe('<UploadingjobsDisplay>', () => {
       });
 
       await waitFor(() => {
-        expect(mockConsoleError).toHaveBeenCalledWith(new TypeError('Cannot read property \'fileDefinitions\' of undefined'));
+        expect(mockConsoleError).toHaveBeenCalledWith(new TypeError('Cannot read properties of undefined (reading \'fileDefinitions\')'));
       });
     });
   });
