@@ -121,6 +121,42 @@ describe('Home component', () => {
 
         await waitFor(() => expect(queryByText('Confirmation modal')).not.toBeInTheDocument());
       });
+
+      it('and successful callout should be displayed', async () => {
+        deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
+
+        const {
+          getAllByLabelText,
+          getByText,
+          queryByText,
+        } = renderHome();
+
+        fireEvent.click(getAllByLabelText('select item')[0]);
+        fireEvent.click(getByText('Actions'));
+        fireEvent.click(getByText('Delete selected logs'));
+        fireEvent.click(getByText('Confirm'));
+
+        await waitFor(() => expect(queryByText('1 data import logs have been successfully deleted.')).toBeDefined());
+      });
+
+      describe('when deleting logs failed', () => {
+        it('should show callout with error message', async () => {
+          deleteJobExecutionsSpy.mockRejectedValueOnce('Cannot delete jobExecutions');
+
+          const {
+            getAllByLabelText,
+            getByText,
+            queryByText,
+          } = renderHome();
+
+          fireEvent.click(getAllByLabelText('select item')[0]);
+          fireEvent.click(getByText('Actions'));
+          fireEvent.click(getByText('Delete selected logs'));
+          fireEvent.click(getByText('Confirm'));
+
+          await waitFor(() => expect(queryByText('Server communication problem. Please try again')).toBeDefined());
+        });
+      });
     });
 
     describe('when cancel deleting logs', () => {
