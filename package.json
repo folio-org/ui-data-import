@@ -276,7 +276,7 @@
         "visible": true
       },
       {
-        "permissionName": "settings.data-import.view",
+        "permissionName": "settings.data-import.enabled",
         "displayName": "Settings (Data import): Can view only",
         "subPermissions": [
           "settings.enabled",
