@@ -1,6 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, {
+  useEffect,
+  useRef
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { useParams } from 'react-router';
 
 import {
   stripesConnect,
@@ -17,8 +21,6 @@ import {
 } from '@folio/stripes/components';
 import css from '@folio/stripes-data-transfer-components/lib/SearchAndSortPane/SearchAndSortPane.css';
 
-import { useParams } from 'react-router';
-import { noop } from 'lodash';
 import {
   SummaryTable,
   RecordsTable,
@@ -68,23 +70,22 @@ const JobSummaryComponent = props => {
   const { id } = useParams();
 
   // persist previous jobExecutionsId
-  const jobExecutionsIdRef = useRef(jobExecutionsId);
+  const previousJobExecutionsIdRef = useRef(jobExecutionsId);
 
   useEffect(() => {
-    if (jobExecutionsIdRef.current !== id) {
+    if (previousJobExecutionsIdRef.current !== id) {
       mutator?.resultOffset?.replace(0);
     }
   }, [id, mutator]);
 
   useEffect(() => {
-    if (jobExecutionsId && jobExecutionsIdRef.current !== jobExecutionsId) {
+    if (jobExecutionsId && previousJobExecutionsIdRef.current !== jobExecutionsId) {
       jobLogEntriesRecords.forEach(entry => {
         const recordId = isEdifactType ? entry.invoiceLineJournalRecordId : entry.sourceRecordId;
 
         mutator.jobLog.GET({ path: `metadata-provider/jobLogEntries/${jobExecutionsId}/records/${recordId}` });
       });
     }
-    return () => mutator.jobLog.cancel();
   }, [jobExecutionsId, jobLogEntriesRecords]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getSource = () => {
