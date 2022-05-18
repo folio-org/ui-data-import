@@ -61,30 +61,31 @@ const JobSummaryComponent = props => {
     history,
   } = props;
 
-  const { id } = useParams();
-
   const dataType = jobExecutionsRecords[0]?.jobProfileInfo.dataType;
   const isEdifactType = dataType === DATA_TYPES[1];
   const jobExecutionsId = jobExecutionsRecords[0]?.id;
 
+  const { id } = useParams();
+
   // persist previous jobExecutionsId
   const jobExecutionsIdRef = useRef(jobExecutionsId);
-
-  useEffect(() => {
-    if (jobExecutionsId) {
-      jobLogEntriesRecords.forEach(entry => {
-        const recordId = isEdifactType ? entry.invoiceLineJournalRecordId : entry.sourceRecordId;
-
-        mutator.jobLog.GET({ path: `metadata-provider/jobLogEntries/${jobExecutionsId}/records/${recordId}` });
-      });
-    }
-  }, [jobExecutionsId, jobLogEntriesRecords]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (jobExecutionsIdRef.current !== id) {
       mutator?.resultOffset?.replace(0);
     }
   }, [id, mutator]);
+
+  useEffect(() => {
+    if (jobExecutionsId && jobExecutionsIdRef.current !== jobExecutionsId) {
+      jobLogEntriesRecords.forEach(entry => {
+        const recordId = isEdifactType ? entry.invoiceLineJournalRecordId : entry.sourceRecordId;
+
+        mutator.jobLog.GET({ path: `metadata-provider/jobLogEntries/${jobExecutionsId}/records/${recordId}` });
+      });
+    }
+    return () => mutator.jobLog.cancel();
+  }, [jobExecutionsId, jobLogEntriesRecords]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getSource = () => {
     const resourceName = 'jobLogEntries';

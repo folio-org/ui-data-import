@@ -25,6 +25,7 @@
 * Update the "Data Import: All permissions" permission (UIDATIMP-1143)
 * Create a new Data import UI permission for only viewing settings (UIDATIMP-1145)
 * Use API for deleting data import logs on Data Import landing page (UIDATIMP-1126)
+* When new data import log summary is opened, old UI from previous log summary is displayed (UIDATIMP-1164)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
