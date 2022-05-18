@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -17,6 +17,8 @@ import {
 } from '@folio/stripes/components';
 import css from '@folio/stripes-data-transfer-components/lib/SearchAndSortPane/SearchAndSortPane.css';
 
+import { useParams } from 'react-router';
+import { noop } from 'lodash';
 import {
   SummaryTable,
   RecordsTable,
@@ -59,9 +61,14 @@ const JobSummaryComponent = props => {
     history,
   } = props;
 
+  const { id } = useParams();
+
   const dataType = jobExecutionsRecords[0]?.jobProfileInfo.dataType;
   const isEdifactType = dataType === DATA_TYPES[1];
   const jobExecutionsId = jobExecutionsRecords[0]?.id;
+
+  // persist previous jobExecutionsId
+  const jobExecutionsIdRef = useRef(jobExecutionsId);
 
   useEffect(() => {
     if (jobExecutionsId) {
@@ -73,10 +80,11 @@ const JobSummaryComponent = props => {
     }
   }, [jobExecutionsId, jobLogEntriesRecords]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // TODO: Refactor this code after fix of UIDATIMP-1164
   useEffect(() => {
-    mutator.resultOffset?.replace(0);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    if (jobExecutionsIdRef.current !== id) {
+      mutator?.resultOffset?.replace(0);
+    }
+  }, [id, mutator]);
 
   const getSource = () => {
     const resourceName = 'jobLogEntries';
