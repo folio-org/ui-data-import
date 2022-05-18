@@ -108,7 +108,7 @@ export const ExtendedInformation = ({
             isRemoveValueAllowed
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={currenciesList}
-            validation={composeValidators(validateRequiredField, validateQuotedString)}
+            validation={validateRequiredField}
             required
             okapi={okapi}
           />
