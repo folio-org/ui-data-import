@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { render } from '@testing-library/react';
 
 import {
   buildResources,
   buildMutator,
+  Harness,
 } from '@folio/stripes-data-transfer-components/test/helpers';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -18,10 +20,10 @@ jest.mock('./components', () => ({
   RecordsTable: () => 'RecordsTable',
 }));
 
-const getJobExecutionsResources = dataType => buildResources({
+const getJobExecutionsResources = (dataType, jobExecutionsId = 'testId') => buildResources({
   resourceName: 'jobExecutions',
   records: [{
-    id: 'testId',
+    id: jobExecutionsId,
     fileName: 'testFileName',
     progress: { total: 10 },
     jobProfileInfo: { dataType },
@@ -35,8 +37,8 @@ const jobLogResources = buildResources({
   resourceName: 'jobLog',
   records: [{}],
 });
-const getResources = dataType => ({
-  ...getJobExecutionsResources(dataType),
+const getResources = (dataType, jobExecutionsId) => ({
+  ...getJobExecutionsResources(dataType, jobExecutionsId),
   ...jobLogEntriesResources,
   ...jobLogResources,
 });
@@ -89,7 +91,28 @@ describe('Job summary page', () => {
   });
 
   it('should fetch job logs once jobExecutionsId is known', () => {
-    renderJobSummary({});
+    const component = (jobExecutionsId) => (
+      <Harness
+        translations={translationsProperties}
+        stripes={{}}
+      >
+        <Router>
+          <JobSummary
+            resources={getResources('MARC', jobExecutionsId)}
+            mutator={mutator}
+            location={{
+              search: '',
+              pathname: '',
+            }}
+            history={{ push: () => {} }}
+          />
+        </Router>
+      </Harness>
+    );
+
+    const { rerender } = render(component(null));
+
+    rerender(component('testJobExecutionsId'));
 
     expect(mutator.jobLog.GET).toHaveBeenCalled();
   });
