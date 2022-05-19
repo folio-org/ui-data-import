@@ -159,7 +159,10 @@ export class ViewActionProfile extends Component {
   };
 
   renderPaneHeader = renderProps => {
-    const { onClose, stripes } = this.props;
+    const {
+      onClose,
+      stripes
+    } = this.props;
     const { record: actionProfile } = this.actionProfileData;
 
     const paneTitle = (

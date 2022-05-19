@@ -162,7 +162,10 @@ export class ViewMatchProfile extends Component {
   };
 
   renderPaneHeader = renderProps => {
-    const { onClose, stripes } = this.props;
+    const {
+      onClose,
+      stripes
+    } = this.props;
 
     const { record: matchProfile } = this.matchProfileData;
 

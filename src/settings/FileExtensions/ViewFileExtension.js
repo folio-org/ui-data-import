@@ -139,7 +139,10 @@ export class ViewFileExtension extends Component {
   );
 
   renderPaneHeader = renderProps => {
-    const { onClose, stripes } = this.props;
+    const {
+      onClose,
+      stripes
+    } = this.props;
     const { record } = this.fileExtensionData;
 
     return (

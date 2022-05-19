@@ -34,7 +34,7 @@ import {
   AppIcon,
   TitleManager,
   stripesConnect,
-  stripesShape, IfPermission,
+  stripesShape,
 } from '@folio/stripes/core';
 
 import {

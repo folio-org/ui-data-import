@@ -179,7 +179,10 @@ export class ViewMappingProfile extends Component {
   };
 
   renderPaneHeader = renderProps => {
-    const { onClose, stripes } = this.props;
+    const {
+      onClose,
+      stripes
+    } = this.props;
 
     const { record: mappingProfile } = this.mappingProfileData;
 
@@ -198,7 +201,10 @@ export class ViewMappingProfile extends Component {
         {...renderProps}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.mappingProfileName" />}
-        actionMenu={showActionMenu({ renderer: this.renderActionMenu, stripes })}
+        actionMenu={showActionMenu({
+          renderer: this.renderActionMenu,
+          stripes
+        })}
         dismissible
         onClose={onClose}
       />
