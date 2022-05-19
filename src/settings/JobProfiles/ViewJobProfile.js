@@ -61,6 +61,7 @@ import {
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
+import { renderActionMenuWithPermission } from '../../utils/renderActionMenuWithPermission';
 
 const {
   COMMITTED,
@@ -71,6 +72,7 @@ const ViewJobProfileComponent = props => {
   const {
     resources,
     resources: { childWrappers },
+    stripes,
     stripes: { okapi },
     history,
     tagsEnabled,
@@ -210,7 +212,7 @@ const ViewJobProfileComponent = props => {
         {...renderProps}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.jobProfileName" />}
-        actionMenu={actionMenu}
+        actionMenu={renderActionMenuWithPermission(actionMenu, stripes)}
         dismissible
         onClose={onClose}
       />

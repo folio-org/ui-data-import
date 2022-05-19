@@ -209,6 +209,8 @@ export class MARCFieldProtection extends Component {
       stripes,
     } = this.props;
 
+    const hasPerm = stripes.hasPerm('ui-data-import.settings.manage');
+
     const columnMapping = {
       field: <FormattedMessage id="ui-data-import.settings.marcFieldProtection.field" />,
       indicator1: <FormattedMessage id="ui-data-import.settings.marcFieldProtection.indicator1" />,
@@ -260,6 +262,7 @@ export class MARCFieldProtection extends Component {
         validate={this.validateFields}
         stripes={stripes}
         fieldComponents={this.getFieldComponents()}
+        editable={hasPerm}
       />
     );
   }

@@ -46,6 +46,7 @@ import {
 } from '../../components';
 
 import sharedCss from '../../shared.css';
+import { renderActionMenuWithPermission } from '../../utils/renderActionMenuWithPermission';
 
 @stripesConnect
 @withTags
@@ -175,7 +176,7 @@ export class ViewActionProfile extends Component {
         {...renderProps}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.actionProfileName" />}
-        actionMenu={this.renderActionMenu}
+        actionMenu={renderActionMenuWithPermission(this.renderActionMenu, this.props.stripes)}
         dismissible
         onClose={onClose}
       />

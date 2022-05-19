@@ -48,6 +48,7 @@ import { ViewMatchCriterion } from '../../components/MatchCriterion/view';
 
 import sharedCss from '../../shared.css';
 import styles from './MatchProfiles.css';
+import { renderActionMenuWithPermission } from '../../utils/renderActionMenuWithPermission';
 
 @stripesConnect
 @withTags
@@ -179,7 +180,7 @@ export class ViewMatchProfile extends Component {
         {...renderProps}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.matchProfileName" />}
-        actionMenu={this.renderActionMenu}
+        actionMenu={renderActionMenuWithPermission(this.renderActionMenu, this.props.stripes)}
         dismissible
         onClose={onClose}
       />

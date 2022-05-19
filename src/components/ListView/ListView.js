@@ -26,9 +26,11 @@ import { ViewContainer } from '../ViewContainer';
 import { listTemplate } from '../ListTemplate';
 import { ActionMenu } from '../ActionMenu';
 import { createNetworkMessage } from '../Callout';
+import { renderActionMenuWithPermission } from '../../utils/renderActionMenuWithPermission';
 
 export class ListView extends Component {
   static propTypes = {
+    stripes: PropTypes.object,
     resources: PropTypes.object.isRequired,
     mutator: PropTypes.object.isRequired,
     location: PropTypes.oneOfType([
@@ -181,6 +183,7 @@ export class ListView extends Component {
 
   render() {
     const {
+      stripes,
       resources,
       mutator,
       location: { search },
@@ -241,7 +244,7 @@ export class ListView extends Component {
               resultCountMessageKey={`ui-data-import.settings.${ENTITY_KEY}.count`}
               resultsLabel={label}
               defaultSort={defaultSort}
-              actionMenu={actionMenu}
+              actionMenu={renderActionMenuWithPermission(actionMenu, stripes)}
               visibleColumns={visibleColumns}
               columnWidths={columnWidths}
               columnMapping={renderHeaders()}

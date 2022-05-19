@@ -31,6 +31,7 @@ import {
 } from '../../components';
 
 import sharedCss from '../../shared.css';
+import { renderActionMenuWithPermission } from '../../utils/renderActionMenuWithPermission';
 
 @stripesConnect
 export class ViewFileExtension extends Component {
@@ -43,6 +44,7 @@ export class ViewFileExtension extends Component {
   });
 
   static propTypes = {
+    stripes: PropTypes.object,
     resources: PropTypes.shape({
       fileExtension: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -137,7 +139,7 @@ export class ViewFileExtension extends Component {
   );
 
   renderPaneHeader = renderProps => {
-    const { onClose } = this.props;
+    const { onClose, stripes } = this.props;
     const { record } = this.fileExtensionData;
 
     return (
@@ -145,7 +147,7 @@ export class ViewFileExtension extends Component {
         {...renderProps}
         paneTitle={record.extension}
         paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
-        actionMenu={this.renderActionMenu}
+        actionMenu={renderActionMenuWithPermission(this.renderActionMenu, stripes)}
         dismissible
         onClose={onClose}
       />
