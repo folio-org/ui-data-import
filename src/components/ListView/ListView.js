@@ -19,6 +19,7 @@ import { buildUrl } from '@folio/stripes/smart-components';
 import {
   checkboxListShape,
   trimSearchTerm,
+  showActionMenu,
 } from '../../utils';
 import { getCRUDActions } from '../ViewContainer/getCRUDActions';
 import { SearchAndSort } from '../SearchAndSort';
@@ -26,7 +27,6 @@ import { ViewContainer } from '../ViewContainer';
 import { listTemplate } from '../ListTemplate';
 import { ActionMenu } from '../ActionMenu';
 import { createNetworkMessage } from '../Callout';
-import { renderActionMenuWithPermission } from '../../utils/renderActionMenuWithPermission';
 
 export class ListView extends Component {
   static propTypes = {
@@ -244,7 +244,10 @@ export class ListView extends Component {
               resultCountMessageKey={`ui-data-import.settings.${ENTITY_KEY}.count`}
               resultsLabel={label}
               defaultSort={defaultSort}
-              actionMenu={renderActionMenuWithPermission(actionMenu, stripes)}
+              actionMenu={showActionMenu({
+                renderer: actionMenu,
+                stripes
+              })}
               visibleColumns={visibleColumns}
               columnWidths={columnWidths}
               columnMapping={renderHeaders()}

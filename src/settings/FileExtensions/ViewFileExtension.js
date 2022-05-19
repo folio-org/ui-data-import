@@ -23,6 +23,7 @@ import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
+  showActionMenu,
 } from '../../utils';
 import {
   DetailsKeyShortcutsWrapper,
@@ -31,7 +32,6 @@ import {
 } from '../../components';
 
 import sharedCss from '../../shared.css';
-import { renderActionMenuWithPermission } from '../../utils/renderActionMenuWithPermission';
 
 @stripesConnect
 export class ViewFileExtension extends Component {
@@ -147,7 +147,10 @@ export class ViewFileExtension extends Component {
         {...renderProps}
         paneTitle={record.extension}
         paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
-        actionMenu={renderActionMenuWithPermission(this.renderActionMenu, stripes)}
+        actionMenu={showActionMenu({
+          renderer: this.renderActionMenu,
+          stripes,
+        })}
         dismissible
         onClose={onClose}
       />

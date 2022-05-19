@@ -58,10 +58,10 @@ import {
   MARC_TYPES,
   FIELD_MAPPINGS_FOR_MARC_OPTIONS,
   marcFieldProtectionSettingsShape,
+  showActionMenu,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
-import { renderActionMenuWithPermission } from '../../utils/renderActionMenuWithPermission';
 
 @stripesConnect
 @withTags
@@ -86,6 +86,7 @@ export class ViewMappingProfile extends Component {
   });
 
   static propTypes = {
+    stripes: PropTypes.object,
     resources: PropTypes.shape({
       mappingProfile: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -178,7 +179,7 @@ export class ViewMappingProfile extends Component {
   };
 
   renderPaneHeader = renderProps => {
-    const { onClose } = this.props;
+    const { onClose, stripes } = this.props;
 
     const { record: mappingProfile } = this.mappingProfileData;
 
@@ -197,7 +198,7 @@ export class ViewMappingProfile extends Component {
         {...renderProps}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.mappingProfileName" />}
-        actionMenu={renderActionMenuWithPermission(this.renderActionMenu, this.props.stripes)}
+        actionMenu={showActionMenu({ renderer: this.renderActionMenu, stripes })}
         dismissible
         onClose={onClose}
       />

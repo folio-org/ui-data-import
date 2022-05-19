@@ -34,7 +34,7 @@ import {
   AppIcon,
   TitleManager,
   stripesConnect,
-  stripesShape,
+  stripesShape, IfPermission,
 } from '@folio/stripes/core';
 
 import {
@@ -58,10 +58,10 @@ import {
   compose,
   createUrlFromArray,
   FILE_STATUSES,
+  showActionMenu,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
-import { renderActionMenuWithPermission } from '../../utils/renderActionMenuWithPermission';
 
 const {
   COMMITTED,
@@ -212,7 +212,10 @@ const ViewJobProfileComponent = props => {
         {...renderProps}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.jobProfileName" />}
-        actionMenu={renderActionMenuWithPermission(actionMenu, stripes)}
+        actionMenu={showActionMenu({
+          renderer: actionMenu,
+          stripes
+        })}
         dismissible
         onClose={onClose}
       />
