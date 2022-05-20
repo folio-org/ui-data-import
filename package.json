@@ -189,8 +189,14 @@
     "permissionSets": [
       {
         "permissionName": "module.data-import.enabled",
+        "displayName": "UI: Data import module is enabled",
+        "visible": false
+      },
+      {
+        "permissionName": "module.data-import.manage",
         "displayName": "Data import: Can upload files, import, and view logs",
         "subPermissions": [
+          "module.data-import.enabled",
           "metadata-provider.logs.get",
           "metadata-provider.jobexecutions.get",
           "data-import.uploaddefinitions.get",
@@ -198,8 +204,9 @@
           "data-import.uploaddefinitions.delete",
           "data-import.uploaddefinitions.files.delete",
           "data-import.upload.file.post",
-          "source-storage.records.get",
+          "data-import.fileExtensions.get",
           "data-import.uploaddefinitions.files.post",
+          "source-storage.records.get",
           "change-manager.records.delete",
           "change-manager.jobexecutions.get",
           "invoice-storage.invoices.item.get",
@@ -208,7 +215,17 @@
           "converter-storage.matchprofile.get",
           "converter-storage.actionprofile.get",
           "converter-storage.mappingprofile.get",
-          "converter-storage.profileassociation.get"
+          "converter-storage.profileassociation.get",
+          "configuration.entries.collection.get"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "module.data-import.logs.delete",
+        "displayName": "Data import: Can delete import logs",
+        "subPermissions": [
+          "module.data-import.manage",
+          "change-manager.jobexecutions.delete"
         ],
         "visible": true
       },
