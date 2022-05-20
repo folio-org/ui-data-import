@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react';
+import React, {
+  useEffect,
+  useRef
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { useParams } from 'react-router';
 
 import {
   stripesConnect,
@@ -63,8 +67,19 @@ const JobSummaryComponent = props => {
   const isEdifactType = dataType === DATA_TYPES[1];
   const jobExecutionsId = jobExecutionsRecords[0]?.id;
 
+  const { id } = useParams();
+
+  // persist previous jobExecutionsId
+  const previousJobExecutionsIdRef = useRef(jobExecutionsId);
+
   useEffect(() => {
-    if (jobExecutionsId) {
+    if (previousJobExecutionsIdRef.current !== id) {
+      mutator?.resultOffset?.replace(0);
+    }
+  }, [id, mutator]);
+
+  useEffect(() => {
+    if (jobExecutionsId && previousJobExecutionsIdRef.current !== jobExecutionsId) {
       jobLogEntriesRecords.forEach(entry => {
         const recordId = isEdifactType ? entry.invoiceLineJournalRecordId : entry.sourceRecordId;
 
@@ -72,11 +87,6 @@ const JobSummaryComponent = props => {
       });
     }
   }, [jobExecutionsId, jobLogEntriesRecords]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // TODO: Refactor this code after fix of UIDATIMP-1164
-  useEffect(() => {
-    mutator.resultOffset?.replace(0);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getSource = () => {
     const resourceName = 'jobLogEntries';
