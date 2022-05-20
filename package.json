@@ -224,7 +224,7 @@
         "permissionName": "ui-data-import.logs.delete",
         "displayName": "Data import: Can delete import logs",
         "subPermissions": [
-          "module.data-import.manage",
+          "ui-data-import.manage",
           "change-manager.jobexecutions.delete"
         ],
         "visible": true
