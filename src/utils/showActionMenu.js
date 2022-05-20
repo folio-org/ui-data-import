@@ -1,7 +1,7 @@
 import { permissions } from './permissions';
 
 /**
- * Displays Action menu if user has ui-data-import.settings.manage permission.
+ * Displays Action menu if user has appropriate permission(s).
  *
  * @param {{renderer: Function | null, stripes: Object}} options
 */
