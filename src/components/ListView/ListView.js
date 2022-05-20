@@ -21,9 +21,11 @@ import {
   trimSearchTerm,
   showActionMenu,
 } from '../../utils';
-import { getCRUDActions } from '../ViewContainer/getCRUDActions';
+import {
+  ViewContainer,
+  getCRUDActions,
+} from '../ViewContainer';
 import { SearchAndSort } from '../SearchAndSort';
-import { ViewContainer } from '../ViewContainer';
 import { listTemplate } from '../ListTemplate';
 import { ActionMenu } from '../ActionMenu';
 import { createNetworkMessage } from '../Callout';
