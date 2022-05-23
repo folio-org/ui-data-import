@@ -27,6 +27,7 @@
 * Use API for deleting data import logs on Data Import landing page (UIDATIMP-1126)
 * replace babel-eslint with @babel/eslint-parser (UIDATIMP-1150)
 * Remove additional validation in the "Currency" field (UIDATIMP-1167)
+* Create a new Data import UI permission for deleting import logs (UIDATIMP-1144)
 * When new data import log summary is opened, old UI from previous log summary is displayed (UIDATIMP-1164)
 
 ### Bugs fixed:
