@@ -208,7 +208,8 @@
           "converter-storage.matchprofile.get",
           "converter-storage.actionprofile.get",
           "converter-storage.mappingprofile.get",
-          "converter-storage.profileassociation.get"
+          "converter-storage.profileassociation.get",
+          "orders.po-lines.collection.get"
         ],
         "visible": true
       },
