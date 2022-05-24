@@ -856,7 +856,7 @@
     "settings.mappingProfiles.map.invoice.invoiceLineInformation.vendorRefNumber.addLabel": "Agregar el número de referencia del proveedor",
     "noFileName": "No hay nombre de archivo",
     "ok": "OK",
-    "modal.fileExtensions.noExtension.message": "You cannot upload a file without a file extension",
+    "modal.fileExtensions.noExtension.message": "No puede cargar un archivo sin una extensión de archivo",
     "settings.jobProfile.confirmationModal.heading": "Action profile not attached",
     "settings.jobProfile.confirmationModal.body": "You must link a field mapping profile to the action profile before assigning the action profile to a job profile",
     "recordTypes.srsMarc": "SRS MARC",

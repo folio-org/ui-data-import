@@ -11,6 +11,7 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
 
 import '../../../../test/jest/__mock__';
+import { Paneset } from '@folio/stripes/components';
 import {
   buildStripes,
   renderWithReduxForm,
@@ -117,21 +118,23 @@ const renderJobProfiles = ({
 
   const component = () => (
     <Router>
-      <JobProfiles
-        resources={resources}
-        mutator={mutator}
-        history={history}
-        match={match}
-        location={location}
-        selectedRecord={selectedRecord}
-        setList={setList}
-        checkboxList={checkBoxList}
-        label={label}
-        unlink
-        stripes={stripes}
-        okapi={okapi}
-        refreshRemote={refreshRemote}
-      />
+      <Paneset>
+        <JobProfiles
+          resources={resources}
+          mutator={mutator}
+          history={history}
+          match={match}
+          location={location}
+          selectedRecord={selectedRecord}
+          setList={setList}
+          checkboxList={checkBoxList}
+          label={label}
+          unlink
+          stripes={stripes}
+          okapi={okapi}
+          refreshRemote={refreshRemote}
+        />
+      </Paneset>
     </Router>
   );
 

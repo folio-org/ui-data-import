@@ -26,7 +26,9 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   okapiShape,
   createOptionsList,
+  composeValidators,
   validateRequiredField,
+  validateQuotedString,
   BOOLEAN_ACTIONS,
 } from '../../../../../utils';
 
@@ -69,7 +71,7 @@ export const ExtendedInformation = ({
             isRemoveValueAllowed
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={paymentMethodsList}
-            validation={validateRequiredField}
+            validation={composeValidators(validateRequiredField, validateQuotedString)}
             required
             okapi={okapi}
           />

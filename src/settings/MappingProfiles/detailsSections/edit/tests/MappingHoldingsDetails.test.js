@@ -33,6 +33,7 @@ const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.HOLDINGS.type);
 const {
   formerIds,
   statisticalCodeIds,
+  administrativeNotes,
   holdingsStatements,
   holdingsStatementsForSupplements,
   holdingsStatementsForIndexes,
@@ -156,6 +157,34 @@ describe('<MappingHoldingsDetails>', () => {
 
       expect(onRemove).toHaveBeenCalledTimes(1);
       expect(onRemove.mock.calls[0][1]).toEqual(statisticalCodeIds);
+    });
+  });
+
+  describe('Administrative notes field', () => {
+    it('User can add administrative note info', async () => {
+      const {
+        findByRole,
+        getByText,
+      } = renderMappingHoldingsDetails({ referenceTables: { administrativeNotes } });
+
+      const button = await findByRole('button', { name: /add administrative note/i });
+
+      fireEvent.click(button);
+
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('administrativeNotes');
+      expect(getByText('Administrative note')).toBeInTheDocument();
+    });
+
+    it('User can delete administrative note info', async () => {
+      const { findByRole } = renderMappingHoldingsDetails({ referenceTables: { administrativeNotes } });
+
+      const deleteButton = await findByRole('button', { name: /delete this item/i });
+
+      fireEvent.click(deleteButton);
+
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(administrativeNotes);
     });
   });
 

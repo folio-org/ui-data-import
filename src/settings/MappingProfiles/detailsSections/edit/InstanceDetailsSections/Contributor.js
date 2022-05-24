@@ -44,7 +44,7 @@ export const Contributor = ({ contributors }) => {
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.contributors.field.contributorName`} />}
-                    name={getSubfieldName(16, 0, index)}
+                    name={getSubfieldName(17, 0, index)}
                     disabled
                   />
                 </Col>
@@ -52,7 +52,7 @@ export const Contributor = ({ contributors }) => {
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.contributors.field.contributorNameTypeId`} />}
-                    name={getSubfieldName(16, 1, index)}
+                    name={getSubfieldName(17, 1, index)}
                     disabled
                   />
                 </Col>
@@ -60,7 +60,7 @@ export const Contributor = ({ contributors }) => {
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.contributors.field.contributorTypeId`} />}
-                    name={getSubfieldName(16, 2, index)}
+                    name={getSubfieldName(17, 2, index)}
                     disabled
                   />
                 </Col>
@@ -68,7 +68,7 @@ export const Contributor = ({ contributors }) => {
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.contributors.field.contributorTypeText`} />}
-                    name={getSubfieldName(16, 3, index)}
+                    name={getSubfieldName(17, 3, index)}
                     disabled
                   />
                 </Col>
@@ -78,7 +78,7 @@ export const Contributor = ({ contributors }) => {
                 >
                   <BooleanActionField
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.contributors.field.primary`} />}
-                    name={getBoolSubfieldName(16, 4, index)}
+                    name={getBoolSubfieldName(17, 4, index)}
                     disabled
                   />
                 </Col>

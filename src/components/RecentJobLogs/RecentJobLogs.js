@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   JobLogs,
   DEFAULT_JOB_LOGS_SORT_COLUMNS,
   sortStrings,
 } from '@folio/stripes-data-transfer-components';
-import { stripesConnect } from '@folio/stripes/core';
 
-import { DataFetcherContext } from '../DataFetcher';
 import { JobLogsContainer } from '../JobLogsContainer';
+
+import { checkboxListShape } from '../../utils';
 
 const sortColumns = {
   ...DEFAULT_JOB_LOGS_SORT_COLUMNS,
@@ -22,18 +23,17 @@ const sortColumns = {
   },
 };
 
-const RecentJobLogsComponent = () => {
-  const {
-    logs,
-    hasLoaded,
-  } = useContext(DataFetcherContext);
-
+export const RecentJobLogs = ({
+  logs,
+  haveLogsLoaded,
+  checkboxList,
+}) => {
   return (
-    <JobLogsContainer>
+    <JobLogsContainer checkboxList={checkboxList}>
       {({ listProps }) => (
         <JobLogs
           sortColumns={sortColumns}
-          hasLoaded={hasLoaded}
+          hasLoaded={haveLogsLoaded}
           contentData={logs}
           formatter={listProps.resultsFormatter}
           {...listProps}
@@ -43,4 +43,8 @@ const RecentJobLogsComponent = () => {
   );
 };
 
-export const RecentJobLogs = stripesConnect(RecentJobLogsComponent);
+RecentJobLogs.propTypes = {
+  checkboxList: checkboxListShape.isRequired,
+  logs: PropTypes.arrayOf(PropTypes.object),
+  haveLogsLoaded: PropTypes.bool,
+};

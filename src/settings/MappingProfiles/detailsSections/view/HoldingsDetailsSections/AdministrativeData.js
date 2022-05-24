@@ -34,6 +34,8 @@ export const AdministrativeData = ({ mappingDetails }) => {
   const holdingsType = getFieldValue(mappingDetails, 'holdingsTypeId', 'value');
   const statisticalCodes = getFieldValue(mappingDetails, 'statisticalCodeIds', 'subfields');
   const statisticalCodesRepeatableAction = getFieldValue(mappingDetails, 'statisticalCodeIds', 'repeatableFieldAction');
+  const administrativeNotes = getFieldValue(mappingDetails, 'administrativeNotes', 'subfields');
+  const administrativeNotesRepeatableAction = getFieldValue(mappingDetails, 'administrativeNotes', 'repeatableFieldAction');
 
   const discoverySuppressLabelId = getBooleanLabelId(discoverySuppress);
   const discoverySuppressValue = getValueById(discoverySuppressLabelId);
@@ -54,19 +56,37 @@ export const AdministrativeData = ({ mappingDetails }) => {
   const formerIdsData = transformSubfieldsData(formerIds, formerIdentifiersFieldsMap);
 
   const statisticalCodesVisibleColumns = ['statisticalCodeId'];
+  const administrativeNotesVisibleColumns = ['administrativeNote'];
+
   const statisticalCodesMapping = {
     statisticalCodeId: (
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCode`} />
     ),
   };
+  const administrativeNotesMapping = {
+    administrativeNote: (
+      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.administrativeNote`} />
+    ),
+  };
+
   const statisticalCodesFieldsMap = [
     {
       field: 'statisticalCodeId',
       key: 'value',
     },
   ];
+  const administrativeNotesFieldsMap = [
+    {
+      field: 'administrativeNote',
+      key: 'value',
+    },
+  ];
+
   const statisticalCodesFormatter = { statisticalCodeId: x => x?.statisticalCodeId || noValueElement };
+  const administrativeNotesFormatter = { administrativeNote: x => x?.administrativeNote || noValueElement };
+
   const statisticalCodesData = transformSubfieldsData(statisticalCodes, statisticalCodesFieldsMap);
+  const administrativeNotesData = transformSubfieldsData(administrativeNotes, administrativeNotesFieldsMap);
 
   return (
     <Accordion
@@ -135,6 +155,21 @@ export const AdministrativeData = ({ mappingDetails }) => {
             columnMapping={statisticalCodesMapping}
             formatter={statisticalCodesFormatter}
             labelId={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCodes.legend`}
+          />
+        </Col>
+      </Row>
+      <Row left="xs">
+        <Col
+          xs={12}
+        >
+          <ViewRepeatableField
+            columnIdPrefix="administrative-notes"
+            repeatableAction={administrativeNotesRepeatableAction}
+            fieldData={administrativeNotesData}
+            visibleColumns={administrativeNotesVisibleColumns}
+            columnMapping={administrativeNotesMapping}
+            formatter={administrativeNotesFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.administrativeData.field.administrativeNotes.legend`}
           />
         </Col>
       </Row>

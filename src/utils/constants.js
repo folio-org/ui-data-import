@@ -49,6 +49,7 @@ export const FILE_STATUSES = {
   ERROR_DEFINITION: 'ERROR_DEFINITION',
   DELETING: 'DELETING',
   DISCARDED: 'DISCARDED',
+  CANCELLED: 'CANCELLED',
 };
 
 export const JOB_STATUSES = {
@@ -56,16 +57,6 @@ export const JOB_STATUSES = {
   READY_FOR_PREVIEW: 'READY_FOR_PREVIEW',
   RUNNING: 'RUNNING',
 };
-
-export const DEFAULT_JOB_LOG_COLUMNS = [
-  'fileName',
-  'status',
-  'totalRecords',
-  'jobProfileName',
-  'completedDate',
-  'runBy',
-  'hrId',
-];
 
 export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
 export const SYSTEM_USER_NAME = 'System';
@@ -416,6 +407,11 @@ export const INSTANCE_RESOURCE_PATHS = [
   'instanceprecedingsucceedingtitle.json',
 ];
 
+export const ACQ_DATA_RESOURCE_PATHS = [
+  'acq-models/mod-orders-storage/schemas/po_line.json',
+  'acq-models/mod-orders-storage/schemas/vendor_detail.json',
+];
+
 export const HOLDINGS_RESOURCE_PATHS = [
   'raml-util/schemas/metadata.schema',
   'holdingsrecord.json',
@@ -752,11 +748,25 @@ export const DEFAULT_PROFILE_IDS = [
   DEFAULT_CREATE_HOLDINGS_MAPPING_ID,
 ];
 
+export const PROFILE_IDS_WITH_DISABLED_DUPLICATE_BUTTON = [
+  QUICKMARK_DERIVE_CREATE_AUTHORITY_JOB_ID,
+  DEFAULT_CREATE_HOLDINGS_JOB_ID,
+  QUICKMARK_DERIVE_CREATE_HOLDINGS_JOB_ID,
+  QUICKMARK_DERIVE_CREATE_BIB_JOB_ID,
+  QUICKMARK_DERIVE_CREATE_AUTHORITY_ACTION_ID,
+  DEFAULT_CREATE_HOLDINGS_ACTION_ID,
+  QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID,
+  QUICKMARK_DERIVE_CREATE_AUTHORITY_MAPPING_ID,
+  DEFAULT_CREATE_HOLDINGS_MAPPING_ID,
+  QUICKMARK_DERIVE_CREATE_HOLDINGS_MAPPING_ID,
+];
+
 export const RECORD_ACTION_STATUS = {
   CREATED: 'CREATED',
   UPDATED: 'UPDATED',
   MULTIPLE: 'MULTIPLE',
   DISCARDED: 'DISCARDED',
+  CANCELLED: 'CANCELLED',
 };
 
 export const RECORD_ACTION_STATUS_LABEL_IDS = {

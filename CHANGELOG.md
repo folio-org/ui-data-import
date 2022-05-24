@@ -1,5 +1,39 @@
 # Change history for ui-data-import
 
+## **5.2.0** (in progress)
+
+### Features added
+* Add checkboxes and delete action to Data Import landing page (UIDATIMP-1077)
+* Add Admin note field to the Instance field mapping profile: Create/Edit (UIDATIMP-1118)
+* Add Admin note field to the Holdings field mapping profile: Create/Edit (UIDATIMP-1119)
+* Add Admin note field to the Instance field mapping profile: View (UIDATIMP-1121)
+* Add Admin note field to the Item field mapping profile: Create/Edit (UIDATIMP-1120)
+* Add checkboxes and delete action to Data Import view all page (UIDATIMP-1078)
+* Add Admin note field to the Holdings field mapping profile: View (UIDATIMP-1122)
+* Add Admin note field to the Item field mapping profile: View (UIDATIMP-1123)
+* Display Authority information on Data import log page: View (UIDATIMP-1053)
+* Fix and Cover ViewAllLogs component with unit tests: Test (UIDATIMP-1151)
+* Add UI validation for some Invoice field mapping profile fields (UIDATIMP-1134)
+* Add summary at top of individual import job's log (UIDATIMP-1153)
+* For the Data Import View all page, change from Load more to Paginated (UIDATIMP-1147)
+* Change the status message for import jobs that are stopped by users (UIDATIMP-1148)
+* For long Data import logs, change from Load more to Paginated (UIDATIMP-1146)
+* Fix unit tests after update way of usage Pane component (UIDATIMP-1165)
+* Update match screen UI for Holdings (UIDATIMP-1047)
+* Update match screen UI for Instances (UIDATIMP-1046)
+* Update match screen UI for Items (UIDATIMP-1048)
+* Update the "Data Import: All permissions" permission (UIDATIMP-1143)
+* Create a new Data import UI permission for only viewing settings (UIDATIMP-1145)
+* Use API for deleting data import logs on Data Import landing page (UIDATIMP-1126)
+* replace babel-eslint with @babel/eslint-parser (UIDATIMP-1150)
+* Remove additional validation in the "Currency" field (UIDATIMP-1167)
+* Create a new Data import UI permission for deleting import logs (UIDATIMP-1144)
+* When new data import log summary is opened, old UI from previous log summary is displayed (UIDATIMP-1164)
+
+### Bugs fixed:
+* Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
+* Some issues with log searching in Juniper Bugfest/Smoke testing (UIDATIMP-1125)
+
 ## [5.1.3](https://github.com/folio-org/ui-data-import/tree/v5.1.3) (2022-05-24)
 
 ### Bugs fixed:

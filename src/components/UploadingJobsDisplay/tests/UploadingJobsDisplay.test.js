@@ -9,6 +9,7 @@ import { noop } from 'lodash';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../../test/jest/__mock__';
+import { Paneset } from '@folio/stripes/components';
 import {
   buildStripes,
   renderWithReduxForm,
@@ -73,9 +74,11 @@ const renderUploadingJobsDisplay = (context, stateField) => {
   const component = () => (
     <UploadingJobsContext.Provider value={context}>
       <Router history={getHistory(stateField)}>
-        <UploadingJobsDisplay
-          stripes={stripes}
-        />
+        <Paneset>
+          <UploadingJobsDisplay
+            stripes={stripes}
+          />
+        </Paneset>
       </Router>
     </UploadingJobsContext.Provider>
 
@@ -113,7 +116,6 @@ describe.skip('<UploadingjobsDisplay>', () => {
         updateUploadDefinition: () => Promise.reject(new Error('failed to update')),
       });
 
-      // eslint-disable-next-line no-console
       await waitFor(() => expect(mockConsoleError).toHaveBeenCalledWith(new Error('failed to update')));
     });
   });
@@ -176,7 +178,6 @@ describe.skip('<UploadingjobsDisplay>', () => {
       fireEvent.click(deleteButton);
 
       await waitFor(() => {
-        // eslint-disable-next-line no-console
         expect(mockConsoleError).toHaveBeenCalledWith(new Error('failed to delete'));
       });
     });
@@ -241,7 +242,7 @@ describe.skip('<UploadingjobsDisplay>', () => {
     });
   });
 
-  describe('when there is no upload definition nor location state', () => {
+  describe('when there is no upload definition for location state', () => {
     it('should handle error correctly', async () => {
       renderUploadingJobsDisplay({
         ...defaultContext,
@@ -249,7 +250,6 @@ describe.skip('<UploadingjobsDisplay>', () => {
       });
 
       await waitFor(() => {
-        // eslint-disable-next-line no-console
         expect(mockConsoleError).toHaveBeenCalledWith(new TypeError('Cannot read property \'fileDefinitions\' of undefined'));
       });
     });

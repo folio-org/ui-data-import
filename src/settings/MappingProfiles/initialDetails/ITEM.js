@@ -63,6 +63,21 @@ const ITEM = {
       }],
     }],
   }, {
+    name: 'administrativeNotes',
+    enabled: true,
+    path: 'item.administrativeNotes[]',
+    value: '',
+    subfields: [{
+      order: 0,
+      path: 'item.administrativeNotes[]',
+      fields: [{
+        name: 'administrativeNote',
+        enabled: true,
+        path: 'item.administrativeNotes[]',
+        value: '',
+      }],
+    }],
+  }, {
     name: 'materialType.id',
     enabled: true,
     path: 'item.materialType.id',

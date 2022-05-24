@@ -43,7 +43,7 @@ export const TitleData = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.titleData.field.title`} />}
-            name={getFieldName(9)}
+            name={getFieldName(10)}
             disabled
           />
         </Col>
@@ -69,7 +69,7 @@ export const TitleData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.alternativeTitles.field.alternativeTitleTypeId`} />}
-                    name={getSubfieldName(10, 0, index)}
+                    name={getSubfieldName(11, 0, index)}
                     disabled
                   />
                 </Col>
@@ -80,7 +80,7 @@ export const TitleData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.alternativeTitles.field.alternativeTitle`} />}
-                    name={getSubfieldName(10, 1, index)}
+                    name={getSubfieldName(11, 1, index)}
                     disabled
                   />
                 </Col>
@@ -97,7 +97,7 @@ export const TitleData = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.titleData.field.indexTitle`} />}
-            name={getFieldName(11)}
+            name={getFieldName(12)}
             disabled
           />
         </Col>
@@ -120,7 +120,7 @@ export const TitleData = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.series.field.series`} />}
-                    name={getSubfieldName(12, 0, index)}
+                    name={getSubfieldName(13, 0, index)}
                     disabled
                   />
                 </Col>
@@ -135,10 +135,10 @@ export const TitleData = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(13)}
+            wrapperFieldName={getRepeatableFieldName(14)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.precedingTitles.legend`} />}
-            repeatableFieldAction={getRepeatableFieldAction(13)}
-            repeatableFieldIndex={13}
+            repeatableFieldAction={getRepeatableFieldAction(14)}
+            repeatableFieldIndex={14}
             hasRepeatableFields={!!precedingTitles.length}
             onRepeatableActionChange={setReferenceTables}
             disabled
@@ -156,7 +156,7 @@ export const TitleData = ({
                       <Field
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesTitle`} />}
-                        name={getSubfieldName(13, 0, index)}
+                        name={getSubfieldName(14, 0, index)}
                         disabled
                       />
                     </Col>
@@ -164,7 +164,7 @@ export const TitleData = ({
                       <Field
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesHrid`} />}
-                        name={getSubfieldName(13, 1, index)}
+                        name={getSubfieldName(14, 1, index)}
                         disabled
                       />
                     </Col>
@@ -172,7 +172,7 @@ export const TitleData = ({
                       <Field
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesIsbn`} />}
-                        name={getSubfieldName(13, 2, index)}
+                        name={getSubfieldName(14, 2, index)}
                         disabled
                       />
                     </Col>
@@ -180,7 +180,7 @@ export const TitleData = ({
                       <Field
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.precedingTitles.field.precedingTitlesIssn`} />}
-                        name={getSubfieldName(13, 3, index)}
+                        name={getSubfieldName(14, 3, index)}
                         disabled
                       />
                     </Col>
@@ -197,10 +197,10 @@ export const TitleData = ({
           xs={12}
         >
           <RepeatableActionsField
-            wrapperFieldName={getRepeatableFieldName(14)}
+            wrapperFieldName={getRepeatableFieldName(15)}
             legend={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.field.succeedingTitles.legend`} />}
-            repeatableFieldAction={getRepeatableFieldAction(14)}
-            repeatableFieldIndex={14}
+            repeatableFieldAction={getRepeatableFieldAction(15)}
+            repeatableFieldIndex={15}
             hasRepeatableFields={!!succeedingTitles.length}
             onRepeatableActionChange={setReferenceTables}
             disabled
@@ -218,7 +218,7 @@ export const TitleData = ({
                       <Field
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesTitle`} />}
-                        name={getSubfieldName(14, 0, index)}
+                        name={getSubfieldName(15, 0, index)}
                         disabled
                       />
                     </Col>
@@ -226,7 +226,7 @@ export const TitleData = ({
                       <Field
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesHrid`} />}
-                        name={getSubfieldName(14, 1, index)}
+                        name={getSubfieldName(15, 1, index)}
                         disabled
                       />
                     </Col>
@@ -234,7 +234,7 @@ export const TitleData = ({
                       <Field
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesIsbn`} />}
-                        name={getSubfieldName(14, 2, index)}
+                        name={getSubfieldName(15, 2, index)}
                         disabled
                       />
                     </Col>
@@ -242,7 +242,7 @@ export const TitleData = ({
                       <Field
                         component={TextField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.titleData.succeedingTitles.field.succeedingTitlesIssn`} />}
-                        name={getSubfieldName(14, 3, index)}
+                        name={getSubfieldName(15, 3, index)}
                         disabled
                       />
                     </Col>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
-import { noop } from 'lodash';
 
 import {
   Accordion,
@@ -25,7 +24,9 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  composeValidators,
   okapiShape,
+  validateQuotedString,
   validateRequiredField,
 } from '../../../../../utils';
 
@@ -112,6 +113,7 @@ export const InvoiceInformation = ({
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(6)}
+            validation={validateQuotedString}
             isMultiSelection
             okapi={okapi}
           />
@@ -135,7 +137,7 @@ export const InvoiceInformation = ({
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(7)}
-            validation={noop}
+            validation={validateQuotedString}
             okapi={okapi}
           />
         </Col>
@@ -162,7 +164,7 @@ export const InvoiceInformation = ({
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(9)}
-            validation={validateRequiredField}
+            validation={composeValidators(validateRequiredField, validateQuotedString)}
             required
             okapi={okapi}
           />

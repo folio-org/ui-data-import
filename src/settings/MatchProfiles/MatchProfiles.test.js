@@ -9,6 +9,7 @@ import {
   Harness,
 } from '@folio/stripes-data-transfer-components/test/helpers';
 import '../../../test/jest/__mock__';
+import { Paneset } from '@folio/stripes/components';
 import {
   renderWithReduxForm,
   translationsProperties,
@@ -83,19 +84,21 @@ const getMatchProfileComponent = ({
   return (
     <Harness translations={translationsProperties}>
       <Router>
-        <MatchProfiles
-          resources={resources}
-          mutator={mutator}
-          stripes={stripes}
-          location={location}
-          match={{ path: 'data-import-profiles/matchProfiles' }}
-          unlink
-          history={history}
-          label={label}
-          selectedRecord={selectedRecord}
-          checkboxList={checkboxList}
-          setList={noop}
-        />
+        <Paneset>
+          <MatchProfiles
+            resources={resources}
+            mutator={mutator}
+            stripes={stripes}
+            location={location}
+            match={{ path: 'data-import-profiles/matchProfiles' }}
+            unlink
+            history={history}
+            label={label}
+            selectedRecord={selectedRecord}
+            checkboxList={checkboxList}
+            setList={noop}
+          />
+        </Paneset>
       </Router>
     </Harness>
   );

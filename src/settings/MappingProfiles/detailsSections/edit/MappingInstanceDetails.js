@@ -32,6 +32,7 @@ export const MappingInstanceDetails = ({
   okapi,
 }) => {
   const statisticalCodes = referenceTables?.statisticalCodeIds || [];
+  const administrativeNotes = referenceTables?.administrativeNotes || [];
   const alternativeTitles = referenceTables?.alternativeTitles || [];
   const seriesStatements = referenceTables?.series || [];
   const precedingTitles = referenceTables?.precedingTitles || [];
@@ -61,6 +62,7 @@ export const MappingInstanceDetails = ({
       <AccordionSet>
         <AdministrativeData
           statisticalCodes={statisticalCodes}
+          administrativeNotes={administrativeNotes}
           getRepeatableFieldAction={getRepeatableFieldAction}
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}

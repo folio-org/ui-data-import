@@ -32,8 +32,9 @@ global.fetch = jest.fn();
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.INSTANCE.type);
 
 const {
-  electronicAccess,
+  electronicAccess, // eslint-disable-line no-unused-vars
   statisticalCodeIds,
+  administrativeNotes,
   parentInstances,
   childInstances,
   natureOfContentTermIds,
@@ -146,6 +147,34 @@ describe('<MappingInstanceDetails>', () => {
 
       expect(onRemove).toHaveBeenCalledTimes(1);
       expect(onRemove.mock.calls[0][1]).toEqual(statisticalCodeIds);
+    });
+  });
+
+  describe('Administrative notes field', () => {
+    it('User can add administrative note info', async () => {
+      const {
+        findByRole,
+        getByText,
+      } = renderMappingInstanceDetails({ referenceTables: { administrativeNotes } });
+
+      const button = await findByRole('button', { name: /add administrative note/i });
+
+      fireEvent.click(button);
+
+      expect(onAdd).toHaveBeenCalledTimes(1);
+      expect(onAdd.mock.calls[0][1]).toBe('administrativeNotes');
+      expect(getByText('Administrative note')).toBeInTheDocument();
+    });
+
+    it('User can delete administrative note info', async () => {
+      const { findByRole } = renderMappingInstanceDetails({ referenceTables: { administrativeNotes } });
+
+      const deleteButton = await findByRole('button', { name: /delete this item/i });
+
+      fireEvent.click(deleteButton);
+
+      expect(onRemove).toHaveBeenCalledTimes(1);
+      expect(onRemove.mock.calls[0][1]).toEqual(administrativeNotes);
     });
   });
 

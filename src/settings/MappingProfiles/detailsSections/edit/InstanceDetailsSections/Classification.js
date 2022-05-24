@@ -39,7 +39,7 @@ export const Classification = ({ classifications }) => {
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.classificationTypeId`} />}
-                    name={getSubfieldName(29, 0, index)}
+                    name={getSubfieldName(30, 0, index)}
                     disabled
                   />
                 </Col>
@@ -47,7 +47,7 @@ export const Classification = ({ classifications }) => {
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.classificationNumber`} />}
-                    name={getSubfieldName(29, 0, index)}
+                    name={getSubfieldName(30, 0, index)}
                     disabled
                   />
                 </Col>

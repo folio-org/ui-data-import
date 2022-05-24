@@ -6,15 +6,15 @@ import {
 } from 'react-intl';
 import {
   get,
+  isEqual,
   noop,
 } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
-  FILTER_SEPARATOR,
-  FILTER_GROUP_SEPARATOR,
   Button,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import {
   changeSearchIndex,
@@ -22,226 +22,143 @@ import {
   handleFilterChange,
 } from '@folio/stripes-acq-components';
 
-import { filterConfig } from './ViewAllLogsFilterConfig';
 import ViewAllLogsFilters from './ViewAllLogsFilters';
+import { searchableIndexes } from './ViewAllLogsSearchConfig';
 import {
-  logsSearchTemplate,
-  searchableIndexes,
-} from './ViewAllLogsSearchConfig';
-import { listTemplate } from '../../components';
+  ActionMenu,
+  listTemplate,
+} from '../../components';
 import packageInfo from '../../../package';
-import { FILE_STATUSES } from '../../utils';
+import {
+  checkboxListShape,
+  DEFAULT_JOB_LOG_COLUMNS,
+  DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
+  FILE_STATUSES,
+  withCheckboxList,
+  getJobLogsListColumnMapping,
+  statusCellFormatter,
+} from '../../utils';
 import {
   FILTERS,
-  SORT_MAP,
+  DATA_IMPORT_POSITION,
 } from './constants';
+import {
+  getQuery,
+  getFilters,
+  getSort
+} from './ViewAllLogsUtils';
 
 import sharedCss from '../../shared.css';
 
 const {
   COMMITTED,
   ERROR,
+  CANCELLED,
 } = FILE_STATUSES;
-
-const columnMapping = {
-  fileName: <FormattedMessage id="ui-data-import.fileName" />,
-  status: <FormattedMessage id="ui-data-import.status" />,
-  hrId: <FormattedMessage id="ui-data-import.jobExecutionHrId" />,
-  jobProfileName: <FormattedMessage id="ui-data-import.jobProfileName" />,
-  totalRecords: <FormattedMessage id="ui-data-import.records" />,
-  completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
-  runBy: <FormattedMessage id="ui-data-import.runBy" />,
-};
-
-const visibleColumns = [
-  'fileName',
-  'status',
-  'totalRecords',
-  'jobProfileName',
-  'completedDate',
-  'runBy',
-  'hrId',
-];
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
 
-const getQuery = (query, qindex) => {
-  if (query && qindex) {
-    return { [qindex]: logsSearchTemplate(query)[qindex] };
-  }
+const entityKey = 'jobLogs';
 
-  if (query) {
-    return logsSearchTemplate(query);
-  }
+export const ViewAllLogsManifest = Object.freeze({
+  initializedFilterConfig: { initialValue: false },
+  query: {
+    initialValue: {
+      filters: '',
+      sort: '-completedDate',
+    },
+  },
+  resultCount: { initialValue: INITIAL_RESULT_COUNT },
+  resultOffset: { initialValue: 0 },
+  records: {
+    type: 'okapi',
+    clear: true,
+    resultDensity: 'sparse',
+    resultOffset: '%{resultOffset}',
+    records: 'jobExecutions',
+    recordsRequired: '%{resultCount}',
+    path: 'metadata-provider/jobExecutions',
+    params: (queryParams, pathComponents, resourceData) => {
+      const {
+        qindex,
+        filters,
+        query,
+        sort,
+      } = resourceData.query || {};
 
-  return {};
-};
-const getFilters = filters => {
-  const splitFiltersByGroups = () => {
-    const groups = {};
+      const queryValue = getQuery(query, qindex);
+      const filtersValues = getFilters(filters);
+      const sortValue = getSort(sort);
 
-    const fullNames = filters.split(FILTER_SEPARATOR);
-
-    for (const fullName of fullNames) {
-      if (fullName) {
-        const [groupName, fieldName] = fullName.split(FILTER_GROUP_SEPARATOR);
-
-        if (groups[groupName] === undefined) groups[groupName] = [];
-        groups[groupName].push(fieldName);
+      if (!filtersValues[FILTERS.ERRORS]) {
+        filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR, CANCELLED];
       }
-    }
 
-    return groups;
-  };
-  const getMappedValues = (values, group) => {
-    return values.map(value => {
-      const obj = group.values.filter(f => typeof f === 'object' && f.name === value);
+      return {
+        ...queryValue,
+        ...filtersValues,
+        ...sortValue,
+      };
+    },
+    perRequest: RESULT_COUNT_INCREMENT,
+    throwErrors: false,
+  },
+});
 
-      return (obj.length > 0) ? obj[0].cql : value;
-    });
-  };
-
-  if (filters) {
-    const groups = splitFiltersByGroups();
-    const filtersObj = {};
-
-    for (const groupName of Object.keys(groups)) {
-      const group = filterConfig.filter(g => g.name === groupName)[0];
-
-      if (group && group.cql) {
-        const cqlIndex = group.cql;
-
-        // values contains the selected filters
-        const values = groups[groupName];
-
-        const mappedValues = getMappedValues(values, group);
-
-        if (group.isRange) {
-          const { rangeSeparator = ':' } = group;
-          const [start, end] = mappedValues[0].split(rangeSeparator);
-
-          filtersObj.completedAfter = [start];
-          filtersObj.completedBefore = [end];
-        } else {
-          const {
-            noIndex,
-            values: groupValues,
-          } = group;
-
-          // fill in filters object
-          if (!noIndex) {
-            if (filtersObj[cqlIndex] === undefined) filtersObj[cqlIndex] = [];
-
-            filtersObj[cqlIndex] = [...filtersObj[cqlIndex], ...values];
-          } else {
-            values.forEach(value => {
-              const obj = groupValues.filter(f => typeof f === 'object' && f.name === value);
-
-              if (obj.length > 0) {
-                const groupIndex = obj[0].indexName;
-
-                if (filtersObj[groupIndex] === undefined) filtersObj[groupIndex] = [];
-
-                filtersObj[groupIndex] = [...filtersObj[groupIndex], ...obj[0].cql];
-              }
-            });
-          }
-        }
-      }
-    }
-
-    return filtersObj;
-  }
-
-  return {};
-};
-const getSort = sort => {
-  const firstSortIndex = sort?.split(',')[0] || '';
-
-  if (!firstSortIndex) return {};
-
-  let reverse = false;
-  let sortValue = firstSortIndex;
-
-  if (firstSortIndex.startsWith('-')) {
-    sortValue = firstSortIndex.substr(1);
-    reverse = true;
-  }
-
-  let sortIndex = SORT_MAP[sortValue] || sortValue;
-
-  if (reverse) {
-    sortIndex = sortIndex.split(' ').map(v => `${v},desc`);
-  } else {
-    sortIndex = sortIndex.split(' ').map(v => `${v},asc`);
-  }
-
-  return { sortBy: sortIndex };
-};
-
+@withCheckboxList
 @stripesConnect
+@injectIntl
 class ViewAllLogs extends Component {
   static propTypes = {
     mutator: PropTypes.object.isRequired,
     resources: PropTypes.object.isRequired,
+    checkboxList: checkboxListShape.isRequired,
+    setList: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired,
     stripes: PropTypes.object,
     disableRecordCreation: PropTypes.bool,
     browseOnly: PropTypes.bool,
     packageInfo: PropTypes.object,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }),
-    intl: PropTypes.object.isRequired,
+    // eslint-disable-next-line react/no-unused-prop-types
+    actionMenuItems: PropTypes.arrayOf(PropTypes.string),
   };
 
-  static defaultProps = { browseOnly: false };
+  static defaultProps = {
+    browseOnly: false,
+    actionMenuItems: ['deleteSelectedLogs'],
+  };
 
-  static manifest = Object.freeze({
-    initializedFilterConfig: { initialValue: false },
-    query: {
-      initialValue: {
-        filters: '',
-        sort: '-completedDate',
-      },
-    },
-    resultCount: { initialValue: INITIAL_RESULT_COUNT },
-    records: {
-      type: 'okapi',
-      clear: true,
-      records: 'jobExecutions',
-      recordsRequired: '%{resultCount}',
-      path: 'metadata-provider/jobExecutions',
-      params: (queryParams, pathComponents, resourceData) => {
-        const {
-          qindex,
-          filters,
-          query,
-          sort,
-        } = resourceData.query || {};
-
-        const queryValue = getQuery(query, qindex);
-        const filtersValues = getFilters(filters);
-        const sortValue = getSort(sort);
-
-        if (!filtersValues[FILTERS.ERRORS]) {
-          filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR];
-        }
-
-        return {
-          ...queryValue,
-          ...filtersValues,
-          ...sortValue,
-        };
-      },
-      perRequest: RESULT_COUNT_INCREMENT,
-      throwErrors: false,
-    },
-  });
+  static manifest = ViewAllLogsManifest;
 
   constructor(props) {
     super(props);
     this.getActiveFilters = getActiveFilters.bind(this);
     this.handleFilterChange = handleFilterChange.bind(this);
     this.changeSearchIndex = changeSearchIndex.bind(this);
+    this.renderActionMenu = this.renderActionMenu.bind(this);
+    this.setLogsList();
+  }
+
+  state = { showDeleteConfirmation: false };
+
+  componentDidUpdate(prevProps) {
+    const { resources: { records: { records: prevRecords } } } = prevProps;
+    const { resources: { records: { records } } } = this.props;
+
+    if (!isEqual(prevRecords, records)) {
+      this.setLogsList();
+    }
+  }
+
+  setLogsList() {
+    const {
+      resources: { records: { records } },
+      setList,
+    } = this.props;
+
+    setList(records);
   }
 
   getSearchableIndexes() {
@@ -296,34 +213,94 @@ class ViewAllLogs extends Component {
       : null;
   };
 
+  renderActionMenu(menu) {
+    return (
+      <ActionMenu
+        entity={this}
+        menu={menu}
+      />
+    );
+  }
+
+  showDeleteConfirmation() {
+    this.setState({ showDeleteConfirmation: true });
+  }
+
+  hideDeleteConfirmation = () => {
+    this.setState({ showDeleteConfirmation: false });
+  };
+
+  deleteLogs() {
+    // TODO: replace this on logs deleting once API is ready
+    this.props.checkboxList.deselectAll();
+    this.hideDeleteConfirmation();
+  }
+
+  isDeleteAllLogsDisabled() {
+    const { checkboxList: { selectedRecords } } = this.props;
+
+    return selectedRecords.size === 0;
+  }
+
+  getResultsFormatter() {
+    const {
+      intl: { formatMessage },
+      checkboxList: {
+        selectedRecords,
+        selectRecord,
+      },
+    } = this.props;
+
+    const fileNameCellFormatter = record => (
+      <Button
+        buttonStyle="link"
+        marginBottom0
+        to={`/data-import/job-summary/${record.id}`}
+        buttonClass={sharedCss.cellLink}
+        onClick={e => e.stopPropagation()}
+      >
+        {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
+      </Button>
+    );
+
+    return {
+      ...listTemplate({
+        entityKey,
+        selectRecord,
+        selectedRecords,
+      }),
+      fileName: fileNameCellFormatter,
+      status: statusCellFormatter(formatMessage),
+    };
+  }
+
+  onMarkPosition = (position) => {
+    sessionStorage.setItem(DATA_IMPORT_POSITION, JSON.stringify(position));
+  }
+
+  resetMarkedPosition = () => {
+    sessionStorage.setItem(DATA_IMPORT_POSITION, null);
+  }
+
   render() {
     const {
+      checkboxList: {
+        isAllSelected,
+        handleSelectAllCheckbox,
+        selectedRecords,
+      },
       browseOnly,
       disableRecordCreation,
       mutator,
       resources,
       stripes,
-      intl,
     } = this.props;
+    const logsNumber = selectedRecords.size;
+    const hasLogsSelected = logsNumber > 0;
 
-    const resultsFormatter = {
-      fileName: record => (
-        <Button
-          buttonStyle="link"
-          marginBottom0
-          buttonClass={sharedCss.cellLink}
-          to={`/data-import/job-summary/${record.id}`}
-          onClick={e => e.stopPropagation()}
-        >
-          {record.fileName || <FormattedMessage id="ui-data-import.noFileName" />}
-        </Button>
-      ),
-      status: listTemplate({ intl }).status,
-      runBy: listTemplate({ intl }).runBy,
-      completedDate: listTemplate({ intl }).completedDate,
-      jobProfileName: listTemplate({ intl }).jobProfileName,
-      totalRecords: listTemplate({ intl }).totalRecords,
-    };
+    const resultsFormatter = this.getResultsFormatter();
+    const columnMapping = getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox });
+    const itemToView = JSON.parse(sessionStorage.getItem(DATA_IMPORT_POSITION));
 
     return (
       <div data-test-logs-list>
@@ -333,9 +310,11 @@ class ViewAllLogs extends Component {
           baseRoute={packageInfo.stripes.route}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={RESULT_COUNT_INCREMENT}
-          visibleColumns={visibleColumns}
+          visibleColumns={DEFAULT_JOB_LOG_COLUMNS}
           columnMapping={columnMapping}
           resultsFormatter={resultsFormatter}
+          columnWidths={DEFAULT_JOB_LOG_COLUMNS_WIDTHS}
+          actionMenu={this.renderActionMenu}
           viewRecordComponent={noop}
           onSelectRow={noop}
           viewRecordPerms="metadata-provider.jobexecutions.get"
@@ -350,13 +329,46 @@ class ViewAllLogs extends Component {
           renderFilters={this.renderFilters}
           onFilterChange={this.handleFilterChange}
           onChangeIndex={this.changeSearchIndex}
-          pagingType="click"
+          pagingType="prev-next"
           pageAmount={RESULT_COUNT_INCREMENT}
           title={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
+          resultCountMessageKey="ui-data-import.logsPaneSubtitle"
+          customPaneSub={hasLogsSelected
+            ? (
+              <FormattedMessage
+                id="ui-data-import.logsSelected"
+                values={{ logsNumber }}
+              />
+            )
+            : null
+          }
+          resultsVirtualize={false}
+          resultsOnMarkPosition={this.onMarkPosition}
+          resultsOnResetMarkedPosition={this.resetMarkedPosition}
+          resultsCachedPosition={itemToView}
+        />
+        <ConfirmationModal
+          id="delete-selected-logs-modal"
+          open={this.state.showDeleteConfirmation}
+          heading={<FormattedMessage id="ui-data-import.modal.landing.delete.header" />}
+          message={(
+            <FormattedMessage
+              id="ui-data-import.modal.landing.delete.message"
+              values={{ logsNumber }}
+            />
+          )}
+          bodyTag="div"
+          confirmLabel={<FormattedMessage id="ui-data-import.modal.landing.delete" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.modal.landing.cancel" />}
+          onConfirm={() => this.deleteLogs()}
+          onCancel={() => {
+            this.props.checkboxList.deselectAll();
+            this.hideDeleteConfirmation();
+          }}
         />
       </div>
     );
   }
 }
 
-export default injectIntl(ViewAllLogs);
+export default ViewAllLogs;

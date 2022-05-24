@@ -34,10 +34,14 @@ const entity = {
   showRunConfirmation: jest.fn(),
   showDeleteConfirmation: jest.fn(),
   showRestoreConfirmation: jest.fn(),
+  isDeleteAllLogsDisabled: () => false,
 };
 const menu = { onToggle: jest.fn() };
 
-const templates = menuTemplate(entity, menu);
+const templates = menuTemplate({
+  entity,
+  menu,
+});
 
 describe('Action menu menuTemplate', () => {
   afterEach(() => {
@@ -180,6 +184,33 @@ describe('Action menu menuTemplate', () => {
 
         expect(menu.onToggle.mock.calls.length).toEqual(1);
         expect(entity.showRestoreConfirmation.mock.calls.length).toEqual(1);
+      });
+    });
+  });
+
+  describe('when item is `viewAllLogs`', () => {
+    it('then `LinkTo` component should be rendered', () => {
+      const { getByText } = render(templates.viewAllLogs('key'));
+
+      expect(getByText('LinkTo')).toBeDefined();
+    });
+  });
+
+  describe('when item is `deleteSelectedLogs`', () => {
+    it('then `Default` component should be rendered', () => {
+      const { getByText } = render(templates.deleteSelectedLogs('key'));
+
+      expect(getByText('Default')).toBeDefined();
+    });
+
+    describe('when `deleteSelectedLogs` button is clicked', () => {
+      it('then `handleDelete` function should be called ', () => {
+        const { getByText } = render(templates.deleteSelectedLogs('key'));
+
+        fireEvent.click(getByText('Default'));
+
+        expect(menu.onToggle.mock.calls.length).toEqual(1);
+        expect(entity.showDeleteConfirmation.mock.calls.length).toEqual(1);
       });
     });
   });
