@@ -146,14 +146,14 @@ export const JobProfilesFormComponent = memo(({
     if (!isLayerCreate) {
       fetchChildWrappers().then();
     }
-  }, [isLayerCreate]);
+  }, [isLayerCreate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const flattenTreeContent = getFlattenProfileTreeContent(childWrappers)
       .filter(item => item.contentType === PROFILE_TYPES.ACTION_PROFILE || item.contentType === PROFILE_TYPES.MATCH_PROFILE);
 
     dispatch(setProfileTreeContent(flattenTreeContent));
-  }, [childWrappers]);
+  }, [childWrappers]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const contentData = !isLayerCreate ? childWrappers : [];

@@ -3,7 +3,10 @@ import { fireEvent } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
+import {
+  renderWithRedux,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 
 import { ProfileBranch } from './ProfileBranch';
 
@@ -108,7 +111,7 @@ const renderProfileBranch = ({
     />
   );
 
-  return renderWithIntl(component, translationsProperties);
+  return renderWithIntl(renderWithRedux(component), translationsProperties);
 };
 
 describe('ProfileBranch', () => {
