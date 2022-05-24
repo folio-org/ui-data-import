@@ -388,20 +388,6 @@ JobProfilesFormComponent.propTypes = {
   }).isRequired,
   onCancel: PropTypes.func.isRequired,
   stripes: PropTypes.object.isRequired,
-  childWrappers: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      profileId: PropTypes.string.isRequired,
-      contentType: PropTypes.string.isRequired,
-      content: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        tags: PropTypes.shape({ tagList: PropTypes.arrayOf(PropTypes.string) }),
-        match: PropTypes.string,
-      }),
-    }),
-  ).isRequired,
   parentResources: PropTypes.object.isRequired,
   transitionToParams: PropTypes.func.isRequired,
   match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
