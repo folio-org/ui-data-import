@@ -2,7 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { Button, TextLink } from '@folio/stripes/components';
+import { TextLink } from '@folio/stripes/components';
 import { useJobLogsProperties } from '@folio/stripes-data-transfer-components';
 
 import { listTemplate } from '../ListTemplate';
@@ -14,8 +14,6 @@ import {
   getJobLogsListColumnMapping,
   statusCellFormatter,
 } from '../../utils';
-
-import sharedCss from '../../shared.css';
 
 export const JobLogsContainer = props => {
   const {
