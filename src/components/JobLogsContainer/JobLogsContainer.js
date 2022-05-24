@@ -2,7 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { Button } from '@folio/stripes/components';
+import { Button, TextLink } from '@folio/stripes/components';
 import { useJobLogsProperties } from '@folio/stripes-data-transfer-components';
 
 import { listTemplate } from '../ListTemplate';
@@ -32,15 +32,11 @@ export const JobLogsContainer = props => {
   const { formatMessage } = useIntl();
 
   const fileNameCellFormatter = record => (
-    <Button
-      buttonStyle="link"
-      marginBottom0
+    <TextLink
       to={`/data-import/job-summary/${record.id}`}
-      buttonClass={sharedCss.cellLink}
-      onClick={e => e.stopPropagation()}
     >
       {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
-    </Button>
+    </TextLink>
   );
 
   const customProperties = {
