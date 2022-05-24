@@ -22,7 +22,8 @@
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-data-import ./translations/ui-data-import/compiled"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.15.0",
+    "@babel/core": "^7.17.12",
+    "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-decorators": "^7.10.5",
     "@babel/plugin-transform-runtime": "^7.10.5",
@@ -30,7 +31,7 @@
     "@bigtest/interactor": "^0.9.1",
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
-    "@folio/eslint-config-stripes": "^6.0.0",
+    "@folio/eslint-config-stripes": "^6.1.0",
     "@folio/stripes": "^7.0.0",
     "@folio/stripes-cli": "^2.0.0",
     "@folio/stripes-components": "^10.0.0",
@@ -39,11 +40,10 @@
     "@formatjs/cli": "^4.2.10",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^10.4.7",
-    "babel-eslint": "^10.0.3",
     "babel-jest": "^26.1.0",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
-    "eslint": "^7",
+    "eslint": "^7.32.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
@@ -189,8 +189,14 @@
     "permissionSets": [
       {
         "permissionName": "module.data-import.enabled",
+        "displayName": "UI: Data import module is enabled",
+        "visible": false
+      },
+      {
+        "permissionName": "ui-data-import.manage",
         "displayName": "Data import: Can upload files, import, and view logs",
         "subPermissions": [
+          "module.data-import.enabled",
           "metadata-provider.logs.get",
           "metadata-provider.jobexecutions.get",
           "data-import.uploaddefinitions.get",
@@ -198,8 +204,9 @@
           "data-import.uploaddefinitions.delete",
           "data-import.uploaddefinitions.files.delete",
           "data-import.upload.file.post",
-          "source-storage.records.get",
+          "data-import.fileExtensions.get",
           "data-import.uploaddefinitions.files.post",
+          "source-storage.records.get",
           "change-manager.records.delete",
           "change-manager.jobexecutions.get",
           "invoice-storage.invoices.item.get",
@@ -208,15 +215,33 @@
           "converter-storage.matchprofile.get",
           "converter-storage.actionprofile.get",
           "converter-storage.mappingprofile.get",
-          "converter-storage.profileassociation.get"
+          "converter-storage.profileassociation.get",
+          "configuration.entries.collection.get"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-data-import.logs.delete",
+        "displayName": "Data import: Can delete import logs",
+        "subPermissions": [
+          "ui-data-import.manage",
+          "change-manager.jobexecutions.delete"
         ],
         "visible": true
       },
       {
         "permissionName": "settings.data-import.enabled",
+        "displayName": "Settings (Data import): Display list of settings pages for Data import",
+        "subPermissions": [
+          "settings.enabled"
+        ],
+        "visible": false
+      },
+      {
+        "permissionName": "ui-data-import.settings.manage",
         "displayName": "Settings (Data import): Can view, create, edit, and remove",
         "subPermissions": [
-          "settings.enabled",
+          "settings.data-import.enabled",
           "data-import.fileExtensions.get",
           "data-import.fileExtensions.post",
           "data-import.fileExtensions.put",
@@ -276,10 +301,10 @@
         "visible": true
       },
       {
-        "permissionName": "settings.data-import.view",
+        "permissionName": "ui-data-import.settings.readOnly",
         "displayName": "Settings (Data import): Can view only",
         "subPermissions": [
-          "settings.enabled",
+          "settings.data-import.enabled",
           "data-import.fileExtensions.get",
           "converter-storage.field-protection-settings.get",
           "converter-storage.jobprofilesnapshots.get",
