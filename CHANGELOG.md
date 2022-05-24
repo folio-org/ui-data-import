@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **5.1.3** (in progress)
+## [5.1.3](https://github.com/folio-org/ui-data-import/tree/v5.1.3) (2022-05-24)
 
 ### Bugs fixed:
 * UI problem with Settings panes in Lotus Bugfest (UIDATIMP-1142)
