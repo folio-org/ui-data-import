@@ -1,12 +1,16 @@
 import React, {
   memo,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
+import {
+  useSelector,
+  useDispatch,
+} from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { connect } from 'react-redux';
 import {
   identity,
   get,
@@ -30,6 +34,7 @@ import {
   FullScreenForm,
 } from '@folio/stripes-data-transfer-components';
 import stripesFinalForm from '@folio/stripes/final-form';
+import { stripesConnect } from '@folio/stripes/core';
 
 import {
   EditKeyShortcutsWrapper,
@@ -40,6 +45,7 @@ import {
   compose,
   validateRequiredField,
   withProfileWrapper,
+  STATE_MANAGEMENT,
   DATA_TYPES,
   PROFILE_LINKING_RULES,
   ASSOCIATION_TYPES,
@@ -47,6 +53,11 @@ import {
   LAYER_TYPES,
   isFieldPristine,
 } from '../../utils';
+import {
+  clearCurrentProfileTreeContent,
+  clearProfileTreeContent,
+  setProfileTreeContent
+} from '../../redux';
 
 const dataTypes = DATA_TYPES.map(dataType => ({
   value: dataType,
@@ -82,7 +93,6 @@ export const JobProfilesFormComponent = memo(({
   pristine,
   submitting,
   initialValues,
-  childWrappers,
   handleSubmit,
   form,
   onCancel,
@@ -92,31 +102,65 @@ export const JobProfilesFormComponent = memo(({
   match: { path },
   accordionStatusRef,
   layerType,
+  mutator,
+  resources,
 }) => {
+  const dataKey = 'currentData';
+  const profileTreeKey = 'profileTreeData';
+
   const { okapi } = stripes;
   const { profile } = initialValues;
   const isEditMode = Boolean(profile.id);
   const isLayerCreate = layerType === LAYER_TYPES.CREATE;
   const isSubmitDisabled = pristine || submitting;
-  const dataKey = 'jobProfiles.current';
-  const profileTreeKey = 'profileTreeData';
+
+  const childWrappers = useMemo(
+    () => resources.childWrappers?.records[0]?.childSnapshotWrappers || [],
+    [resources.childWrappers.records],
+  );
+
+  const dispatch = useDispatch();
+  const currentJobProfileTreeContent = useSelector(state => {
+    return get(
+      state,
+      [STATE_MANAGEMENT.REDUCER, dataKey],
+      [],
+    );
+  });
+  const profileTreeContent = useSelector(state => {
+    return get(
+      state,
+      [STATE_MANAGEMENT.REDUCER, profileTreeKey],
+      [],
+    );
+  });
 
   const [isModalOpen, showModal] = useState(false);
   const [profileTreeData, setProfileTreeData] = useState([]);
 
   useEffect(() => {
-    const contentData = !isLayerCreate ? childWrappers : [];
-    const getData = JSON.parse(sessionStorage.getItem(dataKey)) || contentData;
+    async function fetchChildWrappers() {
+      await mutator.childWrappers.GET();
+    }
 
-    setProfileTreeData(getData);
-  }, [isLayerCreate, childWrappers]);
+    if (!isLayerCreate) {
+      fetchChildWrappers().then();
+    }
+  }, [isLayerCreate]);
 
   useEffect(() => {
-    const profileTreeContent = getFlattenProfileTreeContent(childWrappers)
+    const flattenTreeContent = getFlattenProfileTreeContent(childWrappers)
       .filter(item => item.contentType === PROFILE_TYPES.ACTION_PROFILE || item.contentType === PROFILE_TYPES.MATCH_PROFILE);
 
-    sessionStorage.setItem(profileTreeKey, JSON.stringify(profileTreeContent));
+    dispatch(setProfileTreeContent(flattenTreeContent));
   }, [childWrappers]);
+
+  useEffect(() => {
+    const contentData = !isLayerCreate ? childWrappers : [];
+    const getData = !isEmpty(currentJobProfileTreeContent) ? currentJobProfileTreeContent : contentData;
+
+    setProfileTreeData(getData);
+  }, [isLayerCreate, childWrappers]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (layerType === LAYER_TYPES.DUPLICATE && !isEmpty(childWrappers)) {
@@ -177,21 +221,13 @@ export const JobProfilesFormComponent = memo(({
     </FormattedMessage>
   ) : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
   const headLine = isEditMode ? profile.name : <FormattedMessage id="ui-data-import.settings.jobProfiles.new" />;
+
   const clearStorage = () => {
-    let n = sessionStorage.length;
-
-    while (n--) {
-      const key = sessionStorage.key(n);
-
-      if (/^jobProfiles\.current\.*/.test(key)) {
-        sessionStorage.removeItem(key);
-      }
-    }
+    dispatch(clearProfileTreeContent());
+    dispatch(clearCurrentProfileTreeContent());
   };
   const onSubmit = async event => {
     event.preventDefault();
-
-    const profileTreeContent = JSON.parse(sessionStorage.getItem(profileTreeKey));
 
     const requests = profileTreeContent
       .filter(record => record.contentType === PROFILE_TYPES.ACTION_PROFILE)
@@ -323,6 +359,22 @@ export const JobProfilesFormComponent = memo(({
   );
 });
 
+JobProfilesFormComponent.manifest = Object.freeze({
+  childWrappers: {
+    type: 'okapi',
+    GET: {
+      path: createUrl('data-import-profiles/profileSnapshots/:{id}', {
+        profileType: PROFILE_TYPES.JOB_PROFILE,
+        jobProfileId: ':{id}',
+      }, false),
+    },
+    accumulate: true,
+    throwErrors: false,
+    resourceShouldRefresh: true,
+    shouldRefresh: () => false,
+  },
+});
+
 JobProfilesFormComponent.propTypes = {
   initialValues: PropTypes.object.isRequired,
   pristine: PropTypes.bool.isRequired,
@@ -353,18 +405,12 @@ JobProfilesFormComponent.propTypes = {
   parentResources: PropTypes.object.isRequired,
   transitionToParams: PropTypes.func.isRequired,
   match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
+  mutator: PropTypes.shape({ childWrappers: PropTypes.shape({ GET: PropTypes.func }) }).isRequired,
+  resources: PropTypes.shape({
+    childWrappers: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+  }).isRequired,
   accordionStatusRef: PropTypes.object,
   layerType: PropTypes.oneOfType(LAYER_TYPES),
-};
-
-const mapStateToProps = state => {
-  const childWrappers = get(
-    state,
-    ['folio_data_import_child_wrappers', 'records', 0, 'childSnapshotWrappers'],
-    [],
-  );
-
-  return { childWrappers };
 };
 
 export const JobProfilesForm = compose(
@@ -373,5 +419,5 @@ export const JobProfilesForm = compose(
     navigationCheck: true,
     initialValuesEqual: isEqual,
   }),
-  connect(mapStateToProps),
+  stripesConnect,
 )(JobProfilesFormComponent);

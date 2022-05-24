@@ -3,6 +3,10 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -10,6 +14,8 @@ import {
   noop,
   camelCase,
   snakeCase,
+  get,
+  set,
 } from 'lodash';
 import classNames from 'classnames';
 
@@ -21,11 +27,13 @@ import {
   ProfileLabel,
   ProfileLinker,
 } from '.';
+import { setCurrentProfileTreeContent } from '../../redux';
 
 import css from './ProfileTree.css';
 import {
   PROFILE_LABEL_IDS,
   PROFILE_RELATION_TYPES,
+  STATE_MANAGEMENT,
 } from '../../utils';
 
 export const ProfileBranch = memo(({
@@ -61,12 +69,21 @@ export const ProfileBranch = memo(({
 
   const entityKey = `${camelCase(contentType)}s`;
   const childrenSectionAllowed = childrenAllowed.findIndex(item => item === entityKey) >= 0;
-  const sectionKey = `jobProfiles.${record ? record.id : 'current'}.${currentRecord ? currentRecord.id : 'root'}`;
+  const sectionKey = `${record ? record.id : 'current'}Branch.${currentRecord ? currentRecord.id : 'root'}`;
+
+  const dispatch = useDispatch();
+  const jobProfilesState = useSelector(state => {
+    return get(
+      state,
+      [STATE_MANAGEMENT.REDUCER, 'jobProfiles', sectionKey],
+      [],
+    );
+  });
 
   const getSectionStatus = section => {
-    const res = JSON.parse(sessionStorage.getItem(`${sectionKey}.sectionStatus.${section}`));
+    const res = get(jobProfilesState, ['sectionStatus', section]);
 
-    return res === null || res === true;
+    return res === undefined || res === true;
   };
 
   const [matchSectionOpen, setMatchSectionOpen] = useState(getSectionStatus('match'));
@@ -76,7 +93,8 @@ export const ProfileBranch = memo(({
 
   useEffect(() => {
     const getSectionData = section => {
-      const res = JSON.parse(sessionStorage.getItem(`${sectionKey}.data.${section}`));
+      const res = get(jobProfilesState, ['data', section]);
+
       const itemData = currentChildren.filter(item => item.reactTo && item.reactTo === snakeCase(section).toLocaleUpperCase());
 
       return res || itemData;
@@ -93,7 +111,9 @@ export const ProfileBranch = memo(({
   );
 
   const handleToggle = (section, togglerValue, togglerSetter) => {
-    sessionStorage.setItem(`${sectionKey}.sectionStatus.${section}`, JSON.stringify(!togglerValue));
+    const accStatus = set({}, `${sectionKey}.sectionStatus.${section}`, !togglerValue);
+
+    dispatch(setCurrentProfileTreeContent(accStatus));
     togglerSetter(!togglerValue);
   };
 

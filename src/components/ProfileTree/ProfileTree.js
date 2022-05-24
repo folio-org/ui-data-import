@@ -1,7 +1,12 @@
 import React, {
   memo,
+  useEffect,
   useState,
 } from 'react';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -9,13 +14,21 @@ import {
   noop,
   last,
   snakeCase,
+  get,
+  set,
 } from 'lodash';
 import classNames from 'classnames';
+
+import {
+  setCurrentProfileTreeContent,
+  setProfileTreeContent
+} from '../../redux';
 
 import {
   ENTITY_KEYS,
   PROFILE_TYPES,
   PROFILE_RELATION_TYPES,
+  STATE_MANAGEMENT,
 } from '../../utils';
 import {
   ProfileBranch,
@@ -40,7 +53,7 @@ export const ProfileTree = memo(({
   showLabelsAsHotLink,
   resources,
 }) => {
-  const dataKey = 'jobProfiles.current';
+  const dataKey = 'currentData';
   const profileTreeKey = 'profileTreeData';
 
   const parentRecordData = {
@@ -49,8 +62,25 @@ export const ProfileTree = memo(({
     contentType: PROFILE_TYPES.JOB_PROFILE,
   };
 
+  const dispatch = useDispatch();
+  const profileTreeContent = useSelector(state => {
+    return get(
+      state,
+      [STATE_MANAGEMENT.REDUCER, profileTreeKey],
+      [],
+    );
+  });
+
   const [addedRelations, setAddedRelations] = useState(relationsToAdd);
   const [deletedRelations, setDeletedRelations] = useState(relationsToDelete);
+
+  useEffect(() => {
+    setAddedRelations(relationsToAdd);
+  }, [relationsToAdd]);
+
+  useEffect(() => {
+    setDeletedRelations(relationsToDelete);
+  }, [relationsToDelete]);
 
   const isSnakeCase = str => str && str.includes('_');
 
@@ -93,7 +123,7 @@ export const ProfileTree = memo(({
     const order = initialData.length ? (last(initialData).order + 1) : 0;
     const linesToAdd = lines.filter(line => line.profileId !== masterId);
     const newData = [...initialData, ...getLines(linesToAdd, detailType, order, reactTo)];
-    const profileTreeData = JSON.parse(sessionStorage.getItem(profileTreeKey));
+    const profileTreeData = [...profileTreeContent];
 
     if (linesToAdd && linesToAdd.length) {
       const relsToAdd = [...addedRelations, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo, order)];
@@ -102,15 +132,17 @@ export const ProfileTree = memo(({
       setAddedRelations(relsToAdd);
     }
 
-    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
-    sessionStorage.setItem(profileTreeKey, JSON.stringify([...profileTreeData, linesToAdd]));
+    const currentProfileTreeContent = set({}, localDataKey, newData);
+
+    dispatch(setCurrentProfileTreeContent(currentProfileTreeContent));
+    dispatch(setProfileTreeContent([...profileTreeData, ...linesToAdd]));
     setInitialData(newData);
   };
 
   const unlink = (parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey) => {
     const index = parentData.findIndex(item => item.profileId === line.profileId);
     const newIdx = findRelIndex(addedRelations, masterId, line);
-    const profileTreeData = JSON.parse(sessionStorage.getItem(profileTreeKey));
+    const profileTreeData = [...profileTreeContent];
 
     if (newIdx < 0) {
       const newRels = composeRelations([line], masterId, masterType, detailType, reactTo);
@@ -141,8 +173,10 @@ export const ProfileTree = memo(({
       });
     };
 
-    sessionStorage.setItem(localDataKey, JSON.stringify(newData));
-    sessionStorage.setItem(profileTreeKey, JSON.stringify(getNewProfileTreeData(profileTreeData, line)));
+    const currentProfileTreeContent = set({}, localDataKey, newData);
+
+    dispatch(setCurrentProfileTreeContent(currentProfileTreeContent));
+    dispatch(setProfileTreeContent(getNewProfileTreeData(profileTreeData, line)));
   };
 
   const remove = (parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey) => {
