@@ -8,6 +8,7 @@ import {
   AppIcon,
   TitleManager,
   stripesConnect,
+  stripesShape,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -35,6 +36,7 @@ import {
   PROFILE_TYPES,
   getEntity,
   getEntityTags,
+  showActionMenu,
 } from '../../utils';
 import {
   DetailsKeyShortcutsWrapper,
@@ -71,6 +73,7 @@ export class ViewActionProfile extends Component {
   });
 
   static propTypes = {
+    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       actionProfile: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -157,7 +160,10 @@ export class ViewActionProfile extends Component {
   };
 
   renderPaneHeader = renderProps => {
-    const { onClose } = this.props;
+    const {
+      onClose,
+      stripes,
+    } = this.props;
     const { record: actionProfile } = this.actionProfileData;
 
     const paneTitle = (
@@ -175,7 +181,10 @@ export class ViewActionProfile extends Component {
         {...renderProps}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.actionProfileName" />}
-        actionMenu={this.renderActionMenu}
+        actionMenu={showActionMenu({
+          renderer: this.renderActionMenu,
+          stripes,
+        })}
         dismissible
         onClose={onClose}
       />

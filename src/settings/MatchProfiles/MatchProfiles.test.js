@@ -53,6 +53,7 @@ const matchProfilesProps = {
       token: 'test-token',
       url: 'test-url',
     },
+    hasPerm: () => true,
   },
   location: {
     search: 'data-import-profiles/matchProfiles',
