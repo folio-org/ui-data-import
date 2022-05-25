@@ -31,6 +31,7 @@
 * When new data import log summary is opened, old UI from previous log summary is displayed (UIDATIMP-1164)
 * Update Data import UI permission for POL/VRN (UIDATIMP-1161)
 * Change Import log hotlinks to textLink: View all page (UIDATIMP-1170)
+* Change Import log hotlinks to textLink: Landing page (UIDATIMP-1169)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
