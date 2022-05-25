@@ -216,7 +216,8 @@
           "converter-storage.actionprofile.get",
           "converter-storage.mappingprofile.get",
           "converter-storage.profileassociation.get",
-          "configuration.entries.collection.get"
+          "configuration.entries.collection.get",
+          "orders.po-lines.collection.get"
         ],
         "visible": true
       },
