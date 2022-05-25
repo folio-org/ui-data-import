@@ -193,6 +193,7 @@ const renderListView = ({
         initialValues={initialValues}
         columnWidths={columnWidths}
         objectName={objectName}
+        stripes={{ hasPerm: () => true }}
       />
     </Router>
   );

@@ -70,6 +70,7 @@ const renderViewActionProfile = ({
         tagsEnabled={tagsEnabled}
         location={location}
         resources={resources}
+        stripes={{ hasPerm: () => true }}
       />
     </Router>
   );

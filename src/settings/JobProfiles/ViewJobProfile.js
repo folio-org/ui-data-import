@@ -58,6 +58,7 @@ import {
   compose,
   createUrlFromArray,
   FILE_STATUSES,
+  showActionMenu,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
@@ -71,6 +72,7 @@ const ViewJobProfileComponent = props => {
   const {
     resources,
     resources: { childWrappers },
+    stripes,
     stripes: { okapi },
     history,
     tagsEnabled,
@@ -210,7 +212,10 @@ const ViewJobProfileComponent = props => {
         {...renderProps}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.jobProfileName" />}
-        actionMenu={actionMenu}
+        actionMenu={showActionMenu({
+          renderer: actionMenu,
+          stripes,
+        })}
         dismissible
         onClose={onClose}
       />

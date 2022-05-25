@@ -94,7 +94,10 @@ const renderViewJobProfile = ({
         onClose={noop}
         onDelete={noop}
         actionMenuItems={actionMenuItems}
-        stripes={{ okapi: { url: '' } }}
+        stripes={{
+          okapi: { url: '' },
+          hasPerm: () => true
+        }}
       />
     </Router>
   );
