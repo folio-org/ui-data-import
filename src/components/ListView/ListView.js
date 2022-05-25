@@ -15,6 +15,7 @@ import {
   ConfirmationModal,
 } from '@folio/stripes/components';
 import { buildUrl } from '@folio/stripes/smart-components';
+import { stripesShape } from '@folio/stripes/core';
 
 import {
   checkboxListShape,
@@ -32,7 +33,7 @@ import { createNetworkMessage } from '../Callout';
 
 export class ListView extends Component {
   static propTypes = {
-    stripes: PropTypes.object,
+    stripes: stripesShape.isRequired,
     resources: PropTypes.object.isRequired,
     mutator: PropTypes.object.isRequired,
     location: PropTypes.oneOfType([
@@ -248,7 +249,7 @@ export class ListView extends Component {
               defaultSort={defaultSort}
               actionMenu={showActionMenu({
                 renderer: actionMenu,
-                stripes
+                stripes,
               })}
               visibleColumns={visibleColumns}
               columnWidths={columnWidths}

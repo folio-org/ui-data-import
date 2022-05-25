@@ -214,7 +214,7 @@ const ViewJobProfileComponent = props => {
         paneSub={<FormattedMessage id="ui-data-import.jobProfileName" />}
         actionMenu={showActionMenu({
           renderer: actionMenu,
-          stripes
+          stripes,
         })}
         dismissible
         onClose={onClose}

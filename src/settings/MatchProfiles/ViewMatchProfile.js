@@ -7,6 +7,7 @@ import {
   AppIcon,
   TitleManager,
   stripesConnect,
+  stripesShape,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -73,7 +74,7 @@ export class ViewMatchProfile extends Component {
   });
 
   static propTypes = {
-    stripes: PropTypes.object,
+    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       matchProfile: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -164,7 +165,7 @@ export class ViewMatchProfile extends Component {
   renderPaneHeader = renderProps => {
     const {
       onClose,
-      stripes
+      stripes,
     } = this.props;
 
     const { record: matchProfile } = this.matchProfileData;
@@ -186,7 +187,7 @@ export class ViewMatchProfile extends Component {
         paneSub={<FormattedMessage id="ui-data-import.matchProfileName" />}
         actionMenu={showActionMenu({
           renderer: this.renderActionMenu,
-          stripes
+          stripes,
         })}
         dismissible
         onClose={onClose}

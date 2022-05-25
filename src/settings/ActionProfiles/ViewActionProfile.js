@@ -8,6 +8,7 @@ import {
   AppIcon,
   TitleManager,
   stripesConnect,
+  stripesShape,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -72,7 +73,7 @@ export class ViewActionProfile extends Component {
   });
 
   static propTypes = {
-    stripes: PropTypes.object,
+    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       actionProfile: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -161,7 +162,7 @@ export class ViewActionProfile extends Component {
   renderPaneHeader = renderProps => {
     const {
       onClose,
-      stripes
+      stripes,
     } = this.props;
     const { record: actionProfile } = this.actionProfileData;
 

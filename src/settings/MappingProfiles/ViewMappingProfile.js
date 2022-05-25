@@ -6,6 +6,7 @@ import {
   AppIcon,
   TitleManager,
   stripesConnect,
+  stripesShape,
 } from '@folio/stripes/core';
 import {
   Headline,
@@ -86,7 +87,7 @@ export class ViewMappingProfile extends Component {
   });
 
   static propTypes = {
-    stripes: PropTypes.object,
+    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       mappingProfile: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -181,7 +182,7 @@ export class ViewMappingProfile extends Component {
   renderPaneHeader = renderProps => {
     const {
       onClose,
-      stripes
+      stripes,
     } = this.props;
 
     const { record: mappingProfile } = this.mappingProfileData;
@@ -203,7 +204,7 @@ export class ViewMappingProfile extends Component {
         paneSub={<FormattedMessage id="ui-data-import.mappingProfileName" />}
         actionMenu={showActionMenu({
           renderer: this.renderActionMenu,
-          stripes
+          stripes,
         })}
         dismissible
         onClose={onClose}

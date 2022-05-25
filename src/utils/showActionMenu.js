@@ -7,5 +7,6 @@ import { permissions } from './permissions';
 */
 export function showActionMenu({ renderer, stripes }) {
   const hasPerm = stripes.hasPerm(permissions.SETTINGS_MANAGE);
+
   return hasPerm ? renderer : null;
 }

@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   TitleManager,
   stripesConnect,
+  stripesShape,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -44,7 +45,7 @@ export class ViewFileExtension extends Component {
   });
 
   static propTypes = {
-    stripes: PropTypes.object,
+    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       fileExtension: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -141,7 +142,7 @@ export class ViewFileExtension extends Component {
   renderPaneHeader = renderProps => {
     const {
       onClose,
-      stripes
+      stripes,
     } = this.props;
     const { record } = this.fileExtensionData;
 

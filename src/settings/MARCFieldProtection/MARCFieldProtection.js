@@ -20,7 +20,7 @@ import { TextField } from '@folio/stripes/components';
 
 import {
   MARC_FIELD_PROTECTION_SOURCE,
-  permissions
+  permissions,
 } from '../../utils';
 
 export const DISABLED_FOR_PROTECTING_FIELDS = ['Leader', 'LDR', '001', '002', '003', '004', '005', '009'];
