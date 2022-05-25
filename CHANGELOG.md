@@ -30,10 +30,15 @@
 * Create a new Data import UI permission for deleting import logs (UIDATIMP-1144)
 * When new data import log summary is opened, old UI from previous log summary is displayed (UIDATIMP-1164)
 * Update Data import UI permission for POL/VRN (UIDATIMP-1161)
+* Change Import log hotlinks to textLink: Landing page (UIDATIMP-1169)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
 * Some issues with log searching in Juniper Bugfest/Smoke testing (UIDATIMP-1125)
+
+## [5.1.3](https://github.com/folio-org/ui-data-import/tree/v5.1.3) (2022-05-24)
+
+### Bugs fixed:
 * UI problem with Settings panes in Lotus Bugfest (UIDATIMP-1142)
 
 ## [5.1.2](https://github.com/folio-org/ui-data-import/tree/v5.1.2) (2022-03-24)
