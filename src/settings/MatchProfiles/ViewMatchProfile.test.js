@@ -70,7 +70,7 @@ const renderViewMatchProfile = ({
         history={history}
         onClose={noop}
         onDelete={noop}
-        stripes={{hasPerm: () => true}}
+        stripes={{ hasPerm: () => true }}
       />
     </Router>
   );
