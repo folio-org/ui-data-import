@@ -29,6 +29,7 @@
 * Remove additional validation in the "Currency" field (UIDATIMP-1167)
 * Create a new Data import UI permission for deleting import logs (UIDATIMP-1144)
 * When new data import log summary is opened, old UI from previous log summary is displayed (UIDATIMP-1164)
+* Update Data import UI permission for POL/VRN (UIDATIMP-1161)
 * Change Import log hotlinks to textLink: Landing page (UIDATIMP-1169)
 
 ### Bugs fixed:
