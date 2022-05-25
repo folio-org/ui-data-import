@@ -72,6 +72,7 @@ const renderViewFileExtension = ({
         match={match}
         location={location}
         history={history}
+        stripes={{ hasPerm: () => true }}
       />
     </Router>
   );

@@ -15,20 +15,25 @@ import {
   ConfirmationModal,
 } from '@folio/stripes/components';
 import { buildUrl } from '@folio/stripes/smart-components';
+import { stripesShape } from '@folio/stripes/core';
 
 import {
   checkboxListShape,
   trimSearchTerm,
+  showActionMenu,
 } from '../../utils';
-import { getCRUDActions } from '../ViewContainer/getCRUDActions';
+import {
+  ViewContainer,
+  getCRUDActions,
+} from '../ViewContainer';
 import { SearchAndSort } from '../SearchAndSort';
-import { ViewContainer } from '../ViewContainer';
 import { listTemplate } from '../ListTemplate';
 import { ActionMenu } from '../ActionMenu';
 import { createNetworkMessage } from '../Callout';
 
 export class ListView extends Component {
   static propTypes = {
+    stripes: stripesShape.isRequired,
     resources: PropTypes.object.isRequired,
     mutator: PropTypes.object.isRequired,
     location: PropTypes.oneOfType([
@@ -181,6 +186,7 @@ export class ListView extends Component {
 
   render() {
     const {
+      stripes,
       resources,
       mutator,
       location: { search },
@@ -241,7 +247,10 @@ export class ListView extends Component {
               resultCountMessageKey={`ui-data-import.settings.${ENTITY_KEY}.count`}
               resultsLabel={label}
               defaultSort={defaultSort}
-              actionMenu={actionMenu}
+              actionMenu={showActionMenu({
+                renderer: actionMenu,
+                stripes,
+              })}
               visibleColumns={visibleColumns}
               columnWidths={columnWidths}
               columnMapping={renderHeaders()}

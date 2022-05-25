@@ -216,7 +216,8 @@
           "converter-storage.actionprofile.get",
           "converter-storage.mappingprofile.get",
           "converter-storage.profileassociation.get",
-          "configuration.entries.collection.get"
+          "configuration.entries.collection.get",
+          "orders.po-lines.collection.get"
         ],
         "visible": true
       },
@@ -291,6 +292,7 @@
           "mapping-rules.get",
           "mapping-rules.update",
           "mapping-rules.restore",
+          "metadata-provider.jobexecutions.get",
           "tags.collection.get",
           "tags.item.post",
           "acquisitions-units.units.collection.get",
@@ -331,6 +333,7 @@
           "inventory-storage.item-note-types.collection.get",
           "configuration.entries.collection.get",
           "mapping-rules.get",
+          "metadata-provider.jobexecutions.get",
           "tags.collection.get",
           "acquisitions-units.units.collection.get",
           "batch-groups.collection.get",

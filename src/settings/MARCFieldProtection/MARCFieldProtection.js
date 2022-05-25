@@ -18,7 +18,10 @@ import { withStripes } from '@folio/stripes/core';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { TextField } from '@folio/stripes/components';
 
-import { MARC_FIELD_PROTECTION_SOURCE } from '../../utils';
+import {
+  MARC_FIELD_PROTECTION_SOURCE,
+  permissions,
+} from '../../utils';
 
 export const DISABLED_FOR_PROTECTING_FIELDS = ['Leader', 'LDR', '001', '002', '003', '004', '005', '009'];
 export const DISABLED_FOR_SUBFIELD_AND_INDICATORS_FIELDS = ['006', '007', '008'];
@@ -209,6 +212,8 @@ export class MARCFieldProtection extends Component {
       stripes,
     } = this.props;
 
+    const hasPerm = stripes.hasPerm(permissions.SETTINGS_MANAGE);
+
     const columnMapping = {
       field: <FormattedMessage id="ui-data-import.settings.marcFieldProtection.field" />,
       indicator1: <FormattedMessage id="ui-data-import.settings.marcFieldProtection.indicator1" />,
@@ -260,6 +265,7 @@ export class MARCFieldProtection extends Component {
         validate={this.validateFields}
         stripes={stripes}
         fieldComponents={this.getFieldComponents()}
+        editable={hasPerm}
       />
     );
   }

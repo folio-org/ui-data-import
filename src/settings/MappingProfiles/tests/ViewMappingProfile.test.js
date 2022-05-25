@@ -109,6 +109,7 @@ const renderViewMappingProfile = ({
         tagsEnabled={tagsEnabled}
         onClose={onClose}
         onDelete={onDelete}
+        stripes={{ hasPerm: () => true }}
       />
     </Router>
   );

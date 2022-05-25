@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   TitleManager,
   stripesConnect,
+  stripesShape,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -23,6 +24,7 @@ import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
+  showActionMenu,
 } from '../../utils';
 import {
   DetailsKeyShortcutsWrapper,
@@ -43,6 +45,7 @@ export class ViewFileExtension extends Component {
   });
 
   static propTypes = {
+    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       fileExtension: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -137,7 +140,10 @@ export class ViewFileExtension extends Component {
   );
 
   renderPaneHeader = renderProps => {
-    const { onClose } = this.props;
+    const {
+      onClose,
+      stripes,
+    } = this.props;
     const { record } = this.fileExtensionData;
 
     return (
@@ -145,7 +151,10 @@ export class ViewFileExtension extends Component {
         {...renderProps}
         paneTitle={record.extension}
         paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
-        actionMenu={this.renderActionMenu}
+        actionMenu={showActionMenu({
+          renderer: this.renderActionMenu,
+          stripes,
+        })}
         dismissible
         onClose={onClose}
       />
