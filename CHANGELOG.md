@@ -35,6 +35,7 @@
 * When user have Can view only permission, don't show Actions and +New buttons (UIDATIMP-1174)
 * Change Import log hotlinks to textLink: Log details screen (UIDATIMP-1171)
 * Change Job profile tree hotlinks to textLink, in Settings/Data import (UIDATIMP-1180)
+* Change associated hotlinks in Match, Action, Field mapping profiles to textLink, in Settings/Data import (UIDATIMP-1181)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
