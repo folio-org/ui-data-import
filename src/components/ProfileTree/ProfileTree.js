@@ -5,7 +5,7 @@ import React, {
 } from 'react';
 import {
   useDispatch,
-  useSelector
+  useSelector,
 } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -21,7 +21,7 @@ import classNames from 'classnames';
 
 import {
   setCurrentProfileTreeContent,
-  setProfileTreeContent
+  setProfileTreeContent,
 } from '../../redux';
 
 import {

@@ -56,7 +56,7 @@ import {
 import {
   clearCurrentProfileTreeContent,
   clearProfileTreeContent,
-  setProfileTreeContent
+  setProfileTreeContent,
 } from '../../redux';
 
 const dataTypes = DATA_TYPES.map(dataType => ({
