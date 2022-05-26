@@ -13,7 +13,7 @@ import {
 import { stripesConnect } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
-  Button,
+  TextLink,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import {
@@ -47,8 +47,6 @@ import {
   getFilters,
   getSort
 } from './ViewAllLogsUtils';
-
-import sharedCss from '../../shared.css';
 
 const {
   COMMITTED,
@@ -252,15 +250,11 @@ class ViewAllLogs extends Component {
     } = this.props;
 
     const fileNameCellFormatter = record => (
-      <Button
-        buttonStyle="link"
-        marginBottom0
+      <TextLink
         to={`/data-import/job-summary/${record.id}`}
-        buttonClass={sharedCss.cellLink}
-        onClick={e => e.stopPropagation()}
       >
         {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
-      </Button>
+      </TextLink>
     );
 
     return {
