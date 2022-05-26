@@ -32,6 +32,8 @@
 * Update Data import UI permission for POL/VRN (UIDATIMP-1161)
 * Change Import log hotlinks to textLink: View all page (UIDATIMP-1170)
 * Change Import log hotlinks to textLink: Landing page (UIDATIMP-1169)
+* When user have Can view only permission, don't show Actions and +New buttons (UIDATIMP-1174)
+* Change Import log hotlinks to textLink: Log details screen (UIDATIMP-1171)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
