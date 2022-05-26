@@ -15,9 +15,9 @@ import {
   mapNsKeys,
 } from '@folio/stripes/smart-components';
 import {
-  Button,
   NoValue,
   MCLPagingTypes,
+  TextLink,
 } from '@folio/stripes/components';
 
 import { FOLIO_RECORD_TYPES } from '../../../components';
@@ -26,8 +26,6 @@ import {
   RECORD_ACTION_STATUS,
   RECORD_ACTION_STATUS_LABEL_IDS,
 } from '../../../utils';
-
-import sharedCss from '../../../shared.css';
 
 const getRecordActionStatusLabel = recordType => {
   if (!recordType) return <NoValue />;
@@ -59,15 +57,12 @@ export const RecordsTable = ({
   const getHotlinkCellFormatter = (isHotlink, entityLabel, path, entity) => {
     if (isHotlink) {
       return (
-        <Button
+        <TextLink
           data-test-entity-name={entity}
-          buttonStyle="link"
           to={path}
-          marginBottom0
-          buttonClass={sharedCss.cellLink}
         >
           {entityLabel}
-        </Button>
+        </TextLink>
       );
     }
 
@@ -150,15 +145,13 @@ export const RecordsTable = ({
         : sourceRecordTitle;
 
       return (
-        <Button
-          buttonStyle="link"
+        <TextLink
           target="_blank"
-          marginBottom0
+          rel="noopener noreferrer"
           to={path}
-          buttonClass={sharedCss.cellLink}
         >
           {title}
-        </Button>
+        </TextLink>
       );
     },
     srsMarcStatus: ({ sourceRecordActionStatus }) => getRecordActionStatusLabel(sourceRecordActionStatus),
