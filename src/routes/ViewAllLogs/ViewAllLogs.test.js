@@ -309,12 +309,10 @@ describe('ViewAllLogs component', () => {
   });
 
   describe('Logs section', () => {
-    it('should have clickable file names', () => {
-      const { getByRole } = renderViewAllLogs(defaultQuery);
+    it('should have valid links', () => {
+      const { getByText } = renderViewAllLogs(defaultQuery);
 
-      const fileLink = getByRole('button', { name: /testfile1/i });
-
-      fireEvent.click(fileLink);
+      const fileLink = getByText(/testfile1/i);
 
       expect(fileLink).toHaveAttribute('href');
     });
