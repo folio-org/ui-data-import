@@ -124,7 +124,8 @@ export const jobProfilesShape = {
 // TODO: this code could possibly be rewritten when https://issues.folio.org/browse/STCON-86 is done
 export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', hideDefaultProfiles = false) => {
   const visibleColumns = chooseJobProfile
-    ? jobProfilesShape.visibleColumns : [
+    ? jobProfilesShape.visibleColumns
+    : [
       'selected',
       'name',
       'tags',
