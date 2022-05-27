@@ -5,7 +5,10 @@ import { noop } from 'lodash';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
 import { Pluggable } from '@folio/stripes/core';
-import { translationsProperties } from '../../../test/jest/helpers';
+import {
+  renderWithRedux,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 
 import { ProfileTree } from './ProfileTree';
 
@@ -143,17 +146,12 @@ const renderProfileTree = ({
     />
   );
 
-  return renderWithIntl(component, translationsProperties);
+  return renderWithIntl(renderWithRedux(component), translationsProperties);
 };
 
 describe('ProfileTree', () => {
-  beforeAll(() => {
-    window.sessionStorage.setItem('profileTreeData', JSON.stringify([{ childSnapshotWrappers: [] }]));
-  });
-
   afterAll(() => {
     delete window.ResizeObserver;
-    window.sessionStorage.clear();
   });
 
   afterEach(() => {
