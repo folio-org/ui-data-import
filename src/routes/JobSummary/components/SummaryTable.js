@@ -47,13 +47,13 @@ const SummaryTableComponent = ({ resources: { jobSummary: { records: jobSummaryR
 
   const isLastRow = rowIndex => rowIndex === 3;
   const getResultsCellContent = (column, rowIndex) => {
-    const totalEntitiesKeys = ['totalCreatedEntities', 'totalUpdatedEntities', 'totalDiscardedEntities', 'totalErrors']
+    const totalEntitiesKeys = ['totalCreatedEntities', 'totalUpdatedEntities', 'totalDiscardedEntities', 'totalErrors'];
 
     return column[totalEntitiesKeys[rowIndex]];
   };
 
   const resultsFormatter = {
-    srsMarc: ({ rowIndex, sourceRecordSummary}) => getResultsCellContent(sourceRecordSummary, rowIndex),
+    srsMarc: ({ rowIndex, sourceRecordSummary }) => getResultsCellContent(sourceRecordSummary, rowIndex),
     instance: ({ rowIndex, instanceSummary }) => getResultsCellContent(instanceSummary, rowIndex),
     holdings: ({ rowIndex, holdingSummary }) => getResultsCellContent(holdingSummary, rowIndex),
     item: ({ rowIndex, itemSummary }) => getResultsCellContent(itemSummary, rowIndex),
@@ -91,7 +91,7 @@ SummaryTableComponent.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
-  jobExecutionId: PropTypes.string,
+  jobExecutionId: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
 };
 
 SummaryTableComponent.manifest = Object.freeze({

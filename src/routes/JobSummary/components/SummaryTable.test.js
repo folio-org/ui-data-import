@@ -18,13 +18,13 @@ const entitySummary = {
 const resources = buildResources({
   resourceName: 'jobSummary',
   records: [{
-    sourceRecordSummary: {...entitySummary},
-    instanceSummary: {...entitySummary},
-    holdingSummary: {...entitySummary},
-    itemSummary: {...entitySummary},
-    authoritySummary: {...entitySummary},
-    orderSummary: {...entitySummary},
-    invoiceSummary: {...entitySummary},
+    sourceRecordSummary: { ...entitySummary },
+    instanceSummary: { ...entitySummary },
+    holdingSummary: { ...entitySummary },
+    itemSummary: { ...entitySummary },
+    authoritySummary: { ...entitySummary },
+    orderSummary: { ...entitySummary },
+    invoiceSummary: { ...entitySummary },
     totalErrors: 0,
   }],
 });
