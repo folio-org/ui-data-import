@@ -35,6 +35,7 @@
 * When user have Can view only permission, don't show Actions and +New buttons (UIDATIMP-1174)
 * Change Import log hotlinks to textLink: Log details screen (UIDATIMP-1171)
 * Change associated hotlinks in Match, Action, Field mapping profiles to textLink, in Settings/Data import (UIDATIMP-1181)
+* Prefer @folio/stripes exports to private paths when importing Calendar component (UIDATIMP-942)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
