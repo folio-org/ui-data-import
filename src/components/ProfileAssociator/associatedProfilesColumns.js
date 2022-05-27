@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Button,
   Icon,
+  TextLink,
 } from '@folio/stripes/components';
 
 import { stringToWords } from '../../utils';
@@ -60,15 +61,12 @@ export const associatedProfilesColumns = ({
   return {
     ...formatter,
     name: record => (
-      <Button
+      <TextLink
         data-test-profile-link
-        buttonStyle="link"
-        marginBottom0
         to={`/settings/data-import/${entityName}/view/${record.id}`}
-        buttonClass={sharedCss.cellLink}
       >
         {formatter.name(record)}
-      </Button>
+      </TextLink>
     ),
   };
 };

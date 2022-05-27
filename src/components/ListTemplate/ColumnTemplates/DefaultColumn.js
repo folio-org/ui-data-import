@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import {
   NoValue,
-  Button,
+  TextLink,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
@@ -54,20 +54,17 @@ export const DefaultColumn = memo(({
     </AppIcon>
   );
 
-  const hotlink = (
-    <Button
+  const textLink = (
+    <TextLink
       data-test-profile-link={entityName}
-      buttonStyle="link"
-      marginBottom0
       to={`/settings/data-import/${entityName}/view/${recordId}`}
-      buttonClass={sharedCss.cellLink}
     >
       {appIcon}
-    </Button>
+    </TextLink>
   );
 
   return showLabelsAsHotLink
-    ? hotlink
+    ? textLink
     : appIcon;
 });
 

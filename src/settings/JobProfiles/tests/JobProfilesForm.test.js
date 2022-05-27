@@ -5,6 +5,7 @@ import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
 
 import '../../../../test/jest/__mock__';
 import {
@@ -26,17 +27,27 @@ global.fetch = jest.fn();
 const childWrappers = [
   {
     childSnapshotWrappers: [{
+      content: { name: 'Attached action profile' },
+      contentType: PROFILE_TYPES.ACTION_PROFILE,
+      id: 'testId',
+      profileId: 'testProfileId',
+      order: 0,
       childSnapshotWrappers: [],
-      content: {},
-      contentType: PROFILE_TYPES.MAPPING_PROFILE,
     }],
-    content: { name: 'Attached action profile' },
-    contentType: PROFILE_TYPES.ACTION_PROFILE,
-    id: 'testId',
-    order: 0,
-    profileId: 'testProfileId',
   },
 ];
+
+const mutator = {
+  childWrappers: {
+    GET: jest.fn().mockResolvedValue(childWrappers),
+    reset: jest.fn(),
+  },
+};
+
+const resources = buildResources({
+  resourceName: 'childWrappers',
+  records: childWrappers,
+});
 
 const parentResources = {
   jobProfiles: {},
@@ -99,7 +110,6 @@ const renderJobProfilesForm = ({
       <JobProfilesForm
         submitting={submitting}
         initialValues={initialValues}
-        childWrappers={childWrappers}
         handleSubmit={noop}
         form={form}
         onCancel={noop}
@@ -109,11 +119,13 @@ const renderJobProfilesForm = ({
         match={match}
         onSubmit={jest.fn()}
         layerType={layerType}
+        mutator={mutator}
+        resources={resources}
       />
     </Router>
   );
 
-  return renderWithIntl(renderWithReduxForm(component, { folio_data_import_child_wrappers: () => ({ records: [{ childSnapshotWrappers: childWrappers }] }) }), translationsProperties);
+  return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
 describe('<JobProfilesForm>', () => {

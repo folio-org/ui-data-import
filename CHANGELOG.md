@@ -33,11 +33,16 @@
 * Change Import log hotlinks to textLink: View all page (UIDATIMP-1170)
 * Change Import log hotlinks to textLink: Landing page (UIDATIMP-1169)
 * When user have Can view only permission, don't show Actions and +New buttons (UIDATIMP-1174)
+* Change Import log hotlinks to textLink: Log details screen (UIDATIMP-1171)
+* Change Job profile tree hotlinks to textLink, in Settings/Data import (UIDATIMP-1180)
+* Add line between log summary and record list (UIDATIMP-1168)
+* Change associated hotlinks in Match, Action, Field mapping profiles to textLink, in Settings/Data import (UIDATIMP-1181)
 * Connect summary table of import job's log to BE (UIDATIMP-1163)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
 * Some issues with log searching in Juniper Bugfest/Smoke testing (UIDATIMP-1125)
+* QuotaExceededError: Failed to execute 'setItem' on 'Storage': Setting the value of 'profileTreeData' exceeded the quota (UIDATIMP-1166)
 
 ## [5.1.3](https://github.com/folio-org/ui-data-import/tree/v5.1.3) (2022-05-24)
 

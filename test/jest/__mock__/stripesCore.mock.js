@@ -53,6 +53,15 @@ jest.mock('@folio/stripes/core', () => {
     );
   };
 
+  const withRoot = Component => props => {
+    return (
+      <Component
+        {...props}
+        root={{ addReducer: () => {} }}
+      />
+    );
+  };
+
   const useStripes = () => STRIPES;
 
   const IfPermission = props => <>{props.children}</>;
@@ -65,6 +74,7 @@ jest.mock('@folio/stripes/core', () => {
     ...jest.requireActual('@folio/stripes/core'),
     stripesConnect,
     withStripes,
+    withRoot,
     IfPermission,
     AppContextMenu,
     useStripes,

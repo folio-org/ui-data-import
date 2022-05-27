@@ -20,6 +20,7 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 import css from '@folio/stripes-data-transfer-components/lib/SearchAndSortPane/SearchAndSortPane.css';
+import sharedCss from '../../shared.css';
 
 import {
   SummaryTable,
@@ -141,7 +142,7 @@ const JobSummaryComponent = props => {
         renderHeader={renderHeader}
       >
         <div className={css.paneBody}>
-          <div>
+          <div className={sharedCss.separatorLine}>
             <SummaryTable jobExecutionId={jobExecutionsId} />
           </div>
           <div className={css.searchResults}>
