@@ -142,7 +142,7 @@ const JobSummaryComponent = props => {
       >
         <div className={css.paneBody}>
           <div>
-            <SummaryTable />
+            <SummaryTable jobExecutionId={jobExecutionsId} />
           </div>
           <div className={css.searchResults}>
             <RecordsTable
