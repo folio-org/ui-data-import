@@ -15,14 +15,16 @@ import {
 } from 'lodash';
 
 import {
+  Calendar,
   IconButton,
   Popper,
   RootCloseWrapper,
   TextField,
 } from '@folio/stripes/components';
-import Calendar from '@folio/stripes-components/lib/Datepicker/Calendar';
-import css from '@folio/stripes-components/lib/Datepicker/Calendar.css';
+
 import { AVAILABLE_PLACEMENTS } from '../../utils';
+
+import css from './TextDate.css';
 
 const pickDataProps = props => pick(props, (v, key) => key.indexOf('data-test') !== -1);
 

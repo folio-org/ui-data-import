@@ -37,6 +37,7 @@
 * Change Job profile tree hotlinks to textLink, in Settings/Data import (UIDATIMP-1180)
 * Add line between log summary and record list (UIDATIMP-1168)
 * Change associated hotlinks in Match, Action, Field mapping profiles to textLink, in Settings/Data import (UIDATIMP-1181)
+* Prefer @folio/stripes exports to private paths when importing Calendar component (UIDATIMP-942)
 * Connect summary table of import job's log to BE (UIDATIMP-1163)
 
 ### Bugs fixed:
