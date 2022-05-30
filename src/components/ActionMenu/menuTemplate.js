@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { IfPermission } from '@folio/stripes-core';
+
 import {
   createLayerURL,
   LAYER_TYPES,
@@ -31,10 +33,8 @@ export const menuTemplate = ({
       ENTITY_KEY,
       checkboxList,
       location,
-      stripes,
     },
   } = entity;
-  const hasNoPermissionToDelete = !stripes.hasPerm(permissions.DELETE_LOGS);
 
   return {
     addNew: key => (
@@ -196,13 +196,15 @@ export const menuTemplate = ({
       };
 
       return (
-        <Default
-          key={key}
-          caption="ui-data-import.deleteSelectedLogs"
-          icon="trash"
-          isDisabled={entity.isDeleteAllLogsDisabled() || hasNoPermissionToDelete}
-          onClick={handleDelete}
-        />
+        <IfPermission perm={permissions.DELETE_LOGS}>
+          <Default
+            key={key}
+            caption="ui-data-import.deleteSelectedLogs"
+            icon="trash"
+            isDisabled={entity.isDeleteAllLogsDisabled()}
+            onClick={handleDelete}
+          />
+        </IfPermission>
       );
     },
   };

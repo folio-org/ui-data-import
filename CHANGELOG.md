@@ -22,7 +22,6 @@
 * Update match screen UI for Holdings (UIDATIMP-1047)
 * Update match screen UI for Instances (UIDATIMP-1046)
 * Update match screen UI for Items (UIDATIMP-1048)
-* Update the "Data Import: All permissions" permission (UIDATIMP-1143)
 * Create a new Data import UI permission for only viewing settings (UIDATIMP-1145)
 * Use API for deleting data import logs on Data Import landing page (UIDATIMP-1126)
 * replace babel-eslint with @babel/eslint-parser (UIDATIMP-1150)
@@ -38,6 +37,7 @@
 * Add line between log summary and record list (UIDATIMP-1168)
 * Change associated hotlinks in Match, Action, Field mapping profiles to textLink, in Settings/Data import (UIDATIMP-1181)
 * Prefer @folio/stripes exports to private paths when importing Calendar component (UIDATIMP-942)
+* Update the "Data Import: All permissions" permission (UIDATIMP-1143)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
