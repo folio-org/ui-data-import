@@ -47,6 +47,10 @@ const SummaryTableComponent = ({ resources: { jobSummary: { records: jobSummaryR
 
   const isLastRow = rowIndex => rowIndex === 3;
   const getResultsCellContent = (column, rowIndex) => {
+    if (!column) {
+      return <NoValue />;
+    }
+
     const totalEntitiesKeys = ['totalCreatedEntities', 'totalUpdatedEntities', 'totalDiscardedEntities', 'totalErrors'];
 
     return column[totalEntitiesKeys[rowIndex]];
