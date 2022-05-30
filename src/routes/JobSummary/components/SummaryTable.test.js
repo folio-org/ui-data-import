@@ -23,7 +23,7 @@ describe('SummaryTable component', () => {
   it('should have proper columns', () => {
     const { getByText } = renderSummaryTable();
 
-    const errorColumn = document.getElementById('list-column-error');
+    const errorColumn = document.getElementById('job-summary-table-list-column-error');
 
     expect(getByText('Summary')).toBeDefined();
     expect(getByText('SRS MARC')).toBeDefined();
