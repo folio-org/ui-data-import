@@ -3,6 +3,7 @@ import {
   render,
   fireEvent,
 } from '@testing-library/react';
+import { noop } from 'lodash';
 
 import '../../../test/jest/__mock__';
 
@@ -30,6 +31,7 @@ const entity = {
       selectAll: jest.fn(),
       deselectAll: jest.fn(),
     },
+    stripes: { hasPerm: noop },
   },
   showRunConfirmation: jest.fn(),
   showDeleteConfirmation: jest.fn(),

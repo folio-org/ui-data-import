@@ -60,6 +60,7 @@ import {
   FIELD_MAPPINGS_FOR_MARC_OPTIONS,
   marcFieldProtectionSettingsShape,
   showActionMenu,
+  permissions,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
@@ -202,10 +203,11 @@ export class ViewMappingProfile extends Component {
         {...renderProps}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.mappingProfileName" />}
-        actionMenu={showActionMenu({
-          renderer: this.renderActionMenu,
+        actionMenu={showActionMenu(
+          this.renderActionMenu,
           stripes,
-        })}
+          permissions.SETTINGS_MANAGE,
+        )}
         dismissible
         onClose={onClose}
       />

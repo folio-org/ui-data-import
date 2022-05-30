@@ -3,6 +3,7 @@ import React from 'react';
 import {
   createLayerURL,
   LAYER_TYPES,
+  permissions,
 } from '../../utils';
 
 import {
@@ -30,8 +31,10 @@ export const menuTemplate = ({
       ENTITY_KEY,
       checkboxList,
       location,
+      stripes,
     },
   } = entity;
+  const hasNoPermissionToDelete = !stripes.hasPerm(permissions.DELETE_LOGS);
 
   return {
     addNew: key => (
@@ -197,7 +200,7 @@ export const menuTemplate = ({
           key={key}
           caption="ui-data-import.deleteSelectedLogs"
           icon="trash"
-          isDisabled={entity.isDeleteAllLogsDisabled()}
+          isDisabled={entity.isDeleteAllLogsDisabled() || hasNoPermissionToDelete}
           onClick={handleDelete}
         />
       );

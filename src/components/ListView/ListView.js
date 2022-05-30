@@ -21,6 +21,7 @@ import {
   checkboxListShape,
   trimSearchTerm,
   showActionMenu,
+  permissions,
 } from '../../utils';
 import {
   ViewContainer,
@@ -247,10 +248,11 @@ export class ListView extends Component {
               resultCountMessageKey={`ui-data-import.settings.${ENTITY_KEY}.count`}
               resultsLabel={label}
               defaultSort={defaultSort}
-              actionMenu={showActionMenu({
-                renderer: actionMenu,
+              actionMenu={showActionMenu(
+                actionMenu,
                 stripes,
-              })}
+                permissions.SETTINGS_MANAGE,
+              )}
               visibleColumns={visibleColumns}
               columnWidths={columnWidths}
               columnMapping={renderHeaders()}

@@ -59,6 +59,7 @@ import {
   createUrlFromArray,
   FILE_STATUSES,
   showActionMenu,
+  permissions,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
@@ -212,10 +213,11 @@ const ViewJobProfileComponent = props => {
         {...renderProps}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.jobProfileName" />}
-        actionMenu={showActionMenu({
-          renderer: actionMenu,
+        actionMenu={showActionMenu(
+          actionMenu,
           stripes,
-        })}
+          permissions.SETTINGS_MANAGE,
+        )}
         dismissible
         onClose={onClose}
       />

@@ -10,7 +10,10 @@ import {
   noop,
 } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  stripesConnect,
+  stripesShape,
+} from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   TextLink,
@@ -37,6 +40,8 @@ import {
   withCheckboxList,
   getJobLogsListColumnMapping,
   statusCellFormatter,
+  showActionMenu,
+  permissions,
 } from '../../utils';
 import {
   FILTERS,
@@ -114,7 +119,7 @@ class ViewAllLogs extends Component {
     checkboxList: checkboxListShape.isRequired,
     setList: PropTypes.func.isRequired,
     intl: PropTypes.object.isRequired,
-    stripes: PropTypes.object,
+    stripes: stripesShape.isRequired,
     disableRecordCreation: PropTypes.bool,
     browseOnly: PropTypes.bool,
     packageInfo: PropTypes.object,
@@ -308,7 +313,11 @@ class ViewAllLogs extends Component {
           columnMapping={columnMapping}
           resultsFormatter={resultsFormatter}
           columnWidths={DEFAULT_JOB_LOG_COLUMNS_WIDTHS}
-          actionMenu={this.renderActionMenu}
+          actionMenu={showActionMenu(
+            this.renderActionMenu,
+            stripes,
+            permissions.DELETE_LOGS,
+          )}
           viewRecordComponent={noop}
           onSelectRow={noop}
           viewRecordPerms="metadata-provider.jobexecutions.get"
