@@ -55,7 +55,7 @@ const {
 } = FILE_STATUSES;
 
 const INITIAL_RESULT_COUNT = 100;
-const RESULT_COUNT_INCREMENT = 100;
+const RESULT_COUNT_INCREMENT = 10;
 
 const entityKey = 'jobLogs';
 
@@ -101,6 +101,10 @@ export const ViewAllLogsManifest = Object.freeze({
     },
     perRequest: RESULT_COUNT_INCREMENT,
     throwErrors: false,
+  },
+  users: {
+    type: 'okapi',
+    path: 'metadata-provider/jobExecutions/users',
   },
 });
 
@@ -181,13 +185,16 @@ class ViewAllLogs extends Component {
       .map(item => item.jobProfileInfo)
       .sort((jobProfileA, jobProfileB) => jobProfileA.name.localeCompare(jobProfileB.name));
 
-    const users = get(resources, ['records', 'records'], [])
-      .map(item => ({
-        userId: item.userId,
-        firstName: item.runBy.firstName,
-        lastName: item.runBy.lastName,
-      }))
-      .sort((userA, userB) => {
+    const users = get(resources, ['users', 'records', 0, 'jobExecutionUsersInfo'], [])
+      .map(item => {
+        return {
+          userId: item.userId,
+          firstName:
+          item?.jobUserFirstName,
+          lastName:
+          item?.jobUserLastName,
+        };
+      }).sort((userA, userB) => {
         const nameA = userA.firstName || userA.lastName;
         const nameB = userB.firstName || userB.lastName;
 
