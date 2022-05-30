@@ -54,8 +54,8 @@ const {
   CANCELLED,
 } = FILE_STATUSES;
 
-const INITIAL_RESULT_COUNT = 100;
-const RESULT_COUNT_INCREMENT = 100;
+const INITIAL_RESULT_COUNT = 10;
+const RESULT_COUNT_INCREMENT = 10;
 
 const entityKey = 'jobLogs';
 
@@ -102,6 +102,11 @@ export const ViewAllLogsManifest = Object.freeze({
     perRequest: RESULT_COUNT_INCREMENT,
     throwErrors: false,
   },
+  jobProfiles: {
+    type: 'okapi',
+    path: 'metadata-provider/jobExecutions/jobProfiles',
+    throwErrors: false,
+  }
 });
 
 @withCheckboxList
@@ -176,9 +181,9 @@ class ViewAllLogs extends Component {
 
   renderFilters = onChange => {
     const { resources } = this.props;
+    const { resources: { jobProfiles: { records: jobProfilesForFilter } } } = this.props;
 
-    const jobProfiles = get(resources, ['records', 'records'], [])
-      .map(item => item.jobProfileInfo)
+    const jobProfiles = get(jobProfilesForFilter, ['0', 'jobProfilesInfo'], [])
       .sort((jobProfileA, jobProfileB) => jobProfileA.name.localeCompare(jobProfileB.name));
 
     const users = get(resources, ['records', 'records'], [])
