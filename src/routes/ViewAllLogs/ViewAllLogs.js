@@ -54,8 +54,8 @@ const {
   CANCELLED,
 } = FILE_STATUSES;
 
-const INITIAL_RESULT_COUNT = 10;
-const RESULT_COUNT_INCREMENT = 10;
+const INITIAL_RESULT_COUNT = 100;
+const RESULT_COUNT_INCREMENT = 100;
 
 const entityKey = 'jobLogs';
 
