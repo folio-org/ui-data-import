@@ -55,7 +55,7 @@ const {
 } = FILE_STATUSES;
 
 const INITIAL_RESULT_COUNT = 100;
-const RESULT_COUNT_INCREMENT = 10;
+const RESULT_COUNT_INCREMENT = 100;
 
 const entityKey = 'jobLogs';
 
@@ -104,7 +104,9 @@ export const ViewAllLogsManifest = Object.freeze({
   },
   users: {
     type: 'okapi',
+    records: 'jobExecutionUsersInfo',
     path: 'metadata-provider/jobExecutions/users',
+    throwErrors: false,
   },
 });
 
@@ -179,20 +181,18 @@ class ViewAllLogs extends Component {
   }
 
   renderFilters = onChange => {
-    const { resources } = this.props;
+    const { resources: { users: { records: jobExecutionUsers = [] }, records: { records: jobExecutionProfiles = [] }, query } } = this.props;
 
-    const jobProfiles = get(resources, ['records', 'records'], [])
+    const jobProfiles = jobExecutionProfiles
       .map(item => item.jobProfileInfo)
       .sort((jobProfileA, jobProfileB) => jobProfileA.name.localeCompare(jobProfileB.name));
 
-    const users = get(resources, ['users', 'records', 0, 'jobExecutionUsersInfo'], [])
+    const users = jobExecutionUsers
       .map(item => {
         return {
           userId: item.userId,
-          firstName:
-          item?.jobUserFirstName,
-          lastName:
-          item?.jobUserLastName,
+          firstName: item.jobUserFirstName,
+          lastName: item.jobUserLastName,
         };
       }).sort((userA, userB) => {
         const nameA = userA.firstName || userA.lastName;
@@ -205,7 +205,7 @@ class ViewAllLogs extends Component {
         return nameA.localeCompare(nameB);
       });
 
-    return resources.query
+    return query
       ? (
         <ViewAllLogsFilters
           activeFilters={this.getActiveFilters()}
