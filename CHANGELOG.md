@@ -39,6 +39,7 @@
 * Change associated hotlinks in Match, Action, Field mapping profiles to textLink, in Settings/Data import (UIDATIMP-1181)
 * Prefer @folio/stripes exports to private paths when importing Calendar component (UIDATIMP-942)
 * Accessibility check: Individual job log screen (UIDATIMP-1154)
+* View all logs: User filter contains only users displayed on a specific page (UIDATIMP-1178)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
