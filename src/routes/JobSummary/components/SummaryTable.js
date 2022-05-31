@@ -79,6 +79,7 @@ const SummaryTableComponent = ({ resources: { jobSummary: { records: jobSummaryR
       : (
         <MultiColumnList
           id="job-summary-table"
+          columnIdPrefix="job-summary-table"
           contentData={contentData}
           visibleColumns={visibleColumns}
           columnMapping={columnMapping}
