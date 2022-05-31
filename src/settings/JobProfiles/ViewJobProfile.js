@@ -58,7 +58,8 @@ import {
   compose,
   createUrlFromArray,
   FILE_STATUSES,
-  showActionMenu, permissions,
+  showActionMenu,
+  permissions,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
@@ -308,14 +309,14 @@ const ViewJobProfileComponent = props => {
               </KeyValue>
             </Accordion>
             {(tagsEnabled && isSettingsEnabled) && (
-            <div data-test-tags-accordion>
-              <TagsAccordion
-                link={tagsEntityLink}
-                getEntity={getEntity}
-                getEntityTags={getEntityTags}
-                entityTagsPath="profile.tags"
-              />
-            </div>
+              <div data-test-tags-accordion>
+                <TagsAccordion
+                  link={tagsEntityLink}
+                  getEntity={getEntity}
+                  getEntityTags={getEntityTags}
+                  entityTagsPath="profile.tags"
+                />
+              </div>
             )}
             {isSettingsEnabled && (
               <div data-test-job-profile-overview-details>
