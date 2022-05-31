@@ -181,13 +181,13 @@ class ViewAllLogs extends Component {
   }
 
   renderFilters = onChange => {
-    const { resources: { users: { records: jobExecutionUsers = [] }, records: { records: jobExecutionProfiles = [] }, query } } = this.props;
+    const { resources } = this.props;
 
-    const jobProfiles = jobExecutionProfiles
+    const jobProfiles = get(resources, ['records', 'records'], [])
       .map(item => item.jobProfileInfo)
       .sort((jobProfileA, jobProfileB) => jobProfileA.name.localeCompare(jobProfileB.name));
 
-    const users = jobExecutionUsers
+    const users = get(resources, ['users', 'records'], [])
       .map(item => {
         return {
           userId: item.userId,
@@ -205,7 +205,7 @@ class ViewAllLogs extends Component {
         return nameA.localeCompare(nameB);
       });
 
-    return query
+    return resources.query
       ? (
         <ViewAllLogsFilters
           activeFilters={this.getActiveFilters()}
