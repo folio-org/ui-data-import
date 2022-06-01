@@ -103,6 +103,13 @@ const getResources = query => ({
         status: 'ERROR',
       },
     ],
+    jobProfiles: {
+      records: [
+        { name: 'test1' },
+        { name: 'test2' },
+        { name: 'test3' },
+      ],
+    },
     totalRecords: 100,
   },
 });
