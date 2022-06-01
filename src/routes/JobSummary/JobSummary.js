@@ -143,7 +143,7 @@ const JobSummaryComponent = props => {
       >
         <div className={css.paneBody}>
           <div className={sharedCss.separatorLine}>
-            <SummaryTable />
+            <SummaryTable jobExecutionId={jobExecutionsId} />
           </div>
           <div className={css.searchResults}>
             <RecordsTable

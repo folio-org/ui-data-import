@@ -1,14 +1,41 @@
 import React from 'react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
 
 import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { SummaryTable } from './SummaryTable';
 
+const entitySummary = {
+  totalCreatedEntities: 100,
+  totalUpdatedEntities: 0,
+  totalDiscardedEntities: 0,
+  totalErrors: 0,
+};
+
+const resources = buildResources({
+  resourceName: 'jobSummary',
+  records: [{
+    sourceRecordSummary: { ...entitySummary },
+    instanceSummary: { ...entitySummary },
+    holdingSummary: { ...entitySummary },
+    itemSummary: { ...entitySummary },
+    authoritySummary: { ...entitySummary },
+    orderSummary: { ...entitySummary },
+    invoiceSummary: { ...entitySummary },
+    totalErrors: 0,
+  }],
+});
+
 const renderSummaryTable = () => {
-  const component = <SummaryTable />;
+  const component = (
+    <SummaryTable
+      jobExecutionId="test-id"
+      resources={resources}
+    />
+  );
 
   return renderWithIntl(component, translationsProperties);
 };
