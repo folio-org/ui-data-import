@@ -193,10 +193,16 @@ const ViewJobProfileComponent = props => {
 
   const renderPaneHeader = renderProps => {
     const { record } = jobProfileData();
+    const { pathname } = location;
+    const {
+      SETTINGS_MANAGE,
+      DATA_IMPORT_MANAGE,
+    } = permissions;
 
     const actionMenu = Array.isArray(actionMenuItems) && !!actionMenuItems.length
       ? renderActionMenu
       : null;
+    const perm = pathname.startsWith('/settings') ? SETTINGS_MANAGE : DATA_IMPORT_MANAGE;
 
     const paneTitle = (
       <AppIcon
@@ -213,11 +219,11 @@ const ViewJobProfileComponent = props => {
         {...renderProps}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.jobProfileName" />}
-        actionMenu={showActionMenu(
-          actionMenu,
+        actionMenu={showActionMenu({
+          renderer: actionMenu,
           stripes,
-          permissions.SETTINGS_MANAGE,
-        )}
+          perm,
+        })}
         dismissible
         onClose={onClose}
       />
@@ -264,6 +270,7 @@ const ViewJobProfileComponent = props => {
 
   const jobsUsingThisProfileFormatter = listTemplate({});
   const tagsEntityLink = `data-import-profiles/jobProfiles/${jobProfileRecord.id}`;
+  const isSettingsEnabled = stripes.hasPerm(permissions.SETTINGS_MANAGE) || stripes.hasPerm(permissions.SETTINGS_VIEW_ONLY);
 
   return (
     <DetailsKeyShortcutsWrapper
@@ -301,7 +308,7 @@ const ViewJobProfileComponent = props => {
                 <div data-test-description>{jobProfileRecord.description || <NoValue />}</div>
               </KeyValue>
             </Accordion>
-            {tagsEnabled && (
+            {(tagsEnabled && isSettingsEnabled) && (
               <div data-test-tags-accordion>
                 <TagsAccordion
                   link={tagsEntityLink}
@@ -311,28 +318,30 @@ const ViewJobProfileComponent = props => {
                 />
               </div>
             )}
-            <div data-test-job-profile-overview-details>
-              <Accordion
-                label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
-              >
-                {wrappersLoaded ? (
-                  <ProfileTree
-                    linkingRules={PROFILE_LINKING_RULES}
-                    contentData={wrappers}
-                    record={jobProfileRecord}
-                    resources={resources}
-                    okapi={okapi}
-                    showLabelsAsHotLink
-                  />
-                ) : (
-                  <Preloader
-                    message={<FormattedMessage id="ui-data-import.loading" />}
-                    size="medium"
-                    preloaderClassName={sharedCss.preloader}
-                  />
-                )}
-              </Accordion>
-            </div>
+            {isSettingsEnabled && (
+              <div data-test-job-profile-overview-details>
+                <Accordion
+                  label={<FormattedMessage id="ui-data-import.settings.jobProfiles.overview" />}
+                >
+                  {wrappersLoaded ? (
+                    <ProfileTree
+                      linkingRules={PROFILE_LINKING_RULES}
+                      contentData={wrappers}
+                      record={jobProfileRecord}
+                      resources={resources}
+                      okapi={okapi}
+                      showLabelsAsHotLink
+                    />
+                  ) : (
+                    <Preloader
+                      message={<FormattedMessage id="ui-data-import.loading" />}
+                      size="medium"
+                      preloaderClassName={sharedCss.preloader}
+                    />
+                  )}
+                </Accordion>
+              </div>
+            )}
             <Accordion label={<FormattedMessage id="ui-data-import.settings.jobProfiles.jobsUsingThisProfile" />}>
               {jobsUsingThisProfileDataHasLoaded ? (
                 <MultiColumnList

@@ -25,7 +25,6 @@ import {
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   showActionMenu,
-  permissions,
 } from '../../utils';
 import {
   DetailsKeyShortcutsWrapper,
@@ -152,11 +151,10 @@ export class ViewFileExtension extends Component {
         {...renderProps}
         paneTitle={record.extension}
         paneSub={<FormattedMessage id="ui-data-import.settings.fileExtension.title" />}
-        actionMenu={showActionMenu(
-          this.renderActionMenu,
+        actionMenu={showActionMenu({
+          renderer: this.renderActionMenu,
           stripes,
-          permissions.SETTINGS_MANAGE,
-        )}
+        })}
         dismissible
         onClose={onClose}
       />

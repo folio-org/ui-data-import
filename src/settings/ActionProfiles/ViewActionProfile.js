@@ -37,7 +37,6 @@ import {
   getEntity,
   getEntityTags,
   showActionMenu,
-  permissions,
 } from '../../utils';
 import {
   DetailsKeyShortcutsWrapper,
@@ -182,11 +181,10 @@ export class ViewActionProfile extends Component {
         {...renderProps}
         paneTitle={paneTitle}
         paneSub={<FormattedMessage id="ui-data-import.actionProfileName" />}
-        actionMenu={showActionMenu(
-          this.renderActionMenu,
+        actionMenu={showActionMenu({
+          renderer: this.renderActionMenu,
           stripes,
-          permissions.SETTINGS_MANAGE,
-        )}
+        })}
         dismissible
         onClose={onClose}
       />

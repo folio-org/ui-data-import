@@ -294,6 +294,7 @@ class ViewAllLogs extends Component {
       resources,
       stripes,
     } = this.props;
+    const { DELETE_LOGS } = permissions;
     const logsNumber = selectedRecords.size;
     const hasLogsSelected = logsNumber > 0;
 
@@ -313,11 +314,11 @@ class ViewAllLogs extends Component {
           columnMapping={columnMapping}
           resultsFormatter={resultsFormatter}
           columnWidths={DEFAULT_JOB_LOG_COLUMNS_WIDTHS}
-          actionMenu={showActionMenu(
-            this.renderActionMenu,
+          actionMenu={showActionMenu({
+            renderer: this.renderActionMenu,
             stripes,
-            permissions.DELETE_LOGS,
-          )}
+            perm: DELETE_LOGS,
+          })}
           viewRecordComponent={noop}
           onSelectRow={noop}
           viewRecordPerms="metadata-provider.jobexecutions.get"
