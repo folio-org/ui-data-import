@@ -7,11 +7,12 @@ import { noop } from 'lodash';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
 import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
+import { IfPermission } from '@folio/stripes/core';
 
 import '../../../test/jest/__mock__';
 import {
   translationsProperties,
-  buildStripes
+  buildStripes,
 } from '../../../test/jest/helpers';
 
 import ViewAllLogs, { ViewAllLogsManifest } from './ViewAllLogs';
@@ -166,6 +167,10 @@ const renderViewAllLogs = query => {
 };
 
 describe('ViewAllLogs component', () => {
+  beforeEach(() => {
+    IfPermission.mockImplementation(({ children }) => children);
+  });
+
   it('should render correct number of records', () => {
     const { getByText } = renderViewAllLogs(defaultQuery);
 

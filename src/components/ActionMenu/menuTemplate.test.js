@@ -4,6 +4,8 @@ import {
   fireEvent,
 } from '@testing-library/react';
 
+import { IfPermission } from '@folio/stripes-core';
+
 import '../../../test/jest/__mock__';
 
 import { menuTemplate } from './menuTemplate';
@@ -44,6 +46,10 @@ const templates = menuTemplate({
 });
 
 describe('Action menu menuTemplate', () => {
+  beforeEach(() => {
+    IfPermission.mockImplementation(({ children }) => children);
+  });
+
   afterEach(() => {
     menu.onToggle.mockClear();
     entity.showRunConfirmation.mockClear();

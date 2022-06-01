@@ -6,6 +6,7 @@ import {
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { IfPermission } from '@folio/stripes/core';
 
 import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
@@ -61,6 +62,10 @@ const renderHome = (context = defaultContext) => {
 };
 
 describe('Home component', () => {
+  beforeEach(() => {
+    IfPermission.mockImplementation(({ children }) => children);
+  });
+
   afterAll(() => {
     deleteJobExecutionsSpy.mockClear();
   });
