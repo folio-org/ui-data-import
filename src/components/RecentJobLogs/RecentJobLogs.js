@@ -6,6 +6,7 @@ import {
   DEFAULT_JOB_LOGS_SORT_COLUMNS,
   sortStrings,
 } from '@folio/stripes-data-transfer-components';
+import { stripesShape } from '@folio/stripes-core';
 
 import { JobLogsContainer } from '../JobLogsContainer';
 
@@ -27,9 +28,13 @@ export const RecentJobLogs = ({
   logs,
   haveLogsLoaded,
   checkboxList,
+  stripes,
 }) => {
   return (
-    <JobLogsContainer checkboxList={checkboxList}>
+    <JobLogsContainer
+      checkboxList={checkboxList}
+      stripes={stripes}
+    >
       {({ listProps }) => (
         <JobLogs
           sortColumns={sortColumns}
@@ -47,4 +52,5 @@ RecentJobLogs.propTypes = {
   checkboxList: checkboxListShape.isRequired,
   logs: PropTypes.arrayOf(PropTypes.object),
   haveLogsLoaded: PropTypes.bool,
+  stripes: stripesShape.isRequired,
 };

@@ -181,7 +181,10 @@ export class Home extends Component {
       logs,
       hasLoaded,
     } = this.context;
-    const { checkboxList } = this.props;
+    const {
+      checkboxList,
+      stripes,
+    } = this.props;
 
     return (
       <PersistedPaneset
@@ -216,6 +219,7 @@ export class Home extends Component {
             logs={logs}
             haveLogsLoaded={hasLoaded}
             checkboxList={checkboxList}
+            stripes={stripes}
           />
         </Pane>
         <ConfirmationModal

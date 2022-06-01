@@ -34,7 +34,6 @@ import {
 import packageInfo from '../../../package';
 import {
   checkboxListShape,
-  DEFAULT_JOB_LOG_COLUMNS,
   DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
   FILE_STATUSES,
   withCheckboxList,
@@ -42,6 +41,7 @@ import {
   statusCellFormatter,
   showActionMenu,
   permissions,
+  setVisibleColumns,
 } from '../../utils';
 import {
   FILTERS,
@@ -309,7 +309,7 @@ class ViewAllLogs extends Component {
           baseRoute={packageInfo.stripes.route}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={RESULT_COUNT_INCREMENT}
-          visibleColumns={DEFAULT_JOB_LOG_COLUMNS}
+          visibleColumns={setVisibleColumns(stripes)}
           columnMapping={columnMapping}
           resultsFormatter={resultsFormatter}
           columnWidths={DEFAULT_JOB_LOG_COLUMNS_WIDTHS}

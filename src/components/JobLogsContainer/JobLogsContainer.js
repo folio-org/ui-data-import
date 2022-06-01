@@ -4,15 +4,16 @@ import PropTypes from 'prop-types';
 
 import { TextLink } from '@folio/stripes/components';
 import { useJobLogsProperties } from '@folio/stripes-data-transfer-components';
+import { stripesShape } from '@folio/stripes-core';
 
 import { listTemplate } from '../ListTemplate';
 
 import {
-  DEFAULT_JOB_LOG_COLUMNS,
   DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
   checkboxListShape,
   getJobLogsListColumnMapping,
   statusCellFormatter,
+  setVisibleColumns,
 } from '../../utils';
 
 export const JobLogsContainer = props => {
@@ -24,6 +25,7 @@ export const JobLogsContainer = props => {
       selectRecord,
       selectedRecords,
     },
+    stripes,
     ...rest
   } = props;
 
@@ -38,7 +40,7 @@ export const JobLogsContainer = props => {
   );
 
   const customProperties = {
-    visibleColumns: DEFAULT_JOB_LOG_COLUMNS,
+    visibleColumns: setVisibleColumns(stripes),
     columnWidths: DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
   };
 
@@ -68,4 +70,5 @@ export const JobLogsContainer = props => {
 JobLogsContainer.propTypes = {
   children: PropTypes.func.isRequired,
   checkboxList: checkboxListShape.isRequired,
+  stripes: stripesShape.isRequired,
 };
