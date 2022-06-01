@@ -104,9 +104,10 @@ export const ViewAllLogsManifest = Object.freeze({
   },
   jobProfiles: {
     type: 'okapi',
+    records: 'jobProfilesInfo',
     path: 'metadata-provider/jobExecutions/jobProfiles',
     throwErrors: false,
-  }
+  },
 });
 
 @withCheckboxList
@@ -181,9 +182,8 @@ class ViewAllLogs extends Component {
 
   renderFilters = onChange => {
     const { resources } = this.props;
-    const { resources: { jobProfiles: { records: jobProfilesForFilter } } } = this.props;
 
-    const jobProfiles = get(jobProfilesForFilter, ['0', 'jobProfilesInfo'], [])
+    const jobProfiles = get(resources, ['jobProfiles', 'records'], [])
       .sort((jobProfileA, jobProfileB) => jobProfileA.name.localeCompare(jobProfileB.name));
 
     const users = get(resources, ['records', 'records'], [])
