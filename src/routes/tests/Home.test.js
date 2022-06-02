@@ -1,14 +1,13 @@
 import React from 'react';
 import {
   fireEvent,
-  waitFor
+  waitFor,
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { IfPermission } from '@folio/stripes/core';
-
 import '../../../test/jest/__mock__';
+
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { DataFetcherContext } from '../../components';
@@ -62,10 +61,6 @@ const renderHome = (context = defaultContext) => {
 };
 
 describe('Home component', () => {
-  beforeEach(() => {
-    IfPermission.mockImplementation(({ children }) => children);
-  });
-
   afterAll(() => {
     deleteJobExecutionsSpy.mockClear();
   });

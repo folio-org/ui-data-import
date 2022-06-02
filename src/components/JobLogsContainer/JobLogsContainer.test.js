@@ -3,9 +3,12 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 import { noop } from 'lodash';
 
 import '../../../test/jest/__mock__';
-import { translationsProperties, buildStripes } from '../../../test/jest/helpers';
+import {
+  translationsProperties,
+  buildStripes,
+} from '../../../test/jest/helpers';
 
-import { JobLogsContainer } from './JobLogsContainer';
+import JobLogsContainer from './JobLogsContainer';
 import { FILE_STATUSES } from '../../utils';
 
 const successfulRecord = {

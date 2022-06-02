@@ -35,13 +35,13 @@ import packageInfo from '../../../package';
 import {
   checkboxListShape,
   DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
+  DEFAULT_JOB_LOG_COLUMNS,
   FILE_STATUSES,
   withCheckboxList,
   getJobLogsListColumnMapping,
   statusCellFormatter,
   showActionMenu,
   permissions,
-  setVisibleColumns,
 } from '../../utils';
 import {
   FILTERS,
@@ -313,6 +313,7 @@ class ViewAllLogs extends Component {
     const resultsFormatter = this.getResultsFormatter();
     const columnMapping = getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox });
     const itemToView = JSON.parse(sessionStorage.getItem(DATA_IMPORT_POSITION));
+    const hasDeletePermission = stripes.hasPerm(DELETE_LOGS);
 
     return (
       <div data-test-logs-list>
@@ -322,7 +323,10 @@ class ViewAllLogs extends Component {
           baseRoute={packageInfo.stripes.route}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={RESULT_COUNT_INCREMENT}
-          visibleColumns={setVisibleColumns(stripes)}
+          visibleColumns={hasDeletePermission
+            ? ['selected', ...DEFAULT_JOB_LOG_COLUMNS]
+            : DEFAULT_JOB_LOG_COLUMNS
+          }
           columnMapping={columnMapping}
           resultsFormatter={resultsFormatter}
           columnWidths={DEFAULT_JOB_LOG_COLUMNS_WIDTHS}

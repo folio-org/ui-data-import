@@ -4,12 +4,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { noop } from 'lodash';
 
+import '../../../test/jest/__mock__';
+
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
 import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
-import { IfPermission } from '@folio/stripes/core';
 
-import '../../../test/jest/__mock__';
 import {
   translationsProperties,
   buildStripes,
@@ -174,10 +174,6 @@ const renderViewAllLogs = query => {
 };
 
 describe('ViewAllLogs component', () => {
-  beforeEach(() => {
-    IfPermission.mockImplementation(({ children }) => children);
-  });
-
   it('should render correct number of records', () => {
     const { getByText } = renderViewAllLogs(defaultQuery);
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IfPermission } from '@folio/stripes-core';
+import { IfPermission } from '@folio/stripes/core';
 
 import {
   createLayerURL,
