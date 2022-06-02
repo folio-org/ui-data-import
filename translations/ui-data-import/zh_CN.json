@@ -861,7 +861,7 @@
     "settings.jobProfile.confirmationModal.body": "在将操作配置文件分配给任务配置文件之前，必须将字段映射配置文件链接到操作配置文件",
     "recordTypes.srsMarc": "SRS MARC",
     "settings.mappingProfiles.map.item.status.inProcessNonRequestable": "处理中（不可请求）",
-    "settings.mappingProfiles.map.item.status.intellectualItem": "智力单件",
+    "settings.mappingProfiles.map.item.status.intellectualItem": "虚拟单件",
     "settings.mappingProfiles.map.item.status.longMissing": "遗失已久",
     "settings.mappingProfiles.map.item.status.restricted": "使用受限",
     "settings.mappingProfiles.map.item.status.unavailable": "不可用",

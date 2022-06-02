@@ -102,7 +102,7 @@ export const ProfileBranch = memo(({
 
     setMatchData(getSectionData('match'));
     setNonMatchData(getSectionData('nonMatch'));
-  }, [currentChildren, sectionKey]);
+  }, [currentChildren, sectionKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getLabel = (
     <FormattedMessage id={PROFILE_LABEL_IDS[entityKey]}>
