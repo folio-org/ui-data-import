@@ -18,7 +18,7 @@ export const MappedColumn = memo(({
   if (!record) {
     return <span>-</span>;
   }
-  // console.log('mapped column', { record, searchTerm });
+
   const { existingRecordType } = record;
 
   if (!existingRecordType) {

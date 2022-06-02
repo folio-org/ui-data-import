@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import HighLight from 'react-highlighter';
 
 import {
   Highlighter,
@@ -67,11 +66,7 @@ export const MatchColumn = memo(({
                   &nbsp;&middot;&nbsp;
                 <Highlighter
                   searchWords={[searchTerm || '']}
-                  text={capitalize(
-                    fieldSource,
-                    STRING_CAPITALIZATION_MODES.WORDS,
-                    STRING_CAPITALIZATION_EXCLUSIONS,
-                  )}
+                  text={capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
                   className={sharedCss.container}
                 />
                   &nbsp;&rarr;&nbsp;
@@ -101,11 +96,7 @@ export const MatchColumn = memo(({
                   &nbsp;&larr;&nbsp;
                 <Highlighter
                   searchWords={[searchTerm || '']}
-                  text={capitalize(
-                    fieldSource,
-                    STRING_CAPITALIZATION_MODES.WORDS,
-                    STRING_CAPITALIZATION_EXCLUSIONS,
-                  )}
+                  text={capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
                   className={sharedCss.container}
                 />
                   &nbsp;&middot;&nbsp;
