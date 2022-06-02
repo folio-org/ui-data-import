@@ -45,7 +45,7 @@ export const ActionColumn = memo(({
       {intl => {
         const label = (
           <Highlighter
-            searchWords={[(searchTerm || '')]}
+            searchWords={[searchTerm || '']}
             text={createActionLabel(intl, action, folioRecord)}
             className={sharedCss.container}
           />
