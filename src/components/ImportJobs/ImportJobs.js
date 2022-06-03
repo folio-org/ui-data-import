@@ -37,6 +37,7 @@ import {
   getErrorModalMeta,
   ERROR_MODAL_META_TYPES,
 } from './components/getErrorModalMeta';
+import { permissions } from '../../utils';
 
 import sharedCss from '../../shared.css';
 
@@ -324,6 +325,7 @@ export class ImportJobs extends Component {
         onDragEnter={this.onDragEnter}
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
+        disabled={!this.props.stripes.hasPerm(permissions.DATA_IMPORT_MANAGE)}
       >
         {openDialogWindow => (
           <ConfirmationModal
