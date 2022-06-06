@@ -3,9 +3,12 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 import { noop } from 'lodash';
 
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
+import {
+  translationsProperties,
+  buildStripes,
+} from '../../../test/jest/helpers';
 
-import { JobLogsContainer } from './JobLogsContainer';
+import JobLogsContainer from './JobLogsContainer';
 import { FILE_STATUSES } from '../../utils';
 
 const successfulRecord = {
@@ -37,6 +40,8 @@ const checkboxListProp = {
   deselectAll: noop,
 };
 
+const stripes = buildStripes();
+
 const renderJobLogsContainer = record => {
   const childComponent = listProps => {
     listProps.resultsFormatter.status(record);
@@ -51,7 +56,7 @@ const renderJobLogsContainer = record => {
   };
 
   const component = (
-    <JobLogsContainer checkboxList={checkboxListProp}>
+    <JobLogsContainer checkboxList={checkboxListProp} stripes={stripes}>
       {({ listProps }) => childComponent(listProps)}
     </JobLogsContainer>
   );

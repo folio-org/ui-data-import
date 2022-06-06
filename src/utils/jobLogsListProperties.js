@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { CheckboxHeader } from '../components/ListTemplate/HeaderTemplates';
 
 export const DEFAULT_JOB_LOG_COLUMNS = [
-  'selected',
   'fileName',
   'status',
   'totalRecords',
