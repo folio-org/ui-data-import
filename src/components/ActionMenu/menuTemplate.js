@@ -1,8 +1,11 @@
 import React from 'react';
 
+import { IfPermission } from '@folio/stripes/core';
+
 import {
   createLayerURL,
   LAYER_TYPES,
+  permissions,
 } from '../../utils';
 
 import {
@@ -193,13 +196,15 @@ export const menuTemplate = ({
       };
 
       return (
-        <Default
-          key={key}
-          caption="ui-data-import.deleteSelectedLogs"
-          icon="trash"
-          isDisabled={entity.isDeleteAllLogsDisabled()}
-          onClick={handleDelete}
-        />
+        <IfPermission perm={permissions.DELETE_LOGS}>
+          <Default
+            key={key}
+            caption="ui-data-import.deleteSelectedLogs"
+            icon="trash"
+            isDisabled={entity.isDeleteAllLogsDisabled()}
+            onClick={handleDelete}
+          />
+        </IfPermission>
       );
     },
   };
