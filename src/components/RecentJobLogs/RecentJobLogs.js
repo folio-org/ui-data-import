@@ -7,7 +7,7 @@ import {
   sortStrings,
 } from '@folio/stripes-data-transfer-components';
 
-import { JobLogsContainer } from '../JobLogsContainer';
+import JobLogsContainer from '../JobLogsContainer';
 
 import { checkboxListShape } from '../../utils';
 

@@ -4,14 +4,15 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { noop } from 'lodash';
 
+import '../../../test/jest/__mock__';
+
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
 import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
 
-import '../../../test/jest/__mock__';
 import {
   translationsProperties,
-  buildStripes
+  buildStripes,
 } from '../../../test/jest/helpers';
 
 import ViewAllLogs, { ViewAllLogsManifest } from './ViewAllLogs';
