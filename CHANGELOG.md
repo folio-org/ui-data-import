@@ -42,6 +42,7 @@
 * View all logs: User filter contains only users displayed on a specific page (UIDATIMP-1178)
 * Connect summary table of import job's log to BE (UIDATIMP-1163)
 * View all logs: Job profile filter contains only profiles displayed on a specific page (UIDATIMP-1177)
+* Check for accessibility issues on updated match screens (UIDATIMP-1052)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)

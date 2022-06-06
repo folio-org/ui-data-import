@@ -325,6 +325,7 @@ export class MatchProfiles extends Component {
     RESULT_COUNT_INCREMENT: PropTypes.number,
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
+    nonInteractiveHeaders: PropTypes.arrayOf(PropTypes.string),
     columnWidths: PropTypes.object,
     initialValues: PropTypes.object,
   };
@@ -342,6 +343,7 @@ export class MatchProfiles extends Component {
       'deselectAll',
     ],
     visibleColumns: ['selected', ...matchProfilesShape.visibleColumns],
+    nonInteractiveHeaders: ['selected'],
     columnWidths: { selected: '40px' },
     initialValues: {
       name: '',
