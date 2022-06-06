@@ -12,7 +12,8 @@ import classNames from 'classnames';
 
 import {
   withStripes,
-  stripesShape, IfPermission,
+  stripesShape,
+  IfPermission,
 } from '@folio/stripes/core';
 
 import {
@@ -27,7 +28,10 @@ import {
   createOkapiHeaders,
   createUrl,
 } from '@folio/stripes-data-transfer-components';
-import { permissions, DEFAULT_TIMEOUT_BEFORE_JOB_DELETION } from '../../../../utils';
+import {
+  permissions,
+  DEFAULT_TIMEOUT_BEFORE_JOB_DELETION,
+} from '../../../../utils';
 
 import { jobMetaTypes } from './jobMetaTypes';
 import { jobExecutionPropTypes } from './jobExecutionPropTypes';

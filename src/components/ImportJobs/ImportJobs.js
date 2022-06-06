@@ -269,7 +269,7 @@ export class ImportJobs extends Component {
   };
 
   renderImportJobs() {
-    const { match: { path } } = this.props;
+    const { match: { path }, stripes } = this.props;
     const { filesExtensionsModalType } = this.state;
     const { uploadDefinition } = this.context;
 
@@ -325,7 +325,7 @@ export class ImportJobs extends Component {
         onDragEnter={this.onDragEnter}
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
-        disabled={!this.props.stripes.hasPerm(permissions.DATA_IMPORT_MANAGE)}
+        disabled={!stripes.hasPerm(permissions.DATA_IMPORT_MANAGE)}
       >
         {openDialogWindow => (
           <ConfirmationModal
