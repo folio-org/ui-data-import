@@ -7,7 +7,8 @@ import { translationsProperties } from '../../../test/jest/helpers';
 import { RecentJobLogs } from './RecentJobLogs';
 
 jest.mock('../JobLogsContainer', () => ({
-  JobLogsContainer: ({ children }) => (
+  __esModule: true,
+  default: ({ children }) => (
     <div>
       {children({ listProps: { resultsFormatter: { status: 'COMMITTED' } } })}
       <span>JobLogsContainer</span>
