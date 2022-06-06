@@ -1,11 +1,11 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import HighLight from 'react-highlighter';
 
 import {
   IntlConsumer,
   AppIcon,
 } from '@folio/stripes/core';
+import { Highlighter } from '@folio/stripes/components';
 
 import { FOLIO_RECORD_TYPES } from '../folioRecordTypes';
 
@@ -35,12 +35,11 @@ export const MappedColumn = memo(({
               app="data-import"
               iconKey={FOLIO_RECORD_TYPES[existingRecordType].iconKey}
             >
-              <HighLight
-                search={searchTerm || ''}
+              <Highlighter
+                searchWords={[searchTerm || '']}
+                text={formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
                 className={sharedCss.container}
-              >
-                {formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
-              </HighLight>
+              />
             </AppIcon>
           )}
         </IntlConsumer>
