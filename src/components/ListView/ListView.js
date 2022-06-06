@@ -221,7 +221,7 @@ export class ListView extends Component {
       nonInteractiveHeaders,
     } = this.props;
     const { showRestoreModal } = this.state;
-    console.log({ nonInteractiveHeaders });
+
     const urlQuery = queryString.parse(search);
     const searchTerm = trimSearchTerm(urlQuery.query);
     const actionMenu = isEmpty(actionMenuItems) ? null : this.renderActionMenu;
