@@ -269,7 +269,10 @@ export class ImportJobs extends Component {
   };
 
   renderImportJobs() {
-    const { match: { path }, stripes } = this.props;
+    const {
+      match: { path },
+      stripes,
+    } = this.props;
     const { filesExtensionsModalType } = this.state;
     const { uploadDefinition } = this.context;
 
