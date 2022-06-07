@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import {
   withStripes,
   stripesShape,
+  IfPermission,
 } from '@folio/stripes/core';
 
 import {
@@ -27,11 +28,13 @@ import {
   createOkapiHeaders,
   createUrl,
 } from '@folio/stripes-data-transfer-components';
+import {
+  permissions,
+  DEFAULT_TIMEOUT_BEFORE_JOB_DELETION,
+} from '../../../../utils';
 
 import { jobMetaTypes } from './jobMetaTypes';
 import { jobExecutionPropTypes } from './jobExecutionPropTypes';
-
-import { DEFAULT_TIMEOUT_BEFORE_JOB_DELETION } from '../../../../utils';
 
 import * as API from '../../../../utils/upload';
 
@@ -174,18 +177,20 @@ export class Job extends Component {
             )}
           </span>
         </div>
-        <FormattedMessage id="ui-data-import.delete">
-          {label => (
-            <IconButton
-              data-test-delete-button
-              icon="trash"
-              size="small"
-              ariaLabel={label}
-              className={classNames(css.icon, css.deleteIcon)}
-              onClick={this.handleDeleteJob}
-            />
-          )}
-        </FormattedMessage>
+        <IfPermission perm={permissions.DATA_IMPORT_MANAGE}>
+          <FormattedMessage id="ui-data-import.delete">
+            {label => (
+              <IconButton
+                data-test-delete-button
+                icon="trash"
+                size="small"
+                ariaLabel={label}
+                className={classNames(css.icon, css.deleteIcon)}
+                onClick={this.handleDeleteJob}
+              />
+            )}
+          </FormattedMessage>
+        </IfPermission>
         <button
           data-test-undo-button
           type="button"

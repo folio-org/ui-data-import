@@ -41,6 +41,7 @@
 * View all logs: User filter contains only users displayed on a specific page (UIDATIMP-1178)
 * Connect summary table of import job's log to BE (UIDATIMP-1163)
 * View all logs: Job profile filter contains only profiles displayed on a specific page (UIDATIMP-1177)
+* Create a new Data import UI permission for only viewing app and logs (UIDATIMP-1187)
 * Update the "Data Import: All permissions" permission (UIDATIMP-1143)
 * Replace react-highlighter with a react-17/18 compatible alternative (UIDATIMP-1152)
 
