@@ -60,6 +60,7 @@ export class ListView extends Component {
     withNewRecordButton: PropTypes.bool,
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
+    nonInteractiveHeaders: PropTypes.arrayOf(PropTypes.string),
     columnWidths: PropTypes.object.isRequired,
     initialValues: PropTypes.object.isRequired,
     renderHeaders: PropTypes.func.isRequired,
@@ -79,6 +80,7 @@ export class ListView extends Component {
     },
     checkboxList: {},
     defaultSort: 'name',
+    nonInteractiveHeaders: [],
   };
 
   state = {
@@ -216,6 +218,7 @@ export class ListView extends Component {
       actionMenuItems,
       isFullScreen,
       defaultSort,
+      nonInteractiveHeaders,
     } = this.props;
     const { showRestoreModal } = this.state;
 
@@ -271,6 +274,7 @@ export class ListView extends Component {
               onSubmitSearch={deselectAll}
               isFullScreen={isFullScreen}
               rowUpdater={rowUpdater}
+              nonInteractiveHeaders={nonInteractiveHeaders}
               {...props}
             />
             <ConfirmationModal

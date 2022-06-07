@@ -11,9 +11,8 @@ export const CheckboxHeader = memo(({
   checked = false,
   onChange = noop,
 }) => (
-  <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-    role="button"
-    tabIndex="0"
+  // eslint-disable-next-line jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events
+  <div
     className={sharedCss.selectableCellButton}
     data-test-select-all-checkbox
     onClick={e => e.stopPropagation()}
