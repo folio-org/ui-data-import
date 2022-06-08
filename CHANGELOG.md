@@ -22,7 +22,6 @@
 * Update match screen UI for Holdings (UIDATIMP-1047)
 * Update match screen UI for Instances (UIDATIMP-1046)
 * Update match screen UI for Items (UIDATIMP-1048)
-* Update the "Data Import: All permissions" permission (UIDATIMP-1143)
 * Create a new Data import UI permission for only viewing settings (UIDATIMP-1145)
 * Use API for deleting data import logs on Data Import landing page (UIDATIMP-1126)
 * replace babel-eslint with @babel/eslint-parser (UIDATIMP-1150)
@@ -42,6 +41,9 @@
 * View all logs: User filter contains only users displayed on a specific page (UIDATIMP-1178)
 * Connect summary table of import job's log to BE (UIDATIMP-1163)
 * View all logs: Job profile filter contains only profiles displayed on a specific page (UIDATIMP-1177)
+* Create a new Data import UI permission for only viewing app and logs (UIDATIMP-1187)
+* Update the "Data Import: All permissions" permission (UIDATIMP-1143)
+* Check for accessibility issues on updated match screens (UIDATIMP-1052)
 * Add error hotlinks to the summary at top of individual import job's log (UIDATIMP-1158)
 
 ### Bugs fixed:

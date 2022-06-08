@@ -134,6 +134,7 @@ export class SearchAndSort extends Component {
     showSingleResult: PropTypes.bool,
     notLoadedMessage: PropTypes.string,
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
+    nonInteractiveHeaders: PropTypes.arrayOf(PropTypes.string),
     columnMapping: PropTypes.object,
     columnWidths: PropTypes.object,
     resultsFormatter: PropTypes.object,
@@ -163,6 +164,7 @@ export class SearchAndSort extends Component {
     defaultSort: '',
     finishedResourceName: '',
     editRecordInitialValuesAreLoaded: true,
+    nonInteractiveHeaders: [],
   };
 
   constructor(props) {
@@ -561,6 +563,7 @@ export class SearchAndSort extends Component {
       defaultSort,
       columnWidths,
       columnMapping,
+      nonInteractiveHeaders,
     } = this.props;
     const { selectedItem } = this.state;
 
@@ -592,6 +595,7 @@ export class SearchAndSort extends Component {
             rowFormatter={this.anchoredRowFormatter}
             onRowClick={this.onSelectRow}
             onHeaderClick={this.onSort}
+            nonInteractiveHeaders={nonInteractiveHeaders}
           />
         )}
       </FormattedMessage>
