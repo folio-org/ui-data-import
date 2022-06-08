@@ -11,6 +11,7 @@ export const CheckboxColumn = memo(({
   value,
   checked = false,
   onChange = noop,
+  disabled = false,
 }) => (
   <div // eslint-disable-line jsx-a11y/click-events-have-key-events
     tabIndex="0"
@@ -26,6 +27,7 @@ export const CheckboxColumn = memo(({
           checked={checked}
           onChange={() => onChange(value)}
           aria-label={ariaLabel}
+          disabled={disabled}
         />
       )}
     </FormattedMessage>
@@ -36,4 +38,5 @@ CheckboxColumn.propTypes = {
   value: PropTypes.string.isRequired,
   checked: PropTypes.bool,
   onChange: PropTypes.func,
+  disabled: PropTypes.bool,
 };

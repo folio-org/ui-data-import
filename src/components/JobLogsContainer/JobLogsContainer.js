@@ -30,6 +30,7 @@ const JobLogsContainer = props => {
       selectedRecords,
     },
     stripes,
+    checkboxDisabled = false,
     ...rest
   } = props;
 
@@ -51,11 +52,16 @@ const JobLogsContainer = props => {
 
   const listProps = {
     ...useJobLogsProperties(customProperties),
-    columnMapping: getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox }),
+    columnMapping: getJobLogsListColumnMapping({
+      isAllSelected,
+      handleSelectAllCheckbox,
+      checkboxDisabled,
+    }),
     resultsFormatter: {
       ...listTemplate({
         selectRecord,
         selectedRecords,
+        checkboxDisabled,
       }),
       fileName: fileNameCellFormatter,
       status: statusCellFormatter(formatMessage),
@@ -73,9 +79,10 @@ const JobLogsContainer = props => {
 };
 
 JobLogsContainer.propTypes = {
-  children: PropTypes.func.isRequired,
   checkboxList: checkboxListShape.isRequired,
   stripes: stripesShape.isRequired,
+  checkboxDisabled: PropTypes.bool,
+  children: PropTypes.func.isRequired,
 };
 
 export default withStripes(JobLogsContainer);

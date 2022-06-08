@@ -31,6 +31,25 @@ import {
   deleteJobExecutions,
 } from '../utils';
 
+/**
+ * Compares previous and current job logs by their ids.
+ * Returns false if the logs are the same, otherwise true
+ *
+ * @param {Array<Object>} prevLogs - previous job logs
+ * @param {Array<Object>} currentLogs - current job logs
+ * @returns {boolean}
+ */
+export function isLogsChanged(prevLogs = [], currentLogs = []) {
+  if (prevLogs.length !== currentLogs.length) return true;
+
+  if (prevLogs.length === 0 && currentLogs.length === 0) return false;
+
+  const prevLogsIds = prevLogs.map(log => log.id);
+  const currentLogsIds = currentLogs.map(log => log.id);
+
+  return !prevLogsIds.every(id => currentLogsIds.includes(id));
+}
+
 @withStripes
 @withCheckboxList
 export class Home extends Component {
@@ -63,15 +82,21 @@ export class Home extends Component {
 
     this.calloutRef = createRef();
     this.state = {
-      allLogsNumber: null,
+      isCheckboxesDisabled: false,
+      logs: [],
       selectedLogsNumber: 0,
       showDeleteConfirmation: false,
     };
   }
 
-  componentDidUpdate(_prevProps, prevState) {
-    if (this.context.logs && (prevState.allLogsNumber !== this.context.logs.length)) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.context.logs && isLogsChanged(prevState.logs, this.context.logs)) {
       this.setLogsList();
+
+      // enable checkboxes after deletion completed if user has deleted logs
+      if (this.state.isCheckboxesDisabled) {
+        this.setState({ isCheckboxesDisabled: false });
+      }
     }
   }
 
@@ -80,7 +105,7 @@ export class Home extends Component {
     const { logs } = this.context;
 
     setList(logs);
-    this.setState({ allLogsNumber: logs.length });
+    this.setState({ logs });
   }
 
   handleManageJobs = () => {
@@ -167,6 +192,9 @@ export class Home extends Component {
       this.showDeleteLogsSuccessfulMessage(jobExecutionDetails.length);
     };
 
+    // disable all checkboxes while deletion in progress
+    this.setState({ isCheckboxesDisabled: true });
+
     deleteJobExecutions(selectedRecords, okapi)
       .then(onSuccess)
       .catch(() => this.showDeleteLogsErrorMessage());
@@ -182,6 +210,7 @@ export class Home extends Component {
       hasLoaded,
     } = this.context;
     const { checkboxList } = this.props;
+    const { isCheckboxesDisabled } = this.state;
 
     return (
       <PersistedPaneset
@@ -216,6 +245,7 @@ export class Home extends Component {
             logs={logs}
             haveLogsLoaded={hasLoaded}
             checkboxList={checkboxList}
+            checkboxDisabled={isCheckboxesDisabled}
           />
         </Pane>
         <ConfirmationModal

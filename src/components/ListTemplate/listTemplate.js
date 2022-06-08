@@ -33,12 +33,14 @@ export const listTemplate = ({
   selectRecord,
   selectedRecords,
   showLabelsAsHotLink,
+  checkboxDisabled = false,
 }) => ({
   selected: record => (
     <CheckboxColumn
       value={record.id}
       checked={selectedRecords.has(record.id)}
       onChange={selectRecord}
+      disabled={checkboxDisabled}
     />
   ),
   name: record => (

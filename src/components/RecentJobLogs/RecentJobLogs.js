@@ -27,9 +27,13 @@ export const RecentJobLogs = ({
   logs,
   haveLogsLoaded,
   checkboxList,
+  checkboxDisabled = false,
 }) => {
   return (
-    <JobLogsContainer checkboxList={checkboxList}>
+    <JobLogsContainer
+      checkboxList={checkboxList}
+      checkboxDisabled={checkboxDisabled}
+    >
       {({ listProps }) => (
         <JobLogs
           sortColumns={sortColumns}
@@ -47,4 +51,5 @@ RecentJobLogs.propTypes = {
   checkboxList: checkboxListShape.isRequired,
   logs: PropTypes.arrayOf(PropTypes.object),
   haveLogsLoaded: PropTypes.bool,
+  checkboxDisabled: PropTypes.bool,
 };
