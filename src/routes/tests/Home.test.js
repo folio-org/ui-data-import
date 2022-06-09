@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  fireEvent, screen,
+  fireEvent,
   waitFor,
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
