@@ -89,7 +89,7 @@ export class Home extends Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     if (this.context.logs && isLogsChanged(prevState.logs, this.context.logs)) {
       this.setLogsList();
 
