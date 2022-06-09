@@ -23,6 +23,7 @@ import {
 const JobLogsContainer = props => {
   const {
     children,
+    checkboxDisabled = false,
     checkboxList: {
       isAllSelected,
       handleSelectAllCheckbox,
@@ -30,7 +31,6 @@ const JobLogsContainer = props => {
       selectedRecords,
     },
     stripes,
-    checkboxDisabled = false,
     ...rest
   } = props;
 
