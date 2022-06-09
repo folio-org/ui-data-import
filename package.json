@@ -222,10 +222,23 @@
         "visible": true
       },
       {
+        "permissionName": "ui-data-import.view",
+        "displayName": "Data import: Can view only",
+        "subPermissions": [
+          "module.data-import.enabled",
+          "data-import.uploaddefinitions.get",
+          "metadata-provider.logs.get",
+          "metadata-provider.jobexecutions.get",
+          "source-storage.records.get",
+          "change-manager.jobexecutions.get"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-data-import.logs.delete",
         "displayName": "Data import: Can delete import logs",
         "subPermissions": [
-          "ui-data-import.manage",
+          "ui-data-import.view",
           "change-manager.jobexecutions.delete"
         ],
         "visible": true

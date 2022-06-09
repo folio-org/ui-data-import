@@ -13,9 +13,8 @@ export const CheckboxColumn = memo(({
   disabled = false,
   onChange = noop,
 }) => (
-  <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-    tabIndex="0"
-    role="button"
+  // eslint-disable-next-line jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events
+  <div
     className={sharedCss.selectableCellButton}
     data-test-select-item
     onClick={e => e.stopPropagation()}

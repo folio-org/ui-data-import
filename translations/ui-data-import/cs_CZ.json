@@ -296,7 +296,7 @@
     "settings.fileExtensions.new": "New file extension",
     "from": "From",
     "to": "To",
-    "settings.mappingProfiles.map.administrativeData.field.discoverySuppress": "Suppress from discovery",
+    "settings.mappingProfiles.map.administrativeData.field.discoverySuppress": "Potlačit z objevování",
     "settings.mappingProfiles.map.administrativeData.field.staffSuppress": "Staff suppress",
     "settings.mappingProfiles.map.administrativeData.field.previouslyHeld": "Previously held",
     "settings.mappingProfiles.map.administrativeData.field.statisticalCodes.legend": "Statistical codes",

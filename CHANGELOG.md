@@ -41,7 +41,9 @@
 * View all logs: User filter contains only users displayed on a specific page (UIDATIMP-1178)
 * Connect summary table of import job's log to BE (UIDATIMP-1163)
 * View all logs: Job profile filter contains only profiles displayed on a specific page (UIDATIMP-1177)
+* Create a new Data import UI permission for only viewing app and logs (UIDATIMP-1187)
 * Update the "Data Import: All permissions" permission (UIDATIMP-1143)
+* Check for accessibility issues on updated match screens (UIDATIMP-1052)
 * The "select all items" button does not select all logs after deleting multiple logs from the landing logs page (UIDATIMP-1186)
 
 ### Bugs fixed:
