@@ -42,6 +42,7 @@
 * Connect summary table of import job's log to BE (UIDATIMP-1163)
 * View all logs: Job profile filter contains only profiles displayed on a specific page (UIDATIMP-1177)
 * Update the "Data Import: All permissions" permission (UIDATIMP-1143)
+* The "select all items" button does not select all logs after deleting multiple logs from the landing logs page (UIDATIMP-1186)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)

@@ -23,6 +23,7 @@ import { formatUserName } from '../../utils';
  *   selectRecord?: (id: string) => void,
  *   selectedRecords?: Set<string>,
  *   showLabelsAsHotLink?: boolean,
+ *   checkboxDisabled?: boolean,
  * }}
  * Note: check which params are required based on used columns
  */

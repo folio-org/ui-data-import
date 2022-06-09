@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  fireEvent,
+  fireEvent, screen,
   waitFor,
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -123,6 +123,27 @@ describe('Home component', () => {
         fireEvent.click(getByText('Confirm'));
 
         await waitFor(() => expect(queryByText('Confirmation modal')).not.toBeInTheDocument());
+      });
+
+      it('All checkboxes should be disabled', async () => {
+        deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
+
+        const {
+          getAllByLabelText,
+          getAllByRole,
+          getByText,
+        } = renderHome();
+
+        fireEvent.click(getAllByLabelText('select item')[0]);
+        fireEvent.click(getByText('Actions'));
+        fireEvent.click(getByText('Delete selected logs'));
+        fireEvent.click(getByText('Confirm'));
+
+        const checkboxes = getAllByRole('checkbox');
+
+        checkboxes.forEach(checkbox => {
+          expect(checkbox).toBeDisabled();
+        });
       });
 
       it('and successful callout should be displayed', async () => {
