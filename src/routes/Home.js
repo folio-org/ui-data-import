@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { isEqual } from 'lodash';
 
 import {
   Button,
@@ -30,25 +31,6 @@ import {
   withCheckboxList,
   deleteJobExecutions,
 } from '../utils';
-
-/**
- * Compares previous and current job logs by their ids.
- * Returns false if the logs are the same, otherwise true
- *
- * @param {Array<Object>} prevLogs - previous job logs
- * @param {Array<Object>} currentLogs - current job logs
- * @returns {boolean}
- */
-export function isLogsChanged(prevLogs = [], currentLogs = []) {
-  if (prevLogs.length !== currentLogs.length) return true;
-
-  if (prevLogs.length === 0 && currentLogs.length === 0) return false;
-
-  const prevLogsIds = prevLogs.map(log => log.id);
-  const currentLogsIds = currentLogs.map(log => log.id);
-
-  return !prevLogsIds.every(id => currentLogsIds.includes(id));
-}
 
 @withStripes
 @withCheckboxList
@@ -90,7 +72,7 @@ export class Home extends Component {
   }
 
   componentDidUpdate(_prevProps, prevState) {
-    if (this.context.logs && isLogsChanged(prevState.logs, this.context.logs)) {
+    if (this.context.logs && !isEqual(prevState.logs, this.context.logs)) {
       this.setLogsList();
 
       // enable checkboxes after deletion completed if user has deleted logs

@@ -11,10 +11,7 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { DataFetcherContext } from '../../components';
-import {
-  Home,
-  isLogsChanged,
-} from '../Home';
+import { Home } from '../Home';
 import { jobsLogs } from '../../../test/bigtest/mocks';
 import * as utils from '../../utils/deleteJobExecutions';
 
@@ -198,37 +195,6 @@ describe('Home component', () => {
 
         expect(queryByText('Confirmation modal')).toBeNull();
       });
-    });
-  });
-
-  describe('isLogsChanged function', () => {
-    it('should return false if both previous and current logs are empty', () => {
-      const prevLogs = [];
-      const currentLogs = [];
-
-      expect(isLogsChanged(prevLogs, currentLogs)).toBeFalsy();
-    });
-
-    it('should return true if the lengths of two logs are different ', () => {
-      const prevLogs = [];
-      const currentLogs = [];
-
-      expect(isLogsChanged(prevLogs, [{ id: 'testId' }])).toBeTruthy();
-      expect(isLogsChanged([{ id: 'testId' }], currentLogs)).toBeTruthy();
-    });
-
-    it('should return false if two logs contain the same elements', () => {
-      const prevLogs = [{ id: 'testId' }];
-      const currentLogs = [{ id: 'testId' }];
-
-      expect(isLogsChanged(prevLogs, currentLogs)).toBeFalsy();
-    });
-
-    it('should return true if two logs contain different elements', () => {
-      const prevLogs = [{ id: 'testId1' }];
-      const currentLogs = [{ id: 'testId2' }];
-
-      expect(isLogsChanged(prevLogs, currentLogs)).toBeTruthy();
     });
   });
 });
