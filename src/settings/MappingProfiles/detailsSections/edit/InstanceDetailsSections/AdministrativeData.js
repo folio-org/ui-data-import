@@ -16,6 +16,7 @@ import {
   DatePickerDecorator,
   AcceptedValuesField,
   RepeatableActionsField,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -236,11 +237,16 @@ export const AdministrativeData = ({
                       data-test-admisitrative-note
                       xs={12}
                     >
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.administrativeNote`} />}
-                        name={getSubfieldName(9, 0, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.administrativeNote`} />}
+                            name={getSubfieldName(9, 0, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                   </Row>
                 )}
