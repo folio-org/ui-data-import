@@ -9,6 +9,7 @@ import sharedCss from '../../../shared.css';
 
 export const CheckboxHeader = memo(({
   checked = false,
+  disabled = false,
   onChange = noop,
 }) => (
   // eslint-disable-next-line jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events
@@ -24,6 +25,7 @@ export const CheckboxHeader = memo(({
           checked={checked}
           onChange={onChange}
           aria-label={ariaLabel}
+          disabled={disabled}
         />
       )}
     </FormattedMessage>
@@ -32,5 +34,6 @@ export const CheckboxHeader = memo(({
 
 CheckboxHeader.propTypes = {
   checked: PropTypes.bool,
+  disabled: PropTypes.bool,
   onChange: PropTypes.func,
 };
