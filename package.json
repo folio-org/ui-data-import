@@ -34,7 +34,7 @@
     "@folio/eslint-config-stripes": "^6.1.0",
     "@folio/stripes": "^7.0.0",
     "@folio/stripes-cli": "^2.0.0",
-    "@folio/stripes-components": "^10.0.0",
+    "@folio/stripes-components": "^10.1.5",
     "@folio/stripes-core": "^8.0.0",
     "@folio/stripes-smart-components": "^7.0.0",
     "@formatjs/cli": "^4.2.10",
@@ -79,7 +79,6 @@
     "moment": "~2.24.0",
     "prop-types": "^15.6.0",
     "react-final-form": "^6.3.0",
-    "react-highlighter": "^0.4.3",
     "redux-form": "^8.3.7"
   },
   "peerDependencies": {
