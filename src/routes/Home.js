@@ -64,7 +64,7 @@ export class Home extends Component {
 
     this.calloutRef = createRef();
     this.state = {
-      isCheckboxesDisabled: false,
+      isLogsDeletionInProgress: false,
       logs: [],
       selectedLogsNumber: 0,
       showDeleteConfirmation: false,
@@ -76,8 +76,8 @@ export class Home extends Component {
       this.setLogsList();
 
       // enable checkboxes after deletion completed if user has deleted logs
-      if (this.state.isCheckboxesDisabled) {
-        this.setState({ isCheckboxesDisabled: false });
+      if (this.state.isLogsDeletionInProgress) {
+        this.setState({ isLogsDeletionInProgress: false });
       }
     }
   }
@@ -175,7 +175,7 @@ export class Home extends Component {
     };
 
     // disable all checkboxes while deletion in progress
-    this.setState({ isCheckboxesDisabled: true });
+    this.setState({ isLogsDeletionInProgress: true });
 
     deleteJobExecutions(selectedRecords, okapi)
       .then(onSuccess)
@@ -192,7 +192,7 @@ export class Home extends Component {
       hasLoaded,
     } = this.context;
     const { checkboxList } = this.props;
-    const { isCheckboxesDisabled } = this.state;
+    const { isLogsDeletionInProgress } = this.state;
 
     return (
       <PersistedPaneset
@@ -227,7 +227,7 @@ export class Home extends Component {
             logs={logs}
             haveLogsLoaded={hasLoaded}
             checkboxList={checkboxList}
-            checkboxDisabled={isCheckboxesDisabled}
+            checkboxesDisabled={isLogsDeletionInProgress}
           />
         </Pane>
         <ConfirmationModal

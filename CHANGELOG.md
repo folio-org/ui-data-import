@@ -44,13 +44,13 @@
 * Create a new Data import UI permission for only viewing app and logs (UIDATIMP-1187)
 * Update the "Data Import: All permissions" permission (UIDATIMP-1143)
 * Check for accessibility issues on updated match screens (UIDATIMP-1052)
-* The "select all items" button does not select all logs after deleting multiple logs from the landing logs page (UIDATIMP-1186)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
 * Some issues with log searching in Juniper Bugfest/Smoke testing (UIDATIMP-1125)
 * QuotaExceededError: Failed to execute 'setItem' on 'Storage': Setting the value of 'profileTreeData' exceeded the quota (UIDATIMP-1166)
 * Action button is missing on the data-import/job-summary page when select a job profiles (UIDATIMP-1183)
+* The "select all items" button does not select all logs after deleting multiple logs from the landing logs page (UIDATIMP-1186)
 
 ## [5.1.3](https://github.com/folio-org/ui-data-import/tree/v5.1.3) (2022-05-24)
 
