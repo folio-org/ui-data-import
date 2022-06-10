@@ -37,7 +37,10 @@ const JobLogsContainer = props => {
 
   const fileNameCellFormatter = record => (
     <TextLink
-      to={`/data-import/job-summary/${record.id}`}
+      to={{
+        pathname: `/data-import/job-summary/${record.id}`,
+        state: { from: '/data-import' },
+      }}
     >
       {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
     </TextLink>

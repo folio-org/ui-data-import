@@ -132,6 +132,10 @@ class ViewAllLogs extends Component {
     setList: PropTypes.func.isRequired,
     intl: PropTypes.object.isRequired,
     stripes: stripesShape.isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string.isRequired,
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
     disableRecordCreation: PropTypes.bool,
     browseOnly: PropTypes.bool,
     packageInfo: PropTypes.object,
@@ -264,11 +268,20 @@ class ViewAllLogs extends Component {
         selectedRecords,
         selectRecord,
       },
+      location,
     } = this.props;
+
+    const {
+      pathname,
+      search,
+    } = location;
 
     const fileNameCellFormatter = record => (
       <TextLink
-        to={`/data-import/job-summary/${record.id}`}
+        to={{
+          pathname: `/data-import/job-summary/${record.id}`,
+          state: { from: `${pathname}${search}` },
+        }}
       >
         {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
       </TextLink>

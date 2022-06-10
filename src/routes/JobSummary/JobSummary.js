@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 
 import {
   stripesConnect,
@@ -100,6 +100,8 @@ const JobSummaryComponent = props => {
     return makeConnectedSource(connectedSourceProps, stripes.logger, resourceName);
   };
 
+  const closeLinkPath = location.state?.from || '/data-import';
+
   const renderHeader = renderProps => {
     const resultCountMessageId = 'stripes-smart-components.searchResultsCountHeader';
     const label = (
@@ -112,7 +114,7 @@ const JobSummaryComponent = props => {
     );
     const firstMenu = (
       <PaneMenu>
-        <PaneCloseLink to="/data-import" />
+        <PaneCloseLink to={closeLinkPath} />
       </PaneMenu>
     );
 
