@@ -14,7 +14,8 @@ import {
 import { PersistedPaneset } from '@folio/stripes/smart-components';
 import {
   stripesShape,
-  withStripes
+  withRoot,
+  withStripes,
 } from '@folio/stripes/core';
 
 import {
@@ -29,8 +30,11 @@ import {
   checkboxListShape,
   withCheckboxList,
   deleteJobExecutions,
+  STATE_MANAGEMENT,
 } from '../utils';
+import { reducer, setSelectedRecords } from '../redux';
 
+@withRoot
 @withStripes
 @withCheckboxList
 export class Home extends Component {
@@ -38,6 +42,13 @@ export class Home extends Component {
     stripes: stripesShape.isRequired,
     checkboxList: checkboxListShape.isRequired,
     setList: PropTypes.func.isRequired,
+    root: PropTypes.shape({
+      addReducer: PropTypes.func.isRequired,
+      store: PropTypes.shape({
+        dispatch: PropTypes.func.isRequired,
+        getState: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
     // eslint-disable-next-line react/no-unused-prop-types
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
   };
@@ -48,8 +59,11 @@ export class Home extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const { checkboxList: { selectedRecords } } = nextProps;
+    const { store: { dispatch } } = nextProps.root;
 
     if (selectedRecords.size !== prevState.selectedLogsNumber) {
+      // TODO set selected records
+      dispatch(setSelectedRecords(selectedRecords));
       return { selectedLogsNumber: selectedRecords.size };
     }
 
@@ -58,6 +72,9 @@ export class Home extends Component {
 
   constructor(props) {
     super(props);
+
+    // TODO: flag
+    props.root.addReducer(STATE_MANAGEMENT.REDUCER, reducer);
 
     this.renderLogsPaneSub = this.renderLogsPaneSub.bind(this);
 

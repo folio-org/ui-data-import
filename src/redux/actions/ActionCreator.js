@@ -18,3 +18,8 @@ export const setCurrentProfileTreeContent = content => ({
 export const clearCurrentProfileTreeContent = () => ({
   type: ACTION.CLEAR_CURRENT_PROFILE_TREE_CONTENT,
 });
+
+export const setSelectedRecords = content => ({
+  type: ACTION.SET_SELECTED_RECORDS,
+  payload: content,
+});

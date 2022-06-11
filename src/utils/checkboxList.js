@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
+
+import { STATE_MANAGEMENT } from './constants';
 
 /**
  * Hook that provides checkbox list functionality
@@ -15,7 +19,8 @@ import PropTypes from 'prop-types';
  * }}
  */
 export const useCheckboxList = (list = []) => {
-  const [selectedRecords, setSelectedRecords] = useState(new Set());
+  const persistedSelectedRecords = useSelector(state => get(state, [STATE_MANAGEMENT.REDUCER, 'selectedRecords']));
+  const [selectedRecords, setSelectedRecords] = useState(persistedSelectedRecords ?? new Set());
 
   const listLength = list.length;
   const isAllSelected = (listLength !== 0) && (selectedRecords.size === listLength);
