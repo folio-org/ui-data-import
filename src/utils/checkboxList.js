@@ -19,8 +19,9 @@ import { STATE_MANAGEMENT } from './constants';
  * }}
  */
 export const useCheckboxList = (list = []) => {
-  const persistedSelectedRecords = useSelector(state => get(state, [STATE_MANAGEMENT.REDUCER, 'selectedRecords']));
-  const [selectedRecords, setSelectedRecords] = useState(persistedSelectedRecords ?? new Set());
+  const initialSelectedRecords = useSelector(state => get(state, [STATE_MANAGEMENT.REDUCER, 'selectedRecords'], new Set()));
+
+  const [selectedRecords, setSelectedRecords] = useState(initialSelectedRecords);
 
   const listLength = list.length;
   const isAllSelected = (listLength !== 0) && (selectedRecords.size === listLength);
