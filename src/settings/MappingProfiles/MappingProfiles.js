@@ -214,6 +214,7 @@ export class MappingProfiles extends Component {
     RESULT_COUNT_INCREMENT: PropTypes.number,
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
+    nonInteractiveHeaders: PropTypes.arrayOf(PropTypes.string),
     columnWidths: PropTypes.object,
     initialValues: PropTypes.object,
     isFullScreen: PropTypes.bool,
@@ -232,6 +233,7 @@ export class MappingProfiles extends Component {
       'deselectAll',
     ],
     visibleColumns: ['selected', ...mappingProfilesShape.visibleColumns],
+    nonInteractiveHeaders: ['selected'],
     columnWidths: { selected: '40px' },
     initialValues: {
       name: '',
