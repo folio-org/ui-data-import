@@ -3,7 +3,6 @@ import * as ACTION from '../actions';
 const initialState = {
   profileTreeData: [],
   jobProfiles: {},
-  selectedRecords: {},
 };
 
 export const reducer = (state = initialState, action) => {
@@ -25,14 +24,6 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         jobProfiles: {},
-      };
-    case ACTION.SET_SELECTED_RECORDS:
-      return {
-        ...state,
-        selectedRecords: {
-          ...state.selectedRecords,
-          ...action.payload,
-        },
       };
     default:
       return state;

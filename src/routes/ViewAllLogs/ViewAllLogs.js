@@ -41,7 +41,9 @@ import {
   getJobLogsListColumnMapping,
   statusCellFormatter,
   showActionMenu,
-  permissions, PAGE_KEYS,
+  permissions,
+  PAGE_KEYS,
+  storage,
 } from '../../utils';
 import {
   FILTERS,
@@ -178,7 +180,10 @@ class ViewAllLogs extends Component {
     this.setLogsList();
   }
 
-  state = { showDeleteConfirmation: false, selectedLogsNumber: 0 };
+  state = {
+    showDeleteConfirmation: false,
+    selectedLogsNumber: 0,
+  };
 
   componentDidUpdate(prevProps) {
     const { resources: { records: { records: prevRecords } } } = prevProps;
@@ -346,6 +351,12 @@ class ViewAllLogs extends Component {
     const itemToView = JSON.parse(sessionStorage.getItem(DATA_IMPORT_POSITION));
     const hasDeletePermission = stripes.hasPerm(DELETE_LOGS);
 
+    // ============= TODO: REFACTOR ==============
+    const persistedQuery = storage.getItem('searchQuery') ?? resources.query;
+    const customParentResources = { ...resources, query: persistedQuery };
+    storage.setItem('searchQuery', resources.query);
+    // ============= TODO: REFACTOR ==============
+
     return (
       <div data-test-logs-list>
         <SearchAndSort
@@ -369,7 +380,7 @@ class ViewAllLogs extends Component {
           viewRecordComponent={noop}
           onSelectRow={noop}
           viewRecordPerms="metadata-provider.jobexecutions.get"
-          parentResources={resources}
+          parentResources={customParentResources}
           parentMutator={mutator}
           stripes={stripes}
           disableRecordCreation={disableRecordCreation}
@@ -397,9 +408,6 @@ class ViewAllLogs extends Component {
           resultsOnMarkPosition={this.onMarkPosition}
           resultsOnResetMarkedPosition={this.resetMarkedPosition}
           resultsCachedPosition={itemToView}
-          detailProps={{
-            query: resources.query,
-          }}
         />
         <ConfirmationModal
           id="delete-selected-logs-modal"

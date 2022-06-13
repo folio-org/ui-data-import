@@ -26,8 +26,8 @@ import {
   UploadingJobsContextProvider,
   DataFetcher,
 } from './components';
+import { moduleReducer } from './redux';
 import { STATE_MANAGEMENT } from './utils';
-import { moduleReducer } from './redux/reducers/moduleReducer';
 
 @withRoot
 class DataImport extends Component {

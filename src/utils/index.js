@@ -35,3 +35,4 @@ export * from './xhr';
 export * from './formatStatusCell';
 export * from './permissions';
 export * from './showActionMenu';
+export * from './storage';

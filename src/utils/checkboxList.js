@@ -70,7 +70,7 @@ export const useCheckboxList = (list = [], initialSelectedRecords) => {
  * In order to make it work `setList` must be called with actual list in decorated component.
  * `setList` must be called again on each list change (e.g. after item added or deleted).
  *
- * @param {{pageKey: string}} config - config object that is used to customize HOC
+ * @param {{pageKey: string}} config - configuration object that is used to customize HOC
  * @returns {(WrappedComponent: import('react').ComponentType) => React.FC}
  * */
 export const withCheckboxList = config => (WrappedComponent) => props => {
