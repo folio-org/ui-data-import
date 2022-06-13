@@ -76,7 +76,7 @@
     "inflected": "^2.0.4",
     "lodash": "^4.17.21",
     "miragejs": "^0.1.40",
-    "moment": "~2.24.0",
+    "moment": "~2.29.3",
     "prop-types": "^15.6.0",
     "react-final-form": "^6.3.0",
     "react-highlighter": "^0.4.3",
@@ -92,7 +92,7 @@
     "redux": "*"
   },
   "resolutions": {
-    "moment": "~2.24.0"
+    "moment": "~2.29.3"
   },
   "optionalDependencies": {
     "@folio/plugin-find-organization": "*"
