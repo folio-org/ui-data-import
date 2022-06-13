@@ -10,6 +10,7 @@ import sharedCss from '../../../shared.css';
 export const CheckboxColumn = memo(({
   value,
   checked = false,
+  disabled = false,
   onChange = noop,
 }) => (
   // eslint-disable-next-line jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events
@@ -25,6 +26,7 @@ export const CheckboxColumn = memo(({
           checked={checked}
           onChange={() => onChange(value)}
           aria-label={ariaLabel}
+          disabled={disabled}
         />
       )}
     </FormattedMessage>
@@ -34,5 +36,6 @@ export const CheckboxColumn = memo(({
 CheckboxColumn.propTypes = {
   value: PropTypes.string.isRequired,
   checked: PropTypes.bool,
+  disabled: PropTypes.bool,
   onChange: PropTypes.func,
 };
