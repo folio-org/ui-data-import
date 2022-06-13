@@ -261,6 +261,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
     render() {
       const resultedProps = {
         ...this.props,
+        nonInteractiveHeaders: ['selected'],
         renderHeaders: this.renderHeaders,
       };
 

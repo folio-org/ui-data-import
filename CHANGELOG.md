@@ -45,6 +45,7 @@
 * Update the "Data Import: All permissions" permission (UIDATIMP-1143)
 * Check for accessibility issues on updated match screens (UIDATIMP-1052)
 * Fix Accessibility problems on /data-import view all logs page. (UIDATIMP-1162)
+* Job profiles allows user to sort by checkboxes (UIDATIMP-1188)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
