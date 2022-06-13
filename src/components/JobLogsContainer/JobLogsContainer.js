@@ -40,6 +40,7 @@ const JobLogsContainer = props => {
       to={{
         pathname: `/data-import/job-summary/${record.id}`,
         state: { from: '/data-import' },
+        replace: false,
       }}
     >
       {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }

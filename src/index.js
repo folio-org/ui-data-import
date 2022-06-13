@@ -5,7 +5,10 @@ import {
   Route,
 } from 'react-router-dom';
 
-import { stripesShape } from '@folio/stripes/core';
+import {
+  stripesShape,
+  withRoot,
+} from '@folio/stripes/core';
 import {
   CommandList,
   defaultKeyboardShortcuts as keyboardCommands,
@@ -23,15 +26,27 @@ import {
   UploadingJobsContextProvider,
   DataFetcher,
 } from './components';
+import { STATE_MANAGEMENT } from './utils';
+import { moduleReducer } from './redux/reducers/moduleReducer';
 
+@withRoot
 class DataImport extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
+    root: PropTypes.shape({
+      addReducer: PropTypes.func.isRequired,
+    }).isRequired,
     showSettings: PropTypes.bool,
   };
 
   static defaultProps = { showSettings: false };
+
+  constructor(props) {
+    super(props);
+
+    this.props.root.addReducer(STATE_MANAGEMENT.DI_REDUCER, moduleReducer);
+  }
 
   render() {
     const {

@@ -41,7 +41,7 @@ import {
   getJobLogsListColumnMapping,
   statusCellFormatter,
   showActionMenu,
-  permissions,
+  permissions, PAGE_KEYS,
 } from '../../utils';
 import {
   FILTERS,
@@ -52,6 +52,7 @@ import {
   getFilters,
   getSort
 } from './ViewAllLogsUtils';
+import { setSelectedRecords } from '../../redux';
 
 const {
   COMMITTED,
@@ -121,7 +122,7 @@ export const ViewAllLogsManifest = Object.freeze({
   },
 });
 
-@withCheckboxList
+@withCheckboxList({ pageKey: PAGE_KEYS.VIEW_ALL })
 @stripesConnect
 @injectIntl
 class ViewAllLogs extends Component {
@@ -135,6 +136,11 @@ class ViewAllLogs extends Component {
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
       pathname: PropTypes.string.isRequired,
+    }).isRequired,
+    root: PropTypes.shape({
+      store: PropTypes.shape({
+        dispatch: PropTypes.func.isRequired,
+      }).isRequired,
     }).isRequired,
     disableRecordCreation: PropTypes.bool,
     browseOnly: PropTypes.bool,
@@ -150,9 +156,21 @@ class ViewAllLogs extends Component {
   };
 
   static manifest = ViewAllLogsManifest;
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { checkboxList: { selectedRecords } } = nextProps;
+    const { store: { dispatch } } = nextProps.root;
+
+    if (selectedRecords.size !== prevState.selectedLogsNumber) {
+      dispatch(setSelectedRecords({ [PAGE_KEYS.VIEW_ALL]: selectedRecords }));
+      return { selectedLogsNumber: selectedRecords.size };
+    }
+
+    return null;
+  }
 
   constructor(props) {
     super(props);
+
     this.getActiveFilters = getActiveFilters.bind(this);
     this.handleFilterChange = handleFilterChange.bind(this);
     this.changeSearchIndex = changeSearchIndex.bind(this);
@@ -160,7 +178,7 @@ class ViewAllLogs extends Component {
     this.setLogsList();
   }
 
-  state = { showDeleteConfirmation: false };
+  state = { showDeleteConfirmation: false, selectedLogsNumber: 0 };
 
   componentDidUpdate(prevProps) {
     const { resources: { records: { records: prevRecords } } } = prevProps;
@@ -379,6 +397,9 @@ class ViewAllLogs extends Component {
           resultsOnMarkPosition={this.onMarkPosition}
           resultsOnResetMarkedPosition={this.resetMarkedPosition}
           resultsCachedPosition={itemToView}
+          detailProps={{
+            query: resources.query,
+          }}
         />
         <ConfirmationModal
           id="delete-selected-logs-modal"

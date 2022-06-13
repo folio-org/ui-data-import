@@ -35,7 +35,7 @@ const mapStateToProps = state => {
   return { selectedRecord };
 };
 
-@withCheckboxList
+@withCheckboxList({ pageKey: '' })
 @stripesConnect
 @connect(mapStateToProps)
 export class FileExtensions extends Component {

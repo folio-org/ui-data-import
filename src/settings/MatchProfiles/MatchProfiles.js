@@ -254,7 +254,7 @@ const mapStateToProps = state => {
   return { selectedRecord };
 };
 
-@withCheckboxList
+@withCheckboxList({ pageKey: '' })
 @stripesConnect
 @connect(mapStateToProps)
 export class MatchProfiles extends Component {

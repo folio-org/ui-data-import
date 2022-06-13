@@ -9,6 +9,7 @@ import { STATE_MANAGEMENT } from './constants';
  * Hook that provides checkbox list functionality
  *
  * @param {Array<{ id: string, [key: string]: any}>} list
+ * @param {Set<string>} initialSelectedRecords
  * @return {{
  *   selectedRecords: Set,
  *   isAllSelected: boolean,
@@ -18,10 +19,8 @@ import { STATE_MANAGEMENT } from './constants';
  *   handleSelectAllCheckbox: (e: Event) => void,
  * }}
  */
-export const useCheckboxList = (list = []) => {
-  const initialSelectedRecords = useSelector(state => get(state, [STATE_MANAGEMENT.REDUCER, 'selectedRecords'], new Set()));
-
-  const [selectedRecords, setSelectedRecords] = useState(initialSelectedRecords);
+export const useCheckboxList = (list = [], initialSelectedRecords) => {
+  const [selectedRecords, setSelectedRecords] = useState(initialSelectedRecords ?? new Set());
 
   const listLength = list.length;
   const isAllSelected = (listLength !== 0) && (selectedRecords.size === listLength);
@@ -71,11 +70,20 @@ export const useCheckboxList = (list = []) => {
  * In order to make it work `setList` must be called with actual list in decorated component.
  * `setList` must be called again on each list change (e.g. after item added or deleted).
  *
- * @type {(WrappedComponent: import('react').ComponentType) => React.FC}
- */
-export const withCheckboxList = WrappedComponent => props => {
+ * @param {{pageKey: string}} config - config object that is used to customize HOC
+ * @returns {(WrappedComponent: import('react').ComponentType) => React.FC}
+ * */
+export const withCheckboxList = config => (WrappedComponent) => props => {
   const [list, setList] = useState([]);
-  const checkboxList = useCheckboxList(list);
+
+  // get initial value for selected records if persisted in redux store
+  const selectedRecords = useSelector(state => get(state, [
+    STATE_MANAGEMENT.DI_REDUCER,
+    'selectedRecords',
+    config.pageKey,
+  ], new Set()));
+
+  const checkboxList = useCheckboxList(list, selectedRecords);
 
   return (
     <WrappedComponent

@@ -776,4 +776,12 @@ export const RECORD_ACTION_STATUS_LABEL_IDS = {
   [RECORD_ACTION_STATUS.DISCARDED]: 'ui-data-import.logLight.actionStatus.discarded',
 };
 
-export const STATE_MANAGEMENT = { REDUCER: 'folio-data-import_settings' };
+export const STATE_MANAGEMENT = {
+  REDUCER: 'folio-data-import_settings',
+  DI_REDUCER: 'folio-data-import_module'
+};
+
+export const PAGE_KEYS = {
+  HOME: 'folio-data-import_home',
+  VIEW_ALL: 'folio-data-import_view_all',
+};
