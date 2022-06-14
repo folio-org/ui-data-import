@@ -147,7 +147,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
     return { selectedRecord };
   };
 
-  @withCheckboxList({ pageKey: '' })
+  @withCheckboxList()
   @connect(mapStateToProps)
   @stripesConnect
   @withRouter

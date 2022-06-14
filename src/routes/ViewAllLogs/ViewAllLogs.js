@@ -124,7 +124,7 @@ export const ViewAllLogsManifest = Object.freeze({
   },
 });
 
-@withCheckboxList({ pageKey: PAGE_KEYS.HOME })
+@withCheckboxList({ pageKey: PAGE_KEYS.VIEW_ALL })
 @withRoot
 @stripesConnect
 @injectIntl
@@ -355,12 +355,6 @@ class ViewAllLogs extends Component {
     const columnMapping = getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox });
     const itemToView = JSON.parse(sessionStorage.getItem(DATA_IMPORT_POSITION));
     const hasDeletePermission = stripes.hasPerm(DELETE_LOGS);
-
-    // // ============= TODO: REFACTOR ==============
-    // const persistedQuery = storage.getItem('searchQuery') ?? resources.query;
-    // const customParentResources = { ...resources, query: persistedQuery };
-    // storage.setItem('searchQuery', resources.query);
-    // // ============= TODO: REFACTOR ==============
 
     return (
       <div data-test-logs-list>
