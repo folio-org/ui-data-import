@@ -19,12 +19,17 @@ export const DEFAULT_JOB_LOG_COLUMNS_WIDTHS = {
   totalRecords: '80px',
 };
 
-export const getJobLogsListColumnMapping = ({ isAllSelected, handleSelectAllCheckbox }) => {
+export const getJobLogsListColumnMapping = ({
+  isAllSelected,
+  handleSelectAllCheckbox,
+  checkboxDisabled = false,
+}) => {
   return {
     selected: (
       <CheckboxHeader
         checked={isAllSelected}
         onChange={handleSelectAllCheckbox}
+        disabled={checkboxDisabled}
       />
     ),
     fileName: <FormattedMessage id="ui-data-import.fileName" />,

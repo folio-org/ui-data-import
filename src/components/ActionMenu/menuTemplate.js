@@ -196,9 +196,11 @@ export const menuTemplate = ({
       };
 
       return (
-        <IfPermission perm={permissions.DELETE_LOGS}>
+        <IfPermission
+          perm={permissions.DELETE_LOGS}
+          key={key}
+        >
           <Default
-            key={key}
             caption="ui-data-import.deleteSelectedLogs"
             icon="trash"
             isDisabled={entity.isDeleteAllLogsDisabled()}
