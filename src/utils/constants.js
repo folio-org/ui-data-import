@@ -777,12 +777,12 @@ export const RECORD_ACTION_STATUS_LABEL_IDS = {
 };
 
 export const STATE_MANAGEMENT = {
-  DATA_IMPORT: 'folio-data-import_root_module',
+  DATA_IMPORT: 'folio-data-import_root',
   SETTINGS_REDUCER: 'folio-data-import_settings',
   SELECTED_RECORDS_REDUCER: 'folio-data-import_selected_records'
 };
 
 export const PAGE_KEYS = {
-  HOME: 'folio-data-import_home',
-  VIEW_ALL: 'folio-data-import_view_all',
+  HOME: 'homePageSelectedRecords',
+  VIEW_ALL: 'viewAllPageSelectedRecords',
 };

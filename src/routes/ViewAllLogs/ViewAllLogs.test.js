@@ -1,6 +1,8 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { legacy_createStore as createStore } from 'redux';
 
 import { noop } from 'lodash';
 
@@ -146,27 +148,34 @@ const stripes = buildStripes();
 stripes.hasPerm = jest.fn(() => true);
 stripes.logger.log = jest.fn();
 stripes.connect = jest.fn(() => component => component);
+const store = createStore(state => state, {});
 
 const renderViewAllLogs = query => {
   const component = (
     <Router>
-      <ModuleHierarchyProvider module="@folio/data-import">
-        <ViewAllLogs
-          mutator={mutator}
-          resources={getResources(query)}
-          disableRecordCreation={false}
-          history={{ push: noop }}
-          intl={{ formatMessage: jest.fn(() => 'test') }}
-          stripes={stripes}
-          setList={jest.fn()}
-          checkboxList={{
-            isAllSelected: false,
-            handleSelectAllCheckbox: noop,
-            selectedRecords: [],
-            selectRecord: noop,
-          }}
-        />
-      </ModuleHierarchyProvider>
+      <Provider store={store}>
+        <ModuleHierarchyProvider module="@folio/data-import">
+          <ViewAllLogs
+            mutator={mutator}
+            resources={getResources(query)}
+            disableRecordCreation={false}
+            history={{ push: noop }}
+            intl={{ formatMessage: jest.fn(() => 'test') }}
+            stripes={stripes}
+            setList={jest.fn()}
+            checkboxList={{
+              isAllSelected: false,
+              handleSelectAllCheckbox: noop,
+              selectedRecords: [],
+              selectRecord: noop,
+            }}
+            location={{
+              pathname: '/job-logs',
+              search: '?sort=-completedDate',
+            }}
+          />
+        </ModuleHierarchyProvider>
+      </Provider>
     </Router>
   );
 

@@ -4,6 +4,8 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { legacy_createStore as createStore } from 'redux';
 
 import '../../../test/jest/__mock__';
 
@@ -47,13 +49,16 @@ const defaultContext = {
   jobs: [],
   logs: jobsLogs,
 };
+const store = createStore(state => state, {});
 
 const renderHome = (context = defaultContext) => {
   const component = (
     <Router>
-      <DataFetcherContext.Provider value={context}>
-        <Home />
-      </DataFetcherContext.Provider>
+      <Provider store={store}>
+        <DataFetcherContext.Provider value={context}>
+          <Home />
+        </DataFetcherContext.Provider>
+      </Provider>
     </Router>
   );
 

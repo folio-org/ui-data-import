@@ -13,6 +13,7 @@ import {
 import {
   stripesConnect,
   stripesShape,
+  withRoot,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -124,6 +125,7 @@ export const ViewAllLogsManifest = Object.freeze({
 });
 
 @withCheckboxList({ pageKey: PAGE_KEYS.VIEW_ALL })
+@withRoot
 @stripesConnect
 @injectIntl
 class ViewAllLogs extends Component {
@@ -159,8 +161,10 @@ class ViewAllLogs extends Component {
   static manifest = ViewAllLogsManifest;
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { checkboxList: { selectedRecords } } = nextProps;
-    const { store: { dispatch } } = nextProps.root;
+    const {
+      checkboxList: { selectedRecords },
+      root: { store: { dispatch } },
+    } = nextProps;
 
     if (selectedRecords.size !== prevState.selectedLogsNumber) {
       dispatch(setSelectedRecords({ [PAGE_KEYS.VIEW_ALL]: selectedRecords }));

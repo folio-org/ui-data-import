@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { useLocation, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 import {
   stripesConnect,
@@ -100,9 +100,8 @@ const JobSummaryComponent = props => {
     return makeConnectedSource(connectedSourceProps, stripes.logger, resourceName);
   };
 
-  const closeLinkPath = location.state?.from || '/data-import';
-
   const renderHeader = renderProps => {
+    const closeLinkPath = location.state?.from || '/data-import';
     const resultCountMessageId = 'stripes-smart-components.searchResultsCountHeader';
     const label = (
       <SettingsLabel

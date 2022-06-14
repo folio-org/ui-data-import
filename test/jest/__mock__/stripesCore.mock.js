@@ -57,7 +57,10 @@ jest.mock('@folio/stripes/core', () => {
     return (
       <Component
         {...props}
-        root={{ addReducer: () => {} }}
+        root={{
+          addReducer: () => {},
+          store: { dispatch: () => {} },
+        }}
       />
     );
   };

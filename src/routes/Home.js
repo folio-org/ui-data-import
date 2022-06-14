@@ -28,8 +28,8 @@ import {
 
 import {
   checkboxListShape,
-  deleteJobExecutions,
   withCheckboxList,
+  deleteJobExecutions,
   PAGE_KEYS,
 } from '../utils';
 import { setSelectedRecords } from '../redux';
@@ -56,8 +56,10 @@ export class Home extends Component {
   static contextType = DataFetcherContext;
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { checkboxList: { selectedRecords } } = nextProps;
-    const { store: { dispatch } } = nextProps.root;
+    const {
+      checkboxList: { selectedRecords },
+      root: { store: { dispatch } },
+    } = nextProps;
 
     if (selectedRecords.size !== prevState.selectedLogsNumber) {
       // persist selected records in redux store with associated page key
