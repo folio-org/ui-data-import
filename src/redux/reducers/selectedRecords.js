@@ -4,7 +4,7 @@ const initialState = {
   selectedRecords: {},
 };
 
-export const moduleReducer = (state = initialState, action) => {
+export const selectedRecordsReducer = (state = initialState, action) => {
   switch (action.type) {
     case ACTION.SET_SELECTED_RECORDS:
       return {

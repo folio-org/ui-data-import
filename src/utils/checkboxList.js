@@ -78,11 +78,11 @@ export const withCheckboxList = config => (WrappedComponent) => props => {
 
   // get initial value for selected records if persisted in redux store
   const selectedRecords = useSelector(state => get(state, [
-    STATE_MANAGEMENT.DI_REDUCER,
+    STATE_MANAGEMENT.DATA_IMPORT,
+    STATE_MANAGEMENT.SELECTED_RECORDS_REDUCER,
     'selectedRecords',
     config.pageKey,
   ], new Set()));
-
   const checkboxList = useCheckboxList(list, selectedRecords);
 
   return (

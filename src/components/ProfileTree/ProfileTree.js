@@ -66,7 +66,11 @@ export const ProfileTree = memo(({
   const profileTreeContent = useSelector(state => {
     return get(
       state,
-      [STATE_MANAGEMENT.REDUCER, profileTreeKey],
+      [
+        STATE_MANAGEMENT.DATA_IMPORT,
+        STATE_MANAGEMENT.SETTINGS_REDUCER,
+        profileTreeKey,
+      ],
       [],
     );
   });

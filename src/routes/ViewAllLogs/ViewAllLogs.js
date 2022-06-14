@@ -43,7 +43,6 @@ import {
   showActionMenu,
   permissions,
   PAGE_KEYS,
-  storage,
 } from '../../utils';
 import {
   FILTERS,
@@ -158,12 +157,14 @@ class ViewAllLogs extends Component {
   };
 
   static manifest = ViewAllLogsManifest;
+
   static getDerivedStateFromProps(nextProps, prevState) {
     const { checkboxList: { selectedRecords } } = nextProps;
     const { store: { dispatch } } = nextProps.root;
 
     if (selectedRecords.size !== prevState.selectedLogsNumber) {
       dispatch(setSelectedRecords({ [PAGE_KEYS.VIEW_ALL]: selectedRecords }));
+
       return { selectedLogsNumber: selectedRecords.size };
     }
 
@@ -351,11 +352,11 @@ class ViewAllLogs extends Component {
     const itemToView = JSON.parse(sessionStorage.getItem(DATA_IMPORT_POSITION));
     const hasDeletePermission = stripes.hasPerm(DELETE_LOGS);
 
-    // ============= TODO: REFACTOR ==============
-    const persistedQuery = storage.getItem('searchQuery') ?? resources.query;
-    const customParentResources = { ...resources, query: persistedQuery };
-    storage.setItem('searchQuery', resources.query);
-    // ============= TODO: REFACTOR ==============
+    // // ============= TODO: REFACTOR ==============
+    // const persistedQuery = storage.getItem('searchQuery') ?? resources.query;
+    // const customParentResources = { ...resources, query: persistedQuery };
+    // storage.setItem('searchQuery', resources.query);
+    // // ============= TODO: REFACTOR ==============
 
     return (
       <div data-test-logs-list>
@@ -380,7 +381,7 @@ class ViewAllLogs extends Component {
           viewRecordComponent={noop}
           onSelectRow={noop}
           viewRecordPerms="metadata-provider.jobexecutions.get"
-          parentResources={customParentResources}
+          parentResources={resources}
           parentMutator={mutator}
           stripes={stripes}
           disableRecordCreation={disableRecordCreation}

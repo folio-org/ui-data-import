@@ -777,8 +777,9 @@ export const RECORD_ACTION_STATUS_LABEL_IDS = {
 };
 
 export const STATE_MANAGEMENT = {
-  REDUCER: 'folio-data-import_settings',
-  DI_REDUCER: 'folio-data-import_module'
+  DATA_IMPORT: 'folio-data-import_root_module',
+  SETTINGS_REDUCER: 'folio-data-import_settings',
+  SELECTED_RECORDS_REDUCER: 'folio-data-import_selected_records'
 };
 
 export const PAGE_KEYS = {

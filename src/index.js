@@ -26,7 +26,7 @@ import {
   UploadingJobsContextProvider,
   DataFetcher,
 } from './components';
-import { moduleReducer } from './redux';
+import { rootReducer } from './redux';
 import { STATE_MANAGEMENT } from './utils';
 
 @withRoot
@@ -45,7 +45,7 @@ class DataImport extends Component {
   constructor(props) {
     super(props);
 
-    this.props.root.addReducer(STATE_MANAGEMENT.DI_REDUCER, moduleReducer);
+    this.props.root.addReducer(STATE_MANAGEMENT.DATA_IMPORT, rootReducer);
   }
 
   render() {

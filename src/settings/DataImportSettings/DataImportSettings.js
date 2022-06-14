@@ -2,15 +2,11 @@ import React, {
   Component,
   createRef,
 } from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Settings } from '@folio/stripes/smart-components';
 import { InfoPopover } from '@folio/stripes/components';
-import {
-  stripesShape,
-  withRoot,
-} from '@folio/stripes/core';
+import { stripesShape } from '@folio/stripes/core';
 
 import { createJobProfiles } from '../JobProfiles';
 import { MatchProfiles } from '../MatchProfiles';
@@ -18,28 +14,14 @@ import { ActionProfiles } from '../ActionProfiles';
 import { MappingProfiles } from '../MappingProfiles';
 import { FileExtensions } from '../FileExtensions';
 import { MARCFieldProtection } from '../MARCFieldProtection';
-import { reducer } from '../../redux';
-import {
-  generateSettingsLabel,
-  STATE_MANAGEMENT,
-} from '../../utils';
+import { generateSettingsLabel } from '../../utils';
 
 import css from './DataImportSettings.css';
 
-@withRoot
 export class DataImportSettings extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
-    root: PropTypes.shape({
-      addReducer: PropTypes.func.isRequired,
-    }).isRequired,
   };
-
-  constructor(props) {
-    super(props);
-
-    props.root.addReducer(STATE_MANAGEMENT.REDUCER, reducer);
-  }
 
   componentDidMount() {
     if (this.paneTitleRef.current) {
