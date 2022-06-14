@@ -124,7 +124,7 @@ export const ViewAllLogsManifest = Object.freeze({
   },
 });
 
-@withCheckboxList({ pageKey: PAGE_KEYS.VIEW_ALL })
+@withCheckboxList({ pageKey: PAGE_KEYS.HOME })
 @withRoot
 @stripesConnect
 @injectIntl
@@ -187,7 +187,7 @@ class ViewAllLogs extends Component {
 
   state = {
     showDeleteConfirmation: false,
-    selectedLogsNumber: 0,
+    selectedLogsNumber: null,
   };
 
   componentDidUpdate(prevProps) {

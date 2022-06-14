@@ -8,6 +8,7 @@ import {
   useCheckboxList,
   withCheckboxList,
 } from '../checkboxList';
+import { renderWithRedux } from '../../../test/jest/helpers';
 
 function setup(...args) {
   const returnVal = {};
@@ -106,7 +107,7 @@ describe('withCheckboxList HOC', () => {
   it('returns wrapped component with passed props', () => {
     const TestComponent = props => <span style={{ color: props.color }}>TestComponent</span>;
     const WrappedComponent = withCheckboxList({ pageKey: 'test' })(TestComponent);
-    const { getByText } = render(<WrappedComponent color="red" />);
+    const { getByText } = render(renderWithRedux(<WrappedComponent color="red" />));
 
     expect(getByText('TestComponent')).toBeInTheDocument();
     expect(getByText('TestComponent')).toHaveStyle({ color: 'red' });

@@ -4,13 +4,11 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { legacy_createStore as createStore } from 'redux';
 
 import '../../../test/jest/__mock__';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { translationsProperties } from '../../../test/jest/helpers';
+import { renderWithRedux, translationsProperties } from '../../../test/jest/helpers';
 
 import { DataFetcherContext } from '../../components';
 import { Home } from '../Home';
@@ -49,20 +47,17 @@ const defaultContext = {
   jobs: [],
   logs: jobsLogs,
 };
-const store = createStore(state => state, {});
 
 const renderHome = (context = defaultContext) => {
   const component = (
     <Router>
-      <Provider store={store}>
-        <DataFetcherContext.Provider value={context}>
-          <Home />
-        </DataFetcherContext.Provider>
-      </Provider>
+      <DataFetcherContext.Provider value={context}>
+        <Home />
+      </DataFetcherContext.Provider>
     </Router>
   );
 
-  return renderWithIntl(component, translationsProperties);
+  return renderWithIntl(renderWithRedux(component), translationsProperties);
 };
 
 describe('Home component', () => {
