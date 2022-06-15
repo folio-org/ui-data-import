@@ -238,11 +238,16 @@ export const AdministrativeData = ({
                       data-test-admisitrative-note
                       xs={12}
                     >
-                      <Field
-                        component={TextField}
-                        label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.administrativeNote`} />}
-                        name={getSubfieldName(7, 0, index)}
-                      />
+                      <WithValidation>
+                        {validation => (
+                          <Field
+                            component={TextField}
+                            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.administrativeNote`} />}
+                            name={getSubfieldName(7, 0, index)}
+                            validate={[validation]}
+                          />
+                        )}
+                      </WithValidation>
                     </Col>
                   </Row>
                 )}

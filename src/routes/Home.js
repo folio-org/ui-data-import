@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { isEqual } from 'lodash';
 
 import {
   Button,
@@ -71,15 +72,21 @@ export class Home extends Component {
 
     this.calloutRef = createRef();
     this.state = {
-      allLogsNumber: null,
+      isLogsDeletionInProgress: false,
+      logs: [],
       selectedLogsNumber: 0,
       showDeleteConfirmation: false,
     };
   }
 
   componentDidUpdate(_prevProps, prevState) {
-    if (this.context.logs && (prevState.allLogsNumber !== this.context.logs.length)) {
+    if (this.context.logs && !isEqual(prevState.logs, this.context.logs)) {
       this.setLogsList();
+
+      // enable checkboxes after deletion completed if user has deleted logs
+      if (this.state.isLogsDeletionInProgress) {
+        this.setState({ isLogsDeletionInProgress: false });
+      }
     }
   }
 
@@ -88,7 +95,7 @@ export class Home extends Component {
     const { logs } = this.context;
 
     setList(logs);
-    this.setState({ allLogsNumber: logs.length });
+    this.setState({ logs });
   }
 
   handleManageJobs = () => {
@@ -175,6 +182,9 @@ export class Home extends Component {
       this.showDeleteLogsSuccessfulMessage(jobExecutionDetails.length);
     };
 
+    // disable all checkboxes while deletion in progress
+    this.setState({ isLogsDeletionInProgress: true });
+
     deleteJobExecutions(selectedRecords, okapi)
       .then(onSuccess)
       .catch(() => this.showDeleteLogsErrorMessage());
@@ -190,6 +200,7 @@ export class Home extends Component {
       hasLoaded,
     } = this.context;
     const { checkboxList } = this.props;
+    const { isLogsDeletionInProgress } = this.state;
 
     return (
       <PersistedPaneset
@@ -224,6 +235,7 @@ export class Home extends Component {
             logs={logs}
             haveLogsLoaded={hasLoaded}
             checkboxList={checkboxList}
+            checkboxesDisabled={isLogsDeletionInProgress}
           />
         </Pane>
         <ConfirmationModal

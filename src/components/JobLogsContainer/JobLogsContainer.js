@@ -24,6 +24,7 @@ import {
 const JobLogsContainer = props => {
   const {
     children,
+    checkboxesDisabled = false,
     checkboxList: {
       isAllSelected,
       handleSelectAllCheckbox,
@@ -59,11 +60,16 @@ const JobLogsContainer = props => {
 
   const listProps = {
     ...useJobLogsProperties(customProperties),
-    columnMapping: getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox }),
+    columnMapping: getJobLogsListColumnMapping({
+      isAllSelected,
+      handleSelectAllCheckbox,
+      checkboxDisabled: checkboxesDisabled,
+    }),
     resultsFormatter: {
       ...listTemplate({
         selectRecord,
         selectedRecords,
+        checkboxDisabled: checkboxesDisabled,
       }),
       fileName: fileNameCellFormatter,
       status: statusCellFormatter(formatMessage),
@@ -84,6 +90,7 @@ JobLogsContainer.propTypes = {
   children: PropTypes.func.isRequired,
   checkboxList: checkboxListShape.isRequired,
   stripes: stripesShape.isRequired,
+  checkboxesDisabled: PropTypes.bool,
 };
 
 export default withStripes(JobLogsContainer);

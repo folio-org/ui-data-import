@@ -18,6 +18,7 @@ import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   TextLink,
   ConfirmationModal,
+  DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
 import {
   changeSearchIndex,
@@ -362,6 +363,7 @@ class ViewAllLogs extends Component {
           }
           columnMapping={columnMapping}
           resultsFormatter={resultsFormatter}
+          resultRowFormatter={DefaultMCLRowFormatter}
           columnWidths={DEFAULT_JOB_LOG_COLUMNS_WIDTHS}
           actionMenu={showActionMenu({
             renderer: this.renderActionMenu,
