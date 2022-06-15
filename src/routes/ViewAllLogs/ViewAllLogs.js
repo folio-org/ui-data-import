@@ -180,7 +180,7 @@ class ViewAllLogs extends Component {
 
   state = {
     showDeleteConfirmation: false,
-    selectedLogsNumber: null,
+    selectedLogsNumber: 0,
   };
 
   componentDidUpdate(prevProps) {
