@@ -106,7 +106,7 @@ describe('useCheckboxList hook', () => {
 describe('withCheckboxList HOC', () => {
   it('returns wrapped component with passed props', () => {
     const TestComponent = props => <span style={{ color: props.color }}>TestComponent</span>;
-    const WrappedComponent = withCheckboxList({ pageKey: 'test' })(TestComponent);
+    const WrappedComponent = withCheckboxList()(TestComponent);
     const { getByText } = render(renderWithRedux(<WrappedComponent color="red" />));
 
     expect(getByText('TestComponent')).toBeInTheDocument();

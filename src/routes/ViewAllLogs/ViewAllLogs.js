@@ -13,7 +13,6 @@ import {
 import {
   stripesConnect,
   stripesShape,
-  withRoot,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -125,7 +124,6 @@ export const ViewAllLogsManifest = Object.freeze({
 });
 
 @withCheckboxList({ pageKey: PAGE_KEYS.VIEW_ALL })
-@withRoot
 @stripesConnect
 @injectIntl
 class ViewAllLogs extends Component {
@@ -139,11 +137,6 @@ class ViewAllLogs extends Component {
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
       pathname: PropTypes.string.isRequired,
-    }).isRequired,
-    root: PropTypes.shape({
-      store: PropTypes.shape({
-        dispatch: PropTypes.func.isRequired,
-      }).isRequired,
     }).isRequired,
     disableRecordCreation: PropTypes.bool,
     browseOnly: PropTypes.bool,
@@ -163,7 +156,7 @@ class ViewAllLogs extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const {
       checkboxList: { selectedRecords },
-      root: { store: { dispatch } },
+      stripes: { store: { dispatch } },
     } = nextProps;
 
     if (selectedRecords.size !== prevState.selectedLogsNumber) {
@@ -177,7 +170,6 @@ class ViewAllLogs extends Component {
 
   constructor(props) {
     super(props);
-
     this.getActiveFilters = getActiveFilters.bind(this);
     this.handleFilterChange = handleFilterChange.bind(this);
     this.changeSearchIndex = changeSearchIndex.bind(this);

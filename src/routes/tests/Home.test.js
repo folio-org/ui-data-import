@@ -8,7 +8,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import '../../../test/jest/__mock__';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { renderWithRedux, translationsProperties } from '../../../test/jest/helpers';
+import {
+  renderWithRedux,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 
 import { DataFetcherContext } from '../../components';
 import { Home } from '../Home';

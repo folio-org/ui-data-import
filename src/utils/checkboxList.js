@@ -70,12 +70,12 @@ export const useCheckboxList = (list = [], initialSelectedRecords) => {
  * In order to make it work `setList` must be called with actual list in decorated component.
  * `setList` must be called again on each list change (e.g. after item added or deleted).
  *
- * @param {{pageKey: string}} [config] - configuration object that is used to customize HOC
+ * @param {{pageKey?: string}} [config] - configuration object
  * @returns {(WrappedComponent: import('react').ComponentType) => React.FC}
  * */
 export const withCheckboxList = config => WrappedComponent => props => {
   // get initial value for selected records from redux store
-  const pageKey = get(config, 'pageKey', { pageKey: '' });
+  const pageKey = get(config, 'pageKey', '');
   const selectedRecords = useSelector(state => get(state, [
     STATE_MANAGEMENT.DATA_IMPORT,
     STATE_MANAGEMENT.SELECTED_RECORDS_REDUCER,
