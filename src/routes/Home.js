@@ -17,6 +17,7 @@ import {
   withStripes,
 } from '@folio/stripes/core';
 
+import { setSelectedRecords } from '../redux';
 import {
   Jobs,
   RecentJobLogs,
@@ -31,7 +32,6 @@ import {
   deleteJobExecutions,
   PAGE_KEYS,
 } from '../utils';
-import { setSelectedRecords } from '../redux';
 
 @withCheckboxList({ pageKey: PAGE_KEYS.HOME })
 @withStripes
@@ -66,6 +66,7 @@ export class Home extends Component {
 
   constructor(props) {
     super(props);
+
     this.renderLogsPaneSub = this.renderLogsPaneSub.bind(this);
 
     this.calloutRef = createRef();

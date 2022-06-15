@@ -25,6 +25,7 @@ import {
   handleFilterChange,
 } from '@folio/stripes-acq-components';
 
+import { setSelectedRecords } from '../../redux';
 import ViewAllLogsFilters from './ViewAllLogsFilters';
 import { searchableIndexes } from './ViewAllLogsSearchConfig';
 import {
@@ -53,7 +54,6 @@ import {
   getFilters,
   getSort
 } from './ViewAllLogsUtils';
-import { setSelectedRecords } from '../../redux';
 
 const {
   COMMITTED,

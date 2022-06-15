@@ -4,11 +4,12 @@ import {
   waitFor,
 } from '@testing-library/react';
 
+import { renderWithRedux } from '../../../test/jest/helpers';
+
 import {
   useCheckboxList,
   withCheckboxList,
 } from '../checkboxList';
-import { renderWithRedux } from '../../../test/jest/helpers';
 
 function setup(...args) {
   const returnVal = {};
