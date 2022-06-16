@@ -26,7 +26,6 @@ import {
   handleFilterChange,
 } from '@folio/stripes-acq-components';
 
-import { setSelectedRecords } from '../../redux';
 import ViewAllLogsFilters from './ViewAllLogsFilters';
 import { searchableIndexes } from './ViewAllLogsSearchConfig';
 import {
@@ -45,6 +44,7 @@ import {
   showActionMenu,
   permissions,
   PAGE_KEYS,
+  storage,
 } from '../../utils';
 import {
   FILTERS,
@@ -155,13 +155,10 @@ class ViewAllLogs extends Component {
   static manifest = ViewAllLogsManifest;
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const {
-      checkboxList: { selectedRecords },
-      stripes: { store: { dispatch } },
-    } = nextProps;
+    const { checkboxList: { selectedRecords } } = nextProps;
 
     if (selectedRecords.size !== prevState.selectedLogsNumber) {
-      dispatch(setSelectedRecords({ [PAGE_KEYS.VIEW_ALL]: selectedRecords }));
+      storage.setItem(PAGE_KEYS.VIEW_ALL, [...selectedRecords]);
 
       return { selectedLogsNumber: selectedRecords.size };
     }

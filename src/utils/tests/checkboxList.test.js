@@ -4,8 +4,6 @@ import {
   waitFor,
 } from '@testing-library/react';
 
-import { renderWithRedux } from '../../../test/jest/helpers';
-
 import {
   useCheckboxList,
   withCheckboxList,
@@ -108,7 +106,7 @@ describe('withCheckboxList HOC', () => {
   it('returns wrapped component with passed props', () => {
     const TestComponent = props => <span style={{ color: props.color }}>TestComponent</span>;
     const WrappedComponent = withCheckboxList()(TestComponent);
-    const { getByText } = render(renderWithRedux(<WrappedComponent color="red" />));
+    const { getByText } = render(<WrappedComponent color="red" />);
 
     expect(getByText('TestComponent')).toBeInTheDocument();
     expect(getByText('TestComponent')).toHaveStyle({ color: 'red' });

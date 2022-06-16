@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
-import { STATE_MANAGEMENT } from './constants';
+import { storage } from './storage';
 
 /**
  * Hook that provides checkbox list functionality
@@ -20,7 +19,7 @@ import { STATE_MANAGEMENT } from './constants';
  * }}
  */
 export const useCheckboxList = (list = [], initialSelectedRecords) => {
-  const [selectedRecords, setSelectedRecords] = useState(initialSelectedRecords ?? new Set());
+  const [selectedRecords, setSelectedRecords] = useState(initialSelectedRecords || new Set());
 
   const listLength = list.length;
   const isAllSelected = (listLength !== 0) && (selectedRecords.size === listLength);
@@ -74,13 +73,9 @@ export const useCheckboxList = (list = [], initialSelectedRecords) => {
  * @returns {(WrappedComponent: import('react').ComponentType) => React.FC}
  * */
 export const withCheckboxList = config => WrappedComponent => props => {
-  // get initial value for selected records from redux store
+  // get initial value for selected records from sessionStorage
   const pageKey = get(config, 'pageKey', '');
-  const selectedRecords = useSelector(state => get(state, [
-    STATE_MANAGEMENT.DATA_IMPORT,
-    STATE_MANAGEMENT.SELECTED_RECORDS_REDUCER,
-    pageKey,
-  ], new Set()));
+  const selectedRecords = new Set(storage.getItem(pageKey) || []);
 
   const [list, setList] = useState([]);
   const checkboxList = useCheckboxList(list, selectedRecords);

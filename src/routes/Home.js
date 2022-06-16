@@ -18,7 +18,6 @@ import {
   withStripes,
 } from '@folio/stripes/core';
 
-import { setSelectedRecords } from '../redux';
 import {
   Jobs,
   RecentJobLogs,
@@ -32,6 +31,7 @@ import {
   withCheckboxList,
   deleteJobExecutions,
   PAGE_KEYS,
+  storage,
 } from '../utils';
 
 @withCheckboxList({ pageKey: PAGE_KEYS.HOME })
@@ -50,14 +50,10 @@ export class Home extends Component {
   static contextType = DataFetcherContext;
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const {
-      checkboxList: { selectedRecords },
-      stripes: { store: { dispatch } },
-    } = nextProps;
+    const { checkboxList: { selectedRecords } } = nextProps;
 
     if (selectedRecords.size !== prevState.selectedLogsNumber) {
-      // persist selected records in redux store with associated page key
-      dispatch(setSelectedRecords({ [PAGE_KEYS.HOME]: selectedRecords }));
+      storage.setItem(PAGE_KEYS.HOME, [...selectedRecords]);
 
       return { selectedLogsNumber: selectedRecords.size };
     }

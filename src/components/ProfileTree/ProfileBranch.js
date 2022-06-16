@@ -75,12 +75,7 @@ export const ProfileBranch = memo(({
   const jobProfilesState = useSelector(state => {
     return get(
       state,
-      [
-        STATE_MANAGEMENT.DATA_IMPORT,
-        STATE_MANAGEMENT.SETTINGS_REDUCER,
-        'jobProfiles',
-        sectionKey,
-      ],
+      [STATE_MANAGEMENT.REDUCER, 'jobProfiles', sectionKey],
       [],
     );
   });

@@ -8,10 +8,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import '../../../test/jest/__mock__';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import {
-  renderWithRedux,
-  translationsProperties,
-} from '../../../test/jest/helpers';
+import { translationsProperties } from '../../../test/jest/helpers';
 
 import { DataFetcherContext } from '../../components';
 import { Home } from '../Home';
@@ -60,12 +57,26 @@ const renderHome = (context = defaultContext) => {
     </Router>
   );
 
-  return renderWithIntl(renderWithRedux(component), translationsProperties);
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('Home component', () => {
+  let mockStorage = {};
+
+  beforeAll(() => {
+    global.Storage.prototype.setItem = jest.fn((key, value) => {
+      mockStorage[key] = value;
+    });
+  });
+
+  beforeEach(() => {
+    mockStorage = {};
+  });
+
   afterAll(() => {
     deleteJobExecutionsSpy.mockClear();
+    global.Storage.prototype.setItem.mockReset();
+    global.Storage.prototype.getItem.mockReset();
   });
 
   it('should be rendered', () => {

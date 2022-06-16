@@ -13,7 +13,6 @@ import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/Modu
 import {
   translationsProperties,
   buildStripes,
-  renderWithRedux,
 } from '../../../test/jest/helpers';
 
 import ViewAllLogs, { ViewAllLogsManifest } from './ViewAllLogs';
@@ -175,7 +174,7 @@ const renderViewAllLogs = query => {
     </Router>
   );
 
-  return renderWithIntl(renderWithRedux(component), translationsProperties);
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('ViewAllLogs component', () => {

@@ -5,7 +5,7 @@ const initialState = {
   jobProfiles: {},
 };
 
-export const settingsReducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ACTION.PROFILE_TREE_CONTENT:
       return {
