@@ -50,6 +50,7 @@ export const AcceptedValuesField = ({
   disabled,
   required,
   validation,
+  pattern,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
   const [hasOptions, setHasOptions] = useState(!isEmpty(listOptions));
@@ -135,28 +136,35 @@ export const AcceptedValuesField = ({
 
   const fieldValidation = [customValidation || validateAcceptedValueField, memoizedValidation];
 
-  const renderFormField = () => (
-    <Field
-      id={id}
-      component={withReferenceValues}
-      name={name}
-      label={label}
-      dataOptions={listOptions}
-      optionValue={optionValue}
-      optionLabel={optionLabel}
-      wrappedComponent={component}
-      wrapperLabel={wrapperLabel}
-      validate={fieldValidation}
-      onFieldChange={onChange}
-      isMultiSelection={isMultiSelection}
-      disabled={disabled}
-      required={required}
-      hasLoaded={hasOptions}
-      {...dataAttributes}
-    />
-  );
+  const renderFormField = () => {
+    const patternRegex = `^(${listOptions.map(option => `"${option?.value || option?.name}"`).join('|')})$`;
+    // console.log(patternRegex, label.props.id);
+    // console.log(optionValue);
+    return (
+      <Field
+        id={id}
+        component={withReferenceValues}
+        name={name}
+        label={label}
+        dataOptions={listOptions}
+        optionValue={optionValue}
+        optionLabel={optionLabel}
+        wrappedComponent={component}
+        wrapperLabel={wrapperLabel}
+        validate={fieldValidation}
+        onFieldChange={onChange}
+        isMultiSelection={isMultiSelection}
+        disabled={disabled}
+        required={required}
+        hasLoaded={hasOptions}
+        pattern={patternRegex}
+        {...dataAttributes}
+      />
+    );
+  };
 
   const renderElement = () => {
+    const patternRegex = `^(${listOptions.map(option => `"${option?.value || option.name}"`).join('|')})$`;
     const WithReferenceValuesElement = withReferenceValues;
 
     return (
@@ -173,6 +181,7 @@ export const AcceptedValuesField = ({
         isMultiSelection={isMultiSelection}
         okapi={okapi}
         hasLoaded={hasOptions}
+        pattern={patternRegex}
       />
     );
   };
@@ -210,6 +219,7 @@ AcceptedValuesField.propTypes = {
   parsedOptionValue: PropTypes.string,
   parsedOptionLabel: PropTypes.string,
   validation: PropTypes.func,
+  pattern: PropTypes.any,
 };
 
 AcceptedValuesField.defaultProps = {
