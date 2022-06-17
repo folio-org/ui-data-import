@@ -11,6 +11,14 @@ import {
 import JobLogsContainer from './JobLogsContainer';
 import { FILE_STATUSES } from '../../utils';
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLocation: () => ({
+    pathname: '/test',
+    search: '?testKey=testValue',
+  }),
+}));
+
 const successfulRecord = {
   status: FILE_STATUSES.COMMITTED,
   progress: { current: 0 },

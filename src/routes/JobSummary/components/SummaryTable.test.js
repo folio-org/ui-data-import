@@ -8,6 +8,15 @@ import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { SummaryTable } from './SummaryTable';
 
+jest.mock('@folio/stripes-data-transfer-components', () => ({
+  ...jest.requireActual('@folio/stripes-data-transfer-components'),
+  Preloader: () => <>Preloader</>,
+}));
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  TextLink: () => <>TextLink</>,
+}));
+
 const entitySummary = {
   totalCreatedEntities: 100,
   totalUpdatedEntities: 0,
@@ -25,15 +34,15 @@ const resources = buildResources({
     authoritySummary: { ...entitySummary },
     orderSummary: { ...entitySummary },
     invoiceSummary: { ...entitySummary },
-    totalErrors: 0,
+    totalErrors: 2,
   }],
 });
 
-const renderSummaryTable = () => {
+const renderSummaryTable = (resourcesProp = resources) => {
   const component = (
     <SummaryTable
       jobExecutionId="test-id"
-      resources={resources}
+      resources={resourcesProp}
     />
   );
 
@@ -45,6 +54,22 @@ describe('SummaryTable component', () => {
     renderSummaryTable();
 
     expect(document.getElementById('job-summary-table')).toBeDefined();
+  });
+
+  describe('when no resources fetched', () => {
+    it('should render Preloader', () => {
+      const { getByText } = renderSummaryTable({ jobSummary: { records: [] } });
+
+      expect(getByText('Preloader')).toBeDefined();
+    });
+  });
+
+  describe('when there are errors', () => {
+    it('should render total errors as a text link', () => {
+      const { getByText } = renderSummaryTable();
+
+      expect(getByText('TextLink')).toBeDefined();
+    });
   });
 
   it('should have proper columns', () => {

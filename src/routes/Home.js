@@ -15,7 +15,7 @@ import {
 import { PersistedPaneset } from '@folio/stripes/smart-components';
 import {
   stripesShape,
-  withStripes
+  withStripes,
 } from '@folio/stripes/core';
 
 import {
@@ -30,10 +30,12 @@ import {
   checkboxListShape,
   withCheckboxList,
   deleteJobExecutions,
+  PAGE_KEYS,
+  storage,
 } from '../utils';
 
+@withCheckboxList({ pageKey: PAGE_KEYS.HOME })
 @withStripes
-@withCheckboxList
 export class Home extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
@@ -51,6 +53,8 @@ export class Home extends Component {
     const { checkboxList: { selectedRecords } } = nextProps;
 
     if (selectedRecords.size !== prevState.selectedLogsNumber) {
+      storage.setItem(PAGE_KEYS.HOME, [...selectedRecords]);
+
       return { selectedLogsNumber: selectedRecords.size };
     }
 

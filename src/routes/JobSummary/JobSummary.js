@@ -59,6 +59,7 @@ const JobSummaryComponent = props => {
     resources: {
       jobExecutions: { records: jobExecutionsRecords },
       jobLogEntries: { records: jobLogEntriesRecords },
+      query,
     },
     location,
     history,
@@ -67,6 +68,7 @@ const JobSummaryComponent = props => {
   const dataType = jobExecutionsRecords[0]?.jobProfileInfo.dataType;
   const isEdifactType = dataType === DATA_TYPES[1];
   const jobExecutionsId = jobExecutionsRecords[0]?.id;
+  const isErrorsOnly = !!query.errorsOnly;
 
   const { id } = useParams();
 
@@ -101,6 +103,7 @@ const JobSummaryComponent = props => {
   };
 
   const renderHeader = renderProps => {
+    const closeLinkPath = location.state?.from || '/data-import';
     const resultCountMessageId = 'stripes-smart-components.searchResultsCountHeader';
     const label = (
       <SettingsLabel
@@ -112,7 +115,7 @@ const JobSummaryComponent = props => {
     );
     const firstMenu = (
       <PaneMenu>
-        <PaneCloseLink to="/data-import" />
+        <PaneCloseLink to={closeLinkPath} />
       </PaneMenu>
     );
 
@@ -142,9 +145,11 @@ const JobSummaryComponent = props => {
         renderHeader={renderHeader}
       >
         <div className={css.paneBody}>
-          <div className={sharedCss.separatorLine}>
-            <SummaryTable jobExecutionId={jobExecutionsId} />
-          </div>
+          {!isErrorsOnly && (
+            <div className={sharedCss.separatorLine}>
+              <SummaryTable jobExecutionId={jobExecutionsId} />
+            </div>
+          )}
           <div className={css.searchResults}>
             <RecordsTable
               resources={resources}
@@ -195,6 +200,16 @@ JobSummaryComponent.manifest = Object.freeze({
           const mainSort = sorts[0] || '';
 
           return mainSort.startsWith('-') ? SORT_TYPE.DESCENDING : SORT_TYPE.ASCENDING;
+        },
+        errorsOnly: queryParams => {
+          const { errorsOnly } = queryParams;
+
+          return errorsOnly;
+        },
+        entity: queryParams => {
+          const { entity } = queryParams;
+
+          return entity;
         },
       },
       staticFallback: { params: {} },
