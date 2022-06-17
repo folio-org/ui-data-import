@@ -206,6 +206,7 @@ export class ActionProfiles extends Component {
     RESULT_COUNT_INCREMENT: PropTypes.number,
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
+    nonInteractiveHeaders: PropTypes.arrayOf(PropTypes.string),
     columnWidths: PropTypes.object,
     initialValues: PropTypes.object,
   };
@@ -222,6 +223,7 @@ export class ActionProfiles extends Component {
       'selectAll',
       'deselectAll',
     ],
+    nonInteractiveHeaders: ['selected'],
     visibleColumns: ['selected', ...actionProfilesShape.visibleColumns],
     columnWidths: { selected: '40px' },
     initialValues: {

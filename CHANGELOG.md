@@ -54,6 +54,7 @@
 * Action button is missing on the data-import/job-summary page when select a job profiles (UIDATIMP-1183)
 * Instance Field mapping profile: Admin note does not check for MARC or text validation (UIDATIMP-1189)
 * The "select all items" button does not select all logs after deleting multiple logs from the landing logs page (UIDATIMP-1186)
+* Job profiles allows user to sort by checkboxes (UIDATIMP-1188)
 
 ## [5.1.3](https://github.com/folio-org/ui-data-import/tree/v5.1.3) (2022-05-24)
 
