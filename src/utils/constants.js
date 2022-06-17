@@ -777,3 +777,8 @@ export const RECORD_ACTION_STATUS_LABEL_IDS = {
 };
 
 export const STATE_MANAGEMENT = { REDUCER: 'folio-data-import_settings' };
+
+export const PAGE_KEYS = {
+  HOME: 'homePageSelectedRecords',
+  VIEW_ALL: 'viewAllPageSelectedRecords',
+};

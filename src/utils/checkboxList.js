@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
+
+import { storage } from './storage';
 
 /**
  * Hook that provides checkbox list functionality
  *
  * @param {Array<{ id: string, [key: string]: any}>} list
+ * @param {Set<string>} initialSelectedRecords
  * @return {{
  *   selectedRecords: Set,
  *   isAllSelected: boolean,
@@ -14,8 +18,8 @@ import PropTypes from 'prop-types';
  *   handleSelectAllCheckbox: (e: Event) => void,
  * }}
  */
-export const useCheckboxList = (list = []) => {
-  const [selectedRecords, setSelectedRecords] = useState(new Set());
+export const useCheckboxList = (list = [], initialSelectedRecords) => {
+  const [selectedRecords, setSelectedRecords] = useState(initialSelectedRecords || new Set());
 
   const listLength = list.length;
   const isAllSelected = (listLength !== 0) && (selectedRecords.size === listLength);
@@ -65,11 +69,16 @@ export const useCheckboxList = (list = []) => {
  * In order to make it work `setList` must be called with actual list in decorated component.
  * `setList` must be called again on each list change (e.g. after item added or deleted).
  *
- * @type {(WrappedComponent: import('react').ComponentType) => React.FC}
- */
-export const withCheckboxList = WrappedComponent => props => {
+ * @param {{pageKey?: string}} [config] - configuration object
+ * @returns {(WrappedComponent: import('react').ComponentType) => React.FC}
+ * */
+export const withCheckboxList = config => WrappedComponent => props => {
+  // get initial value for selected records from sessionStorage
+  const pageKey = get(config, 'pageKey', '');
+  const selectedRecords = new Set(storage.getItem(pageKey) || []);
+
   const [list, setList] = useState([]);
-  const checkboxList = useCheckboxList(list);
+  const checkboxList = useCheckboxList(list, selectedRecords);
 
   return (
     <WrappedComponent
