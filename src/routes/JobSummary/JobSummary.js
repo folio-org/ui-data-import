@@ -103,6 +103,7 @@ const JobSummaryComponent = props => {
   };
 
   const renderHeader = renderProps => {
+    const closeLinkPath = location.state?.from || '/data-import';
     const resultCountMessageId = 'stripes-smart-components.searchResultsCountHeader';
     const label = (
       <SettingsLabel
@@ -114,7 +115,7 @@ const JobSummaryComponent = props => {
     );
     const firstMenu = (
       <PaneMenu>
-        <PaneCloseLink to="/data-import" />
+        <PaneCloseLink to={closeLinkPath} />
       </PaneMenu>
     );
 

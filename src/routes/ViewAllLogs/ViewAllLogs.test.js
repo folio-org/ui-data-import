@@ -165,6 +165,10 @@ const renderViewAllLogs = query => {
             selectedRecords: [],
             selectRecord: noop,
           }}
+          location={{
+            pathname: '/job-logs',
+            search: '?sort=-completedDate',
+          }}
         />
       </ModuleHierarchyProvider>
     </Router>

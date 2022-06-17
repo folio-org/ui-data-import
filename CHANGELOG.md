@@ -46,6 +46,7 @@
 * Check for accessibility issues on updated match screens (UIDATIMP-1052)
 * Add error hotlinks to the summary at top of individual import job's log (UIDATIMP-1158)
 * Fix Accessibility problems on /data-import view all logs page. (UIDATIMP-1162)
+* When closing the individual job log, return to the DI Landing page or View all properly. (UIDATIMP-1156)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
@@ -54,6 +55,7 @@
 * Action button is missing on the data-import/job-summary page when select a job profiles (UIDATIMP-1183)
 * Instance Field mapping profile: Admin note does not check for MARC or text validation (UIDATIMP-1189)
 * The "select all items" button does not select all logs after deleting multiple logs from the landing logs page (UIDATIMP-1186)
+* Job profiles allows user to sort by checkboxes (UIDATIMP-1188)
 
 ## [5.1.3](https://github.com/folio-org/ui-data-import/tree/v5.1.3) (2022-05-24)
 
