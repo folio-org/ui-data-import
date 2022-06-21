@@ -47,6 +47,7 @@
 * Add error hotlinks to the summary at top of individual import job's log (UIDATIMP-1158)
 * Fix Accessibility problems on /data-import view all logs page. (UIDATIMP-1162)
 * When closing the individual job log, return to the DI Landing page or View all properly. (UIDATIMP-1156)
+* Use API for deleting data import logs on Data Import view all page (UIDATIMP-1127)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
