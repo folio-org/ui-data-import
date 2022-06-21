@@ -43,6 +43,8 @@ import {
   statusCellFormatter,
   showActionMenu,
   permissions,
+  PAGE_KEYS,
+  storage,
 } from '../../utils';
 import {
   FILTERS,
@@ -122,7 +124,7 @@ export const ViewAllLogsManifest = Object.freeze({
   },
 });
 
-@withCheckboxList
+@withCheckboxList({ pageKey: PAGE_KEYS.VIEW_ALL })
 @stripesConnect
 @injectIntl
 class ViewAllLogs extends Component {
@@ -133,6 +135,10 @@ class ViewAllLogs extends Component {
     setList: PropTypes.func.isRequired,
     intl: PropTypes.object.isRequired,
     stripes: stripesShape.isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string.isRequired,
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
     disableRecordCreation: PropTypes.bool,
     browseOnly: PropTypes.bool,
     packageInfo: PropTypes.object,
@@ -148,6 +154,18 @@ class ViewAllLogs extends Component {
 
   static manifest = ViewAllLogsManifest;
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { checkboxList: { selectedRecords } } = nextProps;
+
+    if (selectedRecords.size !== prevState.selectedLogsNumber) {
+      storage.setItem(PAGE_KEYS.VIEW_ALL, [...selectedRecords]);
+
+      return { selectedLogsNumber: selectedRecords.size };
+    }
+
+    return null;
+  }
+
   constructor(props) {
     super(props);
     this.getActiveFilters = getActiveFilters.bind(this);
@@ -157,7 +175,10 @@ class ViewAllLogs extends Component {
     this.setLogsList();
   }
 
-  state = { showDeleteConfirmation: false };
+  state = {
+    showDeleteConfirmation: false,
+    selectedLogsNumber: 0,
+  };
 
   componentDidUpdate(prevProps) {
     const { resources: { records: { records: prevRecords } } } = prevProps;
@@ -265,11 +286,20 @@ class ViewAllLogs extends Component {
         selectedRecords,
         selectRecord,
       },
+      location,
     } = this.props;
+
+    const {
+      pathname,
+      search,
+    } = location;
 
     const fileNameCellFormatter = record => (
       <TextLink
-        to={`/data-import/job-summary/${record.id}`}
+        to={{
+          pathname: `/data-import/job-summary/${record.id}`,
+          state: { from: `${pathname}${search}` },
+        }}
       >
         {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
       </TextLink>
@@ -368,6 +398,7 @@ class ViewAllLogs extends Component {
           resultsOnMarkPosition={this.onMarkPosition}
           resultsOnResetMarkedPosition={this.resetMarkedPosition}
           resultsCachedPosition={itemToView}
+          nonInteractiveHeaders={['selected']}
         />
         <ConfirmationModal
           id="delete-selected-logs-modal"
