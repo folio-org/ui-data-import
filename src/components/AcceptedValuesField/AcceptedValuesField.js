@@ -135,32 +135,29 @@ export const AcceptedValuesField = ({
 
   const fieldValidation = [customValidation || validateAcceptedValueField, memoizedValidation];
 
-  const renderFormField = () => {
-    return (
-      <Field
-        id={id}
-        component={withReferenceValues}
-        name={name}
-        label={label}
-        dataOptions={listOptions}
-        optionValue={optionValue}
-        optionLabel={optionLabel}
-        wrappedComponent={component}
-        wrapperLabel={wrapperLabel}
-        validate={fieldValidation}
-        onFieldChange={onChange}
-        isMultiSelection={isMultiSelection}
-        disabled={disabled}
-        required={required}
-        hasLoaded={hasOptions}
-        scrollToError
-        {...dataAttributes}
-      />
-    );
-  };
+  const renderFormField = () => (
+    <Field
+      id={id}
+      component={withReferenceValues}
+      name={name}
+      label={label}
+      dataOptions={listOptions}
+      optionValue={optionValue}
+      optionLabel={optionLabel}
+      wrappedComponent={component}
+      wrapperLabel={wrapperLabel}
+      validate={fieldValidation}
+      onFieldChange={onChange}
+      isMultiSelection={isMultiSelection}
+      disabled={disabled}
+      required={required}
+      hasLoaded={hasOptions}
+      {...dataAttributes}
+    />
+  );
+
 
   const renderElement = () => {
-    const patternRegex = `^(${listOptions.map(option => `"${option?.value || option.name}"`).join('|')})$`;
     const WithReferenceValuesElement = withReferenceValues;
 
     return (
@@ -177,7 +174,6 @@ export const AcceptedValuesField = ({
         isMultiSelection={isMultiSelection}
         okapi={okapi}
         hasLoaded={hasOptions}
-        pattern={patternRegex}
       />
     );
   };
