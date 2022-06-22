@@ -1,5 +1,8 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import {
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { noop } from 'lodash';
@@ -22,6 +25,7 @@ import {
   OCLC_CREATE_INSTANCE_JOB_ID,
   OCLC_UPDATE_INSTANCE_JOB_ID,
 } from '../../utils';
+import * as utils from '../../utils/deleteJobExecutions';
 
 const mutator = buildMutator({
   initializedFilterConfig: {
@@ -141,6 +145,7 @@ jest.mock('@folio/stripes/components', () => ({
     </div>
   ) : null)),
 }));
+const deleteJobExecutionsSpy = jest.spyOn(utils, 'deleteJobExecutions');
 
 const stripes = buildStripes();
 stripes.hasPerm = jest.fn(() => true);
@@ -178,6 +183,10 @@ const renderViewAllLogs = query => {
 };
 
 describe('ViewAllLogs component', () => {
+  afterAll(() => {
+    deleteJobExecutionsSpy.mockClear();
+  });
+
   it('should render correct number of records', () => {
     const { getByText } = renderViewAllLogs(defaultQuery);
 
@@ -360,7 +369,7 @@ describe('ViewAllLogs component', () => {
   });
 
   describe('Delete Modal', () => {
-    describe('when delete selected logs', () => {
+    describe('when deleting selected logs', () => {
       it('confirmation modal should appear', () => {
         const {
           getAllByLabelText,
@@ -375,8 +384,10 @@ describe('ViewAllLogs component', () => {
       });
     });
 
-    describe('when confirm delete logs', () => {
-      it('confirmation modal should disappear', () => {
+    describe('when confirming logs deletion', () => {
+      it('confirmation modal should disappear', async () => {
+        deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
+
         const {
           getAllByLabelText,
           getByText,
@@ -388,12 +399,69 @@ describe('ViewAllLogs component', () => {
         fireEvent.click(getByText('Delete selected logs'));
         fireEvent.click(getByText('Confirm'));
 
-        expect(queryByText('Confirmation modal')).toBeNull();
+        await waitFor(() => expect(queryByText('Confirmation modal')).not.toBeInTheDocument());
+      });
+
+      it('all checkboxes should be disabled', async () => {
+        deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
+
+        const {
+          getAllByLabelText,
+          getAllByRole,
+          getByText,
+        } = renderViewAllLogs(defaultQuery);
+
+        fireEvent.click(getAllByLabelText('select item')[0]);
+        fireEvent.click(getByText('Actions'));
+        fireEvent.click(getByText('Delete selected logs'));
+        fireEvent.click(getByText('Confirm'));
+
+        const checkboxes = getAllByRole('checkbox');
+
+        checkboxes.forEach(checkbox => {
+          expect(checkbox).toBeDisabled();
+        });
+      });
+
+      it('and successful callout should be displayed', async () => {
+        deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
+
+        const {
+          getAllByLabelText,
+          getByText,
+          queryByText,
+        } = renderViewAllLogs(defaultQuery);
+
+        fireEvent.click(getAllByLabelText('select item')[0]);
+        fireEvent.click(getByText('Actions'));
+        fireEvent.click(getByText('Delete selected logs'));
+        fireEvent.click(getByText('Confirm'));
+
+        await waitFor(() => expect(queryByText('1 data import logs have been successfully deleted.')).toBeDefined());
       });
     });
 
-    describe('when cancel deleting logs', () => {
-      it('confirmation modal should disappear', () => {
+    describe('when deleting logs failed', () => {
+      it('should show callout with error message', async () => {
+        deleteJobExecutionsSpy.mockRejectedValueOnce('Cannot delete jobExecutions');
+
+        const {
+          getAllByLabelText,
+          getByText,
+          queryByText,
+        } = renderViewAllLogs(defaultQuery);
+
+        fireEvent.click(getAllByLabelText('select item')[0]);
+        fireEvent.click(getByText('Actions'));
+        fireEvent.click(getByText('Delete selected logs'));
+        fireEvent.click(getByText('Confirm'));
+
+        await waitFor(() => expect(queryByText('Server communication problem. Please try again')).toBeDefined());
+      });
+    });
+
+    describe('when canceling logs deletion', () => {
+      it('confirmation modal should disappear', async () => {
         const {
           getAllByLabelText,
           getByText,
