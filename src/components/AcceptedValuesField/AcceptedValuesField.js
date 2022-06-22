@@ -54,6 +54,7 @@ export const AcceptedValuesField = ({
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
   const [hasOptions, setHasOptions] = useState(!isEmpty(listOptions));
+  const [acceptedVals, setAcceptedVals] = useState(acceptedValuesList);
 
   const getAcceptedValuesObj = data => {
     let acceptedValues = {};
@@ -112,6 +113,7 @@ export const AcceptedValuesField = ({
         const acceptedValues = getAcceptedValuesObj(data);
         const updatedListOptions = updateListOptions(data);
 
+        setAcceptedVals(acceptedValues);
         setListOptions(updatedListOptions);
         setAcceptedValues(acceptedValuesPath, acceptedValues);
         setHasOptions(true);
@@ -137,9 +139,11 @@ export const AcceptedValuesField = ({
   const fieldValidation = [customValidation || validateAcceptedValueField, memoizedValidation];
 
   const renderFormField = () => {
-    const patternRegex = `^(${listOptions.map(option => `"${option?.value || option?.name}"`).join('|')})$`;
-    // console.log(patternRegex, label.props.id);
-    // console.log(optionValue);
+    let patternRegex;
+    if (hasOptions) {
+      patternRegex = `^(${Object.values(acceptedVals).map(option => `"${typeof option === 'object' ? option.value : option}"`).join('|')})$`;
+    }
+
     return (
       <Field
         id={id}
@@ -157,7 +161,7 @@ export const AcceptedValuesField = ({
         disabled={disabled}
         required={required}
         hasLoaded={hasOptions}
-        pattern={patternRegex}
+        scrollToError
         {...dataAttributes}
       />
     );
@@ -219,7 +223,7 @@ AcceptedValuesField.propTypes = {
   parsedOptionValue: PropTypes.string,
   parsedOptionLabel: PropTypes.string,
   validation: PropTypes.func,
-  pattern: PropTypes.any,
+  pattern: PropTypes.string,
 };
 
 AcceptedValuesField.defaultProps = {

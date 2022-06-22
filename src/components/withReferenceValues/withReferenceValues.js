@@ -87,6 +87,7 @@ export const withReferenceValues = memo(({
           readOnly={readOnly}
           required={required}
           pattern={pattern}
+          name={input.name}
           {...rest}
         />
         <WithTranslation
@@ -122,6 +123,7 @@ withReferenceValues.propTypes = {
     onDrop: PropTypes.func,
     onFocus: PropTypes.func,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    name: PropTypes.string,
   }),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onFieldChange: PropTypes.func,
