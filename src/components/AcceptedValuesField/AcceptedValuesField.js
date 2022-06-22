@@ -50,11 +50,9 @@ export const AcceptedValuesField = ({
   disabled,
   required,
   validation,
-  pattern,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
   const [hasOptions, setHasOptions] = useState(!isEmpty(listOptions));
-  const [acceptedVals, setAcceptedVals] = useState(acceptedValuesList);
 
   const getAcceptedValuesObj = data => {
     let acceptedValues = {};
@@ -113,7 +111,6 @@ export const AcceptedValuesField = ({
         const acceptedValues = getAcceptedValuesObj(data);
         const updatedListOptions = updateListOptions(data);
 
-        setAcceptedVals(acceptedValues);
         setListOptions(updatedListOptions);
         setAcceptedValues(acceptedValuesPath, acceptedValues);
         setHasOptions(true);
@@ -139,11 +136,6 @@ export const AcceptedValuesField = ({
   const fieldValidation = [customValidation || validateAcceptedValueField, memoizedValidation];
 
   const renderFormField = () => {
-    let patternRegex;
-    if (hasOptions) {
-      patternRegex = `^(${Object.values(acceptedVals).map(option => `"${typeof option === 'object' ? option.value : option}"`).join('|')})$`;
-    }
-
     return (
       <Field
         id={id}
@@ -223,7 +215,6 @@ AcceptedValuesField.propTypes = {
   parsedOptionValue: PropTypes.string,
   parsedOptionLabel: PropTypes.string,
   validation: PropTypes.func,
-  pattern: PropTypes.string,
 };
 
 AcceptedValuesField.defaultProps = {

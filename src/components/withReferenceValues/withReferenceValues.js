@@ -34,7 +34,6 @@ export const withReferenceValues = memo(({
   readOnly,
   isMultiSelection,
   hasLoaded,
-  pattern,
   ...rest
 }) => {
   const currentValue = input?.value || value;
@@ -86,7 +85,6 @@ export const withReferenceValues = memo(({
           disabled={disabled}
           readOnly={readOnly}
           required={required}
-          pattern={pattern}
           name={input.name}
           {...rest}
         />
@@ -135,7 +133,6 @@ withReferenceValues.propTypes = {
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
-  pattern: PropTypes.string,
 };
 
 withReferenceValues.defaultProps = {

@@ -165,7 +165,6 @@ export const InvoiceInformation = ({
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(9)}
             validation={composeValidators(validateRequiredField, validateQuotedString)}
-            pattern={`^(${['a', 'b', 'c'].map(word => `"${word}"`).join('|')})$`}
             required
             okapi={okapi}
           />
