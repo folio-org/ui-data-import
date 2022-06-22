@@ -347,6 +347,7 @@ class ViewAllLogs extends Component {
       },
       location,
     } = this.props;
+    const { isLogsDeletionInProgress } = this.state;
 
     const {
       pathname,
@@ -369,6 +370,7 @@ class ViewAllLogs extends Component {
         entityKey,
         selectRecord,
         selectedRecords,
+        checkboxDisabled: isLogsDeletionInProgress,
       }),
       fileName: fileNameCellFormatter,
       status: statusCellFormatter(formatMessage),
