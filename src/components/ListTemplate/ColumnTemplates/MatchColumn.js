@@ -6,7 +6,7 @@ import { get } from 'lodash';
 import {
   Highlighter,
   NoValue,
-} from '@folio/stripes/components';
+} from '@folio/stripes-components';
 import { AppIcon } from '@folio/stripes/core';
 
 import { MatchingFieldsManager } from '../../MatchingFieldsManager';

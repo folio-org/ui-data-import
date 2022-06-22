@@ -5,7 +5,7 @@ import {
   Highlighter,
   NoValue,
   TextLink,
-} from '@folio/stripes/components';
+} from '@folio/stripes-components';
 import { AppIcon } from '@folio/stripes/core';
 
 import { PROFILE_TYPES_FOR_URL } from '../../../utils';

@@ -5,7 +5,7 @@ import {
   IntlConsumer,
   AppIcon,
 } from '@folio/stripes/core';
-import { Highlighter } from '@folio/stripes/components';
+import { Highlighter } from '@folio/stripes-components';
 
 import { FOLIO_RECORD_TYPES } from '../folioRecordTypes';
 import { ACTION_TYPES } from '../actionTypes';
