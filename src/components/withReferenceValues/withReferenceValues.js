@@ -85,7 +85,7 @@ export const withReferenceValues = memo(({
           disabled={disabled}
           readOnly={readOnly}
           required={required}
-          name={input.name}
+          name={input?.name}
           {...rest}
         />
         <WithTranslation
