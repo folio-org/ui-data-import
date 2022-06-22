@@ -156,7 +156,6 @@ export const AcceptedValuesField = ({
     />
   );
 
-
   const renderElement = () => {
     const WithReferenceValuesElement = withReferenceValues;
 
