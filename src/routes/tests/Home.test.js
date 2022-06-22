@@ -61,8 +61,22 @@ const renderHome = (context = defaultContext) => {
 };
 
 describe('Home component', () => {
+  let mockStorage = {};
+
+  beforeAll(() => {
+    global.Storage.prototype.setItem = jest.fn((key, value) => {
+      mockStorage[key] = value;
+    });
+  });
+
+  beforeEach(() => {
+    mockStorage = {};
+  });
+
   afterAll(() => {
     deleteJobExecutionsSpy.mockClear();
+    global.Storage.prototype.setItem.mockReset();
+    global.Storage.prototype.getItem.mockReset();
   });
 
   it('should be rendered', () => {

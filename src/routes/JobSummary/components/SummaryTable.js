@@ -6,9 +6,13 @@ import { isEmpty } from 'lodash';
 import {
   NoValue,
   MultiColumnList,
+  TextLink,
 } from '@folio/stripes/components';
 import { stripesConnect } from '@folio/stripes/core';
-import { Preloader } from '@folio/stripes-data-transfer-components';
+import {
+  FOLIO_RECORD_TYPES,
+  Preloader,
+} from '@folio/stripes-data-transfer-components';
 
 const summaryLabels = [
   <FormattedMessage id="ui-data-import.logLight.actionStatus.created" />,
@@ -17,7 +21,20 @@ const summaryLabels = [
   <FormattedMessage id="ui-data-import.error" />,
 ];
 
-const SummaryTableComponent = ({ resources: { jobSummary: { records: jobSummaryRecords } } }) => {
+const RECORD_TYPES = {
+  SRS_MARC: 'SRS_MARC',
+  INSTANCE: FOLIO_RECORD_TYPES.INSTANCE.type,
+  HOLDINGS: FOLIO_RECORD_TYPES.HOLDINGS.type,
+  ITEM: FOLIO_RECORD_TYPES.ITEM.type,
+  AUTHORITY: FOLIO_RECORD_TYPES.AUTHORITY.type,
+  ORDER: FOLIO_RECORD_TYPES.ORDER.type,
+  INVOICE: FOLIO_RECORD_TYPES.INVOICE.type,
+};
+
+const SummaryTableComponent = ({
+  resources: { jobSummary: { records: jobSummaryRecords } },
+  jobExecutionId,
+}) => {
   const contentData = new Array(4).fill({}).map((_, index) => ({
     summary: summaryLabels[index],
     ...jobSummaryRecords[0],
@@ -46,27 +63,34 @@ const SummaryTableComponent = ({ resources: { jobSummary: { records: jobSummaryR
   };
 
   const isLastRow = rowIndex => rowIndex === 3;
-  const getResultsCellContent = (column, rowIndex) => {
+  const getResultsCellContent = (column, rowIndex, entity) => {
     if (!column) {
       return <NoValue />;
     }
 
     const totalEntitiesKeys = ['totalCreatedEntities', 'totalUpdatedEntities', 'totalDiscardedEntities', 'totalErrors'];
+    const cellContent = column[totalEntitiesKeys[rowIndex]];
 
-    return column[totalEntitiesKeys[rowIndex]];
+    if (isLastRow(rowIndex) && cellContent > 0) {
+      return <TextLink to={`/data-import/job-summary/${jobExecutionId}?errorsOnly=true&entity=${entity}`}>{cellContent}</TextLink>;
+    }
+
+    return cellContent;
   };
 
   const resultsFormatter = {
-    srsMarc: ({ rowIndex, sourceRecordSummary }) => getResultsCellContent(sourceRecordSummary, rowIndex),
-    instance: ({ rowIndex, instanceSummary }) => getResultsCellContent(instanceSummary, rowIndex),
-    holdings: ({ rowIndex, holdingSummary }) => getResultsCellContent(holdingSummary, rowIndex),
-    item: ({ rowIndex, itemSummary }) => getResultsCellContent(itemSummary, rowIndex),
-    authority: ({ rowIndex, authoritySummary }) => getResultsCellContent(authoritySummary, rowIndex),
-    order: ({ rowIndex, orderSummary }) => getResultsCellContent(orderSummary, rowIndex),
-    invoice: ({ rowIndex, invoiceSummary }) => getResultsCellContent(invoiceSummary, rowIndex),
+    srsMarc: ({ rowIndex, sourceRecordSummary }) => getResultsCellContent(sourceRecordSummary, rowIndex, RECORD_TYPES.SRS_MARC),
+    instance: ({ rowIndex, instanceSummary }) => getResultsCellContent(instanceSummary, rowIndex, RECORD_TYPES.INSTANCE),
+    holdings: ({ rowIndex, holdingSummary }) => getResultsCellContent(holdingSummary, rowIndex, RECORD_TYPES.HOLDINGS),
+    item: ({ rowIndex, itemSummary }) => getResultsCellContent(itemSummary, rowIndex, RECORD_TYPES.ITEM),
+    authority: ({ rowIndex, authoritySummary }) => getResultsCellContent(authoritySummary, rowIndex, RECORD_TYPES.AUTHORITY),
+    order: ({ rowIndex, orderSummary }) => getResultsCellContent(orderSummary, rowIndex, RECORD_TYPES.ORDER),
+    invoice: ({ rowIndex, invoiceSummary }) => getResultsCellContent(invoiceSummary, rowIndex, RECORD_TYPES.INVOICE),
     error: ({ rowIndex, totalErrors }) => {
       if (isLastRow(rowIndex)) {
-        return totalErrors;
+        return totalErrors > 0
+          ? <TextLink to={`/data-import/job-summary/${jobExecutionId}?errorsOnly=true`}>{totalErrors}</TextLink>
+          : totalErrors;
       }
 
       return <NoValue />;
