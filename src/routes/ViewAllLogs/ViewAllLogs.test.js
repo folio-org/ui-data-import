@@ -399,7 +399,7 @@ describe('ViewAllLogs component', () => {
         fireEvent.click(getByText('Delete selected logs'));
         fireEvent.click(getByText('Confirm'));
 
-        await waitFor(() => expect(queryByText('Confirmation modal')).not.toBeInTheDocument());
+        await waitFor(() => expect(queryByText('Confirmation modal')).toBeNull());
       });
 
       it('all checkboxes should be disabled', async () => {
@@ -407,20 +407,16 @@ describe('ViewAllLogs component', () => {
 
         const {
           getAllByLabelText,
-          getAllByRole,
+          getByLabelText,
           getByText,
         } = renderViewAllLogs(defaultQuery);
 
-        fireEvent.click(getAllByLabelText('select item')[0]);
+        fireEvent.click(getByLabelText('select all items'));
         fireEvent.click(getByText('Actions'));
         fireEvent.click(getByText('Delete selected logs'));
         fireEvent.click(getByText('Confirm'));
 
-        const checkboxes = getAllByRole('checkbox');
-
-        checkboxes.forEach(checkbox => {
-          expect(checkbox).toBeDisabled();
-        });
+        expect(getAllByLabelText('select item').every(checkbox => checkbox.disabled)).toBe(true);
       });
 
       it('and successful callout should be displayed', async () => {
@@ -463,12 +459,12 @@ describe('ViewAllLogs component', () => {
     describe('when canceling logs deletion', () => {
       it('confirmation modal should disappear', async () => {
         const {
-          getAllByLabelText,
+          getByLabelText,
           getByText,
           queryByText,
         } = renderViewAllLogs(defaultQuery);
 
-        fireEvent.click(getAllByLabelText('select item')[0]);
+        fireEvent.click(getByLabelText('select all items'));
         fireEvent.click(getByText('Actions'));
         fireEvent.click(getByText('Delete selected logs'));
         fireEvent.click(getByText('Cancel'));
