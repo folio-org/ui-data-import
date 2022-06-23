@@ -5,8 +5,7 @@ import {
   IntlConsumer,
   AppIcon,
 } from '@folio/stripes/core';
-
-import { Highlight } from '../../Highlight';
+import { Highlighter } from '@folio/stripes/components';
 
 import { FOLIO_RECORD_TYPES } from '../folioRecordTypes';
 
@@ -36,7 +35,7 @@ export const MappedColumn = memo(({
               app="data-import"
               iconKey={FOLIO_RECORD_TYPES[existingRecordType].iconKey}
             >
-              <Highlight
+              <Highlighter
                 searchWords={[searchTerm || '']}
                 text={formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
                 className={sharedCss.container}

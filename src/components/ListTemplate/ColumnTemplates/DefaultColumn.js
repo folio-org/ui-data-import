@@ -2,12 +2,11 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import {
+  Highlighter,
   NoValue,
   TextLink,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
-
-import { Highlight } from '../../Highlight';
 
 import { PROFILE_TYPES_FOR_URL } from '../../../utils';
 
@@ -31,7 +30,7 @@ export const DefaultColumn = memo(({
 
   const content = searchTerm
     ? (
-      <Highlight
+      <Highlighter
         searchWords={[searchTerm]}
         text={value}
         className={sharedCss.container}

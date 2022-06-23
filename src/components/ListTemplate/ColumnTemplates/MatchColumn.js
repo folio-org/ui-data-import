@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
 import {
+  Highlighter,
   NoValue,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
 import { MatchingFieldsManager } from '../../MatchingFieldsManager';
-import { Highlight } from '../../Highlight';
 
 import {
   capitalize,
@@ -58,13 +58,13 @@ export const MatchColumn = memo(({
             <>
               {document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT && (
               <>
-                <Highlight
+                <Highlighter
                   searchWords={[(searchTerm || '')]}
                   text={formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
                   className={sharedCss.container}
                 />
                   &nbsp;&middot;&nbsp;
-                <Highlight
+                <Highlighter
                   searchWords={[searchTerm || '']}
                   text={capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
                   className={sharedCss.container}
@@ -72,7 +72,7 @@ export const MatchColumn = memo(({
                   &nbsp;&rarr;&nbsp;
                 {fieldMatchedLabel
                   ? (
-                    <Highlight
+                    <Highlighter
                       searchWords={[searchTerm || '']}
                       text={fieldMatchedLabel}
                       className={sharedCss.container}
@@ -86,7 +86,7 @@ export const MatchColumn = memo(({
               <>
                 {fieldMatchedLabel
                   ? (
-                    <Highlight
+                    <Highlighter
                       searchWords={[searchTerm || '']}
                       text={fieldMatchedLabel}
                       className={sharedCss.container}
@@ -94,13 +94,13 @@ export const MatchColumn = memo(({
                   ) : <NoValue />
                   }
                   &nbsp;&larr;&nbsp;
-                <Highlight
+                <Highlighter
                   searchWords={[searchTerm || '']}
                   text={capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
                   className={sharedCss.container}
                 />
                   &nbsp;&middot;&nbsp;
-                <Highlight
+                <Highlighter
                   searchWords={[searchTerm || '']}
                   text={formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
                   className={sharedCss.container}

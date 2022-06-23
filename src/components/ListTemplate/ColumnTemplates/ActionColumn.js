@@ -5,8 +5,7 @@ import {
   IntlConsumer,
   AppIcon,
 } from '@folio/stripes/core';
-
-import { Highlight } from '../../Highlight';
+import { Highlighter } from '@folio/stripes/components';
 
 import { FOLIO_RECORD_TYPES } from '../folioRecordTypes';
 import { ACTION_TYPES } from '../actionTypes';
@@ -45,7 +44,7 @@ export const ActionColumn = memo(({
     <IntlConsumer>
       {intl => {
         const label = (
-          <Highlight
+          <Highlighter
             searchWords={[searchTerm || '']}
             text={createActionLabel(intl, action, folioRecord)}
             className={sharedCss.container}
