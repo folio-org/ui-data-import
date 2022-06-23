@@ -121,12 +121,14 @@ export const ViewAllLogsManifest = Object.freeze({
     records: 'jobExecutionUsersInfo',
     path: 'metadata-provider/jobExecutions/users',
     throwErrors: false,
+    accumulate: true,
   },
   jobProfiles: {
     type: 'okapi',
     records: 'jobProfilesInfo',
     path: 'metadata-provider/jobExecutions/jobProfiles',
     throwErrors: false,
+    accumulate: true,
   },
 });
 
@@ -188,6 +190,11 @@ class ViewAllLogs extends Component {
     showDeleteConfirmation: false,
     selectedLogsNumber: 0,
   };
+
+  componentDidMount() {
+    this.props.mutator.users.GET();
+    this.props.mutator.jobProfiles.GET();
+  }
 
   componentDidUpdate(prevProps) {
     const { resources: { records: { records: prevRecords } } } = prevProps;
@@ -322,6 +329,9 @@ class ViewAllLogs extends Component {
       deselectAll();
       this.hideDeleteConfirmation();
       this.showDeleteLogsSuccessfulMessage(jobExecutionDetails.length);
+
+      mutator.users.GET();
+      mutator.jobProfiles.GET();
     };
 
     // disable all checkboxes while deletion in progress
