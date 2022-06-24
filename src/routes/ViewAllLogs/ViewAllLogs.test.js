@@ -42,6 +42,12 @@ const mutator = buildMutator({
     PUT: noop,
     cancel: noop,
   },
+  users: {
+    GET: noop,
+  },
+  jobProfiles: {
+    GET: noop,
+  }
 });
 
 const defaultQuery = {
@@ -402,7 +408,7 @@ describe('ViewAllLogs component', () => {
         await waitFor(() => expect(queryByText('Confirmation modal')).toBeNull());
       });
 
-      it('all checkboxes should be disabled', async () => {
+      it('is not completed, all checkboxes should be disabled', async () => {
         deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
 
         const {
@@ -417,6 +423,24 @@ describe('ViewAllLogs component', () => {
         fireEvent.click(getByText('Confirm'));
 
         expect(getAllByLabelText('select item').every(checkbox => checkbox.disabled)).toBe(true);
+      });
+
+      it('is completed, all checkboxes should be enabled', async () => {
+        deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
+
+        const {
+          getAllByLabelText,
+          getByLabelText,
+          getByText,
+        } = renderViewAllLogs(defaultQuery);
+
+        fireEvent.click(getByLabelText('select all items'));
+        fireEvent.click(getByText('Actions'));
+        fireEvent.click(getByText('Delete selected logs'));
+        fireEvent.click(getByText('Confirm'));
+
+        await waitFor(() => expect(deleteJobExecutionsSpy).toHaveBeenCalled());
+        expect(getAllByLabelText('select item').every(checkbox => checkbox.disabled)).toBe(false);
       });
 
       it('and successful callout should be displayed', async () => {
