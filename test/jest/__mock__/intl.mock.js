@@ -28,7 +28,6 @@ export const Intl = ({ children }) => (
   <IntlProvider
     locale="en"
     messages={translations}
-    onWarn={() => {}}
   >
     {children}
   </IntlProvider>
