@@ -47,6 +47,7 @@
 * Add error hotlinks to the summary at top of individual import job's log (UIDATIMP-1158)
 * Fix Accessibility problems on /data-import view all logs page. (UIDATIMP-1162)
 * When closing the individual job log, return to the DI Landing page or View all properly. (UIDATIMP-1156)
+* Replace react-highlighter with a react-17/18 compatible alternative (UIDATIMP-1152)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)

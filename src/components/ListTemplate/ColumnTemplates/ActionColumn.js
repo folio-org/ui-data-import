@@ -1,11 +1,11 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import HighLight from 'react-highlighter';
 
 import {
   IntlConsumer,
   AppIcon,
 } from '@folio/stripes/core';
+import { Highlighter } from '@folio/stripes/components';
 
 import { FOLIO_RECORD_TYPES } from '../folioRecordTypes';
 import { ACTION_TYPES } from '../actionTypes';
@@ -44,12 +44,12 @@ export const ActionColumn = memo(({
     <IntlConsumer>
       {intl => {
         const label = (
-          <HighLight
+          <Highlighter
             search={searchTerm || ''}
             className={sharedCss.container}
           >
             {createActionLabel(intl, action, folioRecord)}
-          </HighLight>
+          </Highlighter>
         );
         const actionIcon = (
           <ActionIcon icon={ACTION_TYPES[action].iconKey}>
