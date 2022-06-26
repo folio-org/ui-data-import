@@ -45,11 +45,10 @@ export const ActionColumn = memo(({
       {intl => {
         const label = (
           <Highlighter
-            search={searchTerm || ''}
+            searchWords={[searchTerm || '']}
+            text={createActionLabel(intl, action, folioRecord)}
             className={sharedCss.container}
-          >
-            {createActionLabel(intl, action, folioRecord)}
-          </Highlighter>
+          />
         );
         const actionIcon = (
           <ActionIcon icon={ACTION_TYPES[action].iconKey}>

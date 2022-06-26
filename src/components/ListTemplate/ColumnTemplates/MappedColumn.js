@@ -36,11 +36,10 @@ export const MappedColumn = memo(({
               iconKey={FOLIO_RECORD_TYPES[existingRecordType].iconKey}
             >
               <Highlighter
-                search={searchTerm || ''}
+                searchWords={[searchTerm || '']}
+                text={formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
                 className={sharedCss.container}
-              >
-                {formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
-              </Highlighter>
+              />
             </AppIcon>
           )}
         </IntlConsumer>

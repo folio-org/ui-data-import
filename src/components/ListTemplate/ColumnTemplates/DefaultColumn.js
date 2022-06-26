@@ -31,11 +31,10 @@ export const DefaultColumn = memo(({
   const content = searchTerm
     ? (
       <Highlighter
-        search={searchTerm}
+        searchWords={[searchTerm]}
+        text={value}
         className={sharedCss.container}
-      >
-        {value}
-      </Highlighter>
+      />
     )
     : value;
 

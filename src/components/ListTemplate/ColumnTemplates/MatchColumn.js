@@ -46,64 +46,71 @@ export const MatchColumn = memo(({
 
   return (
     <MatchingFieldsManager>
-      {({ getFieldMatched }) => (
-        <AppIcon
-          size="small"
-          app="data-import"
-          iconKey={FOLIO_RECORD_TYPES[existingRecordType].iconKey}
-        >
-          <>
-            {document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT && (
-              <>
-                <Highlighter
-                  search={searchTerm || ''}
-                  className={sharedCss.container}
-                >
-                  {formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
-                </Highlighter>
-                &nbsp;&middot;&nbsp;
-                <Highlighter
-                  search={searchTerm || ''}
-                  className={sharedCss.container}
-                >
-                  {capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
-                </Highlighter>
-                &nbsp;&rarr;&nbsp;
-                <Highlighter
-                  search={searchTerm || ''}
-                  className={sharedCss.container}
-                >
-                  {getFieldMatched(fields, fieldSource) || <NoValue />}
-                </Highlighter>
-              </>
-            )}
-            {document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT && (
-              <>
-                <Highlighter
-                  search={searchTerm || ''}
-                  className={sharedCss.container}
-                >
-                  {getFieldMatched(fields, fieldSource) || <NoValue />}
-                </Highlighter>
-                &nbsp;&larr;&nbsp;
-                <Highlighter
-                  search={searchTerm || ''}
-                  className={sharedCss.container}
-                >
-                  {capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
-                </Highlighter>
-                &nbsp;&middot;&nbsp;
-                <Highlighter
-                  search={searchTerm || ''}
-                  className={sharedCss.container}
-                >
-                  {formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
-                </Highlighter>
-              </>
-            )}
-          </>
-        </AppIcon>
-      )}
+      {({ getFieldMatched }) => {
+        const fieldMatchedLabel = getFieldMatched(fields, fieldSource);
+
+        return (
+          <AppIcon
+            size="small"
+            app="data-import"
+            iconKey={FOLIO_RECORD_TYPES[existingRecordType].iconKey}
+          >
+            <>
+              {document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT && (
+                <>
+                  <Highlighter
+                    searchWords={[(searchTerm || '')]}
+                    text={formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
+                    className={sharedCss.container}
+                  />
+                  &nbsp;&middot;&nbsp;
+                  <Highlighter
+                    searchWords={[searchTerm || '']}
+                    text={capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
+                    className={sharedCss.container}
+                  />
+                  &nbsp;&rarr;&nbsp;
+                  {fieldMatchedLabel
+                    ? (
+                      <Highlighter
+                        searchWords={[searchTerm || '']}
+                        text={fieldMatchedLabel}
+                        className={sharedCss.container}
+                      />
+                    )
+                    : <NoValue />
+                  }
+                </>
+              )}
+              {document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT && (
+                <>
+                  {fieldMatchedLabel
+                    ? (
+                      <Highlighter
+                        searchWords={[searchTerm || '']}
+                        text={fieldMatchedLabel}
+                        className={sharedCss.container}
+                      />
+                    ) : <NoValue />
+                  }
+                  &nbsp;&larr;&nbsp;
+                  <Highlighter
+                    searchWords={[searchTerm || '']}
+                    text={capitalize(fieldSource, STRING_CAPITALIZATION_MODES.WORDS, STRING_CAPITALIZATION_EXCLUSIONS)}
+                    className={sharedCss.container}
+                  />
+                  &nbsp;&middot;&nbsp;
+                  <Highlighter
+                    searchWords={[searchTerm || '']}
+                    text={formatMessage({ id: FOLIO_RECORD_TYPES[existingRecordType].captionId })}
+                    className={sharedCss.container}
+                  />
+                </>
+              )}
+            </>
+          </AppIcon>
+        );
+      }}
     </MatchingFieldsManager>
   );
 });
