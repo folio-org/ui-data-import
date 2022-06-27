@@ -37,11 +37,11 @@ export const getBoolFieldName = mappingFieldIndex => {
 };
 
 export const getSubfieldName = (mappingFieldIndex, fieldIndex, subfieldIndex) => {
-  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${subfieldIndex}].fields[${fieldIndex}].value`;
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields.${subfieldIndex}.fields.${fieldIndex}.value`;
 };
 
 export const getInnerSubfieldName = (mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, innerFieldIndex, innerSubfieldIndex) => {
-  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields[${mappingSubfieldIndex}].fields[${mappingSubfieldFieldIndex}].subfields[${innerSubfieldIndex}].fields[${innerFieldIndex}].value`;
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].subfields.${mappingSubfieldIndex}.fields.${mappingSubfieldFieldIndex}.subfields.${innerSubfieldIndex}.fields.${innerFieldIndex}.value`;
 };
 
 export const getBoolSubfieldName = (mappingFieldIndex, fieldIndex, subfieldIndex) => {
