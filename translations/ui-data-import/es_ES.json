@@ -747,8 +747,8 @@
     "failed": "Ha fallado",
     "completed": "Completado",
     "completedWithErrors": "Completado con errores",
-    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementPublicNote": "Statement public note",
-    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementStaffNote": "Statement staff note",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementPublicNote": "Nota pública de la mención de fondos",
+    "settings.mappingProfiles.map.holdings.statements.field.holdingsStatementStaffNote": "Nota interna de la mención de fondos",
     "fieldMappingsForMarc.overrideProtected": "Sobrescribir campos protegidos",
     "fieldMappingsForMarc.updatesOverrides.subtext": "Si algún campo protegido debe ser actualizado por este perfil, marque la casilla correspondiente aquí",
     "settings.mappingProfile.marcTable.header.override": "Sobrescribir",
@@ -769,7 +769,7 @@
     "filter.option.yes": "Yes",
     "filter.option.no": "No",
     "settings.mappingProfiles.map.wrapper.fundDistributionSource": "Select fund distribution source",
-    "settings.mappingProfiles.map.wrapper.fundDistributionSource.useFundDistributionFromPOL": "Use fund distribution from POL",
+    "settings.mappingProfiles.map.wrapper.fundDistributionSource.useFundDistributionFromPOL": "Utilizar la distribución del fondo desde la POL",
     "settings.mappingProfiles.map.wrapper.fundDistributionSource.useFundDistributionFieldMappings": "Use fund distribution field mappings",
     "settings.mappingProfiles.map.invoice.invoiceInformation.section": "Invoice information",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.invoiceDate": "Invoice date",
@@ -869,8 +869,8 @@
     "logViewer.invoice": "Invoice",
     "logViewer.invoiceLine": "Invoice line",
     "logViewer.filter.srsMARC": "SRS MARC",
-    "recordTypes.authority": "Authority",
+    "recordTypes.authority": "Autoridad",
     "validation.enterAsteriskOrOtherNumeric": "Please enter * or other numeric value",
     "validation.enterOther": "Please enter other value",
-    "logViewer.filter.authority": "Authority"
+    "logViewer.filter.authority": "Autoridad"
 }
