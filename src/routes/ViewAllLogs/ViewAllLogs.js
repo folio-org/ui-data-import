@@ -115,6 +115,7 @@ export const ViewAllLogsManifest = Object.freeze({
     perRequest: RESULT_COUNT_INCREMENT,
     throwErrors: false,
     shouldRefresh: () => true,
+    resourceShouldRefresh: true,
   },
   usersList: {
     type: 'okapi',
@@ -192,8 +193,8 @@ class ViewAllLogs extends Component {
   };
 
   componentDidMount() {
-    this.props.mutator.users.GET();
-    this.props.mutator.jobProfiles.GET();
+    this.props.mutator.usersList.GET();
+    this.props.mutator.jobProfilesList.GET();
   }
 
   componentDidUpdate(prevProps) {
@@ -207,6 +208,9 @@ class ViewAllLogs extends Component {
       if (this.state.isLogsDeletionInProgress) {
         this.setState({ isLogsDeletionInProgress: false });
       }
+
+      this.props.mutator.usersList.GET();
+      this.props.mutator.jobProfilesList.GET();
     }
   }
 
@@ -329,9 +333,6 @@ class ViewAllLogs extends Component {
       deselectAll();
       this.hideDeleteConfirmation();
       this.showDeleteLogsSuccessfulMessage(jobExecutionDetails.length);
-
-      mutator.users.GET();
-      mutator.jobProfiles.GET();
     };
 
     // disable all checkboxes while deletion in progress
