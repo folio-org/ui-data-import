@@ -47,6 +47,8 @@
 * Add error hotlinks to the summary at top of individual import job's log (UIDATIMP-1158)
 * Fix Accessibility problems on /data-import view all logs page. (UIDATIMP-1162)
 * When closing the individual job log, return to the DI Landing page or View all properly. (UIDATIMP-1156)
+* Replace react-highlighter with a react-17/18 compatible alternative (UIDATIMP-1152)
+* Resizable Panes - Persistence | Use PersistedPaneset smart component for Data import/View all page (UIDATIMP-979)
 * Use API for deleting data import logs on Data Import view all page (UIDATIMP-1127)
 
 ### Bugs fixed:
@@ -58,6 +60,8 @@
 * The "select all items" button does not select all logs after deleting multiple logs from the landing logs page (UIDATIMP-1186)
 * Job profiles allows user to sort by checkboxes (UIDATIMP-1188)
 * View all logs table allows user to sort by checkboxes. (UIDATIMP-1190)
+* Autofocus does not work after pressing the save button on the mapping-profiles editing page (UIDATIMP-1176)
+* When go to Uploading jobs page or Settings Job profiles from View all page, an error is thrown (UIDATIMP-1192)
 
 ## [5.1.3](https://github.com/folio-org/ui-data-import/tree/v5.1.3) (2022-05-24)
 

@@ -518,8 +518,8 @@ MappingProfilesFormComponent.propTypes = {
 
 const mapStateToProps = state => {
   const okapi = state.okapi || null;
-  const mappingDetails = state.form[formName]?.values.profile?.mappingDetails || {};
-  const mappingMarcFieldProtectionFields = state.form[formName]?.values.profile?.marcFieldProtectionSettings || [];
+  const mappingDetails = state.form[formName]?.values?.profile?.mappingDetails || {};
+  const mappingMarcFieldProtectionFields = state.form[formName]?.values?.profile?.marcFieldProtectionSettings || [];
 
   return {
     okapi,
