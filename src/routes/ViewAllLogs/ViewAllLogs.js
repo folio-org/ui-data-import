@@ -322,16 +322,19 @@ class ViewAllLogs extends Component {
       const { jobExecutionDetails } = result;
       const query = { ...resources.query };
 
-      // force shouldRefresh method
-      mutator.query.replace('');
-      mutator.query.replace(query);
-
-      deselectAll();
       this.hideDeleteConfirmation();
-      this.showDeleteLogsSuccessfulMessage(jobExecutionDetails.length);
 
-      mutator.users.GET();
-      mutator.jobProfiles.GET();
+      setTimeout(() => {
+        // force shouldRefresh method
+        mutator.query.replace('');
+        mutator.query.replace(query);
+
+        deselectAll();
+        this.showDeleteLogsSuccessfulMessage(jobExecutionDetails.length);
+
+        mutator.users.GET();
+        mutator.jobProfiles.GET();
+      }, 1500);
     };
 
     // disable all checkboxes while deletion in progress
