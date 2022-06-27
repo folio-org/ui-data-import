@@ -56,7 +56,7 @@ describe('MatchColumn', () => {
       const firstContainer = getByText('Field1');
       const secondContainer = getByText('Instance');
 
-      expect(firstContainer.nextElementSibling).toEqual(secondContainer);
+      expect(firstContainer.parentElement.nextElementSibling).toEqual(secondContainer.parentElement);
     });
   });
 
@@ -70,7 +70,7 @@ describe('MatchColumn', () => {
       const firstContainer = getByText('Instance');
       const secondContainer = getByText('Field1');
 
-      expect(firstContainer.nextElementSibling).toEqual(secondContainer);
+      expect(firstContainer.parentElement.nextElementSibling).toEqual(secondContainer.parentElement);
     });
   });
 
