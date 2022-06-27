@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+  createRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -19,6 +22,7 @@ import {
   TextLink,
   ConfirmationModal,
   DefaultMCLRowFormatter,
+  Callout,
 } from '@folio/stripes/components';
 import {
   changeSearchIndex,
@@ -45,6 +49,7 @@ import {
   permissions,
   PAGE_KEYS,
   storage,
+  deleteJobExecutions,
 } from '../../utils';
 import {
   FILTERS,
@@ -109,18 +114,22 @@ export const ViewAllLogsManifest = Object.freeze({
     },
     perRequest: RESULT_COUNT_INCREMENT,
     throwErrors: false,
+    shouldRefresh: () => true,
+    resourceShouldRefresh: true,
   },
   usersList: {
     type: 'okapi',
     records: 'jobExecutionUsersInfo',
     path: 'metadata-provider/jobExecutions/users',
     throwErrors: false,
+    accumulate: true,
   },
   jobProfilesList: {
     type: 'okapi',
     records: 'jobProfilesInfo',
     path: 'metadata-provider/jobExecutions/jobProfiles',
     throwErrors: false,
+    accumulate: true,
   },
 });
 
@@ -168,6 +177,8 @@ class ViewAllLogs extends Component {
 
   constructor(props) {
     super(props);
+    this.calloutRef = createRef();
+
     this.getActiveFilters = getActiveFilters.bind(this);
     this.handleFilterChange = handleFilterChange.bind(this);
     this.changeSearchIndex = changeSearchIndex.bind(this);
@@ -176,9 +187,15 @@ class ViewAllLogs extends Component {
   }
 
   state = {
+    isLogsDeletionInProgress: false,
     showDeleteConfirmation: false,
     selectedLogsNumber: 0,
   };
+
+  componentDidMount() {
+    this.props.mutator.usersList?.GET();
+    this.props.mutator.jobProfilesList?.GET();
+  }
 
   componentDidUpdate(prevProps) {
     const { resources: { records: { records: prevRecords } } } = prevProps;
@@ -186,6 +203,14 @@ class ViewAllLogs extends Component {
 
     if (!isEqual(prevRecords, records)) {
       this.setLogsList();
+
+      // enable checkboxes after deletion completed if user has deleted logs
+      if (this.state.isLogsDeletionInProgress) {
+        this.setState({ isLogsDeletionInProgress: false });
+      }
+
+      this.props.mutator.usersList.GET();
+      this.props.mutator.jobProfilesList.GET();
     }
   }
 
@@ -267,10 +292,55 @@ class ViewAllLogs extends Component {
     this.setState({ showDeleteConfirmation: false });
   };
 
+  showDeleteLogsSuccessfulMessage(logsNumber) {
+    this.calloutRef.current.sendCallout({
+      type: 'success',
+      message: (
+        <FormattedMessage
+          id="ui-data-import.landing.callout.success"
+          values={{ logsNumber }}
+        />
+      ),
+    });
+  }
+
+  showDeleteLogsErrorMessage() {
+    this.calloutRef.current.sendCallout({
+      type: 'error',
+      message: <FormattedMessage id="ui-data-import.communicationProblem" />,
+    });
+  }
+
   deleteLogs() {
-    // TODO: replace this on logs deleting once API is ready
-    this.props.checkboxList.deselectAll();
-    this.hideDeleteConfirmation();
+    const {
+      stripes: { okapi },
+      checkboxList: {
+        selectedRecords,
+        deselectAll,
+      },
+      mutator,
+      resources,
+    } = this.props;
+
+    const onSuccess = result => {
+      const { jobExecutionDetails } = result;
+      const query = { ...resources.query };
+
+      // force shouldRefresh method
+      mutator.query.replace('');
+      mutator.query.replace(query);
+
+      deselectAll();
+      this.hideDeleteConfirmation();
+      this.showDeleteLogsSuccessfulMessage(jobExecutionDetails.length);
+    };
+
+    // disable all checkboxes while deletion in progress
+    this.setState({ isLogsDeletionInProgress: true });
+
+    deleteJobExecutions(selectedRecords, okapi)
+      .then(onSuccess)
+      .catch(() => this.showDeleteLogsErrorMessage());
   }
 
   isDeleteAllLogsDisabled() {
@@ -288,6 +358,7 @@ class ViewAllLogs extends Component {
       },
       location,
     } = this.props;
+    const { isLogsDeletionInProgress } = this.state;
 
     const {
       pathname,
@@ -310,6 +381,7 @@ class ViewAllLogs extends Component {
         entityKey,
         selectRecord,
         selectedRecords,
+        checkboxDisabled: isLogsDeletionInProgress,
       }),
       fileName: fileNameCellFormatter,
       status: statusCellFormatter(formatMessage),
@@ -337,12 +409,18 @@ class ViewAllLogs extends Component {
       resources,
       stripes,
     } = this.props;
+    const { isLogsDeletionInProgress } = this.state;
+
     const { DELETE_LOGS } = permissions;
     const logsNumber = selectedRecords.size;
     const hasLogsSelected = logsNumber > 0;
 
     const resultsFormatter = this.getResultsFormatter();
-    const columnMapping = getJobLogsListColumnMapping({ isAllSelected, handleSelectAllCheckbox });
+    const columnMapping = getJobLogsListColumnMapping({
+      isAllSelected,
+      handleSelectAllCheckbox,
+      checkboxDisabled: isLogsDeletionInProgress,
+    });
     const itemToView = JSON.parse(sessionStorage.getItem(DATA_IMPORT_POSITION));
     const hasDeletePermission = stripes.hasPerm(DELETE_LOGS);
 
@@ -419,6 +497,7 @@ class ViewAllLogs extends Component {
             this.hideDeleteConfirmation();
           }}
         />
+        <Callout ref={this.calloutRef} />
       </div>
     );
   }

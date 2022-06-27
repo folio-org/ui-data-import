@@ -136,7 +136,7 @@ describe('Home component', () => {
         await waitFor(() => expect(queryByText('Confirmation modal')).not.toBeInTheDocument());
       });
 
-      it('All checkboxes should be disabled', async () => {
+      it('all checkboxes should be disabled', async () => {
         deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
 
         const {
