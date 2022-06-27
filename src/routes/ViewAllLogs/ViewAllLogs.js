@@ -193,8 +193,8 @@ class ViewAllLogs extends Component {
   };
 
   componentDidMount() {
-    this.props.mutator.usersList.GET();
-    this.props.mutator.jobProfilesList.GET();
+    this.props.mutator.usersList?.GET();
+    this.props.mutator.jobProfilesList?.GET();
   }
 
   componentDidUpdate(prevProps) {

@@ -440,7 +440,7 @@ describe('ViewAllLogs component', () => {
         fireEvent.click(getByText('Confirm'));
 
         await waitFor(() => expect(deleteJobExecutionsSpy).toHaveBeenCalled());
-        expect(getAllByLabelText('select item').every(checkbox => checkbox.disabled)).toBe(false);
+        getAllByLabelText('select item').forEach(checkbox => expect(checkbox.disabled).toBeTruthy());
       });
 
       it('and successful callout should be displayed', async () => {
