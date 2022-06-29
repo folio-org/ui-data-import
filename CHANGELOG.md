@@ -64,6 +64,7 @@
 * Autofocus does not work after pressing the save button on the mapping-profiles editing page (UIDATIMP-1176)
 * When go to Uploading jobs page or Settings Job profiles from View all page, an error is thrown (UIDATIMP-1192)
 * Long titles do not fit in the confirmation modal window header (UIDATIMP-1196)
+* Improve CQL queries for profiles retrieving (UIDATIMP-1204)
 
 ## [5.1.3](https://github.com/folio-org/ui-data-import/tree/v5.1.3) (2022-05-24)
 
