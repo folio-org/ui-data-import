@@ -126,7 +126,7 @@ describe('ActionProfiles', () => {
   describe('query string', () => {
     describe('when sort and query params are set', () => {
       it('should return correct query string', () => {
-        const expectedQuery = `cql.allRecords=1 AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_ACTION_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_ACTION_ID}") AND (id="" NOT id=="${OCLC_CREATE_MARC_BIB_ACTION_ID}") AND (id="" NOT id=="${QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID}") AND (id="" NOT id=="${QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID}") AND (
+        const expectedQuery = `cql.allRecords=1 AND id<>(${OCLC_CREATE_INSTANCE_ACTION_ID} AND ${OCLC_UPDATE_INSTANCE_ACTION_ID} AND ${OCLC_CREATE_MARC_BIB_ACTION_ID} AND ${QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID} AND ${QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID}) AND 
   name="testQuery*" OR
   action="testQuery*" OR
   folioRecord="testQuery*" OR
@@ -146,7 +146,7 @@ describe('ActionProfiles', () => {
 
     describe('when sort and query params are  not set', () => {
       it('should return correct query string', () => {
-        const expectedQuery = `cql.allRecords=1 AND (id="" NOT id=="${OCLC_CREATE_INSTANCE_ACTION_ID}") AND (id="" NOT id=="${OCLC_UPDATE_INSTANCE_ACTION_ID}") AND (id="" NOT id=="${OCLC_CREATE_MARC_BIB_ACTION_ID}") AND (id="" NOT id=="${QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID}") AND (id="" NOT id=="${QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID}")`;
+        const expectedQuery = `cql.allRecords=1 AND id<>(${OCLC_CREATE_INSTANCE_ACTION_ID} AND ${OCLC_UPDATE_INSTANCE_ACTION_ID} AND ${OCLC_CREATE_MARC_BIB_ACTION_ID} AND ${QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID} AND ${QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID})`;
         const { query } = actionProfilesShape.manifest.records.params();
 
         expect(query.trim()).toEqual(expectedQuery);
