@@ -50,6 +50,7 @@
 * Replace react-highlighter with a react-17/18 compatible alternative (UIDATIMP-1152)
 * Resizable Panes - Persistence | Use PersistedPaneset smart component for Data import/View all page (UIDATIMP-979)
 * Use API for deleting data import logs on Data Import view all page (UIDATIMP-1127)
+* Improve cql query to get job profiles for further import processing (UIDATIMP-1202)
 
 ### Bugs fixed:
 * Data Import landing page log shows in old format instead of current format (UIDATIMP-1139)
@@ -62,6 +63,7 @@
 * View all logs table allows user to sort by checkboxes. (UIDATIMP-1190)
 * Autofocus does not work after pressing the save button on the mapping-profiles editing page (UIDATIMP-1176)
 * When go to Uploading jobs page or Settings Job profiles from View all page, an error is thrown (UIDATIMP-1192)
+* Long titles do not fit in the confirmation modal window header (UIDATIMP-1196)
 * Improve CQL queries for profiles retrieving (UIDATIMP-1204)
 
 ## [5.1.3](https://github.com/folio-org/ui-data-import/tree/v5.1.3) (2022-05-24)
