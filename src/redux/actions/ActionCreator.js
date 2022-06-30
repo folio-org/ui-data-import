@@ -15,6 +15,4 @@ export const setCurrentProfileTreeContent = content => ({
   payload: content,
 });
 
-export const clearCurrentProfileTreeContent = () => ({
-  type: ACTION.CLEAR_CURRENT_PROFILE_TREE_CONTENT,
-});
+export const clearCurrentProfileTreeContent = () => ({ type: ACTION.CLEAR_CURRENT_PROFILE_TREE_CONTENT });

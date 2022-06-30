@@ -17,7 +17,7 @@ export const reducer = (state = initialState, action) => {
         ...state,
         jobProfiles: {
           ...state.jobProfiles,
-          ...action.payload
+          ...action.payload,
         },
       };
     case ACTION.CLEAR_CURRENT_PROFILE_TREE_CONTENT:
