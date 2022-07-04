@@ -66,13 +66,8 @@ export const mappingProfilesShape = {
         const search = _r?.query?.query;
         const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
         const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
-        const notIdOclcCreateInstanceMapping = `(id="" NOT id=="${OCLC_CREATE_INSTANCE_MAPPING_ID}")`;
-        const notIdOclcUpdateInstanceMapping = `(id="" NOT id=="${OCLC_UPDATE_INSTANCE_MAPPING_ID}")`;
-        const notIdMarcBibCreateMapping = `(id="" NOT id=="${OCLC_CREATE_MARC_BIB_MAPPING_ID}")`;
-        const notIdQuickMarcBibDeriveCreateMapping = `(id="" NOT id=="${QUICKMARK_DERIVE_CREATE_BIB_MAPPING_ID}")`;
-        const notIdQuickMarcHoldingsDeriveCreateMapping = `(id="" NOT id=="${QUICKMARK_DERIVE_CREATE_HOLDINGS_MAPPING_ID}")`;
 
-        const withoutDefaultProfiles = `AND ${notIdOclcCreateInstanceMapping} AND ${notIdOclcUpdateInstanceMapping} AND ${notIdMarcBibCreateMapping} AND ${notIdQuickMarcBibDeriveCreateMapping} AND ${notIdQuickMarcHoldingsDeriveCreateMapping}`;
+        const withoutDefaultProfiles = `AND id<>(${OCLC_CREATE_INSTANCE_MAPPING_ID} AND ${OCLC_UPDATE_INSTANCE_MAPPING_ID} AND ${OCLC_CREATE_MARC_BIB_MAPPING_ID} AND ${QUICKMARK_DERIVE_CREATE_BIB_MAPPING_ID} AND ${QUICKMARK_DERIVE_CREATE_HOLDINGS_MAPPING_ID})`;
         const query = `${FIND_ALL_CQL} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
 
         return { query };

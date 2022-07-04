@@ -181,7 +181,7 @@ export const matchProfilesShape = {
         const search = _r?.query?.query;
         const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
         const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
-        const withoutDefaultProfiles = `AND (id="" NOT id=="${OCLC_MATCH_EXISTING_SRS_RECORD_ID}") AND (id="" NOT id=="${OCLC_MATCH_NO_SRS_RECORD_ID}")`;
+        const withoutDefaultProfiles = `AND (id<>(${OCLC_MATCH_EXISTING_SRS_RECORD_ID} AND ${OCLC_MATCH_NO_SRS_RECORD_ID}))`;
         const query = `${props.filterParams?.manifest?.query || FIND_ALL_CQL} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
 
         return { query };
