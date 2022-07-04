@@ -396,6 +396,17 @@ class ViewAllLogs extends Component {
     sessionStorage.setItem(DATA_IMPORT_POSITION, null);
   }
 
+  handleResetAll = () => {
+    const { mutator: { query: { update } } } = this.props;
+
+    update({
+      filters: '',
+      sort: '-completedDate',
+      query: '',
+      qindex: '',
+    });
+  }
+
   render() {
     const {
       checkboxList: {
@@ -459,6 +470,7 @@ class ViewAllLogs extends Component {
           renderFilters={this.renderFilters}
           onFilterChange={this.handleFilterChange}
           onChangeIndex={this.changeSearchIndex}
+          onResetAll={this.handleResetAll}
           pagingType="prev-next"
           pageAmount={RESULT_COUNT_INCREMENT}
           title={<FormattedMessage id="ui-data-import.logsPaneTitle" />}
