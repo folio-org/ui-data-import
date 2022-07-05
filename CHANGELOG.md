@@ -67,6 +67,11 @@
 * Improve CQL queries for profiles retrieving (UIDATIMP-1204)
 * The enabled indicator for duplicated field mapping fields is set to false (UIDATIMP-1191)
 
+## [5.1.6](https://github.com/folio-org/ui-data-import/tree/v5.1.6) (2022-07-05)
+
+### Bugs fixed:
+* QuotaExceededError: Failed to execute 'setItem' on 'Storage': Setting the value of 'profileTreeData' exceeded the quota (UIDATIMP-1205)
+
 ## [5.1.3](https://github.com/folio-org/ui-data-import/tree/v5.1.3) (2022-05-24)
 
 ### Bugs fixed:
