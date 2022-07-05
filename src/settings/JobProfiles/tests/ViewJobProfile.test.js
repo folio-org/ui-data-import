@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import {
   fireEvent,
   waitFor,
+  getByText as getByTextScreen,
 } from '@testing-library/react';
 
 import { noop } from 'lodash';
@@ -215,13 +216,18 @@ describe('<ViewJobProfile>', () => {
     it('confirmation modal should be closed', async () => {
       const {
         getByRole,
-        getAllByText,
         queryByText,
       } = renderViewJobProfile(viewJobProfileProps(jobProfile, ['run']));
 
       fireEvent.click(getByRole('button', { name: /actions/i }));
-      fireEvent.click(getAllByText('Run')[0]);
-      fireEvent.click(getAllByText('Run')[2]);
+
+      const actionsMenu = document.querySelector('[class^=DropdownMenu]');
+
+      fireEvent.click(getByTextScreen(actionsMenu, 'Run'));
+
+      const confirmButton = document.querySelector('#clickable-run-job-profile-modal-confirm');
+
+      fireEvent.click(confirmButton);
 
       await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).not.toBeInTheDocument());
     });

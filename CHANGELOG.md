@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## [5.1.5](https://github.com/folio-org/ui-data-import/tree/v5.1.5) (2022-07-05)
+## [5.1.6](https://github.com/folio-org/ui-data-import/tree/v5.1.6) (2022-07-05)
 
 ### Bugs fixed:
 * QuotaExceededError: Failed to execute 'setItem' on 'Storage': Setting the value of 'profileTreeData' exceeded the quota (UIDATIMP-1205)
