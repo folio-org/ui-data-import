@@ -30,9 +30,7 @@ import css from './DataImportSettings.css';
 export class DataImportSettings extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
-    root: PropTypes.shape({
-      addReducer: PropTypes.func.isRequired,
-    }).isRequired,
+    root: PropTypes.shape({ addReducer: PropTypes.func.isRequired }).isRequired,
   };
 
   constructor(props) {
