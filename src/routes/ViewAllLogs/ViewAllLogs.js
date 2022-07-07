@@ -72,13 +72,17 @@ const RESULT_COUNT_INCREMENT = 100;
 
 const entityKey = 'jobLogs';
 
+const INITIAL_QUERY = {
+  filters: '',
+  sort: '-completedDate',
+  query: '',
+  qindex: '',
+};
+
 export const ViewAllLogsManifest = Object.freeze({
   initializedFilterConfig: { initialValue: false },
   query: {
-    initialValue: {
-      filters: '',
-      sort: '-completedDate',
-    },
+    initialValue: INITIAL_QUERY,
   },
   resultCount: { initialValue: INITIAL_RESULT_COUNT },
   resultOffset: { initialValue: 0 },
@@ -399,12 +403,7 @@ class ViewAllLogs extends Component {
   handleResetAll = () => {
     const { mutator: { query: { update } } } = this.props;
 
-    update({
-      filters: '',
-      sort: '-completedDate',
-      query: '',
-      qindex: '',
-    });
+    update(INITIAL_QUERY);
   }
 
   render() {
