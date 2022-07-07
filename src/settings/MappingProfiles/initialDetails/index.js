@@ -1,3 +1,5 @@
+import { omit } from 'lodash';
+
 import ITEM from './ITEM';
 import INSTANCE from './INSTANCE';
 import HOLDINGS from './HOLDINGS';
@@ -38,6 +40,34 @@ const modifyInvoiceLinesFieldDetails = field => {
   return {
     ...field,
     subfields: [invoiceLineSubfield],
+  };
+};
+
+/**
+ * Modifies duplicated mapping details to set the initial `enabled` field
+ *
+ * @param {object} mappingDetails
+ * @returns {{mappingFields}}
+ */
+export const getMappingDetailsForDuplicated = mappingDetails => {
+  const {
+    recordType,
+    mappingFields,
+  } = mappingDetails;
+
+  const initialMappingFields = initialValues[recordType].mappingFields;
+  const modifiedMappingFields = mappingFields.map(field => {
+    const enabled = initialMappingFields.find(item => (item.name === field.name) && (item.path === field.path))?.enabled;
+
+    return {
+      ...field,
+      enabled: enabled || field.enabled,
+    };
+  });
+
+  return {
+    ...omit(mappingDetails, 'mappingFields'),
+    mappingFields: modifiedMappingFields,
   };
 };
 
