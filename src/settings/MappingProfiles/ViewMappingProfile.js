@@ -287,6 +287,7 @@ export class ViewMappingProfile extends Component {
         >
           <TitleManager record={name} />
           <Headline
+            className={sharedCss.headline}
             data-test-headline
             size="xx-large"
             tag="h2"
