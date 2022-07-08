@@ -242,8 +242,10 @@ export class ViewActionProfile extends Component {
           renderHeader={this.renderPaneHeader}
           id="view-action-profile-pane"
         >
+
           <TitleManager record={actionProfile.name} />
           <Headline
+            className={sharedCss.headline}
             data-test-headline
             size="xx-large"
             tag="h2"
