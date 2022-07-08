@@ -243,6 +243,7 @@ export class ViewMatchProfile extends Component {
         >
           <TitleManager record={matchProfile.name} />
           <Headline
+            className={sharedCss.headline}
             data-test-headline
             size="xx-large"
             tag="h2"

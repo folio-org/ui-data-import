@@ -66,6 +66,7 @@
 * Improve CQL queries for profiles retrieving (UIDATIMP-1204)
 * The enabled indicator for duplicated field mapping fields is set to false (UIDATIMP-1191)
 * Data import Reset all bug (UIDATIMP-1201)
+* Long name doesn't fit in the header of profiles on the settings page (UIDATIMP-1206)
 
 ## [5.1.6](https://github.com/folio-org/ui-data-import/tree/v5.1.6) (2022-07-05)
 
