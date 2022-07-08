@@ -244,6 +244,7 @@ export class ViewActionProfile extends Component {
         >
           <TitleManager record={actionProfile.name} />
           <Headline
+            className={sharedCss.headline}
             data-test-headline
             size="xx-large"
             tag="h2"
