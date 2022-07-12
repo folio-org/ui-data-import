@@ -1,6 +1,12 @@
 # Change history for ui-data-import
 
-## **5.2.0** (in progress)
+## **5.2.1** (in progress)
+
+### Bugs fixed:
+* Long titles do not fit in the confirmation modal window header (UIDATIMP-1196)
+* Long name doesn't fit in the header of profiles on the settings page (UIDATIMP-1206)
+
+## [5.2.0](https://github.com/folio-org/ui-data-import/tree/v5.2.0) (2022-07-08)
 
 ### Features added
 * Add checkboxes and delete action to Data Import landing page (UIDATIMP-1077)
@@ -63,9 +69,9 @@
 * View all logs table allows user to sort by checkboxes. (UIDATIMP-1190)
 * Autofocus does not work after pressing the save button on the mapping-profiles editing page (UIDATIMP-1176)
 * When go to Uploading jobs page or Settings Job profiles from View all page, an error is thrown (UIDATIMP-1192)
-* Long titles do not fit in the confirmation modal window header (UIDATIMP-1196)
 * Improve CQL queries for profiles retrieving (UIDATIMP-1204)
 * The enabled indicator for duplicated field mapping fields is set to false (UIDATIMP-1191)
+* Data import Reset all bug (UIDATIMP-1201)
 
 ## [5.1.6](https://github.com/folio-org/ui-data-import/tree/v5.1.6) (2022-07-05)
 

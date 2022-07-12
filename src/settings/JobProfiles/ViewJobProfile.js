@@ -287,6 +287,7 @@ const ViewJobProfileComponent = props => {
       >
         <TitleManager record={jobProfileRecord.name} />
         <Headline
+          className={sharedCss.headline}
           data-test-headline
           size="xx-large"
           tag="h2"
