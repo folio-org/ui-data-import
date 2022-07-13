@@ -28,7 +28,7 @@ import {
 } from './components';
 import { FOLIO_RECORD_TYPES } from '../../components';
 
-import { DATA_TYPES } from '../../utils';
+import { DATA_TYPES, storage } from '../../utils';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -51,6 +51,8 @@ const sortMap = {
   error: 'error',
 };
 
+const PREVIOUS_LOCATIONS_KEY = '@@data-import/prev-locations';
+
 const JobSummaryComponent = props => {
   const {
     stripes,
@@ -72,8 +74,18 @@ const JobSummaryComponent = props => {
 
   const { id } = useParams();
 
+  // stack for keeping track of previous paths
+  const previousLocations = useRef(storage.getItem(PREVIOUS_LOCATIONS_KEY) || []);
+
   // persist previous jobExecutionsId
   const previousJobExecutionsIdRef = useRef(jobExecutionsId);
+
+  useEffect(() => {
+    if (location.state?.from) {
+      previousLocations.current.push(location.state.from);
+      storage.setItem(PREVIOUS_LOCATIONS_KEY, previousLocations.current);
+    }
+  }, [location]);
 
   useEffect(() => {
     if (previousJobExecutionsIdRef.current !== id) {
@@ -102,6 +114,11 @@ const JobSummaryComponent = props => {
     return makeConnectedSource(connectedSourceProps, stripes.logger, resourceName);
   };
 
+  const handlePaneClose = () => {
+    history.push(previousLocations.current.pop());
+    storage.setItem(PREVIOUS_LOCATIONS_KEY, previousLocations.current);
+  };
+
   const renderHeader = renderProps => {
     const resultCountMessageId = 'stripes-smart-components.searchResultsCountHeader';
     const label = (
@@ -114,7 +131,7 @@ const JobSummaryComponent = props => {
     );
     const firstMenu = (
       <PaneMenu>
-        <PaneCloseLink onClick={() => history.goBack()} />
+        <PaneCloseLink onClick={handlePaneClose} />
       </PaneMenu>
     );
 
@@ -254,7 +271,6 @@ JobSummaryComponent.propTypes = {
   ]).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
-    goBack: PropTypes.func.isRequired,
   }).isRequired,
 };
 
