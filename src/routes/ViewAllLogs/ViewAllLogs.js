@@ -360,21 +360,12 @@ class ViewAllLogs extends Component {
         selectedRecords,
         selectRecord,
       },
-      location,
     } = this.props;
     const { isLogsDeletionInProgress } = this.state;
 
-    const {
-      pathname,
-      search,
-    } = location;
-
     const fileNameCellFormatter = record => (
       <TextLink
-        to={{
-          pathname: `/data-import/job-summary/${record.id}`,
-          state: { from: `${pathname}${search}` },
-        }}
+        to={`/data-import/job-summary/${record.id}`}
       >
         {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
       </TextLink>

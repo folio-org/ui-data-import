@@ -103,7 +103,6 @@ const JobSummaryComponent = props => {
   };
 
   const renderHeader = renderProps => {
-    const closeLinkPath = location.state?.from || '/data-import';
     const resultCountMessageId = 'stripes-smart-components.searchResultsCountHeader';
     const label = (
       <SettingsLabel
@@ -115,7 +114,7 @@ const JobSummaryComponent = props => {
     );
     const firstMenu = (
       <PaneMenu>
-        <PaneCloseLink to={closeLinkPath} />
+        <PaneCloseLink onClick={() => history.goBack()} />
       </PaneMenu>
     );
 
@@ -255,6 +254,7 @@ JobSummaryComponent.propTypes = {
   ]).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
+    goBack: PropTypes.func.isRequired,
   }).isRequired,
 };
 
