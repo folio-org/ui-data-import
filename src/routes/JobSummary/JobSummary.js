@@ -28,7 +28,10 @@ import {
 } from './components';
 import { FOLIO_RECORD_TYPES } from '../../components';
 
-import { DATA_TYPES, storage } from '../../utils';
+import {
+  DATA_TYPES,
+  storage,
+} from '../../utils';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -51,7 +54,7 @@ const sortMap = {
   error: 'error',
 };
 
-const PREVIOUS_LOCATIONS_KEY = '@@data-import/prev-locations';
+const PREVIOUS_LOCATIONS_KEY = '@folio/data-import/prev-locations';
 
 const JobSummaryComponent = props => {
   const {
@@ -74,18 +77,10 @@ const JobSummaryComponent = props => {
 
   const { id } = useParams();
 
-  // stack for keeping track of previous paths
-  const previousLocations = useRef(storage.getItem(PREVIOUS_LOCATIONS_KEY) || []);
-
   // persist previous jobExecutionsId
   const previousJobExecutionsIdRef = useRef(jobExecutionsId);
 
-  useEffect(() => {
-    if (location.state?.from) {
-      previousLocations.current.push(location.state.from);
-      storage.setItem(PREVIOUS_LOCATIONS_KEY, previousLocations.current);
-    }
-  }, [location]);
+  const previousLocations = useRef(storage.getItem(PREVIOUS_LOCATIONS_KEY) || []);
 
   useEffect(() => {
     if (previousJobExecutionsIdRef.current !== id) {
@@ -102,6 +97,13 @@ const JobSummaryComponent = props => {
       });
     }
   }, [jobExecutionsId, jobLogEntriesRecords]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (location.state?.from) {
+      previousLocations.current.push(location.state.from);
+      storage.setItem(PREVIOUS_LOCATIONS_KEY, previousLocations.current);
+    }
+  }, [location]);
 
   const getSource = () => {
     const resourceName = 'jobLogEntries';
