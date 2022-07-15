@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { useLocation } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 
 import {
@@ -13,7 +14,6 @@ import {
   FOLIO_RECORD_TYPES,
   Preloader,
 } from '@folio/stripes-data-transfer-components';
-import { useLocation } from 'react-router-dom';
 
 const summaryLabels = [
   <FormattedMessage id="ui-data-import.logLight.actionStatus.created" />,
@@ -36,7 +36,10 @@ const SummaryTableComponent = ({
   resources: { jobSummary: { records: jobSummaryRecords } },
   jobExecutionId,
 }) => {
-  const { pathname, search } = useLocation();
+  const {
+    pathname,
+    search,
+  } = useLocation();
 
   const contentData = new Array(4).fill({}).map((_, index) => ({
     summary: summaryLabels[index],

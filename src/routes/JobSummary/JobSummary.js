@@ -83,6 +83,13 @@ const JobSummaryComponent = props => {
   const previousLocations = useRef(storage.getItem(PREVIOUS_LOCATIONS_KEY) || []);
 
   useEffect(() => {
+    if (location.state?.from) {
+      previousLocations.current.push(location.state.from);
+      storage.setItem(PREVIOUS_LOCATIONS_KEY, previousLocations.current);
+    }
+  }, [location]);
+
+  useEffect(() => {
     if (previousJobExecutionsIdRef.current !== id) {
       mutator?.resultOffset?.replace(0);
     }
@@ -97,13 +104,6 @@ const JobSummaryComponent = props => {
       });
     }
   }, [jobExecutionsId, jobLogEntriesRecords]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    if (location.state?.from) {
-      previousLocations.current.push(location.state.from);
-      storage.setItem(PREVIOUS_LOCATIONS_KEY, previousLocations.current);
-    }
-  }, [location]);
 
   const getSource = () => {
     const resourceName = 'jobLogEntries';

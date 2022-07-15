@@ -1,4 +1,6 @@
 import React from 'react';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -38,12 +40,16 @@ const resources = buildResources({
   }],
 });
 
+const history = createMemoryHistory();
+
 const renderSummaryTable = (resourcesProp = resources) => {
   const component = (
-    <SummaryTable
-      jobExecutionId="test-id"
-      resources={resourcesProp}
-    />
+    <Router history={history}>
+      <SummaryTable
+        jobExecutionId="test-id"
+        resources={resourcesProp}
+      />
+    </Router>
   );
 
   return renderWithIntl(component, translationsProperties);
