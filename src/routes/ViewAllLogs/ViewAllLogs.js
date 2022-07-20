@@ -325,11 +325,19 @@ class ViewAllLogs extends Component {
 
     const onSuccess = result => {
       const { jobExecutionDetails } = result;
+      const {
+        mutator,
+        resources: { resultOffset },
+      } = this.props;
+
       // force shouldRefresh method
       refreshRemote(this.props);
       deselectAll();
       this.hideDeleteConfirmation();
       this.showDeleteLogsSuccessfulMessage(jobExecutionDetails.length);
+
+      mutator.resultOffset.replace(resultOffset - 100);
+      setTimeout(() => mutator.resultOffset.replace(resultOffset + 100));
     };
 
     // disable all checkboxes while deletion in progress
