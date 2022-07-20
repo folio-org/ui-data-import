@@ -56,6 +56,7 @@ import {
   getInitialDetails,
   getInitialFields,
   getReferenceTables,
+  getMappingDetailsForDuplicated,
 } from './initialDetails';
 import {
   compose,
@@ -113,6 +114,7 @@ export const MappingProfilesFormComponent = ({
   const { layer } = queryString.parse(search);
 
   const isEditMode = layer === LAYER_TYPES.EDIT;
+  const isDuplicateMode = layer === LAYER_TYPES.DUPLICATE;
   const isSubmitDisabled = pristine || submitting;
 
   const [folioRecordType, setFolioRecordType] = useState(existingRecordType || null);
@@ -135,8 +137,9 @@ export const MappingProfilesFormComponent = ({
       return;
     }
 
+    const initialMappingDetails = isDuplicateMode ? getMappingDetailsForDuplicated(mappingDetails) : mappingDetails;
     const newInitDetails = folioRecordType === existingRecordType && !isEmpty(mappingDetails)
-      ? mappingDetails
+      ? initialMappingDetails
       : getInitialDetails(folioRecordType, true);
 
     const newInitials = {

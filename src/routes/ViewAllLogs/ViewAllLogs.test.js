@@ -27,6 +27,8 @@ import {
 } from '../../utils';
 import * as utils from '../../utils/deleteJobExecutions';
 
+const mockedQueryUpdate = jest.fn();
+
 const mutator = buildMutator({
   initializedFilterConfig: {
     update: noop,
@@ -34,7 +36,7 @@ const mutator = buildMutator({
   },
   query: {
     replace: noop,
-    update: noop,
+    update: mockedQueryUpdate,
   },
   records: {
     DELETE: noop,
@@ -232,6 +234,22 @@ describe('ViewAllLogs component', () => {
           const resetAllButton = container.querySelector('#clickable-reset-all');
 
           expect(resetAllButton).toBeEnabled();
+        });
+      });
+
+      describe('when resetAll button is clicked', () => {
+        it('should invoke correct handler', () => {
+          const { container } = renderViewAllLogs({
+            filters: 'completedDate.2021-10-01:2021-10-28,jobProfileInfo.test123,userId.test123',
+            query: '',
+            sort: 'completedDate',
+          });
+
+          const resetAllButton = container.querySelector('#clickable-reset-all');
+
+          fireEvent.click(resetAllButton);
+
+          expect(mockedQueryUpdate).toBeCalledWith({ filters: '', sort: '-completedDate', query: '', qindex: '' });
         });
       });
 

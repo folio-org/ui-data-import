@@ -120,7 +120,7 @@ describe('MatchProfiles', () => {
   describe('query string', () => {
     describe('when sort and query params are set', () => {
       it('should return correct query string', () => {
-        const expectedQuery = `propsQuery AND (id="" NOT id=="${OCLC_MATCH_EXISTING_SRS_RECORD_ID}") AND (id="" NOT id=="${OCLC_MATCH_NO_SRS_RECORD_ID}") AND (
+        const expectedQuery = `propsQuery AND (id<>(${OCLC_MATCH_EXISTING_SRS_RECORD_ID} AND ${OCLC_MATCH_NO_SRS_RECORD_ID})) AND (
   name="testQuery*" OR
   existingRecordType="testQuery*" OR
   field="testQuery*" OR
@@ -145,7 +145,7 @@ describe('MatchProfiles', () => {
 
     describe('when sort and query params are not set', () => {
       it('should return correct query string', () => {
-        const expectedQuery = `${FIND_ALL_CQL} AND (id="" NOT id=="${OCLC_MATCH_EXISTING_SRS_RECORD_ID}") AND (id="" NOT id=="${OCLC_MATCH_NO_SRS_RECORD_ID}")`;
+        const expectedQuery = `${FIND_ALL_CQL} AND (id<>(${OCLC_MATCH_EXISTING_SRS_RECORD_ID} AND ${OCLC_MATCH_NO_SRS_RECORD_ID}))`;
         const props = { filterParams: { manifest: { query: null } } };
         const { query } = matchProfilesShape.manifest.records.params(null, null, null, null, props);
 
