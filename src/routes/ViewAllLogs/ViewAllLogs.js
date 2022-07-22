@@ -323,7 +323,6 @@ class ViewAllLogs extends Component {
       refreshRemote,
     } = this.props;
 
-
     const onSuccess = result => {
       const { jobExecutionDetails } = result;
       const {

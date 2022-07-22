@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **5.2.2**
+
+### Bugs fixed
+* View all logs: filters are not updated after logs deletion (UIDATIMP-1219)
+
 ## [5.2.1](https://github.com/folio-org/ui-data-import/tree/v5.2.1) (2022-07-27)
 
 ### Bugs fixed:
