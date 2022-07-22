@@ -340,8 +340,10 @@ class ViewAllLogs extends Component {
       this.hideDeleteConfirmation();
       this.showDeleteLogsSuccessfulMessage(jobExecutionDetails.length);
 
-      mutator.resultOffset.replace(resultOffset - 100);
-      setTimeout(() => mutator.resultOffset.replace(resultOffset + 100));
+      if (resultOffset !== 0) {
+        mutator.resultOffset.replace(resultOffset - RESULT_COUNT_INCREMENT);
+        setTimeout(() => mutator.resultOffset.replace(resultOffset));
+      }
     };
 
     // disable all checkboxes while deletion in progress
