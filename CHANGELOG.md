@@ -6,6 +6,7 @@
 * Long titles do not fit in the confirmation modal window header (UIDATIMP-1196)
 * Long name doesn't fit in the header of profiles on the settings page (UIDATIMP-1206)
 * Long titles don't fit in the green popup notification about a profile (UIDATIMP-1208)
+* Log navigation problem when filtered error list is closed (UIDATIMP-1207)
 * Checkbox on page 2+ of View all log list does not work properly (UIDATIMP-1199)
 
 ## [5.2.0](https://github.com/folio-org/ui-data-import/tree/v5.2.0) (2022-07-08)

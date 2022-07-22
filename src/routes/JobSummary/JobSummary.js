@@ -28,7 +28,10 @@ import {
 } from './components';
 import { FOLIO_RECORD_TYPES } from '../../components';
 
-import { DATA_TYPES } from '../../utils';
+import {
+  DATA_TYPES,
+  storage,
+} from '../../utils';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -50,6 +53,8 @@ const sortMap = {
   invoiceStatus: 'invoice_action_status',
   error: 'error',
 };
+
+const PREVIOUS_LOCATIONS_KEY = '@folio/data-import/prev-locations';
 
 const JobSummaryComponent = props => {
   const {
@@ -74,6 +79,15 @@ const JobSummaryComponent = props => {
 
   // persist previous jobExecutionsId
   const previousJobExecutionsIdRef = useRef(jobExecutionsId);
+
+  const previousLocations = useRef(storage.getItem(PREVIOUS_LOCATIONS_KEY) || []);
+
+  useEffect(() => {
+    if (location.state?.from) {
+      previousLocations.current.push(location.state.from);
+      storage.setItem(PREVIOUS_LOCATIONS_KEY, previousLocations.current);
+    }
+  }, [location]);
 
   useEffect(() => {
     if (previousJobExecutionsIdRef.current !== id) {
@@ -102,8 +116,12 @@ const JobSummaryComponent = props => {
     return makeConnectedSource(connectedSourceProps, stripes.logger, resourceName);
   };
 
+  const handlePaneClose = () => {
+    history.push(previousLocations.current.pop());
+    storage.setItem(PREVIOUS_LOCATIONS_KEY, previousLocations.current);
+  };
+
   const renderHeader = renderProps => {
-    const closeLinkPath = location.state?.from || '/data-import';
     const resultCountMessageId = 'stripes-smart-components.searchResultsCountHeader';
     const label = (
       <SettingsLabel
@@ -115,7 +133,7 @@ const JobSummaryComponent = props => {
     );
     const firstMenu = (
       <PaneMenu>
-        <PaneCloseLink to={closeLinkPath} />
+        <PaneCloseLink onClick={handlePaneClose} />
       </PaneMenu>
     );
 
