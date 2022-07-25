@@ -60,6 +60,7 @@ const defaultQuery = {
 
 const getResources = query => ({
   resourceName: 'jobLogs',
+  resultOffset: 0,
   query,
   resultCount: 100,
   records: {
@@ -182,6 +183,7 @@ const renderViewAllLogs = query => {
             pathname: '/job-logs',
             search: '?sort=-completedDate',
           }}
+          refreshRemote={noop}
         />
       </ModuleHierarchyProvider>
     </Router>
@@ -421,8 +423,7 @@ describe('ViewAllLogs component', () => {
         fireEvent.click(getAllByLabelText('select item')[0]);
         fireEvent.click(getByText('Actions'));
         fireEvent.click(getByText('Delete selected logs'));
-        fireEvent.click(getByText('Confirm'));
-
+        fireEvent.click(queryByText('Confirm'));
         await waitFor(() => expect(queryByText('Confirmation modal')).toBeNull());
       });
 
