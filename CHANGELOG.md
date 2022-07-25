@@ -8,6 +8,7 @@
 * Long name doesn't fit in the header of profiles on the settings page (UIDATIMP-1206)
 * Log navigation problem when filtered error list is closed (UIDATIMP-1207)
 * Long titles don't fit in the green popup notification about a profile (UIDATIMP-1208)
+* Github Actions: The yarn test step fails on upgrading Node to version 16 LTS (UIDATIMP-1211)
 
 ## [5.2.0](https://github.com/folio-org/ui-data-import/tree/v5.2.0) (2022-07-08)
 
