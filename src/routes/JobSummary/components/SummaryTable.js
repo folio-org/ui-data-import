@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { useLocation } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 
 import {
@@ -35,6 +36,11 @@ const SummaryTableComponent = ({
   resources: { jobSummary: { records: jobSummaryRecords } },
   jobExecutionId,
 }) => {
+  const {
+    pathname,
+    search,
+  } = useLocation();
+
   const contentData = new Array(4).fill({}).map((_, index) => ({
     summary: summaryLabels[index],
     ...jobSummaryRecords[0],
@@ -72,7 +78,17 @@ const SummaryTableComponent = ({
     const cellContent = column[totalEntitiesKeys[rowIndex]];
 
     if (isLastRow(rowIndex) && cellContent > 0) {
-      return <TextLink to={`/data-import/job-summary/${jobExecutionId}?errorsOnly=true&entity=${entity}`}>{cellContent}</TextLink>;
+      return (
+        <TextLink
+          to={{
+            pathname: `/data-import/job-summary/${jobExecutionId}`,
+            search: `?errorsOnly=true&entity=${entity}`,
+            state: { from: `${pathname}${search}` }
+          }}
+        >
+          {cellContent}
+        </TextLink>
+      );
     }
 
     return cellContent;
@@ -89,7 +105,17 @@ const SummaryTableComponent = ({
     error: ({ rowIndex, totalErrors }) => {
       if (isLastRow(rowIndex)) {
         return totalErrors > 0
-          ? <TextLink to={`/data-import/job-summary/${jobExecutionId}?errorsOnly=true`}>{totalErrors}</TextLink>
+          ? (
+            <TextLink
+              to={{
+                pathname: `/data-import/job-summary/${jobExecutionId}`,
+                search: '?errorsOnly=true',
+                state: { from: `${pathname}${search}` }
+              }}
+            >
+              {totalErrors}
+            </TextLink>
+          )
           : totalErrors;
       }
 
