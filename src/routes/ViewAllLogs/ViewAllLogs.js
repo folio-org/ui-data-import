@@ -69,6 +69,8 @@ const {
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
+const USERS_LIMIT_PER_REQUEST = 500;
+const JOB_PROFILES_LIMIT_PER_REQUEST = 1000;
 
 const entityKey = 'jobLogs';
 
@@ -127,6 +129,7 @@ export const ViewAllLogsManifest = Object.freeze({
     path: 'metadata-provider/jobExecutions/users',
     throwErrors: false,
     accumulate: true,
+    perRequest: USERS_LIMIT_PER_REQUEST,
   },
   jobProfilesList: {
     type: 'okapi',
@@ -134,6 +137,7 @@ export const ViewAllLogsManifest = Object.freeze({
     path: 'metadata-provider/jobExecutions/jobProfiles',
     throwErrors: false,
     accumulate: true,
+    perRequest: JOB_PROFILES_LIMIT_PER_REQUEST,
   },
 });
 
