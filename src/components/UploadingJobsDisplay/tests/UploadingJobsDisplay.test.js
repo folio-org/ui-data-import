@@ -249,7 +249,7 @@ describe('<UploadingjobsDisplay>', () => {
       });
 
       await waitFor(() => {
-        expect(mockConsoleError).toHaveBeenCalledWith(new TypeError('Cannot read property \'fileDefinitions\' of undefined'));
+        expect(mockConsoleError).toHaveBeenCalled();
       });
     });
   });

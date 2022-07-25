@@ -8,6 +8,7 @@
 * Long titles don't fit in the green popup notification about a profile (UIDATIMP-1208)
 * Log navigation problem when filtered error list is closed (UIDATIMP-1207)
 * View all logs: filters are not updated after logs deletion (UIDATIMP-1219)
+* Github Actions: The yarn test step fails on upgrading Node to version 16 LTS (UIDATIMP-1211)
 
 ## [5.2.0](https://github.com/folio-org/ui-data-import/tree/v5.2.0) (2022-07-08)
 
