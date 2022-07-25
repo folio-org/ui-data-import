@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * Long titles do not fit in the confirmation modal window header (UIDATIMP-1196)
+* Checkbox on page 2+ of View all log list does not work properly (UIDATIMP-1199)
 
 ## [5.2.0](https://github.com/folio-org/ui-data-import/tree/v5.2.0) (2022-07-08)
 
