@@ -162,6 +162,7 @@ class ViewAllLogs extends Component {
     history: PropTypes.shape({ push: PropTypes.func.isRequired }),
     // eslint-disable-next-line react/no-unused-prop-types
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
+    refreshRemote: PropTypes.func,
   };
 
   static defaultProps = {
@@ -225,7 +226,7 @@ class ViewAllLogs extends Component {
       setList,
     } = this.props;
 
-    setList(records);
+    setList(records?.filter(Boolean));
   }
 
   getSearchableIndexes() {
@@ -323,21 +324,27 @@ class ViewAllLogs extends Component {
         selectedRecords,
         deselectAll,
       },
-      mutator,
-      resources,
+      refreshRemote,
     } = this.props;
+
 
     const onSuccess = result => {
       const { jobExecutionDetails } = result;
-      const query = { ...resources.query };
+      const {
+        mutator,
+        resources: { resultOffset },
+      } = this.props;
 
       // force shouldRefresh method
-      mutator.query.replace('');
-      mutator.query.replace(query);
-
+      refreshRemote(this.props);
       deselectAll();
       this.hideDeleteConfirmation();
       this.showDeleteLogsSuccessfulMessage(jobExecutionDetails.length);
+
+      if (resultOffset !== 0) {
+        mutator.resultOffset.replace(resultOffset - RESULT_COUNT_INCREMENT);
+        setTimeout(() => mutator.resultOffset.replace(resultOffset));
+      }
 
       mutator.usersList.reset();
       mutator.jobProfilesList.reset();
@@ -428,13 +435,19 @@ class ViewAllLogs extends Component {
     } = this.props;
     const { isLogsDeletionInProgress } = this.state;
 
+    let isAllSelectedByValues = isAllSelected;
+    if (isAllSelected) {
+      const nonEmptyRecords = resources.records.records.map(record => record.id).filter(Boolean);
+      isAllSelectedByValues = isEqual(Array.from(selectedRecords), nonEmptyRecords);
+    }
+
     const { DELETE_LOGS } = permissions;
     const logsNumber = selectedRecords.size;
     const hasLogsSelected = logsNumber > 0;
 
     const resultsFormatter = this.getResultsFormatter();
     const columnMapping = getJobLogsListColumnMapping({
-      isAllSelected,
+      isAllSelected: isAllSelectedByValues,
       handleSelectAllCheckbox,
       checkboxDisabled: isLogsDeletionInProgress,
     });
