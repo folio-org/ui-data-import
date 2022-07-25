@@ -213,9 +213,6 @@ class ViewAllLogs extends Component {
       if (this.state.isLogsDeletionInProgress) {
         this.setState({ isLogsDeletionInProgress: false });
       }
-
-      this.props.mutator.usersList.GET();
-      this.props.mutator.jobProfilesList.GET();
     }
   }
 
@@ -344,6 +341,12 @@ class ViewAllLogs extends Component {
         mutator.resultOffset.replace(resultOffset - RESULT_COUNT_INCREMENT);
         setTimeout(() => mutator.resultOffset.replace(resultOffset));
       }
+
+      mutator.usersList.reset();
+      mutator.jobProfilesList.reset();
+
+      mutator.usersList.GET();
+      mutator.jobProfilesList.GET();
     };
 
     // disable all checkboxes while deletion in progress
