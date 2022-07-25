@@ -8,6 +8,7 @@
 * Long titles don't fit in the green popup notification about a profile (UIDATIMP-1208)
 * Log navigation problem when filtered error list is closed (UIDATIMP-1207)
 * View all logs: filters are not updated after logs deletion (UIDATIMP-1219)
+* View all logs: User and Job filter contains only 10 records (UIDATIMP-1220)
 
 ## [5.2.0](https://github.com/folio-org/ui-data-import/tree/v5.2.0) (2022-07-08)
 
