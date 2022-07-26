@@ -6,7 +6,7 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 import '../../../test/jest/__mock__';
 import {
   jobExecutions,
-  jobsLogs,
+  RUNNING_JOBS_LENGTH,
 } from '../../../test/bigtest/mocks';
 import { translationsProperties } from '../../../test/jest/helpers';
 
@@ -27,8 +27,8 @@ global.fetch = jest.fn();
 
 const defaultContext = {
   hasLoaded: true,
-  jobs: [],
-  logs: jobsLogs,
+  jobs: jobExecutions,
+  logs: [],
 };
 
 const renderJobs = (context = defaultContext) => {
@@ -43,11 +43,6 @@ const renderJobs = (context = defaultContext) => {
 
 describe('<Jobs>', () => {
   beforeEach(() => {
-    jest.setTimeout(5 * DEFAULT_TIMEOUT_BEFORE_JOB_DELETION);
-  });
-
-  afterEach(() => {
-    jest.clearAllTimers();
     global.fetch.mockClear();
   });
 
@@ -55,76 +50,42 @@ describe('<Jobs>', () => {
     delete global.fetch;
   });
 
-  it('should contain "Previews" and "Running" section', () => {
+  it('should contain "Running" section', () => {
     const { getByText } = renderJobs();
 
-    expect(getByText('Previews')).toBeInTheDocument();
     expect(getByText('Running')).toBeInTheDocument();
   });
 
-  it('"Preview" and "Running" sections open by default', () => {
+  it('"Running" section should be open by default', () => {
     const { getByRole } = renderJobs();
 
-    expect(getByRole('button', {
-      name: /previews/i,
-      expanded: true,
-    }));
-
-    expect(getByRole('button', {
-      name: /running/i,
-      expanded: true,
-    }));
+    expect(getByRole('button', { name: /running/i, expanded: true }));
   });
 
   it('should have correct job items amount', () => {
-    const { getAllByRole } = renderJobs({
-      ...defaultContext,
-      jobs: jobExecutions,
-    });
+    const { getAllByRole } = renderJobs();
 
-    expect(getAllByRole('listitem').length).toBe(jobExecutions.length);
+    expect(getAllByRole('listitem').length).toBe(RUNNING_JOBS_LENGTH);
   });
 
-  describe('"Previews section"', () => {
-    it('should render "Previews" toggle button', () => {
-      const { getByRole } = renderJobs();
-
-      expect(getByRole('button', { name: /previews/i })).toBeInTheDocument();
-    });
-
-    describe('when job data is empty', () => {
-      it('should render empty message', () => {
-        const { getByText } = renderJobs();
-
-        expect(getByText('No previews to show')).toBeInTheDocument();
-      });
-    });
-
+  describe('"Running" section', () => {
     describe('when clicked delete button', () => {
-      it('should handle deletion errors', async done => {
-        const { getAllByRole } = renderJobs({
-          ...defaultContext,
-          jobs: jobExecutions,
-        });
+      it('should handle deletion errors', () => {
+        const { getAllByRole } = renderJobs();
 
         fireEvent.click(getAllByRole('button', { name: /delete/i })[0]);
 
-        new Promise(r => setTimeout(r, DEFAULT_TIMEOUT_BEFORE_JOB_DELETION)).then(() => {
+        return new Promise(r => setTimeout(r, DEFAULT_TIMEOUT_BEFORE_JOB_DELETION)).then(() => {
           expect(deleteFile).toHaveBeenCalled();
-          // eslint-disable-next-line no-console
-          expect(console.error).toHaveBeenCalledWith(new Error('Something went wrong!'));
-          done();
+          expect(console.error).toHaveBeenCalledWith(new Error('Something went wrong!')); // eslint-disable-line no-console
         });
-      });
+      }, DEFAULT_TIMEOUT_BEFORE_JOB_DELETION);
 
       it('correct text should be rendered', () => {
         const {
           getByText,
           getAllByRole,
-        } = renderJobs({
-          ...defaultContext,
-          jobs: jobExecutions,
-        });
+        } = renderJobs();
 
         fireEvent.click(getAllByRole('button', { name: /delete/i })[0]);
 
@@ -137,10 +98,7 @@ describe('<Jobs>', () => {
         const {
           queryByText,
           getAllByRole,
-        } = renderJobs({
-          ...defaultContext,
-          jobs: jobExecutions,
-        });
+        } = renderJobs();
 
         fireEvent.click(getAllByRole('button', { name: /delete/i })[0]);
         fireEvent.click(getAllByRole('button', { name: /undo/i })[0]);
