@@ -10,6 +10,6 @@ export const Jobs = memo(() => (
   <div className={css.jobsPane}>
     <AccordionSet>
       <RunningJobs />
-    </AccordionSet>-
+    </AccordionSet>
   </div>
 ));

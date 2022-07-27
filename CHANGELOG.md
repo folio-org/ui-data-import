@@ -2,6 +2,9 @@
 
 ## **5.2.1** (in progress)
 
+### Features added:
+* Make UI changes to the Data Import landing page (UIDATIMP-1218)
+
 ### Bugs fixed:
 * Long titles do not fit in the confirmation modal window header (UIDATIMP-1196)
 * Long name doesn't fit in the header of profiles on the settings page (UIDATIMP-1206)
@@ -11,7 +14,7 @@
 
 ## [5.2.0](https://github.com/folio-org/ui-data-import/tree/v5.2.0) (2022-07-08)
 
-### Features added
+### Features added:
 * Add checkboxes and delete action to Data Import landing page (UIDATIMP-1077)
 * Add Admin note field to the Instance field mapping profile: Create/Edit (UIDATIMP-1118)
 * Add Admin note field to the Holdings field mapping profile: Create/Edit (UIDATIMP-1119)
