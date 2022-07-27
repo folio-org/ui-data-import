@@ -1,5 +1,8 @@
 import React from 'react';
-import { fireEvent, within } from '@testing-library/react';
+import {
+  fireEvent,
+  within,
+} from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -77,7 +80,7 @@ describe('Jobs', () => {
     expect(getByText('Running')).toBeInTheDocument();
   });
 
-  it('"Running" section should be open by default', () => {
+  it('"Running" section accordion should be open by default', () => {
     const { getByRole } = renderJobs();
 
     expect(getByRole('button', { name: /running/i, expanded: true }));
