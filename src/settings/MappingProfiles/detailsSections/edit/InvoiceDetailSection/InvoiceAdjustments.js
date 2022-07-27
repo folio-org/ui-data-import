@@ -46,6 +46,7 @@ import {
   INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS,
   INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS,
   BOOLEAN_ACTIONS,
+  RELATION_TO_TOTAL_OPTIONS,
   validateQuotedString,
 } from '../../../../../utils';
 
@@ -61,16 +62,30 @@ export const InvoiceAdjustments = ({
   const { formatMessage } = useIntl();
 
   const [isFundDistribution, setIsFundDistribution] = useState(false);
+  const [isNotProratedSelected, setIsNotProratedSelected] = useState(false);
+  const [isSeparateFromSelected, setIsSeparateFromSelected] = useState(false);
 
-  const prorateList = createOptionsList(INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS, formatMessage);
-  const relationToTotalList = createOptionsList(INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS, formatMessage);
+  const prorateList = createOptionsList(INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS, formatMessage)
+    .filter(option => !(isSeparateFromSelected && option.value === PRORATE_OPTIONS.NOT_PRORATED));
+  const relationToTotalList = createOptionsList(INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS, formatMessage)
+    .filter(option => !(isNotProratedSelected && option.value === RELATION_TO_TOTAL_OPTIONS.SEPARATE_FORM));
 
   const handleProRateChange = index => value => {
     if (value === `"${PRORATE_OPTIONS.NOT_PRORATED}"`) {
       setIsFundDistribution(true);
+      setIsNotProratedSelected(true);
     } else {
       setIsFundDistribution(false);
       setReferenceTables(getInnerSubfieldsPath(15, index, 6), []);
+      setIsNotProratedSelected(false);
+    }
+  };
+
+  const handleRelationToTotalChange = () => value => {
+    if (value === `"${RELATION_TO_TOTAL_OPTIONS.SEPARATE_FORM}"`) {
+      setIsSeparateFromSelected(true);
+    } else {
+      setIsSeparateFromSelected(false);
     }
   };
 
@@ -251,6 +266,7 @@ export const InvoiceAdjustments = ({
               isRemoveValueAllowed
               wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
               acceptedValuesList={relationToTotalList}
+              onChange={handleRelationToTotalChange()}
               validation={validateQuotedString}
               okapi={okapi}
             />
