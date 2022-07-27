@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **5.2.1** (in progress)
+## [5.2.1](https://github.com/folio-org/ui-data-import/tree/v5.2.1) (2022-07-27)
 
 ### Bugs fixed:
 * Long titles do not fit in the confirmation modal window header (UIDATIMP-1196)
