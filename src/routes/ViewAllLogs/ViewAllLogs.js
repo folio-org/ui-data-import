@@ -69,6 +69,8 @@ const {
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
+const USERS_LIMIT_PER_REQUEST = 500;
+const JOB_PROFILES_LIMIT_PER_REQUEST = 1000;
 
 const entityKey = 'jobLogs';
 
@@ -127,6 +129,7 @@ export const ViewAllLogsManifest = Object.freeze({
     path: 'metadata-provider/jobExecutions/users',
     throwErrors: false,
     accumulate: true,
+    perRequest: USERS_LIMIT_PER_REQUEST,
   },
   jobProfilesList: {
     type: 'okapi',
@@ -134,6 +137,7 @@ export const ViewAllLogsManifest = Object.freeze({
     path: 'metadata-provider/jobExecutions/jobProfiles',
     throwErrors: false,
     accumulate: true,
+    perRequest: JOB_PROFILES_LIMIT_PER_REQUEST,
   },
 });
 
@@ -158,6 +162,7 @@ class ViewAllLogs extends Component {
     history: PropTypes.shape({ push: PropTypes.func.isRequired }),
     // eslint-disable-next-line react/no-unused-prop-types
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
+    refreshRemote: PropTypes.func,
   };
 
   static defaultProps = {
@@ -221,7 +226,7 @@ class ViewAllLogs extends Component {
       setList,
     } = this.props;
 
-    setList(records);
+    setList(records?.filter(Boolean));
   }
 
   getSearchableIndexes() {
@@ -319,21 +324,27 @@ class ViewAllLogs extends Component {
         selectedRecords,
         deselectAll,
       },
-      mutator,
-      resources,
+      refreshRemote,
     } = this.props;
+
 
     const onSuccess = result => {
       const { jobExecutionDetails } = result;
-      const query = { ...resources.query };
+      const {
+        mutator,
+        resources: { resultOffset },
+      } = this.props;
 
       // force shouldRefresh method
-      mutator.query.replace('');
-      mutator.query.replace(query);
-
+      refreshRemote(this.props);
       deselectAll();
       this.hideDeleteConfirmation();
       this.showDeleteLogsSuccessfulMessage(jobExecutionDetails.length);
+
+      if (resultOffset !== 0) {
+        mutator.resultOffset.replace(resultOffset - RESULT_COUNT_INCREMENT);
+        setTimeout(() => mutator.resultOffset.replace(resultOffset));
+      }
 
       mutator.usersList.reset();
       mutator.jobProfilesList.reset();
@@ -424,13 +435,19 @@ class ViewAllLogs extends Component {
     } = this.props;
     const { isLogsDeletionInProgress } = this.state;
 
+    let isAllSelectedByValues = isAllSelected;
+    if (isAllSelected) {
+      const nonEmptyRecords = resources.records.records.map(record => record.id).filter(Boolean);
+      isAllSelectedByValues = isEqual(Array.from(selectedRecords), nonEmptyRecords);
+    }
+
     const { DELETE_LOGS } = permissions;
     const logsNumber = selectedRecords.size;
     const hasLogsSelected = logsNumber > 0;
 
     const resultsFormatter = this.getResultsFormatter();
     const columnMapping = getJobLogsListColumnMapping({
-      isAllSelected,
+      isAllSelected: isAllSelectedByValues,
       handleSelectAllCheckbox,
       checkboxDisabled: isLogsDeletionInProgress,
     });
