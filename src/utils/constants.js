@@ -502,7 +502,7 @@ export const PRORATE_OPTIONS = {
 export const RELATION_TO_TOTAL_OPTIONS = {
   IN_ADDITION_TO: 'In addition to',
   INCLUDED_IN: 'Included in',
-  SEPARATE_FORM: 'Separate from',
+  SEPARATE_FROM: 'Separate from',
 };
 
 export const ACTION_OPTIONS = [
@@ -650,7 +650,7 @@ export const INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS = [
     value: RELATION_TO_TOTAL_OPTIONS.INCLUDED_IN,
     label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.IncludedIn',
   }, {
-    value: RELATION_TO_TOTAL_OPTIONS.SEPARATE_FORM,
+    value: RELATION_TO_TOTAL_OPTIONS.SEPARATE_FROM,
     label: 'ui-data-import.settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.SeparateFrom',
   },
 ];

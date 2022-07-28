@@ -36,6 +36,7 @@ import {
   getRepeatableFieldName,
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
+  filterOptionsList,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -62,30 +63,37 @@ export const InvoiceAdjustments = ({
   const { formatMessage } = useIntl();
 
   const [isFundDistribution, setIsFundDistribution] = useState(false);
-  const [isNotProratedSelected, setIsNotProratedSelected] = useState(false);
-  const [isSeparateFromSelected, setIsSeparateFromSelected] = useState(false);
+  const [canShowNotProratedOption, setCanShowNotProratedOption] = useState(true);
+  const [canShowSeparateFromOption, setCanShowSeparateFromOption] = useState(true);
 
-  const prorateList = createOptionsList(INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS, formatMessage)
-    .filter(option => !(isSeparateFromSelected && option.value === PRORATE_OPTIONS.NOT_PRORATED));
-  const relationToTotalList = createOptionsList(INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS, formatMessage)
-    .filter(option => !(isNotProratedSelected && option.value === RELATION_TO_TOTAL_OPTIONS.SEPARATE_FORM));
+  const prorateList = filterOptionsList(
+    createOptionsList(INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS, formatMessage),
+    [PRORATE_OPTIONS.NOT_PRORATED],
+    canShowNotProratedOption,
+  );
+
+  const relationToTotalList = filterOptionsList(
+    createOptionsList(INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS, formatMessage),
+    [RELATION_TO_TOTAL_OPTIONS.SEPARATE_FROM],
+    canShowSeparateFromOption,
+  );
 
   const handleProRateChange = index => value => {
     if (value === `"${PRORATE_OPTIONS.NOT_PRORATED}"`) {
       setIsFundDistribution(true);
-      setIsNotProratedSelected(true);
+      setCanShowSeparateFromOption(false);
     } else {
       setIsFundDistribution(false);
       setReferenceTables(getInnerSubfieldsPath(15, index, 6), []);
-      setIsNotProratedSelected(false);
+      setCanShowSeparateFromOption(true);
     }
   };
 
   const handleRelationToTotalChange = () => value => {
-    if (value === `"${RELATION_TO_TOTAL_OPTIONS.SEPARATE_FORM}"`) {
-      setIsSeparateFromSelected(true);
+    if (value === `"${RELATION_TO_TOTAL_OPTIONS.SEPARATE_FROM}"`) {
+      setCanShowNotProratedOption(false);
     } else {
-      setIsSeparateFromSelected(false);
+      setCanShowNotProratedOption(true);
     }
   };
 

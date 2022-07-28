@@ -233,3 +233,15 @@ export const renderCheckbox = (labelPathId, fieldValue) => (
     )}
   </FormattedMessage>
 );
+
+/**
+ * Removes disallowed options from options list
+ *
+ * @param {Array<{value: string, label: string}>} optionsList
+ * @param {Array<string>} disallowedOptions
+ * @param {boolean} canShowAll
+ * @return {Array<{value: string, label: string}>}
+ */
+export const filterOptionsList = (optionsList = [], disallowedOptions = [], canShowAll = false) => {
+  return canShowAll ? optionsList : optionsList.filter(option => !disallowedOptions.includes(option.value));
+};
