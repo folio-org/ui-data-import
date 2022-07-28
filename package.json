@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -19,6 +19,7 @@
     "test": "yarn run test:unit",
     "lint": "eslint .",
     "lintfix": "eslint . --fix",
+    "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-data-import ./translations/ui-data-import/compiled"
   },
   "devDependencies": {
