@@ -18,7 +18,7 @@ const renderFileItem = ({
   name = fileName,
   size = fileSize,
   onDelete,
-  onUndoDelete,
+  onCancel,
   status,
   uploadedDate,
   loading,
@@ -32,7 +32,7 @@ const renderFileItem = ({
       status={status}
       uploadedDate={uploadedDate}
       onDelete={onDelete}
-      onUndoDelete={onUndoDelete}
+      onCancel={onCancel}
       loading={loading}
       isSnapshotMode={isSnapshotMode}
     />
@@ -61,7 +61,7 @@ describe('FileItem component', () => {
       it('should render the file name', () => {
         const { getByText } = renderFileItem({ status: FILE_STATUSES.NEW });
 
-        expect(getByText('test_file')).toBeDefined();
+        expect(getByText(fileName)).toBeDefined();
       });
     });
 
@@ -79,7 +79,7 @@ describe('FileItem component', () => {
       it('should render the file name', () => {
         const { getByText } = renderFileItem({ status: FILE_STATUSES.UPLOADING });
 
-        expect(getByText('test_file')).toBeDefined();
+        expect(getByText(fileName)).toBeDefined();
       });
     });
 
@@ -113,7 +113,7 @@ describe('FileItem component', () => {
       it('should render the file name', () => {
         const { getByText } = renderFileItem({ status: FILE_STATUSES.UPLOADED });
 
-        expect(getByText('test_file')).toBeDefined();
+        expect(getByText(fileName)).toBeDefined();
       });
 
       it('should render the uploaded date', () => {
@@ -134,18 +134,18 @@ describe('FileItem component', () => {
       });
 
       describe('when clicking on Delete button', () => {
-        it('should delete the file', () => {
-          const onDelete = jest.fn();
+        it('should call a function to open the modal window', () => {
+          const onCancel = jest.fn();
           const { container } = renderFileItem({
             status: FILE_STATUSES.UPLOADED,
-            onDelete,
+            onCancel,
           });
 
-          const deleteButtonElement = container.querySelector('[ data-test-delete-button="true"]');
+          const cancelButtonElement = container.querySelector('[ data-test-delete-button="true"]');
 
-          fireEvent.click(deleteButtonElement);
+          fireEvent.click(cancelButtonElement);
 
-          expect(onDelete.mock.calls.length).toEqual(1);
+          expect(onCancel.mock.calls.length).toEqual(1);
         });
       });
     });
@@ -156,7 +156,7 @@ describe('FileItem component', () => {
       it('should render the file name', () => {
         const { getByText } = renderFileItem({ status: FILE_STATUSES.ERROR });
 
-        expect(getByText('test_file')).toBeDefined();
+        expect(getByText(fileName)).toBeDefined();
       });
     });
   });
@@ -166,7 +166,7 @@ describe('FileItem component', () => {
       it('should render the file name', () => {
         const { getByText } = renderFileItem({ status: FILE_STATUSES.ERROR_DEFINITION });
 
-        expect(getByText('test_file')).toBeDefined();
+        expect(getByText(fileName)).toBeDefined();
       });
 
       it('should render the error message', () => {
@@ -208,7 +208,7 @@ describe('FileItem component', () => {
       it('should render the file name', () => {
         const { getByText } = renderFileItem({ status: FILE_STATUSES.DELETING });
 
-        expect(getByText('test_file')).toBeDefined();
+        expect(getByText(fileName)).toBeDefined();
       });
 
       describe('when loading', () => {
@@ -225,32 +225,15 @@ describe('FileItem component', () => {
       });
 
       describe('when not loading', () => {
-        it('should render undo button', () => {
+        it('delete button should be hidden', () => {
           const { container } = renderFileItem({
             status: FILE_STATUSES.DELETING,
             loading: false,
           });
 
-          const undoDeleteButtonElement = container.querySelector('[data-test-undo-button="true"]');
+          const deleteButton = container.querySelector('[ data-test-delete-button="true"]');
 
-          expect(undoDeleteButtonElement).toBeDefined();
-        });
-
-        describe('when clicking on undo button', () => {
-          it('file deleting should be aborted', () => {
-            const onUndoDelete = jest.fn();
-            const { container } = renderFileItem({
-              status: FILE_STATUSES.DELETING,
-              loading: false,
-              onUndoDelete,
-            });
-
-            const undoDeleteButtonElement = container.querySelector('[data-test-undo-button="true"]');
-
-            fireEvent.click(undoDeleteButtonElement);
-
-            expect(onUndoDelete.mock.calls.length).toEqual(1);
-          });
+          expect(deleteButton).toBeNull();
         });
       });
     });
