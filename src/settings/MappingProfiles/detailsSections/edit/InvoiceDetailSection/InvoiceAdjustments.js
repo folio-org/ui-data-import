@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   useIntl,
@@ -36,7 +36,6 @@ import {
   getRepeatableFieldName,
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
-  filterOptionsList,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -62,41 +61,6 @@ export const InvoiceAdjustments = ({
 }) => {
   const { formatMessage } = useIntl();
 
-  const [isFundDistribution, setIsFundDistribution] = useState(false);
-  const [canShowNotProratedOption, setCanShowNotProratedOption] = useState(true);
-  const [canShowSeparateFromOption, setCanShowSeparateFromOption] = useState(true);
-
-  const prorateList = filterOptionsList(
-    createOptionsList(INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS, formatMessage),
-    [PRORATE_OPTIONS.NOT_PRORATED],
-    canShowNotProratedOption,
-  );
-
-  const relationToTotalList = filterOptionsList(
-    createOptionsList(INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS, formatMessage),
-    [RELATION_TO_TOTAL_OPTIONS.SEPARATE_FROM],
-    canShowSeparateFromOption,
-  );
-
-  const handleProRateChange = index => value => {
-    if (value === `"${PRORATE_OPTIONS.NOT_PRORATED}"`) {
-      setIsFundDistribution(true);
-      setCanShowSeparateFromOption(false);
-    } else {
-      setIsFundDistribution(false);
-      setReferenceTables(getInnerSubfieldsPath(15, index, 6), []);
-      setCanShowSeparateFromOption(true);
-    }
-  };
-
-  const handleRelationToTotalChange = () => value => {
-    if (value === `"${RELATION_TO_TOTAL_OPTIONS.SEPARATE_FROM}"`) {
-      setCanShowNotProratedOption(false);
-    } else {
-      setCanShowNotProratedOption(true);
-    }
-  };
-
   const onAdjustmentAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
     const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
 
@@ -108,7 +72,7 @@ export const InvoiceAdjustments = ({
     handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
   };
 
-  const renderFundDistributionFields = (mappingFieldIndex, mappingSubfieldFieldIndex, mappingSubfieldIndex) => {
+  const renderFundDistributionFields = (mappingFieldIndex, mappingSubfieldFieldIndex, mappingSubfieldIndex, isFundDistribution) => {
     const currentInitialFundDistribution = initialFundDistribution[mappingSubfieldFieldIndex];
 
     const fundDistributions = adjustments[mappingSubfieldIndex].fields[mappingSubfieldFieldIndex].subfields;
@@ -202,6 +166,27 @@ export const InvoiceAdjustments = ({
   };
 
   const renderAdjustment = (field, index) => {
+    const prorateField = field.fields[3];
+    const relationToTotalField = field.fields[4];
+
+    const isFundDistribution = prorateField.value === `"${PRORATE_OPTIONS.NOT_PRORATED}"`;
+
+    const prorateList =
+      createOptionsList(INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS, formatMessage).filter(({ value }) => (
+        value !== PRORATE_OPTIONS.NOT_PRORATED || relationToTotalField.value !== `"${RELATION_TO_TOTAL_OPTIONS.SEPARATE_FROM}"`
+      ));
+
+    const relationToTotalList =
+      createOptionsList(INOVOICE_ADJUSTMENTS_RELATION_TO_TOTAL_OPTIONS, formatMessage).filter(({ value }) => (
+        value !== RELATION_TO_TOTAL_OPTIONS.SEPARATE_FROM || prorateField.value !== `"${PRORATE_OPTIONS.NOT_PRORATED}"`
+      ));
+
+    const handleProRateChange = value => {
+      if (value !== `"${PRORATE_OPTIONS.NOT_PRORATED}"`) {
+        setReferenceTables(getInnerSubfieldsPath(15, index, 6), []);
+      }
+    };
+
     const trashButton = (
       <IconButton
         data-test-repeatable-field-remove-item-button
@@ -259,7 +244,7 @@ export const InvoiceAdjustments = ({
               isRemoveValueAllowed
               wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
               acceptedValuesList={prorateList}
-              onChange={handleProRateChange(index)}
+              onChange={handleProRateChange}
               validation={validateQuotedString}
               okapi={okapi}
             />
@@ -274,7 +259,6 @@ export const InvoiceAdjustments = ({
               isRemoveValueAllowed
               wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
               acceptedValuesList={relationToTotalList}
-              onChange={handleRelationToTotalChange()}
               validation={validateQuotedString}
               okapi={okapi}
             />
@@ -297,7 +281,7 @@ export const InvoiceAdjustments = ({
         </Row>
         <Row left="xs">
           <Col xs={12}>
-            {renderFundDistributionFields(15, 6, index)}
+            {renderFundDistributionFields(15, 6, index, isFundDistribution)}
           </Col>
         </Row>
       </Card>
