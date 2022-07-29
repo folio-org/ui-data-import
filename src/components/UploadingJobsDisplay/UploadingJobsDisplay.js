@@ -55,7 +55,6 @@ export class UploadingJobsDisplay extends Component {
       block: PropTypes.func.isRequired,
       push: PropTypes.func.isRequired,
       replace: PropTypes.func.isRequired,
-      go: PropTypes.func,
     }).isRequired,
     location: PropTypes.oneOfType([
       PropTypes.shape({
