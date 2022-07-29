@@ -2,6 +2,9 @@
 
 ## **5.2.2** (in progress)
 
+### Features added:
+* Make UI changes to the Data Import landing page (UIDATIMP-1218)
+
 ### Bugs fixed:
 * View all logs: filters are not updated after logs deletion (UIDATIMP-1219)
 * View all logs: User and Job filter contains only 10 records (UIDATIMP-1220)
@@ -18,7 +21,7 @@
 
 ## [5.2.0](https://github.com/folio-org/ui-data-import/tree/v5.2.0) (2022-07-08)
 
-### Features added
+### Features added:
 * Add checkboxes and delete action to Data Import landing page (UIDATIMP-1077)
 * Add Admin note field to the Instance field mapping profile: Create/Edit (UIDATIMP-1118)
 * Add Admin note field to the Holdings field mapping profile: Create/Edit (UIDATIMP-1119)
