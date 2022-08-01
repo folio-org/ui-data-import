@@ -13,7 +13,7 @@ import css from './FileItem.css';
 export const FileItem = memo(({
   uiKey,
   status = FILE_STATUSES.UPLOADING,
-  onCancel,
+  onCancelImport,
   onDelete = noop,
   name,
   isSnapshotMode = false,
@@ -24,7 +24,7 @@ export const FileItem = memo(({
   loading = false,
 }) => {
   const deleteFile = () => onDelete(uiKey, status);
-  const cancelImport = () => onCancel(uiKey);
+  const cancelImport = () => onCancelImport(uiKey);
 
   const meta = getFileItemMeta({
     name,
@@ -70,5 +70,5 @@ FileItem.propTypes = {
   uploadedDate: PropTypes.string,
   loading: PropTypes.bool,
   onDelete: PropTypes.func,
-  onCancel: PropTypes.func,
+  onCancelImport: PropTypes.func,
 };

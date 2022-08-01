@@ -250,8 +250,6 @@ describe('UploadingjobsDisplay component', () => {
 
       window.dispatchEvent(new Event('beforeunload'));
 
-      // history.push({ location: { pathname: '/settings' } });
-
       await waitFor(() => expect(getByText('Uploading')).toBeInTheDocument());
     });
 

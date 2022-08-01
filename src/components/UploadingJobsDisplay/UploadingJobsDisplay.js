@@ -83,7 +83,7 @@ export class UploadingJobsDisplay extends Component {
   async componentDidMount() {
     this.mounted = true;
     this.fileRemovalMap = {
-      [FILE_STATUSES.DELETING]: this.handleDeleteSuccessfullyUploadedFile,
+      [FILE_STATUSES.DELETING]: this.deleteFileAPI,
       [FILE_STATUSES.ERROR]: this.deleteFileAPI,
       [FILE_STATUSES.ERROR_DEFINITION]: this.deleteFileFromState,
     };
@@ -407,9 +407,9 @@ export class UploadingJobsDisplay extends Component {
     }, resolve);
   });
 
-  handleDeleteSuccessfullyUploadedFile = (fileKey, fileStatus) => {
+  /* handleDeleteSuccessfullyUploadedFile = (fileKey, fileStatus) => {
     this.deleteFileAPI(fileKey, fileStatus);
-  };
+  }; */
 
   renderFiles() {
     const { files } = this.state;
@@ -448,7 +448,7 @@ export class UploadingJobsDisplay extends Component {
           uploadedValue={uploadedValue}
           errorMsgTranslationID={errorMsgTranslationID}
           uploadedDate={uploadedDate}
-          onCancel={this.openCancelUploadModal}
+          onCancelImport={this.openCancelUploadModal}
           onDelete={this.handleDeleteFile}
         />
       );
@@ -467,7 +467,7 @@ export class UploadingJobsDisplay extends Component {
     this.setState({ renderLeaveModal: false });
   };
 
-  openCancelUploadModal = (fileKey) => {
+  openCancelUploadModal = fileKey => {
     this.setState({ renderCancelUploadFileModal: true });
     this.updateFileState(fileKey, { status: FILE_STATUSES.DELETING });
     this.selectedFile = fileKey;
