@@ -21,17 +21,14 @@ import {
   IconButton,
   Callout,
   FormattedDate,
-  FormattedTime,
+  FormattedTime, ConfirmationModal,
 } from '@folio/stripes/components';
 import {
   Progress,
   createOkapiHeaders,
   createUrl,
 } from '@folio/stripes-data-transfer-components';
-import {
-  permissions,
-  DEFAULT_TIMEOUT_BEFORE_JOB_DELETION,
-} from '../../../../utils';
+import { permissions } from '../../../../utils';
 
 import { jobMetaTypes } from './jobMetaTypes';
 import { jobExecutionPropTypes } from './jobExecutionPropTypes';
@@ -52,14 +49,18 @@ export class Job extends Component {
 
   static defaultProps = { handlePreview: noop };
 
-  state = { deletingInProgress: false };
+  state = {
+    deletionInProgress: false,
+    showDeleteConfirmation: false,
+  };
 
-  componentWillUnmount() {
-    clearTimeout(this.deleteJobTimeout);
-    this.deleteJobTimeout = null;
+  showDeleteConfirmation = () => {
+    this.setState({ showDeleteConfirmation: true });
   }
 
-  deleteJobTimeout = null;
+  hideDeleteConfirmation = () => {
+    this.setState({ showDeleteConfirmation: false });
+  };
 
   calloutRef = createRef();
 
@@ -98,7 +99,7 @@ export class Job extends Component {
         createOkapiHeaders(okapi),
       );
     } catch (error) {
-      this.setState({ deletingInProgress: false });
+      this.setState({ deletionInProgress: false });
 
       const errorMessage = (
         <FormattedMessage
@@ -116,20 +117,13 @@ export class Job extends Component {
     }
   };
 
-  handleDeleteJob = () => {
+  handleDeleteJob = async () => {
     const { job } = this.props;
 
-    this.setState({ deletingInProgress: true });
+    this.setState({ deletionInProgress: true });
+    this.hideDeleteConfirmation();
 
-    this.deleteJobTimeout = setTimeout(() => this.deleteJob(job), DEFAULT_TIMEOUT_BEFORE_JOB_DELETION);
-  };
-
-  handleUndoDeleteJob = () => {
-    this.setState({ deletingInProgress: false });
-
-    clearTimeout(this.deleteJobTimeout);
-
-    this.deleteJobTimeout = null;
+    await this.deleteJob(job);
   };
 
   render() {
@@ -138,7 +132,10 @@ export class Job extends Component {
       handlePreview,
     } = this.props;
 
-    const { deletingInProgress } = this.state;
+    const {
+      showDeleteConfirmation,
+      deletionInProgress,
+    } = this.state;
 
     const {
       jobProfileInfo: { name },
@@ -156,17 +153,18 @@ export class Job extends Component {
     } = job;
     const jobMeta = jobMetaTypes[uiStatus](job);
     const dateLabelId = `ui-data-import.${jobMeta.dateLabel}Running`;
+    const isDeletionInProgress = showDeleteConfirmation || deletionInProgress;
 
     return (
       <li
         data-test-job-item
-        className={classNames(css.job, deletingInProgress && css.deletingInProgress)}
+        className={classNames(css.job, isDeletionInProgress && css.deletingInProgress)}
       >
         <div className={classNames(css.delimiter, css.jobHeader)}>
           <span>{name}</span>
           <span>
             {fileName}
-            {deletingInProgress && (
+            {isDeletionInProgress && (
               <>
               &nbsp;
                 <FormattedMessage
@@ -186,20 +184,12 @@ export class Job extends Component {
                 size="small"
                 ariaLabel={label}
                 className={classNames(css.icon, css.deleteIcon)}
-                onClick={this.handleDeleteJob}
+                onClick={this.showDeleteConfirmation}
               />
             )}
           </FormattedMessage>
         </IfPermission>
-        <button
-          data-test-undo-button
-          type="button"
-          className={classNames(css.icon, css.undoIcon)}
-          onClick={this.handleUndoDeleteJob}
-        >
-          <FormattedMessage id="ui-data-import.undo" />
-        </button>
-        {!deletingInProgress && (
+        {!isDeletionInProgress && (
           <>
             <div className={css.delimiter}>
               <span>{hrId}</span>
@@ -253,6 +243,20 @@ export class Job extends Component {
           </>
         )}
         <Callout ref={this.calloutRef} />
+        <ConfirmationModal
+          id="delete-selected-logs-modal"
+          open={showDeleteConfirmation}
+          heading={<FormattedMessage id="ui-data-import.modal.runningJobs.header" />}
+          message={[
+            <FormattedMessage id="ui-data-import.modal.runningJobs.message.header" />,
+            <FormattedMessage id="ui-data-import.modal.runningJobs.message.body" values={{ br: <br /> }} />,
+          ]}
+          bodyTag="div"
+          confirmLabel={<FormattedMessage id="ui-data-import.modal.runningJobs.confirm" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.modal.runningJobs.cancel" />}
+          onConfirm={this.handleDeleteJob}
+          onCancel={this.hideDeleteConfirmation}
+        />
       </li>
     );
   }
