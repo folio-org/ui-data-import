@@ -18,7 +18,7 @@ const renderFileItem = ({
   name = fileName,
   size = fileSize,
   onDelete,
-  onCancel,
+  onCancelImport,
   status,
   uploadedDate,
   loading,
@@ -32,7 +32,7 @@ const renderFileItem = ({
       status={status}
       uploadedDate={uploadedDate}
       onDelete={onDelete}
-      onCancel={onCancel}
+      onCancelImport={onCancelImport}
       loading={loading}
       isSnapshotMode={isSnapshotMode}
     />
@@ -135,17 +135,17 @@ describe('FileItem component', () => {
 
       describe('when clicking on Delete button', () => {
         it('should call a function to open the modal window', () => {
-          const onCancel = jest.fn();
+          const onCancelImport = jest.fn();
           const { container } = renderFileItem({
             status: FILE_STATUSES.UPLOADED,
-            onCancel,
+            onCancelImport,
           });
 
           const cancelButtonElement = container.querySelector('[ data-test-delete-button="true"]');
 
           fireEvent.click(cancelButtonElement);
 
-          expect(onCancel.mock.calls.length).toEqual(1);
+          expect(onCancelImport.mock.calls.length).toEqual(1);
         });
       });
     });
