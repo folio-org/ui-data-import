@@ -407,10 +407,6 @@ export class UploadingJobsDisplay extends Component {
     }, resolve);
   });
 
-  /* handleDeleteSuccessfullyUploadedFile = (fileKey, fileStatus) => {
-    this.deleteFileAPI(fileKey, fileStatus);
-  }; */
-
   renderFiles() {
     const { files } = this.state;
 
