@@ -41,7 +41,7 @@ export const getFileItemMeta = ({
   uploadedDate,
   loading,
   deleteFile,
-  undoDeleteFile,
+  cancelImport,
 }) => {
   const defaultFileMeta = {
     renderProgress: noop,
@@ -110,7 +110,7 @@ export const getFileItemMeta = ({
                   size="small"
                   ariaLabel={label}
                   className={css.icon}
-                  onClick={deleteFile}
+                  onClick={cancelImport}
                 />
               )}
             </FormattedMessage>
@@ -161,27 +161,12 @@ export const getFileItemMeta = ({
         ...defaultFileMeta,
         fileWrapperClassName: css.fileItemDanger,
         renderHeading: () => (
-          <>
-            <span className={css.fileItemHeaderName}>
-              <FormattedMessage
-                id="ui-data-import.deletedFile"
-                values={{ name: <strong>{name}</strong> }}
-              />
-            </span>
-            {!loading
-              ? (
-                <button
-                  data-test-undo-button
-                  type="button"
-                  className={classNames(css.icon, css.undoIcon)}
-                  onClick={undoDeleteFile}
-                >
-                  <FormattedMessage id="ui-data-import.undo" />
-                </button>
-              )
-              : <Loading />
-            }
-          </>
+          <span className={css.fileItemHeaderName}>
+            <FormattedMessage
+              id="ui-data-import.willDeleteFile"
+              values={{ name: <strong>{name}</strong> }}
+            />
+          </span>
         ),
       };
     }
