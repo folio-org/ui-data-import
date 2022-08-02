@@ -19,10 +19,7 @@ import {
 import { UploadingJobsContext } from '../../UploadingJobsContextProvider';
 import { UploadingJobsDisplay } from '../UploadingJobsDisplay';
 
-import {
-  DEFAULT_TIMEOUT_BEFORE_JOB_DELETION,
-  FILE_STATUSES,
-} from '../../../utils';
+import { FILE_STATUSES } from '../../../utils';
 
 jest.mock('../../../utils/upload', () => ({
   ...jest.requireActual('../../../utils/upload'),
@@ -87,13 +84,8 @@ const renderUploadingJobsDisplay = (context, stateField) => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('<UploadingjobsDisplay>', () => {
-  beforeEach(() => {
-    jest.setTimeout(10 * DEFAULT_TIMEOUT_BEFORE_JOB_DELETION);
-  });
-
+describe('UploadingjobsDisplay component', () => {
   afterEach(() => {
-    jest.clearAllTimers();
     global.fetch.mockClear();
     mockConsoleError.mockReset();
   });
@@ -120,7 +112,7 @@ describe('<UploadingjobsDisplay>', () => {
   });
 
   describe('when uploaded successfully', () => {
-    it('renders <JobProfiles>', async () => {
+    it('renders JobProfiles component', async () => {
       const { getByText } = renderUploadingJobsDisplay({
         ...defaultContext,
         uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.UPLOADED }] },
@@ -131,7 +123,7 @@ describe('<UploadingjobsDisplay>', () => {
   });
 
   describe('when clicked delete button', () => {
-    it('shows undo button', async () => {
+    it('modal window should be shown', async () => {
       const {
         findByText,
         getByRole,
@@ -151,39 +143,78 @@ describe('<UploadingjobsDisplay>', () => {
 
       fireEvent.click(deleteButton);
 
-      const undoBtn = await findByText('Undo');
+      const modalTitle = await findByText('Delete uploaded file?');
 
-      expect(undoBtn).toBeDefined();
+      expect(modalTitle).toBeDefined();
+    });
+
+    describe('when cancel deletion', () => {
+      it('file should not be deleted', async () => {
+        const {
+          findByText,
+          getByRole,
+          getByText,
+        } = renderUploadingJobsDisplay({
+          ...defaultContext,
+          uploadDefinition: {
+            fileDefinitions: [{
+              status: FILE_STATUSES.UPLOADED,
+              name: 'CatShip.mrc',
+            }],
+          },
+        });
+
+        expect(await findByText('CatShip.mrc')).toBeDefined();
+
+        const deleteButton = getByRole('button', { name: /delete/i });
+
+        fireEvent.click(deleteButton);
+
+        expect(await findByText('Delete uploaded file?')).toBeDefined();
+
+        const cancelButton = getByText('No, do not delete');
+        await waitFor(() => fireEvent.click(cancelButton));
+
+        expect(await findByText('CatShip.mrc')).toBeDefined();
+      });
+    });
+
+    describe('when confirm deletion', () => {
+      it('file should be deleted', async () => {
+        const {
+          findByText,
+          getByRole,
+          getByText,
+        } = renderUploadingJobsDisplay({
+          ...defaultContext,
+          uploadDefinition: {
+            fileDefinitions: [{
+              status: FILE_STATUSES.UPLOADED,
+              name: 'CatShip.mrc',
+            }],
+          },
+        });
+
+        expect(await findByText('CatShip.mrc')).toBeDefined();
+
+        const deleteButton = getByRole('button', { name: /delete/i });
+
+        fireEvent.click(deleteButton);
+
+        const modalWindow = await findByText('Delete uploaded file?');
+        expect(modalWindow).toBeDefined();
+
+        const confirmButton = getByText('Yes, delete');
+        await waitFor(() => fireEvent.click(confirmButton));
+
+        expect(await findByText('No files to show')).toBeDefined();
+      });
     });
 
     it('handles deletion error', async () => {
       const {
         findByText,
         getByRole,
-      } = renderUploadingJobsDisplay({
-        ...defaultContext,
-        uploadDefinition: {
-          fileDefinitions: [{
-            status: FILE_STATUSES.UPLOADED,
-            name: 'CatShip.mrc',
-          }],
-        },
-      });
-
-      expect(await findByText('CatShip.mrc')).toBeDefined();
-
-      const deleteButton = getByRole('button', { name: /delete/i });
-
-      fireEvent.click(deleteButton);
-
-      await waitFor(() => {
-        expect(mockConsoleError).toHaveBeenCalledWith(new Error('failed to delete'));
-      });
-    });
-
-    it('deletes file successfully', async done => {
-      const {
-        findByRole,
         getByText,
       } = renderUploadingJobsDisplay({
         ...defaultContext,
@@ -195,15 +226,18 @@ describe('<UploadingjobsDisplay>', () => {
         },
       });
 
-      const deleteButton = await findByRole('button', { name: /delete/i });
+      expect(await findByText('CatShip.mrc')).toBeDefined();
+
+      const deleteButton = getByRole('button', { name: /delete/i });
 
       fireEvent.click(deleteButton);
 
-      new Promise(r => setTimeout(r, DEFAULT_TIMEOUT_BEFORE_JOB_DELETION))
-        .then(() => {
-          expect(getByText('No files to show')).toBeDefined();
-          done();
-        });
+      const confirmButton = getByText('Yes, delete');
+      fireEvent.click(confirmButton);
+
+      await waitFor(() => {
+        expect(mockConsoleError).toHaveBeenCalledWith(new Error('failed to delete'));
+      });
     });
   });
 
@@ -214,7 +248,22 @@ describe('<UploadingjobsDisplay>', () => {
         uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.UPLOADING }] },
       });
 
+      window.dispatchEvent(new Event('beforeunload'));
+
       await waitFor(() => expect(getByText('Uploading')).toBeInTheDocument());
+    });
+
+    describe('when reload page while uploading', () => {
+      it('file should continue uploading', async () => {
+        const { getByText } = renderUploadingJobsDisplay({
+          ...defaultContext,
+          uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.UPLOADING }] },
+        });
+
+        window.dispatchEvent(new Event('beforeunload'));
+
+        await waitFor(() => expect(getByText('Uploading')).toBeInTheDocument());
+      });
     });
   });
 

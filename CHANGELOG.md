@@ -12,6 +12,9 @@
 
 ## [5.2.1](https://github.com/folio-org/ui-data-import/tree/v5.2.1) (2022-07-27)
 
+### Features added:
+* Change UI flow for uploaded files deleted before import by users (UIDATIMP-1182)
+
 ### Bugs fixed:
 * Long titles do not fit in the confirmation modal window header (UIDATIMP-1196)
 * Checkbox on page 2+ of View all log list does not work properly (UIDATIMP-1199)
