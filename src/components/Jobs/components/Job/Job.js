@@ -20,8 +20,9 @@ import {
   Button,
   IconButton,
   Callout,
+  ConfirmationModal,
   FormattedDate,
-  FormattedTime, ConfirmationModal,
+  FormattedTime,
 } from '@folio/stripes/components';
 import {
   Progress,
@@ -54,11 +55,11 @@ export class Job extends Component {
     showDeleteConfirmation: false,
   };
 
-  showDeleteConfirmation = () => {
+  showDeleteConfirmationModal = () => {
     this.setState({ showDeleteConfirmation: true });
   }
 
-  hideDeleteConfirmation = () => {
+  hideDeleteConfirmationModal = () => {
     this.setState({ showDeleteConfirmation: false });
   };
 
@@ -121,7 +122,7 @@ export class Job extends Component {
     const { job } = this.props;
 
     this.setState({ deletionInProgress: true });
-    this.hideDeleteConfirmation();
+    this.hideDeleteConfirmationModal();
 
     await this.deleteJob(job);
   };
@@ -184,7 +185,7 @@ export class Job extends Component {
                 size="small"
                 ariaLabel={label}
                 className={classNames(css.icon, css.deleteIcon)}
-                onClick={this.showDeleteConfirmation}
+                onClick={this.showDeleteConfirmationModal}
               />
             )}
           </FormattedMessage>
@@ -244,18 +245,21 @@ export class Job extends Component {
         )}
         <Callout ref={this.calloutRef} />
         <ConfirmationModal
-          id="delete-selected-logs-modal"
+          id="cancel-running-job-modal"
           open={showDeleteConfirmation}
-          heading={<FormattedMessage id="ui-data-import.modal.runningJobs.header" />}
+          heading={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.header" />}
           message={[
-            <FormattedMessage id="ui-data-import.modal.runningJobs.message.header" />,
-            <FormattedMessage id="ui-data-import.modal.runningJobs.message.body" values={{ br: <br /> }} />,
+            <FormattedMessage id="ui-data-import.modal.cancelRunningJob.message.title" />,
+            <FormattedMessage
+              id="ui-data-import.modal.cancelRunningJob.message.body"
+              values={{ break: <br /> }}
+            />,
           ]}
           bodyTag="div"
-          confirmLabel={<FormattedMessage id="ui-data-import.modal.runningJobs.confirm" />}
-          cancelLabel={<FormattedMessage id="ui-data-import.modal.runningJobs.cancel" />}
+          confirmLabel={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.confirm" />}
+          cancelLabel={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.cancel" />}
           onConfirm={this.handleDeleteJob}
-          onCancel={this.hideDeleteConfirmation}
+          onCancel={this.hideDeleteConfirmationModal}
         />
       </li>
     );
