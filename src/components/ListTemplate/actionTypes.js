@@ -19,14 +19,14 @@ export const ACTION_TYPES = {
 export const ACTION_TYPES_SELECT = {
   CREATE: {
     ...ACTION_TYPES.CREATE,
-    captionId: 'ui-data-import.actionSelect.create',
+    captionId: 'ui-data-import.selectAction.create',
   },
   MODIFY: {
     ...ACTION_TYPES.MODIFY,
-    captionId: 'ui-data-import.actionSelect.modify',
+    captionId: 'ui-data-import.selectAction.modify',
   },
   UPDATE: {
     ...ACTION_TYPES.UPDATE,
-    captionId: 'ui-data-import.actionSelect.update',
+    captionId: 'ui-data-import.selectAction.update',
   },
 };
