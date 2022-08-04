@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  fireEvent, waitFor,
+  fireEvent,
+  waitFor,
   within,
 } from '@testing-library/react';
 
@@ -13,10 +14,9 @@ import { DataFetcherContext } from '../DataFetcher';
 import { Jobs } from './Jobs';
 
 import { JOB_STATUSES } from '../../utils';
-import { deleteFile } from '../../utils/upload';
+import * as API from '../../utils/upload';
 
-jest.mock('../../utils/upload');
-deleteFile.mockImplementation(() => Promise.resolve(true));
+const mockDeleteFile = jest.spyOn(API, 'deleteFile').mockResolvedValue(true);
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -88,9 +88,7 @@ const renderJobs = (context = defaultContext) => {
 
 describe('Jobs', () => {
   beforeEach(() => {
-    mockConsoleError.mockClear();
-    deleteFile.mockClear();
-    global.fetch.mockClear();
+    jest.clearAllMocks();
   });
 
   afterAll(() => {
@@ -213,15 +211,15 @@ describe('Jobs', () => {
     });
 
     describe('when confirm button is clicked and when there is deletion error', () => {
-      it('should handle the error correctly', async () => {
+      it('should call console.error', async () => {
+        const error = new Error('Something went wrong. Try again.');
+        mockDeleteFile.mockRejectedValueOnce(error);
         const { getByRole } = renderJobs();
-        const error = new Error('Something went wrong');
-        deleteFile.mockRejectedValueOnce(error);
 
         fireEvent.click(getByRole('button', { name: /delete/i }));
         fireEvent.click(getByRole('button', { name: 'Yes, cancel import job' }));
 
-        expect(deleteFile).toHaveBeenCalled();
+        expect(mockDeleteFile).toHaveBeenCalledTimes(1);
         await waitFor(() => expect(mockConsoleError).toHaveBeenCalledWith(error));
       });
     });

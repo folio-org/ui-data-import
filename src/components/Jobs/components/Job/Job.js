@@ -162,7 +162,7 @@ export class Job extends Component {
         className={classNames(css.job, isDeletionInProgress && css.deletingInProgress)}
       >
         <div className={classNames(css.delimiter, css.jobHeader)}>
-          <span>{name}</span>
+          <span>{name}</span>{' '}
           <span>
             {fileName}
             {isDeletionInProgress && (
@@ -248,13 +248,11 @@ export class Job extends Component {
           id="cancel-running-job-modal"
           open={showDeleteConfirmation}
           heading={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.header" />}
-          message={[
-            <FormattedMessage id="ui-data-import.modal.cancelRunningJob.message.title" />,
+          message={
             <FormattedMessage
-              id="ui-data-import.modal.cancelRunningJob.message.body"
+              id="ui-data-import.modal.cancelRunningJob.message"
               values={{ break: <br /> }}
-            />,
-          ]}
+            />}
           bodyTag="div"
           confirmLabel={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.confirm" />}
           cancelLabel={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.cancel" />}

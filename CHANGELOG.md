@@ -4,6 +4,7 @@
 
 ### Features added:
 * Make UI changes to the Data Import landing page (UIDATIMP-1218)
+* Change UI flow for import jobs cancelled by users  (UIDATIMP-1173)
 
 ### Bugs fixed:
 * View all logs: filters are not updated after logs deletion (UIDATIMP-1219)
