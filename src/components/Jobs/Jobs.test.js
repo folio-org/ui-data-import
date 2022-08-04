@@ -210,8 +210,8 @@ describe('Jobs', () => {
       await waitFor(() => expect(queryByText('Confirmation Modal')).not.toBeInTheDocument());
     });
 
-    describe('when confirm button is clicked and when there is deletion error', () => {
-      it('should call console.error', async () => {
+    describe('when there is a deletion error while cancelling job', () => {
+      it('console.error should be called', async () => {
         const error = new Error('Something went wrong. Try again.');
         mockDeleteFile.mockRejectedValueOnce(error);
         const { getByRole } = renderJobs();

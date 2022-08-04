@@ -52,15 +52,15 @@ export class Job extends Component {
 
   state = {
     deletionInProgress: false,
-    showDeleteConfirmation: false,
+    showCancelJobModal: false,
   };
 
-  showDeleteConfirmationModal = () => {
-    this.setState({ showDeleteConfirmation: true });
+  showCancelJobConfirmationModal = () => {
+    this.setState({ showCancelJobModal: true });
   }
 
-  hideDeleteConfirmationModal = () => {
-    this.setState({ showDeleteConfirmation: false });
+  hideCancelJobConfirmationModal = () => {
+    this.setState({ showCancelJobModal: false });
   };
 
   calloutRef = createRef();
@@ -122,7 +122,7 @@ export class Job extends Component {
     const { job } = this.props;
 
     this.setState({ deletionInProgress: true });
-    this.hideDeleteConfirmationModal();
+    this.hideCancelJobConfirmationModal();
 
     await this.deleteJob(job);
   };
@@ -134,7 +134,7 @@ export class Job extends Component {
     } = this.props;
 
     const {
-      showDeleteConfirmation,
+      showCancelJobModal,
       deletionInProgress,
     } = this.state;
 
@@ -154,7 +154,7 @@ export class Job extends Component {
     } = job;
     const jobMeta = jobMetaTypes[uiStatus](job);
     const dateLabelId = `ui-data-import.${jobMeta.dateLabel}Running`;
-    const isDeletionInProgress = showDeleteConfirmation || deletionInProgress;
+    const isDeletionInProgress = showCancelJobModal || deletionInProgress;
 
     return (
       <li
@@ -185,7 +185,7 @@ export class Job extends Component {
                 size="small"
                 ariaLabel={label}
                 className={classNames(css.icon, css.deleteIcon)}
-                onClick={this.showDeleteConfirmationModal}
+                onClick={this.showCancelJobConfirmationModal}
               />
             )}
           </FormattedMessage>
@@ -246,7 +246,7 @@ export class Job extends Component {
         <Callout ref={this.calloutRef} />
         <ConfirmationModal
           id="cancel-running-job-modal"
-          open={showDeleteConfirmation}
+          open={showCancelJobModal}
           heading={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.header" />}
           message={
             <FormattedMessage
@@ -257,7 +257,7 @@ export class Job extends Component {
           confirmLabel={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.confirm" />}
           cancelLabel={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.cancel" />}
           onConfirm={this.handleDeleteJob}
-          onCancel={this.hideDeleteConfirmationModal}
+          onCancel={this.hideCancelJobConfirmationModal}
         />
       </li>
     );
