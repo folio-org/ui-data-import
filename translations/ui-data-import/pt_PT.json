@@ -31,7 +31,6 @@
     "uploadingPaneTitle": "Files",
     "uploadingMessage": "A carregar",
     "delete": "Excluir",
-    "deletedFile": "{name} has been deleted",
     "noUploadedFiles": "No files to show",
     "fileDeleteError": "Error while deleting {name} file",
     "upload.invalid": "Erro: upload de ficheiro",
@@ -891,5 +890,10 @@
     "settings.mappingProfiles.map.instance.acquisitionsData.field.purchaseOrderLineNumber": "Purchase order line (POL)",
     "settings.mappingProfiles.map.instance.acquisitionsData.field.vendorReferenceNumber": "Vendor reference number",
     "settings.mappingProfiles.map.holdings.acquisitionsData.field.purchaseOrderLineNumber": "Purchase order line (POL)",
-    "settings.mappingProfiles.map.holdings.acquisitionsData.field.vendorReferenceNumber": "Vendor reference number"
+    "settings.mappingProfiles.map.holdings.acquisitionsData.field.vendorReferenceNumber": "Vendor reference number",
+    "willDeleteFile": "{name} will be deleted",
+    "modal.cancelUpload.header": "Delete uploaded file?",
+    "modal.cancelUpload.message": "Are you sure that you want <b>to delete this uploaded file?</b> Deleted files will be permanently removed and cannot be retrieved",
+    "modal.cancelUpload.cancel": "No, do not delete",
+    "modal.cancelUpload.confirm": "Yes, delete"
 }
