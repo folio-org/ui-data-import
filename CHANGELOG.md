@@ -1,10 +1,13 @@
 # Change history for ui-data-import
 
-## **5.2.2** (in progress)
+## **5.2.3** (in progress)
 
 ### Features added:
 * Make UI changes to the Data Import landing page (UIDATIMP-1218)
+* Change UI flow for uploaded files deleted before import by users (UIDATIMP-1182)
 * Change UI flow for import jobs cancelled by users  (UIDATIMP-1173)
+
+## [5.2.2](https://github.com/folio-org/ui-data-import/tree/v5.2.2) (2022-08-05)
 
 ### Bugs fixed:
 * View all logs: filters are not updated after logs deletion (UIDATIMP-1219)
@@ -12,9 +15,6 @@
 * Change options for invoice level adjustments in Invoice field mapping (UIDATIMP-1223)
 
 ## [5.2.1](https://github.com/folio-org/ui-data-import/tree/v5.2.1) (2022-07-27)
-
-### Features added:
-* Change UI flow for uploaded files deleted before import by users (UIDATIMP-1182)
 
 ### Bugs fixed:
 * Long titles do not fit in the confirmation modal window header (UIDATIMP-1196)
