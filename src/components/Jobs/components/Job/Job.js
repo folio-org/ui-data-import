@@ -162,7 +162,8 @@ export class Job extends Component {
         className={classNames(css.job, isDeletionInProgress && css.deletingInProgress)}
       >
         <div className={classNames(css.delimiter, css.jobHeader)}>
-          <span>{name}</span>{' '}
+          <span>{name}</span>
+          &nbsp;
           <span>
             {fileName}
             {isDeletionInProgress && (
