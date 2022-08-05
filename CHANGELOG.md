@@ -1,9 +1,10 @@
 # Change history for ui-data-import
 
-## **5.2.3** (in progress)
+## [5.2.3](https://github.com/folio-org/ui-data-import/tree/v5.2.3) (2022-08-11)
 
 ### Bugs fixed:
 * In the "Check in / Check out notes" section, the "Note type" field is not filled after selecting an accepted value (UIDATIMP-1129)
+* Invoice Field Mapping profile: The 'Accepted values' dropdown contains only 10 records in the 'Batch group' field (UIDATIMP-1230)
 
 ## [5.2.2](https://github.com/folio-org/ui-data-import/tree/v5.2.2) (2022-08-05)
 
@@ -11,7 +12,6 @@
 * View all logs: filters are not updated after logs deletion (UIDATIMP-1219)
 * View all logs: User and Job filter contains only 10 records (UIDATIMP-1220)
 * Change options for invoice level adjustments in Invoice field mapping (UIDATIMP-1223)
-* Invoice Field Mapping profile: The 'Accepted values' dropdown contains only 10 records in the 'Batch group' field (UIDATIMP-1230)
 
 ## [5.2.1](https://github.com/folio-org/ui-data-import/tree/v5.2.1) (2022-07-27)
 
