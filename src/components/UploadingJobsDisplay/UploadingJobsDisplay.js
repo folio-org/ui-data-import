@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import {
-  forEach,
   isEmpty,
   map,
   omit,
@@ -39,7 +38,6 @@ import { FileItem } from './components';
 import {
   xhrAddHeaders,
   generateSettingsLabel,
-  DEFAULT_TIMEOUT_BEFORE_FILE_DELETION,
   FILE_STATUSES,
 } from '../../utils';
 import * as API from '../../utils/upload';
@@ -66,10 +64,7 @@ export class UploadingJobsDisplay extends Component {
       }).isRequired,
       PropTypes.string.isRequired,
     ]),
-    timeoutBeforeFileDeletion: PropTypes.number, // milliseconds
   };
-
-  static defaultProps = { timeoutBeforeFileDeletion: DEFAULT_TIMEOUT_BEFORE_FILE_DELETION };
 
   static contextType = UploadingJobsContext;
 
@@ -79,6 +74,7 @@ export class UploadingJobsDisplay extends Component {
     files: {},
     hasLoaded: false,
     renderLeaveModal: false,
+    renderCancelUploadFileModal: false,
     recordsLoadingInProgress: false,
     JobProfilesComponent: null,
     actionMenuItems: ['run'],
@@ -87,7 +83,7 @@ export class UploadingJobsDisplay extends Component {
   async componentDidMount() {
     this.mounted = true;
     this.fileRemovalMap = {
-      [FILE_STATUSES.UPLOADED]: this.handleDeleteSuccessfullyUploadedFile,
+      [FILE_STATUSES.DELETING]: this.deleteFileAPI,
       [FILE_STATUSES.ERROR]: this.deleteFileAPI,
       [FILE_STATUSES.ERROR_DEFINITION]: this.deleteFileFromState,
     };
@@ -101,13 +97,11 @@ export class UploadingJobsDisplay extends Component {
   componentWillUnmount() {
     this.mounted = false;
 
-    this.cancelFileRemovals();
     this.resetPageLeaveHandler();
   }
 
   calloutRef = createRef();
-
-  deleteFileTimeouts = {};
+  selectedFile = null;
 
   mapFilesToState() {
     const {
@@ -175,11 +169,6 @@ export class UploadingJobsDisplay extends Component {
     const { files } = this.state;
 
     return !this.isSnapshotMode && some(files, file => file.status === FILE_STATUSES.UPLOADING);
-  }
-
-  cancelFileRemovals() {
-    forEach(this.deleteFileTimeouts, clearTimeout);
-    this.deleteFileTimeouts = {};
   }
 
   renderSnapshotData() {
@@ -338,22 +327,21 @@ export class UploadingJobsDisplay extends Component {
     this.updateFileState(fileKey, { status: FILE_STATUSES.ERROR });
   };
 
-  handleUndoDeleteFile = fileKey => {
-    clearTimeout(this.deleteFileTimeouts[fileKey]);
+  handleDeleteFile = () => {
+    const {
+      key,
+      status,
+    } = get(this.state, ['files', this.selectedFile]);
 
-    this.updateFileState(fileKey, { status: FILE_STATUSES.UPLOADED });
-  };
-
-  handleDeleteFile = (fileKey, fileStatus) => {
-    const deleteFile = this.fileRemovalMap[fileStatus];
-
+    const deleteFile = this.fileRemovalMap[status];
     if (deleteFile) {
-      deleteFile(fileKey, fileStatus);
+      deleteFile(key, status);
     }
   };
 
   deleteFileAPI = async (fileKey, fileStatus) => {
     const { files: { [fileKey]: fileMeta } } = this.state;
+    const { history } = this.props;
 
     this.updateFileState(fileKey, { loading: true });
 
@@ -385,10 +373,15 @@ export class UploadingJobsDisplay extends Component {
       console.error(error); // eslint-disable-line no-console
     }
 
+    this.setState({ renderCancelUploadFileModal: false });
+
     const lastFileDeleted = isEmpty(get(this.state, ['files'], {}));
 
     if (lastFileDeleted) {
-      await this.updateJobProfilesComponent();
+      history.push({
+        pathname: '/data-import',
+        search: '',
+      });
     }
   };
 
@@ -413,16 +406,6 @@ export class UploadingJobsDisplay extends Component {
       return { files: updatedFiles };
     }, resolve);
   });
-
-  handleDeleteSuccessfullyUploadedFile = (fileKey, fileStatus) => {
-    const { timeoutBeforeFileDeletion } = this.props;
-
-    this.deleteFileTimeouts[fileKey] = setTimeout(() => {
-      this.deleteFileAPI(fileKey, fileStatus);
-    }, timeoutBeforeFileDeletion);
-
-    this.updateFileState(fileKey, { status: FILE_STATUSES.DELETING });
-  };
 
   renderFiles() {
     const { files } = this.state;
@@ -461,8 +444,8 @@ export class UploadingJobsDisplay extends Component {
           uploadedValue={uploadedValue}
           errorMsgTranslationID={errorMsgTranslationID}
           uploadedDate={uploadedDate}
+          onCancelImport={this.openCancelUploadModal}
           onDelete={this.handleDeleteFile}
-          onUndoDelete={this.handleUndoDeleteFile}
         />
       );
     });
@@ -479,6 +462,17 @@ export class UploadingJobsDisplay extends Component {
   closeModal = () => {
     this.setState({ renderLeaveModal: false });
   };
+
+  openCancelUploadModal = fileKey => {
+    this.setState({ renderCancelUploadFileModal: true });
+    this.updateFileState(fileKey, { status: FILE_STATUSES.DELETING });
+    this.selectedFile = fileKey;
+  }
+
+  closeCancelUploadModal = () => {
+    this.updateFileState(this.selectedFile, { status: FILE_STATUSES.UPLOADED });
+    this.setState({ renderCancelUploadFileModal: false });
+  }
 
   /** @returns {Promise<string[]>} */
   async getDataTypes() {
@@ -518,6 +512,7 @@ export class UploadingJobsDisplay extends Component {
     const {
       hasLoaded,
       renderLeaveModal,
+      renderCancelUploadFileModal,
       JobProfilesComponent,
       actionMenuItems,
     } = this.state;
@@ -571,6 +566,15 @@ export class UploadingJobsDisplay extends Component {
               cancelLabel={<FormattedMessage id="ui-data-import.modal.leavePage.cancel" />}
               onConfirm={this.closeModal}
               onCancel={this.continue}
+            />
+            <ConfirmationModal
+              open={renderCancelUploadFileModal}
+              heading={<FormattedMessage id="ui-data-import.modal.cancelUpload.header" />}
+              message={<FormattedMessage id="ui-data-import.modal.cancelUpload.message" />}
+              confirmLabel={<FormattedMessage id="ui-data-import.modal.cancelUpload.confirm" />}
+              cancelLabel={<FormattedMessage id="ui-data-import.modal.cancelUpload.cancel" />}
+              onConfirm={this.handleDeleteFile}
+              onCancel={this.closeCancelUploadModal}
             />
           </Pane>
         </div>
