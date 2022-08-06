@@ -31,7 +31,6 @@
     "uploadingPaneTitle": "文件",
     "uploadingMessage": "上傳中",
     "delete": "删除",
-    "deletedFile": "{name}已被删除",
     "noUploadedFiles": "没有要显示的文件",
     "fileDeleteError": "删除{name}文件时出错",
     "upload.invalid": "錯誤：檔案上傳",
@@ -891,5 +890,10 @@
     "settings.mappingProfiles.map.instance.acquisitionsData.field.purchaseOrderLineNumber": "Purchase order line (POL)",
     "settings.mappingProfiles.map.instance.acquisitionsData.field.vendorReferenceNumber": "Vendor reference number",
     "settings.mappingProfiles.map.holdings.acquisitionsData.field.purchaseOrderLineNumber": "Purchase order line (POL)",
-    "settings.mappingProfiles.map.holdings.acquisitionsData.field.vendorReferenceNumber": "Vendor reference number"
+    "settings.mappingProfiles.map.holdings.acquisitionsData.field.vendorReferenceNumber": "Vendor reference number",
+    "willDeleteFile": "{name} will be deleted",
+    "modal.cancelUpload.header": "Delete uploaded file?",
+    "modal.cancelUpload.message": "Are you sure that you want <b>to delete this uploaded file?</b> Deleted files will be permanently removed and cannot be retrieved",
+    "modal.cancelUpload.cancel": "No, do not delete",
+    "modal.cancelUpload.confirm": "Yes, delete"
 }
