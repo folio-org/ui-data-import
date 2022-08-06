@@ -94,8 +94,17 @@ export const ActionProfilesFormComponent = ({
           ACTION_TYPES_SELECT.UPDATE.type,
         ]);
       }
-      case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type: {
-        return pick(ACTION_TYPES_SELECT, ACTION_TYPES_SELECT.UPDATE.type);
+      case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INSTANCE.type: {
+        return pick(ACTION_TYPES_SELECT, [
+          ACTION_TYPES_SELECT.CREATE.type,
+          ACTION_TYPES_SELECT.UPDATE.type,
+        ]);
+      }
+      case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.HOLDINGS.type: {
+        return pick(ACTION_TYPES_SELECT, [
+          ACTION_TYPES_SELECT.CREATE.type,
+          ACTION_TYPES_SELECT.UPDATE.type,
+        ]);
       }
       default: {
         return ACTION_TYPES_SELECT;
@@ -113,17 +122,23 @@ export const ActionProfilesFormComponent = ({
     switch (action) {
       case ACTION_TYPES_SELECT.MODIFY.type: {
         return pick(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
-          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type,
-          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type,
+          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
         ]);
       }
       case ACTION_TYPES_SELECT.UPDATE.type: {
-        return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type);
+        return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
+          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type,
+          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INVOICE.type,
+          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type,
+        ]);
       }
       case ACTION_TYPES_SELECT.CREATE.type:
       default: {
-        return ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES;
+        return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
+          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type,
+          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type,
+        ]);
       }
     }
   };
