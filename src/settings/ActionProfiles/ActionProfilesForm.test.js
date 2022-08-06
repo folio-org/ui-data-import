@@ -274,7 +274,7 @@ describe('ActionProfilesForm', () => {
         });
       });
 
-      // skip test until https://issues.folio.org/browse/UIDATIMP-1231 will be ready
+      // skip test until https://issues.folio.org/browse/UIDATIMP-1231 is ready
       describe.skip('when record type is ORDER', () => {
         it('record type input should change the value', () => {
           const { container } = renderActionProfilesForm(actionProfilesFormProps());
