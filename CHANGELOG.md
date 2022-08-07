@@ -5,6 +5,7 @@
 ### Features added:
 * Make UI changes to the Data Import landing page (UIDATIMP-1218)
 * Change UI flow for uploaded files deleted before import by users (UIDATIMP-1182)
+* Update the Action profile UI: Create/Edit screen (UIDATIMP-1215)
 * Change UI flow for import jobs cancelled by users  (UIDATIMP-1173)
 
 ## [5.2.2](https://github.com/folio-org/ui-data-import/tree/v5.2.2) (2022-08-05)
