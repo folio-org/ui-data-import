@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   fireEvent,
+  waitFor,
   within,
 } from '@testing-library/react';
 
@@ -12,18 +13,38 @@ import { translationsProperties } from '../../../test/jest/helpers';
 import { DataFetcherContext } from '../DataFetcher';
 import { Jobs } from './Jobs';
 
-import {
-  DEFAULT_TIMEOUT_BEFORE_JOB_DELETION,
-  JOB_STATUSES,
-} from '../../utils';
-import { deleteFile } from '../../utils/upload';
+import { JOB_STATUSES } from '../../utils';
+import * as API from '../../utils/upload';
 
-jest.mock('../../utils/upload', () => ({
-  ...jest.requireActual('../../utils/upload'),
-  deleteFile: jest.fn(() => Promise.reject(new Error('Something went wrong!'))),
+const mockDeleteFile = jest.spyOn(API, 'deleteFile').mockResolvedValue(true);
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  ConfirmationModal: jest.fn(({
+    open,
+    onCancel,
+    onConfirm,
+  }) => (open ? (
+    <div>
+      <span>Confirmation Modal</span>
+      <button
+        type="button"
+        onClick={onCancel}
+      >
+        No, do not cancel import
+      </button>
+      <button
+        type="button"
+        id="confirmButton"
+        onClick={onConfirm}
+      >
+        Yes, cancel import job
+      </button>
+    </div>
+  ) : null)),
 }));
 
-jest.spyOn(console, 'error').mockImplementation(() => {});
+const mockConsoleError = jest.spyOn(console, 'error');
 
 global.fetch = jest.fn();
 
@@ -67,7 +88,7 @@ const renderJobs = (context = defaultContext) => {
 
 describe('Jobs', () => {
   beforeEach(() => {
-    global.fetch.mockClear();
+    jest.clearAllMocks();
   });
 
   afterAll(() => {
@@ -139,41 +160,67 @@ describe('Jobs', () => {
       });
     });
 
-    describe('when clicked delete button on running job card', () => {
-      it('should handle deletion errors', () => {
-        const { getAllByRole } = renderJobs();
-
-        fireEvent.click(getAllByRole('button', { name: /delete/i })[0]);
-
-        return new Promise(r => setTimeout(r, DEFAULT_TIMEOUT_BEFORE_JOB_DELETION)).then(() => {
-          expect(deleteFile).toHaveBeenCalled();
-          expect(console.error).toHaveBeenCalledWith(new Error('Something went wrong!')); // eslint-disable-line no-console
-        });
-      }, DEFAULT_TIMEOUT_BEFORE_JOB_DELETION);
-
-      it('correct text should be rendered', () => {
+    describe('When delete button on running job card is clicked', () => {
+      it('cancel import job modal should be opened', async () => {
         const {
+          getByRole,
           getByText,
-          getAllByRole,
         } = renderJobs();
 
-        fireEvent.click(getAllByRole('button', { name: /delete/i })[0]);
+        fireEvent.click(getByRole('button', { name: /delete/i }));
+
+        await waitFor(() => expect(getByText('Confirmation Modal')).toBeInTheDocument());
+      });
+
+      it('correct text should be rendered on the job card', () => {
+        const {
+          getByText,
+          getByRole,
+        } = renderJobs();
+
+        fireEvent.click(getByRole('button', { name: /delete/i }));
 
         expect(getByText('has been stopped', { exact: false })).toBeInTheDocument();
       });
     });
+  });
 
-    describe('when clicked "undo" button', () => {
-      it('deleted job reappears', () => {
-        const {
-          queryByText,
-          getAllByRole,
-        } = renderJobs();
+  describe('Opened cancel import job modal', () => {
+    it('should be closed when cancel button is clicked', async () => {
+      const {
+        getByRole,
+        queryByText,
+      } = renderJobs();
 
-        fireEvent.click(getAllByRole('button', { name: /delete/i })[0]);
-        fireEvent.click(getAllByRole('button', { name: /undo/i })[0]);
+      fireEvent.click(getByRole('button', { name: /delete/i }));
+      fireEvent.click(getByRole('button', { name: 'No, do not cancel import' }));
 
-        expect(queryByText('has been stopped', { exact: false })).toBeNull();
+      await waitFor(() => expect(queryByText('Confirmation Modal')).not.toBeInTheDocument());
+    });
+
+    it('should be closed when confirm button is clicked', async () => {
+      const {
+        getByRole,
+        queryByText,
+      } = renderJobs();
+
+      fireEvent.click(getByRole('button', { name: /delete/i }));
+      fireEvent.click(getByRole('button', { name: 'Yes, cancel import job' }));
+
+      await waitFor(() => expect(queryByText('Confirmation Modal')).not.toBeInTheDocument());
+    });
+
+    describe('when there is a deletion error while cancelling job', () => {
+      it('console.error should be called', async () => {
+        const error = new Error('Something went wrong. Try again.');
+        mockDeleteFile.mockRejectedValueOnce(error);
+        const { getByRole } = renderJobs();
+
+        fireEvent.click(getByRole('button', { name: /delete/i }));
+        fireEvent.click(getByRole('button', { name: 'Yes, cancel import job' }));
+
+        expect(mockDeleteFile).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(mockConsoleError).toHaveBeenCalledWith(error));
       });
     });
   });
