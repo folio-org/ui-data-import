@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **5.3.0** (in progress)
+
+### Features added:
+* Change UI flow for import jobs cancelled by users  (UIDATIMP-1173)
+
 ## [5.2.4](https://github.com/folio-org/ui-data-import/tree/v5.2.4) (2022-09-06)
 
 ### Bugs fixed:
