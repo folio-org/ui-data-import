@@ -182,11 +182,11 @@ describe('ActionProfilesForm', () => {
           expect(container.querySelector('[value="INSTANCE"]')).not.toBeDisabled();
           expect(container.querySelector('[value="HOLDINGS"]')).not.toBeDisabled();
           expect(container.querySelector('[value="ITEM"]')).not.toBeDisabled();
-          expect(container.querySelector('[value="ORDER"]')).toBeDisabled();
+          expect(container.querySelector('[value="ORDER"]')).not.toBeInTheDocument();
           expect(container.querySelector('[value="INVOICE"]')).not.toBeDisabled();
           expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).not.toBeDisabled();
           expect(container.querySelector('[value="MARC_AUTHORITY"]')).not.toBeDisabled();
-          expect(container.querySelector('[value="MARC_HOLDINGS"]')).toBeDisabled();
+          expect(container.querySelector('[value="MARC_HOLDINGS"]')).not.toBeInTheDocument();
         });
       });
 
@@ -222,7 +222,7 @@ describe('ActionProfilesForm', () => {
           expect(actionInput.value).toBe('UPDATE');
         });
 
-        it('all record types except Orders and MARC Holdings should be available', () => {
+        it('all record types except Orders, MARC Holdings and Invoice should be available', () => {
           const { container } = renderActionProfilesForm(actionProfilesFormProps());
           const actionInput = container.querySelector('[name="profile.action"]');
 
@@ -231,11 +231,11 @@ describe('ActionProfilesForm', () => {
           expect(container.querySelector('[value="INSTANCE"]')).not.toBeDisabled();
           expect(container.querySelector('[value="HOLDINGS"]')).not.toBeDisabled();
           expect(container.querySelector('[value="ITEM"]')).not.toBeDisabled();
-          expect(container.querySelector('[value="INVOICE"]')).not.toBeDisabled();
+          expect(container.querySelector('[value="INVOICE"]')).not.toBeInTheDocument();
           expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).not.toBeDisabled();
           expect(container.querySelector('[value="MARC_AUTHORITY"]')).not.toBeDisabled();
-          expect(container.querySelector('[value="MARC_HOLDINGS"]')).toBeDisabled();
-          expect(container.querySelector('[value="ORDER"]')).toBeNull();
+          expect(container.querySelector('[value="MARC_HOLDINGS"]')).not.toBeInTheDocument();
+          expect(container.querySelector('[value="ORDER"]')).not.toBeInTheDocument();
         });
       });
     });
@@ -274,7 +274,8 @@ describe('ActionProfilesForm', () => {
         });
       });
 
-      describe('when record type is ORDER', () => {
+      // skip test until https://issues.folio.org/browse/UIDATIMP-1231 is ready
+      describe.skip('when record type is ORDER', () => {
         it('record type input should change the value', () => {
           const { container } = renderActionProfilesForm(actionProfilesFormProps());
           const recordInput = container.querySelector('[name="profile.folioRecord"]');
@@ -304,17 +305,6 @@ describe('ActionProfilesForm', () => {
           fireEvent.change(recordInput, { target: { value: 'MARC_BIBLIOGRAPHIC' } });
 
           expect(recordInput.value).toBe('MARC_BIBLIOGRAPHIC');
-        });
-      });
-
-      describe('when record type is MARC_HOLDINGS', () => {
-        it('record type input should change the value', () => {
-          const { container } = renderActionProfilesForm(actionProfilesFormProps());
-          const recordInput = container.querySelector('[name="profile.folioRecord"]');
-
-          fireEvent.change(recordInput, { target: { value: 'MARC_HOLDINGS' } });
-
-          expect(recordInput.value).toBe('MARC_HOLDINGS');
         });
       });
 
