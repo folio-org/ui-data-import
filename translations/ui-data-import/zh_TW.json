@@ -197,8 +197,6 @@
     "compare": "比较",
     "compareHint": "正比较到这个记录",
     "records": "紀錄",
-    "actionSelect.create": "新增（所有紀錄類型）",
-    "actionSelect.modify": "修改（僅限 MARC 紀錄）",
     "actionProfilesForm.recordTypes.marc-bib": "MARC书目",
     "actionProfilesForm.recordTypes.marc-auth": "MARC规范",
     "actionProfilesForm.recordTypes.marc-hold": "MARC馆藏",
@@ -730,7 +728,6 @@
     "fieldMappingsForMarc.updates": "更新",
     "fieldMappingsForMarc.placeholder": "选择MARC的字段映射",
     "update": "更新",
-    "actionSelect.update": "更新（除订单外的所有记录类型）",
     "settings.mappingProfiles.map.item.status.withdrawn": "已剔除",
     "settings.marcFieldProtection.system": "系统",
     "settings.marcFieldProtection.user": "用户",
@@ -895,5 +892,12 @@
     "modal.cancelUpload.header": "Delete uploaded file?",
     "modal.cancelUpload.message": "Are you sure that you want <b>to delete this uploaded file?</b> Deleted files will be permanently removed and cannot be retrieved",
     "modal.cancelUpload.cancel": "No, do not delete",
-    "modal.cancelUpload.confirm": "Yes, delete"
+    "modal.cancelUpload.confirm": "Yes, delete",
+    "selectAction.create": "Create (all record types)",
+    "selectAction.modify": "Modify (MARC Bibliographic and Authority record types only)",
+    "selectAction.update": "Update (all record types except Orders, Invoices, or MARC Holdings)",
+    "modal.cancelRunningJob.header": "Cancel import job?",
+    "modal.cancelRunningJob.message": "Are you sure that you want <b>to cancel this import job?</b><p><b>Note:</b> Cancelled jobs cannot be restarted. Records created or updated before{break}the job is cancelled cannot yet be reverted.</p>",
+    "modal.cancelRunningJob.cancel": "No, do not cancel import",
+    "modal.cancelRunningJob.confirm": "Yes, cancel import job"
 }

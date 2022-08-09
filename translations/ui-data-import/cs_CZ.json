@@ -197,8 +197,6 @@
     "compare": "Porovnat",
     "compareHint": "Porovnáváte\n k tomuto záznamu",
     "records": "Záznamy",
-    "actionSelect.create": "Vytvořit (všechny typy záznamů)",
-    "actionSelect.modify": "Upravit (pouze typy záznamů MARC)",
     "actionProfilesForm.recordTypes.marc-bib": "MARC Bibliografické",
     "actionProfilesForm.recordTypes.marc-auth": "Autorita MARC",
     "actionProfilesForm.recordTypes.marc-hold": "MARC holdingy",
@@ -730,7 +728,6 @@
     "fieldMappingsForMarc.updates": "Updates",
     "fieldMappingsForMarc.placeholder": "Select field mappings for MARC",
     "update": "Update",
-    "actionSelect.update": "Aktualizace (všechny typy záznamů kromě Objednávky)",
     "settings.mappingProfiles.map.item.status.withdrawn": "Staženo",
     "settings.marcFieldProtection.system": "Systém",
     "settings.marcFieldProtection.user": "Uživatel",
@@ -895,5 +892,12 @@
     "modal.cancelUpload.header": "Delete uploaded file?",
     "modal.cancelUpload.message": "Are you sure that you want <b>to delete this uploaded file?</b> Deleted files will be permanently removed and cannot be retrieved",
     "modal.cancelUpload.cancel": "No, do not delete",
-    "modal.cancelUpload.confirm": "Yes, delete"
+    "modal.cancelUpload.confirm": "Yes, delete",
+    "selectAction.create": "Create (all record types)",
+    "selectAction.modify": "Modify (MARC Bibliographic and Authority record types only)",
+    "selectAction.update": "Update (all record types except Orders, Invoices, or MARC Holdings)",
+    "modal.cancelRunningJob.header": "Cancel import job?",
+    "modal.cancelRunningJob.message": "Are you sure that you want <b>to cancel this import job?</b><p><b>Note:</b> Cancelled jobs cannot be restarted. Records created or updated before{break}the job is cancelled cannot yet be reverted.</p>",
+    "modal.cancelRunningJob.cancel": "No, do not cancel import",
+    "modal.cancelRunningJob.confirm": "Yes, cancel import job"
 }
