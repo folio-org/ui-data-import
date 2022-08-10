@@ -1,8 +1,13 @@
 # Change history for ui-data-import
 
+## **5.2.3** (in progress)
+
+### Bugs fixed:
+* In the "Check in / Check out notes" section, the "Note type" field is not filled after selecting an accepted value (UIDATIMP-1129)
+
 ## [5.2.2](https://github.com/folio-org/ui-data-import/tree/v5.2.2) (2022-08-05)
 
-### Bugs fixed
+### Bugs fixed:
 * View all logs: filters are not updated after logs deletion (UIDATIMP-1219)
 * View all logs: User and Job filter contains only 10 records (UIDATIMP-1220)
 * Change options for invoice level adjustments in Invoice field mapping (UIDATIMP-1223)
@@ -20,7 +25,7 @@
 
 ## [5.2.0](https://github.com/folio-org/ui-data-import/tree/v5.2.0) (2022-07-08)
 
-### Features added
+### Features added:
 * Add checkboxes and delete action to Data Import landing page (UIDATIMP-1077)
 * Add Admin note field to the Instance field mapping profile: Create/Edit (UIDATIMP-1118)
 * Add Admin note field to the Holdings field mapping profile: Create/Edit (UIDATIMP-1119)
