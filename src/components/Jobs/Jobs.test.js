@@ -1,34 +1,79 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import {
+  fireEvent,
+  waitFor,
+  within,
+} from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../test/jest/__mock__';
-import {
-  jobExecutions,
-  jobsLogs,
-} from '../../../test/bigtest/mocks';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { DataFetcherContext } from '../DataFetcher';
 import { Jobs } from './Jobs';
 
-import { DEFAULT_TIMEOUT_BEFORE_JOB_DELETION } from '../../utils';
-import { deleteFile } from '../../utils/upload';
+import { JOB_STATUSES } from '../../utils';
+import * as API from '../../utils/upload';
 
-jest.mock('../../utils/upload', () => ({
-  ...jest.requireActual('../../utils/upload'),
-  deleteFile: jest.fn(() => Promise.reject(new Error('Something went wrong!'))),
+const mockDeleteFile = jest.spyOn(API, 'deleteFile').mockResolvedValue(true);
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  ConfirmationModal: jest.fn(({
+    open,
+    onCancel,
+    onConfirm,
+  }) => (open ? (
+    <div>
+      <span>Confirmation Modal</span>
+      <button
+        type="button"
+        onClick={onCancel}
+      >
+        No, do not cancel import
+      </button>
+      <button
+        type="button"
+        id="confirmButton"
+        onClick={onConfirm}
+      >
+        Yes, cancel import job
+      </button>
+    </div>
+  ) : null)),
 }));
 
-jest.spyOn(console, 'error').mockImplementation(() => {});
+const mockConsoleError = jest.spyOn(console, 'error');
 
 global.fetch = jest.fn();
 
+const runningJobs = [
+  {
+    id: '469eba83-41d1-4161-bd1a-0f46d5554c6a',
+    hrId: 182982989,
+    subordinationType: 'PARENT_SINGLE',
+    jobProfileInfo: { name: 'Main bib jobs' },
+    fileName: 'import_1.mrc',
+    sourcePath: 'import_1.mrc',
+    runBy: {
+      firstName: 'Mark',
+      lastName: 'Curie',
+    },
+    progress: {
+      current: 290,
+      total: 500,
+    },
+    startedDate: '2018-11-22T12:00:31.000',
+    uiStatus: JOB_STATUSES.RUNNING,
+    status: 'PROCESSING_FINISHED',
+  },
+];
+
 const defaultContext = {
   hasLoaded: true,
-  jobs: [],
-  logs: jobsLogs,
+  jobs: runningJobs,
+  logs: [],
 };
 
 const renderJobs = (context = defaultContext) => {
@@ -41,111 +86,141 @@ const renderJobs = (context = defaultContext) => {
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('<Jobs>', () => {
+describe('Jobs', () => {
   beforeEach(() => {
-    jest.setTimeout(5 * DEFAULT_TIMEOUT_BEFORE_JOB_DELETION);
-  });
-
-  afterEach(() => {
-    jest.clearAllTimers();
-    global.fetch.mockClear();
+    jest.clearAllMocks();
   });
 
   afterAll(() => {
     delete global.fetch;
   });
 
-  it('should contain "Previews" and "Running" section', () => {
+  it('should contain "Running" section', () => {
     const { getByText } = renderJobs();
 
-    expect(getByText('Previews')).toBeInTheDocument();
     expect(getByText('Running')).toBeInTheDocument();
   });
 
-  it('"Preview" and "Running" sections open by default', () => {
+  it('"Running" section accordion should be open by default', () => {
     const { getByRole } = renderJobs();
 
-    expect(getByRole('button', {
-      name: /previews/i,
-      expanded: true,
-    }));
-
-    expect(getByRole('button', {
-      name: /running/i,
-      expanded: true,
-    }));
+    expect(getByRole('button', { name: /running/i, expanded: true }));
   });
 
-  it('should have correct job items amount', () => {
-    const { getAllByRole } = renderJobs({
-      ...defaultContext,
-      jobs: jobExecutions,
+  describe('"Running" section', () => {
+    it('should have correct amount of running job cards', () => {
+      const { getAllByRole } = renderJobs();
+
+      expect(getAllByRole('listitem').length).toBe(runningJobs.length);
     });
 
-    expect(getAllByRole('listitem').length).toBe(jobExecutions.length);
-  });
+    it('should display appropriate message when there are no running jobs', () => {
+      const { getByText } = renderJobs({
+        ...defaultContext,
+        jobs: [],
+      });
 
-  describe('"Previews section"', () => {
-    it('should render "Previews" toggle button', () => {
-      const { getByRole } = renderJobs();
-
-      expect(getByRole('button', { name: /previews/i })).toBeInTheDocument();
+      expect(getByText('No running jobs to show')).toBeInTheDocument();
     });
 
-    describe('when job data is empty', () => {
-      it('should render empty message', () => {
-        const { getByText } = renderJobs();
+    describe('Job card', () => {
+      let jobCard;
 
-        expect(getByText('No previews to show')).toBeInTheDocument();
+      beforeEach(() => {
+        const { getByRole } = renderJobs();
+        jobCard = getByRole('listitem');
+      });
+
+      it('should display job profile name', () => {
+        const jobProfileName = runningJobs[0].jobProfileInfo.name;
+
+        expect(within(jobCard).getByText(jobProfileName)).toBeInTheDocument();
+      });
+
+      it('should display file name', () => {
+        const fileName = runningJobs[0].fileName;
+
+        expect(within(jobCard).getByText(fileName)).toBeInTheDocument();
+      });
+
+      it('should display total number of records', () => {
+        const totalRecords = runningJobs[0].progress.total;
+
+        expect(within(jobCard).getByText(`${totalRecords} records`)).toBeInTheDocument();
+      });
+
+      it('should display user full name', () => {
+        const {
+          firstName,
+          lastName,
+        } = runningJobs[0].runBy;
+        const fullName = `${firstName} ${lastName}`;
+
+        expect(within(jobCard).getByText(fullName, { exact: false })).toBeInTheDocument();
       });
     });
 
-    describe('when clicked delete button', () => {
-      it('should handle deletion errors', async done => {
-        const { getAllByRole } = renderJobs({
-          ...defaultContext,
-          jobs: jobExecutions,
-        });
+    describe('When delete button on running job card is clicked', () => {
+      it('cancel import job modal should be opened', async () => {
+        const {
+          getByRole,
+          getByText,
+        } = renderJobs();
 
-        fireEvent.click(getAllByRole('button', { name: /delete/i })[0]);
+        fireEvent.click(getByRole('button', { name: /delete/i }));
 
-        new Promise(r => setTimeout(r, DEFAULT_TIMEOUT_BEFORE_JOB_DELETION)).then(() => {
-          expect(deleteFile).toHaveBeenCalled();
-          // eslint-disable-next-line no-console
-          expect(console.error).toHaveBeenCalledWith(new Error('Something went wrong!'));
-          done();
-        });
+        await waitFor(() => expect(getByText('Confirmation Modal')).toBeInTheDocument());
       });
 
-      it('correct text should be rendered', () => {
+      it('correct text should be rendered on the job card', () => {
         const {
           getByText,
-          getAllByRole,
-        } = renderJobs({
-          ...defaultContext,
-          jobs: jobExecutions,
-        });
+          getByRole,
+        } = renderJobs();
 
-        fireEvent.click(getAllByRole('button', { name: /delete/i })[0]);
+        fireEvent.click(getByRole('button', { name: /delete/i }));
 
         expect(getByText('has been stopped', { exact: false })).toBeInTheDocument();
       });
     });
+  });
 
-    describe('when clicked "undo" button', () => {
-      it('deleted job reappears', () => {
-        const {
-          queryByText,
-          getAllByRole,
-        } = renderJobs({
-          ...defaultContext,
-          jobs: jobExecutions,
-        });
+  describe('Opened cancel import job modal', () => {
+    it('should be closed when cancel button is clicked', async () => {
+      const {
+        getByRole,
+        queryByText,
+      } = renderJobs();
 
-        fireEvent.click(getAllByRole('button', { name: /delete/i })[0]);
-        fireEvent.click(getAllByRole('button', { name: /undo/i })[0]);
+      fireEvent.click(getByRole('button', { name: /delete/i }));
+      fireEvent.click(getByRole('button', { name: 'No, do not cancel import' }));
 
-        expect(queryByText('has been stopped', { exact: false })).toBeNull();
+      await waitFor(() => expect(queryByText('Confirmation Modal')).not.toBeInTheDocument());
+    });
+
+    it('should be closed when confirm button is clicked', async () => {
+      const {
+        getByRole,
+        queryByText,
+      } = renderJobs();
+
+      fireEvent.click(getByRole('button', { name: /delete/i }));
+      fireEvent.click(getByRole('button', { name: 'Yes, cancel import job' }));
+
+      await waitFor(() => expect(queryByText('Confirmation Modal')).not.toBeInTheDocument());
+    });
+
+    describe('when there is a deletion error while cancelling job', () => {
+      it('console.error should be called', async () => {
+        const error = new Error('Something went wrong. Try again.');
+        mockDeleteFile.mockRejectedValueOnce(error);
+        const { getByRole } = renderJobs();
+
+        fireEvent.click(getByRole('button', { name: /delete/i }));
+        fireEvent.click(getByRole('button', { name: 'Yes, cancel import job' }));
+
+        expect(mockDeleteFile).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(mockConsoleError).toHaveBeenCalledWith(error));
       });
     });
   });
