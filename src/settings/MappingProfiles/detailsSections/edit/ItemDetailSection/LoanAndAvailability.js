@@ -68,7 +68,7 @@ export const LoanAndAvailability = ({
   };
 
   const handleCirculationNoteTypeChange = index => value => {
-    setReferenceTables(getSubfieldName(28, 0, index), value);
+    setReferenceTables(getSubfieldName(29, 0, index), value);
   };
 
   return (

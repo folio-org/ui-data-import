@@ -9,6 +9,9 @@
 * Change UI flow for import jobs cancelled by users  (UIDATIMP-1173)
 * Update the Match profile UI: Create/Edit screen (UIDATIMP-1214)
 
+### Bugs fixed:
+* In the "Check in / Check out notes" section, the "Note type" field is not filled after selecting an accepted value (UIDATIMP-1129)
+
 ## [5.2.2](https://github.com/folio-org/ui-data-import/tree/v5.2.2) (2022-08-05)
 
 ### Bugs fixed:
