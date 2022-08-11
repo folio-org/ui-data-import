@@ -126,14 +126,6 @@ describe('MatchCriterion edit', () => {
       });
     });
 
-    describe('MARC_HOLDINGS', () => {
-      it('should render incomingMarcSection', () => {
-        const { getByText } = renderMatchCriterion({ ...matchCriterionProps('INSTANCE', 'MARC_HOLDINGS', 'BEGINS_WITH') });
-
-        expect(getByText('MARCFieldSection')).toBeDefined();
-      });
-    });
-
     describe('MARC_AUTHORITY', () => {
       it('should render incomingMarcSection', () => {
         const { getByText } = renderMatchCriterion({ ...matchCriterionProps('INSTANCE', 'MARC_AUTHORITY', 'BEGINS_WITH') });
@@ -176,33 +168,9 @@ describe('MatchCriterion edit', () => {
       });
     });
 
-    describe('ORDER', () => {
-      it('should render existingSectionFolio', () => {
-        const { getByText } = renderMatchCriterion({ ...matchCriterionProps('ORDER', 'STATIC_VALUE', 'BEGINS_WITH') });
-
-        expect(getByText('ExistingSectionFolio')).toBeDefined();
-      });
-    });
-
-    describe('INVOICE', () => {
-      it('should render existingSectionFolio', () => {
-        const { getByText } = renderMatchCriterion({ ...matchCriterionProps('INVOICE', 'STATIC_VALUE', 'BEGINS_WITH') });
-
-        expect(getByText('ExistingSectionFolio')).toBeDefined();
-      });
-    });
-
     describe('MARC_BIBLIOGRAPHIC', () => {
       it('should render existingMARCSection', () => {
         const { getByText } = renderMatchCriterion({ ...matchCriterionProps('MARC_BIBLIOGRAPHIC', 'STATIC_VALUE', 'BEGINS_WITH') });
-
-        expect(getByText('MARCFieldSection')).toBeDefined();
-      });
-    });
-
-    describe('MARC_HOLDINGS', () => {
-      it('should render existingMARCSection', () => {
-        const { getByText } = renderMatchCriterion({ ...matchCriterionProps('MARC_HOLDINGS', 'STATIC_VALUE', 'BEGINS_WITH') });
 
         expect(getByText('MARCFieldSection')).toBeDefined();
       });
