@@ -144,48 +144,36 @@ export const MatchCriterion = ({
 
   const incomingRecordFieldSections = {
     MARC_BIBLIOGRAPHIC: incomingMARCSectionElement,
-    MARC_HOLDINGS: incomingMARCSectionElement,
     MARC_AUTHORITY: incomingMARCSectionElement,
     STATIC_VALUE: incomingStaticValueSectionElement,
   };
   const incomingRecordQualifierSections = {
     MARC_BIBLIOGRAPHIC: incomingQualifierSectionElement,
-    MARC_HOLDINGS: incomingQualifierSectionElement,
     MARC_AUTHORITY: incomingQualifierSectionElement,
   };
   const incomingRecordQualifierPartSections = {
     MARC_BIBLIOGRAPHIC: incomingQualifierPartSectionElement,
-    MARC_HOLDINGS: incomingQualifierPartSectionElement,
     MARC_AUTHORITY: incomingQualifierPartSectionElement,
   };
   const existingRecordFieldSections = {
     INSTANCE: existingSectionFolioElement,
     HOLDINGS: existingSectionFolioElement,
     ITEM: existingSectionFolioElement,
-    ORDER: existingSectionFolioElement,
-    INVOICE: existingSectionFolioElement,
     MARC_BIBLIOGRAPHIC: existingMARCSectionElement,
-    MARC_HOLDINGS: existingMARCSectionElement,
     MARC_AUTHORITY: existingMARCSectionElement,
   };
   const existingRecordQualifierSections = {
     INSTANCE: existingQualifierSectionElement,
     HOLDINGS: existingQualifierSectionElement,
     ITEM: existingQualifierSectionElement,
-    ORDER: existingQualifierSectionElement,
-    INVOICE: existingQualifierSectionElement,
     MARC_BIBLIOGRAPHIC: existingQualifierSectionElement,
-    MARC_HOLDINGS: existingQualifierSectionElement,
     MARC_AUTHORITY: existingQualifierSectionElement,
   };
   const existingRecordQualifierPartSections = {
     INSTANCE: existingQualifierPartSectionElement,
     HOLDINGS: existingQualifierPartSectionElement,
     ITEM: existingQualifierPartSectionElement,
-    ORDER: existingQualifierPartSectionElement,
-    INVOICE: existingQualifierPartSectionElement,
     MARC_BIBLIOGRAPHIC: existingQualifierPartSectionElement,
-    MARC_HOLDINGS: existingQualifierPartSectionElement,
     MARC_AUTHORITY: existingQualifierPartSectionElement,
   };
 

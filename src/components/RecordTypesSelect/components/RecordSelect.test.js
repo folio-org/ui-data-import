@@ -27,10 +27,7 @@ describe('RecordSelect', () => {
     expect(getByText('Instance')).toBeDefined();
     expect(getByText('Holdings')).toBeDefined();
     expect(getByText('Item')).toBeDefined();
-    expect(getByText('MARC Holdings')).toBeDefined();
     expect(getByText('MARC Bibliographic')).toBeDefined();
-    expect(getByText('Order & order line')).toBeDefined();
-    expect(getByText('Invoice')).toBeDefined();
     expect(getByText('MARC Authority')).toBeDefined();
   });
 

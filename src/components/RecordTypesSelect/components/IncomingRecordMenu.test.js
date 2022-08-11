@@ -34,7 +34,6 @@ describe('IncomingRecordMenu', () => {
       const { getByText } = renderIncomingRecordMenu({ open: false });
 
       expect(getByText('MARC Bibliographic')).not.toBeVisible();
-      expect(getByText('MARC Holdings')).not.toBeVisible();
       expect(getByText('MARC Authority')).not.toBeVisible();
       expect(getByText('Static value (submatch only)')).not.toBeVisible();
     });
@@ -45,7 +44,6 @@ describe('IncomingRecordMenu', () => {
       const { getByText } = renderIncomingRecordMenu({ open: true });
 
       expect(getByText('MARC Bibliographic')).toBeVisible();
-      expect(getByText('MARC Holdings')).toBeVisible();
       expect(getByText('MARC Authority')).toBeVisible();
       expect(getByText('Static value (submatch only)')).toBeVisible();
     });
@@ -58,16 +56,6 @@ describe('IncomingRecordMenu', () => {
       fireEvent.click(getByText('Static value (submatch only)'));
 
       expect(onClick.mock.calls[0][0].type).toEqual('STATIC_VALUE');
-    });
-  });
-
-  describe('when clicking on disabled option', () => {
-    it('MARC Holdings record type should not be chosen', () => {
-      const { getByText } = renderIncomingRecordMenu({ open: true });
-
-      fireEvent.click(getByText('MARC Holdings'));
-
-      expect(onClick.mock.calls).toHaveLength(0);
     });
   });
 
