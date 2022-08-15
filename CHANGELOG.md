@@ -9,6 +9,9 @@
 * Change UI flow for import jobs cancelled by users  (UIDATIMP-1173)
 * Update the Match profile UI: Create/Edit screen (UIDATIMP-1214)
 
+### Bugs fixed:
+* Invoice Field Mapping profile: Acq unit and Batch group dropdown lists should be in alphabetical order (UIDATIMP-1236)
+
 ## [5.2.3](https://github.com/folio-org/ui-data-import/tree/v5.2.3) (2022-08-11)
 
 ### Bugs fixed:
