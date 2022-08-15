@@ -107,7 +107,7 @@ export const InvoiceInformation = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/acquisitions-units/units?limit=1000',
+              wrapperSourceLink: '/acquisitions-units/units?limit=1000&query=cql.allRecords=1 sortby name',
               wrapperSourcePath: 'acquisitionsUnits',
             }]}
             isRemoveValueAllowed
@@ -158,7 +158,7 @@ export const InvoiceInformation = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/batch-groups?limit=500',
+              wrapperSourceLink: '/batch-groups?limit=500&query=cql.allRecords=1 sortby name',
               wrapperSourcePath: 'batchGroups',
             }]}
             isRemoveValueAllowed

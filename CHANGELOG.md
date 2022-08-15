@@ -8,6 +8,9 @@
 * Make UI changes to the Data Import landing page (UIDATIMP-1218)
 * UI flow for import jobs that finish before a user can cancel (UIDATIMP-1235)
 
+### Bugs fixed:
+* Invoice Field Mapping profile: Acq unit and Batch group dropdown lists should be in alphabetical order (UIDATIMP-1236)
+
 ## [5.2.4](https://github.com/folio-org/ui-data-import/tree/v5.2.4) (2022-09-06)
 
 ### Bugs fixed:
