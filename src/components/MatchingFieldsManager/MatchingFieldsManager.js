@@ -33,7 +33,15 @@ export class MatchingFieldsManager extends Component {
     intl: PropTypes.object.isRequired,
   };
 
+  /* shouldComponentUpdate(nextProps) {
+    console.log('nextProps', nextProps);
+    console.log('props', this.props);
+    return nextProps.resources.identifierTypes.records.length !== this.props.resources.identifierTypes.records.length ||
+    nextProps.resources.identifierTypes.records.length === 0;
+  } */
+
   matchFields = (resources, recordType) => {
+    console.log('inside matchFields');
     return fieldsConfig.filter(field => field.recordType
       && field.recordType === recordType
       && get(resources, field.id));
@@ -42,6 +50,7 @@ export class MatchingFieldsManager extends Component {
   getCategory = field => fieldCategoriesConfig.find(category => category.id === field.categoryId);
 
   getFieldFromResources = (fieldFromConfig, fields) => {
+    console.log('inside getFieldFromResources');
     const { resources } = this.props;
     const {
       recordsName,
@@ -83,6 +92,7 @@ export class MatchingFieldsManager extends Component {
   };
 
   getFieldMatched = (fields, recordType) => {
+    console.log('inside getFieldMatched');
     const isMarcRecord = recordType.toLowerCase().includes('marc');
 
     if (isMarcRecord) {
@@ -101,6 +111,7 @@ export class MatchingFieldsManager extends Component {
   };
 
   getFieldMatchedWithCategory = (fields, recordType) => {
+    console.log('inside getFieldMatchedWithCategory');
     const { intl: { formatMessage } } = this.props;
     const {
       fieldFromConfig,
@@ -135,6 +146,7 @@ export class MatchingFieldsManager extends Component {
   };
 
   getDropdownOptions = records => {
+    console.log('inside getDropdownOptions');
     const { intl: { formatMessage } } = this.props;
     const options = [];
 

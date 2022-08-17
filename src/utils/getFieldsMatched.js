@@ -1,6 +1,7 @@
 import {
   HTML_LANG_DIRECTIONS,
   MARC_FIELD_CONSTITUENT,
+  fieldCategoriesConfig,
   fieldsConfig,
 } from '.';
 
@@ -18,13 +19,14 @@ const getFieldFromResources = (fieldFromConfig, resources, fields) => {
 };
 
 const getField = (fields, recordType, resources, formatMessage) => {
+  console.log('resources', resources);
   if (!fields.length || !recordType) {
     return undefined;
   }
-
+  console.log('formatMessage', formatMessage);
   const fieldValue = fields.find(field => field.label === MARC_FIELD_CONSTITUENT.FIELD)?.value;
   const fieldFromConfig = fieldsConfig.find(item => item.value === fieldValue);
-
+  console.log('fieldFromConfig', fieldFromConfig);
   if (fieldFromConfig?.fromResources) {
     const fieldFromResources = getFieldFromResources(fieldFromConfig, resources, fields);
 
@@ -43,6 +45,7 @@ const getField = (fields, recordType, resources, formatMessage) => {
 };
 
 export const getFieldMatched = (fields, recordType, formatMessage, resources) => {
+  console.log(resources);
   const isMarcRecord = recordType.toLowerCase().includes('marc');
 
   if (isMarcRecord) {
@@ -58,4 +61,23 @@ export const getFieldMatched = (fields, recordType, formatMessage, resources) =>
   const { fieldLabel } = getField(fields, recordType, resources, formatMessage);
 
   return fieldLabel;
+};
+
+export const getCategory = field => fieldCategoriesConfig.find(category => category.id === field.categoryId);
+
+export const getFieldMatchedWithCategory = (fields, recordType, formatMessage, resources = {}) => {
+  console.log('inside getFieldMatchedWithCategory');
+  const {
+    fieldFromConfig,
+    fieldLabel,
+  } = getField(fields, recordType, resources, formatMessage);
+
+  if (!fieldFromConfig) {
+    return undefined;
+  }
+
+  const category = getCategory(fieldFromConfig);
+  const categoryLabel = category ? formatMessage({ id: category.label }) : '';
+
+  return `${categoryLabel}: ${fieldLabel}`;
 };

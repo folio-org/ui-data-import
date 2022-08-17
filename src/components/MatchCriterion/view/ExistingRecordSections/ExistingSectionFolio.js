@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { useIntl } from 'react-intl';
 
 import {
   Row,
@@ -15,31 +16,38 @@ import {
 import { MatchingFieldsManager } from '../../../MatchingFieldsManager';
 
 import css from '../ViewMatchCriterion.css';
+import { getFieldMatchedWithCategory } from '../../../../utils';
 
 export const ExistingSectionFolio = ({
   existingRecordFields,
   existingRecordType,
   existingRecordFieldLabel,
-}) => (
-  <Section
-    label={existingRecordFieldLabel}
-    className={classnames(css.field, css.inputContainer)}
-  >
-    <Row>
-      <Col
-        xs={12}
-        className={css.fieldValue}
-      >
-        <MatchingFieldsManager>
-          {({ getFieldMatchedWithCategory }) => {
-            return getFieldMatchedWithCategory(existingRecordFields, existingRecordType)
-            || <NoValue />;
-          }}
-        </MatchingFieldsManager>
-      </Col>
-    </Row>
-  </Section>
-);
+}) => {
+  const intl = useIntl();
+  return (
+    <Section
+      label={existingRecordFieldLabel}
+      className={classnames(css.field, css.inputContainer)}
+    >
+      <Row>
+        <Col
+          xs={12}
+          className={css.fieldValue}
+        >
+          {
+            getFieldMatchedWithCategory(existingRecordFields, existingRecordType, intl.formatMessage)
+          }
+          {/* <MatchingFieldsManager>
+            {({ getFieldMatchedWithCategory }) => {
+              return getFieldMatchedWithCategory(existingRecordFields, existingRecordType)
+              || <NoValue />;
+            }}
+          </MatchingFieldsManager> */}
+        </Col>
+      </Row>
+    </Section>
+  );
+};
 
 ExistingSectionFolio.propTypes = {
   existingRecordFields: PropTypes.arrayOf(PropTypes.object),
