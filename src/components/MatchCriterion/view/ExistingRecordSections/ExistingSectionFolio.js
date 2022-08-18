@@ -16,7 +16,7 @@ import {
 import { MatchingFieldsManager } from '../../../MatchingFieldsManager';
 
 import css from '../ViewMatchCriterion.css';
-import { getFieldMatchedWithCategory } from '../../../../utils';
+// import { getFieldMatchedWithCategory } from '../../../../utils';
 
 export const ExistingSectionFolio = ({
   existingRecordFields,
@@ -34,15 +34,15 @@ export const ExistingSectionFolio = ({
           xs={12}
           className={css.fieldValue}
         >
-          {
+          {/* {
             getFieldMatchedWithCategory(existingRecordFields, existingRecordType, intl.formatMessage)
-          }
-          {/* <MatchingFieldsManager>
+          } */}
+          <MatchingFieldsManager>
             {({ getFieldMatchedWithCategory }) => {
               return getFieldMatchedWithCategory(existingRecordFields, existingRecordType)
               || <NoValue />;
             }}
-          </MatchingFieldsManager> */}
+          </MatchingFieldsManager>
         </Col>
       </Row>
     </Section>

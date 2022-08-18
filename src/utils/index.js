@@ -17,6 +17,7 @@ export * from './formValidators';
 export * from './generateSettingsLabel';
 export * from './getDecoratorValue';
 export * from './getFieldsMatched';
+export * from './getIdentifierTypes';
 export * from './getQueryParts';
 export * from './getTrimmedValue';
 export * from './hooks';

@@ -10,18 +10,19 @@ import {
   fieldsConfig,
   HTML_LANG_DIRECTIONS,
   MARC_FIELD_CONSTITUENT,
+  getIdentifierTypes,
 } from '../../utils';
 
 @injectIntl
 @stripesConnect
 export class MatchingFieldsManager extends Component {
-  static manifest = Object.freeze({
+  /* static manifest = Object.freeze({
     identifierTypes: {
       type: 'okapi',
       records: 'identifierTypes',
       path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
     },
-  });
+  }); */
 
   static propTypes = {
     children: PropTypes.oneOfType([
@@ -31,7 +32,16 @@ export class MatchingFieldsManager extends Component {
     ]).isRequired,
     resources: PropTypes.shape({ identifierTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }) }).isRequired,
     intl: PropTypes.object.isRequired,
+    stripes: PropTypes.object.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      identifierTypes: [],
+    };
+  }
 
   /* shouldComponentUpdate(nextProps) {
     console.log('nextProps', nextProps);
@@ -39,6 +49,20 @@ export class MatchingFieldsManager extends Component {
     return nextProps.resources.identifierTypes.records.length !== this.props.resources.identifierTypes.records.length ||
     nextProps.resources.identifierTypes.records.length === 0;
   } */
+
+  componentDidMount() {
+    console.log(this.props);
+    console.log('0---------', getIdentifierTypes(this.props.stripes.okapi));
+    getIdentifierTypes(this.props.stripes.okapi).then(data => {
+      this.setState({ identifierTypes: data });
+    });
+    console.log('inside cdm');
+  }
+
+  componentDidUpdate() {
+    console.log(this.state.identifierTypes);
+    console.log(this.props.resources);
+  }
 
   matchFields = (resources, recordType) => {
     console.log('inside matchFields');
@@ -51,14 +75,15 @@ export class MatchingFieldsManager extends Component {
 
   getFieldFromResources = (fieldFromConfig, fields) => {
     console.log('inside getFieldFromResources');
-    const { resources } = this.props;
+    // const { resources } = this.props;
+    const { identifierTypes } = this.state;
     const {
       recordsName,
       fieldToSend,
       fieldToDisplay,
     } = fieldFromConfig.fromResources;
 
-    const records = resources[recordsName]?.records || [];
+    const records = identifierTypes[recordsName] || [];
     const fieldValue = fields[fields.length - 1].value;
 
     return records.find(record => record[fieldToSend] === fieldValue)?.[fieldToDisplay];
@@ -105,8 +130,8 @@ export class MatchingFieldsManager extends Component {
       return fieldsMatched.join('.');
     }
 
-    const { fieldLabel } = this.getField(fields, recordType);
-
+    // const { fieldLabel } = this.getField(fields, recordType);
+    const fieldLabel = 'test';
     return fieldLabel;
   };
 
@@ -129,14 +154,16 @@ export class MatchingFieldsManager extends Component {
   };
 
   getDropdownOptionsFromResources = (record, categoryLabel) => {
-    const { resources } = this.props;
+    // const { resources } = this.props;
+    const { identifierTypes } = this.state;
+    console.log('identifierTypes', identifierTypes);
     const {
       recordsName,
       fieldToDisplay,
       fieldToSend,
     } = record.fromResources;
 
-    const recordsFromResource = resources[recordsName]?.records;
+    const recordsFromResource = identifierTypes[recordsName];
 
     return recordsFromResource.map(item => ({
       id: record.id,
@@ -146,6 +173,7 @@ export class MatchingFieldsManager extends Component {
   };
 
   getDropdownOptions = records => {
+    console.log(records);
     console.log('inside getDropdownOptions');
     const { intl: { formatMessage } } = this.props;
     const options = [];
