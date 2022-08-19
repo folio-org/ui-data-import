@@ -7,6 +7,7 @@
 * Change UI flow for uploaded files deleted before import by users (UIDATIMP-1182)
 * Make UI changes to the Data Import landing page (UIDATIMP-1218)
 * UI flow for import jobs that finish before a user can cancel (UIDATIMP-1235)
+* Get rid of jobExecutions request for the Preview section (UIDATIMP-1239)
 
 ### Bugs fixed:
 * Invoice Field Mapping profile: Acq unit and Batch group dropdown lists should be in alphabetical order (UIDATIMP-1236)

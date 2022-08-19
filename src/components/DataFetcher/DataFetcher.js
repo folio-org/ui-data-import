@@ -10,7 +10,6 @@ import { DEFAULT_FETCHER_UPDATE_INTERVAL } from '@folio/stripes-data-transfer-co
 
 import { jobExecutionPropTypes } from '../Jobs/components/Job/jobExecutionPropTypes';
 import {
-  JOB_STATUSES,
   FILE_STATUSES,
   OCLC_CREATE_INSTANCE_JOB_ID,
   OCLC_UPDATE_INSTANCE_JOB_ID,
@@ -20,26 +19,10 @@ import {
 import { DataFetcherContext } from '.';
 
 const {
-  RUNNING,
-  READY_FOR_PREVIEW,
-  PREPARING_FOR_PREVIEW,
-} = JOB_STATUSES;
-
-const {
   COMMITTED,
   ERROR,
-  DISCARDED,
   CANCELLED,
 } = FILE_STATUSES;
-
-const jobsUrlParams = [
-  `statusNot=${DISCARDED}`,
-  `uiStatusAny=${PREPARING_FOR_PREVIEW}`,
-  `uiStatusAny=${READY_FOR_PREVIEW}`,
-  `uiStatusAny=${RUNNING}`,
-  'limit=50',
-  'sortBy=completed_date,desc',
-];
 
 const logsUrlParams = [
   `statusAny=${COMMITTED}`,
@@ -51,18 +34,11 @@ const logsUrlParams = [
   'sortBy=completed_date,desc',
 ];
 
-const jobsUrl = createUrlFromArray('metadata-provider/jobExecutions', jobsUrlParams);
 const logsUrl = createUrlFromArray('metadata-provider/jobExecutions', logsUrlParams);
 
 @stripesConnect
 export class DataFetcher extends Component {
   static manifest = Object.freeze({
-    jobs: {
-      type: 'okapi',
-      path: jobsUrl,
-      accumulate: true,
-      throwErrors: false,
-    },
     logs: {
       type: 'okapi',
       path: logsUrl,
