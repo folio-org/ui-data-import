@@ -43,12 +43,14 @@ export const MatchColumn = memo(({
 
   const fieldSource = (field || existingRecordType).replace(/_/g, ' ');
   const fields = get(record, 'matchDetails[0].existingMatchExpression.fields', []);
-
   return (
+    <span>testtest</span>
+  );
+  /* return (
     <MatchingFieldsManager>
       {({ getFieldMatched }) => {
         const fieldMatchedLabel = getFieldMatched(fields, fieldSource);
-
+        console.log('fieldMatchedLabel', fieldMatchedLabel);
         return (
           <AppIcon
             size="small"
@@ -112,7 +114,7 @@ export const MatchColumn = memo(({
         );
       }}
     </MatchingFieldsManager>
-  );
+  ); */
 });
 
 MatchColumn.propTypes = {

@@ -1,8 +1,8 @@
 import {
   HTML_LANG_DIRECTIONS,
   MARC_FIELD_CONSTITUENT,
-  fieldCategoriesConfig,
   fieldsConfig,
+  fieldCategoriesConfig,
 } from '.';
 
 const getFieldFromResources = (fieldFromConfig, resources, fields) => {
@@ -59,22 +59,4 @@ export const getFieldMatched = (fields, recordType, formatMessage, resources) =>
   const { fieldLabel } = getField(fields, recordType, resources, formatMessage);
 
   return fieldLabel;
-};
-
-export const getCategory = field => fieldCategoriesConfig.find(category => category.id === field.categoryId);
-
-export const getFieldMatchedWithCategory = (fields, recordType, formatMessage, resources = {}) => {
-  const {
-    fieldFromConfig,
-    fieldLabel,
-  } = getField(fields, recordType, resources, formatMessage);
-
-  if (!fieldFromConfig) {
-    return undefined;
-  }
-
-  const category = getCategory(fieldFromConfig);
-  const categoryLabel = category ? formatMessage({ id: category.label }) : '';
-
-  return `${categoryLabel}: ${fieldLabel}`;
 };
