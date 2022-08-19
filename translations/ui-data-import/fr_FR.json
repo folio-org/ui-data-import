@@ -893,7 +893,7 @@
     "modal.cancelUpload.message": "Are you sure that you want <b>to delete this uploaded file?</b> Deleted files will be permanently removed and cannot be retrieved",
     "modal.cancelUpload.cancel": "Non, ne pas supprimer",
     "modal.cancelUpload.confirm": "Oui, supprimer",
-    "selectAction.create": "Create (all record types)",
+    "selectAction.create": "Créer (tous types d'enregistrement)",
     "selectAction.modify": "Modify (MARC Bibliographic and Authority record types only)",
     "selectAction.update": "Update (all record types except Orders, Invoices, or MARC Holdings)",
     "modal.cancelRunningJob.header": "Cancel import job?",
