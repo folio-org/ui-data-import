@@ -60,3 +60,21 @@ export const getFieldMatchedWithCategory = (fields, recordType, formatMessage, r
 
   return `${categoryLabel}: ${fieldLabel}`;
 };
+
+export const getFieldMatchedLabel = (fields, recordType, formatMessage, resources) => {
+  const isMarcRecord = recordType.toLowerCase().includes('marc');
+
+  if (isMarcRecord) {
+    const fieldsMatched = fields.map(item => item.value || '');
+
+    if (document.dir === HTML_LANG_DIRECTIONS.RIGHT_TO_LEFT) {
+      fieldsMatched.reverse();
+    }
+
+    return fieldsMatched.join('.');
+  }
+
+  const { fieldLabel } = getField(fields, recordType, formatMessage, resources);
+
+  return fieldLabel;
+};

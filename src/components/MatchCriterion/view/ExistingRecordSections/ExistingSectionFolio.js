@@ -32,11 +32,8 @@ const ExistingSectionFolio = memo(({
   const [identifierTypes, setIdentifierTypes] = useState([]);
 
   useEffect(() => {
-    let isMounted = true;
     const { okapi } = stripes;
     getIdentifierTypes(okapi).then((data) => setIdentifierTypes(data));
-
-    return () => { isMounted = false; };
   }, [stripes]);
 
   return (

@@ -103,6 +103,7 @@ const jobProfilesProps = {
   refreshRemote: noop,
   label: <span>Job Profiles</span>,
   setList: noop,
+  detailProps: { jsonSchemas: { identifierTypes: [] } },
 };
 const renderJobProfiles = ({
   match,
@@ -113,6 +114,7 @@ const renderJobProfiles = ({
   label,
   okapi,
   refreshRemote,
+  detailProps,
 }) => {
   const JobProfiles = createJobProfiles();
 
@@ -133,6 +135,7 @@ const renderJobProfiles = ({
           stripes={stripes}
           okapi={okapi}
           refreshRemote={refreshRemote}
+          detailProps={detailProps}
         />
       </Paneset>
     </Router>

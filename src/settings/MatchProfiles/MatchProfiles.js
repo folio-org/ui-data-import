@@ -31,6 +31,7 @@ import {
   FIND_ALL_CQL,
   OCLC_MATCH_EXISTING_SRS_RECORD_ID,
   OCLC_MATCH_NO_SRS_RECORD_ID,
+  getIdentifierTypes,
 } from '../../utils';
 import {
   ListView,
@@ -368,6 +369,7 @@ export class MatchProfiles extends Component {
     ITEM: {},
     ORDER: {},
     INVOICE: {},
+    identifierTypes: [],
   };
 
   async componentDidUpdate(prevProps) {
@@ -400,6 +402,7 @@ export class MatchProfiles extends Component {
       await handleAllRequests(requestsToOrder, 'ORDER', this.addToState);
       await handleAllRequests(requestsToNotes, 'ORDER', this.addToState);
       await handleAllRequests(requestsToInvoice, 'INVOICE', this.addToState);
+      await getIdentifierTypes(okapi).then(identifierTypes => this.setState({ identifierTypes }));
     }
   }
 
@@ -422,6 +425,7 @@ export class MatchProfiles extends Component {
       renderHeaders: this.renderHeaders,
       detailProps: { jsonSchemas: { ...this.state } },
     };
+    console.log(resultedProps);
 
     return <ListView {...resultedProps} />;
   }

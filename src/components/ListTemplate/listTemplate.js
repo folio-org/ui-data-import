@@ -35,6 +35,7 @@ export const listTemplate = ({
   selectedRecords,
   showLabelsAsHotLink,
   checkboxDisabled = false,
+  identifierTypes = [],
 }) => ({
   selected: record => (
     <CheckboxColumn
@@ -64,6 +65,7 @@ export const listTemplate = ({
     <MatchColumn
       record={record}
       searchTerm={searchTerm}
+      identifierTypes={identifierTypes}
     />
   ),
   extension: record => (
