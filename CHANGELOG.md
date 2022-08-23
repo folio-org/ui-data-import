@@ -8,6 +8,7 @@
 * Update the Action profile UI: Create/Edit screen (UIDATIMP-1215)
 * Change UI flow for import jobs cancelled by users  (UIDATIMP-1173)
 * Update the Match profile UI: Create/Edit screen (UIDATIMP-1214)
+* So many requests are sent from UI to server after creating match profiles (UIDATIMP-1238)
 
 ## [5.2.3](https://github.com/folio-org/ui-data-import/tree/v5.2.3) (2022-08-11)
 

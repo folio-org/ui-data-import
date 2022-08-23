@@ -2,7 +2,6 @@ import {
   HTML_LANG_DIRECTIONS,
   MARC_FIELD_CONSTITUENT,
   fieldsConfig,
-  fieldCategoriesConfig,
 } from '.';
 
 const getFieldFromResources = (fieldFromConfig, resources, fields) => {

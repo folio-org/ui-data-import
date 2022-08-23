@@ -81,7 +81,7 @@ export class ListView extends Component {
     checkboxList: {},
     defaultSort: 'name',
     nonInteractiveHeaders: [],
-    detailProps: {},
+    detailProps: { jsonSchemas: { identifierTypes: [] } },
   };
 
   state = {

@@ -1,4 +1,8 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, {
+  useEffect,
+  useState,
+  memo,
+} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useIntl } from 'react-intl';

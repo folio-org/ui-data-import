@@ -425,7 +425,6 @@ export class MatchProfiles extends Component {
       renderHeaders: this.renderHeaders,
       detailProps: { jsonSchemas: { ...this.state } },
     };
-    console.log(resultedProps);
 
     return <ListView {...resultedProps} />;
   }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
@@ -32,18 +32,6 @@ export class MatchingFieldsManager extends Component {
     resources: PropTypes.shape({ identifierTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }) }).isRequired,
     intl: PropTypes.object.isRequired,
   };
-
-  /* shouldComponentUpdate(nextProps) {
-    const { resources: { identifierTypes: { records } } } = this.props;
-    const { resources: { identifierTypes: { records: nextRecords } } } = nextProps;
-
-    console.log('records', this.props);
-    console.log('nextRecords', nextProps);
-    // return true;
-    console.log('-------- check', records.length !== nextRecords.length && records.length === 0);
-
-    return records.length !== nextRecords.length && records.length !== 0;
-  } */
 
   matchFields = (resources, recordType) => {
     return fieldsConfig.filter(field => field.recordType
