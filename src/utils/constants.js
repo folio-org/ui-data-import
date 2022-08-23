@@ -1,9 +1,5 @@
 export const FIND_ALL_CQL = 'cql.allRecords=1';
 
-export const DEFAULT_TIMEOUT_BEFORE_FILE_DELETION = 0;
-
-export const DEFAULT_TIMEOUT_BEFORE_JOB_DELETION = 10000;
-
 export const STRING_CAPITALIZATION_MODES = {
   ALL: 0,
   FIRST: 1,
