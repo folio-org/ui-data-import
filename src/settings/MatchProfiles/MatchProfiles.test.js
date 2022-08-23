@@ -41,10 +41,10 @@ const mutator = buildMutator({
 const matchProfilesProps = {
   resources: {
     modules: {
-      records: [/* {
+      records: [{
         name: 'Inventory Storage Module',
         id: 'testId',
-      } */],
+      }],
     },
   },
   stripes: {
