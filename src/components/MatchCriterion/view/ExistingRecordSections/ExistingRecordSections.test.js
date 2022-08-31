@@ -4,7 +4,7 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 import '../../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../../test/jest/helpers';
 
-import { ExistingSectionFolio } from './ExistingSectionFolio';
+import ExistingSectionFolio from './ExistingSectionFolio';
 
 const existingSectionFolio = {
   existingRecordFields: [{ value: 'field' }],

@@ -73,6 +73,7 @@ const fileExtensionsProps = {
     deselectAll: noop,
     handleSelectAllCheckbox: noop,
   },
+  detailProps: { jsonSchemas: { identifierTypes: [] } },
 };
 
 const renderFileExtensions = ({
@@ -81,6 +82,7 @@ const renderFileExtensions = ({
   label,
   selectedRecord,
   checkboxList,
+  detailProps,
 }) => {
   const component = () => (
     <Router>
@@ -94,6 +96,7 @@ const renderFileExtensions = ({
           label={label}
           match={match}
           mutator={mutator}
+          detailProps={detailProps}
         />
       </Paneset>
     </Router>

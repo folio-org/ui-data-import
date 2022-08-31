@@ -81,6 +81,7 @@ export class ListView extends Component {
     checkboxList: {},
     defaultSort: 'name',
     nonInteractiveHeaders: [],
+    detailProps: { jsonSchemas: { identifierTypes: [] } },
   };
 
   state = {
@@ -219,6 +220,7 @@ export class ListView extends Component {
       isFullScreen,
       defaultSort,
       nonInteractiveHeaders,
+      detailProps: { jsonSchemas: { identifierTypes } },
     } = this.props;
     const { showRestoreModal } = this.state;
 
@@ -262,6 +264,7 @@ export class ListView extends Component {
                 searchTerm,
                 selectRecord,
                 selectedRecords,
+                identifierTypes,
               })}
               withNewRecordButton={withNewRecordButton}
               ViewRecordComponent={RecordView}

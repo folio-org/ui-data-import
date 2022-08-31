@@ -1,1 +1,1 @@
-export * from './ExistingSectionFolio';
+export { default as ExistingSectionFolio } from './ExistingSectionFolio';

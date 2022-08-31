@@ -110,6 +110,7 @@ const mappingProfilesProps = {
     handleSelectAllCheckbox: noop,
   },
   setList: noop,
+  detailProps: { jsonSchemas: { identifierTypes: [] } },
 };
 
 const renderMappingProfiles = ({
@@ -120,6 +121,7 @@ const renderMappingProfiles = ({
   selectedRecord,
   checkboxList,
   setList,
+  detailProps,
 }) => {
   const component = () => (
     <Router>
@@ -135,6 +137,7 @@ const renderMappingProfiles = ({
           selectedRecord={selectedRecord}
           checkboxList={checkboxList}
           setList={setList}
+          detailProps={detailProps}
         />
       </Paneset>
     </Router>

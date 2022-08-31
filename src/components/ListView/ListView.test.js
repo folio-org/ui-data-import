@@ -105,6 +105,7 @@ const listViewProps = {
   history: { push: history.push },
   columnWidths: {},
   initialValues: {},
+  detailProps: { jsonSchemas: { identifierTypes: [] } },
 };
 
 const listViewPropsActionProfiles = {
@@ -173,6 +174,7 @@ const renderListView = ({
   initialValues,
   columnWidths,
   objectName,
+  detailProps,
 }) => {
   const component = (
     <Router>
@@ -194,6 +196,7 @@ const renderListView = ({
         columnWidths={columnWidths}
         objectName={objectName}
         stripes={{ hasPerm: () => true }}
+        detailProps={detailProps}
       />
     </Router>
   );
