@@ -5,10 +5,7 @@ import {
   it,
 } from '@bigtest/mocha';
 
-import {
-  PREVIEW_JOBS_LENGTH,
-  RUNNING_JOBS_LENGTH,
-} from '../../mocks/job-executions';
+import { RUNNING_JOBS_LENGTH } from '../../mocks';
 import translation from '../../../../translations/ui-data-import/en';
 import { setupApplication } from '../../helpers';
 import { jobsPane } from '../../interactors';
@@ -16,7 +13,7 @@ import { jobsPane } from '../../interactors';
 describe('Jobs pane', () => {
   setupApplication();
 
-  beforeEach(function () {
+  beforeEach(() => {
     this.visit('/data-import');
   });
 
@@ -62,18 +59,8 @@ describe('Jobs pane', () => {
 describe('Jobs pane when jobs data retrieved successfully', () => {
   setupApplication({ scenarios: ['fetch-jobs-data-success'] });
 
-  beforeEach(function () {
+  beforeEach(() => {
     this.visit('/data-import');
-  });
-
-  describe('jobs preview section', () => {
-    it('renders jobs list', () => {
-      expect(jobsPane.previewJobs.jobsList.isPresent).to.be.true;
-    });
-
-    it('has correct job items amount', () => {
-      expect(jobsPane.previewJobs.jobItems()).to.have.lengthOf(PREVIEW_JOBS_LENGTH);
-    });
   });
 
   describe('jobs running section', () => {
@@ -90,14 +77,8 @@ describe('Jobs pane when jobs data retrieved successfully', () => {
 describe('Jobs pane when unable to fetch jobs data', () => {
   setupApplication({ scenarios: ['fetch-jobs-data-error'] });
 
-  beforeEach(function () {
+  beforeEach(() => {
     this.visit('/data-import');
-  });
-
-  describe('jobs preview section', () => {
-    it('renders empty message', () => {
-      expect(jobsPane.previewJobs.emptyMessage.isPresent).to.be.true;
-    });
   });
 
   describe('jobs running section', () => {

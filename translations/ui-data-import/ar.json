@@ -878,7 +878,7 @@
     "modal.landing.delete.message": "<p><b>Data import logs selected</b></p><p>{logsNumber}</p><p>Are you sure that you want to <b>delete these data import logs</b>? Deleted logs will be permanently removed and cannot be retrieved.</p>",
     "modal.landing.delete": "نعم، قم بالحذف",
     "modal.landing.cancel": "لا، لا تقم بالحذف",
-    "settings.matchProfiles.acquisitionsData": "Acquisitions data",
+    "settings.matchProfiles.acquisitionsData": "بيانات التزويد",
     "settings.mappingProfiles.map.administrativeData.field.administrativeNotes.legend": "ملاحظات إدارية",
     "settings.mappingProfiles.map.administrativeData.field.administrativeNote": "ملاحظة إدارية",
     "settings.mappingProfiles.map.administrativeData.field.administrativeNotes.addLabel": "إضافة ملاحظة إدارية",
@@ -889,15 +889,15 @@
     "settings.mappingProfiles.map.holdings.acquisitionsData.field.purchaseOrderLineNumber": "سطر أمر الشراء (POL)",
     "settings.mappingProfiles.map.holdings.acquisitionsData.field.vendorReferenceNumber": "رقم المورّد المرجعي",
     "willDeleteFile": "سيتم حذف {name}",
-    "modal.cancelUpload.header": "Delete uploaded file?",
+    "modal.cancelUpload.header": "هل تريد حذف الملف المرفوع؟",
     "modal.cancelUpload.message": "Are you sure that you want <b>to delete this uploaded file?</b> Deleted files will be permanently removed and cannot be retrieved",
-    "modal.cancelUpload.cancel": "No, do not delete",
+    "modal.cancelUpload.cancel": "لا، لا تقم بالحذف",
     "modal.cancelUpload.confirm": "نعم، قم بالحذف",
-    "selectAction.create": "Create (all record types)",
+    "selectAction.create": "إنشاء (كل أنواع التسجيلات)",
     "selectAction.modify": "Modify (MARC Bibliographic and Authority record types only)",
     "selectAction.update": "Update (all record types except Orders, Invoices, or MARC Holdings)",
     "modal.cancelRunningJob.header": "هل تريد إلغاء مهمة الاستيراد؟",
     "modal.cancelRunningJob.message": "Are you sure that you want <b>to cancel this import job?</b><p><b>Note:</b> Cancelled jobs cannot be restarted. Records created or updated before{break}the job is cancelled cannot yet be reverted.</p>",
     "modal.cancelRunningJob.cancel": "No, do not cancel import",
-    "modal.cancelRunningJob.confirm": "Yes, cancel import job"
+    "modal.cancelRunningJob.confirm": "نعم، قم بإلغاء مهمة الاستيراد"
 }
