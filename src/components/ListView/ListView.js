@@ -220,6 +220,7 @@ export class ListView extends Component {
       isFullScreen,
       defaultSort,
       nonInteractiveHeaders,
+      detailProps: { jsonSchemas: { identifierTypes } },
     } = this.props;
     const { showRestoreModal } = this.state;
 
