@@ -130,6 +130,18 @@ export const listTemplate = ({
 
     return firstName ? `${firstName} ${lastName}` : `${lastName}`;
   },
+  startedDate: record => {
+    const { startedDate } = record;
+
+    return (
+      <FormattedTime
+        value={startedDate}
+        day="numeric"
+        month="numeric"
+        year="numeric"
+      />
+    );
+  },
   completedDate: record => {
     const { completedDate } = record;
 
