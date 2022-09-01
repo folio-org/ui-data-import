@@ -5,6 +5,7 @@ import {
   JobLogs,
   DEFAULT_JOB_LOGS_SORT_COLUMNS,
   sortStrings,
+  sortDates,
 } from '@folio/stripes-data-transfer-components';
 
 import JobLogsContainer from '../JobLogsContainer';
@@ -20,6 +21,10 @@ const sortColumns = {
   status: {
     sortFn: sortStrings,
     useFormatterFn: true,
+  },
+  startedDate: {
+    sortFn: sortDates,
+    useFormatterFn: false,
   },
 };
 

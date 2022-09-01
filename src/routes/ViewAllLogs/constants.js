@@ -47,6 +47,7 @@ export const SORT_MAP = {
   hrId: 'hrid',
   jobProfileName: 'job_profile_name',
   totalRecords: 'progress_total',
+  startedDate: 'started_date',
   completedDate: 'completed_date',
   runBy: 'job_user_first_name job_user_last_name',
 };

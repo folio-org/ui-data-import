@@ -162,6 +162,7 @@
   "uuId": "UUID",
   "keyword": "Keyword (ID, File name)",
   "records": "Records",
+  "jobStartedDate": "Started running",
   "jobCompletedDate": "Ended running",
   "status": "Status",
   "failed": "Failed",

@@ -8,6 +8,8 @@
 * Make UI changes to the Data Import landing page (UIDATIMP-1218)
 * UI flow for import jobs that finish before a user can cancel (UIDATIMP-1235)
 * Get rid of jobExecutions request for the Preview section (UIDATIMP-1239)
+* Add column for "Started running" in Data Import Landing page log area (UIDATIMP-1244)
+* Add column for "Started running" in Data Import "View all" page (UIDATIMP-1245)
 * Refactor job profiles to use Router instead of 'layout' param (UIDATIMP-1279)
 * Refactor action profiles to use Router instead of 'layout' param (UIDATIMP-1280)
 * Refactor match profiles to use Router instead of 'layout' param (UIDATIMP-1281)
