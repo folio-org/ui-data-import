@@ -220,7 +220,6 @@ export class ListView extends Component {
       isFullScreen,
       defaultSort,
       nonInteractiveHeaders,
-      detailProps: { jsonSchemas: { identifierTypes } },
     } = this.props;
     const { showRestoreModal } = this.state;
 
@@ -228,6 +227,7 @@ export class ListView extends Component {
     const searchTerm = trimSearchTerm(urlQuery.query);
     const actionMenu = isEmpty(actionMenuItems) ? null : this.renderActionMenu;
     const rowUpdater = selectedRecords ? this.rowUpdater : undefined;
+    const identifierTypes = detailProps.jsonSchemas?.identifierTypes;
 
     return (
       <ViewContainer
