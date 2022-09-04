@@ -70,6 +70,7 @@ const getResources = query => ({
     other: { totalRecords: 3 },
     records: [
       {
+        startedDate: '2021-10-10T08:20:56.946+0000',
         completedDate: '2021-10-10T08:30:56.946+0000',
         id: 'testId1',
         fileName: 'testFile1',
@@ -86,6 +87,7 @@ const getResources = query => ({
 
       },
       {
+        startedDate: '2021-10-11T07:00:56.946+0000',
         completedDate: '2021-10-11T07:42:56.946+0000',
         id: 'testId2',
         fileName: '',
@@ -101,6 +103,7 @@ const getResources = query => ({
         },
       },
       {
+        startedDate: '2021-10-12T09:25:56.946+0000',
         completedDate: '2021-10-12T09:46:56.946+0000',
         id: 'testId3',
         fileName: 'testFile3',
