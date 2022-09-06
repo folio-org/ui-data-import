@@ -1,9 +1,9 @@
 # Change history for ui-data-import
 
-## **5.2.4** (in progress)
+## [5.2.4](https://github.com/folio-org/ui-data-import/tree/v5.2.4) (2022-09-06)
 
 ### Bugs fixed:
-* So many requests are sent from UI to server after creating match profiles (UIDATIMP-1238)
+* So many requests are sent from UI to server after creating match profiles (UIDATIMP-1241)
 
 ## [5.2.3](https://github.com/folio-org/ui-data-import/tree/v5.2.3) (2022-08-11)
 
