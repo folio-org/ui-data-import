@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **5.2.4** (in progress)
+## **5.3.0** (in progress)
 
 ### Features added:
 * Make UI changes to the Data Import landing page (UIDATIMP-1218)
@@ -9,12 +9,16 @@
 * Change UI flow for import jobs cancelled by users  (UIDATIMP-1173)
 * Update the Match profile UI: Create/Edit screen (UIDATIMP-1214)
 * Get rid of jobExecutions request for the Preview section (UIDATIMP-1239)
-* So many requests are sent from UI to server after creating match profiles (UIDATIMP-1238)
 * Add column for "Started running" in Data Import Landing page log area (UIDATIMP-1244)
 * Add column for "Started running" in Data Import "View all" page (UIDATIMP-1245)
 
 ### Bugs fixed:
 * Invoice Field Mapping profile: Acq unit and Batch group dropdown lists should be in alphabetical order (UIDATIMP-1236)
+
+## [5.2.4](https://github.com/folio-org/ui-data-import/tree/v5.2.4) (2022-09-06)
+
+### Bugs fixed:
+* So many requests are sent from UI to server after creating match profiles (UIDATIMP-1241)
 
 ## [5.2.3](https://github.com/folio-org/ui-data-import/tree/v5.2.3) (2022-08-11)
 
