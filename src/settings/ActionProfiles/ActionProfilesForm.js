@@ -107,9 +107,7 @@ export const ActionProfilesFormComponent = ({
         ]);
       }
       case ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type: {
-        return pick(ACTION_TYPES_SELECT, [
-          ACTION_TYPES_SELECT.UPDATE.type,
-        ]);
+        return pick(ACTION_TYPES_SELECT, ACTION_TYPES_SELECT.UPDATE.type);
       }
       default: {
         return ACTION_TYPES_SELECT;
@@ -126,9 +124,7 @@ export const ActionProfilesFormComponent = ({
   const getFilteredFolioRecordTypes = () => {
     switch (action) {
       case ACTION_TYPES_SELECT.MODIFY.type: {
-        return pick(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
-          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type,
-        ]);
+        return pick(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type);
       }
       case ACTION_TYPES_SELECT.UPDATE.type: {
         return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
