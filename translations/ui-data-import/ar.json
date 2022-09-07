@@ -899,5 +899,6 @@
     "modal.cancelRunningJob.header": "هل تريد إلغاء مهمة الاستيراد؟",
     "modal.cancelRunningJob.message": "Are you sure that you want <b>to cancel this import job?</b><p><b>Note:</b> Cancelled jobs cannot be restarted. Records created or updated before{break}the job is cancelled cannot yet be reverted.</p>",
     "modal.cancelRunningJob.cancel": "لا، لا تقم بإلغاء الاستيراد",
-    "modal.cancelRunningJob.confirm": "نعم، قم بإلغاء مهمة الاستيراد"
+    "modal.cancelRunningJob.confirm": "نعم، قم بإلغاء مهمة الاستيراد",
+    "jobStartedDate": "Started running"
 }
