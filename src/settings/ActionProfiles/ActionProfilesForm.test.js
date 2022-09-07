@@ -185,7 +185,6 @@ describe('ActionProfilesForm', () => {
           expect(container.querySelector('[value="ORDER"]')).not.toBeInTheDocument();
           expect(container.querySelector('[value="INVOICE"]')).not.toBeDisabled();
           expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).not.toBeDisabled();
-          expect(container.querySelector('[value="MARC_AUTHORITY"]')).not.toBeDisabled();
           expect(container.querySelector('[value="MARC_HOLDINGS"]')).not.toBeInTheDocument();
         });
       });
@@ -207,8 +206,6 @@ describe('ActionProfilesForm', () => {
           fireEvent.change(actionInput, { target: { value: 'MODIFY' } });
 
           expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).toBeDefined();
-          expect(container.querySelector('[value="MARC_AUTHORITY"]')).toBeDefined();
-          expect(container.querySelector('[value="MARC_HOLDINGS"]')).toBeDefined();
         });
       });
 

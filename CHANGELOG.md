@@ -11,6 +11,7 @@
 * Get rid of jobExecutions request for the Preview section (UIDATIMP-1239)
 * Add column for "Started running" in Data Import Landing page log area (UIDATIMP-1244)
 * Add column for "Started running" in Data Import "View all" page (UIDATIMP-1245)
+* Update the Action profile UI again: Create/Edit screen (UIDATIMP-1246)
 
 ### Bugs fixed:
 * Invoice Field Mapping profile: Acq unit and Batch group dropdown lists should be in alphabetical order (UIDATIMP-1236)
