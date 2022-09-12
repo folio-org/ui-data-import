@@ -23,6 +23,7 @@ import {
   ConfirmationModal,
   FormattedDate,
   FormattedTime,
+  ErrorModal,
 } from '@folio/stripes/components';
 import {
   Progress,
@@ -53,6 +54,7 @@ export class Job extends Component {
   state = {
     deletionInProgress: false,
     showCancelJobModal: false,
+    showFinishedJobModal: false,
   };
 
   showCancelJobConfirmationModal = () => {
@@ -61,6 +63,7 @@ export class Job extends Component {
 
   hideCancelJobConfirmationModal = () => {
     this.setState({ showCancelJobModal: false });
+    this.openFinishedJobModal();
   };
 
   calloutRef = createRef();
@@ -127,6 +130,14 @@ export class Job extends Component {
     await this.deleteJob(job);
   };
 
+  openFinishedJobModal = () => {
+    this.setState({ showFinishedJobModal: true });
+  };
+
+  closeFinishedJobModal = () => {
+    this.setState({ showFinishedJobModal: false });
+  };
+
   render() {
     const {
       job,
@@ -136,6 +147,7 @@ export class Job extends Component {
     const {
       showCancelJobModal,
       deletionInProgress,
+      showFinishedJobModal,
     } = this.state;
 
     const {
@@ -259,6 +271,13 @@ export class Job extends Component {
           cancelLabel={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.cancel" />}
           onConfirm={this.handleDeleteJob}
           onCancel={this.hideCancelJobConfirmationModal}
+        />
+        <ErrorModal
+          ariaLabel="confirm-finished-job-modal"
+          open={showFinishedJobModal}
+          label={<FormattedMessage id="ui-data-import.modal.confirmJobFinished.header" />}
+          content={<FormattedMessage id="ui-data-import.modal.confirmJobFinished.message" />}
+          onClose={this.closeFinishedJobModal}
         />
       </li>
     );

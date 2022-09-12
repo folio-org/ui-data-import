@@ -17,7 +17,7 @@ export class RunningJobs extends PureComponent {
     const jobStatuses = [JOB_STATUSES.RUNNING];
     const jobs = [...get(this.context, ['jobs'], [])]
       .filter(({ uiStatus }) => jobStatuses.includes(uiStatus));
-
+    console.log(jobs);
     return sortRunningJobs(jobs);
   }
 
