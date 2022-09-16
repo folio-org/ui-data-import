@@ -139,7 +139,7 @@ const JobComponent = ({
     setDeletionInProgress(true);
     hideCancelJobConfirmationModal();
 
-    await deleteJob(job);
+    await deleteJob();
   };
 
   const {
