@@ -2,20 +2,23 @@ import React, {
   Component,
   createRef
 } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { isEqual } from 'lodash';
+import { isEqual, get } from 'lodash';
 
 import {
   Button,
   Pane,
   ConfirmationModal,
   Callout,
+  ErrorModal,
 } from '@folio/stripes/components';
 import { PersistedPaneset } from '@folio/stripes/smart-components';
 import {
   stripesShape,
   withStripes,
+  withRoot,
 } from '@folio/stripes/core';
 
 import {
@@ -32,10 +35,28 @@ import {
   deleteJobExecutions,
   PAGE_KEYS,
   storage,
+  STATE_MANAGEMENT_LANDING,
 } from '../utils';
+import { jobExecutionsReducer } from '../redux/reducers/jobExecutionsReducer';
+import {
+  deleteHrid,
+  deselectRecord,
+} from '../redux/actions/jobExecutionsActionCreator';
+
+const mapStateToProps = state => {
+  const { hrIds, selectedJob } = get(state, 'folio-data-import_landing', {});
+  return { hrIds, selectedJob };
+};
+
+const mapDispatchToProps = dispatch => ({
+  removeHRID: hrId => dispatch(deleteHrid(hrId)),
+  deselectRecord: () => dispatch(deselectRecord()),
+});
 
 @withCheckboxList({ pageKey: PAGE_KEYS.HOME })
 @withStripes
+@withRoot
+@connect(mapStateToProps, mapDispatchToProps)
 export class Home extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
@@ -43,6 +64,13 @@ export class Home extends Component {
     setList: PropTypes.func.isRequired,
     // eslint-disable-next-line react/no-unused-prop-types
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
+    root: PropTypes.shape({
+      addReducer: PropTypes.func.isRequired,
+    }).isRequired,
+    hrIds: PropTypes.arrayOf(PropTypes.number),
+    selectedJob: PropTypes.number,
+    removeHRID: PropTypes.func,
+    deselectRecord: PropTypes.func,
   };
 
   static defaultProps = { actionMenuItems: ['viewAllLogs', 'deleteSelectedLogs'] };
@@ -64,6 +92,7 @@ export class Home extends Component {
   constructor(props) {
     super(props);
 
+    props.root.addReducer(STATE_MANAGEMENT_LANDING.REDUCER, jobExecutionsReducer);
     this.renderLogsPaneSub = this.renderLogsPaneSub.bind(this);
 
     this.calloutRef = createRef();
@@ -72,6 +101,7 @@ export class Home extends Component {
       logs: [],
       selectedLogsNumber: 0,
       showDeleteConfirmation: false,
+      isShowFinishedJobModalOpen: false,
     };
   }
 
@@ -92,6 +122,21 @@ export class Home extends Component {
 
     setList(logs);
     this.setState({ logs });
+    this.onFinishUploading(logs);
+  }
+
+  onFinishUploading = logs => {
+    console.log(this.props);
+    for (let i = 0; i < logs.length; i++) {
+      if (this.props.hrIds.includes(logs[i].hrId)) {
+        this.props.removeHRID(logs[i].hrId);
+        if (this.props.selectedJob === logs[i].hrId) {
+          this.openFinishedJobModal();
+        }
+        this.props.deselectRecord();
+      }
+    }
+    return false;
   }
 
   handleManageJobs = () => {
@@ -190,13 +235,24 @@ export class Home extends Component {
     return this.state.selectedLogsNumber === 0;
   }
 
+  openFinishedJobModal = () => {
+    this.setState({ isShowFinishedJobModalOpen: true });
+  };
+
+  closeFinishedJobModal = () => {
+    this.setState({ isShowFinishedJobModalOpen: false });
+  };
+
   render() {
     const {
       logs,
       hasLoaded,
     } = this.context;
     const { checkboxList } = this.props;
-    const { isLogsDeletionInProgress } = this.state;
+    const {
+      isLogsDeletionInProgress,
+      isShowFinishedJobModalOpen,
+    } = this.state;
 
     return (
       <PersistedPaneset
@@ -252,6 +308,13 @@ export class Home extends Component {
             this.props.checkboxList.deselectAll();
             this.hideDeleteConfirmation();
           }}
+        />
+        <ErrorModal
+          ariaLabel="confirm-finished-job-modal"
+          open={isShowFinishedJobModalOpen}
+          label={<FormattedMessage id="ui-data-import.modal.confirmJobFinished.header" />}
+          content={<FormattedMessage id="ui-data-import.modal.confirmJobFinished.message" />}
+          onClose={this.closeFinishedJobModal}
         />
         <Callout ref={this.calloutRef} />
       </PersistedPaneset>

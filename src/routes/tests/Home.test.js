@@ -8,7 +8,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import '../../../test/jest/__mock__';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { translationsProperties } from '../../../test/jest/helpers';
+import { translationsProperties, renderWithRedux } from '../../../test/jest/helpers';
 
 import { DataFetcherContext } from '../../components';
 import { Home } from '../Home';
@@ -39,8 +39,36 @@ jest.mock('@folio/stripes/components', () => ({
       </button>
     </div>
   ) : null)),
+  ErrorModal: jest.fn(({
+    open,
+    onClose,
+  }) => (open ? (
+    <div>
+      <span>Information modal</span>
+      <button
+        type="button"
+        id="confirmButton"
+        onClick={onClose}
+      >
+        Close
+      </button>
+    </div>
+  ) : null)),
 }));
 const deleteJobExecutionsSpy = jest.spyOn(utils, 'deleteJobExecutions');
+const initialStore = {
+  'folio-data-import_landing': {
+    hrIds: [],
+    selectedJob: null,
+  }
+};
+
+const storeWithData = {
+  'folio-data-import_landing': {
+    hrIds: [2, 11],
+    selectedJob: 2,
+  }
+};
 
 const defaultContext = {
   hasLoaded: true,
@@ -48,7 +76,7 @@ const defaultContext = {
   logs: jobsLogs,
 };
 
-const renderHome = (context = defaultContext) => {
+const renderHome = (store = initialStore, context = defaultContext) => {
   const component = (
     <Router>
       <DataFetcherContext.Provider value={context}>
@@ -57,7 +85,7 @@ const renderHome = (context = defaultContext) => {
     </Router>
   );
 
-  return renderWithIntl(component, translationsProperties);
+  return renderWithIntl(renderWithRedux(component, store), translationsProperties);
 };
 
 describe('Home component', () => {
@@ -208,6 +236,37 @@ describe('Home component', () => {
         fireEvent.click(getByText('Cancel'));
 
         expect(queryByText('Confirmation modal')).toBeNull();
+      });
+    });
+
+    describe('when cancelled job was uploaded', () => {
+      it('notification modal should be shown', async () => {
+        const {
+          getByText,
+          getAllByLabelText,
+        } = renderHome(storeWithData);
+
+        fireEvent.click(getAllByLabelText('select item')[0]);
+
+        await waitFor(() => expect(getByText('Information modal')).toBeInTheDocument());
+      });
+
+      describe('when click close notification button', () => {
+        it('notification modal should be hidden', async () => {
+          const {
+            getByText,
+            getAllByLabelText,
+            queryByText,
+          } = renderHome(storeWithData);
+
+          fireEvent.click(getAllByLabelText('select item')[0]);
+
+          await waitFor(() => expect(getByText('Information modal')).toBeInTheDocument());
+
+          fireEvent.click(getByText('Close'));
+
+          await waitFor(() => expect(queryByText('Information modal')).toBeNull());
+        });
       });
     });
   });
