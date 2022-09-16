@@ -8,7 +8,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import '../../../test/jest/__mock__';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { translationsProperties, renderWithRedux } from '../../../test/jest/helpers';
+import {
+  translationsProperties,
+  renderWithRedux,
+} from '../../../test/jest/helpers';
 
 import { DataFetcherContext } from '../../components';
 import { Home } from '../Home';
@@ -262,7 +265,6 @@ describe('Home component', () => {
           fireEvent.click(getAllByLabelText('select item')[0]);
 
           await waitFor(() => expect(getByText('Information modal')).toBeInTheDocument());
-
           fireEvent.click(getByText('Close'));
 
           await waitFor(() => expect(queryByText('Information modal')).toBeNull());

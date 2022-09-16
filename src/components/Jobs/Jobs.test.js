@@ -8,7 +8,10 @@ import {
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../test/jest/__mock__';
-import { renderWithRedux, translationsProperties } from '../../../test/jest/helpers';
+import {
+  renderWithRedux,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 
 import { DataFetcherContext } from '../DataFetcher';
 import { Jobs } from './Jobs';

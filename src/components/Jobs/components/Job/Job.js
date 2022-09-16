@@ -37,7 +37,12 @@ import { jobMetaTypes } from './jobMetaTypes';
 import { jobExecutionPropTypes } from './jobExecutionPropTypes';
 
 import * as API from '../../../../utils/upload';
-import { addHrid, deleteHrid, deselectRecord, selectRecord } from '../../../../redux/actions/jobExecutionsActionCreator';
+import {
+  addHrid,
+  deleteHrid,
+  deselectRecord,
+  selectRecord,
+} from '../../../../redux/actions/jobExecutionsActionCreator';
 
 import css from './Job.css';
 

@@ -5,7 +5,10 @@ import React, {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { isEqual, get } from 'lodash';
+import {
+  isEqual,
+  get,
+} from 'lodash';
 
 import {
   Button,
@@ -93,6 +96,7 @@ export class Home extends Component {
     super(props);
 
     props.root.addReducer(STATE_MANAGEMENT_LANDING.REDUCER, jobExecutionsReducer);
+
     this.renderLogsPaneSub = this.renderLogsPaneSub.bind(this);
 
     this.calloutRef = createRef();
@@ -122,11 +126,10 @@ export class Home extends Component {
 
     setList(logs);
     this.setState({ logs });
-    this.onFinishUploading(logs);
+    this.onLogsUpdate(logs);
   }
 
-  onFinishUploading = logs => {
-    console.log(this.props);
+  onLogsUpdate = logs => {
     for (let i = 0; i < logs.length; i++) {
       if (this.props.hrIds.includes(logs[i].hrId)) {
         this.props.removeHRID(logs[i].hrId);
