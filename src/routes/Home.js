@@ -131,9 +131,11 @@ export class Home extends Component {
 
   onLogsUpdate = logs => {
     for (let i = 0; i < logs.length; i++) {
-      if (this.props.hrIds.includes(logs[i].hrId)) {
-        this.props.removeHRID(logs[i].hrId);
-        if (this.props.selectedJob === logs[i].hrId) {
+      const logHRID = logs[i].hrId;
+
+      if (this.props.hrIds.includes(logHRID)) {
+        this.props.removeHRID(logHRID);
+        if (this.props.selectedJob === logHRID) {
           this.openFinishedJobModal();
         }
         this.props.deselectRecord();
