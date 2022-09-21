@@ -1,7 +1,7 @@
 const jobsLogsData = [
   {
     id: '67dfac11-1caf-4470-9ad1-d533f6360bdd',
-    hrId: '02',
+    hrId: 2,
     jobProfileInfo: {
       id: '22fafcc3-f582-493d-88b0-3c538480cd83',
       name: 'Multilingual support check',
@@ -22,7 +22,7 @@ const jobsLogsData = [
   },
   {
     id: '2e149aef-bb77-45aa-8a28-e139674b55e1',
-    hrId: '03',
+    hrId: 3,
     jobProfileInfo: {
       id: '32fafcc3-f582-493d-88b0-3c538480cd83',
       name: 'Standard BIB profile',
@@ -43,7 +43,7 @@ const jobsLogsData = [
   },
   {
     id: '4aa3f7f9-3fe5-4a29-a149-72f7b08879da',
-    hrId: '01',
+    hrId: 1,
     jobProfileInfo: {
       id: '44fafcc3-f582-493d-88b0-3c538480cd83',
       name: 'BIB profile with customized Holdings',
@@ -64,7 +64,7 @@ const jobsLogsData = [
   },
   {
     id: '2e149aef-bb77-45aa-8a28-e139674b55e1',
-    hrId: '03',
+    hrId: 4,
     jobProfileInfo: {
       id: '32fafcc3-f582-493d-88b0-3c538480cd83',
       name: 'Standard BIB profile',
