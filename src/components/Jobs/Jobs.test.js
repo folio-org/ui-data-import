@@ -7,7 +7,10 @@ import {
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
+import {
+  renderWithRedux,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 
 import { DataFetcherContext } from '../DataFetcher';
 import { Jobs } from './Jobs';
@@ -55,6 +58,13 @@ const defaultContext = {
   logs: [],
 };
 
+const initialStore = {
+  'folio-data-import_landing': {
+    hrIds: [],
+    selectedJob: null,
+  }
+};
+
 const renderJobs = (context = defaultContext) => {
   const component = (
     <DataFetcherContext.Provider value={context}>
@@ -62,7 +72,7 @@ const renderJobs = (context = defaultContext) => {
     </DataFetcherContext.Provider>
   );
 
-  return renderWithIntl(component, translationsProperties);
+  return renderWithIntl(renderWithRedux(component, initialStore), translationsProperties);
 };
 
 describe('Jobs', () => {

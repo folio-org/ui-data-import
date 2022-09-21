@@ -783,6 +783,7 @@ export const RECORD_ACTION_STATUS_LABEL_IDS = {
 };
 
 export const STATE_MANAGEMENT = { REDUCER: 'folio-data-import_settings' };
+export const STATE_MANAGEMENT_LANDING = { REDUCER: 'folio-data-import_landing' };
 
 export const PAGE_KEYS = {
   HOME: 'homePageSelectedRecords',

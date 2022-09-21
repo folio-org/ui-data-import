@@ -6,6 +6,7 @@
 * Change UI flow for import jobs cancelled by users  (UIDATIMP-1173)
 * Change UI flow for uploaded files deleted before import by users (UIDATIMP-1182)
 * Make UI changes to the Data Import landing page (UIDATIMP-1218)
+* UI flow for import jobs that finish before a user can cancel (UIDATIMP-1235)
 
 ## [5.2.4](https://github.com/folio-org/ui-data-import/tree/v5.2.4) (2022-09-06)
 
