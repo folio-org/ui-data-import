@@ -115,7 +115,7 @@ export const InvoiceLineFundDistribution = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: '/finance/expense-classes?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourceLink: '/finance/expense-classes?limit=500&query=cql.allRecords=1 sortby name',
                           wrapperSourcePath: 'expenseClasses',
                         }]}
                         setAcceptedValues={setReferenceTables}
