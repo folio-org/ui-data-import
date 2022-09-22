@@ -16,6 +16,7 @@
 
 ### Bugs fixed:
 * Invoice Field Mapping profile: Acq unit and Batch group dropdown lists should be in alphabetical order (UIDATIMP-1236)
+* Data import mapping for invoices will not display more than 10 expense classes (UIDATIMP-1256)
 
 ## [5.2.4](https://github.com/folio-org/ui-data-import/tree/v5.2.4) (2022-09-06)
 
