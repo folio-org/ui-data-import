@@ -900,5 +900,7 @@
     "modal.cancelRunningJob.message": "确定要<b>取消此导入任务吗？ </b> <p> <b>注意： </b>已取消的任务无法重新启动。在{break}前该任务被取消，已创建或更新的记录还不能恢复。 </p>",
     "modal.cancelRunningJob.cancel": "否，不取消导入",
     "modal.cancelRunningJob.confirm": "是，取消导入任务",
-    "jobStartedDate": "Started running"
+    "jobStartedDate": "Started running",
+    "modal.confirmJobFinished.header": "Import job finished before cancellation",
+    "modal.confirmJobFinished.message": "This job finished before the system could cancel it, and appears at the top of the import log"
 }
