@@ -901,6 +901,6 @@
     "modal.cancelRunningJob.cancel": "No, do not cancel import",
     "modal.cancelRunningJob.confirm": "Yes, cancel import job",
     "jobStartedDate": "Started running",
-    "modal.confirmJobFinished.header": "Import job finished before cancellation",
+    "modal.confirmJobFinished.header": "Processo di importazione terminato prima dell'annullamento",
     "modal.confirmJobFinished.message": "This job finished before the system could cancel it, and appears at the top of the import log"
 }
