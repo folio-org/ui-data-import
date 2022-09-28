@@ -133,6 +133,13 @@ const TextDateField = ({
     }
   };
 
+  const handleInternalBlur = e => {
+    if (onBlur) {
+      onBlur(e);
+    }
+    onChange(valueProp);
+  };
+
   const handleRootClose = e => {
     if (!contains(container.current, e.target) || !contains(pickerRef.current, e.target)) {
       if (!datePickerIsFocused()) {
@@ -210,7 +217,7 @@ const TextDateField = ({
       className={css.container}
       ref={container}
       onFocus={handleInternalFocus}
-      onBlur={onBlur}
+      onBlur={handleInternalBlur}
     >
       <TextField
         {...props}
