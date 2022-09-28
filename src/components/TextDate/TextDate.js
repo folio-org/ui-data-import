@@ -127,6 +127,7 @@ const TextDateField = ({
   };
 
   const handleInternalFocus = e => {
+    onChange(valueProp);
     if (onFocus) {
       onFocus(e);
     }
