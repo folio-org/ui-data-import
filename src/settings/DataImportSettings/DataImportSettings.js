@@ -8,6 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { InfoPopover } from '@folio/stripes/components';
 import {
+  stripesConnect,
   stripesShape,
   withRoot,
 } from '@folio/stripes/core';
@@ -25,6 +26,7 @@ import {
 } from '../../utils';
 
 import css from './DataImportSettings.css';
+import { MappingProfilesContainer } from '../MappingProfiles/MappingProfilesContainer';
 
 @withRoot
 export class DataImportSettings extends Component {
@@ -67,7 +69,7 @@ export class DataImportSettings extends Component {
         {
           route: 'mapping-profiles',
           label: generateSettingsLabel('mappingProfiles.title', 'mappingProfiles'),
-          component: MappingProfiles,
+          component: stripesConnect(MappingProfilesContainer),
         },
       ],
     },

@@ -114,7 +114,7 @@ export class ViewMappingProfile extends Component {
   static defaultProps = {
     ENTITY_KEY: ENTITY_KEYS.MAPPING_PROFILES,
     actionMenuItems: [
-      'edit',
+      'editMappingProfile',
       'duplicate',
       'delete',
     ],
