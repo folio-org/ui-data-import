@@ -33,6 +33,7 @@ export const menuTemplate = ({
       ENTITY_KEY,
       checkboxList,
       location,
+      match: { params },
     },
   } = entity;
 
@@ -45,6 +46,17 @@ export const menuTemplate = ({
         menu={menu}
         location={createLayerURL(location, LAYER_TYPES.CREATE)}
         dataAttributes={{ 'data-test-new-item-menu-button': '' }}
+      />
+    ),
+    editMappingProfile: key => (
+      <LinkTo
+        key={key}
+        caption="ui-data-import.edit"
+        icon="edit"
+        menu={menu}
+        isDisabled={isDefaultProfile}
+        location={`/settings/data-import/mapping-profiles/edit/${params.id}${location.search}`}
+        dataAttributes={{ 'data-test-edit-item-menu-button': '' }}
       />
     ),
     edit: key => (
