@@ -127,9 +127,17 @@ const TextDateField = ({
   };
 
   const handleInternalFocus = e => {
+    onChange(valueProp);
     if (onFocus) {
       onFocus(e);
     }
+  };
+
+  const handleInternalBlur = e => {
+    if (onBlur) {
+      onBlur(e);
+    }
+    onChange(valueProp);
   };
 
   const handleRootClose = e => {
@@ -209,7 +217,7 @@ const TextDateField = ({
       className={css.container}
       ref={container}
       onFocus={handleInternalFocus}
-      onBlur={onBlur}
+      onBlur={handleInternalBlur}
     >
       <TextField
         {...props}

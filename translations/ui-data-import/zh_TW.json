@@ -299,7 +299,7 @@
     "settings.mappingProfiles.map.administrativeData.field.statisticalCodes.legend": "统计代码",
     "settings.mappingProfiles.map.administrativeData.field.statisticalCode": "统计代码",
     "settings.mappingProfiles.map.administrativeData.field.statisticalCodes.addLabel": "添加统计代码",
-    "settings.mappingProfiles.map.location.section": "馆藏地",
+    "settings.mappingProfiles.map.location.section": "館藏地",
     "settings.mappingProfiles.map.location.field.permanent": "永久",
     "settings.mappingProfiles.map.location.field.temporary": "临时",
     "settings.mappingProfiles.map.field.copyNumber": "複本號",
@@ -551,7 +551,7 @@
     "settings.matchProfiles.subject": "主题",
     "settings.matchProfiles.classification": "分类",
     "settings.matchProfiles.instanceRelationship": "实例关系",
-    "settings.matchProfiles.location": "馆藏地",
+    "settings.matchProfiles.location": "館藏地",
     "settings.matchProfiles.holdingsDetails": "馆藏详情",
     "settings.matchProfiles.holdingsNotes": "馆藏附注",
     "settings.matchProfiles.acquisition": "采访",
@@ -643,7 +643,7 @@
     "settings.matchProfiles.donor": "捐赠者",
     "settings.matchProfiles.paymentStatus": "支付状态",
     "settings.matchProfiles.selector": "选择者",
-    "settings.matchProfiles.requester": "请求者",
+    "settings.matchProfiles.requester": "請求者",
     "settings.matchProfiles.cancellationRestriction": "取消描述",
     "settings.matchProfiles.rush": "忙碌",
     "settings.matchProfiles.collection": "集合",
@@ -900,5 +900,7 @@
     "modal.cancelRunningJob.message": "Are you sure that you want <b>to cancel this import job?</b><p><b>Note:</b> Cancelled jobs cannot be restarted. Records created or updated before{break}the job is cancelled cannot yet be reverted.</p>",
     "modal.cancelRunningJob.cancel": "No, do not cancel import",
     "modal.cancelRunningJob.confirm": "Yes, cancel import job",
-    "jobStartedDate": "Started running"
+    "jobStartedDate": "Started running",
+    "modal.confirmJobFinished.header": "Import job finished before cancellation",
+    "modal.confirmJobFinished.message": "This job finished before the system could cancel it, and appears at the top of the import log"
 }

@@ -173,7 +173,7 @@ describe('ActionProfilesForm', () => {
           expect(actionInput.value).toBe('CREATE');
         });
 
-        it('all record types except Order and MARC Holdings should be available', () => {
+        it('all record types except MARC Holdings should be available', () => {
           const { container } = renderActionProfilesForm(actionProfilesFormProps());
           const actionInput = container.querySelector('[name="profile.action"]');
 
@@ -182,7 +182,7 @@ describe('ActionProfilesForm', () => {
           expect(container.querySelector('[value="INSTANCE"]')).not.toBeDisabled();
           expect(container.querySelector('[value="HOLDINGS"]')).not.toBeDisabled();
           expect(container.querySelector('[value="ITEM"]')).not.toBeDisabled();
-          expect(container.querySelector('[value="ORDER"]')).not.toBeInTheDocument();
+          expect(container.querySelector('[value="ORDER"]')).not.toBeDisabled();
           expect(container.querySelector('[value="INVOICE"]')).not.toBeDisabled();
           expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).not.toBeDisabled();
           expect(container.querySelector('[value="MARC_HOLDINGS"]')).not.toBeInTheDocument();
@@ -271,8 +271,7 @@ describe('ActionProfilesForm', () => {
         });
       });
 
-      // skip test until https://issues.folio.org/browse/UIDATIMP-1231 is ready
-      describe.skip('when record type is ORDER', () => {
+      describe('when record type is ORDER', () => {
         it('record type input should change the value', () => {
           const { container } = renderActionProfilesForm(actionProfilesFormProps());
           const recordInput = container.querySelector('[name="profile.folioRecord"]');
