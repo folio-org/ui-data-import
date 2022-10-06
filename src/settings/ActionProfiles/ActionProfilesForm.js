@@ -14,7 +14,6 @@ import {
   omit,
   pick,
 } from 'lodash';
-import queryString from 'query-string';
 
 import {
   Headline,

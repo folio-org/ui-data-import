@@ -10,14 +10,16 @@ import {
 import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 
+import { ListView } from '../../components';
+import { ViewFileExtension } from './ViewFileExtension';
+import { CreateFileExtension } from './CreateFileExtension';
+import { EditFileExtension } from './EditFileExtension';
+
 import {
   withCheckboxList,
   checkboxListShape,
+  ENTITY_KEYS,
 } from '../../utils';
-import { ENTITY_KEYS } from '../../utils/constants';
-import { ListView } from '../../components/ListView';
-import { ViewFileExtension } from './ViewFileExtension';
-import { FileExtensionForm } from './FileExtensionForm';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -103,14 +105,14 @@ export class FileExtensions extends Component {
     showSingleResult: PropTypes.bool,
     objectName: PropTypes.string,
     ENTITY_KEY: PropTypes.string,
-    RecordView: PropTypes.func,
-    RecordForm: PropTypes.func,
+    ViewRecordComponent: PropTypes.func,
+    CreateRecordComponent: PropTypes.func,
+    EditRecordComponent: PropTypes.func,
     INITIAL_RESULT_COUNT: PropTypes.number,
     RESULT_COUNT_INCREMENT: PropTypes.number,
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
     columnWidths: PropTypes.object,
-    initialValues: PropTypes.object,
     defaultSort: PropTypes.string,
   };
 
@@ -133,14 +135,9 @@ export class FileExtensions extends Component {
     ],
     columnWidths: {},
     defaultSort: 'extension',
-    initialValues: {
-      importBlocked: false,
-      description: '',
-      extension: '',
-      dataTypes: [],
-    },
-    RecordView: ViewFileExtension,
-    RecordForm: FileExtensionForm,
+    ViewRecordComponent: ViewFileExtension,
+    CreateRecordComponent: CreateFileExtension,
+    EditRecordComponent: EditFileExtension,
   };
 
   renderHeaders = () => ({
