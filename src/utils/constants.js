@@ -699,7 +699,7 @@ export const MARC_FIELD_PROTECTION_SOURCE = {
 
 // TODO: Options to disable until functionality is not implemented.
 // Should be removed in the future
-export const FOLIO_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'AUTHORITY', 'ORDER'];
+export const FOLIO_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'AUTHORITY'];
 export const INCOMING_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS'];
 
 export const OCLC_CREATE_INSTANCE_JOB_ID = 'd0ebb7b0-2f0f-11eb-adc1-0242ac120002';
@@ -779,6 +779,7 @@ export const RECORD_ACTION_STATUS_LABEL_IDS = {
 };
 
 export const STATE_MANAGEMENT = { REDUCER: 'folio-data-import_settings' };
+export const STATE_MANAGEMENT_LANDING = { REDUCER: 'folio-data-import_landing' };
 
 export const PAGE_KEYS = {
   HOME: 'homePageSelectedRecords',

@@ -900,5 +900,7 @@
     "modal.cancelRunningJob.message": "Você tem certeza de que quer <b>cancelar este trabalho de importação?</b><p><b>Nota:</b></p> Os tabalhos cancelados não podem ser reiniciados. Registros criados ou atualizados antes de {break} o trabalho cancelado não podem ser revertidos.",
     "modal.cancelRunningJob.cancel": "Não, não cancele a importação",
     "modal.cancelRunningJob.confirm": "Sim, cancelar o trabalho de importação",
-    "jobStartedDate": "Started running"
+    "jobStartedDate": "Started running",
+    "modal.confirmJobFinished.header": "Import job finished before cancellation",
+    "modal.confirmJobFinished.message": "This job finished before the system could cancel it, and appears at the top of the import log"
 }
