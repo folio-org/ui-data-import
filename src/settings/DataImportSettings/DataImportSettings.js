@@ -8,7 +8,6 @@ import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { InfoPopover } from '@folio/stripes/components';
 import {
-  stripesConnect,
   stripesShape,
   withRoot,
 } from '@folio/stripes/core';

@@ -385,7 +385,6 @@ JobProfilesFormComponent.propTypes = {
   stripes: PropTypes.object.isRequired,
   parentResources: PropTypes.object.isRequired,
   onSubmitSuccess: PropTypes.func.isRequired,
-  match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   mutator: PropTypes.shape({ childWrappers: PropTypes.shape({ GET: PropTypes.func }) }).isRequired,
   resources: PropTypes.shape({ childWrappers: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }) }).isRequired,
   accordionStatusRef: PropTypes.object,

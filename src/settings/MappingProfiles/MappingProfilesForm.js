@@ -499,13 +499,6 @@ MappingProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  location: PropTypes.oneOfType([
-    PropTypes.shape({
-      search: PropTypes.string.isRequired,
-      pathname: PropTypes.string.isRequired,
-    }).isRequired,
-    PropTypes.string.isRequired,
-  ]),
   okapi: okapiShape.isRequired,
   mappingMarcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
   onCancel: PropTypes.func.isRequired,
