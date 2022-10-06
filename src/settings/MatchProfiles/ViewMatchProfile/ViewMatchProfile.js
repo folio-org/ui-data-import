@@ -29,15 +29,6 @@ import {
 import { EndOfItem } from '@folio/stripes-data-transfer-components';
 
 import {
-  ENTITY_KEYS,
-  SYSTEM_USER_ID,
-  SYSTEM_USER_NAME,
-  PROFILE_TYPES,
-  getEntity,
-  getEntityTags,
-  showActionMenu,
-} from '../../utils';
-import {
   DetailsKeyShortcutsWrapper,
   Spinner,
   ActionMenu,
@@ -45,11 +36,21 @@ import {
   MATCH_INCOMING_RECORD_TYPES,
   ProfileAssociator,
   RecordTypesSelect,
-} from '../../components';
-import { ViewMatchCriterion } from '../../components/MatchCriterion/view';
+} from '../../../components';
+import { ViewMatchCriterion } from '../../../components/MatchCriterion/view';
 
-import sharedCss from '../../shared.css';
-import styles from './MatchProfiles.css';
+import {
+  ENTITY_KEYS,
+  SYSTEM_USER_ID,
+  SYSTEM_USER_NAME,
+  PROFILE_TYPES,
+  getEntity,
+  getEntityTags,
+  showActionMenu,
+} from '../../../utils';
+
+import sharedCss from '../../../shared.css';
+import styles from '../MatchProfiles.css';
 
 @stripesConnect
 @withTags
@@ -158,6 +159,7 @@ export class ViewMatchProfile extends Component {
         entity={this}
         menu={menu}
         recordId={record?.id}
+        baseUrl="/settings/data-import/match-profiles"
       />
     );
   };

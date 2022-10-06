@@ -44,7 +44,7 @@ import {
   ActionMenu,
   Spinner,
   ProfileTree,
-} from '../../components';
+} from '../../../components';
 
 import {
   ENTITY_KEYS,
@@ -60,9 +60,9 @@ import {
   FILE_STATUSES,
   showActionMenu,
   permissions,
-} from '../../utils';
+} from '../../../utils';
 
-import sharedCss from '../../shared.css';
+import sharedCss from '../../../shared.css';
 
 const {
   COMMITTED,
@@ -187,6 +187,7 @@ const ViewJobProfileComponent = props => {
         }}
         menu={menu}
         recordId={record?.id}
+        baseUrl="/settings/data-import/job-profiles"
       />
     );
   };
