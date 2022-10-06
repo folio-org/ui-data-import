@@ -51,8 +51,9 @@ export class ListView extends Component {
     setList: PropTypes.func.isRequired,
     showSingleResult: PropTypes.bool,
     objectName: PropTypes.string,
-    RecordView: PropTypes.func.isRequired,
-    RecordForm: PropTypes.func,
+    ViewRecordComponent: PropTypes.func.isRequired,
+    CreateRecordComponent: PropTypes.func,
+    EditRecordComponent: PropTypes.func,
     INITIAL_RESULT_COUNT: PropTypes.number,
     RESULT_COUNT_INCREMENT: PropTypes.number,
     ENTITY_KEY: PropTypes.string,
@@ -178,6 +179,7 @@ export class ListView extends Component {
     <ActionMenu
       entity={this}
       menu={menu}
+      baseUrl={this.props.match.path}
     />
   );
 
@@ -213,8 +215,9 @@ export class ListView extends Component {
       detailProps,
       visibleColumns,
       columnWidths,
-      RecordView,
-      RecordForm,
+      ViewRecordComponent,
+      CreateRecordComponent,
+      EditRecordComponent,
       renderHeaders,
       actionMenuItems,
       isFullScreen,
@@ -267,8 +270,9 @@ export class ListView extends Component {
                 identifierTypes,
               })}
               withNewRecordButton={withNewRecordButton}
-              ViewRecordComponent={RecordView}
-              EditRecordComponent={RecordForm}
+              ViewRecordComponent={ViewRecordComponent}
+              EditRecordComponent={EditRecordComponent}
+              CreateRecordComponent={CreateRecordComponent}
               detailProps={detailProps}
               newRecordInitialValues={initialValues}
               editRecordInitialValues={selectedRecord.record}

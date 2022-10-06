@@ -161,20 +161,15 @@ export const isFieldPristine = (initialValue, currentValue) => {
  * Handles profile form saving
  *
  * @param {function} handleSubmit react-final-form render prop. Handles a form submit.
+ * @param {function} onSubmitSuccess
  * @param {function} resetForm react-final-form prop. Resets the values back to the initial values
  * the form was initialized with.
- * @param {function} transitionToParams Builds URL with passed params.
- * @param {string} path URL basic path.
  * @returns {(function(*=): Promise<void>)|*}
  */
-export const handleProfileSave = (handleSubmit, resetForm, transitionToParams, path) => async event => {
+export const handleProfileSave = (handleSubmit, onSubmitSuccess, resetForm) => async event => {
   const record = await handleSubmit(event);
 
   if (record) {
-    resetForm();
-    transitionToParams({
-      _path: `${path}/view/${record.id}`,
-      layer: null,
-    });
+    onSubmitSuccess(record, resetForm);
   }
 };

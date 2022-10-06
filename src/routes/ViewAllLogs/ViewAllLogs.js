@@ -286,6 +286,7 @@ class ViewAllLogs extends Component {
       <ActionMenu
         entity={this}
         menu={menu}
+        baseUrl="/data-import/job-logs"
       />
     );
   }

@@ -11,6 +11,14 @@ import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import {
+  ListView,
+  CheckboxHeader,
+} from '../../components';
+import { ViewActionProfile } from './ViewActionProfile';
+import { CreateActionProfile } from './CreateActionProfile';
+import { EditActionProfile } from './EditActionProfile';
+
+import {
   withCheckboxList,
   checkboxListShape,
   getSortQuery,
@@ -23,10 +31,6 @@ import {
   QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID,
   QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID,
 } from '../../utils';
-import { ListView } from '../../components';
-import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
-import { ViewActionProfile } from './ViewActionProfile';
-import { ActionProfilesForm } from './ActionProfilesForm';
 
 // big numbers to get rid of infinite scroll
 const INITIAL_RESULT_COUNT = 5000;
@@ -195,15 +199,15 @@ export class ActionProfiles extends Component {
     showSingleResult: PropTypes.bool,
     objectName: PropTypes.string,
     ENTITY_KEY: PropTypes.string,
-    RecordView: PropTypes.func,
-    RecordForm: PropTypes.func,
+    ViewRecordComponent: PropTypes.func,
+    CreateRecordComponent: PropTypes.func,
+    EditRecordComponent: PropTypes.func,
     INITIAL_RESULT_COUNT: PropTypes.number,
     RESULT_COUNT_INCREMENT: PropTypes.number,
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
     nonInteractiveHeaders: PropTypes.arrayOf(PropTypes.string),
     columnWidths: PropTypes.object,
-    initialValues: PropTypes.object,
   };
 
   static defaultProps = {
@@ -221,12 +225,9 @@ export class ActionProfiles extends Component {
     nonInteractiveHeaders: ['selected'],
     visibleColumns: ['selected', ...actionProfilesShape.visibleColumns],
     columnWidths: { selected: '40px' },
-    initialValues: {
-      name: '',
-      description: '',
-    },
-    RecordView: ViewActionProfile,
-    RecordForm: ActionProfilesForm,
+    ViewRecordComponent: ViewActionProfile,
+    CreateRecordComponent: CreateActionProfile,
+    EditRecordComponent: EditActionProfile,
   };
 
   renderHeaders = () => actionProfilesShape.renderHeaders(this.props);

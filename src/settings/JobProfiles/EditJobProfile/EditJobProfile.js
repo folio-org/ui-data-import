@@ -10,21 +10,21 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Layer } from '@folio/stripes/components';
 import { Preloader } from '@folio/stripes-data-transfer-components';
 
-import { MappingProfilesForm } from '../MappingProfilesForm';
+import { JobProfilesForm } from '../JobProfilesForm';
 
 import { LAYER_TYPES } from '../../../utils';
 
-const EditMappingProfileComponent = ({
-  resources: { mappingProfile },
+const EditJobProfileComponent = ({
+  resources: { jobProfile },
   fullWidthContainer,
   layerType,
   ...routeProps
 }) => {
   const { formatMessage } = useIntl();
 
-  const mappingProfileRecord = get(mappingProfile, 'records.0');
+  const jobProfileRecord = get(jobProfile, 'records.0');
 
-  if (!mappingProfileRecord) {
+  if (!jobProfileRecord) {
     return (
       <Layer
         isOpen
@@ -37,15 +37,15 @@ const EditMappingProfileComponent = ({
   }
 
   const isDuplicateMode = layerType === LAYER_TYPES.DUPLICATE;
-  const initialValues = !isDuplicateMode ? mappingProfileRecord : omit(mappingProfileRecord, ['id', 'parentProfiles', 'childProfiles']);
+  const initialValues = !isDuplicateMode ? jobProfileRecord : omit(jobProfileRecord, ['id', 'parentProfiles', 'childProfiles']);
 
   return (
     <Layer
       isOpen
       container={fullWidthContainer}
-      contentLabel={formatMessage({ id: 'settings.mappingProfiles.form' })}
+      contentLabel={formatMessage({ id: 'settings.jobProfiles.form' })}
     >
-      <MappingProfilesForm
+      <JobProfilesForm
         {...routeProps}
         initialValues={initialValues}
       />
@@ -53,18 +53,18 @@ const EditMappingProfileComponent = ({
   );
 };
 
-EditMappingProfileComponent.manifest = Object.freeze({
-  mappingProfile: {
+EditJobProfileComponent.manifest = Object.freeze({
+  jobProfile: {
     type: 'okapi',
-    path: 'data-import-profiles/mappingProfiles/:{id}',
+    path: 'data-import-profiles/jobProfiles/:{id}',
     PUT: { throwErrors: false },
   },
 });
 
-EditMappingProfileComponent.propTypes = {
-  resources: PropTypes.shape({ mappingProfile: PropTypes.object }).isRequired,
+EditJobProfileComponent.propTypes = {
+  resources: PropTypes.shape({ jobProfile: PropTypes.object }).isRequired,
   fullWidthContainer: PropTypes.instanceOf(Element),
   layerType: PropTypes.string,
 };
 
-export const EditMappingProfile = stripesConnect(EditMappingProfileComponent);
+export const EditJobProfile = stripesConnect(EditJobProfileComponent);

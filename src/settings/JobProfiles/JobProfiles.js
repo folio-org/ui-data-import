@@ -11,6 +11,16 @@ import {
 import { stripesConnect } from '@folio/stripes/core';
 
 import {
+  ListView,
+  CheckboxHeader,
+} from '../../components';
+import {
+  ViewJobProfile,
+  CreateJobProfile,
+  EditJobProfile,
+} from '.';
+
+import {
   withCheckboxList,
   checkboxListShape,
   getSortQuery,
@@ -22,13 +32,6 @@ import {
   QUICKMARK_DERIVE_CREATE_BIB_JOB_ID,
   QUICKMARK_DERIVE_CREATE_HOLDINGS_JOB_ID,
 } from '../../utils';
-import {
-  ListView,
-  CheckboxHeader,
-} from '../../components';
-
-import { ViewJobProfile } from './ViewJobProfile';
-import { JobProfilesForm } from './JobProfilesForm';
 
 // big numbers to get rid of infinite scroll
 const INITIAL_RESULT_COUNT = 5000;
@@ -220,8 +223,9 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
       showSingleResult: PropTypes.bool,
       objectName: PropTypes.string,
       ENTITY_KEY: PropTypes.string,
-      RecordView: PropTypes.func,
-      RecordForm: PropTypes.func,
+      ViewRecordComponent: PropTypes.func,
+      CreateRecordComponent: PropTypes.func,
+      EditRecordComponent: PropTypes.func,
       detailProps: PropTypes.object,
       withNewRecordButton: PropTypes.bool,
       INITIAL_RESULT_COUNT: PropTypes.number,
@@ -230,7 +234,6 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
       visibleColumns: PropTypes.arrayOf(PropTypes.string),
       nonInteractiveHeaders: PropTypes.arrayOf(PropTypes.string),
       columnWidths: PropTypes.object,
-      initialValues: PropTypes.object,
     };
 
     static defaultProps = {
@@ -249,13 +252,9 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
       nonInteractiveHeaders: ['selected'],
       visibleColumns,
       columnWidths,
-      initialValues: {
-        name: '',
-        description: '',
-        dataType: '',
-      },
-      RecordView: ViewJobProfile,
-      RecordForm: JobProfilesForm,
+      ViewRecordComponent: ViewJobProfile,
+      CreateRecordComponent: CreateJobProfile,
+      EditRecordComponent: EditJobProfile,
     };
 
     renderHeaders = () => jobProfilesShape.renderHeaders(this.props);
