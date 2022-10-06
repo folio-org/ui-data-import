@@ -519,6 +519,7 @@
   "settings.jobProfiles.form": "Job profile form",
   "settings.actionProfiles.form": "Action profile form",
   "settings.matchProfiles.form": "Match profile form",
+  "settings.fileExtensions.form": "File extension form",
   "settings.mappingProfiles.canNotBeMapped": "Cannot be mapped",
   "settings.mappingProfiles.exceptionModal.label": "Cannot delete field mapping profile",
   "settings.mappingProfiles.exceptionModal.message": "This field mapping profile cannot be deleted, as it is in use by one or more action profiles.",

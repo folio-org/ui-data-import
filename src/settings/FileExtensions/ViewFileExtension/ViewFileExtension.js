@@ -25,14 +25,14 @@ import {
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   showActionMenu,
-} from '../../utils';
+} from '../../../utils';
 import {
   DetailsKeyShortcutsWrapper,
   ActionMenu,
   Spinner,
-} from '../../components';
+} from '../../../components';
 
-import sharedCss from '../../shared.css';
+import sharedCss from '../../../shared.css';
 
 @stripesConnect
 export class ViewFileExtension extends Component {
