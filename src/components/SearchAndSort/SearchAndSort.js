@@ -104,6 +104,7 @@ export class SearchAndSort extends Component {
     }).isRequired,
     ViewRecordComponent: PropTypes.func.isRequired,
     EditRecordComponent: PropTypes.func,
+    CreateRecordComponent: PropTypes.func,
     actionMenu: PropTypes.func, // parameter properties provided by caller
     detailProps: PropTypes.object,
     massageNewRecord: PropTypes.func,
@@ -385,19 +386,23 @@ export class SearchAndSort extends Component {
     }
   };
 
-  closeNewRecord = e => {
-    if (e) {
-      e.preventDefault();
-    }
+  navigateToViewDetails = routerProps => {
+    const { match: { path } } = this.props;
+    const {
+      match: { params: { id } },
+    } = routerProps;
 
-    this.transitionToParams({ layer: null });
-  };
+    this.transitionToParams({ _path: `${path}/view/${id}` });
+  }
 
-  collapseRecordDetails = () => {
+  navigateToRecordsList = () => {
     const { match: { path } } = this.props;
 
-    this.setState({ selectedItem: {} });
-    this.transitionToParams({ _path: `${path}/view` });
+    this.transitionToParams({ _path: `${path}` });
+  }
+
+  collapseRecordDetails = () => {
+    this.navigateToRecordsList();
   };
 
   anchoredRowFormatter = row => {
@@ -491,7 +496,6 @@ export class SearchAndSort extends Component {
       connectedSource: source,
       parentMutator,
       onClose: this.collapseRecordDetails,
-      onCloseEdit: this.onCloseEditRecord,
       onEdit: this.editRecord,
       onDelete: this.deleteRecord,
       onEditSuccess: handleEditSuccess,
@@ -510,10 +514,10 @@ export class SearchAndSort extends Component {
       <Route
         path={`${match.path}/view/:id`}
         render={
-          props => (
+          routeProps => (
             <ViewRecordComponent
               {...viewRecordComponentProps}
-              {...props}
+              {...routeProps}
               {...detailProps}
             />
           )
@@ -604,8 +608,6 @@ export class SearchAndSort extends Component {
 
   getLayerProps(layer) {
     const {
-      newRecordInitialValues,
-      editRecordInitialValues,
       handleCreateSuccess,
       handleEditSuccess,
     } = this.props;
@@ -613,7 +615,6 @@ export class SearchAndSort extends Component {
     switch (layer) {
       case LAYER_TYPES.CREATE: {
         return {
-          initialValues: newRecordInitialValues,
           onSubmit: this.createNewRecord,
           onSubmitSuccess: handleCreateSuccess,
           layerType: LAYER_TYPES.CREATE,
@@ -621,7 +622,6 @@ export class SearchAndSort extends Component {
       }
       case LAYER_TYPES.EDIT: {
         return {
-          initialValues: editRecordInitialValues,
           onSubmit: this.editRecord,
           onSubmitSuccess: handleEditSuccess,
           layerType: LAYER_TYPES.EDIT,
@@ -629,7 +629,6 @@ export class SearchAndSort extends Component {
       }
       case LAYER_TYPES.DUPLICATE: {
         return {
-          initialValues: omit(editRecordInitialValues, ['id', 'parentProfiles', 'childProfiles']),
           onSubmit: this.createNewRecord,
           onSubmitSuccess: handleCreateSuccess,
           layerType: LAYER_TYPES.DUPLICATE,
@@ -641,16 +640,54 @@ export class SearchAndSort extends Component {
     }
   }
 
-  renderCreateRecordLayer(source) {
+  renderCreateRecordForm(source) {
+    const {
+      parentResources,
+      objectName,
+      detailProps,
+      CreateRecordComponent,
+      stripes,
+      parentMutator,
+      fullWidthContainer,
+      match,
+    } = this.props;
+
+    if (!CreateRecordComponent) {
+      return null;
+    }
+
+    return (
+      <Route
+        path={`${match.path}/create`}
+        render={routerProps => (
+          <CreateRecordComponent
+            id={`${objectName}form-add${objectName}`}
+            stripes={stripes}
+            parentResources={parentResources}
+            connectedSource={source}
+            parentMutator={parentMutator}
+            onCancel={() => this.navigateToRecordsList()}
+            transitionToParams={values => this.transitionToParams(values)}
+            match={match}
+            accordionStatusRef={this.accordionStatusRef}
+            fullWidthContainer={fullWidthContainer}
+            {...routerProps}
+            {...detailProps}
+            {...this.getLayerProps(LAYER_TYPES.CREATE)}
+          />
+        )}
+      />
+    );
+  }
+
+  renderEditRecordForm(source) {
     const {
       parentResources,
       objectName,
       detailProps,
       EditRecordComponent,
-      editRecordInitialValuesAreLoaded,
       stripes,
       parentMutator,
-      location: { search },
       fullWidthContainer,
       match,
     } = this.props;
@@ -659,32 +696,67 @@ export class SearchAndSort extends Component {
       return null;
     }
 
-    const { layer } = queryString.parse(search);
-    const isCreateLayerOpen = layer === LAYER_TYPES.CREATE;
-    const isEditLayerOpen = layer === LAYER_TYPES.EDIT && editRecordInitialValuesAreLoaded;
-    const isDuplicateLayerOpen = layer === LAYER_TYPES.DUPLICATE && editRecordInitialValuesAreLoaded;
-    const isLayerOpen = isCreateLayerOpen || isEditLayerOpen || isDuplicateLayerOpen;
+    return (
+      <Route
+        path={`${match.path}/edit/:id`}
+        render={routerProps => (
+          <EditRecordComponent
+            id={`${objectName}form-add${objectName}`}
+            stripes={stripes}
+            parentResources={parentResources}
+            connectedSource={source}
+            parentMutator={parentMutator}
+            onCancel={() => this.navigateToViewDetails(routerProps)}
+            transitionToParams={values => this.transitionToParams(values)}
+            match={match}
+            accordionStatusRef={this.accordionStatusRef}
+            fullWidthContainer={fullWidthContainer}
+            {...routerProps}
+            {...detailProps}
+            {...this.getLayerProps(LAYER_TYPES.EDIT)}
+          />
+        )}
+      />
+    );
+  }
+
+  renderDuplicateRecordForm(source) {
+    const {
+      parentResources,
+      objectName,
+      detailProps,
+      EditRecordComponent,
+      stripes,
+      parentMutator,
+      fullWidthContainer,
+      match,
+    } = this.props;
+
+    if (!EditRecordComponent) {
+      return null;
+    }
 
     return (
-      <Layer
-        isOpen={isLayerOpen}
-        container={fullWidthContainer}
-        contentLabel="Mapping profile form"
-      >
-        <EditRecordComponent
-          id={`${objectName}form-add${objectName}`}
-          stripes={stripes}
-          parentResources={parentResources}
-          connectedSource={source}
-          parentMutator={parentMutator}
-          onCancel={this.closeNewRecord}
-          transitionToParams={values => this.transitionToParams(values)}
-          match={match}
-          accordionStatusRef={this.accordionStatusRef}
-          {...detailProps}
-          {...this.getLayerProps(layer)}
-        />
-      </Layer>
+      <Route
+        path={`${match.path}/duplicate/:id`}
+        render={routerProps => (
+          <EditRecordComponent
+            id={`${objectName}form-add${objectName}`}
+            stripes={stripes}
+            parentResources={parentResources}
+            connectedSource={source}
+            parentMutator={parentMutator}
+            onCancel={() => this.navigateToViewDetails(routerProps)}
+            transitionToParams={values => this.transitionToParams(values)}
+            match={match}
+            accordionStatusRef={this.accordionStatusRef}
+            fullWidthContainer={fullWidthContainer}
+            {...routerProps}
+            {...detailProps}
+            {...this.getLayerProps(LAYER_TYPES.DUPLICATE)}
+          />
+        )}
+      />
     );
   }
 
@@ -753,7 +825,9 @@ export class SearchAndSort extends Component {
             </div>
           </Pane>
           {!isFullScreen && this.renderDetailsPane(source)}
-          {this.renderCreateRecordLayer(source)}
+          {this.renderCreateRecordForm(source)}
+          {this.renderEditRecordForm(source)}
+          {this.renderDuplicateRecordForm(source)}
           {isFullScreen && this.renderDetailsPane(source)}
         </HasCommand>
       </>

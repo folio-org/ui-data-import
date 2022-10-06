@@ -11,6 +11,16 @@ import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import {
+  ListView,
+  CheckboxHeader,
+} from '../../components';
+import {
+  ViewMappingProfile,
+  CreateMappingProfile,
+  EditMappingProfile,
+} from '.';
+
+import {
   withCheckboxList,
   checkboxListShape,
   getSortQuery,
@@ -24,11 +34,6 @@ import {
   ENTITY_KEYS,
   FIND_ALL_CQL,
 } from '../../utils';
-import { ListView } from '../../components';
-import { CheckboxHeader } from '../../components/ListTemplate/HeaderTemplates';
-
-import { ViewMappingProfile } from './ViewMappingProfile';
-import { MappingProfilesForm } from './MappingProfilesForm';
 
 // big numbers to get rid of infinite scroll
 const INITIAL_RESULT_COUNT = 5000;
@@ -203,15 +208,15 @@ export class MappingProfiles extends Component {
     showSingleResult: PropTypes.bool,
     objectName: PropTypes.string,
     ENTITY_KEY: PropTypes.string,
-    RecordView: PropTypes.func,
-    RecordForm: PropTypes.func,
+    ViewRecordComponent: PropTypes.func,
+    CreateRecordComponent: PropTypes.func,
+    EditRecordComponent: PropTypes.func,
     INITIAL_RESULT_COUNT: PropTypes.number,
     RESULT_COUNT_INCREMENT: PropTypes.number,
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
     nonInteractiveHeaders: PropTypes.arrayOf(PropTypes.string),
     columnWidths: PropTypes.object,
-    initialValues: PropTypes.object,
     isFullScreen: PropTypes.bool,
   };
 
@@ -230,16 +235,10 @@ export class MappingProfiles extends Component {
     visibleColumns: ['selected', ...mappingProfilesShape.visibleColumns],
     nonInteractiveHeaders: ['selected'],
     columnWidths: { selected: '40px' },
-    initialValues: {
-      name: '',
-      incomingRecordType: '',
-      existingRecordType: '',
-      description: '',
-      mappingDetails: {},
-    },
     isFullScreen: true,
-    RecordView: ViewMappingProfile,
-    RecordForm: MappingProfilesForm,
+    ViewRecordComponent: ViewMappingProfile,
+    CreateRecordComponent: CreateMappingProfile,
+    EditRecordComponent: EditMappingProfile,
   };
 
   renderHeaders = () => mappingProfilesShape.renderHeaders(this.props);

@@ -39,14 +39,14 @@ import {
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
   MappedHeader,
-} from '../../components';
+} from '../../../components';
 import {
   MappingInstanceDetails,
   MappingItemDetails,
   MappingHoldingsDetails,
   MappingMARCBibDetails,
   MappingInvoiceDetails,
-} from './detailsSections/view';
+} from '../detailsSections/view';
 
 import {
   ENTITY_KEYS,
@@ -60,9 +60,9 @@ import {
   FIELD_MAPPINGS_FOR_MARC_OPTIONS,
   marcFieldProtectionSettingsShape,
   showActionMenu,
-} from '../../utils';
+} from '../../../utils';
 
-import sharedCss from '../../shared.css';
+import sharedCss from '../../../shared.css';
 
 @stripesConnect
 @withTags
@@ -114,7 +114,7 @@ export class ViewMappingProfile extends Component {
   static defaultProps = {
     ENTITY_KEY: ENTITY_KEYS.MAPPING_PROFILES,
     actionMenuItems: [
-      'editMappingProfile',
+      'edit',
       'duplicate',
       'delete',
     ],
@@ -175,6 +175,7 @@ export class ViewMappingProfile extends Component {
         entity={this}
         menu={menu}
         recordId={record?.id}
+        baseUrl="/settings/data-import/mapping-profiles"
       />
     );
   };

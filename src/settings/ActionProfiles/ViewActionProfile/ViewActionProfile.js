@@ -30,6 +30,15 @@ import {
 import { EndOfItem } from '@folio/stripes-data-transfer-components';
 
 import {
+  DetailsKeyShortcutsWrapper,
+  Spinner,
+  ActionMenu,
+  FOLIO_RECORD_TYPES,
+  ACTION_TYPES,
+  ProfileAssociator,
+} from '../../../components';
+
+import {
   ENTITY_KEYS,
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
@@ -37,17 +46,9 @@ import {
   getEntity,
   getEntityTags,
   showActionMenu,
-} from '../../utils';
-import {
-  DetailsKeyShortcutsWrapper,
-  Spinner,
-  ActionMenu,
-  FOLIO_RECORD_TYPES,
-  ACTION_TYPES,
-  ProfileAssociator,
-} from '../../components';
+} from '../../../utils';
 
-import sharedCss from '../../shared.css';
+import sharedCss from '../../../shared.css';
 
 @stripesConnect
 @withTags
@@ -155,6 +156,7 @@ export class ViewActionProfile extends Component {
         entity={this}
         menu={menu}
         recordId={record?.id}
+        baseUrl="/settings/data-import/action-profiles"
       />
     );
   };
