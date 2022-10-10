@@ -25,12 +25,14 @@ import { MappedHeader } from '..';
 import {
   MAPPING_DETAILS_HEADLINE,
   marcFieldProtectionSettingsShape,
+  MARC_TYPES,
 } from '../../utils';
 
 export const OverrideProtectedFieldsTable = ({
   marcFieldProtectionFields,
   mappingMarcFieldProtectionFields,
   setReferenceTables,
+  folioRecordType,
   isEditable,
 }) => {
   const protectedFields = unionBy(mappingMarcFieldProtectionFields, marcFieldProtectionFields, 'id')
@@ -108,7 +110,7 @@ export const OverrideProtectedFieldsTable = ({
     <MappedHeader
       headersToSeparate={[
         'ui-data-import.settings.profiles.select.mappingProfiles',
-        MAPPING_DETAILS_HEADLINE.MARC_BIBLIOGRAPHIC.labelId,
+        MAPPING_DETAILS_HEADLINE[folioRecordType].labelId,
         'ui-data-import.fieldMappingsForMarc.overrideProtected',
       ]}
     />
@@ -132,6 +134,11 @@ export const OverrideProtectedFieldsTable = ({
               <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.subtext" />
             </span>
           )}
+          {folioRecordType === MARC_TYPES.MARC_AUTHORITY && (
+            <div style={{ padding: '10px' }}>
+              <FormattedMessage id="ui-data-import.fieldMappingsForMarc.override.subtext" />
+            </div>
+          )}
         </Col>
       </Row>
       <MultiColumnList
@@ -150,6 +157,7 @@ OverrideProtectedFieldsTable.propTypes = {
   marcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
   mappingMarcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
   setReferenceTables: PropTypes.func,
+  folioRecordType: PropTypes.string,
   isEditable: PropTypes.bool,
 };
 
