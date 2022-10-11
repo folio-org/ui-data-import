@@ -894,7 +894,7 @@
     "modal.cancelUpload.cancel": "Non, ne pas supprimer",
     "modal.cancelUpload.confirm": "Oui, supprimer",
     "selectAction.create": "Créer (tous types d'enregistrement)",
-    "selectAction.modify": "Modify (MARC Bibliographic and Authority record types only)",
+    "selectAction.modify": "Modify (MARC Bibliographic record type only)",
     "selectAction.update": "Update (all record types except Orders, Invoices, or MARC Holdings)",
     "modal.cancelRunningJob.header": "Cancel import job?",
     "modal.cancelRunningJob.message": "Are you sure that you want <b>to cancel this import job?</b><p><b>Note:</b> Cancelled jobs cannot be restarted. Records created or updated before{break}the job is cancelled cannot yet be reverted.</p>",
