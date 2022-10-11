@@ -261,6 +261,7 @@ export class ViewMappingProfile extends Component {
       marcMappingOption,
       marcFieldProtectionFields,
       mappingMarcFieldProtectionFields,
+      folioRecordType: existingRecordType,
     };
 
     const mappingFields = mappingDetails?.mappingFields || [];
