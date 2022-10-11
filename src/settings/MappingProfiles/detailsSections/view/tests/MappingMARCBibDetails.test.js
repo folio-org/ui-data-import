@@ -12,9 +12,15 @@ const marcMappingDetailsProp = [];
 const mappingMarcFieldProtectionFieldsProp = [];
 const marcFieldProtectionFieldsProp = [];
 
+const MARC_TYPES = {
+  MARC_BIBLIOGRAPHIC: 'MARC_BIBLIOGRAPHIC',
+  MARC_AUTHORITY: 'MARC_AUTHORITY',
+};
+
 const renderMappingMARCBibDetails = ({
   marcMappingOption,
   marcMappingDetails,
+  folioRecordType,
 }) => {
   const component = (
     <MappingMARCBibDetails
@@ -22,6 +28,7 @@ const renderMappingMARCBibDetails = ({
       marcMappingOption={marcMappingOption || FIELD_MAPPINGS_FOR_MARC.UPDATES}
       mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFieldsProp}
       marcFieldProtectionFields={marcFieldProtectionFieldsProp}
+      folioRecordType={folioRecordType}
     />
   );
 
@@ -30,7 +37,7 @@ const renderMappingMARCBibDetails = ({
 
 describe('<MARCBibDetails>', () => {
   it('should have correct sections', () => {
-    const { getByRole } = renderMappingMARCBibDetails({});
+    const { getByRole } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
 
     // eslint-disable-next-line no-irregular-whitespace
     expect(getByRole('button', { name: /icon field mapping · marc bibliographic · updates/i })).toBeInTheDocument();
@@ -39,14 +46,14 @@ describe('<MARCBibDetails>', () => {
   });
 
   it('"Updates" section is expanded by default', () => {
-    const { getByRole } = renderMappingMARCBibDetails({});
+    const { getByRole } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
 
     // eslint-disable-next-line no-irregular-whitespace
     expect(getByRole('button', { name: /field mapping · marc bibliographic · updates/i })).toHaveAttribute('aria-expanded', 'true');
   });
 
   it('"Override protected fields" section is not expanded by default', () => {
-    const { getByRole } = renderMappingMARCBibDetails({});
+    const { getByRole } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
 
     // eslint-disable-next-line no-irregular-whitespace
     expect(getByRole('button', { name: /field mapping · marc bibliographic · override protected fields/i }))
@@ -56,6 +63,7 @@ describe('<MARCBibDetails>', () => {
   describe('When there is mapping details', () => {
     it('should render contents as table', () => {
       const { getByText } = renderMappingMARCBibDetails({
+        folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
         marcMappingDetails: [{
           field: {
             field: 'testField',
@@ -83,6 +91,7 @@ describe('<MARCBibDetails>', () => {
     it('should render correct fields', () => {
       const { getByText } = renderMappingMARCBibDetails({
         marcMappingOption: FIELD_MAPPINGS_FOR_MARC.MODIFICATIONS,
+        folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
         marcMappingDetails: [{
           action: 'ADD',
           field: {

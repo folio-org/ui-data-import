@@ -13,23 +13,15 @@ export const MappingMARCAuthorityDetails = ({
   setReferenceTables,
   folioRecordType,
 }) => {
-  const renderUpdatesDetails = () => {
-    return (
-      <>
-        <OverrideProtectedFieldsTable
-          marcFieldProtectionFields={marcFieldProtectionFields}
-          mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
-          setReferenceTables={setReferenceTables}
-          folioRecordType={folioRecordType}
-          isEditable={false}
-        />
-      </>
-    );
-  };
-
   return (
     <AccordionSet>
-      {renderUpdatesDetails()}
+      <OverrideProtectedFieldsTable
+        marcFieldProtectionFields={marcFieldProtectionFields}
+        mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
+        setReferenceTables={setReferenceTables}
+        folioRecordType={folioRecordType}
+        isEditable={false}
+      />
     </AccordionSet>
   );
 };
