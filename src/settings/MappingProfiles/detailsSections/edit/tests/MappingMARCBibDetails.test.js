@@ -9,7 +9,10 @@ import {
 } from '../../../../../../test/jest/helpers';
 
 import { MappingMARCBibDetails } from '../MappingMARCBibDetails';
-import { FIELD_MAPPINGS_FOR_MARC } from '../../../../../utils';
+import {
+  FIELD_MAPPINGS_FOR_MARC,
+  MARC_TYPES,
+} from '../../../../../utils';
 
 const mappingMarcFieldProtectionFieldsProp = [];
 const fieldMappingsForMARCFieldProp = FIELD_MAPPINGS_FOR_MARC.UPDATES;
@@ -17,11 +20,6 @@ const setReferenceTables = jest.fn();
 const marcMappingDetailsProp = [];
 const marcFieldProtectionFieldsProp = [];
 const onUpdateFieldAddProp = jest.fn();
-
-const MARC_TYPES = {
-  MARC_BIBLIOGRAPHIC: 'MARC_BIBLIOGRAPHIC',
-  MARC_AUTHORITY: 'MARC_AUTHORITY',
-};
 
 const renderMappingMARCBibDetails = ({
   fieldMappingsForMARCField,
