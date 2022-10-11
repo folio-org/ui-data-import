@@ -27,6 +27,7 @@ export const MappingMARCBibDetails = ({
   marcMappingOption,
   marcFieldProtectionFields,
   mappingMarcFieldProtectionFields,
+  folioRecordType,
 }) => {
   const defaultFieldMappingForMARCColumns = ['action', 'field', 'indicator1', 'indicator2',
     'subfield', 'subaction', 'data', 'position'];
@@ -63,6 +64,7 @@ export const MappingMARCBibDetails = ({
         <OverrideProtectedFieldsTable
           marcFieldProtectionFields={marcFieldProtectionFields}
           mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
+          folioRecordType={folioRecordType}
         />
       </>
     );
@@ -95,6 +97,7 @@ export const MappingMARCBibDetails = ({
 };
 
 MappingMARCBibDetails.propTypes = {
+  folioRecordType: PropTypes.string,
   marcMappingDetails: PropTypes.arrayOf(mappingMARCFieldShape.isRequired).isRequired,
   marcMappingOption: PropTypes.string.isRequired,
   mappingMarcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
