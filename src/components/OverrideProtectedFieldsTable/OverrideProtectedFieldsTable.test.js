@@ -10,12 +10,9 @@ import {
 
 import { OverrideProtectedFieldsTable } from './OverrideProtectedFieldsTable';
 
-const onChangeEvent = jest.fn();
+import { MARC_TYPES } from '../../utils';
 
-const MARC_TYPES = {
-  MARC_BIBLIOGRAPHIC: 'MARC_BIBLIOGRAPHIC',
-  MARC_AUTHORITY: 'MARC_AUTHORITY',
-};
+const onChangeEvent = jest.fn();
 
 const marcFieldProtectionFieldsProps = override => ([{
   data: 'test data1',

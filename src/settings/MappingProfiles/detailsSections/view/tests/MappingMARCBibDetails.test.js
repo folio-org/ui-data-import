@@ -6,16 +6,14 @@ import '../../../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../../../test/jest/helpers';
 
 import { MappingMARCBibDetails } from '../MappingMARCBibDetails';
-import { FIELD_MAPPINGS_FOR_MARC } from '../../../../../utils';
+import {
+  FIELD_MAPPINGS_FOR_MARC,
+  MARC_TYPES,
+} from '../../../../../utils';
 
 const marcMappingDetailsProp = [];
 const mappingMarcFieldProtectionFieldsProp = [];
 const marcFieldProtectionFieldsProp = [];
-
-const MARC_TYPES = {
-  MARC_BIBLIOGRAPHIC: 'MARC_BIBLIOGRAPHIC',
-  MARC_AUTHORITY: 'MARC_AUTHORITY',
-};
 
 const renderMappingMARCBibDetails = ({
   marcMappingOption,
