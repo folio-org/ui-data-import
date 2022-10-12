@@ -31,6 +31,7 @@ export const MappingMARCBibDetails = ({
   mappingMarcFieldProtectionFields,
   onUpdateFieldAdd,
   setReferenceTables,
+  folioRecordType,
 }) => {
   const defaultFieldMappingForMARCColumns = ['arrows', 'action', 'field', 'indicator1', 'indicator2',
     'subfield', 'subaction', 'data', 'position', 'addRemove'];
@@ -84,6 +85,7 @@ export const MappingMARCBibDetails = ({
           marcFieldProtectionFields={marcFieldProtectionFields}
           mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
           setReferenceTables={setReferenceTables}
+          folioRecordType={folioRecordType}
           isEditable
         />
       </>
@@ -124,6 +126,7 @@ MappingMARCBibDetails.propTypes = {
   marcMappingDetails: PropTypes.arrayOf(PropTypes.object.isRequired),
   marcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape),
   onUpdateFieldAdd: PropTypes.func,
+  folioRecordType: PropTypes.string,
 };
 
 MappingMARCBibDetails.defaultProps = { marcFieldProtectionFields: [{}] };

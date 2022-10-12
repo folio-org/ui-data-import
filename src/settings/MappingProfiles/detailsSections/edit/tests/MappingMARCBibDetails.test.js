@@ -9,7 +9,10 @@ import {
 } from '../../../../../../test/jest/helpers';
 
 import { MappingMARCBibDetails } from '../MappingMARCBibDetails';
-import { FIELD_MAPPINGS_FOR_MARC } from '../../../../../utils';
+import {
+  FIELD_MAPPINGS_FOR_MARC,
+  MARC_TYPES,
+} from '../../../../../utils';
 
 const mappingMarcFieldProtectionFieldsProp = [];
 const fieldMappingsForMARCFieldProp = FIELD_MAPPINGS_FOR_MARC.UPDATES;
@@ -21,6 +24,7 @@ const onUpdateFieldAddProp = jest.fn();
 const renderMappingMARCBibDetails = ({
   fieldMappingsForMARCField,
   marcMappingDetails,
+  folioRecordType,
 }) => {
   const component = () => (
     <MappingMARCBibDetails
@@ -30,6 +34,7 @@ const renderMappingMARCBibDetails = ({
       marcMappingDetails={marcMappingDetails || marcMappingDetailsProp}
       marcFieldProtectionFields={marcFieldProtectionFieldsProp}
       onUpdateFieldAdd={onUpdateFieldAddProp}
+      folioRecordType={folioRecordType}
     />
   );
 
@@ -39,7 +44,7 @@ const renderMappingMARCBibDetails = ({
 describe('<MappingMARCBibDetails>', () => {
   describe('when field mappings for MARC is "Updates"', () => {
     it('should have correct fields', async () => {
-      const { findByRole } = renderMappingMARCBibDetails({});
+      const { findByRole } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
 
       // eslint-disable-next-line no-irregular-whitespace
       expect(await findByRole('button', { name: /icon field mapping · marc bibliographic · updates/i })).toBeInTheDocument();
@@ -58,7 +63,10 @@ describe('<MappingMARCBibDetails>', () => {
         order: 0,
       }];
 
-      const { findByText } = renderMappingMARCBibDetails({ marcMappingDetails: marcMappingDetailsData });
+      const { findByText } = renderMappingMARCBibDetails({
+        marcMappingDetails: marcMappingDetailsData,
+        folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
+      });
 
       expect(await findByText('Field')).toBeInTheDocument();
       expect(await findByText('In.1')).toBeInTheDocument();
@@ -74,6 +82,7 @@ describe('<MappingMARCBibDetails>', () => {
         getByText,
       } = renderMappingMARCBibDetails({
         fieldMappingsForMARCField: FIELD_MAPPINGS_FOR_MARC.MODIFICATIONS,
+        folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
         marcMappingDetails: [{
           field: { subfields: [{}] },
           order: 0,

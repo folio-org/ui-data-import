@@ -15,6 +15,7 @@
 * UI flow for import jobs that finish before a user can cancel (UIDATIMP-1235)
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
 * Update the Action profile UI for Orders (UIDATIMP-1231)
+* Update the field mapping profile for MARC Authority Updates - Create/Edit screen (UIDATIMP-1247)
 * Refactor job profiles to use Router instead of 'layout' param (UIDATIMP-1279)
 * Refactor action profiles to use Router instead of 'layout' param (UIDATIMP-1280)
 * Refactor match profiles to use Router instead of 'layout' param (UIDATIMP-1281)
