@@ -78,6 +78,10 @@ const ViewAllLogsFilters = ({
     label: `${user.firstName} ${user.lastName}`,
   })), 'value');
 
+  const onFilter = (value, dataOptions) => {
+    return dataOptions.filter(option => new RegExp(value, 'i').test(option.label));
+  };
+
   return (
     <div data-test-filter-logs>
       <AccordionSet>
@@ -128,6 +132,7 @@ const ViewAllLogsFilters = ({
                   value={activeFilters[FILTERS.JOB_PROFILE] ? activeFilters[FILTERS.JOB_PROFILE][0] : ''}
                   onChange={onChangeSelectionFilter(onChange, FILTERS.JOB_PROFILE)}
                   placeholder={placeholder}
+                  onFilter={onFilter}
                 />
               )}
             </FormattedMessage>
@@ -149,6 +154,7 @@ const ViewAllLogsFilters = ({
                   value={activeFilters[FILTERS.USER] ? activeFilters[FILTERS.USER][0] : ''}
                   onChange={onChangeSelectionFilter(onChange, FILTERS.USER)}
                   placeholder={placeholder}
+                  onFilter={onFilter}
                 />
               )}
             </FormattedMessage>

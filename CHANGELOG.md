@@ -12,6 +12,7 @@
 * Add column for "Started running" in Data Import "View all" page (UIDATIMP-1245)
 * Update the field mapping profile for MARC Authority Updates - Create/Edit screen (UIDATIMP-1247)
 * Update the field mapping profile for MARC Authority Updates - View screen (UIDATIMP-1248)
+* Change the View all User/Job profile filter searches from Begins to Contains (UIDATIMP-1254)
 * Refactor job profiles to use Router instead of 'layout' param (UIDATIMP-1279)
 * Refactor action profiles to use Router instead of 'layout' param (UIDATIMP-1280)
 * Refactor match profiles to use Router instead of 'layout' param (UIDATIMP-1281)
