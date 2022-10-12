@@ -41,7 +41,7 @@ const renderOverrideProtectedFieldsTable = ({
   marcFieldProtectionFields,
   mappingMarcFieldProtectionFields,
   folioRecordType,
-  isOpenAccordion,
+  isAccordionOpen,
 }) => {
   const component = () => (
     <OverrideProtectedFieldsTable
@@ -50,7 +50,7 @@ const renderOverrideProtectedFieldsTable = ({
       setReferenceTables={onChangeEvent}
       folioRecordType={folioRecordType}
       isEditable={isEditable}
-      isOpenAccordion={isOpenAccordion}
+      isAccordionOpen={isAccordionOpen}
     />
   );
 
@@ -117,7 +117,7 @@ describe('OverrideProtectedFieldsTable', () => {
     it('warning text should be hidden', () => {
       const { queryByText } = renderOverrideProtectedFieldsTable({
         isEditable: false,
-        isOpenAccordion: false,
+        isAccordionOpen: false,
         folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
         marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
         mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,

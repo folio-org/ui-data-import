@@ -34,26 +34,26 @@ export const OverrideProtectedFieldsTable = ({
   setReferenceTables,
   folioRecordType,
   isEditable,
-  isOpenAccordion,
+  isAccordionOpen,
 }) => {
   const protectedFields = unionBy(mappingMarcFieldProtectionFields, marcFieldProtectionFields, 'id')
     .sort((a, b) => a.field.localeCompare(b.field));
   const noProtectedFieldsDefined = isEmpty(protectedFields);
   const hasOverrideProtectedFields = protectedFields.some(field => field.override);
-  const [isOpen, setIsOpen] = useState(isOpenAccordion || hasOverrideProtectedFields);
+  const [isOpen, setIsOpen] = useState(isAccordionOpen || hasOverrideProtectedFields);
   const [isCheckboxesActive] = useState(isEditable);
 
   useEffect(() => {
-    if (isOpenAccordion || hasOverrideProtectedFields) {
+    if (isAccordionOpen || hasOverrideProtectedFields) {
       setIsOpen(true);
     } else {
       setIsOpen(false);
     }
-  }, [hasOverrideProtectedFields, isOpenAccordion]);
+  }, [hasOverrideProtectedFields, isAccordionOpen]);
 
   const emptyTableMessage = (
     <div style={{ margin: '-1rem' }}>
-      {isOpenAccordion
+      {isAccordionOpen
         ? <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.noFields" />
         : <NoValue />
       }
@@ -105,7 +105,7 @@ export const OverrideProtectedFieldsTable = ({
       );
     },
   };
-  const editModeIdPrefix = isOpenAccordion ? 'edit-' : '';
+  const editModeIdPrefix = isAccordionOpen ? 'edit-' : '';
 
   const header = (
     <MappedHeader
@@ -130,7 +130,7 @@ export const OverrideProtectedFieldsTable = ({
         style={{ margin: 0 }}
       >
         <Col>
-          {isOpenAccordion && !noProtectedFieldsDefined && folioRecordType !== MARC_TYPES.MARC_AUTHORITY && (
+          {isAccordionOpen && !noProtectedFieldsDefined && folioRecordType !== MARC_TYPES.MARC_AUTHORITY && (
             <span>
               <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.subtext" />
             </span>
@@ -160,11 +160,11 @@ OverrideProtectedFieldsTable.propTypes = {
   setReferenceTables: PropTypes.func,
   folioRecordType: PropTypes.string,
   isEditable: PropTypes.bool,
-  isOpenAccordion: PropTypes.bool,
+  isAccordionOpen: PropTypes.bool,
 };
 
 OverrideProtectedFieldsTable.defaultProps = {
   isEditable: false,
-  isOpenAccordion: true,
+  isAccordionOpen: true,
   setReferenceTables: noop,
 };
