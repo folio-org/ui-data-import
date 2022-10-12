@@ -34,25 +34,26 @@ export const OverrideProtectedFieldsTable = ({
   setReferenceTables,
   folioRecordType,
   isEditable,
+  isOpenAccordion,
 }) => {
   const protectedFields = unionBy(mappingMarcFieldProtectionFields, marcFieldProtectionFields, 'id')
     .sort((a, b) => a.field.localeCompare(b.field));
   const noProtectedFieldsDefined = isEmpty(protectedFields);
   const hasOverrideProtectedFields = protectedFields.some(field => field.override);
-
-  const [isOpen, setIsOpen] = useState(isEditable || hasOverrideProtectedFields);
+  const [isOpen, setIsOpen] = useState(isOpenAccordion || hasOverrideProtectedFields);
+  const [isCheckboxesActive] = useState(isEditable);
 
   useEffect(() => {
-    if (isEditable || hasOverrideProtectedFields) {
+    if (isOpenAccordion || hasOverrideProtectedFields) {
       setIsOpen(true);
     } else {
       setIsOpen(false);
     }
-  }, [hasOverrideProtectedFields, isEditable]);
+  }, [hasOverrideProtectedFields, isOpenAccordion]);
 
   const emptyTableMessage = (
     <div style={{ margin: '-1rem' }}>
-      {isEditable
+      {isOpenAccordion
         ? <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.noFields" />
         : <NoValue />
       }
@@ -96,7 +97,7 @@ export const OverrideProtectedFieldsTable = ({
             <Checkbox
               checked={!!protectedField.override}
               onChange={() => handleOverrideFieldSelect(protectedField.id)}
-              disabled={!isEditable}
+              disabled={!isCheckboxesActive}
               aria-label={ariaLabel}
             />
           )}
@@ -104,7 +105,7 @@ export const OverrideProtectedFieldsTable = ({
       );
     },
   };
-  const editModeIdPrefix = isEditable ? 'edit-' : '';
+  const editModeIdPrefix = isOpenAccordion ? 'edit-' : '';
 
   const header = (
     <MappedHeader
@@ -129,7 +130,7 @@ export const OverrideProtectedFieldsTable = ({
         style={{ margin: 0 }}
       >
         <Col>
-          {isEditable && !noProtectedFieldsDefined && (
+          {isOpenAccordion && !noProtectedFieldsDefined && folioRecordType !== MARC_TYPES.MARC_AUTHORITY && (
             <span>
               <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.subtext" />
             </span>
@@ -159,9 +160,11 @@ OverrideProtectedFieldsTable.propTypes = {
   setReferenceTables: PropTypes.func,
   folioRecordType: PropTypes.string,
   isEditable: PropTypes.bool,
+  isOpenAccordion: PropTypes.bool,
 };
 
 OverrideProtectedFieldsTable.defaultProps = {
   isEditable: false,
+  isOpenAccordion: true,
   setReferenceTables: noop,
 };
