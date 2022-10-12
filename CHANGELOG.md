@@ -10,6 +10,7 @@
 * Get rid of jobExecutions request for the Preview section (UIDATIMP-1239)
 * Add column for "Started running" in Data Import Landing page log area (UIDATIMP-1244)
 * Add column for "Started running" in Data Import "View all" page (UIDATIMP-1245)
+* Update the field mapping profile for MARC Authority Updates - Create/Edit screen (UIDATIMP-1247)
 * Refactor job profiles to use Router instead of 'layout' param (UIDATIMP-1279)
 * Refactor action profiles to use Router instead of 'layout' param (UIDATIMP-1280)
 * Refactor match profiles to use Router instead of 'layout' param (UIDATIMP-1281)
