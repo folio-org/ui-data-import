@@ -10,6 +10,8 @@ import {
 
 import { OverrideProtectedFieldsTable } from './OverrideProtectedFieldsTable';
 
+import { MARC_TYPES } from '../../utils';
+
 const onChangeEvent = jest.fn();
 
 const marcFieldProtectionFieldsProps = override => ([{
@@ -38,13 +40,17 @@ const renderOverrideProtectedFieldsTable = ({
   isEditable,
   marcFieldProtectionFields,
   mappingMarcFieldProtectionFields,
+  folioRecordType,
+  isAccordionOpen,
 }) => {
   const component = () => (
     <OverrideProtectedFieldsTable
       marcFieldProtectionFields={marcFieldProtectionFields}
       mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
       setReferenceTables={onChangeEvent}
+      folioRecordType={folioRecordType}
       isEditable={isEditable}
+      isAccordionOpen={isAccordionOpen}
     />
   );
 
@@ -60,6 +66,7 @@ describe('OverrideProtectedFieldsTable', () => {
     it('warning text should be shown', () => {
       const { getAllByText } = renderOverrideProtectedFieldsTable({
         isEditable: true,
+        folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
         marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
         mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
       });
@@ -73,6 +80,7 @@ describe('OverrideProtectedFieldsTable', () => {
           const fieldToRemove = [...mappingMarcFieldProtectionFieldsProps];
           const { container } = renderOverrideProtectedFieldsTable({
             isEditable: true,
+            folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
             marcFieldProtectionFields: marcFieldProtectionFieldsProps(true),
             mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
           });
@@ -91,6 +99,7 @@ describe('OverrideProtectedFieldsTable', () => {
           const fieldsToAdd = [...mappingMarcFieldProtectionFieldsProps, ...marcFieldProtectionFieldsProps(true)];
           const { container } = renderOverrideProtectedFieldsTable({
             isEditable: true,
+            folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
             marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
             mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
           });
@@ -108,6 +117,8 @@ describe('OverrideProtectedFieldsTable', () => {
     it('warning text should be hidden', () => {
       const { queryByText } = renderOverrideProtectedFieldsTable({
         isEditable: false,
+        isAccordionOpen: false,
+        folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
         marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
         mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
       });
@@ -120,6 +131,7 @@ describe('OverrideProtectedFieldsTable', () => {
     it('table with information should be hidden', () => {
       const { container } = renderOverrideProtectedFieldsTable({
         isEditable: true,
+        folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
         marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
         mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
       });

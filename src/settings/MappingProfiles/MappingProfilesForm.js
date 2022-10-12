@@ -50,6 +50,7 @@ import {
   MappingItemDetails,
   MappingMARCBibDetails,
   MappingInvoiceDetails,
+  MappingMARCAuthorityDetails,
 } from './detailsSections/edit';
 
 import {
@@ -276,6 +277,7 @@ export const MappingProfilesFormComponent = ({
     fieldMappingsForMARCField: fieldMappingsForMARC,
     onUpdateFieldAdd: setInitialValuesForMARCUpdates,
     setReferenceTables: setFormFieldValue,
+    folioRecordType,
   };
 
   const invoiceDetailsProps = {
@@ -298,6 +300,7 @@ export const MappingProfilesFormComponent = ({
     HOLDINGS: <MappingHoldingsDetails {...detailsProps} />,
     ITEM: <MappingItemDetails {...detailsProps} />,
     MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCDetailsProps} />,
+    MARC_AUTHORITY: <MappingMARCAuthorityDetails {...MARCDetailsProps} />,
     INVOICE: <MappingInvoiceDetails {...invoiceDetailsProps} />,
   };
 
@@ -397,7 +400,7 @@ export const MappingProfilesFormComponent = ({
                   />
                 </div>
               </Accordion>
-              {folioRecordType !== MARC_TYPES.MARC_AUTHORITY && (
+              {folioRecordType && (
                 <Accordion
                   id="mapping-profile-details"
                   label={<FormattedMessage id="ui-data-import.details" />}
