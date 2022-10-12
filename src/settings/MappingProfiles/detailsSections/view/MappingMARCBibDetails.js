@@ -65,6 +65,7 @@ export const MappingMARCBibDetails = ({
           marcFieldProtectionFields={marcFieldProtectionFields}
           mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
           folioRecordType={folioRecordType}
+          isOpenAccordion={false}
         />
       </>
     );
