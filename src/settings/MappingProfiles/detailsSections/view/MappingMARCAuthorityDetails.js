@@ -24,7 +24,7 @@ export const MappingMARCAuthorityDetails = ({
 };
 
 MappingMARCAuthorityDetails.propTypes = {
-  folioRecordType: PropTypes.string,
   mappingMarcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
   marcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
+  folioRecordType: PropTypes.string,
 };
