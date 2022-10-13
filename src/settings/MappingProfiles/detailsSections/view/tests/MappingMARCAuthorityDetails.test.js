@@ -38,31 +38,4 @@ describe('MappingMARCAuthorityDetails', () => {
     expect(getByRole('button', { name: /field mapping · marc authority · override protected fields/i }))
       .toHaveAttribute('aria-expanded', 'true');
   });
-
-  describe('When there is mapping details', () => {
-    it('should render contents as table', () => {
-      const { getByText } = renderMappingMARCAuthorityDetails({
-        folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
-        marcMappingDetails: [{
-          field: {
-            field: 'testField',
-            indicator1: 'testIndicator1',
-            indicator2: 'testIndicator2',
-            subfields: [{ subfield: 'testSubfield' }],
-          },
-          order: 0,
-        }],
-      });
-
-      expect(getByText('Field')).toBeInTheDocument();
-      expect(getByText('In.1')).toBeInTheDocument();
-      expect(getByText('In.2')).toBeInTheDocument();
-      expect(getByText('Subfield')).toBeInTheDocument();
-
-      expect(getByText('testField')).toBeInTheDocument();
-      expect(getByText('testIndicator1')).toBeInTheDocument();
-      expect(getByText('testIndicator2')).toBeInTheDocument();
-      expect(getByText('testSubfield')).toBeInTheDocument();
-    });
-  });
 });
