@@ -35,6 +35,7 @@ export const OverrideProtectedFieldsTable = ({
   folioRecordType,
   isEditable,
   isAccordionOpen,
+  isViewMode,
 }) => {
   const protectedFields = unionBy(mappingMarcFieldProtectionFields, marcFieldProtectionFields, 'id')
     .sort((a, b) => a.field.localeCompare(b.field));
@@ -135,7 +136,7 @@ export const OverrideProtectedFieldsTable = ({
               <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.subtext" />
             </span>
           )}
-          {folioRecordType === MARC_TYPES.MARC_AUTHORITY && (
+          {!isViewMode && folioRecordType === MARC_TYPES.MARC_AUTHORITY && (
             <div style={{ padding: '10px' }}>
               <FormattedMessage id="ui-data-import.fieldMappingsForMarc.override.subtext" />
             </div>
@@ -161,9 +162,11 @@ OverrideProtectedFieldsTable.propTypes = {
   folioRecordType: PropTypes.string,
   isEditable: PropTypes.bool,
   isAccordionOpen: PropTypes.bool,
+  isViewMode: PropTypes.bool,
 };
 
 OverrideProtectedFieldsTable.defaultProps = {
+  isViewMode: true,
   isEditable: false,
   isAccordionOpen: true,
   setReferenceTables: noop,
