@@ -16,6 +16,7 @@
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
 * Update the Action profile UI for Orders (UIDATIMP-1231)
 * Update the field mapping profile for MARC Authority Updates - Create/Edit screen (UIDATIMP-1247)
+* Update the field mapping profile for MARC Authority Updates - View screen (UIDATIMP-1248)
 
 ### Bugs fixed:
 * Invoice Field Mapping profile: Acq unit and Batch group dropdown lists should be in alphabetical order (UIDATIMP-1236)

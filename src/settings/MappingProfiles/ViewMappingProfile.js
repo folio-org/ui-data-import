@@ -57,10 +57,10 @@ import {
   MAPPING_DETAILS_HEADLINE,
   getEntity,
   getEntityTags,
-  MARC_TYPES,
   FIELD_MAPPINGS_FOR_MARC_OPTIONS,
   marcFieldProtectionSettingsShape,
   showActionMenu,
+  isMARCType,
 } from '../../utils';
 
 import sharedCss from '../../shared.css';
@@ -253,7 +253,7 @@ export class ViewMappingProfile extends Component {
       ...mappingProfile.childProfiles,
     ];
 
-    const isMARCRecord = existingRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC;
+    const isMARCRecord = isMARCType(existingRecordType);
 
     const marcMappingOptionLabel = FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === marcMappingOption)?.label;
 
