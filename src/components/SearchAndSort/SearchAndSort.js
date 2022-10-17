@@ -12,11 +12,9 @@ import {
   get,
   upperFirst,
   noop,
-  omit,
 } from 'lodash';
 
 import {
-  Layer,
   Pane,
   SRStatus,
   PaneHeader,
@@ -309,14 +307,6 @@ export class SearchAndSort extends Component {
     this.setState({ locallyChangedSearchTerm: '' });
     this.transitionToParams({ query: '' });
     onSubmitSearch(null, '');
-  };
-
-  onCloseEditRecord = e => {
-    if (e) {
-      e.preventDefault();
-    }
-
-    this.transitionToParams({ layer: null });
   };
 
   onSelectRow = (e, meta) => {

@@ -2,11 +2,7 @@ import React from 'react';
 
 import { IfPermission } from '@folio/stripes/core';
 
-import {
-  createLayerURL,
-  LAYER_TYPES,
-  permissions,
-} from '../../utils';
+import { permissions } from '../../utils';
 
 import {
   LinkTo,
