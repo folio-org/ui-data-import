@@ -39,7 +39,7 @@ import {
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
   MappedHeader,
-} from '../../components';
+} from '../../../components';
 import {
   MappingInstanceDetails,
   MappingItemDetails,
@@ -47,7 +47,7 @@ import {
   MappingMARCBibDetails,
   MappingInvoiceDetails,
   MappingMARCAuthorityDetails,
-} from './detailsSections/view';
+} from '../detailsSections/view';
 
 import {
   ENTITY_KEYS,
@@ -61,9 +61,9 @@ import {
   marcFieldProtectionSettingsShape,
   showActionMenu,
   isMARCType,
-} from '../../utils';
+} from '../../../utils';
 
-import sharedCss from '../../shared.css';
+import sharedCss from '../../../shared.css';
 
 @stripesConnect
 @withTags
@@ -176,6 +176,7 @@ export class ViewMappingProfile extends Component {
         entity={this}
         menu={menu}
         recordId={record?.id}
+        baseUrl="/settings/data-import/mapping-profiles"
       />
     );
   };

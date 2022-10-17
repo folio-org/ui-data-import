@@ -3,7 +3,6 @@ import React, {
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import {
   FormattedMessage,
   useIntl,
@@ -134,13 +133,14 @@ export const MatchProfilesFormComponent = memo(({
   submitting,
   initialValues,
   handleSubmit,
-  location: { search },
+  onSubmitSuccess,
   onCancel,
   jsonSchemas,
   form,
   transitionToParams,
   match: { path },
   accordionStatusRef,
+  layerType,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -153,10 +153,9 @@ export const MatchProfilesFormComponent = memo(({
   } = profile;
   const associatedJobProfiles = profile.parentProfiles || [];
   const associatedJobProfilesAmount = associatedJobProfiles.length;
-  const { layer } = queryString.parse(search);
 
-  const isEditMode = layer === LAYER_TYPES.EDIT;
-  const isDuplicateMode = layer === LAYER_TYPES.DUPLICATE;
+  const isEditMode = layerType === LAYER_TYPES.EDIT;
+  const isDuplicateMode = layerType === LAYER_TYPES.DUPLICATE;
   const staticValueTypes = FORMS_SETTINGS[ENTITY_KEYS.MATCH_PROFILES].MATCHING.STATIC_VALUE_TYPES;
 
   const currentStaticValueType = get(form.getState(), ['values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
@@ -195,7 +194,7 @@ export const MatchProfilesFormComponent = memo(({
       event.preventDefault();
       setConfirmModalOpen(true);
     } else {
-      await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)(event);
+      await handleProfileSave(handleSubmit, onSubmitSuccess, form.reset)(event);
     }
   };
 
@@ -403,13 +402,7 @@ MatchProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  location: PropTypes.oneOfType([
-    PropTypes.shape({
-      search: PropTypes.string.isRequired,
-      pathname: PropTypes.string.isRequired,
-    }).isRequired,
-    PropTypes.string.isRequired,
-  ]),
+  onSubmitSuccess: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   jsonSchemas: PropTypes.shape({
     INSTANCE: PropTypes.object,
@@ -428,6 +421,7 @@ MatchProfilesFormComponent.propTypes = {
   transitionToParams: PropTypes.func.isRequired,
   match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   accordionStatusRef: PropTypes.object,
+  layerType: PropTypes.string,
 };
 
 export const MatchProfilesForm = compose(

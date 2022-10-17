@@ -78,20 +78,15 @@ describe('checkDate function', () => {
 describe('handleProfileSave function', () => {
   it('saves profile successfully', async () => {
     const handleSubmit = jest.fn().mockResolvedValueOnce({ id: 'testRecordId' });
+    const onSubmitSuccess = jest.fn();
     const resetForm = jest.fn();
-    const transitionToParams = jest.fn();
-    const path = 'https://test.com';
     const event = 'testEvent';
 
-    const saveFunction = handleProfileSave(handleSubmit, resetForm, transitionToParams, path);
+    const saveFunction = handleProfileSave(handleSubmit, onSubmitSuccess, resetForm);
 
     await saveFunction(event);
 
     expect(handleSubmit).toHaveBeenLastCalledWith(event);
-    expect(resetForm).toHaveBeenCalled();
-    expect(transitionToParams).toHaveBeenLastCalledWith({
-      _path: `${path}/view/testRecordId`,
-      layer: null,
-    });
+    expect(onSubmitSuccess).toHaveBeenCalled();
   });
 });

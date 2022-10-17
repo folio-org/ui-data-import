@@ -14,7 +14,6 @@ import {
   omit,
   pick,
 } from 'lodash';
-import queryString from 'query-string';
 
 import {
   Headline,
@@ -54,12 +53,13 @@ export const ActionProfilesFormComponent = ({
   submitting,
   initialValues,
   handleSubmit,
+  onSubmitSuccess,
   form,
-  location: { search },
   onCancel,
   transitionToParams,
   match: { path },
   accordionStatusRef,
+  layerType,
 }) => {
   const { profile } = initialValues;
   const associatedJobProfiles = profile.parentProfiles || [];
@@ -157,8 +157,7 @@ export const ActionProfilesFormComponent = ({
     });
   const actionsDataOptions = useMemo(getActionsDataOptions, [folioRecord]);
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, [action]);
-  const { layer } = queryString.parse(search);
-  const isEditMode = layer === LAYER_TYPES.EDIT;
+  const isEditMode = layerType === LAYER_TYPES.EDIT;
   const isSubmitDisabled = pristine || submitting;
 
   const paneTitle = isEditMode ? (
@@ -179,7 +178,7 @@ export const ActionProfilesFormComponent = ({
       event.preventDefault();
       setConfirmModalOpen(true);
     } else {
-      await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)(event);
+      await handleProfileSave(handleSubmit, onSubmitSuccess, form.reset)(event);
     }
   };
 
@@ -358,6 +357,7 @@ ActionProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  onSubmitSuccess: PropTypes.func.isRequired,
   form: PropTypes.shape({
     getState: PropTypes.func.isRequired,
     change: PropTypes.func.isRequired,
@@ -374,6 +374,7 @@ ActionProfilesFormComponent.propTypes = {
     PropTypes.string.isRequired,
   ]),
   accordionStatusRef: PropTypes.object,
+  layerType: PropTypes.string,
 };
 
 export const ActionProfilesForm = compose(

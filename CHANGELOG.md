@@ -16,6 +16,10 @@
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
 * Update the Action profile UI for Orders (UIDATIMP-1231)
 * Update the field mapping profile for MARC Authority Updates - Create/Edit screen (UIDATIMP-1247)
+* Refactor job profiles to use Router instead of 'layout' param (UIDATIMP-1279)
+* Refactor action profiles to use Router instead of 'layout' param (UIDATIMP-1280)
+* Refactor match profiles to use Router instead of 'layout' param (UIDATIMP-1281)
+* Refactor file extension profiles to use Router instead of 'layout' param (UIDATIMP-1282)
 * Change the View all User/Job profile filter searches from Begins to Contains (UIDATIMP-1254)
 * Update the field mapping profile for MARC Authority Updates - View screen (UIDATIMP-1248)
 
@@ -23,6 +27,7 @@
 * Invoice Field Mapping profile: Acq unit and Batch group dropdown lists should be in alphabetical order (UIDATIMP-1236)
 * Data import mapping for invoices will not display more than 10 expense classes (UIDATIMP-1256)
 * An error message is displayed for the "Invoice date" field when using a calendar (UIDATIMP-1242)
+* Data Import Field mapping profile is reset to viewing mode if the page was refreshed during editing/duplication (UIDATIMP-1240)
 
 ## [5.2.4](https://github.com/folio-org/ui-data-import/tree/v5.2.4) (2022-09-06)
 
