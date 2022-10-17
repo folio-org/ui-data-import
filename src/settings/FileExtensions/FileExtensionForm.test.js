@@ -39,6 +39,7 @@ const fileExtensionFormProps = {
   match: { path: '/settings/data-import/file-extensions' },
   transitionToParams: noop,
   handleSubmit: handleFormSubmit,
+  onSubmitSuccess: jest.fn(),
 };
 
 const renderFileExtensionForm = ({
@@ -47,6 +48,7 @@ const renderFileExtensionForm = ({
   form,
   initialValues,
   handleSubmit,
+  onSubmitSuccess,
   transitionToParams,
   match,
 }) => {
@@ -59,6 +61,7 @@ const renderFileExtensionForm = ({
         match={match}
         initialValues={initialValues}
         handleSubmit={handleSubmit}
+        onSubmitSuccess={onSubmitSuccess}
         onCancel={noop}
         transitionToParams={transitionToParams}
       />

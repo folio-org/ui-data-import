@@ -255,7 +255,7 @@ export class SearchAndSort extends Component {
   get initiallySelectedRecord() {
     const { location: { pathname } } = this.props;
 
-    const match = pathname.match(/^\/.*\/view\/(.*)$/);
+    const match = pathname?.match(/^\/.*\/view\/(.*)$/);
     const recordId = match && match[1];
 
     return { id: recordId };

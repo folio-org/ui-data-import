@@ -34,11 +34,12 @@ export const menuTemplate = ({
     props: {
       ENTITY_KEY,
       checkboxList,
-      location,
-      match: { params },
+      location = {},
+      match = {},
     },
   } = entity;
   const { search } = location;
+  const { params = {} } = match;
 
   return {
     addNew: key => (
