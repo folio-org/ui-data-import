@@ -10,7 +10,6 @@ import { marcFieldProtectionSettingsShape } from '../../../../utils';
 export const MappingMARCAuthorityDetails = ({
   marcFieldProtectionFields,
   mappingMarcFieldProtectionFields,
-  setReferenceTables,
   folioRecordType,
 }) => {
   return (
@@ -18,10 +17,7 @@ export const MappingMARCAuthorityDetails = ({
       <OverrideProtectedFieldsTable
         marcFieldProtectionFields={marcFieldProtectionFields}
         mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
-        setReferenceTables={setReferenceTables}
         folioRecordType={folioRecordType}
-        isViewMode={false}
-        isEditable={false}
       />
     </AccordionSet>
   );
@@ -29,9 +25,6 @@ export const MappingMARCAuthorityDetails = ({
 
 MappingMARCAuthorityDetails.propTypes = {
   mappingMarcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
-  setReferenceTables: PropTypes.func.isRequired,
-  marcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape),
+  marcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
   folioRecordType: PropTypes.string,
 };
-
-MappingMARCAuthorityDetails.defaultProps = { marcFieldProtectionFields: [{}] };
