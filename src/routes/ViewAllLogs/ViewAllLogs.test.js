@@ -183,6 +183,7 @@ const renderViewAllLogs = query => {
             pathname: '/job-logs',
             search: '?sort=-completedDate',
           }}
+          match={{ params: {} }}
           refreshRemote={noop}
         />
       </ModuleHierarchyProvider>

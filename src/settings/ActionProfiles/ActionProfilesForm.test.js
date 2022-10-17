@@ -18,6 +18,7 @@ import {
 import { ActionProfilesFormComponent } from './ActionProfilesForm';
 
 import * as utils from '../../utils/formUtils';
+import { LAYER_TYPES } from '../../utils';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -51,7 +52,7 @@ history.push = jest.fn();
 
 const handleProfileSave = jest.spyOn(utils, 'handleProfileSave');
 
-const actionProfilesFormProps = (search = '?layer=create') => ({
+const actionProfilesFormProps = layerType => ({
   initialValues: {
     profile: {
       parentProfiles: [{
@@ -105,9 +106,9 @@ const actionProfilesFormProps = (search = '?layer=create') => ({
   },
   match: { path: '/test-path' },
   location: {
-    search,
     pathname: '/test-path',
   },
+  layerType,
 });
 
 const renderActionProfilesForm = ({
@@ -118,6 +119,7 @@ const renderActionProfilesForm = ({
   form,
   match,
   location,
+  layerType,
 }) => {
   const component = () => (
     <Router>
@@ -132,6 +134,7 @@ const renderActionProfilesForm = ({
         handleSubmit={noop}
         transitionToParams={noop}
         onCancel={noop}
+        layerType={layerType}
       />
     </Router>
   );
@@ -357,7 +360,7 @@ describe('ActionProfilesForm', () => {
 
   describe('when form is in edit mode', () => {
     it('should be rendered', () => {
-      const { getByText } = renderActionProfilesForm(actionProfilesFormProps('?layer=edit'));
+      const { getByText } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
 
       expect(getByText('Edit testName')).toBeDefined();
     });
@@ -368,7 +371,7 @@ describe('ActionProfilesForm', () => {
       const {
         container,
         getByText,
-      } = renderActionProfilesForm(actionProfilesFormProps('?layer=edit'));
+      } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
       const nameInput = container.querySelector('[name="profile.name"]');
 
       fireEvent.change(nameInput, { target: { value: 'testName2' } });
@@ -385,7 +388,7 @@ describe('ActionProfilesForm', () => {
         container,
         getByText,
         queryByText,
-      } = renderActionProfilesForm(actionProfilesFormProps('?layer=edit'));
+      } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
       const nameInput = container.querySelector('[name="profile.name"]');
 
       fireEvent.change(nameInput, { target: { value: 'testName2' } });
@@ -400,7 +403,7 @@ describe('ActionProfilesForm', () => {
       const {
         container,
         getByText,
-      } = renderActionProfilesForm(actionProfilesFormProps('?layer=edit'));
+      } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
       const nameInput = container.querySelector('[name="profile.name"]');
 
       fireEvent.change(nameInput, { target: { value: 'testName2' } });
@@ -418,7 +421,7 @@ describe('ActionProfilesForm', () => {
         container,
         getByText,
         queryByText,
-      } = renderActionProfilesForm(actionProfilesFormProps('?layer=edit'));
+      } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
       const nameInput = container.querySelector('[name="profile.name"]');
 
       fireEvent.change(nameInput, { target: { value: 'testName2' } });

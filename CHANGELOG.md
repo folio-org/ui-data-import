@@ -8,9 +8,14 @@
 * Make UI changes to the Data Import landing page (UIDATIMP-1218)
 * UI flow for import jobs that finish before a user can cancel (UIDATIMP-1235)
 * Get rid of jobExecutions request for the Preview section (UIDATIMP-1239)
+* Refactor job profiles to use Router instead of 'layout' param (UIDATIMP-1279)
+* Refactor action profiles to use Router instead of 'layout' param (UIDATIMP-1280)
+* Refactor match profiles to use Router instead of 'layout' param (UIDATIMP-1281)
+* Refactor file extension profiles to use Router instead of 'layout' param (UIDATIMP-1282)
 
 ### Bugs fixed:
 * Invoice Field Mapping profile: Acq unit and Batch group dropdown lists should be in alphabetical order (UIDATIMP-1236)
+* Data Import Field mapping profile is reset to viewing mode if the page was refreshed during editing/duplication (UIDATIMP-1240)
 
 ## [5.2.4](https://github.com/folio-org/ui-data-import/tree/v5.2.4) (2022-09-06)
 
