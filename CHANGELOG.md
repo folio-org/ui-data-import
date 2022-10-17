@@ -16,6 +16,7 @@
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
 * Update the Action profile UI for Orders (UIDATIMP-1231)
 * Update the field mapping profile for MARC Authority Updates - Create/Edit screen (UIDATIMP-1247)
+* Change the View all User/Job profile filter searches from Begins to Contains (UIDATIMP-1254)
 * Update the field mapping profile for MARC Authority Updates - View screen (UIDATIMP-1248)
 
 ### Bugs fixed:
