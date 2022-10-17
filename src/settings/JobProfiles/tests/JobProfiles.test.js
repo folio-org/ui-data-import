@@ -144,7 +144,7 @@ const renderJobProfiles = ({
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('<JobProfiles>', () => {
+describe.skip('<JobProfiles>', () => {
   it('should render correct amount of items', () => {
     const { getByText } = renderJobProfiles(jobProfilesProps);
 
