@@ -661,6 +661,7 @@ export class SearchAndSort extends Component {
             match={match}
             accordionStatusRef={this.accordionStatusRef}
             fullWidthContainer={fullWidthContainer}
+            baseUrl={match.path}
             {...routerProps}
             {...detailProps}
             {...this.getLayerProps(LAYER_TYPES.CREATE)}
@@ -701,6 +702,7 @@ export class SearchAndSort extends Component {
             match={match}
             accordionStatusRef={this.accordionStatusRef}
             fullWidthContainer={fullWidthContainer}
+            baseUrl={match.path}
             {...routerProps}
             {...detailProps}
             {...this.getLayerProps(LAYER_TYPES.EDIT)}
@@ -741,6 +743,7 @@ export class SearchAndSort extends Component {
             match={match}
             accordionStatusRef={this.accordionStatusRef}
             fullWidthContainer={fullWidthContainer}
+            baseUrl={match.path}
             {...routerProps}
             {...detailProps}
             {...this.getLayerProps(LAYER_TYPES.DUPLICATE)}
