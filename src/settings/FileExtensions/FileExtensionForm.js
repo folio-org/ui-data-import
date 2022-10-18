@@ -41,11 +41,12 @@ MultiSelectItem.propTypes = {
 export const FileExtensionFormComponent = ({
   pristine,
   submitting,
-  onSubmitSuccess,
   form,
   initialValues,
   handleSubmit,
   onCancel,
+  transitionToParams,
+  baseUrl,
 }) => {
   const isEditMode = Boolean(initialValues.id);
 
@@ -85,7 +86,7 @@ export const FileExtensionFormComponent = ({
     : <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />;
 
   const onSubmit = async event => {
-    await handleProfileSave(handleSubmit, onSubmitSuccess, form.reset)(event);
+    await handleProfileSave(handleSubmit, form.reset, transitionToParams, baseUrl)(event);
   };
 
   return (
@@ -179,7 +180,8 @@ FileExtensionFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  onSubmitSuccess: PropTypes.func.isRequired,
+  transitionToParams: PropTypes.func.isRequired,
+  baseUrl: PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired,
 };
 

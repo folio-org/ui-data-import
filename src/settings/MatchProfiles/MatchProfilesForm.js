@@ -133,14 +133,13 @@ export const MatchProfilesFormComponent = memo(({
   submitting,
   initialValues,
   handleSubmit,
-  onSubmitSuccess,
   onCancel,
   jsonSchemas,
   form,
   transitionToParams,
-  match: { path },
   accordionStatusRef,
   layerType,
+  baseUrl,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -194,7 +193,7 @@ export const MatchProfilesFormComponent = memo(({
       event.preventDefault();
       setConfirmModalOpen(true);
     } else {
-      await handleProfileSave(handleSubmit, onSubmitSuccess, form.reset)(event);
+      await handleProfileSave(handleSubmit, form.reset, transitionToParams, baseUrl)(event);
     }
   };
 
@@ -387,7 +386,7 @@ export const MatchProfilesFormComponent = memo(({
           )}
           confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
           onConfirm={async () => {
-            await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)();
+            await handleProfileSave(handleSubmit, form.reset, transitionToParams, baseUrl)();
             setConfirmModalOpen(false);
           }}
           onCancel={() => setConfirmModalOpen(false)}
@@ -402,7 +401,7 @@ MatchProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  onSubmitSuccess: PropTypes.func.isRequired,
+  baseUrl: PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired,
   jsonSchemas: PropTypes.shape({
     INSTANCE: PropTypes.object,

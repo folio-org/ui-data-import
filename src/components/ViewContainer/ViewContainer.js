@@ -44,9 +44,10 @@ export const ViewContainer = memo(({
     history.push(buildUrl(location, params));
   };
 
-  const handleUpdateSuccess = (record, resetForm) => {
-    resetForm();
+  const handleUpdateSuccess = (record, dispatch, properties) => {
+    const { reset: resetForm } = properties;
 
+    resetForm();
     history.push(`${path}/view/${record.id}`);
   };
 

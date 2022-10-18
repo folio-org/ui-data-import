@@ -53,13 +53,12 @@ export const ActionProfilesFormComponent = ({
   submitting,
   initialValues,
   handleSubmit,
-  onSubmitSuccess,
   form,
   onCancel,
-  transitionToParams,
-  match: { path },
   accordionStatusRef,
   layerType,
+  transitionToParams,
+  baseUrl,
 }) => {
   const { profile } = initialValues;
   const associatedJobProfiles = profile.parentProfiles || [];
@@ -178,7 +177,7 @@ export const ActionProfilesFormComponent = ({
       event.preventDefault();
       setConfirmModalOpen(true);
     } else {
-      await handleProfileSave(handleSubmit, onSubmitSuccess, form.reset)(event);
+      await handleProfileSave(handleSubmit, form.reset, transitionToParams, baseUrl)(event);
     }
   };
 
@@ -340,7 +339,7 @@ export const ActionProfilesFormComponent = ({
           )}
           confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
           onConfirm={async () => {
-            await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)();
+            await handleProfileSave(handleSubmit, form.reset, transitionToParams, baseUrl)();
 
             setConfirmModalOpen(false);
           }}
@@ -364,6 +363,7 @@ ActionProfilesFormComponent.propTypes = {
     reset: PropTypes.func.isRequired,
   }).isRequired,
   transitionToParams: PropTypes.func.isRequired,
+  baseUrl: PropTypes.string.isRequired,
   match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   onCancel: PropTypes.func.isRequired,
   location: PropTypes.oneOfType([
