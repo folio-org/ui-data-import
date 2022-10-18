@@ -21,6 +21,7 @@
 * Invoice Field Mapping profile: Acq unit and Batch group dropdown lists should be in alphabetical order (UIDATIMP-1236)
 * Data Import Field mapping profile is reset to viewing mode if the page was refreshed during editing/duplication (UIDATIMP-1240)
 * An error message is displayed for the "Invoice date" field when using a calendar (UIDATIMP-1242)
+* Error during switching between record types on field mapping profile form (UIDATIMP-1250)
 
 ## [5.2.4](https://github.com/folio-org/ui-data-import/tree/v5.2.4) (2022-09-06)
 
