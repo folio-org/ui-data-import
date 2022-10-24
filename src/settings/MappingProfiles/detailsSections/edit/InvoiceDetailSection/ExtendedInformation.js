@@ -44,8 +44,8 @@ export const ExtendedInformation = ({
   const paymentMethodsList = createOptionsList(PAYMENT_METHOD_OPTIONS, formatMessage, 'labelId');
   const currenciesList = useCurrencyOptions();
 
-  const exportToAccountingCheckbox = mappingFields?.[22].booleanFieldAction;
-  const checkSubscriptionOverlapCheckbox = mappingFields?.[21].booleanFieldAction;
+  const exportToAccountingCheckbox = mappingFields?.[22]?.booleanFieldAction;
+  const checkSubscriptionOverlapCheckbox = mappingFields?.[21]?.booleanFieldAction;
 
   return (
     <Accordion
