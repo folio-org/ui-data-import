@@ -111,7 +111,7 @@ const ORDER = {
       }],
     }],
   }, {
-    name: 'titleOrPackage',
+    name: 'title',
     enabled: true,
     path: 'order.poLine.title.title',
     value: '',
