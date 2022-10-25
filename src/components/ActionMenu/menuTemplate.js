@@ -2,11 +2,7 @@ import React from 'react';
 
 import { IfPermission } from '@folio/stripes/core';
 
-import {
-  createLayerURL,
-  LAYER_TYPES,
-  permissions,
-} from '../../utils';
+import { permissions } from '../../utils';
 
 import {
   LinkTo,
@@ -34,11 +30,12 @@ export const menuTemplate = ({
     props: {
       ENTITY_KEY,
       checkboxList,
-      location,
-      match: { params },
+      location = {},
+      match = {},
     },
   } = entity;
   const { search } = location;
+  const { params = {} } = match;
 
   return {
     addNew: key => (

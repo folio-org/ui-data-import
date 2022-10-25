@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import {
   get,
-  omit
+  omit,
 } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';

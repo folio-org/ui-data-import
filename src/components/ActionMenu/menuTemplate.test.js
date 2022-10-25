@@ -25,6 +25,7 @@ const entity = {
   props: {
     ENTITY_KEY: 'test entity',
     location: { pathname: '/test-url' },
+    match: { props: { id: 'testId' } },
     checkboxList: {
       selectedRecords: { size: 1 },
       selectAll: jest.fn(),
@@ -64,14 +65,6 @@ describe('Action menu menuTemplate', () => {
   describe('when item is `edit`', () => {
     it('then `LinkTo` component should be rendered', () => {
       const { getByText } = render(templates.edit('key'));
-
-      expect(getByText('LinkTo')).toBeDefined();
-    });
-  });
-
-  describe('when item is `editJobProfile`', () => {
-    it('then `LinkTo` component should be rendered', () => {
-      const { getByText } = render(templates.editJobProfile('key'));
 
       expect(getByText('LinkTo')).toBeDefined();
     });

@@ -87,6 +87,7 @@ const viewMappingProfilesProps = {
     search: '?sort=name',
     pathname: '/settings/data-import/mapping-profiles/view/id1',
   },
+  match: { params: { id: 'id1' } },
   tagsEnabled: true,
   onClose: jest.fn(),
   onDelete: jest.fn(),
@@ -95,6 +96,7 @@ const viewMappingProfilesProps = {
 const renderViewMappingProfile = ({
   parentResources,
   location,
+  match,
   tagsEnabled,
   onClose,
   onDelete,
@@ -106,6 +108,7 @@ const renderViewMappingProfile = ({
         parentResources={parentResources}
         location={location}
         history={history}
+        match={match}
         tagsEnabled={tagsEnabled}
         onClose={onClose}
         onDelete={onDelete}

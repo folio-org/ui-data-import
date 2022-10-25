@@ -98,7 +98,8 @@ export const JobProfilesFormComponent = memo(({
   onCancel,
   stripes,
   parentResources,
-  onSubmitSuccess,
+  transitionToParams,
+  baseUrl,
   accordionStatusRef,
   layerType,
   mutator,
@@ -241,8 +242,8 @@ export const JobProfilesFormComponent = memo(({
 
       if (record) {
         clearStorage();
-
-        onSubmitSuccess(record, form.reset);
+        form.reset();
+        transitionToParams({ _path: `${baseUrl}/view/${record.id}` });
       }
     }
   };
@@ -384,7 +385,8 @@ JobProfilesFormComponent.propTypes = {
   onCancel: PropTypes.func.isRequired,
   stripes: PropTypes.object.isRequired,
   parentResources: PropTypes.object.isRequired,
-  onSubmitSuccess: PropTypes.func.isRequired,
+  transitionToParams: PropTypes.func.isRequired,
+  baseUrl: PropTypes.string.isRequired,
   mutator: PropTypes.shape({ childWrappers: PropTypes.shape({ GET: PropTypes.func }) }).isRequired,
   resources: PropTypes.shape({ childWrappers: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }) }).isRequired,
   accordionStatusRef: PropTypes.object,

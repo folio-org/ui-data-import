@@ -174,6 +174,7 @@ const renderMatchProfilesForm = ({
         onCancel={noop}
         transitionToParams={noop}
         onSubmit={jest.fn()}
+        layerType={LAYER_TYPES.EDIT}
       />
     </Router>
   );

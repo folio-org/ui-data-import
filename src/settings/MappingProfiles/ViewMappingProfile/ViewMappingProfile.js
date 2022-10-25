@@ -46,6 +46,7 @@ import {
   MappingHoldingsDetails,
   MappingMARCBibDetails,
   MappingInvoiceDetails,
+  MappingMARCAuthorityDetails,
 } from '../detailsSections/view';
 
 import {
@@ -56,10 +57,10 @@ import {
   MAPPING_DETAILS_HEADLINE,
   getEntity,
   getEntityTags,
-  MARC_TYPES,
   FIELD_MAPPINGS_FOR_MARC_OPTIONS,
   marcFieldProtectionSettingsShape,
   showActionMenu,
+  isMARCType,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -253,7 +254,7 @@ export class ViewMappingProfile extends Component {
       ...mappingProfile.childProfiles,
     ];
 
-    const isMARCRecord = existingRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC;
+    const isMARCRecord = isMARCType(existingRecordType);
 
     const marcMappingOptionLabel = FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === marcMappingOption)?.label;
 
@@ -262,6 +263,7 @@ export class ViewMappingProfile extends Component {
       marcMappingOption,
       marcFieldProtectionFields,
       mappingMarcFieldProtectionFields,
+      folioRecordType: existingRecordType,
     };
 
     const mappingFields = mappingDetails?.mappingFields || [];
@@ -272,6 +274,7 @@ export class ViewMappingProfile extends Component {
       ITEM: <MappingItemDetails mappingDetails={mappingFields} />,
       INVOICE: <MappingInvoiceDetails mappingDetails={mappingFields} />,
       MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCBibDetailsProps} />,
+      MARC_AUTHORITY: <MappingMARCAuthorityDetails {...MARCBibDetailsProps} />
     };
 
     return (

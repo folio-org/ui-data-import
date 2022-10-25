@@ -87,6 +87,7 @@ export const LAYER_TYPES = {
   CREATE: 'create',
   EDIT: 'edit',
   DUPLICATE: 'duplicate',
+  VIEW: 'view',
 };
 
 export const ENTITY_KEYS = {

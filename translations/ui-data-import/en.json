@@ -152,6 +152,7 @@
   "fieldMappingsForMarc.updates": "Updates",
   "fieldMappingsForMarc.overrideProtected":"Override protected fields",
   "fieldMappingsForMarc.updates.subtext": "If updates should only affect specific fields, add them here",
+  "fieldMappingsForMarc.override.subtext": "Field protections can be applied to MARC Authority records via this profile, but default field protections <b>cannot</b> be overridden",
   "fieldMappingsForMarc.updatesOverrides.subtext": "If any protected field should be updated by this profile, check the appropriate box here",
   "fieldMappingsForMarc.updatesOverrides.noFields": "The library has not defined any protected fields",
   "fieldMappingsForMarc.placeholder": "Select field mappings for MARC",
