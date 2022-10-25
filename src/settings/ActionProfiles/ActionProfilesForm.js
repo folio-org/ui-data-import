@@ -53,7 +53,6 @@ export const ActionProfilesFormComponent = ({
   submitting,
   initialValues,
   handleSubmit,
-  onSubmitSuccess,
   form,
   onCancel,
   accordionStatusRef,
