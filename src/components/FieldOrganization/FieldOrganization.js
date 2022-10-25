@@ -74,7 +74,7 @@ const FieldOrganization = ({
       <Field
         id={name}
         component={TextField}
-        disabled
+        disabled={disabled}
         endControl={clearButton}
         fullWidth
         hasClearIcon={false}
