@@ -57,10 +57,20 @@ export const JOB_STATUSES = {
 export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
 export const SYSTEM_USER_NAME = 'System';
 
+export const APPROVED_FIELD = 'approved';
+export const MANUAL_PO_FIELD = 'manualPo';
+export const AUTOMATIC_EXPORT_FIELD = 'automaticExport';
+export const ACTIVATION_STATUS_FIELD = 'activationStatus';
+export const TRIAL_FIELD = 'trial';
 export const CURRENCY_FIELD = 'currency';
+export const VENDOR_FIELD = 'vendor';
 export const VENDOR_ID_FIELD = 'vendorId';
+export const ASSIGNED_TO_FIELD = 'assignedTo';
+export const MATERIAL_SUPPLIER_FIELD = 'materialSupplier';
+export const ACCESS_PROVIDER_FIELD = 'accessProvider';
 export const LOCK_TOTAL_FIELD = 'lockTotal';
 export const EXCHANGE_RATE_FIELD = 'exchangeRate';
+export const USE_EXCHANGE_RATE_FIELD = 'useExchangeRate';
 
 export const DATA_TYPES = [
   'MARC',
