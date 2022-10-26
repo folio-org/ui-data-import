@@ -17,7 +17,7 @@ import {
 
 import {
   AcceptedValuesField,
-  FieldOrganization
+  FieldOrganization,
 } from '../../../../../components';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';

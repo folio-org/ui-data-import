@@ -75,7 +75,6 @@ export const ItemDetails = ({
           <Field
             component={Datepicker}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionFrom`} />}
-            dateFormat="MM-DD-YYYY"
             name={getFieldName(21)}
           />
         </Col>
@@ -83,7 +82,6 @@ export const ItemDetails = ({
           <Field
             component={Datepicker}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionTo`} />}
-            dateFormat="MM-DD-YYYY"
             name={getFieldName(22)}
           />
         </Col>

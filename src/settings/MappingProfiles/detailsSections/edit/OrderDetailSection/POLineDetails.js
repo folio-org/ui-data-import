@@ -75,10 +75,10 @@ export const POLineDetails = ({
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.section`} />}
     >
       <Row left="xs">
-        <Col xs={4}>
+        <Col xs={3}>
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.polNumber`} />} />
         </Col>
-        <Col xs={4}>
+        <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
             name={getFieldName(31)}
@@ -95,7 +95,7 @@ export const POLineDetails = ({
             okapi={okapi}
           />
         </Col>
-        <Col xs={4}>
+        <Col xs={3}>
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.automaticExport`} />}
@@ -106,7 +106,7 @@ export const POLineDetails = ({
             vertical
           />
         </Col>
-        <Col xs={4}>
+        <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
             name={getFieldName(33)}
@@ -119,18 +119,17 @@ export const POLineDetails = ({
         </Col>
       </Row>
       <Row left="xs">
-        <Col xs={4}>
+        <Col xs={3}>
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.createdOn`} />} />
         </Col>
-        <Col xs={4}>
+        <Col xs={3}>
           <Field
             component={Datepicker}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.receiptDate`} />}
-            dateFormat="MM-DD-YYYY"
             name={getFieldName(35)}
           />
         </Col>
-        <Col xs={4}>
+        <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
             name={getFieldName(36)}
@@ -141,7 +140,7 @@ export const POLineDetails = ({
             acceptedValuesList={receiptStatusOptions}
           />
         </Col>
-        <Col xs={4}>
+        <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
             name={getFieldName(37)}
@@ -154,26 +153,26 @@ export const POLineDetails = ({
         </Col>
       </Row>
       <Row left="xs">
-        <Col xs={4}>
+        <Col xs={3}>
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.source`} />}>
             <FormattedMessage id="ui-data-import.marc" />
           </KeyValue>
         </Col>
-        <Col xs={4}>
+        <Col xs={3}>
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.donor`} />}
             name={getFieldName(39)}
           />
         </Col>
-        <Col xs={4}>
+        <Col xs={3}>
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.selector`} />}
             name={getFieldName(40)}
           />
         </Col>
-        <Col xs={4}>
+        <Col xs={3}>
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.requester`} />}

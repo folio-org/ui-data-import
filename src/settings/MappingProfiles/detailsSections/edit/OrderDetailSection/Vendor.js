@@ -66,7 +66,7 @@ export const Vendor = ({
       <RepeatableField
         fields={vendorRefNumbers}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.vendorRefNumbers.addLabel`} />}
-        onAdd={() => onAdd(vendorRefNumbers, 'vendorRefNumbers', 47, initialFields, setReferenceTables, 'order')}
+        onAdd={() => onAdd(vendorRefNumbers, 'vendorDetail', 47, initialFields, setReferenceTables, 'order')}
         onRemove={index => onRemove(index, vendorRefNumbers, 47, setReferenceTables, 'order')}
         renderField={(field, index) => (
           <Row left="xs">

@@ -6,7 +6,7 @@ import React, {
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
-  useIntl
+  useIntl,
 } from 'react-intl';
 import { Field } from 'redux-form';
 
