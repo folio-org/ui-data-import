@@ -39,7 +39,7 @@ export const CostDetails = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-unit-price
-          xs={3}
+          xs={4}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.listUnitPrice`} />}
@@ -48,7 +48,7 @@ export const CostDetails = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-quantity-physical
-          xs={3}
+          xs={4}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.quantityPhysical`} />}
@@ -57,7 +57,7 @@ export const CostDetails = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-additional-cost
-          xs={3}
+          xs={4}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.additionalCost`} />}
@@ -68,7 +68,7 @@ export const CostDetails = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-currency
-          xs={3}
+          xs={4}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.currency`} />}
@@ -77,7 +77,7 @@ export const CostDetails = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-use-exchange-rate
-          xs={3}
+          xs={4}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.useExchangeRate`} />}
@@ -86,7 +86,7 @@ export const CostDetails = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-exchange-rate
-          xs={3}
+          xs={4}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.exchangeRate`} />}
@@ -97,7 +97,7 @@ export const CostDetails = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-unit-price-electronic
-          xs={3}
+          xs={4}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.electronicUnitPrice`} />}
@@ -106,7 +106,7 @@ export const CostDetails = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-quantity-electronic
-          xs={3}
+          xs={4}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.quantityElectronic`} />}
@@ -115,7 +115,7 @@ export const CostDetails = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-discount
-          xs={3}
+          xs={4}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.discount`} />}

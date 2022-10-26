@@ -163,7 +163,7 @@ export const POLineDetails = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-cancellation-restriction
-          xs={3}
+          xs={4}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.cancellationRestriction`} />}
@@ -172,7 +172,7 @@ export const POLineDetails = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-rush
-          xs={3}
+          xs={4}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.rush`} />}
@@ -181,7 +181,7 @@ export const POLineDetails = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-receiving-workflow
-          xs={3}
+          xs={4}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.receivingWorkflow`} />}
@@ -192,7 +192,7 @@ export const POLineDetails = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-cancellation-description
-          xs={3}
+          xs={6}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.cancellationDescription`} />}
@@ -201,7 +201,7 @@ export const POLineDetails = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-po-line-description
-          xs={3}
+          xs={6}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.poLineDescription`} />}

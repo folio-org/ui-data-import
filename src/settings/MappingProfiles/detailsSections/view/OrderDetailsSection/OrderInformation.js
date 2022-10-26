@@ -74,7 +74,7 @@ export const OrderInformation = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-po-status
-          xs={3}
+          xs={6}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.poStatus`} />}
@@ -83,7 +83,7 @@ export const OrderInformation = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-approved
-          xs={3}
+          xs={6}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.approved`} />}
@@ -94,7 +94,7 @@ export const OrderInformation = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-pol-limit
-          xs={3}
+          xs={6}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.poLinesLimit`} />}
@@ -103,7 +103,7 @@ export const OrderInformation = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-override-pol-limit
-          xs={3}
+          xs={6}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.overridePoLinesLimit`} />}

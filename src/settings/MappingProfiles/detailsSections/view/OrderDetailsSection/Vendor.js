@@ -77,7 +77,7 @@ export const Vendor = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-vendor-account
-          xs={3}
+          xs={6}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.vendorAccount`} />}
@@ -86,7 +86,7 @@ export const Vendor = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-instructions
-          xs={3}
+          xs={6}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.instructions`} />}

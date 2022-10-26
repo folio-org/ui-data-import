@@ -101,7 +101,7 @@ export const OrderDetails = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-title
-          xs={4}
+          xs={12}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderDetails.title`} />}
@@ -112,7 +112,7 @@ export const OrderDetails = ({ mappingDetails }) => {
       <Row left="xs">
         <Col
           data-test-receiving-note
-          xs={4}
+          xs={6}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderDetails.receivingNote`} />}
@@ -121,7 +121,7 @@ export const OrderDetails = ({ mappingDetails }) => {
         </Col>
         <Col
           data-test-is-acknowledged
-          xs={4}
+          xs={6}
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderDetails.isAcknowledged`} />}
