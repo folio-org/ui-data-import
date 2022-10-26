@@ -902,5 +902,11 @@
     "modal.cancelRunningJob.confirm": "نعم، قم بإلغاء مهمة الاستيراد",
     "jobStartedDate": "Started running",
     "modal.confirmJobFinished.header": "Import job finished before cancellation",
-    "modal.confirmJobFinished.message": "This job finished before the system could cancel it, and appears at the top of the import log"
+    "modal.confirmJobFinished.message": "This job finished before the system could cancel it, and appears at the top of the import log",
+    "fieldMappingsForMarc.override.subtext": "Field protections can be applied to MARC Authority records via this profile, but default field protections <b>cannot</b> be overridden",
+    "settings.mappingProfiles.form": "Mapping profile form",
+    "settings.jobProfiles.form": "Job profile form",
+    "settings.actionProfiles.form": "Action profile form",
+    "settings.matchProfiles.form": "Match profile form",
+    "settings.fileExtensions.form": "File extension form"
 }
