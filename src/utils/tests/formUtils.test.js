@@ -89,9 +89,6 @@ describe('handleProfileSave function', () => {
 
     expect(handleSubmit).toHaveBeenLastCalledWith(event);
     expect(resetForm).toHaveBeenCalled();
-    expect(transitionToParams).toHaveBeenLastCalledWith({
-      _path: `${path}/view/testRecordId`,
-      layer: null,
-    });
+    expect(transitionToParams).toHaveBeenLastCalledWith({ _path: `${path}/view/testRecordId` });
   });
 });

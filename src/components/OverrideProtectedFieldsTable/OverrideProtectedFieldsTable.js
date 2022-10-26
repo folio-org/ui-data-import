@@ -25,32 +25,36 @@ import { MappedHeader } from '..';
 import {
   MAPPING_DETAILS_HEADLINE,
   marcFieldProtectionSettingsShape,
+  MARC_TYPES,
 } from '../../utils';
 
 export const OverrideProtectedFieldsTable = ({
   marcFieldProtectionFields,
   mappingMarcFieldProtectionFields,
   setReferenceTables,
+  folioRecordType,
   isEditable,
+  isAccordionOpen,
+  isViewMode,
 }) => {
   const protectedFields = unionBy(mappingMarcFieldProtectionFields, marcFieldProtectionFields, 'id')
     .sort((a, b) => a.field.localeCompare(b.field));
   const noProtectedFieldsDefined = isEmpty(protectedFields);
   const hasOverrideProtectedFields = protectedFields.some(field => field.override);
-
-  const [isOpen, setIsOpen] = useState(isEditable || hasOverrideProtectedFields);
+  const [isOpen, setIsOpen] = useState(isAccordionOpen || hasOverrideProtectedFields);
+  const [isCheckboxesActive] = useState(isEditable);
 
   useEffect(() => {
-    if (isEditable || hasOverrideProtectedFields) {
+    if (isAccordionOpen || hasOverrideProtectedFields) {
       setIsOpen(true);
     } else {
       setIsOpen(false);
     }
-  }, [hasOverrideProtectedFields, isEditable]);
+  }, [hasOverrideProtectedFields, isAccordionOpen]);
 
   const emptyTableMessage = (
     <div style={{ margin: '-1rem' }}>
-      {isEditable
+      {isAccordionOpen
         ? <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.noFields" />
         : <NoValue />
       }
@@ -94,7 +98,7 @@ export const OverrideProtectedFieldsTable = ({
             <Checkbox
               checked={!!protectedField.override}
               onChange={() => handleOverrideFieldSelect(protectedField.id)}
-              disabled={!isEditable}
+              disabled={!isCheckboxesActive}
               aria-label={ariaLabel}
             />
           )}
@@ -102,13 +106,13 @@ export const OverrideProtectedFieldsTable = ({
       );
     },
   };
-  const editModeIdPrefix = isEditable ? 'edit-' : '';
+  const editModeIdPrefix = isAccordionOpen ? 'edit-' : '';
 
   const header = (
     <MappedHeader
       headersToSeparate={[
         'ui-data-import.settings.profiles.select.mappingProfiles',
-        MAPPING_DETAILS_HEADLINE.MARC_BIBLIOGRAPHIC.labelId,
+        MAPPING_DETAILS_HEADLINE[folioRecordType].labelId,
         'ui-data-import.fieldMappingsForMarc.overrideProtected',
       ]}
     />
@@ -127,10 +131,15 @@ export const OverrideProtectedFieldsTable = ({
         style={{ margin: 0 }}
       >
         <Col>
-          {isEditable && !noProtectedFieldsDefined && (
+          {isAccordionOpen && !noProtectedFieldsDefined && folioRecordType !== MARC_TYPES.MARC_AUTHORITY && (
             <span>
               <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.subtext" />
             </span>
+          )}
+          {!isViewMode && folioRecordType === MARC_TYPES.MARC_AUTHORITY && (
+            <div style={{ padding: '10px' }}>
+              <FormattedMessage id="ui-data-import.fieldMappingsForMarc.override.subtext" />
+            </div>
           )}
         </Col>
       </Row>
@@ -150,10 +159,15 @@ OverrideProtectedFieldsTable.propTypes = {
   marcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
   mappingMarcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
   setReferenceTables: PropTypes.func,
+  folioRecordType: PropTypes.string,
   isEditable: PropTypes.bool,
+  isAccordionOpen: PropTypes.bool,
+  isViewMode: PropTypes.bool,
 };
 
 OverrideProtectedFieldsTable.defaultProps = {
+  isViewMode: true,
   isEditable: false,
+  isAccordionOpen: true,
   setReferenceTables: noop,
 };

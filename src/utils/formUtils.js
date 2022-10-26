@@ -172,9 +172,6 @@ export const handleProfileSave = (handleSubmit, resetForm, transitionToParams, p
 
   if (record) {
     resetForm();
-    transitionToParams({
-      _path: `${path}/view/${record.id}`,
-      layer: null,
-    });
+    transitionToParams({ _path: `${path}/view/${record.id}` });
   }
 };

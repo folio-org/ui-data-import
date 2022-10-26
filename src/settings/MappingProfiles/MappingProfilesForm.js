@@ -5,7 +5,6 @@ import React, {
   useLayoutEffect,
 } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import {
   FormattedMessage,
   injectIntl,
@@ -50,6 +49,7 @@ import {
   MappingItemDetails,
   MappingMARCBibDetails,
   MappingInvoiceDetails,
+  MappingMARCAuthorityDetails,
 } from './detailsSections/edit';
 
 import {
@@ -93,12 +93,12 @@ export const MappingProfilesFormComponent = ({
   parentResources: { marcFieldProtectionSettings: { records: marcFieldProtectionSettings = [] } },
   mappingMarcFieldProtectionFields,
   okapi,
-  location: { search },
   handleSubmit,
   onCancel,
   dispatch,
   intl,
   accordionStatusRef,
+  layerType,
 }) => {
   const { formatMessage } = intl;
   const {
@@ -111,10 +111,8 @@ export const MappingProfilesFormComponent = ({
       childProfiles = [],
     },
   } = initialValues;
-  const { layer } = queryString.parse(search);
-
-  const isEditMode = layer === LAYER_TYPES.EDIT;
-  const isDuplicateMode = layer === LAYER_TYPES.DUPLICATE;
+  const isEditMode = layerType === LAYER_TYPES.EDIT;
+  const isDuplicateMode = layerType === LAYER_TYPES.DUPLICATE;
   const isSubmitDisabled = pristine || submitting;
 
   const [folioRecordType, setFolioRecordType] = useState(existingRecordType || null);
@@ -276,6 +274,7 @@ export const MappingProfilesFormComponent = ({
     fieldMappingsForMARCField: fieldMappingsForMARC,
     onUpdateFieldAdd: setInitialValuesForMARCUpdates,
     setReferenceTables: setFormFieldValue,
+    folioRecordType,
   };
 
   const invoiceDetailsProps = {
@@ -298,6 +297,7 @@ export const MappingProfilesFormComponent = ({
     HOLDINGS: <MappingHoldingsDetails {...detailsProps} />,
     ITEM: <MappingItemDetails {...detailsProps} />,
     MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCDetailsProps} />,
+    MARC_AUTHORITY: <MappingMARCAuthorityDetails {...MARCDetailsProps} />,
     INVOICE: <MappingInvoiceDetails {...invoiceDetailsProps} />,
   };
 
@@ -397,7 +397,7 @@ export const MappingProfilesFormComponent = ({
                   />
                 </div>
               </Accordion>
-              {folioRecordType !== MARC_TYPES.MARC_AUTHORITY && (
+              {folioRecordType && (
                 <Accordion
                   id="mapping-profile-details"
                   label={<FormattedMessage id="ui-data-import.details" />}
@@ -502,13 +502,6 @@ MappingProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  location: PropTypes.oneOfType([
-    PropTypes.shape({
-      search: PropTypes.string.isRequired,
-      pathname: PropTypes.string.isRequired,
-    }).isRequired,
-    PropTypes.string.isRequired,
-  ]),
   okapi: okapiShape.isRequired,
   mappingMarcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape).isRequired,
   onCancel: PropTypes.func.isRequired,
@@ -517,6 +510,7 @@ MappingProfilesFormComponent.propTypes = {
   mappingDetails: PropTypes.object,
   parentResources: PropTypes.object,
   accordionStatusRef: PropTypes.object,
+  layerType: PropTypes.string,
 };
 
 const mapStateToProps = state => {

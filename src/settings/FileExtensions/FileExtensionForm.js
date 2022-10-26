@@ -22,6 +22,7 @@ import {
   composeValidators,
   DATA_TYPES,
   isFieldPristine,
+  handleProfileSave,
 } from '../../utils';
 import { EditKeyShortcutsWrapper } from '../../components';
 
@@ -40,12 +41,12 @@ MultiSelectItem.propTypes = {
 export const FileExtensionFormComponent = ({
   pristine,
   submitting,
-  transitionToParams,
   form,
   initialValues,
   handleSubmit,
   onCancel,
-  match: { path },
+  transitionToParams,
+  baseUrl,
 }) => {
   const isEditMode = Boolean(initialValues.id);
 
@@ -85,13 +86,7 @@ export const FileExtensionFormComponent = ({
     : <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />;
 
   const onSubmit = async event => {
-    const record = await handleSubmit(event);
-
-    form.reset();
-    transitionToParams({
-      _path: `${path}/view/${record.id}`,
-      layer: null,
-    });
+    await handleProfileSave(handleSubmit, form.reset, transitionToParams, baseUrl)(event);
   };
 
   return (
@@ -182,11 +177,11 @@ FileExtensionFormComponent.propTypes = {
     reset: PropTypes.func.isRequired,
     change: PropTypes.func.isRequired,
   }).isRequired,
-  match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   transitionToParams: PropTypes.func.isRequired,
+  baseUrl: PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired,
 };
 

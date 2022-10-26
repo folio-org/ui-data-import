@@ -14,7 +14,6 @@ import {
   omit,
   pick,
 } from 'lodash';
-import queryString from 'query-string';
 
 import {
   Headline,
@@ -55,11 +54,11 @@ export const ActionProfilesFormComponent = ({
   initialValues,
   handleSubmit,
   form,
-  location: { search },
   onCancel,
-  transitionToParams,
-  match: { path },
   accordionStatusRef,
+  layerType,
+  transitionToParams,
+  baseUrl,
 }) => {
   const { profile } = initialValues;
   const associatedJobProfiles = profile.parentProfiles || [];
@@ -157,8 +156,7 @@ export const ActionProfilesFormComponent = ({
     });
   const actionsDataOptions = useMemo(getActionsDataOptions, [folioRecord]);
   const folioRecordTypesDataOptions = useMemo(getFolioRecordTypesDataOptions, [action]);
-  const { layer } = queryString.parse(search);
-  const isEditMode = layer === LAYER_TYPES.EDIT;
+  const isEditMode = layerType === LAYER_TYPES.EDIT;
   const isSubmitDisabled = pristine || submitting;
 
   const paneTitle = isEditMode ? (
@@ -179,7 +177,7 @@ export const ActionProfilesFormComponent = ({
       event.preventDefault();
       setConfirmModalOpen(true);
     } else {
-      await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)(event);
+      await handleProfileSave(handleSubmit, form.reset, transitionToParams, baseUrl)(event);
     }
   };
 
@@ -341,7 +339,7 @@ export const ActionProfilesFormComponent = ({
           )}
           confirmLabel={<FormattedMessage id="ui-data-import.confirm" />}
           onConfirm={async () => {
-            await handleProfileSave(handleSubmit, form.reset, transitionToParams, path)();
+            await handleProfileSave(handleSubmit, form.reset, transitionToParams, baseUrl)();
 
             setConfirmModalOpen(false);
           }}
@@ -358,12 +356,14 @@ ActionProfilesFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  onSubmitSuccess: PropTypes.func.isRequired,
   form: PropTypes.shape({
     getState: PropTypes.func.isRequired,
     change: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
   }).isRequired,
   transitionToParams: PropTypes.func.isRequired,
+  baseUrl: PropTypes.string.isRequired,
   match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   onCancel: PropTypes.func.isRequired,
   location: PropTypes.oneOfType([
@@ -374,6 +374,7 @@ ActionProfilesFormComponent.propTypes = {
     PropTypes.string.isRequired,
   ]),
   accordionStatusRef: PropTypes.object,
+  layerType: PropTypes.string,
 };
 
 export const ActionProfilesForm = compose(

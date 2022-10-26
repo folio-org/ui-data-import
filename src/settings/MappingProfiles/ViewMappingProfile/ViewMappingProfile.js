@@ -39,15 +39,16 @@ import {
   INCOMING_RECORD_TYPES,
   FOLIO_RECORD_TYPES,
   MappedHeader,
-} from '../../components';
+} from '../../../components';
 import {
   MappingInstanceDetails,
   MappingItemDetails,
   MappingHoldingsDetails,
   MappingMARCBibDetails,
   MappingInvoiceDetails,
+  MappingMARCAuthorityDetails,
   MappingOrderDetails,
-} from './detailsSections/view';
+} from '../detailsSections/view';
 
 import {
   ENTITY_KEYS,
@@ -57,13 +58,13 @@ import {
   MAPPING_DETAILS_HEADLINE,
   getEntity,
   getEntityTags,
-  MARC_TYPES,
   FIELD_MAPPINGS_FOR_MARC_OPTIONS,
   marcFieldProtectionSettingsShape,
   showActionMenu,
-} from '../../utils';
+  isMARCType,
+} from '../../../utils';
 
-import sharedCss from '../../shared.css';
+import sharedCss from '../../../shared.css';
 
 @stripesConnect
 @withTags
@@ -176,6 +177,7 @@ export class ViewMappingProfile extends Component {
         entity={this}
         menu={menu}
         recordId={record?.id}
+        baseUrl="/settings/data-import/mapping-profiles"
       />
     );
   };
@@ -253,7 +255,7 @@ export class ViewMappingProfile extends Component {
       ...mappingProfile.childProfiles,
     ];
 
-    const isMARCRecord = existingRecordType === MARC_TYPES.MARC_BIBLIOGRAPHIC;
+    const isMARCRecord = isMARCType(existingRecordType);
 
     const marcMappingOptionLabel = FIELD_MAPPINGS_FOR_MARC_OPTIONS.find(option => option.value === marcMappingOption)?.label;
 
@@ -262,6 +264,7 @@ export class ViewMappingProfile extends Component {
       marcMappingOption,
       marcFieldProtectionFields,
       mappingMarcFieldProtectionFields,
+      folioRecordType: existingRecordType,
     };
 
     const mappingFields = mappingDetails?.mappingFields || [];
@@ -272,7 +275,8 @@ export class ViewMappingProfile extends Component {
       ITEM: <MappingItemDetails mappingDetails={mappingFields} />,
       INVOICE: <MappingInvoiceDetails mappingDetails={mappingFields} />,
       MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCBibDetailsProps} />,
-      ORDER: <MappingOrderDetails mappingDetails={mappingFields} />
+      MARC_AUTHORITY: <MappingMARCAuthorityDetails {...MARCBibDetailsProps} />,
+      ORDER: <MappingOrderDetails mappingDetails={mappingFields} />,
     };
 
     return (

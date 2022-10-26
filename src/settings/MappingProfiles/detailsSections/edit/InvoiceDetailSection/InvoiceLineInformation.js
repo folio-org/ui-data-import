@@ -53,8 +53,7 @@ export const InvoiceLineInformation = ({
   okapi,
 }) => {
   const { formatMessage } = useIntl();
-
-  const releaseEncumbranceCheckbox = mappingFields?.[26].subfields[0]?.fields[13].booleanFieldAction;
+  const releaseEncumbranceCheckbox = mappingFields?.[26]?.subfields[0]?.fields[13]?.booleanFieldAction;
   const vendorRefTypesList = createOptionsList(REF_NUMBER_TYPE_OPTIONS, formatMessage, 'labelId');
 
   const getPathToAddField = currentIndex => getInnerSubfieldsPath(currentIndex, 0, 4);

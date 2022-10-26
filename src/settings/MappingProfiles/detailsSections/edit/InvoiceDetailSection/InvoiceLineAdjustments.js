@@ -85,7 +85,7 @@ export const InvoiceLineAdjustments = ({
       />
     );
 
-    const exportToAccountingCheckbox = mappingFields?.[26].subfields[0].fields[15].subfields[index].fields[4].booleanFieldAction;
+    const exportToAccountingCheckbox = mappingFields?.[26].subfields[0].fields[15].subfields[index].fields[4]?.booleanFieldAction;
 
     return (
       <Card

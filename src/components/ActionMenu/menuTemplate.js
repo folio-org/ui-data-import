@@ -2,11 +2,7 @@ import React from 'react';
 
 import { IfPermission } from '@folio/stripes/core';
 
-import {
-  createLayerURL,
-  LAYER_TYPES,
-  permissions,
-} from '../../utils';
+import { permissions } from '../../utils';
 
 import {
   LinkTo,
@@ -19,12 +15,14 @@ import {
  *
  * @param {Component} entity
  * @param {object} menu
+ * @param {string} baseUrl
  * @param {boolean} isDefaultProfile
  * @param {boolean} isDuplicateButtonDisabled
  */
 export const menuTemplate = ({
   entity,
   menu,
+  baseUrl,
   isDefaultProfile,
   isDuplicateButtonDisabled = false,
 }) => {
@@ -32,9 +30,12 @@ export const menuTemplate = ({
     props: {
       ENTITY_KEY,
       checkboxList,
-      location,
+      location = {},
+      match = {},
     },
   } = entity;
+  const { search } = location;
+  const { params = {} } = match;
 
   return {
     addNew: key => (
@@ -43,7 +44,7 @@ export const menuTemplate = ({
         caption={`ui-data-import.settings.${ENTITY_KEY}.new`}
         icon="plus-sign"
         menu={menu}
-        location={createLayerURL(location, LAYER_TYPES.CREATE)}
+        location={`${baseUrl}/create${search}`}
         dataAttributes={{ 'data-test-new-item-menu-button': '' }}
       />
     ),
@@ -54,17 +55,7 @@ export const menuTemplate = ({
         icon="edit"
         menu={menu}
         isDisabled={isDefaultProfile}
-        location={createLayerURL(location, LAYER_TYPES.EDIT)}
-        dataAttributes={{ 'data-test-edit-item-menu-button': '' }}
-      />
-    ),
-    editJobProfile: key => (
-      <LinkTo
-        key={key}
-        caption="ui-data-import.editJobProfile"
-        icon="edit"
-        menu={menu}
-        location={createLayerURL(location, LAYER_TYPES.EDIT)}
+        location={`${baseUrl}/edit/${params.id}${search}`}
         dataAttributes={{ 'data-test-edit-item-menu-button': '' }}
       />
     ),
@@ -75,7 +66,7 @@ export const menuTemplate = ({
         icon="duplicate"
         menu={menu}
         isDisabled={isDuplicateButtonDisabled}
-        location={createLayerURL(location, LAYER_TYPES.DUPLICATE)}
+        location={`${baseUrl}/duplicate/${params.id}${search}`}
         dataAttributes={{ 'data-test-duplicate-item-menu-button': '' }}
       />
     ),

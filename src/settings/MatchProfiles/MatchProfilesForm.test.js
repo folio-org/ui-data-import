@@ -1,5 +1,4 @@
 import React from 'react';
-import queryString from 'query-string';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
@@ -54,7 +53,7 @@ history.push = jest.fn();
 
 const handleProfileSave = jest.spyOn(utils, 'handleProfileSave');
 
-const matchProfilesFormProps = (search = '?layer=create') => ({
+const matchProfilesFormProps = layerType => ({
   initialValues: {
     profile: {
       parentProfiles: [{
@@ -128,10 +127,7 @@ const matchProfilesFormProps = (search = '?layer=create') => ({
   },
   pristine: true,
   submitting: true,
-  location: {
-    search,
-    pathname: '/test-path',
-  },
+  location: { pathname: '/test-path' },
   jsonSchemas: {
     INSTANCE: {},
     HOLDINGS: {},
@@ -151,6 +147,7 @@ const matchProfilesFormProps = (search = '?layer=create') => ({
     batch: noop,
     change: noop,
   },
+  layerType,
 });
 
 const renderMatchProfilesForm = ({
@@ -160,9 +157,9 @@ const renderMatchProfilesForm = ({
   location,
   jsonSchemas,
   form,
+  layerType,
 }) => {
-  const { layer } = queryString.parse(location.search);
-  const isEditMode = layer === LAYER_TYPES.EDIT;
+  const isEditMode = layerType === LAYER_TYPES.EDIT;
   const editModeComponent = () => (
     <Router>
       <MatchProfilesFormComponent
@@ -177,6 +174,7 @@ const renderMatchProfilesForm = ({
         onCancel={noop}
         transitionToParams={noop}
         onSubmit={jest.fn()}
+        layerType={LAYER_TYPES.EDIT}
       />
     </Router>
   );
@@ -213,7 +211,7 @@ describe('MatchProfilesForm', () => {
         const {
           container,
           getByText,
-        } = renderMatchProfilesForm(matchProfilesFormProps());
+        } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
 
         fireEvent.click(getByText('Static value (submatch only)'));
         const dateRange = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.staticValueDetails.staticValueType"]');
@@ -230,7 +228,7 @@ describe('MatchProfilesForm', () => {
         const {
           getByText,
           getAllByText,
-        } = renderMatchProfilesForm(matchProfilesFormProps());
+        } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
         const MARCBibliographicButton = getAllByText('MARC Bibliographic')[1];
 
         fireEvent.click(MARCBibliographicButton);
@@ -242,7 +240,7 @@ describe('MatchProfilesForm', () => {
 
     describe('when name is set', () => {
       it('name input should change the value', () => {
-        const { container } = renderMatchProfilesForm(matchProfilesFormProps());
+        const { container } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
         const nameInput = container.querySelector('[name="profile.name"]');
 
         fireEvent.change(nameInput, { target: { value: 'test' } });
@@ -253,7 +251,7 @@ describe('MatchProfilesForm', () => {
 
     describe('when incoming MARC Bibliographic record values are set', () => {
       it('inputs whould change the value', () => {
-        const { container } = renderMatchProfilesForm(matchProfilesFormProps());
+        const { container } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
 
         const fieldInput = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[0].value"]');
         const in1Input = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[1].value"]');
@@ -277,7 +275,7 @@ describe('MatchProfilesForm', () => {
         const {
           queryByText,
           getAllByText,
-        } = renderMatchProfilesForm(matchProfilesFormProps());
+        } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
         const qualifier = getAllByText('Use a qualifier')[0];
 
         fireEvent.click(qualifier);
@@ -292,7 +290,7 @@ describe('MatchProfilesForm', () => {
         const {
           container,
           getByText,
-        } = renderMatchProfilesForm(matchProfilesFormProps());
+        } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
         const nameInput = container.querySelector('[name="profile.name"]');
         const fieldInput = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[0].value"]');
         const in1Input = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[1].value"]');
@@ -314,7 +312,7 @@ describe('MatchProfilesForm', () => {
 
   describe('when form is in edit mode', () => {
     it('should be rendered', () => {
-      const { getByText } = renderMatchProfilesForm(matchProfilesFormProps('?layer=edit'));
+      const { getByText } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.EDIT));
 
       expect(getByText('Edit testName')).toBeDefined();
     });
