@@ -26,7 +26,7 @@ export const POLineDetails = ({ mappingDetails }) => {
   const automaticExport = getFieldValue(mappingDetails, 'automaticExport', 'booleanFieldAction');
   const orderFormat = getFieldValue(mappingDetails, 'orderFormat', 'value');
   const createdOn = getFieldValue(mappingDetails, 'createdOn', 'value');
-  const expectedReceiptDate = getFieldValue(mappingDetails, 'expectedReceiptDate', 'value');
+  const receiptDate = getFieldValue(mappingDetails, 'receiptDate', 'value');
   const receiptStatus = getFieldValue(mappingDetails, 'receiptStatus', 'value');
   const paymentStatus = getFieldValue(mappingDetails, 'paymentStatus', 'value');
   const source = getFieldValue(mappingDetails, 'source', 'value');
@@ -35,8 +35,8 @@ export const POLineDetails = ({ mappingDetails }) => {
   const requester = getFieldValue(mappingDetails, 'requester', 'value');
   const cancellationRestriction = getFieldValue(mappingDetails, 'cancellationRestriction', 'value');
   const rush = getFieldValue(mappingDetails, 'rush', 'value');
-  const workflowStatus = getFieldValue(mappingDetails, 'workflowStatus', 'value');
-  const cancellationRestrictionNote = getFieldValue(mappingDetails, 'cancellationRestrictionNote', 'value');
+  const receivingWorkflow = getFieldValue(mappingDetails, 'checkinItems', 'value');
+  const cancellationDescription = getFieldValue(mappingDetails, 'cancellationDescription', 'value');
   const poLineDescription = getFieldValue(mappingDetails, 'poLineDescription', 'value');
 
   const automaticExportCheckbox = renderCheckbox('order.poLineDetails.automaticExport', automaticExport);
@@ -95,12 +95,12 @@ export const POLineDetails = ({ mappingDetails }) => {
           />
         </Col>
         <Col
-          data-test-expected-receipt-date
+          data-test-receipt-date
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.expectedReceiptDate`} />}
-            value={expectedReceiptDate}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.receiptDate`} />}
+            value={receiptDate}
           />
         </Col>
         <Col
@@ -180,23 +180,23 @@ export const POLineDetails = ({ mappingDetails }) => {
           />
         </Col>
         <Col
-          data-test-workflow-status
+          data-test-receiving-workflow
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.workflowStatus`} />}
-            value={workflowStatus}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.receivingWorkflow`} />}
+            value={receivingWorkflow}
           />
         </Col>
       </Row>
       <Row left="xs">
         <Col
-          data-test-cancellation-description-note
+          data-test-cancellation-description
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.cancellationRestrictionNote`} />}
-            value={cancellationRestrictionNote}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.cancellationDescription`} />}
+            value={cancellationDescription}
           />
         </Col>
         <Col

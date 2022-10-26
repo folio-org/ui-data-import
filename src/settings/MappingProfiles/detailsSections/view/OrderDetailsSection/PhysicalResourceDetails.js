@@ -13,7 +13,7 @@ import {
 import { ViewRepeatableField } from '../ViewRepeatableField';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { getFieldValue, transformSubfieldsData } from '../../utils';
+import { getFieldValue, getFieldValueByPath, transformSubfieldsData } from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const PhysicalResourceDetails = ({ mappingDetails }) => {
@@ -22,26 +22,26 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
   const materialSupplier = getFieldValue(mappingDetails, 'materialSupplier', 'value');
   const receiptDue = getFieldValue(mappingDetails, 'receiptDue', 'value');
   const expectedReceiptDate = getFieldValue(mappingDetails, 'expectedReceiptDate', 'value');
-  const createInventory = getFieldValue(mappingDetails, 'createInventory', 'value');
-  const materialType = getFieldValue(mappingDetails, 'materialType', 'value');
+  const createInventory = getFieldValueByPath(mappingDetails, 'order.poLine.physical.createInventory', 'value');
+  const materialType = getFieldValueByPath(mappingDetails, 'order.poLine.physical.materialType', 'value');
   const volumes = getFieldValue(mappingDetails, 'volumes', 'subfields');
 
-  const volumesVisibleColumns = ['volume'];
+  const volumesVisibleColumns = ['volumes'];
 
   const volumesMapping = {
-    volume: (
+    volumes: (
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalOrderDetails.volume`} />
     ),
   };
 
   const volumesFieldsMap = [
     {
-      field: 'volume',
+      field: 'volumes',
       key: 'value',
     }
   ];
 
-  const volumesFormatter = { volume: x => x?.volume || noValueElement };
+  const volumesFormatter = { volumes: x => x?.volumes || noValueElement };
 
   const volumesData = transformSubfieldsData(volumes, volumesFieldsMap);
 

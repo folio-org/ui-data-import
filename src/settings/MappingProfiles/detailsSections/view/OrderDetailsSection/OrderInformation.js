@@ -21,27 +21,26 @@ export const OrderInformation = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
   const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
-  const workflowStatus = getFieldValue(mappingDetails, 'workflowStatus', 'value');
+  const poStatus = getFieldValue(mappingDetails, 'poStatus', 'value');
   const approved = getFieldValue(mappingDetails, 'approved', 'booleanFieldAction');
-  const polLimitSetting = getFieldValue(mappingDetails, 'polLimitSetting', 'value');
-  const overridePOLLimitSetting = getFieldValue(mappingDetails, 'overridePOLLimitSetting', 'value');
+  const poLinesLimit = getFieldValue(mappingDetails, 'poLinesLimit', 'value');
+  const overridePoLinesLimit = getFieldValue(mappingDetails, 'overridePoLinesLimit', 'value');
+  const prefix = getFieldValue(mappingDetails, 'prefix', 'value');
   const poNumber = getFieldValue(mappingDetails, 'poNumber', 'value');
-  const poNumberPrefix = getFieldValue(mappingDetails, 'poNumberPrefix', 'value');
-  const poNumberSuffix = getFieldValue(mappingDetails, 'poNumberSuffix', 'value');
+  const suffix = getFieldValue(mappingDetails, 'suffix', 'value');
   const vendor = getFieldValue(mappingDetails, 'vendor', 'value');
   const orderType = getFieldValue(mappingDetails, 'orderType', 'value');
-  const acqUnitIds = mappingDetails.find(item => item.name === 'acqUnitIds')?.subfields[0]?.fields[0]?.value;
+  const acqUnitIds = getFieldValue(mappingDetails, 'acqUnitIds', 'value');
   const assignedTo = getFieldValue(mappingDetails, 'assignedTo', 'value');
-  const billToName = getFieldValue(mappingDetails, 'billTo', 'value');
+  const billTo = getFieldValue(mappingDetails, 'billTo', 'value');
   const billToAddress = getFieldValue(mappingDetails, 'billToAddress', 'value');
-  const shipToName = getFieldValue(mappingDetails, 'shipTo', 'value');
+  const shipTo = getFieldValue(mappingDetails, 'shipTo', 'value');
   const shipToAddress = getFieldValue(mappingDetails, 'shipToAddress', 'value');
-  const manual = getFieldValue(mappingDetails, 'manualPo', 'booleanFieldAction');
-  const reEncumber = getFieldValue(mappingDetails, 'reEncumber', 'booleanFieldAction');
+  const manualPo = getFieldValue(mappingDetails, 'manualPo', 'booleanFieldAction');
+  const reEncumber = getFieldValue(mappingDetails, 'reEncumber', 'value');
   const notes = getFieldValue(mappingDetails, 'notes', 'subfields');
 
-  const manualCheckbox = renderCheckbox('order.orderInformation.manual', manual);
-  const reEncumberCheckbox = renderCheckbox('order.orderInformation.reEncumber', reEncumber);
+  const manualCheckbox = renderCheckbox('order.orderInformation.manualPo', manualPo);
   const approvedCheckbox = renderCheckbox('order.orderInformation.approved', approved);
 
   const notesVisibleColumns = ['note'];
@@ -54,12 +53,12 @@ export const OrderInformation = ({ mappingDetails }) => {
 
   const notesFieldsMap = [
     {
-      field: 'note',
+      field: 'notes',
       key: 'value',
     }
   ];
 
-  const notesFormatter = { note: x => x?.note || noValueElement };
+  const notesFormatter = { note: x => x?.notes || noValueElement };
 
   const notesData = transformSubfieldsData(notes, notesFieldsMap);
 
@@ -70,12 +69,12 @@ export const OrderInformation = ({ mappingDetails }) => {
     >
       <Row left="xs">
         <Col
-          data-test-workflow-status
+          data-test-po-status
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.workflowStatus`} />}
-            value={workflowStatus}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.poStatus`} />}
+            value={poStatus}
           />
         </Col>
         <Col
@@ -90,21 +89,21 @@ export const OrderInformation = ({ mappingDetails }) => {
       </Row>
       <Row left="xs">
         <Col
-          data-test-pol-limit-setting
+          data-test-pol-limit
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.polLimitSetting`} />}
-            value={polLimitSetting || prohibitionIconElement('pol-limit-setting')}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.poLinesLimit`} />}
+            value={poLinesLimit || prohibitionIconElement('pol-limit')}
           />
         </Col>
         <Col
-          data-test-override-pol-limit-setting
+          data-test-override-pol-limit
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.overridePOLLimitSetting`} />}
-            value={overridePOLLimitSetting}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.overridePoLinesLimit`} />}
+            value={overridePoLinesLimit}
           />
         </Col>
       </Row>
@@ -114,8 +113,8 @@ export const OrderInformation = ({ mappingDetails }) => {
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.poNumberPrefix`} />}
-            value={poNumberPrefix}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.prefix`} />}
+            value={prefix}
           />
         </Col>
         <Col
@@ -132,8 +131,8 @@ export const OrderInformation = ({ mappingDetails }) => {
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.poNumberSuffix`} />}
-            value={poNumberSuffix}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.suffix`} />}
+            value={suffix}
           />
         </Col>
       </Row>
@@ -182,7 +181,7 @@ export const OrderInformation = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.billTo`} />}
-            value={billToName}
+            value={billTo}
           />
         </Col>
         <Col
@@ -200,7 +199,7 @@ export const OrderInformation = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.shipTo`} />}
-            value={shipToName}
+            value={shipTo}
           />
         </Col>
         <Col
@@ -219,7 +218,7 @@ export const OrderInformation = ({ mappingDetails }) => {
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.manual`} />}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.manualPo`} />}
             value={manualCheckbox}
           />
         </Col>
@@ -229,7 +228,7 @@ export const OrderInformation = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.reEncumber`} />}
-            value={reEncumberCheckbox}
+            value={reEncumber}
           />
         </Col>
       </Row>

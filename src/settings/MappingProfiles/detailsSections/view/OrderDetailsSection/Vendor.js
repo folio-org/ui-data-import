@@ -23,27 +23,27 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 export const Vendor = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
 
-  const refNumbers = getFieldValue(mappingDetails, 'refNumbers', 'subfields');
-  const vendorAccount = getFieldValue(mappingDetails, 'vendorAccount', 'value');
+  const vendorDetails = getFieldValue(mappingDetails, 'vendorDetail', 'subfields');
+  const vendorAccount = getFieldValue(mappingDetails, 'accountNo', 'value');
   const instructions = getFieldValue(mappingDetails, 'instructions', 'value');
 
-  const refNumbersVisibleColumns = ['refNumber', 'refNumberType'];
+  const vendorDetailsVisibleColumns = ['refNumber', 'refNumberType'];
 
-  const refNumbersMapping = {
+  const vendorDetailsMapping = {
     refNumber: (
-      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.refNumbers.refNumber`} />
+      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.vendorDetails.refNumber`} />
     ),
     refNumberType: (
-      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.refNumbers.refNumberType`} />
+      <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.vendorDetails.refNumberType`} />
     ),
   };
 
-  const contributorsFormatter = {
+  const vendorDetailsFormatter = {
     refNumber: x => x?.refNumber || noValueElement,
     refNumberType: x => x?.refNumberType || noValueElement,
   };
 
-  const refNumberFieldsMap = [
+  const vendorDetailsFieldsMap = [
     {
       field: 'refNumber',
       key: 'value',
@@ -53,7 +53,7 @@ export const Vendor = ({ mappingDetails }) => {
     },
   ];
 
-  const refNumbersData = transformSubfieldsData(refNumbers, refNumberFieldsMap);
+  const vendorDetailsData = transformSubfieldsData(vendorDetails, vendorDetailsFieldsMap);
 
   return (
     <Accordion
@@ -62,16 +62,16 @@ export const Vendor = ({ mappingDetails }) => {
     >
       <Row left="xs">
         <Col
-          data-test-ref-numbers
+          data-test-vendor-details
           xs={12}
         >
           <ViewRepeatableField
-            columnIdPrefix="ref-number"
-            fieldData={refNumbersData}
-            visibleColumns={refNumbersVisibleColumns}
-            columnMapping={refNumbersMapping}
-            formatter={contributorsFormatter}
-            labelId={`${TRANSLATION_ID_PREFIX}.order.vendor.refNumbers.section`}
+            columnIdPrefix="vendor-details"
+            fieldData={vendorDetailsData}
+            visibleColumns={vendorDetailsVisibleColumns}
+            columnMapping={vendorDetailsMapping}
+            formatter={vendorDetailsFormatter}
+            labelId={`${TRANSLATION_ID_PREFIX}.order.vendor.vendorDetails.section`}
           />
         </Col>
       </Row>

@@ -10,15 +10,15 @@ import {
 } from '@folio/stripes/components';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { getFieldValue, renderCheckbox } from '../../utils';
+import { getFieldValue, getFieldValueByPath, renderCheckbox } from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const EResourcesDetails = ({ mappingDetails }) => {
   const accessProvider = getFieldValue(mappingDetails, 'accessProvider', 'value');
-  const activated = getFieldValue(mappingDetails, 'activated', 'booleanFieldAction');
+  const activated = getFieldValue(mappingDetails, 'activationStatus', 'booleanFieldAction');
   const activationDue = getFieldValue(mappingDetails, 'activationDue', 'value');
-  const createEInventory = getFieldValue(mappingDetails, 'createEInventory', 'value');
-  const eMaterialType = getFieldValue(mappingDetails, 'eMaterialType', 'value');
+  const createInventory = getFieldValueByPath(mappingDetails, 'order.poLine.eresource.createInventory', 'value');
+  const materialType = getFieldValueByPath(mappingDetails, 'order.poLine.eresource.materialType', 'value');
   const trial = getFieldValue(mappingDetails, 'trial', 'booleanFieldAction');
   const expectedActivation = getFieldValue(mappingDetails, 'expectedActivation', 'value');
   const userLimit = getFieldValue(mappingDetails, 'userLimit', 'value');
@@ -65,19 +65,19 @@ export const EResourcesDetails = ({ mappingDetails }) => {
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.createEInventory`} />}
-            value={createEInventory}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.createInventory`} />}
+            value={createInventory}
           />
         </Col>
       </Row>
       <Row left="xs">
         <Col
-          data-test-e-material-type
+          data-test-material-type
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.eMaterialType`} />}
-            value={eMaterialType}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.materialType`} />}
+            value={materialType}
           />
         </Col>
         <Col

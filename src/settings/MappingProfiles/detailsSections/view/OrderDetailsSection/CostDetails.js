@@ -22,14 +22,14 @@ export const CostDetails = ({ mappingDetails }) => {
   const quantityPhysical = getFieldValue(mappingDetails, 'quantityPhysical', 'value');
   const additionalCost = getFieldValue(mappingDetails, 'additionalCost', 'value');
   const currency = getFieldValue(mappingDetails, 'currency', 'value');
-  const useSetExchangeRate = getFieldValue(mappingDetails, 'useSetExchangeRate', 'booleanFieldAction');
+  const useExchangeRate = getFieldValue(mappingDetails, 'useExchangeRate', 'booleanFieldAction');
   const exchangeRate = getFieldValue(mappingDetails, 'exchangeRate', 'value');
-  const listUnitPriceElectronic = getFieldValue(mappingDetails, 'listUnitPriceElectronic', 'value');
+  const electronicUnitPrice = getFieldValue(mappingDetails, 'electronicUnitPrice', 'value');
   const quantityElectronic = getFieldValue(mappingDetails, 'quantityElectronic', 'value');
   const discount = getFieldValue(mappingDetails, 'discount', 'value');
   const discountType = getFieldValue(mappingDetails, 'discountType', 'value');
 
-  const useSetExchangeRateCheckbox = renderCheckbox('order.costDetails.useSetExchangeRate', useSetExchangeRate);
+  const useExchangeRateCheckbox = renderCheckbox('order.costDetails.useExchangeRate', useExchangeRate);
 
   return (
     <Accordion
@@ -76,12 +76,12 @@ export const CostDetails = ({ mappingDetails }) => {
           />
         </Col>
         <Col
-          data-test-use-set-exchange-rate
+          data-test-use-exchange-rate
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.useSetExchangeRate`} />}
-            value={useSetExchangeRateCheckbox}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.useExchangeRate`} />}
+            value={useExchangeRateCheckbox}
           />
         </Col>
         <Col
@@ -96,12 +96,12 @@ export const CostDetails = ({ mappingDetails }) => {
       </Row>
       <Row left="xs">
         <Col
-          data-test-list-unit-price-electronic
+          data-test-unit-price-electronic
           xs={3}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.listUnitPriceElectronic`} />}
-            value={listUnitPriceElectronic}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.electronicUnitPrice`} />}
+            value={electronicUnitPrice}
           />
         </Col>
         <Col

@@ -14,7 +14,6 @@ import { ViewRepeatableField } from '../ViewRepeatableField';
 
 import {
   getFieldValue,
-  renderCheckbox,
   transformSubfieldsData,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
@@ -25,7 +24,7 @@ export const OrderDetails = ({ mappingDetails }) => {
 
   const title = getFieldValue(mappingDetails, 'title', 'value');
   const receivingNote = getFieldValue(mappingDetails, 'receivingNote', 'value');
-  const mustAcknowledgeReceivingNote = getFieldValue(mappingDetails, 'mustAcknowledgeReceivingNote', 'booleanFieldAction');
+  const isAcknowledged = getFieldValue(mappingDetails, 'isAcknowledged', 'value');
   const subscriptionFrom = getFieldValue(mappingDetails, 'subscriptionFrom', 'value');
   const subscriptionTo = getFieldValue(mappingDetails, 'subscriptionTo', 'value');
   const subscriptionInterval = getFieldValue(mappingDetails, 'subscriptionInterval', 'value');
@@ -33,23 +32,21 @@ export const OrderDetails = ({ mappingDetails }) => {
   const publisher = getFieldValue(mappingDetails, 'publisher', 'value');
   const edition = getFieldValue(mappingDetails, 'edition', 'value');
   const contributors = getFieldValue(mappingDetails, 'contributors', 'subfields');
-  const productIdentifiers = getFieldValue(mappingDetails, 'productIdentifiers', 'subfields');
+  const productIds = getFieldValue(mappingDetails, 'productIds', 'subfields');
   const internalNote = getFieldValue(mappingDetails, 'internalNote', 'value');
 
-  const mustAcknowledgeReceivingNoteCheckbox = renderCheckbox('order.orderDetails.mustAcknowledgeReceivingNote', mustAcknowledgeReceivingNote);
-
-  const contributorsVisibleColumns = ['contributor', 'contributorType'];
-  const productIdentifiersVisibleColumns = ['productId', 'qualifier', 'productIdType'];
+  const contributorsVisibleColumns = ['contributor', 'contributorNameTypeId'];
+  const productIdsVisibleColumns = ['productId', 'qualifier', 'productIdType'];
 
   const contributorsMapping = {
     contributor: (
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderDetails.contributors.contributor`} />
     ),
-    contributorType: (
+    contributorNameTypeId: (
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderDetails.contributors.contributorType`} />
     ),
   };
-  const productIdentifiersMapping = {
+  const productIdsMapping = {
     productId: (
       <FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderDetails.productIdentifiers.productId`} />
     ),
@@ -63,9 +60,9 @@ export const OrderDetails = ({ mappingDetails }) => {
 
   const contributorsFormatter = {
     contributor: x => x?.contributor || noValueElement,
-    contributorType: x => x?.contributorType || noValueElement,
+    contributorNameTypeId: x => x?.contributorNameTypeId || noValueElement,
   };
-  const productIdentifiersFormatter = {
+  const productIdsFormatter = {
     productId: x => x?.productId || noValueElement,
     qualifier: x => x?.qualifier || noValueElement,
     productIdType: x => x?.productIdType || noValueElement,
@@ -76,11 +73,11 @@ export const OrderDetails = ({ mappingDetails }) => {
       field: 'contributor',
       key: 'value',
     }, {
-      field: 'contributorType',
+      field: 'contributorNameTypeId',
       key: 'value',
     }
   ];
-  const productIdentifiersFieldsMap = [
+  const productIdsFieldsMap = [
     {
       field: 'productId',
       key: 'value',
@@ -94,7 +91,7 @@ export const OrderDetails = ({ mappingDetails }) => {
   ];
 
   const contributorsData = transformSubfieldsData(contributors, contributorsFieldsMap);
-  const productIdentifiersData = transformSubfieldsData(productIdentifiers, productIdentifiersFieldsMap);
+  const productIdsData = transformSubfieldsData(productIds, productIdsFieldsMap);
 
   return (
     <Accordion
@@ -123,12 +120,12 @@ export const OrderDetails = ({ mappingDetails }) => {
           />
         </Col>
         <Col
-          data-test-must-acknowledge-receiving-note
+          data-test-is-acknowledged
           xs={4}
         >
           <KeyValue
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderDetails.mustAcknowledgeReceivingNote`} />}
-            value={mustAcknowledgeReceivingNoteCheckbox}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderDetails.isAcknowledged`} />}
+            value={isAcknowledged}
           />
         </Col>
       </Row>
@@ -212,10 +209,10 @@ export const OrderDetails = ({ mappingDetails }) => {
         >
           <ViewRepeatableField
             columnIdPrefix="product-identifiers"
-            fieldData={productIdentifiersData}
-            visibleColumns={productIdentifiersVisibleColumns}
-            columnMapping={productIdentifiersMapping}
-            formatter={productIdentifiersFormatter}
+            fieldData={productIdsData}
+            visibleColumns={productIdsVisibleColumns}
+            columnMapping={productIdsMapping}
+            formatter={productIdsFormatter}
             labelId={`${TRANSLATION_ID_PREFIX}.order.orderDetails.productIdentifiers.section`}
           />
         </Col>
