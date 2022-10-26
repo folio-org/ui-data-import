@@ -19,7 +19,6 @@ import {
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
-
 export const Vendor = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
 

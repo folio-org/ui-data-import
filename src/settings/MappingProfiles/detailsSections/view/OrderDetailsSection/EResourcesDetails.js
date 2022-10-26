@@ -10,7 +10,11 @@ import {
 } from '@folio/stripes/components';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { getFieldValue, getFieldValueByPath, renderCheckbox } from '../../utils';
+import {
+  getFieldValue,
+  getFieldValueByPath,
+  renderCheckbox,
+} from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const EResourcesDetails = ({ mappingDetails }) => {

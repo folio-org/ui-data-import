@@ -14,7 +14,11 @@ import { ProhibitionIcon } from '../../../../../components';
 import { ViewRepeatableField } from '../ViewRepeatableField';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { getFieldValue, renderCheckbox, transformSubfieldsData } from '../../utils';
+import {
+  getFieldValue,
+  renderCheckbox,
+  transformSubfieldsData,
+} from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const OrderInformation = ({ mappingDetails }) => {

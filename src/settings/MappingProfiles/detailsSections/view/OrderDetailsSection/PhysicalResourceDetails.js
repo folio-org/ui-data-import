@@ -13,7 +13,11 @@ import {
 import { ViewRepeatableField } from '../ViewRepeatableField';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { getFieldValue, getFieldValueByPath, transformSubfieldsData } from '../../utils';
+import {
+  getFieldValue,
+  getFieldValueByPath,
+  transformSubfieldsData,
+} from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const PhysicalResourceDetails = ({ mappingDetails }) => {
