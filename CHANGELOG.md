@@ -9,7 +9,7 @@
 * Update the Action profile UI again: Create/Edit screen (UIDATIMP-1246)
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
 
-## [5.3.0](https://github.com/folio-org/ui-data-import/tree/v5.3.0) (2022-10-27)
+## [5.3.1](https://github.com/folio-org/ui-data-import/tree/v5.3.1) (2022-10-27)
 
 ### Features added:
 * Change UI flow for import jobs cancelled by users  (UIDATIMP-1173)
