@@ -281,7 +281,7 @@ const OrderInformationComponent = ({
             parsedOptionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/configurations/entries?limit=500&query=(module=TENANT and configName=tenant.addresses)',
+              wrapperSourceLink: '/configurations/entries?limit=500&query=(module=TENANT and configName=tenant.addresses) sortBy value',
               wrapperSourcePath: 'configs',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -315,7 +315,7 @@ const OrderInformationComponent = ({
             parsedOptionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/configurations/entries?limit=500&query=(module=TENANT and configName=tenant.addresses)',
+              wrapperSourceLink: '/configurations/entries?limit=500&query=(module=TENANT and configName=tenant.addresses) sortBy value',
               wrapperSourcePath: 'configs',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -400,7 +400,7 @@ OrderInformationComponent.manifest = Object.freeze({
   },
   addresses: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==TENANT and configName==tenant.addresses)',
+    path: 'configurations/entries?query=(module==TENANT and configName==tenant.addresses) sortBy value',
   },
 });
 
