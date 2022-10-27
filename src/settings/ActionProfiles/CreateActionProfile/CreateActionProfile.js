@@ -21,7 +21,7 @@ export const CreateActionProfile = ({
     <Layer
       isOpen
       container={fullWidthContainer}
-      contentLabel={formatMessage({ id: 'settings.actionProfiles.form' })}
+      contentLabel={formatMessage({ id: 'ui-data-import.settings.actionProfiles.form' })}
     >
       <ActionProfilesForm
         {...routeProps}
