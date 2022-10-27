@@ -43,7 +43,7 @@ const EditActionProfileComponent = ({
     <Layer
       isOpen
       container={fullWidthContainer}
-      contentLabel={formatMessage({ id: 'ui-data-import.settings.actionProfiles.form' })}
+      contentLabel={formatMessage({ id: 'settings.actionProfiles.form' })}
     >
       <ActionProfilesForm
         {...routeProps}

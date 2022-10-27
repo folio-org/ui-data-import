@@ -24,7 +24,7 @@ export const CreateMappingProfile = ({
     <Layer
       isOpen
       container={fullWidthContainer}
-      contentLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfiles.form' })}
+      contentLabel={formatMessage({ id: 'settings.mappingProfiles.form' })}
     >
       <MappingProfilesForm
         {...routeProps}

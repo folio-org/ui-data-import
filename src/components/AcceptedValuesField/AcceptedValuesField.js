@@ -184,7 +184,7 @@ AcceptedValuesField.propTypes = {
   component: PropTypes.oneOfType([PropTypes.elementType, PropTypes.func]).isRequired,
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
-  okapi: okapiShape,
+  okapi: okapiShape.isRequired,
   name: PropTypes.string,
   optionTemplate: PropTypes.string,
   acceptedValuesList: PropTypes.arrayOf(PropTypes.object),

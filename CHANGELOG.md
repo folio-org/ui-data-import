@@ -1,10 +1,5 @@
 # Change history for ui-data-import
 
-## **5.4.0** (in progress)
-
-### Features added:
-* Field Mapping Profile details: Order PO & POL from MARC Bib (Create/Edit) (UIDATIMP-294)
-
 ## **5.3.0** (in progress)
 
 ### Features added:
