@@ -44,10 +44,14 @@ export const ViewContainer = memo(({
     history.push(buildUrl(location, params));
   };
 
-  const handleUpdateSuccess = (record, resetForm) => {
-    resetForm();
+  const handleUpdateSuccess = (record, dispatch, properties) => {
+    const { reset: resetForm } = properties;
 
-    history.push(`${path}/view/${record.id}`);
+    resetForm();
+    transitionToParams({
+      _path: `${path}/view/${record.id}`,
+      layer: null,
+    });
   };
 
   const deselectOnDelete = recordId => {
@@ -60,7 +64,7 @@ export const ViewContainer = memo(({
 
   const handleDeleteSuccess = record => {
     transitionToParams({
-      _path: `${path}`,
+      _path: `${path}/view`,
       layer: null,
     });
     deselectOnDelete(record.id);

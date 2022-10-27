@@ -11,7 +11,6 @@ export const ActionMenu = memo(({
   entity,
   entity: { props: { actionMenuItems: items } },
   menu,
-  baseUrl,
   recordId,
 }) => {
   const isDefaultProfile = DEFAULT_PROFILE_IDS.includes(recordId);
@@ -20,7 +19,6 @@ export const ActionMenu = memo(({
   const templates = menuTemplate({
     entity,
     menu,
-    baseUrl,
     isDefaultProfile,
     isDuplicateButtonDisabled,
   });
@@ -36,7 +34,6 @@ ActionMenu.propTypes = {
   entity: PropTypes.shape({ props: PropTypes.shape({ actionMenuItems: PropTypes.arrayOf(PropTypes.string).isRequired }) }).isRequired,
   menu: PropTypes.object.isRequired,
   recordId: PropTypes.string,
-  baseUrl: PropTypes.string,
 };
 
 ActionMenu.defaultProps = { recordId: '' };

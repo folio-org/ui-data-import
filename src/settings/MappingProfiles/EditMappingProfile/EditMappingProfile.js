@@ -1,53 +1,53 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
-import {
-  get,
-  omit
-} from 'lodash';
+import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { Layer } from '@folio/stripes/components';
-import { Preloader } from '@folio/stripes-data-transfer-components';
+import { FullScreenPreloader } from '@folio/data-export/src/components/FullScreenPreloader';
 
 import { MappingProfilesForm } from '../MappingProfilesForm';
 
-import { LAYER_TYPES } from '../../../utils';
+const objectName = 'mapping-profiles';
 
 const EditMappingProfileComponent = ({
   resources: { mappingProfile },
+  resources,
+  mutator,
+  parentMutator,
+  parentResources,
+  stripes,
   fullWidthContainer,
-  layerType,
-  ...routeProps
+  onEdit,
+  ...routerProps
 }) => {
-  const { formatMessage } = useIntl();
-
   const mappingProfileRecord = get(mappingProfile, 'records.0');
 
   if (!mappingProfileRecord) {
     return (
-      <Layer
-        isOpen
-        container={fullWidthContainer}
-        contentLabel={formatMessage({ id: 'stripes-data-transfer-components.loading' })}
-      >
-        <Preloader />
-      </Layer>
+      <FullScreenPreloader
+        isLoading
+      />
     );
   }
 
-  const isDuplicateMode = layerType === LAYER_TYPES.DUPLICATE;
-  const initialValues = !isDuplicateMode ? mappingProfileRecord : omit(mappingProfileRecord, ['id', 'parentProfiles', 'childProfiles']);
+  const handleSubmit = e => {
+    return onEdit(e);
+  };
 
   return (
     <Layer
       isOpen
       container={fullWidthContainer}
-      contentLabel={formatMessage({ id: 'settings.mappingProfiles.form' })}
+      contentLabel="Mapping profile form"
     >
       <MappingProfilesForm
-        {...routeProps}
-        initialValues={initialValues}
+        {...routerProps}
+        id={`${objectName}form-add${objectName}`}
+        stripes={stripes}
+        parentResources={parentResources}
+        parentMutator={parentMutator}
+        initialValues={mappingProfileRecord}
+        handleSubmit={handleSubmit}
       />
     </Layer>
   );
@@ -60,11 +60,5 @@ EditMappingProfileComponent.manifest = Object.freeze({
     PUT: { throwErrors: false },
   },
 });
-
-EditMappingProfileComponent.propTypes = {
-  resources: PropTypes.shape({ mappingProfile: PropTypes.object }).isRequired,
-  fullWidthContainer: PropTypes.instanceOf(Element),
-  layerType: PropTypes.string,
-};
 
 export const EditMappingProfile = stripesConnect(EditMappingProfileComponent);

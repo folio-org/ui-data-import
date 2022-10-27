@@ -26,6 +26,7 @@ import {
 } from '../../utils';
 
 import css from './DataImportSettings.css';
+import { MappingProfilesContainer } from '../MappingProfiles/MappingProfilesContainer';
 
 @withRoot
 export class DataImportSettings extends Component {
@@ -68,7 +69,7 @@ export class DataImportSettings extends Component {
         {
           route: 'mapping-profiles',
           label: generateSettingsLabel('mappingProfiles.title', 'mappingProfiles'),
-          component: MappingProfiles,
+          component: stripesConnect(MappingProfilesContainer),
         },
       ],
     },

@@ -38,8 +38,7 @@ import {
   CheckboxHeader,
 } from '../../components';
 import { ViewMatchProfile } from './ViewMatchProfile';
-import { CreateMatchProfile } from './CreateMatchProfile';
-import { EditMatchProfile } from './EditMatchProfile';
+import { MatchProfilesForm } from './MatchProfilesForm';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -321,15 +320,15 @@ export class MatchProfiles extends Component {
     showSingleResult: PropTypes.bool,
     objectName: PropTypes.string,
     ENTITY_KEY: PropTypes.string,
-    ViewRecordComponent: PropTypes.func,
-    CreateRecordComponent: PropTypes.func,
-    EditRecordComponent: PropTypes.func,
+    RecordView: PropTypes.func,
+    RecordForm: PropTypes.func,
     INITIAL_RESULT_COUNT: PropTypes.number,
     RESULT_COUNT_INCREMENT: PropTypes.number,
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
     nonInteractiveHeaders: PropTypes.arrayOf(PropTypes.string),
     columnWidths: PropTypes.object,
+    initialValues: PropTypes.object,
   };
 
   static defaultProps = {
@@ -347,9 +346,21 @@ export class MatchProfiles extends Component {
     visibleColumns: ['selected', ...matchProfilesShape.visibleColumns],
     nonInteractiveHeaders: ['selected'],
     columnWidths: { selected: '40px' },
-    ViewRecordComponent: ViewMatchProfile,
-    CreateRecordComponent: CreateMatchProfile,
-    EditRecordComponent: EditMatchProfile,
+    initialValues: {
+      name: '',
+      description: '',
+      /* TODO: these values are hardcoded now and will need to be changed in future (https://issues.folio.org/browse/UIDATIMP-175) */
+      incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+      matchDetails: [{
+        incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+        incomingMatchExpression: getSectionInitialValues('MARC_BIBLIOGRAPHIC'),
+        existingRecordType: 'INSTANCE',
+        existingMatchExpression: getSectionInitialValues('INSTANCE'),
+        matchCriterion: 'EXACTLY_MATCHES',
+      }],
+    },
+    RecordView: ViewMatchProfile,
+    RecordForm: MatchProfilesForm,
   };
 
   state = {

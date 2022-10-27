@@ -136,7 +136,6 @@ export class ViewFileExtension extends Component {
     <ActionMenu
       entity={this}
       menu={menu}
-      baseUrl="/settings/data-import/file-extensions"
     />
   );
 
