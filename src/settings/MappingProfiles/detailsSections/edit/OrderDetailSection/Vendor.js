@@ -104,6 +104,7 @@ export const Vendor = ({
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(48)}
             acceptedValuesList={accountNumbersOptions}
+            hasLoaded
           />
         </Col>
         <Col xs={6}>

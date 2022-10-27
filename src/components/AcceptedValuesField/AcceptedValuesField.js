@@ -50,9 +50,10 @@ export const AcceptedValuesField = ({
   disabled,
   required,
   validation,
+  hasLoaded,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
-  const [hasOptions, setHasOptions] = useState(!isEmpty(listOptions));
+  const [hasOptions, setHasOptions] = useState(hasLoaded || !isEmpty(listOptions));
 
   const getAcceptedValuesObj = data => {
     let acceptedValues = {};
@@ -210,6 +211,7 @@ AcceptedValuesField.propTypes = {
   parsedOptionValue: PropTypes.string,
   parsedOptionLabel: PropTypes.string,
   validation: PropTypes.func,
+  hasLoaded: PropTypes.bool,
 };
 
 AcceptedValuesField.defaultProps = {
@@ -221,4 +223,5 @@ AcceptedValuesField.defaultProps = {
   parsedOptionLabel: '',
   required: false,
   disabled: false,
+  hasLoaded: false,
 };
