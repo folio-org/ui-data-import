@@ -1,5 +1,14 @@
 # Change history for ui-data-import
 
+## **5.4.0** (in progress)
+
+### Features added:
+* Update the Match profile UI: Create/Edit screen (UIDATIMP-1214)
+* Update the Action profile UI: Create/Edit screen (UIDATIMP-1215)
+* Update the Action profile UI for Orders (UIDATIMP-1231)
+* Update the Action profile UI again: Create/Edit screen (UIDATIMP-1246)
+* Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
+
 ## [5.3.0](https://github.com/folio-org/ui-data-import/tree/v5.3.0) (2022-10-27)
 
 ### Features added:

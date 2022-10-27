@@ -1,9 +1,5 @@
 export const FIND_ALL_CQL = 'cql.allRecords=1';
 
-export const DEFAULT_TIMEOUT_BEFORE_FILE_DELETION = 0;
-
-export const DEFAULT_TIMEOUT_BEFORE_JOB_DELETION = 10000;
-
 export const STRING_CAPITALIZATION_MODES = {
   ALL: 0,
   FIRST: 1,
@@ -700,7 +696,7 @@ export const MARC_FIELD_PROTECTION_SOURCE = {
 
 // TODO: Options to disable until functionality is not implemented.
 // Should be removed in the future
-export const FOLIO_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'AUTHORITY', 'ORDER'];
+export const FOLIO_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'AUTHORITY'];
 export const INCOMING_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS'];
 
 export const OCLC_CREATE_INSTANCE_JOB_ID = 'd0ebb7b0-2f0f-11eb-adc1-0242ac120002';
