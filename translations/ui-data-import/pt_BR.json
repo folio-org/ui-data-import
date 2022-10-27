@@ -900,7 +900,13 @@
     "modal.cancelRunningJob.message": "Você tem certeza de que quer <b>cancelar este trabalho de importação?</b><p><b>Nota:</b></p> Os tabalhos cancelados não podem ser reiniciados. Registros criados ou atualizados antes de {break} o trabalho cancelado não podem ser revertidos.",
     "modal.cancelRunningJob.cancel": "Não, não cancele a importação",
     "modal.cancelRunningJob.confirm": "Sim, cancelar o trabalho de importação",
-    "jobStartedDate": "Started running",
-    "modal.confirmJobFinished.header": "Import job finished before cancellation",
-    "modal.confirmJobFinished.message": "This job finished before the system could cancel it, and appears at the top of the import log"
+    "jobStartedDate": "Execução iniciada",
+    "modal.confirmJobFinished.header": "Trabalho de importação concluído antes do cancelamento",
+    "modal.confirmJobFinished.message": "Este trabalho foi concluído antes que o sistema pudesse cancelá-lo e aparece na parte superior do log de importação",
+    "fieldMappingsForMarc.override.subtext": "As proteções de campo podem ser aplicadas aos registros da Autoridade MARC por meio deste perfil, mas as proteções de campo padrão <b> NÃO </b> podem ser substituídas",
+    "settings.mappingProfiles.form": "Formulário de perfil de mapeamento",
+    "settings.jobProfiles.form": "Formulário de perfil de trabalho",
+    "settings.actionProfiles.form": "Formulário de perfil de ação",
+    "settings.matchProfiles.form": "Formulário de perfil de correspondência",
+    "settings.fileExtensions.form": "Formulário de extensão do arquivo"
 }
