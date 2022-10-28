@@ -16,17 +16,28 @@ import {
   getFieldValue,
   transformSubfieldsData,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  VENDOR_VISIBLE_COLUMNS,
+} from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const Vendor = ({ mappingDetails }) => {
+  const {
+    REF_NUMBER,
+    REF_NUMBER_TYPE,
+  } = VENDOR_VISIBLE_COLUMNS;
+
   const noValueElement = <NoValue />;
 
   const vendorDetails = getFieldValue(mappingDetails, 'vendorDetail', 'subfields');
   const vendorAccount = getFieldValue(mappingDetails, 'accountNo', 'value');
   const instructions = getFieldValue(mappingDetails, 'instructions', 'value');
 
-  const vendorDetailsVisibleColumns = ['refNumber', 'refNumberType'];
+  const vendorDetailsVisibleColumns = [
+    REF_NUMBER,
+    REF_NUMBER_TYPE,
+  ];
 
   const vendorDetailsMapping = {
     refNumber: (

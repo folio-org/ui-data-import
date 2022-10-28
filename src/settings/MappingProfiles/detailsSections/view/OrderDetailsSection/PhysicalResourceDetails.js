@@ -15,15 +15,27 @@ import {
 
 import { ViewRepeatableField } from '../ViewRepeatableField';
 
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  PHYSICAL_RESOURCE_VISIBLE_COLUMNS,
+} from '../../constants';
 import {
   getFieldValue,
   getFieldValueByPath,
   transformSubfieldsData,
 } from '../../utils';
-import { mappingProfileFieldShape } from '../../../../../utils';
+import {
+  DATE_TYPES,
+  mappingProfileFieldShape,
+} from '../../../../../utils';
 
 export const PhysicalResourceDetails = ({ mappingDetails }) => {
+  const { VOLUMES } = PHYSICAL_RESOURCE_VISIBLE_COLUMNS;
+  const {
+    TWO_DIGIT,
+    NUMERIC,
+  } = DATE_TYPES;
+
   const noValueElement = <NoValue />;
 
   const materialSupplier = getFieldValue(mappingDetails, 'materialSupplier', 'value');
@@ -33,7 +45,7 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
   const materialType = getFieldValueByPath(mappingDetails, 'order.poLine.physical.materialType', 'value');
   const volumes = getFieldValue(mappingDetails, 'volumes', 'subfields');
 
-  const volumesVisibleColumns = ['volumes'];
+  const volumesVisibleColumns = [VOLUMES];
 
   const volumesMapping = {
     volumes: (
@@ -48,24 +60,24 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
     }
   ];
 
-  const volumesFormatter = { volumes: x => x?.volumes || noValueElement };
+  const volumesFormatter = { volumes: volume => volume?.volumes || noValueElement };
 
   const volumesData = transformSubfieldsData(volumes, volumesFieldsMap);
 
   const formattedReceiptDue = (
     <FormattedDate
       value={receiptDue}
-      day="2-digit"
-      month="2-digit"
-      year="numeric"
+      day={TWO_DIGIT}
+      month={TWO_DIGIT}
+      year={NUMERIC}
     />
   );
   const formattedExpectedReceiptDate = (
     <FormattedDate
       value={expectedReceiptDate}
-      day="2-digit"
-      month="2-digit"
-      year="numeric"
+      day={TWO_DIGIT}
+      month={TWO_DIGIT}
+      year={NUMERIC}
     />
   );
 

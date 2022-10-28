@@ -15,15 +15,28 @@ import {
   getFieldValue,
   transformSubfieldsData,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  LOCATION_VISIBLE_COLUMNS,
+} from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const Location = ({ mappingDetails }) => {
+  const {
+    LOCATION_ID,
+    QUANTITY_PHYSICAL,
+    QUANTITY_ELECTRONIC,
+  } = LOCATION_VISIBLE_COLUMNS;
+
   const noValueElement = <NoValue />;
 
   const locations = getFieldValue(mappingDetails, 'locations', 'subfields');
 
-  const locationsVisibleColumns = ['locationId', 'quantityPhysical', 'quantityElectronic'];
+  const locationsVisibleColumns = [
+    LOCATION_ID,
+    QUANTITY_PHYSICAL,
+    QUANTITY_ELECTRONIC,
+  ];
 
   const locationsMapping = {
     locationId: (
@@ -38,9 +51,9 @@ export const Location = ({ mappingDetails }) => {
   };
 
   const locationsFormatter = {
-    locationId: x => x?.locationId || noValueElement,
-    quantityPhysical: x => x?.quantityPhysical || noValueElement,
-    quantityElectronic: x => x?.quantityElectronic || noValueElement,
+    locationId: location => location?.locationId || noValueElement,
+    quantityPhysical: location => location?.quantityPhysical || noValueElement,
+    quantityElectronic: location => location?.quantityElectronic || noValueElement,
   };
 
   const locationsFieldsMap = [

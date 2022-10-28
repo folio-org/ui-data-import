@@ -19,10 +19,31 @@ import {
   getFieldValue,
   transformSubfieldsData,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileFieldShape } from '../../../../../utils';
+import {
+  TRANSLATION_ID_PREFIX,
+  CONTRIBUTORS_VISIBLE_COLUMNS,
+  PRODUCT_IDS_VISIBLE_COLUMNS,
+} from '../../constants';
+import {
+  DATE_TYPES,
+  mappingProfileFieldShape,
+} from '../../../../../utils';
 
 export const OrderDetails = ({ mappingDetails }) => {
+  const {
+    CONTRIBUTOR,
+    CONTRIBUTOR_TYPE_ID,
+  } = CONTRIBUTORS_VISIBLE_COLUMNS;
+  const {
+    PRODUCT_ID,
+    QUALIFIER,
+    PRODUCT_ID_TYPE,
+  } = PRODUCT_IDS_VISIBLE_COLUMNS;
+  const {
+    TWO_DIGIT,
+    NUMERIC,
+  } = DATE_TYPES;
+
   const noValueElement = <NoValue />;
 
   const title = getFieldValue(mappingDetails, 'title', 'value');
@@ -38,8 +59,15 @@ export const OrderDetails = ({ mappingDetails }) => {
   const productIds = getFieldValue(mappingDetails, 'productIds', 'subfields');
   const internalNote = getFieldValue(mappingDetails, 'internalNote', 'value');
 
-  const contributorsVisibleColumns = ['contributor', 'contributorNameTypeId'];
-  const productIdsVisibleColumns = ['productId', 'qualifier', 'productIdType'];
+  const contributorsVisibleColumns = [
+    CONTRIBUTOR,
+    CONTRIBUTOR_TYPE_ID,
+  ];
+  const productIdsVisibleColumns = [
+    PRODUCT_ID,
+    QUALIFIER,
+    PRODUCT_ID_TYPE,
+  ];
 
   const contributorsMapping = {
     contributor: (
@@ -62,13 +90,13 @@ export const OrderDetails = ({ mappingDetails }) => {
   };
 
   const contributorsFormatter = {
-    contributor: x => x?.contributor || noValueElement,
-    contributorNameTypeId: x => x?.contributorNameTypeId || noValueElement,
+    contributor: contributor => contributor?.contributor || noValueElement,
+    contributorNameTypeId: contributor => contributor?.contributorNameTypeId || noValueElement,
   };
   const productIdsFormatter = {
-    productId: x => x?.productId || noValueElement,
-    qualifier: x => x?.qualifier || noValueElement,
-    productIdType: x => x?.productIdType || noValueElement,
+    productId: product => product?.productId || noValueElement,
+    qualifier: product => product?.qualifier || noValueElement,
+    productIdType: product => product?.productIdType || noValueElement,
   };
 
   const contributorsFieldsMap = [
@@ -99,18 +127,17 @@ export const OrderDetails = ({ mappingDetails }) => {
   const formattedSubscriptionFrom = (
     <FormattedDate
       value={subscriptionFrom}
-      day="2-digit"
-      month="2-digit"
-      year="numeric"
+      day={TWO_DIGIT}
+      month={TWO_DIGIT}
+      year={NUMERIC}
     />
   );
   const formattedSubscriptionTo = (
     <FormattedDate
       value={subscriptionTo}
-      day="2-digit"
-      month="2-digit"
-      year="numeric"
-      format="YYYY-MM-DD"
+      day={TWO_DIGIT}
+      month={TWO_DIGIT}
+      year={NUMERIC}
     />
   );
 

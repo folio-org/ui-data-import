@@ -13,7 +13,10 @@ import {
 import { ProhibitionIcon } from '../../../../../components';
 import { ViewRepeatableField } from '../ViewRepeatableField';
 
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  NOTES_VISIBLE_COLUMNS,
+} from '../../constants';
 import {
   getFieldValue,
   renderCheckbox,
@@ -22,6 +25,8 @@ import {
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const OrderInformation = ({ mappingDetails }) => {
+  const { NOTE } = NOTES_VISIBLE_COLUMNS;
+
   const noValueElement = <NoValue />;
   const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
@@ -47,7 +52,7 @@ export const OrderInformation = ({ mappingDetails }) => {
   const manualCheckbox = renderCheckbox('order.orderInformation.manualPo', manualPo);
   const approvedCheckbox = renderCheckbox('order.orderInformation.approved', approved);
 
-  const notesVisibleColumns = ['note'];
+  const notesVisibleColumns = [NOTE];
 
   const notesMapping = {
     note: (
@@ -62,7 +67,7 @@ export const OrderInformation = ({ mappingDetails }) => {
     }
   ];
 
-  const notesFormatter = { note: x => x?.notes || noValueElement };
+  const notesFormatter = { note: note => note?.notes || noValueElement };
 
   const notesData = transformSubfieldsData(notes, notesFieldsMap);
 

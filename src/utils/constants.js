@@ -786,3 +786,8 @@ export const PAGE_KEYS = {
   HOME: 'homePageSelectedRecords',
   VIEW_ALL: 'viewAllPageSelectedRecords',
 };
+
+export const DATE_TYPES = {
+  TWO_DIGIT: '2-digit',
+  NUMERIC: 'numeric',
+};

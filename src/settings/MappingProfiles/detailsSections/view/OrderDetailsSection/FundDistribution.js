@@ -16,15 +16,28 @@ import {
   renderAmountValue,
   transformSubfieldsData,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  FUND_DISTRIBUTION_VISIBLE_COLUMNS,
+} from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const FundDistribution = ({ mappingDetails }) => {
+  const {
+    FUND_ID,
+    EXPENSE_CLASS_ID,
+    VALUE,
+  } = FUND_DISTRIBUTION_VISIBLE_COLUMNS;
+
   const noValueElement = <NoValue />;
 
   const fundDistributions = getFieldValue(mappingDetails, 'fundDistribution', 'subfields');
 
-  const fundDistributionsVisibleColumns = ['fundId', 'expenseClassId', 'value'];
+  const fundDistributionsVisibleColumns = [
+    FUND_ID,
+    EXPENSE_CLASS_ID,
+    VALUE,
+  ];
 
   const fundDistributionsMapping = {
     fundId: (
@@ -39,9 +52,11 @@ export const FundDistribution = ({ mappingDetails }) => {
   };
 
   const fundDistributionsFormatter = {
-    fundId: x => x?.fundId || noValueElement,
-    expenseClassId: x => x?.expenseClassId || noValueElement,
-    value: x => (x.value ? renderAmountValue(x.value, x.distributionType) : noValueElement),
+    fundId: distribution => distribution?.fundId || noValueElement,
+    expenseClassId: distribution => distribution?.expenseClassId || noValueElement,
+    value: distribution => (
+      distribution.value ? renderAmountValue(distribution.value, distribution.distributionType) : noValueElement
+    ),
   };
 
   const fundDistributionsFieldsMap = [

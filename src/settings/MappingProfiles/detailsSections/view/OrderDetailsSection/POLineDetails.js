@@ -19,9 +19,17 @@ import {
   renderCheckbox,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileFieldShape } from '../../../../../utils';
+import {
+  DATE_TYPES,
+  mappingProfileFieldShape,
+} from '../../../../../utils';
 
 export const POLineDetails = ({ mappingDetails }) => {
+  const {
+    TWO_DIGIT,
+    NUMERIC,
+  } = DATE_TYPES;
+
   const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
   const poLineNumber = getFieldValue(mappingDetails, 'poLineNumber', 'value');
@@ -47,9 +55,9 @@ export const POLineDetails = ({ mappingDetails }) => {
   const formattedReceiptDate = (
     <FormattedDate
       value={receiptDate}
-      day="2-digit"
-      month="2-digit"
-      year="numeric"
+      day={TWO_DIGIT}
+      month={TWO_DIGIT}
+      year={NUMERIC}
     />
   );
 

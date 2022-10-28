@@ -18,9 +18,17 @@ import {
   getFieldValueByPath,
   renderCheckbox,
 } from '../../utils';
-import { mappingProfileFieldShape } from '../../../../../utils';
+import {
+  DATE_TYPES,
+  mappingProfileFieldShape,
+} from '../../../../../utils';
 
 export const EResourcesDetails = ({ mappingDetails }) => {
+  const {
+    TWO_DIGIT,
+    NUMERIC,
+  } = DATE_TYPES;
+
   const accessProvider = getFieldValue(mappingDetails, 'accessProvider', 'value');
   const activated = getFieldValue(mappingDetails, 'activationStatus', 'booleanFieldAction');
   const activationDue = getFieldValue(mappingDetails, 'activationDue', 'value');
@@ -37,17 +45,17 @@ export const EResourcesDetails = ({ mappingDetails }) => {
   const formattedActivationDue = (
     <FormattedDate
       value={activationDue}
-      day="2-digit"
-      month="2-digit"
-      year="numeric"
+      day={TWO_DIGIT}
+      month={TWO_DIGIT}
+      year={NUMERIC}
     />
   );
   const formattedExpectedActivation = (
     <FormattedDate
       value={expectedActivation}
-      day="2-digit"
-      month="2-digit"
-      year="numeric"
+      day={TWO_DIGIT}
+      month={TWO_DIGIT}
+      year={NUMERIC}
     />
   );
 
