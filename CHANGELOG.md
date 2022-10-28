@@ -1,35 +1,41 @@
 # Change history for ui-data-import
 
-## **5.3.0** (in progress)
+## **5.4.0** (in progress)
 
 ### Features added:
-* Make UI changes to the Data Import landing page (UIDATIMP-1218)
-* Change UI flow for uploaded files deleted before import by users (UIDATIMP-1182)
-* Update the Action profile UI: Create/Edit screen (UIDATIMP-1215)
-* Change UI flow for import jobs cancelled by users  (UIDATIMP-1173)
 * Update the Match profile UI: Create/Edit screen (UIDATIMP-1214)
+* Update the Action profile UI: Create/Edit screen (UIDATIMP-1215)
+* Update the Action profile UI for Orders (UIDATIMP-1231)
+* Update the Action profile UI again: Create/Edit screen (UIDATIMP-1246)
+* Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
+* Create the field mapping profile for Orders and Order Lines: View (UIDATIMP-1217)
+
+## [5.3.1](https://github.com/folio-org/ui-data-import/tree/v5.3.1) (2022-10-27)
+
+### Features added:
+* Change UI flow for import jobs cancelled by users  (UIDATIMP-1173)
+* Change UI flow for uploaded files deleted before import by users (UIDATIMP-1182)
+* Make UI changes to the Data Import landing page (UIDATIMP-1218)
+* UI flow for import jobs that finish before a user can cancel (UIDATIMP-1235)
 * Get rid of jobExecutions request for the Preview section (UIDATIMP-1239)
 * Add column for "Started running" in Data Import Landing page log area (UIDATIMP-1244)
 * Add column for "Started running" in Data Import "View all" page (UIDATIMP-1245)
-* Update the Action profile UI again: Create/Edit screen (UIDATIMP-1246)
-* UI flow for import jobs that finish before a user can cancel (UIDATIMP-1235)
-* Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
-* Update the Action profile UI for Orders (UIDATIMP-1231)
 * Update the field mapping profile for MARC Authority Updates - Create/Edit screen (UIDATIMP-1247)
+* Update the field mapping profile for MARC Authority Updates - View screen (UIDATIMP-1248)
+* Change the View all User/Job profile filter searches from Begins to Contains (UIDATIMP-1254)
 * Refactor job profiles to use Router instead of 'layout' param (UIDATIMP-1279)
 * Refactor action profiles to use Router instead of 'layout' param (UIDATIMP-1280)
 * Refactor match profiles to use Router instead of 'layout' param (UIDATIMP-1281)
 * Refactor file extension profiles to use Router instead of 'layout' param (UIDATIMP-1282)
 * Change the View all User/Job profile filter searches from Begins to Contains (UIDATIMP-1254)
 * Update the field mapping profile for MARC Authority Updates - View screen (UIDATIMP-1248)
-* Create the field mapping profile for Orders and Order Lines: View (UIDATIMP-1217)
 
 ### Bugs fixed:
 * Invoice Field Mapping profile: Acq unit and Batch group dropdown lists should be in alphabetical order (UIDATIMP-1236)
-* Data import mapping for invoices will not display more than 10 expense classes (UIDATIMP-1256)
-* An error message is displayed for the "Invoice date" field when using a calendar (UIDATIMP-1242)
 * Data Import Field mapping profile is reset to viewing mode if the page was refreshed during editing/duplication (UIDATIMP-1240)
+* An error message is displayed for the "Invoice date" field when using a calendar (UIDATIMP-1242)
 * Error during switching between record types on field mapping profile form (UIDATIMP-1250)
+* Data import mapping for invoices will not display more than 10 expense classes (UIDATIMP-1256)
 
 ## [5.2.4](https://github.com/folio-org/ui-data-import/tree/v5.2.4) (2022-09-06)
 
