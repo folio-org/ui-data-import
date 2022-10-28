@@ -2,17 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, AccordionSet } from '@folio/stripes/components';
+import {
+  Accordion,
+  AccordionSet,
+} from '@folio/stripes/components';
 
-import { OrderInformation } from './OrderDetailsSection/OrderInformation';
-import { OrderDetails } from './OrderDetailsSection/OrderDetails';
-import { POLineDetails } from './OrderDetailsSection/POLineDetails';
-import { Vendor } from './OrderDetailsSection/Vendor';
-import { CostDetails } from './OrderDetailsSection/CostDetails';
-import { FundDistribution } from './OrderDetailsSection/FundDistribution';
-import { Location } from './OrderDetailsSection/Location';
-import { PhysicalResourceDetails } from './OrderDetailsSection/PhysicalResourceDetails';
-import { EResourcesDetails } from './OrderDetailsSection/EResourcesDetails';
+import {
+  OrderInformation,
+  OrderDetails,
+  POLineDetails,
+  Vendor,
+  CostDetails,
+  FundDistribution,
+  Location,
+  PhysicalResourceDetails,
+  EResourcesDetails,
+} from './OrderDetailsSection';
 
 import { mappingProfileFieldShape } from '../../../../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';

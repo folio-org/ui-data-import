@@ -27,8 +27,6 @@
 * Refactor action profiles to use Router instead of 'layout' param (UIDATIMP-1280)
 * Refactor match profiles to use Router instead of 'layout' param (UIDATIMP-1281)
 * Refactor file extension profiles to use Router instead of 'layout' param (UIDATIMP-1282)
-* Change the View all User/Job profile filter searches from Begins to Contains (UIDATIMP-1254)
-* Update the field mapping profile for MARC Authority Updates - View screen (UIDATIMP-1248)
 
 ### Bugs fixed:
 * Invoice Field Mapping profile: Acq unit and Batch group dropdown lists should be in alphabetical order (UIDATIMP-1236)
