@@ -20,7 +20,11 @@ import {
   FieldOrganization,
 } from '../../../../../components';
 
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  CREATE_INVENTORY_TYPES,
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   getAcceptedValuesPath,
   getFieldName,
@@ -41,18 +45,20 @@ export const PhysicalResourceDetails = ({
   const createInventoryOptions = [
     {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.instanceHoldingsItems` }),
-      name: 'Instance, holdings, item',
+      value: CREATE_INVENTORY_TYPES.INSTANCE_HOLDINGS_ITEM,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.instanceHoldings` }),
-      name: 'Instance, holdings',
+      value: CREATE_INVENTORY_TYPES.INSTANCE_HOLDINGS,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.instance` }),
-      name: 'Instance',
+      value: CREATE_INVENTORY_TYPES.INSTANCE,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.none` }),
-      name: 'None',
+      value: CREATE_INVENTORY_TYPES.NONE,
     },
   ];
+
+  const volumesFieldIndex = 67;
 
   return (
     <Accordion
@@ -87,7 +93,7 @@ export const PhysicalResourceDetails = ({
             component={TextField}
             name={getFieldName(65)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.createInventory`} />}
-            optionValue="name"
+            optionValue="value"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={createInventoryOptions}
@@ -104,7 +110,7 @@ export const PhysicalResourceDetails = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/material-types?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.MATERIAL_TYPES,
               wrapperSourcePath: 'mtypes',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -116,15 +122,15 @@ export const PhysicalResourceDetails = ({
       <RepeatableField
         fields={volumes}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.volume.addLabel`} />}
-        onAdd={() => onAdd(volumes, 'volumes', 67, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, volumes, 67, setReferenceTables, 'order')}
+        onAdd={() => onAdd(volumes, 'volumes', volumesFieldIndex, initialFields, setReferenceTables, 'order')}
+        onRemove={index => onRemove(index, volumes, volumesFieldIndex, setReferenceTables, 'order')}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={12}>
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.volume`} />}
-                name={getSubfieldName(67, 0, index)}
+                name={getSubfieldName(volumesFieldIndex, 0, index)}
               />
             </Col>
           </Row>
@@ -140,4 +146,9 @@ PhysicalResourceDetails.propTypes = {
   okapi: PropTypes.object.isRequired,
   volumes: PropTypes.arrayOf(PropTypes.object),
   materialSupplierId: PropTypes.string,
+};
+
+PhysicalResourceDetails.defaultProps = {
+  volumes: [],
+  materialSupplierId: null,
 };

@@ -137,3 +137,8 @@ CostDetails.propTypes = {
   currency: PropTypes.string,
   useSetExchange: PropTypes.string,
 };
+
+CostDetails.defaultProps = {
+  currency: null,
+  useSetExchange: null,
+};

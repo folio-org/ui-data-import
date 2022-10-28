@@ -215,6 +215,7 @@ AcceptedValuesField.propTypes = {
 };
 
 AcceptedValuesField.defaultProps = {
+  okapi: {},
   acceptedValuesList: [],
   isRemoveValueAllowed: false,
   isFormField: true,
@@ -224,4 +225,18 @@ AcceptedValuesField.defaultProps = {
   required: false,
   disabled: false,
   hasLoaded: false,
+  name: null,
+  optionTemplate: null,
+  wrapperSources: null,
+  wrapperSourcesFn: null,
+  wrapperLabel: null,
+  label: null,
+  id: null,
+  setAcceptedValues: null,
+  acceptedValuesPath: null,
+  dataAttributes: null,
+  onChange: null,
+  componentValue: null,
+  isDirty: false,
+  validation: null,
 };

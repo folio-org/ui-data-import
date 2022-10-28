@@ -39,6 +39,7 @@ import {
 import {
   FIELD_NAME_PREFIX,
   TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
 } from '../../constants';
 import { BOOLEAN_ACTIONS } from '../../../../../utils';
 
@@ -189,7 +190,7 @@ const OrderInformationComponent = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/orders/configuration/prefixes?limit=2000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.PREFIXES,
               wrapperSourcePath: 'prefixes',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -214,7 +215,7 @@ const OrderInformationComponent = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/orders/configuration/suffixes?limit=2000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.SUFFIXES,
               wrapperSourcePath: 'suffixes',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -250,7 +251,7 @@ const OrderInformationComponent = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/acquisitions-units/units?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ACQUISITIONS_UNITS,
               wrapperSourcePath: 'acquisitionsUnits',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -281,7 +282,7 @@ const OrderInformationComponent = ({
             parsedOptionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/configurations/entries?limit=500&query=(module=TENANT and configName=tenant.addresses) sortBy value',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ADDRESSES,
               wrapperSourcePath: 'configs',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -315,7 +316,7 @@ const OrderInformationComponent = ({
             parsedOptionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/configurations/entries?limit=500&query=(module=TENANT and configName=tenant.addresses) sortBy value',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ADDRESSES,
               wrapperSourcePath: 'configs',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -420,6 +421,15 @@ OrderInformationComponent.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.object),
   filledVendorId: PropTypes.string,
   assignedToId: PropTypes.string,
+};
+
+OrderInformationComponent.defaultProps = {
+  approvedCheckbox: null,
+  manualPOCheckbox: null,
+  onOrganizationSelect: null,
+  notes: [],
+  filledVendorId: null,
+  assignedToId: null,
 };
 
 export const OrderInformation = stripesConnect(OrderInformationComponent);

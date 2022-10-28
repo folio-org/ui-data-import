@@ -17,6 +17,7 @@ import {
   mappingHoldingsRefTablesShape,
   okapiShape,
 } from '../../../../utils';
+import { getRefValuesFromTables } from '../utils';
 
 export const MappingHoldingsDetails = ({
   initialFields,
@@ -25,15 +26,15 @@ export const MappingHoldingsDetails = ({
   getRepeatableFieldAction,
   okapi,
 }) => {
-  const formerIds = referenceTables?.formerIds || [];
-  const statisticalCodeIds = referenceTables?.statisticalCodeIds || [];
-  const administrativeNotes = referenceTables?.administrativeNotes || [];
-  const holdingsStatements = referenceTables?.holdingsStatements || [];
-  const holdingsStatementsForSupplements = referenceTables?.holdingsStatementsForSupplements || [];
-  const holdingsStatementsForIndexes = referenceTables?.holdingsStatementsForIndexes || [];
-  const notes = referenceTables?.notes || [];
-  const electronicAccess = referenceTables?.electronicAccess || [];
-  const receivingHistory = referenceTables?.['receivingHistory.entries'] || [];
+  const formerIds = getRefValuesFromTables(referenceTables, 'formerIds');
+  const statisticalCodeIds = getRefValuesFromTables(referenceTables, 'statisticalCodeIds');
+  const administrativeNotes = getRefValuesFromTables(referenceTables, 'administrativeNotes');
+  const holdingsStatements = getRefValuesFromTables(referenceTables, 'holdingsStatements');
+  const holdingsStatementsForSupplements = getRefValuesFromTables(referenceTables, 'holdingsStatementsForSupplements');
+  const holdingsStatementsForIndexes = getRefValuesFromTables(referenceTables, 'holdingsStatementsForIndexes');
+  const notes = getRefValuesFromTables(referenceTables, 'notes');
+  const electronicAccess = getRefValuesFromTables(referenceTables, 'electronicAccess');
+  const receivingHistory = getRefValuesFromTables(referenceTables, 'receivingHistory.entries');
 
   return (
     <AccordionSet>

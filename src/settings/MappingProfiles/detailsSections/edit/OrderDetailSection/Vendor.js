@@ -17,7 +17,10 @@ import {
 
 import { AcceptedValuesField } from '../../../../../components';
 
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  VENDOR_REF_TYPES,
+} from '../../constants';
 import {
   getSubfieldName,
   getFieldName,
@@ -38,25 +41,27 @@ export const Vendor = ({
   const vendorRefTypeOptions = [
     {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.vendor.field.continuationRefNumber` }),
-      name: 'Vendor continuation reference number',
+      name: VENDOR_REF_TYPES.CONTINUATION_REF_NUMBER,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.vendor.field.internalNumber` }),
-      name: 'Vendor internal number',
+      name: VENDOR_REF_TYPES.INTERNAL_NUMBER,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.vendor.field.orderRefNumber` }),
-      name: 'Vendor order reference number',
+      name: VENDOR_REF_TYPES.ORDER_REF_NUMBER,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.vendor.field.subscriptionRefNumber` }),
-      name: 'Vendor subscription reference number',
+      name: VENDOR_REF_TYPES.SUBSCRIPTION_REF_NUMBER,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.vendor.field.titleRefNumber` }),
-      name: 'Vendor title number',
+      name: VENDOR_REF_TYPES.TITLE_NUMBER,
     },
   ];
   const accountNumbersOptions = accountNumbers.map(accountNo => ({
     label: accountNo,
     value: accountNo,
   }));
+
+  const vendorDetailFieldIndex = 47;
 
   return (
     <Accordion
@@ -66,21 +71,21 @@ export const Vendor = ({
       <RepeatableField
         fields={vendorRefNumbers}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.vendorRefNumbers.addLabel`} />}
-        onAdd={() => onAdd(vendorRefNumbers, 'vendorDetail', 47, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, vendorRefNumbers, 47, setReferenceTables, 'order')}
+        onAdd={() => onAdd(vendorRefNumbers, 'vendorDetail', vendorDetailFieldIndex, initialFields, setReferenceTables, 'order')}
+        onRemove={index => onRemove(index, vendorRefNumbers, vendorDetailFieldIndex, setReferenceTables, 'order')}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={6}>
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.vendorRefNumber`} />}
-                name={getSubfieldName(47, 0, index)}
+                name={getSubfieldName(vendorDetailFieldIndex, 0, index)}
               />
             </Col>
             <Col xs={6}>
               <AcceptedValuesField
                 component={TextField}
-                name={getSubfieldName(47, 1, index)}
+                name={getSubfieldName(vendorDetailFieldIndex, 1, index)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.vendorRefType`} />}
                 optionValue="name"
                 optionLabel="label"
@@ -125,4 +130,9 @@ Vendor.propTypes = {
   okapi: PropTypes.object.isRequired,
   vendorRefNumbers: PropTypes.arrayOf(PropTypes.object),
   accountNumbers: PropTypes.arrayOf(PropTypes.object),
+};
+
+Vendor.defaultProps = {
+  vendorRefNumbers: [],
+  accountNumbers: [],
 };

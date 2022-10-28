@@ -796,3 +796,5 @@ export const PAGE_KEYS = {
   HOME: 'homePageSelectedRecords',
   VIEW_ALL: 'viewAllPageSelectedRecords',
 };
+
+export const PER_REQUEST_LIMIT = 1000;

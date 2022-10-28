@@ -16,7 +16,12 @@ import {
   RepeatableField,
 } from '@folio/stripes/components';
 
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import { AcceptedValuesField } from '../../../../../components';
+
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   boolAcceptedValuesOptions,
   getFieldName,
@@ -25,7 +30,6 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
-import { AcceptedValuesField } from '../../../../../components';
 
 export const ItemDetails = ({
   contributors,
@@ -35,6 +39,9 @@ export const ItemDetails = ({
   okapi,
 }) => {
   const { formatMessage } = useIntl();
+
+  const contributorsFieldIndex = 27;
+  const productIdsFieldIndex = 28;
 
   return (
     <Accordion
@@ -120,77 +127,81 @@ export const ItemDetails = ({
       <RepeatableField
         fields={contributors}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributor.addLabel`} />}
-        onAdd={() => onAdd(contributors, 'contributors', 27, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, contributors, 27, setReferenceTables, 'order')}
-        renderField={(field, index) => (
-          <Row left="xs">
-            <Col xs={6}>
-              <Field
-                component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributor`} />}
-                name={getSubfieldName(27, 0, index)}
-              />
-            </Col>
-            <Col xs={6}>
-              <AcceptedValuesField
-                component={TextField}
-                name={getSubfieldName(27, 1, index)}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributorType`} />}
-                optionValue="name"
-                optionLabel="name"
-                wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                wrapperSources={[{
-                  wrapperSourceLink: '/contributor-types?limit=2000&query=cql.allRecords=1 sortby name',
-                  wrapperSourcePath: 'contributorTypes',
-                }]}
-                setAcceptedValues={setReferenceTables}
-                acceptedValuesPath={getRepeatableAcceptedValuesPath(27, 1, index)}
-                okapi={okapi}
-              />
-            </Col>
-          </Row>
-        )}
+        onAdd={() => onAdd(contributors, 'contributors', contributorsFieldIndex, initialFields, setReferenceTables, 'order')}
+        onRemove={index => onRemove(index, contributors, contributorsFieldIndex, setReferenceTables, 'order')}
+        renderField={(field, index) => {
+          return (
+            <Row left="xs">
+              <Col xs={6}>
+                <Field
+                  component={TextField}
+                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributor`} />}
+                  name={getSubfieldName(contributorsFieldIndex, 0, index)}
+                />
+              </Col>
+              <Col xs={6}>
+                <AcceptedValuesField
+                  component={TextField}
+                  name={getSubfieldName(contributorsFieldIndex, 1, index)}
+                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributorType`} />}
+                  optionValue="name"
+                  optionLabel="name"
+                  wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+                  wrapperSources={[{
+                    wrapperSourceLink: WRAPPER_SOURCE_LINKS.CONTRIBUTOR_TYPES,
+                    wrapperSourcePath: 'contributorTypes'
+                  }]}
+                  setAcceptedValues={setReferenceTables}
+                  acceptedValuesPath={getRepeatableAcceptedValuesPath(contributorsFieldIndex, 1, index)}
+                  okapi={okapi}
+                />
+              </Col>
+            </Row>
+          );
+        }}
       />
       <RepeatableField
         fields={productIdentifiers}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.productIdentifiers.addLabel`} />}
-        onAdd={() => onAdd(productIdentifiers, 'contributors', 28, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, productIdentifiers, 28, setReferenceTables, 'order')}
-        renderField={(field, index) => (
-          <Row left="xs">
-            <Col xs={4}>
-              <Field
-                component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.productId`} />}
-                name={getSubfieldName(28, 0, index)}
-              />
-            </Col>
-            <Col xs={4}>
-              <Field
-                component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.qualifier`} />}
-                name={getSubfieldName(28, 1, index)}
-              />
-            </Col>
-            <Col xs={4}>
-              <AcceptedValuesField
-                component={TextField}
-                name={getSubfieldName(28, 2, index)}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.productIdType`} />}
-                optionValue="name"
-                optionLabel="name"
-                wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                wrapperSources={[{
-                  wrapperSourceLink: '/identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
-                  wrapperSourcePath: 'identifierTypes',
-                }]}
-                setAcceptedValues={setReferenceTables}
-                acceptedValuesPath={getRepeatableAcceptedValuesPath(28, 2, index)}
-                okapi={okapi}
-              />
-            </Col>
-          </Row>
-        )}
+        onAdd={() => onAdd(productIdentifiers, 'productIds', productIdsFieldIndex, initialFields, setReferenceTables, 'order')}
+        onRemove={index => onRemove(index, productIdentifiers, productIdsFieldIndex, setReferenceTables, 'order')}
+        renderField={(field, index) => {
+          return (
+            <Row left="xs">
+              <Col xs={4}>
+                <Field
+                  component={TextField}
+                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.productId`} />}
+                  name={getSubfieldName(productIdsFieldIndex, 0, index)}
+                />
+              </Col>
+              <Col xs={4}>
+                <Field
+                  component={TextField}
+                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.qualifier`} />}
+                  name={getSubfieldName(productIdsFieldIndex, 1, index)}
+                />
+              </Col>
+              <Col xs={4}>
+                <AcceptedValuesField
+                  component={TextField}
+                  name={getSubfieldName(productIdsFieldIndex, 2, index)}
+                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.productIdType`} />}
+                  optionValue="name"
+                  optionLabel="name"
+                  wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+                  wrapperSources={[{
+                    wrapperSourceLink: WRAPPER_SOURCE_LINKS.IDENTIFIER_TYPES,
+                    wrapperSourcePath: 'identifierTypes'
+                  }]}
+                  setAcceptedValues={setReferenceTables}
+                  acceptedValuesPath={getRepeatableAcceptedValuesPath(productIdsFieldIndex, 2, index)}
+                  okapi={okapi}
+                />
+              </Col>
+            </Row>
+          );
+        }}
       />
       <Row left="xs">
         <Col xs={12}>
@@ -211,4 +222,9 @@ ItemDetails.propTypes = {
   okapi: PropTypes.object.isRequired,
   contributors: PropTypes.arrayOf(PropTypes.object),
   productIdentifiers: PropTypes.arrayOf(PropTypes.object),
+};
+
+ItemDetails.defaultProps = {
+  contributors: [],
+  productIdentifiers: [],
 };

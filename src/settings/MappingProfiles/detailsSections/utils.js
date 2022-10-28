@@ -178,6 +178,8 @@ export const updateInitialFields = initials => {
   return updatedInitRow;
 };
 
+export const getRefValuesFromTables = (referenceTables, fieldPath) => get(referenceTables, fieldPath, []);
+
 export const getFieldValueFromDetails = (path, fieldName, trimQuotes = true) => {
   const value = path?.find(item => (item.name === fieldName))?.value;
 

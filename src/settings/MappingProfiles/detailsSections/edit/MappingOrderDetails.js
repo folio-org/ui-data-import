@@ -21,6 +21,7 @@ import {
 
 import { TRANSLATION_ID_PREFIX } from '../constants';
 import {
+  getRefValuesFromTables,
   getFieldValueFromDetails,
   getBoolFieldValueFromDetails,
 } from '../utils';
@@ -47,24 +48,27 @@ export const MappingOrderDetails = ({
 }) => {
   const [vendorAccountNumbers, setVendorAccountNumbers] = useState([]);
 
-  const notes = referenceTables?.notes || [];
-  const contributors = referenceTables?.contributors || [];
-  const productIds = referenceTables?.productIds || [];
-  const vendorRefNumbers = referenceTables?.vendorDetail || [];
-  const fundDistributions = referenceTables?.fundDistribution || [];
-  const locations = referenceTables?.locations || [];
-  const volumes = referenceTables?.volumes || [];
+  const notes = getRefValuesFromTables(referenceTables, 'notes');
+  const contributors = getRefValuesFromTables(referenceTables, 'contributors');
+  const productIds = getRefValuesFromTables(referenceTables, 'productIds');
+  const vendorRefNumbers = getRefValuesFromTables(referenceTables, 'vendorDetail');
+  const fundDistributions = getRefValuesFromTables(referenceTables, 'fundDistribution');
+  const locations = getRefValuesFromTables(referenceTables, 'locations');
+  const volumes = getRefValuesFromTables(referenceTables, 'volumes');
+
   const approvedCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, APPROVED_FIELD);
   const manualPOCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, MANUAL_PO_FIELD);
   const automaticExportCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, AUTOMATIC_EXPORT_FIELD);
   const activationStatusCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, ACTIVATION_STATUS_FIELD);
   const trialCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, TRIAL_FIELD);
+  const useSetExchangeFromDetails = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, USE_EXCHANGE_RATE_FIELD);
+
   const currencyFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, CURRENCY_FIELD);
   const filledVendorId = getFieldValueFromDetails(mappingDetails?.mappingFields, VENDOR_FIELD);
   const assignedToId = getFieldValueFromDetails(mappingDetails?.mappingFields, ASSIGNED_TO_FIELD);
   const materialSupplierId = getFieldValueFromDetails(mappingDetails?.mappingFields, MATERIAL_SUPPLIER_FIELD);
   const accessProviderId = getFieldValueFromDetails(mappingDetails?.mappingFields, ACCESS_PROVIDER_FIELD);
-  const useSetExchangeFromDetails = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, USE_EXCHANGE_RATE_FIELD);
+
   const onOrganizationSelect = organization => {
     if (organization?.accounts?.length) {
       const accountNumbers = organization.accounts.map(account => account.accountNo);
@@ -152,3 +156,5 @@ MappingOrderDetails.propTypes = {
   okapi: PropTypes.object.isRequired,
   mappingDetails: PropTypes.object,
 };
+
+MappingOrderDetails.defaultProps = { mappingDetails: {} };

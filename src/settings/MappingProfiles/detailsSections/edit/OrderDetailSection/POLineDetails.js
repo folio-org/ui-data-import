@@ -19,7 +19,13 @@ import {
 
 import { AcceptedValuesField } from '../../../../../components';
 
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  ORDER_FORMATS,
+  RECEIPT_STATUS,
+  BOOL_OPTIONS,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   boolAcceptedValuesOptions,
   getAcceptedValuesPath,
@@ -38,34 +44,34 @@ export const POLineDetails = ({
   const orderFormatOptions = [
     {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.electronicResource` }),
-      value: 'Electronic Resource',
+      value: ORDER_FORMATS.ELECTRONIC_RESOURCE,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.pEMix` }),
-      value: 'P/E Mix',
+      value: ORDER_FORMATS.PE_MIX,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.physicalResource` }),
-      value: 'Physical Resource',
+      value: ORDER_FORMATS.PHYSICAL_RESOURCE,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.other` }),
-      value: 'Other',
+      value: ORDER_FORMATS.OTHER,
     },
   ];
   const receiptStatusOptions = [
     {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.pending` }),
-      value: 'Pending',
+      value: RECEIPT_STATUS.PENDING,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.receiptNotRequired` }),
-      value: 'Receipt not required',
+      value: RECEIPT_STATUS.NOT_REQUIRED,
     },
   ];
   const receivingWorkflowOptions = [
     {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.synchronized` }),
-      value: 'false',
+      value: BOOL_OPTIONS.FALSE,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.independent` }),
-      value: 'true',
+      value: BOOL_OPTIONS.TRUE,
     },
   ];
 
@@ -87,7 +93,7 @@ export const POLineDetails = ({
             optionLabel="value"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/orders/acquisition-methods?limit=2000&query=cql.allRecords=1 sortby value',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ACQUISITION_METHODS,
               wrapperSourcePath: 'acquisitionMethods',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -240,3 +246,5 @@ POLineDetails.propTypes = {
   okapi: PropTypes.object.isRequired,
   automaticExportCheckbox: PropTypes.string,
 };
+
+POLineDetails.defaultProps = { automaticExportCheckbox: null };

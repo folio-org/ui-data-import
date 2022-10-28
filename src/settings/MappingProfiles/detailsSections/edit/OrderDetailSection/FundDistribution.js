@@ -14,7 +14,10 @@ import { TypeToggle } from '@folio/stripes-acq-components';
 
 import { AcceptedValuesField } from '../../../../../components';
 
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   getRepeatableAcceptedValuesPath,
   getSubfieldName,
@@ -29,6 +32,8 @@ export const FundDistribution = ({
   setReferenceTables,
   okapi,
 }) => {
+  const fundDistributionsFieldIndex = 60;
+
   return (
     <Accordion
       id="fund-distribution"
@@ -37,62 +42,64 @@ export const FundDistribution = ({
       <RepeatableField
         fields={fundDistributions}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundDistribution.addLabel`} />}
-        onAdd={() => onAdd(fundDistributions, 'fundDistribution', 60, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, fundDistributions, 60, setReferenceTables, 'order')}
-        renderField={(field, index) => (
-          <Row left="xs">
-            <Col xs={3}>
-              <AcceptedValuesField
-                component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId`} />}
-                name={getSubfieldName(60, 0, index)}
-                optionValue="name"
-                optionLabel="name"
-                wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                wrapperSources={[{
-                  wrapperSourceLink: '/finance/funds?limit=1000&query=cql.allRecords=1 sortby name',
-                  wrapperSourcePath: 'funds',
-                }]}
-                setAcceptedValues={setReferenceTables}
-                acceptedValuesPath={getRepeatableAcceptedValuesPath(60, 0, index)}
-                okapi={okapi}
-              />
-            </Col>
-            <Col xs={3}>
-              <AcceptedValuesField
-                component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.expenseClass`} />}
-                name={getSubfieldName(60, 1, index)}
-                optionValue="name"
-                optionLabel="name"
-                wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                wrapperSources={[{
-                  wrapperSourceLink: '/finance/expense-classes?limit=2000&query=cql.allRecords=1 sortby name',
-                  wrapperSourcePath: 'expenseClasses',
-                }]}
-                setAcceptedValues={setReferenceTables}
-                acceptedValuesPath={getRepeatableAcceptedValuesPath(60, 1, index)}
-                okapi={okapi}
-              />
-            </Col>
-            <Col xs={3}>
-              <Field
-                component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.value`} />}
-                name={getSubfieldName(60, 2, index)}
-                type="number"
-              />
-            </Col>
-            <Col xs={3}>
-              <Field
-                component={TypeToggle}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.type`} />}
-                name={getSubfieldName(60, 3, index)}
-                currency={currency}
-              />
-            </Col>
-          </Row>
-        )}
+        onAdd={() => onAdd(fundDistributions, 'fundDistribution', fundDistributionsFieldIndex, initialFields, setReferenceTables, 'order')}
+        onRemove={index => onRemove(index, fundDistributions, fundDistributionsFieldIndex, setReferenceTables, 'order')}
+        renderField={(field, index) => {
+          return (
+            <Row left="xs">
+              <Col xs={3}>
+                <AcceptedValuesField
+                  component={TextField}
+                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId`} />}
+                  name={getSubfieldName(fundDistributionsFieldIndex, 0, index)}
+                  optionValue="name"
+                  optionLabel="name"
+                  wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+                  wrapperSources={[{
+                    wrapperSourceLink: WRAPPER_SOURCE_LINKS.FUNDS,
+                    wrapperSourcePath: 'funds'
+                  }]}
+                  setAcceptedValues={setReferenceTables}
+                  acceptedValuesPath={getRepeatableAcceptedValuesPath(fundDistributionsFieldIndex, 0, index)}
+                  okapi={okapi}
+                />
+              </Col>
+              <Col xs={3}>
+                <AcceptedValuesField
+                  component={TextField}
+                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.expenseClass`} />}
+                  name={getSubfieldName(fundDistributionsFieldIndex, 1, index)}
+                  optionValue="name"
+                  optionLabel="name"
+                  wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+                  wrapperSources={[{
+                    wrapperSourceLink: WRAPPER_SOURCE_LINKS.EXPENSE_CLASSES,
+                    wrapperSourcePath: 'expenseClasses'
+                  }]}
+                  setAcceptedValues={setReferenceTables}
+                  acceptedValuesPath={getRepeatableAcceptedValuesPath(fundDistributionsFieldIndex, 1, index)}
+                  okapi={okapi}
+                />
+              </Col>
+              <Col xs={3}>
+                <Field
+                  component={TextField}
+                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.value`} />}
+                  name={getSubfieldName(fundDistributionsFieldIndex, 2, index)}
+                  type="number"
+                />
+              </Col>
+              <Col xs={3}>
+                <Field
+                  component={TypeToggle}
+                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.type`} />}
+                  name={getSubfieldName(fundDistributionsFieldIndex, 3, index)}
+                  currency={currency}
+                />
+              </Col>
+            </Row>
+          );
+        }}
       />
     </Accordion>
   );
@@ -104,4 +111,9 @@ FundDistribution.propTypes = {
   okapi: PropTypes.object.isRequired,
   fundDistributions: PropTypes.arrayOf(PropTypes.object),
   currency: PropTypes.string,
+};
+
+FundDistribution.defaultProps = {
+  fundDistributions: [],
+  currency: null,
 };

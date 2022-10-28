@@ -18,6 +18,7 @@ import {
   Pluggable,
 } from '@folio/stripes/core';
 import { getFullName } from '@folio/stripes/util';
+import { PER_REQUEST_LIMIT } from '../../utils';
 
 const columnMapping = {
   name: <FormattedMessage id="ui-orders.user.name" />,
@@ -109,15 +110,21 @@ FieldAssignedTo.propTypes = {
   name: PropTypes.string.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   stripes: stripesShape.isRequired,
+  mutator: PropTypes.object.isRequired,
   id: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   disabled: PropTypes.bool,
-  mutator: PropTypes.object,
+};
+
+FieldAssignedTo.defaultProps = {
+  id: '',
+  label: null,
+  disabled: false,
 };
 
 FieldAssignedTo.manifest = Object.freeze({
   users: {
-    perRequest: 1000,
+    perRequest: PER_REQUEST_LIMIT,
     throwErrors: false,
     type: 'okapi',
     path: 'users',

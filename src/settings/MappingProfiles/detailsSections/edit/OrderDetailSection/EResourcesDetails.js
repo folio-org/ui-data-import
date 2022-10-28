@@ -20,7 +20,11 @@ import {
   FieldOrganization,
 } from '../../../../../components';
 
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  CREATE_INVENTORY_TYPES,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   getAcceptedValuesPath,
   getBoolFieldName,
@@ -40,16 +44,16 @@ export const EResourcesDetails = ({
   const createInventoryOptions = [
     {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.instanceHoldingsItems` }),
-      name: 'Instance, holdings, item',
+      value: CREATE_INVENTORY_TYPES.INSTANCE_HOLDINGS_ITEM,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.instanceHoldings` }),
-      name: 'Instance, holdings',
+      value: CREATE_INVENTORY_TYPES.INSTANCE_HOLDINGS,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.instance` }),
-      name: 'Instance',
+      value: CREATE_INVENTORY_TYPES.INSTANCE,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.none` }),
-      name: 'None',
+      value: CREATE_INVENTORY_TYPES.NONE,
     },
   ];
 
@@ -90,7 +94,7 @@ export const EResourcesDetails = ({
             component={TextField}
             name={getFieldName(71)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.createInventory`} />}
-            optionValue="name"
+            optionValue="value"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={createInventoryOptions}
@@ -107,7 +111,7 @@ export const EResourcesDetails = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/material-types?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.MATERIAL_TYPES,
               wrapperSourcePath: 'mtypes',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -161,4 +165,10 @@ EResourcesDetails.propTypes = {
   activationStatusCheckbox: PropTypes.string,
   trialCheckbox: PropTypes.string,
   accessProviderId: PropTypes.string,
+};
+
+EResourcesDetails.defaultProps = {
+  activationStatusCheckbox: null,
+  trialCheckbox: null,
+  accessProviderId: null,
 };
