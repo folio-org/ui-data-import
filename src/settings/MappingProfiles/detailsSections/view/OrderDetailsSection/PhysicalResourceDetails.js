@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedDate,
+  FormattedMessage,
+} from 'react-intl';
 
 import {
   Accordion,
@@ -49,6 +52,23 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
 
   const volumesData = transformSubfieldsData(volumes, volumesFieldsMap);
 
+  const formattedReceiptDue = (
+    <FormattedDate
+      value={receiptDue}
+      day="2-digit"
+      month="2-digit"
+      year="numeric"
+    />
+  );
+  const formattedExpectedReceiptDate = (
+    <FormattedDate
+      value={expectedReceiptDate}
+      day="2-digit"
+      month="2-digit"
+      year="numeric"
+    />
+  );
+
   return (
     <Accordion
       id="view-physical-order-details"
@@ -70,7 +90,7 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalOrderDetails.receiptDue`} />}
-            value={receiptDue}
+            value={formattedReceiptDue}
           />
         </Col>
         <Col
@@ -79,7 +99,7 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalOrderDetails.expectedReceiptDate`} />}
-            value={expectedReceiptDate}
+            value={formattedExpectedReceiptDate}
           />
         </Col>
         <Col

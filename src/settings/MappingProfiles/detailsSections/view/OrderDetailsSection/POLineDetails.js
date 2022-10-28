@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedDate,
+  FormattedMessage,
+} from 'react-intl';
 
 import {
   Accordion,
@@ -40,6 +43,15 @@ export const POLineDetails = ({ mappingDetails }) => {
   const poLineDescription = getFieldValue(mappingDetails, 'poLineDescription', 'value');
 
   const automaticExportCheckbox = renderCheckbox('order.poLineDetails.automaticExport', automaticExport);
+
+  const formattedReceiptDate = (
+    <FormattedDate
+      value={receiptDate}
+      day="2-digit"
+      month="2-digit"
+      year="numeric"
+    />
+  );
 
   return (
     <Accordion
@@ -100,7 +112,7 @@ export const POLineDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.receiptDate`} />}
-            value={receiptDate}
+            value={formattedReceiptDate}
           />
         </Col>
         <Col

@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedDate,
+  FormattedMessage,
+} from 'react-intl';
 
 import {
   Accordion,
@@ -30,6 +33,23 @@ export const EResourcesDetails = ({ mappingDetails }) => {
 
   const activatedCheckbox = renderCheckbox('order.eResourcesDetails.activated', activated);
   const trialCheckbox = renderCheckbox('order.eResourcesDetails.trial', trial);
+
+  const formattedActivationDue = (
+    <FormattedDate
+      value={activationDue}
+      day="2-digit"
+      month="2-digit"
+      year="numeric"
+    />
+  );
+  const formattedExpectedActivation = (
+    <FormattedDate
+      value={expectedActivation}
+      day="2-digit"
+      month="2-digit"
+      year="numeric"
+    />
+  );
 
   return (
     <Accordion
@@ -61,7 +81,7 @@ export const EResourcesDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.activationDue`} />}
-            value={activationDue}
+            value={formattedActivationDue}
           />
         </Col>
         <Col
@@ -99,7 +119,7 @@ export const EResourcesDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.expectedActivation`} />}
-            value={expectedActivation}
+            value={formattedExpectedActivation}
           />
         </Col>
         <Col

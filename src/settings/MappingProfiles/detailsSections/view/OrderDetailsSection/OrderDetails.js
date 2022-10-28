@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedDate,
+  FormattedMessage,
+} from 'react-intl';
 
 import {
   Accordion,
@@ -93,6 +96,24 @@ export const OrderDetails = ({ mappingDetails }) => {
   const contributorsData = transformSubfieldsData(contributors, contributorsFieldsMap);
   const productIdsData = transformSubfieldsData(productIds, productIdsFieldsMap);
 
+  const formattedSubscriptionFrom = (
+    <FormattedDate
+      value={subscriptionFrom}
+      day="2-digit"
+      month="2-digit"
+      year="numeric"
+    />
+  );
+  const formattedSubscriptionTo = (
+    <FormattedDate
+      value={subscriptionTo}
+      day="2-digit"
+      month="2-digit"
+      year="numeric"
+      format="YYYY-MM-DD"
+    />
+  );
+
   return (
     <Accordion
       id="view-order-details"
@@ -136,7 +157,7 @@ export const OrderDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderDetails.subscriptionFrom`} />}
-            value={subscriptionFrom}
+            value={formattedSubscriptionFrom}
           />
         </Col>
         <Col
@@ -145,7 +166,7 @@ export const OrderDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderDetails.subscriptionTo`} />}
-            value={subscriptionTo}
+            value={formattedSubscriptionTo}
           />
         </Col>
         <Col
