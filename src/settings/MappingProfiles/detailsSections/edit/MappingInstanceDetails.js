@@ -23,6 +23,7 @@ import {
   mappingInstanceRefTablesShape,
   okapiShape,
 } from '../../../../utils';
+import { getRefValuesFromTables } from '../utils';
 
 export const MappingInstanceDetails = ({
   initialFields,
@@ -31,28 +32,28 @@ export const MappingInstanceDetails = ({
   getRepeatableFieldAction,
   okapi,
 }) => {
-  const statisticalCodes = referenceTables?.statisticalCodeIds || [];
-  const administrativeNotes = referenceTables?.administrativeNotes || [];
-  const alternativeTitles = referenceTables?.alternativeTitles || [];
-  const seriesStatements = referenceTables?.series || [];
-  const precedingTitles = referenceTables?.precedingTitles || [];
-  const succeedingTitles = referenceTables?.succeedingTitles || [];
-  const identifiers = referenceTables?.identifiers || [];
-  const contributors = referenceTables?.contributors || [];
-  const publications = referenceTables?.publication || [];
-  const editions = referenceTables?.editions || [];
-  const physicalDescriptions = referenceTables?.physicalDescriptions || [];
-  const natureOfContentTermIds = referenceTables?.natureOfContentTermIds || [];
-  const instanceFormatIds = referenceTables?.instanceFormatIds || [];
-  const languages = referenceTables?.languages || [];
-  const publicationFrequency = referenceTables?.publicationFrequency || [];
-  const publicationRange = referenceTables?.publicationRange || [];
-  const notes = referenceTables?.notes || [];
-  const electronicAccess = referenceTables?.electronicAccess || [];
-  const subjects = referenceTables?.subjects || [];
-  const classifications = referenceTables?.classifications || [];
-  const parentInstances = referenceTables?.parentInstances || [];
-  const childInstances = referenceTables?.childInstances || [];
+  const statisticalCodes = getRefValuesFromTables(referenceTables, 'statisticalCodeIds');
+  const administrativeNotes = getRefValuesFromTables(referenceTables, 'administrativeNotes');
+  const alternativeTitles = getRefValuesFromTables(referenceTables, 'alternativeTitles');
+  const seriesStatements = getRefValuesFromTables(referenceTables, 'series');
+  const precedingTitles = getRefValuesFromTables(referenceTables, 'precedingTitles');
+  const succeedingTitles = getRefValuesFromTables(referenceTables, 'succeedingTitles');
+  const identifiers = getRefValuesFromTables(referenceTables, 'identifiers');
+  const contributors = getRefValuesFromTables(referenceTables, 'contributors');
+  const publications = getRefValuesFromTables(referenceTables, 'publication');
+  const editions = getRefValuesFromTables(referenceTables, 'editions');
+  const physicalDescriptions = getRefValuesFromTables(referenceTables, 'physicalDescriptions');
+  const natureOfContentTermIds = getRefValuesFromTables(referenceTables, 'natureOfContentTermIds');
+  const instanceFormatIds = getRefValuesFromTables(referenceTables, 'instanceFormatIds');
+  const languages = getRefValuesFromTables(referenceTables, 'languages');
+  const publicationFrequency = getRefValuesFromTables(referenceTables, 'publicationFrequency');
+  const publicationRange = getRefValuesFromTables(referenceTables, 'publicationRange');
+  const notes = getRefValuesFromTables(referenceTables, 'notes');
+  const electronicAccess = getRefValuesFromTables(referenceTables, 'electronicAccess');
+  const subjects = getRefValuesFromTables(referenceTables, 'subjects');
+  const classifications = getRefValuesFromTables(referenceTables, 'classifications');
+  const parentInstances = getRefValuesFromTables(referenceTables, 'parentInstances');
+  const childInstances = getRefValuesFromTables(referenceTables, 'childInstances');
 
   return (
     <>

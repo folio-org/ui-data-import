@@ -178,9 +178,21 @@ export const updateInitialFields = initials => {
   return updatedInitRow;
 };
 
-export const getFieldValueFromDetails = (path, fieldName) => path
-  ?.find(item => (item.name === fieldName))?.value
-  ?.replace(/['"]+/g, '');
+export const getRefValuesFromTables = (referenceTables, fieldPath) => get(referenceTables, fieldPath, []);
+
+export const getFieldValueFromDetails = (path, fieldName, trimQuotes = true) => {
+  const value = path?.find(item => (item.name === fieldName))?.value;
+
+  if (trimQuotes) {
+    return value?.replace(/['"]+/g, '');
+  }
+
+  return value;
+};
+
+export const getBoolFieldValueFromDetails = (path, fieldName) => {
+  return path?.find(item => (item.name === fieldName))?.booleanFieldAction;
+};
 
 export const getAccountingCodeOptions = vendor => {
   const accounts = get(vendor, 'accounts', []).filter(({ appSystemNo }) => Boolean(appSystemNo));
@@ -233,3 +245,13 @@ export const renderCheckbox = (labelPathId, fieldValue) => (
     )}
   </FormattedMessage>
 );
+
+export const boolAcceptedValuesOptions = formatMessage => ([
+  {
+    label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.true` }),
+    value: 'true',
+  }, {
+    label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.false` }),
+    value: 'false',
+  },
+]);

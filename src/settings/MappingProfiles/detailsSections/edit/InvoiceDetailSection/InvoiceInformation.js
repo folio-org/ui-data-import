@@ -22,7 +22,10 @@ import {
   getAcceptedValuesPath,
   getSubfieldName,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   composeValidators,
   okapiShape,
@@ -107,7 +110,7 @@ export const InvoiceInformation = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/acquisitions-units/units?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ACQUISITIONS_UNITS,
               wrapperSourcePath: 'acquisitionsUnits',
             }]}
             isRemoveValueAllowed
@@ -131,7 +134,7 @@ export const InvoiceInformation = ({
             parsedOptionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/configurations/entries?limit=500&query=(module=TENANT and configName=tenant.addresses)',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ADDRESSES,
               wrapperSourcePath: 'configs',
             }]}
             isRemoveValueAllowed

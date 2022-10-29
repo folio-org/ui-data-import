@@ -53,6 +53,7 @@ export const VendorInformation = ({
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.vendorInformation.field.vendorName`} />}
             validate={validateRequiredField}
             required
+            disabled
           />
         </Col>
         <Col xs={4}>
