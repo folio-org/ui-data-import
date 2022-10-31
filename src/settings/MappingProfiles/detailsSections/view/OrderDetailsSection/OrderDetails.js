@@ -25,7 +25,7 @@ import {
   PRODUCT_IDS_VISIBLE_COLUMNS,
 } from '../../constants';
 import {
-  DATE_TYPES,
+  BASE_FORMATTED_DATE,
   mappingProfileFieldShape,
 } from '../../../../../utils';
 
@@ -39,10 +39,6 @@ export const OrderDetails = ({ mappingDetails }) => {
     QUALIFIER,
     PRODUCT_ID_TYPE,
   } = PRODUCT_IDS_VISIBLE_COLUMNS;
-  const {
-    TWO_DIGIT,
-    NUMERIC,
-  } = DATE_TYPES;
 
   const noValueElement = <NoValue />;
 
@@ -127,17 +123,13 @@ export const OrderDetails = ({ mappingDetails }) => {
   const formattedSubscriptionFrom = (
     <FormattedDate
       value={subscriptionFrom}
-      day={TWO_DIGIT}
-      month={TWO_DIGIT}
-      year={NUMERIC}
+      {...BASE_FORMATTED_DATE}
     />
   );
   const formattedSubscriptionTo = (
     <FormattedDate
       value={subscriptionTo}
-      day={TWO_DIGIT}
-      month={TWO_DIGIT}
-      year={NUMERIC}
+      {...BASE_FORMATTED_DATE}
     />
   );
 

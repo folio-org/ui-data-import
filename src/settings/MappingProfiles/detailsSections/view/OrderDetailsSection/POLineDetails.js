@@ -20,16 +20,11 @@ import {
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
-  DATE_TYPES,
+  BASE_FORMATTED_DATE,
   mappingProfileFieldShape,
 } from '../../../../../utils';
 
 export const POLineDetails = ({ mappingDetails }) => {
-  const {
-    TWO_DIGIT,
-    NUMERIC,
-  } = DATE_TYPES;
-
   const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
   const poLineNumber = getFieldValue(mappingDetails, 'poLineNumber', 'value');
@@ -55,9 +50,7 @@ export const POLineDetails = ({ mappingDetails }) => {
   const formattedReceiptDate = (
     <FormattedDate
       value={receiptDate}
-      day={TWO_DIGIT}
-      month={TWO_DIGIT}
-      year={NUMERIC}
+      {...BASE_FORMATTED_DATE}
     />
   );
 

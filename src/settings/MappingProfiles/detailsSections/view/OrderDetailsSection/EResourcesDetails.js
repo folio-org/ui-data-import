@@ -19,16 +19,11 @@ import {
   renderCheckbox,
 } from '../../utils';
 import {
-  DATE_TYPES,
+  BASE_FORMATTED_DATE,
   mappingProfileFieldShape,
 } from '../../../../../utils';
 
 export const EResourcesDetails = ({ mappingDetails }) => {
-  const {
-    TWO_DIGIT,
-    NUMERIC,
-  } = DATE_TYPES;
-
   const accessProvider = getFieldValue(mappingDetails, 'accessProvider', 'value');
   const activated = getFieldValue(mappingDetails, 'activationStatus', 'booleanFieldAction');
   const activationDue = getFieldValue(mappingDetails, 'activationDue', 'value');
@@ -45,17 +40,13 @@ export const EResourcesDetails = ({ mappingDetails }) => {
   const formattedActivationDue = (
     <FormattedDate
       value={activationDue}
-      day={TWO_DIGIT}
-      month={TWO_DIGIT}
-      year={NUMERIC}
+      {...BASE_FORMATTED_DATE}
     />
   );
   const formattedExpectedActivation = (
     <FormattedDate
       value={expectedActivation}
-      day={TWO_DIGIT}
-      month={TWO_DIGIT}
-      year={NUMERIC}
+      {...BASE_FORMATTED_DATE}
     />
   );
 

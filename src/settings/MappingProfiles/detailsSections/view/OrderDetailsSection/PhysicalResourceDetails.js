@@ -25,16 +25,12 @@ import {
   transformSubfieldsData,
 } from '../../utils';
 import {
-  DATE_TYPES,
+  BASE_FORMATTED_DATE,
   mappingProfileFieldShape,
 } from '../../../../../utils';
 
 export const PhysicalResourceDetails = ({ mappingDetails }) => {
   const { VOLUMES } = PHYSICAL_RESOURCE_VISIBLE_COLUMNS;
-  const {
-    TWO_DIGIT,
-    NUMERIC,
-  } = DATE_TYPES;
 
   const noValueElement = <NoValue />;
 
@@ -67,17 +63,13 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
   const formattedReceiptDue = (
     <FormattedDate
       value={receiptDue}
-      day={TWO_DIGIT}
-      month={TWO_DIGIT}
-      year={NUMERIC}
+      {...BASE_FORMATTED_DATE}
     />
   );
   const formattedExpectedReceiptDate = (
     <FormattedDate
       value={expectedReceiptDate}
-      day={TWO_DIGIT}
-      month={TWO_DIGIT}
-      year={NUMERIC}
+      {...BASE_FORMATTED_DATE}
     />
   );
 

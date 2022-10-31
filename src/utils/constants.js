@@ -787,7 +787,11 @@ export const PAGE_KEYS = {
   VIEW_ALL: 'viewAllPageSelectedRecords',
 };
 
-export const DATE_TYPES = {
-  TWO_DIGIT: '2-digit',
-  NUMERIC: 'numeric',
+export const TWO_DIGIT = '2-digit';
+export const NUMERIC = 'numeric';
+
+export const BASE_FORMATTED_DATE = {
+  day: TWO_DIGIT,
+  month: TWO_DIGIT,
+  year: NUMERIC,
 };
