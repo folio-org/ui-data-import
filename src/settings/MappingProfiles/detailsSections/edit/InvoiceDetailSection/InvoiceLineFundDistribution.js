@@ -29,7 +29,10 @@ import {
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   MAPPING_FUND_DISTRIBUTION_FIELD_SOURCES,
   FUND_DISTRIBUTION_SOURCE,
@@ -96,7 +99,7 @@ export const InvoiceLineFundDistribution = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: '/finance/funds?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.FUNDS,
                           wrapperSourcePath: 'funds',
                         }]}
                         optionTemplate="**name** (**code**)"
@@ -115,7 +118,7 @@ export const InvoiceLineFundDistribution = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: '/finance/expense-classes?limit=500&query=cql.allRecords=1 sortby name',
+                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.EXPENSE_CLASSES,
                           wrapperSourcePath: 'expenseClasses',
                         }]}
                         setAcceptedValues={setReferenceTables}

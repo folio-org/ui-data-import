@@ -242,7 +242,6 @@ export const JobProfilesFormComponent = memo(({
 
       if (record) {
         clearStorage();
-
         form.reset();
         transitionToParams({ _path: `${baseUrl}/view/${record.id}` });
       }
