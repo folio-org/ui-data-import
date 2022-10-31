@@ -797,7 +797,8 @@ export const PAGE_KEYS = {
   VIEW_ALL: 'viewAllPageSelectedRecords',
 };
 
-<<<<<<< HEAD
+export const PER_REQUEST_LIMIT = 1000;
+
 export const TWO_DIGIT = '2-digit';
 export const NUMERIC = 'numeric';
 
@@ -805,11 +806,4 @@ export const BASE_FORMATTED_DATE = {
   day: TWO_DIGIT,
   month: TWO_DIGIT,
   year: NUMERIC,
-=======
-export const PER_REQUEST_LIMIT = 1000;
-
-export const DATE_TYPES = {
-  TWO_DIGIT: '2-digit',
-  NUMERIC: 'numeric',
->>>>>>> 6cc26ac323c8aff95a6c021f18cbe307d99befa1
 };
