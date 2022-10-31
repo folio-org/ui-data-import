@@ -132,6 +132,8 @@ export const onRemove = (index, refTable, fieldIndex, callback, incrementalField
 
 export const getFieldValue = (details, fieldName, key) => details.find(item => item.name === fieldName)?.[key];
 
+export const getFieldValueByPath = (details, path, key) => details.find(item => item.path === path)?.[key];
+
 export const getValueById = id => (id ? <FormattedMessage id={id} /> : <NoValue />);
 
 export const getUnmappableValueById = (id, fieldName) => (id ? <FormattedMessage id={id} /> : <ProhibitionIcon fieldName={fieldName} />);

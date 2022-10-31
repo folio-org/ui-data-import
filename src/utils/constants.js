@@ -798,3 +798,12 @@ export const PAGE_KEYS = {
 };
 
 export const PER_REQUEST_LIMIT = 1000;
+
+export const TWO_DIGIT = '2-digit';
+export const NUMERIC = 'numeric';
+
+export const BASE_FORMATTED_DATE = {
+  day: TWO_DIGIT,
+  month: TWO_DIGIT,
+  year: NUMERIC,
+};
