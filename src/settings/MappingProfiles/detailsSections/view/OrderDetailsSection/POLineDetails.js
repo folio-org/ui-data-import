@@ -47,12 +47,14 @@ export const POLineDetails = ({ mappingDetails }) => {
 
   const automaticExportCheckbox = renderCheckbox('order.poLineDetails.automaticExport', automaticExport);
 
-  const formattedReceiptDate = (
-    <FormattedDate
-      value={receiptDate}
-      {...BASE_FORMATTED_DATE}
-    />
-  );
+  const formattedReceiptDate = receiptDate
+    ? (
+      <FormattedDate
+        value={receiptDate}
+        {...BASE_FORMATTED_DATE}
+      />
+    )
+    : null;
 
   return (
     <Accordion

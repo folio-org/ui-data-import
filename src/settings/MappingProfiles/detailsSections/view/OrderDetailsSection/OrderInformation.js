@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -9,6 +12,7 @@ import {
   KeyValue,
   NoValue,
 } from '@folio/stripes/components';
+import { stripesConnect } from '@folio/stripes/core';
 
 import { ProhibitionIcon } from '../../../../../components';
 import { ViewRepeatableField } from '../ViewRepeatableField';
@@ -24,7 +28,23 @@ import {
 } from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
-export const OrderInformation = ({ mappingDetails }) => {
+const OrderInformation = ({
+  mappingDetails,
+  mutator,
+  vendorId,
+}) => {
+  const [selectedOrganization, setSelectedOrganization] = useState({});
+  const vendorNameValue = selectedOrganization?.name;
+
+  useEffect(() => {
+    if (vendorId && selectedOrganization.id !== vendorId) {
+      mutator.fieldOrganizationOrg.GET()
+        .then(setSelectedOrganization);
+    } else {
+      setSelectedOrganization({});
+    }
+  }, [vendorId]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const { NOTE } = NOTES_VISIBLE_COLUMNS;
 
   const noValueElement = <NoValue />;
@@ -37,7 +57,6 @@ export const OrderInformation = ({ mappingDetails }) => {
   const prefix = getFieldValue(mappingDetails, 'prefix', 'value');
   const poNumber = getFieldValue(mappingDetails, 'poNumber', 'value');
   const suffix = getFieldValue(mappingDetails, 'suffix', 'value');
-  const vendor = getFieldValue(mappingDetails, 'vendor', 'value');
   const orderType = getFieldValue(mappingDetails, 'orderType', 'value');
   const acqUnitIds = getFieldValue(mappingDetails, 'acqUnitIds', 'value');
   const assignedTo = getFieldValue(mappingDetails, 'assignedTo', 'value');
@@ -152,7 +171,7 @@ export const OrderInformation = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.vendor`} />}
-            value={vendor}
+            value={vendorNameValue}
           />
         </Col>
         <Col
@@ -260,4 +279,21 @@ export const OrderInformation = ({ mappingDetails }) => {
   );
 };
 
-OrderInformation.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };
+OrderInformation.propTypes = {
+  mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired,
+  mutator: PropTypes.object.isRequired,
+  vendorId: PropTypes.string,
+};
+
+OrderInformation.manifest = {
+  fieldOrganizationOrg: {
+    type: 'okapi',
+    path: 'organizations/organizations/!{vendorId}',
+    throwErrors: false,
+    perRequest: 1000,
+    accumulate: true,
+    fetch: false,
+  },
+};
+
+export default stripesConnect(OrderInformation);
