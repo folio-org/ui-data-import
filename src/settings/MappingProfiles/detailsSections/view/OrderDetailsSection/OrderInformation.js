@@ -26,7 +26,10 @@ import {
   renderCheckbox,
   transformSubfieldsData,
 } from '../../utils';
-import { mappingProfileFieldShape } from '../../../../../utils';
+import {
+  mappingProfileFieldShape,
+  PER_REQUEST_LIMIT,
+} from '../../../../../utils';
 
 const OrderInformation = ({
   mappingDetails,
@@ -290,7 +293,7 @@ OrderInformation.manifest = {
     type: 'okapi',
     path: 'organizations/organizations/!{vendorId}',
     throwErrors: false,
-    perRequest: 1000,
+    perRequest: PER_REQUEST_LIMIT,
     accumulate: true,
     fetch: false,
   },
