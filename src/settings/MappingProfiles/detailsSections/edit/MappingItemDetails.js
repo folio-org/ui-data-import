@@ -19,6 +19,7 @@ import {
   mappingItemRefTablesShape,
   okapiShape,
 } from '../../../../utils';
+import { getRefValuesFromTables } from '../utils';
 
 export const MappingItemDetails = ({
   initialFields,
@@ -27,13 +28,13 @@ export const MappingItemDetails = ({
   getRepeatableFieldAction,
   okapi,
 }) => {
-  const formerIds = referenceTables?.formerIds || [];
-  const statisticalCodeIds = referenceTables?.statisticalCodeIds || [];
-  const administrativeNotes = referenceTables?.administrativeNotes || [];
-  const yearCaption = referenceTables?.yearCaption || [];
-  const notes = referenceTables?.notes || [];
-  const circulationNotes = referenceTables?.circulationNotes || [];
-  const electronicAccess = referenceTables?.electronicAccess || [];
+  const formerIds = getRefValuesFromTables(referenceTables, 'formerIds');
+  const statisticalCodeIds = getRefValuesFromTables(referenceTables, 'statisticalCodeIds');
+  const administrativeNotes = getRefValuesFromTables(referenceTables, 'administrativeNotes');
+  const yearCaption = getRefValuesFromTables(referenceTables, 'yearCaption');
+  const notes = getRefValuesFromTables(referenceTables, 'notes');
+  const circulationNotes = getRefValuesFromTables(referenceTables, 'circulationNotes');
+  const electronicAccess = getRefValuesFromTables(referenceTables, 'electronicAccess');
 
   return (
     <AccordionSet>

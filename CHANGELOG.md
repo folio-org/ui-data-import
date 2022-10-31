@@ -3,6 +3,7 @@
 ## **5.4.0** (in progress)
 
 ### Features added:
+* Field Mapping Profile details: Order PO & POL from MARC Bib (Create/Edit) (UIDATIMP-294)
 * Update the Match profile UI: Create/Edit screen (UIDATIMP-1214)
 * Update the Action profile UI: Create/Edit screen (UIDATIMP-1215)
 * Update the Action profile UI for Orders (UIDATIMP-1231)

@@ -49,6 +49,7 @@ import {
   MappingItemDetails,
   MappingMARCBibDetails,
   MappingInvoiceDetails,
+  MappingOrderDetails,
   MappingMARCAuthorityDetails,
 } from './detailsSections/edit';
 
@@ -299,6 +300,7 @@ export const MappingProfilesFormComponent = ({
     MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCDetailsProps} />,
     MARC_AUTHORITY: <MappingMARCAuthorityDetails {...MARCDetailsProps} />,
     INVOICE: <MappingInvoiceDetails {...invoiceDetailsProps} />,
+    ORDER: <MappingOrderDetails {...invoiceDetailsProps} />,
   };
 
   return (
