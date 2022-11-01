@@ -21,11 +21,17 @@ import {
 
 import { mappingProfileFieldShape } from '../../../../utils';
 import { TRANSLATION_ID_PREFIX } from '../constants';
+import { getFieldValue } from '../utils';
 
 export const MappingOrderDetails = ({ mappingDetails }) => {
+  const vendorId = getFieldValue(mappingDetails, 'vendor', 'value').replace(/['"]+/g, '');
+
   return (
     <AccordionSet>
-      <OrderInformation mappingDetails={mappingDetails} />
+      <OrderInformation
+        mappingDetails={mappingDetails}
+        vendorId={vendorId}
+      />
       <Accordion
         id="view-order-line-information"
         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderLineInformation.section`} />}
