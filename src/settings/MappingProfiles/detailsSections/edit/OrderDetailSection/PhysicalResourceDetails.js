@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -10,13 +10,13 @@ import {
   Accordion,
   RepeatableField,
   TextField,
-  Datepicker,
   Row,
   Col,
 } from '@folio/stripes/components';
 
 import {
   AcceptedValuesField,
+  DatePickerDecorator,
   FieldOrganization,
   WithValidation,
 } from '../../../../../components';
@@ -33,6 +33,7 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
+import { validateMARCWithDate } from '../../../../../utils';
 
 export const PhysicalResourceDetails = ({
   volumes,
@@ -42,6 +43,11 @@ export const PhysicalResourceDetails = ({
   okapi,
 }) => {
   const { formatMessage } = useIntl();
+
+  const validateDatepickerFieldValue = useCallback(
+    value => validateMARCWithDate(value, false),
+    [],
+  );
 
   const createInventoryOptions = [
     {
@@ -81,28 +87,24 @@ export const PhysicalResourceDetails = ({
           </WithValidation>
         </Col>
         <Col xs={3}>
-          <WithValidation>
-            {validation => (
-              <Field
-                component={Datepicker}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.receiptDue`} />}
-                name={getFieldName(63)}
-                validate={[validation]}
-              />
-            )}
-          </WithValidation>
+          <Field
+            component={DatePickerDecorator}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.receiptDue`} />}
+            name={getFieldName(63)}
+            wrappedComponent={TextField}
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+            validate={[validateDatepickerFieldValue]}
+          />
         </Col>
         <Col xs={3}>
-          <WithValidation>
-            {validation => (
-              <Field
-                component={Datepicker}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.expectedReceiptDate`} />}
-                name={getFieldName(64)}
-                validate={[validation]}
-              />
-            )}
-          </WithValidation>
+          <Field
+            component={DatePickerDecorator}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.expectedReceiptDate`} />}
+            name={getFieldName(64)}
+            wrappedComponent={TextField}
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+            validate={[validateDatepickerFieldValue]}
+          />
         </Col>
         <Col xs={3}>
           <AcceptedValuesField

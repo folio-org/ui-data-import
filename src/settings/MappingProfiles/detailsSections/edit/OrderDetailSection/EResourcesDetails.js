@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -12,11 +12,11 @@ import {
   Col,
   TextField,
   Checkbox,
-  Datepicker,
 } from '@folio/stripes/components';
 
 import {
   AcceptedValuesField,
+  DatePickerDecorator,
   FieldOrganization,
   WithValidation,
 } from '../../../../../components';
@@ -31,7 +31,10 @@ import {
   getBoolFieldName,
   getFieldName,
 } from '../../utils';
-import { BOOLEAN_ACTIONS } from '../../../../../utils';
+import {
+  BOOLEAN_ACTIONS,
+  validateMARCWithDate,
+} from '../../../../../utils';
 
 export const EResourcesDetails = ({
   activationStatusCheckbox,
@@ -41,6 +44,11 @@ export const EResourcesDetails = ({
   okapi,
 }) => {
   const { formatMessage } = useIntl();
+
+  const validateDatepickerFieldValue = useCallback(
+    value => validateMARCWithDate(value, false),
+    [],
+  );
 
   const createInventoryOptions = [
     {
@@ -89,16 +97,14 @@ export const EResourcesDetails = ({
           />
         </Col>
         <Col xs={3}>
-          <WithValidation>
-            {validation => (
-              <Field
-                component={Datepicker}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.activationDue`} />}
-                name={getFieldName(70)}
-                validate={[validation]}
-              />
-            )}
-          </WithValidation>
+          <Field
+            component={DatePickerDecorator}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.activationDue`} />}
+            name={getFieldName(70)}
+            wrappedComponent={TextField}
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+            validate={[validateDatepickerFieldValue]}
+          />
         </Col>
         <Col xs={3}>
           <AcceptedValuesField
@@ -142,16 +148,14 @@ export const EResourcesDetails = ({
           />
         </Col>
         <Col xs={3}>
-          <WithValidation>
-            {validation => (
-              <Field
-                component={Datepicker}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.expectedActivation`} />}
-                name={getFieldName(74)}
-                validate={[validation]}
-              />
-            )}
-          </WithValidation>
+          <Field
+            component={DatePickerDecorator}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.expectedActivation`} />}
+            name={getFieldName(74)}
+            wrappedComponent={TextField}
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+            validate={[validateDatepickerFieldValue]}
+          />
         </Col>
         <Col xs={3}>
           <WithValidation>

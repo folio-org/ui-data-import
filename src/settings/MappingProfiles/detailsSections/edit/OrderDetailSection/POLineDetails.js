@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -14,12 +14,12 @@ import {
   TextField,
   TextArea,
   Checkbox,
-  Datepicker,
 } from '@folio/stripes/components';
 
 import {
   AcceptedValuesField,
   WithValidation,
+  DatePickerDecorator,
 } from '../../../../../components';
 
 import {
@@ -35,7 +35,10 @@ import {
   getFieldName,
   getBoolFieldName,
 } from '../../utils';
-import { BOOLEAN_ACTIONS } from '../../../../../utils';
+import {
+  BOOLEAN_ACTIONS,
+  validateMARCWithDate
+} from '../../../../../utils';
 
 export const POLineDetails = ({
   automaticExportCheckbox,
@@ -43,6 +46,11 @@ export const POLineDetails = ({
   okapi,
 }) => {
   const { formatMessage } = useIntl();
+
+  const validateDatepickerFieldValue = useCallback(
+    value => validateMARCWithDate(value, false),
+    [],
+  );
 
   const orderFormatOptions = [
     {
@@ -134,16 +142,14 @@ export const POLineDetails = ({
           <KeyValue label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.createdOn`} />} />
         </Col>
         <Col xs={3}>
-          <WithValidation>
-            {validation => (
-              <Field
-                component={Datepicker}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.receiptDate`} />}
-                name={getFieldName(35)}
-                validate={[validation]}
-              />
-            )}
-          </WithValidation>
+          <Field
+            component={DatePickerDecorator}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.receiptDate`} />}
+            name={getFieldName(35)}
+            wrappedComponent={TextField}
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+            validate={[validateDatepickerFieldValue]}
+          />
         </Col>
         <Col xs={3}>
           <AcceptedValuesField
