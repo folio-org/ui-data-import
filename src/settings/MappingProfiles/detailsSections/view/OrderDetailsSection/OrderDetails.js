@@ -120,18 +120,22 @@ export const OrderDetails = ({ mappingDetails }) => {
   const contributorsData = transformSubfieldsData(contributors, contributorsFieldsMap);
   const productIdsData = transformSubfieldsData(productIds, productIdsFieldsMap);
 
-  const formattedSubscriptionFrom = (
-    <FormattedDate
-      value={subscriptionFrom}
-      {...BASE_FORMATTED_DATE}
-    />
-  );
-  const formattedSubscriptionTo = (
-    <FormattedDate
-      value={subscriptionTo}
-      {...BASE_FORMATTED_DATE}
-    />
-  );
+  const formattedSubscriptionFrom = subscriptionFrom
+    ? (
+      <FormattedDate
+        value={subscriptionFrom}
+        {...BASE_FORMATTED_DATE}
+      />
+    )
+    : null;
+  const formattedSubscriptionTo = subscriptionTo
+    ? (
+      <FormattedDate
+        value={subscriptionTo}
+        {...BASE_FORMATTED_DATE}
+      />
+    )
+    : null;
 
   return (
     <Accordion

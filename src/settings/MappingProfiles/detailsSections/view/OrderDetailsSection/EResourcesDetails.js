@@ -37,18 +37,22 @@ export const EResourcesDetails = ({ mappingDetails }) => {
   const activatedCheckbox = renderCheckbox('order.eResourcesDetails.activated', activated);
   const trialCheckbox = renderCheckbox('order.eResourcesDetails.trial', trial);
 
-  const formattedActivationDue = (
-    <FormattedDate
-      value={activationDue}
-      {...BASE_FORMATTED_DATE}
-    />
-  );
-  const formattedExpectedActivation = (
-    <FormattedDate
-      value={expectedActivation}
-      {...BASE_FORMATTED_DATE}
-    />
-  );
+  const formattedActivationDue = activationDue
+    ? (
+      <FormattedDate
+        value={activationDue}
+        {...BASE_FORMATTED_DATE}
+      />
+    )
+    : null;
+  const formattedExpectedActivation = expectedActivation
+    ? (
+      <FormattedDate
+        value={expectedActivation}
+        {...BASE_FORMATTED_DATE}
+      />
+    )
+    : null;
 
   return (
     <Accordion

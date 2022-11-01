@@ -60,18 +60,22 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
 
   const volumesData = transformSubfieldsData(volumes, volumesFieldsMap);
 
-  const formattedReceiptDue = (
-    <FormattedDate
-      value={receiptDue}
-      {...BASE_FORMATTED_DATE}
-    />
-  );
-  const formattedExpectedReceiptDate = (
-    <FormattedDate
-      value={expectedReceiptDate}
-      {...BASE_FORMATTED_DATE}
-    />
-  );
+  const formattedReceiptDue = receiptDue
+    ? (
+      <FormattedDate
+        value={receiptDue}
+        {...BASE_FORMATTED_DATE}
+      />
+    )
+    : null;
+  const formattedExpectedReceiptDate = expectedReceiptDate
+    ? (
+      <FormattedDate
+        value={expectedReceiptDate}
+        {...BASE_FORMATTED_DATE}
+      />
+    )
+    : null;
 
   return (
     <Accordion
