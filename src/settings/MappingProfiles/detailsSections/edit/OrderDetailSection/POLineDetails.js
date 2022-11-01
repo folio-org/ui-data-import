@@ -14,10 +14,12 @@ import {
   TextField,
   TextArea,
   Checkbox,
-  Datepicker,
 } from '@folio/stripes/components';
 
-import { AcceptedValuesField } from '../../../../../components';
+import {
+  AcceptedValuesField,
+  DatePickerDecorator,
+} from '../../../../../components';
 
 import {
   TRANSLATION_ID_PREFIX,
@@ -130,9 +132,11 @@ export const POLineDetails = ({
         </Col>
         <Col xs={3}>
           <Field
-            component={Datepicker}
+            component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.receiptDate`} />}
             name={getFieldName(35)}
+            wrappedComponent={TextField}
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
           />
         </Col>
         <Col xs={3}>

@@ -12,11 +12,13 @@ import {
   Col,
   TextField,
   TextArea,
-  Datepicker,
   RepeatableField,
 } from '@folio/stripes/components';
 
-import { AcceptedValuesField } from '../../../../../components';
+import {
+  AcceptedValuesField,
+  DatePickerDecorator,
+} from '../../../../../components';
 
 import {
   TRANSLATION_ID_PREFIX,
@@ -80,16 +82,20 @@ export const ItemDetails = ({
       <Row left="xs">
         <Col xs={4}>
           <Field
-            component={Datepicker}
+            component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionFrom`} />}
             name={getFieldName(21)}
+            wrappedComponent={TextField}
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
           />
         </Col>
         <Col xs={4}>
           <Field
-            component={Datepicker}
+            component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionTo`} />}
             name={getFieldName(22)}
+            wrappedComponent={TextField}
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
           />
         </Col>
         <Col xs={4}>
