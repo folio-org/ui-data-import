@@ -18,6 +18,7 @@ import {
 import {
   AcceptedValuesField,
   FieldOrganization,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -64,12 +65,17 @@ export const EResourcesDetails = ({
     >
       <Row left="xs">
         <Col xs={3}>
-          <FieldOrganization
-            id={accessProviderId}
-            setReferenceTables={setReferenceTables}
-            name={getFieldName(68)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.accessProvider`} />}
-          />
+          <WithValidation>
+            {validation => (
+              <FieldOrganization
+                id={accessProviderId}
+                setReferenceTables={setReferenceTables}
+                name={getFieldName(68)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.accessProvider`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
           <Field
@@ -83,11 +89,16 @@ export const EResourcesDetails = ({
           />
         </Col>
         <Col xs={3}>
-          <Field
-            component={Datepicker}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.activationDue`} />}
-            name={getFieldName(70)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={Datepicker}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.activationDue`} />}
+                name={getFieldName(70)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
           <AcceptedValuesField
@@ -131,28 +142,42 @@ export const EResourcesDetails = ({
           />
         </Col>
         <Col xs={3}>
-          <Field
-            component={Datepicker}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.expectedActivation`} />}
-            name={getFieldName(74)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={Datepicker}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.expectedActivation`} />}
+                name={getFieldName(74)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.userLimit`} />}
-            name={getFieldName(75)}
-            type="number"
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.userLimit`} />}
+                name={getFieldName(75)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
       <Row>
         <Col xs={12}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.url`} />}
-            name={getFieldName(76)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.url`} />}
+                name={getFieldName(76)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
     </Accordion>

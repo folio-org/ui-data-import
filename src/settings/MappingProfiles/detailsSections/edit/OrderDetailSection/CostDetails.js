@@ -13,7 +13,10 @@ import {
 } from '@folio/stripes/components';
 import { TypeToggle } from '@folio/stripes-acq-components';
 
-import { AcceptedValuesField } from '../../../../../components';
+import {
+  AcceptedValuesField,
+  WithValidation,
+} from '../../../../../components';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -35,28 +38,40 @@ export const CostDetails = ({
     >
       <Row left="xs">
         <Col xs={4}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice`} />}
-            name={getFieldName(50)}
-            type="number"
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice`} />}
+                name={getFieldName(50)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={4}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.quantityPhysical`} />}
-            name={getFieldName(51)}
-            type="number"
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.quantityPhysical`} />}
+                name={getFieldName(51)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={4}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.additionalCoast`} />}
-            name={getFieldName(52)}
-            type="number"
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.additionalCoast`} />}
+                name={getFieldName(52)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
       <Row left="xs">
@@ -87,39 +102,55 @@ export const CostDetails = ({
           />
         </Col>
         <Col xs={4}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.setExchangeRate`} />}
-            name={getFieldName(55)}
-            type="number"
-            disabled={isSetExchangeDisabled}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.setExchangeRate`} />}
+                name={getFieldName(55)}
+                validate={[validation]}
+                disabled={isSetExchangeDisabled}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
       <Row left="xs">
         <Col xs={3}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice`} />}
-            name={getFieldName(56)}
-            type="number"
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice`} />}
+                name={getFieldName(56)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.quantityElectronic`} />}
-            name={getFieldName(57)}
-            type="number"
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.quantityElectronic`} />}
+                name={getFieldName(57)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.discount`} />}
-            name={getFieldName(58)}
-            type="number"
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.discount`} />}
+                name={getFieldName(58)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
           <Field

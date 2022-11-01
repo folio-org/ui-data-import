@@ -18,6 +18,7 @@ import {
 import {
   AcceptedValuesField,
   FieldOrganization,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -67,26 +68,41 @@ export const PhysicalResourceDetails = ({
     >
       <Row left="xs">
         <Col xs={3}>
-          <FieldOrganization
-            id={materialSupplierId}
-            setReferenceTables={setReferenceTables}
-            name={getFieldName(62)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialSupplier`} />}
-          />
+          <WithValidation>
+            {validation => (
+              <FieldOrganization
+                id={materialSupplierId}
+                setReferenceTables={setReferenceTables}
+                name={getFieldName(62)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialSupplier`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
-          <Field
-            component={Datepicker}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.receiptDue`} />}
-            name={getFieldName(63)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={Datepicker}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.receiptDue`} />}
+                name={getFieldName(63)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
-          <Field
-            component={Datepicker}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.expectedReceiptDate`} />}
-            name={getFieldName(64)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={Datepicker}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.expectedReceiptDate`} />}
+                name={getFieldName(64)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
           <AcceptedValuesField
@@ -127,11 +143,16 @@ export const PhysicalResourceDetails = ({
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={12}>
-              <Field
-                component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.volume`} />}
-                name={getSubfieldName(volumesFieldIndex, 0, index)}
-              />
+              <WithValidation>
+                {validation => (
+                  <Field
+                    component={TextField}
+                    label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.volume`} />}
+                    name={getSubfieldName(volumesFieldIndex, 0, index)}
+                    validate={[validation]}
+                  />
+                )}
+              </WithValidation>
             </Col>
           </Row>
         )}

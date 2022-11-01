@@ -12,7 +12,10 @@ import {
 } from '@folio/stripes/components';
 import { TypeToggle } from '@folio/stripes-acq-components';
 
-import { AcceptedValuesField } from '../../../../../components';
+import {
+  AcceptedValuesField,
+  WithValidation,
+} from '../../../../../components';
 
 import {
   TRANSLATION_ID_PREFIX,
@@ -82,12 +85,16 @@ export const FundDistribution = ({
                 />
               </Col>
               <Col xs={3}>
-                <Field
-                  component={TextField}
-                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.value`} />}
-                  name={getSubfieldName(fundDistributionsFieldIndex, 2, index)}
-                  type="number"
-                />
+                <WithValidation>
+                  {validation => (
+                    <Field
+                      component={TextField}
+                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.value`} />}
+                      name={getSubfieldName(fundDistributionsFieldIndex, 2, index)}
+                      validate={[validation]}
+                    />
+                  )}
+                </WithValidation>
               </Col>
               <Col xs={3}>
                 <Field

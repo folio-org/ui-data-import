@@ -16,7 +16,10 @@ import {
   RepeatableField,
 } from '@folio/stripes/components';
 
-import { AcceptedValuesField } from '../../../../../components';
+import {
+  AcceptedValuesField,
+  WithValidation,
+} from '../../../../../components';
 
 import {
   TRANSLATION_ID_PREFIX,
@@ -50,21 +53,31 @@ export const ItemDetails = ({
     >
       <Row left="xs">
         <Col xs={12}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.title`} />}
-            name={getFieldName(18)}
-            required
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.title`} />}
+                name={getFieldName(18)}
+                validate={[validation]}
+                required
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
       <Row left="xs">
         <Col xs={4}>
-          <Field
-            component={TextArea}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.receivingNote`} />}
-            name={getFieldName(19)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextArea}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.receivingNote`} />}
+                name={getFieldName(19)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={4}>
           <AcceptedValuesField
@@ -80,49 +93,78 @@ export const ItemDetails = ({
       </Row>
       <Row left="xs">
         <Col xs={4}>
-          <Field
-            component={Datepicker}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionFrom`} />}
-            name={getFieldName(21)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={Datepicker}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionFrom`} />}
+                name={getFieldName(21)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={4}>
-          <Field
-            component={Datepicker}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionTo`} />}
-            name={getFieldName(22)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={Datepicker}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionTo`} />}
+                name={getFieldName(22)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={4}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionInterval`} />}
-            name={getFieldName(23)}
-            type="number"
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionInterval`} />}
+                name={getFieldName(23)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
       <Row left="xs">
         <Col xs={4}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.publicationDate`} />}
-            name={getFieldName(24)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.publicationDate`} />}
+                name={getFieldName(24)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={4}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.publisher`} />}
-            name={getFieldName(25)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.publisher`} />}
+                name={getFieldName(25)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={4}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.edition`} />}
-            name={getFieldName(26)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.edition`} />}
+                name={getFieldName(26)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
       <RepeatableField
@@ -134,11 +176,16 @@ export const ItemDetails = ({
           return (
             <Row left="xs">
               <Col xs={6}>
-                <Field
-                  component={TextField}
-                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributor`} />}
-                  name={getSubfieldName(contributorsFieldIndex, 0, index)}
-                />
+                <WithValidation>
+                  {validation => (
+                    <Field
+                      component={TextField}
+                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributor`} />}
+                      name={getSubfieldName(contributorsFieldIndex, 0, index)}
+                      validate={[validation]}
+                    />
+                  )}
+                </WithValidation>
               </Col>
               <Col xs={6}>
                 <AcceptedValuesField
@@ -170,18 +217,28 @@ export const ItemDetails = ({
           return (
             <Row left="xs">
               <Col xs={4}>
-                <Field
-                  component={TextField}
-                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.productId`} />}
-                  name={getSubfieldName(productIdsFieldIndex, 0, index)}
-                />
+                <WithValidation>
+                  {validation => (
+                    <Field
+                      component={TextField}
+                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.productId`} />}
+                      name={getSubfieldName(productIdsFieldIndex, 0, index)}
+                      validate={[validation]}
+                    />
+                  )}
+                </WithValidation>
               </Col>
               <Col xs={4}>
-                <Field
-                  component={TextField}
-                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.qualifier`} />}
-                  name={getSubfieldName(productIdsFieldIndex, 1, index)}
-                />
+                <WithValidation>
+                  {validation => (
+                    <Field
+                      component={TextField}
+                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.qualifier`} />}
+                      name={getSubfieldName(productIdsFieldIndex, 1, index)}
+                      validate={[validation]}
+                    />
+                  )}
+                </WithValidation>
               </Col>
               <Col xs={4}>
                 <AcceptedValuesField
@@ -206,11 +263,16 @@ export const ItemDetails = ({
       />
       <Row left="xs">
         <Col xs={12}>
-          <Field
-            component={TextArea}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.internalNote`} />}
-            name={getFieldName(29)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextArea}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.internalNote`} />}
+                name={getFieldName(29)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
     </Accordion>
