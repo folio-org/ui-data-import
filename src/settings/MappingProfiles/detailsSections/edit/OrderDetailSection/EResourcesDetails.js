@@ -12,11 +12,11 @@ import {
   Col,
   TextField,
   Checkbox,
-  Datepicker,
 } from '@folio/stripes/components';
 
 import {
   AcceptedValuesField,
+  DatePickerDecorator,
   FieldOrganization,
 } from '../../../../../components';
 
@@ -84,9 +84,11 @@ export const EResourcesDetails = ({
         </Col>
         <Col xs={3}>
           <Field
-            component={Datepicker}
+            component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.activationDue`} />}
             name={getFieldName(70)}
+            wrappedComponent={TextField}
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
           />
         </Col>
         <Col xs={3}>
@@ -132,9 +134,11 @@ export const EResourcesDetails = ({
         </Col>
         <Col xs={3}>
           <Field
-            component={Datepicker}
+            component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.expectedActivation`} />}
             name={getFieldName(74)}
+            wrappedComponent={TextField}
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
           />
         </Col>
         <Col xs={3}>
