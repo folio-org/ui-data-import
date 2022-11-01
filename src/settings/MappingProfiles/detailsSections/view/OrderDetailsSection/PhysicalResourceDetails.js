@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormattedDate,
-  FormattedMessage,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Accordion,
@@ -24,10 +21,7 @@ import {
   getFieldValueByPath,
   transformSubfieldsData,
 } from '../../utils';
-import {
-  BASE_FORMATTED_DATE,
-  mappingProfileFieldShape,
-} from '../../../../../utils';
+import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const PhysicalResourceDetails = ({ mappingDetails }) => {
   const { VOLUMES } = PHYSICAL_RESOURCE_VISIBLE_COLUMNS;
@@ -60,23 +54,6 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
 
   const volumesData = transformSubfieldsData(volumes, volumesFieldsMap);
 
-  const formattedReceiptDue = receiptDue
-    ? (
-      <FormattedDate
-        value={receiptDue}
-        {...BASE_FORMATTED_DATE}
-      />
-    )
-    : null;
-  const formattedExpectedReceiptDate = expectedReceiptDate
-    ? (
-      <FormattedDate
-        value={expectedReceiptDate}
-        {...BASE_FORMATTED_DATE}
-      />
-    )
-    : null;
-
   return (
     <Accordion
       id="view-physical-order-details"
@@ -98,7 +75,7 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalOrderDetails.receiptDue`} />}
-            value={formattedReceiptDue}
+            value={receiptDue}
           />
         </Col>
         <Col
@@ -107,7 +84,7 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalOrderDetails.expectedReceiptDate`} />}
-            value={formattedExpectedReceiptDate}
+            value={expectedReceiptDate}
           />
         </Col>
         <Col
