@@ -232,6 +232,7 @@ const OrderInformationComponent = ({
             name={getFieldName(7)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.vendor`} />}
             onSelect={onOrganizationSelect}
+            required
           />
         </Col>
         <Col xs={3}>
@@ -240,6 +241,7 @@ const OrderInformationComponent = ({
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.orderType`} />}
             name={getFieldName(8)}
             disabled
+            required
           />
         </Col>
         <Col xs={3}>

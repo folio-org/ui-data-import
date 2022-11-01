@@ -69,6 +69,7 @@ export const CostDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={currenciesOptions}
+            required
           />
         </Col>
         <Col xs={4}>

@@ -99,6 +99,7 @@ export const POLineDetails = ({
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(31)}
             okapi={okapi}
+            required
           />
         </Col>
         <Col xs={3}>
@@ -121,6 +122,7 @@ export const POLineDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={orderFormatOptions}
+            required
           />
         </Col>
       </Row>
@@ -218,6 +220,7 @@ export const POLineDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={receivingWorkflowOptions}
+            required
           />
         </Col>
       </Row>
