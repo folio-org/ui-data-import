@@ -11,6 +11,9 @@
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
 * Create the field mapping profile for Orders and Order Lines: View (UIDATIMP-1217)
 
+### Bugs fixed:
+* Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
+
 ## [5.3.1](https://github.com/folio-org/ui-data-import/tree/v5.3.1) (2022-10-27)
 
 ### Features added:
