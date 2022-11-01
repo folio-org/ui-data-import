@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormattedDate,
-  FormattedMessage,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Accordion,
@@ -18,10 +15,7 @@ import {
   getFieldValueByPath,
   renderCheckbox,
 } from '../../utils';
-import {
-  BASE_FORMATTED_DATE,
-  mappingProfileFieldShape,
-} from '../../../../../utils';
+import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const EResourcesDetails = ({ mappingDetails }) => {
   const accessProvider = getFieldValue(mappingDetails, 'accessProvider', 'value');
@@ -36,23 +30,6 @@ export const EResourcesDetails = ({ mappingDetails }) => {
 
   const activatedCheckbox = renderCheckbox('order.eResourcesDetails.activated', activated);
   const trialCheckbox = renderCheckbox('order.eResourcesDetails.trial', trial);
-
-  const formattedActivationDue = activationDue
-    ? (
-      <FormattedDate
-        value={activationDue}
-        {...BASE_FORMATTED_DATE}
-      />
-    )
-    : null;
-  const formattedExpectedActivation = expectedActivation
-    ? (
-      <FormattedDate
-        value={expectedActivation}
-        {...BASE_FORMATTED_DATE}
-      />
-    )
-    : null;
 
   return (
     <Accordion
@@ -84,7 +61,7 @@ export const EResourcesDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.activationDue`} />}
-            value={formattedActivationDue}
+            value={activationDue}
           />
         </Col>
         <Col
@@ -122,7 +99,7 @@ export const EResourcesDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.expectedActivation`} />}
-            value={formattedExpectedActivation}
+            value={expectedActivation}
           />
         </Col>
         <Col
