@@ -10,13 +10,13 @@ import {
   Accordion,
   RepeatableField,
   TextField,
-  Datepicker,
   Row,
   Col,
 } from '@folio/stripes/components';
 
 import {
   AcceptedValuesField,
+  DatePickerDecorator,
   FieldOrganization,
 } from '../../../../../components';
 
@@ -76,16 +76,20 @@ export const PhysicalResourceDetails = ({
         </Col>
         <Col xs={3}>
           <Field
-            component={Datepicker}
+            component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.receiptDue`} />}
             name={getFieldName(63)}
+            wrappedComponent={TextField}
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
           />
         </Col>
         <Col xs={3}>
           <Field
-            component={Datepicker}
+            component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.expectedReceiptDate`} />}
             name={getFieldName(64)}
+            wrappedComponent={TextField}
+            wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
           />
         </Col>
         <Col xs={3}>
