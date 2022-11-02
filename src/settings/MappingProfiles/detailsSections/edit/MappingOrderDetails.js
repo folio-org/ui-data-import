@@ -65,7 +65,7 @@ export const MappingOrderDetails = ({
 
   const currencyFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, CURRENCY_FIELD);
   const vendorFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, VENDOR_FIELD, false);
-  const vendorIdMatch = vendorFromDetails.match(/^"([a-zA-Z0-9-]*)"$/);
+  const vendorIdMatch = vendorFromDetails?.match(/^"([a-zA-Z0-9-]*)"$/);
   const filledVendorId = vendorIdMatch ? vendorIdMatch[1] : null;
   const assignedToId = getFieldValueFromDetails(mappingDetails?.mappingFields, ASSIGNED_TO_FIELD);
   const materialSupplierId = getFieldValueFromDetails(mappingDetails?.mappingFields, MATERIAL_SUPPLIER_FIELD);
