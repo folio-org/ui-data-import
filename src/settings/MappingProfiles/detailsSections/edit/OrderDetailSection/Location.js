@@ -22,6 +22,7 @@ import {
   getSubfieldName,
   onAdd,
   onRemove,
+  renderFieldLabelWithInfo,
 } from '../../utils';
 
 export const Location = ({
@@ -31,6 +32,18 @@ export const Location = ({
   okapi,
 }) => {
   const locationsFieldIndex = 61;
+  const locationLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.location.field.name`,
+    `${TRANSLATION_ID_PREFIX}.order.location.field.name.info`,
+  );
+  const quantityPhysicalLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.location.field.quantityPhysical`,
+    `${TRANSLATION_ID_PREFIX}.order.location.field.quantityPhysical.info`,
+  );
+  const quantityElectronicLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.location.field.quantityElectronic`,
+    `${TRANSLATION_ID_PREFIX}.order.location.field.quantityElectronic.info`,
+  );
 
   return (
     <Accordion
@@ -48,7 +61,7 @@ export const Location = ({
               <Col xs={4}>
                 <AcceptedValuesField
                   component={TextField}
-                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.location.field.name`} />}
+                  label={locationLabel}
                   name={getSubfieldName(locationsFieldIndex, 0, index)}
                   optionValue="name"
                   optionLabel="name"
@@ -66,7 +79,7 @@ export const Location = ({
               <Col xs={4}>
                 <Field
                   component={TextField}
-                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.location.field.quantityPhysical`} />}
+                  label={quantityPhysicalLabel}
                   name={getSubfieldName(locationsFieldIndex, 1, index)}
                   type="number"
                 />
@@ -74,7 +87,7 @@ export const Location = ({
               <Col xs={4}>
                 <Field
                   component={TextField}
-                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.location.field.quantityElectronic`} />}
+                  label={quantityElectronicLabel}
                   name={getSubfieldName(locationsFieldIndex, 2, index)}
                   type="number"
                 />
