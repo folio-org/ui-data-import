@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormattedDate,
-  FormattedMessage,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Accordion,
@@ -19,10 +16,7 @@ import {
   renderCheckbox,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import {
-  BASE_FORMATTED_DATE,
-  mappingProfileFieldShape,
-} from '../../../../../utils';
+import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const POLineDetails = ({ mappingDetails }) => {
   const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
@@ -46,15 +40,6 @@ export const POLineDetails = ({ mappingDetails }) => {
   const poLineDescription = getFieldValue(mappingDetails, 'poLineDescription', 'value');
 
   const automaticExportCheckbox = renderCheckbox('order.poLineDetails.automaticExport', automaticExport);
-
-  const formattedReceiptDate = receiptDate
-    ? (
-      <FormattedDate
-        value={receiptDate}
-        {...BASE_FORMATTED_DATE}
-      />
-    )
-    : null;
 
   return (
     <Accordion
@@ -115,7 +100,7 @@ export const POLineDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.receiptDate`} />}
-            value={formattedReceiptDate}
+            value={receiptDate}
           />
         </Col>
         <Col
