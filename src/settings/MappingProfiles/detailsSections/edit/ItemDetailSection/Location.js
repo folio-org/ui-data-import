@@ -15,7 +15,10 @@ import {
   getAcceptedValuesPath,
   getFieldName,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import { okapiShape } from '../../../../../utils';
 
 export const Location = ({
@@ -40,7 +43,7 @@ export const Location = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.LOCATIONS,
               wrapperSourcePath: 'locations',
             }]}
             isRemoveValueAllowed
@@ -62,7 +65,7 @@ export const Location = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/locations?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.LOCATIONS,
               wrapperSourcePath: 'locations',
             }]}
             isRemoveValueAllowed

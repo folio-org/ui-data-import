@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **5.3.2** (in progress)
+
+### Bugs fixed:
+* Invoice field mapping profile: sortBy param is missed for Bill to name field (UIDATIMP-1288)
+
 ## [5.3.1](https://github.com/folio-org/ui-data-import/tree/v5.3.1) (2022-10-27)
 
 ### Features added:

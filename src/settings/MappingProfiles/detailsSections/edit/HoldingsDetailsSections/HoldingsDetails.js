@@ -25,7 +25,10 @@ import {
   getRepeatableFieldName,
   getAcceptedValuesPath,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   mappingProfileSubfieldShape,
   okapiShape,
@@ -273,7 +276,7 @@ export const HoldingsDetails = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/ill-policies?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ILL_POLICIES,
               wrapperSourcePath: 'illPolicies',
             }]}
             isRemoveValueAllowed

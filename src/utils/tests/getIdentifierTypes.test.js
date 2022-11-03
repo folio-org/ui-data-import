@@ -1,5 +1,6 @@
 import '../../../test/jest/__mock__';
 
+import { WRAPPER_SOURCE_LINKS } from '../../settings/MappingProfiles/detailsSections/constants';
 import { getIdentifierTypes } from '../getIdentifierTypes';
 
 global.fetch = jest.fn();
@@ -13,7 +14,7 @@ describe('getIdentifierTypes function', () => {
     });
 
     const okapi = { url: 'https://test.com' };
-    const expectedURL = `${okapi.url}/identifier-types?limit=1000&query=cql.allRecords=1 sortby name`;
+    const expectedURL = `${okapi.url}/${WRAPPER_SOURCE_LINKS.IDENTIFIER_TYPES}`;
 
     const data = await getIdentifierTypes(okapi);
 

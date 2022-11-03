@@ -1,10 +1,11 @@
 import { createOkapiHeaders } from '@folio/stripes-data-transfer-components';
+import { WRAPPER_SOURCE_LINKS } from '../settings/MappingProfiles/detailsSections/constants';
 
 export const getIdentifierTypes = async (okapi) => {
   const { url } = okapi;
 
   try {
-    const path = `${url}/identifier-types?limit=1000&query=cql.allRecords=1 sortby name`;
+    const path = `${url}/${WRAPPER_SOURCE_LINKS.IDENTIFIER_TYPES}`;
     const response = await fetch(path,
       {
         headers: {
