@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * After duplicating profiles the previous view details information is displayed (UIDATIMP-1285)
+* Invoice field mapping profile: sortBy param is missed for Bill to name field (UIDATIMP-1288)
 
 ## [5.3.1](https://github.com/folio-org/ui-data-import/tree/v5.3.1) (2022-10-27)
 
