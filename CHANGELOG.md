@@ -13,6 +13,7 @@
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
+* After duplicating profiles the previous view details information is displayed (UIDATIMP-1285)
 
 ## [5.3.1](https://github.com/folio-org/ui-data-import/tree/v5.3.1) (2022-10-27)
 

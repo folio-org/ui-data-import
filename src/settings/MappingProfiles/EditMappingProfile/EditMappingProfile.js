@@ -58,6 +58,7 @@ EditMappingProfileComponent.manifest = Object.freeze({
     type: 'okapi',
     path: 'data-import-profiles/mappingProfiles/:{id}',
     PUT: { throwErrors: false },
+    shouldRefresh: () => false,
   },
 });
 

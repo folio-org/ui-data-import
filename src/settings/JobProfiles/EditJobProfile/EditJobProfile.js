@@ -58,6 +58,7 @@ EditJobProfileComponent.manifest = Object.freeze({
     type: 'okapi',
     path: 'data-import-profiles/jobProfiles/:{id}',
     PUT: { throwErrors: false },
+    shouldRefresh: () => false,
   },
 });
 
