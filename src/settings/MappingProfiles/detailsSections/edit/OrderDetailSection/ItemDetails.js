@@ -33,7 +33,10 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
-import { validateMARCWithDate } from '../../../../../utils';
+import {
+  validateMARCWithDate,
+  validateRequiredField,
+} from '../../../../../utils';
 
 export const ItemDetails = ({
   contributors,
@@ -65,7 +68,7 @@ export const ItemDetails = ({
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.title`} />}
                 name={getFieldName(18)}
-                validate={[validation]}
+                validate={[validateRequiredField, validation]}
                 required
               />
             )}

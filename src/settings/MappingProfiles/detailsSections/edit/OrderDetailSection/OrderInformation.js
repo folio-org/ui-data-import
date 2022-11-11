@@ -42,7 +42,10 @@ import {
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
-import { BOOLEAN_ACTIONS } from '../../../../../utils';
+import {
+  BOOLEAN_ACTIONS,
+  validateRequiredField,
+} from '../../../../../utils';
 
 const OrderInformationComponent = ({
   approvedCheckbox,
@@ -244,7 +247,7 @@ const OrderInformationComponent = ({
                 name={getFieldName(7)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.vendor`} />}
                 onSelect={onOrganizationSelect}
-                validate={[validation]}
+                validate={[validateRequiredField, validation]}
                 required
               />
             )}
