@@ -12,16 +12,17 @@ export const createLayerURL = (location, type) => {
     pathname,
     search,
   } = location;
+  const splittedPath = pathname.split('/');
 
   if (type === LAYER_TYPES.CREATE) {
-    return `${pathname}/${type}${search}`;
+    splittedPath.length = 4;
+    splittedPath.push(type);
+  } else {
+    const itemToChangeIndex = splittedPath.findIndex(item => item === LAYER_TYPES.VIEW);
+    splittedPath[itemToChangeIndex] = type;
   }
 
-  const splittedArr = pathname.split('/');
-  const itemToChangeIndex = splittedArr.findIndex(item => item === LAYER_TYPES.VIEW);
-  splittedArr[itemToChangeIndex] = type;
-  const joinedArr = splittedArr.join('/');
-
+  const joinedArr = splittedPath.join('/');
   const url = `${joinedArr}${search}`;
 
   return url;
