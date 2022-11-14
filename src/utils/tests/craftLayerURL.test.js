@@ -2,14 +2,40 @@ import { createLayerURL } from '../craftLayerURL';
 import { LAYER_TYPES } from '../constants';
 
 describe('createLayerUrl function', () => {
-  it('creates and returns url with given location and type values', () => {
-    const location = {
-      pathname: '/folio-org/ui-data-import/search',
-      search: '?q=searchTerm',
-    };
-    const type = LAYER_TYPES.DUPLICATE;
-    const expected = `${location.pathname}${location.search}&layer=${type}`;
+  describe('when create new record', () => {
+    it('should return the correct path', () => {
+      const location = {
+        pathname: '/folio-org/ui-data-import/search',
+        search: '?q=searchTerm',
+      };
+      const type = LAYER_TYPES.CREATE;
+      const expected = `${location.pathname}/${type}${location.search}`;
 
-    expect(createLayerURL(location, type)).toBe(expected);
+      expect(createLayerURL(location, type)).toBe(expected);
+    });
+  });
+  describe('when edit the existing record', () => {
+    it('should return the correct path', () => {
+      const location = {
+        pathname: '/folio-org/ui-data-import/search/view/testId',
+        search: '?q=searchTerm',
+      };
+      const type = LAYER_TYPES.EDIT;
+      const expected = `/folio-org/ui-data-import/search/${type}/testId${location.search}`;
+
+      expect(createLayerURL(location, type)).toBe(expected);
+    });
+  });
+  describe('when duplicate the record', () => {
+    it('should return the correct path', () => {
+      const location = {
+        pathname: '/folio-org/ui-data-import/search/view/testId',
+        search: '?q=searchTerm',
+      };
+      const type = LAYER_TYPES.DUPLICATE;
+      const expected = `/folio-org/ui-data-import/search/${type}/testId${location.search}`;
+
+      expect(createLayerURL(location, type)).toBe(expected);
+    });
   });
 });
