@@ -23,7 +23,7 @@ const matchProfileRecord = (
   name = 'testName',
   description = 'testDescription',
 ) => ({
-  matchProfile: {
+  matchProfileView: {
     hasLoaded,
     records: [{
       id: 'testId',

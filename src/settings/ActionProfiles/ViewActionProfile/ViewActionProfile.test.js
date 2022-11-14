@@ -25,7 +25,7 @@ const actionProfileRecord = (
   createdByUserId = 'testUserId',
   updatedByUserId = 'testUserId',
 ) => ({
-  actionProfile: {
+  actionProfileView: {
     records: [{
       parentProfiles: [],
       childProfiles: [],
