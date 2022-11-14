@@ -84,7 +84,7 @@ export const Location = ({
                   {validation => (
                     <Field
                       component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.location.field.quantityPhysical`} />}
+                      label={quantityPhysicalLabel}
                       name={getSubfieldName(locationsFieldIndex, 1, index)}
                       validate={[validation]}
                     />
@@ -96,7 +96,7 @@ export const Location = ({
                   {validation => (
                     <Field
                       component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.location.field.quantityElectronic`} />}
+                      label={quantityElectronicLabel}
                       name={getSubfieldName(locationsFieldIndex, 2, index)}
                       validate={[validation]}
                     />

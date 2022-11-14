@@ -60,7 +60,7 @@ export const CostDetails = ({
             {validation => (
               <Field
                 component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice`} />}
+                label={physicalUnitPriceLabel}
                 name={getFieldName(50)}
                 validate={[validation]}
               />
@@ -72,7 +72,7 @@ export const CostDetails = ({
             {validation => (
               <Field
                 component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.quantityPhysical`} />}
+                label={quantityPhysicalLabel}
                 name={getFieldName(51)}
                 validate={[validation]}
               />
@@ -139,7 +139,7 @@ export const CostDetails = ({
             {validation => (
               <Field
                 component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice`} />}
+                label={electronicUnitPriceLabel}
                 name={getFieldName(56)}
                 validate={[validation]}
               />
@@ -151,7 +151,7 @@ export const CostDetails = ({
             {validation => (
               <Field
                 component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.quantityElectronic`} />}
+                label={quantityElectronicLabel}
                 name={getFieldName(57)}
                 validate={[validation]}
               />

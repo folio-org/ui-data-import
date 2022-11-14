@@ -13,6 +13,11 @@ import { CostDetails } from '../CostDetails';
 
 import { BOOLEAN_ACTIONS } from '../../../../../../utils';
 
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  InfoPopover: () => <span>InfoPopover</span>,
+}));
+
 const renderCostDetails = () => {
   const component = () => (
     <CostDetails
@@ -44,5 +49,14 @@ describe('CostDetails', () => {
     const { queryByText } = renderCostDetails();
 
     expect(within(queryByText('Currency')).getByText(/\*/i)).toBeDefined();
+  });
+
+  it('should render info icons for sometimes required fields', () => {
+    const { queryByText } = renderCostDetails();
+
+    expect(within(queryByText('Physical unit price')).getByText(/InfoPopover/i)).toBeDefined();
+    expect(within(queryByText('Quantity physical')).getByText(/InfoPopover/i)).toBeDefined();
+    expect(within(queryByText('Electronic unit price')).getByText(/InfoPopover/i)).toBeDefined();
+    expect(within(queryByText('Quantity electronic')).getByText(/InfoPopover/i)).toBeDefined();
   });
 });

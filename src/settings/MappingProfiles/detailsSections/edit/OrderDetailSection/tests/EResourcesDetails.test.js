@@ -1,4 +1,5 @@
 import React from 'react';
+import { within } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -11,6 +12,11 @@ import {
 import { EResourcesDetails } from '../EResourcesDetails';
 
 import { BOOLEAN_ACTIONS } from '../../../../../../utils';
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  InfoPopover: () => <span>InfoPopover</span>,
+}));
 
 const okapiProp = {
   tenant: 'testTenant',
@@ -45,5 +51,12 @@ describe('EResourcesDetails', () => {
     expect(getByText('Expected activation')).toBeInTheDocument();
     expect(getByText('User limit')).toBeInTheDocument();
     expect(getByText('URL')).toBeInTheDocument();
+  });
+
+  it('should render info icons for sometimes required fields', () => {
+    const { queryByText } = renderEResourcesDetails();
+
+    expect(within(queryByText('Create inventory')).getByText(/InfoPopover/i)).toBeDefined();
+    expect(within(queryByText('Material type')).getByText(/InfoPopover/i)).toBeDefined();
   });
 });

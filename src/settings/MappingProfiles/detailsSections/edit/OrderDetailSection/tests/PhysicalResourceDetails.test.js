@@ -1,4 +1,5 @@
 import React from 'react';
+import { within } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -9,6 +10,11 @@ import {
 } from '../../../../../../../test/jest/helpers';
 
 import { PhysicalResourceDetails } from '../PhysicalResourceDetails';
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  InfoPopover: () => <span>InfoPopover</span>,
+}));
 
 const okapiProp = {
   tenant: 'testTenant',
@@ -52,5 +58,12 @@ describe('PhysicalResourceDetails', () => {
     expect(getByText('Material type')).toBeInTheDocument();
     expect(getByText('Add volume')).toBeInTheDocument();
     expect(getByText('Volume')).toBeInTheDocument();
+  });
+
+  it('should render info icons for sometimes required fields', () => {
+    const { queryByText } = renderPhysicalResourceDetails();
+
+    expect(within(queryByText('Create inventory')).getByText(/InfoPopover/i)).toBeDefined();
+    expect(within(queryByText('Material type')).getByText(/InfoPopover/i)).toBeDefined();
   });
 });

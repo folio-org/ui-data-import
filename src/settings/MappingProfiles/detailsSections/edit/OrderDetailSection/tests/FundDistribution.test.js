@@ -1,4 +1,5 @@
 import React from 'react';
+import { within } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -9,6 +10,11 @@ import {
 } from '../../../../../../../test/jest/helpers';
 
 import { FundDistribution } from '../FundDistribution';
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  InfoPopover: () => <span>InfoPopover</span>,
+}));
 
 const okapiProp = {
   tenant: 'testTenant',
@@ -67,5 +73,13 @@ describe('FundDistribution', () => {
     expect(getByText('Expense class')).toBeInTheDocument();
     expect(getByText('Value')).toBeInTheDocument();
     expect(getByText('Type')).toBeInTheDocument();
+  });
+
+  it('should render info icons for sometimes required fields', () => {
+    const { queryByText } = renderFundDistribution();
+
+    expect(within(queryByText('Fund ID')).getByText(/InfoPopover/i)).toBeDefined();
+    expect(within(queryByText('Expense class')).getByText(/InfoPopover/i)).toBeDefined();
+    expect(within(queryByText('Value')).getByText(/InfoPopover/i)).toBeDefined();
   });
 });

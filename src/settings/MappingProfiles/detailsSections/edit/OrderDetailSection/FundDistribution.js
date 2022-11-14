@@ -102,7 +102,7 @@ export const FundDistribution = ({
                   {validation => (
                     <Field
                       component={TextField}
-                      label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.value`} />}
+                      label={valueLabel}
                       name={getSubfieldName(fundDistributionsFieldIndex, 2, index)}
                       validate={[validation]}
                     />

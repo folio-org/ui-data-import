@@ -1,4 +1,5 @@
 import React from 'react';
+import { within } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -9,6 +10,11 @@ import {
 } from '../../../../../../../test/jest/helpers';
 
 import { Location } from '../Location';
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  InfoPopover: () => <span>InfoPopover</span>,
+}));
 
 const okapiProp = {
   tenant: 'testTenant',
@@ -60,5 +66,13 @@ describe('Location', () => {
     expect(getByText('Name (code)')).toBeInTheDocument();
     expect(getByText('Quantity physical')).toBeInTheDocument();
     expect(getByText('Quantity electronic')).toBeInTheDocument();
+  });
+
+  it('should render info icons for sometimes required fields', () => {
+    const { queryByText } = renderLocation();
+
+    expect(within(queryByText('Name (code)')).getByText(/InfoPopover/i)).toBeDefined();
+    expect(within(queryByText('Quantity physical')).getByText(/InfoPopover/i)).toBeDefined();
+    expect(within(queryByText('Quantity electronic')).getByText(/InfoPopover/i)).toBeDefined();
   });
 });
