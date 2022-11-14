@@ -19,6 +19,7 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   getBoolFieldName,
   getFieldName,
+  renderFieldLabelWithInfo,
 } from '../../utils';
 import { BOOLEAN_ACTIONS } from '../../../../../utils';
 
@@ -27,6 +28,23 @@ export const CostDetails = ({
   useSetExchange,
 }) => {
   const [isSetExchangeDisabled, setIsSetExchangeDisabled] = useState(useSetExchange === BOOLEAN_ACTIONS.ALL_FALSE);
+
+  const physicalUnitPriceLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice`,
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice.info`,
+  );
+  const quantityPhysicalLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.quantityPhysical`,
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice.info`,
+  );
+  const electronicUnitPriceLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice`,
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice.info`,
+  );
+  const quantityElectronicLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.quantityElectronic`,
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice.info`,
+  );
 
   return (
     <Accordion
@@ -37,7 +55,7 @@ export const CostDetails = ({
         <Col xs={4}>
           <Field
             component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice`} />}
+            label={physicalUnitPriceLabel}
             name={getFieldName(50)}
             type="number"
           />
@@ -45,7 +63,7 @@ export const CostDetails = ({
         <Col xs={4}>
           <Field
             component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.quantityPhysical`} />}
+            label={quantityPhysicalLabel}
             name={getFieldName(51)}
             type="number"
           />
@@ -99,7 +117,7 @@ export const CostDetails = ({
         <Col xs={3}>
           <Field
             component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice`} />}
+            label={electronicUnitPriceLabel}
             name={getFieldName(56)}
             type="number"
           />
@@ -107,7 +125,7 @@ export const CostDetails = ({
         <Col xs={3}>
           <Field
             component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.quantityElectronic`} />}
+            label={quantityElectronicLabel}
             name={getFieldName(57)}
             type="number"
           />

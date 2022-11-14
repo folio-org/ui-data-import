@@ -8,6 +8,7 @@ import {
 import {
   NoValue,
   Checkbox,
+  InfoPopover,
 } from '@folio/stripes/components';
 import { CurrencySymbol } from '@folio/stripes-acq-components';
 
@@ -257,3 +258,13 @@ export const boolAcceptedValuesOptions = formatMessage => ([
     value: 'false',
   },
 ]);
+
+export const renderFieldLabelWithInfo = (fieldLabel, infoContent) => (
+  <>
+    <FormattedMessage id={fieldLabel} />
+    <InfoPopover
+      iconSize="medium"
+      content={<FormattedMessage id={infoContent} />}
+    />
+  </>
+);
