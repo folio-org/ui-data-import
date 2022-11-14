@@ -1,3 +1,5 @@
+import { LAYER_TYPES } from './constants';
+
 /**
  * Description: TBD
  *
@@ -10,8 +12,15 @@ export const createLayerURL = (location, type) => {
     pathname,
     search,
   } = location;
+  const splittedPath = pathname.split('/');
 
-  const url = `${pathname}${search}`;
+  if (type === LAYER_TYPES.CREATE) {
+    splittedPath.length = 4;
+    splittedPath.push(type);
+  } else {
+    const itemToChangeIndex = splittedPath.findIndex(item => item === LAYER_TYPES.VIEW);
+    splittedPath[itemToChangeIndex] = type;
+  }
 
-  return `${url}${url.includes('?') ? '&' : '?'}layer=${type}`;
+  return `${splittedPath.join('/')}${search}`;
 };
