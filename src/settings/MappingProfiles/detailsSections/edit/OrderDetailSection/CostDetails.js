@@ -22,6 +22,7 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   getBoolFieldName,
   getFieldName,
+  renderFieldLabelWithInfo,
 } from '../../utils';
 import { BOOLEAN_ACTIONS } from '../../../../../utils';
 
@@ -30,6 +31,23 @@ export const CostDetails = ({
   useSetExchange,
 }) => {
   const [isSetExchangeDisabled, setIsSetExchangeDisabled] = useState(useSetExchange === BOOLEAN_ACTIONS.ALL_FALSE);
+
+  const physicalUnitPriceLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice`,
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice.info`,
+  );
+  const quantityPhysicalLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.quantityPhysical`,
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice.info`,
+  );
+  const electronicUnitPriceLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice`,
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice.info`,
+  );
+  const quantityElectronicLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.quantityElectronic`,
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice.info`,
+  );
 
   return (
     <Accordion

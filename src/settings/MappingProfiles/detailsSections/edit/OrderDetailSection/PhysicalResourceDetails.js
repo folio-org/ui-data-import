@@ -32,6 +32,7 @@ import {
   getSubfieldName,
   onAdd,
   onRemove,
+  renderFieldLabelWithInfo,
 } from '../../utils';
 import { validateMARCWithDate } from '../../../../../utils';
 
@@ -66,6 +67,15 @@ export const PhysicalResourceDetails = ({
   ];
 
   const volumesFieldIndex = 67;
+
+  const createInventoryLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.createInventory`,
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice.info`,
+  );
+  const materialTypeLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialType`,
+    `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialType.info`,
+  );
 
   return (
     <Accordion
@@ -110,7 +120,7 @@ export const PhysicalResourceDetails = ({
           <AcceptedValuesField
             component={TextField}
             name={getFieldName(65)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.createInventory`} />}
+            label={createInventoryLabel}
             optionValue="value"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -122,7 +132,7 @@ export const PhysicalResourceDetails = ({
         <Col xs={12}>
           <AcceptedValuesField
             component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialType`} />}
+            label={materialTypeLabel}
             name={getFieldName(66)}
             optionValue="name"
             optionLabel="name"
