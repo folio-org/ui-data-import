@@ -47,8 +47,8 @@ const actionProfileRecord = (
   },
 });
 
-const viewActionProfileProps = ({ actionProfile }) => ({
-  resources: { actionProfile },
+const viewActionProfileProps = ({ actionProfileView }) => ({
+  resources: { actionProfileView },
   location: {
     search: '/test-path',
     pathname: '/test-path',
