@@ -70,7 +70,7 @@ import sharedCss from '../../../shared.css';
 export class ViewMappingProfile extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
-    mappingProfile: {
+    mappingProfileView: {
       type: 'okapi',
       path: 'data-import-profiles/mappingProfiles/:{id}',
       params: { withRelations: true },
@@ -90,7 +90,7 @@ export class ViewMappingProfile extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
-      mappingProfile: PropTypes.shape({
+      mappingProfileView: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -132,7 +132,7 @@ export class ViewMappingProfile extends Component {
       parentResources,
     } = this.props;
 
-    const mappingProfile = resources.mappingProfile || {};
+    const mappingProfile = resources.mappingProfileView || {};
     const marcFieldProtectionFields = parentResources.marcFieldProtectionSettings.records || [];
     const [record] = mappingProfile.records || [];
 
