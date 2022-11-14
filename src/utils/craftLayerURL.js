@@ -22,7 +22,5 @@ export const createLayerURL = (location, type) => {
     splittedPath[itemToChangeIndex] = type;
   }
 
-  const url = `${splittedPath.join('/')}${search}`;
-
-  return url;
+  return `${splittedPath.join('/')}${search}`;
 };
