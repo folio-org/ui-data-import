@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * Invoice field mapping profile: sortBy param is missed for Bill to name field (UIDATIMP-1288)
+* Incorrect name of the page in Edit mode of field mapping profile (UIDATIMP-1302)
 
 ## [5.3.1](https://github.com/folio-org/ui-data-import/tree/v5.3.1) (2022-10-27)
 

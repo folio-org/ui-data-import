@@ -48,6 +48,7 @@ const EditMappingProfileComponent = ({
       <MappingProfilesForm
         {...routeProps}
         initialValues={initialValues}
+        layerType={layerType}
       />
     </Layer>
   );
