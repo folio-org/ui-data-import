@@ -29,6 +29,7 @@ import {
   getAcceptedValuesPath,
   getBoolFieldName,
   getFieldName,
+  renderFieldLabelWithInfo,
 } from '../../utils';
 import { BOOLEAN_ACTIONS } from '../../../../../utils';
 
@@ -56,6 +57,15 @@ export const EResourcesDetails = ({
       value: CREATE_INVENTORY_TYPES.NONE,
     },
   ];
+
+  const createInventoryLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.createInventory`,
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice.info`,
+  );
+  const materialTypeLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.materialType`,
+    `${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.materialType.info`,
+  );
 
   return (
     <Accordion
@@ -95,7 +105,7 @@ export const EResourcesDetails = ({
           <AcceptedValuesField
             component={TextField}
             name={getFieldName(71)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.createInventory`} />}
+            label={createInventoryLabel}
             optionValue="value"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -107,7 +117,7 @@ export const EResourcesDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.materialType`} />}
+            label={materialTypeLabel}
             name={getFieldName(72)}
             optionValue="name"
             optionLabel="name"
