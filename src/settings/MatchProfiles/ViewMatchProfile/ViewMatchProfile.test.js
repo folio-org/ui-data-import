@@ -23,7 +23,7 @@ const matchProfileRecord = (
   name = 'testName',
   description = 'testDescription',
 ) => ({
-  matchProfile: {
+  matchProfileView: {
     hasLoaded,
     records: [{
       id: 'testId',
@@ -44,8 +44,8 @@ const matchProfileRecord = (
     }],
   },
 });
-const viewMatchProfileProps = ({ matchProfile }) => ({
-  resources: { matchProfile },
+const viewMatchProfileProps = ({ matchProfileView }) => ({
+  resources: { matchProfileView },
   match: { params: { id: 'testId' } },
   location: {
     search: '/test-path',
