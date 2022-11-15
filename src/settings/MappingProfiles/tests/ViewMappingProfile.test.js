@@ -57,7 +57,7 @@ history.push = jest.fn();
 const mappingDetails = getInitialDetails(FOLIO_RECORD_TYPES.INVOICE.type);
 
 const resources = buildResources({
-  resourceName: 'mappingProfile',
+  resourceName: 'mappingProfileView',
   records: [{
     childProfiles: [],
     deleted: false,
