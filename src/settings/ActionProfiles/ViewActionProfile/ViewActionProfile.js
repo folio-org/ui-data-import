@@ -56,7 +56,7 @@ import sharedCss from '../../../shared.css';
 export class ViewActionProfile extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
-    actionProfile: {
+    actionProfileView: {
       type: 'okapi',
       path: 'data-import-profiles/actionProfiles/:{id}',
       params: { withRelations: true },
@@ -76,7 +76,7 @@ export class ViewActionProfile extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
-      actionProfile: PropTypes.shape({
+      actionProfileView: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -114,7 +114,7 @@ export class ViewActionProfile extends Component {
   get actionProfileData() {
     const { resources } = this.props;
 
-    const actionProfile = resources.actionProfile || {};
+    const actionProfile = resources.actionProfileView || {};
     const [record] = actionProfile.records || [];
 
     return {
