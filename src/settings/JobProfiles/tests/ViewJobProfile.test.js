@@ -48,7 +48,7 @@ const jobProfile = {
 const viewJobProfileProps = (profile, actionMenuItems) => ({
   match: { params: { id: 'test id' } },
   resources: {
-    jobProfile: profile,
+    jobProfileView: profile,
     jobsUsingThisProfile: {
       records: [{
         jobExecutions: [{
