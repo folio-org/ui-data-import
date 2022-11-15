@@ -12,15 +12,15 @@ export const createLayerURL = (location, type) => {
     pathname,
     search,
   } = location;
-  const splittedPath = pathname.split('/');
+  const pathList = pathname.split('/');
 
   if (type === LAYER_TYPES.CREATE) {
-    splittedPath.length = 4;
-    splittedPath.push(type);
+    pathList.length = 4;
+    pathList.push(type);
   } else {
-    const itemToChangeIndex = splittedPath.findIndex(item => item === LAYER_TYPES.VIEW);
-    splittedPath[itemToChangeIndex] = type;
+    const itemToChangeIndex = pathList.findIndex(item => item === LAYER_TYPES.VIEW);
+    pathList[itemToChangeIndex] = type;
   }
 
-  return `${splittedPath.join('/')}${search}`;
+  return `${pathList.join('/')}${search}`;
 };
