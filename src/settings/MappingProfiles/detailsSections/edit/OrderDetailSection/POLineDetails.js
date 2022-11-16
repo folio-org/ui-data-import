@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -18,6 +18,7 @@ import {
 
 import {
   AcceptedValuesField,
+  WithValidation,
   DatePickerDecorator,
 } from '../../../../../components';
 
@@ -34,7 +35,10 @@ import {
   getFieldName,
   getBoolFieldName,
 } from '../../utils';
-import { BOOLEAN_ACTIONS } from '../../../../../utils';
+import {
+  BOOLEAN_ACTIONS,
+  validateMARCWithDate
+} from '../../../../../utils';
 
 export const POLineDetails = ({
   automaticExportCheckbox,
@@ -42,6 +46,11 @@ export const POLineDetails = ({
   okapi,
 }) => {
   const { formatMessage } = useIntl();
+
+  const validateDatepickerFieldValue = useCallback(
+    value => validateMARCWithDate(value, false),
+    [],
+  );
 
   const orderFormatOptions = [
     {
@@ -101,6 +110,7 @@ export const POLineDetails = ({
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(31)}
             okapi={okapi}
+            required
           />
         </Col>
         <Col xs={3}>
@@ -123,6 +133,7 @@ export const POLineDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={orderFormatOptions}
+            required
           />
         </Col>
       </Row>
@@ -137,6 +148,7 @@ export const POLineDetails = ({
             name={getFieldName(35)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+            validate={[validateDatepickerFieldValue]}
           />
         </Col>
         <Col xs={3}>
@@ -169,25 +181,40 @@ export const POLineDetails = ({
           </KeyValue>
         </Col>
         <Col xs={3}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.donor`} />}
-            name={getFieldName(39)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.donor`} />}
+                name={getFieldName(39)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.selector`} />}
-            name={getFieldName(40)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.selector`} />}
+                name={getFieldName(40)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.requester`} />}
-            name={getFieldName(41)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.requester`} />}
+                name={getFieldName(41)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
       <Row left="xs">
@@ -222,23 +249,34 @@ export const POLineDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={receivingWorkflowOptions}
+            required
           />
         </Col>
       </Row>
       <Row left="xs">
         <Col xs={6}>
-          <Field
-            component={TextArea}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.cancellationDescription`} />}
-            name={getFieldName(45)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextArea}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.cancellationDescription`} />}
+                name={getFieldName(45)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={6}>
-          <Field
-            component={TextArea}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.lineDescription`} />}
-            name={getFieldName(46)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextArea}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.lineDescription`} />}
+                name={getFieldName(46)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
     </Accordion>

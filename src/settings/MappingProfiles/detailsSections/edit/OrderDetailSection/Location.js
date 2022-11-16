@@ -11,7 +11,10 @@ import {
   Col,
 } from '@folio/stripes/components';
 
-import { AcceptedValuesField } from '../../../../../components';
+import {
+  AcceptedValuesField,
+  WithValidation,
+} from '../../../../../components';
 
 import {
   TRANSLATION_ID_PREFIX,
@@ -77,20 +80,28 @@ export const Location = ({
                 />
               </Col>
               <Col xs={4}>
-                <Field
-                  component={TextField}
-                  label={quantityPhysicalLabel}
-                  name={getSubfieldName(locationsFieldIndex, 1, index)}
-                  type="number"
-                />
+                <WithValidation>
+                  {validation => (
+                    <Field
+                      component={TextField}
+                      label={quantityPhysicalLabel}
+                      name={getSubfieldName(locationsFieldIndex, 1, index)}
+                      validate={[validation]}
+                    />
+                  )}
+                </WithValidation>
               </Col>
               <Col xs={4}>
-                <Field
-                  component={TextField}
-                  label={quantityElectronicLabel}
-                  name={getSubfieldName(locationsFieldIndex, 2, index)}
-                  type="number"
-                />
+                <WithValidation>
+                  {validation => (
+                    <Field
+                      component={TextField}
+                      label={quantityElectronicLabel}
+                      name={getSubfieldName(locationsFieldIndex, 2, index)}
+                      validate={[validation]}
+                    />
+                  )}
+                </WithValidation>
               </Col>
             </Row>
           );
