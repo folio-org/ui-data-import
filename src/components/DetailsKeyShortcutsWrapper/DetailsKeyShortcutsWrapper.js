@@ -77,5 +77,5 @@ DetailsKeyShortcutsWrapper.propTypes = {
     }).isRequired,
     PropTypes.string.isRequired,
   ]).isRequired,
-  baseUrl: PropTypes.string
+  baseUrl: PropTypes.string,
 };
