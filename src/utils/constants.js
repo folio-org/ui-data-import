@@ -788,3 +788,11 @@ export const PAGE_KEYS = {
 };
 
 export const PER_REQUEST_LIMIT = 1000;
+
+export const BASE_URLS = {
+  JOB_PROFILE: '/settings/data-import/job-profiles',
+  ACTION_PROFILE: '/settings/data-import/action-profiles',
+  MATCH_PROFILE: '/settings/data-import/match-profiles',
+  MAPPING_PROFILE: '/settings/data-import/mapping-profiles',
+  FILE_EXTENSIONS: '/settings/data-import/file-extensions',
+};

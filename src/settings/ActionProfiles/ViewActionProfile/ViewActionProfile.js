@@ -46,6 +46,7 @@ import {
   getEntity,
   getEntityTags,
   showActionMenu,
+  BASE_URLS,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -156,7 +157,7 @@ export class ViewActionProfile extends Component {
         entity={this}
         menu={menu}
         recordId={record?.id}
-        baseUrl="/settings/data-import/action-profiles"
+        baseUrl={BASE_URLS.ACTION_PROFILE}
       />
     );
   };
@@ -236,6 +237,7 @@ export class ViewActionProfile extends Component {
         history={history}
         location={location}
         recordId={actionProfile?.id}
+        baseUrl={BASE_URLS.ACTION_PROFILE}
       >
         <Pane
           data-test-pane-action-profile-details

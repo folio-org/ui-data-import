@@ -25,6 +25,7 @@ import {
   SYSTEM_USER_ID,
   SYSTEM_USER_NAME,
   showActionMenu,
+  BASE_URLS,
 } from '../../../utils';
 import {
   DetailsKeyShortcutsWrapper,
@@ -136,7 +137,7 @@ export class ViewFileExtension extends Component {
     <ActionMenu
       entity={this}
       menu={menu}
-      baseUrl="/settings/data-import/file-extensions"
+      baseUrl={BASE_URLS.FILE_EXTENSIONS}
     />
   );
 
@@ -174,6 +175,7 @@ export class ViewFileExtension extends Component {
         history={history}
         location={location}
         recordId={record.id}
+        baseUrl={BASE_URLS.FILE_EXTENSIONS}
       >
         <Pane
           data-test-pane-file-extension-details
