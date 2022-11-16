@@ -93,7 +93,7 @@ const ViewJobProfileComponent = props => {
   const { uploadDefinition } = useContext(UploadingJobsContext);
 
   const jobProfileData = () => {
-    const jobProfile = resources.jobProfile || {};
+    const jobProfile = resources.jobProfileView || {};
     const [record] = jobProfile.records || [];
 
     return {
@@ -416,7 +416,7 @@ const ViewJobProfileComponent = props => {
 };
 
 ViewJobProfileComponent.manifest = Object.freeze({
-  jobProfile: {
+  jobProfileView: {
     type: 'okapi',
     path: 'data-import-profiles/jobProfiles/:{id}',
     throwErrors: false,
@@ -471,7 +471,7 @@ ViewJobProfileComponent.propTypes = {
     PropTypes.string.isRequired,
   ]).isRequired,
   resources: PropTypes.shape({
-    jobProfile: PropTypes.shape({
+    jobProfileView: PropTypes.shape({
       hasLoaded: PropTypes.bool.isRequired,
       records: PropTypes.arrayOf(
         PropTypes.shape({
