@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "5.3.2",
+  "version": "5.3.1",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -32,7 +32,7 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^6.1.0",
-    "@folio/stripes": "^7.3.2",
+    "@folio/stripes": "^7.2.0",
     "@folio/stripes-cli": "^2.6.0",
     "@folio/stripes-components": "^10.2.0",
     "@folio/stripes-core": "^8.1.0",
