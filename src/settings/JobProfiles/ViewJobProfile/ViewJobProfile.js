@@ -60,6 +60,7 @@ import {
   FILE_STATUSES,
   showActionMenu,
   permissions,
+  BASE_URLS,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -187,7 +188,7 @@ const ViewJobProfileComponent = props => {
         }}
         menu={menu}
         recordId={record?.id}
-        baseUrl="/settings/data-import/job-profiles"
+        baseUrl={BASE_URLS.JOB_PROFILE}
       />
     );
   };
@@ -278,6 +279,7 @@ const ViewJobProfileComponent = props => {
       history={history}
       location={location}
       recordId={jobProfileRecord.id}
+      baseUrl={BASE_URLS.JOB_PROFILE}
     >
       <Pane
         data-test-pane-job-profile-details

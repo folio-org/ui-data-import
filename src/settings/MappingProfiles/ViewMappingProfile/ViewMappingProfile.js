@@ -62,6 +62,7 @@ import {
   marcFieldProtectionSettingsShape,
   showActionMenu,
   isMARCType,
+  BASE_URLS,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -177,7 +178,7 @@ export class ViewMappingProfile extends Component {
         entity={this}
         menu={menu}
         recordId={record?.id}
-        baseUrl="/settings/data-import/mapping-profiles"
+        baseUrl={BASE_URLS.MAPPING_PROFILE}
       />
     );
   };
@@ -284,6 +285,7 @@ export class ViewMappingProfile extends Component {
         history={history}
         location={location}
         recordId={id}
+        baseUrl={BASE_URLS.MAPPING_PROFILE}
       >
         <FullScreenView
           data-test-mapping-profile-details
