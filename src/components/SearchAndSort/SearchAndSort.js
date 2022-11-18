@@ -183,9 +183,13 @@ export class SearchAndSort extends Component {
         handler: () => {
           const {
             history,
-            location,
+            location: { search },
           } = this.props;
-          const url = createLayerURL(location, LAYER_TYPES.CREATE);
+          const url = createLayerURL({
+            baseUrl: routePath,
+            layerType: LAYER_TYPES.CREATE,
+            search,
+          });
 
           history.push(url);
         },

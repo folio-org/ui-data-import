@@ -47,6 +47,7 @@ import {
   getEntity,
   getEntityTags,
   showActionMenu,
+  BASE_URLS,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -159,7 +160,7 @@ export class ViewMatchProfile extends Component {
         entity={this}
         menu={menu}
         recordId={record?.id}
-        baseUrl="/settings/data-import/match-profiles"
+        baseUrl={BASE_URLS.MATCH_PROFILE}
       />
     );
   };
@@ -235,6 +236,7 @@ export class ViewMatchProfile extends Component {
         history={history}
         location={location}
         recordId={matchProfile?.id}
+        baseUrl={BASE_URLS.MATCH_PROFILE}
       >
         <Pane
           data-test-pane-match-profile-details
