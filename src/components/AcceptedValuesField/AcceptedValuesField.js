@@ -21,6 +21,7 @@ import {
   validateAcceptedValues,
   updateValueWithTemplate,
   okapiShape,
+  validateRequiredField,
 } from '../../utils';
 
 export const AcceptedValuesField = ({
@@ -135,6 +136,10 @@ export const AcceptedValuesField = ({
   const customValidation = useCallback(validation, []);
 
   const fieldValidation = [customValidation || validateAcceptedValueField, memoizedValidation];
+
+  if (required) {
+    fieldValidation.push(validateRequiredField);
+  }
 
   const renderFormField = () => (
     <Field

@@ -47,6 +47,7 @@ import {
   getEntity,
   getEntityTags,
   showActionMenu,
+  BASE_URLS,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -57,7 +58,7 @@ import styles from '../MatchProfiles.css';
 export class ViewMatchProfile extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
-    matchProfile: {
+    matchProfileView: {
       type: 'okapi',
       path: 'data-import-profiles/matchProfiles/:{id}',
       params: { withRelations: true },
@@ -77,7 +78,7 @@ export class ViewMatchProfile extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
-      matchProfile: PropTypes.shape({
+      matchProfileView: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -117,7 +118,7 @@ export class ViewMatchProfile extends Component {
   get matchProfileData() {
     const { resources } = this.props;
 
-    const matchProfile = resources.matchProfile || {};
+    const matchProfile = resources.matchProfileView || {};
     const [record] = matchProfile.records || [];
 
     return {
@@ -159,7 +160,7 @@ export class ViewMatchProfile extends Component {
         entity={this}
         menu={menu}
         recordId={record?.id}
-        baseUrl="/settings/data-import/match-profiles"
+        baseUrl={BASE_URLS.MATCH_PROFILE}
       />
     );
   };
@@ -235,6 +236,7 @@ export class ViewMatchProfile extends Component {
         history={history}
         location={location}
         recordId={matchProfile?.id}
+        baseUrl={BASE_URLS.MATCH_PROFILE}
       >
         <Pane
           data-test-pane-match-profile-details

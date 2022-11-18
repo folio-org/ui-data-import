@@ -807,3 +807,11 @@ export const BASE_FORMATTED_DATE = {
   month: TWO_DIGIT,
   year: NUMERIC,
 };
+
+export const BASE_URLS = {
+  JOB_PROFILE: '/settings/data-import/job-profiles',
+  ACTION_PROFILE: '/settings/data-import/action-profiles',
+  MATCH_PROFILE: '/settings/data-import/match-profiles',
+  MAPPING_PROFILE: '/settings/data-import/mapping-profiles',
+  FILE_EXTENSIONS: '/settings/data-import/file-extensions',
+};

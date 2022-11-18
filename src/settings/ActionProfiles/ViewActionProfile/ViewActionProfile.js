@@ -46,6 +46,7 @@ import {
   getEntity,
   getEntityTags,
   showActionMenu,
+  BASE_URLS,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -56,7 +57,7 @@ import sharedCss from '../../../shared.css';
 export class ViewActionProfile extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
-    actionProfile: {
+    actionProfileView: {
       type: 'okapi',
       path: 'data-import-profiles/actionProfiles/:{id}',
       params: { withRelations: true },
@@ -76,7 +77,7 @@ export class ViewActionProfile extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
-      actionProfile: PropTypes.shape({
+      actionProfileView: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -114,7 +115,7 @@ export class ViewActionProfile extends Component {
   get actionProfileData() {
     const { resources } = this.props;
 
-    const actionProfile = resources.actionProfile || {};
+    const actionProfile = resources.actionProfileView || {};
     const [record] = actionProfile.records || [];
 
     return {
@@ -156,7 +157,7 @@ export class ViewActionProfile extends Component {
         entity={this}
         menu={menu}
         recordId={record?.id}
-        baseUrl="/settings/data-import/action-profiles"
+        baseUrl={BASE_URLS.ACTION_PROFILE}
       />
     );
   };
@@ -236,6 +237,7 @@ export class ViewActionProfile extends Component {
         history={history}
         location={location}
         recordId={actionProfile?.id}
+        baseUrl={BASE_URLS.ACTION_PROFILE}
       >
         <Pane
           data-test-pane-action-profile-details

@@ -12,7 +12,10 @@ import {
 } from '@folio/stripes/components';
 import { TypeToggle } from '@folio/stripes-acq-components';
 
-import { AcceptedValuesField } from '../../../../../components';
+import {
+  AcceptedValuesField,
+  WithValidation,
+} from '../../../../../components';
 
 import {
   TRANSLATION_ID_PREFIX,
@@ -23,6 +26,7 @@ import {
   getSubfieldName,
   onAdd,
   onRemove,
+  renderFieldLabelWithInfo,
 } from '../../utils';
 
 export const FundDistribution = ({
@@ -33,6 +37,18 @@ export const FundDistribution = ({
   okapi,
 }) => {
   const fundDistributionsFieldIndex = 60;
+  const fundIdLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId`,
+    `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId.info`,
+  );
+  const expenseClassLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.expenseClass`,
+    `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.expenseClass.info`,
+  );
+  const valueLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.value`,
+    `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId.info`,
+  );
 
   return (
     <Accordion
@@ -50,7 +66,7 @@ export const FundDistribution = ({
               <Col xs={3}>
                 <AcceptedValuesField
                   component={TextField}
-                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId`} />}
+                  label={fundIdLabel}
                   name={getSubfieldName(fundDistributionsFieldIndex, 0, index)}
                   optionValue="name"
                   optionLabel="name"
@@ -67,7 +83,7 @@ export const FundDistribution = ({
               <Col xs={3}>
                 <AcceptedValuesField
                   component={TextField}
-                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.expenseClass`} />}
+                  label={expenseClassLabel}
                   name={getSubfieldName(fundDistributionsFieldIndex, 1, index)}
                   optionValue="name"
                   optionLabel="name"
@@ -82,12 +98,16 @@ export const FundDistribution = ({
                 />
               </Col>
               <Col xs={3}>
-                <Field
-                  component={TextField}
-                  label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.value`} />}
-                  name={getSubfieldName(fundDistributionsFieldIndex, 2, index)}
-                  type="number"
-                />
+                <WithValidation>
+                  {validation => (
+                    <Field
+                      component={TextField}
+                      label={valueLabel}
+                      name={getSubfieldName(fundDistributionsFieldIndex, 2, index)}
+                      validate={[validation]}
+                    />
+                  )}
+                </WithValidation>
               </Col>
               <Col xs={3}>
                 <Field

@@ -25,6 +25,7 @@ import {
   AcceptedValuesField,
   FieldAssignedTo,
   FieldOrganization,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -41,7 +42,10 @@ import {
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
-import { BOOLEAN_ACTIONS } from '../../../../../utils';
+import {
+  BOOLEAN_ACTIONS,
+  validateRequiredField,
+} from '../../../../../utils';
 
 const OrderInformationComponent = ({
   approvedCheckbox,
@@ -172,12 +176,16 @@ const OrderInformationComponent = ({
           />
         </Col>
         <Col xs={4}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.overridePurchaseOrderLinesLimitSetting`} />}
-            name={getFieldName(3)}
-            type="number"
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.overridePurchaseOrderLinesLimitSetting`} />}
+                name={getFieldName(3)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
       <Row left="xs">
@@ -199,12 +207,17 @@ const OrderInformationComponent = ({
           />
         </Col>
         <Col xs={4}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.poNumber`} />}
-            name={getFieldName(5)}
-            disabled={!userCanEditPONumberValue}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextField}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.poNumber`} />}
+                name={getFieldName(5)}
+                disabled={!userCanEditPONumberValue}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={4}>
           <AcceptedValuesField
@@ -226,13 +239,19 @@ const OrderInformationComponent = ({
       </Row>
       <Row left="xs">
         <Col xs={3}>
-          <FieldOrganization
-            id={filledVendorId}
-            setReferenceTables={setReferenceTables}
-            name={getFieldName(7)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.vendor`} />}
-            onSelect={onOrganizationSelect}
-          />
+          <WithValidation>
+            {validation => (
+              <FieldOrganization
+                id={filledVendorId}
+                setReferenceTables={setReferenceTables}
+                name={getFieldName(7)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.vendor`} />}
+                onSelect={onOrganizationSelect}
+                validate={[validateRequiredField, validation]}
+                required
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
           <Field
@@ -240,6 +259,7 @@ const OrderInformationComponent = ({
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.orderType`} />}
             name={getFieldName(8)}
             disabled
+            required
           />
         </Col>
         <Col xs={3}>
@@ -373,11 +393,16 @@ const OrderInformationComponent = ({
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={12}>
-              <Field
-                component={TextArea}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.note`} />}
-                name={getSubfieldName(17, 0, index)}
-              />
+              <WithValidation>
+                {validation => (
+                  <Field
+                    component={TextArea}
+                    label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.note`} />}
+                    name={getSubfieldName(17, 0, index)}
+                    validate={[validation]}
+                  />
+                )}
+              </WithValidation>
             </Col>
           </Row>
         )}

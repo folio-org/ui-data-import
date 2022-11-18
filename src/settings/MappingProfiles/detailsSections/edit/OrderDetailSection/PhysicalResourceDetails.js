@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -18,6 +18,7 @@ import {
   AcceptedValuesField,
   DatePickerDecorator,
   FieldOrganization,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -31,7 +32,9 @@ import {
   getSubfieldName,
   onAdd,
   onRemove,
+  renderFieldLabelWithInfo,
 } from '../../utils';
+import { validateMARCWithDate } from '../../../../../utils';
 
 export const PhysicalResourceDetails = ({
   volumes,
@@ -41,6 +44,11 @@ export const PhysicalResourceDetails = ({
   okapi,
 }) => {
   const { formatMessage } = useIntl();
+
+  const validateDatepickerFieldValue = useCallback(
+    value => validateMARCWithDate(value, false),
+    [],
+  );
 
   const createInventoryOptions = [
     {
@@ -60,6 +68,15 @@ export const PhysicalResourceDetails = ({
 
   const volumesFieldIndex = 67;
 
+  const createInventoryLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.createInventory`,
+    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice.info`,
+  );
+  const materialTypeLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialType`,
+    `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialType.info`,
+  );
+
   return (
     <Accordion
       id="physical-resource-details"
@@ -67,12 +84,17 @@ export const PhysicalResourceDetails = ({
     >
       <Row left="xs">
         <Col xs={3}>
-          <FieldOrganization
-            id={materialSupplierId}
-            setReferenceTables={setReferenceTables}
-            name={getFieldName(62)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialSupplier`} />}
-          />
+          <WithValidation>
+            {validation => (
+              <FieldOrganization
+                id={materialSupplierId}
+                setReferenceTables={setReferenceTables}
+                name={getFieldName(62)}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialSupplier`} />}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
         <Col xs={3}>
           <Field
@@ -81,6 +103,7 @@ export const PhysicalResourceDetails = ({
             name={getFieldName(63)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+            validate={[validateDatepickerFieldValue]}
           />
         </Col>
         <Col xs={3}>
@@ -90,13 +113,14 @@ export const PhysicalResourceDetails = ({
             name={getFieldName(64)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
+            validate={[validateDatepickerFieldValue]}
           />
         </Col>
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
             name={getFieldName(65)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.createInventory`} />}
+            label={createInventoryLabel}
             optionValue="value"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -108,7 +132,7 @@ export const PhysicalResourceDetails = ({
         <Col xs={12}>
           <AcceptedValuesField
             component={TextField}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialType`} />}
+            label={materialTypeLabel}
             name={getFieldName(66)}
             optionValue="name"
             optionLabel="name"
@@ -131,11 +155,16 @@ export const PhysicalResourceDetails = ({
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={12}>
-              <Field
-                component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.volume`} />}
-                name={getSubfieldName(volumesFieldIndex, 0, index)}
-              />
+              <WithValidation>
+                {validation => (
+                  <Field
+                    component={TextField}
+                    label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.volume`} />}
+                    name={getSubfieldName(volumesFieldIndex, 0, index)}
+                    validate={[validation]}
+                  />
+                )}
+              </WithValidation>
             </Col>
           </Row>
         )}

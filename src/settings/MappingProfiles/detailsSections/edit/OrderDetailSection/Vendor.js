@@ -15,7 +15,10 @@ import {
   Col,
 } from '@folio/stripes/components';
 
-import { AcceptedValuesField } from '../../../../../components';
+import {
+  AcceptedValuesField,
+  WithValidation,
+} from '../../../../../components';
 
 import {
   TRANSLATION_ID_PREFIX,
@@ -76,11 +79,16 @@ export const Vendor = ({
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={6}>
-              <Field
-                component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.vendorRefNumber`} />}
-                name={getSubfieldName(vendorDetailFieldIndex, 0, index)}
-              />
+              <WithValidation>
+                {validation => (
+                  <Field
+                    component={TextField}
+                    label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.vendorRefNumber`} />}
+                    name={getSubfieldName(vendorDetailFieldIndex, 0, index)}
+                    validate={[validation]}
+                  />
+                )}
+              </WithValidation>
             </Col>
             <Col xs={6}>
               <AcceptedValuesField
@@ -113,11 +121,16 @@ export const Vendor = ({
           />
         </Col>
         <Col xs={6}>
-          <Field
-            component={TextArea}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.instructionsToVendor`} />}
-            name={getFieldName(49)}
-          />
+          <WithValidation>
+            {validation => (
+              <Field
+                component={TextArea}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.instructionsToVendor`} />}
+                name={getFieldName(49)}
+                validate={[validation]}
+              />
+            )}
+          </WithValidation>
         </Col>
       </Row>
     </Accordion>

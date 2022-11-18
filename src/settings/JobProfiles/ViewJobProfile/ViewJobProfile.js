@@ -60,6 +60,7 @@ import {
   FILE_STATUSES,
   showActionMenu,
   permissions,
+  BASE_URLS,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -93,7 +94,7 @@ const ViewJobProfileComponent = props => {
   const { uploadDefinition } = useContext(UploadingJobsContext);
 
   const jobProfileData = () => {
-    const jobProfile = resources.jobProfile || {};
+    const jobProfile = resources.jobProfileView || {};
     const [record] = jobProfile.records || [];
 
     return {
@@ -187,7 +188,7 @@ const ViewJobProfileComponent = props => {
         }}
         menu={menu}
         recordId={record?.id}
-        baseUrl="/settings/data-import/job-profiles"
+        baseUrl={BASE_URLS.JOB_PROFILE}
       />
     );
   };
@@ -278,6 +279,7 @@ const ViewJobProfileComponent = props => {
       history={history}
       location={location}
       recordId={jobProfileRecord.id}
+      baseUrl={BASE_URLS.JOB_PROFILE}
     >
       <Pane
         data-test-pane-job-profile-details
@@ -416,7 +418,7 @@ const ViewJobProfileComponent = props => {
 };
 
 ViewJobProfileComponent.manifest = Object.freeze({
-  jobProfile: {
+  jobProfileView: {
     type: 'okapi',
     path: 'data-import-profiles/jobProfiles/:{id}',
     throwErrors: false,
@@ -471,7 +473,7 @@ ViewJobProfileComponent.propTypes = {
     PropTypes.string.isRequired,
   ]).isRequired,
   resources: PropTypes.shape({
-    jobProfile: PropTypes.shape({
+    jobProfileView: PropTypes.shape({
       hasLoaded: PropTypes.bool.isRequired,
       records: PropTypes.arrayOf(
         PropTypes.shape({
