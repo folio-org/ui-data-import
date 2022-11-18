@@ -14,10 +14,15 @@
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
 
 ### Bugs fixed:
+* Data import settings: Shortcuts for creating, editing and duplicating don't work (UIDATIMP-1300)
+
+## [5.3.5](https://github.com/folio-org/ui-data-import/tree/v5.3.5) (2022-11-17)
+
+### Bugs fixed:
 * After duplicating profiles the previous view details information is displayed (UIDATIMP-1285)
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
 * Incorrect name of the page in Edit mode of field mapping profile (UIDATIMP-1302)
-* Data import settings: Shortcuts for creating, editing and duplicating don't work (UIDATIMP-1300)
+* Update dependencies versions
 
 ## [5.3.1](https://github.com/folio-org/ui-data-import/tree/v5.3.1) (2022-10-27)
 
