@@ -5,6 +5,7 @@
 ### Bugs fixed:
 * After duplicating profiles the previous view details information is displayed (UIDATIMP-1285)
 * Invoice field mapping profile: sortBy param is missed for Bill to name field (UIDATIMP-1288)
+* Data import settings: Shortcuts for creating, editing and duplicating don't work (UIDATIMP-1300)
 * Incorrect name of the page in Edit mode of field mapping profile (UIDATIMP-1302)
 * Update dependencies versions
 

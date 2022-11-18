@@ -17,6 +17,7 @@ export const DetailsKeyShortcutsWrapper = ({
   recordId,
   history,
   location,
+  baseUrl,
 }) => {
   const isDefaultProfile = DEFAULT_PROFILE_IDS.includes(recordId);
 
@@ -26,14 +27,24 @@ export const DetailsKeyShortcutsWrapper = ({
       handler: () => {
         if (isDefaultProfile) return;
 
-        const url = createLayerURL(location, LAYER_TYPES.EDIT);
+        const url = createLayerURL({
+          baseUrl,
+          layerType: LAYER_TYPES.EDIT,
+          search: location.search,
+          recordId,
+        });
 
         history.push(url);
       },
     }, {
       name: 'duplicateRecord',
       handler: () => {
-        const url = createLayerURL(location, LAYER_TYPES.DUPLICATE);
+        const url = createLayerURL({
+          baseUrl,
+          layerType: LAYER_TYPES.DUPLICATE,
+          search: location.search,
+          recordId,
+        });
 
         history.push(url);
       },
@@ -66,4 +77,5 @@ DetailsKeyShortcutsWrapper.propTypes = {
     }).isRequired,
     PropTypes.string.isRequired,
   ]).isRequired,
+  baseUrl: PropTypes.string,
 };
