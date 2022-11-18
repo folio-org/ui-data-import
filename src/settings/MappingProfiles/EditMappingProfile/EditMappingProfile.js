@@ -48,6 +48,7 @@ const EditMappingProfileComponent = ({
       <MappingProfilesForm
         {...routeProps}
         initialValues={initialValues}
+        layerType={layerType}
       />
     </Layer>
   );
@@ -57,6 +58,7 @@ EditMappingProfileComponent.manifest = Object.freeze({
   mappingProfile: {
     type: 'okapi',
     path: 'data-import-profiles/mappingProfiles/:{id}',
+    params: { withRelations: true },
     PUT: { throwErrors: false },
   },
 });

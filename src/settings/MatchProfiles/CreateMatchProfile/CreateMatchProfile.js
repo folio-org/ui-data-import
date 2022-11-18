@@ -9,6 +9,7 @@ import { getSectionInitialValues } from '../MatchProfiles';
 
 export const CreateMatchProfile = ({
   fullWidthContainer,
+  layerType,
   ...routeProps
 }) => {
   const { formatMessage } = useIntl();
@@ -36,9 +37,13 @@ export const CreateMatchProfile = ({
       <MatchProfilesForm
         {...routeProps}
         initialValues={initialValues}
+        layerType={layerType}
       />
     </Layer>
   );
 };
 
-CreateMatchProfile.propTypes = { fullWidthContainer: PropTypes.instanceOf(Element) };
+CreateMatchProfile.propTypes = {
+  fullWidthContainer: PropTypes.instanceOf(Element),
+  layerType: PropTypes.string,
+};
