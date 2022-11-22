@@ -16,6 +16,7 @@
 ### Bugs fixed:
 * Missing associated profiles on edit screen on Action/Field mapping profiles (UIDATIMP-1296)
 * Data import settings: Shortcuts for creating, editing and duplicating don't work (UIDATIMP-1300)
+* Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
 
 ## [5.3.5](https://github.com/folio-org/ui-data-import/tree/v5.3.5) (2022-11-17)
 
