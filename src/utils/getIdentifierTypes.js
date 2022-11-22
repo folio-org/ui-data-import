@@ -5,7 +5,7 @@ export const getIdentifierTypes = async (okapi) => {
   const { url } = okapi;
 
   try {
-    const path = `${url}/${WRAPPER_SOURCE_LINKS.IDENTIFIER_TYPES}`;
+    const path = `${url}${WRAPPER_SOURCE_LINKS.IDENTIFIER_TYPES}`;
     const response = await fetch(path,
       {
         headers: {
