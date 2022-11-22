@@ -14,6 +14,7 @@
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
 
 ### Bugs fixed:
+* Missing associated profiles on edit screen on Action/Field mapping profiles (UIDATIMP-1296)
 * Data import settings: Shortcuts for creating, editing and duplicating don't work (UIDATIMP-1300)
 
 ## [5.3.5](https://github.com/folio-org/ui-data-import/tree/v5.3.5) (2022-11-17)

@@ -58,6 +58,7 @@ EditActionProfileComponent.manifest = Object.freeze({
   actionProfile: {
     type: 'okapi',
     path: 'data-import-profiles/actionProfiles/:{id}',
+    params: { withRelations: true },
     PUT: { throwErrors: false },
   },
 });
