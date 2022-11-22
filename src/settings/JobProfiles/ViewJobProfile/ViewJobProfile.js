@@ -89,6 +89,7 @@ const ViewJobProfileComponent = props => {
   const [showRunConfirmation, setShowRunConfirmation] = useState(false);
   const [isDeletionInProgress, setDeletionInProgress] = useState(false);
   const [isRecordsLoadingInProgress, setRecordsLoadingInProgress] = useState(false);
+  const [isConfirmButtonDisabled, setIsConfirmButtonDisabled] = useState(false);
 
   const calloutRef = useRef(null);
   const { uploadDefinition } = useContext(UploadingJobsContext);
@@ -169,6 +170,8 @@ const ViewJobProfileComponent = props => {
   };
 
   const handleRun = async record => {
+    setIsConfirmButtonDisabled(true);
+
     if (isRecordsLoadingInProgress) {
       return;
     }
@@ -410,6 +413,7 @@ const ViewJobProfileComponent = props => {
           confirmLabel={<FormattedMessage id="ui-data-import.run" />}
           onCancel={() => setShowRunConfirmation(false)}
           onConfirm={() => handleRun(jobProfileRecord)}
+          isConfirmButtonDisabled={isConfirmButtonDisabled}
         />
         <Callout ref={calloutRef} />
       </Pane>
