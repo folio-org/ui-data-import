@@ -8,6 +8,7 @@ import { JobProfilesForm } from '../JobProfilesForm';
 
 export const CreateJobProfile = ({
   fullWidthContainer,
+  layerType,
   ...routeProps
 }) => {
   const { formatMessage } = useIntl();
@@ -27,9 +28,13 @@ export const CreateJobProfile = ({
       <JobProfilesForm
         {...routeProps}
         initialValues={initialValues}
+        layerType={layerType}
       />
     </Layer>
   );
 };
 
-CreateJobProfile.propTypes = { fullWidthContainer: PropTypes.instanceOf(Element) };
+CreateJobProfile.propTypes = {
+  fullWidthContainer: PropTypes.instanceOf(Element),
+  layerType: PropTypes.string,
+};

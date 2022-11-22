@@ -2,12 +2,15 @@
 
 ## **5.3.6** (in progress)
 
+### Bugs fixed:
+* Missing associated profiles on edit screen on Action/Field mapping profiles (UIDATIMP-1296)
+* Data import settings: Shortcuts for creating, editing and duplicating don't work (UIDATIMP-1300)
+
 ## [5.3.5](https://github.com/folio-org/ui-data-import/tree/v5.3.5) (2022-11-17)
 
 ### Bugs fixed:
 * After duplicating profiles the previous view details information is displayed (UIDATIMP-1285)
 * Invoice field mapping profile: sortBy param is missed for Bill to name field (UIDATIMP-1288)
-* Data import settings: Shortcuts for creating, editing and duplicating don't work (UIDATIMP-1300)
 * Incorrect name of the page in Edit mode of field mapping profile (UIDATIMP-1302)
 * Update dependencies versions
 

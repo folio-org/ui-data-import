@@ -8,6 +8,7 @@ import { FileExtensionForm } from '../FileExtensionForm';
 
 export const CreateFileExtension = ({
   fullWidthContainer,
+  layerType,
   ...routeProps
 }) => {
   const { formatMessage } = useIntl();
@@ -28,9 +29,13 @@ export const CreateFileExtension = ({
       <FileExtensionForm
         {...routeProps}
         initialValues={initialValues}
+        layerType={layerType}
       />
     </Layer>
   );
 };
 
-CreateFileExtension.propTypes = { fullWidthContainer: PropTypes.instanceOf(Element) };
+CreateFileExtension.propTypes = {
+  fullWidthContainer: PropTypes.instanceOf(Element),
+  layerType: PropTypes.string,
+};
