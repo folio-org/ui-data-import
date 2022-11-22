@@ -8,6 +8,7 @@ import { MappingProfilesForm } from '../MappingProfilesForm';
 
 export const CreateMappingProfile = ({
   fullWidthContainer,
+  layerType,
   ...routeProps
 }) => {
   const { formatMessage } = useIntl();
@@ -29,9 +30,13 @@ export const CreateMappingProfile = ({
       <MappingProfilesForm
         {...routeProps}
         initialValues={initialValues}
+        layerType={layerType}
       />
     </Layer>
   );
 };
 
-CreateMappingProfile.propTypes = { fullWidthContainer: PropTypes.instanceOf(Element) };
+CreateMappingProfile.propTypes = {
+  fullWidthContainer: PropTypes.instanceOf(Element),
+  layerType: PropTypes.string,
+};

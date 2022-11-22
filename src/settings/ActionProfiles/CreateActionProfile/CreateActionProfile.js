@@ -8,6 +8,7 @@ import { ActionProfilesForm } from '../ActionProfilesForm';
 
 export const CreateActionProfile = ({
   fullWidthContainer,
+  layerType,
   ...routeProps
 }) => {
   const { formatMessage } = useIntl();
@@ -26,9 +27,13 @@ export const CreateActionProfile = ({
       <ActionProfilesForm
         {...routeProps}
         initialValues={initialValues}
+        layerType={layerType}
       />
     </Layer>
   );
 };
 
-CreateActionProfile.propTypes = { fullWidthContainer: PropTypes.instanceOf(Element) };
+CreateActionProfile.propTypes = {
+  fullWidthContainer: PropTypes.instanceOf(Element),
+  layerType: PropTypes.string,
+};

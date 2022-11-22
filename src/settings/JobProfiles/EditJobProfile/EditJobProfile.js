@@ -48,6 +48,7 @@ const EditJobProfileComponent = ({
       <JobProfilesForm
         {...routeProps}
         initialValues={initialValues}
+        layerType={layerType}
       />
     </Layer>
   );
