@@ -248,7 +248,7 @@ describe('<ViewJobProfile>', () => {
 
       fireEvent.click(confirmButton);
 
-      expect(confirmButton).toBeDisabled();
+      await waitFor(() => expect(confirmButton).toBeDisabled());
     });
   });
 
