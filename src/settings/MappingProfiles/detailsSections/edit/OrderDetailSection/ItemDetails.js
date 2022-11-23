@@ -22,6 +22,7 @@ import {
 } from '../../../../../components';
 
 import {
+  CONTRIBUTOR_TYPES,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
@@ -54,6 +55,22 @@ export const ItemDetails = ({
 
   const contributorsFieldIndex = 27;
   const productIdsFieldIndex = 28;
+
+  const contributorTypeOptions = [
+    {
+      label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.itemDetails.field.personalName` }),
+      value: CONTRIBUTOR_TYPES.PERSONAL_NAME,
+    }, {
+      label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.itemDetails.field.corporateName` }),
+      value: CONTRIBUTOR_TYPES.CORPORATE_NAME,
+    }, {
+      label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.itemDetails.field.meetingName` }),
+      value: CONTRIBUTOR_TYPES.MEETING_NAME,
+    }, {
+      label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.itemDetails.field.innReachAuthor` }),
+      value: CONTRIBUTOR_TYPES.INN_REACH_AUTHOR,
+    },
+  ];
 
   return (
     <Accordion
@@ -197,16 +214,10 @@ export const ItemDetails = ({
                   component={TextField}
                   name={getSubfieldName(contributorsFieldIndex, 1, index)}
                   label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributorType`} />}
-                  optionValue="name"
-                  optionLabel="name"
+                  optionValue="value"
+                  optionLabel="label"
                   wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                  wrapperSources={[{
-                    wrapperSourceLink: WRAPPER_SOURCE_LINKS.CONTRIBUTOR_TYPES,
-                    wrapperSourcePath: 'contributorTypes'
-                  }]}
-                  setAcceptedValues={setReferenceTables}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(contributorsFieldIndex, 1, index)}
-                  okapi={okapi}
+                  acceptedValuesList={contributorTypeOptions}
                 />
               </Col>
             </Row>

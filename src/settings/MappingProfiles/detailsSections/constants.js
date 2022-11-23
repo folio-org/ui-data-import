@@ -33,6 +33,12 @@ export const VENDOR_REF_TYPES = {
   SUBSCRIPTION_REF_NUMBER: 'Vendor subscription reference number',
   TITLE_NUMBER: 'Vendor title number',
 };
+export const CONTRIBUTOR_TYPES = {
+  PERSONAL_NAME: 'Personal name',
+  CORPORATE_NAME: 'Corporate name',
+  MEETING_NAME: 'Meeting name',
+  INN_REACH_AUTHOR: 'INN-Reach author',
+};
 
 export const WRAPPER_SOURCE_LINKS = {
   PREFIXES: `/orders/configuration/prefixes?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby name`,
