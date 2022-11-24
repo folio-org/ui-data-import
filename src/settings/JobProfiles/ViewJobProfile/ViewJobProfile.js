@@ -155,7 +155,6 @@ const ViewJobProfileComponent = props => {
         jobProfileInfo,
         defaultMapping: false,
       });
-      debugger;
 
       history.push('/data-import');
     } catch (error) {
