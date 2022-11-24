@@ -578,6 +578,7 @@
   "settings.mappingProfiles.map.field.chronology": "Chronology",
   "settings.mappingProfiles.map.field.EAccess.addLabel": "Add electronic access",
   "settings.mappingProfiles.map.item": "Item",
+  "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Required when creating Item",
   "settings.mappingProfiles.map.administrativeData.section": "Administrative data",
   "settings.mappingProfiles.map.item.administrativeData.field.id": "Item UUID",
   "settings.mappingProfiles.map.item.administrativeData.field.hrid": "Item HRID",

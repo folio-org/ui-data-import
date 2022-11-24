@@ -12,6 +12,7 @@
 * Add required field asterisks & validation action to Order field mapping profile (UIDATIMP-1265)
 * Add required info icons to Order field mapping profile (UIDATIMP-1266)
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
+* Add required info icons to Item field mapping profile (UIDATIMP-1293)
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
