@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **5.3.6** (in progress)
+## [5.3.6](https://github.com/folio-org/ui-data-import/tree/v5.3.6) (2022-11-24)
 
 ### Bugs fixed:
 * Missing associated profiles on edit screen on Action/Field mapping profiles (UIDATIMP-1296)
