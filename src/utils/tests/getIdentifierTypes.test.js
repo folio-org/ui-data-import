@@ -1,7 +1,10 @@
 import '../../../test/jest/__mock__';
 
-import { WRAPPER_SOURCE_LINKS } from '../../settings/MappingProfiles/detailsSections/constants';
 import { getIdentifierTypes } from '../getIdentifierTypes';
+import {
+  PER_REQUEST_LIMIT,
+  FIND_ALL_CQL,
+} from '..';
 
 global.fetch = jest.fn();
 
@@ -14,7 +17,7 @@ describe('getIdentifierTypes function', () => {
     });
 
     const okapi = { url: 'https://test.com' };
-    const expectedURL = `${okapi.url}/${WRAPPER_SOURCE_LINKS.IDENTIFIER_TYPES}`;
+    const expectedURL = `https://test.com/identifier-types?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby name`;
 
     const data = await getIdentifierTypes(okapi);
 
