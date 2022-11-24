@@ -24,14 +24,6 @@ const recordsData = {
       from: FOLIO_RECORD_TYPES.ITEM.type,
       to: FOLIO_RECORD_TYPES.INSTANCE.type,
     },
-    {
-      from: FOLIO_RECORD_TYPES.ORDER.type,
-      to: FOLIO_RECORD_TYPES.INSTANCE.type,
-    },
-    {
-      from: FOLIO_RECORD_TYPES.INVOICE.type,
-      to: FOLIO_RECORD_TYPES.INSTANCE.type,
-    },
   ],
   children: [
     {
@@ -41,17 +33,9 @@ const recordsData = {
           itemMeta: FOLIO_RECORD_TYPES.HOLDINGS,
           children: [{ itemMeta: FOLIO_RECORD_TYPES.ITEM }],
         },
-        { itemMeta: FOLIO_RECORD_TYPES.MARC_HOLDINGS },
       ],
     },
     { itemMeta: FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC },
-    {
-      itemMeta: {
-        ...FOLIO_RECORD_TYPES.ORDER,
-        captionId: 'ui-data-import.recordTypes.orderLine',
-      },
-    },
-    { itemMeta: FOLIO_RECORD_TYPES.INVOICE },
     { itemMeta: FOLIO_RECORD_TYPES.MARC_AUTHORITY },
   ],
 };

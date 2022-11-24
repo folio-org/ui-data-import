@@ -8,6 +8,7 @@ import {
 import {
   NoValue,
   Checkbox,
+  InfoPopover,
 } from '@folio/stripes/components';
 import { CurrencySymbol } from '@folio/stripes-acq-components';
 
@@ -132,6 +133,8 @@ export const onRemove = (index, refTable, fieldIndex, callback, incrementalField
 
 export const getFieldValue = (details, fieldName, key) => details.find(item => item.name === fieldName)?.[key];
 
+export const getFieldValueByPath = (details, path, key) => details.find(item => item.path === path)?.[key];
+
 export const getValueById = id => (id ? <FormattedMessage id={id} /> : <NoValue />);
 
 export const getUnmappableValueById = (id, fieldName) => (id ? <FormattedMessage id={id} /> : <ProhibitionIcon fieldName={fieldName} />);
@@ -178,9 +181,21 @@ export const updateInitialFields = initials => {
   return updatedInitRow;
 };
 
-export const getFieldValueFromDetails = (path, fieldName) => path
-  ?.find(item => (item.name === fieldName))?.value
-  ?.replace(/['"]+/g, '');
+export const getRefValuesFromTables = (referenceTables, fieldPath) => get(referenceTables, fieldPath, []);
+
+export const getFieldValueFromDetails = (path, fieldName, trimQuotes = true) => {
+  const value = path?.find(item => (item.name === fieldName))?.value;
+
+  if (trimQuotes) {
+    return value?.replace(/['"]+/g, '');
+  }
+
+  return value;
+};
+
+export const getBoolFieldValueFromDetails = (path, fieldName) => {
+  return path?.find(item => (item.name === fieldName))?.booleanFieldAction;
+};
 
 export const getAccountingCodeOptions = vendor => {
   const accounts = get(vendor, 'accounts', []).filter(({ appSystemNo }) => Boolean(appSystemNo));
@@ -232,4 +247,24 @@ export const renderCheckbox = (labelPathId, fieldValue) => (
       />
     )}
   </FormattedMessage>
+);
+
+export const boolAcceptedValuesOptions = formatMessage => ([
+  {
+    label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.true` }),
+    value: 'true',
+  }, {
+    label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.false` }),
+    value: 'false',
+  },
+]);
+
+export const renderFieldLabelWithInfo = (fieldLabel, infoContent) => (
+  <>
+    <FormattedMessage id={fieldLabel} />
+    <InfoPopover
+      iconSize="medium"
+      content={<FormattedMessage id={infoContent} />}
+    />
+  </>
 );

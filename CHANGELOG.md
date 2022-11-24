@@ -1,5 +1,22 @@
 # Change history for ui-data-import
 
+## **5.4.0** (in progress)
+
+### Features added:
+* Field Mapping Profile details: Order PO & POL from MARC Bib (Create/Edit) (UIDATIMP-294)
+* Update the Match profile UI: Create/Edit screen (UIDATIMP-1214)
+* Update the Action profile UI: Create/Edit screen (UIDATIMP-1215)
+* Create the field mapping profile for Orders and Order Lines: View (UIDATIMP-1217)
+* Update the Action profile UI for Orders (UIDATIMP-1231)
+* Update the Action profile UI again: Create/Edit screen (UIDATIMP-1246)
+* Add required field asterisks & validation action to Order field mapping profile (UIDATIMP-1265)
+* Add required info icons to Order field mapping profile (UIDATIMP-1266)
+* Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
+
+### Bugs fixed:
+* Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
+* Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
+
 ## [5.3.6](https://github.com/folio-org/ui-data-import/tree/v5.3.6) (2022-11-24)
 
 ### Bugs fixed:

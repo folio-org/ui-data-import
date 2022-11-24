@@ -24,7 +24,7 @@ export const CreateFileExtension = ({
     <Layer
       isOpen
       container={fullWidthContainer}
-      contentLabel={formatMessage({ id: 'settings.fileExtensions.form' })}
+      contentLabel={formatMessage({ id: 'ui-data-import.settings.fileExtensions.form' })}
     >
       <FileExtensionForm
         {...routeProps}

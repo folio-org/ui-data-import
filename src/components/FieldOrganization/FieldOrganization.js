@@ -56,7 +56,7 @@ const FieldOrganization = ({
   }, [name]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const clearButton = useMemo(() => {
-    if (selectedOrganization.id && !disabled) {
+    if (selectedOrganization.id) {
       return (
         <IconButton
           onClick={clearOrganization}
@@ -67,14 +67,14 @@ const FieldOrganization = ({
     }
 
     return null;
-  }, [selectedOrganization, disabled]);// eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedOrganization]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
       <Field
         id={name}
         component={TextField}
-        disabled
+        disabled={disabled}
         endControl={clearButton}
         fullWidth
         hasClearIcon={false}
@@ -84,22 +84,19 @@ const FieldOrganization = ({
         validate={validate}
         format={() => selectedOrganization.name}
       />
-
-      {!disabled && (
-        <div>
-          <Pluggable
-            id={`${name}-plugin`}
-            aria-haspopup="true"
-            dataKey="organization"
-            searchButtonStyle="link"
-            searchLabel={<FormattedMessage id="stripes-acq-components.filter.organization.lookup" />}
-            selectVendor={selectOrganization}
-            type="find-organization"
-          >
-            <FormattedMessage id="stripes-acq-components.filter.organization.lookupNoSupport" />
-          </Pluggable>
-        </div>
-      )}
+      <div>
+        <Pluggable
+          id={`${name}-plugin`}
+          aria-haspopup="true"
+          dataKey="organization"
+          searchButtonStyle="link"
+          searchLabel={<FormattedMessage id="stripes-acq-components.filter.organization.lookup" />}
+          selectVendor={selectOrganization}
+          type="find-organization"
+        >
+          <FormattedMessage id="stripes-acq-components.filter.organization.lookupNoSupport" />
+        </Pluggable>
+      </div>
     </div>
   );
 };

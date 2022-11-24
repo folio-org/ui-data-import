@@ -57,10 +57,20 @@ export const JOB_STATUSES = {
 export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
 export const SYSTEM_USER_NAME = 'System';
 
+export const APPROVED_FIELD = 'approved';
+export const MANUAL_PO_FIELD = 'manualPo';
+export const AUTOMATIC_EXPORT_FIELD = 'automaticExport';
+export const ACTIVATION_STATUS_FIELD = 'activationStatus';
+export const TRIAL_FIELD = 'trial';
 export const CURRENCY_FIELD = 'currency';
+export const VENDOR_FIELD = 'vendor';
 export const VENDOR_ID_FIELD = 'vendorId';
+export const ASSIGNED_TO_FIELD = 'assignedTo';
+export const MATERIAL_SUPPLIER_FIELD = 'materialSupplier';
+export const ACCESS_PROVIDER_FIELD = 'accessProvider';
 export const LOCK_TOTAL_FIELD = 'lockTotal';
 export const EXCHANGE_RATE_FIELD = 'exchangeRate';
+export const USE_EXCHANGE_RATE_FIELD = 'useExchangeRate';
 
 export const DATA_TYPES = [
   'MARC',
@@ -700,7 +710,7 @@ export const MARC_FIELD_PROTECTION_SOURCE = {
 
 // TODO: Options to disable until functionality is not implemented.
 // Should be removed in the future
-export const FOLIO_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'AUTHORITY', 'ORDER'];
+export const FOLIO_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS', 'AUTHORITY'];
 export const INCOMING_RECORD_TYPES_TO_DISABLE = ['MARC_HOLDINGS'];
 
 export const OCLC_CREATE_INSTANCE_JOB_ID = 'd0ebb7b0-2f0f-11eb-adc1-0242ac120002';
@@ -788,6 +798,15 @@ export const PAGE_KEYS = {
 };
 
 export const PER_REQUEST_LIMIT = 1000;
+
+export const TWO_DIGIT = '2-digit';
+export const NUMERIC = 'numeric';
+
+export const BASE_FORMATTED_DATE = {
+  day: TWO_DIGIT,
+  month: TWO_DIGIT,
+  year: NUMERIC,
+};
 
 export const BASE_URLS = {
   JOB_PROFILE: '/settings/data-import/job-profiles',

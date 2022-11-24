@@ -4,3 +4,4 @@ export * from './MappingItemDetails';
 export * from './MappingMARCBibDetails';
 export * from './MappingInvoiceDetails';
 export * from './MappingMARCAuthorityDetails';
+export * from './MappingOrderDetails';

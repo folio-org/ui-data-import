@@ -24,7 +24,10 @@ import {
   getRepeatableFieldName,
   getRepeatableAcceptedValuesPath,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX, WRAPPER_SOURCE_LINKS } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   mappingProfileSubfieldShape,
   okapiShape,

@@ -25,6 +25,7 @@ import {
 } from '../../../../utils';
 
 import {
+  getRefValuesFromTables,
   getFieldName,
   getFieldValueFromDetails,
   getAccountingCodeOptions,
@@ -44,10 +45,11 @@ export const MappingInvoiceDetails = ({
   const [accountingCodeOptions, setAccountingCodeOptions] = useState([]);
   const [accountingNumberOptions, setAccountingNumberOptions] = useState([]);
 
-  const vendorReferenceNumbers = referenceTables?.invoiceLines?.[0].fields[4]?.subfields || [];
-  const adjustments = referenceTables?.adjustments || [];
-  const fundDistributions = referenceTables?.invoiceLines?.[0].fields[14]?.subfields || [];
-  const lineAdjustments = referenceTables?.invoiceLines?.[0].fields[15]?.subfields || [];
+  const vendorReferenceNumbers = getRefValuesFromTables(referenceTables, 'invoiceLines.[0].fields[4].subfields');
+  const adjustments = getRefValuesFromTables(referenceTables, 'adjustments');
+  const fundDistributions = getRefValuesFromTables(referenceTables, 'invoiceLines.[0].fields[14].subfields');
+  const lineAdjustments = getRefValuesFromTables(referenceTables, 'invoiceLines.[0].fields[15].subfields');
+
   const currencyFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, CURRENCY_FIELD);
   const lockTotalFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, LOCK_TOTAL_FIELD);
   const exchangeRateFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, EXCHANGE_RATE_FIELD);

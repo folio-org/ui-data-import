@@ -47,6 +47,7 @@ import {
   MappingMARCBibDetails,
   MappingInvoiceDetails,
   MappingMARCAuthorityDetails,
+  MappingOrderDetails,
 } from '../detailsSections/view';
 
 import {
@@ -275,7 +276,8 @@ export class ViewMappingProfile extends Component {
       ITEM: <MappingItemDetails mappingDetails={mappingFields} />,
       INVOICE: <MappingInvoiceDetails mappingDetails={mappingFields} />,
       MARC_BIBLIOGRAPHIC: <MappingMARCBibDetails {...MARCBibDetailsProps} />,
-      MARC_AUTHORITY: <MappingMARCAuthorityDetails {...MARCBibDetailsProps} />
+      MARC_AUTHORITY: <MappingMARCAuthorityDetails {...MARCBibDetailsProps} />,
+      ORDER: <MappingOrderDetails mappingDetails={mappingFields} />,
     };
 
     return (

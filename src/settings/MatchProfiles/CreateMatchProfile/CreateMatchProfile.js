@@ -32,7 +32,7 @@ export const CreateMatchProfile = ({
     <Layer
       isOpen
       container={fullWidthContainer}
-      contentLabel={formatMessage({ id: 'settings.matchProfiles.form' })}
+      contentLabel={formatMessage({ id: 'ui-data-import.settings.matchProfiles.form' })}
     >
       <MatchProfilesForm
         {...routeProps}

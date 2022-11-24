@@ -23,7 +23,7 @@ export const CreateJobProfile = ({
     <Layer
       isOpen
       container={fullWidthContainer}
-      contentLabel={formatMessage({ id: 'settings.jobProfiles.form' })}
+      contentLabel={formatMessage({ id: 'ui-data-import.settings.jobProfiles.form' })}
     >
       <JobProfilesForm
         {...routeProps}

@@ -43,7 +43,7 @@ const EditMappingProfileComponent = ({
     <Layer
       isOpen
       container={fullWidthContainer}
-      contentLabel={formatMessage({ id: 'settings.mappingProfiles.form' })}
+      contentLabel={formatMessage({ id: 'ui-data-import.settings.mappingProfiles.form' })}
     >
       <MappingProfilesForm
         {...routeProps}

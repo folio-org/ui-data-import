@@ -21,6 +21,7 @@ import {
   validateAcceptedValues,
   updateValueWithTemplate,
   okapiShape,
+  validateRequiredField,
 } from '../../utils';
 
 export const AcceptedValuesField = ({
@@ -50,9 +51,10 @@ export const AcceptedValuesField = ({
   disabled,
   required,
   validation,
+  hasLoaded,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
-  const [hasOptions, setHasOptions] = useState(!isEmpty(listOptions));
+  const [hasOptions, setHasOptions] = useState(hasLoaded || !isEmpty(listOptions));
 
   const getAcceptedValuesObj = data => {
     let acceptedValues = {};
@@ -135,6 +137,10 @@ export const AcceptedValuesField = ({
 
   const fieldValidation = [customValidation || validateAcceptedValueField, memoizedValidation];
 
+  if (required) {
+    fieldValidation.push(validateRequiredField);
+  }
+
   const renderFormField = () => (
     <Field
       id={id}
@@ -184,7 +190,7 @@ AcceptedValuesField.propTypes = {
   component: PropTypes.oneOfType([PropTypes.elementType, PropTypes.func]).isRequired,
   optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
-  okapi: okapiShape.isRequired,
+  okapi: okapiShape,
   name: PropTypes.string,
   optionTemplate: PropTypes.string,
   acceptedValuesList: PropTypes.arrayOf(PropTypes.object),
@@ -210,9 +216,11 @@ AcceptedValuesField.propTypes = {
   parsedOptionValue: PropTypes.string,
   parsedOptionLabel: PropTypes.string,
   validation: PropTypes.func,
+  hasLoaded: PropTypes.bool,
 };
 
 AcceptedValuesField.defaultProps = {
+  okapi: {},
   acceptedValuesList: [],
   isRemoveValueAllowed: false,
   isFormField: true,
@@ -221,4 +229,19 @@ AcceptedValuesField.defaultProps = {
   parsedOptionLabel: '',
   required: false,
   disabled: false,
+  hasLoaded: false,
+  name: null,
+  optionTemplate: null,
+  wrapperSources: null,
+  wrapperSourcesFn: null,
+  wrapperLabel: null,
+  label: null,
+  id: null,
+  setAcceptedValues: null,
+  acceptedValuesPath: null,
+  dataAttributes: null,
+  onChange: null,
+  componentValue: null,
+  isDirty: false,
+  validation: null,
 };
