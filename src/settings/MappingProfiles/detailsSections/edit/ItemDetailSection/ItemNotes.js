@@ -26,7 +26,10 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   okapiShape,
   mappingProfileSubfieldShape,
@@ -77,7 +80,7 @@ export const ItemNotes = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: '/item-note-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.ITEM_NOTE_TYPES,
                           wrapperSourcePath: 'itemNoteTypes',
                         }]}
                         setAcceptedValues={setReferenceTables}
