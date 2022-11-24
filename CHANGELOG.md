@@ -12,6 +12,7 @@
 * Add required field asterisks & validation action to Order field mapping profile (UIDATIMP-1265)
 * Add required info icons to Order field mapping profile (UIDATIMP-1266)
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
+* Allow edit and duplicate Default - Create SRS MARC Authority job profile (UIDATIMP-1318)
 
 ### Bugs fixed:
 * Missing associated profiles on edit screen on Action/Field mapping profiles (UIDATIMP-1296)
