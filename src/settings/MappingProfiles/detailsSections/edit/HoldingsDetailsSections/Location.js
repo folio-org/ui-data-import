@@ -137,7 +137,7 @@ export const Location = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.CALL_NUMBER_TYPES,
               wrapperSourcePath: 'callNumberTypes',
             }]}
             isRemoveValueAllowed

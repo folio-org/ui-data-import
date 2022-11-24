@@ -11,6 +11,7 @@ import {
   HTML_LANG_DIRECTIONS,
   MARC_FIELD_CONSTITUENT,
 } from '../../utils';
+import { WRAPPER_SOURCE_LINKS } from '../../settings/MappingProfiles/detailsSections/constants';
 
 @injectIntl
 @stripesConnect
@@ -19,7 +20,7 @@ export class MatchingFieldsManager extends Component {
     identifierTypes: {
       type: 'okapi',
       records: 'identifierTypes',
-      path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
+      path: WRAPPER_SOURCE_LINKS.IDENTIFIER_TYPES,
     },
   });
 

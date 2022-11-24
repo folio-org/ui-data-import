@@ -24,7 +24,10 @@ import {
   getRepeatableFieldName,
   getRepeatableAcceptedValuesPath,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   mappingProfileSubfieldShape,
   okapiShape,
@@ -91,7 +94,7 @@ export const InstanceRelationship = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: '/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.INSTANCE_RELATIONSHIP_TYPES,
                           wrapperSourcePath: 'instanceRelationshipTypes',
                         }]}
                         setAcceptedValues={setReferenceTables}
@@ -152,7 +155,7 @@ export const InstanceRelationship = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: '/instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.INSTANCE_RELATIONSHIP_TYPES,
                           wrapperSourcePath: 'instanceRelationshipTypes',
                         }]}
                         setAcceptedValues={setReferenceTables}

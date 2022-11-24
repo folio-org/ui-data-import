@@ -20,7 +20,10 @@ import {
   getAcceptedValuesPath,
   getFieldName,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   validateMARCWithDate,
   okapiShape,
@@ -93,7 +96,7 @@ export const Condition = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/item-damaged-statuses?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ITEM_DAMAGE_STATUS,
               wrapperSourcePath: 'itemDamageStatuses',
             }]}
             isRemoveValueAllowed

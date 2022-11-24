@@ -34,7 +34,10 @@ import {
   getAcceptedValuesPath,
   getRepeatableAcceptedValuesPath,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 
 export const AdministrativeData = ({
   statisticalCodes,
@@ -135,7 +138,7 @@ export const AdministrativeData = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/instance-statuses?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.INSTANCE_STATUSES,
               wrapperSourcePath: 'instanceStatuses',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -193,10 +196,10 @@ export const AdministrativeData = ({
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSourcesFn="statisticalCodeTypeName"
                         wrapperSources={[{
-                          wrapperSourceLink: '/statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
+                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.STATISTICAL_CODES,
                           wrapperSourcePath: 'statisticalCodes',
                         }, {
-                          wrapperSourceLink: '/statistical-code-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.STATISTICAL_CODE_TYPES,
                           wrapperSourcePath: 'statisticalCodeTypes',
                         }]}
                         optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
