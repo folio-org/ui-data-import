@@ -25,7 +25,10 @@ import {
   getRepeatableFieldName,
   getRepeatableAcceptedValuesPath,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   mappingProfileSubfieldShape,
   okapiShape,
@@ -203,7 +206,7 @@ export const DescriptiveData = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: '/nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.NATURE_OF_CONTENT_TERMS,
                           wrapperSourcePath: 'natureOfContentTerms',
                         }]}
                         setAcceptedValues={setReferenceTables}

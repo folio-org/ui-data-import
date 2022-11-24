@@ -26,7 +26,10 @@ import {
   getRepeatableFieldName,
   getRepeatableAcceptedValuesPath,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   mappingProfileSubfieldShape,
   okapiShape,
@@ -77,7 +80,7 @@ export const HoldingsNotes = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: '/holdings-note-types?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.HOLDINGS_NOTE_TYPES,
                           wrapperSourcePath: 'holdingsNoteTypes',
                         }]}
                         setAcceptedValues={setReferenceTables}

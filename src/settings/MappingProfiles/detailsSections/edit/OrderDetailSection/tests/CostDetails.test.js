@@ -35,7 +35,7 @@ describe('CostDetails', () => {
 
     expect(getByText('Physical unit price')).toBeInTheDocument();
     expect(getByText('Quantity physical')).toBeInTheDocument();
-    expect(getByText('Additional coast')).toBeInTheDocument();
+    expect(getByText('Additional cost')).toBeInTheDocument();
     expect(getByText('Currency')).toBeInTheDocument();
     expect(getByText('Use set exchange rate')).toBeInTheDocument();
     expect(getByText('Set exchange rate')).toBeInTheDocument();

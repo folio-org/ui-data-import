@@ -84,7 +84,7 @@ export const CostDetails = ({
             {validation => (
               <Field
                 component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.additionalCoast`} />}
+                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.additionalCost`} />}
                 name={getFieldName(52)}
                 validate={[validation]}
               />

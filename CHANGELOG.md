@@ -14,15 +14,18 @@
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
 
 ### Bugs fixed:
+* Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
 * Missing associated profiles on edit screen on Action/Field mapping profiles (UIDATIMP-1296)
 * Data import settings: Shortcuts for creating, editing and duplicating don't work (UIDATIMP-1300)
 * Order and Order line field mapping: View screen updates (UIDATIMP-1304)
+* Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
+* Error in module after creating new match profile (UIDATIMP-1319)
 
 ## [5.3.5](https://github.com/folio-org/ui-data-import/tree/v5.3.5) (2022-11-17)
 
 ### Bugs fixed:
 * After duplicating profiles the previous view details information is displayed (UIDATIMP-1285)
-* Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
+* Invoice field mapping profile: sortBy param is missed for Bill to name field (UIDATIMP-1288)
 * Incorrect name of the page in Edit mode of field mapping profile (UIDATIMP-1302)
 * Update dependencies versions
 

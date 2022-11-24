@@ -24,7 +24,10 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   okapiShape,
   mappingProfileSubfieldShape,
@@ -75,7 +78,7 @@ export const ElectronicAccess = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: '/electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
+                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.ELECTRONIC_ACCESS,
                           wrapperSourcePath: 'electronicAccessRelationships',
                         }]}
                         setAcceptedValues={setReferenceTables}
