@@ -248,9 +248,7 @@ describe('<ViewJobProfile>', () => {
 
       fireEvent.click(confirmButton);
 
-      const confirmButtonAfterClick = document.querySelector('#clickable-run-job-profile-modal-confirm');
-
-      expect(confirmButtonAfterClick).toBeDisabled();
+      await waitFor(() => expect(document.querySelector('#clickable-run-job-profile-modal-confirm')).toBeDisabled());
     });
   });
 
