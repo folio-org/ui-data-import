@@ -30,7 +30,10 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   createOptionsList,
   ITEM_STATUS_OPTIONS,
@@ -89,7 +92,7 @@ export const LoanAndAvailability = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.LOAN_TYPES,
               wrapperSourcePath: 'loantypes',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -111,7 +114,7 @@ export const LoanAndAvailability = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.LOAN_TYPES,
               wrapperSourcePath: 'loantypes',
             }]}
             isRemoveValueAllowed

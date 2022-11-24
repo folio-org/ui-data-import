@@ -161,7 +161,7 @@ export const InvoiceInformation = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/batch-groups?limit=500&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.BATCH_GROUPS,
               wrapperSourcePath: 'batchGroups',
             }]}
             isRemoveValueAllowed
