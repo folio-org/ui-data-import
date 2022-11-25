@@ -15,6 +15,7 @@
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
+* Order and Order line field mapping: View screen updates (UIDATIMP-1304)
 * Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
 
 ## [5.3.6](https://github.com/folio-org/ui-data-import/tree/v5.3.6) (2022-11-24)

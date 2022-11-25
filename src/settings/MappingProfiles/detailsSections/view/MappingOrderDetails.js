@@ -25,12 +25,16 @@ import { getFieldValue } from '../utils';
 
 export const MappingOrderDetails = ({ mappingDetails }) => {
   const vendorId = getFieldValue(mappingDetails, 'vendor', 'value').replace(/['"]+/g, '');
+  const userId = getFieldValue(mappingDetails, 'assignedTo', 'value').replace(/['"]+/g, '');
+  const materialSupplierId = getFieldValue(mappingDetails, 'materialSupplier', 'value').replace(/['"]+/g, '');
+  const accessProviderId = getFieldValue(mappingDetails, 'accessProvider', 'value').replace(/['"]+/g, '');
 
   return (
     <AccordionSet>
       <OrderInformation
         mappingDetails={mappingDetails}
         vendorId={vendorId}
+        userId={userId}
       />
       <Accordion
         id="view-order-line-information"
@@ -42,8 +46,14 @@ export const MappingOrderDetails = ({ mappingDetails }) => {
         <CostDetails mappingDetails={mappingDetails} />
         <FundDistribution mappingDetails={mappingDetails} />
         <Location mappingDetails={mappingDetails} />
-        <PhysicalResourceDetails mappingDetails={mappingDetails} />
-        <EResourcesDetails mappingDetails={mappingDetails} />
+        <PhysicalResourceDetails
+          mappingDetails={mappingDetails}
+          materialSupplierId={materialSupplierId}
+        />
+        <EResourcesDetails
+          mappingDetails={mappingDetails}
+          accessProviderId={accessProviderId}
+        />
       </Accordion>
     </AccordionSet>
   );
