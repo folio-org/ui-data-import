@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -9,6 +12,7 @@ import {
   KeyValue,
   NoValue,
 } from '@folio/stripes/components';
+import { stripesConnect } from '@folio/stripes/core';
 
 import { ViewRepeatableField } from '../ViewRepeatableField';
 
@@ -23,12 +27,27 @@ import {
 } from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
-export const PhysicalResourceDetails = ({ mappingDetails }) => {
+const PhysicalResourceDetails = ({
+  mappingDetails,
+  materialSupplierId,
+  mutator,
+}) => {
+  const [selectedOrganization, setSelectedOrganization] = useState({});
+  const materialSupplierValue = selectedOrganization?.name;
+
+  useEffect(() => {
+    if (materialSupplierId && selectedOrganization.id !== materialSupplierId) {
+      mutator.fieldOrganizationOrg.GET()
+        .then(setSelectedOrganization);
+    } else {
+      setSelectedOrganization({});
+    }
+  }, [materialSupplierId]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const { VOLUMES } = PHYSICAL_RESOURCE_VISIBLE_COLUMNS;
 
   const noValueElement = <NoValue />;
 
-  const materialSupplier = getFieldValue(mappingDetails, 'materialSupplier', 'value');
   const receiptDue = getFieldValue(mappingDetails, 'receiptDue', 'value');
   const expectedReceiptDate = getFieldValue(mappingDetails, 'expectedReceiptDate', 'value');
   const createInventory = getFieldValueByPath(mappingDetails, 'order.poLine.physical.createInventory', 'value');
@@ -66,7 +85,7 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalOrderDetails.materialSupplier`} />}
-            value={materialSupplier}
+            value={materialSupplierValue}
           />
         </Col>
         <Col
@@ -126,4 +145,20 @@ export const PhysicalResourceDetails = ({ mappingDetails }) => {
   );
 };
 
-PhysicalResourceDetails.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };
+PhysicalResourceDetails.propTypes = {
+  mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired,
+  mutator: PropTypes.object.isRequired,
+  materialSupplierId: PropTypes.string,
+};
+
+PhysicalResourceDetails.manifest = Object.freeze({
+  fieldOrganizationOrg: {
+    type: 'okapi',
+    path: 'organizations/organizations/!{materialSupplierId}',
+    throwErrors: false,
+    accumulate: true,
+    fetch: false,
+  },
+});
+
+export default stripesConnect(PhysicalResourceDetails);

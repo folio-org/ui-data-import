@@ -1,9 +1,9 @@
 export * from './CostDetails';
-export * from './EResourcesDetails';
+export { default as EResourcesDetails } from './EResourcesDetails';
 export * from './FundDistribution';
 export * from './Location';
 export * from './OrderDetails';
 export { default as OrderInformation } from './OrderInformation';
-export * from './PhysicalResourceDetails';
+export { default as PhysicalResourceDetails } from './PhysicalResourceDetails';
 export * from './POLineDetails';
 export * from './Vendor';
