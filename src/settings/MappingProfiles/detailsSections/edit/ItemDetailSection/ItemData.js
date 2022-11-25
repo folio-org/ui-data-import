@@ -18,6 +18,7 @@ import {
 import {
   getAcceptedValuesPath,
   getFieldName,
+  renderFieldLabelWithInfo,
 } from '../../utils';
 import {
   TRANSLATION_ID_PREFIX,
@@ -29,6 +30,11 @@ export const ItemData = ({
   setReferenceTables,
   okapi,
 }) => {
+  const materialTypeLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.item.itemData.field.materialType`,
+    `${TRANSLATION_ID_PREFIX}.item.requiredWhenCreatingItem.info`,
+  );
+
   return (
     <Accordion
       id="item-data"
@@ -42,7 +48,7 @@ export const ItemData = ({
           <AcceptedValuesField
             component={TextField}
             name={getFieldName(8)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemData.field.materialType`} />}
+            label={materialTypeLabel}
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
