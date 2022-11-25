@@ -18,6 +18,7 @@ import {
  * @param {string} baseUrl
  * @param {boolean} isDefaultProfile
  * @param {boolean} isDuplicateButtonDisabled
+ * @param {boolean} isEditableDefaultProfile
  */
 export const menuTemplate = ({
   entity,
@@ -25,6 +26,7 @@ export const menuTemplate = ({
   baseUrl,
   isDefaultProfile,
   isDuplicateButtonDisabled = false,
+  isEditableDefaultProfile = false,
 }) => {
   const {
     props: {
@@ -54,7 +56,7 @@ export const menuTemplate = ({
         caption="ui-data-import.edit"
         icon="edit"
         menu={menu}
-        isDisabled={isDefaultProfile}
+        isDisabled={isDefaultProfile && !isEditableDefaultProfile}
         location={`${baseUrl}/edit/${params.id}${search}`}
         dataAttributes={{ 'data-test-edit-item-menu-button': '' }}
       />
