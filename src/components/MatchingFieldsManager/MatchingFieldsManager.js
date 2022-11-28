@@ -8,10 +8,11 @@ import { stripesConnect } from '@folio/stripes/core';
 import {
   fieldCategoriesConfig,
   fieldsConfig,
+  FIND_ALL_CQL,
   HTML_LANG_DIRECTIONS,
   MARC_FIELD_CONSTITUENT,
+  PER_REQUEST_LIMIT,
 } from '../../utils';
-import { WRAPPER_SOURCE_LINKS } from '../../settings/MappingProfiles/detailsSections/constants';
 
 @injectIntl
 @stripesConnect
@@ -20,7 +21,7 @@ export class MatchingFieldsManager extends Component {
     identifierTypes: {
       type: 'okapi',
       records: 'identifierTypes',
-      path: WRAPPER_SOURCE_LINKS.IDENTIFIER_TYPES,
+      path: `identifier-types?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby name`,
     },
   });
 
