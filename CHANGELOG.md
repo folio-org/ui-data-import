@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **5.3.7** (in progress)
+
+### Bugs fixed:
+* Fix path for getting identifierTypes when creating new match profile (UIDATIMP-1319)
+
 ## [5.3.6](https://github.com/folio-org/ui-data-import/tree/v5.3.6) (2022-11-24)
 
 ### Bugs fixed:
