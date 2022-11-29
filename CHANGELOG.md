@@ -3,6 +3,7 @@
 ## **5.3.8** (in progress)
 
 ### Bugs fixed:
+* Upgrade moment from 2.24.0 to >= 2.29.4 fixing vulns (UIDATIMP-1317)
 * Loose plugin dependencies permit incompatible versions (UIDATIMP-1323)
 
 ## [5.3.7](https://github.com/folio-org/ui-data-import/tree/v5.3.7) (2022-11-28)
