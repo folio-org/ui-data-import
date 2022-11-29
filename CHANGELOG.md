@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **5.3.8** (in progress)
+
+### Bugs fixed:
+* Loose plugin dependencies permit incompatible versions (UIDATIMP-1323)
+
 ## [5.3.7](https://github.com/folio-org/ui-data-import/tree/v5.3.7) (2022-11-28)
 
 ### Bugs fixed:
