@@ -1,6 +1,10 @@
 import '../../../test/jest/__mock__';
 
 import { getIdentifierTypes } from '../getIdentifierTypes';
+import {
+  PER_REQUEST_LIMIT,
+  FIND_ALL_CQL,
+} from '..';
 
 global.fetch = jest.fn();
 
@@ -13,7 +17,7 @@ describe('getIdentifierTypes function', () => {
     });
 
     const okapi = { url: 'https://test.com' };
-    const expectedURL = `${okapi.url}/identifier-types?limit=1000&query=cql.allRecords=1 sortby name`;
+    const expectedURL = `https://test.com/identifier-types?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby name`;
 
     const data = await getIdentifierTypes(okapi);
 

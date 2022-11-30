@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -8,6 +11,7 @@ import {
   Row,
   KeyValue,
 } from '@folio/stripes/components';
+import { stripesConnect } from '@folio/stripes/core';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -17,8 +21,23 @@ import {
 } from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
-export const EResourcesDetails = ({ mappingDetails }) => {
-  const accessProvider = getFieldValue(mappingDetails, 'accessProvider', 'value');
+const EResourcesDetails = ({
+  mappingDetails,
+  accessProviderId,
+  mutator,
+}) => {
+  const [selectedOrganization, setSelectedOrganization] = useState({});
+  const accessProviderValue = selectedOrganization?.name;
+
+  useEffect(() => {
+    if (accessProviderId && selectedOrganization.id !== accessProviderId) {
+      mutator.fieldOrganizationOrg.GET()
+        .then(setSelectedOrganization);
+    } else {
+      setSelectedOrganization({});
+    }
+  }, [accessProviderId]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const activated = getFieldValue(mappingDetails, 'activationStatus', 'booleanFieldAction');
   const activationDue = getFieldValue(mappingDetails, 'activationDue', 'value');
   const createInventory = getFieldValueByPath(mappingDetails, 'order.poLine.eresource.createInventory', 'value');
@@ -43,7 +62,7 @@ export const EResourcesDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.accessProvider`} />}
-            value={accessProvider}
+            value={accessProviderValue}
           />
         </Col>
         <Col
@@ -127,4 +146,20 @@ export const EResourcesDetails = ({ mappingDetails }) => {
   );
 };
 
-EResourcesDetails.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };
+EResourcesDetails.propTypes = {
+  mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired,
+  mutator: PropTypes.object.isRequired,
+  accessProviderId: PropTypes.string,
+};
+
+EResourcesDetails.manifest = Object.freeze({
+  fieldOrganizationOrg: {
+    type: 'okapi',
+    path: 'organizations/organizations/!{accessProviderId}',
+    throwErrors: false,
+    accumulate: true,
+    fetch: false,
+  },
+});
+
+export default stripesConnect(EResourcesDetails);

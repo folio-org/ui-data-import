@@ -12,18 +12,32 @@
 * Add required field asterisks & validation action to Order field mapping profile (UIDATIMP-1265)
 * Add required info icons to Order field mapping profile (UIDATIMP-1266)
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
+* Add required info icons to Item field mapping profile (UIDATIMP-1293)
+* Allow edit and duplicate Default - Create SRS MARC Authority job profile (UIDATIMP-1318)
+
+### Bugs fixed:
+* Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
+* Order and Order line field mapping: View screen updates (UIDATIMP-1304)
+* Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
+
+## [5.3.7](https://github.com/folio-org/ui-data-import/tree/v5.3.7) (2022-11-28)
+
+### Bugs fixed:
+* Fix path for getting identifierTypes when creating new match profile (UIDATIMP-1319)
+
+## [5.3.6](https://github.com/folio-org/ui-data-import/tree/v5.3.6) (2022-11-24)
 
 ### Bugs fixed:
 * Missing associated profiles on edit screen on Action/Field mapping profiles (UIDATIMP-1296)
 * "Completed with errors" after double clicking run import (UIDATIMP-1299)
 * Data import settings: Shortcuts for creating, editing and duplicating don't work (UIDATIMP-1300)
-* Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
+* Fix path for getting identifierTypes on the match profiles list
 
 ## [5.3.5](https://github.com/folio-org/ui-data-import/tree/v5.3.5) (2022-11-17)
 
 ### Bugs fixed:
 * After duplicating profiles the previous view details information is displayed (UIDATIMP-1285)
-* Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
+* Invoice field mapping profile: sortBy param is missed for Bill to name field (UIDATIMP-1288)
 * Incorrect name of the page in Edit mode of field mapping profile (UIDATIMP-1302)
 * Update dependencies versions
 
