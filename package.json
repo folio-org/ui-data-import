@@ -94,7 +94,7 @@
     "moment": "~2.29.4"
   },
   "optionalDependencies": {
-    "@folio/plugin-find-organization": "*"
+    "@folio/plugin-find-organization": "^3.3.0"
   },
   "stripes": {
     "stripesDeps": [
