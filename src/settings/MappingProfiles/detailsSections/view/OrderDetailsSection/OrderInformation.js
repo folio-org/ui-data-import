@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { isEmpty } from 'lodash';
 
 import {
   Accordion,
@@ -13,6 +14,7 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 import { stripesConnect } from '@folio/stripes/core';
+import { getFullName } from '@folio/stripes/util';
 
 import { ProhibitionIcon } from '../../../../../components';
 import { ViewRepeatableField } from '../ViewRepeatableField';
@@ -26,18 +28,18 @@ import {
   renderCheckbox,
   transformSubfieldsData,
 } from '../../utils';
-import {
-  mappingProfileFieldShape,
-  PER_REQUEST_LIMIT,
-} from '../../../../../utils';
+import { mappingProfileFieldShape } from '../../../../../utils';
 
 const OrderInformation = ({
   mappingDetails,
   mutator,
   vendorId,
+  userId,
 }) => {
   const [selectedOrganization, setSelectedOrganization] = useState({});
+  const [selectedUser, setSelectedUser] = useState({});
   const vendorNameValue = selectedOrganization?.name;
+  const userNameValue = !isEmpty(selectedUser) ? getFullName(selectedUser) : null;
 
   useEffect(() => {
     if (vendorId && selectedOrganization.id !== vendorId) {
@@ -47,6 +49,14 @@ const OrderInformation = ({
       setSelectedOrganization({});
     }
   }, [vendorId]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (userId && selectedUser.id !== userId) {
+      mutator.user.GET()
+        .then(setSelectedUser);
+    } else {
+      setSelectedUser({});
+    }
+  }, [userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const { NOTE } = NOTES_VISIBLE_COLUMNS;
 
@@ -62,7 +72,6 @@ const OrderInformation = ({
   const suffix = getFieldValue(mappingDetails, 'suffix', 'value');
   const orderType = getFieldValue(mappingDetails, 'orderType', 'value');
   const acqUnitIds = getFieldValue(mappingDetails, 'acqUnitIds', 'value');
-  const assignedTo = getFieldValue(mappingDetails, 'assignedTo', 'value');
   const billTo = getFieldValue(mappingDetails, 'billTo', 'value');
   const billToAddress = getFieldValue(mappingDetails, 'billToAddress', 'value');
   const shipTo = getFieldValue(mappingDetails, 'shipTo', 'value');
@@ -201,7 +210,7 @@ const OrderInformation = ({
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.assignedTo`} />}
-            value={assignedTo}
+            value={userNameValue}
           />
         </Col>
       </Row>
@@ -286,17 +295,24 @@ OrderInformation.propTypes = {
   mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired,
   mutator: PropTypes.object.isRequired,
   vendorId: PropTypes.string,
+  userId: PropTypes.string,
 };
 
-OrderInformation.manifest = {
+OrderInformation.manifest = Object.freeze({
   fieldOrganizationOrg: {
     type: 'okapi',
     path: 'organizations/organizations/!{vendorId}',
     throwErrors: false,
-    perRequest: PER_REQUEST_LIMIT,
     accumulate: true,
     fetch: false,
   },
-};
+  user: {
+    type: 'okapi',
+    path: 'users/!{userId}',
+    throwErrors: false,
+    accumulate: true,
+    fetch: false,
+  },
+});
 
 export default stripesConnect(OrderInformation);

@@ -259,12 +259,12 @@ export const boolAcceptedValuesOptions = formatMessage => ([
   },
 ]);
 
-export const renderFieldLabelWithInfo = (fieldLabel, infoContent) => (
+export const renderFieldLabelWithInfo = (fieldLabelId, infoMessageId) => (
   <>
-    <FormattedMessage id={fieldLabel} />
+    <FormattedMessage id={fieldLabelId} />
     <InfoPopover
       iconSize="medium"
-      content={<FormattedMessage id={infoContent} />}
+      content={<FormattedMessage id={infoMessageId} />}
     />
   </>
 );

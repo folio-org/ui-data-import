@@ -29,8 +29,12 @@ import {
   getSubfieldName,
   onAdd,
   onRemove,
+  renderFieldLabelWithInfo,
 } from '../../utils';
-import { TRANSLATION_ID_PREFIX } from '../../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  WRAPPER_SOURCE_LINKS,
+} from '../../constants';
 import {
   createOptionsList,
   ITEM_STATUS_OPTIONS,
@@ -51,6 +55,15 @@ export const LoanAndAvailability = ({
   const statusesList = createOptionsList(ITEM_STATUS_OPTIONS, formatMessage);
   const circulationNotesList = createOptionsList(ITEM_CIRCULATION_NOTES_OPTIONS, formatMessage);
   const initialCirculationNotes = useRef(circulationNotes);
+
+  const permanentLoanTypeLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanTypePermanentRequired`,
+    `${TRANSLATION_ID_PREFIX}.item.requiredWhenCreatingItem.info`,
+  );
+  const statusLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanStatus`,
+    `${TRANSLATION_ID_PREFIX}.item.requiredWhenCreatingItem.info`,
+  );
 
   const getCirculationNoteTypeState = index => {
     const initialValue = initialCirculationNotes.current[index]?.fields.find(item => item.name === 'noteType').value;
@@ -84,12 +97,12 @@ export const LoanAndAvailability = ({
           <AcceptedValuesField
             component={TextField}
             name={getFieldName(26)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanTypePermanentRequired`} />}
+            label={permanentLoanTypeLabel}
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.LOAN_TYPES,
               wrapperSourcePath: 'loantypes',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -111,7 +124,7 @@ export const LoanAndAvailability = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: '/loan-types?limit=1000&query=cql.allRecords=1 sortby name',
+              wrapperSourceLink: WRAPPER_SOURCE_LINKS.LOAN_TYPES,
               wrapperSourcePath: 'loantypes',
             }]}
             isRemoveValueAllowed
@@ -129,7 +142,7 @@ export const LoanAndAvailability = ({
           <AcceptedValuesField
             component={TextField}
             name={getFieldName(28)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.itemLoans.field.loanStatus`} />}
+            label={statusLabel}
             optionValue="value"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}

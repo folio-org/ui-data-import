@@ -8,8 +8,10 @@ import { stripesConnect } from '@folio/stripes/core';
 import {
   fieldCategoriesConfig,
   fieldsConfig,
+  FIND_ALL_CQL,
   HTML_LANG_DIRECTIONS,
   MARC_FIELD_CONSTITUENT,
+  PER_REQUEST_LIMIT,
 } from '../../utils';
 
 @injectIntl
@@ -19,7 +21,7 @@ export class MatchingFieldsManager extends Component {
     identifierTypes: {
       type: 'okapi',
       records: 'identifierTypes',
-      path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
+      path: `identifier-types?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby name`,
     },
   });
 
