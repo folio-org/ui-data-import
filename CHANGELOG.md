@@ -17,6 +17,7 @@
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
+* "Completed with errors" after double clicking run import (UIDATIMP-1299)
 * Order and Order line field mapping: View screen updates (UIDATIMP-1304)
 * Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
 
@@ -29,7 +30,6 @@
 
 ### Bugs fixed:
 * Missing associated profiles on edit screen on Action/Field mapping profiles (UIDATIMP-1296)
-* "Completed with errors" after double clicking run import (UIDATIMP-1299)
 * Data import settings: Shortcuts for creating, editing and duplicating don't work (UIDATIMP-1300)
 * Fix path for getting identifierTypes on the match profiles list
 
