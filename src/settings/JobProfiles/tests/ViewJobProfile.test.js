@@ -234,6 +234,22 @@ describe('<ViewJobProfile>', () => {
 
       await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).not.toBeInTheDocument());
     });
+
+    it('confirmation button should be disabled', async () => {
+      const { getByRole } = renderViewJobProfile(viewJobProfileProps(jobProfile, ['run']));
+
+      fireEvent.click(getByRole('button', { name: /actions/i }));
+
+      const actionsMenu = document.querySelector('[class^=DropdownMenu]');
+
+      fireEvent.click(getByTextScreen(actionsMenu, 'Run'));
+
+      const confirmButton = document.querySelector('#clickable-run-job-profile-modal-confirm');
+
+      fireEvent.click(confirmButton);
+
+      expect(confirmButton).toBeDisabled();
+    });
   });
 
   describe('when user cancel running job profile', () => {
