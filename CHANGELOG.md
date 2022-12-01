@@ -17,6 +17,7 @@
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
+* "Completed with errors" after double clicking run import (UIDATIMP-1299)
 * Order and Order line field mapping: View screen updates (UIDATIMP-1304)
 * Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
 
