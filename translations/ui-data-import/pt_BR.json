@@ -992,7 +992,6 @@
     "settings.mappingProfiles.map.order.costDetails.section": "Detalhes de custos",
     "settings.mappingProfiles.map.order.costDetails.field.physicalUnitPrice": "Preço unitário do exemplar físico",
     "settings.mappingProfiles.map.order.costDetails.field.quantityPhysical": "Quantidade física",
-    "settings.mappingProfiles.map.order.costDetails.field.additionalCoast": "Custo adicional",
     "settings.mappingProfiles.map.order.costDetails.field.currency": "Moeda",
     "settings.mappingProfiles.map.order.costDetails.field.useSetExchangeRate": "Usar taxa de câmbio definida",
     "settings.mappingProfiles.map.order.costDetails.field.setExchangeRate": "Definir taxa de câmbio",
@@ -1132,5 +1131,11 @@
     "settings.mappingProfiles.map.order.location.field.quantityPhysical.info": "Necessário quando Criar inventário para Instância, acervos, item ou Instância, acervos; e o formato adquirido é recurso físico, misto de impresso/eletrônico ou outro",
     "settings.mappingProfiles.map.order.location.field.quantityElectronic.info": "Necessário quando Criar inventário é Instância, acervos, item ou Instância, acervos; e o formato do pedido é recurso eletrônico ou misto de Impresso/Eletrônico",
     "settings.mappingProfiles.map.order.physicalResourceDetails.field.materialType.info": "Necessário quando o formato do pedido for recurso físico, misto de Impresso/Eletrônico ou outro; e Criar inventário é Instância, acervos, item",
-    "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "Necessário quando o formato do pedido é recurso eletrônico ou misto Impresso/Eletrônico; e Criar inventário é Instância, acervos, item"
+    "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "Necessário quando o formato do pedido é recurso eletrônico ou misto Impresso/Eletrônico; e Criar inventário é Instância, acervos, item",
+    "settings.mappingProfiles.map.order.itemDetails.field.personalName": "Nome pessoal",
+    "settings.mappingProfiles.map.order.itemDetails.field.corporateName": "Entidade coletiva",
+    "settings.mappingProfiles.map.order.itemDetails.field.meetingName": "Nome da reunião",
+    "settings.mappingProfiles.map.order.itemDetails.field.innReachAuthor": "Autor INN-Reach",
+    "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "Custo adicional",
+    "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Necessário ao criar Item"
 }
