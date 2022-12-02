@@ -992,7 +992,6 @@
     "settings.mappingProfiles.map.order.costDetails.section": "Kostendetails",
     "settings.mappingProfiles.map.order.costDetails.field.physicalUnitPrice": "Preis physische Ressource",
     "settings.mappingProfiles.map.order.costDetails.field.quantityPhysical": "Anzahl physisch",
-    "settings.mappingProfiles.map.order.costDetails.field.additionalCoast": "Zusatzkosten",
     "settings.mappingProfiles.map.order.costDetails.field.currency": "Währung",
     "settings.mappingProfiles.map.order.costDetails.field.useSetExchangeRate": "Festgelegten Wechselkurs anwenden",
     "settings.mappingProfiles.map.order.costDetails.field.setExchangeRate": "Wechselkurs festlegen",
@@ -1132,5 +1131,11 @@
     "settings.mappingProfiles.map.order.location.field.quantityPhysical.info": "Required when Create inventory is Instance, holdings, item or Instance, holdings; and Order format is Physical resource, P/E mix, or Other",
     "settings.mappingProfiles.map.order.location.field.quantityElectronic.info": "Required when Create inventory is Instance, holdings, item or Instance, holdings; and Order format is Electronic resource or P/E mix",
     "settings.mappingProfiles.map.order.physicalResourceDetails.field.materialType.info": "Required when Order format is Physical resource, P/E mix, or Other; and Create inventory is Instance, holdings, item",
-    "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "Required when Order format is Electronic resource or P/E mix; and Create inventory is Instance, holdings, item"
+    "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "Required when Order format is Electronic resource or P/E mix; and Create inventory is Instance, holdings, item",
+    "settings.mappingProfiles.map.order.itemDetails.field.personalName": "Personal name",
+    "settings.mappingProfiles.map.order.itemDetails.field.corporateName": "Corporate name",
+    "settings.mappingProfiles.map.order.itemDetails.field.meetingName": "Meeting name",
+    "settings.mappingProfiles.map.order.itemDetails.field.innReachAuthor": "INN-Reach author",
+    "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "Additional cost",
+    "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Required when creating Item"
 }
