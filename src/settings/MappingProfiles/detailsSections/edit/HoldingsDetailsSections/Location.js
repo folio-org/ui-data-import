@@ -34,6 +34,7 @@ export const Location = ({
     `${TRANSLATION_ID_PREFIX}.location.field.permanent`,
     `${TRANSLATION_ID_PREFIX}.item.requiredWhenCreatingHoldings.info`,
   );
+
   return (
     <Accordion
       id="holdings-location"
