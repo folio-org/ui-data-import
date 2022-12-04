@@ -3,7 +3,6 @@
 ## **5.3.8** (in progress)
 
 ### Bugs fixed:
-* 'Completed with errors' after double clicking run import (UIDATIMP-1299)
 * Upgrade moment from 2.24.0 to >= 2.29.4 fixing vulns (UIDATIMP-1317)
 * Loose plugin dependencies permit incompatible versions (UIDATIMP-1323)
 
