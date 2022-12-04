@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **5.3.8** (in progress)
+## [5.3.9](https://github.com/folio-org/ui-data-import/tree/v5.3.9) (2022-12-04)
 
 ### Bugs fixed:
 * Upgrade moment from 2.24.0 to >= 2.29.4 fixing vulns (UIDATIMP-1317)
