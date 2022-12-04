@@ -88,7 +88,7 @@ const ViewJobProfileComponent = props => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showRunConfirmation, setShowRunConfirmation] = useState(false);
   const [isDeletionInProgress, setDeletionInProgress] = useState(false);
-  const [isConfirmButtonDisabled, setIsConfirmButtonDisabled] = useState(false);
+  const [isRecordsLoadingInProgress, setRecordsLoadingInProgress] = useState(false);
 
   const calloutRef = useRef(null);
   const { uploadDefinition } = useContext(UploadingJobsContext);
@@ -126,6 +126,7 @@ const ViewJobProfileComponent = props => {
 
   const hideRunConfirmation = () => {
     setShowRunConfirmation(false);
+    setRecordsLoadingInProgress(false);
   };
 
   const handleDelete = async record => {
@@ -156,19 +157,21 @@ const ViewJobProfileComponent = props => {
 
       history.push('/data-import');
     } catch (error) {
-      setIsConfirmButtonDisabled(false);
       hideRunConfirmation();
       calloutRef.current.sendCallout({
         type: 'error',
         message: <FormattedMessage id="ui-data-import.communicationProblem" />,
       });
 
+      setRecordsLoadingInProgress(false);
       console.error(error); // eslint-disable-line no-console
     }
   };
 
   const handleRun = async record => {
-    setIsConfirmButtonDisabled(true);
+    if (isRecordsLoadingInProgress) {
+      return;
+    }
 
     await handleLoadRecords(record);
   };
@@ -407,7 +410,6 @@ const ViewJobProfileComponent = props => {
           confirmLabel={<FormattedMessage id="ui-data-import.run" />}
           onCancel={() => setShowRunConfirmation(false)}
           onConfirm={() => handleRun(jobProfileRecord)}
-          isConfirmButtonDisabled={isConfirmButtonDisabled}
         />
         <Callout ref={calloutRef} />
       </Pane>
