@@ -18,9 +18,19 @@
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
-* "Completed with errors" after double clicking run import (UIDATIMP-1299)
 * Order and Order line field mapping: View screen updates (UIDATIMP-1304)
 * Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
+
+## [5.3.10](https://github.com/folio-org/ui-data-import/tree/v5.3.10) (2022-12-05)
+
+### Bugs fixed:
+* "Completed with errors" after double clicking run import (UIDATIMP-1299)
+
+## [5.3.9](https://github.com/folio-org/ui-data-import/tree/v5.3.9) (2022-12-04)
+
+### Bugs fixed:
+* Upgrade moment from 2.24.0 to >= 2.29.4 fixing vulns (UIDATIMP-1317)
+* Loose plugin dependencies permit incompatible versions (UIDATIMP-1323)
 
 ## [5.3.7](https://github.com/folio-org/ui-data-import/tree/v5.3.7) (2022-11-28)
 
