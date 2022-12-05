@@ -19,6 +19,7 @@ import {
 import {
   getAcceptedValuesPath,
   getFieldName,
+  renderFieldLabelWithInfo,
 } from '../../utils';
 import {
   TRANSLATION_ID_PREFIX,
@@ -29,6 +30,11 @@ export const Location = ({
   setReferenceTables,
   okapi,
 }) => {
+  const permanentLocationLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.location.field.permanent`,
+    `${TRANSLATION_ID_PREFIX}.item.requiredWhenCreatingHoldings.info`,
+  );
+
   return (
     <Accordion
       id="holdings-location"
@@ -42,7 +48,7 @@ export const Location = ({
           <AcceptedValuesField
             component={TextField}
             name={getFieldName(6)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.location.field.permanent`} />}
+            label={permanentLocationLabel}
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
