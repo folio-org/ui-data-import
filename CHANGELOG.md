@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **5.3.10** (in progress)
+
+### Bugs fixed:
+* "Completed with errors" after double clicking run import (UIDATIMP-1299)
+
 ## [5.3.9](https://github.com/folio-org/ui-data-import/tree/v5.3.9) (2022-12-04)
 
 ### Bugs fixed:
