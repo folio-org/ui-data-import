@@ -13,6 +13,7 @@
 * Add required info icons to Order field mapping profile (UIDATIMP-1266)
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
 * Cover Order field mapping profile with unit tests (UIDATIMP-1291)
+* Add required info icons to Holdings field mapping profile (UIDATIMP-1292)
 * Add required info icons to Item field mapping profile (UIDATIMP-1293)
 * Allow edit and duplicate Default - Create SRS MARC Authority job profile (UIDATIMP-1318)
 
