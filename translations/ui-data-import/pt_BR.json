@@ -1137,5 +1137,6 @@
     "settings.mappingProfiles.map.order.itemDetails.field.meetingName": "Nome da reunião",
     "settings.mappingProfiles.map.order.itemDetails.field.innReachAuthor": "Autor INN-Reach",
     "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "Custo adicional",
-    "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Necessário ao criar Item"
+    "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Necessário ao criar Item",
+    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Necessário ao criar Acervos"
 }
