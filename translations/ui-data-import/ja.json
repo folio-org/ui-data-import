@@ -1137,5 +1137,6 @@
     "settings.mappingProfiles.map.order.itemDetails.field.meetingName": "Meeting name",
     "settings.mappingProfiles.map.order.itemDetails.field.innReachAuthor": "INN-Reach author",
     "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "Additional cost",
-    "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Required when creating Item"
+    "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Required when creating Item",
+    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Required when creating Holdings"
 }
