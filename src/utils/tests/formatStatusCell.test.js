@@ -1,3 +1,5 @@
+import '../../../test/jest/__mock__';
+
 import { statusCellFormatter } from '../formatStatusCell';
 import { FILE_STATUSES } from '../constants';
 

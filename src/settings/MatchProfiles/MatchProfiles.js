@@ -11,6 +11,7 @@ import {
 
 import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
+import { CheckboxHeader } from '@folio/stripes-data-transfer-components';
 
 import {
   withCheckboxList,
@@ -33,10 +34,7 @@ import {
   OCLC_MATCH_NO_SRS_RECORD_ID,
   getIdentifierTypes,
 } from '../../utils';
-import {
-  ListView,
-  CheckboxHeader,
-} from '../../components';
+import { ListView } from '../../components';
 import { ViewMatchProfile } from './ViewMatchProfile';
 import { CreateMatchProfile } from './CreateMatchProfile';
 import { EditMatchProfile } from './EditMatchProfile';

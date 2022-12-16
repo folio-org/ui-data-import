@@ -9,12 +9,9 @@ import {
   Col,
   NoValue,
 } from '@folio/stripes/components';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
-import {
-  Section,
-  MATCH_INCOMING_RECORD_TYPES,
-  FOLIO_RECORD_TYPES,
-} from '../..';
+import { Section } from '../..';
 import {
   MARCFieldSection,
   IncomingSectionStatic,
@@ -26,6 +23,7 @@ import {
 import {
   CRITERION_TYPES_OPTIONS,
   matchDetailsShape,
+  MATCH_INCOMING_RECORD_TYPES,
 } from '../../../utils';
 
 import css from './ViewMatchCriterion.css';

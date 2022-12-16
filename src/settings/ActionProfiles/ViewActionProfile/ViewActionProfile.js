@@ -27,14 +27,16 @@ import {
   withTags,
   TagsAccordion,
 } from '@folio/stripes/smart-components';
-import { EndOfItem } from '@folio/stripes-data-transfer-components';
+import {
+  EndOfItem,
+  FOLIO_RECORD_TYPES,
+} from '@folio/stripes-data-transfer-components';
+import { ACTION_TYPES } from '@folio/stripes-data-transfer-components/lib/utils';
 
 import {
   DetailsKeyShortcutsWrapper,
   Spinner,
   ActionMenu,
-  FOLIO_RECORD_TYPES,
-  ACTION_TYPES,
   ProfileAssociator,
 } from '../../../components';
 

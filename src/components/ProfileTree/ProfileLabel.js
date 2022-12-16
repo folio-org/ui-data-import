@@ -16,13 +16,13 @@ import {
   ConfirmationModal,
   IconButton,
 } from '@folio/stripes/components';
+import { listTemplate } from '@folio/stripes-data-transfer-components';
 
 import {
   PROFILE_RELATION_TYPES,
   PROFILE_TYPES,
 } from '../../utils';
 
-import { listTemplate } from '../ListTemplate';
 
 import css from './ProfileTree.css';
 

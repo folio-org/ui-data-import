@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+
 import { TreeLine } from '../../TreeLine';
 import { TreeView } from '../../TreeView';
 import { RecordItem } from './RecordItem';
 
-import { FOLIO_RECORD_TYPES } from '../../ListTemplate';
 
 import treeViewStyles from '../../TreeView/TreeView.css';
 import recordTypeSelectStyles from '../RecordTypesSelect.css';

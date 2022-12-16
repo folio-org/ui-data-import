@@ -1,10 +1,10 @@
-export const FIND_ALL_CQL = 'cql.allRecords=1';
+import { omit } from 'lodash';
+import {
+  ACTION_TYPES,
+  FOLIO_RECORD_TYPES,
+} from '@folio/stripes-data-transfer-components/lib/utils';
 
-export const STRING_CAPITALIZATION_MODES = {
-  ALL: 0,
-  FIRST: 1,
-  WORDS: 2,
-};
+export const FIND_ALL_CQL = 'cql.allRecords=1';
 
 export const AVAILABLE_PLACEMENTS = [
   'bottom',
@@ -20,15 +20,6 @@ export const AVAILABLE_PLACEMENTS = [
   'right-start',
   'right-end',
 ];
-
-export const STRING_CAPITALIZATION_EXCLUSIONS = [
-  'ID', 'HRID', 'MARC', 'ISBN', 'PO', 'TBD',
-];
-
-export const HTML_LANG_DIRECTIONS = {
-  LEFT_TO_RIGHT: 'ltr',
-  RIGHT_TO_LEFT: 'rtl',
-};
 
 export const UPLOAD_DEFINITION_STATUSES = {
   NEW: 'NEW',
@@ -105,13 +96,6 @@ export const PROFILE_TYPES = {
   MAPPING_PROFILE: 'MAPPING_PROFILE',
 };
 
-export const PROFILE_TYPES_FOR_URL = {
-  jobProfiles: 'job-profiles',
-  matchProfiles: 'match-profiles',
-  actionProfiles: 'action-profiles',
-  mappingProfiles: 'mapping-profiles',
-};
-
 export const ASSOCIATION_TYPES = {
   jobProfiles: 'JOB_PROFILE',
   matchProfiles: 'MATCH_PROFILE',
@@ -149,13 +133,6 @@ export const LOG_VIEWER = {
       INVOICE: 6,
     },
   },
-};
-
-export const MARC_FIELD_CONSTITUENT = {
-  FIELD: 'field',
-  INDICATOR1: 'indicator1',
-  INDICATOR2: 'indicator1',
-  SUBFIELD: 'subfield',
 };
 
 export const QUALIFIER_TYPES = {
@@ -817,4 +794,65 @@ export const BASE_URLS = {
   MATCH_PROFILE: '/settings/data-import/match-profiles',
   MAPPING_PROFILE: '/settings/data-import/mapping-profiles',
   FILE_EXTENSIONS: '/settings/data-import/file-extensions',
+};
+
+export const ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES = {
+  ...omit(
+    FOLIO_RECORD_TYPES, [
+      FOLIO_RECORD_TYPES.AUTHORITY.type,
+      FOLIO_RECORD_TYPES.ITEMS.type,
+      FOLIO_RECORD_TYPES.SRS.type,
+    ]
+  ),
+  MARC_AUTHORITY: {
+    ...FOLIO_RECORD_TYPES.MARC_AUTHORITY,
+    captionId: 'ui-data-import.actionProfilesForm.recordTypes.marc-auth',
+  },
+  MARC_BIBLIOGRAPHIC: {
+    ...FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC,
+    captionId: 'ui-data-import.actionProfilesForm.recordTypes.marc-bib',
+  },
+  MARC_HOLDINGS: {
+    ...FOLIO_RECORD_TYPES.MARC_HOLDINGS,
+    captionId: 'ui-data-import.actionProfilesForm.recordTypes.marc-hold',
+  },
+};
+
+export const ACTION_TYPES_SELECT = {
+  CREATE: {
+    ...ACTION_TYPES.CREATE,
+    captionId: 'ui-data-import.selectAction.create',
+  },
+  MODIFY: {
+    ...ACTION_TYPES.MODIFY,
+    captionId: 'ui-data-import.selectAction.modify',
+  },
+  UPDATE: {
+    ...ACTION_TYPES.UPDATE,
+    captionId: 'ui-data-import.selectAction.update',
+  },
+};
+
+export const DEFAULT_RECORD_TYPES = {
+  MARC_BIBLIOGRAPHIC: FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC,
+  MARC_HOLDINGS: FOLIO_RECORD_TYPES.MARC_HOLDINGS,
+  MARC_AUTHORITY: FOLIO_RECORD_TYPES.MARC_AUTHORITY,
+};
+
+export const INCOMING_RECORD_TYPES = {
+  ...DEFAULT_RECORD_TYPES,
+  EDIFACT_INVOICE: {
+    type: 'EDIFACT_INVOICE',
+    captionId: 'ui-data-import.incomingRecordTypes.edifact-invoice',
+    iconKey: 'invoices',
+  },
+};
+
+export const MATCH_INCOMING_RECORD_TYPES = {
+  ...DEFAULT_RECORD_TYPES,
+  STATIC_VALUE: {
+    type: 'STATIC_VALUE',
+    captionId: 'ui-data-import.incomingRecordTypes.static',
+    iconKey: '',
+  },
 };

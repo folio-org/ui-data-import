@@ -6,9 +6,11 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
 import '../../../../test/jest/__mock__';
+
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+
 import {
   renderWithReduxForm,
   translationsProperties,
@@ -17,7 +19,6 @@ import {
 import { MappingProfilesForm } from '../MappingProfilesForm';
 
 import { getInitialDetails } from '../initialDetails';
-import { FOLIO_RECORD_TYPES } from '../../../components';
 
 const mappingDetailsProp = getInitialDetails(FOLIO_RECORD_TYPES.INVOICE.type);
 const mappingProfilesFormProps = {

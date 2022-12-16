@@ -29,6 +29,7 @@ import {
 import {
   EndOfItem,
   FullScreenView,
+  FOLIO_RECORD_TYPES
 } from '@folio/stripes-data-transfer-components';
 
 import {
@@ -36,8 +37,6 @@ import {
   Spinner,
   ActionMenu,
   ProfileAssociator,
-  INCOMING_RECORD_TYPES,
-  FOLIO_RECORD_TYPES,
   MappedHeader,
 } from '../../../components';
 import {
@@ -63,6 +62,7 @@ import {
   showActionMenu,
   isMARCType,
   BASE_URLS,
+  INCOMING_RECORD_TYPES,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';

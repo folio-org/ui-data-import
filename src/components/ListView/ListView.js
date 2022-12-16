@@ -16,18 +16,19 @@ import {
 } from '@folio/stripes/components';
 import { buildUrl } from '@folio/stripes/smart-components';
 import { stripesShape } from '@folio/stripes/core';
+import { listTemplate } from '@folio/stripes-data-transfer-components';
 
 import {
   checkboxListShape,
   trimSearchTerm,
   showActionMenu,
+  fieldsConfig,
 } from '../../utils';
 import {
   ViewContainer,
   getCRUDActions,
 } from '../ViewContainer';
 import { SearchAndSort } from '../SearchAndSort';
-import { listTemplate } from '../ListTemplate';
 import { ActionMenu } from '../ActionMenu';
 import { createNetworkMessage } from '../Callout';
 
@@ -268,6 +269,7 @@ export class ListView extends Component {
                 selectRecord,
                 selectedRecords,
                 identifierTypes,
+                fieldsConfig,
               })}
               withNewRecordButton={withNewRecordButton}
               ViewRecordComponent={ViewRecordComponent}

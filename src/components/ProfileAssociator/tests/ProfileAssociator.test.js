@@ -7,6 +7,7 @@ import {
 } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { ACTION_TYPES } from '@folio/stripes-data-transfer-components/lib/utils';
 
 import '../../../../test/jest/__mock__';
 import { Pluggable } from '@folio/stripes/core';
@@ -15,7 +16,6 @@ import { translationsProperties } from '../../../../test/jest/helpers';
 import { ProfileAssociator } from '../ProfileAssociator';
 
 import { PROFILE_TYPES } from '../../../utils';
-import { ACTION_TYPES } from '../../ListTemplate';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),

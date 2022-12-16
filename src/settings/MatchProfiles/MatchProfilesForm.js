@@ -28,12 +28,13 @@ import {
   ConfirmationModal,
   AccordionStatus,
 } from '@folio/stripes/components';
-import { FullScreenForm } from '@folio/stripes-data-transfer-components';
+import {
+  FullScreenForm,
+  FOLIO_RECORD_TYPES,
+} from '@folio/stripes-data-transfer-components';
 
 import {
   EditKeyShortcutsWrapper,
-  FOLIO_RECORD_TYPES,
-  MATCH_INCOMING_RECORD_TYPES,
   RecordTypesSelect,
   MatchingFieldsManager,
 } from '../../components';
@@ -53,6 +54,7 @@ import {
   validateValueLength3,
   validateMARCFieldInMatchCriterion,
   validateValueLength1,
+  MATCH_INCOMING_RECORD_TYPES,
 } from '../../utils';
 
 import { getSectionInitialValues } from './MatchProfiles';

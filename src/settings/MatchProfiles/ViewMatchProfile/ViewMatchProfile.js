@@ -26,14 +26,15 @@ import {
   withTags,
   TagsAccordion,
 } from '@folio/stripes/smart-components';
-import { EndOfItem } from '@folio/stripes-data-transfer-components';
+import {
+  EndOfItem,
+  FOLIO_RECORD_TYPES,
+} from '@folio/stripes-data-transfer-components';
 
 import {
   DetailsKeyShortcutsWrapper,
   Spinner,
   ActionMenu,
-  FOLIO_RECORD_TYPES,
-  MATCH_INCOMING_RECORD_TYPES,
   ProfileAssociator,
   RecordTypesSelect,
 } from '../../../components';
@@ -48,6 +49,7 @@ import {
   getEntityTags,
   showActionMenu,
   BASE_URLS,
+  MATCH_INCOMING_RECORD_TYPES,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
