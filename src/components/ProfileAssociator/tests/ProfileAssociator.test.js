@@ -6,10 +6,10 @@ import {
   act,
 } from '@testing-library/react';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { ACTION_TYPES } from '@folio/stripes-data-transfer-components/lib/utils';
-
 import '../../../../test/jest/__mock__';
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { ACTION_TYPES } from '@folio/stripes-data-transfer-components';
+
 import { Pluggable } from '@folio/stripes/core';
 import { translationsProperties } from '../../../../test/jest/helpers';
 

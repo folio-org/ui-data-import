@@ -30,8 +30,8 @@ import {
 import {
   EndOfItem,
   FOLIO_RECORD_TYPES,
+  ACTION_TYPES,
 } from '@folio/stripes-data-transfer-components';
-import { ACTION_TYPES } from '@folio/stripes-data-transfer-components/lib/utils';
 
 import {
   DetailsKeyShortcutsWrapper,

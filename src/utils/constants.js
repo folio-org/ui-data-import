@@ -2,7 +2,7 @@ import { omit } from 'lodash';
 import {
   ACTION_TYPES,
   FOLIO_RECORD_TYPES,
-} from '@folio/stripes-data-transfer-components/lib/utils';
+} from '@folio/stripes-data-transfer-components';
 
 export const FIND_ALL_CQL = 'cql.allRecords=1';
 
