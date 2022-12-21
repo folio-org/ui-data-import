@@ -19,7 +19,10 @@ import {
   EResourcesDetails,
 } from './OrderDetailSection';
 
-import { TRANSLATION_ID_PREFIX } from '../constants';
+import {
+  TRANSLATION_ID_PREFIX,
+  QUOTED_ID_PATTERN,
+} from '../constants';
 import {
   getRefValuesFromTables,
   getFieldValueFromDetails,
@@ -34,8 +37,8 @@ import {
   CURRENCY_FIELD,
   MANUAL_PO_FIELD,
   MATERIAL_SUPPLIER_FIELD,
+  SET_EXCHANGE_RATE_FIELD,
   TRIAL_FIELD,
-  USE_EXCHANGE_RATE_FIELD,
   VENDOR_FIELD,
 } from '../../../../utils';
 
@@ -61,15 +64,19 @@ export const MappingOrderDetails = ({
   const automaticExportCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, AUTOMATIC_EXPORT_FIELD);
   const activationStatusCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, ACTIVATION_STATUS_FIELD);
   const trialCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, TRIAL_FIELD);
-  const useSetExchangeFromDetails = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, USE_EXCHANGE_RATE_FIELD);
 
+  const setExchangeRateValue = getFieldValueFromDetails(mappingDetails?.mappingFields, SET_EXCHANGE_RATE_FIELD);
   const currencyFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, CURRENCY_FIELD);
   const vendorFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, VENDOR_FIELD, false);
-  const vendorIdMatch = vendorFromDetails?.match(/^"([a-zA-Z0-9-]*)"$/);
+  const vendorIdMatch = vendorFromDetails?.match(QUOTED_ID_PATTERN);
   const filledVendorId = vendorIdMatch ? vendorIdMatch[1] : null;
   const assignedToId = getFieldValueFromDetails(mappingDetails?.mappingFields, ASSIGNED_TO_FIELD);
-  const materialSupplierId = getFieldValueFromDetails(mappingDetails?.mappingFields, MATERIAL_SUPPLIER_FIELD);
-  const accessProviderId = getFieldValueFromDetails(mappingDetails?.mappingFields, ACCESS_PROVIDER_FIELD);
+  const materialSupplierFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, MATERIAL_SUPPLIER_FIELD);
+  const materialSupplierMatch = materialSupplierFromDetails?.match(QUOTED_ID_PATTERN);
+  const materialSupplierId = materialSupplierMatch ? materialSupplierMatch[1] : null;
+  const accessProviderFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, ACCESS_PROVIDER_FIELD);
+  const accessProviderMatch = accessProviderFromDetails?.match(QUOTED_ID_PATTERN);
+  const accessProviderId = accessProviderMatch ? accessProviderMatch[1] : null;
 
   const onOrganizationSelect = organization => {
     if (organization?.accounts?.length) {
@@ -117,7 +124,8 @@ export const MappingOrderDetails = ({
         />
         <CostDetails
           currency={currencyFromDetails}
-          useSetExchange={useSetExchangeFromDetails}
+          setExchangeRateValue={setExchangeRateValue}
+          setReferenceTables={setReferenceTables}
         />
         <FundDistribution
           fundDistributions={fundDistributions}

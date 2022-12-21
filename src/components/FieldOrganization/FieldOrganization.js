@@ -1,6 +1,5 @@
 import React, {
   useState,
-  useMemo,
   useCallback,
   useEffect,
 } from 'react';
@@ -28,46 +27,42 @@ const FieldOrganization = ({
   mutator,
   validate,
 }) => {
-  const [selectedOrganization, setSelectedOrganization] = useState({});
+  const [selectedOrganization, setSelectedOrganization] = useState(null);
+  const [isClearButtonVisible, setIsClearButtonVisible] = useState(!!id);
 
   const selectOrganization = useCallback(organization => {
-    if (onSelect) onSelect(organization);
-
+    onSelect?.(organization);
     setSelectedOrganization(organization);
-
     setReferenceTables(name, `"${organization.id}"`);
+    setIsClearButtonVisible(true);
   }, [name]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (id) {
-      if (selectedOrganization.id !== id) {
+      if (selectedOrganization?.id !== id) {
         mutator.fieldOrganizationOrg.GET()
           .then(setSelectedOrganization);
       }
     } else {
-      setSelectedOrganization({});
+      setSelectedOrganization(null);
     }
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const clearOrganization = useCallback(() => {
-    setSelectedOrganization({});
+    setSelectedOrganization(null);
 
     setReferenceTables(name, '');
+    setIsClearButtonVisible(false);
   }, [name]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const clearButton = useMemo(() => {
-    if (selectedOrganization.id) {
-      return (
-        <IconButton
-          onClick={clearOrganization}
-          icon="times-circle-solid"
-          size="small"
-        />
-      );
-    }
-
-    return null;
-  }, [selectedOrganization]); // eslint-disable-line react-hooks/exhaustive-deps
+  const clearButton = isClearButtonVisible
+    ? (
+      <IconButton
+        onClick={clearOrganization}
+        icon="times-circle-solid"
+        size="small"
+      />)
+    : null;
 
   return (
     <div>
@@ -82,7 +77,8 @@ const FieldOrganization = ({
         name={name}
         required={required}
         validate={validate}
-        format={() => selectedOrganization.name}
+        format={value => (selectedOrganization ? selectedOrganization.name : value)}
+        onChange={e => setIsClearButtonVisible(!!e.target.value)}
       />
       <div>
         <Pluggable

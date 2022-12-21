@@ -22,9 +22,9 @@ export const RECEIPT_STATUS = {
   PENDING: 'Pending',
   NOT_REQUIRED: 'Receipt not required',
 };
-export const BOOL_OPTIONS = {
-  FALSE: 'false',
-  TRUE: 'true',
+export const RECEIVING_WORKFLOW = {
+  SYNCHRONIZED: 'Synchronized',
+  INDEPENDENT: 'Independent',
 };
 export const VENDOR_REF_TYPES = {
   CONTINUATION_REF_NUMBER: 'Vendor continuation reference number',
@@ -99,3 +99,5 @@ export const VENDOR_VISIBLE_COLUMNS = {
   REF_NUMBER: 'refNumber',
   REF_NUMBER_TYPE: 'refNumberType',
 };
+
+export const QUOTED_ID_PATTERN = /^"([a-zA-Z0-9-]*)"$/;

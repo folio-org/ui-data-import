@@ -1,4 +1,7 @@
-import React, { useCallback } from 'react';
+import React, {
+  useCallback,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -26,8 +29,8 @@ import {
   TRANSLATION_ID_PREFIX,
   ORDER_FORMATS,
   RECEIPT_STATUS,
-  BOOL_OPTIONS,
   WRAPPER_SOURCE_LINKS,
+  RECEIVING_WORKFLOW,
 } from '../../constants';
 import {
   boolAcceptedValuesOptions,
@@ -37,7 +40,9 @@ import {
 } from '../../utils';
 import {
   BOOLEAN_ACTIONS,
-  validateMARCWithDate
+  BOOLEAN_STRING_VALUES,
+  validateMARCWithDate,
+  validateMARCWithElse,
 } from '../../../../../utils';
 
 export const POLineDetails = ({
@@ -46,6 +51,8 @@ export const POLineDetails = ({
   okapi,
 }) => {
   const { formatMessage } = useIntl();
+
+  const [receivingWorkflow, setReceivingWorkflow] = useState();
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),
@@ -79,10 +86,10 @@ export const POLineDetails = ({
   const receivingWorkflowOptions = [
     {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.synchronized` }),
-      value: BOOL_OPTIONS.FALSE,
+      value: BOOLEAN_STRING_VALUES.FALSE,
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.independent` }),
-      value: BOOL_OPTIONS.TRUE,
+      value: BOOLEAN_STRING_VALUES.TRUE,
     },
   ];
 
@@ -98,7 +105,7 @@ export const POLineDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(31)}
+            name={getFieldName(29)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.acquisitionMethod`} />}
             optionValue="value"
             optionLabel="value"
@@ -108,7 +115,7 @@ export const POLineDetails = ({
               wrapperSourcePath: 'acquisitionMethods',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(31)}
+            acceptedValuesPath={getAcceptedValuesPath(29)}
             okapi={okapi}
             required
           />
@@ -117,7 +124,7 @@ export const POLineDetails = ({
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.automaticExport`} />}
-            name={getBoolFieldName(32)}
+            name={getBoolFieldName(30)}
             type="checkbox"
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={automaticExportCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
@@ -127,7 +134,7 @@ export const POLineDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(33)}
+            name={getFieldName(31)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.orderFormat`} />}
             optionValue="value"
             optionLabel="label"
@@ -145,7 +152,7 @@ export const POLineDetails = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.receiptDate`} />}
-            name={getFieldName(35)}
+            name={getFieldName(32)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
@@ -154,7 +161,7 @@ export const POLineDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(36)}
+            name={getFieldName(33)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.receiptStatus`} />}
             optionValue="value"
             optionLabel="label"
@@ -165,7 +172,7 @@ export const POLineDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(37)}
+            name={getFieldName(34)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.paymentStatus`} />}
             optionValue="value"
             optionLabel="label"
@@ -186,7 +193,7 @@ export const POLineDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.donor`} />}
-                name={getFieldName(39)}
+                name={getFieldName(36)}
                 validate={[validation]}
               />
             )}
@@ -198,7 +205,7 @@ export const POLineDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.selector`} />}
-                name={getFieldName(40)}
+                name={getFieldName(37)}
                 validate={[validation]}
               />
             )}
@@ -210,7 +217,7 @@ export const POLineDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.requester`} />}
-                name={getFieldName(41)}
+                name={getFieldName(38)}
                 validate={[validation]}
               />
             )}
@@ -221,7 +228,7 @@ export const POLineDetails = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(42)}
+            name={getFieldName(39)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.cancellationRestriction`} />}
             optionValue="value"
             optionLabel="label"
@@ -232,7 +239,7 @@ export const POLineDetails = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(43)}
+            name={getFieldName(40)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.rush`} />}
             optionValue="value"
             optionLabel="label"
@@ -243,12 +250,27 @@ export const POLineDetails = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(44)}
+            name={getFieldName(41)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.receivingWorkflow`} />}
             optionValue="label"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={receivingWorkflowOptions}
+            parse={value => {
+              setReceivingWorkflow(value);
+              if (value === `"${RECEIVING_WORKFLOW.INDEPENDENT}"`) return BOOLEAN_STRING_VALUES.TRUE;
+              if (value === `"${RECEIVING_WORKFLOW.SYNCHRONIZED}"`) return BOOLEAN_STRING_VALUES.FALSE;
+
+              return value;
+            }}
+            format={() => receivingWorkflow}
+            validation={value => {
+              const valueToValidate = (value === BOOLEAN_STRING_VALUES.TRUE || value === BOOLEAN_STRING_VALUES.FALSE)
+                ? `"${value}"`
+                : value;
+
+              return validateMARCWithElse(valueToValidate);
+            }}
             required
           />
         </Col>
@@ -260,7 +282,7 @@ export const POLineDetails = ({
               <Field
                 component={TextArea}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.cancellationDescription`} />}
-                name={getFieldName(45)}
+                name={getFieldName(42)}
                 validate={[validation]}
               />
             )}
@@ -272,7 +294,7 @@ export const POLineDetails = ({
               <Field
                 component={TextArea}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.lineDescription`} />}
-                name={getFieldName(46)}
+                name={getFieldName(43)}
                 validate={[validation]}
               />
             )}

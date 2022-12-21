@@ -22,7 +22,10 @@ import {
 } from '../../constants';
 import {
   getRepeatableAcceptedValuesPath,
+  getRepeatableFieldName,
   getSubfieldName,
+  handleRepeatableFieldAndActionAdd,
+  handleRepeatableFieldAndActionClean,
   onAdd,
   onRemove,
   renderFieldLabelWithInfo,
@@ -34,7 +37,7 @@ export const Location = ({
   setReferenceTables,
   okapi,
 }) => {
-  const locationsFieldIndex = 61;
+  const locationsFieldIndex = 57;
   const locationLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.location.field.name`,
     `${TRANSLATION_ID_PREFIX}.order.location.field.name.info`,
@@ -48,6 +51,18 @@ export const Location = ({
     `${TRANSLATION_ID_PREFIX}.order.location.field.quantityElectronic.info`,
   );
 
+  const onLocationAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+    const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+    handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+  };
+
+  const onLocationClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+    const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+    handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+  };
+
   return (
     <Accordion
       id="location"
@@ -56,8 +71,8 @@ export const Location = ({
       <RepeatableField
         fields={locations}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.location.field.locations.addLabel`} />}
-        onAdd={() => onAdd(locations, 'locations', locationsFieldIndex, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, locations, locationsFieldIndex, setReferenceTables, 'order')}
+        onAdd={() => onAdd(locations, 'locations', locationsFieldIndex, initialFields, onLocationAdd, 'order')}
+        onRemove={index => onRemove(index, locations, locationsFieldIndex, onLocationClean, 'order')}
         renderField={(field, index) => {
           return (
             <Row left="xs">

@@ -66,7 +66,7 @@ export const PhysicalResourceDetails = ({
     },
   ];
 
-  const volumesFieldIndex = 67;
+  const volumesFieldIndex = 63;
 
   const createInventoryLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.createInventory`,
@@ -89,7 +89,7 @@ export const PhysicalResourceDetails = ({
               <FieldOrganization
                 id={materialSupplierId}
                 setReferenceTables={setReferenceTables}
-                name={getFieldName(62)}
+                name={getFieldName(58)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialSupplier`} />}
                 validate={[validation]}
               />
@@ -100,7 +100,7 @@ export const PhysicalResourceDetails = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.receiptDue`} />}
-            name={getFieldName(63)}
+            name={getFieldName(59)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
@@ -110,7 +110,7 @@ export const PhysicalResourceDetails = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.expectedReceiptDate`} />}
-            name={getFieldName(64)}
+            name={getFieldName(60)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
@@ -119,7 +119,7 @@ export const PhysicalResourceDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(65)}
+            name={getFieldName(61)}
             label={createInventoryLabel}
             optionValue="value"
             optionLabel="label"
@@ -133,7 +133,7 @@ export const PhysicalResourceDetails = ({
           <AcceptedValuesField
             component={TextField}
             label={materialTypeLabel}
-            name={getFieldName(66)}
+            name={getFieldName(62)}
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -142,7 +142,7 @@ export const PhysicalResourceDetails = ({
               wrapperSourcePath: 'mtypes',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(66)}
+            acceptedValuesPath={getAcceptedValuesPath(62)}
             okapi={okapi}
           />
         </Col>

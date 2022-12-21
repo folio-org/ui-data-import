@@ -47,7 +47,7 @@ export const OrderDetails = ({ mappingDetails }) => {
   const edition = getFieldValue(mappingDetails, 'edition', 'value');
   const contributors = getFieldValue(mappingDetails, 'contributors', 'subfields');
   const productIds = getFieldValue(mappingDetails, 'productIds', 'subfields');
-  const internalNote = getFieldValue(mappingDetails, 'internalNote', 'value');
+  const internalNote = getFieldValue(mappingDetails, 'description', 'value');
 
   const contributorsVisibleColumns = [
     CONTRIBUTOR,

@@ -88,7 +88,7 @@ export const EResourcesDetails = ({
               <FieldOrganization
                 id={accessProviderId}
                 setReferenceTables={setReferenceTables}
-                name={getFieldName(68)}
+                name={getFieldName(64)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.accessProvider`} />}
                 validate={[validation]}
               />
@@ -99,7 +99,7 @@ export const EResourcesDetails = ({
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.activationStatus`} />}
-            name={getBoolFieldName(69)}
+            name={getBoolFieldName(65)}
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={activationStatusCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
             type="checkbox"
@@ -110,7 +110,7 @@ export const EResourcesDetails = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.activationDue`} />}
-            name={getFieldName(70)}
+            name={getFieldName(66)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
@@ -119,7 +119,7 @@ export const EResourcesDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(71)}
+            name={getFieldName(67)}
             label={createInventoryLabel}
             optionValue="value"
             optionLabel="label"
@@ -133,7 +133,7 @@ export const EResourcesDetails = ({
           <AcceptedValuesField
             component={TextField}
             label={materialTypeLabel}
-            name={getFieldName(72)}
+            name={getFieldName(68)}
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -142,7 +142,7 @@ export const EResourcesDetails = ({
               wrapperSourcePath: 'mtypes',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(72)}
+            acceptedValuesPath={getAcceptedValuesPath(68)}
             okapi={okapi}
           />
         </Col>
@@ -150,7 +150,7 @@ export const EResourcesDetails = ({
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.trial`} />}
-            name={getBoolFieldName(73)}
+            name={getBoolFieldName(69)}
             type="checkbox"
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={trialCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
@@ -161,7 +161,7 @@ export const EResourcesDetails = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.expectedActivation`} />}
-            name={getFieldName(74)}
+            name={getFieldName(70)}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
@@ -173,7 +173,7 @@ export const EResourcesDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.userLimit`} />}
-                name={getFieldName(75)}
+                name={getFieldName(71)}
                 validate={[validation]}
               />
             )}
@@ -187,7 +187,7 @@ export const EResourcesDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.url`} />}
-                name={getFieldName(76)}
+                name={getFieldName(72)}
                 validate={[validation]}
               />
             )}

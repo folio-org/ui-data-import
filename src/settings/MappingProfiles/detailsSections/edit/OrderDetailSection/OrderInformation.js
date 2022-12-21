@@ -67,6 +67,8 @@ const OrderInformationComponent = ({
   const { formatMessage } = useIntl();
 
   const [isApprovedChecked, setIsApprovedChecked] = useState(false);
+  const [billToAddress, setBillToAddress] = useState('');
+  const [shipToAddress, setShipToAddress] = useState('');
 
   useEffect(() => {
     if (purchaseOrderLinesLimitSetting.hasLoaded) {
@@ -133,6 +135,8 @@ const OrderInformationComponent = ({
     },
     [formatMessage, isApprovalRequiredValue, isApprovedChecked],
   );
+
+  const notesFieldIndex = 15;
 
   return (
     <Accordion
@@ -313,22 +317,21 @@ const OrderInformationComponent = ({
                 return value.name === billToNameValue.replace(/"/g, '');
               })?.address;
 
-              setReferenceTables(getFieldName(12), address ? `"${address}"` : '');
+              setBillToAddress(address ? `"${address}"` : '');
             }}
           />
         </Col>
         <Col xs={3}>
-          <Field
-            component={TextField}
+          <TextField
+            value={billToAddress}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.billToAddress`} />}
-            name={getFieldName(12)}
             disabled
           />
         </Col>
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(13)}
+            name={getFieldName(12)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.shipToName`} />}
             optionValue="value"
             optionLabel="value"
@@ -340,22 +343,21 @@ const OrderInformationComponent = ({
               wrapperSourcePath: 'configs',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(13)}
+            acceptedValuesPath={getAcceptedValuesPath(12)}
             okapi={okapi}
             onChange={shipToNameValue => {
               const address = addressesValue.find(value => {
                 return value.name === shipToNameValue.replace(/"/g, '');
               })?.address;
 
-              setReferenceTables(getFieldName(14), address ? `"${address}"` : '');
+              setShipToAddress(address ? `"${address}"` : '');
             }}
           />
         </Col>
         <Col xs={3}>
-          <Field
-            component={TextField}
+          <TextField
+            value={shipToAddress}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.shipToAddress`} />}
-            name={getFieldName(14)}
             disabled
           />
         </Col>
@@ -365,7 +367,7 @@ const OrderInformationComponent = ({
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.manual`} />}
-            name={getBoolFieldName(15)}
+            name={getBoolFieldName(13)}
             type="checkbox"
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={manualPOCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
@@ -375,7 +377,7 @@ const OrderInformationComponent = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(16)}
+            name={getFieldName(14)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.reEncumber`} />}
             optionValue="value"
             optionLabel="label"
@@ -388,8 +390,8 @@ const OrderInformationComponent = ({
       <RepeatableField
         fields={notes}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.note.addLabel`} />}
-        onAdd={() => onAdd(notes, 'notes', 17, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, notes, 17, setReferenceTables, 'order')}
+        onAdd={() => onAdd(notes, 'notes', notesFieldIndex, initialFields, setReferenceTables, 'order')}
+        onRemove={index => onRemove(index, notes, notesFieldIndex, setReferenceTables, 'order')}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={12}>
@@ -398,7 +400,7 @@ const OrderInformationComponent = ({
                   <Field
                     component={TextArea}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.note`} />}
-                    name={getSubfieldName(17, 0, index)}
+                    name={getSubfieldName(notesFieldIndex, 0, index)}
                     validate={[validation]}
                   />
                 )}

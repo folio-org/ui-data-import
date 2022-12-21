@@ -23,7 +23,10 @@ import {
 } from '../../constants';
 import {
   getRepeatableAcceptedValuesPath,
+  getRepeatableFieldName,
   getSubfieldName,
+  handleRepeatableFieldAndActionAdd,
+  handleRepeatableFieldAndActionClean,
   onAdd,
   onRemove,
   renderFieldLabelWithInfo,
@@ -36,7 +39,7 @@ export const FundDistribution = ({
   setReferenceTables,
   okapi,
 }) => {
-  const fundDistributionsFieldIndex = 60;
+  const fundDistributionsFieldIndex = 56;
   const fundIdLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId`,
     `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId.info`,
@@ -50,6 +53,18 @@ export const FundDistribution = ({
     `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId.info`,
   );
 
+  const onFundAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+    const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+    handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+  };
+
+  const onFundClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+    const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+    handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+  };
+
   return (
     <Accordion
       id="fund-distribution"
@@ -58,8 +73,8 @@ export const FundDistribution = ({
       <RepeatableField
         fields={fundDistributions}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundDistribution.addLabel`} />}
-        onAdd={() => onAdd(fundDistributions, 'fundDistribution', fundDistributionsFieldIndex, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, fundDistributions, fundDistributionsFieldIndex, setReferenceTables, 'order')}
+        onAdd={() => onAdd(fundDistributions, 'fundDistribution', fundDistributionsFieldIndex, initialFields, onFundAdd, 'order')}
+        onRemove={index => onRemove(index, fundDistributions, fundDistributionsFieldIndex, onFundClean, 'order')}
         renderField={(field, index) => {
           return (
             <Row left="xs">

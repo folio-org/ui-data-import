@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
+import { isEmpty } from 'lodash';
 
 import {
   Accordion,
@@ -20,17 +21,17 @@ import {
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
-  getBoolFieldName,
   getFieldName,
   renderFieldLabelWithInfo,
 } from '../../utils';
-import { BOOLEAN_ACTIONS } from '../../../../../utils';
 
 export const CostDetails = ({
   currency,
-  useSetExchange,
+  setExchangeRateValue,
+  setReferenceTables,
 }) => {
-  const [isSetExchangeDisabled, setIsSetExchangeDisabled] = useState(useSetExchange === BOOLEAN_ACTIONS.ALL_FALSE);
+  const [isUseExchangeChecked, setIsUseExchangeChecked] = useState(!isEmpty(setExchangeRateValue));
+  const [isSetExchangeDisabled, setIsSetExchangeDisabled] = useState(isEmpty(setExchangeRateValue));
 
   const physicalUnitPriceLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice`,
@@ -61,7 +62,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={physicalUnitPriceLabel}
-                name={getFieldName(50)}
+                name={getFieldName(47)}
                 validate={[validation]}
               />
             )}
@@ -73,7 +74,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={quantityPhysicalLabel}
-                name={getFieldName(51)}
+                name={getFieldName(48)}
                 validate={[validation]}
               />
             )}
@@ -85,7 +86,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.additionalCost`} />}
-                name={getFieldName(52)}
+                name={getFieldName(49)}
                 validate={[validation]}
               />
             )}
@@ -96,7 +97,7 @@ export const CostDetails = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(53)}
+            name={getFieldName(50)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.currency`} />}
             optionValue="value"
             optionLabel="label"
@@ -106,16 +107,19 @@ export const CostDetails = ({
           />
         </Col>
         <Col xs={4}>
-          <Field
-            component={Checkbox}
+          <Checkbox
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.useSetExchangeRate`} />}
-            name={getBoolFieldName(54)}
-            onChange={e => {
-              setIsSetExchangeDisabled(!(e.target.value === BOOLEAN_ACTIONS.ALL_FALSE));
+            onChange={() => {
+              setIsUseExchangeChecked(prevState => !prevState);
+              setIsSetExchangeDisabled(prevState => {
+                if (!prevState) {
+                  setReferenceTables(getFieldName(51), '');
+                }
+
+                return !prevState;
+              });
             }}
-            type="checkbox"
-            parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
-            checked={useSetExchange === BOOLEAN_ACTIONS.ALL_TRUE}
+            checked={isUseExchangeChecked}
             vertical
           />
         </Col>
@@ -125,7 +129,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.setExchangeRate`} />}
-                name={getFieldName(55)}
+                name={getFieldName(51)}
                 validate={[validation]}
                 disabled={isSetExchangeDisabled}
               />
@@ -140,7 +144,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={electronicUnitPriceLabel}
-                name={getFieldName(56)}
+                name={getFieldName(52)}
                 validate={[validation]}
               />
             )}
@@ -152,7 +156,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={quantityElectronicLabel}
-                name={getFieldName(57)}
+                name={getFieldName(53)}
                 validate={[validation]}
               />
             )}
@@ -164,7 +168,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.discount`} />}
-                name={getFieldName(58)}
+                name={getFieldName(54)}
                 validate={[validation]}
               />
             )}
@@ -174,7 +178,7 @@ export const CostDetails = ({
           <Field
             component={TypeToggle}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.type`} />}
-            name={getFieldName(59)}
+            name={getFieldName(55)}
             currency={currency}
           />
         </Col>
@@ -184,11 +188,12 @@ export const CostDetails = ({
 };
 
 CostDetails.propTypes = {
+  setReferenceTables: PropTypes.func.isRequired,
   currency: PropTypes.string,
-  useSetExchange: PropTypes.string,
+  setExchangeRateValue: PropTypes.string,
 };
 
 CostDetails.defaultProps = {
   currency: null,
-  useSetExchange: null,
+  setExchangeRateValue: null,
 };

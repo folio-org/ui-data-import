@@ -31,7 +31,7 @@ export const Vendor = ({ mappingDetails }) => {
   const noValueElement = <NoValue />;
 
   const vendorDetails = getFieldValue(mappingDetails, 'vendorDetail', 'subfields');
-  const vendorAccount = getFieldValue(mappingDetails, 'accountNo', 'value');
+  const vendorAccount = getFieldValue(mappingDetails, 'vendorAccount', 'value');
   const instructions = getFieldValue(mappingDetails, 'instructions', 'value');
 
   const vendorDetailsVisibleColumns = [

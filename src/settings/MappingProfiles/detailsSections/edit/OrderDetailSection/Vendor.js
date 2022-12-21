@@ -64,7 +64,7 @@ export const Vendor = ({
     value: accountNo,
   }));
 
-  const vendorDetailFieldIndex = 47;
+  const vendorDetailFieldIndex = 44;
 
   return (
     <Accordion
@@ -109,13 +109,13 @@ export const Vendor = ({
         <Col xs={6}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(48)}
+            name={getFieldName(45)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.accountNumber`} />}
             optionValue="value"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(48)}
+            acceptedValuesPath={getAcceptedValuesPath(45)}
             acceptedValuesList={accountNumbersOptions}
             hasLoaded
           />
@@ -126,7 +126,7 @@ export const Vendor = ({
               <Field
                 component={TextArea}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.instructionsToVendor`} />}
-                name={getFieldName(49)}
+                name={getFieldName(46)}
                 validate={[validation]}
               />
             )}

@@ -2,9 +2,9 @@ const ORDER = {
   name: 'order',
   recordType: 'ORDER',
   mappingFields: [{
-    name: 'poStatus',
+    name: 'workflowStatus',
     enabled: true,
-    path: 'order.po.poStatus', // ?
+    path: 'order.po.workflowStatus',
     value: '',
   }, {
     name: 'approved',
@@ -46,13 +46,13 @@ const ORDER = {
     value: '',
   }, {
     name: 'orderType',
-    enabled: false,
+    enabled: true,
     path: 'order.po.orderType',
-    value: '"One-time"',
+    value: '"One-Time"',
   }, {
     name: 'acqUnitIds',
     enabled: true,
-    path: 'order.po.acqUnitIds',
+    path: 'order.po.acqUnitIds[]',
     value: '',
     acceptedValues: {},
   }, {
@@ -67,21 +67,11 @@ const ORDER = {
     value: '',
     acceptedValues: {},
   }, {
-    name: 'billToAddress',
-    enabled: false,
-    path: 'order.po.billToAddress', // ?
-    value: '',
-  }, {
     name: 'shipTo',
     enabled: true,
     path: 'order.po.shipTo',
     value: '',
     acceptedValues: {},
-  }, {
-    name: 'shipToAddress',
-    enabled: false,
-    path: 'order.po.shipToAddress', // ?
-    value: '',
   }, {
     name: 'manualPo',
     enabled: true,
@@ -113,17 +103,17 @@ const ORDER = {
   }, {
     name: 'title',
     enabled: true,
-    path: 'order.poLine.title.title',
+    path: 'order.poLine.titleOrPackage',
     value: '',
   }, {
     name: 'receivingNote',
     enabled: true,
-    path: 'order.poLine.title.receivingNote',
+    path: 'order.poLine.details.receivingNote',
     value: '',
   }, {
     name: 'isAcknowledged',
     enabled: true,
-    path: 'order.poLine.title.isAcknowledged',
+    path: 'order.poLine.details.isAcknowledged',
     value: '',
     acceptedValues: {},
   }, {
@@ -204,9 +194,9 @@ const ORDER = {
       }],
     }],
   }, {
-    name: 'internalNote',
+    name: 'description',
     enabled: true,
-    path: 'order.poLine.internalNote', // ?
+    path: 'order.poLine.description',
     value: '',
   }, {
     name: 'poLineNumber',
@@ -231,11 +221,6 @@ const ORDER = {
     path: 'order.poLine.orderFormat',
     value: '',
     acceptedValues: {},
-  }, {
-    name: 'createdOn',
-    enabled: false,
-    path: 'order.poLine.createdOn', // ?
-    value: '',
   }, {
     name: 'receiptDate',
     enabled: true,
@@ -291,9 +276,9 @@ const ORDER = {
     value: '',
     acceptedValues: {},
   }, {
-    name: 'cancellationDescription',
+    name: 'cancellationRestrictionNote',
     enabled: true,
-    path: 'order.poLine.cancellationDescription', // ?
+    path: 'order.poLine.cancellationRestrictionNote',
     value: '',
   }, {
     name: 'poLineDescription',
@@ -322,9 +307,9 @@ const ORDER = {
       }],
     }],
   }, {
-    name: 'accountNo',
+    name: 'vendorAccount',
     enabled: true,
-    path: 'order.poLine.accountNo', // ?
+    path: 'order.poLine.vendorDetail.vendorAccount',
     value: '',
     acceptedValues: {},
   }, {
@@ -354,12 +339,6 @@ const ORDER = {
     path: 'order.poLine.cost.currency',
     value: '',
   }, {
-    name: 'useExchangeRate',
-    enabled: true,
-    path: 'order.poLine.useExchangeRate', // ?
-    value: null,
-    booleanFieldAction: 'ALL_FALSE',
-  }, {
     name: 'exchangeRate',
     enabled: true,
     path: 'order.poLine.cost.exchangeRate',
@@ -367,7 +346,7 @@ const ORDER = {
   }, {
     name: 'electronicUnitPrice',
     enabled: true,
-    path: 'order.poLine.cost.electronicUnitPrice', // ?
+    path: 'order.poLine.cost.listUnitPriceElectronic',
     value: '',
   }, {
     name: 'quantityElectronic',
@@ -497,7 +476,7 @@ const ORDER = {
   }, {
     name: 'activationStatus',
     enabled: true,
-    path: 'order.poLine.eresource.activationStatus', // ?
+    path: 'order.poLine.eresource.activated',
     value: null,
     booleanFieldAction: 'ALL_FALSE',
   }, {
