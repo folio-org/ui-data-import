@@ -19,7 +19,10 @@ import {
   renderCheckbox,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileFieldShape } from '../../../../../utils';
+import {
+  BOOLEAN_STRING_VALUES,
+  mappingProfileFieldShape,
+} from '../../../../../utils';
 
 export const POLineDetails = ({ mappingDetails }) => {
   const { formatMessage } = useIntl();
@@ -48,8 +51,12 @@ export const POLineDetails = ({ mappingDetails }) => {
 
   const receivingWorkflow = useMemo(
     () => {
-      if (checkinItemsValue === 'true') return formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.independent` });
-      if (checkinItemsValue === 'false') return formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.synchronized` });
+      if (checkinItemsValue === BOOLEAN_STRING_VALUES.TRUE) {
+        return formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.independent` });
+      }
+      if (checkinItemsValue === BOOLEAN_STRING_VALUES.FALSE) {
+        return formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.synchronized` });
+      }
 
       return checkinItemsValue;
     },

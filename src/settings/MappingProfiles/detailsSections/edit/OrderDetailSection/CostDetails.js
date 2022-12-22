@@ -50,6 +50,17 @@ export const CostDetails = ({
     `${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice.info`,
   );
 
+  const handleUseSetExchangeToggle = () => {
+    setIsUseExchangeChecked(prevState => !prevState);
+    setIsSetExchangeDisabled(prevState => {
+      if (!prevState) {
+        setReferenceTables(getFieldName(51), '');
+      }
+
+      return !prevState;
+    });
+  };
+
   return (
     <Accordion
       id="cost-details"
@@ -109,16 +120,7 @@ export const CostDetails = ({
         <Col xs={4}>
           <Checkbox
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.useSetExchangeRate`} />}
-            onChange={() => {
-              setIsUseExchangeChecked(prevState => !prevState);
-              setIsSetExchangeDisabled(prevState => {
-                if (!prevState) {
-                  setReferenceTables(getFieldName(51), '');
-                }
-
-                return !prevState;
-              });
-            }}
+            onChange={handleUseSetExchangeToggle}
             checked={isUseExchangeChecked}
             vertical
           />
