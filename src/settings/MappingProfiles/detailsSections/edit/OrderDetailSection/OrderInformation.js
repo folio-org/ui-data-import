@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -154,6 +155,20 @@ const OrderInformationComponent = ({
       return [];
     },
     [formatMessage, isApprovalRequiredValue, isApprovedChecked],
+  );
+
+  const handleNotesAdd = useCallback(
+    () => {
+      return onAdd(notes, 'notes', ORDER_INFO_FIELDS_MAP.NOTES, initialFields, setReferenceTables, 'order');
+    },
+    [initialFields, notes, setReferenceTables],
+  );
+
+  const handleNotesClean = useCallback(
+    index => {
+      return onRemove(index, notes, ORDER_INFO_FIELDS_MAP.NOTES, setReferenceTables, 'order');
+    },
+    [notes, setReferenceTables],
   );
 
   return (
@@ -408,8 +423,8 @@ const OrderInformationComponent = ({
       <RepeatableField
         fields={notes}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.note.addLabel`} />}
-        onAdd={() => onAdd(notes, 'notes', ORDER_INFO_FIELDS_MAP.NOTES, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, notes, ORDER_INFO_FIELDS_MAP.NOTES, setReferenceTables, 'order')}
+        onAdd={handleNotesAdd}
+        onRemove={handleNotesClean}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={12}>

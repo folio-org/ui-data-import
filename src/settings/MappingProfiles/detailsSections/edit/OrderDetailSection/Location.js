@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
@@ -57,17 +57,31 @@ export const Location = ({
     `${TRANSLATION_ID_PREFIX}.order.location.field.quantityElectronic.info`,
   );
 
-  const onLocationAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
-    const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+  const handleLocationAdd = useCallback(
+    () => {
+      const onLocationAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
 
-    handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
-  };
+        handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+      };
 
-  const onLocationClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
-    const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+      return onAdd(locations, 'locations', LOCATION_FIELDS_MAP.LOCATIONS, initialFields, onLocationAdd, 'order');
+    },
+    [initialFields, locations, setReferenceTables],
+  );
 
-    handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
-  };
+  const handleLocationClean = useCallback(
+    index => {
+      const onLocationClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+        handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+      };
+
+      return onRemove(index, locations, LOCATION_FIELDS_MAP.LOCATIONS, onLocationClean, 'order');
+    },
+    [locations, setReferenceTables],
+  );
 
   return (
     <Accordion
@@ -77,8 +91,8 @@ export const Location = ({
       <RepeatableField
         fields={locations}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.location.field.locations.addLabel`} />}
-        onAdd={() => onAdd(locations, 'locations', LOCATION_FIELDS_MAP.LOCATIONS, initialFields, onLocationAdd, 'order')}
-        onRemove={index => onRemove(index, locations, LOCATION_FIELDS_MAP.LOCATIONS, onLocationClean, 'order')}
+        onAdd={handleLocationAdd}
+        onRemove={handleLocationClean}
         renderField={(field, index) => {
           return (
             <Row left="xs">

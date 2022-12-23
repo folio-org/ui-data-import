@@ -64,6 +64,15 @@ const FieldOrganization = ({
       />)
     : null;
 
+  const handleFieldFormat = useCallback(
+    value => (selectedOrganization ? selectedOrganization.name : value),
+    [selectedOrganization],
+  );
+  const handleFieldChange = useCallback(
+    e => setIsClearButtonVisible(!!e.target.value),
+    [],
+  );
+
   return (
     <div>
       <Field
@@ -77,8 +86,8 @@ const FieldOrganization = ({
         name={name}
         required={required}
         validate={validate}
-        format={value => (selectedOrganization ? selectedOrganization.name : value)}
-        onChange={e => setIsClearButtonVisible(!!e.target.value)}
+        format={handleFieldFormat}
+        onChange={handleFieldChange}
       />
       <div>
         <Pluggable

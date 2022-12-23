@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, {
+  useCallback,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
@@ -62,16 +65,19 @@ export const CostDetails = ({
     `${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice.info`,
   );
 
-  const handleUseSetExchangeToggle = () => {
-    setIsUseExchangeChecked(prevState => !prevState);
-    setIsSetExchangeDisabled(prevState => {
-      if (!prevState) {
-        setReferenceTables(getFieldName(51), '');
-      }
+  const handleUseSetExchangeToggle = useCallback(
+    () => {
+      setIsUseExchangeChecked(prevState => !prevState);
+      setIsSetExchangeDisabled(prevState => {
+        if (!prevState) {
+          setReferenceTables(getFieldName(51), '');
+        }
 
-      return !prevState;
-    });
-  };
+        return !prevState;
+      });
+    },
+    [setReferenceTables],
+  );
 
   return (
     <Accordion

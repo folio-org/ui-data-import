@@ -92,17 +92,31 @@ export const ItemDetails = ({
     },
   ];
 
-  const onProductIdAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
-    const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+  const handleProductIdAdd = useCallback(
+    () => {
+      const onProductIdAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
 
-    handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
-  };
+        handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+      };
 
-  const onProductIdClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
-    const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+      return onAdd(productIdentifiers, 'productIds', ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, initialFields, onProductIdAdd, 'order');
+    },
+    [initialFields, productIdentifiers, setReferenceTables],
+  );
 
-    handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
-  };
+  const handleProductIdClean = useCallback(
+    index => {
+      const onProductIdClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+        handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+      };
+
+      return onRemove(index, productIdentifiers, ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, onProductIdClean, 'order');
+    },
+    [productIdentifiers, setReferenceTables],
+  );
 
   return (
     <Accordion
@@ -259,8 +273,8 @@ export const ItemDetails = ({
       <RepeatableField
         fields={productIdentifiers}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.productIdentifiers.addLabel`} />}
-        onAdd={() => onAdd(productIdentifiers, 'productIds', ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, initialFields, onProductIdAdd, 'order')}
-        onRemove={index => onRemove(index, productIdentifiers, ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, onProductIdClean, 'order')}
+        onAdd={handleProductIdAdd}
+        onRemove={handleProductIdClean}
         renderField={(field, index) => {
           return (
             <Row left="xs">

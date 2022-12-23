@@ -110,6 +110,33 @@ export const POLineDetails = ({
     },
   ];
 
+  const onReceivingWorkflowParse = useCallback(
+    value => {
+      setReceivingWorkflow(value);
+      if (value === `"${RECEIVING_WORKFLOW.INDEPENDENT}"`) return BOOLEAN_STRING_VALUES.TRUE;
+      if (value === `"${RECEIVING_WORKFLOW.SYNCHRONIZED}"`) return BOOLEAN_STRING_VALUES.FALSE;
+
+      return value;
+    },
+    [],
+  );
+
+  const onReceivingWorkflowFormat = useCallback(
+    () => receivingWorkflow,
+    [receivingWorkflow],
+  );
+
+  const validateReceivingWorkflow = useCallback(
+    value => {
+      const valueToValidate = (value === BOOLEAN_STRING_VALUES.TRUE || value === BOOLEAN_STRING_VALUES.FALSE)
+        ? `"${value}"`
+        : value;
+
+      return validateMARCWithElse(valueToValidate);
+    },
+    [],
+  );
+
   return (
     <Accordion
       id="po-line-details"
@@ -273,21 +300,9 @@ export const POLineDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={receivingWorkflowOptions}
-            parse={value => {
-              setReceivingWorkflow(value);
-              if (value === `"${RECEIVING_WORKFLOW.INDEPENDENT}"`) return BOOLEAN_STRING_VALUES.TRUE;
-              if (value === `"${RECEIVING_WORKFLOW.SYNCHRONIZED}"`) return BOOLEAN_STRING_VALUES.FALSE;
-
-              return value;
-            }}
-            format={() => receivingWorkflow}
-            validation={value => {
-              const valueToValidate = (value === BOOLEAN_STRING_VALUES.TRUE || value === BOOLEAN_STRING_VALUES.FALSE)
-                ? `"${value}"`
-                : value;
-
-              return validateMARCWithElse(valueToValidate);
-            }}
+            parse={onReceivingWorkflowParse}
+            format={onReceivingWorkflowFormat}
+            validation={validateReceivingWorkflow}
             required
           />
         </Col>

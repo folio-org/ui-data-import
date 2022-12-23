@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
@@ -60,17 +60,31 @@ export const FundDistribution = ({
     `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId.info`,
   );
 
-  const onFundAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
-    const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+  const handleFundAdd = useCallback(
+    () => {
+      const onFundAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
 
-    handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
-  };
+        handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+      };
 
-  const onFundClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
-    const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+      return onAdd(fundDistributions, 'fundDistribution', FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, initialFields, onFundAdd, 'order');
+    },
+    [fundDistributions, initialFields, setReferenceTables],
+  );
 
-    handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
-  };
+  const handleFundClean = useCallback(
+    index => {
+      const onFundClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+        handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+      };
+
+      return onRemove(index, fundDistributions, FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, onFundClean, 'order');
+    },
+    [fundDistributions, setReferenceTables],
+  );
 
   return (
     <Accordion
@@ -80,8 +94,8 @@ export const FundDistribution = ({
       <RepeatableField
         fields={fundDistributions}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundDistribution.addLabel`} />}
-        onAdd={() => onAdd(fundDistributions, 'fundDistribution', FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, initialFields, onFundAdd, 'order')}
-        onRemove={index => onRemove(index, fundDistributions, FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, onFundClean, 'order')}
+        onAdd={handleFundAdd}
+        onRemove={handleFundClean}
         renderField={(field, index) => {
           return (
             <Row left="xs">
