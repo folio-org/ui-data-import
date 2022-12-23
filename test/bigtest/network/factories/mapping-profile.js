@@ -1,9 +1,10 @@
 import { Factory } from 'miragejs';
 import faker from 'faker';
 
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+
 import { associatedActionProfiles } from '../../mocks';
-import { INCOMING_RECORD_TYPES } from '../../../../src/components/ListTemplate/incomingRecordTypes';
-import { FOLIO_RECORD_TYPES } from '../../../../src/components/ListTemplate/folioRecordTypes';
+import { INCOMING_RECORD_TYPES } from '../../../../src/utils';
 
 export default Factory.extend({
   id: () => faker.random.uuid(),
