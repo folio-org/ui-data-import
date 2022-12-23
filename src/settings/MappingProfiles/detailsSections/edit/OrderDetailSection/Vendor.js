@@ -34,8 +34,8 @@ import {
 
 const VENDOR_FIELDS_MAP = {
   VENDOR_REF_NUMBERS: 44,
-  VENDOR_REF_NUMBER: index => getSubfieldName(this.VENDOR_REF_NUMBERS, 0, index),
-  VENDOR_REF_TYPE: index => getSubfieldName(this.VENDOR_REF_NUMBERS, 1, index),
+  VENDOR_REF_NUMBER: index => getSubfieldName(VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, 0, index),
+  VENDOR_REF_TYPE: index => getSubfieldName(VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, 1, index),
   ACCOUNT_NUMBER: 45,
   INSTRUCTION_TO_VENDOR: getFieldName(46),
 };

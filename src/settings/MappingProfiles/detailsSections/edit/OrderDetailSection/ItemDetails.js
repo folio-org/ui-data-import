@@ -53,12 +53,12 @@ const ITEM_DETAILS_FIELDS_MAP = {
   PUBLISHER: getFieldName(23),
   EDITION: getFieldName(24),
   CONTRIBUTORS: 25,
-  CONTRIBUTOR: index => getSubfieldName(this.CONTRIBUTORS, 0, index),
-  CONTRIBUTOR_TYPE: index => getSubfieldName(this.CONTRIBUTORS, 1, index),
+  CONTRIBUTOR: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, 0, index),
+  CONTRIBUTOR_TYPE: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, 1, index),
   PRODUCT_IDS: 26,
-  PRODUCT_ID: index => getSubfieldName(this.PRODUCT_IDS, 0, index),
-  QUALIFIER: index => getSubfieldName(this.PRODUCT_IDS, 1, index),
-  PRODUCT_ID_TYPE: index => getSubfieldName(this.PRODUCT_IDS, 2, index),
+  PRODUCT_ID: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 0, index),
+  QUALIFIER: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 1, index),
+  PRODUCT_ID_TYPE: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 2, index),
   INTERNAL_NOTE: getFieldName(27),
 };
 

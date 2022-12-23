@@ -65,7 +65,7 @@ const ORDER_INFO_FIELDS_MAP = {
   MANUAL: getBoolFieldName(13),
   RE_ENCUMBER: getFieldName(14),
   NOTES: 15,
-  NOTE: index => getSubfieldName(this.NOTES, 0, index),
+  NOTE: index => getSubfieldName(ORDER_INFO_FIELDS_MAP.NOTES, 0, index),
 };
 
 const OrderInformationComponent = ({

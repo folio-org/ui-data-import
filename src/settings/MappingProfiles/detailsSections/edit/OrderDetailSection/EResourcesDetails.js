@@ -39,11 +39,11 @@ import {
 
 const E_RESOURCES_DETAILS_FIELDS_MAP = {
   ACCESS_PROVIDER: getFieldName(64),
-  ACTIVATION_STATUS: getFieldName(65),
+  ACTIVATION_STATUS: getBoolFieldName(65),
   ACTIVATION_DUE: getFieldName(66),
   CREATE_INVENTORY: getFieldName(67),
   MATERIAL_TYPE: 68,
-  TRIAL: getFieldName(69),
+  TRIAL: getBoolFieldName(69),
   EXPECTED_ACTIVATION: getFieldName(70),
   USER_LIMIT: getFieldName(71),
   URL: getFieldName(72),

@@ -43,7 +43,7 @@ const PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP = {
   CREATE_INVENTORY: getFieldName(61),
   MATERIAL_TYPE: 62,
   VOLUMES: 63,
-  VOLUME: index => getSubfieldName(this.VOLUMES, 0, index),
+  VOLUME: index => getSubfieldName(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, 0, index),
 };
 
 export const PhysicalResourceDetails = ({

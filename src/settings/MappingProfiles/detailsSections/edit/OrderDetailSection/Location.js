@@ -33,9 +33,9 @@ import {
 
 const LOCATION_FIELDS_MAP = {
   LOCATIONS: 57,
-  NAME: index => getSubfieldName(this.LOCATIONS, 0, index),
-  QUANTITY_PHYSICAL: index => getSubfieldName(this.LOCATIONS, 1, index),
-  QUANTITY_ELECTRONIC: index => getSubfieldName(this.LOCATIONS, 2, index),
+  NAME: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 0, index),
+  QUANTITY_PHYSICAL: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 1, index),
+  QUANTITY_ELECTRONIC: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 2, index),
 };
 
 export const Location = ({

@@ -34,10 +34,10 @@ import {
 
 const FUND_DISTRIBUTION_FIELDS_MAP = {
   FUND_DISTRIBUTION: 56,
-  FUND_ID: index => getSubfieldName(this.FUND_DISTRIBUTION, 0, index),
-  EXPENSE_CLASS: index => getSubfieldName(this.FUND_DISTRIBUTION, 1, index),
-  VALUE: index => getSubfieldName(this.FUND_DISTRIBUTION, 2, index),
-  TYPE: index => getSubfieldName(this.FUND_DISTRIBUTION, 3, index),
+  FUND_ID: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 0, index),
+  EXPENSE_CLASS: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 1, index),
+  VALUE: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 2, index),
+  TYPE: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 3, index),
 };
 
 export const FundDistribution = ({
