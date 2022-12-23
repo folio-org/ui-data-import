@@ -25,6 +25,18 @@ import {
   renderFieldLabelWithInfo,
 } from '../../utils';
 
+const COST_DETAILS_FIELDS_MAP = {
+  PHYSICAL_UNIT_PRICE: getFieldName(47),
+  QUANTITY_PHYSICAL: getFieldName(48),
+  ADDITIONAL_COAST: getFieldName(49),
+  CURRENCY: getFieldName(50),
+  SET_EXCHANGE_RATE: getFieldName(51),
+  ELECTRONIC_UNIT_PRICE: getFieldName(52),
+  QUANTITY_ELECTRONIC: getFieldName(53),
+  DISCOUNT: getFieldName(54),
+  TYPE: getFieldName(55),
+};
+
 export const CostDetails = ({
   currency,
   setExchangeRateValue,
@@ -73,7 +85,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={physicalUnitPriceLabel}
-                name={getFieldName(47)}
+                name={COST_DETAILS_FIELDS_MAP.PHYSICAL_UNIT_PRICE}
                 validate={[validation]}
               />
             )}
@@ -85,7 +97,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={quantityPhysicalLabel}
-                name={getFieldName(48)}
+                name={COST_DETAILS_FIELDS_MAP.QUANTITY_PHYSICAL}
                 validate={[validation]}
               />
             )}
@@ -97,7 +109,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.additionalCost`} />}
-                name={getFieldName(49)}
+                name={COST_DETAILS_FIELDS_MAP.ADDITIONAL_COAST}
                 validate={[validation]}
               />
             )}
@@ -108,7 +120,7 @@ export const CostDetails = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(50)}
+            name={COST_DETAILS_FIELDS_MAP.CURRENCY}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.currency`} />}
             optionValue="value"
             optionLabel="label"
@@ -131,7 +143,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.setExchangeRate`} />}
-                name={getFieldName(51)}
+                name={COST_DETAILS_FIELDS_MAP.SET_EXCHANGE_RATE}
                 validate={[validation]}
                 disabled={isSetExchangeDisabled}
               />
@@ -146,7 +158,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={electronicUnitPriceLabel}
-                name={getFieldName(52)}
+                name={COST_DETAILS_FIELDS_MAP.ELECTRONIC_UNIT_PRICE}
                 validate={[validation]}
               />
             )}
@@ -158,7 +170,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={quantityElectronicLabel}
-                name={getFieldName(53)}
+                name={COST_DETAILS_FIELDS_MAP.QUANTITY_ELECTRONIC}
                 validate={[validation]}
               />
             )}
@@ -170,7 +182,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.discount`} />}
-                name={getFieldName(54)}
+                name={COST_DETAILS_FIELDS_MAP.DISCOUNT}
                 validate={[validation]}
               />
             )}
@@ -180,7 +192,7 @@ export const CostDetails = ({
           <Field
             component={TypeToggle}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.type`} />}
-            name={getFieldName(55)}
+            name={COST_DETAILS_FIELDS_MAP.TYPE}
             currency={currency}
           />
         </Col>

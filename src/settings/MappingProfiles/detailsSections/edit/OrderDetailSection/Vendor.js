@@ -32,6 +32,14 @@ import {
   getAcceptedValuesPath,
 } from '../../utils';
 
+const VENDOR_FIELDS_MAP = {
+  VENDOR_REF_NUMBERS: 44,
+  VENDOR_REF_NUMBER: index => getSubfieldName(this.VENDOR_REF_NUMBERS, 0, index),
+  VENDOR_REF_TYPE: index => getSubfieldName(this.VENDOR_REF_NUMBERS, 1, index),
+  ACCOUNT_NUMBER: 45,
+  INSTRUCTION_TO_VENDOR: getFieldName(46),
+};
+
 export const Vendor = ({
   vendorRefNumbers,
   accountNumbers,
@@ -64,8 +72,6 @@ export const Vendor = ({
     value: accountNo,
   }));
 
-  const vendorDetailFieldIndex = 44;
-
   return (
     <Accordion
       id="vendor"
@@ -74,8 +80,8 @@ export const Vendor = ({
       <RepeatableField
         fields={vendorRefNumbers}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.vendorRefNumbers.addLabel`} />}
-        onAdd={() => onAdd(vendorRefNumbers, 'vendorDetail', vendorDetailFieldIndex, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, vendorRefNumbers, vendorDetailFieldIndex, setReferenceTables, 'order')}
+        onAdd={() => onAdd(vendorRefNumbers, 'vendorDetail', VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, initialFields, setReferenceTables, 'order')}
+        onRemove={index => onRemove(index, vendorRefNumbers, VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, setReferenceTables, 'order')}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={6}>
@@ -84,7 +90,7 @@ export const Vendor = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.vendorRefNumber`} />}
-                    name={getSubfieldName(vendorDetailFieldIndex, 0, index)}
+                    name={VENDOR_FIELDS_MAP.VENDOR_REF_NUMBER(index)}
                     validate={[validation]}
                   />
                 )}
@@ -93,7 +99,7 @@ export const Vendor = ({
             <Col xs={6}>
               <AcceptedValuesField
                 component={TextField}
-                name={getSubfieldName(vendorDetailFieldIndex, 1, index)}
+                name={VENDOR_FIELDS_MAP.VENDOR_REF_TYPE(index)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.vendorRefType`} />}
                 optionValue="name"
                 optionLabel="label"
@@ -109,13 +115,13 @@ export const Vendor = ({
         <Col xs={6}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(45)}
+            name={getFieldName(VENDOR_FIELDS_MAP.ACCOUNT_NUMBER)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.accountNumber`} />}
             optionValue="value"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(45)}
+            acceptedValuesPath={getAcceptedValuesPath(VENDOR_FIELDS_MAP.ACCOUNT_NUMBER)}
             acceptedValuesList={accountNumbersOptions}
             hasLoaded
           />
@@ -126,7 +132,7 @@ export const Vendor = ({
               <Field
                 component={TextArea}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.instructionsToVendor`} />}
-                name={getFieldName(46)}
+                name={VENDOR_FIELDS_MAP.INSTRUCTION_TO_VENDOR}
                 validate={[validation]}
               />
             )}

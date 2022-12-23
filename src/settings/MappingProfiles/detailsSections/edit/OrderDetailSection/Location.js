@@ -31,13 +31,19 @@ import {
   renderFieldLabelWithInfo,
 } from '../../utils';
 
+const LOCATION_FIELDS_MAP = {
+  LOCATIONS: 57,
+  NAME: index => getSubfieldName(this.LOCATIONS, 0, index),
+  QUANTITY_PHYSICAL: index => getSubfieldName(this.LOCATIONS, 1, index),
+  QUANTITY_ELECTRONIC: index => getSubfieldName(this.LOCATIONS, 2, index),
+};
+
 export const Location = ({
   locations,
   initialFields,
   setReferenceTables,
   okapi,
 }) => {
-  const locationsFieldIndex = 57;
   const locationLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.location.field.name`,
     `${TRANSLATION_ID_PREFIX}.order.location.field.name.info`,
@@ -71,8 +77,8 @@ export const Location = ({
       <RepeatableField
         fields={locations}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.location.field.locations.addLabel`} />}
-        onAdd={() => onAdd(locations, 'locations', locationsFieldIndex, initialFields, onLocationAdd, 'order')}
-        onRemove={index => onRemove(index, locations, locationsFieldIndex, onLocationClean, 'order')}
+        onAdd={() => onAdd(locations, 'locations', LOCATION_FIELDS_MAP.LOCATIONS, initialFields, onLocationAdd, 'order')}
+        onRemove={index => onRemove(index, locations, LOCATION_FIELDS_MAP.LOCATIONS, onLocationClean, 'order')}
         renderField={(field, index) => {
           return (
             <Row left="xs">
@@ -80,7 +86,7 @@ export const Location = ({
                 <AcceptedValuesField
                   component={TextField}
                   label={locationLabel}
-                  name={getSubfieldName(locationsFieldIndex, 0, index)}
+                  name={LOCATION_FIELDS_MAP.NAME(index)}
                   optionValue="name"
                   optionLabel="name"
                   wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -89,7 +95,7 @@ export const Location = ({
                     wrapperSourcePath: 'locations'
                   }]}
                   setAcceptedValues={setReferenceTables}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(locationsFieldIndex, 0, index)}
+                  acceptedValuesPath={getRepeatableAcceptedValuesPath(LOCATION_FIELDS_MAP.LOCATIONS, 0, index)}
                   optionTemplate="**name** (**code**)"
                   okapi={okapi}
                 />
@@ -100,7 +106,7 @@ export const Location = ({
                     <Field
                       component={TextField}
                       label={quantityPhysicalLabel}
-                      name={getSubfieldName(locationsFieldIndex, 1, index)}
+                      name={LOCATION_FIELDS_MAP.QUANTITY_PHYSICAL(index)}
                       validate={[validation]}
                     />
                   )}
@@ -112,7 +118,7 @@ export const Location = ({
                     <Field
                       component={TextField}
                       label={quantityElectronicLabel}
-                      name={getSubfieldName(locationsFieldIndex, 2, index)}
+                      name={LOCATION_FIELDS_MAP.QUANTITY_ELECTRONIC(index)}
                       validate={[validation]}
                     />
                   )}

@@ -32,6 +32,14 @@ import {
   renderFieldLabelWithInfo,
 } from '../../utils';
 
+const FUND_DISTRIBUTION_FIELDS_MAP = {
+  FUND_DISTRIBUTION: 56,
+  FUND_ID: index => getSubfieldName(this.FUND_DISTRIBUTION, 0, index),
+  EXPENSE_CLASS: index => getSubfieldName(this.FUND_DISTRIBUTION, 1, index),
+  VALUE: index => getSubfieldName(this.FUND_DISTRIBUTION, 2, index),
+  TYPE: index => getSubfieldName(this.FUND_DISTRIBUTION, 3, index),
+};
+
 export const FundDistribution = ({
   fundDistributions,
   currency,
@@ -39,7 +47,6 @@ export const FundDistribution = ({
   setReferenceTables,
   okapi,
 }) => {
-  const fundDistributionsFieldIndex = 56;
   const fundIdLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId`,
     `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId.info`,
@@ -73,8 +80,8 @@ export const FundDistribution = ({
       <RepeatableField
         fields={fundDistributions}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundDistribution.addLabel`} />}
-        onAdd={() => onAdd(fundDistributions, 'fundDistribution', fundDistributionsFieldIndex, initialFields, onFundAdd, 'order')}
-        onRemove={index => onRemove(index, fundDistributions, fundDistributionsFieldIndex, onFundClean, 'order')}
+        onAdd={() => onAdd(fundDistributions, 'fundDistribution', FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, initialFields, onFundAdd, 'order')}
+        onRemove={index => onRemove(index, fundDistributions, FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, onFundClean, 'order')}
         renderField={(field, index) => {
           return (
             <Row left="xs">
@@ -82,7 +89,7 @@ export const FundDistribution = ({
                 <AcceptedValuesField
                   component={TextField}
                   label={fundIdLabel}
-                  name={getSubfieldName(fundDistributionsFieldIndex, 0, index)}
+                  name={FUND_DISTRIBUTION_FIELDS_MAP.FUND_ID(index)}
                   optionValue="name"
                   optionLabel="name"
                   wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -91,7 +98,7 @@ export const FundDistribution = ({
                     wrapperSourcePath: 'funds'
                   }]}
                   setAcceptedValues={setReferenceTables}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(fundDistributionsFieldIndex, 0, index)}
+                  acceptedValuesPath={getRepeatableAcceptedValuesPath(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 0, index)}
                   okapi={okapi}
                 />
               </Col>
@@ -99,7 +106,7 @@ export const FundDistribution = ({
                 <AcceptedValuesField
                   component={TextField}
                   label={expenseClassLabel}
-                  name={getSubfieldName(fundDistributionsFieldIndex, 1, index)}
+                  name={FUND_DISTRIBUTION_FIELDS_MAP.EXPENSE_CLASS(index)}
                   optionValue="name"
                   optionLabel="name"
                   wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -108,7 +115,7 @@ export const FundDistribution = ({
                     wrapperSourcePath: 'expenseClasses'
                   }]}
                   setAcceptedValues={setReferenceTables}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(fundDistributionsFieldIndex, 1, index)}
+                  acceptedValuesPath={getRepeatableAcceptedValuesPath(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 1, index)}
                   okapi={okapi}
                 />
               </Col>
@@ -118,7 +125,7 @@ export const FundDistribution = ({
                     <Field
                       component={TextField}
                       label={valueLabel}
-                      name={getSubfieldName(fundDistributionsFieldIndex, 2, index)}
+                      name={FUND_DISTRIBUTION_FIELDS_MAP.VALUE(index)}
                       validate={[validation]}
                     />
                   )}
@@ -128,7 +135,7 @@ export const FundDistribution = ({
                 <Field
                   component={TypeToggle}
                   label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.type`} />}
-                  name={getSubfieldName(fundDistributionsFieldIndex, 3, index)}
+                  name={FUND_DISTRIBUTION_FIELDS_MAP.TYPE(index)}
                   currency={currency}
                 />
               </Col>

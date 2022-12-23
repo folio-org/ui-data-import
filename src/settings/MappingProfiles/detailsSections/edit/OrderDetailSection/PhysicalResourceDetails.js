@@ -36,6 +36,16 @@ import {
 } from '../../utils';
 import { validateMARCWithDate } from '../../../../../utils';
 
+const PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP = {
+  MATERIAL_SUPPLIER: getFieldName(58),
+  RECEIPT_DUE: getFieldName(59),
+  EXPECTED_RECEIPT_DATE: getFieldName(60),
+  CREATE_INVENTORY: getFieldName(61),
+  MATERIAL_TYPE: 62,
+  VOLUMES: 63,
+  VOLUME: index => getSubfieldName(this.VOLUMES, 0, index),
+};
+
 export const PhysicalResourceDetails = ({
   volumes,
   materialSupplierId,
@@ -66,8 +76,6 @@ export const PhysicalResourceDetails = ({
     },
   ];
 
-  const volumesFieldIndex = 63;
-
   const createInventoryLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.createInventory`,
     `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice.info`,
@@ -89,7 +97,7 @@ export const PhysicalResourceDetails = ({
               <FieldOrganization
                 id={materialSupplierId}
                 setReferenceTables={setReferenceTables}
-                name={getFieldName(58)}
+                name={PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.MATERIAL_SUPPLIER}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialSupplier`} />}
                 validate={[validation]}
               />
@@ -100,7 +108,7 @@ export const PhysicalResourceDetails = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.receiptDue`} />}
-            name={getFieldName(59)}
+            name={PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.RECEIPT_DUE}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
@@ -110,7 +118,7 @@ export const PhysicalResourceDetails = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.expectedReceiptDate`} />}
-            name={getFieldName(60)}
+            name={PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.EXPECTED_RECEIPT_DATE}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
@@ -119,7 +127,7 @@ export const PhysicalResourceDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(61)}
+            name={PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY}
             label={createInventoryLabel}
             optionValue="value"
             optionLabel="label"
@@ -133,7 +141,7 @@ export const PhysicalResourceDetails = ({
           <AcceptedValuesField
             component={TextField}
             label={materialTypeLabel}
-            name={getFieldName(62)}
+            name={getFieldName(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.MATERIAL_TYPE)}
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -142,7 +150,7 @@ export const PhysicalResourceDetails = ({
               wrapperSourcePath: 'mtypes',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(62)}
+            acceptedValuesPath={getAcceptedValuesPath(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.MATERIAL_TYPE)}
             okapi={okapi}
           />
         </Col>
@@ -150,8 +158,8 @@ export const PhysicalResourceDetails = ({
       <RepeatableField
         fields={volumes}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.volume.addLabel`} />}
-        onAdd={() => onAdd(volumes, 'volumes', volumesFieldIndex, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, volumes, volumesFieldIndex, setReferenceTables, 'order')}
+        onAdd={() => onAdd(volumes, 'volumes', PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, initialFields, setReferenceTables, 'order')}
+        onRemove={index => onRemove(index, volumes, PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, setReferenceTables, 'order')}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={12}>
@@ -160,7 +168,7 @@ export const PhysicalResourceDetails = ({
                   <Field
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.volume`} />}
-                    name={getSubfieldName(volumesFieldIndex, 0, index)}
+                    name={PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUME(index)}
                     validate={[validation]}
                   />
                 )}

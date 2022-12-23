@@ -42,6 +42,26 @@ import {
   validateRequiredField,
 } from '../../../../../utils';
 
+const ITEM_DETAILS_FIELDS_MAP = {
+  TITLE: getFieldName(16),
+  RECEIVING_NOTE: getFieldName(17),
+  MUST_ACKNOWLEDGE_RECEIVING_NOTE: getFieldName(18),
+  SUBSCRIPTION_FROM: getFieldName(19),
+  SUBSCRIPTION_TO: getFieldName(20),
+  SUBSCRIPTION_INTERVAL: getFieldName(21),
+  PUBLICATION_DATE: getFieldName(22),
+  PUBLISHER: getFieldName(23),
+  EDITION: getFieldName(24),
+  CONTRIBUTORS: 25,
+  CONTRIBUTOR: index => getSubfieldName(this.CONTRIBUTORS, 0, index),
+  CONTRIBUTOR_TYPE: index => getSubfieldName(this.CONTRIBUTORS, 1, index),
+  PRODUCT_IDS: 26,
+  PRODUCT_ID: index => getSubfieldName(this.PRODUCT_IDS, 0, index),
+  QUALIFIER: index => getSubfieldName(this.PRODUCT_IDS, 1, index),
+  PRODUCT_ID_TYPE: index => getSubfieldName(this.PRODUCT_IDS, 2, index),
+  INTERNAL_NOTE: getFieldName(27),
+};
+
 export const ItemDetails = ({
   contributors,
   productIdentifiers,
@@ -55,9 +75,6 @@ export const ItemDetails = ({
     value => validateMARCWithDate(value, false),
     [],
   );
-
-  const contributorsFieldIndex = 25;
-  const productIdsFieldIndex = 26;
 
   const contributorTypeOptions = [
     {
@@ -99,7 +116,7 @@ export const ItemDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.title`} />}
-                name={getFieldName(16)}
+                name={ITEM_DETAILS_FIELDS_MAP.TITLE}
                 validate={[validateRequiredField, validation]}
                 required
               />
@@ -114,7 +131,7 @@ export const ItemDetails = ({
               <Field
                 component={TextArea}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.receivingNote`} />}
-                name={getFieldName(17)}
+                name={ITEM_DETAILS_FIELDS_MAP.RECEIVING_NOTE}
                 validate={[validation]}
               />
             )}
@@ -123,7 +140,7 @@ export const ItemDetails = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(18)}
+            name={ITEM_DETAILS_FIELDS_MAP.MUST_ACKNOWLEDGE_RECEIVING_NOTE}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.mustAcknowledgeReceivingNote`} />}
             optionValue="value"
             optionLabel="label"
@@ -137,7 +154,7 @@ export const ItemDetails = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionFrom`} />}
-            name={getFieldName(19)}
+            name={ITEM_DETAILS_FIELDS_MAP.SUBSCRIPTION_FROM}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
@@ -147,7 +164,7 @@ export const ItemDetails = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionTo`} />}
-            name={getFieldName(20)}
+            name={ITEM_DETAILS_FIELDS_MAP.SUBSCRIPTION_TO}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
@@ -159,7 +176,7 @@ export const ItemDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.subscriptionInterval`} />}
-                name={getFieldName(21)}
+                name={ITEM_DETAILS_FIELDS_MAP.SUBSCRIPTION_INTERVAL}
                 validate={[validation]}
               />
             )}
@@ -173,7 +190,7 @@ export const ItemDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.publicationDate`} />}
-                name={getFieldName(22)}
+                name={ITEM_DETAILS_FIELDS_MAP.PUBLICATION_DATE}
                 validate={[validation]}
               />
             )}
@@ -185,7 +202,7 @@ export const ItemDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.publisher`} />}
-                name={getFieldName(23)}
+                name={ITEM_DETAILS_FIELDS_MAP.PUBLISHER}
                 validate={[validation]}
               />
             )}
@@ -197,7 +214,7 @@ export const ItemDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.edition`} />}
-                name={getFieldName(24)}
+                name={ITEM_DETAILS_FIELDS_MAP.EDITION}
                 validate={[validation]}
               />
             )}
@@ -207,8 +224,8 @@ export const ItemDetails = ({
       <RepeatableField
         fields={contributors}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributor.addLabel`} />}
-        onAdd={() => onAdd(contributors, 'contributors', contributorsFieldIndex, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, contributors, contributorsFieldIndex, setReferenceTables, 'order')}
+        onAdd={() => onAdd(contributors, 'contributors', ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, initialFields, setReferenceTables, 'order')}
+        onRemove={index => onRemove(index, contributors, ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, setReferenceTables, 'order')}
         renderField={(field, index) => {
           return (
             <Row left="xs">
@@ -218,7 +235,7 @@ export const ItemDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributor`} />}
-                      name={getSubfieldName(contributorsFieldIndex, 0, index)}
+                      name={ITEM_DETAILS_FIELDS_MAP.CONTRIBUTOR(index)}
                       validate={[validation]}
                     />
                   )}
@@ -227,7 +244,7 @@ export const ItemDetails = ({
               <Col xs={6}>
                 <AcceptedValuesField
                   component={TextField}
-                  name={getSubfieldName(contributorsFieldIndex, 1, index)}
+                  name={ITEM_DETAILS_FIELDS_MAP.CONTRIBUTOR_TYPE(index)}
                   label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributorType`} />}
                   optionValue="value"
                   optionLabel="label"
@@ -242,8 +259,8 @@ export const ItemDetails = ({
       <RepeatableField
         fields={productIdentifiers}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.productIdentifiers.addLabel`} />}
-        onAdd={() => onAdd(productIdentifiers, 'productIds', productIdsFieldIndex, initialFields, onProductIdAdd, 'order')}
-        onRemove={index => onRemove(index, productIdentifiers, productIdsFieldIndex, onProductIdClean, 'order')}
+        onAdd={() => onAdd(productIdentifiers, 'productIds', ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, initialFields, onProductIdAdd, 'order')}
+        onRemove={index => onRemove(index, productIdentifiers, ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, onProductIdClean, 'order')}
         renderField={(field, index) => {
           return (
             <Row left="xs">
@@ -253,7 +270,7 @@ export const ItemDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.productId`} />}
-                      name={getSubfieldName(productIdsFieldIndex, 0, index)}
+                      name={ITEM_DETAILS_FIELDS_MAP.PRODUCT_ID(index)}
                       validate={[validation]}
                     />
                   )}
@@ -265,7 +282,7 @@ export const ItemDetails = ({
                     <Field
                       component={TextField}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.qualifier`} />}
-                      name={getSubfieldName(productIdsFieldIndex, 1, index)}
+                      name={ITEM_DETAILS_FIELDS_MAP.QUALIFIER(index)}
                       validate={[validation]}
                     />
                   )}
@@ -274,7 +291,7 @@ export const ItemDetails = ({
               <Col xs={4}>
                 <AcceptedValuesField
                   component={TextField}
-                  name={getSubfieldName(productIdsFieldIndex, 2, index)}
+                  name={ITEM_DETAILS_FIELDS_MAP.PRODUCT_ID_TYPE(index)}
                   label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.productIdType`} />}
                   optionValue="name"
                   optionLabel="name"
@@ -284,7 +301,7 @@ export const ItemDetails = ({
                     wrapperSourcePath: 'identifierTypes'
                   }]}
                   setAcceptedValues={setReferenceTables}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(productIdsFieldIndex, 2, index)}
+                  acceptedValuesPath={getRepeatableAcceptedValuesPath(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 2, index)}
                   okapi={okapi}
                 />
               </Col>
@@ -299,7 +316,7 @@ export const ItemDetails = ({
               <Field
                 component={TextArea}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.internalNote`} />}
-                name={getFieldName(27)}
+                name={ITEM_DETAILS_FIELDS_MAP.INTERNAL_NOTE}
                 validate={[validation]}
               />
             )}
