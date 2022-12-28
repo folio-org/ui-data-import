@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -72,6 +72,16 @@ export const Vendor = ({
     value: accountNo,
   }));
 
+  const handleVendorNumbersAdd = useCallback(
+    () => onAdd(vendorRefNumbers, 'vendorDetail', VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, initialFields, setReferenceTables, 'order'),
+    [VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, initialFields, setReferenceTables, vendorRefNumbers],
+  );
+
+  const handleVendorNumbersClean = useCallback(
+    index => onRemove(index, vendorRefNumbers, VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, setReferenceTables, 'order'),
+    [VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, setReferenceTables, vendorRefNumbers],
+  );
+
   return (
     <Accordion
       id="vendor"
@@ -80,8 +90,8 @@ export const Vendor = ({
       <RepeatableField
         fields={vendorRefNumbers}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.vendorRefNumbers.addLabel`} />}
-        onAdd={() => onAdd(vendorRefNumbers, 'vendorDetail', VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, vendorRefNumbers, VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, setReferenceTables, 'order')}
+        onAdd={handleVendorNumbersAdd}
+        onRemove={handleVendorNumbersClean}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={6}>

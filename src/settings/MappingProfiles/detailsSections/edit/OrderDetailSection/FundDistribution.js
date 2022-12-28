@@ -70,7 +70,7 @@ export const FundDistribution = ({
 
       return onAdd(fundDistributions, 'fundDistribution', FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, initialFields, onFundAdd, 'order');
     },
-    [fundDistributions, initialFields, setReferenceTables],
+    [FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, fundDistributions, initialFields, setReferenceTables],
   );
 
   const handleFundClean = useCallback(
@@ -83,7 +83,7 @@ export const FundDistribution = ({
 
       return onRemove(index, fundDistributions, FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, onFundClean, 'order');
     },
-    [fundDistributions, setReferenceTables],
+    [FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, fundDistributions, setReferenceTables],
   );
 
   return (

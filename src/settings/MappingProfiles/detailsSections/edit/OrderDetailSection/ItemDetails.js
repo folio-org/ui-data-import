@@ -102,7 +102,7 @@ export const ItemDetails = ({
 
       return onAdd(productIdentifiers, 'productIds', ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, initialFields, onProductIdAdd, 'order');
     },
-    [initialFields, productIdentifiers, setReferenceTables],
+    [ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, initialFields, productIdentifiers, setReferenceTables],
   );
 
   const handleProductIdClean = useCallback(
@@ -115,7 +115,17 @@ export const ItemDetails = ({
 
       return onRemove(index, productIdentifiers, ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, onProductIdClean, 'order');
     },
-    [productIdentifiers, setReferenceTables],
+    [ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, productIdentifiers, setReferenceTables],
+  );
+
+  const handleContributorsAdd = useCallback(
+    () => onAdd(contributors, 'contributors', ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, initialFields, setReferenceTables, 'order'),
+    [ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, contributors, initialFields, setReferenceTables],
+  );
+
+  const handleContributorsClean = useCallback(
+    index => onRemove(index, contributors, ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, setReferenceTables, 'order'),
+    [ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, contributors, setReferenceTables],
   );
 
   return (
@@ -238,8 +248,8 @@ export const ItemDetails = ({
       <RepeatableField
         fields={contributors}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributor.addLabel`} />}
-        onAdd={() => onAdd(contributors, 'contributors', ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, contributors, ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, setReferenceTables, 'order')}
+        onAdd={handleContributorsAdd}
+        onRemove={handleContributorsClean}
         renderField={(field, index) => {
           return (
             <Row left="xs">

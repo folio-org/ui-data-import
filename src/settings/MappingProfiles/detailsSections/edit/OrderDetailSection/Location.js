@@ -67,7 +67,7 @@ export const Location = ({
 
       return onAdd(locations, 'locations', LOCATION_FIELDS_MAP.LOCATIONS, initialFields, onLocationAdd, 'order');
     },
-    [initialFields, locations, setReferenceTables],
+    [LOCATION_FIELDS_MAP.LOCATIONS, initialFields, locations, setReferenceTables],
   );
 
   const handleLocationClean = useCallback(
@@ -80,7 +80,7 @@ export const Location = ({
 
       return onRemove(index, locations, LOCATION_FIELDS_MAP.LOCATIONS, onLocationClean, 'order');
     },
-    [locations, setReferenceTables],
+    [LOCATION_FIELDS_MAP.LOCATIONS, locations, setReferenceTables],
   );
 
   return (

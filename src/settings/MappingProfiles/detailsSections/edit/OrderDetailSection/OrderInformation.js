@@ -161,14 +161,14 @@ const OrderInformationComponent = ({
     () => {
       return onAdd(notes, 'notes', ORDER_INFO_FIELDS_MAP.NOTES, initialFields, setReferenceTables, 'order');
     },
-    [initialFields, notes, setReferenceTables],
+    [ORDER_INFO_FIELDS_MAP.NOTES, initialFields, notes, setReferenceTables],
   );
 
   const handleNotesClean = useCallback(
     index => {
       return onRemove(index, notes, ORDER_INFO_FIELDS_MAP.NOTES, setReferenceTables, 'order');
     },
-    [notes, setReferenceTables],
+    [ORDER_INFO_FIELDS_MAP.NOTES, notes, setReferenceTables],
   );
 
   return (

@@ -85,6 +85,16 @@ export const PhysicalResourceDetails = ({
     `${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialType.info`,
   );
 
+  const handleVolumesAdd = useCallback(
+    () => onAdd(volumes, 'volumes', PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, initialFields, setReferenceTables, 'order'),
+    [PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, initialFields, setReferenceTables, volumes],
+  );
+
+  const handleVolumesClean = useCallback(
+    index => onRemove(index, volumes, PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, setReferenceTables, 'order'),
+    [PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, setReferenceTables, volumes],
+  );
+
   return (
     <Accordion
       id="physical-resource-details"
@@ -158,8 +168,8 @@ export const PhysicalResourceDetails = ({
       <RepeatableField
         fields={volumes}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.volume.addLabel`} />}
-        onAdd={() => onAdd(volumes, 'volumes', PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, volumes, PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, setReferenceTables, 'order')}
+        onAdd={handleVolumesAdd}
+        onRemove={handleVolumesClean}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={12}>
