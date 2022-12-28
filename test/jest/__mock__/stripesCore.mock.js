@@ -71,7 +71,8 @@ jest.mock('@folio/stripes/core', () => {
   STRIPES.connect = stripesConnect;
 
   return {
-    ...jest.requireActual('@folio/stripes/core'),
+    ...jest.requireActual('@folio/stripes-core'),
+//    AppIcon: jest.fn(({ ariaLabel }) => <span>{ariaLabel}</span>),
     stripesConnect,
     withStripes,
     withRoot,

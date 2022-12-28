@@ -37,6 +37,8 @@
     "@folio/stripes-cli": "^2.6.0",
     "@folio/stripes-components": "^10.3.3",
     "@folio/stripes-core": "^8.1.0",
+    "@folio/stripes-final-form": "^6.1.0",
+    "@folio/stripes-form": "^7.1.0",
     "@folio/stripes-smart-components": "^7.3.3",
     "@formatjs/cli": "^4.2.10",
     "@testing-library/jest-dom": "^5.14.1",
