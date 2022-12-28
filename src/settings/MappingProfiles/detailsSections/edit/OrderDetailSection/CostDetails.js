@@ -39,7 +39,7 @@ export const CostDetails = ({
   const COST_DETAILS_FIELDS_MAP = {
     PHYSICAL_UNIT_PRICE: getFieldName(47),
     QUANTITY_PHYSICAL: getFieldName(48),
-    ADDITIONAL_COAST: getFieldName(49),
+    ADDITIONAL_COST: getFieldName(49),
     CURRENCY: getFieldName(50),
     SET_EXCHANGE_RATE: getFieldName(51),
     ELECTRONIC_UNIT_PRICE: getFieldName(52),
@@ -115,7 +115,7 @@ export const CostDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.additionalCost`} />}
-                name={COST_DETAILS_FIELDS_MAP.ADDITIONAL_COAST}
+                name={COST_DETAILS_FIELDS_MAP.ADDITIONAL_COST}
                 validate={[validation]}
               />
             )}
