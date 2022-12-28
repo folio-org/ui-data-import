@@ -42,26 +42,6 @@ import {
   validateRequiredField,
 } from '../../../../../utils';
 
-const ITEM_DETAILS_FIELDS_MAP = {
-  TITLE: getFieldName(16),
-  RECEIVING_NOTE: getFieldName(17),
-  MUST_ACKNOWLEDGE_RECEIVING_NOTE: getFieldName(18),
-  SUBSCRIPTION_FROM: getFieldName(19),
-  SUBSCRIPTION_TO: getFieldName(20),
-  SUBSCRIPTION_INTERVAL: getFieldName(21),
-  PUBLICATION_DATE: getFieldName(22),
-  PUBLISHER: getFieldName(23),
-  EDITION: getFieldName(24),
-  CONTRIBUTORS: 25,
-  CONTRIBUTOR: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, 0, index),
-  CONTRIBUTOR_TYPE: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, 1, index),
-  PRODUCT_IDS: 26,
-  PRODUCT_ID: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 0, index),
-  QUALIFIER: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 1, index),
-  PRODUCT_ID_TYPE: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 2, index),
-  INTERNAL_NOTE: getFieldName(27),
-};
-
 export const ItemDetails = ({
   contributors,
   productIdentifiers,
@@ -70,6 +50,26 @@ export const ItemDetails = ({
   okapi,
 }) => {
   const { formatMessage } = useIntl();
+
+  const ITEM_DETAILS_FIELDS_MAP = {
+    TITLE: getFieldName(16),
+    RECEIVING_NOTE: getFieldName(17),
+    MUST_ACKNOWLEDGE_RECEIVING_NOTE: getFieldName(18),
+    SUBSCRIPTION_FROM: getFieldName(19),
+    SUBSCRIPTION_TO: getFieldName(20),
+    SUBSCRIPTION_INTERVAL: getFieldName(21),
+    PUBLICATION_DATE: getFieldName(22),
+    PUBLISHER: getFieldName(23),
+    EDITION: getFieldName(24),
+    CONTRIBUTORS: 25,
+    CONTRIBUTOR: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, 0, index),
+    CONTRIBUTOR_TYPE: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, 1, index),
+    PRODUCT_IDS: 26,
+    PRODUCT_ID: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 0, index),
+    QUALIFIER: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 1, index),
+    PRODUCT_ID_TYPE: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 2, index),
+    INTERNAL_NOTE: getFieldName(27),
+  };
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),

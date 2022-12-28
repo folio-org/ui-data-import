@@ -32,14 +32,6 @@ import {
   renderFieldLabelWithInfo,
 } from '../../utils';
 
-const FUND_DISTRIBUTION_FIELDS_MAP = {
-  FUND_DISTRIBUTION: 56,
-  FUND_ID: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 0, index),
-  EXPENSE_CLASS: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 1, index),
-  VALUE: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 2, index),
-  TYPE: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 3, index),
-};
-
 export const FundDistribution = ({
   fundDistributions,
   currency,
@@ -47,6 +39,14 @@ export const FundDistribution = ({
   setReferenceTables,
   okapi,
 }) => {
+  const FUND_DISTRIBUTION_FIELDS_MAP = {
+    FUND_DISTRIBUTION: 56,
+    FUND_ID: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 0, index),
+    EXPENSE_CLASS: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 1, index),
+    VALUE: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 2, index),
+    TYPE: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 3, index),
+  };
+
   const fundIdLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId`,
     `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId.info`,

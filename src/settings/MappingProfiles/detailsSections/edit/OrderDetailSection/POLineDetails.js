@@ -45,29 +45,29 @@ import {
   validateMARCWithElse,
 } from '../../../../../utils';
 
-const PO_LONE_DETAILS_FIELDS_MAP = {
-  ACQ_METHOD: 29,
-  AUTOMATIC_EXPORT: getBoolFieldName(30),
-  ORDER_FORMAT: getFieldName(31),
-  RECEIPT_DATE: getFieldName(32),
-  RECEIPT_STATUS: getFieldName(33),
-  PAYMENT_STATUS: getFieldName(34),
-  DONOR: getFieldName(36),
-  SELECTOR: getFieldName(37),
-  REQUESTER: getFieldName(38),
-  CANCELLATION_RESTRICTION: getFieldName(39),
-  RUSH: getFieldName(40),
-  RECEIVING_WORKFLOW: getFieldName(41),
-  CANCELLATION_DESCRIPTION: getFieldName(42),
-  LINE_DESCRIPTION: getFieldName(43),
-};
-
 export const POLineDetails = ({
   automaticExportCheckbox,
   setReferenceTables,
   okapi,
 }) => {
   const { formatMessage } = useIntl();
+
+  const PO_LONE_DETAILS_FIELDS_MAP = {
+    ACQ_METHOD: 29,
+    AUTOMATIC_EXPORT: getBoolFieldName(30),
+    ORDER_FORMAT: getFieldName(31),
+    RECEIPT_DATE: getFieldName(32),
+    RECEIPT_STATUS: getFieldName(33),
+    PAYMENT_STATUS: getFieldName(34),
+    DONOR: getFieldName(36),
+    SELECTOR: getFieldName(37),
+    REQUESTER: getFieldName(38),
+    CANCELLATION_RESTRICTION: getFieldName(39),
+    RUSH: getFieldName(40),
+    RECEIVING_WORKFLOW: getFieldName(41),
+    CANCELLATION_DESCRIPTION: getFieldName(42),
+    LINE_DESCRIPTION: getFieldName(43),
+  };
 
   const [receivingWorkflow, setReceivingWorkflow] = useState();
 

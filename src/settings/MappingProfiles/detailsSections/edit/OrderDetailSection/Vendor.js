@@ -32,14 +32,6 @@ import {
   getAcceptedValuesPath,
 } from '../../utils';
 
-const VENDOR_FIELDS_MAP = {
-  VENDOR_REF_NUMBERS: 44,
-  VENDOR_REF_NUMBER: index => getSubfieldName(VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, 0, index),
-  VENDOR_REF_TYPE: index => getSubfieldName(VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, 1, index),
-  ACCOUNT_NUMBER: 45,
-  INSTRUCTION_TO_VENDOR: getFieldName(46),
-};
-
 export const Vendor = ({
   vendorRefNumbers,
   accountNumbers,
@@ -48,6 +40,14 @@ export const Vendor = ({
   okapi,
 }) => {
   const { formatMessage } = useIntl();
+
+  const VENDOR_FIELDS_MAP = {
+    VENDOR_REF_NUMBERS: 44,
+    VENDOR_REF_NUMBER: index => getSubfieldName(VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, 0, index),
+    VENDOR_REF_TYPE: index => getSubfieldName(VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, 1, index),
+    ACCOUNT_NUMBER: 45,
+    INSTRUCTION_TO_VENDOR: getFieldName(46),
+  };
 
   const vendorRefTypeOptions = [
     {

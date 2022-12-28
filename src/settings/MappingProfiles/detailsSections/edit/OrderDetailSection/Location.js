@@ -31,19 +31,19 @@ import {
   renderFieldLabelWithInfo,
 } from '../../utils';
 
-const LOCATION_FIELDS_MAP = {
-  LOCATIONS: 57,
-  NAME: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 0, index),
-  QUANTITY_PHYSICAL: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 1, index),
-  QUANTITY_ELECTRONIC: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 2, index),
-};
-
 export const Location = ({
   locations,
   initialFields,
   setReferenceTables,
   okapi,
 }) => {
+  const LOCATION_FIELDS_MAP = {
+    LOCATIONS: 57,
+    NAME: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 0, index),
+    QUANTITY_PHYSICAL: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 1, index),
+    QUANTITY_ELECTRONIC: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 2, index),
+  };
+
   const locationLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.location.field.name`,
     `${TRANSLATION_ID_PREFIX}.order.location.field.name.info`,

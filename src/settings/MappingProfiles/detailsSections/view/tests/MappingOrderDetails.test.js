@@ -1,8 +1,4 @@
 import React from 'react';
-import {
-  fireEvent,
-  waitFor
-} from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 

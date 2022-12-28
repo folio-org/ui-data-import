@@ -36,16 +36,6 @@ import {
 } from '../../utils';
 import { validateMARCWithDate } from '../../../../../utils';
 
-const PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP = {
-  MATERIAL_SUPPLIER: getFieldName(58),
-  RECEIPT_DUE: getFieldName(59),
-  EXPECTED_RECEIPT_DATE: getFieldName(60),
-  CREATE_INVENTORY: getFieldName(61),
-  MATERIAL_TYPE: 62,
-  VOLUMES: 63,
-  VOLUME: index => getSubfieldName(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, 0, index),
-};
-
 export const PhysicalResourceDetails = ({
   volumes,
   materialSupplierId,
@@ -54,6 +44,16 @@ export const PhysicalResourceDetails = ({
   okapi,
 }) => {
   const { formatMessage } = useIntl();
+
+  const PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP = {
+    MATERIAL_SUPPLIER: getFieldName(58),
+    RECEIPT_DUE: getFieldName(59),
+    EXPECTED_RECEIPT_DATE: getFieldName(60),
+    CREATE_INVENTORY: getFieldName(61),
+    MATERIAL_TYPE: 62,
+    VOLUMES: 63,
+    VOLUME: index => getSubfieldName(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, 0, index),
+  };
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),

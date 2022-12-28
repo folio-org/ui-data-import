@@ -48,26 +48,6 @@ import {
   validateRequiredField,
 } from '../../../../../utils';
 
-const ORDER_INFO_FIELDS_MAP = {
-  PO_STATUS: getFieldName(0),
-  APPROVED: getBoolFieldName(1),
-  PO_LINES_LIMIT: getFieldName(2),
-  OVERRIDE_PO_LINES_LIMIT: getFieldName(3),
-  PREFIX: 4,
-  PO_NUMBER: getFieldName(5),
-  SUFFIX: 6,
-  VENDOR: getFieldName(7),
-  ORDER_TYPE: getFieldName(8),
-  ACQ_UNITS: 9,
-  ASSIGNED_TO: getFieldName(10),
-  BILL_TO_NAME: 11,
-  SHIP_TO_NAME: 12,
-  MANUAL: getBoolFieldName(13),
-  RE_ENCUMBER: getFieldName(14),
-  NOTES: 15,
-  NOTE: index => getSubfieldName(ORDER_INFO_FIELDS_MAP.NOTES, 0, index),
-};
-
 const OrderInformationComponent = ({
   approvedCheckbox,
   manualPOCheckbox,
@@ -86,6 +66,26 @@ const OrderInformationComponent = ({
   okapi,
 }) => {
   const { formatMessage } = useIntl();
+
+  const ORDER_INFO_FIELDS_MAP = {
+    PO_STATUS: getFieldName(0),
+    APPROVED: getBoolFieldName(1),
+    PO_LINES_LIMIT: getFieldName(2),
+    OVERRIDE_PO_LINES_LIMIT: getFieldName(3),
+    PREFIX: 4,
+    PO_NUMBER: getFieldName(5),
+    SUFFIX: 6,
+    VENDOR: getFieldName(7),
+    ORDER_TYPE: getFieldName(8),
+    ACQ_UNITS: 9,
+    ASSIGNED_TO: getFieldName(10),
+    BILL_TO_NAME: 11,
+    SHIP_TO_NAME: 12,
+    MANUAL: getBoolFieldName(13),
+    RE_ENCUMBER: getFieldName(14),
+    NOTES: 15,
+    NOTE: index => getSubfieldName(ORDER_INFO_FIELDS_MAP.NOTES, 0, index),
+  };
 
   const [isApprovedChecked, setIsApprovedChecked] = useState(false);
   const [billToAddress, setBillToAddress] = useState('');
