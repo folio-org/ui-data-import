@@ -21,7 +21,7 @@ import {
 
 import {
   TRANSLATION_ID_PREFIX,
-  QUOTED_ID_PATTERN,
+  UUID_IN_QUOTES_PATTERN,
 } from '../constants';
 import {
   getRefValuesFromTables,
@@ -68,14 +68,14 @@ export const MappingOrderDetails = ({
   const setExchangeRateValue = getFieldValueFromDetails(mappingDetails?.mappingFields, SET_EXCHANGE_RATE_FIELD);
   const currencyFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, CURRENCY_FIELD);
   const vendorFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, VENDOR_FIELD, false);
-  const vendorIdMatch = vendorFromDetails?.match(QUOTED_ID_PATTERN);
+  const vendorIdMatch = vendorFromDetails?.match(UUID_IN_QUOTES_PATTERN);
   const filledVendorId = vendorIdMatch ? vendorIdMatch[1] : null;
   const assignedToId = getFieldValueFromDetails(mappingDetails?.mappingFields, ASSIGNED_TO_FIELD);
   const materialSupplierFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, MATERIAL_SUPPLIER_FIELD);
-  const materialSupplierMatch = materialSupplierFromDetails?.match(QUOTED_ID_PATTERN);
+  const materialSupplierMatch = materialSupplierFromDetails?.match(UUID_IN_QUOTES_PATTERN);
   const materialSupplierId = materialSupplierMatch ? materialSupplierMatch[1] : null;
   const accessProviderFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, ACCESS_PROVIDER_FIELD);
-  const accessProviderMatch = accessProviderFromDetails?.match(QUOTED_ID_PATTERN);
+  const accessProviderMatch = accessProviderFromDetails?.match(UUID_IN_QUOTES_PATTERN);
   const accessProviderId = accessProviderMatch ? accessProviderMatch[1] : null;
 
   const onOrganizationSelect = organization => {

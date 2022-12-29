@@ -100,4 +100,4 @@ export const VENDOR_VISIBLE_COLUMNS = {
   REF_NUMBER_TYPE: 'refNumberType',
 };
 
-export const QUOTED_ID_PATTERN = /^"([a-zA-Z0-9-]*)"$/;
+export const UUID_IN_QUOTES_PATTERN = /^"[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}"$/;
