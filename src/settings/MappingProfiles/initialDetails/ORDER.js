@@ -16,7 +16,7 @@ const ORDER = {
     name: 'poLinesLimit',
     enabled: false,
     path: 'order.po.poLinesLimit', // ?
-    value: '',
+    value: '"1"',
   }, {
     name: 'overridePoLinesLimit',
     enabled: true,

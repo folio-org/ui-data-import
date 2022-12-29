@@ -92,12 +92,12 @@ const OrderInformationComponent = ({
   const [shipToAddress, setShipToAddress] = useState('');
 
   useEffect(() => {
-    if (purchaseOrderLinesLimitSetting.hasLoaded) {
-      const purchaseOrderLinesLimitValue = purchaseOrderLinesLimitSetting.records[0]?.configs[0]?.value;
+    const purchaseOrderLinesLimitValue = purchaseOrderLinesLimitSetting.records[0]?.configs[0]?.value;
 
-      setReferenceTables(`${FIELD_NAME_PREFIX}[2].value`, purchaseOrderLinesLimitValue);
+    if (purchaseOrderLinesLimitSetting.hasLoaded && purchaseOrderLinesLimitValue) {
+      setReferenceTables(`${FIELD_NAME_PREFIX}[2].value`, `"${purchaseOrderLinesLimitValue}"`);
     }
-  }, [purchaseOrderLinesLimitSetting.hasLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [purchaseOrderLinesLimitSetting.hasLoaded, purchaseOrderLinesLimitSetting.records, setReferenceTables]);
 
   const isApprovalRequiredValue = useMemo(
     () => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { within } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
 
 import '../../../../../../../test/jest/__mock__';
 import {
@@ -19,10 +20,10 @@ const okapiProp = {
   url: 'https://folio-testing-okapi.dev.folio.org',
 };
 const resourcesProp = {
-  purchaseOrderLinesLimitSetting: {},
-  isApprovalRequired: {},
-  userCanEditPONumber: {},
-  addresses: {},
+  ...buildResources({ resourceName: 'purchaseOrderLinesLimitSetting', records: [] }),
+  ...buildResources({ resourceName: 'isApprovalRequired', records: [] }),
+  ...buildResources({ resourceName: 'userCanEditPONumber', records: [] }),
+  ...buildResources({ resourceName: 'addresses', records: [] }),
 };
 
 const notes = [{
