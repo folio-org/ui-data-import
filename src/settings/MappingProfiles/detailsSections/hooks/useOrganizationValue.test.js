@@ -4,6 +4,7 @@ import {
   QueryClientProvider,
 } from 'react-query';
 import { renderHook } from '@testing-library/react-hooks';
+import faker from 'faker';
 
 import '../../../../../test/jest/__mock__';
 
@@ -23,7 +24,7 @@ const wrapper = ({ children }) => (
 );
 
 const organization = {
-  id: 'orgId',
+  id: faker.random.uuid(),
   code: 'AMAZ',
   name: 'Amazon',
 };
