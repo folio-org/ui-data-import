@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import {
   Accordion,
@@ -16,9 +19,14 @@ import {
   renderCheckbox,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileFieldShape } from '../../../../../utils';
+import {
+  BOOLEAN_STRING_VALUES,
+  mappingProfileFieldShape,
+} from '../../../../../utils';
 
 export const POLineDetails = ({ mappingDetails }) => {
+  const { formatMessage } = useIntl();
+
   const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
   const poLineNumber = getFieldValue(mappingDetails, 'poLineNumber', 'value');
@@ -35,11 +43,25 @@ export const POLineDetails = ({ mappingDetails }) => {
   const requester = getFieldValue(mappingDetails, 'requester', 'value');
   const cancellationRestriction = getFieldValue(mappingDetails, 'cancellationRestriction', 'value');
   const rush = getFieldValue(mappingDetails, 'rush', 'value');
-  const receivingWorkflow = getFieldValue(mappingDetails, 'checkinItems', 'value');
-  const cancellationDescription = getFieldValue(mappingDetails, 'cancellationDescription', 'value');
+  const checkinItemsValue = getFieldValue(mappingDetails, 'checkinItems', 'value');
+  const cancellationDescription = getFieldValue(mappingDetails, 'cancellationRestrictionNote', 'value');
   const poLineDescription = getFieldValue(mappingDetails, 'poLineDescription', 'value');
 
   const automaticExportCheckbox = renderCheckbox('order.poLineDetails.automaticExport', automaticExport);
+
+  const receivingWorkflow = useMemo(
+    () => {
+      if (checkinItemsValue === BOOLEAN_STRING_VALUES.TRUE) {
+        return formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.independent` });
+      }
+      if (checkinItemsValue === BOOLEAN_STRING_VALUES.FALSE) {
+        return formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.synchronized` });
+      }
+
+      return checkinItemsValue;
+    },
+    [checkinItemsValue, formatMessage],
+  );
 
   return (
     <Accordion

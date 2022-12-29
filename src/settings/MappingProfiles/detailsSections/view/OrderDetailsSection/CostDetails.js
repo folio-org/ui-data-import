@@ -15,21 +15,23 @@ import {
   renderCheckbox,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileFieldShape } from '../../../../../utils';
+import {
+  BOOLEAN_ACTIONS,
+  mappingProfileFieldShape,
+} from '../../../../../utils';
 
 export const CostDetails = ({ mappingDetails }) => {
   const listUnitPrice = getFieldValue(mappingDetails, 'listUnitPrice', 'value');
   const quantityPhysical = getFieldValue(mappingDetails, 'quantityPhysical', 'value');
   const additionalCost = getFieldValue(mappingDetails, 'additionalCost', 'value');
   const currency = getFieldValue(mappingDetails, 'currency', 'value');
-  const useExchangeRate = getFieldValue(mappingDetails, 'useExchangeRate', 'booleanFieldAction');
   const exchangeRate = getFieldValue(mappingDetails, 'exchangeRate', 'value');
   const electronicUnitPrice = getFieldValue(mappingDetails, 'electronicUnitPrice', 'value');
   const quantityElectronic = getFieldValue(mappingDetails, 'quantityElectronic', 'value');
   const discount = getFieldValue(mappingDetails, 'discount', 'value');
   const discountType = getFieldValue(mappingDetails, 'discountType', 'value');
 
-  const useExchangeRateCheckbox = renderCheckbox('order.costDetails.useExchangeRate', useExchangeRate);
+  const useExchangeRateCheckbox = renderCheckbox('order.costDetails.useExchangeRate', exchangeRate ? BOOLEAN_ACTIONS.ALL_TRUE : false);
 
   return (
     <Accordion
