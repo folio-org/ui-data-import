@@ -13,7 +13,10 @@ import { ReturnToAssignJobs } from './ReturnToAssignJobs';
 
 import { FILE_STATUSES } from '../../../../utils';
 
-jest.mock('@folio/stripes-data-transfer-components', () => ({ Preloader: () => <span>Preloader</span> }));
+jest.mock('@folio/stripes-data-transfer-components', () => ({
+  ...jest.requireActual('@folio/stripes-data-transfer-components'),
+  Preloader: () => <span>Preloader</span>,
+}));
 
 const mockOnResumeProp = jest.fn();
 
