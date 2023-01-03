@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
@@ -22,7 +22,10 @@ import {
 } from '../../constants';
 import {
   getRepeatableAcceptedValuesPath,
+  getRepeatableFieldName,
   getSubfieldName,
+  handleRepeatableFieldAndActionAdd,
+  handleRepeatableFieldAndActionClean,
   onAdd,
   onRemove,
   renderFieldLabelWithInfo,
@@ -34,7 +37,13 @@ export const Location = ({
   setReferenceTables,
   okapi,
 }) => {
-  const locationsFieldIndex = 61;
+  const LOCATION_FIELDS_MAP = {
+    LOCATIONS: 57,
+    NAME: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 0, index),
+    QUANTITY_PHYSICAL: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 1, index),
+    QUANTITY_ELECTRONIC: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 2, index),
+  };
+
   const locationLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.location.field.name`,
     `${TRANSLATION_ID_PREFIX}.order.location.field.name.info`,
@@ -48,6 +57,32 @@ export const Location = ({
     `${TRANSLATION_ID_PREFIX}.order.location.field.quantityElectronic.info`,
   );
 
+  const handleLocationAdd = useCallback(
+    () => {
+      const onLocationAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+        handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+      };
+
+      return onAdd(locations, 'locations', LOCATION_FIELDS_MAP.LOCATIONS, initialFields, onLocationAdd, 'order');
+    },
+    [LOCATION_FIELDS_MAP.LOCATIONS, initialFields, locations, setReferenceTables],
+  );
+
+  const handleLocationClean = useCallback(
+    index => {
+      const onLocationClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+        handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+      };
+
+      return onRemove(index, locations, LOCATION_FIELDS_MAP.LOCATIONS, onLocationClean, 'order');
+    },
+    [LOCATION_FIELDS_MAP.LOCATIONS, locations, setReferenceTables],
+  );
+
   return (
     <Accordion
       id="location"
@@ -56,8 +91,8 @@ export const Location = ({
       <RepeatableField
         fields={locations}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.location.field.locations.addLabel`} />}
-        onAdd={() => onAdd(locations, 'locations', locationsFieldIndex, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, locations, locationsFieldIndex, setReferenceTables, 'order')}
+        onAdd={handleLocationAdd}
+        onRemove={handleLocationClean}
         renderField={(field, index) => {
           return (
             <Row left="xs">
@@ -65,7 +100,7 @@ export const Location = ({
                 <AcceptedValuesField
                   component={TextField}
                   label={locationLabel}
-                  name={getSubfieldName(locationsFieldIndex, 0, index)}
+                  name={LOCATION_FIELDS_MAP.NAME(index)}
                   optionValue="name"
                   optionLabel="name"
                   wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -74,7 +109,7 @@ export const Location = ({
                     wrapperSourcePath: 'locations'
                   }]}
                   setAcceptedValues={setReferenceTables}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(locationsFieldIndex, 0, index)}
+                  acceptedValuesPath={getRepeatableAcceptedValuesPath(LOCATION_FIELDS_MAP.LOCATIONS, 0, index)}
                   optionTemplate="**name** (**code**)"
                   okapi={okapi}
                 />
@@ -85,7 +120,7 @@ export const Location = ({
                     <Field
                       component={TextField}
                       label={quantityPhysicalLabel}
-                      name={getSubfieldName(locationsFieldIndex, 1, index)}
+                      name={LOCATION_FIELDS_MAP.QUANTITY_PHYSICAL(index)}
                       validate={[validation]}
                     />
                   )}
@@ -97,7 +132,7 @@ export const Location = ({
                     <Field
                       component={TextField}
                       label={quantityElectronicLabel}
-                      name={getSubfieldName(locationsFieldIndex, 2, index)}
+                      name={LOCATION_FIELDS_MAP.QUANTITY_ELECTRONIC(index)}
                       validate={[validation]}
                     />
                   )}

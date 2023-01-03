@@ -46,6 +46,18 @@ export const EResourcesDetails = ({
 }) => {
   const { formatMessage } = useIntl();
 
+  const E_RESOURCES_DETAILS_FIELDS_MAP = {
+    ACCESS_PROVIDER: getFieldName(64),
+    ACTIVATION_STATUS: getBoolFieldName(65),
+    ACTIVATION_DUE: getFieldName(66),
+    CREATE_INVENTORY: getFieldName(67),
+    MATERIAL_TYPE: 68,
+    TRIAL: getBoolFieldName(69),
+    EXPECTED_ACTIVATION: getFieldName(70),
+    USER_LIMIT: getFieldName(71),
+    URL: getFieldName(72),
+  };
+
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),
     [],
@@ -88,7 +100,7 @@ export const EResourcesDetails = ({
               <FieldOrganization
                 id={accessProviderId}
                 setReferenceTables={setReferenceTables}
-                name={getFieldName(68)}
+                name={E_RESOURCES_DETAILS_FIELDS_MAP.ACCESS_PROVIDER}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.accessProvider`} />}
                 validate={[validation]}
               />
@@ -99,7 +111,7 @@ export const EResourcesDetails = ({
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.activationStatus`} />}
-            name={getBoolFieldName(69)}
+            name={E_RESOURCES_DETAILS_FIELDS_MAP.ACTIVATION_STATUS}
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={activationStatusCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
             type="checkbox"
@@ -110,7 +122,7 @@ export const EResourcesDetails = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.activationDue`} />}
-            name={getFieldName(70)}
+            name={E_RESOURCES_DETAILS_FIELDS_MAP.ACTIVATION_DUE}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
@@ -119,7 +131,7 @@ export const EResourcesDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(71)}
+            name={E_RESOURCES_DETAILS_FIELDS_MAP.CREATE_INVENTORY}
             label={createInventoryLabel}
             optionValue="value"
             optionLabel="label"
@@ -133,7 +145,7 @@ export const EResourcesDetails = ({
           <AcceptedValuesField
             component={TextField}
             label={materialTypeLabel}
-            name={getFieldName(72)}
+            name={getFieldName(E_RESOURCES_DETAILS_FIELDS_MAP.MATERIAL_TYPE)}
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -142,7 +154,7 @@ export const EResourcesDetails = ({
               wrapperSourcePath: 'mtypes',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(72)}
+            acceptedValuesPath={getAcceptedValuesPath(E_RESOURCES_DETAILS_FIELDS_MAP.MATERIAL_TYPE)}
             okapi={okapi}
           />
         </Col>
@@ -150,7 +162,7 @@ export const EResourcesDetails = ({
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.trial`} />}
-            name={getBoolFieldName(73)}
+            name={E_RESOURCES_DETAILS_FIELDS_MAP.TRIAL}
             type="checkbox"
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={trialCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
@@ -161,7 +173,7 @@ export const EResourcesDetails = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.expectedActivation`} />}
-            name={getFieldName(74)}
+            name={E_RESOURCES_DETAILS_FIELDS_MAP.EXPECTED_ACTIVATION}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
@@ -173,7 +185,7 @@ export const EResourcesDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.userLimit`} />}
-                name={getFieldName(75)}
+                name={E_RESOURCES_DETAILS_FIELDS_MAP.USER_LIMIT}
                 validate={[validation]}
               />
             )}
@@ -187,7 +199,7 @@ export const EResourcesDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.url`} />}
-                name={getFieldName(76)}
+                name={E_RESOURCES_DETAILS_FIELDS_MAP.URL}
                 validate={[validation]}
               />
             )}

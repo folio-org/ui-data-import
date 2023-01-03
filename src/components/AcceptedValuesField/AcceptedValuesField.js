@@ -52,6 +52,8 @@ export const AcceptedValuesField = ({
   required,
   validation,
   hasLoaded,
+  parse,
+  format,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
   const [hasOptions, setHasOptions] = useState(hasLoaded || !isEmpty(listOptions));
@@ -158,6 +160,8 @@ export const AcceptedValuesField = ({
       disabled={disabled}
       required={required}
       hasLoaded={hasOptions}
+      parse={parse}
+      format={format}
       {...dataAttributes}
     />
   );
@@ -217,6 +221,8 @@ AcceptedValuesField.propTypes = {
   parsedOptionLabel: PropTypes.string,
   validation: PropTypes.func,
   hasLoaded: PropTypes.bool,
+  parse: PropTypes.func,
+  format: PropTypes.func,
 };
 
 AcceptedValuesField.defaultProps = {
@@ -244,4 +250,6 @@ AcceptedValuesField.defaultProps = {
   componentValue: null,
   isDirty: false,
   validation: null,
+  parse: null,
+  format: null,
 };

@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -11,7 +8,6 @@ import {
   Row,
   KeyValue,
 } from '@folio/stripes/components';
-import { stripesConnect } from '@folio/stripes/core';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -20,23 +16,13 @@ import {
   renderCheckbox,
 } from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
+import { useOrganizationValue } from '../../hooks';
 
-const EResourcesDetails = ({
+export const EResourcesDetails = ({
   mappingDetails,
   accessProviderId,
-  mutator,
 }) => {
-  const [selectedOrganization, setSelectedOrganization] = useState({});
-  const accessProviderValue = selectedOrganization?.name;
-
-  useEffect(() => {
-    if (accessProviderId && selectedOrganization.id !== accessProviderId) {
-      mutator.fieldOrganizationOrg.GET()
-        .then(setSelectedOrganization);
-    } else {
-      setSelectedOrganization({});
-    }
-  }, [accessProviderId]); // eslint-disable-line react-hooks/exhaustive-deps
+  const { organization } = useOrganizationValue(accessProviderId);
 
   const activated = getFieldValue(mappingDetails, 'activationStatus', 'booleanFieldAction');
   const activationDue = getFieldValue(mappingDetails, 'activationDue', 'value');
@@ -62,7 +48,7 @@ const EResourcesDetails = ({
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.accessProvider`} />}
-            value={accessProviderValue}
+            value={organization}
           />
         </Col>
         <Col
@@ -148,18 +134,5 @@ const EResourcesDetails = ({
 
 EResourcesDetails.propTypes = {
   mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired,
-  mutator: PropTypes.object.isRequired,
   accessProviderId: PropTypes.string,
 };
-
-EResourcesDetails.manifest = Object.freeze({
-  fieldOrganizationOrg: {
-    type: 'okapi',
-    path: 'organizations/organizations/!{accessProviderId}',
-    throwErrors: false,
-    accumulate: true,
-    fetch: false,
-  },
-});
-
-export default stripesConnect(EResourcesDetails);

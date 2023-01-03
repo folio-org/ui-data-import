@@ -70,6 +70,10 @@ jest.mock('@folio/stripes/core', () => {
 
   STRIPES.connect = stripesConnect;
 
+  const useOkapiKy = jest.fn();
+
+  const useNamespace = () => ['@folio/data-import'];
+
   return {
     ...jest.requireActual('@folio/stripes-core'),
 //    AppIcon: jest.fn(({ ariaLabel }) => <span>{ariaLabel}</span>),
@@ -79,6 +83,8 @@ jest.mock('@folio/stripes/core', () => {
     IfPermission,
     AppContextMenu,
     useStripes,
+    useOkapiKy,
+    useNamespace,
     Pluggable: jest.fn(props => <>{props.children}</>),
   };
 }, { virtual: true });
