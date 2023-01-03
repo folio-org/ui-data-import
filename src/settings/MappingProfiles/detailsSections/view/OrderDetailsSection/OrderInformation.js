@@ -29,26 +29,47 @@ import {
   transformSubfieldsData,
 } from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
+import { useOrganizationValue } from '../../hooks';
 
 const OrderInformation = ({
   mappingDetails,
   mutator,
   vendorId,
   userId,
+  resources: { addresses },
 }) => {
-  const [selectedOrganization, setSelectedOrganization] = useState({});
+  const [billToAddress, setBillToAddress] = useState('');
+  const [shipToAddress, setShipToAddress] = useState('');
   const [selectedUser, setSelectedUser] = useState({});
-  const vendorNameValue = selectedOrganization?.name;
+  const { organization } = useOrganizationValue(vendorId);
+
   const userNameValue = !isEmpty(selectedUser) ? getFullName(selectedUser) : null;
+  const billTo = getFieldValue(mappingDetails, 'billTo', 'value');
+  const shipTo = getFieldValue(mappingDetails, 'shipTo', 'value');
 
   useEffect(() => {
-    if (vendorId && selectedOrganization.id !== vendorId) {
-      mutator.fieldOrganizationOrg.GET()
-        .then(setSelectedOrganization);
-    } else {
-      setSelectedOrganization({});
+    let addressesValue = [];
+
+    if (addresses.hasLoaded) {
+      addressesValue = [...addresses.records[0]?.configs.map(address => JSON.parse(address.value))];
     }
-  }, [vendorId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    if (billTo) {
+      const billToAddressVal = addressesValue.find(value => {
+        return value.name === billTo.replace(/"/g, '');
+      })?.address;
+
+      setBillToAddress(billToAddressVal ? `"${billToAddressVal}"` : '');
+    }
+
+    if (shipTo) {
+      const shipToAddressVal = addressesValue.find(value => {
+        return value.name === shipTo.replace(/"/g, '');
+      })?.address;
+
+      setShipToAddress(shipToAddressVal ? `"${shipToAddressVal}"` : '');
+    }
+  }, [addresses.hasLoaded, addresses.records, billTo, shipTo]);
   useEffect(() => {
     if (userId && selectedUser.id !== userId) {
       mutator.user.GET()
@@ -63,7 +84,7 @@ const OrderInformation = ({
   const noValueElement = <NoValue />;
   const prohibitionIconElement = fieldName => <ProhibitionIcon fieldName={fieldName} />;
 
-  const poStatus = getFieldValue(mappingDetails, 'poStatus', 'value');
+  const poStatus = getFieldValue(mappingDetails, 'workflowStatus', 'value');
   const approved = getFieldValue(mappingDetails, 'approved', 'booleanFieldAction');
   const poLinesLimit = getFieldValue(mappingDetails, 'poLinesLimit', 'value');
   const overridePoLinesLimit = getFieldValue(mappingDetails, 'overridePoLinesLimit', 'value');
@@ -72,10 +93,6 @@ const OrderInformation = ({
   const suffix = getFieldValue(mappingDetails, 'suffix', 'value');
   const orderType = getFieldValue(mappingDetails, 'orderType', 'value');
   const acqUnitIds = getFieldValue(mappingDetails, 'acqUnitIds', 'value');
-  const billTo = getFieldValue(mappingDetails, 'billTo', 'value');
-  const billToAddress = getFieldValue(mappingDetails, 'billToAddress', 'value');
-  const shipTo = getFieldValue(mappingDetails, 'shipTo', 'value');
-  const shipToAddress = getFieldValue(mappingDetails, 'shipToAddress', 'value');
   const manualPo = getFieldValue(mappingDetails, 'manualPo', 'booleanFieldAction');
   const reEncumber = getFieldValue(mappingDetails, 'reEncumber', 'value');
   const notes = getFieldValue(mappingDetails, 'notes', 'subfields');
@@ -183,7 +200,7 @@ const OrderInformation = ({
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.vendor`} />}
-            value={vendorNameValue}
+            value={organization}
           />
         </Col>
         <Col
@@ -292,6 +309,7 @@ const OrderInformation = ({
 };
 
 OrderInformation.propTypes = {
+  resources: PropTypes.shape({ addresses: PropTypes.object.isRequired }).isRequired,
   mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired,
   mutator: PropTypes.object.isRequired,
   vendorId: PropTypes.string,
@@ -299,19 +317,16 @@ OrderInformation.propTypes = {
 };
 
 OrderInformation.manifest = Object.freeze({
-  fieldOrganizationOrg: {
-    type: 'okapi',
-    path: 'organizations/organizations/!{vendorId}',
-    throwErrors: false,
-    accumulate: true,
-    fetch: false,
-  },
   user: {
     type: 'okapi',
     path: 'users/!{userId}',
     throwErrors: false,
     accumulate: true,
     fetch: false,
+  },
+  addresses: {
+    type: 'okapi',
+    path: 'configurations/entries?query=(module==TENANT and configName==tenant.addresses) sortBy value',
   },
 });
 

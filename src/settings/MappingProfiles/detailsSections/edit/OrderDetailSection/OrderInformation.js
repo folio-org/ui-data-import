@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -66,15 +67,37 @@ const OrderInformationComponent = ({
 }) => {
   const { formatMessage } = useIntl();
 
+  const ORDER_INFO_FIELDS_MAP = {
+    PO_STATUS: getFieldName(0),
+    APPROVED: getBoolFieldName(1),
+    PO_LINES_LIMIT: getFieldName(2),
+    OVERRIDE_PO_LINES_LIMIT: getFieldName(3),
+    PREFIX: 4,
+    PO_NUMBER: getFieldName(5),
+    SUFFIX: 6,
+    VENDOR: getFieldName(7),
+    ORDER_TYPE: getFieldName(8),
+    ACQ_UNITS: 9,
+    ASSIGNED_TO: getFieldName(10),
+    BILL_TO_NAME: 11,
+    SHIP_TO_NAME: 12,
+    MANUAL: getBoolFieldName(13),
+    RE_ENCUMBER: getFieldName(14),
+    NOTES: 15,
+    NOTE: index => getSubfieldName(ORDER_INFO_FIELDS_MAP.NOTES, 0, index),
+  };
+
   const [isApprovedChecked, setIsApprovedChecked] = useState(false);
+  const [billToAddress, setBillToAddress] = useState('');
+  const [shipToAddress, setShipToAddress] = useState('');
 
   useEffect(() => {
-    if (purchaseOrderLinesLimitSetting.hasLoaded) {
-      const purchaseOrderLinesLimitValue = purchaseOrderLinesLimitSetting.records[0]?.configs[0]?.value;
+    const purchaseOrderLinesLimitValue = purchaseOrderLinesLimitSetting.records[0]?.configs[0]?.value;
 
-      setReferenceTables(`${FIELD_NAME_PREFIX}[2].value`, purchaseOrderLinesLimitValue);
+    if (purchaseOrderLinesLimitSetting.hasLoaded && purchaseOrderLinesLimitValue) {
+      setReferenceTables(`${FIELD_NAME_PREFIX}[2].value`, `"${purchaseOrderLinesLimitValue}"`);
     }
-  }, [purchaseOrderLinesLimitSetting.hasLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [purchaseOrderLinesLimitSetting.hasLoaded, purchaseOrderLinesLimitSetting.records, setReferenceTables]);
 
   const isApprovalRequiredValue = useMemo(
     () => {
@@ -134,6 +157,20 @@ const OrderInformationComponent = ({
     [formatMessage, isApprovalRequiredValue, isApprovedChecked],
   );
 
+  const handleNotesAdd = useCallback(
+    () => {
+      return onAdd(notes, 'notes', ORDER_INFO_FIELDS_MAP.NOTES, initialFields, setReferenceTables, 'order');
+    },
+    [ORDER_INFO_FIELDS_MAP.NOTES, initialFields, notes, setReferenceTables],
+  );
+
+  const handleNotesClean = useCallback(
+    index => {
+      return onRemove(index, notes, ORDER_INFO_FIELDS_MAP.NOTES, setReferenceTables, 'order');
+    },
+    [ORDER_INFO_FIELDS_MAP.NOTES, notes, setReferenceTables],
+  );
+
   return (
     <Accordion
       id="order-information"
@@ -143,7 +180,7 @@ const OrderInformationComponent = ({
         <Col xs={6}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(0)}
+            name={ORDER_INFO_FIELDS_MAP.PO_STATUS}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.purchaseOrderStatus`} />}
             optionValue="value"
             optionLabel="label"
@@ -155,7 +192,7 @@ const OrderInformationComponent = ({
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.approved`} />}
-            name={getBoolFieldName(1)}
+            name={ORDER_INFO_FIELDS_MAP.APPROVED}
             onChange={e => {
               setIsApprovedChecked(!(e.target.value === BOOLEAN_ACTIONS.ALL_TRUE));
             }}
@@ -171,7 +208,7 @@ const OrderInformationComponent = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.purchaseOrderLinesLimitSetting`} />}
-            name={getFieldName(2)}
+            name={ORDER_INFO_FIELDS_MAP.PO_LINES_LIMIT}
             disabled
           />
         </Col>
@@ -181,7 +218,7 @@ const OrderInformationComponent = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.overridePurchaseOrderLinesLimitSetting`} />}
-                name={getFieldName(3)}
+                name={ORDER_INFO_FIELDS_MAP.OVERRIDE_PO_LINES_LIMIT}
                 validate={[validation]}
               />
             )}
@@ -192,7 +229,7 @@ const OrderInformationComponent = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(4)}
+            name={getFieldName(ORDER_INFO_FIELDS_MAP.PREFIX)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.prefix`} />}
             optionValue="name"
             optionLabel="name"
@@ -202,7 +239,7 @@ const OrderInformationComponent = ({
               wrapperSourcePath: 'prefixes',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(4)}
+            acceptedValuesPath={getAcceptedValuesPath(ORDER_INFO_FIELDS_MAP.PREFIX)}
             okapi={okapi}
           />
         </Col>
@@ -212,7 +249,7 @@ const OrderInformationComponent = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.poNumber`} />}
-                name={getFieldName(5)}
+                name={ORDER_INFO_FIELDS_MAP.PO_NUMBER}
                 disabled={!userCanEditPONumberValue}
                 validate={[validation]}
               />
@@ -222,7 +259,7 @@ const OrderInformationComponent = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(6)}
+            name={getFieldName(ORDER_INFO_FIELDS_MAP.SUFFIX)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.suffix`} />}
             optionValue="name"
             optionLabel="name"
@@ -232,7 +269,7 @@ const OrderInformationComponent = ({
               wrapperSourcePath: 'suffixes',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(6)}
+            acceptedValuesPath={getAcceptedValuesPath(ORDER_INFO_FIELDS_MAP.SUFFIX)}
             okapi={okapi}
           />
         </Col>
@@ -244,7 +281,7 @@ const OrderInformationComponent = ({
               <FieldOrganization
                 id={filledVendorId}
                 setReferenceTables={setReferenceTables}
-                name={getFieldName(7)}
+                name={ORDER_INFO_FIELDS_MAP.VENDOR}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.vendor`} />}
                 onSelect={onOrganizationSelect}
                 validate={[validateRequiredField, validation]}
@@ -257,7 +294,7 @@ const OrderInformationComponent = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.orderType`} />}
-            name={getFieldName(8)}
+            name={ORDER_INFO_FIELDS_MAP.ORDER_TYPE}
             disabled
             required
           />
@@ -265,7 +302,7 @@ const OrderInformationComponent = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(9)}
+            name={getFieldName(ORDER_INFO_FIELDS_MAP.ACQ_UNITS)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.acquisitionUnits`} />}
             optionValue="name"
             optionLabel="name"
@@ -275,7 +312,7 @@ const OrderInformationComponent = ({
               wrapperSourcePath: 'acquisitionsUnits',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(9)}
+            acceptedValuesPath={getAcceptedValuesPath(ORDER_INFO_FIELDS_MAP.ACQ_UNITS)}
             isMultiSelection
             okapi={okapi}
           />
@@ -284,7 +321,7 @@ const OrderInformationComponent = ({
           <FieldAssignedTo
             id={assignedToId}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.assignedTo`} />}
-            name={getFieldName(10)}
+            name={ORDER_INFO_FIELDS_MAP.ASSIGNED_TO}
             setReferenceTables={setReferenceTables}
             disabled
           />
@@ -294,7 +331,7 @@ const OrderInformationComponent = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(11)}
+            name={getFieldName(ORDER_INFO_FIELDS_MAP.BILL_TO_NAME)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.billToName`} />}
             optionValue="value"
             optionLabel="value"
@@ -306,29 +343,28 @@ const OrderInformationComponent = ({
               wrapperSourcePath: 'configs',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(11)}
+            acceptedValuesPath={getAcceptedValuesPath(ORDER_INFO_FIELDS_MAP.BILL_TO_NAME)}
             okapi={okapi}
             onChange={billToNameValue => {
               const address = addressesValue.find(value => {
                 return value.name === billToNameValue.replace(/"/g, '');
               })?.address;
 
-              setReferenceTables(getFieldName(12), address ? `"${address}"` : '');
+              setBillToAddress(address ? `"${address}"` : '');
             }}
           />
         </Col>
         <Col xs={3}>
-          <Field
-            component={TextField}
+          <TextField
+            value={billToAddress}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.billToAddress`} />}
-            name={getFieldName(12)}
             disabled
           />
         </Col>
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(13)}
+            name={getFieldName(ORDER_INFO_FIELDS_MAP.SHIP_TO_NAME)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.shipToName`} />}
             optionValue="value"
             optionLabel="value"
@@ -340,22 +376,21 @@ const OrderInformationComponent = ({
               wrapperSourcePath: 'configs',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(13)}
+            acceptedValuesPath={getAcceptedValuesPath(ORDER_INFO_FIELDS_MAP.SHIP_TO_NAME)}
             okapi={okapi}
             onChange={shipToNameValue => {
               const address = addressesValue.find(value => {
                 return value.name === shipToNameValue.replace(/"/g, '');
               })?.address;
 
-              setReferenceTables(getFieldName(14), address ? `"${address}"` : '');
+              setShipToAddress(address ? `"${address}"` : '');
             }}
           />
         </Col>
         <Col xs={3}>
-          <Field
-            component={TextField}
+          <TextField
+            value={shipToAddress}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.shipToAddress`} />}
-            name={getFieldName(14)}
             disabled
           />
         </Col>
@@ -365,7 +400,7 @@ const OrderInformationComponent = ({
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.manual`} />}
-            name={getBoolFieldName(15)}
+            name={ORDER_INFO_FIELDS_MAP.MANUAL}
             type="checkbox"
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={manualPOCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
@@ -375,7 +410,7 @@ const OrderInformationComponent = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(16)}
+            name={ORDER_INFO_FIELDS_MAP.RE_ENCUMBER}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.reEncumber`} />}
             optionValue="value"
             optionLabel="label"
@@ -388,8 +423,8 @@ const OrderInformationComponent = ({
       <RepeatableField
         fields={notes}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.note.addLabel`} />}
-        onAdd={() => onAdd(notes, 'notes', 17, initialFields, setReferenceTables, 'order')}
-        onRemove={index => onRemove(index, notes, 17, setReferenceTables, 'order')}
+        onAdd={handleNotesAdd}
+        onRemove={handleNotesClean}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={12}>
@@ -398,7 +433,7 @@ const OrderInformationComponent = ({
                   <Field
                     component={TextArea}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.note`} />}
-                    name={getSubfieldName(17, 0, index)}
+                    name={ORDER_INFO_FIELDS_MAP.NOTE(index)}
                     validate={[validation]}
                   />
                 )}

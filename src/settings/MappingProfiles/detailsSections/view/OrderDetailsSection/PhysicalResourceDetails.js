@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -12,7 +9,6 @@ import {
   KeyValue,
   NoValue,
 } from '@folio/stripes/components';
-import { stripesConnect } from '@folio/stripes/core';
 
 import { ViewRepeatableField } from '../ViewRepeatableField';
 
@@ -26,23 +22,13 @@ import {
   transformSubfieldsData,
 } from '../../utils';
 import { mappingProfileFieldShape } from '../../../../../utils';
+import { useOrganizationValue } from '../../hooks';
 
-const PhysicalResourceDetails = ({
+export const PhysicalResourceDetails = ({
   mappingDetails,
   materialSupplierId,
-  mutator,
 }) => {
-  const [selectedOrganization, setSelectedOrganization] = useState({});
-  const materialSupplierValue = selectedOrganization?.name;
-
-  useEffect(() => {
-    if (materialSupplierId && selectedOrganization.id !== materialSupplierId) {
-      mutator.fieldOrganizationOrg.GET()
-        .then(setSelectedOrganization);
-    } else {
-      setSelectedOrganization({});
-    }
-  }, [materialSupplierId]); // eslint-disable-line react-hooks/exhaustive-deps
+  const { organization } = useOrganizationValue(materialSupplierId);
 
   const { VOLUMES } = PHYSICAL_RESOURCE_VISIBLE_COLUMNS;
 
@@ -85,7 +71,7 @@ const PhysicalResourceDetails = ({
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalOrderDetails.materialSupplier`} />}
-            value={materialSupplierValue}
+            value={organization}
           />
         </Col>
         <Col
@@ -147,18 +133,5 @@ const PhysicalResourceDetails = ({
 
 PhysicalResourceDetails.propTypes = {
   mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired,
-  mutator: PropTypes.object.isRequired,
   materialSupplierId: PropTypes.string,
 };
-
-PhysicalResourceDetails.manifest = Object.freeze({
-  fieldOrganizationOrg: {
-    type: 'okapi',
-    path: 'organizations/organizations/!{materialSupplierId}',
-    throwErrors: false,
-    accumulate: true,
-    fetch: false,
-  },
-});
-
-export default stripesConnect(PhysicalResourceDetails);

@@ -24,10 +24,10 @@ import { TRANSLATION_ID_PREFIX } from '../constants';
 import { getFieldValue } from '../utils';
 
 export const MappingOrderDetails = ({ mappingDetails }) => {
-  const vendorId = getFieldValue(mappingDetails, 'vendor', 'value').replace(/['"]+/g, '');
+  const vendorId = getFieldValue(mappingDetails, 'vendor', 'value');
   const userId = getFieldValue(mappingDetails, 'assignedTo', 'value').replace(/['"]+/g, '');
-  const materialSupplierId = getFieldValue(mappingDetails, 'materialSupplier', 'value').replace(/['"]+/g, '');
-  const accessProviderId = getFieldValue(mappingDetails, 'accessProvider', 'value').replace(/['"]+/g, '');
+  const materialSupplierId = getFieldValue(mappingDetails, 'materialSupplier', 'value');
+  const accessProviderId = getFieldValue(mappingDetails, 'accessProvider', 'value');
 
   return (
     <AccordionSet>

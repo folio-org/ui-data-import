@@ -61,7 +61,7 @@ export const MATERIAL_SUPPLIER_FIELD = 'materialSupplier';
 export const ACCESS_PROVIDER_FIELD = 'accessProvider';
 export const LOCK_TOTAL_FIELD = 'lockTotal';
 export const EXCHANGE_RATE_FIELD = 'exchangeRate';
-export const USE_EXCHANGE_RATE_FIELD = 'useExchangeRate';
+export const SET_EXCHANGE_RATE_FIELD = 'exchangeRate';
 
 export const DATA_TYPES = [
   'MARC',
@@ -219,6 +219,11 @@ export const BOOLEAN_ACTIONS = {
   ALL_FALSE: 'ALL_FALSE',
   AS_IS: 'AS_IS',
   IGNORE: 'IGNORE',
+};
+
+export const BOOLEAN_STRING_VALUES = {
+  TRUE: 'true',
+  FALSE: 'false',
 };
 
 export const REPEATABLE_ACTIONS = {
