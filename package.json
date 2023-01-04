@@ -36,7 +36,10 @@
     "@folio/stripes": "^7.3.5",
     "@folio/stripes-cli": "^2.6.0",
     "@folio/stripes-components": "^10.3.3",
-    "@folio/stripes-core": "^8.1.0",
+    "@folio/stripes-core": "folio-org/stripes-core#STCOR-663",
+    "@folio/stripes-final-form": "^6.0.0",
+    "@folio/stripes-form": "^7.1.0",
+    "@folio/stripes-ui": "folio-org/stripes-ui#STRIPESUI-2",
     "@folio/stripes-smart-components": "^7.3.3",
     "@formatjs/cli": "^4.2.10",
     "@testing-library/jest-dom": "^5.14.1",
@@ -60,7 +63,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-intl": "^5.7.0",
-    "react-redux": "^7.2.2",
+    "react-redux": "^8.0.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
@@ -92,6 +95,7 @@
     "redux": "*"
   },
   "resolutions": {
+    "@folio/stripes-components": "folio-org/stripes-components#STCOM-1067",
     "moment": "~2.29.4"
   },
   "optionalDependencies": {
