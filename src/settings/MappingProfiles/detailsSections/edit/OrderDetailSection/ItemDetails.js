@@ -119,12 +119,28 @@ export const ItemDetails = ({
   );
 
   const handleContributorsAdd = useCallback(
-    () => onAdd(contributors, 'contributors', ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, initialFields, setReferenceTables, 'order'),
+    () => {
+      const onContributorsAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+        handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+      };
+
+      return onAdd(contributors, 'contributors', ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, initialFields, onContributorsAdd, 'order');
+    },
     [ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, contributors, initialFields, setReferenceTables],
   );
 
   const handleContributorsClean = useCallback(
-    index => onRemove(index, contributors, ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, setReferenceTables, 'order'),
+    index => {
+      const onContributorsClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+        handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+      };
+
+      return onRemove(index, contributors, ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, onContributorsClean, 'order');
+    },
     [ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, contributors, setReferenceTables],
   );
 

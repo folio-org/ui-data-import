@@ -30,6 +30,9 @@ import {
   onAdd,
   onRemove,
   getAcceptedValuesPath,
+  getRepeatableFieldName,
+  handleRepeatableFieldAndActionAdd,
+  handleRepeatableFieldAndActionClean,
 } from '../../utils';
 
 export const Vendor = ({
@@ -73,12 +76,28 @@ export const Vendor = ({
   }));
 
   const handleVendorNumbersAdd = useCallback(
-    () => onAdd(vendorRefNumbers, 'vendorDetail', VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, initialFields, setReferenceTables, 'order'),
+    () => {
+      const onVendorNumbersAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+        handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+      };
+
+      return onAdd(vendorRefNumbers, 'vendorDetail', VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, initialFields, onVendorNumbersAdd, 'order');
+    },
     [VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, initialFields, setReferenceTables, vendorRefNumbers],
   );
 
   const handleVendorNumbersClean = useCallback(
-    index => onRemove(index, vendorRefNumbers, VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, setReferenceTables, 'order'),
+    index => {
+      const onVendorNumbersClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+        handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+      };
+
+      return onRemove(index, vendorRefNumbers, VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, onVendorNumbersClean, 'order');
+    },
     [VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, setReferenceTables, vendorRefNumbers],
   );
 
