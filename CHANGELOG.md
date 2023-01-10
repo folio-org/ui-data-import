@@ -23,6 +23,7 @@
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
 * Order and Order line field mapping: View screen updates (UIDATIMP-1304)
 * Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
+* Error after selecting order option on field mapping profile (UIDATIMP-1344)
 
 ## [5.3.10](https://github.com/folio-org/ui-data-import/tree/v5.3.10) (2022-12-05)
 
