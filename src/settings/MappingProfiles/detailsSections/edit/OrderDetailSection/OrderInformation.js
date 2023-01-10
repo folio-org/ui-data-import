@@ -10,6 +10,7 @@ import {
   useIntl,
 } from 'react-intl';
 import { Field } from 'redux-form';
+import { isEmpty } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import {
@@ -91,12 +92,22 @@ const OrderInformationComponent = ({
   const [billToAddress, setBillToAddress] = useState('');
   const [shipToAddress, setShipToAddress] = useState('');
 
+  const purchaseOrderLinesLimitValue = useMemo(
+    () => {
+      if (purchaseOrderLinesLimitSetting.hasLoaded && !isEmpty(purchaseOrderLinesLimitSetting.records)) {
+        return purchaseOrderLinesLimitSetting.records[0]?.configs[0]?.value;
+      }
+
+      return '';
+    },
+    [purchaseOrderLinesLimitSetting.hasLoaded, purchaseOrderLinesLimitSetting.records],
+  );
+
   useEffect(() => {
-    if (purchaseOrderLinesLimitSetting.hasLoaded) {
-      const purchaseOrderLinesLimitValue = purchaseOrderLinesLimitSetting.records[0]?.configs[0]?.value;
+    if (purchaseOrderLinesLimitValue) {
       setReferenceTables(`${FIELD_NAME_PREFIX}[2].value`, `"${purchaseOrderLinesLimitValue}"`);
     }
-  }, [purchaseOrderLinesLimitSetting.hasLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [purchaseOrderLinesLimitValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isApprovalRequiredValue = useMemo(
     () => {
