@@ -107,7 +107,7 @@ const OrderInformationComponent = ({
     if (purchaseOrderLinesLimitValue) {
       setReferenceTables(`${FIELD_NAME_PREFIX}[2].value`, `"${purchaseOrderLinesLimitValue}"`);
     }
-  }, [purchaseOrderLinesLimitValue]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [purchaseOrderLinesLimitValue, setReferenceTables]);
 
   const isApprovalRequiredValue = useMemo(
     () => {
