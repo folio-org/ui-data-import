@@ -103,11 +103,14 @@ const OrderInformationComponent = ({
     [purchaseOrderLinesLimitSetting.hasLoaded, purchaseOrderLinesLimitSetting.records],
   );
 
+  // ignore this dependency: setReferenceTables
+  // because it causes an infinite-render loop. We only care about purchaseOrderLinesLimitValue,
+  // which indicates that POL limit is set
   useEffect(() => {
     if (purchaseOrderLinesLimitValue) {
       setReferenceTables(`${FIELD_NAME_PREFIX}[2].value`, `"${purchaseOrderLinesLimitValue}"`);
     }
-  }, [purchaseOrderLinesLimitValue, setReferenceTables]);
+  }, [purchaseOrderLinesLimitValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isApprovalRequiredValue = useMemo(
     () => {
