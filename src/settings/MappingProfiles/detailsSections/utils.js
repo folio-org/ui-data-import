@@ -131,7 +131,7 @@ export const onRemove = (index, refTable, fieldIndex, callback, incrementalField
   callback(fieldsPath, newRefTable, fieldIndex, isLastSubfield);
 };
 
-export const getFieldValue = (details, fieldName, key) => details.find(item => item.name === fieldName)?.[key];
+export const getFieldValue = (details, fieldName, key) => details.find(item => item?.name === fieldName)?.[key];
 
 export const getFieldValueByPath = (details, path, key) => details.find(item => item.path === path)?.[key];
 
@@ -141,7 +141,7 @@ export const getUnmappableValueById = (id, fieldName) => (id ? <FormattedMessage
 
 export const transformSubfieldsData = (subfields, columns) => subfields?.map(item => {
   return columns.reduce((acc, column) => {
-    const fieldValue = item?.fields.find(field => field.name === column.field)?.[column.key];
+    const fieldValue = item?.fields.find(field => field?.name === column.field)?.[column.key];
 
     return {
       ...acc,
@@ -184,7 +184,7 @@ export const updateInitialFields = initials => {
 export const getRefValuesFromTables = (referenceTables, fieldPath) => get(referenceTables, fieldPath, []);
 
 export const getFieldValueFromDetails = (path, fieldName, trimQuotes = true) => {
-  const value = path?.find(item => (item.name === fieldName))?.value;
+  const value = path?.find(item => (item?.name === fieldName))?.value;
 
   if (trimQuotes) {
     return value?.replace(/['"]+/g, '');
@@ -194,7 +194,7 @@ export const getFieldValueFromDetails = (path, fieldName, trimQuotes = true) => 
 };
 
 export const getBoolFieldValueFromDetails = (path, fieldName) => {
-  return path?.find(item => (item.name === fieldName))?.booleanFieldAction;
+  return path?.find(item => (item?.name === fieldName))?.booleanFieldAction;
 };
 
 export const getAccountingCodeOptions = vendor => {
