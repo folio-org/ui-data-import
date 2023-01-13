@@ -25,6 +25,7 @@
 * Order and Order line field mapping: View screen updates (UIDATIMP-1304)
 * Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
 * Error after selecting order option on field mapping profile (UIDATIMP-1344)
+* Error after selecting order option on field mapping profile: Part 2 (UIDATIMP-1346)
 
 ## [5.3.10](https://github.com/folio-org/ui-data-import/tree/v5.3.10) (2022-12-05)
 

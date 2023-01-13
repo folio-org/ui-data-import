@@ -7,8 +7,8 @@ export const TRANSLATION_ID_PREFIX = 'ui-data-import.settings.mappingProfiles.ma
 export const FIELD_NAME_PREFIX = 'profile.mappingDetails.mappingFields';
 
 export const CREATE_INVENTORY_TYPES = {
-  INSTANCE_HOLDINGS_ITEM: 'Instance, holdings, item',
-  INSTANCE_HOLDINGS: 'Instance, holdings',
+  INSTANCE_HOLDINGS_ITEM: 'Instance, Holding, Item',
+  INSTANCE_HOLDINGS: 'Instance, Holding',
   INSTANCE: 'Instance',
   NONE: 'None',
 };
