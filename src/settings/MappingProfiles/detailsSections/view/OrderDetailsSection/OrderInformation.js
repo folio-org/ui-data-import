@@ -1,6 +1,7 @@
 import React, {
   useEffect,
   useState,
+  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -36,8 +37,12 @@ const OrderInformation = ({
   mutator,
   vendorId,
   userId,
-  resources: { addresses },
+  resources: {
+    addresses,
+    purchaseOrderLinesLimitSetting,
+  },
 }) => {
+  const [poLinesLimit, setPoLinesLimit] = useState('"1"');
   const [billToAddress, setBillToAddress] = useState('');
   const [shipToAddress, setShipToAddress] = useState('');
   const [selectedUser, setSelectedUser] = useState({});
@@ -47,6 +52,22 @@ const OrderInformation = ({
   const billTo = getFieldValue(mappingDetails, 'billTo', 'value');
   const shipTo = getFieldValue(mappingDetails, 'shipTo', 'value');
 
+  const purchaseOrderLinesLimitValue = useMemo(
+    () => {
+      if (purchaseOrderLinesLimitSetting.hasLoaded && !isEmpty(purchaseOrderLinesLimitSetting.records)) {
+        return purchaseOrderLinesLimitSetting.records[0]?.configs[0]?.value;
+      }
+
+      return '';
+    },
+    [purchaseOrderLinesLimitSetting.hasLoaded, purchaseOrderLinesLimitSetting.records],
+  );
+
+  useEffect(() => {
+    if (purchaseOrderLinesLimitValue) {
+      setPoLinesLimit(`"${purchaseOrderLinesLimitValue}"`);
+    }
+  }, [purchaseOrderLinesLimitValue]);
   useEffect(() => {
     let addressesValue = [];
 
@@ -86,7 +107,6 @@ const OrderInformation = ({
 
   const poStatus = getFieldValue(mappingDetails, 'workflowStatus', 'value');
   const approved = getFieldValue(mappingDetails, 'approved', 'booleanFieldAction');
-  const poLinesLimit = getFieldValue(mappingDetails, 'poLinesLimit', 'value');
   const overridePoLinesLimit = getFieldValue(mappingDetails, 'overridePoLinesLimit', 'value');
   const prefix = getFieldValue(mappingDetails, 'prefix', 'value');
   const poNumber = getFieldValue(mappingDetails, 'poNumber', 'value');
@@ -151,7 +171,7 @@ const OrderInformation = ({
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.poLinesLimit`} />}
-            value={poLinesLimit || prohibitionIconElement('pol-limit')}
+            value={poLinesLimit}
           />
         </Col>
         <Col
@@ -309,7 +329,10 @@ const OrderInformation = ({
 };
 
 OrderInformation.propTypes = {
-  resources: PropTypes.shape({ addresses: PropTypes.object.isRequired }).isRequired,
+  resources: PropTypes.shape({
+    addresses: PropTypes.object.isRequired,
+    purchaseOrderLinesLimitSetting: PropTypes.object.isRequired,
+  }).isRequired,
   mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired,
   mutator: PropTypes.object.isRequired,
   vendorId: PropTypes.string,
@@ -317,6 +340,10 @@ OrderInformation.propTypes = {
 };
 
 OrderInformation.manifest = Object.freeze({
+  purchaseOrderLinesLimitSetting: {
+    type: 'okapi',
+    path: 'configurations/entries?query=(module==ORDERS and configName==poLines-limit)',
+  },
   user: {
     type: 'okapi',
     path: 'users/!{userId}',
