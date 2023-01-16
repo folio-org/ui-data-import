@@ -6,9 +6,12 @@ import {
   Icon,
   TextLink,
 } from '@folio/stripes/components';
+import { listTemplate } from '@folio/stripes-data-transfer-components';
 
-import { stringToWords } from '../../utils';
-import { listTemplate } from '..';
+import {
+  stringToWords,
+  fieldsConfig,
+} from '../../utils';
 
 import sharedCss from '../../shared.css';
 import css from './ProfileAssociator.css';
@@ -28,6 +31,7 @@ export const associatedProfilesColumns = ({
     searchTerm,
     selectRecord,
     selectedRecords,
+    fieldsConfig,
   });
   const entityName = stringToWords(entityKey).map(word => word.toLocaleLowerCase()).join('-');
 

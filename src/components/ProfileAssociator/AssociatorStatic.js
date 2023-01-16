@@ -9,11 +9,11 @@ import { noop } from 'lodash';
 import { SearchAndSortQuery } from '@folio/stripes/smart-components';
 import { SearchForm } from '@folio/stripes-data-transfer-components';
 
+import { searchAndSortTemplate } from '../SearchAndSort';
 import {
   useCheckboxList,
   stringToWords,
 } from '../../utils';
-import { searchAndSortTemplate } from '../ListTemplate';
 
 import { AssociatedList } from './AssociatedList';
 

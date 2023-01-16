@@ -9,13 +9,12 @@ import {
   noop,
 } from 'lodash';
 
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+import { HTML_LANG_DIRECTIONS } from '@folio/stripes-data-transfer-components/lib/utils';
+
 import { InitialRecordSelect } from './components/InitialRecordSelect';
 import { CompareRecordSelect } from './components/CompareRecordSelect';
-import {
-  FOLIO_RECORD_TYPES,
-  MATCH_INCOMING_RECORD_TYPES,
-} from '../ListTemplate';
-import { HTML_LANG_DIRECTIONS } from '../../utils/constants';
+import { MATCH_INCOMING_RECORD_TYPES } from '../../utils';
 
 const useForceUpdate = () => useState()[1];
 

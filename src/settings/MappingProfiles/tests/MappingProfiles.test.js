@@ -3,13 +3,15 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
+import '../../../../test/jest/__mock__';
+
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 import {
   buildMutator,
   buildResources,
 } from '@folio/stripes-data-transfer-components/test/helpers';
 
-import '../../../../test/jest/__mock__';
 import { Paneset } from '@folio/stripes/components';
 import {
   renderWithReduxForm,
@@ -22,7 +24,6 @@ import {
 } from '../MappingProfiles';
 
 import { getInitialDetails } from '../initialDetails';
-import { FOLIO_RECORD_TYPES } from '../../../components';
 import {
   OCLC_CREATE_INSTANCE_MAPPING_ID,
   OCLC_UPDATE_INSTANCE_MAPPING_ID,

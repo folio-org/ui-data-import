@@ -4,13 +4,14 @@ import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { TextLink } from '@folio/stripes/components';
-import { useJobLogsProperties } from '@folio/stripes-data-transfer-components';
+import {
+  useJobLogsProperties,
+  listTemplate,
+} from '@folio/stripes-data-transfer-components';
 import {
   stripesShape,
   withStripes,
 } from '@folio/stripes/core';
-
-import { listTemplate } from '../ListTemplate';
 
 import {
   DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
@@ -19,6 +20,7 @@ import {
   getJobLogsListColumnMapping,
   statusCellFormatter,
   permissions,
+  fieldsConfig,
 } from '../../utils';
 
 const JobLogsContainer = props => {
@@ -70,6 +72,7 @@ const JobLogsContainer = props => {
         selectRecord,
         selectedRecords,
         checkboxDisabled: checkboxesDisabled,
+        fieldsConfig,
       }),
       fileName: fileNameCellFormatter,
       status: statusCellFormatter(formatMessage),

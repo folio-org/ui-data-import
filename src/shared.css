@@ -1,9 +1,5 @@
 @import "@folio/stripes-components/lib/variables.css";
 
-.container {
-  width: 100%;
-}
-
 .fullWidthAndHeightContainer {
   position: absolute;
   width: 100%;
@@ -19,22 +15,6 @@
 .cellAppIcon {
   align-items: baseline;
   flex-shrink: initial;
-}
-
-.selectableCellButton {
-  & label {
-    &:before,
-    &:after {
-      content: none;
-    }
-
-    & input {
-      margin: 0;
-    }
-
-    justify-content: center;
-    margin-bottom: 0;
-  }
 }
 
 /* disable styles for visited links created by react-router-dom Link */
@@ -62,19 +42,10 @@
   color: inherit !important;
 }
 
-.modifyActionContainer {
-  display: inline-flex;
-  align-items: center;
-}
-
 .modifyActionIcon {
   width: 14px;
   min-width: 14px;
   height: 14px;
-}
-
-.modifyActionIconLabel {
-  margin: 0 0 0 0.35em;
 }
 
 .preloader {

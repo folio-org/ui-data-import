@@ -1,3 +1,5 @@
+import '../../../test/jest/__mock__';
+
 import { createLayerURL } from '../craftLayerURL';
 import { LAYER_TYPES } from '../constants';
 

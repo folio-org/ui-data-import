@@ -1,4 +1,3 @@
-export * from './capitalize';
 export * from './checkboxList';
 export * from './checkEmpty';
 export * from './compose';
@@ -37,4 +36,3 @@ export * from './formatStatusCell';
 export * from './permissions';
 export * from './showActionMenu';
 export * from './storage';
-export * from './matchingFieldsManager';

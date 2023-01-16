@@ -4,13 +4,15 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
+import {
+  HTML_LANG_DIRECTIONS,
+  MARC_FIELD_CONSTITUENT,
+} from '@folio/stripes-data-transfer-components/lib/utils';
 
 import {
   fieldCategoriesConfig,
   fieldsConfig,
   FIND_ALL_CQL,
-  HTML_LANG_DIRECTIONS,
-  MARC_FIELD_CONSTITUENT,
   PER_REQUEST_LIMIT,
 } from '../../utils';
 

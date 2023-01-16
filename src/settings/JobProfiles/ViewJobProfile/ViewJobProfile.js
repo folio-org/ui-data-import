@@ -29,6 +29,7 @@ import {
   EndOfItem,
   Preloader,
   createUrl,
+  listTemplate,
 } from '@folio/stripes-data-transfer-components';
 import {
   AppIcon,
@@ -39,7 +40,6 @@ import {
 
 import {
   UploadingJobsContext,
-  listTemplate,
   DetailsKeyShortcutsWrapper,
   ActionMenu,
   Spinner,

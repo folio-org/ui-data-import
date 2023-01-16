@@ -9,11 +9,9 @@ import {
 
 import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
+import { CheckboxHeader } from '@folio/stripes-data-transfer-components';
 
-import {
-  ListView,
-  CheckboxHeader,
-} from '../../components';
+import { ListView } from '../../components';
 import {
   ViewMappingProfile,
   CreateMappingProfile,

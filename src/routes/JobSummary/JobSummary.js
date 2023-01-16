@@ -11,7 +11,10 @@ import {
   stripesShape,
 } from '@folio/stripes/core';
 import { makeConnectedSource } from '@folio/stripes/smart-components';
-import { SettingsLabel } from '@folio/stripes-data-transfer-components';
+import {
+  SettingsLabel,
+  FOLIO_RECORD_TYPES,
+} from '@folio/stripes-data-transfer-components';
 import {
   PaneMenu,
   PaneCloseLink,
@@ -26,7 +29,6 @@ import {
   SummaryTable,
   RecordsTable,
 } from './components';
-import { FOLIO_RECORD_TYPES } from '../../components';
 
 import {
   DATA_TYPES,
