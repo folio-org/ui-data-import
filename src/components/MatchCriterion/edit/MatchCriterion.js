@@ -14,12 +14,9 @@ import {
   Col,
   Select,
 } from '@folio/stripes/components';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
-import {
-  Section,
-  MATCH_INCOMING_RECORD_TYPES,
-  FOLIO_RECORD_TYPES,
-} from '../..';
+import { Section } from '../..';
 import {
   MARCFieldSection,
   IncomingSectionStatic,
@@ -33,6 +30,7 @@ import {
   CRITERION_TYPES_OPTIONS,
   STATIC_VALUE_TYPES,
   matchDetailsShape,
+  MATCH_INCOMING_RECORD_TYPES,
 } from '../../../utils';
 
 import css from './MatchCriterions.css';

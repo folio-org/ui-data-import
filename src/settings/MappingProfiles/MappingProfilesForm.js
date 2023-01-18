@@ -33,11 +33,12 @@ import {
   Row,
   ConfirmationModal,
 } from '@folio/stripes/components';
-import { FullScreenForm } from '@folio/stripes-data-transfer-components';
+import {
+  FullScreenForm,
+  FOLIO_RECORD_TYPES,
+} from '@folio/stripes-data-transfer-components';
 
 import {
-  INCOMING_RECORD_TYPES,
-  FOLIO_RECORD_TYPES,
   FolioRecordTypeSelect,
   ProfileAssociator,
   MappedHeader,
@@ -77,13 +78,20 @@ import {
   createOptionsList,
   FOLIO_RECORD_TYPES_TO_DISABLE,
   INCOMING_RECORD_TYPES_TO_DISABLE,
+  INCOMING_RECORD_TYPES,
 } from '../../utils';
 
 import styles from './MappingProfiles.css';
 
 const formName = 'mappingProfilesForm';
 
-const MAPPING_PROFILES_FORM_FOLIO_RECORD_TYPES = { ...omit(FOLIO_RECORD_TYPES, FOLIO_RECORD_TYPES.AUTHORITY.type) };
+const MAPPING_PROFILES_FORM_FOLIO_RECORD_TYPES = {
+  ...omit(FOLIO_RECORD_TYPES, [
+    FOLIO_RECORD_TYPES.AUTHORITY.type,
+    FOLIO_RECORD_TYPES.ITEMS.type,
+    FOLIO_RECORD_TYPES.SRS.type,
+  ])
+};
 
 export const MappingProfilesFormComponent = ({
   pristine,

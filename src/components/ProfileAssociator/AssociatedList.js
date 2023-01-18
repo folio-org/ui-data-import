@@ -19,9 +19,10 @@ import {
   buildSortOrder,
 } from '@folio/stripes-data-transfer-components/lib/utils';
 
+import { searchAndSortTemplate } from '../SearchAndSort';
+
 import { checkboxListShape } from '../../utils';
 
-import { searchAndSortTemplate } from '../ListTemplate';
 import { associatedProfilesColumns } from './associatedProfilesColumns';
 
 export const AssociatedList = memo(({

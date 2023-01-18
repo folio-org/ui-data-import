@@ -9,16 +9,12 @@ import {
   Col,
   Selection,
 } from '@folio/stripes/components';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+import { MARC_FIELD_CONSTITUENT } from '@folio/stripes-data-transfer-components/lib/utils';
 
-import {
-  Section,
-  FOLIO_RECORD_TYPES,
-} from '../../..';
+import { Section } from '../../..';
 
-import {
-  fieldsConfig,
-  MARC_FIELD_CONSTITUENT,
-} from '../../../../utils';
+import { fieldsConfig } from '../../../../utils';
 
 import css from '../MatchCriterions.css';
 

@@ -75,7 +75,8 @@ jest.mock('@folio/stripes/core', () => {
   const useNamespace = () => ['@folio/data-import'];
 
   return {
-    ...jest.requireActual('@folio/stripes/core'),
+    ...jest.requireActual('@folio/stripes-core'),
+    // AppIcon: jest.fn(({ ariaLabel }) => <span>{ariaLabel}</span>),
     stripesConnect,
     withStripes,
     withRoot,

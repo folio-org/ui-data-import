@@ -1,17 +1,17 @@
 import { Factory } from 'miragejs';
 import faker from 'faker';
 
-import { associatedJobProfiles } from '../../mocks';
-import { fieldsConfig } from '../../../../src/utils/fieldsConfig';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+
 import {
   MATCH_INCOMING_RECORD_TYPES,
-  FOLIO_RECORD_TYPES,
-} from '../../../../src/components/ListTemplate';
-import {
+  fieldsConfig,
   COMPARISON_PARTS_OPTIONS,
   CRITERION_TYPES_OPTIONS,
   VALUE_TYPES,
 } from '../../../../src/utils';
+
+import { associatedJobProfiles } from '../../mocks';
 
 export default Factory.extend({
   id: () => faker.random.uuid(),

@@ -1,3 +1,5 @@
+import '../../../test/jest/__mock__';
+
 import { createOptionsList } from '../createOptionsList';
 import { ITEM_STATUS_OPTIONS } from '../constants';
 

@@ -1,5 +1,7 @@
 import { omit } from 'lodash';
 
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+
 import ITEM from './ITEM';
 import INSTANCE from './INSTANCE';
 import HOLDINGS from './HOLDINGS';
@@ -10,7 +12,6 @@ import MARC_HOLDINGS from './MARC_HOLDINGS';
 import MARC_AUTHORITY from './MARC_AUTHORITY';
 
 import { isMARCType } from '../../../utils';
-import { FOLIO_RECORD_TYPES } from '../../../components';
 
 const initialValues = {
   ITEM,

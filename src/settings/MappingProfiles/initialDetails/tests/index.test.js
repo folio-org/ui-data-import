@@ -2,6 +2,8 @@ import React from 'react';
 
 import '../../../../../test/jest/__mock__';
 
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+
 import {
   getInitialDetails,
   getInitialFields,
@@ -9,7 +11,6 @@ import {
 } from '../index';
 import { MARC_TYPES } from '../../../../utils';
 import MARC_HOLDINGS from '../MARC_HOLDINGS';
-import { FOLIO_RECORD_TYPES } from '../../../../components';
 import INVOICE from '../INVOICE';
 import INSTANCE from '../INSTANCE';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { CheckboxHeader } from '../components/ListTemplate/HeaderTemplates';
+import { CheckboxHeader } from '@folio/stripes-data-transfer-components';
 
 export const DEFAULT_JOB_LOG_COLUMNS = [
   'fileName',

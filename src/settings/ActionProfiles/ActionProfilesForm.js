@@ -38,12 +38,12 @@ import {
   LAYER_TYPES,
   PROFILE_TYPES,
   FOLIO_RECORD_TYPES_TO_DISABLE,
+  ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES,
+  ACTION_TYPES_SELECT,
 } from '../../utils';
 import {
   EditKeyShortcutsWrapper,
   FolioRecordTypeSelect,
-  ACTION_TYPES_SELECT,
-  ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES,
   ProfileAssociator,
 } from '../../components';
 

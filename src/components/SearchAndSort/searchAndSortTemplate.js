@@ -1,16 +1,16 @@
 import { get } from 'lodash';
 
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 import {
-  capitalize,
-  formatUserName,
-  getFieldMatched,
-  HTML_LANG_DIRECTIONS,
   STRING_CAPITALIZATION_EXCLUSIONS,
   STRING_CAPITALIZATION_MODES,
-} from '../../utils';
+  HTML_LANG_DIRECTIONS,
+  capitalize,
+  formatUserName,
+} from '@folio/stripes-data-transfer-components/lib/utils';
+import { createActionLabel } from '@folio/stripes-data-transfer-components/lib/ListTemplate';
 
-import { createActionLabel } from './ColumnTemplates';
-import { FOLIO_RECORD_TYPES } from './folioRecordTypes';
+import { getFieldMatched } from '../../utils';
 
 /**
  * Retrieves and returns list of Search and Sort Column Templates

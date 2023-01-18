@@ -9,11 +9,9 @@ import {
 } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { CheckboxHeader } from '@folio/stripes-data-transfer-components';
 
-import {
-  ListView,
-  CheckboxHeader,
-} from '../../components';
+import { ListView } from '../../components';
 import {
   ViewJobProfile,
   CreateJobProfile,

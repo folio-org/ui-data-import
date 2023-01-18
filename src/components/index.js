@@ -8,7 +8,6 @@ export * from './Callout';
 export * from './FieldAssignedTo';
 export * from './FieldOrganization';
 export * from './ListView';
-export * from './ListTemplate';
 export * from './DataFetcher';
 export * from './DatePickerDecorator';
 export * from './ImportJobs';

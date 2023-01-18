@@ -7,10 +7,12 @@ import {
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
+import '../../../../test/jest/__mock__';
+
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
-import '../../../../test/jest/__mock__';
 import {
   renderWithReduxForm,
   translationsProperties,
@@ -19,7 +21,6 @@ import {
 import { ViewMappingProfile } from '../ViewMappingProfile';
 
 import { getInitialDetails } from '../initialDetails';
-import { FOLIO_RECORD_TYPES } from '../../../components';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),

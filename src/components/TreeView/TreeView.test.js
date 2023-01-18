@@ -2,13 +2,12 @@ import React from 'react';
 
 import { screen } from '@testing-library/react';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import { translationsProperties } from '../../../test/jest/helpers';
-
 import '../../../test/jest/__mock__';
 
-import { FOLIO_RECORD_TYPES } from '../ListTemplate';
+import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+
+import { translationsProperties } from '../../../test/jest/helpers';
 
 import css from '../RecordTypesSelect/RecordTypesSelect.css';
 

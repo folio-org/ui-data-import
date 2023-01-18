@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 import {
   buildSortOrder,
   createUrl,
@@ -19,8 +20,6 @@ import {
   MCLPagingTypes,
   TextLink,
 } from '@folio/stripes/components';
-
-import { FOLIO_RECORD_TYPES } from '../../../components';
 
 import {
   RECORD_ACTION_STATUS,

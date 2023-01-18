@@ -13,15 +13,15 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 import { stripesConnect } from '@folio/stripes/core';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+import { getFieldMatchedWithCategory } from '@folio/stripes-data-transfer-components/lib/utils';
+
+import { Section } from '../../..';
 
 import {
-  Section,
-  FOLIO_RECORD_TYPES,
-} from '../../..';
-
-import {
-  getFieldMatchedWithCategory,
+  fieldsConfig,
   getIdentifierTypes,
+  fieldCategoriesConfig,
 } from '../../../../utils';
 
 import css from '../ViewMatchCriterion.css';
@@ -51,12 +51,14 @@ const ExistingSectionFolio = memo(({
           className={css.fieldValue}
         >
           {
-            getFieldMatchedWithCategory(
-              existingRecordFields,
-              existingRecordType,
+            getFieldMatchedWithCategory({
+              fields: existingRecordFields,
+              recordType: existingRecordType,
               formatMessage,
-              identifierTypes,
-            ) || <NoValue />
+              resources: identifierTypes,
+              fieldCategoriesConfig,
+              fieldsConfig,
+            }) || <NoValue />
           }
         </Col>
       </Row>

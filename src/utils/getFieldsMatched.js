@@ -1,8 +1,9 @@
 import {
   HTML_LANG_DIRECTIONS,
   MARC_FIELD_CONSTITUENT,
-  fieldsConfig,
-} from '.';
+} from '@folio/stripes-data-transfer-components/lib/utils';
+
+import { fieldsConfig } from '.';
 
 const getFieldFromResources = (fieldFromConfig, resources, fields) => {
   const {

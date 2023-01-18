@@ -8,7 +8,7 @@ import {
   DropdownMenu,
 } from '@folio/stripes/components';
 
-import { MATCH_INCOMING_RECORD_TYPES } from '../../ListTemplate';
+import { MATCH_INCOMING_RECORD_TYPES } from '../../../utils';
 
 export const IncomingRecordMenu = ({
   open,

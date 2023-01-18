@@ -29,13 +29,11 @@ import {
   getActiveFilters,
   handleFilterChange,
 } from '@folio/stripes-acq-components';
+import { listTemplate } from '@folio/stripes-data-transfer-components';
 
 import ViewAllLogsFilters from './ViewAllLogsFilters';
 import { searchableIndexes } from './ViewAllLogsSearchConfig';
-import {
-  ActionMenu,
-  listTemplate,
-} from '../../components';
+import { ActionMenu } from '../../components';
 import packageInfo from '../../../package';
 import {
   checkboxListShape,
@@ -50,6 +48,7 @@ import {
   PAGE_KEYS,
   storage,
   deleteJobExecutions,
+  fieldsConfig,
 } from '../../utils';
 import {
   FILTERS,
@@ -401,6 +400,7 @@ class ViewAllLogs extends Component {
         selectRecord,
         selectedRecords,
         checkboxDisabled: isLogsDeletionInProgress,
+        fieldsConfig,
       }),
       fileName: fileNameCellFormatter,
       status: statusCellFormatter(formatMessage),

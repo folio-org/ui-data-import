@@ -3,6 +3,9 @@ import React from 'react';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../../../../test/jest/__mock__';
+
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+
 import {
   renderWithReduxForm,
   translationsProperties,
@@ -13,7 +16,6 @@ import {
   getInitialDetails,
   getInitialFields,
 } from '../../../initialDetails';
-import { FOLIO_RECORD_TYPES } from '../../../../../components';
 
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.ORDER.type);
 const mappingDetailsProp = getInitialDetails(FOLIO_RECORD_TYPES.ORDER.type);
