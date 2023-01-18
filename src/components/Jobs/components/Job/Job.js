@@ -183,7 +183,7 @@ const JobComponent = ({
       </div>
       <IfPermission perm={permissions.DATA_IMPORT_MANAGE}>
         <FormattedMessage id="ui-data-import.delete">
-          {label => (
+          {([label]) => (
             <IconButton
               data-test-delete-button
               icon="trash"
