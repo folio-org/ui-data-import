@@ -1,8 +1,5 @@
 import { FILTERS } from './constants';
-import {
-  OCLC_CREATE_INSTANCE_JOB_ID,
-  OCLC_UPDATE_INSTANCE_JOB_ID,
-} from '../../utils';
+import { NO_FILE_NAME } from '../../utils';
 
 export const filterConfig = [
   {
@@ -35,13 +32,13 @@ export const filterConfig = [
     values: [
       {
         name: 'no',
-        cql: [OCLC_CREATE_INSTANCE_JOB_ID, OCLC_UPDATE_INSTANCE_JOB_ID],
-        indexName: 'profileIdNotAny',
+        cql: [NO_FILE_NAME],
+        indexName: 'fileNameNotAny',
       },
       {
         name: 'yes',
-        cql: [OCLC_CREATE_INSTANCE_JOB_ID, OCLC_UPDATE_INSTANCE_JOB_ID],
-        indexName: 'profileIdAny',
+        cql: [NO_FILE_NAME],
+        indexName: 'fileName',
       },
     ],
   },
