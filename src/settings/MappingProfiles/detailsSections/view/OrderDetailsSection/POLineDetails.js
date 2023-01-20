@@ -51,11 +51,15 @@ export const POLineDetails = ({ mappingDetails }) => {
 
   const receivingWorkflow = useMemo(
     () => {
-      if (checkinItemsValue === BOOLEAN_STRING_VALUES.TRUE) {
-        return formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.independent` });
+      if (checkinItemsValue === `"${BOOLEAN_STRING_VALUES.TRUE}"`) {
+        const independentLabel = formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.independent` });
+
+        return `"${independentLabel}"`;
       }
-      if (checkinItemsValue === BOOLEAN_STRING_VALUES.FALSE) {
-        return formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.synchronized` });
+      if (checkinItemsValue === `"${BOOLEAN_STRING_VALUES.FALSE}"`) {
+        const synchronizedLabel = formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.synchronized` });
+
+        return `"${synchronizedLabel}"`;
       }
 
       return checkinItemsValue;

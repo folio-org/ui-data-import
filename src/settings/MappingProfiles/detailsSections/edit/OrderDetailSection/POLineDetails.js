@@ -1,7 +1,4 @@
-import React, {
-  useCallback,
-  useState,
-} from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -42,7 +39,6 @@ import {
   BOOLEAN_ACTIONS,
   BOOLEAN_STRING_VALUES,
   validateMARCWithDate,
-  validateMARCWithElse,
 } from '../../../../../utils';
 
 export const POLineDetails = ({
@@ -52,7 +48,7 @@ export const POLineDetails = ({
 }) => {
   const { formatMessage } = useIntl();
 
-  const PO_LONE_DETAILS_FIELDS_MAP = {
+  const PO_LINE_DETAILS_FIELDS_MAP = {
     ACQ_METHOD: 29,
     AUTOMATIC_EXPORT: getBoolFieldName(30),
     ORDER_FORMAT: getFieldName(31),
@@ -68,8 +64,6 @@ export const POLineDetails = ({
     CANCELLATION_DESCRIPTION: getFieldName(42),
     LINE_DESCRIPTION: getFieldName(43),
   };
-
-  const [receivingWorkflow, setReceivingWorkflow] = useState();
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),
@@ -112,9 +106,8 @@ export const POLineDetails = ({
 
   const onReceivingWorkflowParse = useCallback(
     value => {
-      setReceivingWorkflow(value);
-      if (value === `"${RECEIVING_WORKFLOW.INDEPENDENT}"`) return BOOLEAN_STRING_VALUES.TRUE;
-      if (value === `"${RECEIVING_WORKFLOW.SYNCHRONIZED}"`) return BOOLEAN_STRING_VALUES.FALSE;
+      if (value === `"${RECEIVING_WORKFLOW.INDEPENDENT}"`) return `"${BOOLEAN_STRING_VALUES.TRUE}"`;
+      if (value === `"${RECEIVING_WORKFLOW.SYNCHRONIZED}"`) return `"${BOOLEAN_STRING_VALUES.FALSE}"`;
 
       return value;
     },
@@ -122,17 +115,11 @@ export const POLineDetails = ({
   );
 
   const onReceivingWorkflowFormat = useCallback(
-    () => receivingWorkflow,
-    [receivingWorkflow],
-  );
-
-  const validateReceivingWorkflow = useCallback(
     value => {
-      const valueToValidate = (value === BOOLEAN_STRING_VALUES.TRUE || value === BOOLEAN_STRING_VALUES.FALSE)
-        ? `"${value}"`
-        : value;
+      if (value === `"${BOOLEAN_STRING_VALUES.TRUE}"`) return `"${RECEIVING_WORKFLOW.INDEPENDENT}"`;
+      if (value === `"${BOOLEAN_STRING_VALUES.FALSE}"`) return `"${RECEIVING_WORKFLOW.SYNCHRONIZED}"`;
 
-      return validateMARCWithElse(valueToValidate);
+      return value;
     },
     [],
   );
@@ -149,7 +136,7 @@ export const POLineDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(PO_LONE_DETAILS_FIELDS_MAP.ACQ_METHOD)}
+            name={getFieldName(PO_LINE_DETAILS_FIELDS_MAP.ACQ_METHOD)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.acquisitionMethod`} />}
             optionValue="value"
             optionLabel="value"
@@ -159,7 +146,7 @@ export const POLineDetails = ({
               wrapperSourcePath: 'acquisitionMethods',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(PO_LONE_DETAILS_FIELDS_MAP.ACQ_METHOD)}
+            acceptedValuesPath={getAcceptedValuesPath(PO_LINE_DETAILS_FIELDS_MAP.ACQ_METHOD)}
             okapi={okapi}
             required
           />
@@ -168,7 +155,7 @@ export const POLineDetails = ({
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.automaticExport`} />}
-            name={PO_LONE_DETAILS_FIELDS_MAP.AUTOMATIC_EXPORT}
+            name={PO_LINE_DETAILS_FIELDS_MAP.AUTOMATIC_EXPORT}
             type="checkbox"
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={automaticExportCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
@@ -178,7 +165,7 @@ export const POLineDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={PO_LONE_DETAILS_FIELDS_MAP.ORDER_FORMAT}
+            name={PO_LINE_DETAILS_FIELDS_MAP.ORDER_FORMAT}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.orderFormat`} />}
             optionValue="value"
             optionLabel="label"
@@ -196,7 +183,7 @@ export const POLineDetails = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.receiptDate`} />}
-            name={PO_LONE_DETAILS_FIELDS_MAP.RECEIPT_DATE}
+            name={PO_LINE_DETAILS_FIELDS_MAP.RECEIPT_DATE}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
@@ -205,7 +192,7 @@ export const POLineDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={PO_LONE_DETAILS_FIELDS_MAP.RECEIPT_STATUS}
+            name={PO_LINE_DETAILS_FIELDS_MAP.RECEIPT_STATUS}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.receiptStatus`} />}
             optionValue="value"
             optionLabel="label"
@@ -216,7 +203,7 @@ export const POLineDetails = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={PO_LONE_DETAILS_FIELDS_MAP.PAYMENT_STATUS}
+            name={PO_LINE_DETAILS_FIELDS_MAP.PAYMENT_STATUS}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.paymentStatus`} />}
             optionValue="value"
             optionLabel="label"
@@ -237,7 +224,7 @@ export const POLineDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.donor`} />}
-                name={PO_LONE_DETAILS_FIELDS_MAP.DONOR}
+                name={PO_LINE_DETAILS_FIELDS_MAP.DONOR}
                 validate={[validation]}
               />
             )}
@@ -249,7 +236,7 @@ export const POLineDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.selector`} />}
-                name={PO_LONE_DETAILS_FIELDS_MAP.SELECTOR}
+                name={PO_LINE_DETAILS_FIELDS_MAP.SELECTOR}
                 validate={[validation]}
               />
             )}
@@ -261,7 +248,7 @@ export const POLineDetails = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.requester`} />}
-                name={PO_LONE_DETAILS_FIELDS_MAP.REQUESTER}
+                name={PO_LINE_DETAILS_FIELDS_MAP.REQUESTER}
                 validate={[validation]}
               />
             )}
@@ -272,7 +259,7 @@ export const POLineDetails = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={PO_LONE_DETAILS_FIELDS_MAP.CANCELLATION_RESTRICTION}
+            name={PO_LINE_DETAILS_FIELDS_MAP.CANCELLATION_RESTRICTION}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.cancellationRestriction`} />}
             optionValue="value"
             optionLabel="label"
@@ -283,7 +270,7 @@ export const POLineDetails = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={PO_LONE_DETAILS_FIELDS_MAP.RUSH}
+            name={PO_LINE_DETAILS_FIELDS_MAP.RUSH}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.rush`} />}
             optionValue="value"
             optionLabel="label"
@@ -294,15 +281,14 @@ export const POLineDetails = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={PO_LONE_DETAILS_FIELDS_MAP.RECEIVING_WORKFLOW}
+            name={PO_LINE_DETAILS_FIELDS_MAP.RECEIVING_WORKFLOW}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.receivingWorkflow`} />}
-            optionValue="label"
+            optionValue="value"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={receivingWorkflowOptions}
             parse={onReceivingWorkflowParse}
             format={onReceivingWorkflowFormat}
-            validation={validateReceivingWorkflow}
             required
           />
         </Col>
@@ -314,7 +300,7 @@ export const POLineDetails = ({
               <Field
                 component={TextArea}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.cancellationDescription`} />}
-                name={PO_LONE_DETAILS_FIELDS_MAP.CANCELLATION_DESCRIPTION}
+                name={PO_LINE_DETAILS_FIELDS_MAP.CANCELLATION_DESCRIPTION}
                 validate={[validation]}
               />
             )}
@@ -326,7 +312,7 @@ export const POLineDetails = ({
               <Field
                 component={TextArea}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.lineDescription`} />}
-                name={PO_LONE_DETAILS_FIELDS_MAP.LINE_DESCRIPTION}
+                name={PO_LINE_DETAILS_FIELDS_MAP.LINE_DESCRIPTION}
                 validate={[validation]}
               />
             )}
