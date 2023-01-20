@@ -17,6 +17,7 @@
 * Add required info icons to Item field mapping profile (UIDATIMP-1293)
 * Change imports for ListTemplate component in ui-data-import (UIDATIMP-1301)
 * ISRI: Suppress ISRI imports from the Data Import landing page, despite the job profile used (UIDATIMP-1314)
+* ISRI: Filter the ISRI imports on the Data Import View all page, despite the job profile used (UIDATIMP-1315)
 * Allow edit and duplicate Default - Create SRS MARC Authority job profile (UIDATIMP-1318)
 * Improve mapping profile for Orders (UIDATIMP-1333)
 * Order field mapping profile: Include default value for PO line limit setting (UIDATIMP-1337)
