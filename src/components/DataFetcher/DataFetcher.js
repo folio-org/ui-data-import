@@ -15,6 +15,7 @@ import {
   OCLC_CREATE_INSTANCE_JOB_ID,
   OCLC_UPDATE_INSTANCE_JOB_ID,
   createUrlFromArray,
+  NO_FILE_NAME,
 } from '../../utils';
 
 import { DataFetcherContext } from '.';
@@ -47,6 +48,7 @@ const logsUrlParams = [
   `statusAny=${CANCELLED}`,
   `profileIdNotAny=${OCLC_CREATE_INSTANCE_JOB_ID}`,
   `profileIdNotAny=${OCLC_UPDATE_INSTANCE_JOB_ID}`,
+  `fileNameNotAny=${NO_FILE_NAME}`,
   'limit=25',
   'sortBy=completed_date,desc',
 ];

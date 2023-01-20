@@ -21,10 +21,7 @@ import {
 import ViewAllLogs, { ViewAllLogsManifest } from './ViewAllLogs';
 
 import { SORT_MAP } from './constants';
-import {
-  OCLC_CREATE_INSTANCE_JOB_ID,
-  OCLC_UPDATE_INSTANCE_JOB_ID,
-} from '../../utils';
+import { NO_FILE_NAME } from '../../utils';
 import * as utils from '../../utils/deleteJobExecutions';
 
 const mockedQueryUpdate = jest.fn();
@@ -555,7 +552,7 @@ describe('ViewAllLogs component', () => {
     describe('by date, status and singleRecordImports', () => {
       it('should return an object as specified', () => {
         const expected = {
-          profileIdAny: [OCLC_CREATE_INSTANCE_JOB_ID, OCLC_UPDATE_INSTANCE_JOB_ID],
+          fileName: [NO_FILE_NAME],
           statusAny: ['ERROR'],
           completedAfter: ['2022-04-24'],
           completedBefore: ['2022-04-26'],
