@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "5.3.10",
+  "version": "6.0.0",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -9,7 +9,7 @@
   },
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=14.0.0"
   },
   "scripts": {
     "start": "stripes serve",
@@ -33,13 +33,13 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^6.1.0",
-    "@folio/stripes": "^7.3.5",
+    "@folio/stripes": "^8.0.0",
     "@folio/stripes-cli": "^2.6.0",
-    "@folio/stripes-components": "^10.3.3",
-    "@folio/stripes-core": "^8.1.0",
-    "@folio/stripes-final-form": "^6.1.0",
-    "@folio/stripes-form": "^7.1.0",
-    "@folio/stripes-smart-components": "^7.3.3",
+    "@folio/stripes-components": "^11.0.0",
+    "@folio/stripes-core": "^9.0.0",
+    "@folio/stripes-final-form": "^7.0.0",
+    "@folio/stripes-form": "^8.0.0",
+    "@folio/stripes-smart-components": "^8.0.0",
     "@formatjs/cli": "^4.2.10",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^10.4.7",
@@ -65,7 +65,7 @@
     "react-dom": "^17.0.2",
     "react-intl": "^5.7.0",
     "react-query": "^3.39.2",
-    "react-redux": "^7.2.2",
+    "react-redux": "^8.0.5",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
@@ -73,7 +73,7 @@
     "sinon": "^7.2.2"
   },
   "dependencies": {
-    "@folio/stripes-acq-components": "~3.2.0",
+    "@folio/stripes-acq-components": "~4.0.0",
     "@folio/stripes-data-transfer-components": "^5.4.0",
     "classnames": "^2.2.5",
     "dom-helpers": "^5.2.0",
@@ -87,13 +87,13 @@
     "redux-form": "^8.3.7"
   },
   "peerDependencies": {
-    "@folio/stripes": "^7.0.0",
+    "@folio/stripes": "^8.0.0",
     "react": "^17.0.2",
     "react-intl": "^5.7.0",
-    "react-redux": "*",
+    "react-redux": "^8.0.5",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "redux": "*"
+    "redux": "^4.0.5"
   },
   "resolutions": {
     "moment": "~2.29.4"
