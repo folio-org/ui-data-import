@@ -11,7 +11,7 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 import {
   translationsProperties,
   renderWithRedux,
-  jobsLogsData,
+  jobLogsData,
 } from '../../../test/jest/helpers';
 
 import { DataFetcherContext } from '../../components';
@@ -76,7 +76,7 @@ const storeWithData = {
 const defaultContext = {
   hasLoaded: true,
   jobs: [],
-  logs: jobsLogsData,
+  logs: jobLogsData,
 };
 
 const renderHome = (store = initialStore, context = defaultContext) => {

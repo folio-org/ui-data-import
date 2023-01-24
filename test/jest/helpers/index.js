@@ -4,4 +4,4 @@ export * from './renderWithRedux';
 export * from './stripesMock';
 export * from './translationsProperties';
 export * from './shortcuts';
-export * from './jobLogs';
+export * from './jobLogsData';
