@@ -21,6 +21,7 @@
 * Allow edit and duplicate Default - Create SRS MARC Authority job profile (UIDATIMP-1318)
 * Improve mapping profile for Orders (UIDATIMP-1333)
 * Order field mapping profile: Include default value for PO line limit setting (UIDATIMP-1337)
+* Get rid of BigTest in ui-data-import (UIDATIMP-1343)
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
