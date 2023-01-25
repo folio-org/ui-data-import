@@ -1138,5 +1138,5 @@
     "settings.mappingProfiles.map.order.itemDetails.field.innReachAuthor": "INN-Reach作者",
     "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "附加费用",
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "创建单件时需要",
-    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Required when creating Holdings"
+    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "创建馆藏时需要"
 }
