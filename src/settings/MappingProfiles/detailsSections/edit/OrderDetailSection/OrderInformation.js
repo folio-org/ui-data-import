@@ -21,6 +21,7 @@ import {
   Row,
   TextArea,
   TextField,
+  KeyValue,
 } from '@folio/stripes/components';
 
 import {
@@ -368,10 +369,9 @@ const OrderInformationComponent = ({
           />
         </Col>
         <Col xs={3}>
-          <TextField
-            value={billToAddress}
+          <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.billToAddress`} />}
-            disabled
+            value={billToAddress}
           />
         </Col>
         <Col xs={3}>
@@ -401,10 +401,9 @@ const OrderInformationComponent = ({
           />
         </Col>
         <Col xs={3}>
-          <TextField
-            value={shipToAddress}
+          <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.shipToAddress`} />}
-            disabled
+            value={shipToAddress}
           />
         </Col>
       </Row>
