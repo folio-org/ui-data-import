@@ -1,4 +1,4 @@
-const jobsLogsData = [
+export const jobLogsData = [
   {
     id: '67dfac11-1caf-4470-9ad1-d533f6360bdd',
     hrId: 2,
@@ -84,5 +84,3 @@ const jobsLogsData = [
     userId: '18bbfdb5-91be-50ab-ad28-0d737fb5758a',
   },
 ];
-
-export const jobsLogs = [...jobsLogsData];

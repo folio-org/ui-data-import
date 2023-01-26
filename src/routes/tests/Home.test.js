@@ -11,11 +11,11 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 import {
   translationsProperties,
   renderWithRedux,
+  jobLogsData,
 } from '../../../test/jest/helpers';
 
 import { DataFetcherContext } from '../../components';
 import { Home } from '../Home';
-import { jobsLogs } from '../../../test/bigtest/mocks';
 import * as utils from '../../utils/deleteJobExecutions';
 
 jest.mock('@folio/stripes/components', () => ({
@@ -76,7 +76,7 @@ const storeWithData = {
 const defaultContext = {
   hasLoaded: true,
   jobs: [],
-  logs: jobsLogs,
+  logs: jobLogsData,
 };
 
 const renderHome = (store = initialStore, context = defaultContext) => {
