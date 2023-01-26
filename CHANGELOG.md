@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **5.4.0** (in progress)
+## **6.0.0** (in progress)
 
 ### Features added:
 * Field Mapping Profile details: Order PO & POL from MARC Bib (Create/Edit) (UIDATIMP-294)
@@ -21,6 +21,7 @@
 * Allow edit and duplicate Default - Create SRS MARC Authority job profile (UIDATIMP-1318)
 * Improve mapping profile for Orders (UIDATIMP-1333)
 * Order field mapping profile: Include default value for PO line limit setting (UIDATIMP-1337)
+* Bump `stripes-*` and upgrade `react-redux` to `v8` (UIDATIMP-1353)
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
