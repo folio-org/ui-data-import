@@ -9,7 +9,7 @@
   },
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=6.0.0"
   },
   "scripts": {
     "start": "stripes serve",
