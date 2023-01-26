@@ -115,9 +115,9 @@ describe('ExistingSectionFolio edit', () => {
     it('should filter data options', () => {
       const {
         getByRole,
-        getByLabelText,
+        getByPlaceholderText,
       } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
-      const filterElement = getByLabelText('options filter');
+      const filterElement = getByPlaceholderText('Filter options list');
 
       expect(filterElement).toHaveValue('');
 
