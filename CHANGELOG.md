@@ -28,6 +28,7 @@
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
 * Order and Order line field mapping: View screen updates (UIDATIMP-1304)
 * Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
+* Order field mapping profile: Address data not stacked properly (View) (UIDATIMP-1342)
 * Error after selecting order option on field mapping profile (UIDATIMP-1344)
 * Error after selecting order option on field mapping profile: Part 2 (UIDATIMP-1346)
 * Receiving value disappears from Order field mapping profile after default order line limit updated (UIDATIMP-1348)
