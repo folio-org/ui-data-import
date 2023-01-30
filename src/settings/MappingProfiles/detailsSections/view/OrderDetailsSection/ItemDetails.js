@@ -23,7 +23,7 @@ import {
 } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
-export const OrderDetails = ({ mappingDetails }) => {
+export const ItemDetails = ({ mappingDetails }) => {
   const {
     CONTRIBUTOR,
     CONTRIBUTOR_TYPE_ID,
@@ -116,7 +116,7 @@ export const OrderDetails = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="view-order-details"
+      id="view-item-details"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderDetails.section`} />}
     >
       <Row left="xs">
@@ -253,4 +253,4 @@ export const OrderDetails = ({ mappingDetails }) => {
   );
 };
 
-OrderDetails.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };
+ItemDetails.propTypes = { mappingDetails: PropTypes.arrayOf(mappingProfileFieldShape).isRequired };
