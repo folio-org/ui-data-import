@@ -67,7 +67,7 @@ export const Vendor = ({ mappingDetails }) => {
 
   return (
     <Accordion
-      id="view-order-details"
+      id="view-vendor"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.section`} />}
     >
       <Row left="xs">

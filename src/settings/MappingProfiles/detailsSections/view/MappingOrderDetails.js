@@ -9,7 +9,7 @@ import {
 
 import {
   OrderInformation,
-  OrderDetails,
+  ItemDetails,
   POLineDetails,
   Vendor,
   CostDetails,
@@ -40,7 +40,7 @@ export const MappingOrderDetails = ({ mappingDetails }) => {
         id="view-order-line-information"
         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderLineInformation.section`} />}
       >
-        <OrderDetails mappingDetails={mappingDetails} />
+        <ItemDetails mappingDetails={mappingDetails} />
         <POLineDetails mappingDetails={mappingDetails} />
         <Vendor mappingDetails={mappingDetails} />
         <CostDetails mappingDetails={mappingDetails} />
