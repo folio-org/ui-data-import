@@ -23,6 +23,7 @@
 * Order field mapping profile: Include default value for PO line limit setting (UIDATIMP-1337)
 * Get rid of BigTest in ui-data-import (UIDATIMP-1343)
 * Bump `stripes-*` and upgrade `react-redux` to `v8` (UIDATIMP-1353)
+* Ensure accepted values property for "Contributor type" field mapping (UIDATIMP-1361)
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
