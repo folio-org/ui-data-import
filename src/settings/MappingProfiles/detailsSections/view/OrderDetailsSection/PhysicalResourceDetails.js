@@ -61,7 +61,7 @@ export const PhysicalResourceDetails = ({
 
   return (
     <Accordion
-      id="view-physical-order-details"
+      id="view-physical-resource-details"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalOrderDetails.section`} />}
     >
       <Row left="xs">
