@@ -2,7 +2,6 @@ import React, {
   useMemo,
   useState,
   useEffect,
-  useLayoutEffect,
 } from 'react';
 import PropTypes from 'prop-types';
 import {
