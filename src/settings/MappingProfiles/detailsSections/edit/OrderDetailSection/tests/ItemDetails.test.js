@@ -1,5 +1,5 @@
 import React from 'react';
-import { within } from '@testing-library/react';
+import { fireEvent, within } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -94,5 +94,36 @@ describe('ItemDetails', () => {
     const { queryByText } = renderItemDetails();
 
     expect(within(queryByText('Title')).getByText(/\*/i)).toBeDefined();
+  });
+
+  describe('when click "Add contributor" button', () => {
+    it('fields for new contributor should be rendered', () => {
+      const {
+        getByRole,
+        getByText,
+      } = renderItemDetails();
+
+      const button = getByRole('button', { name: /Add contributor/i });
+      fireEvent.click(button);
+
+      expect(getByText('Contributor')).toBeInTheDocument();
+      expect(getByText('Contributor type')).toBeInTheDocument();
+    });
+  });
+
+  describe('when click "Add product ID and product ID type" button', () => {
+    it('fields for new contributor type should be rendered', () => {
+      const {
+        getByRole,
+        getByText,
+      } = renderItemDetails();
+
+      const button = getByRole('button', { name: /Add product ID and product ID type/i });
+      fireEvent.click(button);
+
+      expect(getByText('Product ID')).toBeInTheDocument();
+      expect(getByText('Qualifier')).toBeInTheDocument();
+      expect(getByText('Product ID type')).toBeInTheDocument();
+    });
   });
 });

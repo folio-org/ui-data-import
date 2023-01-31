@@ -1,5 +1,8 @@
 import React from 'react';
-import { within } from '@testing-library/react';
+import {
+  fireEvent,
+  within,
+} from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -24,11 +27,14 @@ const okapiProp = {
   url: 'https://folio-testing-okapi.dev.folio.org',
 };
 
-const renderEResourcesDetails = () => {
+const renderEResourcesDetails = (
+  activationStatusCheckbox = BOOLEAN_ACTIONS.ALL_FALSE,
+  trialCheckbox = BOOLEAN_ACTIONS.ALL_FALSE,
+) => {
   const component = () => (
     <EResourcesDetails
-      activationStatusCheckbox={BOOLEAN_ACTIONS.ALL_FALSE}
-      trialCheckbox={BOOLEAN_ACTIONS.ALL_FALSE}
+      activationStatusCheckbox={activationStatusCheckbox}
+      trialCheckbox={trialCheckbox}
       accessProviderId={null}
       setReferenceTables={() => {}}
       okapi={okapiProp}
@@ -58,5 +64,49 @@ describe('EResourcesDetails', () => {
 
     expect(within(queryByText('Create inventory')).getByText(/InfoPopover/i)).toBeDefined();
     expect(within(queryByText('Material type')).getByText(/InfoPopover/i)).toBeDefined();
+  });
+
+  describe('when click on unchecked "Activation status" checkbox', () => {
+    it('checkbox should be checked', () => {
+      const { getByLabelText } = renderEResourcesDetails();
+
+      const activationStatusCheckbox = getByLabelText('Activation status');
+      fireEvent.click(activationStatusCheckbox);
+
+      expect(activationStatusCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_TRUE);
+    });
+  });
+
+  describe('when click on checked "Activation status" checkbox', () => {
+    it('checkbox should be unchecked', () => {
+      const { getByLabelText } = renderEResourcesDetails(BOOLEAN_ACTIONS.ALL_TRUE, BOOLEAN_ACTIONS.ALL_TRUE);
+
+      const activationStatusCheckbox = getByLabelText('Activation status');
+      fireEvent.click(activationStatusCheckbox);
+
+      expect(activationStatusCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_FALSE);
+    });
+  });
+
+  describe('when click on unchecked "Trial" checkbox', () => {
+    it('checkbox should be checked', () => {
+      const { getByLabelText } = renderEResourcesDetails();
+
+      const trialCheckbox = getByLabelText('Trial');
+      fireEvent.click(trialCheckbox);
+
+      expect(trialCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_TRUE);
+    });
+  });
+
+  describe('when click on checked "Trial" checkbox', () => {
+    it('checkbox should be unchecked', () => {
+      const { getByLabelText } = renderEResourcesDetails(BOOLEAN_ACTIONS.ALL_TRUE, BOOLEAN_ACTIONS.ALL_TRUE);
+
+      const trialCheckbox = getByLabelText('Trial');
+      fireEvent.click(trialCheckbox);
+
+      expect(trialCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_FALSE);
+    });
   });
 });

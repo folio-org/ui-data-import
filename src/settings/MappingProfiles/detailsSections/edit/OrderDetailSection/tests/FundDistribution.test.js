@@ -1,5 +1,8 @@
 import React from 'react';
-import { within } from '@testing-library/react';
+import {
+  fireEvent,
+  within,
+} from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -81,5 +84,22 @@ describe('FundDistribution', () => {
     expect(within(queryByText('Fund ID')).getByText(/InfoPopover/i)).toBeDefined();
     expect(within(queryByText('Expense class')).getByText(/InfoPopover/i)).toBeDefined();
     expect(within(queryByText('Value')).getByText(/InfoPopover/i)).toBeDefined();
+  });
+
+  describe('when click "Add fund distribution" button', () => {
+    it('fields for new fund distribution should be rendered', () => {
+      const {
+        getByRole,
+        getByText,
+      } = renderFundDistribution();
+
+      const button = getByRole('button', { name: /Add fund distribution/i });
+      fireEvent.click(button);
+
+      expect(getByText('Fund ID')).toBeInTheDocument();
+      expect(getByText('Expense class')).toBeInTheDocument();
+      expect(getByText('Value')).toBeInTheDocument();
+      expect(getByText('Type')).toBeInTheDocument();
+    });
   });
 });
