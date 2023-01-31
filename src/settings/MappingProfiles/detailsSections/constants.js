@@ -33,19 +33,13 @@ export const VENDOR_REF_TYPES = {
   SUBSCRIPTION_REF_NUMBER: 'Vendor subscription reference number',
   TITLE_NUMBER: 'Vendor title number',
 };
-export const CONTRIBUTOR_TYPES = {
-  PERSONAL_NAME: 'Personal name',
-  CORPORATE_NAME: 'Corporate name',
-  MEETING_NAME: 'Meeting name',
-  INN_REACH_AUTHOR: 'INN-Reach author',
-};
 
 export const WRAPPER_SOURCE_LINKS = {
   PREFIXES: `/orders/configuration/prefixes?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby name`,
   SUFFIXES: `/orders/configuration/suffixes?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby name`,
   ACQUISITIONS_UNITS: `/acquisitions-units/units?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby name`,
   ADDRESSES: `/configurations/entries?limit=${PER_REQUEST_LIMIT}&query=(module=TENANT and configName=tenant.addresses) sortBy value`,
-  CONTRIBUTOR_TYPES: `/contributor-types?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby name`,
+  CONTRIBUTOR_NAME_TYPES: `/contributor-name-types?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby name`,
   IDENTIFIER_TYPES: `/identifier-types?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby name`,
   ACQUISITION_METHODS: `/orders/acquisition-methods?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby value`,
   FUNDS: `/finance/funds?limit=${PER_REQUEST_LIMIT}&query=${FIND_ALL_CQL} sortby name`,
