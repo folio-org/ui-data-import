@@ -133,7 +133,7 @@ export const ItemDetails = ({
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.section`} />}
     >
       <Row left="xs">
-        <Col xs={12}>-
+        <Col xs={12}>
           <WithValidation>
             {validation => (
               <Field
