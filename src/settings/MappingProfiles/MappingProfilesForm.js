@@ -147,6 +147,7 @@ export const MappingProfilesFormComponent = ({
   };
 
   useEffect(() => {
+    setFolioRecordType(existingRecordType);
     const initialMappingDetails = isDuplicateMode ? getMappingDetailsForDuplicated(mappingDetails) : mappingDetails;
     configInitialFormDetails(initialMappingDetails);
   }, [existingRecordType]); // eslint-disable-line react-hooks/exhaustive-deps
