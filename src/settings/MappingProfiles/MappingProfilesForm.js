@@ -136,6 +136,22 @@ export const MappingProfilesFormComponent = ({
   });
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
+  const configInitialFormDetails = initialData => {
+    const newInitials = {
+      ...initials,
+      mappingDetails: initialData,
+    };
+
+    setInitials(newInitials);
+    dispatch(change(formName, 'profile.mappingDetails', initialData));
+  };
+
+  useEffect(() => {
+    setFolioRecordType(existingRecordType);
+    const initialMappingDetails = isDuplicateMode ? getMappingDetailsForDuplicated(mappingDetails) : mappingDetails;
+    configInitialFormDetails(initialMappingDetails);
+  }, [existingRecordType]); // eslint-disable-line react-hooks/exhaustive-deps
+
   useLayoutEffect(() => {
     const isEqual = folioRecordType === prevExistingRecordType;
     const needsUpdate = !id || (id && (!isEqual || isEmpty(mappingDetails)));
@@ -144,18 +160,8 @@ export const MappingProfilesFormComponent = ({
       return;
     }
 
-    const initialMappingDetails = isDuplicateMode ? getMappingDetailsForDuplicated(mappingDetails) : mappingDetails;
-    const newInitDetails = folioRecordType === existingRecordType && !isEmpty(mappingDetails)
-      ? initialMappingDetails
-      : getInitialDetails(folioRecordType, true);
-
-    const newInitials = {
-      ...initials,
-      mappingDetails: newInitDetails,
-    };
-
-    setInitials(newInitials);
-    dispatch(change(formName, 'profile.mappingDetails', newInitDetails));
+    const newInitDetails = getInitialDetails(folioRecordType, true);
+    configInitialFormDetails(newInitDetails);
 
     if (!isEqual) {
       setPrevExistingRecordType(folioRecordType);
