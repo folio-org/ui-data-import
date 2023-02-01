@@ -72,6 +72,12 @@ export class ViewJobLog extends Component {
       throwErrors: false,
       accumulate: true,
     },
+    poLines: {
+      type: 'okapi',
+      path: 'orders/order-lines',
+      throwErrors: false,
+      accumulate: true,
+    },
   });
 
   static propTypes = {
@@ -135,6 +141,7 @@ export class ViewJobLog extends Component {
       this.fetchInvoiceData();
       this.fetchInvoiceLineData();
       this.fetchAuthorityData();
+      this.fetchPoLinesData();
     }
   }
 
@@ -185,6 +192,14 @@ export class ViewJobLog extends Component {
 
     authorityIds.forEach(authorityId => {
       this.props.mutator.authorities.GET({ path: `authority-storage/authorities/${authorityId}` });
+    });
+  }
+
+  fetchPoLinesData() {
+    const poLineIds = this.props.resources.jobLog.records[0]?.relatedPoLineInfo?.idList || [];
+
+    poLineIds.forEach(poLineId => {
+      this.props.mutator.poLines.GET({ path: `orders/order-lines/${poLineId}` });
     });
   }
 
@@ -259,6 +274,18 @@ export class ViewJobLog extends Component {
 
     return {
       hasLoaded: authorities.hasLoaded,
+      record,
+    };
+  }
+
+  get poLineData() {
+    const { resources } = this.props;
+
+    const poLines = resources.poLines || {};
+    const [record] = poLines.records || [];
+
+    return {
+      hasLoaded: poLines.hasLoaded,
       record,
     };
   }
@@ -394,7 +421,12 @@ export class ViewJobLog extends Component {
         error: this.getErrorMessage(OPTIONS.AUTHORITY),
         errorBlockId: 'authority-error',
       }],
-      [OPTIONS.ORDER]: [{}],
+      [OPTIONS.ORDER]: [{
+        label: '',
+        logs: this.poLineData.record,
+        error: this.getErrorMessage(OPTIONS.ORDER).poLineInfo,
+        errorBlockId: 'order-error',
+      }],
       [OPTIONS.INVOICE]: [{
         label: (
           <Headline margin="none">
