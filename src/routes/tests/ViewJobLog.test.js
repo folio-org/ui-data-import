@@ -60,7 +60,7 @@ const jobLogResources = hasLoaded => buildResources({
       error: 'Error message',
       idList: [faker.random.uuid()],
     },
-    relatedOrderInfo: { idList: [faker.random.uuid()] },
+    relatedPoLineInfo: { idList: [faker.random.uuid()] },
     relatedInvoiceInfo: { idList: [faker.random.uuid()] },
     relatedInvoiceLineInfo: {
       id: faker.random.uuid(),
