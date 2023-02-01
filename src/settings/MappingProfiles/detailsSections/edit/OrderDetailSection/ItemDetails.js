@@ -8,17 +8,17 @@ import { Field } from 'redux-form';
 
 import {
   Accordion,
-  Row,
   Col,
-  TextField,
-  TextArea,
   RepeatableField,
+  Row,
+  TextArea,
+  TextField,
 } from '@folio/stripes/components';
 
 import {
   AcceptedValuesField,
-  WithValidation,
   DatePickerDecorator,
+  WithValidation,
 } from '../../../../../components';
 
 import {
@@ -125,6 +125,28 @@ export const ItemDetails = ({
       return onRemove(index, contributors, ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, onContributorsClean, 'order');
     },
     [ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, contributors, setReferenceTables],
+  );
+
+  const filterProductIdTypeOptions = useCallback(
+    data => {
+      const ALLOWED_PROD_ID_TYPE_NAMES = [
+        'ASIN',
+        'CODEN',
+        'DOI',
+        'GPO item number',
+        'ISBN',
+        'ISMN',
+        'ISSN',
+        'Publisher or distributor number',
+        'Report number',
+        'Standard technical report number',
+        'UPC',
+        'URN',
+      ];
+
+      return data.filter(({ name }) => ALLOWED_PROD_ID_TYPE_NAMES.includes(name));
+    },
+    [],
   );
 
   return (
@@ -330,6 +352,7 @@ export const ItemDetails = ({
                     wrapperSourcePath: 'identifierTypes'
                   }]}
                   setAcceptedValues={setReferenceTables}
+                  formatListOptions={filterProductIdTypeOptions}
                   acceptedValuesPath={getRepeatableAcceptedValuesPath(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 2, index)}
                   okapi={okapi}
                 />
