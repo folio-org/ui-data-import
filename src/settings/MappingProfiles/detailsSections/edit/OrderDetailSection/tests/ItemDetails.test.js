@@ -11,6 +11,8 @@ import {
 
 import { ItemDetails } from '../ItemDetails';
 
+const setReferenceTablesMock = jest.fn();
+
 const okapiProp = {
   tenant: 'testTenant',
   token: 'token.for.test',
@@ -59,7 +61,7 @@ const renderItemDetails = () => {
       contributors={contributors}
       productIdentifiers={productIdentifiers}
       initialFields={{}}
-      setReferenceTables={() => {}}
+      setReferenceTables={setReferenceTablesMock}
       okapi={okapiProp}
     />
   );
@@ -68,6 +70,9 @@ const renderItemDetails = () => {
 };
 
 describe('ItemDetails', () => {
+  afterEach(() => {
+    setReferenceTablesMock.mockClear();
+  });
   it('should render correct fields', async () => {
     const { getByText } = renderItemDetails();
 
@@ -124,6 +129,23 @@ describe('ItemDetails', () => {
       expect(getByText('Product ID')).toBeInTheDocument();
       expect(getByText('Qualifier')).toBeInTheDocument();
       expect(getByText('Product ID type')).toBeInTheDocument();
+    });
+
+    describe('when click on trash icon button', () => {
+      it('function for changing form should be called', () => {
+        const {
+          getByRole,
+          getAllByRole,
+        } = renderItemDetails();
+
+        const button = getByRole('button', { name: /Add product ID and product ID type/i });
+        fireEvent.click(button);
+
+        const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
+        fireEvent.click(deleteButton);
+
+        expect(setReferenceTablesMock).toHaveBeenCalled();
+      });
     });
   });
 });
