@@ -1,5 +1,8 @@
 import React from 'react';
-import { within } from '@testing-library/react';
+import {
+  fireEvent,
+  within,
+} from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -15,6 +18,8 @@ jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   InfoPopover: () => <span>InfoPopover</span>,
 }));
+
+const setReferenceTablesMock = jest.fn();
 
 const okapiProp = {
   tenant: 'testTenant',
@@ -50,7 +55,7 @@ const renderLocation = () => {
     <Location
       locations={locations}
       initialFields={{}}
-      setReferenceTables={() => {}}
+      setReferenceTables={setReferenceTablesMock}
       okapi={okapiProp}
     />
   );
@@ -59,6 +64,10 @@ const renderLocation = () => {
 };
 
 describe('Location', () => {
+  afterEach(() => {
+    setReferenceTablesMock.mockClear();
+  });
+
   it('should render correct fields', async () => {
     const { getByText } = renderLocation();
 
@@ -74,5 +83,38 @@ describe('Location', () => {
     expect(within(queryByText('Name (code)')).getByText(/InfoPopover/i)).toBeDefined();
     expect(within(queryByText('Quantity physical')).getByText(/InfoPopover/i)).toBeDefined();
     expect(within(queryByText('Quantity electronic')).getByText(/InfoPopover/i)).toBeDefined();
+  });
+
+  describe('when click "Add location" button', () => {
+    it('fields for new location should be rendered', () => {
+      const {
+        getByRole,
+        getByText,
+      } = renderLocation();
+
+      const addLocationButton = getByRole('button', { name: /Add location/i });
+      fireEvent.click(addLocationButton);
+
+      expect(getByText('Name (code)')).toBeInTheDocument();
+      expect(getByText('Quantity physical')).toBeInTheDocument();
+      expect(getByText('Quantity electronic')).toBeInTheDocument();
+    });
+
+    describe('when click on trash icon button', () => {
+      it('function for changing form should be called', () => {
+        const {
+          getByRole,
+          getAllByRole,
+        } = renderLocation();
+
+        const addLocationButton = getByRole('button', { name: /Add location/i });
+        fireEvent.click(addLocationButton);
+
+        const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
+        fireEvent.click(deleteButton);
+
+        expect(setReferenceTablesMock).toHaveBeenCalled();
+      });
+    });
   });
 });

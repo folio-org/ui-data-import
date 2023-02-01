@@ -1,5 +1,8 @@
 import React from 'react';
-import { fireEvent, within } from '@testing-library/react';
+import {
+  fireEvent,
+  within,
+} from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -73,6 +76,7 @@ describe('ItemDetails', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
   });
+
   it('should render correct fields', async () => {
     const { getByText } = renderItemDetails();
 
@@ -108,11 +112,28 @@ describe('ItemDetails', () => {
         getByText,
       } = renderItemDetails();
 
-      const button = getByRole('button', { name: /Add contributor/i });
-      fireEvent.click(button);
+      const addContributorButton = getByRole('button', { name: /Add contributor/i });
+      fireEvent.click(addContributorButton);
 
       expect(getByText('Contributor')).toBeInTheDocument();
       expect(getByText('Contributor type')).toBeInTheDocument();
+    });
+
+    describe('when click on trash icon button', () => {
+      it('function for changing form should be called', () => {
+        const {
+          getByRole,
+          getAllByRole,
+        } = renderItemDetails();
+
+        const addContributorButton = getByRole('button', { name: /Add contributor/i });
+        fireEvent.click(addContributorButton);
+
+        const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
+        fireEvent.click(deleteButton);
+
+        expect(setReferenceTablesMock).toHaveBeenCalled();
+      });
     });
   });
 
@@ -123,8 +144,8 @@ describe('ItemDetails', () => {
         getByText,
       } = renderItemDetails();
 
-      const button = getByRole('button', { name: /Add product ID and product ID type/i });
-      fireEvent.click(button);
+      const addContributorTypeButton = getByRole('button', { name: /Add product ID and product ID type/i });
+      fireEvent.click(addContributorTypeButton);
 
       expect(getByText('Product ID')).toBeInTheDocument();
       expect(getByText('Qualifier')).toBeInTheDocument();
@@ -138,10 +159,10 @@ describe('ItemDetails', () => {
           getAllByRole,
         } = renderItemDetails();
 
-        const button = getByRole('button', { name: /Add product ID and product ID type/i });
-        fireEvent.click(button);
+        const addContributorTypeButton = getByRole('button', { name: /Add product ID and product ID type/i });
+        fireEvent.click(addContributorTypeButton);
 
-        const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
+        const deleteButton = getAllByRole('button', { name: /delete this item/i })[1];
         fireEvent.click(deleteButton);
 
         expect(setReferenceTablesMock).toHaveBeenCalled();

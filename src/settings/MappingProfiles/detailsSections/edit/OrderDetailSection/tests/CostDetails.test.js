@@ -69,10 +69,10 @@ describe('CostDetails', () => {
     it('checkbox should be checked', () => {
       const { getByLabelText } = renderCostDetails();
 
-      const checkbox = getByLabelText('Use set exchange rate');
-      fireEvent.click(checkbox);
+      const useSetExchangeCheckbox = getByLabelText('Use set exchange rate');
+      fireEvent.click(useSetExchangeCheckbox);
 
-      expect(checkbox).toBeChecked();
+      expect(useSetExchangeCheckbox).toBeChecked();
     });
   });
 
@@ -80,11 +80,11 @@ describe('CostDetails', () => {
     it('checkbox should be unchecked', () => {
       const { getByLabelText } = renderCostDetails();
 
-      const checkbox = getByLabelText('Use set exchange rate');
-      fireEvent.click(checkbox);
-      fireEvent.click(checkbox);
+      const useSetExchangeCheckbox = getByLabelText('Use set exchange rate');
+      fireEvent.click(useSetExchangeCheckbox);
+      fireEvent.click(useSetExchangeCheckbox);
 
-      expect(checkbox).not.toBeChecked();
+      expect(useSetExchangeCheckbox).not.toBeChecked();
     });
   });
 });

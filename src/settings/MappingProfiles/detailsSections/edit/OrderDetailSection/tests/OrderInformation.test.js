@@ -1,5 +1,8 @@
 import React from 'react';
-import { within } from '@testing-library/react';
+import {
+  fireEvent,
+  within,
+} from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -14,16 +17,41 @@ import { OrderInformation } from '../OrderInformation';
 
 import { BOOLEAN_ACTIONS } from '../../../../../../utils';
 
+const setReferenceTablesMock = jest.fn();
+
 const okapiProp = {
   tenant: 'testTenant',
   token: 'token.for.test',
   url: 'https://folio-testing-okapi.dev.folio.org',
 };
 const resourcesProp = {
-  ...buildResources({ resourceName: 'purchaseOrderLinesLimitSetting', records: [] }),
-  ...buildResources({ resourceName: 'isApprovalRequired', records: [] }),
-  ...buildResources({ resourceName: 'userCanEditPONumber', records: [] }),
-  ...buildResources({ resourceName: 'addresses', records: [] }),
+  ...buildResources({
+    resourceName: 'purchaseOrderLinesLimitSetting',
+    records: [{
+      configs: [{ value: 'test purchaseOrderLinesLimitSetting' }]
+    }],
+  }),
+  ...buildResources({
+    resourceName: 'isApprovalRequired',
+    records: [{
+      configs: [{ value: '{ "isApprovalRequired": true }' }]
+    }],
+  }),
+  ...buildResources({
+    resourceName: 'userCanEditPONumber',
+    records: [{
+      configs: [{ value: '{ "canUserEditOrderNumber": true }' }]
+    }],
+  }),
+  ...buildResources({
+    resourceName: 'addresses',
+    records: [{
+      configs: [
+        { value: '{ "name": "test address name","address": "test address" }' },
+        { value: '{ "name": "test address name2","address": "test address2" }' },
+      ]
+    }],
+  }),
 };
 
 const notes = [{
@@ -46,10 +74,12 @@ const renderOrderInformation = () => {
       filledVendorId={null}
       assignedToId={null}
       initialFields={{}}
-      setReferenceTables={() => {}}
+      setReferenceTables={setReferenceTablesMock}
       onOrganizationSelect={() => {}}
       okapi={okapiProp}
       resources={resourcesProp}
+      billToValue="test address name"
+      shipToValue="test address name"
     />
   );
 
@@ -57,6 +87,10 @@ const renderOrderInformation = () => {
 };
 
 describe('OrderInformation', () => {
+  afterEach(() => {
+    setReferenceTablesMock.mockClear();
+  });
+
   it('should render correct fields', async () => {
     const { getByText } = renderOrderInformation();
 
@@ -86,5 +120,79 @@ describe('OrderInformation', () => {
 
     expect(within(queryByText('Vendor')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Order type')).getByText(/\*/i)).toBeDefined();
+  });
+
+  describe('when click on "Approved" checkbox', () => {
+    it('checkbox should be checked', () => {
+      const { getByLabelText } = renderOrderInformation();
+
+      const approvedCheckbox = getByLabelText('Approved');
+      fireEvent.click(approvedCheckbox);
+
+      expect(approvedCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_TRUE);
+    });
+  });
+
+  describe('when click "Add note" button', () => {
+    it('field for new note should be rendered', () => {
+      const {
+        getByRole,
+        getByText,
+      } = renderOrderInformation();
+
+      const addNoteButton = getByRole('button', { name: /Add note/i });
+      fireEvent.click(addNoteButton);
+
+      expect(getByText('Note')).toBeInTheDocument();
+    });
+
+    describe('when click on trash icon button', () => {
+      it('function for changing form should be called', () => {
+        const {
+          getByRole,
+          getAllByRole,
+        } = renderOrderInformation();
+
+        const addNoteButton = getByRole('button', { name: /Add note/i });
+        fireEvent.click(addNoteButton);
+
+        const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
+        fireEvent.click(deleteButton);
+
+        expect(setReferenceTablesMock).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('when change "Bill to name" field', () => {
+    it('"Bill to address" value should be changed', () => {
+      const {
+        getByLabelText,
+        getByText,
+      } = renderOrderInformation();
+
+      const billToNameField = getByLabelText('Bill to name');
+      fireEvent.change(billToNameField, { target: { value: 'test address name2' } });
+
+      const billToAddressField = getByText('"test address2"');
+
+      expect(billToAddressField).toBeInTheDocument();
+    });
+  });
+
+  describe('when change "Ship to name" field', () => {
+    it('"Ship to address" value should be changed', () => {
+      const {
+        getByLabelText,
+        getByText,
+      } = renderOrderInformation();
+
+      const shipToNameField = getByLabelText('Ship to name');
+      fireEvent.change(shipToNameField, { target: { value: 'test address name2' } });
+
+      const shipToAddressField = getByText('"test address2"');
+
+      expect(shipToAddressField).toBeInTheDocument();
+    });
   });
 });

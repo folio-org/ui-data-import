@@ -19,6 +19,8 @@ jest.mock('@folio/stripes/components', () => ({
   InfoPopover: () => <span>InfoPopover</span>,
 }));
 
+const setReferenceTablesMock = jest.fn();
+
 const okapiProp = {
   tenant: 'testTenant',
   token: 'token.for.test',
@@ -59,7 +61,7 @@ const renderFundDistribution = () => {
       fundDistributions={fundDistributions}
       currency="USD"
       initialFields={{}}
-      setReferenceTables={() => {}}
+      setReferenceTables={setReferenceTablesMock}
       okapi={okapiProp}
     />
   );
@@ -68,6 +70,10 @@ const renderFundDistribution = () => {
 };
 
 describe('FundDistribution', () => {
+  afterEach(() => {
+    setReferenceTablesMock.mockClear();
+  });
+
   it('should render correct fields', async () => {
     const { getByText } = renderFundDistribution();
 
@@ -93,13 +99,30 @@ describe('FundDistribution', () => {
         getByText,
       } = renderFundDistribution();
 
-      const button = getByRole('button', { name: /Add fund distribution/i });
-      fireEvent.click(button);
+      const addFundDistributionButton = getByRole('button', { name: /Add fund distribution/i });
+      fireEvent.click(addFundDistributionButton);
 
       expect(getByText('Fund ID')).toBeInTheDocument();
       expect(getByText('Expense class')).toBeInTheDocument();
       expect(getByText('Value')).toBeInTheDocument();
       expect(getByText('Type')).toBeInTheDocument();
+    });
+
+    describe('when click on trash icon button', () => {
+      it('function for changing form should be called', () => {
+        const {
+          getByRole,
+          getAllByRole,
+        } = renderFundDistribution();
+
+        const addFundDistributionButton = getByRole('button', { name: /Add fund distribution/i });
+        fireEvent.click(addFundDistributionButton);
+
+        const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
+        fireEvent.click(deleteButton);
+
+        expect(setReferenceTablesMock).toHaveBeenCalled();
+      });
     });
   });
 });
