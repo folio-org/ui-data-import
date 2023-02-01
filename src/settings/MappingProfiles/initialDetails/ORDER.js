@@ -165,6 +165,7 @@ const ORDER = {
         enabled: true,
         path: 'order.poLine.contributors[].contributorNameTypeId',
         value: '',
+        acceptedValues: {},
       }],
     }],
   }, {
