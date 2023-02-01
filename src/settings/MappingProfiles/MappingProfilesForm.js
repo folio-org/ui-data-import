@@ -2,7 +2,6 @@ import React, {
   useMemo,
   useState,
   useEffect,
-  useLayoutEffect,
 } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -14,10 +13,7 @@ import {
   Field,
   change,
 } from 'redux-form';
-import {
-  isEmpty,
-  omit,
-} from 'lodash';
+import { omit } from 'lodash';
 
 import stripesForm from '@folio/stripes/form';
 import {
@@ -125,48 +121,51 @@ export const MappingProfilesFormComponent = ({
   const isSubmitDisabled = pristine || submitting;
 
   const [folioRecordType, setFolioRecordType] = useState(existingRecordType || null);
+  const [initials, setInitials] = useState(profile || {});
   const [fieldMappingsForMARCSelectedOption, setFieldMappingsForMARCSelectedOption] = useState('');
   const [fieldMappingsForMARC, setFieldMappingsForMARC] = useState(marcMappingOption || '');
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
-  const [prevExistingRecordType, setPrevExistingRecordType] = useState(existingRecordType);
-  const [initials, setInitials] = useState({
-    ...profile,
-    mappingDetails: isEmpty(mappingDetails) ? getInitialDetails(prevExistingRecordType, true) : mappingDetails,
-  });
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
-  const configInitialFormDetails = initialData => {
+  const setMappingDetailsToForm = newMappingDetails => {
+    dispatch(change(formName, 'profile.mappingDetails', newMappingDetails));
+  };
+
+  // set initial mappingDetails
+  useEffect(() => {
+    // existingRecordType is the initial folio record type value
+    setFolioRecordType(existingRecordType);
+
+    // on Edit/Duplicate mappingDetails is an object of fields
+    // on Create mappingDetails = {}
+    const initialMappingDetails = isDuplicateMode ? getMappingDetailsForDuplicated(mappingDetails) : mappingDetails;
+
+    // update initials
     const newInitials = {
       ...initials,
-      mappingDetails: initialData,
+      mappingDetails: initialMappingDetails,
     };
 
     setInitials(newInitials);
-    dispatch(change(formName, 'profile.mappingDetails', initialData));
-  };
 
-  useEffect(() => {
-    setFolioRecordType(existingRecordType);
-    const initialMappingDetails = isDuplicateMode ? getMappingDetailsForDuplicated(mappingDetails) : mappingDetails;
-    configInitialFormDetails(initialMappingDetails);
+    // initialize the form with mappingDetails
+    setMappingDetailsToForm(initialMappingDetails);
   }, [existingRecordType]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useLayoutEffect(() => {
-    const isEqual = folioRecordType === prevExistingRecordType;
-    const needsUpdate = !id || (id && (!isEqual || isEmpty(mappingDetails)));
+  // set updated mappingDetails on the folio record type change
+  useEffect(() => {
+    const isInitial = folioRecordType === existingRecordType;
 
-    if (!needsUpdate) {
-      return;
-    }
+    if (isInitial) {
+      setMappingDetailsToForm(initials.mappingDetails);
+    } else {
+      const updatedMappingDetails = getInitialDetails(folioRecordType, true);
 
-    const newInitDetails = getInitialDetails(folioRecordType, true);
-    configInitialFormDetails(newInitDetails);
-
-    if (!isEqual) {
-      setPrevExistingRecordType(folioRecordType);
+      setMappingDetailsToForm(updatedMappingDetails);
     }
   }, [folioRecordType]); // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     dispatch(change(formName, 'addedRelations', addedRelations));
   }, [addedRelations, dispatch]);
