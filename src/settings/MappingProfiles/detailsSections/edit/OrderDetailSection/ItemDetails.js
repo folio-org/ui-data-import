@@ -277,7 +277,7 @@ export const ItemDetails = ({
                     wrapperSourcePath: 'contributorNameTypes'
                   }]}
                   setAcceptedValues={setReferenceTables}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(ITEM_DETAILS_FIELDS_MAP.CONTRIBUTOR_TYPE(index), 2, index)}
+                  acceptedValuesPath={getRepeatableAcceptedValuesPath(ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, 1, index)}
                   okapi={okapi}
                 />
               </Col>
