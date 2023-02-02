@@ -41,7 +41,7 @@ import {
   onRemove,
 } from '../../utils';
 import {
-  FIELD_NAME_PREFIX,
+  DEFAULT_PO_LINES_LIMIT_VALUE,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
@@ -52,6 +52,8 @@ import {
 
 const OrderInformationComponent = ({
   approvedCheckbox,
+  billToValue,
+  shipToValue,
   manualPOCheckbox,
   notes,
   filledVendorId,
@@ -60,11 +62,11 @@ const OrderInformationComponent = ({
   setReferenceTables,
   onOrganizationSelect,
   resources: {
-    purchaseOrderLinesLimitSetting,
     isApprovalRequired,
     userCanEditPONumber,
     addresses,
   },
+  mutator,
   okapi,
 }) => {
   const { formatMessage } = useIntl();
@@ -93,25 +95,18 @@ const OrderInformationComponent = ({
   const [billToAddress, setBillToAddress] = useState('');
   const [shipToAddress, setShipToAddress] = useState('');
 
-  const purchaseOrderLinesLimitValue = useMemo(
-    () => {
-      if (purchaseOrderLinesLimitSetting.hasLoaded && !isEmpty(purchaseOrderLinesLimitSetting.records)) {
-        return purchaseOrderLinesLimitSetting.records[0]?.configs[0]?.value;
-      }
-
-      return '';
-    },
-    [purchaseOrderLinesLimitSetting.hasLoaded, purchaseOrderLinesLimitSetting.records],
-  );
-
-  // ignore this dependency: setReferenceTables
-  // because it causes an infinite-render loop. We only care about purchaseOrderLinesLimitValue,
-  // which indicates that POL limit is set
   useEffect(() => {
-    if (purchaseOrderLinesLimitValue) {
-      setReferenceTables(`${FIELD_NAME_PREFIX}[2].value`, `"${purchaseOrderLinesLimitValue}"`);
-    }
-  }, [purchaseOrderLinesLimitValue]); // eslint-disable-line react-hooks/exhaustive-deps
+    mutator.purchaseOrderLinesLimitSetting.GET()
+      .then(response => {
+        let purchaseOrderLinesLimitValue = DEFAULT_PO_LINES_LIMIT_VALUE;
+
+        if (!isEmpty(response.configs)) {
+          purchaseOrderLinesLimitValue = response.configs[0]?.value;
+        }
+
+        setReferenceTables(ORDER_INFO_FIELDS_MAP.PO_LINES_LIMIT, `"${purchaseOrderLinesLimitValue}"`);
+      });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isApprovalRequiredValue = useMemo(
     () => {
@@ -170,6 +165,14 @@ const OrderInformationComponent = ({
     },
     [formatMessage, isApprovalRequiredValue, isApprovedChecked],
   );
+
+  useEffect(() => {
+    const shipToAddressValue = shipToValue ? addressesValue.find(address => address.name === shipToValue)?.address : '';
+    const billToAddressValue = billToValue ? addressesValue.find(address => address.name === billToValue)?.address : '';
+
+    setBillToAddress(billToAddressValue ? `"${billToAddressValue}"` : '');
+    setShipToAddress(shipToAddressValue ? `"${shipToAddressValue}"` : '');
+  }, [addressesValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNotesAdd = useCallback(
     () => {
@@ -462,6 +465,7 @@ OrderInformationComponent.manifest = Object.freeze({
   purchaseOrderLinesLimitSetting: {
     type: 'okapi',
     path: 'configurations/entries?query=(module==ORDERS and configName==poLines-limit)',
+    accumulate: true,
   },
   isApprovalRequired: {
     type: 'okapi',
@@ -481,11 +485,11 @@ OrderInformationComponent.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   resources: PropTypes.shape({
-    purchaseOrderLinesLimitSetting: PropTypes.object.isRequired,
     isApprovalRequired: PropTypes.object.isRequired,
     userCanEditPONumber: PropTypes.object.isRequired,
     addresses: PropTypes.object.isRequired,
   }).isRequired,
+  mutator: PropTypes.object.isRequired,
   okapi: PropTypes.object.isRequired,
   approvedCheckbox: PropTypes.string,
   manualPOCheckbox: PropTypes.string,
@@ -493,6 +497,8 @@ OrderInformationComponent.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.object),
   filledVendorId: PropTypes.string,
   assignedToId: PropTypes.string,
+  billToValue: PropTypes.string,
+  shipToValue: PropTypes.string,
 };
 
 OrderInformationComponent.defaultProps = {
@@ -502,6 +508,8 @@ OrderInformationComponent.defaultProps = {
   notes: [],
   filledVendorId: null,
   assignedToId: null,
+  billToValue: '',
+  shipToValue: '',
 };
 
 export const OrderInformation = stripesConnect(OrderInformationComponent);

@@ -25,35 +25,36 @@ import {
 } from '../../utils';
 
 export const AcceptedValuesField = ({
-  id,
-  name,
-  label,
-  okapi,
-  component,
-  optionValue,
-  optionLabel,
-  parsedOptionValue,
-  parsedOptionLabel,
-  wrapperLabel,
   acceptedValuesList,
-  wrapperSources,
-  wrapperSourcesFn,
-  setAcceptedValues,
   acceptedValuesPath,
-  dataAttributes,
-  optionTemplate,
-  isRemoveValueAllowed,
+  component,
   componentValue,
-  onChange,
+  dataAttributes,
+  disabled,
+  format,
+  formatListOptions,
+  hasLoaded,
+  id,
   isDirty,
   isFormField,
   isMultiSelection,
-  disabled,
-  required,
-  validation,
-  hasLoaded,
+  isRemoveValueAllowed,
+  label,
+  name,
+  okapi,
+  onChange,
+  optionLabel,
+  optionTemplate,
+  optionValue,
   parse,
-  format,
+  parsedOptionLabel,
+  parsedOptionValue,
+  required,
+  setAcceptedValues,
+  validation,
+  wrapperLabel,
+  wrapperSources,
+  wrapperSourcesFn,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
   const [hasOptions, setHasOptions] = useState(hasLoaded || !isEmpty(listOptions));
@@ -77,18 +78,26 @@ export const AcceptedValuesField = ({
     return acceptedValues;
   };
 
-  const updateListOptions = data => data.map(option => {
-    let currentOption = optionTemplate ? updateValueWithTemplate(option, optionTemplate) : option[optionLabel];
+  const updateListOptions = data => {
+    let options = data.map(option => {
+      let currentOption = optionTemplate ? updateValueWithTemplate(option, optionTemplate) : option[optionLabel];
 
-    if (parsedOptionLabel) {
-      currentOption = JSON.parse(currentOption)[parsedOptionLabel];
+      if (parsedOptionLabel) {
+        currentOption = JSON.parse(currentOption)[parsedOptionLabel];
+      }
+
+      return {
+        ...option,
+        [optionLabel]: currentOption,
+      };
+    });
+
+    if (formatListOptions) {
+      options = formatListOptions(options);
     }
 
-    return {
-      ...option,
-      [optionLabel]: currentOption,
-    };
-  });
+    return options;
+  };
 
   const extendDataWithStatisticalCodeType = (arrToExtend, arrWithExtendedField) => {
     const extendedData = sortCollection(arrToExtend, ['code']).map(item => {
@@ -192,64 +201,66 @@ export const AcceptedValuesField = ({
 
 AcceptedValuesField.propTypes = {
   component: PropTypes.oneOfType([PropTypes.elementType, PropTypes.func]).isRequired,
-  optionValue: PropTypes.string.isRequired,
   optionLabel: PropTypes.string.isRequired,
-  okapi: okapiShape,
-  name: PropTypes.string,
-  optionTemplate: PropTypes.string,
+  optionValue: PropTypes.string.isRequired,
   acceptedValuesList: PropTypes.arrayOf(PropTypes.object),
-  wrapperSources: PropTypes.arrayOf(PropTypes.object),
-  wrapperSourcesFn: PropTypes.string,
-  wrapperLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  acceptedValuesPath: PropTypes.string,
+  componentValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  dataAttributes: PropTypes.arrayOf(PropTypes.object),
+  disabled: PropTypes.bool,
+  format: PropTypes.func,
+  formatListOptions: PropTypes.func,
+  hasLoaded: PropTypes.bool,
+  id: PropTypes.string,
+  isDirty: PropTypes.bool,
+  isFormField: PropTypes.bool,
+  isMultiSelection: PropTypes.bool,
+  isRemoveValueAllowed: PropTypes.bool,
   label: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
   ]),
-  id: PropTypes.string,
-  setAcceptedValues: PropTypes.func,
-  acceptedValuesPath: PropTypes.string,
-  dataAttributes: PropTypes.arrayOf(PropTypes.object),
-  isRemoveValueAllowed: PropTypes.bool,
+  name: PropTypes.string,
+  okapi: okapiShape,
   onChange: PropTypes.func,
-  componentValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  isMultiSelection: PropTypes.bool,
-  disabled: PropTypes.bool,
-  required: PropTypes.bool,
-  isDirty: PropTypes.bool,
-  isFormField: PropTypes.bool,
-  parsedOptionValue: PropTypes.string,
-  parsedOptionLabel: PropTypes.string,
-  validation: PropTypes.func,
-  hasLoaded: PropTypes.bool,
+  optionTemplate: PropTypes.string,
   parse: PropTypes.func,
-  format: PropTypes.func,
+  parsedOptionLabel: PropTypes.string,
+  parsedOptionValue: PropTypes.string,
+  required: PropTypes.bool,
+  setAcceptedValues: PropTypes.func,
+  validation: PropTypes.func,
+  wrapperSources: PropTypes.arrayOf(PropTypes.object),
+  wrapperSourcesFn: PropTypes.string,
+  wrapperLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 };
 
 AcceptedValuesField.defaultProps = {
-  okapi: {},
   acceptedValuesList: [],
-  isRemoveValueAllowed: false,
+  acceptedValuesPath: null,
+  componentValue: null,
+  dataAttributes: null,
+  disabled: false,
+  format: null,
+  formatListOptions: null,
+  hasLoaded: false,
+  id: null,
+  isDirty: false,
   isFormField: true,
   isMultiSelection: false,
-  parsedOptionValue: '',
-  parsedOptionLabel: '',
-  required: false,
-  disabled: false,
-  hasLoaded: false,
+  isRemoveValueAllowed: false,
+  label: null,
   name: null,
+  okapi: {},
+  onChange: null,
   optionTemplate: null,
+  parse: null,
+  parsedOptionLabel: '',
+  parsedOptionValue: '',
+  required: false,
+  setAcceptedValues: null,
+  validation: null,
   wrapperSources: null,
   wrapperSourcesFn: null,
   wrapperLabel: null,
-  label: null,
-  id: null,
-  setAcceptedValues: null,
-  acceptedValuesPath: null,
-  dataAttributes: null,
-  onChange: null,
-  componentValue: null,
-  isDirty: false,
-  validation: null,
-  parse: null,
-  format: null,
 };

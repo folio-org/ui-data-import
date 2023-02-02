@@ -328,7 +328,7 @@ export class ViewJobLog extends Component {
       relatedHoldingsInfo,
       relatedItemInfo,
       relatedAuthorityInfo,
-      relatedOrderInfo,
+      relatedPoLineInfo,
       relatedInvoiceInfo,
       relatedInvoiceLineInfo,
     } = record;
@@ -339,7 +339,7 @@ export class ViewJobLog extends Component {
       [OPTIONS.HOLDINGS]: relatedHoldingsInfo.error || '',
       [OPTIONS.ITEM]: relatedItemInfo.error || '',
       [OPTIONS.AUTHORITY]: relatedAuthorityInfo.error || '',
-      [OPTIONS.ORDER]: relatedOrderInfo.error || '',
+      [OPTIONS.ORDER]: { poLineInfo: relatedPoLineInfo.error || '' },
       [OPTIONS.INVOICE]: {
         invoiceInfo: relatedInvoiceInfo.error || '',
         invoiceLineInfo: relatedInvoiceLineInfo?.error || '',

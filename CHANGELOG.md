@@ -36,6 +36,8 @@
 * Error after selecting order option on field mapping profile: Part 2 (UIDATIMP-1346)
 * Receiving value disappears from Order field mapping profile after default order line limit updated (UIDATIMP-1348)
 * Empty Order type after switching to another FOLIO record type on existing order field mapping profile (UIDATIMP-1359)
+* Order field mapping profile: Update the list of product identifier types (UIDATIMP-1362)
+* "Something went wrong" error message appears after trying to reach JSON tab (UIDATIMP-1363)
 
 ## [5.3.10](https://github.com/folio-org/ui-data-import/tree/v5.3.10) (2022-12-05)
 

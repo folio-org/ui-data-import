@@ -1,5 +1,8 @@
 import React from 'react';
-import { within } from '@testing-library/react';
+import {
+  fireEvent,
+  within,
+} from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -59,5 +62,45 @@ describe('POLineDetails', () => {
     expect(within(queryByText('Acquisition method')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Order format')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Receiving workflow')).getByText(/\*/i)).toBeDefined();
+  });
+
+  describe('when click on "Automatic export" checkbox', () => {
+    it('checkbox should be checked', () => {
+      const { getByLabelText } = renderPOLineDetails();
+
+      const automaticExportCheckbox = getByLabelText('Automatic export');
+      fireEvent.click(automaticExportCheckbox);
+
+      expect(automaticExportCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_TRUE);
+    });
+  });
+
+  describe('when select receipt date', () => {
+    it('value for receipt date field should be changed', () => {
+      const {
+        getByLabelText,
+      } = renderPOLineDetails();
+
+      const receiptDateField = getByLabelText('Receipt date');
+      fireEvent.change(receiptDateField, { target: { value: '###TODAY###' } });
+
+      expect(receiptDateField).toHaveValue('###TODAY###');
+    });
+  });
+
+  describe('when change "Receiving workflow" field', () => {
+    it('value should be changed', () => {
+      const {
+        getByLabelText,
+        getByText,
+      } = renderPOLineDetails();
+
+      const receivingWorkflowField = getByLabelText('Receiving workflow*');
+      fireEvent.change(receivingWorkflowField, { target: { value: 'Synchronized' } });
+
+      const receivingWorkflowValue = getByText('Synchronized');
+
+      expect(receivingWorkflowValue).toBeInTheDocument();
+    });
   });
 });

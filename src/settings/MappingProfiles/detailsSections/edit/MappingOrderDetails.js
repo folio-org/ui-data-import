@@ -34,10 +34,12 @@ import {
   APPROVED_FIELD,
   ASSIGNED_TO_FIELD,
   AUTOMATIC_EXPORT_FIELD,
+  BILL_TO_FIELD,
   CURRENCY_FIELD,
   MANUAL_PO_FIELD,
   MATERIAL_SUPPLIER_FIELD,
   SET_EXCHANGE_RATE_FIELD,
+  SHIP_TO_FIELD,
   TRIAL_FIELD,
   VENDOR_FIELD,
 } from '../../../../utils';
@@ -50,6 +52,9 @@ export const MappingOrderDetails = ({
   okapi,
 }) => {
   const [vendorAccountNumbers, setVendorAccountNumbers] = useState([]);
+
+  const billToValue = getFieldValueFromDetails(mappingDetails?.mappingFields, BILL_TO_FIELD);
+  const shipToValue = getFieldValueFromDetails(mappingDetails?.mappingFields, SHIP_TO_FIELD);
 
   const notes = getRefValuesFromTables(referenceTables, 'notes');
   const contributors = getRefValuesFromTables(referenceTables, 'contributors');
@@ -90,6 +95,8 @@ export const MappingOrderDetails = ({
     <AccordionSet>
       <OrderInformation
         approvedCheckbox={approvedCheckbox}
+        billToValue={billToValue}
+        shipToValue={shipToValue}
         manualPOCheckbox={manualPOCheckbox}
         notes={notes}
         filledVendorId={filledVendorId}
