@@ -64,6 +64,8 @@ export const ACCESS_PROVIDER_FIELD = 'accessProvider';
 export const LOCK_TOTAL_FIELD = 'lockTotal';
 export const EXCHANGE_RATE_FIELD = 'exchangeRate';
 export const SET_EXCHANGE_RATE_FIELD = 'exchangeRate';
+export const BILL_TO_FIELD = 'billTo';
+export const SHIP_TO_FIELD = 'shipTo';
 
 export const DATA_TYPES = [
   'MARC',

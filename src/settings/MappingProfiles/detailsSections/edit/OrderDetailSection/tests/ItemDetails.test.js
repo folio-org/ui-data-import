@@ -1,5 +1,8 @@
 import React from 'react';
-import { within } from '@testing-library/react';
+import {
+  fireEvent,
+  within,
+} from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -10,6 +13,8 @@ import {
 } from '../../../../../../../test/jest/helpers';
 
 import { ItemDetails } from '../ItemDetails';
+
+const setReferenceTablesMock = jest.fn();
 
 const okapiProp = {
   tenant: 'testTenant',
@@ -59,7 +64,7 @@ const renderItemDetails = () => {
       contributors={contributors}
       productIdentifiers={productIdentifiers}
       initialFields={{}}
-      setReferenceTables={() => {}}
+      setReferenceTables={setReferenceTablesMock}
       okapi={okapiProp}
     />
   );
@@ -68,6 +73,10 @@ const renderItemDetails = () => {
 };
 
 describe('ItemDetails', () => {
+  afterEach(() => {
+    setReferenceTablesMock.mockClear();
+  });
+
   it('should render correct fields', async () => {
     const { getByText } = renderItemDetails();
 
@@ -94,5 +103,70 @@ describe('ItemDetails', () => {
     const { queryByText } = renderItemDetails();
 
     expect(within(queryByText('Title')).getByText(/\*/i)).toBeDefined();
+  });
+
+  describe('when click "Add contributor" button', () => {
+    it('fields for new contributor should be rendered', () => {
+      const {
+        getByRole,
+        getByText,
+      } = renderItemDetails();
+
+      const addContributorButton = getByRole('button', { name: /Add contributor/i });
+      fireEvent.click(addContributorButton);
+
+      expect(getByText('Contributor')).toBeInTheDocument();
+      expect(getByText('Contributor type')).toBeInTheDocument();
+    });
+
+    describe('when click on trash icon button', () => {
+      it('function for changing form should be called', () => {
+        const {
+          getByRole,
+          getAllByRole,
+        } = renderItemDetails();
+
+        const addContributorButton = getByRole('button', { name: /Add contributor/i });
+        fireEvent.click(addContributorButton);
+
+        const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
+        fireEvent.click(deleteButton);
+
+        expect(setReferenceTablesMock).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('when click "Add product ID and product ID type" button', () => {
+    it('fields for new contributor type should be rendered', () => {
+      const {
+        getByRole,
+        getByText,
+      } = renderItemDetails();
+
+      const addContributorTypeButton = getByRole('button', { name: /Add product ID and product ID type/i });
+      fireEvent.click(addContributorTypeButton);
+
+      expect(getByText('Product ID')).toBeInTheDocument();
+      expect(getByText('Qualifier')).toBeInTheDocument();
+      expect(getByText('Product ID type')).toBeInTheDocument();
+    });
+
+    describe('when click on trash icon button', () => {
+      it('function for changing form should be called', () => {
+        const {
+          getByRole,
+          getAllByRole,
+        } = renderItemDetails();
+
+        const addContributorTypeButton = getByRole('button', { name: /Add product ID and product ID type/i });
+        fireEvent.click(addContributorTypeButton);
+
+        const deleteButton = getAllByRole('button', { name: /delete this item/i })[1];
+        fireEvent.click(deleteButton);
+
+        expect(setReferenceTablesMock).toHaveBeenCalled();
+      });
+    });
   });
 });
