@@ -110,3 +110,5 @@ export const ALLOWED_PROD_ID_TYPE_NAMES = [
 ];
 
 export const UUID_IN_QUOTES_PATTERN = /^"([0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12})"$/;
+
+export const DEFAULT_PO_LINES_LIMIT_VALUE = '1';
