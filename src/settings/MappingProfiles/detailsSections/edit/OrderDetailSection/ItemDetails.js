@@ -22,6 +22,7 @@ import {
 } from '../../../../../components';
 
 import {
+  ALLOWED_PROD_ID_TYPE_NAMES,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
@@ -129,21 +130,6 @@ export const ItemDetails = ({
 
   const filterProductIdTypeOptions = useCallback(
     data => {
-      const ALLOWED_PROD_ID_TYPE_NAMES = [
-        'ASIN',
-        'CODEN',
-        'DOI',
-        'GPO item number',
-        'ISBN',
-        'ISMN',
-        'ISSN',
-        'Publisher or distributor number',
-        'Report number',
-        'Standard technical report number',
-        'UPC',
-        'URN',
-      ];
-
       return data.filter(({ name }) => ALLOWED_PROD_ID_TYPE_NAMES.includes(name));
     },
     [],
