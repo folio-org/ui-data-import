@@ -60,6 +60,7 @@ EditMappingProfileComponent.manifest = Object.freeze({
     path: 'data-import-profiles/mappingProfiles/:{id}',
     params: { withRelations: true },
     PUT: { throwErrors: false },
+    resourceShouldRefresh: true,
   },
 });
 

@@ -23,16 +23,20 @@
 * Order field mapping profile: Include default value for PO line limit setting (UIDATIMP-1337)
 * Get rid of BigTest in ui-data-import (UIDATIMP-1343)
 * Bump `stripes-*` and upgrade `react-redux` to `v8` (UIDATIMP-1353)
+* Ensure accepted values property for "Contributor type" field mapping (UIDATIMP-1361)
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
 * Order and Order line field mapping: View screen updates (UIDATIMP-1304)
 * Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
 * Accessibility errors: Data Import Field mapping Orders View screen (UIDATIMP-1332)
+* Error during switching between record types on field mapping profile form: Part 2 (UIDATIMP-1334)
 * Order field mapping profile: Address data not stacked properly (View) (UIDATIMP-1342)
 * Error after selecting order option on field mapping profile (UIDATIMP-1344)
 * Error after selecting order option on field mapping profile: Part 2 (UIDATIMP-1346)
 * Receiving value disappears from Order field mapping profile after default order line limit updated (UIDATIMP-1348)
+* Empty Order type after switching to another FOLIO record type on existing order field mapping profile (UIDATIMP-1359)
+* "Something went wrong" error message appears after trying to reach JSON tab (UIDATIMP-1363)
 
 ## [5.3.10](https://github.com/folio-org/ui-data-import/tree/v5.3.10) (2022-12-05)
 

@@ -22,7 +22,6 @@ import {
 } from '../../../../../components';
 
 import {
-  CONTRIBUTOR_TYPES,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
@@ -75,22 +74,6 @@ export const ItemDetails = ({
     value => validateMARCWithDate(value, false),
     [],
   );
-
-  const contributorTypeOptions = [
-    {
-      label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.itemDetails.field.personalName` }),
-      value: CONTRIBUTOR_TYPES.PERSONAL_NAME,
-    }, {
-      label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.itemDetails.field.corporateName` }),
-      value: CONTRIBUTOR_TYPES.CORPORATE_NAME,
-    }, {
-      label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.itemDetails.field.meetingName` }),
-      value: CONTRIBUTOR_TYPES.MEETING_NAME,
-    }, {
-      label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.itemDetails.field.innReachAuthor` }),
-      value: CONTRIBUTOR_TYPES.INN_REACH_AUTHOR,
-    },
-  ];
 
   const handleProductIdAdd = useCallback(
     () => {
@@ -286,10 +269,16 @@ export const ItemDetails = ({
                   component={TextField}
                   name={ITEM_DETAILS_FIELDS_MAP.CONTRIBUTOR_TYPE(index)}
                   label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributorType`} />}
-                  optionValue="value"
-                  optionLabel="label"
+                  optionValue="name"
+                  optionLabel="name"
                   wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-                  acceptedValuesList={contributorTypeOptions}
+                  wrapperSources={[{
+                    wrapperSourceLink: WRAPPER_SOURCE_LINKS.CONTRIBUTOR_NAME_TYPES,
+                    wrapperSourcePath: 'contributorNameTypes'
+                  }]}
+                  setAcceptedValues={setReferenceTables}
+                  acceptedValuesPath={getRepeatableAcceptedValuesPath(ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, 1, index)}
+                  okapi={okapi}
                 />
               </Col>
             </Row>
