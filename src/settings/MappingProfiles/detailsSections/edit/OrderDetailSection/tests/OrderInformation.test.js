@@ -53,6 +53,15 @@ const resourcesProp = {
     }],
   }),
 };
+const poLinesLimitMock = {
+  configs: [{ value: 'test purchaseOrderLinesLimitSetting' }]
+};
+const mutatorProp = {
+  purchaseOrderLinesLimitSetting: {
+    GET: jest.fn().mockResolvedValue(poLinesLimitMock),
+    reset: jest.fn(),
+  },
+};
 
 const notes = [{
   order: 0,
@@ -78,6 +87,7 @@ const renderOrderInformation = () => {
       onOrganizationSelect={() => {}}
       okapi={okapiProp}
       resources={resourcesProp}
+      mutator={mutatorProp}
       billToValue="test address name"
       shipToValue="test address name"
     />
