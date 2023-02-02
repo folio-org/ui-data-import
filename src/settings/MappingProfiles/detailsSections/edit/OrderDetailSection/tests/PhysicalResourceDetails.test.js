@@ -1,5 +1,8 @@
 import React from 'react';
-import { within } from '@testing-library/react';
+import {
+  fireEvent,
+  within,
+} from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -15,6 +18,8 @@ jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   InfoPopover: () => <span>InfoPopover</span>,
 }));
+
+const setReferenceTablesMock = jest.fn();
 
 const okapiProp = {
   tenant: 'testTenant',
@@ -39,7 +44,7 @@ const renderPhysicalResourceDetails = () => {
       volumes={volumes}
       materialSupplierId={null}
       initialFields={{}}
-      setReferenceTables={() => {}}
+      setReferenceTables={setReferenceTablesMock}
       okapi={okapiProp}
     />
   );
@@ -48,6 +53,10 @@ const renderPhysicalResourceDetails = () => {
 };
 
 describe('PhysicalResourceDetails', () => {
+  afterEach(() => {
+    setReferenceTablesMock.mockClear();
+  });
+
   it('should render correct fields', async () => {
     const { getByText } = renderPhysicalResourceDetails();
 
@@ -65,5 +74,36 @@ describe('PhysicalResourceDetails', () => {
 
     expect(within(queryByText('Create inventory')).getByText(/InfoPopover/i)).toBeDefined();
     expect(within(queryByText('Material type')).getByText(/InfoPopover/i)).toBeDefined();
+  });
+
+  describe('when click "Add volume" button', () => {
+    it('fields for new volume should be rendered', () => {
+      const {
+        getByRole,
+        getByText,
+      } = renderPhysicalResourceDetails();
+
+      const addVolumeButton = getByRole('button', { name: /Add volume/i });
+      fireEvent.click(addVolumeButton);
+
+      expect(getByText('Volume')).toBeInTheDocument();
+    });
+
+    describe('when click on trash icon button', () => {
+      it('function for changing form should be called', () => {
+        const {
+          getByRole,
+          getAllByRole,
+        } = renderPhysicalResourceDetails();
+
+        const addVolumeButton = getByRole('button', { name: /Add volume/i });
+        fireEvent.click(addVolumeButton);
+
+        const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
+        fireEvent.click(deleteButton);
+
+        expect(setReferenceTablesMock).toHaveBeenCalled();
+      });
+    });
   });
 });

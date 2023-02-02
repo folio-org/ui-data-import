@@ -1,5 +1,8 @@
 import React from 'react';
-import { within } from '@testing-library/react';
+import {
+  fireEvent,
+  within,
+} from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -15,6 +18,8 @@ jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   InfoPopover: () => <span>InfoPopover</span>,
 }));
+
+const setReferenceTablesMock = jest.fn();
 
 const okapiProp = {
   tenant: 'testTenant',
@@ -56,7 +61,7 @@ const renderFundDistribution = () => {
       fundDistributions={fundDistributions}
       currency="USD"
       initialFields={{}}
-      setReferenceTables={() => {}}
+      setReferenceTables={setReferenceTablesMock}
       okapi={okapiProp}
     />
   );
@@ -65,6 +70,10 @@ const renderFundDistribution = () => {
 };
 
 describe('FundDistribution', () => {
+  afterEach(() => {
+    setReferenceTablesMock.mockClear();
+  });
+
   it('should render correct fields', async () => {
     const { getByText } = renderFundDistribution();
 
@@ -81,5 +90,39 @@ describe('FundDistribution', () => {
     expect(within(queryByText('Fund ID')).getByText(/InfoPopover/i)).toBeDefined();
     expect(within(queryByText('Expense class')).getByText(/InfoPopover/i)).toBeDefined();
     expect(within(queryByText('Value')).getByText(/InfoPopover/i)).toBeDefined();
+  });
+
+  describe('when click "Add fund distribution" button', () => {
+    it('fields for new fund distribution should be rendered', () => {
+      const {
+        getByRole,
+        getByText,
+      } = renderFundDistribution();
+
+      const addFundDistributionButton = getByRole('button', { name: /Add fund distribution/i });
+      fireEvent.click(addFundDistributionButton);
+
+      expect(getByText('Fund ID')).toBeInTheDocument();
+      expect(getByText('Expense class')).toBeInTheDocument();
+      expect(getByText('Value')).toBeInTheDocument();
+      expect(getByText('Type')).toBeInTheDocument();
+    });
+
+    describe('when click on trash icon button', () => {
+      it('function for changing form should be called', () => {
+        const {
+          getByRole,
+          getAllByRole,
+        } = renderFundDistribution();
+
+        const addFundDistributionButton = getByRole('button', { name: /Add fund distribution/i });
+        fireEvent.click(addFundDistributionButton);
+
+        const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
+        fireEvent.click(deleteButton);
+
+        expect(setReferenceTablesMock).toHaveBeenCalled();
+      });
+    });
   });
 });

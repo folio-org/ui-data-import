@@ -1,5 +1,9 @@
 import React from 'react';
-import { within } from '@testing-library/react';
+import {
+  fireEvent,
+  within,
+} from '@testing-library/react';
+import { noop } from 'lodash';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -23,6 +27,7 @@ const renderCostDetails = () => {
     <CostDetails
       currency="USD"
       useSetExchange={BOOLEAN_ACTIONS.ALL_FALSE}
+      setReferenceTables={noop}
     />
   );
 
@@ -58,5 +63,28 @@ describe('CostDetails', () => {
     expect(within(queryByText('Quantity physical')).getByText(/InfoPopover/i)).toBeDefined();
     expect(within(queryByText('Electronic unit price')).getByText(/InfoPopover/i)).toBeDefined();
     expect(within(queryByText('Quantity electronic')).getByText(/InfoPopover/i)).toBeDefined();
+  });
+
+  describe('when click on "Use set exchange rate" checkbox', () => {
+    it('checkbox should be checked', () => {
+      const { getByLabelText } = renderCostDetails();
+
+      const useSetExchangeCheckbox = getByLabelText('Use set exchange rate');
+      fireEvent.click(useSetExchangeCheckbox);
+
+      expect(useSetExchangeCheckbox).toBeChecked();
+    });
+  });
+
+  describe('when click on "Use set exchange rate" checkbox twice', () => {
+    it('checkbox should be unchecked', () => {
+      const { getByLabelText } = renderCostDetails();
+
+      const useSetExchangeCheckbox = getByLabelText('Use set exchange rate');
+      fireEvent.click(useSetExchangeCheckbox);
+      fireEvent.click(useSetExchangeCheckbox);
+
+      expect(useSetExchangeCheckbox).not.toBeChecked();
+    });
   });
 });

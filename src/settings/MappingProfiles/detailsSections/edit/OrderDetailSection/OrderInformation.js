@@ -52,6 +52,8 @@ import {
 
 const OrderInformationComponent = ({
   approvedCheckbox,
+  billToValue,
+  shipToValue,
   manualPOCheckbox,
   notes,
   filledVendorId,
@@ -170,6 +172,14 @@ const OrderInformationComponent = ({
     },
     [formatMessage, isApprovalRequiredValue, isApprovedChecked],
   );
+
+  useEffect(() => {
+    const shipToAddressValue = shipToValue ? addressesValue.find(address => address.name === shipToValue)?.address : '';
+    const billToAddressValue = billToValue ? addressesValue.find(address => address.name === billToValue)?.address : '';
+
+    setBillToAddress(billToAddressValue ? `"${billToAddressValue}"` : '');
+    setShipToAddress(shipToAddressValue ? `"${shipToAddressValue}"` : '');
+  }, [addressesValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNotesAdd = useCallback(
     () => {
@@ -493,6 +503,8 @@ OrderInformationComponent.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.object),
   filledVendorId: PropTypes.string,
   assignedToId: PropTypes.string,
+  billToValue: PropTypes.string,
+  shipToValue: PropTypes.string,
 };
 
 OrderInformationComponent.defaultProps = {
@@ -502,6 +514,8 @@ OrderInformationComponent.defaultProps = {
   notes: [],
   filledVendorId: null,
   assignedToId: null,
+  billToValue: '',
+  shipToValue: '',
 };
 
 export const OrderInformation = stripesConnect(OrderInformationComponent);
