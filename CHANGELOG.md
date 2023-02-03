@@ -10,6 +10,7 @@
 * Update the Action profile UI for Orders (UIDATIMP-1231)
 * Update the Action profile UI again: Create/Edit screen (UIDATIMP-1246)
 * Create hotlink from "Created" in DI Log Orders column to POL (UIDATIMP-1258)
+* Create the UI for the Orders Log info in the DI job log (UIDATIMP-1264)
 * Add required field asterisks & validation action to Order field mapping profile (UIDATIMP-1265)
 * Add required info icons to Order field mapping profile (UIDATIMP-1266)
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
