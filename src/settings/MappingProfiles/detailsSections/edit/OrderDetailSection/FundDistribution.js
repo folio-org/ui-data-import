@@ -111,6 +111,7 @@ export const FundDistribution = ({
                     wrapperSourceLink: WRAPPER_SOURCE_LINKS.FUNDS,
                     wrapperSourcePath: 'funds'
                   }]}
+                  optionTemplate="**name** (**code**)"
                   setAcceptedValues={setReferenceTables}
                   acceptedValuesPath={getRepeatableAcceptedValuesPath(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 0, index)}
                   okapi={okapi}
