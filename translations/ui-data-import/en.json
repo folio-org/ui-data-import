@@ -1113,6 +1113,8 @@
   "validation.enterValue": "Please enter a value",
   "logViewer.invoice": "Invoice",
   "logViewer.invoiceLine": "Invoice line",
+  "logViewer.order": "Order",
+  "logViewer.orderLine": "Order line",
   "logViewer.filter.label": "Show",
   "logViewer.filter.srsMARC": "SRS MARC",
   "logViewer.filter.instance": "Instance",

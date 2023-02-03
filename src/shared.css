@@ -62,3 +62,7 @@
 .headline {
   word-break: break-word;
 }
+
+.leftMargin {
+  margin-left: 5px;
+}

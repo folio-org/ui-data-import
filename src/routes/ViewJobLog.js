@@ -54,6 +54,18 @@ export class ViewJobLog extends Component {
       throwErrors: false,
       accumulate: true,
     },
+    order: {
+      type: 'okapi',
+      path: 'orders/composite-orders',
+      throwErrors: false,
+      accumulate: true,
+    },
+    poLine: {
+      type: 'okapi',
+      path: 'orders/order-lines',
+      throwErrors: false,
+      accumulate: true,
+    },
     invoice: {
       type: 'okapi',
       path: 'invoice-storage/invoices',
@@ -69,12 +81,6 @@ export class ViewJobLog extends Component {
     authorities: {
       type: 'okapi',
       path: 'authority-storage/authorities',
-      throwErrors: false,
-      accumulate: true,
-    },
-    poLines: {
-      type: 'okapi',
-      path: 'orders/order-lines',
       throwErrors: false,
       accumulate: true,
     },
@@ -102,6 +108,14 @@ export class ViewJobLog extends Component {
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
       }),
+      order: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+      }),
+      poLine: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+      }),
       invoice: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
@@ -119,6 +133,8 @@ export class ViewJobLog extends Component {
       instances: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
       holdings: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
       items: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
+      order: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
+      poLine: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
       invoice: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
       invoiceLine: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
       authorities: PropTypes.shape({ GET: PropTypes.func.isRequired }).isRequired,
@@ -138,10 +154,11 @@ export class ViewJobLog extends Component {
       this.fetchInstancesData();
       this.fetchHoldingsData();
       this.fetchItemsData();
+      this.fetchOrderData();
+      this.fetchPoLinesData();
       this.fetchInvoiceData();
       this.fetchInvoiceLineData();
       this.fetchAuthorityData();
-      this.fetchPoLinesData();
     }
   }
 
@@ -169,6 +186,22 @@ export class ViewJobLog extends Component {
     });
   }
 
+  fetchOrderData() {
+    const orderId = this.props.resources.jobLog.records[0]?.relatedPoLineInfo?.orderId || null;
+
+    if (orderId) {
+      this.props.mutator.order.GET({ path: `orders/composite-orders/${orderId}` });
+    }
+  }
+
+  fetchPoLinesData() {
+    const poLineIds = this.props.resources.jobLog.records[0]?.relatedPoLineInfo?.idList || [];
+
+    poLineIds.forEach(poLineId => {
+      this.props.mutator.poLine.GET({ path: `orders/order-lines/${poLineId}` });
+    });
+  }
+
   fetchInvoiceData() {
     const invoiceIds = this.props.resources.jobLog.records[0]?.relatedInvoiceInfo.idList || [];
 
@@ -192,14 +225,6 @@ export class ViewJobLog extends Component {
 
     authorityIds.forEach(authorityId => {
       this.props.mutator.authorities.GET({ path: `authority-storage/authorities/${authorityId}` });
-    });
-  }
-
-  fetchPoLinesData() {
-    const poLineIds = this.props.resources.jobLog.records[0]?.relatedPoLineInfo?.idList || [];
-
-    poLineIds.forEach(poLineId => {
-      this.props.mutator.poLines.GET({ path: `orders/order-lines/${poLineId}` });
     });
   }
 
@@ -266,6 +291,30 @@ export class ViewJobLog extends Component {
     };
   }
 
+  get orderData() {
+    const { resources } = this.props;
+
+    const order = resources.order || {};
+    const [record] = order.records || [];
+
+    return {
+      hasLoaded: order.hasLoaded,
+      record,
+    };
+  }
+
+  get poLineData() {
+    const { resources } = this.props;
+
+    const poLine = resources.poLine || {};
+    const [record] = poLine.records || [];
+
+    return {
+      hasLoaded: poLine.hasLoaded,
+      record,
+    };
+  }
+
   get authorityData() {
     const { resources } = this.props;
 
@@ -274,18 +323,6 @@ export class ViewJobLog extends Component {
 
     return {
       hasLoaded: authorities.hasLoaded,
-      record,
-    };
-  }
-
-  get poLineData() {
-    const { resources } = this.props;
-
-    const poLines = resources.poLines || {};
-    const [record] = poLines.records || [];
-
-    return {
-      hasLoaded: poLines.hasLoaded,
       record,
     };
   }
@@ -338,8 +375,8 @@ export class ViewJobLog extends Component {
       [OPTIONS.INSTANCE]: relatedInstanceInfo.error || '',
       [OPTIONS.HOLDINGS]: relatedHoldingsInfo.error || '',
       [OPTIONS.ITEM]: relatedItemInfo.error || '',
+      [OPTIONS.ORDER]: relatedPoLineInfo.error || '',
       [OPTIONS.AUTHORITY]: relatedAuthorityInfo.error || '',
-      [OPTIONS.ORDER]: { poLineInfo: relatedPoLineInfo.error || '' },
       [OPTIONS.INVOICE]: {
         invoiceInfo: relatedInvoiceInfo.error || '',
         invoiceLineInfo: relatedInvoiceLineInfo?.error || '',
@@ -422,14 +459,25 @@ export class ViewJobLog extends Component {
         errorBlockId: 'authority-error',
       }],
       [OPTIONS.ORDER]: [{
-        label: '',
+        label: (
+          <Headline margin="none" className={sharedCss.leftMargin}>
+            <FormattedMessage id="ui-data-import.logViewer.orderLine" />
+          </Headline>
+        ),
         logs: this.poLineData.record,
-        error: this.getErrorMessage(OPTIONS.ORDER).poLineInfo,
-        errorBlockId: 'order-error',
+        error: this.getErrorMessage(OPTIONS.ORDER),
+        errorBlockId: 'order-line-error',
+      }, {
+        label: (
+          <Headline margin="none" className={sharedCss.leftMargin}>
+            <FormattedMessage id="ui-data-import.logViewer.order" />
+          </Headline>
+        ),
+        logs: this.orderData.record,
       }],
       [OPTIONS.INVOICE]: [{
         label: (
-          <Headline margin="none">
+          <Headline margin="none" className={sharedCss.leftMargin}>
             <FormattedMessage id="ui-data-import.logViewer.invoiceLine" />
           </Headline>
         ),
@@ -438,7 +486,7 @@ export class ViewJobLog extends Component {
         errorBlockId: 'invoice-line-error',
       }, {
         label: (
-          <Headline margin="none">
+          <Headline margin="none" className={sharedCss.leftMargin}>
             <FormattedMessage id="ui-data-import.logViewer.invoice" />
           </Headline>
         ),
