@@ -217,7 +217,7 @@ export const RecordsTable = ({
 
       return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'authority');
     },
-    orderStatus: ({ orderActionStatus }) => getRecordActionStatusLabel(orderActionStatus),
+    orderStatus: ({ poLineActionStatus }) => getRecordActionStatusLabel(poLineActionStatus),
     invoiceStatus: ({
       invoiceActionStatus,
       sourceRecordId,
