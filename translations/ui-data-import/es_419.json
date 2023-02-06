@@ -1132,10 +1132,6 @@
     "settings.mappingProfiles.map.order.location.field.quantityElectronic.info": "Obligatorio cuando Crear inventario es Instancia, existencias, artículo o Instancia, existencias; y Formato de pedido es Recurso electrónico o Mezcla P/E",
     "settings.mappingProfiles.map.order.physicalResourceDetails.field.materialType.info": "Obligatorio cuando Formato de pedido es Recurso físico, Mezcla P/E u Otro; y Crear inventario es Instancia, existencias, artículo.",
     "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "Obligatorio cuando Formato de pedido es Recurso electrónico o Mezcla P/E; y Crear inventario es Instancia, existencias, artículo",
-    "settings.mappingProfiles.map.order.itemDetails.field.personalName": "Nombre personal",
-    "settings.mappingProfiles.map.order.itemDetails.field.corporateName": "Nombre corporativo",
-    "settings.mappingProfiles.map.order.itemDetails.field.meetingName": "Nombre de la reunión",
-    "settings.mappingProfiles.map.order.itemDetails.field.innReachAuthor": "INN-Reach autor",
     "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "Coste adicional",
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Obligatorio al crear un artículo",
     "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Obligatorio al crear Holdings"
