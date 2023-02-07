@@ -217,7 +217,20 @@ export const RecordsTable = ({
 
       return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'authority');
     },
-    orderStatus: ({ poLineActionStatus }) => getRecordActionStatusLabel(poLineActionStatus),
+    orderStatus: ({
+      poLineActionStatus,
+      sourceRecordId,
+    }) => {
+      const entityLabel = getRecordActionStatusLabel(poLineActionStatus);
+      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
+      const orderLineId = sourceRecord?.relatedPoLineInfo.idList[0];
+      const path = `/orders/lines/view/${orderLineId}`;
+
+      const isPathCorrect = !!orderLineId;
+      const isHotlink = isPathCorrect && poLineActionStatus === RECORD_ACTION_STATUS.CREATED;
+
+      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'order');
+    },
     invoiceStatus: ({
       invoiceActionStatus,
       sourceRecordId,

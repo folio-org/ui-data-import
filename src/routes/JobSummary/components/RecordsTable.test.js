@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import {
   buildMutator,
-  buildResources
+  buildResources,
 } from '@folio/stripes-data-transfer-components/test/helpers';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -20,6 +20,7 @@ window.open.mockReturnValue({ focus: jest.fn() });
 
 const firstRecordJobExecutionId = faker.random.uuid();
 const sourceRecordsIds = [
+  faker.random.uuid(),
   faker.random.uuid(),
   faker.random.uuid(),
   faker.random.uuid(),
@@ -82,6 +83,14 @@ const jobLogEntriesResources = buildResources({
     sourceRecordId: sourceRecordsIds[5],
     sourceRecordOrder: '5',
     sourceRecordTitle: 'Test item 6',
+  }, {
+    sourceRecordActionStatus: 'CREATED',
+    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
+    poLineActionStatus: 'CREATED',
+    jobExecutionId: faker.random.uuid(),
+    sourceRecordId: sourceRecordsIds[6],
+    sourceRecordOrder: '6',
+    sourceRecordTitle: 'Test item 7',
   }],
 });
 const jobLogResources = buildResources({
@@ -106,6 +115,10 @@ const jobLogResources = buildResources({
       actionStatus: 'CREATED',
       idList: [authorityId],
     },
+    relatedPoLineInfo: {
+      actionStatus: 'CREATED',
+      idList: [faker.random.uuid()],
+    },
   }, {
     sourceRecordId: sourceRecordsIds[1],
     sourceRecordOrder: '1',
@@ -125,6 +138,10 @@ const jobLogResources = buildResources({
     relatedAuthorityInfo: {
       actionStatus: 'UPDATED',
       idList: [authorityId],
+    },
+    relatedPoLineInfo: {
+      actionStatus: 'CREATED',
+      idList: [faker.random.uuid()],
     },
   }, {
     sourceRecordId: sourceRecordsIds[2],
@@ -146,6 +163,10 @@ const jobLogResources = buildResources({
       actionStatus: 'MULTIPLE',
       idList: [faker.random.uuid()],
     },
+    relatedPoLineInfo: {
+      actionStatus: 'CREATED',
+      idList: [faker.random.uuid()],
+    },
   }, {
     sourceRecordId: sourceRecordsIds[3],
     sourceRecordOrder: '3',
@@ -164,6 +185,34 @@ const jobLogResources = buildResources({
     },
     relatedAuthorityInfo: {
       actionStatus: 'DISCARDED',
+      idList: [faker.random.uuid()],
+    },
+    relatedPoLineInfo: {
+      actionStatus: 'CREATED',
+      idList: [faker.random.uuid()],
+    },
+  }, {
+    sourceRecordId: sourceRecordsIds[6],
+    sourceRecordOrder: '6',
+    sourceRecordTitle: 'Test item 7',
+    relatedInstanceInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [faker.random.uuid()],
+    },
+    relatedHoldingsInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [faker.random.uuid()],
+    },
+    relatedItemInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [faker.random.uuid()],
+    },
+    relatedAuthorityInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [faker.random.uuid()],
+    },
+    relatedPoLineInfo: {
+      actionStatus: 'CREATED',
       idList: [faker.random.uuid()],
     },
   }],
