@@ -1132,10 +1132,6 @@
     "settings.mappingProfiles.map.order.location.field.quantityElectronic.info": "Required when Create inventory is Instance, holdings, item or Instance, holdings; and Order format is Electronic resource or P/E mix",
     "settings.mappingProfiles.map.order.physicalResourceDetails.field.materialType.info": "Required when Order format is Physical resource, P/E mix, or Other; and Create inventory is Instance, holdings, item",
     "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "Required when Order format is Electronic resource or P/E mix; and Create inventory is Instance, holdings, item",
-    "settings.mappingProfiles.map.order.itemDetails.field.personalName": "Personal name",
-    "settings.mappingProfiles.map.order.itemDetails.field.corporateName": "Corporate name",
-    "settings.mappingProfiles.map.order.itemDetails.field.meetingName": "Meeting name",
-    "settings.mappingProfiles.map.order.itemDetails.field.innReachAuthor": "INN-Reach author",
     "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "Zusatzkosten",
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Required when creating Item",
     "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Required when creating Holdings"
