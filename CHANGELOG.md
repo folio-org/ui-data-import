@@ -40,6 +40,8 @@
 * Empty Order type after switching to another FOLIO record type on existing order field mapping profile (UIDATIMP-1359)
 * Order field mapping profile: Update the list of product identifier types (UIDATIMP-1362)
 * "Something went wrong" error message appears after trying to reach JSON tab (UIDATIMP-1363)
+* Order field mapping profile: Show the fund and code when default fund is selected (UIDATIMP-1367)
+* Order field mapping profile: Show the expense class and code when default expense class is selected (UIDATIMP-1368)
 
 ## [5.3.10](https://github.com/folio-org/ui-data-import/tree/v5.3.10) (2022-12-05)
 

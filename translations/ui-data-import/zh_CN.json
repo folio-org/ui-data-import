@@ -1132,10 +1132,6 @@
     "settings.mappingProfiles.map.order.location.field.quantityElectronic.info": "当创建典藏为实例、馆藏、单件或实例、馆藏时必备；以及订单格式是电子资源或实体/电子组合时必备。",
     "settings.mappingProfiles.map.order.physicalResourceDetails.field.materialType.info": "当订单格式为实体资源、实体/电子组合或其他时必备；以及创建典藏为实例、馆藏、单件时必备。",
     "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "当订单格式为电子资源或实体/电子组合时必备；以及创建典藏为实例、持馆藏、单件时必备。",
-    "settings.mappingProfiles.map.order.itemDetails.field.personalName": "个人名称",
-    "settings.mappingProfiles.map.order.itemDetails.field.corporateName": "团体名称",
-    "settings.mappingProfiles.map.order.itemDetails.field.meetingName": "会议名称",
-    "settings.mappingProfiles.map.order.itemDetails.field.innReachAuthor": "INN-Reach作者",
     "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "附加费用",
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "创建单件时需要",
     "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "创建馆藏时需要"
