@@ -26,7 +26,6 @@ import {
   HOLDINGS_RESOURCE_PATHS,
   ITEM_RESOURCE_PATHS,
   ORDER_RESOURCE_PATHS,
-  NOTES_RESOURCE_PATHS,
   INVOICE_RESOURCE_PATHS,
   ACQ_DATA_RESOURCE_PATHS,
   FIND_ALL_CQL,
@@ -369,14 +368,12 @@ export class MatchProfiles extends Component {
 
       const inventoryModuleVersion = getModuleVersion(records, 'Inventory Storage Module');
       const ordersModuleVersion = getModuleVersion(records, 'Orders Business Logic Module');
-      const notesModuleVersion = getModuleVersion(records, 'Notes');
       const invoiceModuleVersion = getModuleVersion(records, 'Invoice business logic module');
 
       const requestsToInstance = INSTANCE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
       const requestsToHoldings = HOLDINGS_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
       const requestsToItem = ITEM_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
       const requestsToOrder = ORDER_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
-      const requestsToNotes = NOTES_RESOURCE_PATHS.map(path => fetchJsonSchema(path, notesModuleVersion, okapi));
       const requestsToInvoice = INVOICE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, invoiceModuleVersion, okapi));
       const requestToAcquisitionsData = ACQ_DATA_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
 
@@ -387,7 +384,6 @@ export class MatchProfiles extends Component {
       await handleAllRequests(requestToAcquisitionsData, 'INSTANCE', this.addToState);
       await handleAllRequests(requestToAcquisitionsData, 'ITEM', this.addToState);
       await handleAllRequests(requestsToOrder, 'ORDER', this.addToState);
-      await handleAllRequests(requestsToNotes, 'ORDER', this.addToState);
       await handleAllRequests(requestsToInvoice, 'INVOICE', this.addToState);
       await getIdentifierTypes(okapi).then(identifierTypes => this.setState({ identifierTypes }));
     }

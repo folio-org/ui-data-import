@@ -432,8 +432,6 @@ export const ORDER_RESOURCE_PATHS = [
   'acq-models/mod-orders-storage/schemas/vendor_detail.json',
 ];
 
-export const NOTES_RESOURCE_PATHS = ['types/notes/note.json'];
-
 export const INVOICE_RESOURCE_PATHS = [
   'raml-util/schemas/metadata.schema',
   'acq-models/mod-invoice-storage/schemas/invoice.json',
