@@ -23,6 +23,7 @@
 * Allow edit and duplicate Default - Create SRS MARC Authority job profile (UIDATIMP-1318)
 * Improve mapping profile for Orders (UIDATIMP-1333)
 * Order field mapping profile: Include default value for PO line limit setting (UIDATIMP-1337)
+* leverage cookie-based authentication in all API requests (UIDATIMP-1338)
 * Get rid of BigTest in ui-data-import (UIDATIMP-1343)
 * Bump `stripes-*` and upgrade `react-redux` to `v8` (UIDATIMP-1353)
 * Ensure accepted values property for "Contributor type" field mapping (UIDATIMP-1361)
