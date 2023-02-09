@@ -12,12 +12,16 @@ import { Preloader } from '@folio/stripes-data-transfer-components';
 
 import { ActionProfilesForm } from '../ActionProfilesForm';
 
-import { LAYER_TYPES } from '../../../utils';
+import {
+  LAYER_TYPES,
+  omitAssociatedProfiles,
+} from '../../../utils';
 
 const EditActionProfileComponent = ({
   resources: { actionProfile },
   fullWidthContainer,
   layerType,
+  onSubmit,
   ...routeProps
 }) => {
   const { formatMessage } = useIntl();
@@ -47,6 +51,7 @@ const EditActionProfileComponent = ({
     >
       <ActionProfilesForm
         {...routeProps}
+        onSubmit={omitAssociatedProfiles(onSubmit)}
         initialValues={initialValues}
         layerType={layerType}
       />
@@ -64,6 +69,7 @@ EditActionProfileComponent.manifest = Object.freeze({
 });
 
 EditActionProfileComponent.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
   resources: PropTypes.shape({ actionProfile: PropTypes.object }).isRequired,
   fullWidthContainer: PropTypes.instanceOf(Element),
   layerType: PropTypes.string,
