@@ -74,6 +74,7 @@ const renderRepeatableActionsField = ({
       actions={actions}
       actionToClearFields={actionToClearFields}
       subfieldsToClearPath={subfieldsToClearPath}
+      recordType="INSTANCE"
     >
       {props => childComponent(props)}
     </RepeatableActionsField>

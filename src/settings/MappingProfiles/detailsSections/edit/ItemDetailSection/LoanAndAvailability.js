@@ -14,6 +14,7 @@ import {
   RepeatableField,
 } from '@folio/stripes/components';
 
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 import {
   AcceptedValuesField,
   BooleanActionField,
@@ -163,6 +164,7 @@ export const LoanAndAvailability = ({
             repeatableFieldIndex={29}
             hasRepeatableFields={!!circulationNotes.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.ITEM.type}
           >
             {isDisabled => (
               <RepeatableField
@@ -210,6 +212,7 @@ export const LoanAndAvailability = ({
                       <BooleanActionField
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.staffOnly`} />}
                         name={getBoolSubfieldName(29, 2, index)}
+                        onBooleanFieldChange={setReferenceTables}
                         required
                       />
                     </Col>

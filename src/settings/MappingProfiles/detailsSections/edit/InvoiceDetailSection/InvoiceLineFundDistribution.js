@@ -12,6 +12,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 import { TypeToggle } from '@folio/stripes-acq-components';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
   AcceptedValuesField,
@@ -80,6 +81,7 @@ export const InvoiceLineFundDistribution = ({
             actions={MAPPING_FUND_DISTRIBUTION_FIELD_SOURCES}
             actionToClearFields={FUND_DISTRIBUTION_SOURCE.USE_FUND_DISTRIBUTION_FROM_POL}
             subfieldsToClearPath={getInnerSubfieldsPath(26, 0, 14)}
+            recordType={FOLIO_RECORD_TYPES.INVOICE.type}
           >
             {isDisabled => (
               <RepeatableField

@@ -10,6 +10,7 @@ import {
   RepeatableField,
   TextField,
 } from '@folio/stripes/components';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
   AcceptedValuesField,
@@ -58,6 +59,7 @@ export const HoldingsNotes = ({
             repeatableFieldIndex={22}
             hasRepeatableFields={!!notes.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.HOLDINGS.type}
           >
             {isDisabled => (
               <RepeatableField
@@ -107,6 +109,7 @@ export const HoldingsNotes = ({
                       <BooleanActionField
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.staffOnly`} />}
                         name={getBoolSubfieldName(22, 2, index)}
+                        onBooleanFieldChange={setReferenceTables}
                         required
                       />
                     </Col>
