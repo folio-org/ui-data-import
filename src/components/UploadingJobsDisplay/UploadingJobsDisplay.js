@@ -248,6 +248,8 @@ export class UploadingJobsDisplay extends Component {
 
         this.currentFileUploadXhr.open('POST', url);
 
+        this.currentFileUploadXhr.withCredentials = true;
+
         xhrAddHeaders(this.currentFileUploadXhr, this.createUploadFilesHeaders());
 
         this.currentFileUploadXhr.upload.onprogress = event => {
