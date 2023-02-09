@@ -12,12 +12,16 @@ import { Preloader } from '@folio/stripes-data-transfer-components';
 
 import { MappingProfilesForm } from '../MappingProfilesForm';
 
-import { LAYER_TYPES } from '../../../utils';
+import {
+  LAYER_TYPES,
+  omitAssociatedProfiles,
+} from '../../../utils';
 
 const EditMappingProfileComponent = ({
   resources: { mappingProfile },
   fullWidthContainer,
   layerType,
+  onSubmit,
   ...routeProps
 }) => {
   const { formatMessage } = useIntl();
@@ -47,6 +51,7 @@ const EditMappingProfileComponent = ({
     >
       <MappingProfilesForm
         {...routeProps}
+        onSubmit={omitAssociatedProfiles(onSubmit)}
         initialValues={initialValues}
         layerType={layerType}
       />
@@ -65,6 +70,7 @@ EditMappingProfileComponent.manifest = Object.freeze({
 });
 
 EditMappingProfileComponent.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
   resources: PropTypes.shape({ mappingProfile: PropTypes.object }).isRequired,
   fullWidthContainer: PropTypes.instanceOf(Element),
   layerType: PropTypes.string,

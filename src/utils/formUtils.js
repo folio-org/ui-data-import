@@ -5,6 +5,7 @@ import {
   get,
   isEmpty,
   isEqual,
+  omit,
 } from 'lodash';
 
 import { FormattedDate } from '@folio/stripes/components';
@@ -174,4 +175,19 @@ export const handleProfileSave = (handleSubmit, resetForm, transitionToParams, p
     resetForm();
     transitionToParams({ _path: `${path}/view/${record.id}` });
   }
+};
+
+/**
+ * Normalize record on form submit - suppress "parentProfiles" and "childProfiles"
+ *
+ * @param {function} onSubmit
+ * @returns {function(*): *}
+ */
+export const omitAssociatedProfiles = onSubmit => record => {
+  const recordToEdit = {
+    ...record,
+    profile: omit(record.profile, ['parentProfiles', 'childProfiles']),
+  };
+
+  return onSubmit(recordToEdit);
 };
