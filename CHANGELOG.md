@@ -23,6 +23,7 @@
 * Allow edit and duplicate Default - Create SRS MARC Authority job profile (UIDATIMP-1318)
 * Improve mapping profile for Orders (UIDATIMP-1333)
 * Order field mapping profile: Include default value for PO line limit setting (UIDATIMP-1337)
+* leverage cookie-based authentication in all API requests (UIDATIMP-1338)
 * Get rid of BigTest in ui-data-import (UIDATIMP-1343)
 * Bump `stripes-*` and upgrade `react-redux` to `v8` (UIDATIMP-1353)
 * Ensure accepted values property for "Contributor type" field mapping (UIDATIMP-1361)
@@ -43,6 +44,8 @@
 * "Something went wrong" error message appears after trying to reach JSON tab (UIDATIMP-1363)
 * Order field mapping profile: Show the fund and code when default fund is selected (UIDATIMP-1367)
 * Order field mapping profile: Show the expense class and code when default expense class is selected (UIDATIMP-1368)
+* "parentProfiles" and "childProfiles" properties are populated on profile update that causes to size-bloat (UIDATIMP-1369)
+* Order line field mapping: Fix organizations on edit screen (UIDATIMP-1371)
 
 ## [5.3.10](https://github.com/folio-org/ui-data-import/tree/v5.3.10) (2022-12-05)
 
