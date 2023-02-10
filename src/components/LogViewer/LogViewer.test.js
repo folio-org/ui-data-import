@@ -46,7 +46,14 @@ const logViewerLogsProps = {
       }],
       errorBlockId: 'authority-error',
     }],
-    5: [{}],
+    5: [{
+      label: 'po-line label',
+      logs: [{
+        id: '5',
+        name: 'test',
+      }],
+      errorBlockId: 'po-line-error',
+    }],
     6: [{
       label: 'invoice label',
       logs: [{
@@ -202,7 +209,7 @@ describe('LogViewer', () => {
 
         fireEvent.click(orderButton);
 
-        expect(orderButton).toHaveClass('default');
+        expect(orderButton).toHaveClass('primary');
       });
     });
 
