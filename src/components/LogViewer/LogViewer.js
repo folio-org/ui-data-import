@@ -48,7 +48,6 @@ const filterOptions = [
   }, {
     id: OPTIONS.ORDER,
     caption: 'ui-data-import.logViewer.filter.order',
-    disabled: true,
   }, {
     id: OPTIONS.INVOICE,
     caption: 'ui-data-import.logViewer.filter.invoice',
