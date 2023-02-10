@@ -28,6 +28,7 @@
 * Get rid of BigTest in ui-data-import (UIDATIMP-1343)
 * Bump `stripes-*` and upgrade `react-redux` to `v8` (UIDATIMP-1353)
 * Ensure accepted values property for "Contributor type" field mapping (UIDATIMP-1361)
+* Adjust UI permission for DI Settings (UIDATIMP-1375)
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
