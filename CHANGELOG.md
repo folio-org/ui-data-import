@@ -10,6 +10,8 @@
 * Update the Action profile UI for Orders (UIDATIMP-1231)
 * Update the Action profile UI again: Create/Edit screen (UIDATIMP-1246)
 * Create the UI for the Orders JSON tab in the DI job log (UIDATIMP-1257)
+* Create hotlink from "Created" in DI Log Orders column to POL (UIDATIMP-1258)
+* Create the UI for the Orders Log info in the DI job log (UIDATIMP-1264)
 * Add required field asterisks & validation action to Order field mapping profile (UIDATIMP-1265)
 * Add required info icons to Order field mapping profile (UIDATIMP-1266)
 * Data Import field mapping profile: Enable FOLIO record type = Orders (UIDATIMP-1267)
@@ -22,6 +24,7 @@
 * Allow edit and duplicate Default - Create SRS MARC Authority job profile (UIDATIMP-1318)
 * Improve mapping profile for Orders (UIDATIMP-1333)
 * Order field mapping profile: Include default value for PO line limit setting (UIDATIMP-1337)
+* leverage cookie-based authentication in all API requests (UIDATIMP-1338)
 * Get rid of BigTest in ui-data-import (UIDATIMP-1343)
 * Bump `stripes-*` and upgrade `react-redux` to `v8` (UIDATIMP-1353)
 * Ensure accepted values property for "Contributor type" field mapping (UIDATIMP-1361)
@@ -39,6 +42,10 @@
 * Empty Order type after switching to another FOLIO record type on existing order field mapping profile (UIDATIMP-1359)
 * Order field mapping profile: Update the list of product identifier types (UIDATIMP-1362)
 * "Something went wrong" error message appears after trying to reach JSON tab (UIDATIMP-1363)
+* Order field mapping profile: Show the fund and code when default fund is selected (UIDATIMP-1367)
+* Order field mapping profile: Show the expense class and code when default expense class is selected (UIDATIMP-1368)
+* "parentProfiles" and "childProfiles" properties are populated on profile update that causes to size-bloat (UIDATIMP-1369)
+* Order line field mapping: Fix organizations on edit screen (UIDATIMP-1371)
 
 ## [5.3.10](https://github.com/folio-org/ui-data-import/tree/v5.3.10) (2022-12-05)
 
