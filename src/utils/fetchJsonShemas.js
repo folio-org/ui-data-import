@@ -9,9 +9,10 @@ export const fetchJsonSchema = async (path, module, okapi) => {
     const response = await fetch(`${okapi.url}/_/jsonSchemas?path=${path}`, {
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
-        'X-Okapi-Token': okapi.token,
         'X-Okapi-Module-Id': module,
+        ...(okapi.token && { 'X-Okapi-Token': okapi.token }),
       },
+      credentials: 'include',
     });
 
     if (!response.ok) {

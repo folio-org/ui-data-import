@@ -76,10 +76,10 @@ export const MappingOrderDetails = ({
   const vendorIdMatch = vendorFromDetails?.match(UUID_IN_QUOTES_PATTERN);
   const filledVendorId = vendorIdMatch ? vendorIdMatch[1] : null;
   const assignedToId = getFieldValueFromDetails(mappingDetails?.mappingFields, ASSIGNED_TO_FIELD);
-  const materialSupplierFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, MATERIAL_SUPPLIER_FIELD);
+  const materialSupplierFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, MATERIAL_SUPPLIER_FIELD, false);
   const materialSupplierMatch = materialSupplierFromDetails?.match(UUID_IN_QUOTES_PATTERN);
   const materialSupplierId = materialSupplierMatch ? materialSupplierMatch[1] : null;
-  const accessProviderFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, ACCESS_PROVIDER_FIELD);
+  const accessProviderFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, ACCESS_PROVIDER_FIELD, false);
   const accessProviderMatch = accessProviderFromDetails?.match(UUID_IN_QUOTES_PATTERN);
   const accessProviderId = accessProviderMatch ? accessProviderMatch[1] : null;
 
