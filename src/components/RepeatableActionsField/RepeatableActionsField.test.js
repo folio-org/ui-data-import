@@ -1,8 +1,5 @@
 import React from 'react';
-
 import { fireEvent } from '@testing-library/react';
-
-import { noop } from 'lodash';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -20,8 +17,10 @@ import {
 
 import { RepeatableActionsField } from './RepeatableActionsField';
 
+const onRepeatableActionChangeMock = jest.fn();
+
 const repeatableActionsFieldProps = {
-  wrapperFieldName: '',
+  wrapperFieldName: 'testName',
   legend: 'Repeatable Actions',
   disabled: false,
   wrapperPlaceholder: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions',
@@ -31,7 +30,6 @@ const repeatableActionsFieldProps = {
   repeatableFieldIndex: 15,
   hasRepeatableFields: true,
   repeatableFieldAction: REPEATABLE_ACTIONS.EXTEND_EXISTING,
-  onRepeatableActionChange: noop,
 };
 
 const renderRepeatableActionsField = ({
@@ -42,7 +40,6 @@ const renderRepeatableActionsField = ({
   repeatableFieldAction,
   repeatableFieldIndex,
   hasRepeatableFields,
-  onRepeatableActionChange,
   actions,
   actionToClearFields,
   subfieldsToClearPath,
@@ -70,7 +67,7 @@ const renderRepeatableActionsField = ({
       repeatableFieldAction={repeatableFieldAction}
       repeatableFieldIndex={repeatableFieldIndex}
       hasRepeatableFields={hasRepeatableFields}
-      onRepeatableActionChange={onRepeatableActionChange}
+      onRepeatableActionChange={onRepeatableActionChangeMock}
       actions={actions}
       actionToClearFields={actionToClearFields}
       subfieldsToClearPath={subfieldsToClearPath}
@@ -84,6 +81,10 @@ const renderRepeatableActionsField = ({
 };
 
 describe('RepeatableActionsField component', () => {
+  afterEach(() => {
+    onRepeatableActionChangeMock.mockClear();
+  });
+
   it('should be rendered with child component', () => {
     const { getByText } = renderRepeatableActionsField(repeatableActionsFieldProps);
 
@@ -104,6 +105,17 @@ describe('RepeatableActionsField component', () => {
         fireEvent.change(selectRepeatableAction, { target: { value: 'DELETE_EXISTING' } });
         expect(addFieldButton).toBeDisabled();
       });
+    });
+  });
+
+  describe('when select default value', () => {
+    it('function for changing value should be called', () => {
+      const { container } = renderRepeatableActionsField(repeatableActionsFieldProps);
+      const selectElement = container.querySelector('[name="testName"]');
+
+      fireEvent.change(selectElement, { target: { value: 'Select action' } });
+
+      expect(onRepeatableActionChangeMock).toHaveBeenCalled();
     });
   });
 });
