@@ -38,6 +38,14 @@ const itemsJSONData = {
   id: faker.random.uuid(),
   title: 'Test item title',
 };
+const orderJSONData = {
+  id: faker.random.uuid(),
+  title: 'Test purchase order title',
+};
+const poLineJSONData = {
+  id: faker.random.uuid(),
+  title: 'Test po line title',
+};
 const invoiceJSONData = {
   id: faker.random.uuid(),
   title: 'Test invoice title',
@@ -60,7 +68,10 @@ const jobLogResources = hasLoaded => buildResources({
       error: 'Error message',
       idList: [faker.random.uuid()],
     },
-    relatedPoLineInfo: { idList: [faker.random.uuid()] },
+    relatedPoLineInfo: {
+      idList: [faker.random.uuid()],
+      orderId: faker.random.uuid(),
+    },
     relatedInvoiceInfo: { idList: [faker.random.uuid()] },
     relatedInvoiceLineInfo: {
       id: faker.random.uuid(),
@@ -88,6 +99,14 @@ const itemsResources = buildResources({
   resourceName: 'items',
   records: [itemsJSONData],
 });
+const orderResources = buildResources({
+  resourceName: 'order',
+  records: [orderJSONData],
+});
+const poLineResources = buildResources({
+  resourceName: 'poLine',
+  records: [poLineJSONData],
+});
 const invoiceResources = buildResources({
   resourceName: 'invoice',
   records: [invoiceJSONData],
@@ -110,6 +129,8 @@ const getResources = ({
   ...instancesResources,
   ...holdingsResources,
   ...itemsResources,
+  ...orderResources,
+  ...poLineResources,
   ...invoiceResources,
   ...invoiceLineResources,
   ...authoritiesResources,
@@ -119,6 +140,8 @@ const mutator = buildMutator({
   instances: { GET: jest.fn() },
   holdings: { GET: jest.fn() },
   items: { GET: jest.fn() },
+  order: { GET: jest.fn() },
+  poLine: { GET: jest.fn() },
   invoice: { GET: jest.fn() },
   invoiceLine: { GET: jest.fn() },
   authorities: { GET: jest.fn() },
@@ -169,6 +192,8 @@ describe('View job log page', () => {
       expect(mutator.instances.GET).toHaveBeenCalled();
       expect(mutator.holdings.GET).toHaveBeenCalled();
       expect(mutator.items.GET).toHaveBeenCalled();
+      expect(mutator.order.GET).toHaveBeenCalled();
+      expect(mutator.poLine.GET).toHaveBeenCalled();
       expect(mutator.invoice.GET).toHaveBeenCalled();
       expect(mutator.invoiceLine.GET).toHaveBeenCalled();
       expect(mutator.authorities.GET).toHaveBeenCalled();
@@ -300,6 +325,28 @@ describe('View job log page', () => {
           const codeElement = container.querySelector('code.info');
 
           expect(JSON.parse(codeElement.textContent)).toEqual(authorityJSONData);
+        });
+      });
+
+      describe('and Order tag is active', () => {
+        it('should display Order Line JSON details on the screen', () => {
+          const { getByRole } = renderViewJobLog({ recordType: 'MARC' });
+          const orderTabElement = getByRole('tab', { name: 'Order' });
+
+          fireEvent.click(orderTabElement);
+          const orderLineCodeElement = document.querySelectorAll('code.info')[0];
+
+          expect(JSON.parse(orderLineCodeElement.textContent)).toEqual(poLineJSONData);
+        });
+
+        it('should display Order JSON details on the screen', () => {
+          const { getByRole } = renderViewJobLog({ recordType: 'MARC' });
+          const orderTabElement = getByRole('tab', { name: 'Order' });
+
+          fireEvent.click(orderTabElement);
+          const orderLineCodeElement = document.querySelectorAll('code.info')[1];
+
+          expect(JSON.parse(orderLineCodeElement.textContent)).toEqual(orderJSONData);
         });
       });
 
