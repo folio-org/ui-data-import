@@ -1,4 +1,5 @@
 import React from 'react';
+import { fireEvent } from '@testing-library/react';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -10,12 +11,15 @@ import {
 
 import { BooleanActionField } from './BooleanActionField';
 
+const onBooleanFieldChangeMock = jest.fn();
+
 const renderBooleanActionField = ({ placeholder }) => {
   const component = () => (
     <BooleanActionField
       label="testLabel"
       name="testField"
       placeholder={placeholder}
+      onBooleanFieldChange={onBooleanFieldChangeMock}
     />
   );
 
@@ -23,6 +27,10 @@ const renderBooleanActionField = ({ placeholder }) => {
 };
 
 describe('Boolean action field component', () => {
+  afterEach(() => {
+    onBooleanFieldChangeMock.mockClear();
+  });
+
   describe('when a form has wrapped component', () => {
     it('then the wrapped component should be rendered', () => {
       expect(renderBooleanActionField({})).toBeDefined();
@@ -48,6 +56,17 @@ describe('Boolean action field component', () => {
       const { getByText } = renderBooleanActionField({ placeholder: 'testPlaceholder' });
 
       expect(getByText('testPlaceholder')).toBeDefined();
+    });
+  });
+
+  describe('when select default value', () => {
+    it('function for changing value should be called', () => {
+      const { container } = renderBooleanActionField({ placeholder: 'testPlaceholder' });
+      const selectElement = container.querySelector('[name="testField"]');
+
+      fireEvent.change(selectElement, { target: { value: 'testPlaceholder' } });
+
+      expect(onBooleanFieldChangeMock).toHaveBeenCalled();
     });
   });
 });

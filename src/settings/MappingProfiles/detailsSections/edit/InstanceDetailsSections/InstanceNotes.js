@@ -21,7 +21,10 @@ import {
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileSubfieldShape } from '../../../../../utils';
 
-export const InstanceNotes = ({ notes }) => {
+export const InstanceNotes = ({
+  notes,
+  setReferenceTables,
+}) => {
   return (
     <Accordion
       id="instance-notes"
@@ -63,6 +66,7 @@ export const InstanceNotes = ({ notes }) => {
                   <BooleanActionField
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.notes.staffOnly`} />}
                     name={getBoolSubfieldName(27, 2, index)}
+                    onBooleanFieldChange={setReferenceTables}
                     disabled
                   />
                 </Col>
@@ -75,4 +79,7 @@ export const InstanceNotes = ({ notes }) => {
   );
 };
 
-InstanceNotes.propTypes = { notes: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired };
+InstanceNotes.propTypes = {
+  notes: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
+};

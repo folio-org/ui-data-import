@@ -11,6 +11,7 @@ import {
   RepeatableField,
   TextField,
 } from '@folio/stripes/components';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
   AcceptedValuesField,
@@ -183,6 +184,7 @@ export const DescriptiveData = ({
             repeatableFieldIndex={22}
             hasRepeatableFields={!!natureOfContentTermIds.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.INSTANCE.type}
           >
             {isDisabled => (
               <RepeatableField

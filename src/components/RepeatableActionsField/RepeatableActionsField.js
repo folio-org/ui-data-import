@@ -22,6 +22,8 @@ import {
   repeatableFieldActionShape,
 } from '../../utils';
 
+import { getInitialDetails } from '../../settings/MappingProfiles';
+
 import styles from './RepeatableActionsField.css';
 
 export const RepeatableActionsField = memo(({
@@ -36,6 +38,7 @@ export const RepeatableActionsField = memo(({
   actionToClearFields,
   subfieldsToClearPath,
   disabled,
+  recordType,
   children,
 }) => {
   const [isAddButtonDisabled, setIsAddButtonDisabled] = useState(false);
@@ -57,10 +60,16 @@ export const RepeatableActionsField = memo(({
   );
 
   const handleRepeatableActionChange = e => {
+    e.preventDefault();
     e.target.blur();
 
     if (e.target.value === actionToClearFields) {
       onRepeatableActionChange(subfieldsToClearPath || `profile.mappingDetails.mappingFields[${repeatableFieldIndex}].subfields`, []);
+    }
+
+    if (!e.target.value) {
+      const initialDetails = getInitialDetails(recordType, true).mappingFields[repeatableFieldIndex];
+      onRepeatableActionChange(`profile.mappingDetails.mappingFields[${repeatableFieldIndex}]`, initialDetails);
     }
   };
 
@@ -84,12 +93,11 @@ export const RepeatableActionsField = memo(({
         <WithTranslation
           wrapperLabel={wrapperPlaceholder}
         >
-          {placeholder => (
+          {label => (
             <Field
               name={wrapperFieldName}
               component={Select}
-              dataOptions={dataOptions}
-              placeholder={placeholder}
+              dataOptions={[{ label, value: '' }, ...dataOptions]}
               disabled={disabled}
               onChange={handleRepeatableActionChange}
               validate={[validateRepeatableActions]}
@@ -113,6 +121,7 @@ RepeatableActionsField.propTypes = {
   repeatableFieldIndex: PropTypes.number.isRequired,
   hasRepeatableFields: PropTypes.bool.isRequired,
   onRepeatableActionChange: PropTypes.func.isRequired,
+  recordType: PropTypes.string.isRequired,
   actions: PropTypes.arrayOf(repeatableFieldActionShape),
   actionToClearFields: PropTypes.string,
   subfieldsToClearPath: PropTypes.string,

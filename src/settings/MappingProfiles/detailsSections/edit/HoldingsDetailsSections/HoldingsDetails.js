@@ -10,6 +10,7 @@ import {
   RepeatableField,
   TextField,
 } from '@folio/stripes/components';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
   AcceptedValuesField,
@@ -78,6 +79,7 @@ export const HoldingsDetails = ({
             repeatableFieldIndex={16}
             hasRepeatableFields={!!holdingsStatements.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.HOLDINGS.type}
           >
             {isDisabled => (
               <RepeatableField
@@ -144,6 +146,7 @@ export const HoldingsDetails = ({
             repeatableFieldIndex={17}
             hasRepeatableFields={!!holdingsStatementsForSupplements.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.HOLDINGS.type}
           >
             {isDisabled => (
               <RepeatableField
@@ -210,6 +213,7 @@ export const HoldingsDetails = ({
             repeatableFieldIndex={18}
             hasRepeatableFields={!!holdingsStatementsForIndexes.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.HOLDINGS.type}
           >
             {isDisabled => (
               <RepeatableField
