@@ -415,23 +415,6 @@ export const ITEM_RESOURCE_PATHS = [
   'item.json',
 ];
 
-export const ORDER_RESOURCE_PATHS = [
-  'raml-util/schemas/metadata.schema',
-  'acq-models/mod-orders-storage/schemas/purchase_order.json',
-  'acq-models/mod-orders-storage/schemas/ongoing.json',
-  'acq-models/mod-orders-storage/schemas/po_line.json',
-  'acq-models/mod-orders-storage/schemas/details.json',
-  'acq-models/mod-orders-storage/schemas/product_identifier.json',
-  'acq-models/mod-orders-storage/schemas/contributor.json',
-  'acq-models/mod-orders-storage/schemas/receiving_history.json',
-  'acq-models/mod-orders-storage/schemas/cost.json',
-  'acq-models/mod-orders-storage/schemas/fund_distribution.json',
-  'acq-models/mod-orders-storage/schemas/location.json',
-  'acq-models/mod-orders-storage/schemas/physical.json',
-  'acq-models/mod-orders-storage/schemas/eresource.json',
-  'acq-models/mod-orders-storage/schemas/vendor_detail.json',
-];
-
 export const INVOICE_RESOURCE_PATHS = [
   'raml-util/schemas/metadata.schema',
   'acq-models/mod-invoice-storage/schemas/invoice.json',

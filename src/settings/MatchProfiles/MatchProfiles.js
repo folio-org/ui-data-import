@@ -25,7 +25,6 @@ import {
   INSTANCE_RESOURCE_PATHS,
   HOLDINGS_RESOURCE_PATHS,
   ITEM_RESOURCE_PATHS,
-  ORDER_RESOURCE_PATHS,
   INVOICE_RESOURCE_PATHS,
   ACQ_DATA_RESOURCE_PATHS,
   FIND_ALL_CQL,
@@ -373,7 +372,6 @@ export class MatchProfiles extends Component {
       const requestsToInstance = INSTANCE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
       const requestsToHoldings = HOLDINGS_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
       const requestsToItem = ITEM_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
-      const requestsToOrder = ORDER_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
       const requestsToInvoice = INVOICE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, invoiceModuleVersion, okapi));
       const requestToAcquisitionsData = ACQ_DATA_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
 
@@ -383,7 +381,6 @@ export class MatchProfiles extends Component {
       await handleAllRequests(requestsToItem, 'ITEM', this.addToState);
       await handleAllRequests(requestToAcquisitionsData, 'INSTANCE', this.addToState);
       await handleAllRequests(requestToAcquisitionsData, 'ITEM', this.addToState);
-      await handleAllRequests(requestsToOrder, 'ORDER', this.addToState);
       await handleAllRequests(requestsToInvoice, 'INVOICE', this.addToState);
       await getIdentifierTypes(okapi).then(identifierTypes => this.setState({ identifierTypes }));
     }
