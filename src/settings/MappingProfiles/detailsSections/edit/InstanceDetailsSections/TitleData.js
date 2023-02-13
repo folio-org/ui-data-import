@@ -11,6 +11,7 @@ import {
   RepeatableField,
   TextField,
 } from '@folio/stripes/components';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import { RepeatableActionsField } from '../../../../../components';
 
@@ -141,6 +142,7 @@ export const TitleData = ({
             repeatableFieldIndex={14}
             hasRepeatableFields={!!precedingTitles.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.INSTANCE.type}
             disabled
           >
             {() => (
@@ -203,6 +205,7 @@ export const TitleData = ({
             repeatableFieldIndex={15}
             hasRepeatableFields={!!succeedingTitles.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.INSTANCE.type}
             disabled
           >
             {() => (

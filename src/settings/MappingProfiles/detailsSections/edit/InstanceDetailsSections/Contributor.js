@@ -21,7 +21,10 @@ import {
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileSubfieldShape } from '../../../../../utils';
 
-export const Contributor = ({ contributors }) => {
+export const Contributor = ({
+  contributors,
+  setReferenceTables,
+}) => {
   return (
     <Accordion
       id="contributors"
@@ -79,6 +82,7 @@ export const Contributor = ({ contributors }) => {
                   <BooleanActionField
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.contributors.field.primary`} />}
                     name={getBoolSubfieldName(17, 4, index)}
+                    onBooleanFieldChange={setReferenceTables}
                     disabled
                   />
                 </Col>
@@ -91,4 +95,7 @@ export const Contributor = ({ contributors }) => {
   );
 };
 
-Contributor.propTypes = { contributors: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired };
+Contributor.propTypes = {
+  contributors: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
+};

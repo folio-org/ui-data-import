@@ -15,6 +15,7 @@ export const BooleanActionField = ({
   name,
   label,
   placeholder,
+  onBooleanFieldChange,
   required,
   disabled,
 }) => {
@@ -28,6 +29,16 @@ export const BooleanActionField = ({
 
   const defaultPlaceholderId = 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping';
   const checkboxPlaceholder = placeholder || intl.formatMessage({ id: defaultPlaceholderId });
+  const defaultDataOption = { label: checkboxPlaceholder, value: '' };
+
+  const handleBooleanActionChange = e => {
+    e.preventDefault();
+    e.target.blur();
+
+    if (!e.target.value) {
+      onBooleanFieldChange(name, null);
+    }
+  };
 
   return (
     <Field
@@ -35,8 +46,8 @@ export const BooleanActionField = ({
       component={Select}
       name={name}
       label={label}
-      placeholder={checkboxPlaceholder}
-      dataOptions={dataOptions}
+      dataOptions={[defaultDataOption, ...dataOptions]}
+      onChange={handleBooleanActionChange}
       required={required}
       disabled={disabled}
     />
@@ -45,6 +56,7 @@ export const BooleanActionField = ({
 
 BooleanActionField.propTypes = {
   name: PropTypes.string.isRequired,
+  onBooleanFieldChange: PropTypes.func.isRequired,
   id: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   placeholder: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),

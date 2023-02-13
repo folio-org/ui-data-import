@@ -11,6 +11,7 @@ import {
   RepeatableField,
 } from '@folio/stripes/components';
 
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 import {
   RepeatableActionsField,
   WithValidation,
@@ -98,6 +99,7 @@ export const EnumerationData = ({
             repeatableFieldIndex={19}
             hasRepeatableFields={!!yearCaption.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.ITEM.type}
           >
             {isDisabled => (
               <RepeatableField

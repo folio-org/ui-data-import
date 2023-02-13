@@ -10,6 +10,7 @@ import {
   RepeatableField,
   TextField,
 } from '@folio/stripes/components';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
   BooleanActionField,
@@ -59,6 +60,7 @@ export const AdministrativeData = ({
           <BooleanActionField
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.discoverySuppress`} />}
             name={getBoolFieldName(0)}
+            onBooleanFieldChange={setReferenceTables}
           />
         </Col>
       </Row>
@@ -87,6 +89,7 @@ export const AdministrativeData = ({
             repeatableFieldIndex={2}
             hasRepeatableFields={!!formerIds.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.HOLDINGS.type}
           >
             {isDisabled => (
               <RepeatableField
@@ -151,6 +154,7 @@ export const AdministrativeData = ({
             repeatableFieldIndex={4}
             hasRepeatableFields={!!statisticalCodeIds.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.HOLDINGS.type}
           >
             {isDisabled => (
               <RepeatableField
@@ -205,6 +209,7 @@ export const AdministrativeData = ({
             repeatableFieldIndex={5}
             hasRepeatableFields={!!administrativeNotes.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.HOLDINGS.type}
           >
             {isDisabled => (
               <RepeatableField

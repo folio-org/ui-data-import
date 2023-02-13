@@ -10,6 +10,7 @@ import {
   RepeatableField,
   TextField,
 } from '@folio/stripes/components';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
   RepeatableActionsField,
@@ -58,6 +59,7 @@ export const InstanceRelationship = ({
             repeatableFieldIndex={31}
             hasRepeatableFields={!!parentInstances.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.INSTANCE.type}
           >
             {isDisabled => (
               <RepeatableField
@@ -120,6 +122,7 @@ export const InstanceRelationship = ({
             repeatableFieldIndex={32}
             hasRepeatableFields={!!childInstances.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.INSTANCE.type}
           >
             {isDisabled => (
               <RepeatableField

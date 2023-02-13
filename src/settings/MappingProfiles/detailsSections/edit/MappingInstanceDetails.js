@@ -82,6 +82,7 @@ export const MappingInstanceDetails = ({
         />
         <Contributor
           contributors={contributors}
+          setReferenceTables={setReferenceTables}
         />
         <DescriptiveData
           publications={publications}
@@ -99,6 +100,7 @@ export const MappingInstanceDetails = ({
         />
         <InstanceNotes
           notes={notes}
+          setReferenceTables={setReferenceTables}
         />
         <ElectronicAccess
           electronicAccess={electronicAccess}

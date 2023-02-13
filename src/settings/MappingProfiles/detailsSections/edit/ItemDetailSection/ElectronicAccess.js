@@ -10,6 +10,7 @@ import {
   TextField,
   RepeatableField,
 } from '@folio/stripes/components';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
   AcceptedValuesField,
@@ -56,6 +57,7 @@ export const ElectronicAccess = ({
             repeatableFieldIndex={32}
             hasRepeatableFields={!!electronicAccess.length}
             onRepeatableActionChange={setReferenceTables}
+            recordType={FOLIO_RECORD_TYPES.ITEM.type}
           >
             {isDisabled => (
               <RepeatableField
