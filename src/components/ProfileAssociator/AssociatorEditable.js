@@ -104,7 +104,7 @@ export const AssociatorEditable = memo(({
 
     newData.splice(index, 1);
     setCurrentData(newData);
-    onLink(newData);
+    onLink(composeRelations(newData));
     setPluginDisabled(isPluginDisabled(newData));
   };
 
