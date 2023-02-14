@@ -234,7 +234,7 @@ export const renderAmountValue = (amounValue, amountType, currency) => {
     <FormattedMessage id="stripes-acq-components.fundDistribution.type.sign.percent" /> :
     <CurrencySymbol currency={currency} />;
 
-  return <> {amounValue}{amountSymbol} </>;
+  return <> {amounValue.replace(/"/g, '')}{amountSymbol} </>;
 };
 
 export const renderCheckbox = (labelPathId, fieldValue) => (
