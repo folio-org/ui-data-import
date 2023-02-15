@@ -1134,5 +1134,7 @@
     "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "Požadováno, pokud je formát objednávky Elektronický zdroj nebo mix F/E; a Vytvořit katalog je Titul, holding, jednotka",
     "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "Dodatečné náklady",
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Povinné při vytváření jednotky",
-    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Požadováno při vytváření holdingů"
+    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Požadováno při vytváření holdingů",
+    "logViewer.order": "Objednávka",
+    "logViewer.orderLine": "Řádek objednávky"
 }

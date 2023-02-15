@@ -1134,5 +1134,7 @@
     "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "Necessário quando o formato do pedido é recurso eletrônico ou misto Impresso/Eletrônico; e Criar inventário é Instância, acervos, item",
     "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "Custo adicional",
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Necessário ao criar Item",
-    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Necessário ao criar Acervos"
+    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Necessário ao criar Acervos",
+    "logViewer.order": "Order",
+    "logViewer.orderLine": "Order line"
 }
