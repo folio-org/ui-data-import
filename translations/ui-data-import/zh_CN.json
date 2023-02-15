@@ -1134,5 +1134,7 @@
     "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "当订单格式为电子资源或实体/电子组合时必备；以及创建典藏为实例、持馆藏、单件时必备。",
     "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "附加费用",
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "创建单件时需要",
-    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "创建馆藏时需要"
+    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "创建馆藏时需要",
+    "logViewer.order": "Order",
+    "logViewer.orderLine": "Order line"
 }

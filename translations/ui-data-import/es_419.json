@@ -1134,5 +1134,7 @@
     "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "Obligatorio cuando Formato de pedido es Recurso electrónico o Mezcla P/E; y Crear inventario es Instancia, existencias, artículo",
     "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "Coste adicional",
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Obligatorio al crear un artículo",
-    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Obligatorio al crear Holdings"
+    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Obligatorio al crear Holdings",
+    "logViewer.order": "Order",
+    "logViewer.orderLine": "Order line"
 }
