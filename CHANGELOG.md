@@ -50,6 +50,7 @@
 * Order field mapping profile: Show the expense class and code when default expense class is selected (UIDATIMP-1368)
 * "parentProfiles" and "childProfiles" properties are populated on profile update that causes to size-bloat (UIDATIMP-1369)
 * Order line field mapping: Fix organizations on edit screen (UIDATIMP-1371)
+* Add permission for viewing Order and Order lines on JSON tab in DI Settings (UIDATIMP-1376)
 
 ## [5.3.10](https://github.com/folio-org/ui-data-import/tree/v5.3.10) (2022-12-05)
 

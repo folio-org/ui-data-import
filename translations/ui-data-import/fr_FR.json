@@ -1134,5 +1134,7 @@
     "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "Required when Order format is Electronic resource or P/E mix; and Create inventory is Instance, holdings, item",
     "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "Coût supplémentaire",
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Required when creating Item",
-    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Required when creating Holdings"
+    "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Required when creating Holdings",
+    "logViewer.order": "Order",
+    "logViewer.orderLine": "Order line"
 }
