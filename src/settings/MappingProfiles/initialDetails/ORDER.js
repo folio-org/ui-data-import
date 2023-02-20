@@ -180,6 +180,7 @@ const ORDER = {
       fields: [{
         name: 'productId',
         enabled: true,
+        required: true,
         path: 'order.poLine.details.productIds[].productId',
         value: '',
       }, {

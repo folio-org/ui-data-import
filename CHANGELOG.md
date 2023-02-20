@@ -29,6 +29,7 @@
 * Bump `stripes-*` and upgrade `react-redux` to `v8` (UIDATIMP-1353)
 * Ensure accepted values property for "Contributor type" field mapping (UIDATIMP-1361)
 * Adjust UI permission for DI Settings (UIDATIMP-1375)
+* Provide "required" property for "productId" field mapping (UIDATIMP-1380)
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
