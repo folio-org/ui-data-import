@@ -26,7 +26,7 @@ const wrapper = ({ children }) => (
 const organization = {
   id: faker.random.uuid(),
   code: 'AMAZ',
-  name: 'Amazon',
+  name: '"Amazon"',
 };
 
 describe('useOrganizationValue', () => {

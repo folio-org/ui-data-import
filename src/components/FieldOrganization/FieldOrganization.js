@@ -26,16 +26,18 @@ const FieldOrganization = ({
   id,
   mutator,
   validate,
+  mappingValue,
 }) => {
   const [selectedOrganization, setSelectedOrganization] = useState(null);
   const [isClearButtonVisible, setIsClearButtonVisible] = useState(!!id);
+  const [mappingQuery, setMappingQuery] = useState(mappingValue || '');
 
-  const selectOrganization = useCallback(organization => {
+  const selectOrganization = organization => {
     onSelect?.(organization);
     setSelectedOrganization(organization);
-    setReferenceTables(name, `"${organization.id}"`);
+    setReferenceTables(name, `${mappingQuery}"${organization.id}"`);
     setIsClearButtonVisible(true);
-  }, [name]); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
   useEffect(() => {
     if (id) {
@@ -50,7 +52,7 @@ const FieldOrganization = ({
 
   const clearOrganization = useCallback(() => {
     setSelectedOrganization(null);
-
+    setMappingQuery('');
     setReferenceTables(name, '');
     setIsClearButtonVisible(false);
   }, [name]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -64,14 +66,26 @@ const FieldOrganization = ({
       />)
     : null;
 
-  const handleFieldFormat = useCallback(
-    value => (selectedOrganization ? selectedOrganization.name : value),
-    [selectedOrganization],
-  );
-  const handleFieldChange = useCallback(
-    e => setIsClearButtonVisible(!!e.target.value),
-    [],
-  );
+  const handleFieldFormat = useCallback(value => {
+    const mappingQueryFromValue = value?.substring(0, value.indexOf('"')) || '';
+
+    return (selectedOrganization ? `${mappingQueryFromValue}"${selectedOrganization?.name}"` : value);
+  }, [selectedOrganization]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleFieldChange = e => {
+    e.preventDefault();
+    const organizationNameFromValue = e.target.value.match(selectedOrganization?.name)[0];
+
+    if (organizationNameFromValue === selectedOrganization?.name) {
+      const mappingQueryFromValue = e.target.value.substring(0, e.target.value.indexOf('"')) || '';
+      setMappingQuery(mappingQueryFromValue);
+      setReferenceTables(name, `${mappingQueryFromValue}"${selectedOrganization.id}"`);
+    } else {
+      setMappingQuery(e.target.value);
+      setReferenceTables(name, e.target.value);
+    }
+    setIsClearButtonVisible(!!e.target.value);
+  };
 
   return (
     <div>
@@ -88,6 +102,7 @@ const FieldOrganization = ({
         validate={validate}
         format={handleFieldFormat}
         onChange={handleFieldChange}
+        onBlur={e => e.preventDefault()}
       />
       <div>
         <Pluggable
@@ -119,6 +134,7 @@ FieldOrganization.propTypes = {
   name: PropTypes.string,
   required: PropTypes.bool,
   validate: PropTypes.func,
+  mappingValue: PropTypes.string,
 };
 
 FieldOrganization.defaultProps = {

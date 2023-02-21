@@ -52,7 +52,7 @@ describe('FieldOrganization component', () => {
     it('should render selected organization', async () => {
       const { findByDisplayValue } = renderFieldOrganization({ id: '1' });
 
-      const inputValue = await findByDisplayValue('org 1');
+      const inputValue = await findByDisplayValue('"org 1"');
 
       expect(inputValue).toBeDefined();
     });
@@ -76,7 +76,7 @@ describe('FieldOrganization component', () => {
         container,
       } = renderFieldOrganization({ id: '1' });
 
-      const inputValue = await findByDisplayValue('org 1');
+      const inputValue = await findByDisplayValue('"org 1"');
 
       expect(inputValue).toBeDefined();
 
@@ -97,10 +97,21 @@ describe('FieldOrganization component', () => {
 
       Pluggable.mock.calls[0][0].selectVendor({ name: 'org 2' });
 
-      const inputValue = await findByDisplayValue('org 2');
+      const inputValue = await findByDisplayValue('"org 2"');
 
       expect(inputValue).toBeDefined();
       expect(onSelect).toHaveBeenCalled();
+    });
+  });
+
+  describe('when input only mapping query', () => {
+    it('should render the proper value', () => {
+      const { container } = renderFieldOrganization({});
+
+      const input = container.querySelector('[id="org"]');
+      fireEvent.change(input, { target: { value: '245$a' } });
+
+      expect(input.value).toBe('245$a');
     });
   });
 });
