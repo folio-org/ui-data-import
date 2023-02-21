@@ -41,6 +41,7 @@
 * Error after selecting order option on field mapping profile (UIDATIMP-1344)
 * Error after selecting order option on field mapping profile: Part 2 (UIDATIMP-1346)
 * Receiving value disappears from Order field mapping profile after default order line limit updated (UIDATIMP-1348)
+* Error when saving a field mapping profile with some (not all) of related action profiles unlinked (UIDATIMP-1350)
 * Data Import Field Mappings (Item, Holdings, Instance) Inability to go back to defaults (UIDATIMP-1357)
 * Empty Order type after switching to another FOLIO record type on existing order field mapping profile (UIDATIMP-1359)
 * Order field mapping profile: Update the list of product identifier types (UIDATIMP-1362)
@@ -50,6 +51,7 @@
 * Order field mapping profile: Show the expense class and code when default expense class is selected (UIDATIMP-1368)
 * "parentProfiles" and "childProfiles" properties are populated on profile update that causes to size-bloat (UIDATIMP-1369)
 * Order line field mapping: Fix organizations on edit screen (UIDATIMP-1371)
+* Add permission for viewing Order and Order lines on JSON tab in DI Settings (UIDATIMP-1376)
 
 ## [5.3.10](https://github.com/folio-org/ui-data-import/tree/v5.3.10) (2022-12-05)
 

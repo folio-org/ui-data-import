@@ -1,4 +1,5 @@
 import React from 'react';
+import faker from 'faker';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   act,
@@ -9,7 +10,10 @@ import { noop } from 'lodash';
 import '../../../../test/jest/__mock__';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+import {
+  ACTION_TYPES,
+  FOLIO_RECORD_TYPES,
+} from '@folio/stripes-data-transfer-components';
 
 import {
   renderWithReduxForm,
@@ -19,22 +23,67 @@ import {
 import { MappingProfilesForm } from '../MappingProfilesForm';
 
 import { getInitialDetails } from '../initialDetails';
+import {
+  LAYER_TYPES,
+  PROFILE_TYPES,
+} from '../../../utils';
 
 const mappingDetailsProp = getInitialDetails(FOLIO_RECORD_TYPES.INVOICE.type);
+const metadataMock = {
+  createdByUserId: faker.random.uuid(),
+  createdDate: '2023-02-16T21:48:26.558+00:00',
+  updatedByUserId: faker.random.uuid(),
+  updatedDate: '2023-02-16T21:48:26.558+00:00',
+};
+const userInfoMock = {
+  firstName: 'FirstName',
+  lastName: 'LastName',
+  userName: 'user_name',
+};
+const handleSubmit = jest.fn();
+const mappingProfileName = 'test mapping profile form';
+const associatedProfileName1 = 'associated action 1';
+const associatedProfileName2 = 'associated action 2';
 const mappingProfilesFormProps = {
-  handleSubmit: noop,
   initialValues: {
-    addedRelations: [],
-    deletedRelations: [],
-    id: null,
-    profile: {
-      description: '',
-      existingRecordType: '',
-      incomingRecordType: '',
-      mappingDetails: {},
-      name: '',
-    },
+    id: faker.random.uuid(),
+    description: '',
+    existingRecordType: '',
+    incomingRecordType: '',
+    mappingDetails: {},
+    name: mappingProfileName,
+    parentProfiles: [
+      {
+        id: faker.random.uuid(),
+        contentType: PROFILE_TYPES.ACTION_PROFILE,
+        order: 0,
+        content: {
+          id: faker.random.uuid(),
+          name: associatedProfileName1,
+          action: ACTION_TYPES.CREATE.type,
+          folioRecord: FOLIO_RECORD_TYPES.ITEM.type,
+          metadata: metadataMock,
+          userInfo: userInfoMock,
+        },
+      },
+      {
+        id: faker.random.uuid(),
+        contentType: PROFILE_TYPES.ACTION_PROFILE,
+        order: 1,
+        content: {
+          id: faker.random.uuid(),
+          name: associatedProfileName2,
+          action: ACTION_TYPES.CREATE.type,
+          folioRecord: FOLIO_RECORD_TYPES.ITEM.type,
+          metadata: metadataMock,
+          userInfo: userInfoMock,
+        },
+      },
+    ],
+    childProfiles: [],
+    metadata: metadataMock,
   },
+  layerType: LAYER_TYPES.EDIT,
   location: { search: '?layer=create&sort=name' },
   mappingMarcFieldProtectionFields: [],
   onCancel: noop,
@@ -49,8 +98,8 @@ const renderMappingProfilesForm = ({
   initialValues,
   parentResources,
   mappingMarcFieldProtectionFields,
+  layerType,
   location,
-  handleSubmit,
   onCancel,
 }) => {
   const component = () => (
@@ -62,6 +111,7 @@ const renderMappingProfilesForm = ({
         mappingDetails={mappingDetailsProp}
         parentResources={parentResources}
         mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
+        layerType={layerType}
         location={location}
         handleSubmit={handleSubmit}
         oncancel={onCancel}
@@ -77,10 +127,13 @@ const spyConsoleError = jest.spyOn(console, 'error').mockImplementation(noop);
 describe('<MappingProfilesForm>', () => {
   afterAll(() => {
     spyConsoleError.mockRestore();
+    handleSubmit.mockRestore();
   });
 
   it('should render correctly', () => {
-    renderMappingProfilesForm(mappingProfilesFormProps);
+    const { getByText } = renderMappingProfilesForm(mappingProfilesFormProps);
+
+    expect(getByText(`Edit ${mappingProfileName}`)).toBeInTheDocument();
   });
 
   describe('when "Folio record type" is "Marc Bibliographic"', () => {
@@ -126,6 +179,54 @@ describe('<MappingProfilesForm>', () => {
         // eslint-disable-next-line no-irregular-whitespace
         expect(getByRole('button', { name: /field mapping · marc bibliographic · modifications/i })).toBeInTheDocument();
       });
+    });
+  });
+
+  it('should render associations', () => {
+    const { getByText } = renderMappingProfilesForm(mappingProfilesFormProps);
+
+    expect(getByText(associatedProfileName1)).toBeInTheDocument();
+    expect(getByText(associatedProfileName2)).toBeInTheDocument();
+  });
+
+  describe('when unlinking associated profiles', () => {
+    it('should display the modal', () => {
+      const {
+        getByText,
+        getAllByTitle,
+      } = renderMappingProfilesForm(mappingProfilesFormProps);
+
+      fireEvent.click(getAllByTitle('Unlink this profile')[0]);
+
+      expect(getByText('Confirm removal')).toBeInTheDocument();
+    });
+
+    it('and unlink profile on confirm', () => {
+      const {
+        getByText,
+        getAllByTitle,
+        queryByText,
+      } = renderMappingProfilesForm(mappingProfilesFormProps);
+
+      fireEvent.click(getAllByTitle('Unlink this profile')[0]);
+      fireEvent.click(getByText('Confirm'));
+
+      expect(queryByText(associatedProfileName1)).not.toBeInTheDocument();
+    });
+  });
+
+  describe('when saving the form', () => {
+    it('should call handleSubmit func', () => {
+      const {
+        container,
+        getByText,
+      } = renderMappingProfilesForm(mappingProfilesFormProps);
+      const nameInput = container.querySelector('[name="profile.name"]');
+
+      fireEvent.change(nameInput, { target: { value: 'testName' } });
+      fireEvent.click(getByText('Save as profile & Close'));
+
+      expect(handleSubmit).toHaveBeenCalled();
     });
   });
 });
