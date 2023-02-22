@@ -26,7 +26,7 @@ const wrapper = ({ children }) => (
 const organization = {
   id: faker.random.uuid(),
   code: 'AMAZ',
-  name: '"Amazon"',
+  name: 'Amazon',
 };
 
 describe('useOrganizationValue', () => {
@@ -45,7 +45,7 @@ describe('useOrganizationValue', () => {
 
     await waitFor(() => !result.current.isLoading);
 
-    expect(result.current.organization).toEqual(organization.name);
+    expect(result.current.organization).toEqual('"Amazon"');
     expect(mockGet).toHaveBeenCalledWith(`${VENDORS_API}/${organization.id}`);
   });
 
