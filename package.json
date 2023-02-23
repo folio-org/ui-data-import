@@ -311,7 +311,8 @@
           "batch-groups.collection.get",
           "finance.funds.collection.get",
           "finance.expense-classes.collection.get",
-          "organizations.organizations.collection.get"
+          "organizations.organizations.collection.get",
+          "ui-orders.orders.view"
         ],
         "visible": true
       },
