@@ -55,6 +55,7 @@
 * Order line field mapping: Fix organizations on edit screen (UIDATIMP-1371)
 * Add permission for viewing Order and Order lines on JSON tab in DI Settings (UIDATIMP-1376)
 * Add permission for viewing adding Acquisition Methods on Field mapping profiles (UIDATIMP-1381)
+* Override purchase order lines limit setting field allows saving fractional numbers (UIDATIMP-1383)
 
 ## [5.3.10](https://github.com/folio-org/ui-data-import/tree/v5.3.10) (2022-12-05)
 

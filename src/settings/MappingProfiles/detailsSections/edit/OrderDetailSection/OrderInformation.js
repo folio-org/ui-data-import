@@ -189,6 +189,27 @@ const OrderInformationComponent = ({
     [ORDER_INFO_FIELDS_MAP.NOTES, notes, setReferenceTables],
   );
 
+  const validateIntegers = useCallback(
+    value => {
+      if (!value) {
+        return undefined;
+      }
+
+      if ((value.charAt(0) !== '"') || (value.charAt(value.length - 1) !== '"')) {
+        return <FormattedMessage id="ui-data-import.validation.quotationError" />;
+      }
+
+      const pattern = /^"([1-9][0-9]{0,2})"$/;
+
+      if (!value?.match(pattern)) {
+        return <FormattedMessage id="ui-data-import.validation.integer" />;
+      }
+
+      return undefined;
+    },
+    [],
+  );
+
   return (
     <Accordion
       id="order-information"
@@ -231,16 +252,12 @@ const OrderInformationComponent = ({
           />
         </Col>
         <Col xs={4}>
-          <WithValidation>
-            {validation => (
-              <Field
-                component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.overridePurchaseOrderLinesLimitSetting`} />}
-                name={ORDER_INFO_FIELDS_MAP.OVERRIDE_PO_LINES_LIMIT}
-                validate={[validation]}
-              />
-            )}
-          </WithValidation>
+          <Field
+            component={TextField}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.overridePurchaseOrderLinesLimitSetting`} />}
+            name={ORDER_INFO_FIELDS_MAP.OVERRIDE_PO_LINES_LIMIT}
+            validate={[validateIntegers]}
+          />
         </Col>
       </Row>
       <Row left="xs">
