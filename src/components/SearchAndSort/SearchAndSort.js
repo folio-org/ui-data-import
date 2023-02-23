@@ -264,15 +264,9 @@ export class SearchAndSort extends Component {
   }
 
   setInitialSortQueryParam() {
-    const {
-      defaultSort,
-      location: { search },
-    } = this.props;
+    const { defaultSort } = this.props;
 
-    const queryParams = queryString.parse(search);
-    const sortOrder = queryParams.sort || defaultSort;
-
-    this.transitionToParams({ sort: sortOrder });
+    this.transitionToParams({ sort: defaultSort });
   }
 
   focusSearchField = () => {
@@ -390,9 +384,12 @@ export class SearchAndSort extends Component {
   }
 
   navigateToRecordsList = () => {
-    const { match: { path } } = this.props;
+    const {
+      match: { path },
+      defaultSort,
+    } = this.props;
 
-    this.transitionToParams({ _path: `${path}` });
+    this.transitionToParams({ _path: `${path}`, sort: defaultSort });
   }
 
   collapseRecordDetails = () => {

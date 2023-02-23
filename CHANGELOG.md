@@ -29,11 +29,13 @@
 * Bump `stripes-*` and upgrade `react-redux` to `v8` (UIDATIMP-1353)
 * Ensure accepted values property for "Contributor type" field mapping (UIDATIMP-1361)
 * Adjust UI permission for DI Settings (UIDATIMP-1375)
+* Provide "required" property for "productId" field mapping (UIDATIMP-1380)
 
 ### Bugs fixed:
 * Invoice field mapping profile: Vendor name lookup is hidden (UIDATIMP-1290)
 * Order and Order line field mapping: View screen updates (UIDATIMP-1304)
 * Order and Order line field mapping: Create/Edit screen updates (UIDATIMP-1305)
+* Data Import profiles not in alpha order (UIDATIMP-1330)
 * Accessibility errors: Data Import Field mapping Orders View screen (UIDATIMP-1332)
 * Error during switching between record types on field mapping profile form: Part 2 (UIDATIMP-1334)
 * Data import tries to load notes json schema that doesn't exist (UIDATIMP-1339)
