@@ -199,7 +199,7 @@ const OrderInformationComponent = ({
         return <FormattedMessage id="ui-data-import.validation.quotationError" />;
       }
 
-      const pattern = /^"([1-9][0-9]{0,2})"$/;
+      const pattern = /^"([1-9]\d{0,2})"$/;
 
       if (!value?.match(pattern)) {
         return <FormattedMessage id="ui-data-import.validation.integer" />;
