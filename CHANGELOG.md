@@ -48,6 +48,7 @@
 * Empty Order type after switching to another FOLIO record type on existing order field mapping profile (UIDATIMP-1359)
 * Order field mapping profile: Update the list of product identifier types (UIDATIMP-1362)
 * "Something went wrong" error message appears after trying to reach JSON tab (UIDATIMP-1363)
+* Order field mapping: Vendor field error message (UIDATIMP-1366)
 * Order field mapping profile: Show the fund and code when default fund is selected (UIDATIMP-1367)
 * Order field mapping profile: Show the expense class and code when default expense class is selected (UIDATIMP-1368)
 * "parentProfiles" and "childProfiles" properties are populated on profile update that causes to size-bloat (UIDATIMP-1369)

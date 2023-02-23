@@ -45,7 +45,7 @@ describe('useOrganizationValue', () => {
 
     await waitFor(() => !result.current.isLoading);
 
-    expect(result.current.organization).toEqual(organization.name);
+    expect(result.current.organization).toEqual('"Amazon"');
     expect(mockGet).toHaveBeenCalledWith(`${VENDORS_API}/${organization.id}`);
   });
 
