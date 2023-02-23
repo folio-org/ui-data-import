@@ -57,6 +57,7 @@ const OrderInformationComponent = ({
   manualPOCheckbox,
   notes,
   filledVendorId,
+  mappingValue,
   assignedToId,
   initialFields,
   setReferenceTables,
@@ -297,6 +298,7 @@ const OrderInformationComponent = ({
             {validation => (
               <FieldOrganization
                 id={filledVendorId}
+                mappingValue={mappingValue}
                 setReferenceTables={setReferenceTables}
                 name={ORDER_INFO_FIELDS_MAP.VENDOR}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.vendor`} />}
@@ -496,6 +498,7 @@ OrderInformationComponent.propTypes = {
   onOrganizationSelect: PropTypes.func,
   notes: PropTypes.arrayOf(PropTypes.object),
   filledVendorId: PropTypes.string,
+  mappingValue: PropTypes.string,
   assignedToId: PropTypes.string,
   billToValue: PropTypes.string,
   shipToValue: PropTypes.string,
