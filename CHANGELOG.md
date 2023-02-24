@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **6.0.0** (in progress)
+## [6.0.0](https://github.com/folio-org/ui-data-import/tree/v6.0.0) (2023-02-24)
 
 ### Features added:
 * Field Mapping Profile details: Order PO & POL from MARC Bib (Create/Edit) (UIDATIMP-294)
