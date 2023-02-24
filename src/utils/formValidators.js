@@ -481,3 +481,48 @@ export const validateQuotedString = value => {
 
   return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
 };
+
+/**
+ * Validate the whole numbers greater than 0 and less than 1000 wrapped in
+ * the quotation marks
+ *
+ * @param value
+ * @returns {JSX.Element|undefined}
+ *
+ * @example
+ *
+ * validateIntegers("999")
+ * // => undefined
+ *
+ * validateIntegers(999)
+ * // => Translated string (en = 'Non-MARC value must use quotation marks')
+ *
+ * validateIntegers("2.5")
+ * // => Translated string (en = 'Please enter a whole number greater than 0 and less than 1000 to continue')
+ *
+ * validateIntegers("text")
+ * // => Translated string (en = 'Please enter a whole number greater than 0 and less than 1000 to continue')
+ *
+ * validateIntegers("0")
+ * // => Translated string (en = 'Please enter a whole number greater than 0 and less than 1000 to continue')
+ *
+ * validateIntegers("1000")
+ * // => Translated string (en = 'Please enter a whole number greater than 0 and less than 1000 to continue')
+ */
+export const validateIntegers = value => {
+  if (!value || !value.length) {
+    return undefined;
+  }
+
+  if ((value.charAt(0) !== '"') || (value.charAt(value.length - 1) !== '"')) {
+    return <FormattedMessage id="ui-data-import.validation.quotationError" />;
+  }
+
+  const pattern = /^"([1-9]\d{0,2})"$/;
+
+  if (!value.match(pattern)) {
+    return <FormattedMessage id="ui-data-import.validation.integer" />;
+  }
+
+  return undefined;
+};

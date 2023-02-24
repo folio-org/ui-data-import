@@ -132,6 +132,60 @@ describe('OrderInformation', () => {
     expect(within(queryByText('Order type')).getByText(/\*/i)).toBeDefined();
   });
 
+  describe('should render validation error message when "Override purchase order lines limit setting" field value', () => {
+    it('is not wrapped into quotation marks', () => {
+      const {
+        getByText,
+        getByLabelText,
+      } = renderOrderInformation();
+
+      const overrideLimitField = getByLabelText('Override purchase order lines limit setting');
+      fireEvent.change(overrideLimitField, { target: { value: '25' } });
+      fireEvent.blur(overrideLimitField);
+
+      expect(getByText('Non-MARC value must use quotation marks')).toBeInTheDocument();
+    });
+
+    it('is less than 1', () => {
+      const {
+        getByText,
+        getByLabelText,
+      } = renderOrderInformation();
+
+      const overrideLimitField = getByLabelText('Override purchase order lines limit setting');
+      fireEvent.change(overrideLimitField, { target: { value: '"0"' } });
+      fireEvent.blur(overrideLimitField);
+
+      expect(getByText('Please enter a whole number greater than 0 and less than 1000 to continue')).toBeInTheDocument();
+    });
+
+    it('is greater than 999', () => {
+      const {
+        getByText,
+        getByLabelText,
+      } = renderOrderInformation();
+
+      const overrideLimitField = getByLabelText('Override purchase order lines limit setting');
+      fireEvent.change(overrideLimitField, { target: { value: '"1000"' } });
+      fireEvent.blur(overrideLimitField);
+
+      expect(getByText('Please enter a whole number greater than 0 and less than 1000 to continue')).toBeInTheDocument();
+    });
+
+    it('is fractional', () => {
+      const {
+        getByText,
+        getByLabelText,
+      } = renderOrderInformation();
+
+      const overrideLimitField = getByLabelText('Override purchase order lines limit setting');
+      fireEvent.change(overrideLimitField, { target: { value: '"2.5"' } });
+      fireEvent.blur(overrideLimitField);
+
+      expect(getByText('Please enter a whole number greater than 0 and less than 1000 to continue')).toBeInTheDocument();
+    });
+  });
+
   describe('when click on "Approved" checkbox', () => {
     it('checkbox should be checked', () => {
       const { getByLabelText } = renderOrderInformation();
