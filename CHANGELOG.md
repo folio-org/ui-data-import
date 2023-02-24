@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **6.0.1** (in progress)
+
+### Bugs fixed:
+* Override purchase order lines limit setting field allows saving fractional numbers (UIDATIMP-1383)
+
 ## [6.0.0](https://github.com/folio-org/ui-data-import/tree/v6.0.0) (2023-02-24)
 
 ### Features added:

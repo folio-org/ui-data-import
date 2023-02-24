@@ -48,6 +48,7 @@ import {
 import {
   BOOLEAN_ACTIONS,
   validateRequiredField,
+  validateIntegers,
 } from '../../../../../utils';
 
 const OrderInformationComponent = ({
@@ -231,16 +232,12 @@ const OrderInformationComponent = ({
           />
         </Col>
         <Col xs={4}>
-          <WithValidation>
-            {validation => (
-              <Field
-                component={TextField}
-                label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.overridePurchaseOrderLinesLimitSetting`} />}
-                name={ORDER_INFO_FIELDS_MAP.OVERRIDE_PO_LINES_LIMIT}
-                validate={[validation]}
-              />
-            )}
-          </WithValidation>
+          <Field
+            component={TextField}
+            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.overridePurchaseOrderLinesLimitSetting`} />}
+            name={ORDER_INFO_FIELDS_MAP.OVERRIDE_PO_LINES_LIMIT}
+            validate={[validateIntegers]}
+          />
         </Col>
       </Row>
       <Row left="xs">
