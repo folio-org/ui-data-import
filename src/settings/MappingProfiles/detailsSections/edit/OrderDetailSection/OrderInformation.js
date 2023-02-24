@@ -48,6 +48,7 @@ import {
 import {
   BOOLEAN_ACTIONS,
   validateRequiredField,
+  validateIntegers,
 } from '../../../../../utils';
 
 const OrderInformationComponent = ({
@@ -187,27 +188,6 @@ const OrderInformationComponent = ({
       return onRemove(index, notes, ORDER_INFO_FIELDS_MAP.NOTES, setReferenceTables, 'order');
     },
     [ORDER_INFO_FIELDS_MAP.NOTES, notes, setReferenceTables],
-  );
-
-  const validateIntegers = useCallback(
-    value => {
-      if (!value) {
-        return undefined;
-      }
-
-      if ((value.charAt(0) !== '"') || (value.charAt(value.length - 1) !== '"')) {
-        return <FormattedMessage id="ui-data-import.validation.quotationError" />;
-      }
-
-      const pattern = /^"([1-9]\d{0,2})"$/;
-
-      if (!value?.match(pattern)) {
-        return <FormattedMessage id="ui-data-import.validation.integer" />;
-      }
-
-      return undefined;
-    },
-    [],
   );
 
   return (
