@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * Override purchase order lines limit setting field allows saving fractional numbers (UIDATIMP-1383)
+* Manual clearing of the Vendor/Material supplier/Access provider fields is not working properly (UIDATIMP-1388)
 
 ## [6.0.0](https://github.com/folio-org/ui-data-import/tree/v6.0.0) (2023-02-24)
 

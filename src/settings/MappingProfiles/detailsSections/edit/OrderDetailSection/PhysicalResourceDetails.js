@@ -39,6 +39,7 @@ import { validateMARCWithDate } from '../../../../../utils';
 export const PhysicalResourceDetails = ({
   volumes,
   materialSupplierId,
+  mappingValue,
   initialFields,
   setReferenceTables,
   okapi,
@@ -106,6 +107,7 @@ export const PhysicalResourceDetails = ({
             {validation => (
               <FieldOrganization
                 id={materialSupplierId}
+                mappingValue={mappingValue}
                 setReferenceTables={setReferenceTables}
                 name={PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.MATERIAL_SUPPLIER}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialSupplier`} />}
@@ -197,6 +199,7 @@ PhysicalResourceDetails.propTypes = {
   okapi: PropTypes.object.isRequired,
   volumes: PropTypes.arrayOf(PropTypes.object),
   materialSupplierId: PropTypes.string,
+  mappingValue: PropTypes.string,
 };
 
 PhysicalResourceDetails.defaultProps = {
