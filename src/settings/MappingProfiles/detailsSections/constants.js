@@ -22,6 +22,10 @@ export const RECEIPT_STATUS = {
   PENDING: 'Pending',
   NOT_REQUIRED: 'Receipt not required',
 };
+export const PAYMENT_STATUS = {
+  PENDING: 'Pending',
+  NOT_REQUIRED: 'Payment Not Required',
+};
 export const RECEIVING_WORKFLOW = {
   SYNCHRONIZED: 'Synchronized',
   INDEPENDENT: 'Independent',

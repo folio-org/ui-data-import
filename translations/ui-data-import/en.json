@@ -806,6 +806,7 @@
   "settings.mappingProfiles.map.order.poLineDetails.field.pending": "Pending",
   "settings.mappingProfiles.map.order.poLineDetails.field.receiptNotRequired": "Receipt not required",
   "settings.mappingProfiles.map.order.poLineDetails.field.paymentStatus": "Payment status",
+  "settings.mappingProfiles.map.order.poLineDetails.field.paymentNotRequired": "Payment not required",
   "settings.mappingProfiles.map.order.poLineDetails.field.source": "Source",
   "settings.mappingProfiles.map.order.poLineDetails.field.donor": "Donor",
   "settings.mappingProfiles.map.order.poLineDetails.field.selector": "Selector",
