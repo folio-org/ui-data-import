@@ -5,6 +5,7 @@
 ### Bugs fixed:
 * Error when saving a field mapping profile with some (not all) of related action profiles unlinked - Fixed (UIDATIMP-1350)
 * Override purchase order lines limit setting field allows saving fractional numbers (UIDATIMP-1383)
+* Order field mapping profile: Fix the values in the Payment status field (UIDATIMP-1386)
 
 ## [6.0.0](https://github.com/folio-org/ui-data-import/tree/v6.0.0) (2023-02-24)
 
