@@ -1,8 +1,14 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { CodeHighlight } from './CodeHighlight';
 import * as Languages from './Languages';
+
+expect.extend(toHaveNoViolations);
 
 const { LANGUAGES } = Languages;
 
@@ -31,6 +37,13 @@ const testItem = {
 };
 
 describe('CodeHighlight component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderCodeHighlight({});
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered', () => {
     const { getByText } = renderCodeHighlight({});
 

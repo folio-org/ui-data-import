@@ -1,5 +1,9 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -7,6 +11,8 @@ import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { GroupAction } from './GroupAction';
+
+expect.extend(toHaveNoViolations);
 
 const menu = { onToggle: jest.fn() };
 
@@ -26,6 +32,13 @@ const renderGroupActionItemTemplate = ({ selectedCount = 0 }) => {
 describe('Action menu GroupAction Item Template', () => {
   afterEach(() => {
     menu.onToggle.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderGroupActionItemTemplate({});
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should be rendered', () => {

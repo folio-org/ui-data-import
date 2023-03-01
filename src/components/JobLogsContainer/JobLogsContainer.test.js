@@ -1,6 +1,10 @@
 import React from 'react';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { noop } from 'lodash';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 import {
@@ -10,6 +14,8 @@ import {
 
 import JobLogsContainer from './JobLogsContainer';
 import { FILE_STATUSES } from '../../utils';
+
+expect.extend(toHaveNoViolations);
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -73,6 +79,13 @@ const renderJobLogsContainer = record => {
 };
 
 describe('Job Logs container', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobLogsContainer(successfulRecord);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered with child component', () => {
     const { getByText } = renderJobLogsContainer(successfulRecord);
 

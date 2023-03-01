@@ -3,6 +3,10 @@ import {
   render,
   waitFor,
 } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
 
@@ -12,6 +16,8 @@ import {
   DataFetcher,
   DataFetcherContext,
 } from '.';
+
+expect.extend(toHaveNoViolations);
 
 const reset = () => {};
 const successGET = () => new Promise((resolve, _) => process.nextTick(() => resolve()));
@@ -71,6 +77,14 @@ const renderDataFetcher = mutator => render(
 );
 
 describe('DataFetcher component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const mutator = buildMutator(reset, successGET);
+    const { container } = await renderDataFetcher(mutator);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   describe('when data is received successfully', () => {
     it('then child component should be rendered with correct data', async () => {
       const mutator = buildMutator(reset, successGET);

@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -6,6 +10,8 @@ import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { MappedHeader } from './MappedHeader';
+
+expect.extend(toHaveNoViolations);
 
 jest.mock('..', () => ({
   WithTranslation: ({
@@ -21,6 +27,13 @@ const renderMappedHeader = ({ headersToSeparate }) => {
 };
 
 describe('Mapped header component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappedHeader({ headersToSeparate: ['header1', 'header2', 'header3'] });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should display 1 header without separators', () => {
     const { getByText } = renderMappedHeader({ headersToSeparate: ['header1'] });
 

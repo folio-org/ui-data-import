@@ -1,5 +1,9 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../../test/jest/__mock__';
@@ -9,6 +13,8 @@ import {
 } from '../../../../../test/jest/helpers';
 
 import { ExistingSectionFolio } from './ExistingSectionFolio';
+
+expect.extend(toHaveNoViolations);
 
 const onChangeFormStateMock = jest.fn(value => value);
 const existingSectionFolioWithCorrectData = {
@@ -70,6 +76,13 @@ const renderExistingSectionFolio = ({
 describe('ExistingSectionFolio edit', () => {
   afterEach(() => {
     onChangeFormStateMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should render data options', () => {

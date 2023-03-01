@@ -4,6 +4,10 @@ import {
   waitFor,
   within,
 } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -18,6 +22,8 @@ import { Jobs } from './Jobs';
 
 import { JOB_STATUSES } from '../../utils';
 import * as API from '../../utils/upload';
+
+expect.extend(toHaveNoViolations);
 
 const mockDeleteFile = jest.spyOn(API, 'deleteFile').mockResolvedValue(true);
 
@@ -96,13 +102,20 @@ const renderJobs = (context = defaultContext) => {
   return renderWithIntl(renderWithRedux(component, initialStore), translationsProperties);
 };
 
-describe('Jobs', () => {
+describe('Jobs component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   afterAll(() => {
     delete global.fetch;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobs();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should contain "Running" section', () => {

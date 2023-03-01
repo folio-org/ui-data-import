@@ -1,5 +1,9 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -10,6 +14,8 @@ import {
 } from '../../../test/jest/helpers';
 
 import { MARCTable } from './MARCTable';
+
+expect.extend(toHaveNoViolations);
 
 const onChange = jest.fn();
 const initialFields = [
@@ -37,6 +43,13 @@ const renderMARCTable = (fields, columns) => {
 describe('MARC modifications table', () => {
   afterEach(() => {
     onChange.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMARCTable(initialFields, initialColumns);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   describe('when "Add new row" button clicked', () => {

@@ -1,5 +1,9 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../../test/jest/__mock__';
@@ -9,6 +13,8 @@ import {
 } from '../../../../../test/jest/helpers';
 
 import { QualifierSection } from './QualifierSection';
+
+expect.extend(toHaveNoViolations);
 
 const onChangeMock = jest.fn();
 const qualifierSection = {
@@ -45,6 +51,13 @@ const renderQualifierSection = ({
 describe('QualifierSection edit', () => {
   afterAll(() => {
     onChangeMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderQualifierSection(openedQualifierSection);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should be rendered with closed section content', () => {

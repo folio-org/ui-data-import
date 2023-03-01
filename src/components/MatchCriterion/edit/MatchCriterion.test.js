@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
@@ -8,6 +12,8 @@ import {
 } from '../../../../test/jest/helpers';
 
 import { MatchCriterion } from './MatchCriterion';
+
+expect.extend(toHaveNoViolations);
 
 jest.mock('.', () => ({
   MARCFieldSection: () => <span>MARCFieldSection</span>,
@@ -105,6 +111,13 @@ const renderMatchCriterion = ({
 };
 
 describe('MatchCriterion edit', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMatchCriterion({ ...matchCriterionProps('INSTANCE', 'MARC_BIBLIOGRAPHIC', 'BEGINS_WITH') });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered with a qualifier type', () => {
     const { getByText } = renderMatchCriterion({ ...matchCriterionProps('INSTANCE', 'MARC_BIBLIOGRAPHIC', 'BEGINS_WITH') });
 

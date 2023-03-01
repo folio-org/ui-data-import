@@ -1,11 +1,17 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { OptionsList } from './OptionsList';
+
+expect.extend(toHaveNoViolations);
 
 const onSelectMock = jest.fn(value => value);
 const notEmptyOptionsListProps = {
@@ -67,6 +73,13 @@ const renderOptionsList = ({
 describe('OptionsList', () => {
   afterAll(() => {
     onSelectMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderOptionsList(notEmptyOptionsListProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   describe('when there are options', () => {

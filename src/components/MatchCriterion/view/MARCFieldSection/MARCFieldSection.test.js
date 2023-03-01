@@ -1,10 +1,16 @@
 import React from 'react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../../test/jest/helpers';
 
 import { MARCFieldSection } from './MARCFieldSection';
+
+expect.extend(toHaveNoViolations);
 
 const marcFieldSection = {
   expressionDetails: {
@@ -53,6 +59,13 @@ const renderMARCFieldSection = ({
 };
 
 describe('MARCFieldSection view', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMARCFieldSection(marcFieldSection);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered with label', () => {
     const { getByText } = renderMARCFieldSection(marcFieldSection);
 

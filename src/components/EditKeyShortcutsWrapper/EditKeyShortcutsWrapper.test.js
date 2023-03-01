@@ -1,6 +1,9 @@
 import React from 'react';
-
 import { waitFor } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -13,6 +16,8 @@ import {
 } from '../../../test/jest/helpers';
 
 import { EditKeyShortcutsWrapper } from './EditKeyShortcutsWrapper';
+
+expect.extend(toHaveNoViolations);
 
 const {
   CommandList,
@@ -38,6 +43,13 @@ const renderEditKeyShortcutsWrapper = ({ onSubmit }) => {
 };
 
 describe('EditKeyShortcutsWrapper component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderEditKeyShortcutsWrapper({ onSubmit: mockOnSubmitProp });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should render children correctly', () => {
     const { getByText } = renderEditKeyShortcutsWrapper({ onSubmit: mockOnSubmitProp });
 

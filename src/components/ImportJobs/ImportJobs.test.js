@@ -3,6 +3,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { waitFor } from '@testing-library/react';
 import { noop } from 'lodash';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -13,6 +17,8 @@ import { ImportJobs } from './ImportJobs';
 import { ReturnToAssignJobs } from './components';
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
 import { translationsProperties } from '../../../test/jest/helpers';
+
+expect.extend(toHaveNoViolations);
 
 const mockOpenDialogWindow = jest.fn();
 
@@ -84,6 +90,13 @@ const renderImportJobs = context => {
 describe('Import Jobs component', () => {
   beforeEach(() => {
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = await renderImportJobs(defaultContext);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   describe('when is not loaded', () => {
