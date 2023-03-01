@@ -41,6 +41,7 @@ export const EResourcesDetails = ({
   activationStatusCheckbox,
   trialCheckbox,
   accessProviderId,
+  mappingValue,
   setReferenceTables,
   okapi,
 }) => {
@@ -99,6 +100,7 @@ export const EResourcesDetails = ({
             {validation => (
               <FieldOrganization
                 id={accessProviderId}
+                mappingValue={mappingValue}
                 setReferenceTables={setReferenceTables}
                 name={E_RESOURCES_DETAILS_FIELDS_MAP.ACCESS_PROVIDER}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.accessProvider`} />}
@@ -216,6 +218,7 @@ EResourcesDetails.propTypes = {
   activationStatusCheckbox: PropTypes.string,
   trialCheckbox: PropTypes.string,
   accessProviderId: PropTypes.string,
+  mappingValue: PropTypes.string,
 };
 
 EResourcesDetails.defaultProps = {

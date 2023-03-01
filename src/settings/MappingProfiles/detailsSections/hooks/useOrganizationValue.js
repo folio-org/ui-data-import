@@ -22,7 +22,9 @@ export const useOrganizationValue = orgId => {
     () => ky.get(`${VENDORS_API}/${id}`).json(),
     { enabled: Boolean(id) },
   );
-  const organizationName = mapping ? `${mapping}"${data?.name}"` : `"${data?.name}"`;
+
+  const organizationNameFromResponse = data?.name ? `"${data?.name}"` : '';
+  const organizationName = mapping ? `${mapping}${organizationNameFromResponse}` : organizationNameFromResponse;
 
   return ({
     organization: (orgId && !orgIdMatch) ? orgId : organizationName,
