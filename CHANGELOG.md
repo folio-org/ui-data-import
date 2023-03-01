@@ -3,6 +3,7 @@
 ## **6.0.1** (in progress)
 
 ### Bugs fixed:
+* Error when saving a field mapping profile with some (not all) of related action profiles unlinked - Fixed (UIDATIMP-1350)
 * Override purchase order lines limit setting field allows saving fractional numbers (UIDATIMP-1383)
 * Order field mapping profile: Fix the values in the Payment status field (UIDATIMP-1386)
 * Order import: creating an order with Receipt not required causes an error (UIDATIMP-1389)
