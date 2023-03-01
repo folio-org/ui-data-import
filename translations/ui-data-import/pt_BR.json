@@ -1136,5 +1136,7 @@
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Necessário ao criar Item",
     "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Necessário ao criar Coleções",
     "logViewer.order": "Ordem",
-    "logViewer.orderLine": "Linha de pedido"
+    "logViewer.orderLine": "Linha de pedido",
+    "validation.integer": "Favor inserir um número inteiro maior que 0 e menor que 1000 para continuar",
+    "settings.mappingProfiles.map.order.poLineDetails.field.paymentNotRequired": "Pagamento não obrigatório"
 }

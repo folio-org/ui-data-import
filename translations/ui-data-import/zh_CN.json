@@ -1135,6 +1135,8 @@
     "settings.mappingProfiles.map.order.costDetails.field.additionalCost": "附加费用",
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "创建单件时需要",
     "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "创建馆藏时需要",
-    "logViewer.order": "Order",
-    "logViewer.orderLine": "Order line"
+    "logViewer.order": "订单",
+    "logViewer.orderLine": "订单行",
+    "validation.integer": "Please enter a whole number greater than 0 and less than 1000 to continue",
+    "settings.mappingProfiles.map.order.poLineDetails.field.paymentNotRequired": "Payment not required"
 }
