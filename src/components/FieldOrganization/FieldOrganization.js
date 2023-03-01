@@ -74,12 +74,14 @@ const FieldOrganization = ({
 
   const handleFieldChange = e => {
     e.preventDefault();
-    const organizationNameFromValue = e.target.value.match(selectedOrganization?.name)[0];
+    const organizationNameMatch = e.target.value.match(`"${selectedOrganization?.name}"`);
+    const organizationNameWithQuotes = organizationNameMatch ? organizationNameMatch[0] : null;
+    const organizationNameFromValue = organizationNameWithQuotes?.replace(/['"]+/g, '');
 
-    if (organizationNameFromValue === selectedOrganization?.name) {
+    if (organizationNameFromValue && organizationNameFromValue === selectedOrganization?.name) {
       const mappingQueryFromValue = e.target.value.substring(0, e.target.value.indexOf('"')) || '';
       setMappingQuery(mappingQueryFromValue);
-      setReferenceTables(name, `${mappingQueryFromValue}"${selectedOrganization.id}"`);
+      setReferenceTables(name, `${mappingQueryFromValue}"${selectedOrganization?.id}"`);
     } else {
       setMappingQuery(e.target.value);
       setReferenceTables(name, e.target.value);

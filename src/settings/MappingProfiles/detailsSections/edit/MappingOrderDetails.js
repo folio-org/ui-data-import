@@ -19,14 +19,13 @@ import {
   EResourcesDetails,
 } from './OrderDetailSection';
 
-import {
-  TRANSLATION_ID_PREFIX,
-  UUID_IN_QUOTES_PATTERN,
-} from '../constants';
+import { TRANSLATION_ID_PREFIX } from '../constants';
 import {
   getRefValuesFromTables,
   getFieldValueFromDetails,
   getBoolFieldValueFromDetails,
+  getVendorId,
+  getMappingFromVendorDetails,
 } from '../utils';
 import {
   ACCESS_PROVIDER_FIELD,
@@ -72,17 +71,20 @@ export const MappingOrderDetails = ({
 
   const setExchangeRateValue = getFieldValueFromDetails(mappingDetails?.mappingFields, SET_EXCHANGE_RATE_FIELD);
   const currencyFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, CURRENCY_FIELD);
+
   const vendorFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, VENDOR_FIELD, false);
-  const vendorIdMatch = vendorFromDetails?.match(UUID_IN_QUOTES_PATTERN);
-  const filledVendorId = vendorIdMatch ? vendorIdMatch[1] : null;
-  const mapping = vendorFromDetails?.substring(0, vendorFromDetails.indexOf('"'));
+  const filledVendorId = getVendorId(vendorFromDetails);
+  const vendorMapping = getMappingFromVendorDetails(vendorFromDetails);
+
   const assignedToId = getFieldValueFromDetails(mappingDetails?.mappingFields, ASSIGNED_TO_FIELD);
+
   const materialSupplierFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, MATERIAL_SUPPLIER_FIELD, false);
-  const materialSupplierMatch = materialSupplierFromDetails?.match(UUID_IN_QUOTES_PATTERN);
-  const materialSupplierId = materialSupplierMatch ? materialSupplierMatch[1] : null;
+  const materialSupplierId = getVendorId(materialSupplierFromDetails);
+  const materialSupplierMapping = getMappingFromVendorDetails(materialSupplierFromDetails);
+
   const accessProviderFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, ACCESS_PROVIDER_FIELD, false);
-  const accessProviderMatch = accessProviderFromDetails?.match(UUID_IN_QUOTES_PATTERN);
-  const accessProviderId = accessProviderMatch ? accessProviderMatch[1] : null;
+  const accessProviderId = getVendorId(accessProviderFromDetails);
+  const accessProviderMapping = getMappingFromVendorDetails(accessProviderFromDetails);
 
   const onOrganizationSelect = organization => {
     if (organization?.accounts?.length) {
@@ -101,7 +103,7 @@ export const MappingOrderDetails = ({
         manualPOCheckbox={manualPOCheckbox}
         notes={notes}
         filledVendorId={filledVendorId}
-        mappingValue={mapping}
+        mappingValue={vendorMapping}
         assignedToId={assignedToId}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
@@ -152,6 +154,7 @@ export const MappingOrderDetails = ({
         <PhysicalResourceDetails
           volumes={volumes}
           materialSupplierId={materialSupplierId}
+          mappingValue={materialSupplierMapping}
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
@@ -160,6 +163,7 @@ export const MappingOrderDetails = ({
           activationStatusCheckbox={activationStatusCheckbox}
           trialCheckbox={trialCheckbox}
           accessProviderId={accessProviderId}
+          mappingValue={accessProviderMapping}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
         />
