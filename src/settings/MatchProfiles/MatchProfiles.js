@@ -55,6 +55,7 @@ const sortMap = {
   updated: 'metadata.updatedDate',
   updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
 };
+const defaultSort = 'name';
 
 const sectionInitialValues = {
   MARC_BIBLIOGRAPHIC: {
@@ -164,7 +165,7 @@ export const matchProfilesShape = {
   RESULT_COUNT_INCREMENT,
   manifest: {
     initializedFilterConfig: { initialValue: false },
-    query: { initialValue: {} },
+    query: { initialValue: { sort: defaultSort } },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     records: {
       type: 'okapi',
@@ -326,6 +327,7 @@ export class MatchProfiles extends Component {
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
     nonInteractiveHeaders: PropTypes.arrayOf(PropTypes.string),
     columnWidths: PropTypes.object,
+    defaultSort: PropTypes.string,
   };
 
   static defaultProps = {
@@ -346,6 +348,7 @@ export class MatchProfiles extends Component {
     ViewRecordComponent: ViewMatchProfile,
     CreateRecordComponent: CreateMatchProfile,
     EditRecordComponent: EditMatchProfile,
+    defaultSort,
   };
 
   state = {
