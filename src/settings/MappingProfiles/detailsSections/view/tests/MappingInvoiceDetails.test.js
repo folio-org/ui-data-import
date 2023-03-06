@@ -1,5 +1,9 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -7,6 +11,8 @@ import '../../../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../../../test/jest/helpers';
 
 import { MappingInvoiceDetails } from '../MappingInvoiceDetails';
+
+expect.extend(toHaveNoViolations);
 
 const mappingDetailsProp = [
   {
@@ -122,6 +128,14 @@ const renderMappingInvoiceDetails = () => {
 };
 
 describe('<MappingInvoiceDetails', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingInvoiceDetails();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should have correct sections', () => {
     const { getByRole } = renderMappingInvoiceDetails();
 

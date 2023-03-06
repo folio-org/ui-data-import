@@ -1,5 +1,9 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -7,6 +11,8 @@ import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { RecordTypesSelect } from './RecordTypesSelect';
+
+expect.extend(toHaveNoViolations);
 
 window.ResizeObserver = jest.fn(() => ({
   observe() {},
@@ -30,6 +36,16 @@ const renderRecordTypesSelect = ({
 describe('RecordTypesSelect', () => {
   afterAll(() => {
     delete window.ResizeObserver;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderRecordTypesSelect({
+      incomingRecordType: 'MARC_AUTHORITY',
+      existingRecordType: 'INSTANCE',
+    });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should be rendered', () => {

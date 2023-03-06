@@ -1,6 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import {
   buildResources,
@@ -13,6 +17,8 @@ import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { JobSummary } from './JobSummary';
+
+expect.extend(toHaveNoViolations);
 
 jest.mock('./components', () => ({
   ...jest.requireActual('./components'),
@@ -66,6 +72,13 @@ const renderJobSummary = ({ dataType = 'MARC', resources }) => {
 };
 
 describe('Job summary page', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobSummary({});
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should have a file name in the header', () => {
     const { getByText } = renderJobSummary({ dataType: 'EDIFACT' });
 

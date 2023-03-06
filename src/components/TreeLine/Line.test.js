@@ -1,10 +1,15 @@
 import React from 'react';
-
 import { render } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 
 import { Line } from './Line';
+
+expect.extend(toHaveNoViolations);
 
 const parentContainer = <div>{' '}</div>;
 
@@ -52,6 +57,13 @@ const renderLine = ({
 };
 
 describe('Line', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderLine(lineWithParentContainer);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered in parent element', () => {
     const { container } = renderLine(lineWithParentContainer);
     const line = container.querySelector('.tester');

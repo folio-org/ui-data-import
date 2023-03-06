@@ -1,10 +1,15 @@
 import React from 'react';
-
 import { render } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 
 import { TreeLine } from './TreeLine';
+
+expect.extend(toHaveNoViolations);
 
 const parentContainer = (
   <div
@@ -108,6 +113,13 @@ window.ResizeObserver = jest.fn(() => ({
 describe('TreeLine', () => {
   afterAll(() => {
     delete window.ResizeObserver;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = render(parentContainer);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should be rendered inside container', () => {

@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -7,6 +11,8 @@ import { translationsProperties } from '../../../../../../test/jest/helpers';
 
 import { MappingOrderDetails } from '../MappingOrderDetails';
 import ORDER from '../../../initialDetails/ORDER';
+
+expect.extend(toHaveNoViolations);
 
 const renderMappingOrderDetails = () => {
   const component = (
@@ -17,6 +23,14 @@ const renderMappingOrderDetails = () => {
 };
 
 describe('MappingOrderDetails', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingOrderDetails();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should have correct sections', () => {
     const { getByRole } = renderMappingOrderDetails();
 

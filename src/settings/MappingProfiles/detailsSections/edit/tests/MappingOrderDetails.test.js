@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -16,6 +20,8 @@ import {
   getInitialDetails,
   getInitialFields,
 } from '../../../initialDetails';
+
+expect.extend(toHaveNoViolations);
 
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.ORDER.type);
 const mappingDetailsProp = getInitialDetails(FOLIO_RECORD_TYPES.ORDER.type);
@@ -51,6 +57,13 @@ const renderMappingOrderDetails = () => {
 
 
 describe('MappingOrderDetails', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingOrderDetails();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should have correct sections', async () => {
     const {
       findByRole,

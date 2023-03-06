@@ -1,12 +1,18 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { TextDate } from './TextDate';
+
+expect.extend(toHaveNoViolations);
 
 const defaultTextDateProps = {
   id: 'testId',
@@ -41,6 +47,7 @@ const textDateProps = ({
   useInput: false,
   usePortal,
   value,
+  'aria-label': 'test label',
 });
 
 const renderTextDate = ({
@@ -61,6 +68,7 @@ const renderTextDate = ({
   useInput,
   usePortal,
   value,
+  ...rest
 }) => {
   const component = (
     <TextDate
@@ -82,6 +90,7 @@ const renderTextDate = ({
       useInput={useInput}
       usePortal={usePortal}
       value={value}
+      {...rest}
     />
   );
 
@@ -91,6 +100,13 @@ const renderTextDate = ({
 describe('TextDate', () => {
   afterEach(() => {
     onChange.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { debug, container } = renderTextDate(textDateProps(defaultTextDateProps));
+    const results = await axe(container);
+    debug(container);
+    expect(results).toHaveNoViolations();
   });
 
   describe('when clicking on calendar icon', () => {

@@ -1,8 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { fireEvent } from '@testing-library/react';
-
 import { noop } from 'lodash';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -21,6 +24,8 @@ import {
   LAYER_TYPES,
   PROFILE_TYPES,
 } from '../../../utils';
+
+expect.extend(toHaveNoViolations);
 
 global.fetch = jest.fn();
 
@@ -135,6 +140,13 @@ describe('<JobProfilesForm>', () => {
 
   afterAll(() => {
     delete global.fetch;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobProfilesForm(jobProfilesFormProps({}));
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   describe('when profile is duplicated', () => {

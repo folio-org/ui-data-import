@@ -4,8 +4,11 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-
 import { noop } from 'lodash';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 
@@ -23,6 +26,8 @@ import ViewAllLogs, { ViewAllLogsManifest } from './ViewAllLogs';
 import { SORT_MAP } from './constants';
 import { NO_FILE_NAME } from '../../utils';
 import * as utils from '../../utils/deleteJobExecutions';
+
+expect.extend(toHaveNoViolations);
 
 const mockedQueryUpdate = jest.fn();
 
@@ -196,6 +201,14 @@ const renderViewAllLogs = query => {
 describe('ViewAllLogs component', () => {
   afterAll(() => {
     deleteJobExecutionsSpy.mockClear();
+  });
+
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderViewAllLogs(defaultQuery);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should render correct number of records', () => {

@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -9,6 +13,8 @@ import {
 } from '../../../../../../../test/jest/helpers';
 
 import { ElectronicAccess } from '../ElectronicAccess';
+
+expect.extend(toHaveNoViolations);
 
 jest.mock('../../../../../../components/AcceptedValuesField/AcceptedValuesField', () => ({
   ...jest.requireActual('../../../../../../components/AcceptedValuesField/AcceptedValuesField'),
@@ -64,6 +70,13 @@ const renderElectronicAccess = () => {
 };
 
 describe('<ElectronicAccess>', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderElectronicAccess();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should render correct fields', async () => {
     const { getByText } = renderElectronicAccess();
 

@@ -3,6 +3,10 @@ import { fireEvent } from '@testing-library/react';
 import faker from 'faker';
 import { noop } from 'lodash';
 import { BrowserRouter } from 'react-router-dom';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import {
   buildMutator,
@@ -14,6 +18,8 @@ import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { RecordsTable } from './RecordsTable';
+
+expect.extend(toHaveNoViolations);
 
 window.open = jest.fn();
 window.open.mockReturnValue({ focus: jest.fn() });
@@ -248,6 +254,14 @@ const renderRecordsTable = ({ isEdifactType = false }) => {
 };
 
 describe('RecordsTable component', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderRecordsTable({});
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should have proper columns', () => {
     const { getByText } = renderRecordsTable({});
     /*

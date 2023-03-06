@@ -1,5 +1,9 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import '../../../../../../test/jest/__mock__';
 
@@ -16,6 +20,8 @@ import {
   getInitialFields,
   getInitialDetails,
 } from '../../../initialDetails';
+
+expect.extend(toHaveNoViolations);
 
 jest.mock('.../../../../../components/FieldOrganization/FieldOrganization', () => ({ onSelect }) => (
   <div>
@@ -88,6 +94,13 @@ describe('<MappingInvoiceDetails>', () => {
   afterAll(() => {
     delete global.fetch;
     consoleErrorSpy = null;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingInvoiceDetails();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should have correct sections', async () => {

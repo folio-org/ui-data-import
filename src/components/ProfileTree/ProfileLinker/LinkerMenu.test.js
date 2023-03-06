@@ -1,10 +1,16 @@
 import React from 'react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { LinkerMenu } from './LinkerMenu';
+
+expect.extend(toHaveNoViolations);
 
 const onClick = jest.fn();
 const onToggle = jest.fn();
@@ -46,6 +52,14 @@ describe('LinkerMenu', () => {
   afterEach(() => {
     onClick.mockClear();
   });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderLinkerMenu(linkerMenuProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered with label', () => {
     const { getByText } = renderLinkerMenu(linkerMenuProps);
 

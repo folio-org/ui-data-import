@@ -7,6 +7,10 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -15,6 +19,8 @@ import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { ViewFileExtension } from './ViewFileExtension';
+
+expect.extend(toHaveNoViolations);
 
 const history = createMemoryHistory();
 
@@ -83,6 +89,13 @@ const renderViewFileExtension = ({
 describe('ViewFileExtension', () => {
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderViewFileExtension(viewFileExtensionProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should render extension name', () => {

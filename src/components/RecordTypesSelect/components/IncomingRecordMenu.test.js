@@ -1,6 +1,10 @@
 import React from 'react';
 import { noop } from 'lodash';
 import { fireEvent } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -8,6 +12,8 @@ import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { IncomingRecordMenu } from './IncomingRecordMenu';
+
+expect.extend(toHaveNoViolations);
 
 const onClick = jest.fn();
 
@@ -27,6 +33,13 @@ const renderIncomingRecordMenu = ({ open }) => {
 describe('IncomingRecordMenu', () => {
   afterEach(() => {
     onClick.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderIncomingRecordMenu({ open: true });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   describe('when dropdown menu is closed', () => {

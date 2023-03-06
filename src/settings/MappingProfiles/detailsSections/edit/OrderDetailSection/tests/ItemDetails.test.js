@@ -3,6 +3,10 @@ import {
   fireEvent,
   within,
 } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -13,6 +17,8 @@ import {
 } from '../../../../../../../test/jest/helpers';
 
 import { ItemDetails } from '../ItemDetails';
+
+expect.extend(toHaveNoViolations);
 
 const setReferenceTablesMock = jest.fn();
 
@@ -75,6 +81,13 @@ const renderItemDetails = () => {
 describe('ItemDetails', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderItemDetails();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should render correct fields', async () => {

@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -6,6 +10,8 @@ import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { CompareRecordSelect } from './CompareRecordSelect';
+
+expect.extend(toHaveNoViolations);
 
 const compareRecordSelectProps = {
   id: 'match.value-type.static-value',
@@ -40,6 +46,13 @@ const renderCompareRecordSelect = ({
 };
 
 describe('CompareRecordSelect', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderCompareRecordSelect(compareRecordSelectProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   describe('when current language is LTR', () => {
     it('direction should be rendered correctly', () => {
       const {

@@ -1,10 +1,16 @@
 import React from 'react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { LinkerTrigger } from './LinkerTrigger';
+
+expect.extend(toHaveNoViolations);
 
 const onClick = jest.fn();
 
@@ -37,6 +43,13 @@ const renderLinkerTrigger = ({
 };
 
 describe('LinkerTrigger', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderLinkerTrigger({ ...linkerTriggerProps });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered with node type title', () => {
     const { getByText } = renderLinkerTrigger({
       ...linkerTriggerProps,

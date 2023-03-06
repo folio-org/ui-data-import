@@ -3,6 +3,10 @@ import {
   fireEvent,
   within,
 } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -13,6 +17,8 @@ import {
 } from '../../../../../../../test/jest/helpers';
 
 import { Location } from '../Location';
+
+expect.extend(toHaveNoViolations);
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -66,6 +72,13 @@ const renderLocation = () => {
 describe('Location', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderLocation();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should render correct fields', async () => {

@@ -1,5 +1,9 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -7,6 +11,8 @@ import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { Spinner } from './Spinner';
+
+expect.extend(toHaveNoViolations);
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -29,6 +35,13 @@ const renderSpinner = ({ entity }) => {
 };
 
 describe('Spinner component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderSpinner(spinnerProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should render preloader', () => {
     const { getByText } = renderSpinner(spinnerProps);
 

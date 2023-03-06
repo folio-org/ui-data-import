@@ -4,6 +4,10 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
@@ -13,6 +17,8 @@ import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { ViewActionProfile } from './ViewActionProfile';
+
+expect.extend(toHaveNoViolations);
 
 const history = createMemoryHistory();
 
@@ -81,6 +87,14 @@ const renderViewActionProfile = ({
 describe('ViewActionProfiles', () => {
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderViewActionProfile(viewActionProfileProps(actionProfileRecord()));
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('profile name should be rendered correctly', () => {

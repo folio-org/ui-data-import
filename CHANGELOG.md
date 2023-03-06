@@ -2,6 +2,9 @@
 
 ## **6.0.1** (in progress)
 
+### Features added:
+* Add accessibiity testing to automated tests in UIDATIMP (UIDATIMP-1388)
+
 ### Bugs fixed:
 * Override purchase order lines limit setting field allows saving fractional numbers (UIDATIMP-1383)
 * Manual clearing of the Vendor/Material supplier/Access provider fields is not working properly (UIDATIMP-1388)

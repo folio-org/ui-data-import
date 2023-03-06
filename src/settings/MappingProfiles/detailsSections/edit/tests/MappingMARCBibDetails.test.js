@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -13,6 +17,8 @@ import {
   FIELD_MAPPINGS_FOR_MARC,
   MARC_TYPES,
 } from '../../../../../utils';
+
+expect.extend(toHaveNoViolations);
 
 const mappingMarcFieldProtectionFieldsProp = [];
 const fieldMappingsForMARCFieldProp = FIELD_MAPPINGS_FOR_MARC.UPDATES;
@@ -43,6 +49,13 @@ const renderMappingMARCBibDetails = ({
 
 describe('<MappingMARCBibDetails>', () => {
   describe('when field mappings for MARC is "Updates"', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+
     it('should have correct fields', async () => {
       const { findByRole } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
 
@@ -76,6 +89,20 @@ describe('<MappingMARCBibDetails>', () => {
   });
 
   describe('when field mappings for MARC is "Modifications"', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderMappingMARCBibDetails({
+        fieldMappingsForMARCField: FIELD_MAPPINGS_FOR_MARC.MODIFICATIONS,
+        folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
+        marcMappingDetails: [{
+          field: { subfields: [{}] },
+          order: 0,
+        }],
+      });
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+
     it('should have correct fields', async () => {
       const {
         findByRole,

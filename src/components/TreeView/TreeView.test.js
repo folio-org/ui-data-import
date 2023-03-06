@@ -1,6 +1,9 @@
 import React from 'react';
-
 import { screen } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 
@@ -12,6 +15,8 @@ import { translationsProperties } from '../../../test/jest/helpers';
 import css from '../RecordTypesSelect/RecordTypesSelect.css';
 
 import { TreeView } from './TreeView';
+
+expect.extend(toHaveNoViolations);
 
 const recordsData = {
   children: [
@@ -70,6 +75,13 @@ const renderTreeView = treeViewProps => {
 };
 
 describe('Tree View component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderTreeView(mockSpacingProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('Should be rendered', () => {
     expect(renderTreeView(mockSpacingProps)).toBeDefined();
   });

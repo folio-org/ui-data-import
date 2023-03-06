@@ -1,5 +1,10 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
+
 
 import '../../../../../../test/jest/__mock__';
 
@@ -21,6 +26,8 @@ import {
   getInitialFields,
   getReferenceTables,
 } from '../../../initialDetails';
+
+expect.extend(toHaveNoViolations);
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
@@ -81,6 +88,13 @@ describe('<MappingInstanceDetails>', () => {
 
   afterAll(() => {
     delete global.fetch;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingInstanceDetails({});
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should have correct sections', async () => {

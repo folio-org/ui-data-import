@@ -4,6 +4,10 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { createMemoryHistory } from 'history';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -15,6 +19,8 @@ import {
 } from '../../../../test/jest/helpers';
 
 import { DataImportSettings } from '../DataImportSettings';
+
+expect.extend(toHaveNoViolations);
 
 const history = createMemoryHistory();
 
@@ -52,6 +58,13 @@ const renderDataImportSettings = () => {
 };
 
 describe('<DataImportSettings>', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderDataImportSettings();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('renders correct heading', () => {
     const { getByText } = renderDataImportSettings();
 

@@ -5,6 +5,10 @@ import {
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import faker from 'faker';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import {
   buildResources,
@@ -16,6 +20,8 @@ import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { ViewJobLog } from '../ViewJobLog';
+
+expect.extend(toHaveNoViolations);
 
 const SRSMARCBibMARCJSONData = {
   id: faker.random.uuid(),
@@ -180,6 +186,16 @@ describe('View job log page', () => {
     '  <header />' +
     '</div>';
 
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderViewJobLog({
+      recordType: 'MARC',
+      jobLogHasLoaded: false,
+    });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   describe('when component is updated', () => {
     it('should get JSON data for each record type', () => {
       const { rerender } = renderViewJobLog({
@@ -265,6 +281,13 @@ describe('View job log page', () => {
     });
 
     describe('when log for SRS MARC has loaded', () => {
+      it('should be rendered with no axe errors', async () => {
+        const { container } = renderViewJobLog({ recordType: 'MARC' });
+        const results = await axe(container);
+
+        expect(results).toHaveNoViolations();
+      });
+
       it('should display SRS MARC JSON details on the screen', () => {
         const { container } = renderViewJobLog({ recordType: 'MARC' });
         const codeElement = container.querySelector('code.info');

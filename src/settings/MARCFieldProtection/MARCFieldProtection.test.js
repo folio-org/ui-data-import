@@ -5,6 +5,10 @@ import {
   screen,
   fireEvent,
 } from '@testing-library/react';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -20,6 +24,8 @@ import {
   DISABLED_FOR_PROTECTING_FIELDS,
   DISABLED_FOR_SUBFIELD_AND_INDICATORS_FIELDS,
 } from './MARCFieldProtection';
+
+expect.extend(toHaveNoViolations);
 
 const resources = buildResources({
   resourceName: 'values',
@@ -101,6 +107,14 @@ const renderMarcFieldProtection = () => {
 };
 
 describe('MARCFieldProtection component', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderMarcFieldProtection();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered', () => {
     const { getByText } = renderMarcFieldProtection();
 

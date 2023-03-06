@@ -23,6 +23,7 @@ const TestComponent = props => {
         name="name"
         onChange={props.validate('hello')}
         value="Hello"
+        aria-label="Name"
       />
       <input
         data-testid="age"
@@ -31,6 +32,7 @@ const TestComponent = props => {
         name="age"
         onChange={handleChange}
         value={data}
+        aria-label="Age"
       />
     </div>
   );

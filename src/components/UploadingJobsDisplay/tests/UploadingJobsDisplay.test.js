@@ -4,8 +4,12 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-
 import { noop } from 'lodash';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
+
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../../test/jest/__mock__';
@@ -20,6 +24,8 @@ import { UploadingJobsContext } from '../../UploadingJobsContextProvider';
 import { UploadingJobsDisplay } from '../UploadingJobsDisplay';
 
 import { FILE_STATUSES } from '../../../utils';
+
+expect.extend(toHaveNoViolations);
 
 jest.mock('../../../utils/upload', () => ({
   ...jest.requireActual('../../../utils/upload'),
@@ -94,6 +100,13 @@ describe('UploadingjobsDisplay component', () => {
     delete global.fetch;
   });
 
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderUploadingJobsDisplay(defaultContext);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('renders correctly', async () => {
     const { findByText } = renderUploadingJobsDisplay(defaultContext);
 
@@ -112,6 +125,16 @@ describe('UploadingjobsDisplay component', () => {
   });
 
   describe('when uploaded successfully', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderUploadingJobsDisplay({
+        ...defaultContext,
+        uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.UPLOADED }] },
+      });
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+
     it('renders JobProfiles component', async () => {
       const { getByText } = renderUploadingJobsDisplay({
         ...defaultContext,
@@ -242,6 +265,16 @@ describe('UploadingjobsDisplay component', () => {
   });
 
   describe('when status is UPLOADING', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderUploadingJobsDisplay({
+        ...defaultContext,
+        uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.UPLOADING }] },
+      });
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+
     it('shows correct message', async () => {
       const { getByText } = renderUploadingJobsDisplay({
         ...defaultContext,
@@ -268,6 +301,16 @@ describe('UploadingjobsDisplay component', () => {
   });
 
   describe('when status is  ERROR_DEFINITION', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderUploadingJobsDisplay({
+        ...defaultContext,
+        uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.ERROR_DEFINITION }] },
+      });
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+
     it('shows error message', async () => {
       const { getByText } = renderUploadingJobsDisplay({
         ...defaultContext,
@@ -279,6 +322,15 @@ describe('UploadingjobsDisplay component', () => {
   });
 
   describe('when status is ERROR', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderUploadingJobsDisplay({
+        ...defaultContext,
+        uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.ERROR }] },
+      });
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
     it('renders error message', async () => {
       const state = { files: { 'CatShip.mrc1634031179989': { status: FILE_STATUSES.ERROR } } };
       const { getByText } = renderUploadingJobsDisplay({

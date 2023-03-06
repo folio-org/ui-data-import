@@ -2,6 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import {
   buildResources,
@@ -25,6 +29,8 @@ import {
   QUICKMARK_DERIVE_CREATE_BIB_ACTION_ID,
   QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID,
 } from '../../utils';
+
+expect.extend(toHaveNoViolations);
 
 const testSet = new Set(['testId1']);
 
@@ -117,6 +123,13 @@ const renderActionProfiles = ({
 describe('ActionProfiles', () => {
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderActionProfiles(actionProfilesProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should be rendered', () => {

@@ -7,12 +7,18 @@ import {
 
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { ViewMatchProfile } from './ViewMatchProfile';
+
+expect.extend(toHaveNoViolations);
 
 const history = createMemoryHistory();
 
@@ -81,6 +87,14 @@ const renderViewMatchProfile = ({
 describe('ViewMatchProfile', () => {
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderViewMatchProfile(viewMatchProfileProps(matchProfileRecord()));
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('match profile name should be rendered correctly', () => {

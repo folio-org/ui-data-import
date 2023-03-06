@@ -2,6 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import {
+  axe,
+  toHaveNoViolations,
+} from 'jest-axe';
 
 import {
   buildResources,
@@ -17,6 +21,8 @@ import {
 } from '../../../test/jest/helpers';
 
 import { FileExtensions } from './FileExtensions';
+
+expect.extend(toHaveNoViolations);
 
 const history = createMemoryHistory();
 
@@ -108,6 +114,13 @@ const renderFileExtensions = ({
 describe('FileExtensions', () => {
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderFileExtensions(fileExtensionsProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should be rendered', () => {

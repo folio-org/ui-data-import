@@ -68,6 +68,18 @@ describe('OverrideProtectedFieldsTable', () => {
     onChangeEvent.mockClear();
   });
 
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderOverrideProtectedFieldsTable({
+      isEditable: true,
+      folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
+      marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
+      mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
+    });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   describe('when override protected fields table is editable', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderOverrideProtectedFieldsTable({
@@ -96,14 +108,13 @@ describe('OverrideProtectedFieldsTable', () => {
       describe('when clicking on MARC field Protection Field override checkbox', () => {
         it('form should be upated', () => {
           const fieldToRemove = [...mappingMarcFieldProtectionFieldsProps];
-          const { debug, container } = renderOverrideProtectedFieldsTable({
+          const { container } = renderOverrideProtectedFieldsTable({
             isEditable: true,
             folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
             marcFieldProtectionFields: marcFieldProtectionFieldsProps(true),
             mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
           });
           const element = container.querySelector('[aria-label="Override protected fields"]');
-          debug(container);
           fireEvent.click(element);
 
           expect(onChangeEvent.mock.calls[0][1]).toEqual(fieldToRemove);
