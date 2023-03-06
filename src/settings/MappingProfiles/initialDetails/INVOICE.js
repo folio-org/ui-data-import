@@ -182,7 +182,7 @@ const INVOICE = {
     value: '',
   }, {
     name: 'accountingCode',
-    enabled: true,
+    enabled: false,
     path: 'invoice.accountingCode',
     value: '',
   }, {

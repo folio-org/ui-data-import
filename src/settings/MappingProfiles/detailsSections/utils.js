@@ -25,6 +25,10 @@ import {
   BOOLEAN_ACTIONS,
 } from '../../../utils';
 
+export const getFieldEnabled = mappingFieldIndex => {
+  return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].enabled`;
+};
+
 export const getFieldName = mappingFieldIndex => {
   return `${FIELD_NAME_PREFIX}[${mappingFieldIndex}].value`;
 };

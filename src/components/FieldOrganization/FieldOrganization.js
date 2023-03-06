@@ -18,6 +18,7 @@ import {
 
 const FieldOrganization = ({
   onSelect,
+  onClear,
   setReferenceTables,
   disabled,
   label,
@@ -55,6 +56,10 @@ const FieldOrganization = ({
     setMappingQuery('');
     setReferenceTables(name, '');
     setIsClearButtonVisible(false);
+
+    if (onClear) {
+      onClear();
+    }
   }, [name]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const clearButton = isClearButtonVisible
@@ -125,6 +130,7 @@ FieldOrganization.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   mutator: PropTypes.object.isRequired,
   onSelect: PropTypes.func,
+  onClear: PropTypes.func,
   disabled: PropTypes.bool,
   id: PropTypes.string,
   label: PropTypes.oneOfType([
