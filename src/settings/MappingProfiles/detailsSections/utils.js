@@ -17,6 +17,7 @@ import { ProhibitionIcon } from '../../../components';
 import {
   FIELD_NAME_PREFIX,
   TRANSLATION_ID_PREFIX,
+  UUID_IN_QUOTES_PATTERN,
 } from './constants';
 import {
   ENTITY_KEYS,
@@ -272,3 +273,16 @@ export const renderFieldLabelWithInfo = (fieldLabelId, infoMessageId) => (
     />
   </>
 );
+
+export const getVendorId = vendorFromDetails => {
+  const vendorIdMatch = vendorFromDetails?.match(UUID_IN_QUOTES_PATTERN);
+
+  return vendorIdMatch ? vendorIdMatch[1] : null;
+};
+
+export const getMappingFromVendorDetails = vendorFromDetails => {
+  const mappingEndPosition = vendorFromDetails?.indexOf('"');
+  const mapping = vendorFromDetails?.substring(0, mappingEndPosition === -1 ? vendorFromDetails.length : mappingEndPosition);
+
+  return mapping;
+};
