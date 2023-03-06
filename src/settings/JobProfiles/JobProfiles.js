@@ -34,13 +34,14 @@ import {
 // big numbers to get rid of infinite scroll
 const INITIAL_RESULT_COUNT = 5000;
 const RESULT_COUNT_INCREMENT = 5000;
+const defaultSort = 'name';
 
 export const jobProfilesShape = {
   INITIAL_RESULT_COUNT,
   RESULT_COUNT_INCREMENT,
   manifest: {
     initializedFilterConfig: { initialValue: false },
-    query: { initialValue: {} },
+    query: { initialValue: { sort: defaultSort } },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     records: {
       type: 'okapi',
@@ -232,6 +233,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
       visibleColumns: PropTypes.arrayOf(PropTypes.string),
       nonInteractiveHeaders: PropTypes.arrayOf(PropTypes.string),
       columnWidths: PropTypes.object,
+      defaultSort: PropTypes.string,
     };
 
     static defaultProps = {
@@ -253,6 +255,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
       ViewRecordComponent: ViewJobProfile,
       CreateRecordComponent: CreateJobProfile,
       EditRecordComponent: EditJobProfile,
+      defaultSort,
     };
 
     renderHeaders = () => jobProfilesShape.renderHeaders(this.props);
