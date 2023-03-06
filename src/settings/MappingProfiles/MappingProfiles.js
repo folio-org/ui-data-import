@@ -48,13 +48,14 @@ const sortMap = {
   updated: 'metadata.updatedDate',
   updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
 };
+const defaultSort = 'name';
 
 export const mappingProfilesShape = {
   INITIAL_RESULT_COUNT,
   RESULT_COUNT_INCREMENT,
   manifest: {
     initializedFilterConfig: { initialValue: false },
-    query: { initialValue: {} },
+    query: { initialValue: { sort: defaultSort } },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     records: {
       type: 'okapi',
@@ -216,6 +217,7 @@ export class MappingProfiles extends Component {
     nonInteractiveHeaders: PropTypes.arrayOf(PropTypes.string),
     columnWidths: PropTypes.object,
     isFullScreen: PropTypes.bool,
+    defaultSort: PropTypes.string,
   };
 
   static defaultProps = {
@@ -237,6 +239,7 @@ export class MappingProfiles extends Component {
     ViewRecordComponent: ViewMappingProfile,
     CreateRecordComponent: CreateMappingProfile,
     EditRecordComponent: EditMappingProfile,
+    defaultSort,
   };
 
   renderHeaders = () => mappingProfilesShape.renderHeaders(this.props);

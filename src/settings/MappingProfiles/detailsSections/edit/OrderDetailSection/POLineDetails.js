@@ -28,6 +28,7 @@ import {
   RECEIPT_STATUS,
   WRAPPER_SOURCE_LINKS,
   RECEIVING_WORKFLOW,
+  PAYMENT_STATUS,
 } from '../../constants';
 import {
   boolAcceptedValuesOptions,
@@ -92,6 +93,15 @@ export const POLineDetails = ({
     }, {
       label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.receiptNotRequired` }),
       value: RECEIPT_STATUS.NOT_REQUIRED,
+    },
+  ];
+  const paymentStatusOptions = [
+    {
+      label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.pending` }),
+      value: PAYMENT_STATUS.PENDING,
+    }, {
+      label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.paymentNotRequired` }),
+      value: PAYMENT_STATUS.NOT_REQUIRED,
     },
   ];
   const receivingWorkflowOptions = [
@@ -208,7 +218,7 @@ export const POLineDetails = ({
             optionValue="value"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            acceptedValuesList={receiptStatusOptions}
+            acceptedValuesList={paymentStatusOptions}
           />
         </Col>
       </Row>

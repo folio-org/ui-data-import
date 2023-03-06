@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import {
   noop,
   camelCase,
+  differenceWith,
+  isEqual,
 } from 'lodash';
 
 import { Pluggable } from '@folio/stripes/core';
@@ -74,10 +76,15 @@ export const AssociatorEditable = memo(({
     detailProfileType: detailType,
   }));
 
+  const composedContentData = composeRelations(contentData);
+
   const link = lines => {
     const uniqueLines = lines.filter(line => currentData.findIndex(item => item.id === line.id) === -1);
-    const newData = [...currentData, ...uniqueLines];
-    const linesToAdd = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) === -1);
+    const newContentData = [...currentData, ...uniqueLines];
+
+    // filter the associations that were already attached to a profile
+    const linesToAdd = uniqueLines.filter(line => findRelIndex(composedContentData, line) === -1);
+    const linesToUnlink = uniqueLines.filter(line => findRelIndex(relationsToDelete, line) >= 0);
 
     if (linesToAdd && linesToAdd.length) {
       const relsToAdd = [...relationsToAdd, ...composeRelations(linesToAdd)];
@@ -85,14 +92,20 @@ export const AssociatorEditable = memo(({
       onLink(relsToAdd);
     }
 
-    setCurrentData(newData);
-    setPluginDisabled(isPluginDisabled(newData));
+    if (linesToUnlink && linesToUnlink.length) {
+      const relsToDel = differenceWith(relationsToDelete, composeRelations(linesToUnlink), isEqual);
+
+      onUnlink(relsToDel);
+    }
+
+    setCurrentData(newContentData);
+    setPluginDisabled(isPluginDisabled(newContentData));
   };
 
   const remove = row => {
     const index = currentData.findIndex(item => item.id === row.id);
-    const newIdx = findRelIndex(relationsToAdd, row);
-    const needsToBeUnlinked = newIdx < 0;
+    const needsToBeUnlinked = findRelIndex(composedContentData, row) >= 0;
+    const indexInAddedRelations = findRelIndex(relationsToAdd, row);
 
     if (needsToBeUnlinked) {
       const relsToDel = [...relationsToDelete, ...composeRelations([row])];
@@ -100,12 +113,18 @@ export const AssociatorEditable = memo(({
       onUnlink(relsToDel);
     }
 
-    const newData = [...currentData];
+    if (indexInAddedRelations >= 0) {
+      const relsToAdd = [...relationsToAdd];
 
-    newData.splice(index, 1);
-    setCurrentData(newData);
-    onLink(composeRelations(newData));
-    setPluginDisabled(isPluginDisabled(newData));
+      relsToAdd.splice(indexInAddedRelations, 1);
+      onLink(relsToAdd);
+    }
+
+    const newContentData = [...currentData];
+
+    newContentData.splice(index, 1);
+    setCurrentData(newContentData);
+    setPluginDisabled(isPluginDisabled(newContentData));
   };
 
   return (
