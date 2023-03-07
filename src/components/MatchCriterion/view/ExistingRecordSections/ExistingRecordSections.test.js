@@ -37,7 +37,6 @@ describe('ExistingRecordSections view', () => {
     expect(results).toHaveNoViolations();
   });
 
-
   it('should render a correct label', () => {
     const { getByText } = renderExistingSectionFolio(existingSectionFolio);
 

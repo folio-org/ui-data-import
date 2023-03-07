@@ -28,6 +28,7 @@ describe('RecordSelect', () => {
 
     expect(results).toHaveNoViolations();
   });
+
   it('Records should be rendered', () => {
     const { getByText } = renderRecordSelect({ isLocalLTR: false });
 

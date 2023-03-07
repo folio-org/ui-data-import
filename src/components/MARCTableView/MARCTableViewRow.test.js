@@ -70,7 +70,6 @@ describe('MARCTableViewRow', () => {
     expect(results).toHaveNoViolations();
   });
 
-
   describe('when mapping details action is Edit', () => {
     describe('when mapping details subaction is not Replace', () => {
       describe('when row has the text ', () => {

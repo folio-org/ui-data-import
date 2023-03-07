@@ -166,7 +166,6 @@ describe('ProfileTree', () => {
     expect(results).toHaveNoViolations();
   });
 
-
   describe('when clicking on delete button', () => {
     it('modal window shod be closed', () => {
       const {
