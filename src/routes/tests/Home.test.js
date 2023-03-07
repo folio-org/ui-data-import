@@ -4,10 +4,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 
@@ -21,8 +18,6 @@ import {
 import { DataFetcherContext } from '../../components';
 import { Home } from '../Home';
 import * as utils from '../../utils/deleteJobExecutions';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),

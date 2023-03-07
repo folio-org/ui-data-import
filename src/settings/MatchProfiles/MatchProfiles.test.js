@@ -3,10 +3,7 @@ import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import {
   buildMutator,
@@ -26,8 +23,6 @@ import {
 } from '../../utils';
 import { matchProfilesShape } from '.';
 import { MatchProfiles } from './MatchProfiles';
-
-expect.extend(toHaveNoViolations);
 
 const history = createMemoryHistory();
 

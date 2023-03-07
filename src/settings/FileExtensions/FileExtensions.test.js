@@ -2,10 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import {
   buildResources,
@@ -21,8 +18,6 @@ import {
 } from '../../../test/jest/helpers';
 
 import { FileExtensions } from './FileExtensions';
-
-expect.extend(toHaveNoViolations);
 
 const history = createMemoryHistory();
 

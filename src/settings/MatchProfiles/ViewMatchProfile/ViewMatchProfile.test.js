@@ -7,18 +7,13 @@ import {
 
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { ViewMatchProfile } from './ViewMatchProfile';
-
-expect.extend(toHaveNoViolations);
 
 const history = createMemoryHistory();
 

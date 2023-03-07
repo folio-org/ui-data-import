@@ -4,10 +4,7 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
@@ -17,8 +14,6 @@ import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { ViewActionProfile } from './ViewActionProfile';
-
-expect.extend(toHaveNoViolations);
 
 const history = createMemoryHistory();
 

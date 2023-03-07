@@ -1,10 +1,7 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -13,8 +10,6 @@ import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { SummaryTable } from './SummaryTable';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('@folio/stripes-data-transfer-components', () => ({
   ...jest.requireActual('@folio/stripes-data-transfer-components'),

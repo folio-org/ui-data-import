@@ -3,10 +3,7 @@ import {
   render,
   waitFor,
 } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
 
@@ -16,8 +13,6 @@ import {
   DataFetcher,
   DataFetcherContext,
 } from '.';
-
-expect.extend(toHaveNoViolations);
 
 const reset = () => {};
 const successGET = () => new Promise((resolve, _) => process.nextTick(() => resolve()));

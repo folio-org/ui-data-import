@@ -5,10 +5,7 @@ import {
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 
@@ -26,8 +23,6 @@ import ViewAllLogs, { ViewAllLogsManifest } from './ViewAllLogs';
 import { SORT_MAP } from './constants';
 import { NO_FILE_NAME } from '../../utils';
 import * as utils from '../../utils/deleteJobExecutions';
-
-expect.extend(toHaveNoViolations);
 
 const mockedQueryUpdate = jest.fn();
 

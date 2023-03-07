@@ -1,17 +1,12 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { WithTranslation } from './WithTranslation';
-
-expect.extend(toHaveNoViolations);
 
 const childrenWithLabel = label => <span>{label}</span>;
 

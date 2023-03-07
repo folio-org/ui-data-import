@@ -1,15 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 
 import { ActionMenu } from './ActionMenu';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('./menuTemplate', () => ({
   menuTemplate: () => ({

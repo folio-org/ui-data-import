@@ -3,10 +3,7 @@ import { fireEvent } from '@testing-library/react';
 import faker from 'faker';
 import { noop } from 'lodash';
 import { BrowserRouter } from 'react-router-dom';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import {
   buildMutator,
@@ -18,8 +15,6 @@ import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { RecordsTable } from './RecordsTable';
-
-expect.extend(toHaveNoViolations);
 
 window.open = jest.fn();
 window.open.mockReturnValue({ focus: jest.fn() });

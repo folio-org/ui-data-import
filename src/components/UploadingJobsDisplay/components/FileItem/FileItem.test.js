@@ -1,9 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -13,8 +10,6 @@ import { translationsProperties } from '../../../../../test/jest/helpers';
 import { FileItem } from '..';
 
 import { FILE_STATUSES } from '../../../../utils';
-
-expect.extend(toHaveNoViolations);
 
 const fileName = 'test_file';
 const fileSize = 1000;

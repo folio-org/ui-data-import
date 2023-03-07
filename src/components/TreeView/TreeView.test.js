@@ -1,9 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 
@@ -15,8 +12,6 @@ import { translationsProperties } from '../../../test/jest/helpers';
 import css from '../RecordTypesSelect/RecordTypesSelect.css';
 
 import { TreeView } from './TreeView';
-
-expect.extend(toHaveNoViolations);
 
 const recordsData = {
   children: [

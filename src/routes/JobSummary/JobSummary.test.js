@@ -1,10 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import {
   buildResources,
@@ -17,8 +14,6 @@ import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { JobSummary } from './JobSummary';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('./components', () => ({
   ...jest.requireActual('./components'),

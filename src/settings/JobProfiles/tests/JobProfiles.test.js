@@ -6,10 +6,7 @@ import {
 } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -26,8 +23,6 @@ import {
   createJobProfiles,
   jobProfilesShape,
 } from '../JobProfiles';
-
-expect.extend(toHaveNoViolations);
 
 const history = createMemoryHistory();
 

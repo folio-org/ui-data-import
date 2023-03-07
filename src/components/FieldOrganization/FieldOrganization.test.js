@@ -1,9 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -15,8 +12,6 @@ import {
 } from '../../../test/jest/helpers';
 
 import { FieldOrganization } from '.';
-
-expect.extend(toHaveNoViolations);
 
 const organizationMock = {
   id: '1',

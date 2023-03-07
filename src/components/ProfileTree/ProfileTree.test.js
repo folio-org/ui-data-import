@@ -1,10 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -15,8 +12,6 @@ import {
 } from '../../../test/jest/helpers';
 
 import { ProfileTree } from './ProfileTree';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),

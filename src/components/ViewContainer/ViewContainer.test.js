@@ -1,10 +1,7 @@
 import React from 'react';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -15,8 +12,6 @@ import { translationsProperties } from '../../../test/jest/helpers';
 import { ViewContainer } from './ViewContainer';
 
 import { ENTITY_KEYS } from '../../utils';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('../Callout', () => ({ createNetworkMessage: () => () => 'message' }));
 

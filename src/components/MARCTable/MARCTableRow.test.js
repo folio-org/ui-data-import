@@ -1,9 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -16,8 +13,6 @@ import {
 import { MARCTableRow } from './MARCTableRow';
 
 import * as utils from '../../utils/fillEmptyFieldsWithValue';
-
-expect.extend(toHaveNoViolations);
 
 const onFieldUpdate = jest.fn();
 const removeSubfieldRows = jest.fn();

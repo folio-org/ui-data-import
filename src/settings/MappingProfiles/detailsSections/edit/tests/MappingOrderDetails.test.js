@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -20,8 +17,6 @@ import {
   getInitialDetails,
   getInitialFields,
 } from '../../../initialDetails';
-
-expect.extend(toHaveNoViolations);
 
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.ORDER.type);
 const mappingDetailsProp = getInitialDetails(FOLIO_RECORD_TYPES.ORDER.type);

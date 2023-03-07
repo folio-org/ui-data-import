@@ -1,9 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../../test/jest/__mock__';
@@ -13,8 +10,6 @@ import {
 } from '../../../../../test/jest/helpers';
 
 import { ExistingSectionFolio } from './ExistingSectionFolio';
-
-expect.extend(toHaveNoViolations);
 
 const onChangeFormStateMock = jest.fn(value => value);
 const existingSectionFolioWithCorrectData = {

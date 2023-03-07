@@ -4,10 +4,7 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { createMemoryHistory } from 'history';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -19,8 +16,6 @@ import {
 } from '../../../../test/jest/helpers';
 
 import { DataImportSettings } from '../DataImportSettings';
-
-expect.extend(toHaveNoViolations);
 
 const history = createMemoryHistory();
 

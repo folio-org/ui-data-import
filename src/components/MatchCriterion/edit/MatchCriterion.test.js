@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
@@ -12,8 +9,6 @@ import {
 } from '../../../../test/jest/helpers';
 
 import { MatchCriterion } from './MatchCriterion';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('.', () => ({
   MARCFieldSection: () => <span>MARCFieldSection</span>,

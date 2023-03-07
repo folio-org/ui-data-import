@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -13,8 +10,6 @@ import {
 } from '../../../../../../../test/jest/helpers';
 
 import { ElectronicAccess } from '../ElectronicAccess';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('../../../../../../components/AcceptedValuesField/AcceptedValuesField', () => ({
   ...jest.requireActual('../../../../../../components/AcceptedValuesField/AcceptedValuesField'),

@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -11,8 +8,6 @@ import { translationsProperties } from '../../../../../../test/jest/helpers';
 
 import { MappingOrderDetails } from '../MappingOrderDetails';
 import ORDER from '../../../initialDetails/ORDER';
-
-expect.extend(toHaveNoViolations);
 
 const renderMappingOrderDetails = () => {
   const component = (

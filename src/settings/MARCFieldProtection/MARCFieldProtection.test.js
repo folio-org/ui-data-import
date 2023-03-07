@@ -5,10 +5,7 @@ import {
   screen,
   fireEvent,
 } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -24,8 +21,6 @@ import {
   DISABLED_FOR_PROTECTING_FIELDS,
   DISABLED_FOR_SUBFIELD_AND_INDICATORS_FIELDS,
 } from './MARCFieldProtection';
-
-expect.extend(toHaveNoViolations);
 
 const resources = buildResources({
   resourceName: 'values',

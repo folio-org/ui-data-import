@@ -5,10 +5,7 @@ import {
   waitFor,
   getByText as getByTextScreen,
 } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { noop } from 'lodash';
 
@@ -21,8 +18,6 @@ import {
 } from '../../../../test/jest/helpers';
 
 import { ViewJobProfile } from '../ViewJobProfile';
-
-expect.extend(toHaveNoViolations);
 
 const jobProfile = {
   records: [

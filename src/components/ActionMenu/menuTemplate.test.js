@@ -3,16 +3,11 @@ import {
   render,
   fireEvent,
 } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 
 import { menuTemplate } from './menuTemplate';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('./ItemTemplates', () => ({
   LinkTo: () => <button type="button">LinkTo</button>,

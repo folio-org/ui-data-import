@@ -5,10 +5,7 @@ import {
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import faker from 'faker';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import {
   buildResources,
@@ -20,8 +17,6 @@ import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { ViewJobLog } from '../ViewJobLog';
-
-expect.extend(toHaveNoViolations);
 
 const SRSMARCBibMARCJSONData = {
   id: faker.random.uuid(),

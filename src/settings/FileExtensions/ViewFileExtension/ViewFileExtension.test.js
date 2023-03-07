@@ -7,10 +7,7 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -19,8 +16,6 @@ import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { ViewFileExtension } from './ViewFileExtension';
-
-expect.extend(toHaveNoViolations);
 
 const history = createMemoryHistory();
 

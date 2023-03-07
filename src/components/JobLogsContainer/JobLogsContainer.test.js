@@ -1,10 +1,7 @@
 import React from 'react';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { noop } from 'lodash';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 import {
@@ -14,8 +11,6 @@ import {
 
 import JobLogsContainer from './JobLogsContainer';
 import { FILE_STATUSES } from '../../utils';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),

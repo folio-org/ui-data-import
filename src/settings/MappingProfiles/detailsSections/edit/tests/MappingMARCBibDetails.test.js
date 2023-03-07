@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -17,8 +14,6 @@ import {
   FIELD_MAPPINGS_FOR_MARC,
   MARC_TYPES,
 } from '../../../../../utils';
-
-expect.extend(toHaveNoViolations);
 
 const mappingMarcFieldProtectionFieldsProp = [];
 const fieldMappingsForMARCFieldProp = FIELD_MAPPINGS_FOR_MARC.UPDATES;

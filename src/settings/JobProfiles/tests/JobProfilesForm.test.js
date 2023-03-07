@@ -2,10 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -24,8 +21,6 @@ import {
   LAYER_TYPES,
   PROFILE_TYPES,
 } from '../../../utils';
-
-expect.extend(toHaveNoViolations);
 
 global.fetch = jest.fn();
 

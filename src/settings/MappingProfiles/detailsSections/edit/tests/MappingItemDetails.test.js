@@ -1,9 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import '../../../../../../test/jest/__mock__';
 
@@ -25,8 +22,6 @@ import {
   getInitialFields,
   getReferenceTables,
 } from '../../../initialDetails';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),

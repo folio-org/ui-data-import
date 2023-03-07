@@ -1,10 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import '../../../../../test/jest/__mock__';
 
@@ -16,8 +13,6 @@ import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
 import { ReturnToAssignJobs } from './ReturnToAssignJobs';
 
 import { FILE_STATUSES } from '../../../../utils';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('@folio/stripes-data-transfer-components', () => ({
   ...jest.requireActual('@folio/stripes-data-transfer-components'),

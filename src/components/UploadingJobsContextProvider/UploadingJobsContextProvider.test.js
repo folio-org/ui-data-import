@@ -3,10 +3,7 @@ import {
   waitFor,
   fireEvent,
 } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithContext } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -17,8 +14,6 @@ import { UploadingJobsContext } from './UploadingJobsContext';
 
 import * as utils from '../../utils/upload';
 import { FILE_STATUSES } from '../../utils';
-
-expect.extend(toHaveNoViolations);
 
 global.fetch = jest.fn();
 

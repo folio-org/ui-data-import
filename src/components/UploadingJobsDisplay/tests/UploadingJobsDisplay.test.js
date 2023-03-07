@@ -5,10 +5,7 @@ import {
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -24,8 +21,6 @@ import { UploadingJobsContext } from '../../UploadingJobsContextProvider';
 import { UploadingJobsDisplay } from '../UploadingJobsDisplay';
 
 import { FILE_STATUSES } from '../../../utils';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('../../../utils/upload', () => ({
   ...jest.requireActual('../../../utils/upload'),

@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -15,8 +12,6 @@ import {
 import { MappingMARCAuthorityDetails } from '../MappingMARCAuthorityDetails';
 
 import { MARC_TYPES } from '../../../../../utils';
-
-expect.extend(toHaveNoViolations);
 
 const mappingMarcFieldProtectionFieldsProp = [];
 const setReferenceTables = jest.fn();

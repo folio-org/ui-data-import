@@ -6,10 +6,7 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import {
   buildResources,
@@ -20,8 +17,6 @@ import '../../../test/jest/__mock__';
 import { translationsProperties } from '../../../test/jest/helpers';
 
 import { ListView } from './ListView';
-
-expect.extend(toHaveNoViolations);
 
 const mutator = buildMutator({
   query: {

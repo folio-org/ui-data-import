@@ -1,9 +1,6 @@
 import React from 'react';
 import { noop } from 'lodash';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -12,8 +9,6 @@ import '../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { IncomingRecordTrigger } from './IncomingRecordTrigger';
-
-expect.extend(toHaveNoViolations);
 
 const incomingRecordTriggerProps = {
   triggerRef: {},

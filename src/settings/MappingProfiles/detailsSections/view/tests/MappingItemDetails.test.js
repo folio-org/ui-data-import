@@ -1,9 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -11,8 +8,6 @@ import '../../../../../../test/jest/__mock__';
 import { translationsProperties } from '../../../../../../test/jest/helpers';
 
 import { MappingItemDetails } from '../MappingItemDetails';
-
-expect.extend(toHaveNoViolations);
 
 const mappingDetailsProp = [{
   enabled: 'true',

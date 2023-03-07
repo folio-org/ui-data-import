@@ -3,10 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import faker from 'faker';
 import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -17,8 +14,6 @@ import {
 } from '../../../test/jest/helpers';
 
 import { FileExtensionFormComponent } from './FileExtensionForm';
-
-expect.extend(toHaveNoViolations);
 
 const initialValuesNewForm = {
   dataTypes: [],

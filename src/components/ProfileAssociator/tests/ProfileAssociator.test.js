@@ -5,10 +5,7 @@ import {
   fireEvent,
   act,
 } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import '../../../../test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -20,8 +17,6 @@ import { translationsProperties } from '../../../../test/jest/helpers';
 import { ProfileAssociator } from '../ProfileAssociator';
 
 import { PROFILE_TYPES } from '../../../utils';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),

@@ -4,10 +4,7 @@ import {
   waitFor,
   within,
 } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -22,8 +19,6 @@ import { Jobs } from './Jobs';
 
 import { JOB_STATUSES } from '../../utils';
 import * as API from '../../utils/upload';
-
-expect.extend(toHaveNoViolations);
 
 const mockDeleteFile = jest.spyOn(API, 'deleteFile').mockResolvedValue(true);
 

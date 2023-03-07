@@ -1,14 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { CodeHighlight } from './CodeHighlight';
 import * as Languages from './Languages';
-
-expect.extend(toHaveNoViolations);
 
 const { LANGUAGES } = Languages;
 

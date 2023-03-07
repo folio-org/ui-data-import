@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import { createMemoryHistory } from 'history';
 
@@ -22,8 +19,6 @@ import {
 import { DetailsKeyShortcutsWrapper } from './DetailsKeyShortcutsWrapper';
 
 import { OCLC_UPDATE_INSTANCE_JOB_ID } from '../../utils';
-
-expect.extend(toHaveNoViolations);
 
 const {
   CommandList,

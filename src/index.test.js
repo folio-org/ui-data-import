@@ -1,17 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import '../test/jest/__mock__';
 import { buildStripes } from '../test/jest/helpers';
 
 import DataImport from './index';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('./settings', () => ({
   ...jest.requireActual('./settings'),

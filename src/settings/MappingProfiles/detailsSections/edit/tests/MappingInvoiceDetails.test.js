@@ -1,9 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import {
-  axe,
-  toHaveNoViolations,
-} from 'jest-axe';
+import { axe } from 'jest-axe';
 
 import '../../../../../../test/jest/__mock__';
 
@@ -20,8 +17,6 @@ import {
   getInitialFields,
   getInitialDetails,
 } from '../../../initialDetails';
-
-expect.extend(toHaveNoViolations);
 
 jest.mock('.../../../../../components/FieldOrganization/FieldOrganization', () => ({ onSelect }) => (
   <div>
