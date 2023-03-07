@@ -20,7 +20,11 @@ export const ORDER_FORMATS = {
 };
 export const RECEIPT_STATUS = {
   PENDING: 'Pending',
-  NOT_REQUIRED: 'Receipt not required',
+  NOT_REQUIRED: 'Receipt Not Required',
+};
+export const PAYMENT_STATUS = {
+  PENDING: 'Pending',
+  NOT_REQUIRED: 'Payment Not Required',
 };
 export const RECEIVING_WORKFLOW = {
   SYNCHRONIZED: 'Synchronized',

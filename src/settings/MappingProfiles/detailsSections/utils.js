@@ -277,7 +277,7 @@ export const getVendorId = vendorFromDetails => {
 };
 
 export const getMappingFromVendorDetails = vendorFromDetails => {
-  const mappingEndPosition = vendorFromDetails.indexOf('"');
+  const mappingEndPosition = vendorFromDetails?.indexOf('"');
   const mapping = vendorFromDetails?.substring(0, mappingEndPosition === -1 ? vendorFromDetails.length : mappingEndPosition);
 
   return mapping;
