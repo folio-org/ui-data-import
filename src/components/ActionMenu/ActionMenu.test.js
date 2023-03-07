@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import '../../../test/jest/__mock__';
 
@@ -27,6 +28,13 @@ const renderActionMenu = () => {
 };
 
 describe('Action menu component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderActionMenu();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered', () => {
     expect(renderActionMenu()).toBeDefined();
   });

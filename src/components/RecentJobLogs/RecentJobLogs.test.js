@@ -1,4 +1,5 @@
 import React from 'react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -25,6 +26,13 @@ const renderRecentJobLogs = () => {
 };
 
 describe('RecentJobLogs', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderRecentJobLogs();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('JobLogsContainer should be rendered', () => {
     const { getByText } = renderRecentJobLogs();
 

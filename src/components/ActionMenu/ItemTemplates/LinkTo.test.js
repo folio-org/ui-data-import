@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -33,6 +34,13 @@ describe('Action menu LinkTo Item Template', () => {
   afterEach(() => {
     menu.onToggle.mockClear();
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderLinkToItemTemplate();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should be rendered', () => {

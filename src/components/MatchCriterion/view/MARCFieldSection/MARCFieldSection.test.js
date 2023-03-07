@@ -1,4 +1,5 @@
 import React from 'react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../../test/jest/__mock__';
@@ -53,6 +54,13 @@ const renderMARCFieldSection = ({
 };
 
 describe('MARCFieldSection view', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMARCFieldSection(marcFieldSection);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered with label', () => {
     const { getByText } = renderMARCFieldSection(marcFieldSection);
 

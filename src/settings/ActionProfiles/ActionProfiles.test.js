@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import { axe } from 'jest-axe';
 
 import {
   buildResources,
@@ -117,6 +118,13 @@ const renderActionProfiles = ({
 describe('ActionProfiles', () => {
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderActionProfiles(actionProfilesProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should be rendered', () => {

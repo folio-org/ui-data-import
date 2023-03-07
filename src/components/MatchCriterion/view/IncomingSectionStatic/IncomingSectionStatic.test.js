@@ -1,4 +1,5 @@
 import React from 'react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../../test/jest/__mock__';
@@ -69,6 +70,13 @@ const renderIncomingSectionStatic = ({ staticValueDetails }) => {
 };
 
 describe('IncomingSectionStatic view', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderIncomingSectionStatic(incomingSectionStaticWithText);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   describe('when there is no value', () => {
     it('should be rendered empty', () => {
       const { queryByText } = renderIncomingSectionStatic(emptyIncomingSectionStatic);

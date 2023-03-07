@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -64,6 +64,7 @@ const renderWithReferenceValues = ({
       value={value}
       onChange={onChange}
       disabled={disabled}
+      aria-label="wrappedComponent label"
     />
   );
 
@@ -95,6 +96,13 @@ describe('withReferenceValues component', () => {
     mockOnFieldChange.mockClear();
 
     mockInputOnchange.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderWithReferenceValues(withReferenceValuesProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should render wrapped component correctly', () => {

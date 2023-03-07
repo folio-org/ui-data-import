@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -41,6 +42,16 @@ describe('RecordItem', () => {
   });
 
   describe('when button is initial', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderRecordItem({
+        ...recordItemProps('holdings'),
+        isEditable: true,
+      });
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+
     it('should be rendered', () => {
       const { getByText } = renderRecordItem({
         ...recordItemProps('holdings'),
@@ -102,6 +113,17 @@ describe('RecordItem', () => {
   });
 
   describe('when button is dropdown', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderRecordItem({
+        ...recordItemProps('holdings'),
+        className: 'incomingRecord',
+        isEditable: true,
+      });
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+
     it('should be rendered', () => {
       const { getByText } = renderRecordItem({
         ...recordItemProps('holdings'),

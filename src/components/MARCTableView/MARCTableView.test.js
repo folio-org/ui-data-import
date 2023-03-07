@@ -1,4 +1,5 @@
 import React from 'react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -77,6 +78,13 @@ const renderMARCTableView = ({
 };
 
 describe('MARCTableView', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMARCTableView(MARCTableViewProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('MARC table header should be rendered', () => {
     const { getByText } = renderMARCTableView(MARCTableViewProps);
 

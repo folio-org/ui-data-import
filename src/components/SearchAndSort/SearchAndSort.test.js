@@ -6,6 +6,7 @@ import {
   render,
 } from '@testing-library/react';
 import { noop } from 'lodash';
+import { axe } from 'jest-axe';
 
 import {
   buildMutator,
@@ -172,6 +173,17 @@ describe.skip('SearchAndSort component', () => {
     EditRecordComponentMock.mockClear();
     onCreateMock.mockClear();
     onEditMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderSearchAndSort(searchAndSortProps({
+      parentResources: resources(1, false),
+      isFullScreen: true,
+      route: `${pathname}/create`,
+    }));
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should be rendered', () => {

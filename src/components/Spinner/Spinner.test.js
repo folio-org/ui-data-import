@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -29,6 +30,13 @@ const renderSpinner = ({ entity }) => {
 };
 
 describe('Spinner component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderSpinner(spinnerProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should render preloader', () => {
     const { getByText } = renderSpinner(spinnerProps);
 

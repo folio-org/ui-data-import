@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -83,6 +84,13 @@ const renderRepeatableActionsField = ({
 describe('RepeatableActionsField component', () => {
   afterEach(() => {
     onRepeatableActionChangeMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderRepeatableActionsField(repeatableActionsFieldProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should be rendered with child component', () => {

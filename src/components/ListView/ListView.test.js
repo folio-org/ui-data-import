@@ -6,6 +6,7 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
+import { axe } from 'jest-axe';
 
 import {
   buildResources,
@@ -204,12 +205,22 @@ const renderListView = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('ListView', () => {
+describe('ListView component', () => {
   afterEach(() => {
     history.push.mockClear();
   });
 
   describe('when profile type is Action Profiles', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderListView({
+        ...listViewProps,
+        ...listViewPropsActionProfiles,
+      });
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+
     it('should render correct label', () => {
       const { getByText } = renderListView({
         ...listViewProps,
@@ -221,6 +232,16 @@ describe('ListView', () => {
   });
 
   describe('when profile type is File extention', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderListView({
+        ...listViewProps,
+        ...listViewPropsFileExtensions,
+      });
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+
     it('should render correct label', () => {
       const { getByText } = renderListView({
         ...listViewProps,

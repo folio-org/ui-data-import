@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -206,6 +207,13 @@ describe('MatchProfilesForm', () => {
   });
 
   describe('when form is in creating new record mode', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+
     describe('when select static value incoming record', () => {
       it('Incoming Static value record should be rendered', () => {
         const {
@@ -311,6 +319,13 @@ describe('MatchProfilesForm', () => {
   });
 
   describe('when form is in edit mode', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.EDIT));
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+
     it('should be rendered', () => {
       const { getByText } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.EDIT));
 

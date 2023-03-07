@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import '../../../../../../test/jest/__mock__';
 
@@ -83,6 +84,13 @@ describe('<MappingItemDetails>', () => {
 
   afterAll(() => {
     delete global.fetch;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingItemDetails({});
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should have correct sections', async () => {

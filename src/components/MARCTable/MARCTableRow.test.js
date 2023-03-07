@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -47,6 +48,13 @@ const renderMARCTableRow = () => {
 describe('MARC modifications table row', () => {
   afterEach(() => {
     mockedFunctions.forEach(fn => fn.mockClear());
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMARCTableRow();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   describe('when "Action" field changed', () => {

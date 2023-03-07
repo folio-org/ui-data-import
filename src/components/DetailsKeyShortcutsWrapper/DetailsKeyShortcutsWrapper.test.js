@@ -1,4 +1,5 @@
 import React from 'react';
+import { axe } from 'jest-axe';
 
 import { createMemoryHistory } from 'history';
 
@@ -37,11 +38,16 @@ const locationProp = {
   pathname: '',
 };
 
+const defaultProps = {
+  recordId: recordIdProp(),
+  location: locationProp,
+};
+
 const renderDetailsKeyShortcutsWrapper = ({
   recordId,
   location,
 }) => {
-  const childElement = <input data-testid="childElement" />;
+  const childElement = <input data-testid="childElement" aria-label="childElementLabel" />;
 
   const component = () => (
     <CommandList commands={defaultKeyboardShortcuts}>
@@ -63,11 +69,15 @@ describe('DetailsKeyShortcutsWrapper component', () => {
     history.push.mockClear();
   });
 
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderDetailsKeyShortcutsWrapper(defaultProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should render children correctly', () => {
-    const { getByTestId } = renderDetailsKeyShortcutsWrapper({
-      recordId: recordIdProp(),
-      location: locationProp,
-    });
+    const { getByTestId } = renderDetailsKeyShortcutsWrapper(defaultProps);
 
     expect(getByTestId('childElement')).toBeInTheDocument();
   });
@@ -89,10 +99,7 @@ describe('DetailsKeyShortcutsWrapper component', () => {
 
   describe('calls the correct handler when a key is pressed that', () => {
     it('matches edit shortcut', () => {
-      const { getByTestId } = renderDetailsKeyShortcutsWrapper({
-        recordId: recordIdProp(),
-        location: locationProp,
-      });
+      const { getByTestId } = renderDetailsKeyShortcutsWrapper(defaultProps);
 
       const childElement = getByTestId('childElement');
 
@@ -104,10 +111,7 @@ describe('DetailsKeyShortcutsWrapper component', () => {
     });
 
     it('matches duplicateRecord shortcut pressed', () => {
-      const { getByTestId } = renderDetailsKeyShortcutsWrapper({
-        recordId: recordIdProp(),
-        location: locationProp,
-      });
+      const { getByTestId } = renderDetailsKeyShortcutsWrapper(defaultProps);
 
       const childElement = getByTestId('childElement');
 

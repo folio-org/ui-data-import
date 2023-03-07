@@ -1,6 +1,7 @@
 import React from 'react';
 import { noop } from 'lodash';
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -27,6 +28,13 @@ const renderIncomingRecordMenu = ({ open }) => {
 describe('IncomingRecordMenu', () => {
   afterEach(() => {
     onClick.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderIncomingRecordMenu({ open: true });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   describe('when dropdown menu is closed', () => {

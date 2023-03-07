@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import { axe } from 'jest-axe';
 
 import {
   buildMutator,
@@ -111,6 +112,13 @@ const renderMatchProfiles = props => {
 };
 
 describe('MatchProfiles', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMatchProfiles(matchProfilesProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered', () => {
     const { getByText } = renderMatchProfiles(matchProfilesProps);
 
