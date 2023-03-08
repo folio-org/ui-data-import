@@ -3,7 +3,7 @@ import {
   render,
   waitFor,
 } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
 
@@ -75,9 +75,8 @@ describe('DataFetcher component', () => {
   it('should be rendered with no axe errors', async () => {
     const mutator = buildMutator(reset, successGET);
     const { container } = await renderDataFetcher(mutator);
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when data is received successfully', () => {

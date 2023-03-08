@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
@@ -58,9 +58,8 @@ describe('ProfileLinker', () => {
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderProfileLinker(profileLinkerProps);
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {
