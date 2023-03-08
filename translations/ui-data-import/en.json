@@ -875,6 +875,7 @@
   "settings.mappingProfiles.map.order.eResourcesDetails.field.activationStatus": "Activation status",
   "settings.mappingProfiles.map.order.eResourcesDetails.field.activationDue": "Activation due",
   "settings.mappingProfiles.map.order.eResourcesDetails.field.createInventory": "Create inventory",
+  "settings.mappingProfiles.map.order.eResourcesDetails.field.electronicUnitPrice.info": "Required when Order format is Electronic resource or P/E mix. When import job creates a Pending order, this field controls the Inventory record requirements when the PO is opened via the Orders app. When import job creates an Open order, this field reflects the Inventory record requirements that were included as actions in the Data Import job profile",
   "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType": "Material type",
   "settings.mappingProfiles.map.order.eResourcesDetails.field.materialType.info": "Required when Order format is Electronic resource or P/E mix; and Create inventory is Instance, holdings, item",
   "settings.mappingProfiles.map.order.eResourcesDetails.field.trial": "Trial",
