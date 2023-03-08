@@ -5,7 +5,7 @@ import {
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import faker from 'faker';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   buildResources,
@@ -186,9 +186,8 @@ describe('View job log page', () => {
       recordType: 'MARC',
       jobLogHasLoaded: false,
     });
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when component is updated', () => {
@@ -278,9 +277,8 @@ describe('View job log page', () => {
     describe('when log for SRS MARC has loaded', () => {
       it('should be rendered with no axe errors', async () => {
         const { container } = renderViewJobLog({ recordType: 'MARC' });
-        const results = await axe(container);
 
-        expect(results).toHaveNoViolations();
+        await runAxeTest({ rootNode: container });
       });
 
       it('should display SRS MARC JSON details on the screen', () => {

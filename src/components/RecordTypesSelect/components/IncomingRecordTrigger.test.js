@@ -1,6 +1,6 @@
 import React from 'react';
 import { noop } from 'lodash';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -49,9 +49,8 @@ describe('IncomingRecordTrigger', () => {
         iconKey: 'test-icon-key',
         isExpanded: false,
       });
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('should be rendered title with icon', () => {
@@ -76,9 +75,8 @@ describe('IncomingRecordTrigger', () => {
         iconKey: null,
         isExpanded: true,
       });
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('should be rendered title without icon', () => {

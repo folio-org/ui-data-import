@@ -3,7 +3,7 @@ import {
   fireEvent,
   within,
 } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -77,9 +77,8 @@ describe('FundDistribution', () => {
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderFundDistribution();
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

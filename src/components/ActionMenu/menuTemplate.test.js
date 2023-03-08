@@ -3,7 +3,7 @@ import {
   render,
   fireEvent,
 } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
@@ -58,9 +58,8 @@ describe('Action menu menuTemplate', () => {
   describe('when item is `addNew`', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = render(templates.addNew('key'));
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('then `LinkTo` component should be rendered', () => {
@@ -73,9 +72,8 @@ describe('Action menu menuTemplate', () => {
   describe('when item is `edit`', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = render(templates.edit('key'));
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('then `LinkTo` component should be rendered', () => {
@@ -88,9 +86,8 @@ describe('Action menu menuTemplate', () => {
   describe('when item is `duplicate`', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = render(templates.duplicate('key'));
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('then `LinkTo` component should be rendered', () => {
@@ -103,9 +100,8 @@ describe('Action menu menuTemplate', () => {
   describe('when item is `run`', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = render(templates.run('key'));
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('then `Default` component should be rendered', () => {
@@ -129,9 +125,8 @@ describe('Action menu menuTemplate', () => {
   describe('when item is `exportSelected`', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = render(templates.exportSelected('key'));
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('then `GroupAction` component should be rendered', () => {
@@ -144,9 +139,8 @@ describe('Action menu menuTemplate', () => {
   describe('when item is `selectAll`', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = render(templates.selectAll('key'));
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('then `Default` component should be rendered', () => {
@@ -170,9 +164,8 @@ describe('Action menu menuTemplate', () => {
   describe('when item is `deselectAll`', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = render(templates.deselectAll('key'));
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('then `Default` component should be rendered', () => {
@@ -196,9 +189,8 @@ describe('Action menu menuTemplate', () => {
   describe('when item is `delete`', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = render(templates.delete('key'));
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('then `Default` component should be rendered', () => {
@@ -222,9 +214,8 @@ describe('Action menu menuTemplate', () => {
   describe('when item is `restoreDefaults`', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = render(templates.restoreDefaults('key'));
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('then `Default` component should be rendered', () => {
@@ -248,9 +239,8 @@ describe('Action menu menuTemplate', () => {
   describe('when item is `viewAllLogs`', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = render(templates.viewAllLogs('key'));
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('then `LinkTo` component should be rendered', () => {
@@ -263,9 +253,8 @@ describe('Action menu menuTemplate', () => {
   describe('when item is `deleteSelectedLogs`', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = render(templates.deleteSelectedLogs('key'));
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('then `Default` component should be rendered', () => {

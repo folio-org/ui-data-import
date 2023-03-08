@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -151,9 +151,8 @@ describe('ActionProfilesForm', () => {
   describe('when form is in creating new record mode', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderActionProfilesForm(actionProfilesFormProps());
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('should be rendered', () => {
@@ -355,9 +354,8 @@ describe('ActionProfilesForm', () => {
   describe('when form is in edit mode', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('should be rendered', () => {

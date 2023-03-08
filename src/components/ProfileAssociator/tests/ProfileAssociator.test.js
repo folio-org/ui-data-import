@@ -5,7 +5,7 @@ import {
   fireEvent,
   act,
 } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -151,9 +151,8 @@ describe('<ProfileAssociator>', () => {
       isMultiSelect: true,
       useSearch: true,
     });
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when there is no associated profiles', () => {

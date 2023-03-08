@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   buildResources,
@@ -216,9 +216,8 @@ describe('ListView component', () => {
         ...listViewProps,
         ...listViewPropsActionProfiles,
       });
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('should render correct label', () => {
@@ -237,9 +236,8 @@ describe('ListView component', () => {
         ...listViewProps,
         ...listViewPropsFileExtensions,
       });
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('should render correct label', () => {

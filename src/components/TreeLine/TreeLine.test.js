@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
@@ -112,9 +112,8 @@ describe('TreeLine', () => {
 
   it('should be rendered with no axe errors', async () => {
     const { container } = render(parentContainer);
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered inside container', () => {

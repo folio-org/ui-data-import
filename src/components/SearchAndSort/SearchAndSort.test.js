@@ -6,7 +6,7 @@ import {
   render,
 } from '@testing-library/react';
 import { noop } from 'lodash';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   buildMutator,
@@ -181,9 +181,8 @@ describe.skip('SearchAndSort component', () => {
       isFullScreen: true,
       route: `${pathname}/create`,
     }));
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

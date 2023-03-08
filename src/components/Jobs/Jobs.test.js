@@ -4,7 +4,7 @@ import {
   waitFor,
   within,
 } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -108,9 +108,8 @@ describe('Jobs component', () => {
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderJobs();
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('should contain "Running" section', () => {

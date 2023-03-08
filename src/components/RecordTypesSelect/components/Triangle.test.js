@@ -1,15 +1,14 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { Triangle } from './Triangle';
 
 describe('Triangle', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = render(<Triangle />);
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../test/jest/__mock__';
 import { buildStripes } from '../test/jest/helpers';
@@ -36,9 +36,8 @@ const renderDataImport = (showSettings = false) => {
 describe('DataImport component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderDataImport();
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {
@@ -48,9 +47,8 @@ describe('DataImport component', () => {
   describe('when showSettings is true', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderDataImport(true);
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('should render Data import settings', () => {

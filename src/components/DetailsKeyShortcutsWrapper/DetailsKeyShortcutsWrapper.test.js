@@ -1,5 +1,5 @@
 import React from 'react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { createMemoryHistory } from 'history';
 
@@ -71,9 +71,8 @@ describe('DetailsKeyShortcutsWrapper component', () => {
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderDetailsKeyShortcutsWrapper(defaultProps);
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render children correctly', () => {
