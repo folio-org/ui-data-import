@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
@@ -72,9 +72,8 @@ const renderTreeView = treeViewProps => {
 describe('Tree View component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderTreeView(mockSpacingProps);
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('Should be rendered', () => {

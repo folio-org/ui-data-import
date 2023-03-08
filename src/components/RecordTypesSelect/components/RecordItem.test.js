@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -47,9 +47,8 @@ describe('RecordItem', () => {
         ...recordItemProps('holdings'),
         isEditable: true,
       });
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('should be rendered', () => {
@@ -119,9 +118,8 @@ describe('RecordItem', () => {
         className: 'incomingRecord',
         isEditable: true,
       });
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('should be rendered', () => {

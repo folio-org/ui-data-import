@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -61,9 +61,8 @@ describe('Section', () => {
   describe('when label is provided', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderSection(sectionWithLabel);
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('should be rendered only with label', () => {
@@ -76,9 +75,8 @@ describe('Section', () => {
   describe('when headline is not provided', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderSection(sectionWithoutHeadline);
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('should be rendered without headline', () => {
@@ -92,9 +90,8 @@ describe('Section', () => {
   describe('when only child elemnt is provided', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderSection(sectionWithChildElements);
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('should be rendered only with child elements', () => {

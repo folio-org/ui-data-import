@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -26,9 +26,8 @@ const renderWithTranslation = ({
 describe('WithTranslation component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderWithTranslation({ wrapperLabel: 'ui-data-import.meta.title' });
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when wrapper label prop is translation id', () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../../test/jest/__mock__';
@@ -41,9 +41,8 @@ const renderQualifierPartSection = ({
 describe('QualifierPartSection view', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderQualifierPartSection(qualifierPartSection);
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when there is a value', () => {
