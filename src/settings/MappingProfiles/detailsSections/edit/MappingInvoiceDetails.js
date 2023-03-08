@@ -30,8 +30,9 @@ import {
   getFieldValueFromDetails,
   getAccountingCodeOptions,
   getAccountingNumberOptions,
+  getFieldEnabled,
+  getSubfieldName,
 } from '../utils';
-import { FIELD_NAME_PREFIX } from '../constants';
 
 export const MappingInvoiceDetails = ({
   mappingDetails,
@@ -55,6 +56,10 @@ export const MappingInvoiceDetails = ({
   const exchangeRateFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, EXCHANGE_RATE_FIELD);
   const filledVendorId = getFieldValueFromDetails(mappingDetails?.mappingFields, VENDOR_ID_FIELD);
 
+  const ACCOUNTING_CODE_FIELD_INDEX = 18;
+  const INVOICE_LINES_FIELD_INDEX = 26;
+  const ACCOUNT_NUMBER_FIELD_INDEX = 10;
+
   const selectVendor = useCallback(vendor => {
     if (selectedVendor?.id !== vendor.id) {
       setSelectedVendor(vendor);
@@ -63,13 +68,26 @@ export const MappingInvoiceDetails = ({
 
       const erpCode = vendor.erpCode || '';
       const hasAnyAccountingCode = vendor.accounts?.some(({ appSystemNo }) => Boolean(appSystemNo));
-      const vendorAccountingCode = !hasAnyAccountingCode ? erpCode : '';
+      const defaultVendorAccountingCode = !hasAnyAccountingCode ? erpCode : '';
 
-      setReferenceTables(getFieldName(18), vendorAccountingCode ? `"${vendorAccountingCode}"` : '');
-      setReferenceTables(getFieldName(36), '');
-      setReferenceTables(`${FIELD_NAME_PREFIX}[18].enabled`, !!vendorAccountingCode);
+      setReferenceTables(getFieldName(ACCOUNTING_CODE_FIELD_INDEX), defaultVendorAccountingCode ? `"${defaultVendorAccountingCode}"` : '');
+      setReferenceTables(getSubfieldName(INVOICE_LINES_FIELD_INDEX, ACCOUNT_NUMBER_FIELD_INDEX, 0), '');
+
+      if (defaultVendorAccountingCode) {
+        setReferenceTables(getFieldEnabled(ACCOUNTING_CODE_FIELD_INDEX), true);
+      }
     }
   }, [selectedVendor, setReferenceTables]);
+
+  const onClearVendor = () => {
+    setSelectedVendor(null);
+    setAccountingCodeOptions([]);
+    setAccountingNumberOptions([]);
+
+    setReferenceTables(getFieldName(ACCOUNTING_CODE_FIELD_INDEX), '');
+    setReferenceTables(getFieldEnabled(ACCOUNTING_CODE_FIELD_INDEX), false);
+    setReferenceTables(getSubfieldName(INVOICE_LINES_FIELD_INDEX, ACCOUNT_NUMBER_FIELD_INDEX, 0), '');
+  };
 
   return (
     <AccordionSet>
@@ -91,6 +109,7 @@ export const MappingInvoiceDetails = ({
         setReferenceTables={setReferenceTables}
         accountingCodeOptions={accountingCodeOptions}
         onSelectVendor={selectVendor}
+        onClearVendor={onClearVendor}
         okapi={okapi}
       />
       <ExtendedInformation
