@@ -135,6 +135,7 @@ describe('OrderInformation', () => {
   it('should render required fields', () => {
     const { queryByText } = renderOrderInformation();
 
+    expect(within(queryByText('Purchase order status')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Vendor')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Order type')).getByText(/\*/i)).toBeDefined();
   });
