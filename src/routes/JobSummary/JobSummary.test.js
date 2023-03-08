@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   buildResources,
@@ -69,9 +69,8 @@ const renderJobSummary = ({ dataType = 'MARC', resources }) => {
 describe('Job summary page', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderJobSummary({});
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('should have a file name in the header', () => {
