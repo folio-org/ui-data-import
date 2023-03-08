@@ -1112,7 +1112,6 @@
     "settings.mappingProfiles.map.order.physicalOrderDetails.receiptDue": "Receipt due",
     "settings.mappingProfiles.map.order.physicalOrderDetails.expectedReceiptDate": "Expected receipt date",
     "settings.mappingProfiles.map.order.physicalOrderDetails.createInventory": "Create inventory",
-    "settings.mappingProfiles.map.order.physicalResourceDetails.field.physicalUnitPrice.info": "Required when Order format is Physical resource, P/E mix, or Other. When import job creates a Pending order, this field controls the Inventory record requirements when the PO is opened via the Orders app. When import job creates an Open order, this field reflects the Inventory record requirements that were included as actions in the Data Import job profile",
     "settings.mappingProfiles.map.order.physicalOrderDetails.materialType": "Material type",
     "settings.mappingProfiles.map.order.physicalOrderDetails.volume": "Volume",
     "settings.mappingProfiles.map.order.eResourcesDetails.accessProvider": "Access provider",
