@@ -8,6 +8,7 @@
 * Order field mapping profile: Fix the values in the Payment status field (UIDATIMP-1386)
 * Manual clearing of the Vendor/Material supplier/Access provider fields is not working properly (UIDATIMP-1388)
 * Data Import Action/Field mapping profiles in modal window are not in alpha order by default on Create screen (UIDATIMP-1390)
+* Order field mapping profile: Make Purchase order status a required field (UIDATIMP-1396)
 
 ## [6.0.0](https://github.com/folio-org/ui-data-import/tree/v6.0.0) (2023-02-24)
 
