@@ -205,6 +205,7 @@ const OrderInformationComponent = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={purchaseOrderStatusOptions}
+            required
           />
         </Col>
         <Col xs={6}>
