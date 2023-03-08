@@ -125,6 +125,7 @@ export const OverrideProtectedFieldsTable = ({
       separator={false}
       open={isOpen}
       onToggle={() => setIsOpen(!isOpen)}
+      role="gridcell"
     >
       <Row
         between="xs"

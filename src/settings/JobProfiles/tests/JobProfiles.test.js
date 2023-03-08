@@ -6,6 +6,7 @@ import {
 } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -145,6 +146,13 @@ const renderJobProfiles = ({
 };
 
 describe.skip('<JobProfiles>', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobProfiles(jobProfilesProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should render correct amount of items', () => {
     const { getByText } = renderJobProfiles(jobProfilesProps);
 

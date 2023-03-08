@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -19,6 +20,14 @@ const renderMappingHoldingsDetails = () => {
 };
 
 describe('<MappingHoldingsDetails>', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingHoldingsDetails();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should have correct sections', () => {
     const { getByRole } = renderMappingHoldingsDetails();
 

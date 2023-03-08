@@ -5,6 +5,7 @@ import {
   fireEvent,
   act,
 } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import '../../../../test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -42,6 +43,12 @@ jest.mock('@folio/stripes/components', () => ({
     </div>
   ) : null)),
 }));
+
+const defaultRecord = {
+  id: 'testId1',
+  action: ACTION_TYPES.CREATE,
+  name: 'testName1',
+};
 
 const contentDataProp = [{
   contentType: PROFILE_TYPES.JOB_PROFILE,
@@ -137,14 +144,22 @@ const renderProfileAssociator = ({
 };
 
 describe('<ProfileAssociator>', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderProfileAssociator({
+      record: defaultRecord,
+      contentData: [],
+      isMultiSelect: true,
+      useSearch: true,
+    });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   describe('when there is no associated profiles', () => {
     it('renders empty message', () => {
       const { getByText } = renderProfileAssociator({
-        record: {
-          id: 'testId1',
-          action: ACTION_TYPES.CREATE,
-          name: 'testName1',
-        },
+        record: defaultRecord,
         contentData: [],
         isMultiSelect: true,
         useSearch: true,
@@ -156,11 +171,7 @@ describe('<ProfileAssociator>', () => {
 
   it('"Search" button is disabled by default', () => {
     const { getByRole } = renderProfileAssociator({
-      record: {
-        id: 'testId1',
-        action: ACTION_TYPES.CREATE,
-        name: 'testName1',
-      },
+      record: defaultRecord,
       isMultiSelect: false,
       useSearch: true,
     });
@@ -171,11 +182,7 @@ describe('<ProfileAssociator>', () => {
   describe('when input field is filled', () => {
     it('"Search" button is enabled', () => {
       const { getByRole } = renderProfileAssociator({
-        record: {
-          id: 'testId1',
-          action: ACTION_TYPES.CREATE,
-          name: 'testName1',
-        },
+        record: defaultRecord,
         isMultiSelect: true,
         useSearch: true,
       });
@@ -192,11 +199,7 @@ describe('<ProfileAssociator>', () => {
         getByRole,
         container,
       } = renderProfileAssociator({
-        record: {
-          id: 'testId1',
-          action: ACTION_TYPES.CREATE,
-          name: 'testName1',
-        },
+        record: defaultRecord,
         isMultiSelect: true,
         useSearch: true,
       });
@@ -217,11 +220,7 @@ describe('<ProfileAssociator>', () => {
   describe('when user search', () => {
     it('input field persists search term', async () => {
       const { getByRole } = renderProfileAssociator({
-        record: {
-          id: 'testId1',
-          action: ACTION_TYPES.CREATE,
-          name: 'testName1',
-        },
+        record: defaultRecord,
         isMultiSelect: true,
         useSearch: true,
       });

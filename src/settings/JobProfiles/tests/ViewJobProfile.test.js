@@ -5,6 +5,7 @@ import {
   waitFor,
   getByText as getByTextScreen,
 } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { noop } from 'lodash';
 
@@ -107,6 +108,14 @@ const renderViewJobProfile = ({
 };
 
 describe('<ViewJobProfile>', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderViewJobProfile(viewJobProfileProps(jobProfile));
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should render profile name correctly', () => {
     const { getAllByText } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 

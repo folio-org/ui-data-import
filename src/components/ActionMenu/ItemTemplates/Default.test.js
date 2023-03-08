@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -25,6 +26,13 @@ const renderDefaultItemTemplate = () => {
 describe('Action menu Default Item Template', () => {
   afterEach(() => {
     onClick.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderDefaultItemTemplate();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should be rendered', () => {

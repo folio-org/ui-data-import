@@ -1,4 +1,5 @@
 import React from 'react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
@@ -68,6 +69,13 @@ const renderViewMatchCriterion = ({
 };
 
 describe('ViewMatchCriterion', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderViewMatchCriterion({ ...viewMatchCriterionProps('EXACTLY_MATCHES') });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered with a qualifier type', () => {
     const { getByText } = renderViewMatchCriterion({ ...viewMatchCriterionProps('EXACTLY_MATCHES') });
 

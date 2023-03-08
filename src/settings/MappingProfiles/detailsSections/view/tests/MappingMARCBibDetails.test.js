@@ -1,4 +1,5 @@
 import React from 'react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -34,6 +35,13 @@ const renderMappingMARCBibDetails = ({
 };
 
 describe('<MARCBibDetails>', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should have correct sections', () => {
     const { getByRole } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -29,6 +30,13 @@ const renderBooleanActionField = ({ placeholder }) => {
 describe('Boolean action field component', () => {
   afterEach(() => {
     onBooleanFieldChangeMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderBooleanActionField({});
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   describe('when a form has wrapped component', () => {

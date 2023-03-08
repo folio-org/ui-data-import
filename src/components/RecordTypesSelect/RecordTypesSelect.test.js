@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -30,6 +31,16 @@ const renderRecordTypesSelect = ({
 describe('RecordTypesSelect', () => {
   afterAll(() => {
     delete window.ResizeObserver;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderRecordTypesSelect({
+      incomingRecordType: 'MARC_AUTHORITY',
+      existingRecordType: 'INSTANCE',
+    });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should be rendered', () => {

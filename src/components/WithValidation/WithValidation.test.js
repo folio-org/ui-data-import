@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { waitFor } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithContext } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -23,6 +24,7 @@ const TestComponent = props => {
         name="name"
         onChange={props.validate('hello')}
         value="Hello"
+        aria-label="Name"
       />
       <input
         data-testid="age"
@@ -31,6 +33,7 @@ const TestComponent = props => {
         name="age"
         onChange={handleChange}
         value={data}
+        aria-label="Age"
       />
     </div>
   );
@@ -57,6 +60,13 @@ const renderWithValidation = ({ isRemoveValueAllowed }) => {
 };
 
 describe('With Validation component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderWithValidation(false);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('Render the component', () => {
     waitFor(() => expect(renderWithValidation(false)).toBeDefined());
   });

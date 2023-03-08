@@ -2,6 +2,9 @@
 
 ## **6.0.1** (in progress)
 
+### Features added:
+* Add accessibiity testing to automated tests in ui-data-import (UIDATIMP-1372)
+
 ### Bugs fixed:
 * Error when saving a field mapping profile with some (not all) of related action profiles unlinked - Fixed (UIDATIMP-1350)
 * Override purchase order lines limit setting field allows saving fractional numbers (UIDATIMP-1383)

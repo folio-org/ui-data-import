@@ -1,4 +1,5 @@
 import React from 'react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -30,6 +31,13 @@ const renderMappingMARCAuthorityDetails = ({ folioRecordType }) => {
 };
 
 describe('MappingMARCAuthorityDetails', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingMARCAuthorityDetails({ folioRecordType: MARC_TYPES.MARC_AUTHORITY });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   describe('when field mappings for MARC is "Updates"', () => {
     it('should have correct fields', async () => {
       const { findByRole } = renderMappingMARCAuthorityDetails({ folioRecordType: MARC_TYPES.MARC_AUTHORITY });

@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../../test/jest/__mock__';
@@ -70,6 +71,13 @@ const renderExistingSectionFolio = ({
 describe('ExistingSectionFolio edit', () => {
   afterEach(() => {
     onChangeFormStateMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should render data options', () => {

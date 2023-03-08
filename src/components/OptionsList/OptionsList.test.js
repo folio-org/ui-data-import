@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -67,6 +68,13 @@ const renderOptionsList = ({
 describe('OptionsList', () => {
   afterAll(() => {
     onSelectMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderOptionsList(notEmptyOptionsListProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   describe('when there are options', () => {

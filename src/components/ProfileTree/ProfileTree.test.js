@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -46,7 +47,6 @@ window.ResizeObserver = jest.fn(() => ({
 const profileTreeProps = ({
   allowUnlink,
   allowDelete,
-  record,
 }) => {
   return {
     setData: noop,
@@ -123,7 +123,6 @@ const profileTreeProps = ({
         }],
       },
     },
-    record,
   };
 };
 
@@ -133,7 +132,6 @@ const renderProfileTree = ({
   setData,
   okapi,
   resources,
-  record,
 }) => {
   const component = (
     <ProfileTree
@@ -141,7 +139,6 @@ const renderProfileTree = ({
       contentData={contentData}
       okapi={okapi}
       resources={resources}
-      record={record}
       setData={setData}
     />
   );
@@ -158,6 +155,17 @@ describe('ProfileTree', () => {
     Pluggable.mockClear();
   });
 
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderProfileTree(profileTreeProps({
+      allowUnlink: false,
+      allowDelete: true,
+    }));
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   describe('when clicking on delete button', () => {
     it('modal window shod be closed', () => {
       const {
@@ -166,7 +174,6 @@ describe('ProfileTree', () => {
       } = renderProfileTree(profileTreeProps({
         allowUnlink: false,
         allowDelete: true,
-        record: null,
       }));
       const onDeleteButton = container.querySelector('button[data-test-profile-delete="true"]');
 
@@ -184,7 +191,6 @@ describe('ProfileTree', () => {
     const { getAllByText } = renderProfileTree(profileTreeProps({
       allowUnlink: true,
       allowDelete: false,
-      record: null,
     }));
 
     Pluggable.mock.calls[0][0].onLink([{ id: 'testId' }]);

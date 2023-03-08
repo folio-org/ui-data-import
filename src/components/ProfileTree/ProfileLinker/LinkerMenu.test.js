@@ -1,4 +1,5 @@
 import React from 'react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
@@ -46,6 +47,14 @@ describe('LinkerMenu', () => {
   afterEach(() => {
     onClick.mockClear();
   });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderLinkerMenu(linkerMenuProps);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should be rendered with label', () => {
     const { getByText } = renderLinkerMenu(linkerMenuProps);
 

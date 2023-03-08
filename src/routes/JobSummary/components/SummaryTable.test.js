@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -56,6 +57,14 @@ const renderSummaryTable = (resourcesProp = resources) => {
 };
 
 describe('SummaryTable component', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderSummaryTable();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should render a table', () => {
     renderSummaryTable();
 

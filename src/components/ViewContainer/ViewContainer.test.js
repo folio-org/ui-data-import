@@ -1,6 +1,7 @@
 import React from 'react';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -67,6 +68,16 @@ describe.skip('ViewContainer component', () => {
 
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderViewContainer({
+      ...viewContainerProps,
+      children,
+    });
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('should render children', () => {

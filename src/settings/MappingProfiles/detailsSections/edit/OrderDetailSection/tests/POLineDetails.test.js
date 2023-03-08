@@ -3,6 +3,7 @@ import {
   fireEvent,
   within,
 } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -35,6 +36,13 @@ const renderPOLineDetails = () => {
 };
 
 describe('POLineDetails', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderPOLineDetails();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('should render correct fields', async () => {
     const { getByText } = renderPOLineDetails();
 
