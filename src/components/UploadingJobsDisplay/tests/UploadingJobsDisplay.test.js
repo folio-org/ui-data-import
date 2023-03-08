@@ -5,7 +5,7 @@ import {
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -97,9 +97,8 @@ describe('UploadingjobsDisplay component', () => {
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderUploadingJobsDisplay(defaultContext);
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('renders correctly', async () => {
@@ -125,9 +124,8 @@ describe('UploadingjobsDisplay component', () => {
         ...defaultContext,
         uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.UPLOADED }] },
       });
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('renders JobProfiles component', async () => {
@@ -265,9 +263,8 @@ describe('UploadingjobsDisplay component', () => {
         ...defaultContext,
         uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.UPLOADING }] },
       });
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('shows correct message', async () => {
@@ -301,9 +298,8 @@ describe('UploadingjobsDisplay component', () => {
         ...defaultContext,
         uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.ERROR_DEFINITION }] },
       });
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
 
     it('shows error message', async () => {
@@ -322,9 +318,8 @@ describe('UploadingjobsDisplay component', () => {
         ...defaultContext,
         uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.ERROR }] },
       });
-      const results = await axe(container);
 
-      expect(results).toHaveNoViolations();
+      await runAxeTest({ rootNode: container });
     });
     it('renders error message', async () => {
       const state = { files: { 'CatShip.mrc1634031179989': { status: FILE_STATUSES.ERROR } } };

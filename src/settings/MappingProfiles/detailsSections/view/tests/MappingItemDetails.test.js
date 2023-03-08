@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -29,9 +29,8 @@ describe('<MappingItemDetails>', () => {
   // TODO: Create separate ticket to fix all the accesibility tests
   it.skip('should be rendered with no axe errors', async () => {
     const { container } = renderMappingItemDetails();
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('should have correct sections', () => {

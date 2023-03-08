@@ -4,7 +4,7 @@ import {
   within,
 } from '@testing-library/react';
 import { noop } from 'lodash';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -38,9 +38,8 @@ const renderCostDetails = () => {
 describe('CostDetails', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderCostDetails();
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

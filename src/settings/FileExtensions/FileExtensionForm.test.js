@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import faker from 'faker';
 import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -82,9 +82,8 @@ describe('FileExtensionForm', () => {
       ...fileExtensionFormProps,
       initialValues: initialValuesNewForm,
     });
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when form is in creating new record mode', () => {

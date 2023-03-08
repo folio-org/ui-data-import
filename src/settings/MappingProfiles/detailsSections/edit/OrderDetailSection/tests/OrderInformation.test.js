@@ -3,7 +3,7 @@ import {
   fireEvent,
   within,
 } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
@@ -104,9 +104,8 @@ describe('OrderInformation', () => {
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderOrderInformation();
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {
@@ -136,6 +135,7 @@ describe('OrderInformation', () => {
   it('should render required fields', () => {
     const { queryByText } = renderOrderInformation();
 
+    expect(within(queryByText('Purchase order status')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Vendor')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Order type')).getByText(/\*/i)).toBeDefined();
   });

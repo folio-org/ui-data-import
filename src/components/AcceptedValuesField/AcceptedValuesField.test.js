@@ -1,5 +1,5 @@
 import React from 'react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -68,9 +68,7 @@ describe('Accepted values field component', () => {
       isFormField: true,
     });
 
-    const results = await axe(container);
-
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when a wrapped component is the form field component', () => {

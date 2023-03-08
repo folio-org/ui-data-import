@@ -4,7 +4,7 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
@@ -87,9 +87,8 @@ describe('ViewActionProfiles', () => {
   // TODO: Create separate ticket to fix all the accesibility tests
   it.skip('should be rendered with no axe errors', async () => {
     const { container } = renderViewActionProfile(viewActionProfileProps(actionProfileRecord()));
-    const results = await axe(container);
 
-    expect(results).toHaveNoViolations();
+    await runAxeTest({ rootNode: container });
   });
 
   it('profile name should be rendered correctly', () => {
