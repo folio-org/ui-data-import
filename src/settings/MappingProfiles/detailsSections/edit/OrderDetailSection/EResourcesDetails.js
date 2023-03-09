@@ -82,7 +82,7 @@ export const EResourcesDetails = ({
 
   const createInventoryLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.createInventory`,
-    `${TRANSLATION_ID_PREFIX}.order.costDetails.field.electronicUnitPrice.info`,
+    `${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.electronicUnitPrice.info`,
   );
   const materialTypeLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.materialType`,
