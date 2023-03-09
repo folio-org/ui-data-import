@@ -6,6 +6,7 @@ import {
   render,
 } from '@testing-library/react';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   buildMutator,
@@ -172,6 +173,16 @@ describe.skip('SearchAndSort component', () => {
     EditRecordComponentMock.mockClear();
     onCreateMock.mockClear();
     onEditMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderSearchAndSort(searchAndSortProps({
+      parentResources: resources(1, false),
+      isFullScreen: true,
+      route: `${pathname}/create`,
+    }));
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

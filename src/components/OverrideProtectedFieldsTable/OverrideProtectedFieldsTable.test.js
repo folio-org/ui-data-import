@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -62,7 +63,29 @@ describe('OverrideProtectedFieldsTable', () => {
     onChangeEvent.mockClear();
   });
 
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderOverrideProtectedFieldsTable({
+      isEditable: true,
+      folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
+      marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
+      mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
+    });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when override protected fields table is editable', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderOverrideProtectedFieldsTable({
+        isEditable: true,
+        folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
+        marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
+        mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
+      });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('warning text should be shown', () => {
       const { getAllByText } = renderOverrideProtectedFieldsTable({
         isEditable: true,
@@ -84,8 +107,7 @@ describe('OverrideProtectedFieldsTable', () => {
             marcFieldProtectionFields: marcFieldProtectionFieldsProps(true),
             mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
           });
-          const element = container.querySelector('#checkbox-5');
-
+          const element = container.querySelector('[aria-label="Override protected fields"]');
           fireEvent.click(element);
 
           expect(onChangeEvent.mock.calls[0][1]).toEqual(fieldToRemove);
@@ -103,7 +125,7 @@ describe('OverrideProtectedFieldsTable', () => {
             marcFieldProtectionFields: marcFieldProtectionFieldsProps(false),
             mappingMarcFieldProtectionFields: mappingMarcFieldProtectionFieldsProps,
           });
-          const element = container.querySelector('#checkbox-8');
+          const element = container.querySelector('[aria-label="Override protected fields"]');
 
           fireEvent.click(element);
 

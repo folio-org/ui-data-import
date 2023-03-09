@@ -3,6 +3,7 @@ import { fireEvent } from '@testing-library/react';
 import faker from 'faker';
 import { noop } from 'lodash';
 import { BrowserRouter } from 'react-router-dom';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   buildMutator,
@@ -248,6 +249,13 @@ const renderRecordsTable = ({ isEdifactType = false }) => {
 };
 
 describe('RecordsTable component', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderRecordsTable({});
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should have proper columns', () => {
     const { getByText } = renderRecordsTable({});
     /*

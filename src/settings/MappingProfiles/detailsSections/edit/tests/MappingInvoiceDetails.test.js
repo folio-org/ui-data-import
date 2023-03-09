@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
 
@@ -88,6 +89,12 @@ describe('<MappingInvoiceDetails>', () => {
   afterAll(() => {
     delete global.fetch;
     consoleErrorSpy = null;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingInvoiceDetails();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should have correct sections', async () => {

@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { render } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
@@ -52,6 +52,12 @@ const renderLine = ({
 };
 
 describe('Line', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderLine(lineWithParentContainer);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should be rendered in parent element', () => {
     const { container } = renderLine(lineWithParentContainer);
     const line = container.querySelector('.tester');
