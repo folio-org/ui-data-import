@@ -10,7 +10,9 @@ import {
   validateMarcIndicatorField,
   validateMarcTagField,
   validateMARCWithDate,
+  validateMARCWithElse,
   validateMoveField,
+  validateQuotedStringOrMarcPath,
   validateRepeatableActionsField,
   validateSubfieldField,
 } from '../formValidators';
@@ -182,6 +184,102 @@ describe('form validators', () => {
       const { getByText } = renderWithIntl(MessageComponent, translationsProperties);
 
       expect(getByText('Please correct the syntax to continue')).toBeInTheDocument();
+    });
+  });
+
+  describe('validateMARCWithElse function', () => {
+    it('when the value is not wrapped in quotation marks, returns error', () => {
+      const value = 'text';
+
+      const MessageComponent = validateMARCWithElse(value);
+
+      const { getByText } = renderWithIntl(MessageComponent, translationsProperties);
+
+      expect(getByText('Please correct the syntax to continue')).toBeInTheDocument();
+    });
+
+    it('when ###REMOVE### value is not allowed, returns error', () => {
+      const value = '###REMOVE###';
+
+      const MessageComponent = validateMARCWithElse(value, false);
+
+      const { getByText } = renderWithIntl(MessageComponent, translationsProperties);
+
+      expect(getByText('Please correct the syntax to continue')).toBeInTheDocument();
+    });
+
+    it('when the value does not have subfield but it is required, returns error', () => {
+      const value = '909';
+
+      const MessageComponent = validateMARCWithElse(value, false, true);
+
+      const { getByText } = renderWithIntl(MessageComponent, translationsProperties);
+
+      expect(getByText('Please correct the syntax to continue')).toBeInTheDocument();
+    });
+
+    it('when the value is correct, returns undefined', () => {
+      const correctConditions = [
+        validateMARCWithElse('910'),
+        validateMARCWithElse('910$a'),
+        validateMARCWithElse('910$a; else "text"; else 910'),
+        validateMARCWithElse('910$a "text"'),
+        validateMARCWithElse('"text"'),
+        validateMARCWithElse('LDR'),
+        validateMARCWithElse('LDR/7'),
+        validateMARCWithElse('005/7-10'),
+        validateMARCWithElse('###REMOVE###', true),
+      ];
+
+      correctConditions.forEach(result => expect(result).toBeUndefined());
+    });
+  });
+
+  describe('validateQuotedStringOrMarcPath function', () => {
+    it('when the value is not wrapped in quotation marks, returns error', () => {
+      const value = 'text';
+
+      const MessageComponent = validateQuotedStringOrMarcPath(value);
+
+      const { getByText } = renderWithIntl(MessageComponent, translationsProperties);
+
+      expect(getByText('Non-MARC value must use quotation marks')).toBeInTheDocument();
+    });
+
+    it('when ###REMOVE### value is not allowed, returns error', () => {
+      const value = '###REMOVE###';
+
+      const MessageComponent = validateQuotedStringOrMarcPath(value, false);
+
+      const { getByText } = renderWithIntl(MessageComponent, translationsProperties);
+
+      expect(getByText('Non-MARC value must use quotation marks')).toBeInTheDocument();
+    });
+
+    it('when the value does not have subfield but it is required, returns error', () => {
+      const value = '909';
+
+      const MessageComponent = validateQuotedStringOrMarcPath(value, false, true);
+
+      const { getByText } = renderWithIntl(MessageComponent, translationsProperties);
+
+      expect(getByText('Non-MARC value must use quotation marks')).toBeInTheDocument();
+    });
+
+    it('when the value is correct, returns undefined', () => {
+      const correctConditions = [
+        validateQuotedStringOrMarcPath('910'),
+        validateQuotedStringOrMarcPath('910$a'),
+        validateQuotedStringOrMarcPath('910$a; else "text"; else 910'),
+        validateQuotedStringOrMarcPath('910$a "text"'),
+        validateQuotedStringOrMarcPath('"text"'),
+        validateQuotedStringOrMarcPath('LDR'),
+        validateQuotedStringOrMarcPath('LDR/7'),
+        validateQuotedStringOrMarcPath('005/7-10'),
+        validateQuotedStringOrMarcPath('###REMOVE###', true),
+      ];
+
+      correctConditions.forEach(result => expect(result).toBeUndefined());
     });
   });
 
