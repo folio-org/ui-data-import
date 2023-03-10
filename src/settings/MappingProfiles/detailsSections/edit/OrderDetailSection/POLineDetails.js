@@ -21,6 +21,7 @@ import {
   WithValidation,
   DatePickerDecorator,
 } from '../../../../../components';
+import { useFieldMappingBoolFieldValue } from '../../hooks';
 
 import {
   TRANSLATION_ID_PREFIX,
@@ -37,18 +38,16 @@ import {
   getBoolFieldName,
 } from '../../utils';
 import {
+  AUTOMATIC_EXPORT_FIELD,
   BOOLEAN_ACTIONS,
   BOOLEAN_STRING_VALUES,
   validateMARCWithDate,
 } from '../../../../../utils';
 
 export const POLineDetails = ({
-  automaticExportCheckbox,
   setReferenceTables,
   okapi,
 }) => {
-  const { formatMessage } = useIntl();
-
   const PO_LINE_DETAILS_FIELDS_MAP = {
     ACQ_METHOD: 29,
     AUTOMATIC_EXPORT: getBoolFieldName(30),
@@ -65,6 +64,10 @@ export const POLineDetails = ({
     CANCELLATION_DESCRIPTION: getFieldName(42),
     LINE_DESCRIPTION: getFieldName(43),
   };
+
+  const { formatMessage } = useIntl();
+
+  const [automaticExportCheckbox] = useFieldMappingBoolFieldValue([AUTOMATIC_EXPORT_FIELD]);
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),
@@ -336,7 +339,4 @@ export const POLineDetails = ({
 POLineDetails.propTypes = {
   setReferenceTables: PropTypes.object.isRequired,
   okapi: PropTypes.object.isRequired,
-  automaticExportCheckbox: PropTypes.string,
 };
-
-POLineDetails.defaultProps = { automaticExportCheckbox: null };

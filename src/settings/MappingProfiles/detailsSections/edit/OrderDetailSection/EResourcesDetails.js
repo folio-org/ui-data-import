@@ -1,4 +1,7 @@
-import React, { useCallback } from 'react';
+import React, {
+  useCallback,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -20,11 +23,17 @@ import {
   FieldOrganization,
   WithValidation,
 } from '../../../../../components';
+import {
+  useFieldMappingBoolFieldValue,
+  useFieldMappingFieldValue,
+  useFieldMappingValueFromLookup,
+} from '../../hooks';
 
 import {
   TRANSLATION_ID_PREFIX,
   CREATE_INVENTORY_TYPES,
   WRAPPER_SOURCE_LINKS,
+  PO_STATUS,
 } from '../../constants';
 import {
   getAcceptedValuesPath,
@@ -33,20 +42,18 @@ import {
   renderFieldLabelWithInfo,
 } from '../../utils';
 import {
+  ACCESS_PROVIDER_FIELD,
+  ACTIVATION_STATUS_FIELD,
   BOOLEAN_ACTIONS,
+  PO_STATUS_FIELD,
+  TRIAL_FIELD,
   validateMARCWithDate,
 } from '../../../../../utils';
 
 export const EResourcesDetails = ({
-  activationStatusCheckbox,
-  trialCheckbox,
-  accessProviderId,
-  mappingValue,
   setReferenceTables,
   okapi,
 }) => {
-  const { formatMessage } = useIntl();
-
   const E_RESOURCES_DETAILS_FIELDS_MAP = {
     ACCESS_PROVIDER: getFieldName(64),
     ACTIVATION_STATUS: getBoolFieldName(65),
@@ -58,6 +65,17 @@ export const EResourcesDetails = ({
     USER_LIMIT: getFieldName(71),
     URL: getFieldName(72),
   };
+
+  const { formatMessage } = useIntl();
+
+  const [poStatus] = useFieldMappingFieldValue([PO_STATUS_FIELD]);
+  const [
+    activationStatusCheckbox,
+    trialCheckbox,
+  ] = useFieldMappingBoolFieldValue([ACTIVATION_STATUS_FIELD, TRIAL_FIELD]);
+  const [accessProviderId, mappingValue] = useFieldMappingValueFromLookup(ACCESS_PROVIDER_FIELD);
+
+  const isCreateInventoryDisabled = useMemo(() => poStatus === PO_STATUS.OPEN, [poStatus]);
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),
@@ -139,6 +157,7 @@ export const EResourcesDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={createInventoryOptions}
+            disabled={isCreateInventoryDisabled}
           />
         </Col>
       </Row>
@@ -215,14 +234,4 @@ export const EResourcesDetails = ({
 EResourcesDetails.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
-  activationStatusCheckbox: PropTypes.string,
-  trialCheckbox: PropTypes.string,
-  accessProviderId: PropTypes.string,
-  mappingValue: PropTypes.string,
-};
-
-EResourcesDetails.defaultProps = {
-  activationStatusCheckbox: null,
-  trialCheckbox: null,
-  accessProviderId: null,
 };

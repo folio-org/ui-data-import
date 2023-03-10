@@ -1,4 +1,7 @@
-import React, { useCallback } from 'react';
+import React, {
+  useCallback,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -20,8 +23,14 @@ import {
   FieldOrganization,
   WithValidation,
 } from '../../../../../components';
+import {
+  useFieldMappingFieldValue,
+  useFieldMappingRefValues,
+  useFieldMappingValueFromLookup,
+} from '../../hooks';
 
 import {
+  PO_STATUS,
   CREATE_INVENTORY_TYPES,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
@@ -34,18 +43,18 @@ import {
   onRemove,
   renderFieldLabelWithInfo,
 } from '../../utils';
-import { validateMARCWithDate } from '../../../../../utils';
+import {
+  MATERIAL_SUPPLIER_FIELD,
+  PO_STATUS_FIELD,
+  validateMARCWithDate,
+  VOLUMES_FIELD,
+} from '../../../../../utils';
 
 export const PhysicalResourceDetails = ({
-  volumes,
-  materialSupplierId,
-  mappingValue,
   initialFields,
   setReferenceTables,
   okapi,
 }) => {
-  const { formatMessage } = useIntl();
-
   const PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP = {
     MATERIAL_SUPPLIER: getFieldName(58),
     RECEIPT_DUE: getFieldName(59),
@@ -55,6 +64,14 @@ export const PhysicalResourceDetails = ({
     VOLUMES: 63,
     VOLUME: index => getSubfieldName(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, 0, index),
   };
+
+  const { formatMessage } = useIntl();
+
+  const [poStatus] = useFieldMappingFieldValue([PO_STATUS_FIELD]);
+  const [volumes] = useFieldMappingRefValues([VOLUMES_FIELD]);
+  const [materialSupplierId, mappingValue] = useFieldMappingValueFromLookup(MATERIAL_SUPPLIER_FIELD);
+
+  const isCreateInventoryDisabled = useMemo(() => poStatus === PO_STATUS.OPEN, [poStatus]);
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),
@@ -145,6 +162,7 @@ export const PhysicalResourceDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={createInventoryOptions}
+            disabled={isCreateInventoryDisabled}
           />
         </Col>
       </Row>
@@ -197,12 +215,4 @@ PhysicalResourceDetails.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
-  volumes: PropTypes.arrayOf(PropTypes.object),
-  materialSupplierId: PropTypes.string,
-  mappingValue: PropTypes.string,
-};
-
-PhysicalResourceDetails.defaultProps = {
-  volumes: [],
-  materialSupplierId: null,
 };

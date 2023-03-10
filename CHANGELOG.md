@@ -14,6 +14,7 @@
 * Data Import Action/Field mapping profiles in modal window are not in alpha order by default on Create screen (UIDATIMP-1390)
 * Field mapping profile Invoice: enabled prop set to false when the value exists for Accounting code field (UIDATIMP-1392)
 * Order field mapping profile: Make Purchase order status a required field (UIDATIMP-1396)
+* Order field mapping profile: Inactivate Create Inventory fields when Order status is Open (UIDATIMP-1402)
 
 ## [6.0.0](https://github.com/folio-org/ui-data-import/tree/v6.0.0) (2023-02-24)
 

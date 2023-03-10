@@ -79,7 +79,7 @@ import {
 
 import styles from './MappingProfiles.css';
 
-const formName = 'mappingProfilesForm';
+export const formName = 'mappingProfilesForm';
 
 const MAPPING_PROFILES_FORM_FOLIO_RECORD_TYPES = {
   ...omit(FOLIO_RECORD_TYPES, [

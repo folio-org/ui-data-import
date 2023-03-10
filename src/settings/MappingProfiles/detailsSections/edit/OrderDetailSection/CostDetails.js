@@ -21,21 +21,19 @@ import {
   AcceptedValuesField,
   WithValidation,
 } from '../../../../../components';
+import { useFieldMappingFieldValue } from '../../hooks';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   getFieldName,
   renderFieldLabelWithInfo,
 } from '../../utils';
+import {
+  CURRENCY_FIELD,
+  SET_EXCHANGE_RATE_FIELD,
+} from '../../../../../utils';
 
-export const CostDetails = ({
-  currency,
-  setExchangeRateValue,
-  setReferenceTables,
-}) => {
-  const [isUseExchangeChecked, setIsUseExchangeChecked] = useState(!isEmpty(setExchangeRateValue));
-  const [isSetExchangeDisabled, setIsSetExchangeDisabled] = useState(isEmpty(setExchangeRateValue));
-
+export const CostDetails = ({ setReferenceTables }) => {
   const COST_DETAILS_FIELDS_MAP = {
     PHYSICAL_UNIT_PRICE: getFieldName(47),
     QUANTITY_PHYSICAL: getFieldName(48),
@@ -47,6 +45,11 @@ export const CostDetails = ({
     DISCOUNT: getFieldName(54),
     TYPE: getFieldName(55),
   };
+
+  const [setExchangeRateValue, currency] = useFieldMappingFieldValue([SET_EXCHANGE_RATE_FIELD, CURRENCY_FIELD]);
+
+  const [isUseExchangeChecked, setIsUseExchangeChecked] = useState(!isEmpty(setExchangeRateValue));
+  const [isSetExchangeDisabled, setIsSetExchangeDisabled] = useState(isEmpty(setExchangeRateValue));
 
   const physicalUnitPriceLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice`,
@@ -207,13 +210,4 @@ export const CostDetails = ({
   );
 };
 
-CostDetails.propTypes = {
-  setReferenceTables: PropTypes.func.isRequired,
-  currency: PropTypes.string,
-  setExchangeRateValue: PropTypes.string,
-};
-
-CostDetails.defaultProps = {
-  currency: null,
-  setExchangeRateValue: null,
-};
+CostDetails.propTypes = { setReferenceTables: PropTypes.func.isRequired };

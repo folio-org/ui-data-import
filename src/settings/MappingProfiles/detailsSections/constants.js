@@ -18,6 +18,10 @@ export const ORDER_FORMATS = {
   PHYSICAL_RESOURCE: 'Physical Resource',
   OTHER: 'Other',
 };
+export const PO_STATUS = {
+  OPEN: 'Open',
+  PENDING: 'Pending',
+};
 export const RECEIPT_STATUS = {
   PENDING: 'Pending',
   NOT_REQUIRED: 'Receipt Not Required',
