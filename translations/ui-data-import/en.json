@@ -752,6 +752,7 @@
   "settings.mappingProfiles.map.order": "Order",
   "settings.mappingProfiles.map.order.orderInformation.section": "Order information",
   "settings.mappingProfiles.map.order.orderInformation.field.purchaseOrderStatus": "Purchase order status",
+  "settings.mappingProfiles.map.order.orderInformation.field.purchaseOrderStatus.info": "When Purchase order status is Pending, do not include any Inventory actions in the job profile. When Purchase order status is Open, include the desired Inventory actions in the job profile, preceded by the Create orders action",
   "settings.mappingProfiles.map.order.orderInformation.field.pending": "Pending",
   "settings.mappingProfiles.map.order.orderInformation.field.open": "Open",
   "settings.mappingProfiles.map.order.orderInformation.field.approved": "Approved",
