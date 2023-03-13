@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **6.0.1** (in progress)
+## [6.0.1](https://github.com/folio-org/ui-data-import/tree/v6.0.1) (2023-03-13)
 
 ### Bugs fixed:
 * Error when saving a field mapping profile with some (not all) of related action profiles unlinked - Fixed (UIDATIMP-1350)
