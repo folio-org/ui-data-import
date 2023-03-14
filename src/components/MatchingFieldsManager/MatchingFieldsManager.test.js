@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -72,6 +73,12 @@ const renderMatchingFieldsManager = ({
 };
 
 describe('MatchingFieldsManager', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMatchingFieldsManager({ children: getFieldMatchedChildren });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when matchFileds function is called', () => {
     it('should be rendered', () => {
       const matchFieldsChildren = record => {

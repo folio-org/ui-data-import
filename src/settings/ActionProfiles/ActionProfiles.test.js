@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   buildResources,
@@ -117,6 +118,12 @@ const renderActionProfiles = ({
 describe('ActionProfiles', () => {
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderActionProfiles(actionProfilesProps);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {
