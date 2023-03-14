@@ -4,8 +4,8 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
@@ -196,6 +196,13 @@ const renderViewAllLogs = query => {
 describe('ViewAllLogs component', () => {
   afterAll(() => {
     deleteJobExecutionsSpy.mockClear();
+  });
+
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderViewAllLogs(defaultQuery);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct number of records', () => {
