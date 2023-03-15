@@ -150,6 +150,7 @@ export const validateValueLength3 = value => validateValueLength(value, 3);
  * `910$a "text"`, `910$a; else "text"; else 910`,
  * @param value
  * @param {boolean} isRemoveValueAllowed
+ * @param {boolean} isSubfieldRequired
  * @returns {boolean}
  *
  * @example
@@ -158,10 +159,20 @@ export const validateValueLength3 = value => validateValueLength(value, 3);
  *
  * validateQuotedStringOrMarcPathPattern('TEST', false)
  * // => false
+ *
+ * validateQuotedStringOrMarcPathPattern('909', false, false)
+ * // => true
+ *
+ * validateQuotedStringOrMarcPathPattern('909', false, true)
+ * // => false
+ *
+ * validateQuotedStringOrMarcPathPattern('909$a', false, true)
+ * // => true
  */
-const validateQuotedStringOrMarcPathPattern = (value, isRemoveValueAllowed) => {
+const validateQuotedStringOrMarcPathPattern = (value, isRemoveValueAllowed = false, isSubfieldRequired = false) => {
   const allowedValue = isRemoveValueAllowed ? REMOVE_OPTION_VALUE : '';
-  const quotedStringOrMarcPathPattern = '(("[^"]+")|((005|006|007|008|LDR)[\\w\\/\\-]*)|([0-9]{3}(\\$[a-z0-9])?))';
+  const marcWithSubfieldPattern = `([0-9]{3}(\\$[a-z0-9])${isSubfieldRequired ? '' : '?'})`;
+  const quotedStringOrMarcPathPattern = `(("[^"]+")|((005|006|007|008|LDR)[\\w\\/\\-]*)|${marcWithSubfieldPattern})`;
 
   const pattern = new RegExp([
     `^${quotedStringOrMarcPathPattern}`,
@@ -178,17 +189,24 @@ const validateQuotedStringOrMarcPathPattern = (value, isRemoveValueAllowed) => {
  * `910$a "text"`, `910$a; else "text"; else 910`,
  * @param value
  * @param {boolean} isRemoveValueAllowed
+ * @param {boolean} isSubfieldRequired
  * @returns {undefined|JSX.Element}
  *
  * @example
  * validateMARCWithElse('###REMOVE###', true)
  * // => undefined
  *
+ * validateMARCWithElse('909$a', false, true)
+ * // => undefined
+ *
  * validateMARCWithElse('###REMOVE###', false)
  * // => Translated string (en = 'Please correct the syntax to continue')
+ *
+ * validateMARCWithElse('909', false, true)
+ * // => Translated string (en = 'Please correct the syntax to continue')
  */
-export const validateMARCWithElse = (value, isRemoveValueAllowed) => {
-  const isValid = validateQuotedStringOrMarcPathPattern(value, isRemoveValueAllowed);
+export const validateMARCWithElse = (value, isRemoveValueAllowed = false, isSubfieldRequired = false) => {
+  const isValid = validateQuotedStringOrMarcPathPattern(value, isRemoveValueAllowed, isSubfieldRequired);
 
   return isValid ? undefined : <FormattedMessage id="ui-data-import.validation.syntaxError" />;
 };
@@ -198,6 +216,7 @@ export const validateMARCWithElse = (value, isRemoveValueAllowed) => {
  * `910$a "text"`, `910$a; else "text"; else 910`,
  * @param value
  * @param {boolean} isRemoveValueAllowed
+ * @param {boolean} isSubfieldRequired
  * @returns {undefined|JSX.Element}
  *
  * @example
@@ -207,8 +226,8 @@ export const validateMARCWithElse = (value, isRemoveValueAllowed) => {
  * validateQuotedStringOrMarcPath('###REMOVE###', false)
  * // => Translated string (en = 'Non-MARC value must use quotation marks')
  */
-export const validateQuotedStringOrMarcPath = (value, isRemoveValueAllowed) => {
-  const isValid = validateQuotedStringOrMarcPathPattern(value, isRemoveValueAllowed);
+export const validateQuotedStringOrMarcPath = (value, isRemoveValueAllowed = false, isSubfieldRequired = false) => {
+  const isValid = validateQuotedStringOrMarcPathPattern(value, isRemoveValueAllowed, isSubfieldRequired);
 
   return isValid ? undefined : <FormattedMessage id="ui-data-import.validation.quotationError" />;
 };
