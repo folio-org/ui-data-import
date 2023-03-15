@@ -17,6 +17,7 @@
 * Data Import Action/Field mapping profiles in modal window are not in alpha order by default on Create screen (UIDATIMP-1390)
 * Field mapping profile Invoice: enabled prop set to false when the value exists for Accounting code field (UIDATIMP-1392)
 * Order field mapping profile: Make Purchase order status a required field (UIDATIMP-1396)
+* Order field mapping profile: Add info icon to the Purchase order status fieldPurchase order status a required field (UIDATIMP-1397)
 * Order field mapping profile: Adjust text for info icon for Physical resource Create inventory field (UIDATIMP-1398)
 * Order field mapping profile: Adjust text for info icon for E-resources Create inventory field (UIDATIMP-1399)
 
