@@ -6,6 +6,9 @@ import {
 export const TRANSLATION_ID_PREFIX = 'ui-data-import.settings.mappingProfiles.map';
 export const FIELD_NAME_PREFIX = 'profile.mappingDetails.mappingFields';
 
+export const CREATE_INVENTORY_PHYSICAL_PATH = '';
+export const CREATE_INVENTORY_ERESOURCE_PATH = 'order.poLine.eresource.createInventory';
+
 export const CREATE_INVENTORY_TYPES = {
   INSTANCE_HOLDINGS_ITEM: 'Instance, Holding, Item',
   INSTANCE_HOLDINGS: 'Instance, Holding',

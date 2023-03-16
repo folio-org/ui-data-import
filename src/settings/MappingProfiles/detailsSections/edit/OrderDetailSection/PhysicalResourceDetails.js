@@ -1,5 +1,6 @@
 import React, {
   useCallback,
+  useEffect,
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -25,6 +26,7 @@ import {
 } from '../../../../../components';
 import {
   useFieldMappingFieldValue,
+  useFieldMappingFieldValueByPath,
   useFieldMappingRefValues,
   useFieldMappingValueFromLookup,
 } from '../../hooks';
@@ -34,6 +36,7 @@ import {
   CREATE_INVENTORY_TYPES,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
+  CREATE_INVENTORY_PHYSICAL_PATH,
 } from '../../constants';
 import {
   getAcceptedValuesPath,
@@ -68,10 +71,19 @@ export const PhysicalResourceDetails = ({
   const { formatMessage } = useIntl();
 
   const [poStatus] = useFieldMappingFieldValue([PO_STATUS_FIELD]);
+  const [createInventory] = useFieldMappingFieldValueByPath(CREATE_INVENTORY_PHYSICAL_PATH);
   const [volumes] = useFieldMappingRefValues([VOLUMES_FIELD]);
   const [materialSupplierId, mappingValue] = useFieldMappingValueFromLookup(MATERIAL_SUPPLIER_FIELD);
 
   const isCreateInventoryDisabled = useMemo(() => poStatus === PO_STATUS.OPEN, [poStatus]);
+
+  useEffect(() => {
+    if (!isCreateInventoryDisabled) {
+      setReferenceTables(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY, createInventory);
+    } else {
+      setReferenceTables(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY, '');
+    }
+  }, [isCreateInventoryDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),
@@ -162,6 +174,7 @@ export const PhysicalResourceDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={createInventoryOptions}
+            // componentValue={!isCreateInventoryDisabled ? createInventory : ''}
             disabled={isCreateInventoryDisabled}
           />
         </Col>

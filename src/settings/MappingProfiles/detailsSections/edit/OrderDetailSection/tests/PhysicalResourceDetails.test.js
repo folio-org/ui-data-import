@@ -23,6 +23,7 @@ jest.mock('@folio/stripes/components', () => ({
 jest.mock('../../../hooks', () => ({
   useFieldMappingFieldValue: () => ['Open'],
   useFieldMappingValueFromLookup: () => ['', ''],
+  useFieldMappingFieldValueByPath: () => ['"None"'],
   useFieldMappingRefValues: () => [[{
     order: 0,
     path: 'order.poLine.physical.volumes[]',
