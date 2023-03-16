@@ -12,6 +12,24 @@ import {
 
 import { Vendor } from '../Vendor';
 
+jest.mock('../../../hooks', () => ({
+  useFieldMappingRefValues: () => [[{
+    order: 0,
+    path: 'order.poLine.vendorDetail.referenceNumbers[]',
+    fields: [{
+      name: 'refNumber',
+      enabled: true,
+      path: 'order.poLine.vendorDetail.referenceNumbers[].refNumber',
+      value: '',
+    }, {
+      name: 'refNumberType',
+      enabled: true,
+      path: 'order.poLine.vendorDetail.referenceNumbers[].refNumberType',
+      value: '',
+    }],
+  }]],
+}));
+
 const setReferenceTablesMock = jest.fn();
 
 const okapiProp = {
@@ -20,27 +38,9 @@ const okapiProp = {
   url: 'https://folio-testing-okapi.dev.folio.org',
 };
 
-const vendorRefNumbers = [{
-  order: 0,
-  path: 'order.poLine.vendorDetail.referenceNumbers[]',
-  fields: [{
-    name: 'refNumber',
-    enabled: true,
-    path: 'order.poLine.vendorDetail.referenceNumbers[].refNumber',
-    value: '',
-  }, {
-    name: 'refNumberType',
-    enabled: true,
-    path: 'order.poLine.vendorDetail.referenceNumbers[].refNumberType',
-    value: '',
-  }],
-}];
-
 const renderVendor = () => {
   const component = () => (
     <Vendor
-      vendorRefNumbers={vendorRefNumbers}
-      accountNumbers={[]}
       initialFields={{}}
       setReferenceTables={setReferenceTablesMock}
       okapi={okapiProp}

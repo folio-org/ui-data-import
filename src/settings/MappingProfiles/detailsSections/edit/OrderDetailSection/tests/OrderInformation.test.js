@@ -18,6 +18,24 @@ import { OrderInformation } from '../OrderInformation';
 
 import { BOOLEAN_ACTIONS } from '../../../../../../utils';
 
+jest.mock('../../../hooks', () => ({
+  useFieldMappingBoolFieldValue: () => ['ALL_TRUE', 'ALL_TRUE'],
+  useFieldMappingFieldValue: () => ['testId1', '', ''],
+  useFieldMappingValueFromLookup: () => ['testUUID', 'testMapping'],
+  useFieldMappingRefValues: () => [[{
+    order: 0,
+    path: 'order.po.notes[]',
+    fields: [
+      {
+        name: 'notes',
+        enabled: true,
+        path: 'order.po.notes[]',
+        value: '"test note"'
+      }
+    ]
+  }]],
+}));
+
 const setReferenceTablesMock = jest.fn();
 
 const okapiProp = {
@@ -64,33 +82,15 @@ const mutatorProp = {
   },
 };
 
-const notes = [{
-  order: 0,
-  path: 'order.po.notes[]',
-  fields: [{
-    name: 'notes',
-    enabled: true,
-    path: 'order.po.notes[]',
-    value: '',
-  }],
-}];
-
 const renderOrderInformation = () => {
   const component = () => (
     <OrderInformation
-      notes={notes}
-      approvedCheckbox={BOOLEAN_ACTIONS.ALL_FALSE}
-      manualPOCheckbox={BOOLEAN_ACTIONS.ALL_FALSE}
-      filledVendorId={null}
-      assignedToId={null}
       initialFields={{}}
       setReferenceTables={setReferenceTablesMock}
       onOrganizationSelect={() => {}}
       okapi={okapiProp}
       resources={resourcesProp}
       mutator={mutatorProp}
-      billToValue="test address name"
-      shipToValue="test address name"
     />
   );
 
@@ -195,13 +195,13 @@ describe('OrderInformation', () => {
   });
 
   describe('when click on "Approved" checkbox', () => {
-    it('checkbox should be checked', () => {
+    it('checkbox should be unchecked', () => {
       const { getByLabelText } = renderOrderInformation();
 
       const approvedCheckbox = getByLabelText('Approved');
       fireEvent.click(approvedCheckbox);
 
-      expect(approvedCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_TRUE);
+      expect(approvedCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_FALSE);
     });
   });
 

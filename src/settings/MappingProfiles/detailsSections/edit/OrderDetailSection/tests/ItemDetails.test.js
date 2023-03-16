@@ -16,6 +16,42 @@ import {
 import { ItemDetails } from '../ItemDetails';
 
 const setReferenceTablesMock = jest.fn();
+jest.mock('../../../hooks', () => ({
+  useFieldMappingRefValues: () => [[{
+    order: 0,
+    path: 'order.poLine.contributors[]',
+    fields: [{
+      name: 'contributor',
+      enabled: true,
+      path: 'order.poLine.contributors[].contributor',
+      value: '',
+    }, {
+      name: 'contributorNameTypeId',
+      enabled: true,
+      path: 'order.poLine.contributors[].contributorNameTypeId',
+      value: '',
+    }],
+  }], [{
+    order: 0,
+    path: 'order.poLine.details.productIds[]',
+    fields: [{
+      name: 'productId',
+      enabled: true,
+      path: 'order.poLine.details.productIds[].productId',
+      value: '',
+    }, {
+      name: 'qualifier',
+      enabled: true,
+      path: 'order.poLine.details.productIds[].qualifier',
+      value: '',
+    }, {
+      name: 'productIdType',
+      enabled: true,
+      path: 'order.poLine.details.productIds[].productIdType',
+      value: '',
+    }],
+  }]],
+}));
 
 const okapiProp = {
   tenant: 'testTenant',
@@ -23,47 +59,9 @@ const okapiProp = {
   url: 'https://folio-testing-okapi.dev.folio.org',
 };
 
-const contributors = [{
-  order: 0,
-  path: 'order.poLine.contributors[]',
-  fields: [{
-    name: 'contributor',
-    enabled: true,
-    path: 'order.poLine.contributors[].contributor',
-    value: '',
-  }, {
-    name: 'contributorNameTypeId',
-    enabled: true,
-    path: 'order.poLine.contributors[].contributorNameTypeId',
-    value: '',
-  }],
-}];
-const productIdentifiers = [{
-  order: 0,
-  path: 'order.poLine.details.productIds[]',
-  fields: [{
-    name: 'productId',
-    enabled: true,
-    path: 'order.poLine.details.productIds[].productId',
-    value: '',
-  }, {
-    name: 'qualifier',
-    enabled: true,
-    path: 'order.poLine.details.productIds[].qualifier',
-    value: '',
-  }, {
-    name: 'productIdType',
-    enabled: true,
-    path: 'order.poLine.details.productIds[].productIdType',
-    value: '',
-  }],
-}];
-
 const renderItemDetails = () => {
   const component = () => (
     <ItemDetails
-      contributors={contributors}
-      productIdentifiers={productIdentifiers}
       initialFields={{}}
       setReferenceTables={setReferenceTablesMock}
       okapi={okapiProp}
