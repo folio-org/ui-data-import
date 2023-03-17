@@ -285,3 +285,9 @@ export const getMappingQueryFromValue = valueFromDetails => {
 
   return valueFromDetails?.substring(0, mappingEndPosition === -1 ? valueFromDetails.length : mappingEndPosition);
 };
+
+export const setFieldValue = ({ path, setReferenceTables, value, isDisabled }) => {
+  const reference = isDisabled ? '' : value;
+
+  setReferenceTables(path, reference);
+};
