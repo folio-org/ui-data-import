@@ -85,9 +85,6 @@ export const PhysicalResourceDetails = ({
       value: createInventory,
       setReferenceTables,
     });
-    /* const reference = isCreateInventoryDisabled ? '' : createInventory;
-
-    setReferenceTables(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY, reference); */
   }, [isCreateInventoryDisabled, createInventory]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const validateDatepickerFieldValue = useCallback(
