@@ -21,21 +21,22 @@ jest.mock('@folio/stripes/components', () => ({
   InfoPopover: () => <span>InfoPopover</span>,
 }));
 
+jest.mock('../../../hooks', () => ({
+  useFieldMappingBoolFieldValue: () => ['ALL_FALSE', 'ALL_FALSE'],
+  useFieldMappingFieldValue: () => ['testPOStatus'],
+  useFieldMappingValueFromLookup: () => ['testUUID', 'testMapping'],
+  useFieldMappingFieldValueByPath: () => ['"None"'],
+}));
+
 const okapiProp = {
   tenant: 'testTenant',
   token: 'token.for.test',
   url: 'https://folio-testing-okapi.dev.folio.org',
 };
 
-const renderEResourcesDetails = (
-  activationStatusCheckbox = BOOLEAN_ACTIONS.ALL_FALSE,
-  trialCheckbox = BOOLEAN_ACTIONS.ALL_FALSE,
-) => {
+const renderEResourcesDetails = () => {
   const component = () => (
     <EResourcesDetails
-      activationStatusCheckbox={activationStatusCheckbox}
-      trialCheckbox={trialCheckbox}
-      accessProviderId={null}
       setReferenceTables={() => {}}
       okapi={okapiProp}
     />
@@ -77,17 +78,6 @@ describe('EResourcesDetails', () => {
     });
   });
 
-  describe('when click on checked "Activation status" checkbox', () => {
-    it('checkbox should be unchecked', () => {
-      const { getByLabelText } = renderEResourcesDetails(BOOLEAN_ACTIONS.ALL_TRUE, BOOLEAN_ACTIONS.ALL_TRUE);
-
-      const activationStatusCheckbox = getByLabelText('Activation status');
-      fireEvent.click(activationStatusCheckbox);
-
-      expect(activationStatusCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_FALSE);
-    });
-  });
-
   describe('when click on unchecked "Trial" checkbox', () => {
     it('checkbox should be checked', () => {
       const { getByLabelText } = renderEResourcesDetails();
@@ -96,17 +86,6 @@ describe('EResourcesDetails', () => {
       fireEvent.click(trialCheckbox);
 
       expect(trialCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_TRUE);
-    });
-  });
-
-  describe('when click on checked "Trial" checkbox', () => {
-    it('checkbox should be unchecked', () => {
-      const { getByLabelText } = renderEResourcesDetails(BOOLEAN_ACTIONS.ALL_TRUE, BOOLEAN_ACTIONS.ALL_TRUE);
-
-      const trialCheckbox = getByLabelText('Trial');
-      fireEvent.click(trialCheckbox);
-
-      expect(trialCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_FALSE);
     });
   });
 });

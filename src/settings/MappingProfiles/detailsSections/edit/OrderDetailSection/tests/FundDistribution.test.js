@@ -19,6 +19,37 @@ jest.mock('@folio/stripes/components', () => ({
   InfoPopover: () => <span>InfoPopover</span>,
 }));
 
+jest.mock('../../../hooks', () => ({
+  useFieldMappingFieldValue: () => ['USD'],
+  useFieldMappingRefValues: () => [[{
+    order: 0,
+    path: 'order.poLine.fundDistribution[]',
+    fields: [{
+      name: 'fundId',
+      enabled: true,
+      path: 'order.poLine.fundDistribution[].fundId',
+      value: '',
+      acceptedValues: {},
+    }, {
+      name: 'expenseClassId',
+      enabled: true,
+      path: 'order.poLine.fundDistribution[].expenseClassId',
+      value: '',
+      acceptedValues: {},
+    }, {
+      name: 'value',
+      enabled: true,
+      path: 'order.poLine.fundDistribution[].value',
+      value: '',
+    }, {
+      name: 'distributionType',
+      enabled: true,
+      path: 'order.poLine.fundDistribution[].distributionType',
+      value: 'percentage',
+    }],
+  }]],
+}));
+
 const setReferenceTablesMock = jest.fn();
 
 const okapiProp = {
@@ -27,39 +58,9 @@ const okapiProp = {
   url: 'https://folio-testing-okapi.dev.folio.org',
 };
 
-const fundDistributions = [{
-  order: 0,
-  path: 'order.poLine.fundDistribution[]',
-  fields: [{
-    name: 'fundId',
-    enabled: true,
-    path: 'order.poLine.fundDistribution[].fundId',
-    value: '',
-    acceptedValues: {},
-  }, {
-    name: 'expenseClassId',
-    enabled: true,
-    path: 'order.poLine.fundDistribution[].expenseClassId',
-    value: '',
-    acceptedValues: {},
-  }, {
-    name: 'value',
-    enabled: true,
-    path: 'order.poLine.fundDistribution[].value',
-    value: '',
-  }, {
-    name: 'distributionType',
-    enabled: true,
-    path: 'order.poLine.fundDistribution[].distributionType',
-    value: 'percentage',
-  }],
-}];
-
 const renderFundDistribution = () => {
   const component = () => (
     <FundDistribution
-      fundDistributions={fundDistributions}
-      currency="USD"
       initialFields={{}}
       setReferenceTables={setReferenceTablesMock}
       okapi={okapiProp}

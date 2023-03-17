@@ -30,6 +30,12 @@ import {
   FieldOrganization,
   WithValidation,
 } from '../../../../../components';
+import {
+  useFieldMappingBoolFieldValue,
+  useFieldMappingFieldValue,
+  useFieldMappingRefValues,
+  useFieldMappingValueFromLookup,
+} from '../../hooks';
 
 import {
   boolAcceptedValuesOptions,
@@ -43,6 +49,7 @@ import {
 } from '../../utils';
 import {
   DEFAULT_PO_LINES_LIMIT_VALUE,
+  PO_STATUS,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
@@ -50,17 +57,16 @@ import {
   BOOLEAN_ACTIONS,
   validateRequiredField,
   validateIntegers,
+  BILL_TO_FIELD,
+  SHIP_TO_FIELD,
+  ASSIGNED_TO_FIELD,
+  APPROVED_FIELD,
+  MANUAL_PO_FIELD,
+  VENDOR_FIELD,
+  NOTES_FIELD,
 } from '../../../../../utils';
 
 const OrderInformationComponent = ({
-  approvedCheckbox,
-  billToValue,
-  shipToValue,
-  manualPOCheckbox,
-  notes,
-  filledVendorId,
-  mappingValue,
-  assignedToId,
   initialFields,
   setReferenceTables,
   onOrganizationSelect,
@@ -72,8 +78,6 @@ const OrderInformationComponent = ({
   mutator,
   okapi,
 }) => {
-  const { formatMessage } = useIntl();
-
   const ORDER_INFO_FIELDS_MAP = {
     PO_STATUS: getFieldName(0),
     APPROVED: getBoolFieldName(1),
@@ -93,6 +97,20 @@ const OrderInformationComponent = ({
     NOTES: 15,
     NOTE: index => getSubfieldName(ORDER_INFO_FIELDS_MAP.NOTES, 0, index),
   };
+
+  const { formatMessage } = useIntl();
+
+  const [
+    assignedToId,
+    billToValue,
+    shipToValue,
+  ] = useFieldMappingFieldValue([ASSIGNED_TO_FIELD, BILL_TO_FIELD, SHIP_TO_FIELD]);
+  const [
+    approvedCheckbox,
+    manualPOCheckbox,
+  ] = useFieldMappingBoolFieldValue([APPROVED_FIELD, MANUAL_PO_FIELD]);
+  const [notes] = useFieldMappingRefValues([NOTES_FIELD]);
+  const [filledVendorId, mappingValue] = useFieldMappingValueFromLookup(VENDOR_FIELD);
 
   const [isApprovedChecked, setIsApprovedChecked] = useState(false);
   const [billToAddress, setBillToAddress] = useState('');
@@ -162,10 +180,10 @@ const OrderInformationComponent = ({
       if (!isApprovalRequiredValue || (isApprovalRequiredValue && isApprovedChecked)) {
         return [{
           label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.pending` }),
-          value: 'Pending',
+          value: PO_STATUS.PENDING,
         }, {
           label: formatMessage({ id: `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.open` }),
-          value: 'Open',
+          value: PO_STATUS.OPEN,
         }];
       }
 
@@ -493,26 +511,9 @@ OrderInformationComponent.propTypes = {
   }).isRequired,
   mutator: PropTypes.object.isRequired,
   okapi: PropTypes.object.isRequired,
-  approvedCheckbox: PropTypes.string,
-  manualPOCheckbox: PropTypes.string,
   onOrganizationSelect: PropTypes.func,
-  notes: PropTypes.arrayOf(PropTypes.object),
-  filledVendorId: PropTypes.string,
-  mappingValue: PropTypes.string,
-  assignedToId: PropTypes.string,
-  billToValue: PropTypes.string,
-  shipToValue: PropTypes.string,
 };
 
-OrderInformationComponent.defaultProps = {
-  approvedCheckbox: null,
-  manualPOCheckbox: null,
-  onOrganizationSelect: null,
-  notes: [],
-  filledVendorId: null,
-  assignedToId: null,
-  billToValue: '',
-  shipToValue: '',
-};
+OrderInformationComponent.defaultProps = { onOrganizationSelect: null };
 
 export const OrderInformation = stripesConnect(OrderInformationComponent);

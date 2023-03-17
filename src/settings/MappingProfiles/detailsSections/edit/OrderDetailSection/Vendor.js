@@ -19,6 +19,7 @@ import {
   AcceptedValuesField,
   WithValidation,
 } from '../../../../../components';
+import { useFieldMappingRefValues } from '../../hooks';
 
 import {
   TRANSLATION_ID_PREFIX,
@@ -34,16 +35,14 @@ import {
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
 } from '../../utils';
+import { VENDOR_DETAILS_FIELD } from '../../../../../utils';
 
 export const Vendor = ({
-  vendorRefNumbers,
   accountNumbers,
   setReferenceTables,
   initialFields,
   okapi,
 }) => {
-  const { formatMessage } = useIntl();
-
   const VENDOR_FIELDS_MAP = {
     VENDOR_REF_NUMBERS: 44,
     VENDOR_REF_NUMBER: index => getSubfieldName(VENDOR_FIELDS_MAP.VENDOR_REF_NUMBERS, 0, index),
@@ -51,6 +50,10 @@ export const Vendor = ({
     ACCOUNT_NUMBER: 45,
     INSTRUCTION_TO_VENDOR: getFieldName(46),
   };
+
+  const { formatMessage } = useIntl();
+
+  const [vendorRefNumbers] = useFieldMappingRefValues([VENDOR_DETAILS_FIELD]);
 
   const vendorRefTypeOptions = [
     {
@@ -176,11 +179,7 @@ Vendor.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   initialFields: PropTypes.object.isRequired,
   okapi: PropTypes.object.isRequired,
-  vendorRefNumbers: PropTypes.arrayOf(PropTypes.object),
   accountNumbers: PropTypes.arrayOf(PropTypes.object),
 };
 
-Vendor.defaultProps = {
-  vendorRefNumbers: [],
-  accountNumbers: [],
-};
+Vendor.defaultProps = { accountNumbers: [] };
