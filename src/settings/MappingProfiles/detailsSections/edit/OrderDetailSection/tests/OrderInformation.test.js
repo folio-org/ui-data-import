@@ -19,6 +19,14 @@ import { OrderInformation } from '../OrderInformation';
 import { BOOLEAN_ACTIONS } from '../../../../../../utils';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  InfoPopover: () => <span>InfoPopover</span>,
+}));
+
+>>>>>>> 9483eb7fe2be8789333d7cacf4f36b42e6e23327
 jest.mock('../../../hooks', () => ({
   useFieldMappingBoolFieldValue: () => ['ALL_TRUE', 'ALL_TRUE'],
   useFieldMappingFieldValue: () => ['testId1', '', ''],
@@ -35,11 +43,14 @@ jest.mock('../../../hooks', () => ({
       }
     ]
   }]],
+<<<<<<< HEAD
 =======
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   InfoPopover: () => <span>InfoPopover</span>,
 >>>>>>> 2a0cc7b1a81b98281187240cd4ea0b9da76d4a83
+=======
+>>>>>>> 9483eb7fe2be8789333d7cacf4f36b42e6e23327
 }));
 
 const setReferenceTablesMock = jest.fn();
