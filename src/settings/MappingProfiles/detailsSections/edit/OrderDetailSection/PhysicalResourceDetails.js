@@ -45,6 +45,7 @@ import {
   onAdd,
   onRemove,
   renderFieldLabelWithInfo,
+  setFieldValue,
 } from '../../utils';
 import {
   MATERIAL_SUPPLIER_FIELD,
@@ -78,12 +79,16 @@ export const PhysicalResourceDetails = ({
   const isCreateInventoryDisabled = useMemo(() => poStatus === PO_STATUS.OPEN, [poStatus]);
 
   useEffect(() => {
-    if (!isCreateInventoryDisabled) {
-      setReferenceTables(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY, createInventory);
-    } else {
-      setReferenceTables(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY, '');
-    }
-  }, [isCreateInventoryDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
+    setFieldValue({
+      path: PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY,
+      isDisabled: isCreateInventoryDisabled,
+      value: createInventory,
+      setReferenceTables,
+    });
+    /* const reference = isCreateInventoryDisabled ? '' : createInventory;
+
+    setReferenceTables(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY, reference); */
+  }, [isCreateInventoryDisabled, createInventory]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),

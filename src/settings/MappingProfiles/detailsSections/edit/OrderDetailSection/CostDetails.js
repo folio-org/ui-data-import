@@ -58,8 +58,10 @@ export const CostDetails = ({ setReferenceTables }) => {
     quantityPhysical,
   ] = useFieldMappingFieldValue([SET_EXCHANGE_RATE_FIELD, CURRENCY_FIELD]);
 
-  const [isUseExchangeChecked, setIsUseExchangeChecked] = useState(!isEmpty(setExchangeRateValue));
-  const [isSetExchangeDisabled, setIsSetExchangeDisabled] = useState(isEmpty(setExchangeRateValue));
+  const isSetExchangeRateValueEmpty = !isEmpty(setExchangeRateValue);
+
+  const [isUseExchangeChecked, setIsUseExchangeChecked] = useState(isSetExchangeRateValueEmpty);
+  const [isSetExchangeDisabled, setIsSetExchangeDisabled] = useState(isSetExchangeRateValueEmpty);
 
   const isPhysicalDetailsDisabled = useMemo(() => orderFormat === ORDER_FORMATS.ELECTRONIC_RESOURCE, [orderFormat]);
 
