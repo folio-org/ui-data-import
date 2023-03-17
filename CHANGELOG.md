@@ -5,19 +5,22 @@
 ### Features added:
 * Add accessibiity testing to automated tests in ui-data-import (UIDATIMP-1372)
 
+### Bugs fixed:
+* Order field mapping profile: Fix the UI and error message for the fund "Value" field (UIDATIMP-1387)
+* Order field mapping profile: Add info icon to the Purchase order status fieldPurchase order status a required field (UIDATIMP-1397)
+* Order field mapping profile: Inactivate Create Inventory fields when Order status is Open (UIDATIMP-1402)
+
 ## [6.0.1](https://github.com/folio-org/ui-data-import/tree/v6.0.1) (2023-03-14)
 
 ### Bugs fixed:
 * Error when saving a field mapping profile with some (not all) of related action profiles unlinked - Fixed (UIDATIMP-1350)
 * Override purchase order lines limit setting field allows saving fractional numbers (UIDATIMP-1383)
 * Order field mapping profile: Fix the values in the Payment status field (UIDATIMP-1386)
-* Order field mapping profile: Fix the UI and error message for the fund "Value" field (UIDATIMP-1387)
 * Manual clearing of the Vendor/Material supplier/Access provider fields is not working properly (UIDATIMP-1388)
 * Order import: creating an order with Receipt not required causes an error (UIDATIMP-1389)
 * Data Import Action/Field mapping profiles in modal window are not in alpha order by default on Create screen (UIDATIMP-1390)
 * Field mapping profile Invoice: enabled prop set to false when the value exists for Accounting code field (UIDATIMP-1392)
 * Order field mapping profile: Make Purchase order status a required field (UIDATIMP-1396)
-* Order field mapping profile: Add info icon to the Purchase order status fieldPurchase order status a required field (UIDATIMP-1397)
 * Order field mapping profile: Adjust text for info icon for Physical resource Create inventory field (UIDATIMP-1398)
 * Order field mapping profile: Adjust text for info icon for E-resources Create inventory field (UIDATIMP-1399)
 

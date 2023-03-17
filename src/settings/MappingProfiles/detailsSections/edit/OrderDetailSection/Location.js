@@ -15,6 +15,7 @@ import {
   AcceptedValuesField,
   WithValidation,
 } from '../../../../../components';
+import { useFieldMappingRefValues } from '../../hooks';
 
 import {
   TRANSLATION_ID_PREFIX,
@@ -30,9 +31,9 @@ import {
   onRemove,
   renderFieldLabelWithInfo,
 } from '../../utils';
+import { LOCATIONS_FIELD } from '../../../../../utils';
 
 export const Location = ({
-  locations,
   initialFields,
   setReferenceTables,
   okapi,
@@ -43,6 +44,8 @@ export const Location = ({
     QUANTITY_PHYSICAL: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 1, index),
     QUANTITY_ELECTRONIC: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 2, index),
   };
+
+  const [locations] = useFieldMappingRefValues([LOCATIONS_FIELD]);
 
   const locationLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.location.field.name`,
@@ -150,7 +153,4 @@ Location.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
-  locations: PropTypes.arrayOf(PropTypes.object),
 };
-
-Location.defaultProps = { locations: [] };

@@ -16,6 +16,10 @@ import {
   AcceptedValuesField,
   WithValidation,
 } from '../../../../../components';
+import {
+  useFieldMappingFieldValue,
+  useFieldMappingRefValues,
+} from '../../hooks';
 
 import {
   TRANSLATION_ID_PREFIX,
@@ -31,10 +35,12 @@ import {
   onRemove,
   renderFieldLabelWithInfo,
 } from '../../utils';
+import {
+  CURRENCY_FIELD,
+  FUND_DISTRIBUTION_FIELD,
+} from '../../../../../utils';
 
 export const FundDistribution = ({
-  fundDistributions,
-  currency,
   initialFields,
   setReferenceTables,
   okapi,
@@ -46,6 +52,9 @@ export const FundDistribution = ({
     VALUE: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 2, index),
     TYPE: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 3, index),
   };
+
+  const [currency] = useFieldMappingFieldValue([CURRENCY_FIELD]);
+  const [fundDistributions] = useFieldMappingRefValues([FUND_DISTRIBUTION_FIELD]);
 
   const fundIdLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.fundId`,
@@ -167,11 +176,4 @@ FundDistribution.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   initialFields: PropTypes.object.isRequired,
   okapi: PropTypes.object.isRequired,
-  fundDistributions: PropTypes.arrayOf(PropTypes.object),
-  currency: PropTypes.string,
-};
-
-FundDistribution.defaultProps = {
-  fundDistributions: [],
-  currency: null,
 };

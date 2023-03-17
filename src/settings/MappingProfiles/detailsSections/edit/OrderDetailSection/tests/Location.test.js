@@ -20,6 +20,31 @@ jest.mock('@folio/stripes/components', () => ({
   InfoPopover: () => <span>InfoPopover</span>,
 }));
 
+jest.mock('../../../hooks', () => ({
+  useFieldMappingRefValues: () => [[{
+    order: 0,
+    path: 'order.poLine.locations[]',
+    fields: [{
+      name: 'locationId',
+      enabled: true,
+      path: 'order.poLine.locations[].locationId',
+      value: '',
+      acceptedValues: {},
+    }, {
+      name: 'quantityPhysical',
+      enabled: true,
+      path: 'order.poLine.locations[].quantityPhysical',
+      value: '',
+      acceptedValues: {},
+    }, {
+      name: 'quantityElectronic',
+      enabled: true,
+      path: 'order.poLine.locations[].quantityElectronic',
+      value: '',
+    }],
+  }]],
+}));
+
 const setReferenceTablesMock = jest.fn();
 
 const okapiProp = {
@@ -28,33 +53,9 @@ const okapiProp = {
   url: 'https://folio-testing-okapi.dev.folio.org',
 };
 
-const locations = [{
-  order: 0,
-  path: 'order.poLine.locations[]',
-  fields: [{
-    name: 'locationId',
-    enabled: true,
-    path: 'order.poLine.locations[].locationId',
-    value: '',
-    acceptedValues: {},
-  }, {
-    name: 'quantityPhysical',
-    enabled: true,
-    path: 'order.poLine.locations[].quantityPhysical',
-    value: '',
-    acceptedValues: {},
-  }, {
-    name: 'quantityElectronic',
-    enabled: true,
-    path: 'order.poLine.locations[].quantityElectronic',
-    value: '',
-  }],
-}];
-
 const renderLocation = () => {
   const component = () => (
     <Location
-      locations={locations}
       initialFields={{}}
       setReferenceTables={setReferenceTablesMock}
       okapi={okapiProp}

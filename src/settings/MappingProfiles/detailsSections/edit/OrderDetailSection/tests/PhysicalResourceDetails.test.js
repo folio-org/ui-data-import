@@ -20,6 +20,22 @@ jest.mock('@folio/stripes/components', () => ({
   InfoPopover: () => <span>InfoPopover</span>,
 }));
 
+jest.mock('../../../hooks', () => ({
+  useFieldMappingFieldValue: () => ['Open'],
+  useFieldMappingValueFromLookup: () => ['', ''],
+  useFieldMappingFieldValueByPath: () => ['"None"'],
+  useFieldMappingRefValues: () => [[{
+    order: 0,
+    path: 'order.poLine.physical.volumes[]',
+    fields: [{
+      name: 'volumes',
+      enabled: true,
+      path: 'order.poLine.physical.volumes[]',
+      value: '',
+    }],
+  }]],
+}));
+
 const setReferenceTablesMock = jest.fn();
 
 const okapiProp = {
@@ -28,22 +44,9 @@ const okapiProp = {
   url: 'https://folio-testing-okapi.dev.folio.org',
 };
 
-const volumes = [{
-  order: 0,
-  path: 'order.poLine.physical.volumes[]',
-  fields: [{
-    name: 'volumes',
-    enabled: true,
-    path: 'order.poLine.physical.volumes[]',
-    value: '',
-  }],
-}];
-
 const renderPhysicalResourceDetails = () => {
   const component = () => (
     <PhysicalResourceDetails
-      volumes={volumes}
-      materialSupplierId={null}
       initialFields={{}}
       setReferenceTables={setReferenceTablesMock}
       okapi={okapiProp}
