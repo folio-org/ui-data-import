@@ -18,6 +18,7 @@ import { OrderInformation } from '../OrderInformation';
 
 import { BOOLEAN_ACTIONS } from '../../../../../../utils';
 
+<<<<<<< HEAD
 jest.mock('../../../hooks', () => ({
   useFieldMappingBoolFieldValue: () => ['ALL_TRUE', 'ALL_TRUE'],
   useFieldMappingFieldValue: () => ['testId1', '', ''],
@@ -34,6 +35,11 @@ jest.mock('../../../hooks', () => ({
       }
     ]
   }]],
+=======
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  InfoPopover: () => <span>InfoPopover</span>,
+>>>>>>> 2a0cc7b1a81b98281187240cd4ea0b9da76d4a83
 }));
 
 const setReferenceTablesMock = jest.fn();
@@ -138,6 +144,12 @@ describe('OrderInformation', () => {
     expect(within(queryByText('Purchase order status')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Vendor')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Order type')).getByText(/\*/i)).toBeDefined();
+  });
+
+  it('should render info icons for the particular fields', () => {
+    const { queryByText } = renderOrderInformation();
+
+    expect(within(queryByText('Purchase order status')).getByText(/InfoPopover/i)).toBeDefined();
   });
 
   describe('should render validation error message when "Override purchase order lines limit setting" field value', () => {
