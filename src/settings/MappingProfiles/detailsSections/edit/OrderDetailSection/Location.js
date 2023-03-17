@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
@@ -15,9 +15,10 @@ import {
   AcceptedValuesField,
   WithValidation,
 } from '../../../../../components';
-import { useFieldMappingRefValues } from '../../hooks';
+import { useFieldMappingFieldValue, useFieldMappingRefValues } from '../../hooks';
 
 import {
+  ORDER_FORMATS,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
@@ -31,7 +32,7 @@ import {
   onRemove,
   renderFieldLabelWithInfo,
 } from '../../utils';
-import { LOCATIONS_FIELD } from '../../../../../utils';
+import { LOCATIONS_FIELD, ORDER_FORMAT_FILED } from '../../../../../utils';
 
 export const Location = ({
   initialFields,
@@ -45,7 +46,19 @@ export const Location = ({
     QUANTITY_ELECTRONIC: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 2, index),
   };
 
+  const [orderFormat] = useFieldMappingFieldValue([ORDER_FORMAT_FILED]);
+
   const [locations] = useFieldMappingRefValues([LOCATIONS_FIELD]);
+
+  const isPhysicalDetailsDisabled = useMemo(() => orderFormat === ORDER_FORMATS.ELECTRONIC_RESOURCE, [orderFormat]);
+  /*
+  useEffect(() => {
+    if (!isPhysicalDetailsDisabled) {
+      setReferenceTables(LOCATION_FIELDS_MAP.QUANTITY_PHYSICAL, physicalUnitPrice);
+    } else {
+      setReferenceTables(LOCATION_FIELDS_MAP.QUANTITY_PHYSICAL, '');
+    }
+  }, [isPhysicalDetailsDisabled]); // eslint-disable-line react-hooks/exhaustive-deps */
 
   const locationLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.location.field.name`,
@@ -86,6 +99,15 @@ export const Location = ({
     [LOCATION_FIELDS_MAP.LOCATIONS, locations, setReferenceTables],
   );
 
+  const setQuantityPhysicalValue = (path) => {
+    console.log(path);
+    if (!isPhysicalDetailsDisabled) {
+      console.log('test');
+    } else {
+      setReferenceTables(path, '');
+    }
+  };
+
   return (
     <Accordion
       id="location"
@@ -125,6 +147,8 @@ export const Location = ({
                       label={quantityPhysicalLabel}
                       name={LOCATION_FIELDS_MAP.QUANTITY_PHYSICAL(index)}
                       validate={[validation]}
+                      value={setQuantityPhysicalValue(LOCATION_FIELDS_MAP.QUANTITY_PHYSICAL(index))}
+                      disabled={isPhysicalDetailsDisabled}
                     />
                   )}
                 </WithValidation>

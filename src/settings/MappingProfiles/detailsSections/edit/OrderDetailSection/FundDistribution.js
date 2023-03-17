@@ -145,7 +145,7 @@ export const FundDistribution = ({
                 />
               </Col>
               <Col xs={3}>
-                <WithValidation>
+                <WithValidation isSubfieldRequired>
                   {validation => (
                     <Field
                       component={TextField}

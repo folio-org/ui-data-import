@@ -45,6 +45,7 @@ import {
   getSubfieldName,
   onAdd,
   onRemove,
+  renderFieldLabelWithInfo,
 } from '../../utils';
 import {
   DEFAULT_PO_LINES_LIMIT_VALUE,
@@ -127,6 +128,11 @@ const OrderInformationComponent = ({
         setReferenceTables(ORDER_INFO_FIELDS_MAP.PO_LINES_LIMIT, `"${purchaseOrderLinesLimitValue}"`);
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const purchaseOrderStatusLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.purchaseOrderStatus`,
+    `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.purchaseOrderStatus.info`,
+  );
 
   const isApprovalRequiredValue = useMemo(
     () => {
@@ -218,7 +224,7 @@ const OrderInformationComponent = ({
           <AcceptedValuesField
             component={TextField}
             name={ORDER_INFO_FIELDS_MAP.PO_STATUS}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.purchaseOrderStatus`} />}
+            label={purchaseOrderStatusLabel}
             optionValue="value"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
