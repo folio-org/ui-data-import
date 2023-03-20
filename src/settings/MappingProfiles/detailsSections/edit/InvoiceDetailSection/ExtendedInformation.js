@@ -17,6 +17,7 @@ import {
 import { PAYMENT_METHOD_OPTIONS } from '@folio/stripes-acq-components';
 
 import { AcceptedValuesField } from '../../../../../components';
+import { useFieldMappingFieldValue } from '../../hooks';
 
 import {
   getFieldName,
@@ -30,15 +31,27 @@ import {
   validateRequiredField,
   validateQuotedString,
   BOOLEAN_ACTIONS,
+  EXCHANGE_RATE_FIELD,
 } from '../../../../../utils';
 
 export const ExtendedInformation = ({
   mappingFields,
   okapi,
   setReferenceTables,
-  hasExchangeRate,
 }) => {
-  const [isUseSetExchangeRate, setIsUseSetExchangeRate] = useState(hasExchangeRate);
+  const EXTENDED_INFO_FIELDS_MAP = {
+    FOLIO_INVOICE_NUMBER: getFieldName(19),
+    PAYMENT_METHOD: getFieldName(20),
+    CHECK_SUBSCRIPTION_OVERLAP: getBoolFieldName(21),
+    EXPORT_TO_ACCOUNTING: getBoolFieldName(22),
+    CURRENCY: getFieldName(23),
+    CURRENT_EXCHANGE_RATE: getFieldName(24),
+    SET_EXCHANGE_RATE: getFieldName(25),
+  };
+
+  const [exchangeRate] = useFieldMappingFieldValue([EXCHANGE_RATE_FIELD]);
+
+  const [isUseSetExchangeRate, setIsUseSetExchangeRate] = useState(!!exchangeRate);
 
   const { formatMessage } = useIntl();
   const paymentMethodsList = createOptionsList(PAYMENT_METHOD_OPTIONS, formatMessage, 'labelId');
@@ -57,14 +70,14 @@ export const ExtendedInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.field.folioInvoiceNumber`} />}
-            name={getFieldName(19)}
+            name={EXTENDED_INFO_FIELDS_MAP.FOLIO_INVOICE_NUMBER}
             disabled
           />
         </Col>
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(20)}
+            name={EXTENDED_INFO_FIELDS_MAP.PAYMENT_METHOD}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.field.paymentMethod`} />}
             optionValue="value"
             optionLabel="label"
@@ -81,7 +94,7 @@ export const ExtendedInformation = ({
             component={Checkbox}
             vertical
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.field.checkSubscriptionOverlap`} />}
-            name={getBoolFieldName(21)}
+            name={EXTENDED_INFO_FIELDS_MAP.CHECK_SUBSCRIPTION_OVERLAP}
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={checkSubscriptionOverlapCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
           />
@@ -91,7 +104,7 @@ export const ExtendedInformation = ({
             component={Checkbox}
             vertical
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.field.exportToAccounting`} />}
-            name={getBoolFieldName(22)}
+            name={EXTENDED_INFO_FIELDS_MAP.EXPORT_TO_ACCOUNTING}
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={exportToAccountingCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
           />
@@ -101,7 +114,7 @@ export const ExtendedInformation = ({
         <Col xs={3}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(23)}
+            name={EXTENDED_INFO_FIELDS_MAP.CURRENCY}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.field.currency`} />}
             optionValue="value"
             optionLabel="label"
@@ -117,7 +130,7 @@ export const ExtendedInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.field.currentExchangeRate`} />}
-            name={getFieldName(24)}
+            name={EXTENDED_INFO_FIELDS_MAP.CURRENT_EXCHANGE_RATE}
             disabled
           />
         </Col>
@@ -129,7 +142,7 @@ export const ExtendedInformation = ({
             onChange={() => {
               setIsUseSetExchangeRate(!isUseSetExchangeRate);
               if (isUseSetExchangeRate) {
-                setReferenceTables(getFieldName(25), '');
+                setReferenceTables(EXTENDED_INFO_FIELDS_MAP.SET_EXCHANGE_RATE, '');
               }
             }}
           />
@@ -138,7 +151,7 @@ export const ExtendedInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.extendedInformation.field.setExchangeRate`} />}
-            name={getFieldName(25)}
+            name={EXTENDED_INFO_FIELDS_MAP.SET_EXCHANGE_RATE}
             disabled={!isUseSetExchangeRate}
           />
         </Col>
@@ -151,5 +164,4 @@ ExtendedInformation.propTypes = {
   okapi: okapiShape.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   mappingFields: PropTypes.arrayOf(PropTypes.object),
-  hasExchangeRate: PropTypes.bool.isRequired,
 };

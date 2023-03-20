@@ -74,6 +74,7 @@ export const PRODUCT_IDS_FIELD = 'productIds';
 export const LOCATIONS_FIELD = 'locations';
 export const VOLUMES_FIELD = 'volumes';
 export const VENDOR_DETAILS_FIELD = 'vendorDetail';
+export const ADJUSTMENTS_FIELD = 'adjustments';
 
 export const DATA_TYPES = [
   'MARC',

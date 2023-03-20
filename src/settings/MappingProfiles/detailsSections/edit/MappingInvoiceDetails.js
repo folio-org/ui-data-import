@@ -1,8 +1,10 @@
 import React, {
   useState,
+  useEffect,
   useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 
 import { AccordionSet } from '@folio/stripes/components';
 
@@ -18,26 +20,24 @@ import {
 
 import {
   okapiShape,
-  CURRENCY_FIELD,
   VENDOR_ID_FIELD,
-  LOCK_TOTAL_FIELD,
-  EXCHANGE_RATE_FIELD,
 } from '../../../../utils';
 
 import {
-  getRefValuesFromTables,
   getFieldName,
-  getFieldValueFromDetails,
   getAccountingCodeOptions,
   getAccountingNumberOptions,
   getFieldEnabled,
   getSubfieldName,
 } from '../utils';
+import {
+  useFieldMappingValueFromLookup,
+  useOrganizationValue,
+} from '../hooks';
 
 export const MappingInvoiceDetails = ({
   mappingDetails,
   initialFields,
-  referenceTables,
   setReferenceTables,
   getMappingSubfieldsFieldValue,
   okapi,
@@ -46,15 +46,15 @@ export const MappingInvoiceDetails = ({
   const [accountingCodeOptions, setAccountingCodeOptions] = useState([]);
   const [accountingNumberOptions, setAccountingNumberOptions] = useState([]);
 
-  const vendorReferenceNumbers = getRefValuesFromTables(referenceTables, 'invoiceLines.[0].fields[4].subfields');
-  const adjustments = getRefValuesFromTables(referenceTables, 'adjustments');
-  const fundDistributions = getRefValuesFromTables(referenceTables, 'invoiceLines.[0].fields[14].subfields');
-  const lineAdjustments = getRefValuesFromTables(referenceTables, 'invoiceLines.[0].fields[15].subfields');
+  const [filledVendorId] = useFieldMappingValueFromLookup(VENDOR_ID_FIELD);
+  const { organization } = useOrganizationValue(filledVendorId ? `"${filledVendorId}"` : '');
 
-  const currencyFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, CURRENCY_FIELD);
-  const lockTotalFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, LOCK_TOTAL_FIELD);
-  const exchangeRateFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, EXCHANGE_RATE_FIELD);
-  const filledVendorId = getFieldValueFromDetails(mappingDetails?.mappingFields, VENDOR_ID_FIELD);
+  useEffect(() => {
+    if (!isEmpty(organization)) {
+      setAccountingCodeOptions(getAccountingCodeOptions(organization));
+      setAccountingNumberOptions(getAccountingNumberOptions(organization));
+    }
+  }, [organization]);
 
   const ACCOUNTING_CODE_FIELD_INDEX = 18;
   const INVOICE_LINES_FIELD_INDEX = 26;
@@ -92,13 +92,10 @@ export const MappingInvoiceDetails = ({
   return (
     <AccordionSet>
       <InvoiceInformation
-        hasLockTotal={!!lockTotalFromDetails}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
       <InvoiceAdjustments
-        adjustments={adjustments}
-        currency={currencyFromDetails}
         initialFields={initialFields}
         mappingFields={mappingDetails?.mappingFields}
         setReferenceTables={setReferenceTables}
@@ -113,13 +110,12 @@ export const MappingInvoiceDetails = ({
         okapi={okapi}
       />
       <ExtendedInformation
-        hasExchangeRate={!!exchangeRateFromDetails}
         setReferenceTables={setReferenceTables}
         mappingFields={mappingDetails?.mappingFields}
         okapi={okapi}
       />
       <InvoiceLineInformation
-        vendorReferenceNumbers={vendorReferenceNumbers}
+        invoiceLinesFieldIndex={INVOICE_LINES_FIELD_INDEX}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
@@ -127,16 +123,14 @@ export const MappingInvoiceDetails = ({
         mappingFields={mappingDetails?.mappingFields}
       />
       <InvoiceLineFundDistribution
-        fundDistributions={fundDistributions}
-        currency={currencyFromDetails}
+        invoiceLinesFieldIndex={INVOICE_LINES_FIELD_INDEX}
         initialFields={initialFields}
         getMappingSubfieldsFieldValue={getMappingSubfieldsFieldValue}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
       />
       <InvoiceLineAdjustments
-        lineAdjustments={lineAdjustments}
-        currency={currencyFromDetails}
+        invoiceLinesFieldIndex={INVOICE_LINES_FIELD_INDEX}
         initialFields={initialFields}
         mappingFields={mappingDetails?.mappingFields}
         setReferenceTables={setReferenceTables}
@@ -148,7 +142,6 @@ export const MappingInvoiceDetails = ({
 
 MappingInvoiceDetails.propTypes = {
   initialFields: PropTypes.object.isRequired,
-  referenceTables: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   getMappingSubfieldsFieldValue: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
