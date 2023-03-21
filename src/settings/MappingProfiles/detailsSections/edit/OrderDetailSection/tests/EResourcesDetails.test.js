@@ -26,7 +26,6 @@ jest.mock('../../../hooks', () => ({
   useFieldMappingBoolFieldValue: () => ['ALL_FALSE', 'ALL_FALSE'],
   useFieldMappingFieldValue: () => ['testPOStatus'],
   useFieldMappingValueFromLookup: () => ['testUUID', 'testMapping'],
-  useFieldMappingFieldValueByPath: () => ['"None"'],
 }));
 
 const okapiProp = {
