@@ -36,6 +36,7 @@ import {
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
   ORDER_FORMATS,
+  CREATE_INVENTORY_PHYSICAL_PATH,
 } from '../../constants';
 import {
   clearFieldValue,
@@ -45,6 +46,7 @@ import {
   onAdd,
   onRemove,
   renderFieldLabelWithInfo,
+  setFieldValue,
 } from '../../utils';
 import {
   MATERIAL_SUPPLIER_FIELD,
