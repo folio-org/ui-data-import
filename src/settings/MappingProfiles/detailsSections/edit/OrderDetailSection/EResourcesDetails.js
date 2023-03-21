@@ -27,6 +27,7 @@ import {
 import {
   useFieldMappingBoolFieldValue,
   useFieldMappingFieldValue,
+  useFieldMappingFieldValueByPath,
   useFieldMappingValueFromLookup,
 } from '../../hooks';
 
@@ -35,6 +36,7 @@ import {
   CREATE_INVENTORY_TYPES,
   WRAPPER_SOURCE_LINKS,
   PO_STATUS,
+  CREATE_INVENTORY_ERESOURCE_PATH,
 } from '../../constants';
 import {
   clearFieldValue,
@@ -42,6 +44,7 @@ import {
   getBoolFieldName,
   getFieldName,
   renderFieldLabelWithInfo,
+  setFieldValue,
 } from '../../utils';
 import {
   ACCESS_PROVIDER_FIELD,
@@ -71,6 +74,7 @@ export const EResourcesDetails = ({
   const { formatMessage } = useIntl();
 
   const [poStatus] = useFieldMappingFieldValue([PO_STATUS_FIELD]);
+  const [createInventory] = useFieldMappingFieldValueByPath(CREATE_INVENTORY_ERESOURCE_PATH);
   const [
     activationStatusCheckbox,
     trialCheckbox,

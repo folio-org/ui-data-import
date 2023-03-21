@@ -40,6 +40,7 @@ import {
   onRemove,
   renderFieldLabelWithInfo,
 } from '../../utils';
+
 import {
   LOCATIONS_FIELD,
   ORDER_FORMAT_FILED,
