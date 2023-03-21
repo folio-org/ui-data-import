@@ -21,6 +21,7 @@ jest.mock('@folio/stripes/components', () => ({
 }));
 
 jest.mock('../../../hooks', () => ({
+  useFieldMappingFieldValue: () => ['P/E Mix'],
   useFieldMappingRefValues: () => [[{
     order: 0,
     path: 'order.poLine.locations[]',

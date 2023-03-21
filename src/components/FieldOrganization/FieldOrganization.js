@@ -120,6 +120,7 @@ const FieldOrganization = ({
           searchLabel={<FormattedMessage id="stripes-acq-components.filter.organization.lookup" />}
           selectVendor={selectOrganization}
           type="find-organization"
+          disabled={disabled}
         >
           <FormattedMessage id="stripes-acq-components.filter.organization.lookupNoSupport" />
         </Pluggable>

@@ -286,8 +286,23 @@ export const getMappingQueryFromValue = valueFromDetails => {
   return valueFromDetails?.substring(0, mappingEndPosition === -1 ? valueFromDetails.length : mappingEndPosition);
 };
 
-export const setFieldValue = ({ path, setReferenceTables, value, isDisabled }) => {
-  const reference = isDisabled ? '' : value;
+export const clearFieldValue = ({ paths, setReferenceTables, value = '', isDisabled }) => {
+  if (isDisabled) {
+    paths.forEach(path => setReferenceTables(path, value));
+  }
+};
 
-  setReferenceTables(path, reference);
+export const clearSubfieldValue = ({
+  mappingFieldIndex,
+  setReferenceTables,
+  subfields,
+  isDisabled,
+  subfieldName,
+}) => {
+  if (isDisabled) {
+    subfields.forEach((item, fieldIndex) => {
+      const subfieldIndex = item.fields.findIndex(field => field.name === subfieldName);
+      setReferenceTables(getSubfieldName(mappingFieldIndex, subfieldIndex, fieldIndex), '');
+    });
+  }
 };

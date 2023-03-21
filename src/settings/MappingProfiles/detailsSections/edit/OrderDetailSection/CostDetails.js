@@ -25,8 +25,12 @@ import {
 } from '../../../../../components';
 import { useFieldMappingFieldValue } from '../../hooks';
 
-import { ORDER_FORMATS, TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  ORDER_FORMATS,
+  TRANSLATION_ID_PREFIX,
+} from '../../constants';
+import {
+  clearFieldValue,
   getFieldName,
   renderFieldLabelWithInfo,
 } from '../../utils';
@@ -49,14 +53,14 @@ export const CostDetails = ({ setReferenceTables }) => {
     TYPE: getFieldName(55),
   };
 
+  const physicalDetailsDisabledPaths = [
+    COST_DETAILS_FIELDS_MAP.PHYSICAL_UNIT_PRICE,
+    COST_DETAILS_FIELDS_MAP.QUANTITY_PHYSICAL,
+  ];
+
   const [orderFormat] = useFieldMappingFieldValue([ORDER_FORMAT_FILED]);
 
-  const [
-    setExchangeRateValue,
-    currency,
-    physicalUnitPrice,
-    quantityPhysical,
-  ] = useFieldMappingFieldValue([SET_EXCHANGE_RATE_FIELD, CURRENCY_FIELD]);
+  const [setExchangeRateValue, currency] = useFieldMappingFieldValue([SET_EXCHANGE_RATE_FIELD, CURRENCY_FIELD]);
 
   const isSetExchangeRateValueEmpty = !isEmpty(setExchangeRateValue);
 
@@ -66,13 +70,11 @@ export const CostDetails = ({ setReferenceTables }) => {
   const isPhysicalDetailsDisabled = useMemo(() => orderFormat === ORDER_FORMATS.ELECTRONIC_RESOURCE, [orderFormat]);
 
   useEffect(() => {
-    if (!isPhysicalDetailsDisabled) {
-      setReferenceTables(COST_DETAILS_FIELDS_MAP.PHYSICAL_UNIT_PRICE, physicalUnitPrice);
-      setReferenceTables(COST_DETAILS_FIELDS_MAP.QUANTITY_PHYSICAL, quantityPhysical);
-    } else {
-      setReferenceTables(COST_DETAILS_FIELDS_MAP.PHYSICAL_UNIT_PRICE, '');
-      setReferenceTables(COST_DETAILS_FIELDS_MAP.QUANTITY_PHYSICAL, '');
-    }
+    clearFieldValue({
+      paths: physicalDetailsDisabledPaths,
+      isDisabled: isPhysicalDetailsDisabled,
+      setReferenceTables,
+    });
   }, [isPhysicalDetailsDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const physicalUnitPriceLabel = renderFieldLabelWithInfo(
