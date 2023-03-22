@@ -28,7 +28,7 @@ export const PhysicalResourceDetails = ({
   mappingDetails,
   materialSupplierId,
 }) => {
-  const { organization } = useOrganizationValue(materialSupplierId);
+  const { organizationName } = useOrganizationValue(materialSupplierId);
 
   const { VOLUMES } = PHYSICAL_RESOURCE_VISIBLE_COLUMNS;
 
@@ -71,7 +71,7 @@ export const PhysicalResourceDetails = ({
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalOrderDetails.materialSupplier`} />}
-            value={organization}
+            value={organizationName}
           />
         </Col>
         <Col
