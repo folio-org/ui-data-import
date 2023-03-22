@@ -10,6 +10,7 @@
 * Field mapping profile Invoice Edit screen: Accounting code field is disabled when Vendor name is selected (UIDATIMP-1394)
 * Order field mapping profile: Add info icon to the Purchase order status fieldPurchase order status a required field (UIDATIMP-1397)
 * Order field mapping profile: Inactivate Create Inventory fields when Order status is Open (UIDATIMP-1402)
+* Adjust mapping details for DI wrt PO prefixes and suffixes (UIDATIMP-1408)
 
 ## [6.0.1](https://github.com/folio-org/ui-data-import/tree/v6.0.1) (2023-03-14)
 
