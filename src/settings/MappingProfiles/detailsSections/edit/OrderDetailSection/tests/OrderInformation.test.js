@@ -17,6 +17,11 @@ import { OrderInformation } from '../OrderInformation';
 
 import { BOOLEAN_ACTIONS } from '../../../../../../utils';
 
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  InfoPopover: () => <span>InfoPopover</span>,
+}));
+
 const setReferenceTablesMock = jest.fn();
 
 const okapiProp = {
@@ -131,6 +136,12 @@ describe('OrderInformation', () => {
     expect(within(queryByText('Purchase order status')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Vendor')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Order type')).getByText(/\*/i)).toBeDefined();
+  });
+
+  it('should render info icons for the particular fields', () => {
+    const { queryByText } = renderOrderInformation();
+
+    expect(within(queryByText('Purchase order status')).getByText(/InfoPopover/i)).toBeDefined();
   });
 
   describe('should render validation error message when "Override purchase order lines limit setting" field value', () => {
