@@ -260,8 +260,6 @@ const OrderInformationComponent = ({
               wrapperSourceLink: WRAPPER_SOURCE_LINKS.PREFIXES,
               wrapperSourcePath: 'prefixes',
             }]}
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(ORDER_INFO_FIELDS_MAP.PREFIX)}
             okapi={okapi}
           />
         </Col>
@@ -290,8 +288,6 @@ const OrderInformationComponent = ({
               wrapperSourceLink: WRAPPER_SOURCE_LINKS.SUFFIXES,
               wrapperSourcePath: 'suffixes',
             }]}
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(ORDER_INFO_FIELDS_MAP.SUFFIX)}
             okapi={okapi}
           />
         </Col>

@@ -5,6 +5,7 @@
 ### Bugs fixed:
 * Order field mapping profile: Fix the UI and error message for the fund "Value" field (UIDATIMP-1387)
 * Order field mapping profile: Add info icon to the Purchase order status fieldPurchase order status a required field (UIDATIMP-1397)
+* Adjust mapping details for DI wrt PO prefixes and suffixes (UIDATIMP-1408)
 
 ## [6.0.1](https://github.com/folio-org/ui-data-import/tree/v6.0.1) (2023-03-14)
 
