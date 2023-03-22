@@ -27,7 +27,8 @@ export const useOrganizationValue = orgId => {
   const organizationName = mapping ? `${mapping}${organizationNameFromResponse}` : organizationNameFromResponse;
 
   return ({
-    organization: (orgId && !orgIdMatch) ? orgId : organizationName,
+    organizationName: (orgId && !orgIdMatch) ? orgId : organizationName,
+    organization: data,
     isLoading,
   });
 };

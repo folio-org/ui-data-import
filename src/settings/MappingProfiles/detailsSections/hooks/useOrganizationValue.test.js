@@ -45,7 +45,7 @@ describe('useOrganizationValue', () => {
 
     await waitFor(() => !result.current.isLoading);
 
-    expect(result.current.organization).toEqual('"Amazon"');
+    expect(result.current.organizationName).toEqual('"Amazon"');
     expect(mockGet).toHaveBeenCalledWith(`${VENDORS_API}/${organization.id}`);
   });
 
@@ -53,6 +53,6 @@ describe('useOrganizationValue', () => {
     const orgValue = '111';
     const { result } = renderHook(() => useOrganizationValue(orgValue), { wrapper });
 
-    expect(result.current.organization).toEqual(orgValue);
+    expect(result.current.organizationName).toEqual(orgValue);
   });
 });
