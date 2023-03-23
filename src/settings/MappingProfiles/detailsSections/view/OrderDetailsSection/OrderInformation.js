@@ -46,7 +46,7 @@ const OrderInformation = ({
   const [billToAddress, setBillToAddress] = useState('');
   const [shipToAddress, setShipToAddress] = useState('');
   const [selectedUser, setSelectedUser] = useState({});
-  const { organization } = useOrganizationValue(vendorId);
+  const { organizationName } = useOrganizationValue(vendorId);
 
   const userNameValue = !isEmpty(selectedUser) ? getFullName(selectedUser) : null;
   const billTo = getFieldValue(mappingDetails, 'billTo', 'value');
@@ -220,7 +220,7 @@ const OrderInformation = ({
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.vendor`} />}
-            value={organization}
+            value={organizationName}
           />
         </Col>
         <Col

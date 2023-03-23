@@ -27,7 +27,6 @@ const ORDER = {
     enabled: true,
     path: 'order.po.poNumberPrefix',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'poNumber',
     enabled: true,
@@ -38,7 +37,6 @@ const ORDER = {
     enabled: true,
     path: 'order.po.poNumberSuffix',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'vendor',
     enabled: true,

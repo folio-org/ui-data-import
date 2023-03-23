@@ -23,6 +23,10 @@ import {
 import { TypeToggle } from '@folio/stripes-acq-components';
 
 import { AcceptedValuesField } from '../../../../../components';
+import {
+  useFieldMappingFieldValue,
+  useFieldMappingRefValues,
+} from '../../hooks';
 
 import {
   onAdd,
@@ -36,6 +40,7 @@ import {
   getRepeatableFieldName,
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
+  getInnerRepeatableFieldPath,
 } from '../../utils';
 import {
   TRANSLATION_ID_PREFIX,
@@ -43,7 +48,6 @@ import {
 } from '../../constants';
 import {
   createOptionsList,
-  mappingProfileSubfieldShape,
   okapiShape,
   PRORATE_OPTIONS,
   INOVOICE_ADJUSTMENTS_PRORATE_OPTIONS,
@@ -51,18 +55,35 @@ import {
   BOOLEAN_ACTIONS,
   RELATION_TO_TOTAL_OPTIONS,
   validateQuotedString,
+  ADJUSTMENTS_FIELD,
+  CURRENCY_FIELD,
 } from '../../../../../utils';
 
 export const InvoiceAdjustments = ({
-  adjustments,
-  currency,
   initialFields,
   initialFields: { adjustments: { fields: initialFundDistribution } },
   mappingFields,
   setReferenceTables,
   okapi,
 }) => {
+  const INVOICE_ADJUSTMENTS_FIELD_INDEX = 15;
+  const PRO_RATE_FIELD_INDEX = 3;
+  const RELS_TO_TOTAL_FIELD_INDEX = 4;
+  const EXPORT_TO_ACCOUNTING_FIELD_INDEX = 5;
+  const FUND_DISTRIBUTIONS_FIELD_INDEX = 6;
+  const INVOICE_ADJUSTMENTS_FIELDS_MAP = {
+    DESCRIPTION: index => getSubfieldName(INVOICE_ADJUSTMENTS_FIELD_INDEX, 0, index),
+    AMOUNT: index => getSubfieldName(INVOICE_ADJUSTMENTS_FIELD_INDEX, 1, index),
+    TYPE: index => getSubfieldName(INVOICE_ADJUSTMENTS_FIELD_INDEX, 2, index),
+    PRO_RATE: index => getSubfieldName(INVOICE_ADJUSTMENTS_FIELD_INDEX, PRO_RATE_FIELD_INDEX, index),
+    RELS_TO_TOTAL: index => getSubfieldName(INVOICE_ADJUSTMENTS_FIELD_INDEX, RELS_TO_TOTAL_FIELD_INDEX, index),
+    EXPORT_TO_ACCOUNTING: index => getBoolSubfieldName(INVOICE_ADJUSTMENTS_FIELD_INDEX, EXPORT_TO_ACCOUNTING_FIELD_INDEX, index),
+  };
+
   const { formatMessage } = useIntl();
+
+  const [adjustments] = useFieldMappingRefValues([ADJUSTMENTS_FIELD]);
+  const [currency] = useFieldMappingFieldValue([CURRENCY_FIELD]);
 
   const onAdjustmentAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
     const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
@@ -76,6 +97,16 @@ export const InvoiceAdjustments = ({
   };
 
   const renderFundDistributionFields = (mappingFieldIndex, mappingSubfieldFieldIndex, mappingSubfieldIndex, isFundDistribution) => {
+    const FUND_DISTRIBUTION_FIELDS_MAP = {
+      FUND: index => getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 0, index),
+      FUND_ACCEPTED_VALUES: index => getInnerRepeatableAcceptedValuesPath(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 0, index),
+      EXPENSE_CLASS: index => getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 1, index),
+      EXPENSE_CLASS_ACCEPTED_VALUES: index => getInnerRepeatableAcceptedValuesPath(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 1, index),
+      VALUE: index => getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 2, index),
+      TYPE: index => getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 3, index),
+      AMOUNT: index => getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 4, index),
+    };
+
     const currentInitialFundDistribution = initialFundDistribution[mappingSubfieldFieldIndex];
 
     const fundDistributions = adjustments[mappingSubfieldIndex].fields[mappingSubfieldFieldIndex].subfields;
@@ -83,12 +114,12 @@ export const InvoiceAdjustments = ({
 
     const getActualPath = currentIndex => getInnerSubfieldsPath(mappingFieldIndex, mappingSubfieldIndex, currentIndex);
     const onFundDistributionAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
-      const repeatableFieldActionPath = `profile.mappingDetails.mappingFields[${mappingFieldIndex}].subfields[${mappingSubfieldIndex}].fields[${fieldIndex}].repeatableFieldAction`;
+      const repeatableFieldActionPath = getInnerRepeatableFieldPath(mappingFieldIndex, mappingSubfieldIndex, fieldIndex);
 
       handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
     };
     const onFundDistributionsClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
-      const repeatableFieldActionPath = `profile.mappingDetails.mappingFields[${mappingFieldIndex}].subfields[${mappingSubfieldIndex}].fields[${fieldIndex}].repeatableFieldAction`;
+      const repeatableFieldActionPath = getInnerRepeatableFieldPath(mappingFieldIndex, mappingSubfieldIndex, fieldIndex);
 
       handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
     };
@@ -105,7 +136,7 @@ export const InvoiceAdjustments = ({
             <Col xs={3}>
               <AcceptedValuesField
                 component={TextField}
-                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 0, index)}
+                name={FUND_DISTRIBUTION_FIELDS_MAP.FUND(index)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.fundId`} />}
                 optionValue="name"
                 optionLabel="name"
@@ -116,7 +147,7 @@ export const InvoiceAdjustments = ({
                 }]}
                 optionTemplate="**name** (**code**)"
                 setAcceptedValues={setReferenceTables}
-                acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 0, index)}
+                acceptedValuesPath={FUND_DISTRIBUTION_FIELDS_MAP.FUND_ACCEPTED_VALUES(index)}
                 validation={noop}
                 okapi={okapi}
               />
@@ -124,7 +155,7 @@ export const InvoiceAdjustments = ({
             <Col xs={3}>
               <AcceptedValuesField
                 component={TextField}
-                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 1, index)}
+                name={FUND_DISTRIBUTION_FIELDS_MAP.EXPENSE_CLASS(index)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.expenseClass`} />}
                 optionValue="name"
                 optionLabel="name"
@@ -134,7 +165,7 @@ export const InvoiceAdjustments = ({
                   wrapperSourcePath: 'expenseClasses',
                 }]}
                 setAcceptedValues={setReferenceTables}
-                acceptedValuesPath={getInnerRepeatableAcceptedValuesPath(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 1, index)}
+                acceptedValuesPath={FUND_DISTRIBUTION_FIELDS_MAP.EXPENSE_CLASS_ACCEPTED_VALUES(index)}
                 validation={noop}
                 okapi={okapi}
               />
@@ -143,14 +174,14 @@ export const InvoiceAdjustments = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.value`} />}
-                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 2, index)}
+                name={FUND_DISTRIBUTION_FIELDS_MAP.VALUE(index)}
               />
             </Col>
             <Col xs={2}>
               <Field
                 component={TypeToggle}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.type`} />}
-                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 3, index)}
+                name={FUND_DISTRIBUTION_FIELDS_MAP.TYPE(index)}
                 currency={currency}
               />
             </Col>
@@ -158,7 +189,7 @@ export const InvoiceAdjustments = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.amount`} />}
-                name={getInnerSubfieldName(mappingFieldIndex, mappingSubfieldIndex, mappingSubfieldFieldIndex, 4, index)}
+                name={FUND_DISTRIBUTION_FIELDS_MAP.AMOUNT(index)}
                 disabled
               />
             </Col>
@@ -169,8 +200,8 @@ export const InvoiceAdjustments = ({
   };
 
   const renderAdjustment = (field, index) => {
-    const prorateField = field.fields[3];
-    const relationToTotalField = field.fields[4];
+    const prorateField = field.fields[PRO_RATE_FIELD_INDEX];
+    const relationToTotalField = field.fields[RELS_TO_TOTAL_FIELD_INDEX];
 
     const isFundDistribution = prorateField.value === `"${PRORATE_OPTIONS.NOT_PRORATED}"`;
 
@@ -186,7 +217,13 @@ export const InvoiceAdjustments = ({
 
     const handleProRateChange = value => {
       if (value !== `"${PRORATE_OPTIONS.NOT_PRORATED}"`) {
-        setReferenceTables(getInnerSubfieldsPath(15, index, 6), []);
+        const fundDistributionFieldPath = getInnerSubfieldsPath(
+          INVOICE_ADJUSTMENTS_FIELD_INDEX,
+          index,
+          FUND_DISTRIBUTIONS_FIELD_INDEX
+        );
+
+        setReferenceTables(fundDistributionFieldPath, []);
       }
     };
 
@@ -194,7 +231,7 @@ export const InvoiceAdjustments = ({
       <IconButton
         data-test-repeatable-field-remove-item-button
         icon="trash"
-        onClick={() => onRemove(index, adjustments, 15, onAdjustmentsClean, 'order')}
+        onClick={() => onRemove(index, adjustments, INVOICE_ADJUSTMENTS_FIELD_INDEX, onAdjustmentsClean, 'order')}
         size="medium"
         ariaLabel={formatMessage({ id: 'stripes-components.deleteThisItem' })}
       />
@@ -207,7 +244,8 @@ export const InvoiceAdjustments = ({
       />
     );
 
-    const exportToAccountingCheckbox = mappingFields?.[15].subfields[index].fields[5]?.booleanFieldAction;
+    const exportToAccountingCheckboxValue = mappingFields?.[INVOICE_ADJUSTMENTS_FIELD_INDEX]
+      .subfields[index].fields[EXPORT_TO_ACCOUNTING_FIELD_INDEX]?.booleanFieldAction;
 
     return (
       <Card
@@ -219,28 +257,28 @@ export const InvoiceAdjustments = ({
             <Field
               component={TextField}
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.description`} />}
-              name={getSubfieldName(15, 0, index)}
+              name={INVOICE_ADJUSTMENTS_FIELDS_MAP.DESCRIPTION(index)}
             />
           </Col>
           <Col xs={1}>
             <Field
               component={TextField}
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.amount`} />}
-              name={getSubfieldName(15, 1, index)}
+              name={INVOICE_ADJUSTMENTS_FIELDS_MAP.AMOUNT(index)}
             />
           </Col>
           <Col xs={2}>
             <Field
               component={TypeToggle}
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.type`} />}
-              name={getSubfieldName(15, 2, index)}
+              name={INVOICE_ADJUSTMENTS_FIELDS_MAP.TYPE(index)}
               currency={currency}
             />
           </Col>
           <Col xs={2}>
             <AcceptedValuesField
               component={TextField}
-              name={getSubfieldName(15, 3, index)}
+              name={INVOICE_ADJUSTMENTS_FIELDS_MAP.PRO_RATE(index)}
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.prorate`} />}
               optionValue="value"
               optionLabel="label"
@@ -255,7 +293,7 @@ export const InvoiceAdjustments = ({
           <Col xs={3}>
             <AcceptedValuesField
               component={TextField}
-              name={getSubfieldName(15, 4, index)}
+              name={INVOICE_ADJUSTMENTS_FIELDS_MAP.RELS_TO_TOTAL(index)}
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.relationToTotal`} />}
               optionValue="value"
               optionLabel="label"
@@ -271,9 +309,9 @@ export const InvoiceAdjustments = ({
               component={Checkbox}
               vertical
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.exportToAccounting`} />}
-              name={getBoolSubfieldName(15, 5, index)}
+              name={INVOICE_ADJUSTMENTS_FIELDS_MAP.EXPORT_TO_ACCOUNTING(index)}
               parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
-              checked={exportToAccountingCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
+              checked={exportToAccountingCheckboxValue === BOOLEAN_ACTIONS.ALL_TRUE}
             />
           </Col>
         </Row>
@@ -284,7 +322,7 @@ export const InvoiceAdjustments = ({
         </Row>
         <Row left="xs">
           <Col xs={12}>
-            {renderFundDistributionFields(15, 6, index, isFundDistribution)}
+            {renderFundDistributionFields(INVOICE_ADJUSTMENTS_FIELD_INDEX, FUND_DISTRIBUTIONS_FIELD_INDEX, index, isFundDistribution)}
           </Col>
         </Row>
       </Card>
@@ -297,16 +335,14 @@ export const InvoiceAdjustments = ({
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.section`} />}
     >
       <Row left="xs">
-        <Col
-          xs={12}
-        >
+        <Col xs={12}>
           <RepeatableField
             fields={adjustments}
             addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.addLabel`} />}
             onAdd={() => {
               const updatedInitialFields = updateInitialFields(initialFields);
 
-              onAdd(adjustments, 'adjustments', 15, updatedInitialFields, onAdjustmentAdd, 'order');
+              onAdd(adjustments, ADJUSTMENTS_FIELD, INVOICE_ADJUSTMENTS_FIELD_INDEX, updatedInitialFields, onAdjustmentAdd, 'order');
             }}
             onRemove={null}
             renderField={renderAdjustment}
@@ -318,12 +354,8 @@ export const InvoiceAdjustments = ({
 };
 
 InvoiceAdjustments.propTypes = {
-  adjustments: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
   mappingFields: PropTypes.arrayOf(PropTypes.object),
-  currency: PropTypes.string,
 };
-
-InvoiceAdjustments.defaultProps = { currency: '' };
