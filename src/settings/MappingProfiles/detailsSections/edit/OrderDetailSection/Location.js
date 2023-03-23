@@ -65,13 +65,14 @@ export const Location = ({
   const isPhysicalDetailsDisabled = useMemo(() => orderFormat === ORDER_FORMATS.ELECTRONIC_RESOURCE, [orderFormat]);
 
   useEffect(() => {
-    clearSubfieldValue({
-      mappingFieldIndex: LOCATION_FIELDS_MAP.LOCATIONS,
-      setReferenceTables,
-      isDisabled: isPhysicalDetailsDisabled,
-      subfields: locations,
-      subfieldName: QUANTITY_PHYSICAL_FIELD,
-    });
+    if (isPhysicalDetailsDisabled) {
+      clearSubfieldValue({
+        mappingFieldIndex: LOCATION_FIELDS_MAP.LOCATIONS,
+        setReferenceTables,
+        subfields: locations,
+        subfieldName: QUANTITY_PHYSICAL_FIELD,
+      });
+    }
   }, [isPhysicalDetailsDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const locationLabel = renderFieldLabelWithInfo(

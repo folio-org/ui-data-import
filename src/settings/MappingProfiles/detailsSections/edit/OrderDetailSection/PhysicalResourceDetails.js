@@ -87,23 +87,27 @@ export const PhysicalResourceDetails = ({
   const isPhysicalDetailsDisabled = useMemo(() => orderFormat === ORDER_FORMATS.ELECTRONIC_RESOURCE, [orderFormat]);
 
   useEffect(() => {
-    clearFieldValue({
-      paths: [PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY],
-      isDisabled: isCreateInventoryDisabled,
-      setReferenceTables,
-    });
-    clearFieldValue({
-      paths: physicalDetailsDisabledPaths,
-      isDisabled: isPhysicalDetailsDisabled,
-      setReferenceTables,
-    });
-    clearFieldValue({
-      paths: [`profile.mappingDetails.mappingFields[${PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES}].subfields`],
-      isDisabled: isPhysicalDetailsDisabled,
-      setReferenceTables,
-      value: [],
-    });
-  }, [isCreateInventoryDisabled, isPhysicalDetailsDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (isCreateInventoryDisabled) {
+      clearFieldValue({
+        paths: [PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY],
+        setReferenceTables,
+      });
+    }
+  }, [isCreateInventoryDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (isPhysicalDetailsDisabled) {
+      clearFieldValue({
+        paths: physicalDetailsDisabledPaths,
+        setReferenceTables,
+      });
+      clearFieldValue({
+        paths: [`profile.mappingDetails.mappingFields[${PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES}].subfields`],
+        setReferenceTables,
+        isSubfiled: true,
+      });
+    }
+  }, [isPhysicalDetailsDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),

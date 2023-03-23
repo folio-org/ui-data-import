@@ -80,11 +80,9 @@ export const EResourcesDetails = ({
   const isCreateInventoryDisabled = useMemo(() => poStatus === PO_STATUS.OPEN, [poStatus]);
 
   useEffect(() => {
-    clearFieldValue({
-      paths: [E_RESOURCES_DETAILS_FIELDS_MAP.CREATE_INVENTORY],
-      isDisabled: isCreateInventoryDisabled,
-      setReferenceTables,
-    });
+    if (isCreateInventoryDisabled) {
+      clearFieldValue({ paths: [E_RESOURCES_DETAILS_FIELDS_MAP.CREATE_INVENTORY], setReferenceTables });
+    }
   }, [isCreateInventoryDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const validateDatepickerFieldValue = useCallback(

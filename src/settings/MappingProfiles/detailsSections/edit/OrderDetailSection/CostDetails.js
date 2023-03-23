@@ -70,11 +70,9 @@ export const CostDetails = ({ setReferenceTables }) => {
   const isPhysicalDetailsDisabled = useMemo(() => orderFormat === ORDER_FORMATS.ELECTRONIC_RESOURCE, [orderFormat]);
 
   useEffect(() => {
-    clearFieldValue({
-      paths: physicalDetailsDisabledPaths,
-      isDisabled: isPhysicalDetailsDisabled,
-      setReferenceTables,
-    });
+    if (isPhysicalDetailsDisabled) {
+      clearFieldValue({ paths: physicalDetailsDisabledPaths, setReferenceTables });
+    }
   }, [isPhysicalDetailsDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const physicalUnitPriceLabel = renderFieldLabelWithInfo(
