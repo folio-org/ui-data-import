@@ -20,7 +20,7 @@ jest.mock('@folio/stripes/components', () => ({
   InfoPopover: () => <span>InfoPopover</span>,
 }));
 
-jest.mock('../../../hooks', () => ({ useFieldMappingFieldValue: () => ['', 'USD'] }));
+jest.mock('../../../hooks', () => ({ useFieldMappingFieldValue: () => ['', 'USD', 'Electronic resource'] }));
 
 const renderCostDetails = () => {
   const component = () => (

@@ -5,6 +5,7 @@
 ### Bugs fixed:
 * Order field mapping profile: Fix the UI and error message for the fund "Value" field (UIDATIMP-1387)
 * Order field mapping profile: Add info icon to the Purchase order status fieldPurchase order status a required field (UIDATIMP-1397)
+* Order field mapping profile: Inactivate some fields when Order format is Electronic (UIDATIMP-1400)
 * Order field mapping profile: Inactivate Create Inventory fields when Order status is Open (UIDATIMP-1402)
 * Adjust mapping details for DI wrt PO prefixes and suffixes (UIDATIMP-1408)
 

@@ -1,5 +1,6 @@
 import React, {
   memo,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -29,6 +30,7 @@ import {
 import styles from './DatePickerDecorator.css';
 
 export const DatePickerDecorator = memo(({
+  disabled,
   id,
   input,
   label,
@@ -46,6 +48,12 @@ export const DatePickerDecorator = memo(({
   const [currentValue, setCurrentValue] = useState(input.value || '');
   const [isDatepicker, setIsDatepicker] = useState(false);
   const fieldId = useMemo(() => uniqueId('decorated-field-'), []);
+
+  useEffect(() => {
+    if (disabled) {
+      setCurrentValue('');
+    }
+  }, [disabled]);
 
   const currentInput = useRef(input);
   const intl = useIntl();
@@ -110,6 +118,7 @@ export const DatePickerDecorator = memo(({
     onDragStart,
     onDrop,
     onFocus,
+    disabled,
     ...rest,
   };
 
@@ -153,6 +162,7 @@ export const DatePickerDecorator = memo(({
               optionLabel="name"
               className={styles['options-dropdown']}
               onSelect={handleChangeWrapperValue}
+              disabled={disabled}
             />
           )}
         </WithTranslation>
@@ -174,6 +184,7 @@ DatePickerDecorator.propTypes = {
   id: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
 };
@@ -181,6 +192,7 @@ DatePickerDecorator.propTypes = {
 DatePickerDecorator.defaultProps = {
   id: '',
   wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
+  disabled: false,
   required: false,
   readOnly: false,
 };
