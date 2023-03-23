@@ -1,5 +1,7 @@
 import React, {
   useCallback,
+  useEffect,
+  useMemo,
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -23,13 +25,18 @@ import {
 } from '../../../../../components';
 import { useFieldMappingFieldValue } from '../../hooks';
 
-import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  ORDER_FORMATS,
+  TRANSLATION_ID_PREFIX,
+} from '../../constants';
+import {
+  clearFieldValue,
   getFieldName,
   renderFieldLabelWithInfo,
 } from '../../utils';
 import {
   CURRENCY_FIELD,
+  ORDER_FORMAT_FILED,
   SET_EXCHANGE_RATE_FIELD,
 } from '../../../../../utils';
 
@@ -46,12 +53,33 @@ export const CostDetails = ({ setReferenceTables }) => {
     TYPE: getFieldName(55),
   };
 
-  const [setExchangeRateValue, currency] = useFieldMappingFieldValue([SET_EXCHANGE_RATE_FIELD, CURRENCY_FIELD]);
+  const physicalDetailsDisabledPaths = [
+    COST_DETAILS_FIELDS_MAP.PHYSICAL_UNIT_PRICE,
+    COST_DETAILS_FIELDS_MAP.QUANTITY_PHYSICAL,
+  ];
+
+  const [
+    setExchangeRateValue,
+    currency,
+    orderFormat,
+  ] = useFieldMappingFieldValue([
+    SET_EXCHANGE_RATE_FIELD,
+    CURRENCY_FIELD,
+    ORDER_FORMAT_FILED,
+  ]);
 
   const isSetExchangeRateValueEmpty = !isEmpty(setExchangeRateValue);
 
   const [isUseExchangeChecked, setIsUseExchangeChecked] = useState(isSetExchangeRateValueEmpty);
   const [isSetExchangeDisabled, setIsSetExchangeDisabled] = useState(isSetExchangeRateValueEmpty);
+
+  const isPhysicalDetailsDisabled = useMemo(() => orderFormat === ORDER_FORMATS.ELECTRONIC_RESOURCE, [orderFormat]);
+
+  useEffect(() => {
+    if (isPhysicalDetailsDisabled) {
+      clearFieldValue({ paths: physicalDetailsDisabledPaths, setReferenceTables });
+    }
+  }, [isPhysicalDetailsDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const physicalUnitPriceLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice`,
@@ -98,6 +126,7 @@ export const CostDetails = ({ setReferenceTables }) => {
                 label={physicalUnitPriceLabel}
                 name={COST_DETAILS_FIELDS_MAP.PHYSICAL_UNIT_PRICE}
                 validate={[validation]}
+                disabled={isPhysicalDetailsDisabled}
               />
             )}
           </WithValidation>
@@ -110,6 +139,7 @@ export const CostDetails = ({ setReferenceTables }) => {
                 label={quantityPhysicalLabel}
                 name={COST_DETAILS_FIELDS_MAP.QUANTITY_PHYSICAL}
                 validate={[validation]}
+                disabled={isPhysicalDetailsDisabled}
               />
             )}
           </WithValidation>

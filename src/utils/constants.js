@@ -74,6 +74,11 @@ export const PRODUCT_IDS_FIELD = 'productIds';
 export const LOCATIONS_FIELD = 'locations';
 export const VOLUMES_FIELD = 'volumes';
 export const VENDOR_DETAILS_FIELD = 'vendorDetail';
+export const ORDER_FORMAT_FILED = 'orderFormat';
+export const PHYSICAL_UNIT_PRICE_FIELD = 'listUnitPrice';
+export const QUANTITY_PHYSICAL_FIELD = 'quantityPhysical';
+export const RECEIPT_DUE_FIELD = 'receiptDue';
+export const EXPECTED_RECEIPT_DATE_FIELD = 'expectedReceiptDate';
 export const ADJUSTMENTS_FIELD = 'adjustments';
 
 export const DATA_TYPES = [

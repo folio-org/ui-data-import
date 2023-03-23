@@ -27,7 +27,6 @@ import {
 import {
   useFieldMappingBoolFieldValue,
   useFieldMappingFieldValue,
-  useFieldMappingFieldValueByPath,
   useFieldMappingValueFromLookup,
 } from '../../hooks';
 
@@ -36,14 +35,13 @@ import {
   CREATE_INVENTORY_TYPES,
   WRAPPER_SOURCE_LINKS,
   PO_STATUS,
-  CREATE_INVENTORY_ERESOURCE_PATH,
 } from '../../constants';
 import {
+  clearFieldValue,
   getAcceptedValuesPath,
   getBoolFieldName,
   getFieldName,
   renderFieldLabelWithInfo,
-  setFieldValue,
 } from '../../utils';
 import {
   ACCESS_PROVIDER_FIELD,
@@ -73,7 +71,6 @@ export const EResourcesDetails = ({
   const { formatMessage } = useIntl();
 
   const [poStatus] = useFieldMappingFieldValue([PO_STATUS_FIELD]);
-  const [createInventory] = useFieldMappingFieldValueByPath(CREATE_INVENTORY_ERESOURCE_PATH);
   const [
     activationStatusCheckbox,
     trialCheckbox,
@@ -83,13 +80,10 @@ export const EResourcesDetails = ({
   const isCreateInventoryDisabled = useMemo(() => poStatus === PO_STATUS.OPEN, [poStatus]);
 
   useEffect(() => {
-    setFieldValue({
-      path: E_RESOURCES_DETAILS_FIELDS_MAP.CREATE_INVENTORY,
-      isDisabled: isCreateInventoryDisabled,
-      value: createInventory,
-      setReferenceTables,
-    });
-  }, [isCreateInventoryDisabled, createInventory]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (isCreateInventoryDisabled) {
+      clearFieldValue({ paths: [E_RESOURCES_DETAILS_FIELDS_MAP.CREATE_INVENTORY], setReferenceTables });
+    }
+  }, [isCreateInventoryDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),
