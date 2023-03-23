@@ -3,13 +3,15 @@
 ## **6.1.0** (in progress)
 
 ### Features added:
-* Add accessibiity testing to automated tests in ui-data-import (UIDATIMP-1372)
+* Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
 
 ### Bugs fixed:
 * Order field mapping profile: Fix the UI and error message for the fund "Value" field (UIDATIMP-1387)
+* Field mapping profile Invoice Edit screen: Accounting code field is disabled when Vendor name is selected (UIDATIMP-1394)
 * Order field mapping profile: Add info icon to the Purchase order status fieldPurchase order status a required field (UIDATIMP-1397)
 * Order field mapping profile: Inactivate some fields when Order format is Electronic (UIDATIMP-1400)
 * Order field mapping profile: Inactivate Create Inventory fields when Order status is Open (UIDATIMP-1402)
+* Adjust mapping details for DI wrt PO prefixes and suffixes (UIDATIMP-1408)
 
 ## [6.0.1](https://github.com/folio-org/ui-data-import/tree/v6.0.1) (2023-03-14)
 
