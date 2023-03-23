@@ -300,9 +300,9 @@ export const clearSubfieldValue = ({
   subfieldName,
 }) => {
   if (isDisabled) {
-    subfields.forEach((item, fieldIndex) => {
-      const subfieldIndex = item.fields.findIndex(field => field.name === subfieldName);
-      setReferenceTables(getSubfieldName(mappingFieldIndex, subfieldIndex, fieldIndex), '');
+    subfields.forEach((item, subfieldIndex) => {
+      const fieldIndex = item.fields.findIndex(field => field.name === subfieldName);
+      setReferenceTables(getSubfieldName(mappingFieldIndex, fieldIndex, subfieldIndex), '');
     });
   }
 };
