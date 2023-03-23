@@ -58,9 +58,15 @@ export const CostDetails = ({ setReferenceTables }) => {
     COST_DETAILS_FIELDS_MAP.QUANTITY_PHYSICAL,
   ];
 
-  const [orderFormat] = useFieldMappingFieldValue([ORDER_FORMAT_FILED]);
-
-  const [setExchangeRateValue, currency] = useFieldMappingFieldValue([SET_EXCHANGE_RATE_FIELD, CURRENCY_FIELD]);
+  const [
+    setExchangeRateValue,
+    currency,
+    orderFormat,
+  ] = useFieldMappingFieldValue([
+    SET_EXCHANGE_RATE_FIELD,
+    CURRENCY_FIELD,
+    ORDER_FORMAT_FILED,
+  ]);
 
   const isSetExchangeRateValueEmpty = !isEmpty(setExchangeRateValue);
 

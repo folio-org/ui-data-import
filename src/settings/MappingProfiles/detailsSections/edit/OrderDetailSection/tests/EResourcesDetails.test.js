@@ -24,7 +24,7 @@ jest.mock('@folio/stripes/components', () => ({
 
 jest.mock('../../../hooks', () => ({
   useFieldMappingBoolFieldValue: () => ['ALL_FALSE', 'ALL_FALSE'],
-  useFieldMappingFieldValue: () => ['testPOStatus'],
+  useFieldMappingFieldValue: () => ['Open'],
   useFieldMappingValueFromLookup: () => ['testUUID', 'testMapping'],
 }));
 

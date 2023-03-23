@@ -21,7 +21,7 @@ jest.mock('@folio/stripes/components', () => ({
 }));
 
 jest.mock('../../../hooks', () => ({
-  useFieldMappingFieldValue: () => ['Open'],
+  useFieldMappingFieldValue: () => ['Open', 'Electronic resource'],
   useFieldMappingValueFromLookup: () => ['', ''],
   useFieldMappingRefValues: () => [[{
     order: 0,
