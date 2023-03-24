@@ -166,6 +166,7 @@ export const PhysicalResourceDetails = ({
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialSupplier`} />}
                 validate={[validation]}
                 disabled={isPhysicalDetailsDisabled}
+                isPluginDisabled={isPhysicalDetailsDisabled}
               />
             )}
           </WithValidation>
