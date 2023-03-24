@@ -12,6 +12,7 @@
 * Order field mapping profile: Inactivate some fields when Order format is Electronic (UIDATIMP-1400)
 * Order field mapping profile: Inactivate Create Inventory fields when Order status is Open (UIDATIMP-1402)
 * Adjust mapping details for DI wrt PO prefixes and suffixes (UIDATIMP-1408)
+* The "Organization look-up" is disabled after creating the New field mapping profile (UIDATIMP-1416)
 
 ## [6.0.1](https://github.com/folio-org/ui-data-import/tree/v6.0.1) (2023-03-14)
 
