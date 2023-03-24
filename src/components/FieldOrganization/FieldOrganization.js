@@ -20,8 +20,8 @@ const FieldOrganization = ({
   onSelect,
   onClear,
   setReferenceTables,
-  isFieldDisabled,
-  isLookupDisabled,
+  disabled,
+  isPluginDisabled,
   label,
   name,
   required,
@@ -100,7 +100,7 @@ const FieldOrganization = ({
       <Field
         id={name}
         component={TextField}
-        disabled={isFieldDisabled}
+        disabled={disabled}
         endControl={clearButton}
         fullWidth
         hasClearIcon={false}
@@ -121,7 +121,7 @@ const FieldOrganization = ({
           searchLabel={<FormattedMessage id="stripes-acq-components.filter.organization.lookup" />}
           selectVendor={selectOrganization}
           type="find-organization"
-          disabled={isLookupDisabled}
+          disabled={isPluginDisabled}
         >
           <FormattedMessage id="stripes-acq-components.filter.organization.lookupNoSupport" />
         </Pluggable>
@@ -135,8 +135,8 @@ FieldOrganization.propTypes = {
   mutator: PropTypes.object.isRequired,
   onSelect: PropTypes.func,
   onClear: PropTypes.func,
-  isFieldDisabled: PropTypes.bool,
-  isLookupDisabled: PropTypes.bool,
+  disabled: PropTypes.bool,
+  isPluginDisabled: PropTypes.bool,
   id: PropTypes.string,
   label: PropTypes.oneOfType([
     PropTypes.string,
@@ -149,8 +149,8 @@ FieldOrganization.propTypes = {
 };
 
 FieldOrganization.defaultProps = {
-  isFieldDisabled: false,
-  isLookupDisabled: false,
+  disabled: false,
+  isPluginDisabled: false,
   required: false,
 };
 
