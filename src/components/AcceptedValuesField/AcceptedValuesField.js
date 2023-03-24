@@ -9,6 +9,7 @@ import { Field } from 'redux-form';
 import {
   isEmpty,
   isEqual,
+  noop,
 } from 'lodash';
 
 import { sortCollection } from '@folio/stripes-data-transfer-components';
@@ -258,7 +259,7 @@ AcceptedValuesField.defaultProps = {
   parsedOptionLabel: '',
   parsedOptionValue: '',
   required: false,
-  setAcceptedValues: null,
+  setAcceptedValues: noop,
   validation: null,
   wrapperSources: null,
   wrapperSourcesFn: null,

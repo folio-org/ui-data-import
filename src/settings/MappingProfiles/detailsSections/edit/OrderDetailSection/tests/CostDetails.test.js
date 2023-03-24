@@ -15,20 +15,22 @@ import {
 
 import { CostDetails } from '../CostDetails';
 
-import { BOOLEAN_ACTIONS } from '../../../../../../utils';
-
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   InfoPopover: () => <span>InfoPopover</span>,
 }));
 
+jest.mock('../../../hooks', () => ({
+  useFieldMappingFieldValue: () => ['', 'USD', 'Electronic resource'],
+  useDisabledOrderFields: () => ({
+    dismissPhysicalDetails: false,
+    dismissElectronicDetails: false,
+  }),
+}));
+
 const renderCostDetails = () => {
   const component = () => (
-    <CostDetails
-      currency="USD"
-      useSetExchange={BOOLEAN_ACTIONS.ALL_FALSE}
-      setReferenceTables={noop}
-    />
+    <CostDetails setReferenceTables={noop} />
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);

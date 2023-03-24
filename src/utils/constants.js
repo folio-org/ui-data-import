@@ -50,6 +50,7 @@ export const JOB_STATUSES = {
 export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
 export const SYSTEM_USER_NAME = 'System';
 
+export const PO_STATUS_FIELD = 'workflowStatus';
 export const APPROVED_FIELD = 'approved';
 export const MANUAL_PO_FIELD = 'manualPo';
 export const AUTOMATIC_EXPORT_FIELD = 'automaticExport';
@@ -66,6 +67,17 @@ export const EXCHANGE_RATE_FIELD = 'exchangeRate';
 export const SET_EXCHANGE_RATE_FIELD = 'exchangeRate';
 export const BILL_TO_FIELD = 'billTo';
 export const SHIP_TO_FIELD = 'shipTo';
+export const NOTES_FIELD = 'notes';
+export const FUND_DISTRIBUTION_FIELD = 'fundDistribution';
+export const CONTRIBUTORS_FIELD = 'contributors';
+export const PRODUCT_IDS_FIELD = 'productIds';
+export const LOCATIONS_FIELD = 'locations';
+export const VOLUMES_FIELD = 'volumes';
+export const VENDOR_DETAILS_FIELD = 'vendorDetail';
+export const ORDER_FORMAT_FILED = 'orderFormat';
+export const QUANTITY_PHYSICAL_FIELD = 'quantityPhysical';
+export const QUANTITY_ELECTRONIC_FIELD = 'quantityElectronic';
+export const ADJUSTMENTS_FIELD = 'adjustments';
 
 export const DATA_TYPES = [
   'MARC',

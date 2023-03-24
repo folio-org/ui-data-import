@@ -20,6 +20,7 @@ import {
   DatePickerDecorator,
   WithValidation,
 } from '../../../../../components';
+import { useFieldMappingRefValues } from '../../hooks';
 
 import {
   ALLOWED_PROD_ID_TYPE_NAMES,
@@ -38,19 +39,17 @@ import {
   onRemove,
 } from '../../utils';
 import {
+  CONTRIBUTORS_FIELD,
+  PRODUCT_IDS_FIELD,
   validateMARCWithDate,
   validateRequiredField,
 } from '../../../../../utils';
 
 export const ItemDetails = ({
-  contributors,
-  productIdentifiers,
   initialFields,
   setReferenceTables,
   okapi,
 }) => {
-  const { formatMessage } = useIntl();
-
   const ITEM_DETAILS_FIELDS_MAP = {
     TITLE: getFieldName(16),
     RECEIVING_NOTE: getFieldName(17),
@@ -70,6 +69,13 @@ export const ItemDetails = ({
     PRODUCT_ID_TYPE: index => getSubfieldName(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 2, index),
     INTERNAL_NOTE: getFieldName(27),
   };
+
+  const { formatMessage } = useIntl();
+
+  const [
+    contributors,
+    productIdentifiers,
+  ] = useFieldMappingRefValues([CONTRIBUTORS_FIELD, PRODUCT_IDS_FIELD]);
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),
@@ -369,11 +375,4 @@ ItemDetails.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
-  contributors: PropTypes.arrayOf(PropTypes.object),
-  productIdentifiers: PropTypes.arrayOf(PropTypes.object),
-};
-
-ItemDetails.defaultProps = {
-  contributors: [],
-  productIdentifiers: [],
 };

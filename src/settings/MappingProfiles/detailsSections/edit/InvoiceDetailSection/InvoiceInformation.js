@@ -16,6 +16,7 @@ import {
   AcceptedValuesField,
   DatePickerDecorator,
 } from '../../../../../components';
+import { useFieldMappingFieldValue } from '../../hooks';
 
 import {
   getFieldName,
@@ -28,17 +29,36 @@ import {
 } from '../../constants';
 import {
   composeValidators,
+  LOCK_TOTAL_FIELD,
   okapiShape,
   validateQuotedString,
   validateRequiredField,
 } from '../../../../../utils';
 
 export const InvoiceInformation = ({
-  hasLockTotal,
   setReferenceTables,
   okapi,
 }) => {
-  const [isLockTotal, setIsLockTotal] = useState(hasLockTotal);
+  const INVOICE_INFO_FIELDS_MAP = {
+    INVOICE_DATE: getFieldName(0),
+    STATUS: getFieldName(1),
+    PAYMENT_DUE: getFieldName(2),
+    PAYMENT_TERMS: getFieldName(3),
+    APPROVAL_DATE: getFieldName(4),
+    APPROVED_BY: getFieldName(5),
+    ACQ_UNITS: 6,
+    BILL_TO_NAME: 7,
+    BILL_TO_ADDRESS: getFieldName(8),
+    BATCH_GROUP: 9,
+    SUB_TOTAL: getFieldName(10),
+    ADJUSTMENTS_TOTAL: getFieldName(11),
+    TOTAL: getFieldName(12),
+    LOCK_TOTAL: getFieldName(13),
+    NOTE: getFieldName(14),
+  };
+
+  const [lockTotalFromDetails] = useFieldMappingFieldValue([LOCK_TOTAL_FIELD]);
+  const [isLockTotal, setIsLockTotal] = useState(!!lockTotalFromDetails);
 
   return (
     <Accordion
@@ -50,7 +70,7 @@ export const InvoiceInformation = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.invoiceDate`} />}
-            name={getFieldName(0)}
+            name={INVOICE_INFO_FIELDS_MAP.INVOICE_DATE}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={validateRequiredField}
@@ -61,7 +81,7 @@ export const InvoiceInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.status`} />}
-            name={getFieldName(1)}
+            name={INVOICE_INFO_FIELDS_MAP.STATUS}
             validate={validateRequiredField}
             required
             disabled
@@ -71,7 +91,7 @@ export const InvoiceInformation = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.paymentDue`} />}
-            name={getFieldName(2)}
+            name={INVOICE_INFO_FIELDS_MAP.PAYMENT_DUE}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
           />
@@ -80,7 +100,7 @@ export const InvoiceInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.paymentTerms`} />}
-            name={getFieldName(3)}
+            name={INVOICE_INFO_FIELDS_MAP.PAYMENT_TERMS}
           />
         </Col>
       </Row>
@@ -89,7 +109,7 @@ export const InvoiceInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.approvalDate`} />}
-            name={getFieldName(4)}
+            name={INVOICE_INFO_FIELDS_MAP.APPROVAL_DATE}
             disabled
           />
         </Col>
@@ -97,14 +117,14 @@ export const InvoiceInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.approvedBy`} />}
-            name={getFieldName(5)}
+            name={INVOICE_INFO_FIELDS_MAP.APPROVED_BY}
             disabled
           />
         </Col>
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={getSubfieldName(6, 0, 0)}
+            name={getSubfieldName(INVOICE_INFO_FIELDS_MAP.ACQ_UNITS, 0, 0)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.acqUnitIds`} />}
             optionValue="name"
             optionLabel="name"
@@ -115,7 +135,7 @@ export const InvoiceInformation = ({
             }]}
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(6)}
+            acceptedValuesPath={getAcceptedValuesPath(INVOICE_INFO_FIELDS_MAP.ACQ_UNITS)}
             validation={validateQuotedString}
             isMultiSelection
             okapi={okapi}
@@ -126,7 +146,7 @@ export const InvoiceInformation = ({
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(7)}
+            name={getFieldName(INVOICE_INFO_FIELDS_MAP.BILL_TO_NAME)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.billToName`} />}
             optionValue="value"
             optionLabel="value"
@@ -139,7 +159,7 @@ export const InvoiceInformation = ({
             }]}
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(7)}
+            acceptedValuesPath={getAcceptedValuesPath(INVOICE_INFO_FIELDS_MAP.BILL_TO_NAME)}
             validation={validateQuotedString}
             okapi={okapi}
           />
@@ -148,14 +168,14 @@ export const InvoiceInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.billToAddress`} />}
-            name={getFieldName(8)}
+            name={INVOICE_INFO_FIELDS_MAP.BILL_TO_ADDRESS}
             disabled
           />
         </Col>
         <Col xs={4}>
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(9)}
+            name={getFieldName(INVOICE_INFO_FIELDS_MAP.BATCH_GROUP)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.batchGroupId`} />}
             optionValue="name"
             optionLabel="name"
@@ -166,7 +186,7 @@ export const InvoiceInformation = ({
             }]}
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(9)}
+            acceptedValuesPath={getAcceptedValuesPath(INVOICE_INFO_FIELDS_MAP.BATCH_GROUP)}
             validation={composeValidators(validateRequiredField, validateQuotedString)}
             required
             okapi={okapi}
@@ -178,7 +198,7 @@ export const InvoiceInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.subTotal`} />}
-            name={getFieldName(10)}
+            name={INVOICE_INFO_FIELDS_MAP.SUB_TOTAL}
             disabled
           />
         </Col>
@@ -186,7 +206,7 @@ export const InvoiceInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.adjustmentsTotal`} />}
-            name={getFieldName(11)}
+            name={INVOICE_INFO_FIELDS_MAP.ADJUSTMENTS_TOTAL}
             disabled
           />
         </Col>
@@ -194,7 +214,7 @@ export const InvoiceInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.total`} />}
-            name={getFieldName(12)}
+            name={INVOICE_INFO_FIELDS_MAP.TOTAL}
             disabled
           />
         </Col>
@@ -206,7 +226,7 @@ export const InvoiceInformation = ({
             onChange={() => {
               setIsLockTotal(!isLockTotal);
               if (isLockTotal) {
-                setReferenceTables(getFieldName(13), '');
+                setReferenceTables(INVOICE_INFO_FIELDS_MAP.LOCK_TOTAL, '');
               }
             }}
           />
@@ -215,7 +235,7 @@ export const InvoiceInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.lockTotal`} />}
-            name={getFieldName(13)}
+            name={INVOICE_INFO_FIELDS_MAP.LOCK_TOTAL}
             disabled={!isLockTotal}
           />
         </Col>
@@ -225,7 +245,7 @@ export const InvoiceInformation = ({
           <Field
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.note`} />}
             component={TextArea}
-            name={getFieldName(14)}
+            name={INVOICE_INFO_FIELDS_MAP.NOTE}
           />
         </Col>
       </Row>
@@ -236,5 +256,4 @@ export const InvoiceInformation = ({
 InvoiceInformation.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
-  hasLockTotal: PropTypes.bool.isRequired,
 };

@@ -22,6 +22,7 @@ import {
   AcceptedValuesField,
   DatePickerDecorator,
 } from '../../../../../components';
+import { useFieldMappingRefValues } from '../../hooks';
 
 import {
   getSubfieldName,
@@ -39,21 +40,40 @@ import {
   BOOLEAN_ACTIONS,
   createOptionsList,
   validateRequiredField,
-  mappingProfileSubfieldShape,
   okapiShape,
   REPEATABLE_ACTIONS,
 } from '../../../../../utils';
 
 export const InvoiceLineInformation = ({
-  vendorReferenceNumbers,
+  invoiceLinesFieldIndex,
   accountingNumberOptions,
   initialFields,
   mappingFields,
   setReferenceTables,
   okapi,
 }) => {
+  const INVOICE_LINE_INFO_FIELDS_MAP = {
+    DESCRIPTION: getSubfieldName(invoiceLinesFieldIndex, 0, 0),
+    PO_LINE_NUMBER: getSubfieldName(invoiceLinesFieldIndex, 1, 0),
+    INVOICE_LINE_NUMBER: getSubfieldName(invoiceLinesFieldIndex, 2, 0),
+    INVOICE_LINE_STATUS: getSubfieldName(invoiceLinesFieldIndex, 3, 0),
+    VENDOR_REF_NO: index => getInnerSubfieldName(invoiceLinesFieldIndex, 0, 4, 0, index),
+    VENDOR_REF_TYPE: index => getInnerSubfieldName(invoiceLinesFieldIndex, 0, 4, 1, index),
+    SUBSCRIPTION_INFO: getSubfieldName(invoiceLinesFieldIndex, 5, 0),
+    SUBSCRIPTION_START_DATE: getSubfieldName(invoiceLinesFieldIndex, 6, 0),
+    SUBSCRIPTION_END_DATE: getSubfieldName(invoiceLinesFieldIndex, 7, 0),
+    COMMENT: getSubfieldName(invoiceLinesFieldIndex, 8, 0),
+    ACCOUNTING_CODE: getSubfieldName(invoiceLinesFieldIndex, 9, 0),
+    ACCOUNT_NUMBER: getSubfieldName(invoiceLinesFieldIndex, 10, 0),
+    QUANTITY: getSubfieldName(invoiceLinesFieldIndex, 11, 0),
+    SUB_TOTAL: getSubfieldName(invoiceLinesFieldIndex, 12, 0),
+    RELEASE_ENCUMBRANCE: getBoolSubfieldName(invoiceLinesFieldIndex, 13, 0),
+  };
+
   const { formatMessage } = useIntl();
-  const releaseEncumbranceCheckbox = mappingFields?.[26]?.subfields[0]?.fields[13]?.booleanFieldAction;
+
+  const [vendorReferenceNumbers] = useFieldMappingRefValues(['invoiceLines.[0].fields[4].subfields']);
+  const releaseEncumbranceCheckbox = mappingFields?.[invoiceLinesFieldIndex]?.subfields[0]?.fields[13]?.booleanFieldAction;
   const vendorRefTypesList = createOptionsList(REF_NUMBER_TYPE_OPTIONS, formatMessage, 'labelId');
 
   const getPathToAddField = currentIndex => getInnerSubfieldsPath(currentIndex, 0, 4);
@@ -82,7 +102,7 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.description`} />}
-            name={getSubfieldName(26, 0, 0)}
+            name={INVOICE_LINE_INFO_FIELDS_MAP.DESCRIPTION}
             validate={validateRequiredField}
             required
           />
@@ -93,14 +113,14 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.POLineNumber`} />}
-            name={getSubfieldName(26, 1, 0)}
+            name={INVOICE_LINE_INFO_FIELDS_MAP.PO_LINE_NUMBER}
           />
         </Col>
         <Col xs={4}>
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.invoiceLineNumber`} />}
-            name={getSubfieldName(26, 2, 0)}
+            name={INVOICE_LINE_INFO_FIELDS_MAP.INVOICE_LINE_NUMBER}
             disabled
           />
         </Col>
@@ -108,7 +128,7 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.invoiceLineStatus`} />}
-            name={getSubfieldName(26, 3, 0)}
+            name={INVOICE_LINE_INFO_FIELDS_MAP.INVOICE_LINE_STATUS}
             disabled
           />
         </Col>
@@ -116,21 +136,21 @@ export const InvoiceLineInformation = ({
       <RepeatableField
         fields={vendorReferenceNumbers}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.vendorRefNumber.addLabel`} />}
-        onAdd={() => onAdd(vendorReferenceNumbers, 'invoiceLines.fields[4].subfields[0]', 26, initialFields, onVendorRefNumberAdd, 'order', getPathToAddField)}
-        onRemove={index => onRemove(index, vendorReferenceNumbers, 26, onVendorRefNumbersClean, 'order', getPathToAddField)}
+        onAdd={() => onAdd(vendorReferenceNumbers, 'invoiceLines.fields[4].subfields[0]', invoiceLinesFieldIndex, initialFields, onVendorRefNumberAdd, 'order', getPathToAddField)}
+        onRemove={index => onRemove(index, vendorReferenceNumbers, invoiceLinesFieldIndex, onVendorRefNumbersClean, 'order', getPathToAddField)}
         renderField={(field, index) => (
           <Row left="xs">
             <Col xs={6}>
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.vendorRefNo`} />}
-                name={getInnerSubfieldName(26, 0, 4, 0, index)}
+                name={INVOICE_LINE_INFO_FIELDS_MAP.VENDOR_REF_NO(index)}
               />
             </Col>
             <Col xs={6}>
               <AcceptedValuesField
                 component={TextField}
-                name={getInnerSubfieldName(26, 0, 4, 1, index)}
+                name={INVOICE_LINE_INFO_FIELDS_MAP.VENDOR_REF_TYPE(index)}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.vendorRefType`} />}
                 optionValue="value"
                 optionLabel="label"
@@ -148,14 +168,14 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.subscriptionInfo`} />}
-            name={getSubfieldName(26, 5, 0)}
+            name={INVOICE_LINE_INFO_FIELDS_MAP.SUBSCRIPTION_INFO}
           />
         </Col>
         <Col xs={3}>
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.subscriptionStartDate`} />}
-            name={getSubfieldName(26, 6, 0)}
+            name={INVOICE_LINE_INFO_FIELDS_MAP.SUBSCRIPTION_START_DATE}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
           />
@@ -164,7 +184,7 @@ export const InvoiceLineInformation = ({
           <Field
             component={DatePickerDecorator}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.subscriptionEndDate`} />}
-            name={getSubfieldName(26, 7, 0)}
+            name={INVOICE_LINE_INFO_FIELDS_MAP.SUBSCRIPTION_END_DATE}
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
           />
@@ -173,7 +193,7 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.comment`} />}
-            name={getSubfieldName(26, 8, 0)}
+            name={INVOICE_LINE_INFO_FIELDS_MAP.COMMENT}
           />
         </Col>
       </Row>
@@ -182,7 +202,7 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.accountingCode`} />}
-            name={getSubfieldName(26, 9, 0)}
+            name={INVOICE_LINE_INFO_FIELDS_MAP.ACCOUNTING_CODE}
             disabled
           />
         </Col>
@@ -192,12 +212,12 @@ export const InvoiceLineInformation = ({
               <Field
                 component={TextField}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.accountNumber`} />}
-                name={getSubfieldName(26, 10, 0)}
+                name={INVOICE_LINE_INFO_FIELDS_MAP.ACCOUNT_NUMBER}
               />
             ) : (
               <AcceptedValuesField
                 component={TextField}
-                name={getSubfieldName(26, 10, 0)}
+                name={INVOICE_LINE_INFO_FIELDS_MAP.ACCOUNT_NUMBER}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.accountNumber`} />}
                 optionValue="value"
                 optionLabel="label"
@@ -212,7 +232,7 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.quantity`} />}
-            name={getSubfieldName(26, 11, 0)}
+            name={INVOICE_LINE_INFO_FIELDS_MAP.QUANTITY}
             validate={validateRequiredField}
             required
           />
@@ -221,7 +241,7 @@ export const InvoiceLineInformation = ({
           <Field
             component={TextField}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.subTotal`} />}
-            name={getSubfieldName(26, 12, 0)}
+            name={INVOICE_LINE_INFO_FIELDS_MAP.SUB_TOTAL}
             validate={validateRequiredField}
             required
           />
@@ -232,7 +252,7 @@ export const InvoiceLineInformation = ({
           <Field
             component={Checkbox}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.releaseEncumbrance`} />}
-            name={getBoolSubfieldName(26, 13, 0)}
+            name={INVOICE_LINE_INFO_FIELDS_MAP.RELEASE_ENCUMBRANCE}
             vertical
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={releaseEncumbranceCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
@@ -244,7 +264,7 @@ export const InvoiceLineInformation = ({
 };
 
 InvoiceLineInformation.propTypes = {
-  vendorReferenceNumbers: PropTypes.arrayOf(mappingProfileSubfieldShape).isRequired,
+  invoiceLinesFieldIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   accountingNumberOptions: PropTypes.arrayOf(PropTypes.object),

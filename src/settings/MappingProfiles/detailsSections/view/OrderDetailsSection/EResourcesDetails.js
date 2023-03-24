@@ -22,7 +22,7 @@ export const EResourcesDetails = ({
   mappingDetails,
   accessProviderId,
 }) => {
-  const { organization } = useOrganizationValue(accessProviderId);
+  const { organizationName } = useOrganizationValue(accessProviderId);
 
   const activated = getFieldValue(mappingDetails, 'activationStatus', 'booleanFieldAction');
   const activationDue = getFieldValue(mappingDetails, 'activationDue', 'value');
@@ -48,7 +48,7 @@ export const EResourcesDetails = ({
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.accessProvider`} />}
-            value={organization}
+            value={organizationName}
           />
         </Col>
         <Col

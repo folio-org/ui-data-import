@@ -1,5 +1,6 @@
 import React, {
   useCallback,
+  useEffect,
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -21,21 +22,23 @@ import {
   AcceptedValuesField,
   WithValidation,
 } from '../../../../../components';
+import {
+  useFieldMappingFieldValue,
+  useDisabledOrderFields,
+} from '../../hooks';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  clearFieldValue,
   getFieldName,
   renderFieldLabelWithInfo,
 } from '../../utils';
+import {
+  CURRENCY_FIELD,
+  SET_EXCHANGE_RATE_FIELD,
+} from '../../../../../utils';
 
-export const CostDetails = ({
-  currency,
-  setExchangeRateValue,
-  setReferenceTables,
-}) => {
-  const [isUseExchangeChecked, setIsUseExchangeChecked] = useState(!isEmpty(setExchangeRateValue));
-  const [isSetExchangeDisabled, setIsSetExchangeDisabled] = useState(isEmpty(setExchangeRateValue));
-
+export const CostDetails = ({ setReferenceTables }) => {
   const COST_DETAILS_FIELDS_MAP = {
     PHYSICAL_UNIT_PRICE: getFieldName(47),
     QUANTITY_PHYSICAL: getFieldName(48),
@@ -47,6 +50,42 @@ export const CostDetails = ({
     DISCOUNT: getFieldName(54),
     TYPE: getFieldName(55),
   };
+
+  const physicalDetailsDisabledPaths = [
+    COST_DETAILS_FIELDS_MAP.PHYSICAL_UNIT_PRICE,
+    COST_DETAILS_FIELDS_MAP.QUANTITY_PHYSICAL,
+  ];
+  const electronicDetailsDisabledPaths = [
+    COST_DETAILS_FIELDS_MAP.ELECTRONIC_UNIT_PRICE,
+    COST_DETAILS_FIELDS_MAP.QUANTITY_ELECTRONIC,
+  ];
+
+  const [
+    setExchangeRateValue,
+    currency,
+  ] = useFieldMappingFieldValue([
+    SET_EXCHANGE_RATE_FIELD,
+    CURRENCY_FIELD,
+  ]);
+
+  const isSetExchangeRateValueEmpty = !isEmpty(setExchangeRateValue);
+
+  const [isUseExchangeChecked, setIsUseExchangeChecked] = useState(isSetExchangeRateValueEmpty);
+  const [isSetExchangeDisabled, setIsSetExchangeDisabled] = useState(isSetExchangeRateValueEmpty);
+
+  const { dismissPhysicalDetails, dismissElectronicDetails } = useDisabledOrderFields();
+
+  useEffect(() => {
+    if (dismissPhysicalDetails) {
+      clearFieldValue({ paths: physicalDetailsDisabledPaths, setReferenceTables });
+    }
+  }, [dismissPhysicalDetails]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (dismissElectronicDetails) {
+      clearFieldValue({ paths: electronicDetailsDisabledPaths, setReferenceTables });
+    }
+  }, [dismissElectronicDetails]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const physicalUnitPriceLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.costDetails.field.physicalUnitPrice`,
@@ -93,6 +132,7 @@ export const CostDetails = ({
                 label={physicalUnitPriceLabel}
                 name={COST_DETAILS_FIELDS_MAP.PHYSICAL_UNIT_PRICE}
                 validate={[validation]}
+                disabled={dismissPhysicalDetails}
               />
             )}
           </WithValidation>
@@ -105,6 +145,7 @@ export const CostDetails = ({
                 label={quantityPhysicalLabel}
                 name={COST_DETAILS_FIELDS_MAP.QUANTITY_PHYSICAL}
                 validate={[validation]}
+                disabled={dismissPhysicalDetails}
               />
             )}
           </WithValidation>
@@ -166,6 +207,7 @@ export const CostDetails = ({
                 label={electronicUnitPriceLabel}
                 name={COST_DETAILS_FIELDS_MAP.ELECTRONIC_UNIT_PRICE}
                 validate={[validation]}
+                disabled={dismissElectronicDetails}
               />
             )}
           </WithValidation>
@@ -178,6 +220,7 @@ export const CostDetails = ({
                 label={quantityElectronicLabel}
                 name={COST_DETAILS_FIELDS_MAP.QUANTITY_ELECTRONIC}
                 validate={[validation]}
+                disabled={dismissElectronicDetails}
               />
             )}
           </WithValidation>
@@ -207,13 +250,4 @@ export const CostDetails = ({
   );
 };
 
-CostDetails.propTypes = {
-  setReferenceTables: PropTypes.func.isRequired,
-  currency: PropTypes.string,
-  setExchangeRateValue: PropTypes.string,
-};
-
-CostDetails.defaultProps = {
-  currency: null,
-  setExchangeRateValue: null,
-};
+CostDetails.propTypes = { setReferenceTables: PropTypes.func.isRequired };

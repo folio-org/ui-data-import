@@ -1,4 +1,7 @@
-import React, { useCallback } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
@@ -15,12 +18,17 @@ import {
   AcceptedValuesField,
   WithValidation,
 } from '../../../../../components';
+import {
+  useDisabledOrderFields,
+  useFieldMappingRefValues,
+} from '../../hooks';
 
 import {
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
 import {
+  clearSubfieldValue,
   getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
@@ -31,8 +39,13 @@ import {
   renderFieldLabelWithInfo,
 } from '../../utils';
 
+import {
+  LOCATIONS_FIELD,
+  QUANTITY_PHYSICAL_FIELD,
+  QUANTITY_ELECTRONIC_FIELD,
+} from '../../../../../utils';
+
 export const Location = ({
-  locations,
   initialFields,
   setReferenceTables,
   okapi,
@@ -43,6 +56,31 @@ export const Location = ({
     QUANTITY_PHYSICAL: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 1, index),
     QUANTITY_ELECTRONIC: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 2, index),
   };
+
+  const [locations] = useFieldMappingRefValues([LOCATIONS_FIELD]);
+  const { dismissPhysicalDetails, dismissElectronicDetails } = useDisabledOrderFields();
+
+  useEffect(() => {
+    if (dismissPhysicalDetails) {
+      clearSubfieldValue({
+        mappingFieldIndex: LOCATION_FIELDS_MAP.LOCATIONS,
+        setReferenceTables,
+        subfields: locations,
+        subfieldName: QUANTITY_PHYSICAL_FIELD,
+      });
+    }
+  }, [dismissPhysicalDetails]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (dismissElectronicDetails) {
+      clearSubfieldValue({
+        mappingFieldIndex: LOCATION_FIELDS_MAP.LOCATIONS,
+        setReferenceTables,
+        subfields: locations,
+        subfieldName: QUANTITY_ELECTRONIC_FIELD,
+      });
+    }
+  }, [dismissElectronicDetails]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const locationLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.location.field.name`,
@@ -122,6 +160,7 @@ export const Location = ({
                       label={quantityPhysicalLabel}
                       name={LOCATION_FIELDS_MAP.QUANTITY_PHYSICAL(index)}
                       validate={[validation]}
+                      disabled={dismissPhysicalDetails}
                     />
                   )}
                 </WithValidation>
@@ -134,6 +173,7 @@ export const Location = ({
                       label={quantityElectronicLabel}
                       name={LOCATION_FIELDS_MAP.QUANTITY_ELECTRONIC(index)}
                       validate={[validation]}
+                      disabled={dismissElectronicDetails}
                     />
                   )}
                 </WithValidation>
@@ -150,7 +190,4 @@ Location.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
-  locations: PropTypes.arrayOf(PropTypes.object),
 };
-
-Location.defaultProps = { locations: [] };

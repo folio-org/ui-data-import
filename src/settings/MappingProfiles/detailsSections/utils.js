@@ -1,14 +1,14 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import {
-  isEmpty,
   get,
+  isEmpty,
 } from 'lodash';
 
 import {
-  NoValue,
   Checkbox,
   InfoPopover,
+  NoValue,
 } from '@folio/stripes/components';
 import { CurrencySymbol } from '@folio/stripes-acq-components';
 
@@ -20,10 +20,10 @@ import {
   UUID_IN_QUOTES_PATTERN,
 } from './constants';
 import {
+  BOOLEAN_ACTIONS,
   ENTITY_KEYS,
   FORMS_SETTINGS,
   REPEATABLE_ACTIONS,
-  BOOLEAN_ACTIONS,
 } from '../../../utils';
 
 export const getFieldEnabled = mappingFieldIndex => {
@@ -274,15 +274,34 @@ export const renderFieldLabelWithInfo = (fieldLabelId, infoMessageId) => (
   </>
 );
 
-export const getVendorId = vendorFromDetails => {
-  const vendorIdMatch = vendorFromDetails?.match(UUID_IN_QUOTES_PATTERN);
+export const getMatchByUuidInQuotes = valueFromDetails => {
+  const idMatch = valueFromDetails?.match(UUID_IN_QUOTES_PATTERN);
 
-  return vendorIdMatch ? vendorIdMatch[1] : null;
+  return idMatch ? idMatch[1] : null;
 };
 
-export const getMappingFromVendorDetails = vendorFromDetails => {
-  const mappingEndPosition = vendorFromDetails?.indexOf('"');
-  const mapping = vendorFromDetails?.substring(0, mappingEndPosition === -1 ? vendorFromDetails.length : mappingEndPosition);
+export const getMappingQueryFromValue = valueFromDetails => {
+  const mappingEndPosition = valueFromDetails?.indexOf('"');
 
-  return mapping;
+  return valueFromDetails?.substring(0, mappingEndPosition === -1 ? valueFromDetails.length : mappingEndPosition);
+};
+
+export const clearFieldValue = ({ paths, setReferenceTables, isSubfield = false }) => {
+  if (isSubfield) {
+    paths.forEach(path => setReferenceTables(path, []));
+  } else {
+    paths.forEach(path => setReferenceTables(path, ''));
+  }
+};
+
+export const clearSubfieldValue = ({
+  mappingFieldIndex,
+  setReferenceTables,
+  subfields,
+  subfieldName,
+}) => {
+  subfields.forEach((item, subfieldIndex) => {
+    const fieldIndex = item.fields.findIndex(field => field.name === subfieldName);
+    setReferenceTables(getSubfieldName(mappingFieldIndex, fieldIndex, subfieldIndex), '');
+  });
 };

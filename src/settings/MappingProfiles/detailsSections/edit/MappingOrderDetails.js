@@ -20,71 +20,13 @@ import {
 } from './OrderDetailSection';
 
 import { TRANSLATION_ID_PREFIX } from '../constants';
-import {
-  getRefValuesFromTables,
-  getFieldValueFromDetails,
-  getBoolFieldValueFromDetails,
-  getVendorId,
-  getMappingFromVendorDetails,
-} from '../utils';
-import {
-  ACCESS_PROVIDER_FIELD,
-  ACTIVATION_STATUS_FIELD,
-  APPROVED_FIELD,
-  ASSIGNED_TO_FIELD,
-  AUTOMATIC_EXPORT_FIELD,
-  BILL_TO_FIELD,
-  CURRENCY_FIELD,
-  MANUAL_PO_FIELD,
-  MATERIAL_SUPPLIER_FIELD,
-  SET_EXCHANGE_RATE_FIELD,
-  SHIP_TO_FIELD,
-  TRIAL_FIELD,
-  VENDOR_FIELD,
-} from '../../../../utils';
 
 export const MappingOrderDetails = ({
-  mappingDetails,
   initialFields,
-  referenceTables,
   setReferenceTables,
   okapi,
 }) => {
   const [vendorAccountNumbers, setVendorAccountNumbers] = useState([]);
-
-  const billToValue = getFieldValueFromDetails(mappingDetails?.mappingFields, BILL_TO_FIELD);
-  const shipToValue = getFieldValueFromDetails(mappingDetails?.mappingFields, SHIP_TO_FIELD);
-
-  const notes = getRefValuesFromTables(referenceTables, 'notes');
-  const contributors = getRefValuesFromTables(referenceTables, 'contributors');
-  const productIds = getRefValuesFromTables(referenceTables, 'productIds');
-  const vendorRefNumbers = getRefValuesFromTables(referenceTables, 'vendorDetail');
-  const fundDistributions = getRefValuesFromTables(referenceTables, 'fundDistribution');
-  const locations = getRefValuesFromTables(referenceTables, 'locations');
-  const volumes = getRefValuesFromTables(referenceTables, 'volumes');
-
-  const approvedCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, APPROVED_FIELD);
-  const manualPOCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, MANUAL_PO_FIELD);
-  const automaticExportCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, AUTOMATIC_EXPORT_FIELD);
-  const activationStatusCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, ACTIVATION_STATUS_FIELD);
-  const trialCheckbox = getBoolFieldValueFromDetails(mappingDetails?.mappingFields, TRIAL_FIELD);
-
-  const setExchangeRateValue = getFieldValueFromDetails(mappingDetails?.mappingFields, SET_EXCHANGE_RATE_FIELD);
-  const currencyFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, CURRENCY_FIELD);
-
-  const vendorFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, VENDOR_FIELD, false);
-  const filledVendorId = getVendorId(vendorFromDetails);
-  const vendorMapping = getMappingFromVendorDetails(vendorFromDetails);
-
-  const assignedToId = getFieldValueFromDetails(mappingDetails?.mappingFields, ASSIGNED_TO_FIELD);
-
-  const materialSupplierFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, MATERIAL_SUPPLIER_FIELD, false);
-  const materialSupplierId = getVendorId(materialSupplierFromDetails);
-  const materialSupplierMapping = getMappingFromVendorDetails(materialSupplierFromDetails);
-
-  const accessProviderFromDetails = getFieldValueFromDetails(mappingDetails?.mappingFields, ACCESS_PROVIDER_FIELD, false);
-  const accessProviderId = getVendorId(accessProviderFromDetails);
-  const accessProviderMapping = getMappingFromVendorDetails(accessProviderFromDetails);
 
   const onOrganizationSelect = organization => {
     if (organization?.accounts?.length) {
@@ -97,14 +39,6 @@ export const MappingOrderDetails = ({
   return (
     <AccordionSet>
       <OrderInformation
-        approvedCheckbox={approvedCheckbox}
-        billToValue={billToValue}
-        shipToValue={shipToValue}
-        manualPOCheckbox={manualPOCheckbox}
-        notes={notes}
-        filledVendorId={filledVendorId}
-        mappingValue={vendorMapping}
-        assignedToId={assignedToId}
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         onOrganizationSelect={onOrganizationSelect}
@@ -115,55 +49,37 @@ export const MappingOrderDetails = ({
         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderLineInformation.section`} />}
       >
         <ItemDetails
-          contributors={contributors}
-          productIdentifiers={productIds}
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
         />
         <POLineDetails
-          automaticExportCheckbox={automaticExportCheckbox}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
         />
         <Vendor
-          vendorRefNumbers={vendorRefNumbers}
           accountNumbers={vendorAccountNumbers}
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
         />
-        <CostDetails
-          currency={currencyFromDetails}
-          setExchangeRateValue={setExchangeRateValue}
-          setReferenceTables={setReferenceTables}
-        />
+        <CostDetails setReferenceTables={setReferenceTables} />
         <FundDistribution
-          fundDistributions={fundDistributions}
-          currency={currencyFromDetails}
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
         />
         <Location
-          locations={locations}
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
         />
         <PhysicalResourceDetails
-          volumes={volumes}
-          materialSupplierId={materialSupplierId}
-          mappingValue={materialSupplierMapping}
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
         />
         <EResourcesDetails
-          activationStatusCheckbox={activationStatusCheckbox}
-          trialCheckbox={trialCheckbox}
-          accessProviderId={accessProviderId}
-          mappingValue={accessProviderMapping}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
         />
@@ -174,10 +90,6 @@ export const MappingOrderDetails = ({
 
 MappingOrderDetails.propTypes = {
   initialFields: PropTypes.object.isRequired,
-  referenceTables: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
-  mappingDetails: PropTypes.object,
 };
-
-MappingOrderDetails.defaultProps = { mappingDetails: {} };

@@ -16,6 +16,8 @@ import { POLineDetails } from '../POLineDetails';
 
 import { BOOLEAN_ACTIONS } from '../../../../../../utils';
 
+jest.mock('../../../hooks', () => ({ useFieldMappingBoolFieldValue: () => ['ALL_FALSE'] }));
+
 const okapiProp = {
   tenant: 'testTenant',
   token: 'token.for.test',
@@ -25,7 +27,6 @@ const okapiProp = {
 const renderPOLineDetails = () => {
   const component = () => (
     <POLineDetails
-      automaticExportCheckbox={BOOLEAN_ACTIONS.ALL_FALSE}
       setReferenceTables={() => {}}
       okapi={okapiProp}
     />

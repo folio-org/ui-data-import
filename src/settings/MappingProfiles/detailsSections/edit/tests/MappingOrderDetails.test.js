@@ -12,22 +12,10 @@ import {
 } from '../../../../../../test/jest/helpers';
 
 import { MappingOrderDetails } from '../MappingOrderDetails';
-import {
-  getInitialDetails,
-  getInitialFields,
-} from '../../../initialDetails';
+import { getInitialFields } from '../../../initialDetails';
 
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.ORDER.type);
-const mappingDetailsProp = getInitialDetails(FOLIO_RECORD_TYPES.ORDER.type);
-const referenceTablesProp = {
-  notes: [initialFieldsProp.notes],
-  contributors: [initialFieldsProp.contributors],
-  productIds: [initialFieldsProp.productIds],
-  vendorDetail: [initialFieldsProp.vendorDetail],
-  fundDistribution: [initialFieldsProp.fundDistribution],
-  locations: [initialFieldsProp.locations],
-  volumes: [initialFieldsProp.volumes],
-};
+
 const setReferenceTablesMockProp = jest.fn();
 const okapiProp = {
   tenant: 'testTenant',
@@ -38,9 +26,7 @@ const okapiProp = {
 const renderMappingOrderDetails = () => {
   const component = () => (
     <MappingOrderDetails
-      mappingDetails={mappingDetailsProp}
       initialFields={initialFieldsProp}
-      referenceTables={referenceTablesProp}
       setReferenceTables={setReferenceTablesMockProp}
       okapi={okapiProp}
     />

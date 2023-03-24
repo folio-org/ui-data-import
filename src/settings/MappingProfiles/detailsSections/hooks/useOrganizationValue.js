@@ -13,7 +13,7 @@ export const useOrganizationValue = orgId => {
   const ky = useOkapiKy();
   const [namespace] = useNamespace({ key: 'organization' });
 
-  const mapping = orgId.substring(0, orgId.indexOf('"'));
+  const mapping = orgId?.substring(0, orgId.indexOf('"'));
   const orgIdMatch = orgId?.match(UUID_IN_QUOTES_PATTERN);
   const id = orgIdMatch ? orgIdMatch[1].replace(/['"]+/g, '') : null;
 
@@ -27,7 +27,8 @@ export const useOrganizationValue = orgId => {
   const organizationName = mapping ? `${mapping}${organizationNameFromResponse}` : organizationNameFromResponse;
 
   return ({
-    organization: (orgId && !orgIdMatch) ? orgId : organizationName,
+    organizationName: (orgId && !orgIdMatch) ? orgId : organizationName,
+    organization: data,
     isLoading,
   });
 };
