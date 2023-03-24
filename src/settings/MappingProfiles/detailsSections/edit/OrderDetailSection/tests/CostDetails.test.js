@@ -21,7 +21,13 @@ jest.mock('@folio/stripes/components', () => ({
   InfoPopover: () => <span>InfoPopover</span>,
 }));
 
-jest.mock('../../../hooks', () => ({ useFieldMappingFieldValue: () => ['', 'USD', 'Electronic resource'] }));
+jest.mock('../../../hooks', () => ({
+  useFieldMappingFieldValue: () => ['', 'USD', 'Electronic resource'],
+  useDisabledOrderFields: () => ({
+    dismissPhysicalDetails: false,
+    dismissElectronicDetails: false,
+  }),
+}));
 
 const renderCostDetails = () => {
   const component = () => (
