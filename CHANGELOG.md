@@ -10,6 +10,7 @@
 * Field mapping profile Invoice Edit screen: Accounting code field is disabled when Vendor name is selected (UIDATIMP-1394)
 * Order field mapping profile: Add info icon to the Purchase order status fieldPurchase order status a required field (UIDATIMP-1397)
 * Order field mapping profile: Inactivate some fields when Order format is Electronic (UIDATIMP-1400)
+* Order field mapping profile: Inactivate some fields when Order format is Physical or Other (UIDATIMP-1401)
 * Order field mapping profile: Inactivate Create Inventory fields when Order status is Open (UIDATIMP-1402)
 * Adjust mapping details for DI wrt PO prefixes and suffixes (UIDATIMP-1408)
 
