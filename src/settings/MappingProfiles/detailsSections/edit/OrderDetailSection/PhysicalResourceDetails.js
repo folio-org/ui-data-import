@@ -104,7 +104,7 @@ export const PhysicalResourceDetails = ({
       clearFieldValue({
         paths: [`profile.mappingDetails.mappingFields[${PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES}].subfields`],
         setReferenceTables,
-        isSubfiled: true,
+        isSubfield: true,
       });
     }
   }, [isPhysicalDetailsDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
