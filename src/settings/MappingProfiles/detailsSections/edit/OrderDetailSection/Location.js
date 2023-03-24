@@ -1,7 +1,6 @@
 import React, {
   useCallback,
   useEffect,
-  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -20,12 +19,11 @@ import {
   WithValidation,
 } from '../../../../../components';
 import {
-  useFieldMappingFieldValue,
+  useDisabledOrderFields,
   useFieldMappingRefValues,
 } from '../../hooks';
 
 import {
-  ORDER_FORMATS,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
@@ -43,8 +41,8 @@ import {
 
 import {
   LOCATIONS_FIELD,
-  ORDER_FORMAT_FILED,
   QUANTITY_PHYSICAL_FIELD,
+  QUANTITY_ELECTRONIC_FIELD,
 } from '../../../../../utils';
 
 export const Location = ({
@@ -59,13 +57,11 @@ export const Location = ({
     QUANTITY_ELECTRONIC: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 2, index),
   };
 
-  const [orderFormat] = useFieldMappingFieldValue([ORDER_FORMAT_FILED]);
-
   const [locations] = useFieldMappingRefValues([LOCATIONS_FIELD]);
-  const isPhysicalDetailsDisabled = useMemo(() => orderFormat === ORDER_FORMATS.ELECTRONIC_RESOURCE, [orderFormat]);
+  const { dismissPhysicalDetails, dismissElectronicDetails } = useDisabledOrderFields();
 
   useEffect(() => {
-    if (isPhysicalDetailsDisabled) {
+    if (dismissPhysicalDetails) {
       clearSubfieldValue({
         mappingFieldIndex: LOCATION_FIELDS_MAP.LOCATIONS,
         setReferenceTables,
@@ -73,7 +69,18 @@ export const Location = ({
         subfieldName: QUANTITY_PHYSICAL_FIELD,
       });
     }
-  }, [isPhysicalDetailsDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dismissPhysicalDetails]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (dismissElectronicDetails) {
+      clearSubfieldValue({
+        mappingFieldIndex: LOCATION_FIELDS_MAP.LOCATIONS,
+        setReferenceTables,
+        subfields: locations,
+        subfieldName: QUANTITY_ELECTRONIC_FIELD,
+      });
+    }
+  }, [dismissElectronicDetails]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const locationLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.location.field.name`,
@@ -153,7 +160,7 @@ export const Location = ({
                       label={quantityPhysicalLabel}
                       name={LOCATION_FIELDS_MAP.QUANTITY_PHYSICAL(index)}
                       validate={[validation]}
-                      disabled={isPhysicalDetailsDisabled}
+                      disabled={dismissPhysicalDetails}
                     />
                   )}
                 </WithValidation>
@@ -166,6 +173,7 @@ export const Location = ({
                       label={quantityElectronicLabel}
                       name={LOCATION_FIELDS_MAP.QUANTITY_ELECTRONIC(index)}
                       validate={[validation]}
+                      disabled={dismissElectronicDetails}
                     />
                   )}
                 </WithValidation>

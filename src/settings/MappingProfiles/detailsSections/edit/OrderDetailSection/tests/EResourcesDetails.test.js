@@ -25,6 +25,10 @@ jest.mock('../../../hooks', () => ({
   useFieldMappingBoolFieldValue: () => ['ALL_FALSE', 'ALL_FALSE'],
   useFieldMappingFieldValue: () => ['Open'],
   useFieldMappingValueFromLookup: () => ['testUUID', 'testMapping'],
+  useDisabledOrderFields: () => ({
+    dismissCreateInventory: false,
+    dismissElectronicDetails: false,
+  }),
 }));
 
 const okapiProp = {
