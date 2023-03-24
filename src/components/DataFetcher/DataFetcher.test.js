@@ -3,6 +3,7 @@ import {
   render,
   waitFor,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
 
@@ -71,6 +72,13 @@ const renderDataFetcher = mutator => render(
 );
 
 describe('DataFetcher component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const mutator = buildMutator(reset, successGET);
+    const { container } = await renderDataFetcher(mutator);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when data is received successfully', () => {
     it('then child component should be rendered with correct data', async () => {
       const mutator = buildMutator(reset, successGET);

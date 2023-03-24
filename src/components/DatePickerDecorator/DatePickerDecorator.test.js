@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -11,7 +12,7 @@ import { DatePickerDecorator } from './DatePickerDecorator';
 const onChange = jest.fn();
 
 const renderDatePickerDecorator = () => {
-  const wrappedComponent = () => <input />;
+  const wrappedComponent = () => <input aria-label="wrappedComponent" />;
   const component = (
     <DatePickerDecorator
       wrappedComponent={wrappedComponent}
@@ -29,6 +30,12 @@ const renderDatePickerDecorator = () => {
 describe('Date picker decorator component', () => {
   afterEach(() => {
     onChange.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderDatePickerDecorator();
+
+    await runAxeTest({ rootNode: container });
   });
 
   describe('rendering Date picker decorator', () => {

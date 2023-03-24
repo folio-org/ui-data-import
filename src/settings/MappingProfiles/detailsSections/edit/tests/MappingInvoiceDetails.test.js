@@ -4,6 +4,7 @@ import faker from 'faker';
 
 import '../../../../../../test/jest/__mock__';
 
+import { runAxeTest } from '@folio/stripes-testing';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
@@ -69,6 +70,12 @@ const renderMappingInvoiceDetails = () => {
 };
 
 describe('MappingInvoiceDetails', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingInvoiceDetails();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should have correct sections', async () => {
     const {
       findByRole,

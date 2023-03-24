@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../../test/jest/__mock__';
@@ -33,6 +34,12 @@ const renderMARCFieldSection = ({
 };
 
 describe('MARCFieldSection edit', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMARCFieldSection(marcFieldSection);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render a correct section title', () => {
     const { getByText } = renderMARCFieldSection(marcFieldSection);
 

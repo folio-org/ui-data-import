@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../test/jest/__mock__';
 
@@ -52,6 +53,12 @@ describe('ReturnToAssignJobs component', () => {
   afterEach(() => {
     mockOnResumeProp.mockClear();
     mockDeleteUploadDefinition.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderReturnToAssignJobs();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correctly', () => {

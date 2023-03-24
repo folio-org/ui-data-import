@@ -1,5 +1,6 @@
 import React from 'react';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -42,6 +43,16 @@ const renderIncomingRecordTrigger = ({
 
 describe('IncomingRecordTrigger', () => {
   describe('when iconKey is given', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderIncomingRecordTrigger({
+        ...incomingRecordTriggerProps,
+        iconKey: 'test-icon-key',
+        isExpanded: false,
+      });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('should be rendered title with icon', () => {
       const {
         container,
@@ -58,6 +69,16 @@ describe('IncomingRecordTrigger', () => {
   });
 
   describe('when iconKey is not given', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderIncomingRecordTrigger({
+        ...incomingRecordTriggerProps,
+        iconKey: null,
+        isExpanded: true,
+      });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('should be rendered title without icon', () => {
       const {
         container,

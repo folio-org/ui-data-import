@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -40,6 +41,12 @@ const renderFolioRecordTypeSelect = ({
 
 describe('FolioRecordTypeSelect component', () => {
   describe('inside the redux-form', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderFolioRecordTypeSelect({ formType: 'redux-form' });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('should be rendered', () => {
       const { getByText } = renderFolioRecordTypeSelect({ formType: 'redux-form' });
 
@@ -48,6 +55,12 @@ describe('FolioRecordTypeSelect component', () => {
   });
 
   describe('inside the final-form', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderFolioRecordTypeSelect({ formType: 'final-form' });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('should be rendered', () => {
       const { getByText } = renderFolioRecordTypeSelect({ formType: 'final-form' });
 

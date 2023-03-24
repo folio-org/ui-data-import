@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 
+import { runAxeTest } from '@folio/stripes-testing';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../../../../../test/jest/__mock__';
@@ -39,6 +40,12 @@ const renderInvoiceAdjustments = () => {
 describe('InvoiceAdjustments', () => {
   afterAll(() => {
     setReferenceTablesMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderInvoiceAdjustments();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', () => {

@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **6.1.0** (in progress)
+
+### Features added:
+* Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
+
 ## [6.0.2](https://github.com/folio-org/ui-data-import/tree/v6.0.2) (2023-03-24)
 
 ### Bugs fixed:
