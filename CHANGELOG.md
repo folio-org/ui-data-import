@@ -5,6 +5,8 @@
 ### Features added:
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
 
+## [6.0.2](https://github.com/folio-org/ui-data-import/tree/v6.0.2) (2023-03-24)
+
 ### Bugs fixed:
 * Order field mapping profile: Fix the UI and error message for the fund "Value" field (UIDATIMP-1387)
 * Field mapping profile Invoice Edit screen: Accounting code field is disabled when Vendor name is selected (UIDATIMP-1394)
