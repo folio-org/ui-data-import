@@ -33,6 +33,10 @@ jest.mock('../../../hooks', () => ({
       value: '',
     }],
   }]],
+  useDisabledOrderFields: () => ({
+    dismissCreateInventory: false,
+    dismissPhysicalDetails: false,
+  }),
 }));
 
 const setReferenceTablesMock = jest.fn();

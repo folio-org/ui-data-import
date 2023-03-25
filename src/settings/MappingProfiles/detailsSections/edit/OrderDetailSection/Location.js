@@ -28,6 +28,7 @@ import {
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
 import {
+  clearFieldValue,
   clearSubfieldValue,
   getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
@@ -50,20 +51,30 @@ export const Location = ({
   setReferenceTables,
   okapi,
 }) => {
+  const LOCATIONS_INDEX = 57;
   const LOCATION_FIELDS_MAP = {
-    LOCATIONS: 57,
-    NAME: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 0, index),
-    QUANTITY_PHYSICAL: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 1, index),
-    QUANTITY_ELECTRONIC: index => getSubfieldName(LOCATION_FIELDS_MAP.LOCATIONS, 2, index),
+    NAME: index => getSubfieldName(LOCATIONS_INDEX, 0, index),
+    QUANTITY_PHYSICAL: index => getSubfieldName(LOCATIONS_INDEX, 1, index),
+    QUANTITY_ELECTRONIC: index => getSubfieldName(LOCATIONS_INDEX, 2, index),
   };
 
   const [locations] = useFieldMappingRefValues([LOCATIONS_FIELD]);
-  const { dismissPhysicalDetails, dismissElectronicDetails } = useDisabledOrderFields();
+  const { dismissCreateInventory, dismissPhysicalDetails, dismissElectronicDetails } = useDisabledOrderFields();
+
+  useEffect(() => {
+    if (dismissCreateInventory) {
+      clearFieldValue({
+        paths: [`profile.mappingDetails.mappingFields[${LOCATIONS_INDEX}].subfields`],
+        setReferenceTables,
+        isSubfield: true,
+      });
+    }
+  }, [dismissCreateInventory]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (dismissPhysicalDetails) {
       clearSubfieldValue({
-        mappingFieldIndex: LOCATION_FIELDS_MAP.LOCATIONS,
+        mappingFieldIndex: LOCATIONS_INDEX,
         setReferenceTables,
         subfields: locations,
         subfieldName: QUANTITY_PHYSICAL_FIELD,
@@ -74,7 +85,7 @@ export const Location = ({
   useEffect(() => {
     if (dismissElectronicDetails) {
       clearSubfieldValue({
-        mappingFieldIndex: LOCATION_FIELDS_MAP.LOCATIONS,
+        mappingFieldIndex: LOCATIONS_INDEX,
         setReferenceTables,
         subfields: locations,
         subfieldName: QUANTITY_ELECTRONIC_FIELD,
@@ -103,9 +114,9 @@ export const Location = ({
         handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
       };
 
-      return onAdd(locations, 'locations', LOCATION_FIELDS_MAP.LOCATIONS, initialFields, onLocationAdd, 'order');
+      return onAdd(locations, 'locations', LOCATIONS_INDEX, initialFields, onLocationAdd, 'order');
     },
-    [LOCATION_FIELDS_MAP.LOCATIONS, initialFields, locations, setReferenceTables],
+    [LOCATIONS_INDEX, initialFields, locations, setReferenceTables],
   );
 
   const handleLocationClean = useCallback(
@@ -116,9 +127,9 @@ export const Location = ({
         handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
       };
 
-      return onRemove(index, locations, LOCATION_FIELDS_MAP.LOCATIONS, onLocationClean, 'order');
+      return onRemove(index, locations, LOCATIONS_INDEX, onLocationClean, 'order');
     },
-    [LOCATION_FIELDS_MAP.LOCATIONS, locations, setReferenceTables],
+    [LOCATIONS_INDEX, locations, setReferenceTables],
   );
 
   return (
@@ -131,6 +142,7 @@ export const Location = ({
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.location.field.locations.addLabel`} />}
         onAdd={handleLocationAdd}
         onRemove={handleLocationClean}
+        canAdd={!dismissCreateInventory}
         renderField={(field, index) => {
           return (
             <Row left="xs">
@@ -147,7 +159,7 @@ export const Location = ({
                     wrapperSourcePath: 'locations'
                   }]}
                   setAcceptedValues={setReferenceTables}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(LOCATION_FIELDS_MAP.LOCATIONS, 0, index)}
+                  acceptedValuesPath={getRepeatableAcceptedValuesPath(LOCATIONS_INDEX, 0, index)}
                   optionTemplate="**name** (**code**)"
                   okapi={okapi}
                 />
