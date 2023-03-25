@@ -3,9 +3,9 @@ import {
   fireEvent,
   within,
 } from '@testing-library/react';
-import { runAxeTest } from '@folio/stripes-testing';
 import { noop } from 'lodash';
 
+import { runAxeTest } from '@folio/stripes-testing';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../../../../../test/jest/__mock__';

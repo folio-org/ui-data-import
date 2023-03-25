@@ -1,4 +1,7 @@
-import React, { useCallback } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
@@ -15,13 +18,17 @@ import {
   AcceptedValuesField,
   WithValidation,
 } from '../../../../../components';
-import { useFieldMappingRefValues } from '../../hooks';
+import {
+  useDisabledOrderFields,
+  useFieldMappingRefValues,
+} from '../../hooks';
 
 import {
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
 import {
+  clearSubfieldValue,
   getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
@@ -31,7 +38,12 @@ import {
   onRemove,
   renderFieldLabelWithInfo,
 } from '../../utils';
-import { LOCATIONS_FIELD } from '../../../../../utils';
+
+import {
+  LOCATIONS_FIELD,
+  QUANTITY_PHYSICAL_FIELD,
+  QUANTITY_ELECTRONIC_FIELD,
+} from '../../../../../utils';
 
 export const Location = ({
   initialFields,
@@ -46,6 +58,29 @@ export const Location = ({
   };
 
   const [locations] = useFieldMappingRefValues([LOCATIONS_FIELD]);
+  const { dismissPhysicalDetails, dismissElectronicDetails } = useDisabledOrderFields();
+
+  useEffect(() => {
+    if (dismissPhysicalDetails) {
+      clearSubfieldValue({
+        mappingFieldIndex: LOCATION_FIELDS_MAP.LOCATIONS,
+        setReferenceTables,
+        subfields: locations,
+        subfieldName: QUANTITY_PHYSICAL_FIELD,
+      });
+    }
+  }, [dismissPhysicalDetails]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (dismissElectronicDetails) {
+      clearSubfieldValue({
+        mappingFieldIndex: LOCATION_FIELDS_MAP.LOCATIONS,
+        setReferenceTables,
+        subfields: locations,
+        subfieldName: QUANTITY_ELECTRONIC_FIELD,
+      });
+    }
+  }, [dismissElectronicDetails]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const locationLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.order.location.field.name`,
@@ -125,6 +160,7 @@ export const Location = ({
                       label={quantityPhysicalLabel}
                       name={LOCATION_FIELDS_MAP.QUANTITY_PHYSICAL(index)}
                       validate={[validation]}
+                      disabled={dismissPhysicalDetails}
                     />
                   )}
                 </WithValidation>
@@ -137,6 +173,7 @@ export const Location = ({
                       label={quantityElectronicLabel}
                       name={LOCATION_FIELDS_MAP.QUANTITY_ELECTRONIC(index)}
                       validate={[validation]}
+                      disabled={dismissElectronicDetails}
                     />
                   )}
                 </WithValidation>

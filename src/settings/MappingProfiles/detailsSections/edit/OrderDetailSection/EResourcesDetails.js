@@ -1,7 +1,6 @@
 import React, {
   useCallback,
   useEffect,
-  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -25,9 +24,8 @@ import {
   WithValidation,
 } from '../../../../../components';
 import {
+  useDisabledOrderFields,
   useFieldMappingBoolFieldValue,
-  useFieldMappingFieldValue,
-  useFieldMappingFieldValueByPath,
   useFieldMappingValueFromLookup,
 } from '../../hooks';
 
@@ -35,21 +33,18 @@ import {
   TRANSLATION_ID_PREFIX,
   CREATE_INVENTORY_TYPES,
   WRAPPER_SOURCE_LINKS,
-  PO_STATUS,
-  CREATE_INVENTORY_ERESOURCE_PATH,
 } from '../../constants';
 import {
+  clearFieldValue,
   getAcceptedValuesPath,
   getBoolFieldName,
   getFieldName,
   renderFieldLabelWithInfo,
-  setFieldValue,
 } from '../../utils';
 import {
   ACCESS_PROVIDER_FIELD,
   ACTIVATION_STATUS_FIELD,
   BOOLEAN_ACTIONS,
-  PO_STATUS_FIELD,
   TRIAL_FIELD,
   validateMARCWithDate,
 } from '../../../../../utils';
@@ -58,12 +53,13 @@ export const EResourcesDetails = ({
   setReferenceTables,
   okapi,
 }) => {
+  const MATERIAL_TYPE_INDEX = 68;
   const E_RESOURCES_DETAILS_FIELDS_MAP = {
     ACCESS_PROVIDER: getFieldName(64),
     ACTIVATION_STATUS: getBoolFieldName(65),
     ACTIVATION_DUE: getFieldName(66),
     CREATE_INVENTORY: getFieldName(67),
-    MATERIAL_TYPE: 68,
+    MATERIAL_TYPE: getFieldName(MATERIAL_TYPE_INDEX),
     TRIAL: getBoolFieldName(69),
     EXPECTED_ACTIVATION: getFieldName(70),
     USER_LIMIT: getFieldName(71),
@@ -72,24 +68,28 @@ export const EResourcesDetails = ({
 
   const { formatMessage } = useIntl();
 
-  const [poStatus] = useFieldMappingFieldValue([PO_STATUS_FIELD]);
-  const [createInventory] = useFieldMappingFieldValueByPath(CREATE_INVENTORY_ERESOURCE_PATH);
   const [
     activationStatusCheckbox,
     trialCheckbox,
   ] = useFieldMappingBoolFieldValue([ACTIVATION_STATUS_FIELD, TRIAL_FIELD]);
   const [accessProviderId, mappingValue] = useFieldMappingValueFromLookup(ACCESS_PROVIDER_FIELD);
 
-  const isCreateInventoryDisabled = useMemo(() => poStatus === PO_STATUS.OPEN, [poStatus]);
+  const { dismissCreateInventory, dismissElectronicDetails } = useDisabledOrderFields();
 
   useEffect(() => {
-    setFieldValue({
-      path: E_RESOURCES_DETAILS_FIELDS_MAP.CREATE_INVENTORY,
-      isDisabled: isCreateInventoryDisabled,
-      value: createInventory,
-      setReferenceTables,
-    });
-  }, [isCreateInventoryDisabled, createInventory]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (dismissCreateInventory) {
+      clearFieldValue({ paths: [E_RESOURCES_DETAILS_FIELDS_MAP.CREATE_INVENTORY], setReferenceTables });
+    }
+  }, [dismissCreateInventory]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (dismissElectronicDetails) {
+      clearFieldValue({
+        paths: Object.values(E_RESOURCES_DETAILS_FIELDS_MAP),
+        setReferenceTables,
+      });
+    }
+  }, [dismissElectronicDetails]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),
@@ -137,6 +137,7 @@ export const EResourcesDetails = ({
                 name={E_RESOURCES_DETAILS_FIELDS_MAP.ACCESS_PROVIDER}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.accessProvider`} />}
                 validate={[validation]}
+                disabled={dismissElectronicDetails}
               />
             )}
           </WithValidation>
@@ -148,6 +149,7 @@ export const EResourcesDetails = ({
             name={E_RESOURCES_DETAILS_FIELDS_MAP.ACTIVATION_STATUS}
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={activationStatusCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
+            disabled={dismissElectronicDetails}
             type="checkbox"
             vertical
           />
@@ -160,6 +162,7 @@ export const EResourcesDetails = ({
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
+            disabled={dismissElectronicDetails}
           />
         </Col>
         <Col xs={3}>
@@ -171,7 +174,7 @@ export const EResourcesDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={createInventoryOptions}
-            disabled={isCreateInventoryDisabled}
+            disabled={dismissCreateInventory || dismissElectronicDetails}
           />
         </Col>
       </Row>
@@ -180,7 +183,7 @@ export const EResourcesDetails = ({
           <AcceptedValuesField
             component={TextField}
             label={materialTypeLabel}
-            name={getFieldName(E_RESOURCES_DETAILS_FIELDS_MAP.MATERIAL_TYPE)}
+            name={E_RESOURCES_DETAILS_FIELDS_MAP.MATERIAL_TYPE}
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -189,8 +192,9 @@ export const EResourcesDetails = ({
               wrapperSourcePath: 'mtypes',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(E_RESOURCES_DETAILS_FIELDS_MAP.MATERIAL_TYPE)}
+            acceptedValuesPath={getAcceptedValuesPath(MATERIAL_TYPE_INDEX)}
             okapi={okapi}
+            disabled={dismissElectronicDetails}
           />
         </Col>
         <Col xs={3}>
@@ -201,6 +205,7 @@ export const EResourcesDetails = ({
             type="checkbox"
             parse={value => (value ? BOOLEAN_ACTIONS.ALL_TRUE : BOOLEAN_ACTIONS.ALL_FALSE)}
             checked={trialCheckbox === BOOLEAN_ACTIONS.ALL_TRUE}
+            disabled={dismissElectronicDetails}
             vertical
           />
         </Col>
@@ -212,6 +217,7 @@ export const EResourcesDetails = ({
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
+            disabled={dismissElectronicDetails}
           />
         </Col>
         <Col xs={3}>
@@ -222,6 +228,7 @@ export const EResourcesDetails = ({
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.userLimit`} />}
                 name={E_RESOURCES_DETAILS_FIELDS_MAP.USER_LIMIT}
                 validate={[validation]}
+                disabled={dismissElectronicDetails}
               />
             )}
           </WithValidation>
@@ -236,6 +243,7 @@ export const EResourcesDetails = ({
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.url`} />}
                 name={E_RESOURCES_DETAILS_FIELDS_MAP.URL}
                 validate={[validation]}
+                disabled={dismissElectronicDetails}
               />
             )}
           </WithValidation>

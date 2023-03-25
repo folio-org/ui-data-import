@@ -74,6 +74,9 @@ export const PRODUCT_IDS_FIELD = 'productIds';
 export const LOCATIONS_FIELD = 'locations';
 export const VOLUMES_FIELD = 'volumes';
 export const VENDOR_DETAILS_FIELD = 'vendorDetail';
+export const ORDER_FORMAT_FILED = 'orderFormat';
+export const QUANTITY_PHYSICAL_FIELD = 'quantityPhysical';
+export const QUANTITY_ELECTRONIC_FIELD = 'quantityElectronic';
 export const ADJUSTMENTS_FIELD = 'adjustments';
 
 export const DATA_TYPES = [
