@@ -138,6 +138,7 @@ export const EResourcesDetails = ({
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.eResourcesDetails.field.accessProvider`} />}
                 validate={[validation]}
                 disabled={dismissElectronicDetails}
+                isPluginDisabled={dismissElectronicDetails}
               />
             )}
           </WithValidation>
