@@ -286,12 +286,10 @@ export const getMappingQueryFromValue = valueFromDetails => {
   return valueFromDetails?.substring(0, mappingEndPosition === -1 ? valueFromDetails.length : mappingEndPosition);
 };
 
-export const clearFieldValue = ({ paths, setReferenceTables, isSubfield = false }) => {
-  if (isSubfield) {
-    paths.forEach(path => setReferenceTables(path, []));
-  } else {
-    paths.forEach(path => setReferenceTables(path, ''));
-  }
+export const clearFieldValue = ({ paths, setReferenceTables, isSubfield = false, isCheckbox = false }) => {
+  const initialValue = isCheckbox ? BOOLEAN_ACTIONS.ALL_FALSE : (isSubfield ? [] : '');
+
+  paths.forEach(path => setReferenceTables(path, initialValue));
 };
 
 export const clearSubfieldValue = ({
