@@ -5,6 +5,11 @@
 ### Features added:
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
 
+## **6.0.3** (in progress)
+
+### Bugs fixed:
+* Order field mapping profile: Fix the View UI for Fund value % and Currency (UIDATIMP-1404)
+
 ## [6.0.2](https://github.com/folio-org/ui-data-import/tree/v6.0.2) (2023-03-24)
 
 ### Bugs fixed:
