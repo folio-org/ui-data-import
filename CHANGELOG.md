@@ -4,6 +4,10 @@
 
 ### Features added:
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
+
+## **6.0.3** (in progress)
+
+### Bugs fixed:
 * Order field mapping profile: Disable Organization lookup-up when Access provider field disabled (UIDATIMP-1418)
 
 ## [6.0.2](https://github.com/folio-org/ui-data-import/tree/v6.0.2) (2023-03-24)
