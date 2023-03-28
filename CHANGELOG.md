@@ -4,6 +4,7 @@
 
 ### Features added:
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
+* Avoid private paths in stripes-core imports (UIDATIMP-1414)
 
 ## **6.0.3** (in progress)
 
@@ -24,7 +25,6 @@
 * Order field mapping profile: Inactivate some fields when Order format is Physical or Other (UIDATIMP-1401)
 * Order field mapping profile: Inactivate Create Inventory fields when Order status is Open (UIDATIMP-1402)
 * Adjust mapping details for DI wrt PO prefixes and suffixes (UIDATIMP-1408)
-* Avoid private paths in stripes-core imports (UIDATIMP-1414)
 * The "Organization look-up" is disabled after creating the New field mapping profile (UIDATIMP-1416)
 
 ## [6.0.1](https://github.com/folio-org/ui-data-import/tree/v6.0.1) (2023-03-14)
