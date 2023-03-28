@@ -287,7 +287,8 @@ export const getMappingQueryFromValue = valueFromDetails => {
 };
 
 export const clearFieldValue = ({ paths, setReferenceTables, isSubfield = false, isCheckbox = false }) => {
-  const initialValue = isCheckbox ? BOOLEAN_ACTIONS.ALL_FALSE : (isSubfield ? [] : '');
+  const checkSubfieldInitialValue = isSubfield ? [] : '';
+  const initialValue = isCheckbox ? BOOLEAN_ACTIONS.ALL_FALSE : checkSubfieldInitialValue;
 
   paths.forEach(path => setReferenceTables(path, initialValue));
 };
