@@ -9,6 +9,7 @@
 
 ### Bugs fixed:
 * Order field mapping profile: Fix the View UI for Fund value % and Currency (UIDATIMP-1404)
+* Mock `react-virtualized-auto-sizer` module for unit tests (UIDATIMP-1422)
 
 ## [6.0.2](https://github.com/folio-org/ui-data-import/tree/v6.0.2) (2023-03-24)
 
