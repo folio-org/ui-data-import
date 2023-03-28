@@ -8,6 +8,7 @@ import {
   useIntl,
 } from 'react-intl';
 import { Field } from 'redux-form';
+import { omit } from 'lodash';
 
 import {
   Accordion,
@@ -75,6 +76,7 @@ export const EResourcesDetails = ({
   const [accessProviderId, mappingValue] = useFieldMappingValueFromLookup(ACCESS_PROVIDER_FIELD);
 
   const { dismissCreateInventory, dismissElectronicDetails } = useDisabledOrderFields();
+  const eResourceCheckboxPaths = [E_RESOURCES_DETAILS_FIELDS_MAP.ACTIVATION_STATUS, E_RESOURCES_DETAILS_FIELDS_MAP.TRIAL];
 
   useEffect(() => {
     if (dismissCreateInventory) {
@@ -88,7 +90,12 @@ export const EResourcesDetails = ({
   useEffect(() => {
     if (dismissElectronicDetails) {
       clearFieldValue({
-        paths: Object.values(E_RESOURCES_DETAILS_FIELDS_MAP),
+        paths: Object.values(omit(E_RESOURCES_DETAILS_FIELDS_MAP, ['ACTIVATION_STATUS', 'TRIAL'])),
+        setReferenceTables,
+      });
+      clearFieldValue({
+        paths: eResourceCheckboxPaths,
+        isCheckbox: true,
         setReferenceTables,
       });
     }

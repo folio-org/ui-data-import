@@ -12,6 +12,7 @@
 * Order field mapping profile: Fix the View UI for Discount Currency (UIDATIMP-1405)
 * Order field mapping profile: Inactivate Locations and Material Types fields when Order status is Open (UIDATIMP-1417)
 * Order field mapping profile: Disable Organization lookup-up when Access provider field disabled (UIDATIMP-1418)
+* Order field mapping profile: Cannot save the profile when switching between Order formats (UIDATIMP-1419)
 * Mock `react-virtualized-auto-sizer` module for unit tests (UIDATIMP-1422)
 
 ## [6.0.2](https://github.com/folio-org/ui-data-import/tree/v6.0.2) (2023-03-24)
