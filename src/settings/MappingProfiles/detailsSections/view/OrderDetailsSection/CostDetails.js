@@ -31,6 +31,8 @@ export const CostDetails = ({ mappingDetails }) => {
   const discount = getFieldValue(mappingDetails, 'discount', 'value');
   const discountType = getFieldValue(mappingDetails, 'discountType', 'value');
 
+  const trimmedCurrencyValue = currency?.replace(/['"]+/g, '');
+
   const useExchangeRateCheckbox = renderCheckbox('order.costDetails.useExchangeRate', exchangeRate ? BOOLEAN_ACTIONS.ALL_TRUE : false);
 
   return (
@@ -121,7 +123,7 @@ export const CostDetails = ({ mappingDetails }) => {
         >
           <KeyValue
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.discount`} />}
-            value={renderAmountValue(discount, discountType)}
+            value={renderAmountValue(discount, discountType, trimmedCurrencyValue)}
           />
         </Col>
       </Row>
