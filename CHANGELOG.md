@@ -8,6 +8,7 @@
 ## **6.0.3** (in progress)
 
 ### Bugs fixed:
+* Order field mapping profile: Fix the View UI for Fund value % and Currency (UIDATIMP-1404)
 * Order field mapping profile: Fix the View UI for Discount Currency (UIDATIMP-1405)
 * Order field mapping profile: Inactivate Locations and Material Types fields when Order status is Open (UIDATIMP-1417)
 * Order field mapping profile: Disable Organization lookup-up when Access provider field disabled (UIDATIMP-1418)

@@ -13,6 +13,7 @@ import { ViewRepeatableField } from '../ViewRepeatableField';
 
 import {
   getFieldValue,
+  getFieldValueFromDetails,
   renderAmountValue,
   transformSubfieldsData,
 } from '../../utils';
@@ -20,7 +21,10 @@ import {
   TRANSLATION_ID_PREFIX,
   FUND_DISTRIBUTION_VISIBLE_COLUMNS,
 } from '../../constants';
-import { mappingProfileFieldShape } from '../../../../../utils';
+import {
+  CURRENCY_FIELD,
+  mappingProfileFieldShape,
+} from '../../../../../utils';
 
 export const FundDistribution = ({ mappingDetails }) => {
   const {
@@ -28,6 +32,8 @@ export const FundDistribution = ({ mappingDetails }) => {
     EXPENSE_CLASS_ID,
     VALUE,
   } = FUND_DISTRIBUTION_VISIBLE_COLUMNS;
+
+  const currency = getFieldValueFromDetails(mappingDetails, CURRENCY_FIELD, true);
 
   const noValueElement = <NoValue />;
 
@@ -55,7 +61,7 @@ export const FundDistribution = ({ mappingDetails }) => {
     fundId: distribution => distribution?.fundId || noValueElement,
     expenseClassId: distribution => distribution?.expenseClassId || noValueElement,
     value: distribution => (
-      distribution.value ? renderAmountValue(distribution.value, distribution.distributionType) : noValueElement
+      distribution.value ? renderAmountValue(distribution.value, distribution.distributionType, currency) : noValueElement
     ),
   };
 
@@ -69,6 +75,10 @@ export const FundDistribution = ({ mappingDetails }) => {
     },
     {
       field: 'value',
+      key: 'value',
+    },
+    {
+      field: 'distributionType',
       key: 'value',
     },
   ];
