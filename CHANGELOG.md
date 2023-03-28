@@ -8,6 +8,7 @@
 ## **6.0.3** (in progress)
 
 ### Bugs fixed:
+* Order field mapping profile: Inactivate Locations and Material Types fields when Order status is Open (UIDATIMP-1417)
 * Order field mapping profile: Disable Organization lookup-up when Access provider field disabled (UIDATIMP-1418)
 * Mock `react-virtualized-auto-sizer` module for unit tests (UIDATIMP-1422)
 

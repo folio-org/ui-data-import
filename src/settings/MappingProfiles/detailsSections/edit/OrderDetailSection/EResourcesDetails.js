@@ -78,7 +78,10 @@ export const EResourcesDetails = ({
 
   useEffect(() => {
     if (dismissCreateInventory) {
-      clearFieldValue({ paths: [E_RESOURCES_DETAILS_FIELDS_MAP.CREATE_INVENTORY], setReferenceTables });
+      clearFieldValue({
+        paths: [E_RESOURCES_DETAILS_FIELDS_MAP.CREATE_INVENTORY, E_RESOURCES_DETAILS_FIELDS_MAP.MATERIAL_TYPE],
+        setReferenceTables,
+      });
     }
   }, [dismissCreateInventory]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -195,7 +198,7 @@ export const EResourcesDetails = ({
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(MATERIAL_TYPE_INDEX)}
             okapi={okapi}
-            disabled={dismissElectronicDetails}
+            disabled={dismissElectronicDetails || dismissCreateInventory}
           />
         </Col>
         <Col xs={3}>
