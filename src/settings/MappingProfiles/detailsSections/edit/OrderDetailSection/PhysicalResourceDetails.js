@@ -1,7 +1,6 @@
 import React, {
   useCallback,
   useEffect,
-  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -25,17 +24,15 @@ import {
   WithValidation,
 } from '../../../../../components';
 import {
-  useFieldMappingFieldValue,
+  useDisabledOrderFields,
   useFieldMappingRefValues,
   useFieldMappingValueFromLookup,
 } from '../../hooks';
 
 import {
-  PO_STATUS,
   CREATE_INVENTORY_TYPES,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
-  ORDER_FORMATS,
 } from '../../constants';
 import {
   clearFieldValue,
@@ -48,8 +45,6 @@ import {
 } from '../../utils';
 import {
   MATERIAL_SUPPLIER_FIELD,
-  ORDER_FORMAT_FILED,
-  PO_STATUS_FIELD,
   validateMARCWithDate,
   VOLUMES_FIELD,
 } from '../../../../../utils';
@@ -59,14 +54,15 @@ export const PhysicalResourceDetails = ({
   setReferenceTables,
   okapi,
 }) => {
+  const MATERIAL_TYPE_INDEX = 62;
+  const VOLUMES_INDEX = 63;
   const PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP = {
     MATERIAL_SUPPLIER: getFieldName(58),
     RECEIPT_DUE: getFieldName(59),
     EXPECTED_RECEIPT_DATE: getFieldName(60),
     CREATE_INVENTORY: getFieldName(61),
-    MATERIAL_TYPE: 62,
-    VOLUMES: 63,
-    VOLUME: index => getSubfieldName(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, 0, index),
+    MATERIAL_TYPE: getFieldName(MATERIAL_TYPE_INDEX),
+    VOLUME: index => getSubfieldName(VOLUMES_INDEX, 0, index),
   };
 
   const physicalDetailsDisabledPaths = [
@@ -74,40 +70,38 @@ export const PhysicalResourceDetails = ({
     PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY,
     PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.RECEIPT_DUE,
     PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.EXPECTED_RECEIPT_DATE,
-    getFieldName(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.MATERIAL_TYPE),
+    PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.MATERIAL_TYPE,
   ];
 
   const { formatMessage } = useIntl();
 
-  const [poStatus, orderFormat] = useFieldMappingFieldValue([PO_STATUS_FIELD, ORDER_FORMAT_FILED]);
   const [volumes] = useFieldMappingRefValues([VOLUMES_FIELD]);
   const [materialSupplierId, mappingValue] = useFieldMappingValueFromLookup(MATERIAL_SUPPLIER_FIELD);
 
-  const isCreateInventoryDisabled = useMemo(() => poStatus === PO_STATUS.OPEN, [poStatus]);
-  const isPhysicalDetailsDisabled = useMemo(() => orderFormat === ORDER_FORMATS.ELECTRONIC_RESOURCE, [orderFormat]);
+  const { dismissCreateInventory, dismissPhysicalDetails } = useDisabledOrderFields();
 
   useEffect(() => {
-    if (isCreateInventoryDisabled) {
+    if (dismissCreateInventory) {
       clearFieldValue({
-        paths: [PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY],
+        paths: [PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY, PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.MATERIAL_TYPE],
         setReferenceTables,
       });
     }
-  }, [isCreateInventoryDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dismissCreateInventory]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (isPhysicalDetailsDisabled) {
+    if (dismissPhysicalDetails) {
       clearFieldValue({
         paths: physicalDetailsDisabledPaths,
         setReferenceTables,
       });
       clearFieldValue({
-        paths: [`profile.mappingDetails.mappingFields[${PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES}].subfields`],
+        paths: [`profile.mappingDetails.mappingFields[${VOLUMES_INDEX}].subfields`],
         setReferenceTables,
         isSubfield: true,
       });
     }
-  }, [isPhysicalDetailsDisabled]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dismissPhysicalDetails]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),
@@ -140,13 +134,13 @@ export const PhysicalResourceDetails = ({
   );
 
   const handleVolumesAdd = useCallback(
-    () => onAdd(volumes, 'volumes', PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, initialFields, setReferenceTables, 'order'),
-    [PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, initialFields, setReferenceTables, volumes],
+    () => onAdd(volumes, 'volumes', VOLUMES_INDEX, initialFields, setReferenceTables, 'order'),
+    [VOLUMES_INDEX, initialFields, setReferenceTables, volumes],
   );
 
   const handleVolumesClean = useCallback(
-    index => onRemove(index, volumes, PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, setReferenceTables, 'order'),
-    [PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUMES, setReferenceTables, volumes],
+    index => onRemove(index, volumes, VOLUMES_INDEX, setReferenceTables, 'order'),
+    [VOLUMES_INDEX, setReferenceTables, volumes],
   );
 
   return (
@@ -165,8 +159,8 @@ export const PhysicalResourceDetails = ({
                 name={PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.MATERIAL_SUPPLIER}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.materialSupplier`} />}
                 validate={[validation]}
-                disabled={isPhysicalDetailsDisabled}
-                isPluginDisabled={isPhysicalDetailsDisabled}
+                disabled={dismissPhysicalDetails}
+                isPluginDisabled={dismissPhysicalDetails}
               />
             )}
           </WithValidation>
@@ -179,7 +173,7 @@ export const PhysicalResourceDetails = ({
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
-            disabled={isPhysicalDetailsDisabled}
+            disabled={dismissPhysicalDetails}
           />
         </Col>
         <Col xs={3}>
@@ -190,7 +184,7 @@ export const PhysicalResourceDetails = ({
             wrappedComponent={TextField}
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             validate={[validateDatepickerFieldValue]}
-            disabled={isPhysicalDetailsDisabled}
+            disabled={dismissPhysicalDetails}
           />
         </Col>
         <Col xs={3}>
@@ -202,7 +196,7 @@ export const PhysicalResourceDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={createInventoryOptions}
-            disabled={isCreateInventoryDisabled || isPhysicalDetailsDisabled}
+            disabled={dismissCreateInventory || dismissPhysicalDetails}
           />
         </Col>
       </Row>
@@ -211,7 +205,7 @@ export const PhysicalResourceDetails = ({
           <AcceptedValuesField
             component={TextField}
             label={materialTypeLabel}
-            name={getFieldName(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.MATERIAL_TYPE)}
+            name={PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.MATERIAL_TYPE}
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
@@ -220,9 +214,9 @@ export const PhysicalResourceDetails = ({
               wrapperSourcePath: 'mtypes',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.MATERIAL_TYPE)}
+            acceptedValuesPath={getAcceptedValuesPath(MATERIAL_TYPE_INDEX)}
             okapi={okapi}
-            disabled={isPhysicalDetailsDisabled}
+            disabled={dismissPhysicalDetails || dismissCreateInventory}
           />
         </Col>
       </Row>
@@ -230,7 +224,7 @@ export const PhysicalResourceDetails = ({
         fields={volumes}
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.volume.addLabel`} />}
         onAdd={handleVolumesAdd}
-        canAdd={!isPhysicalDetailsDisabled}
+        canAdd={!dismissPhysicalDetails}
         onRemove={handleVolumesClean}
         renderField={(field, index) => (
           <Row left="xs">
