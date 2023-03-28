@@ -234,12 +234,12 @@ export const getAccountingNumberOptions = vendor => {
   }));
 };
 
-export const renderAmountValue = (amounValue, amountType, currency) => {
+export const renderAmountValue = (amountValue, amountType, currency) => {
   const amountSymbol = amountType === 'percentage' ?
     <FormattedMessage id="stripes-acq-components.fundDistribution.type.sign.percent" /> :
     <CurrencySymbol currency={currency} />;
 
-  return <> {amounValue}{amountSymbol} </>;
+  return <> {amountValue}{amountSymbol} </>;
 };
 
 export const renderCheckbox = (labelPathId, fieldValue) => (
