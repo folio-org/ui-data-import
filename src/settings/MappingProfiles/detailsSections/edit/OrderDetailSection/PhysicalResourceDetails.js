@@ -30,6 +30,7 @@ import {
 } from '../../hooks';
 
 import {
+  FIELD_NAME_PREFIX,
   CREATE_INVENTORY_TYPES,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
@@ -96,7 +97,7 @@ export const PhysicalResourceDetails = ({
         setReferenceTables,
       });
       clearFieldValue({
-        paths: [`profile.mappingDetails.mappingFields[${VOLUMES_INDEX}].subfields`],
+        paths: [`${FIELD_NAME_PREFIX}[${VOLUMES_INDEX}]`],
         setReferenceTables,
         isSubfield: true,
       });
