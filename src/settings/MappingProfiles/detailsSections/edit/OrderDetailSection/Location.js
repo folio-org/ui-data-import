@@ -24,6 +24,7 @@ import {
 } from '../../hooks';
 
 import {
+  FIELD_NAME_PREFIX,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
@@ -64,7 +65,7 @@ export const Location = ({
   useEffect(() => {
     if (dismissCreateInventory) {
       clearFieldValue({
-        paths: [`profile.mappingDetails.mappingFields[${LOCATIONS_INDEX}].subfields`],
+        paths: [`${FIELD_NAME_PREFIX}[${LOCATIONS_INDEX}]`],
         setReferenceTables,
         isSubfield: true,
       });

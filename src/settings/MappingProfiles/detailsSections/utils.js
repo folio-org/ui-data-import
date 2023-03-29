@@ -290,7 +290,14 @@ export const clearFieldValue = ({ paths, setReferenceTables, isSubfield = false,
   const checkSubfieldInitialValue = isSubfield ? [] : '';
   const initialValue = isCheckbox ? BOOLEAN_ACTIONS.ALL_FALSE : checkSubfieldInitialValue;
 
-  paths.forEach(path => setReferenceTables(path, initialValue));
+  if (isSubfield) {
+    paths.forEach(path => {
+      setReferenceTables(`${path}.subfields`, initialValue);
+      setReferenceTables(`${path}.repeatableFieldAction`, null);
+    });
+  } else {
+    paths.forEach(path => setReferenceTables(path, initialValue));
+  }
 };
 
 export const clearSubfieldValue = ({
