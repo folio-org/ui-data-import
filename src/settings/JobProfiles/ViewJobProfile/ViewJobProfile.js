@@ -19,7 +19,6 @@ import {
   Callout,
   PaneHeader,
   AccordionStatus,
-  TextLink,
 } from '@folio/stripes/components';
 import {
   withTags,
@@ -62,6 +61,7 @@ import {
   showActionMenu,
   permissions,
   BASE_URLS,
+  fileNameCellFormatter,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -270,23 +270,7 @@ const ViewJobProfileComponent = props => {
 
   const jobsUsingThisProfileFormatter = {
     ...listTemplate({}),
-    fileName: record => {
-      const {
-        pathname,
-        search,
-      } = location;
-      const { fileName, id } = record;
-
-      return (
-        <TextLink
-          to={{
-            pathname: `/data-import/job-summary/${id}`,
-            state: { from: `${pathname}${search}` }
-          }}
-        >
-          {fileName}
-        </TextLink>);
-    },
+    fileName: record => fileNameCellFormatter(record, location),
   };
   const tagsEntityLink = `data-import-profiles/jobProfiles/${jobProfileRecord.id}`;
   const isSettingsEnabled = stripes.hasPerm(permissions.SETTINGS_MANAGE) || stripes.hasPerm(permissions.SETTINGS_VIEW_ONLY);

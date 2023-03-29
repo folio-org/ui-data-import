@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { TextLink } from '@folio/stripes/components';
 import {
   useJobLogsProperties,
   listTemplate,
@@ -21,6 +20,7 @@ import {
   statusCellFormatter,
   permissions,
   fieldsConfig,
+  fileNameCellFormatter,
 } from '../../utils';
 
 const JobLogsContainer = props => {
@@ -38,21 +38,8 @@ const JobLogsContainer = props => {
   } = props;
 
   const { formatMessage } = useIntl();
-  const {
-    pathname,
-    search,
-  } = useLocation();
+  const location = useLocation();
 
-  const fileNameCellFormatter = record => (
-    <TextLink
-      to={{
-        pathname: `/data-import/job-summary/${record.id}`,
-        state: { from: `${pathname}${search}` },
-      }}
-    >
-      {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
-    </TextLink>
-  );
   const hasDeletePermission = stripes.hasPerm(permissions.DELETE_LOGS);
 
   const customProperties = {
@@ -74,7 +61,7 @@ const JobLogsContainer = props => {
         checkboxDisabled: checkboxesDisabled,
         fieldsConfig,
       }),
-      fileName: fileNameCellFormatter,
+      fileName: record => fileNameCellFormatter(record, location),
       status: statusCellFormatter(formatMessage),
     },
   };
