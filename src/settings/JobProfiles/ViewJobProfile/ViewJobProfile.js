@@ -19,6 +19,7 @@ import {
   Callout,
   PaneHeader,
   AccordionStatus,
+  TextLink,
 } from '@folio/stripes/components';
 import {
   withTags,
@@ -267,7 +268,26 @@ const ViewJobProfileComponent = props => {
 
   setRecordMetadata(jobProfileRecord);
 
-  const jobsUsingThisProfileFormatter = listTemplate({});
+  const jobsUsingThisProfileFormatter = {
+    ...listTemplate({}),
+    fileName: record => {
+      const {
+        pathname,
+        search,
+      } = location;
+      const { fileName, id } = record;
+
+      return (
+        <TextLink
+          to={{
+            pathname: `/data-import/job-summary/${id}`,
+            state: { from: `${pathname}${search}` }
+          }}
+        >
+          {fileName}
+        </TextLink>);
+    },
+  };
   const tagsEntityLink = `data-import-profiles/jobProfiles/${jobProfileRecord.id}`;
   const isSettingsEnabled = stripes.hasPerm(permissions.SETTINGS_MANAGE) || stripes.hasPerm(permissions.SETTINGS_VIEW_ONLY);
 

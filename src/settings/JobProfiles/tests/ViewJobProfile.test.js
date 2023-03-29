@@ -1,4 +1,5 @@
 import React from 'react';
+import faker from 'faker';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   fireEvent,
@@ -46,6 +47,8 @@ const jobProfile = {
   hasLoaded: true,
 };
 
+const fileId = faker.random.uuid();
+
 const viewJobProfileProps = (profile, actionMenuItems) => ({
   match: { params: { id: 'test id' } },
   resources: {
@@ -53,6 +56,7 @@ const viewJobProfileProps = (profile, actionMenuItems) => ({
     jobsUsingThisProfile: {
       records: [{
         jobExecutions: [{
+          id: fileId,
           fileName: 'jobUsingProfile.mrc',
           hrId: 20,
           completedDate: '2022-03-10T13:43:36.071+00:00',
@@ -159,6 +163,12 @@ describe('<ViewJobProfile>', () => {
       const { getByText } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
       expect(getByText('jobUsingProfile.mrc')).toBeDefined();
+    });
+
+    it('should display file names as a hotlink', () => {
+      const { getByText } = renderViewJobProfile(viewJobProfileProps(jobProfile));
+
+      expect(getByText('jobUsingProfile.mrc').href).toContain(`/data-import/job-summary/${fileId}`);
     });
   });
 
