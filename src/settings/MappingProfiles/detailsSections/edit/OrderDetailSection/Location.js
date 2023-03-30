@@ -24,7 +24,6 @@ import {
 } from '../../hooks';
 
 import {
-  FIELD_NAME_PREFIX,
   TRANSLATION_ID_PREFIX,
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
@@ -132,7 +131,6 @@ export const Location = ({
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.location.field.locations.addLabel`} />}
         onAdd={handleLocationAdd}
         onRemove={handleLocationClean}
-        canAdd={!dismissCreateInventory}
         renderField={(field, index) => {
           return (
             <Row left="xs">
