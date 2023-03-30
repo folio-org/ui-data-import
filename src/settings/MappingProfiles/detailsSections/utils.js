@@ -234,12 +234,12 @@ export const getAccountingNumberOptions = vendor => {
   }));
 };
 
-export const renderAmountValue = (amounValue, amountType, currency) => {
+export const renderAmountValue = (amountValue, amountType, currency) => {
   const amountSymbol = amountType === 'percentage' ?
     <FormattedMessage id="stripes-acq-components.fundDistribution.type.sign.percent" /> :
     <CurrencySymbol currency={currency} />;
 
-  return <> {amounValue}{amountSymbol} </>;
+  return <> {amountValue}{amountSymbol} </>;
 };
 
 export const renderCheckbox = (labelPathId, fieldValue) => (
@@ -286,11 +286,17 @@ export const getMappingQueryFromValue = valueFromDetails => {
   return valueFromDetails?.substring(0, mappingEndPosition === -1 ? valueFromDetails.length : mappingEndPosition);
 };
 
-export const clearFieldValue = ({ paths, setReferenceTables, isSubfield = false }) => {
+export const clearFieldValue = ({ paths, setReferenceTables, isSubfield = false, isCheckbox = false }) => {
+  const checkSubfieldInitialValue = isSubfield ? [] : '';
+  const initialValue = isCheckbox ? BOOLEAN_ACTIONS.ALL_FALSE : checkSubfieldInitialValue;
+
   if (isSubfield) {
-    paths.forEach(path => setReferenceTables(path, []));
+    paths.forEach(path => {
+      setReferenceTables(`${path}.subfields`, initialValue);
+      setReferenceTables(`${path}.repeatableFieldAction`, null);
+    });
   } else {
-    paths.forEach(path => setReferenceTables(path, ''));
+    paths.forEach(path => setReferenceTables(path, initialValue));
   }
 };
 
