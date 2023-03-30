@@ -28,7 +28,6 @@ import {
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
 import {
-  clearFieldValue,
   clearSubfieldValue,
   getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
@@ -59,17 +58,7 @@ export const Location = ({
   };
 
   const [locations] = useFieldMappingRefValues([LOCATIONS_FIELD]);
-  const { dismissCreateInventory, dismissPhysicalDetails, dismissElectronicDetails } = useDisabledOrderFields();
-
-  useEffect(() => {
-    if (dismissCreateInventory) {
-      clearFieldValue({
-        paths: [`profile.mappingDetails.mappingFields[${LOCATIONS_INDEX}].subfields`],
-        setReferenceTables,
-        isSubfield: true,
-      });
-    }
-  }, [dismissCreateInventory]); // eslint-disable-line react-hooks/exhaustive-deps
+  const { dismissPhysicalDetails, dismissElectronicDetails } = useDisabledOrderFields();
 
   useEffect(() => {
     if (dismissPhysicalDetails) {
@@ -142,7 +131,6 @@ export const Location = ({
         addLabel={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.location.field.locations.addLabel`} />}
         onAdd={handleLocationAdd}
         onRemove={handleLocationClean}
-        canAdd={!dismissCreateInventory}
         renderField={(field, index) => {
           return (
             <Row left="xs">

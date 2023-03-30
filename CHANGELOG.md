@@ -3,6 +3,8 @@
 ## **6.1.0** (in progress)
 
 ### Features added:
+* Landing page: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1355)
+* Create hotlink from file name in job profile detail view to job log details (UIDATIMP-1356)
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
 
 ## **6.0.3** (in progress)
@@ -14,6 +16,7 @@
 * Order field mapping profile: Disable Organization lookup-up when Access provider field disabled (UIDATIMP-1418)
 * Order field mapping profile: Cannot save the profile when switching between Order formats (UIDATIMP-1419)
 * Mock `react-virtualized-auto-sizer` module for unit tests (UIDATIMP-1422)
+* Activate "Location" field for Open Order field mapping (UIDATIMP-1429)
 
 ## [6.0.2](https://github.com/folio-org/ui-data-import/tree/v6.0.2) (2023-03-24)
 

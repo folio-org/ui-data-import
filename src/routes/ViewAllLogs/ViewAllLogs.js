@@ -19,7 +19,6 @@ import {
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
-  TextLink,
   ConfirmationModal,
   DefaultMCLRowFormatter,
   Callout,
@@ -49,6 +48,7 @@ import {
   storage,
   deleteJobExecutions,
   fieldsConfig,
+  fileNameCellFormatter,
 } from '../../utils';
 import {
   FILTERS,
@@ -378,22 +378,6 @@ class ViewAllLogs extends Component {
     } = this.props;
     const { isLogsDeletionInProgress } = this.state;
 
-    const {
-      pathname,
-      search,
-    } = location;
-
-    const fileNameCellFormatter = record => (
-      <TextLink
-        to={{
-          pathname: `/data-import/job-summary/${record.id}`,
-          state: { from: `${pathname}${search}` },
-        }}
-      >
-        {record.fileName || formatMessage({ id: 'ui-data-import.noFileName' }) }
-      </TextLink>
-    );
-
     return {
       ...listTemplate({
         entityKey,
@@ -402,7 +386,7 @@ class ViewAllLogs extends Component {
         checkboxDisabled: isLogsDeletionInProgress,
         fieldsConfig,
       }),
-      fileName: fileNameCellFormatter,
+      fileName: record => fileNameCellFormatter(record, location),
       status: statusCellFormatter(formatMessage),
     };
   }
