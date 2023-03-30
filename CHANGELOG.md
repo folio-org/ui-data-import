@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * Order field mapping profile: Cannot save the profile when switching between Order formats (UIDATIMP-1419)
+* Activate "Location" field for Open Order field mapping (UIDATIMP-1429)
 
 ## [6.0.3](https://github.com/folio-org/ui-data-import/tree/v6.0.3) (2023-03-30)
 
