@@ -20,6 +20,7 @@ import {
   statusCellFormatter,
   permissions,
   fieldsConfig,
+  jobProfileNameCellFormatter,
   fileNameCellFormatter,
 } from '../../utils';
 
@@ -63,6 +64,7 @@ const JobLogsContainer = props => {
       }),
       fileName: record => fileNameCellFormatter(record, location),
       status: statusCellFormatter(formatMessage),
+      jobProfileName: jobProfileNameCellFormatter,
     },
   };
 
