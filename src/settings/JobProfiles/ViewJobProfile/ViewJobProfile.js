@@ -61,6 +61,7 @@ import {
   showActionMenu,
   permissions,
   BASE_URLS,
+  fileNameCellFormatter,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -267,7 +268,10 @@ const ViewJobProfileComponent = props => {
 
   setRecordMetadata(jobProfileRecord);
 
-  const jobsUsingThisProfileFormatter = listTemplate({});
+  const jobsUsingThisProfileFormatter = {
+    ...listTemplate({}),
+    fileName: record => fileNameCellFormatter(record, location),
+  };
   const tagsEntityLink = `data-import-profiles/jobProfiles/${jobProfileRecord.id}`;
   const isSettingsEnabled = stripes.hasPerm(permissions.SETTINGS_MANAGE) || stripes.hasPerm(permissions.SETTINGS_VIEW_ONLY);
 
