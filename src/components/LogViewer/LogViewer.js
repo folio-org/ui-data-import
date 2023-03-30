@@ -146,6 +146,7 @@ export const LogViewer = memo(({
               <Select
                 onChange={e => setCurrentTheme(e.target.value)}
                 value={currentTheme}
+                aria-label="Select theme"
                 marginBottom0
               >
                 {themesPresent.map(item => (

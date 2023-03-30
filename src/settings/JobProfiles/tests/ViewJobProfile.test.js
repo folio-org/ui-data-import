@@ -1,10 +1,12 @@
 import React from 'react';
+import faker from 'faker';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   fireEvent,
   waitFor,
   getByText as getByTextScreen,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { noop } from 'lodash';
 
@@ -45,6 +47,8 @@ const jobProfile = {
   hasLoaded: true,
 };
 
+const fileId = faker.random.uuid();
+
 const viewJobProfileProps = (profile, actionMenuItems) => ({
   match: { params: { id: 'test id' } },
   resources: {
@@ -52,6 +56,7 @@ const viewJobProfileProps = (profile, actionMenuItems) => ({
     jobsUsingThisProfile: {
       records: [{
         jobExecutions: [{
+          id: fileId,
           fileName: 'jobUsingProfile.mrc',
           hrId: 20,
           completedDate: '2022-03-10T13:43:36.071+00:00',
@@ -107,6 +112,13 @@ const renderViewJobProfile = ({
 };
 
 describe('<ViewJobProfile>', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderViewJobProfile(viewJobProfileProps(jobProfile));
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render profile name correctly', () => {
     const { getAllByText } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
@@ -151,6 +163,12 @@ describe('<ViewJobProfile>', () => {
       const { getByText } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
       expect(getByText('jobUsingProfile.mrc')).toBeDefined();
+    });
+
+    it('should display file names as a hotlink', () => {
+      const { getByText } = renderViewJobProfile(viewJobProfileProps(jobProfile));
+
+      expect(getByText('jobUsingProfile.mrc').href).toContain(`/data-import/job-summary/${fileId}`);
     });
   });
 

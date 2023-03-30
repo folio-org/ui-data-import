@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -42,6 +43,12 @@ const renderFileItem = ({
 };
 
 describe('FileItem component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderFileItem({});
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should be rendered', () => {
     const { container } = renderFileItem({});
 
@@ -57,6 +64,12 @@ describe('FileItem component', () => {
   });
 
   describe('when status is NEW', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderFileItem({ status: FILE_STATUSES.NEW });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     describe('heading', () => {
       it('should render the file name', () => {
         const { getByText } = renderFileItem({ status: FILE_STATUSES.NEW });
@@ -75,6 +88,11 @@ describe('FileItem component', () => {
   });
 
   describe('when status is UPLOADING', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderFileItem({ status: FILE_STATUSES.UPLOADING });
+
+      await runAxeTest({ rootNode: container });
+    });
     describe('heading', () => {
       it('should render the file name', () => {
         const { getByText } = renderFileItem({ status: FILE_STATUSES.UPLOADING });
@@ -109,6 +127,12 @@ describe('FileItem component', () => {
   });
 
   describe('when status is UPLOADED', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderFileItem({ status: FILE_STATUSES.UPLOADED });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     describe('heading', () => {
       it('should render the file name', () => {
         const { getByText } = renderFileItem({ status: FILE_STATUSES.UPLOADED });
@@ -152,6 +176,12 @@ describe('FileItem component', () => {
   });
 
   describe('when status is ERROR', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderFileItem({ status: FILE_STATUSES.ERROR });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     describe('heading', () => {
       it('should render the file name', () => {
         const { getByText } = renderFileItem({ status: FILE_STATUSES.ERROR });
@@ -162,6 +192,12 @@ describe('FileItem component', () => {
   });
 
   describe('when status is ERROR_DEFINITION', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderFileItem({ status: FILE_STATUSES.ERROR_DEFINITION });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     describe('heading', () => {
       it('should render the file name', () => {
         const { getByText } = renderFileItem({ status: FILE_STATUSES.ERROR_DEFINITION });
@@ -204,6 +240,12 @@ describe('FileItem component', () => {
   });
 
   describe('when status is DELETING', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderFileItem({ status: FILE_STATUSES.DELETING });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     describe('heading', () => {
       it('should render the file name', () => {
         const { getByText } = renderFileItem({ status: FILE_STATUSES.DELETING });

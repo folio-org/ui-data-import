@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -57,24 +58,54 @@ const renderSection = ({
 };
 
 describe('Section', () => {
-  it('should be rendered only with label', () => {
-    const { getByText } = renderSection(sectionWithLabel);
+  describe('when label is provided', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderSection(sectionWithLabel);
 
-    expect(getByText('test label')).toBeDefined();
+      await runAxeTest({ rootNode: container });
+    });
+
+    it('should be rendered only with label', () => {
+      const { getByText } = renderSection(sectionWithLabel);
+
+      expect(getByText('test label')).toBeDefined();
+    });
   });
 
-  it('should be rendered without headline', () => {
-    const { container } = renderSection(sectionWithoutHeadline);
-    const headlineElement = container.querySelector('h3');
+  describe('when headline is not provided', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderSection(sectionWithoutHeadline);
 
-    expect(headlineElement).toBeNull();
+      await runAxeTest({ rootNode: container });
+    });
+
+    it('should be rendered without headline', () => {
+      const { container } = renderSection(sectionWithoutHeadline);
+      const headlineElement = container.querySelector('h3');
+
+      expect(headlineElement).toBeNull();
+    });
   });
 
-  it('should be rendered without optional headline', () => {
-    const { container } = renderSection(sectionWithChildElements);
-    const headlineElement = container.querySelector('h3');
+  describe('when only child elemnt is provided', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderSection(sectionWithChildElements);
 
-    expect(headlineElement).toBeNull();
+      await runAxeTest({ rootNode: container });
+    });
+
+    it('should be rendered only with child elements', () => {
+      const { getByText } = renderSection(sectionWithChildElements);
+
+      expect(getByText('child component')).toBeDefined();
+    });
+
+    it('should be rendered without optional headline', () => {
+      const { container } = renderSection(sectionWithChildElements);
+      const headlineElement = container.querySelector('h3');
+
+      expect(headlineElement).toBeNull();
+    });
   });
 
   it('should be rendered with data-test- attribute', () => {
@@ -82,12 +113,6 @@ describe('Section', () => {
     const dataTestAttribute = container.querySelector('[data-test-tester="true]');
 
     expect(dataTestAttribute).toBeDefined();
-  });
-
-  it('should be rendered only with child elements', () => {
-    const { getByText } = renderSection(sectionWithChildElements);
-
-    expect(getByText('child component')).toBeDefined();
   });
 
   it('should be rendered with label and disabled checkbox', () => {

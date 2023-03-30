@@ -1,5 +1,18 @@
 # Change history for ui-data-import
 
+## **6.1.0** (in progress)
+
+### Features added:
+* Landing page: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1355)
+* Create hotlink from file name in job profile detail view to job log details (UIDATIMP-1356)
+* Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
+
+## **6.0.4** (in progress)
+
+### Bugs fixed:
+* Order field mapping profile: Cannot save the profile when switching between Order formats (UIDATIMP-1419)
+* Activate "Location" field for Open Order field mapping (UIDATIMP-1429)
+
 ## [6.0.3](https://github.com/folio-org/ui-data-import/tree/v6.0.3) (2023-03-30)
 
 ### Bugs fixed:

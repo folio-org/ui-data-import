@@ -1136,5 +1136,10 @@
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Required when creating Item",
     "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Required when creating Holdings",
     "logViewer.order": "Order",
-    "logViewer.orderLine": "Order line"
+    "logViewer.orderLine": "Order line",
+    "validation.integer": "Please enter a whole number greater than 0 and less than 1000 to continue",
+    "settings.mappingProfiles.map.order.poLineDetails.field.paymentNotRequired": "Payment not required",
+    "settings.mappingProfiles.map.order.eResourcesDetails.field.electronicUnitPrice.info": "Required when Order format is Electronic resource or P/E mix. When import job creates a Pending order, this field controls the Inventory record requirements when the PO is opened via the Orders app. When import job creates an Open order, this field reflects the Inventory record requirements that were included as actions in the Data Import job profile",
+    "settings.mappingProfiles.map.order.physicalResourceDetails.field.physicalUnitPrice.info": "Required when Order format is Physical resource, P/E mix, or Other. When import job creates a Pending order, this field controls the Inventory record requirements when the PO is opened via the Orders app. When import job creates an Open order, this field reflects the Inventory record requirements that were included as actions in the Data Import job profile",
+    "settings.mappingProfiles.map.order.orderInformation.field.purchaseOrderStatus.info": "When Purchase order status is Pending, do not include any Inventory actions in the job profile. When Purchase order status is Open, include the desired Inventory actions in the job profile, preceded by the Create orders action"
 }

@@ -3,6 +3,7 @@ import {
   waitFor,
   fireEvent,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithContext } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -63,6 +64,12 @@ describe('UploadingJobsContextProvider component', () => {
 
   afterAll(() => {
     delete global.fetch;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderUploadingJobsContextProvider();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render children', () => {

@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { waitFor } from '@testing-library/react';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -84,6 +85,12 @@ const renderImportJobs = context => {
 describe('Import Jobs component', () => {
   beforeEach(() => {
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = await renderImportJobs(defaultContext);
+
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when is not loaded', () => {

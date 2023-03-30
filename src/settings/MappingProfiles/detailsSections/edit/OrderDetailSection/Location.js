@@ -29,7 +29,6 @@ import {
   WRAPPER_SOURCE_LINKS,
 } from '../../constants';
 import {
-  clearFieldValue,
   clearSubfieldValue,
   getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
@@ -60,17 +59,7 @@ export const Location = ({
   };
 
   const [locations] = useFieldMappingRefValues([LOCATIONS_FIELD]);
-  const { dismissCreateInventory, dismissPhysicalDetails, dismissElectronicDetails } = useDisabledOrderFields();
-
-  useEffect(() => {
-    if (dismissCreateInventory) {
-      clearFieldValue({
-        paths: [`${FIELD_NAME_PREFIX}[${LOCATIONS_INDEX}]`],
-        setReferenceTables,
-        isSubfield: true,
-      });
-    }
-  }, [dismissCreateInventory]); // eslint-disable-line react-hooks/exhaustive-deps
+  const { dismissPhysicalDetails, dismissElectronicDetails } = useDisabledOrderFields();
 
   useEffect(() => {
     if (dismissPhysicalDetails) {

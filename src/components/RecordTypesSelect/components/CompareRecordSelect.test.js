@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -40,6 +41,12 @@ const renderCompareRecordSelect = ({
 };
 
 describe('CompareRecordSelect', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderCompareRecordSelect(compareRecordSelectProps);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when current language is LTR', () => {
     it('direction should be rendered correctly', () => {
       const {

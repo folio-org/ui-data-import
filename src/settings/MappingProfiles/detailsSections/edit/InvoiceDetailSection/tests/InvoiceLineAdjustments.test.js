@@ -5,6 +5,7 @@ import {
   get,
 } from 'lodash';
 
+import { runAxeTest } from '@folio/stripes-testing';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../../../../../test/jest/__mock__';
@@ -38,6 +39,12 @@ const renderInvoiceLineAdjustments = () => {
 };
 
 describe('InvoiceLineAdjustments', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderInvoiceLineAdjustments();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render correct fields', () => {
     const { getByRole } = renderInvoiceLineAdjustments();
 

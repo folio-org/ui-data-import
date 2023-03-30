@@ -4,6 +4,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
@@ -108,6 +109,13 @@ describe('Home component', () => {
     deleteJobExecutionsSpy.mockClear();
     global.Storage.prototype.setItem.mockReset();
     global.Storage.prototype.getItem.mockReset();
+  });
+
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderHome(storeWithData);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

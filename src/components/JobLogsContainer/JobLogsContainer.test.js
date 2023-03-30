@@ -1,6 +1,7 @@
 import React from 'react';
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 import {
@@ -73,6 +74,12 @@ const renderJobLogsContainer = record => {
 };
 
 describe('Job Logs container', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobLogsContainer(successfulRecord);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should be rendered with child component', () => {
     const { getByText } = renderJobLogsContainer(successfulRecord);
 

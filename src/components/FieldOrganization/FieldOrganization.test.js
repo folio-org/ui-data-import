@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -36,6 +37,7 @@ const renderFieldOrganization = ({
       mutator={mutator}
       setReferenceTables={setReferenceTablesMock}
       onSelect={onSelect}
+      label="FieldOrganization label"
     />
   );
 
@@ -46,6 +48,12 @@ describe('FieldOrganization component', () => {
   afterEach(() => {
     Pluggable.mockClear();
     setReferenceTablesMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderFieldOrganization({ id: '1' });
+
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when vendor id is provided', () => {

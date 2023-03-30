@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
@@ -17,6 +18,13 @@ const renderMappingOrderDetails = () => {
 };
 
 describe('MappingOrderDetails', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingOrderDetails();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should have correct sections', () => {
     const { getByRole } = renderMappingOrderDetails();
 
