@@ -25,6 +25,7 @@ export * from './htmlDecode';
 export * from './isMARCType';
 export * from './isTestEnv';
 export * from './jobLogsListProperties';
+export * from './jobProfileNameCellFormatter';
 export * from './loadRecords';
 export * from './shapes';
 export * from './stringToWords';
