@@ -3,6 +3,7 @@
 ## **6.1.0** (in progress)
 
 ### Features added:
+* Create hotlink from file name in job profile detail view to job log details (UIDATIMP-1356)
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
 
 ## **6.0.3** (in progress)

@@ -9,6 +9,7 @@ export * from './deleteJobExecutions';
 export * from './fetchJsonShemas';
 export * from './fieldCategoriesConfig';
 export * from './fieldsConfig';
+export * from './fileNameCellFormatter';
 export * from './fillEmptyFieldsWithValue';
 export * from './formatUserName';
 export * from './formUtils';
