@@ -17,6 +17,7 @@
 * Order field mapping profile: Cannot save the profile when switching between Order formats (UIDATIMP-1419)
 * Mock `react-virtualized-auto-sizer` module for unit tests (UIDATIMP-1422)
 * Activate "Location" field for Open Order field mapping (UIDATIMP-1429)
+* Order field mapping profile: Get confirmation modal after form submitting (UIDATIMP-1431)
 
 ## [6.0.2](https://github.com/folio-org/ui-data-import/tree/v6.0.2) (2023-03-24)
 
