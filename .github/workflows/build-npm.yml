@@ -26,6 +26,7 @@ jobs:
       FOLIO_NPM_REGISTRY_AUTH: '//repository.folio.org/repository/npm-folioci/'
       FOLIO_MD_REGISTRY: 'https://folio-registry.dev.folio.org'
       NODEJS_VERSION: '16'
+      NODE_OPTIONS: '--max_old_space_size=4096'
       JEST_JUNIT_OUTPUT_DIR: 'artifacts/jest-junit'
       JEST_COVERAGE_REPORT_DIR: 'artifacts/coverage-jest/lcov-report/'
       BIGTEST_JUNIT_OUTPUT_DIR: 'artifacts/runTest'
@@ -69,7 +70,7 @@ jobs:
         run: yarn lint
         continue-on-error: true
 
-      - name: Run yarn test
+      - name: Run yarn test ${{ env.NODE_OPTIONS }}
         run: xvfb-run --server-args="-screen 0 1024x768x24" yarn test $YARN_TEST_OPTIONS
 
       - name: Run yarn formatjs-compile
