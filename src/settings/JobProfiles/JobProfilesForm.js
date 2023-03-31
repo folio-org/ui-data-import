@@ -390,7 +390,7 @@ JobProfilesFormComponent.propTypes = {
   mutator: PropTypes.shape({ childWrappers: PropTypes.shape({ GET: PropTypes.func }) }).isRequired,
   resources: PropTypes.shape({ childWrappers: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }) }).isRequired,
   accordionStatusRef: PropTypes.object,
-  layerType: PropTypes.oneOfType(LAYER_TYPES),
+  layerType: PropTypes.oneOfType(Object.values(LAYER_TYPES)),
 };
 
 export const JobProfilesForm = compose(
