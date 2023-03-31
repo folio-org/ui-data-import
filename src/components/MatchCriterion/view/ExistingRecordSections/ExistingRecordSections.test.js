@@ -1,4 +1,5 @@
 import React from 'react';
+import { waitFor } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -29,16 +30,16 @@ const renderExistingSectionFolio = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('ExistingRecordSections view', () => {
+describe('ExistingRecordSections view component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderExistingSectionFolio(existingSectionFolio);
 
     await runAxeTest({ rootNode: container });
   });
 
-  it('should render a correct label', () => {
-    const { getByText } = renderExistingSectionFolio(existingSectionFolio);
+  it('should render a correct label', async () => {
+    const { findByText } = renderExistingSectionFolio(existingSectionFolio);
 
-    expect(getByText('Test label')).toBeDefined();
+    await waitFor(() => expect(findByText('Test label')).toBeDefined());
   });
 });

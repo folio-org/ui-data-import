@@ -58,7 +58,7 @@ const renderMARCTableViewRow = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('MARCTableViewRow', () => {
+describe('MARCTableViewRow component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMARCTableViewRow(MARCTableViewRowProps({
       action: 'EDIT',

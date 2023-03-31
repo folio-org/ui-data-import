@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
@@ -11,14 +11,13 @@ import { TextDate } from './TextDate';
 
 const defaultTextDateProps = {
   id: 'testId',
-  usePortal: false,
+  usePortal: true,
   readOnly: false,
   value: '',
 };
 const onChange = jest.fn();
 const textDateProps = ({
   id,
-  usePortal,
   readOnly,
   value,
 }) => ({
@@ -31,7 +30,7 @@ const textDateProps = ({
     value: 'test value',
     onChange: noop,
   },
-  inputRef: {},
+  inputRef: createRef(),
   meta: { dirty: false },
   onFocus: noop,
   onSetDate: noop,
@@ -39,8 +38,6 @@ const textDateProps = ({
   readOnly,
   required: false,
   showCalendar: false,
-  useInput: false,
-  usePortal,
   value,
   'aria-label': 'test label',
 });
@@ -60,7 +57,6 @@ const renderTextDate = ({
   readOnly,
   required,
   showCalendar,
-  useInput,
   usePortal,
   value,
   ...rest
@@ -82,7 +78,6 @@ const renderTextDate = ({
       readOnly={readOnly}
       required={required}
       showCalendar={showCalendar}
-      useInput={useInput}
       usePortal={usePortal}
       value={value}
       {...rest}
@@ -92,7 +87,7 @@ const renderTextDate = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('TextDate', () => {
+describe('TextDate component', () => {
   afterEach(() => {
     onChange.mockClear();
   });
@@ -172,7 +167,6 @@ describe('TextDate', () => {
       it('text date value should be empty', () => {
         const { container } = renderTextDate(textDateProps({
           id: 'testId',
-          usePortal: true,
           readOnly: false,
           value: '03 03 2021',
         }));
@@ -205,7 +199,6 @@ describe('TextDate', () => {
     it('calendar icon and clean icon should not exist', () => {
       const { container } = renderTextDate(textDateProps({
         id: null,
-        usePortal: true,
         readOnly: true,
         value: '',
       }));

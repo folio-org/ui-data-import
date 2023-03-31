@@ -42,7 +42,7 @@ LinkerButton.propTypes = {
   id: PropTypes.string.isRequired,
   entityKey: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  searchLabel: PropTypes.node || PropTypes.string,
+  searchLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   className: PropTypes.string,
   dataAttributes: PropTypes.object,
 };

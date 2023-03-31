@@ -58,7 +58,7 @@ const renderOverrideProtectedFieldsTable = ({
   return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
-describe('OverrideProtectedFieldsTable', () => {
+describe('OverrideProtectedFieldsTable component', () => {
   afterEach(() => {
     onChangeEvent.mockClear();
   });

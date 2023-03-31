@@ -105,7 +105,7 @@ const renderMatchCriterion = ({
   return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
-describe('MatchCriterion edit', () => {
+describe('MatchCriterion edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMatchCriterion({ ...matchCriterionProps('INSTANCE', 'MARC_BIBLIOGRAPHIC', 'BEGINS_WITH') });
 
@@ -119,7 +119,7 @@ describe('MatchCriterion edit', () => {
   });
 
   it('should be rendered without a qualifier type', () => {
-    const { getByText } = renderMatchCriterion({ ...matchCriterionProps('INSTANCE', 'MARC_BIBLIOGRAPHIC', '') });
+    const { getByText } = renderMatchCriterion({ ...matchCriterionProps('INSTANCE', 'MARC_BIBLIOGRAPHIC', null) });
 
     expect(getByText('Incoming testIncomingRecordLabel record')).toBeDefined();
   });

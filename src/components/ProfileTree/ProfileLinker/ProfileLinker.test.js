@@ -45,13 +45,14 @@ const renderProfileLinker = ({
       initialData={initialData}
       setInitialData={setInitialData}
       okapi={okapi}
+      profileType="test profile type"
     />
   );
 
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('ProfileLinker', () => {
+describe('ProfileLinker component', () => {
   afterEach(() => {
     Pluggable.mockClear();
   });

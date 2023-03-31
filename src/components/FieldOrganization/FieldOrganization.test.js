@@ -1,5 +1,8 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import {
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -103,7 +106,7 @@ describe('FieldOrganization component', () => {
       const onSelect = jest.fn();
       const { findByDisplayValue } = renderFieldOrganization({ onSelect });
 
-      Pluggable.mock.calls[0][0].selectVendor({ name: 'org 2' });
+      await waitFor(() => Pluggable.mock.calls[0][0].selectVendor({ name: 'org 2' }));
 
       const inputValue = await findByDisplayValue('"org 2"');
 

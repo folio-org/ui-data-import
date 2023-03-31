@@ -11,13 +11,18 @@ import { createMemoryHistory } from 'history';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
-import { translationsProperties } from '../../../../test/jest/helpers';
+import {
+  buildStripes,
+  translationsProperties,
+} from '../../../../test/jest/helpers';
 
 import { ViewActionProfile } from './ViewActionProfile';
 
 const history = createMemoryHistory();
 
 history.push = jest.fn();
+
+const stripes = buildStripes();
 
 const actionProfileRecord = (
   hasLoaded = true,
@@ -71,7 +76,7 @@ const renderViewActionProfile = ({
         tagsEnabled={tagsEnabled}
         location={location}
         resources={resources}
-        stripes={{ hasPerm: () => true }}
+        stripes={stripes}
       />
     </Router>
   );
@@ -79,7 +84,7 @@ const renderViewActionProfile = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('ViewActionProfiles', () => {
+describe('ViewActionProfiles component', () => {
   afterEach(() => {
     history.push.mockClear();
   });

@@ -117,7 +117,7 @@ describe('Job summary page', () => {
       </Harness>
     );
 
-    const { rerender } = render(component(null));
+    const { rerender } = render(component('testId'));
 
     rerender(component('testJobExecutionsId'));
 

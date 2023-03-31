@@ -72,7 +72,7 @@ const renderMatchingFieldsManager = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('MatchingFieldsManager', () => {
+describe('MatchingFieldsManager component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMatchingFieldsManager({ children: getFieldMatchedChildren });
 

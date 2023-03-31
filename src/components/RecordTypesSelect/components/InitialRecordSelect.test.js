@@ -20,7 +20,7 @@ const renderInitialRecordSelect = () => {
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('InitialRecordSelect', () => {
+describe('InitialRecordSelect component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderInitialRecordSelect();
 

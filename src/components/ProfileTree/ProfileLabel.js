@@ -110,8 +110,6 @@ export const ProfileLabel = memo(({
                 data-test-profile-unlink
                 icon="unlink"
                 iconSize="medium"
-                buttonStyle="default"
-                marginBottom0
                 onClick={() => setUnlinkConfirmationOpen(true)}
               />
               <ConfirmationModal
@@ -145,8 +143,6 @@ export const ProfileLabel = memo(({
                 data-test-profile-delete
                 icon="trash"
                 iconSize="medium"
-                buttonStyle="default"
-                marginBottom0
                 onClick={() => setDeleteConfirmationOpen(true)}
               />
               <ConfirmationModal

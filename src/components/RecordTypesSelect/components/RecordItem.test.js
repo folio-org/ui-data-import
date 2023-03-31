@@ -36,7 +36,7 @@ const renderRecordItem = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('RecordItem', () => {
+describe('RecordItem component', () => {
   afterEach(() => {
     onClick.mockClear();
   });

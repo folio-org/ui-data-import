@@ -62,9 +62,9 @@ const contentDataProp = [{
     },
     metadata: {
       createdByUserId: '00000000-0000-0000-0000-000000000000',
-      createdDate: 1618322400000,
+      createdDate: '2020-12-13T01:50:24.783+00:00',
       updatedByUserId: '00000000-0000-0000-0000-000000000000',
-      updatedDate: 1607871600462,
+      updatedDate: '2021-04-13T01:50:24.783+00:00',
     },
   },
   id: 'testId1',
@@ -80,9 +80,9 @@ const contentDataProp = [{
     },
     metadata: {
       createdByUserId: '00000000-0000-0000-0000-000000000000',
-      createdDate: 1618322400000,
+      createdDate: '2021-12-14T01:50:24.783+00:00',
       updatedByUserId: '00000000-0000-0000-0000-000000000000',
-      updatedDate: 1608058800000,
+      updatedDate: '2021-04-14T01:50:24.783+00:00',
     },
   },
   id: 'testId2',
@@ -99,9 +99,9 @@ const contentDataProp = [{
     },
     metadata: {
       createdByUserId: '00000000-0000-0000-0000-000000000000',
-      createdDate: 1618322400000,
+      createdDate: '2021-12-15T01:50:24.783+00:00',
       updatedByUserId: '00000000-0000-0000-0000-000000000000',
-      updatedDate: 1608058800000,
+      updatedDate: '2021-04-15T01:50:24.783+00:00',
     },
   },
   id: 'testId3',
@@ -143,7 +143,7 @@ const renderProfileAssociator = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('<ProfileAssociator>', () => {
+describe('ProfileAssociator component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderProfileAssociator({
       record: defaultRecord,
@@ -334,8 +334,8 @@ describe('<ProfileAssociator>', () => {
 
     fireEvent.click(getByText('Updated'));
 
-    expect(dataRows[0]).toHaveTextContent('12/13/2020');
-    expect(dataRows[1]).toHaveTextContent('12/15/2020');
+    expect(dataRows[0]).toHaveTextContent('4/13/2021');
+    expect(dataRows[1]).toHaveTextContent('4/14/2021');
   });
 
   it('renders plugin info', async () => {

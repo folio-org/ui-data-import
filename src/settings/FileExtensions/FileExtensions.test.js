@@ -98,6 +98,7 @@ const renderFileExtensions = ({
           match={match}
           mutator={mutator}
           detailProps={detailProps}
+          initialValues={{}}
         />
       </Paneset>
     </Router>
@@ -106,7 +107,7 @@ const renderFileExtensions = ({
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('FileExtensions', () => {
+describe('FileExtensions component', () => {
   afterEach(() => {
     history.push.mockClear();
   });

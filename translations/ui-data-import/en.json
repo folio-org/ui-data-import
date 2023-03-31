@@ -516,6 +516,7 @@
   "error.actionProfiles.action": "The action profile \"{name}\" was not {action}",
   "success.actionProfiles.action": "The action profile \"{name}\" was successfully {action}",
   "error.actionProfile.duplication.invalid": "Action profile \"{name}\" already exists",
+  "logViewer.themes.label": "Use theme",
   "settings.mappingProfiles.title": "Field mapping profiles",
   "settings.mappingProfiles.count": "{count, number} field mapping {count, plural, one {profile} other {profiles}}",
   "settings.mappingProfiles.new": "New field mapping profile",

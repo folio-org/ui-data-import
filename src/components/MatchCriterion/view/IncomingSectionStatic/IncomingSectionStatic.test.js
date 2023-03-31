@@ -69,7 +69,7 @@ const renderIncomingSectionStatic = ({ staticValueDetails }) => {
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('IncomingSectionStatic view', () => {
+describe('IncomingSectionStatic view component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderIncomingSectionStatic(incomingSectionStaticWithText);
 

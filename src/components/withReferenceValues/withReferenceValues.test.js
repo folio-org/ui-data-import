@@ -94,7 +94,6 @@ const renderWithReferenceValues = ({
 describe('withReferenceValues component', () => {
   afterAll(() => {
     mockOnFieldChange.mockClear();
-
     mockInputOnchange.mockClear();
   });
 

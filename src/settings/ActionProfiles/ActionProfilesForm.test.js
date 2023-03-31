@@ -18,7 +18,6 @@ import {
 
 import { ActionProfilesFormComponent } from './ActionProfilesForm';
 
-import * as utils from '../../utils/formUtils';
 import { LAYER_TYPES } from '../../utils';
 
 jest.mock('@folio/stripes/components', () => ({
@@ -51,7 +50,7 @@ const history = createMemoryHistory();
 
 history.push = jest.fn();
 
-const handleProfileSave = jest.spyOn(utils, 'handleProfileSave');
+const onSubmitMock = jest.fn();
 
 const actionProfilesFormProps = layerType => ({
   initialValues: {
@@ -75,10 +74,10 @@ const actionProfilesFormProps = layerType => ({
           parentProfiles: [],
           childProfiles: [],
           metadata: {
-            createdDate: 1543741530000,
+            createdDate: '2018-12-02T01:50:24.783+00:00',
             createdByUserId: '',
             createdByUsername: '',
-            updatedDate: 1544000730000,
+            updatedDate: '2018-12-05T01:50:24.783+00:00',
             updatedByUserId: '',
             updatedByUsername: '',
           },
@@ -106,9 +105,7 @@ const actionProfilesFormProps = layerType => ({
     reset: noop,
   },
   match: { path: '/test-path' },
-  location: {
-    pathname: '/test-path',
-  },
+  location: '/test-path',
   layerType,
 });
 
@@ -132,10 +129,12 @@ const renderActionProfilesForm = ({
         form={form}
         match={match}
         location={location}
-        handleSubmit={noop}
+        handleSubmit={onSubmitMock}
         transitionToParams={noop}
         onCancel={noop}
         layerType={layerType}
+        baseUrl="base-url"
+        onSubmitSuccess={noop}
       />
     </Router>
   );
@@ -143,9 +142,9 @@ const renderActionProfilesForm = ({
   return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
-describe('ActionProfilesForm', () => {
+describe('ActionProfilesForm component', () => {
   afterEach(() => {
-    handleProfileSave.mockClear();
+    onSubmitMock.mockClear();
   });
 
   describe('when form is in creating new record mode', () => {
@@ -346,7 +345,7 @@ describe('ActionProfilesForm', () => {
 
         await waitFor(() => fireEvent.click(getByText('Save as profile & Close')));
 
-        await waitFor(() => expect(handleProfileSave).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(onSubmitMock).toHaveBeenCalledTimes(1));
       });
     });
   });
@@ -410,7 +409,7 @@ describe('ActionProfilesForm', () => {
       await waitFor(() => fireEvent.click(getByText('Save as profile & Close')));
       await waitFor(() => fireEvent.click(getByText('Confirm')));
 
-      await waitFor(() => expect(handleProfileSave).toHaveBeenCalledTimes(1));
+      await waitFor(() => expect(onSubmitMock).toHaveBeenCalledTimes(1));
     });
   });
 

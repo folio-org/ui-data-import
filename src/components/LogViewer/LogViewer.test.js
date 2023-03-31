@@ -98,7 +98,7 @@ const renderLogViewer = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('LogViewer', () => {
+describe('LogViewer component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderLogViewer({
       ...logViewerLogsProps,

@@ -109,13 +109,14 @@ const renderProfileBranch = ({
       resources={resources}
       okapi={okapi}
       record={record}
+      profileType="test profile type"
     />
   );
 
   return renderWithIntl(renderWithRedux(component), translationsProperties);
 };
 
-describe('ProfileBranch', () => {
+describe('ProfileBranch component', () => {
   afterAll(() => {
     delete window.ResizeObserver;
   });

@@ -241,6 +241,8 @@ const renderRecordsTable = ({ isEdifactType = false }) => {
         source={source}
         resultCountIncrement={5}
         pageAmount={5}
+        history={{ push: noop }}
+        location="test location"
       />
     </BrowserRouter>
   );

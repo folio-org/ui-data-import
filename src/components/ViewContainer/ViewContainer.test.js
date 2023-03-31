@@ -63,7 +63,7 @@ const renderViewContainer = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe.skip('ViewContainer component', () => {
+describe('ViewContainer component', () => {
   const children = jest.fn().mockReturnValue('Children');
 
   afterEach(() => {

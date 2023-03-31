@@ -52,7 +52,7 @@ const renderDataImportSettings = () => {
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('<DataImportSettings>', () => {
+describe('DataImportSettings component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderDataImportSettings();
 

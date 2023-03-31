@@ -43,7 +43,7 @@ const renderQualifierPartSection = ({
   return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
-describe('QualifierPartSection edit', () => {
+describe('QualifierPartSection edit component', () => {
   afterAll(() => {
     onChangeMock.mockClear();
   });

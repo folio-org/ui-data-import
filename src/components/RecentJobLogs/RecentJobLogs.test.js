@@ -1,5 +1,6 @@
 import React from 'react';
 import { runAxeTest } from '@folio/stripes-testing';
+import { noop } from 'lodash';
 
 import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../test/jest/__mock__';
@@ -21,11 +22,20 @@ jest.mock('@folio/stripes-data-transfer-components', () => ({
   JobLogs: () => <span>JobLogs</span>,
 }));
 
-const renderRecentJobLogs = () => {
-  return renderWithIntl(<RecentJobLogs />, translationsProperties);
+const checkboxListProp = {
+  isAllSelected: false,
+  handleSelectAllCheckbox: noop,
+  selectRecord: noop,
+  selectedRecords: new Set(),
+  selectAll: noop,
+  deselectAll: noop,
 };
 
-describe('RecentJobLogs', () => {
+const renderRecentJobLogs = () => {
+  return renderWithIntl(<RecentJobLogs checkboxList={checkboxListProp} />, translationsProperties);
+};
+
+describe('RecentJobLogs component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderRecentJobLogs();
 

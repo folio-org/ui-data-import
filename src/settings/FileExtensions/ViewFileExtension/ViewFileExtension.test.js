@@ -13,7 +13,10 @@ import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jes
 import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
 
 import '../../../../test/jest/__mock__';
-import { translationsProperties } from '../../../../test/jest/helpers';
+import {
+  buildStripes,
+  translationsProperties,
+} from '../../../../test/jest/helpers';
 
 import { ViewFileExtension } from './ViewFileExtension';
 
@@ -22,6 +25,7 @@ const history = createMemoryHistory();
 history.push = jest.fn();
 
 const fileExtensionId = faker.random.uuid();
+const stripes = buildStripes();
 
 const resources = importBlocked => buildResources({
   resourceName: 'fileExtension',
@@ -73,7 +77,7 @@ const renderViewFileExtension = ({
         match={match}
         location={location}
         history={history}
-        stripes={{ hasPerm: () => true }}
+        stripes={stripes}
       />
     </Router>
   );
@@ -81,7 +85,7 @@ const renderViewFileExtension = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('ViewFileExtension', () => {
+describe('ViewFileExtension component', () => {
   afterEach(() => {
     history.push.mockClear();
   });

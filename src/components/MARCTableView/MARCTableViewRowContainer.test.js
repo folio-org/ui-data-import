@@ -77,7 +77,7 @@ const renderMARCTableViewRowContainer = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('MARCTableViewRowContainer', () => {
+describe('MARCTableViewRowContainer component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMARCTableViewRowContainer(MARCTableViewRowContainerProps);
 

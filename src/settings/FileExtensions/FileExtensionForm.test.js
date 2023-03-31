@@ -65,6 +65,7 @@ const renderFileExtensionForm = ({
         onSubmitSuccess={onSubmitSuccess}
         onCancel={noop}
         transitionToParams={transitionToParams}
+        baseUrl="base-url"
       />
     </Router>
   );
@@ -72,7 +73,7 @@ const renderFileExtensionForm = ({
   return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
-describe('FileExtensionForm', () => {
+describe('FileExtensionForm component', () => {
   afterAll(() => {
     handleFormSubmit.mockClear();
   });
