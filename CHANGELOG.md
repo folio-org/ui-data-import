@@ -7,16 +7,20 @@
 * Create hotlink from file name in job profile detail view to job log details (UIDATIMP-1356)
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
 
-## **6.0.3** (in progress)
+## **6.0.4** (in progress)
+
+### Bugs fixed:
+* Order field mapping profile: Cannot save the profile when switching between Order formats (UIDATIMP-1419)
+* Activate "Location" field for Open Order field mapping (UIDATIMP-1429)
+
+## [6.0.3](https://github.com/folio-org/ui-data-import/tree/v6.0.3) (2023-03-30)
 
 ### Bugs fixed:
 * Order field mapping profile: Fix the View UI for Fund value % and Currency (UIDATIMP-1404)
 * Order field mapping profile: Fix the View UI for Discount Currency (UIDATIMP-1405)
 * Order field mapping profile: Inactivate Locations and Material Types fields when Order status is Open (UIDATIMP-1417)
 * Order field mapping profile: Disable Organization lookup-up when Access provider field disabled (UIDATIMP-1418)
-* Order field mapping profile: Cannot save the profile when switching between Order formats (UIDATIMP-1419)
 * Mock `react-virtualized-auto-sizer` module for unit tests (UIDATIMP-1422)
-* Activate "Location" field for Open Order field mapping (UIDATIMP-1429)
 
 ## [6.0.2](https://github.com/folio-org/ui-data-import/tree/v6.0.2) (2023-03-24)
 
