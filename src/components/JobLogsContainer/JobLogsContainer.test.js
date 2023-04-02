@@ -1,13 +1,13 @@
 import React from 'react';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
-import '../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   translationsProperties,
   buildStripes,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import JobLogsContainer from './JobLogsContainer';
 import { FILE_STATUSES } from '../../utils';
