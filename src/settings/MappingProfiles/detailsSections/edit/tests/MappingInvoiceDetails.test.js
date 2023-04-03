@@ -1,17 +1,16 @@
 import React from 'react';
 import { noop } from 'lodash';
 import faker from 'faker';
-
-import '../../../../../../test/jest/__mock__';
-
 import { runAxeTest } from '@folio/stripes-testing';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../test/jest/helpers';
+import '../../../../../../test/jest/__mock__';
+
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import { MappingInvoiceDetails } from '../MappingInvoiceDetails';
 import {

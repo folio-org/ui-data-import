@@ -8,14 +8,14 @@ import {
   buildResources,
   buildMutator,
 } from '@folio/stripes-data-transfer-components/test/helpers';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
-import '../../../test/jest/__mock__';
 import { Paneset } from '@folio/stripes/components';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { FileExtensions } from './FileExtensions';
 

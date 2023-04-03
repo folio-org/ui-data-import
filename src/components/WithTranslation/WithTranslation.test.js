@@ -2,9 +2,11 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
 
 import { WithTranslation } from './WithTranslation';
 

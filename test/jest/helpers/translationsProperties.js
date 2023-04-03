@@ -2,7 +2,7 @@ import componentsTranslations from '@folio/stripes-components/translations/strip
 import smartComponentsTranslations from '@folio/stripes-smart-components/translations/stripes-smart-components/en';
 import stripesCoreTranslations from '@folio/stripes-core/translations/stripes-core/en';
 import stripesAcqComponentsTranslations from '@folio/stripes-acq-components/translations/stripes-acq-components/en';
-import dataImportTranslations from '../../../translations/ui-data-import/en';
+import stripesDataTransferComponentsTranslations from '@folio/stripes-data-transfer-components/translations/stripes-data-transfer-components/en';
 
 export const translationsProperties = [
   {
@@ -22,7 +22,7 @@ export const translationsProperties = [
     translations: stripesAcqComponentsTranslations,
   },
   {
-    prefix: 'ui-data-import',
-    translations: dataImportTranslations,
+    prefix: 'stripes-data-transfer-components',
+    translations: stripesDataTransferComponentsTranslations,
   },
 ];

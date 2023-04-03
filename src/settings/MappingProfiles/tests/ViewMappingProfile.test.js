@@ -7,16 +7,12 @@ import {
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import '../../../../test/jest/__mock__';
-
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
-import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
-
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../test/jest/helpers';
+import '../../../../test/jest/__mock__';
 
 import { ViewMappingProfile } from '../ViewMappingProfile';
 
@@ -55,32 +51,34 @@ const history = createMemoryHistory();
 
 history.push = jest.fn();
 
-const mappingDetails = getInitialDetails(FOLIO_RECORD_TYPES.INVOICE.type);
+const mappingDetails = getInitialDetails('INVOICE');
 
-const resources = buildResources({
-  resourceName: 'mappingProfileView',
-  records: [{
-    childProfiles: [],
-    deleted: false,
-    existingRecordType: 'INVOICE',
-    id: 'id1',
-    incomingRecordType: 'EDIFACT_INVOICE',
-    marcFieldProtectionSettings: [],
-    metadata: {
-      createdByUserId: '00000000-0000-0000-0000-000000000000',
-      createdDate: '2021-03-01T15:00:00.000+00:00',
-      updatedByUserId: '00000000-0000-0000-0000-000000000000',
-      updatedDate: '2021-03-01T16:00:00.462+00:00',
-    },
-    mappingDetails,
-    parentProfiles: [],
-    userInfo: {
-      firstName: 'System',
-      lastName: 'System',
-      userName: 'System',
-    },
-  }],
-});
+const resources = {
+  mappingProfileView: {
+    records: [{
+      childProfiles: [],
+      deleted: false,
+      existingRecordType: 'INVOICE',
+      id: 'id1',
+      incomingRecordType: 'EDIFACT_INVOICE',
+      marcFieldProtectionSettings: [],
+      metadata: {
+        createdByUserId: '00000000-0000-0000-0000-000000000000',
+        createdDate: '2021-03-01T15:00:00.000+00:00',
+        updatedByUserId: '00000000-0000-0000-0000-000000000000',
+        updatedDate: '2021-03-01T16:00:00.462+00:00',
+      },
+      mappingDetails,
+      parentProfiles: [],
+      userInfo: {
+        firstName: 'System',
+        lastName: 'System',
+        userName: 'System',
+      },
+    }],
+    hasLoaded: true,
+  },
+};
 
 const viewMappingProfilesProps = {
   parentResources: { marcFieldProtectionSettings: { records: [] } },
