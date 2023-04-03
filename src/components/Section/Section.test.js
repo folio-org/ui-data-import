@@ -1,9 +1,11 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
 
 import { Section } from './Section';
 
@@ -79,7 +81,7 @@ describe('Section', () => {
 
   it('should be rendered with data-test- attribute', () => {
     const { container } = renderSection(sectionWithLabelAndDataTestAttribute);
-    const dataTestAttribute = container.querySelector('[data-test-tester="true]');
+    const dataTestAttribute = container.querySelector('[data-test-tester="true"]');
 
     expect(dataTestAttribute).toBeDefined();
   });

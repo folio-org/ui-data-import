@@ -7,17 +7,16 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 
-import {
-  buildMutator,
-  Harness,
-} from '@folio/stripes-data-transfer-components/test/helpers';
+import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
 
-import '../../../test/jest/__mock__';
 import { Paneset } from '@folio/stripes/components';
+
+import { Harness } from '../../../test/helpers';
 import {
   buildStripes,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { SearchAndSort } from './SearchAndSort';
 

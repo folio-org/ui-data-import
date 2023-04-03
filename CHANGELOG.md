@@ -1,10 +1,11 @@
 # Change history for ui-data-import
 
-## **6.0.3** (in progress)
+## **6.0.4** (in progress)
 
 ### Bugs fixed:
 * Order field mapping profile: Cannot save the profile when switching between Order formats (UIDATIMP-1419)
 * Activate "Location" field for Open Order field mapping (UIDATIMP-1429)
+* Use local Harness mock to avoid tests failure (UIDATIMP-1434)
 
 ## [6.0.3](https://github.com/folio-org/ui-data-import/tree/v6.0.3) (2023-03-30)
 

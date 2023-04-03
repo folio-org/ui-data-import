@@ -4,13 +4,12 @@ import { fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithFinalForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import {
   MatchProfilesForm,
@@ -163,6 +162,7 @@ const renderMatchProfilesForm = ({
   const editModeComponent = () => (
     <Router>
       <MatchProfilesFormComponent
+        baseUrl="/match-profiles"
         initialValues={initialValues}
         pristine={pristine}
         submitting={submitting}

@@ -1,10 +1,14 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
+
 import { Pluggable } from '@folio/stripes/core';
-import { translationsProperties } from '../../../../test/jest/helpers';
+
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../test/jest/helpers';
 
 import { ProfileLinker } from './ProfileLinker';
 
@@ -38,6 +42,7 @@ const renderProfileLinker = ({
     <ProfileLinker
       id={id}
       parentType={parentType}
+      profileType="profileType"
       onLink={onLink}
       linkingRules={linkingRules}
       dataKey={dataKey}

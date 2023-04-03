@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import '../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   translationsProperties,
   renderWithFinalForm,
 } from '../../../../test/jest/helpers';
+import '../../../../test/jest/__mock__';
 
 import { MatchCriterion } from './MatchCriterion';
 

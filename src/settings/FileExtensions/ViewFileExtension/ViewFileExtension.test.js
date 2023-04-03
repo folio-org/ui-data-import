@@ -8,11 +8,11 @@ import {
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
-
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../test/jest/helpers';
 import '../../../../test/jest/__mock__';
-import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { ViewFileExtension } from './ViewFileExtension';
 
@@ -22,9 +22,8 @@ history.push = jest.fn();
 
 const fileExtensionId = faker.random.uuid();
 
-const resources = importBlocked => buildResources({
-  resourceName: 'fileExtension',
-  records: [
+const resources = importBlocked => ({
+  fileExtension: { records: [
     {
       dataTypes: ['MARC'],
       extension: '.dat',
@@ -44,6 +43,7 @@ const resources = importBlocked => buildResources({
       },
     },
   ],
+  hasLoaded: true },
 });
 
 const viewFileExtensionProps = {

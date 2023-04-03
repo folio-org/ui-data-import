@@ -8,13 +8,12 @@ import {
 
 import { noop } from 'lodash';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../test/jest/helpers';
+import '../../../../test/jest/__mock__';
 
 import { ViewJobProfile } from '../ViewJobProfile';
 

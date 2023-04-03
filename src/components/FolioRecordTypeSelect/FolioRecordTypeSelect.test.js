@@ -1,14 +1,13 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   renderWithFinalForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { FolioRecordTypeSelect } from './FolioRecordTypeSelect';
 
