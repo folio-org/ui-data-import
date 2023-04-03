@@ -4,13 +4,14 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-
 import { noop } from 'lodash';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../../test/jest/__mock__';
+
 import { Paneset } from '@folio/stripes/components';
+
 import {
+  renderWithIntl,
   buildStripes,
   renderWithReduxForm,
   translationsProperties,
@@ -74,6 +75,7 @@ const renderUploadingJobsDisplay = (context, stateField) => {
         <Paneset>
           <UploadingJobsDisplay
             stripes={stripes}
+            history={getHistory(stateField)}
           />
         </Paneset>
       </Router>
@@ -84,7 +86,7 @@ const renderUploadingJobsDisplay = (context, stateField) => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('UploadingjobsDisplay component', () => {
+describe('UploadingJobsDisplay component', () => {
   afterEach(() => {
     global.fetch.mockClear();
     mockConsoleError.mockReset();

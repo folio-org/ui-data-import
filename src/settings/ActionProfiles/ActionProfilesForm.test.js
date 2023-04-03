@@ -7,13 +7,12 @@ import {
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithFinalForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { ActionProfilesFormComponent } from './ActionProfilesForm';
 
@@ -124,6 +123,7 @@ const renderActionProfilesForm = ({
   const component = () => (
     <Router>
       <ActionProfilesFormComponent
+        baseUrl="/action-profiles"
         intl={intl}
         initialValues={initialValues}
         pristine={pristine}
@@ -132,6 +132,7 @@ const renderActionProfilesForm = ({
         match={match}
         location={location}
         handleSubmit={noop}
+        onSubmitSuccess={noop}
         transitionToParams={noop}
         onCancel={noop}
         layerType={layerType}

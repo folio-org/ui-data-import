@@ -2,11 +2,11 @@ import React from 'react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
-
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../test/jest/helpers';
 import '../../../../test/jest/__mock__';
-import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { SummaryTable } from './SummaryTable';
 
@@ -26,21 +26,22 @@ const entitySummary = {
   totalErrors: 0,
 };
 
-const resources = buildResources({
-  resourceName: 'jobSummary',
-  records: [{
-    sourceRecordSummary: { ...entitySummary },
-    instanceSummary: { ...entitySummary },
-    holdingSummary: { ...entitySummary },
-    itemSummary: { ...entitySummary },
-    authoritySummary: { ...entitySummary },
-    orderSummary: { ...entitySummary },
-    invoiceSummary: { ...entitySummary },
-    totalErrors: 2,
-  }],
-});
-
 const history = createMemoryHistory();
+
+const resources = {
+  jobSummary: {
+    records: [{
+      sourceRecordSummary: { ...entitySummary },
+      instanceSummary: { ...entitySummary },
+      holdingSummary: { ...entitySummary },
+      itemSummary: { ...entitySummary },
+      authoritySummary: { ...entitySummary },
+      orderSummary: { ...entitySummary },
+      invoiceSummary: { ...entitySummary },
+      totalErrors: 2,
+    }],
+  },
+};
 
 const renderSummaryTable = (resourcesProp = resources) => {
   const component = (

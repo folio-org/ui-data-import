@@ -6,13 +6,13 @@ import {
 } from '@testing-library/react';
 
 import { createMemoryHistory } from 'history';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
-import '../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   buildStripes,
   translationsProperties,
 } from '../../../../test/jest/helpers';
+import '../../../../test/jest/__mock__';
 
 import { DataImportSettings } from '../DataImportSettings';
 

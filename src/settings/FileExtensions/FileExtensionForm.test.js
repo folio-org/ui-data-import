@@ -4,15 +4,16 @@ import faker from 'faker';
 import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithFinalForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { FileExtensionFormComponent } from './FileExtensionForm';
+
+import { BASE_URLS } from '../../utils';
 
 const initialValuesNewForm = {
   dataTypes: [],
@@ -55,6 +56,7 @@ const renderFileExtensionForm = ({
   const component = () => (
     <Router>
       <FileExtensionFormComponent
+        baseUrl={BASE_URLS.FILE_EXTENSIONS}
         pristine={pristine}
         submitting={submitting}
         form={form}

@@ -1,19 +1,16 @@
 import React from 'react';
+import faker from 'faker';
 
 import { createMemoryHistory } from 'history';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../test/jest/__mock__';
-
-import faker from 'faker';
-
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
   duplicateRecordShortcut,
   openEditShortcut,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { DetailsKeyShortcutsWrapper } from './DetailsKeyShortcutsWrapper';
 
@@ -37,11 +34,16 @@ const locationProp = {
   pathname: '',
 };
 
+const defaultProps = {
+  recordId: recordIdProp(),
+  location: locationProp,
+};
+
 const renderDetailsKeyShortcutsWrapper = ({
   recordId,
   location,
 }) => {
-  const childElement = <input data-testid="childElement" />;
+  const childElement = <input data-testid="childElement" aria-label="childElementLabel" />;
 
   const component = () => (
     <CommandList commands={defaultKeyboardShortcuts}>
@@ -64,10 +66,7 @@ describe('DetailsKeyShortcutsWrapper component', () => {
   });
 
   it('should render children correctly', () => {
-    const { getByTestId } = renderDetailsKeyShortcutsWrapper({
-      recordId: recordIdProp(),
-      location: locationProp,
-    });
+    const { getByTestId } = renderDetailsKeyShortcutsWrapper(defaultProps);
 
     expect(getByTestId('childElement')).toBeInTheDocument();
   });
@@ -89,10 +88,7 @@ describe('DetailsKeyShortcutsWrapper component', () => {
 
   describe('calls the correct handler when a key is pressed that', () => {
     it('matches edit shortcut', () => {
-      const { getByTestId } = renderDetailsKeyShortcutsWrapper({
-        recordId: recordIdProp(),
-        location: locationProp,
-      });
+      const { getByTestId } = renderDetailsKeyShortcutsWrapper(defaultProps);
 
       const childElement = getByTestId('childElement');
 
@@ -104,10 +100,7 @@ describe('DetailsKeyShortcutsWrapper component', () => {
     });
 
     it('matches duplicateRecord shortcut pressed', () => {
-      const { getByTestId } = renderDetailsKeyShortcutsWrapper({
-        recordId: recordIdProp(),
-        location: locationProp,
-      });
+      const { getByTestId } = renderDetailsKeyShortcutsWrapper(defaultProps);
 
       const childElement = getByTestId('childElement');
 
