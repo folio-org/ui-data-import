@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## [6.0.4](https://github.com/folio-org/ui-data-import/tree/v6.0.4) (2023-04-03)
+## [6.0.5](https://github.com/folio-org/ui-data-import/tree/v6.0.5) (2023-04-03)
 
 ### Bugs fixed:
 * Order field mapping profile: Cannot save the profile when switching between Order formats (UIDATIMP-1419)

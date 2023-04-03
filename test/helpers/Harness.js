@@ -9,7 +9,7 @@ import {
 
 import '../jest/__mock__';
 
-import { StripesContext, createReactQueryClient } from '@folio/stripes/core';
+import { StripesContext } from '@folio/stripes/core';
 
 import translations from '../../translations/ui-data-import/en';
 import { prefixKeys } from './prefixKeys';
@@ -21,7 +21,18 @@ const stripesDefaultProps = {
     <Component {... props} />
   ),
 };
-const reactQueryClient = new QueryClient(createReactQueryClient());
+
+const cacheTimeMinutes = 5;
+
+const reactQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+      cacheTime: 1000 * 60 * cacheTimeMinutes,
+    },
+  },
+});
 
 const defaultRichTextElements = ['b', 'i', 'em', 'strong', 'span', 'div', 'p', 'ul', 'ol', 'li', 'code'].reduce((res, Tag) => {
   res[Tag] = chunks => <Tag>{chunks}</Tag>;
