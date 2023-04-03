@@ -4,25 +4,25 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
+import faker from 'faker';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
 
 import {
-  buildResources,
-  buildMutator,
-} from '@folio/stripes-data-transfer-components/test/helpers';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+  renderWithIntl,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
 
 import { ListView } from './ListView';
 
-const mutator = buildMutator({
+const mutator = {
+  resultOffset: { replace: () => {} },
+  resultCount: { replace: noop },
   query: {
     replace: noop,
     update: noop,
   },
-  resultCount: { replace: noop },
   actionProfiles: {
     POST: noop,
     PUT: noop,
@@ -33,9 +33,21 @@ const mutator = buildMutator({
     DELETE: noop,
   },
   restoreDefaults: { POST: noop },
-});
+};
 
-const resources = buildResources({
+const metadataMock = {
+  createdByUserId: faker.random.uuid(),
+  createdDate: '2023-02-16T21:48:26.558+00:00',
+  updatedByUserId: faker.random.uuid(),
+  updatedDate: '2023-02-16T21:48:26.558+00:00',
+};
+const userInfoMock = {
+  firstName: 'FirstName',
+  lastName: 'LastName',
+  userName: 'user_name',
+};
+
+const resources = {
   query: {
     filters: 'testFilter',
     notes: true,
@@ -46,8 +58,19 @@ const resources = buildResources({
     other: { totalRecords: 1 },
     successfulMutations: [{ record: { id: 'testId1' } }],
   },
-  actionProfiles: { records: ['test1', 'test2'] },
-});
+  actionProfiles: { records: [
+    {
+      name: 'test1',
+      metadata: metadataMock,
+      userInfo: userInfoMock,
+    },
+    {
+      name: 'test2',
+      metadata: metadataMock,
+      userInfo: userInfoMock,
+    }
+  ] },
+};
 
 const history = createMemoryHistory();
 

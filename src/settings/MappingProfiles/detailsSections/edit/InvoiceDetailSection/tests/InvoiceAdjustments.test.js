@@ -1,13 +1,14 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import '../../../../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
+import '../../../../../../../test/jest/__mock__';
 
 import INVOICE from '../../../../initialDetails/INVOICE';
 import { InvoiceAdjustments } from '../InvoiceAdjustments';
@@ -39,6 +40,12 @@ const renderInvoiceAdjustments = () => {
 describe('InvoiceAdjustments', () => {
   afterAll(() => {
     setReferenceTablesMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderInvoiceAdjustments();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', () => {

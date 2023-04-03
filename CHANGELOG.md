@@ -14,6 +14,7 @@
 * Order field mapping profile: Cannot save the profile when switching between Order formats (UIDATIMP-1419)
 * Activate "Location" field for Open Order field mapping (UIDATIMP-1429)
 * Order field mapping profile: Get confirmation modal after form submitting (UIDATIMP-1431)
+* Use local Harness mock to avoid tests failure (UIDATIMP-1434)
 
 ## [6.0.3](https://github.com/folio-org/ui-data-import/tree/v6.0.3) (2023-03-30)
 

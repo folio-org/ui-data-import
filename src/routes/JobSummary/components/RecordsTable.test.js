@@ -3,20 +3,20 @@ import { fireEvent } from '@testing-library/react';
 import faker from 'faker';
 import { noop } from 'lodash';
 import { BrowserRouter } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
-  buildMutator,
-  buildResources,
-} from '@folio/stripes-data-transfer-components/test/helpers';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../test/jest/helpers';
 import '../../../../test/jest/__mock__';
-import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { RecordsTable } from './RecordsTable';
 
 window.open = jest.fn();
 window.open.mockReturnValue({ focus: jest.fn() });
+const history = createMemoryHistory();
 
 const firstRecordJobExecutionId = faker.random.uuid();
 const sourceRecordsIds = [
@@ -31,197 +31,206 @@ const sourceRecordsIds = [
 const instanceId = faker.random.uuid();
 const authorityId = faker.random.uuid();
 
-const jobLogEntriesResources = buildResources({
-  resourceName: 'jobLogEntries',
-  records: [{
-    sourceRecordActionStatus: 'CREATED',
-    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-    instanceActionStatus: 'CREATED',
-    authorityActionStatus: 'CREATED',
-    jobExecutionId: firstRecordJobExecutionId,
-    sourceRecordId: sourceRecordsIds[0],
-    sourceRecordOrder: '0',
-    sourceRecordTitle: 'Test item 1',
-  }, {
-    instanceActionStatus: 'UPDATED',
-    authorityActionStatus: 'UPDATED',
-    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-    jobExecutionId: faker.random.uuid(),
-    sourceRecordId: sourceRecordsIds[1],
-    sourceRecordOrder: '1',
-    sourceRecordTitle: 'Test item 2',
-  }, {
-    holdingsActionStatus: 'MULTIPLE',
-    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-    jobExecutionId: faker.random.uuid(),
-    sourceRecordId: sourceRecordsIds[2],
-    sourceRecordOrder: '2',
-    sourceRecordTitle: 'Test item 3',
-  }, {
-    itemActionStatus: 'DISCARDED',
-    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-    jobExecutionId: faker.random.uuid(),
-    sourceRecordId: sourceRecordsIds[3],
-    sourceRecordOrder: '3',
-    sourceRecordTitle: 'Test item 4',
-    error: 'Error message',
-  }, {
-    sourceRecordActionStatus: 'CREATED',
-    holdingsActionStatus: 'CREATED',
-    holdingsRecordHridList: ['holdingsHrid1'],
-    sourceRecordType: 'MARC_HOLDINGS',
-    jobExecutionId: faker.random.uuid(),
-    sourceRecordId: sourceRecordsIds[4],
-    sourceRecordOrder: '4',
-    sourceRecordTitle: 'Test item 5',
-  }, {
-    sourceRecordActionStatus: 'DISCARDED',
-    holdingsActionStatus: 'DISCARDED',
-    holdingsRecordHridList: ['holdingsHrid2'],
-    sourceRecordType: 'MARC_HOLDINGS',
-    jobExecutionId: faker.random.uuid(),
-    sourceRecordId: sourceRecordsIds[5],
-    sourceRecordOrder: '5',
-    sourceRecordTitle: 'Test item 6',
-  }, {
-    sourceRecordActionStatus: 'CREATED',
-    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-    poLineActionStatus: 'CREATED',
-    jobExecutionId: faker.random.uuid(),
-    sourceRecordId: sourceRecordsIds[6],
-    sourceRecordOrder: '6',
-    sourceRecordTitle: 'Test item 7',
-  }],
-});
-const jobLogResources = buildResources({
-  resourceName: 'jobLog',
-  records: [{
-    sourceRecordId: sourceRecordsIds[0],
-    sourceRecordOrder: '0',
-    sourceRecordTitle: 'Test item 1',
-    relatedInstanceInfo: {
-      actionStatus: 'CREATED',
-      idList: [instanceId],
-    },
-    relatedHoldingsInfo: {
-      actionStatus: 'CREATED',
-      idList: [faker.random.uuid()],
-    },
-    relatedItemInfo: {
-      actionStatus: 'CREATED',
-      idList: [faker.random.uuid()],
-    },
-    relatedAuthorityInfo: {
-      actionStatus: 'CREATED',
-      idList: [authorityId],
-    },
-    relatedPoLineInfo: {
-      actionStatus: 'CREATED',
-      idList: [faker.random.uuid()],
-    },
-  }, {
-    sourceRecordId: sourceRecordsIds[1],
-    sourceRecordOrder: '1',
-    sourceRecordTitle: 'Test item 2',
-    relatedInstanceInfo: {
-      actionStatus: 'UPDATED',
-      idList: [instanceId],
-    },
-    relatedHoldingsInfo: {
-      actionStatus: 'UPDATED',
-      idList: [faker.random.uuid()],
-    },
-    relatedItemInfo: {
-      actionStatus: 'UPDATED',
-      idList: [faker.random.uuid()],
-    },
-    relatedAuthorityInfo: {
-      actionStatus: 'UPDATED',
-      idList: [authorityId],
-    },
-    relatedPoLineInfo: {
-      actionStatus: 'CREATED',
-      idList: [faker.random.uuid()],
-    },
-  }, {
-    sourceRecordId: sourceRecordsIds[2],
-    sourceRecordOrder: '2',
-    sourceRecordTitle: 'Test item 1',
-    relatedInstanceInfo: {
-      actionStatus: 'MULTIPLE',
-      idList: [faker.random.uuid()],
-    },
-    relatedHoldingsInfo: {
-      actionStatus: 'MULTIPLE',
-      idList: [faker.random.uuid()],
-    },
-    relatedItemInfo: {
-      actionStatus: 'MULTIPLE',
-      idList: [faker.random.uuid()],
-    },
-    relatedAuthorityInfo: {
-      actionStatus: 'MULTIPLE',
-      idList: [faker.random.uuid()],
-    },
-    relatedPoLineInfo: {
-      actionStatus: 'CREATED',
-      idList: [faker.random.uuid()],
-    },
-  }, {
-    sourceRecordId: sourceRecordsIds[3],
-    sourceRecordOrder: '3',
-    sourceRecordTitle: 'Test item 4',
-    relatedInstanceInfo: {
-      actionStatus: 'DISCARDED',
-      idList: [faker.random.uuid()],
-    },
-    relatedHoldingsInfo: {
-      actionStatus: 'DISCARDED',
-      idList: [faker.random.uuid()],
-    },
-    relatedItemInfo: {
-      actionStatus: 'DISCARDED',
-      idList: [faker.random.uuid()],
-    },
-    relatedAuthorityInfo: {
-      actionStatus: 'DISCARDED',
-      idList: [faker.random.uuid()],
-    },
-    relatedPoLineInfo: {
-      actionStatus: 'CREATED',
-      idList: [faker.random.uuid()],
-    },
-  }, {
-    sourceRecordId: sourceRecordsIds[6],
-    sourceRecordOrder: '6',
-    sourceRecordTitle: 'Test item 7',
-    relatedInstanceInfo: {
-      actionStatus: 'DISCARDED',
-      idList: [faker.random.uuid()],
-    },
-    relatedHoldingsInfo: {
-      actionStatus: 'DISCARDED',
-      idList: [faker.random.uuid()],
-    },
-    relatedItemInfo: {
-      actionStatus: 'DISCARDED',
-      idList: [faker.random.uuid()],
-    },
-    relatedAuthorityInfo: {
-      actionStatus: 'DISCARDED',
-      idList: [faker.random.uuid()],
-    },
-    relatedPoLineInfo: {
-      actionStatus: 'CREATED',
-      idList: [faker.random.uuid()],
-    },
-  }],
-});
+const jobLogEntriesRecords = [{
+  sourceRecordActionStatus: 'CREATED',
+  sourceRecordType: 'MARC_BIBLIOGRAPHIC',
+  instanceActionStatus: 'CREATED',
+  authorityActionStatus: 'CREATED',
+  jobExecutionId: firstRecordJobExecutionId,
+  sourceRecordId: sourceRecordsIds[0],
+  sourceRecordOrder: '0',
+  sourceRecordTitle: 'Test item 1',
+}, {
+  instanceActionStatus: 'UPDATED',
+  authorityActionStatus: 'UPDATED',
+  sourceRecordType: 'MARC_BIBLIOGRAPHIC',
+  jobExecutionId: faker.random.uuid(),
+  sourceRecordId: sourceRecordsIds[1],
+  sourceRecordOrder: '1',
+  sourceRecordTitle: 'Test item 2',
+}, {
+  holdingsActionStatus: 'MULTIPLE',
+  sourceRecordType: 'MARC_BIBLIOGRAPHIC',
+  jobExecutionId: faker.random.uuid(),
+  sourceRecordId: sourceRecordsIds[2],
+  sourceRecordOrder: '2',
+  sourceRecordTitle: 'Test item 3',
+}, {
+  itemActionStatus: 'DISCARDED',
+  sourceRecordType: 'MARC_BIBLIOGRAPHIC',
+  jobExecutionId: faker.random.uuid(),
+  sourceRecordId: sourceRecordsIds[3],
+  sourceRecordOrder: '3',
+  sourceRecordTitle: 'Test item 4',
+  error: 'Error message',
+}, {
+  sourceRecordActionStatus: 'CREATED',
+  holdingsActionStatus: 'CREATED',
+  holdingsRecordHridList: ['holdingsHrid1'],
+  sourceRecordType: 'MARC_HOLDINGS',
+  jobExecutionId: faker.random.uuid(),
+  sourceRecordId: sourceRecordsIds[4],
+  sourceRecordOrder: '4',
+  sourceRecordTitle: 'Test item 5',
+}, {
+  sourceRecordActionStatus: 'DISCARDED',
+  holdingsActionStatus: 'DISCARDED',
+  holdingsRecordHridList: ['holdingsHrid2'],
+  sourceRecordType: 'MARC_HOLDINGS',
+  jobExecutionId: faker.random.uuid(),
+  sourceRecordId: sourceRecordsIds[5],
+  sourceRecordOrder: '5',
+  sourceRecordTitle: 'Test item 6',
+}, {
+  sourceRecordActionStatus: 'CREATED',
+  sourceRecordType: 'MARC_BIBLIOGRAPHIC',
+  poLineActionStatus: 'CREATED',
+  jobExecutionId: faker.random.uuid(),
+  sourceRecordId: sourceRecordsIds[6],
+  sourceRecordOrder: '6',
+  sourceRecordTitle: 'Test item 7',
+}];
+const jobLogEntriesResources = {
+  jobLogEntries: {
+    records: jobLogEntriesRecords,
+    other: { totalRecords: jobLogEntriesRecords.length }
+  },
+};
+const jobLogRecords = [{
+  sourceRecordId: sourceRecordsIds[0],
+  sourceRecordOrder: '0',
+  sourceRecordTitle: 'Test item 1',
+  relatedInstanceInfo: {
+    actionStatus: 'CREATED',
+    idList: [instanceId],
+  },
+  relatedHoldingsInfo: {
+    actionStatus: 'CREATED',
+    idList: [faker.random.uuid()],
+  },
+  relatedItemInfo: {
+    actionStatus: 'CREATED',
+    idList: [faker.random.uuid()],
+  },
+  relatedAuthorityInfo: {
+    actionStatus: 'CREATED',
+    idList: [authorityId],
+  },
+  relatedPoLineInfo: {
+    actionStatus: 'CREATED',
+    idList: [faker.random.uuid()],
+  },
+}, {
+  sourceRecordId: sourceRecordsIds[1],
+  sourceRecordOrder: '1',
+  sourceRecordTitle: 'Test item 2',
+  relatedInstanceInfo: {
+    actionStatus: 'UPDATED',
+    idList: [instanceId],
+  },
+  relatedHoldingsInfo: {
+    actionStatus: 'UPDATED',
+    idList: [faker.random.uuid()],
+  },
+  relatedItemInfo: {
+    actionStatus: 'UPDATED',
+    idList: [faker.random.uuid()],
+  },
+  relatedAuthorityInfo: {
+    actionStatus: 'UPDATED',
+    idList: [authorityId],
+  },
+  relatedPoLineInfo: {
+    actionStatus: 'CREATED',
+    idList: [faker.random.uuid()],
+  },
+}, {
+  sourceRecordId: sourceRecordsIds[2],
+  sourceRecordOrder: '2',
+  sourceRecordTitle: 'Test item 1',
+  relatedInstanceInfo: {
+    actionStatus: 'MULTIPLE',
+    idList: [faker.random.uuid()],
+  },
+  relatedHoldingsInfo: {
+    actionStatus: 'MULTIPLE',
+    idList: [faker.random.uuid()],
+  },
+  relatedItemInfo: {
+    actionStatus: 'MULTIPLE',
+    idList: [faker.random.uuid()],
+  },
+  relatedAuthorityInfo: {
+    actionStatus: 'MULTIPLE',
+    idList: [faker.random.uuid()],
+  },
+  relatedPoLineInfo: {
+    actionStatus: 'CREATED',
+    idList: [faker.random.uuid()],
+  },
+}, {
+  sourceRecordId: sourceRecordsIds[3],
+  sourceRecordOrder: '3',
+  sourceRecordTitle: 'Test item 4',
+  relatedInstanceInfo: {
+    actionStatus: 'DISCARDED',
+    idList: [faker.random.uuid()],
+  },
+  relatedHoldingsInfo: {
+    actionStatus: 'DISCARDED',
+    idList: [faker.random.uuid()],
+  },
+  relatedItemInfo: {
+    actionStatus: 'DISCARDED',
+    idList: [faker.random.uuid()],
+  },
+  relatedAuthorityInfo: {
+    actionStatus: 'DISCARDED',
+    idList: [faker.random.uuid()],
+  },
+  relatedPoLineInfo: {
+    actionStatus: 'CREATED',
+    idList: [faker.random.uuid()],
+  },
+}, {
+  sourceRecordId: sourceRecordsIds[6],
+  sourceRecordOrder: '6',
+  sourceRecordTitle: 'Test item 7',
+  relatedInstanceInfo: {
+    actionStatus: 'DISCARDED',
+    idList: [faker.random.uuid()],
+  },
+  relatedHoldingsInfo: {
+    actionStatus: 'DISCARDED',
+    idList: [faker.random.uuid()],
+  },
+  relatedItemInfo: {
+    actionStatus: 'DISCARDED',
+    idList: [faker.random.uuid()],
+  },
+  relatedAuthorityInfo: {
+    actionStatus: 'DISCARDED',
+    idList: [faker.random.uuid()],
+  },
+  relatedPoLineInfo: {
+    actionStatus: 'CREATED',
+    idList: [faker.random.uuid()],
+  },
+}];
+const jobLogResources = {
+  jobLog: {
+    records: jobLogRecords,
+    other: { totalRecords: jobLogRecords.length }
+  },
+};
 const resources = {
   ...jobLogEntriesResources,
   ...jobLogResources,
 };
-const mutator = buildMutator();
+const mutator = {
+  resultCount: { replace: () => {} },
+  resultOffset: { replace: () => {} },
+};
 const source = {
   records: () => resources.jobLogEntries.records,
   pending: () => false,
@@ -240,6 +249,7 @@ const renderRecordsTable = ({ isEdifactType = false }) => {
         source={source}
         resultCountIncrement={5}
         pageAmount={5}
+        history={history}
       />
     </BrowserRouter>
   );
@@ -248,6 +258,13 @@ const renderRecordsTable = ({ isEdifactType = false }) => {
 };
 
 describe('RecordsTable component', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderRecordsTable({});
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should have proper columns', () => {
     const { getByText } = renderRecordsTable({});
     /*

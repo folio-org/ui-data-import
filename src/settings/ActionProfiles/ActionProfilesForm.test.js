@@ -7,13 +7,12 @@ import {
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithFinalForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { ActionProfilesFormComponent } from './ActionProfilesForm';
 

@@ -1,6 +1,5 @@
+import { renderWithIntl } from '../../../test/jest/helpers';
 import '../../../test/jest/__mock__';
-
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import {
   augmentParam,

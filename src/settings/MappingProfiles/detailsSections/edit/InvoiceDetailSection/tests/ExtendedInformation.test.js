@@ -5,13 +5,14 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import '../../../../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
+import '../../../../../../../test/jest/__mock__';
 
 import { ExtendedInformation } from '../ExtendedInformation';
 import INVOICE from '../../../../initialDetails/INVOICE';
@@ -29,6 +30,12 @@ const renderExtendedInformation = () => {
 };
 
 describe('ExtendedInformation', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderExtendedInformation();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render correct fields', () => {
     const { getByText } = renderExtendedInformation();
 
