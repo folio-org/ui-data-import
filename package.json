@@ -14,7 +14,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test:unit": "jest --ci --coverage",
+    "test:unit": "jest --ci --coverage --max-old-space-size=20480",
     "test": "yarn run test:unit",
     "lint": "eslint .",
     "lintfix": "eslint . --fix",
