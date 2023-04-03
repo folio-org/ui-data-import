@@ -6,13 +6,12 @@ import {
 } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithRedux,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { DataFetcherContext } from '../DataFetcher';
 import { Jobs } from './Jobs';

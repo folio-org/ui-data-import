@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { buildStripes as mockBuildStripes } from '../helpers';
+import { buildStripes as mockBuildStripes } from '../helpers/stripesMock';
 
-jest.mock('@folio/stripes/core', () => {
+const mockStripesCore = () => {
   const STRIPES = mockBuildStripes();
 
   const stripesConnect = Component => ({
@@ -57,7 +57,10 @@ jest.mock('@folio/stripes/core', () => {
     return (
       <Component
         {...props}
-        root={{ addReducer: () => {} }}
+        root={{
+          addReducer: () => {
+          }
+        }}
       />
     );
   };
@@ -75,8 +78,6 @@ jest.mock('@folio/stripes/core', () => {
   const useNamespace = () => ['@folio/data-import'];
 
   return {
-    ...jest.requireActual('@folio/stripes-core'),
-    // AppIcon: jest.fn(({ ariaLabel }) => <span>{ariaLabel}</span>),
     stripesConnect,
     withStripes,
     withRoot,
@@ -87,4 +88,14 @@ jest.mock('@folio/stripes/core', () => {
     useNamespace,
     Pluggable: jest.fn(props => <>{props.children}</>),
   };
-}, { virtual: true });
+};
+
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  ...mockStripesCore(),
+}), { virtual: true });
+
+jest.mock('@folio/stripes-core', () => ({
+  ...jest.requireActual('@folio/stripes-core'),
+  ...mockStripesCore(),
+}), { virtual: true });
