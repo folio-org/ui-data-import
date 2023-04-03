@@ -1,20 +1,17 @@
 import React from 'react';
 import { runAxeTest } from '@folio/stripes-testing';
+import faker from 'faker';
 
 import { createMemoryHistory } from 'history';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../test/jest/__mock__';
-
-import faker from 'faker';
-
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
   duplicateRecordShortcut,
   openEditShortcut,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { DetailsKeyShortcutsWrapper } from './DetailsKeyShortcutsWrapper';
 
