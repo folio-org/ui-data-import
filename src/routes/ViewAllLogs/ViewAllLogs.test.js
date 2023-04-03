@@ -8,7 +8,7 @@ import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
-import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
+import { ModuleHierarchyProvider } from '@folio/stripes/core';
 
 import {
   renderWithIntl,

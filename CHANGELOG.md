@@ -6,6 +6,7 @@
 * Landing page: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1355)
 * Create hotlink from file name in job profile detail view to job log details (UIDATIMP-1356)
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
+* Avoid private paths in stripes-core imports (UIDATIMP-1414)
 
 ## **6.0.4** (in progress)
 
