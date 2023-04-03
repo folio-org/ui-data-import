@@ -9,10 +9,10 @@ import {
 
 import '../jest/__mock__';
 
-import { StripesContext } from '@folio/stripes/core';
-
 import translations from '../../translations/ui-data-import/en';
 import { prefixKeys } from './prefixKeys';
+
+const { StripesContext } = jest.requireActual('@folio/stripes/core');
 
 const stripesDefaultProps = {
   okapi: { url: '' },
