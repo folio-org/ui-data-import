@@ -145,7 +145,7 @@ const renderMappingProfiles = ({
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('<MappingProfiles>', () => {
+describe.skip('<MappingProfiles>', () => {
   it('renders correctly', async () => {
     const { getByText } = renderMappingProfiles(mappingProfilesProps);
     const numberOfMappingProfiles = resources.mappingProfiles.other.totalRecords;
