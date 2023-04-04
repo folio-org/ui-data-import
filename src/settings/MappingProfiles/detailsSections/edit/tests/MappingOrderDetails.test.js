@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
 
@@ -35,6 +36,12 @@ const renderMappingOrderDetails = () => {
 };
 
 describe('MappingOrderDetails', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingOrderDetails();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should have correct sections', async () => {
     const {
       findByRole,
