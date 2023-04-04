@@ -1,14 +1,14 @@
 import React from 'react';
 import { runAxeTest } from '@folio/stripes-testing';
 
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+
 import {
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../test/jest/helpers';
 import '../../../../../../test/jest/__mock__';
-
-import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import { MappingOrderDetails } from '../MappingOrderDetails';
 import { getInitialFields } from '../../../initialDetails';
