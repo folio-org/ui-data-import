@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { runAxeTest } from '@folio/stripes-testing';
 import faker from 'faker';
 
 import { createMemoryHistory } from 'history';
