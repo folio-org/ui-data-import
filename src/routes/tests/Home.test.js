@@ -6,13 +6,14 @@ import {
 import { BrowserRouter as Router } from 'react-router-dom';
 import { runAxeTest } from '@folio/stripes-testing';
 
+import '../../../test/jest/__mock__';
+
 import {
   renderWithIntl,
   translationsProperties,
   renderWithRedux,
   jobLogsData,
 } from '../../../test/jest/helpers';
-import '../../../test/jest/__mock__';
 
 import { DataFetcherContext } from '../../components';
 import { Home } from '../Home';

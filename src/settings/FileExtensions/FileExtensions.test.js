@@ -4,6 +4,8 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
+import '../../../test/jest/__mock__';
+
 import {
   buildResources,
   buildMutator,
@@ -15,7 +17,6 @@ import {
   renderWithReduxForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
-import '../../../test/jest/__mock__';
 
 import { FileExtensions } from './FileExtensions';
 

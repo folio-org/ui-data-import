@@ -6,11 +6,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { runAxeTest } from '@folio/stripes-testing';
 
+import '../../../../test/jest/__mock__';
+
 import {
   renderWithIntl,
   translationsProperties,
 } from '../../../../test/jest/helpers';
-import '../../../../test/jest/__mock__';
 
 import { RecordsTable } from './RecordsTable';
 
