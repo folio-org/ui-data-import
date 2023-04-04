@@ -1,5 +1,6 @@
 import React from 'react';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -22,6 +23,12 @@ const renderRecordSelect = ({ isLocalLTR }) => {
 };
 
 describe('RecordSelect', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderRecordSelect({ isLocalLTR: false });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('Records should be rendered', () => {
     const { getByText } = renderRecordSelect({ isLocalLTR: false });
 

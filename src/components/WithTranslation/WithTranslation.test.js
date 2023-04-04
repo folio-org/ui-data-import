@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -25,6 +26,12 @@ const renderWithTranslation = ({
 };
 
 describe('WithTranslation component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderWithTranslation({ wrapperLabel: 'ui-data-import.meta.title' });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when wrapper label prop is translation id', () => {
     it('should render formatted message', () => {
       const { getByText } = renderWithTranslation({ wrapperLabel: 'ui-data-import.meta.title' });

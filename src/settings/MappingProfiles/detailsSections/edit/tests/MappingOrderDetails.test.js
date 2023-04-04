@@ -34,7 +34,6 @@ const renderMappingOrderDetails = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-
 describe('MappingOrderDetails', () => {
   it('should have correct sections', async () => {
     const {

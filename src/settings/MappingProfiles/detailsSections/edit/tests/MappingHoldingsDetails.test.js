@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
 
@@ -83,6 +84,12 @@ describe('<MappingHoldingsDetails>', () => {
 
   afterAll(() => {
     delete global.fetch;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingHoldingsDetails({});
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should have correct sections', async () => {

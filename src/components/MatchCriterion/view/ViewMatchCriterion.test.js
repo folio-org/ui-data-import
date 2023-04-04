@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -70,6 +71,12 @@ const renderViewMatchCriterion = ({
 };
 
 describe('ViewMatchCriterion', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderViewMatchCriterion({ ...viewMatchCriterionProps('EXACTLY_MATCHES') });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should be rendered with a qualifier type', () => {
     const { getByText } = renderViewMatchCriterion({ ...viewMatchCriterionProps('EXACTLY_MATCHES') });
 

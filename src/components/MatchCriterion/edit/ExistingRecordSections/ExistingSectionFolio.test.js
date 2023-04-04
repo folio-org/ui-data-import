@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -70,6 +71,12 @@ const renderExistingSectionFolio = ({
 describe('ExistingSectionFolio edit', () => {
   afterEach(() => {
     onChangeFormStateMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render data options', () => {

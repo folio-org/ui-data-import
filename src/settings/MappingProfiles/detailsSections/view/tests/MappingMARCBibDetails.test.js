@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -35,6 +36,12 @@ const renderMappingMARCBibDetails = ({
 };
 
 describe('<MARCBibDetails>', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should have correct sections', () => {
     const { getByRole } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
 

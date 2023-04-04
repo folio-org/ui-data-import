@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -34,6 +35,12 @@ describe('Action menu LinkTo Item Template', () => {
   afterEach(() => {
     menu.onToggle.mockClear();
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderLinkToItemTemplate();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { fireEvent } from '@testing-library/react';
-
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -132,6 +132,12 @@ describe('<JobProfilesForm>', () => {
 
   afterAll(() => {
     delete global.fetch;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobProfilesForm(jobProfilesFormProps({}));
+
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when profile is duplicated', () => {

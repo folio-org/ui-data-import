@@ -37,6 +37,7 @@ const renderFieldOrganization = ({
       mutator={mutator}
       setReferenceTables={setReferenceTablesMock}
       onSelect={onSelect}
+      label="FieldOrganization label"
     />
   );
 

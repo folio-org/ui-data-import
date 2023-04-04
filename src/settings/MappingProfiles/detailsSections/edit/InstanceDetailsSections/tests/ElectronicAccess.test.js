@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -63,6 +64,12 @@ const renderElectronicAccess = () => {
 };
 
 describe('<ElectronicAccess>', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderElectronicAccess();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render correct fields', async () => {
     const { getByText } = renderElectronicAccess();
 

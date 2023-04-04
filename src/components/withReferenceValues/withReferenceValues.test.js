@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { fireEvent } from '@testing-library/react';
 
 import {
@@ -62,6 +61,7 @@ const renderWithReferenceValues = ({
       value={value}
       onChange={onChange}
       disabled={disabled}
+      aria-label="wrappedComponent label"
     />
   );
 

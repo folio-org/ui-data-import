@@ -114,6 +114,15 @@ describe('UploadingJobsDisplay component', () => {
   });
 
   describe('when uploaded successfully', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderUploadingJobsDisplay({
+        ...defaultContext,
+        uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.UPLOADED }] },
+      });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('renders JobProfiles component', async () => {
       const { getByText } = renderUploadingJobsDisplay({
         ...defaultContext,
@@ -244,6 +253,15 @@ describe('UploadingJobsDisplay component', () => {
   });
 
   describe('when status is UPLOADING', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderUploadingJobsDisplay({
+        ...defaultContext,
+        uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.UPLOADING }] },
+      });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('shows correct message', async () => {
       const { getByText } = renderUploadingJobsDisplay({
         ...defaultContext,
@@ -270,6 +288,15 @@ describe('UploadingJobsDisplay component', () => {
   });
 
   describe('when status is  ERROR_DEFINITION', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderUploadingJobsDisplay({
+        ...defaultContext,
+        uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.ERROR_DEFINITION }] },
+      });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('shows error message', async () => {
       const { getByText } = renderUploadingJobsDisplay({
         ...defaultContext,
@@ -281,6 +308,14 @@ describe('UploadingJobsDisplay component', () => {
   });
 
   describe('when status is ERROR', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderUploadingJobsDisplay({
+        ...defaultContext,
+        uploadDefinition: { fileDefinitions: [{ status: FILE_STATUSES.ERROR }] },
+      });
+
+      await runAxeTest({ rootNode: container });
+    });
     it('renders error message', async () => {
       const state = { files: { 'CatShip.mrc1634031179989': { status: FILE_STATUSES.ERROR } } };
       const { getByText } = renderUploadingJobsDisplay({

@@ -7,6 +7,7 @@ import {
 import faker from 'faker';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -227,12 +228,21 @@ const renderListView = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('ListView', () => {
+describe('ListView component', () => {
   afterEach(() => {
     history.push.mockClear();
   });
 
   describe('when profile type is Action Profiles', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderListView({
+        ...listViewProps,
+        ...listViewPropsActionProfiles,
+      });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('should render correct label', () => {
       const { getByText } = renderListView({
         ...listViewProps,
@@ -244,6 +254,15 @@ describe('ListView', () => {
   });
 
   describe('when profile type is File extention', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderListView({
+        ...listViewProps,
+        ...listViewPropsFileExtensions,
+      });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('should render correct label', () => {
       const { getByText } = renderListView({
         ...listViewProps,

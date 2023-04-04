@@ -3,6 +3,7 @@ import {
   render,
   fireEvent,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
@@ -55,6 +56,12 @@ describe('Action menu menuTemplate', () => {
   });
 
   describe('when item is `addNew`', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = render(templates.addNew('key'));
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('then `LinkTo` component should be rendered', () => {
       const { getByText } = render(templates.addNew('key'));
 
@@ -63,6 +70,12 @@ describe('Action menu menuTemplate', () => {
   });
 
   describe('when item is `edit`', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = render(templates.edit('key'));
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('then `LinkTo` component should be rendered', () => {
       const { getByText } = render(templates.edit('key'));
 
@@ -71,6 +84,12 @@ describe('Action menu menuTemplate', () => {
   });
 
   describe('when item is `duplicate`', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = render(templates.duplicate('key'));
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('then `LinkTo` component should be rendered', () => {
       const { getByText } = render(templates.duplicate('key'));
 
@@ -79,6 +98,12 @@ describe('Action menu menuTemplate', () => {
   });
 
   describe('when item is `run`', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = render(templates.run('key'));
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('then `Default` component should be rendered', () => {
       const { getByText } = render(templates.run('key'));
 
@@ -98,6 +123,12 @@ describe('Action menu menuTemplate', () => {
   });
 
   describe('when item is `exportSelected`', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = render(templates.exportSelected('key'));
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('then `GroupAction` component should be rendered', () => {
       const { getByText } = render(templates.exportSelected('key'));
 
@@ -106,6 +137,12 @@ describe('Action menu menuTemplate', () => {
   });
 
   describe('when item is `selectAll`', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = render(templates.selectAll('key'));
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('then `Default` component should be rendered', () => {
       const { getByText } = render(templates.selectAll('key'));
 
@@ -125,6 +162,12 @@ describe('Action menu menuTemplate', () => {
   });
 
   describe('when item is `deselectAll`', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = render(templates.deselectAll('key'));
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('then `Default` component should be rendered', () => {
       const { getByText } = render(templates.deselectAll('key'));
 
@@ -144,6 +187,12 @@ describe('Action menu menuTemplate', () => {
   });
 
   describe('when item is `delete`', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = render(templates.delete('key'));
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('then `Default` component should be rendered', () => {
       const { getByText } = render(templates.delete('key'));
 
@@ -163,6 +212,12 @@ describe('Action menu menuTemplate', () => {
   });
 
   describe('when item is `restoreDefaults`', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = render(templates.restoreDefaults('key'));
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('then `Default` component should be rendered', () => {
       const { getByText } = render(templates.restoreDefaults('key'));
 
@@ -182,6 +237,12 @@ describe('Action menu menuTemplate', () => {
   });
 
   describe('when item is `viewAllLogs`', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = render(templates.viewAllLogs('key'));
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('then `LinkTo` component should be rendered', () => {
       const { getByText } = render(templates.viewAllLogs('key'));
 
@@ -190,6 +251,12 @@ describe('Action menu menuTemplate', () => {
   });
 
   describe('when item is `deleteSelectedLogs`', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = render(templates.deleteSelectedLogs('key'));
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('then `Default` component should be rendered', () => {
       const { getByText } = render(templates.deleteSelectedLogs('key'));
 

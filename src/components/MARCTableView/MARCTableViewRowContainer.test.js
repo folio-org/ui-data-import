@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -79,6 +80,12 @@ const renderMARCTableViewRowContainer = ({
 };
 
 describe('MARCTableViewRowContainer', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMARCTableViewRowContainer(MARCTableViewRowContainerProps);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should be rendered with correct cells', () => {
     const { getAllByText } = renderMARCTableViewRowContainer(MARCTableViewRowContainerProps);
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -31,6 +32,15 @@ const renderRecordTypesSelect = ({
 describe('RecordTypesSelect', () => {
   afterAll(() => {
     delete window.ResizeObserver;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderRecordTypesSelect({
+      incomingRecordType: 'MARC_AUTHORITY',
+      existingRecordType: 'INSTANCE',
+    });
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {
