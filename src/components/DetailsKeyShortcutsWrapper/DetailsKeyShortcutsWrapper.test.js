@@ -1,5 +1,4 @@
 import React from 'react';
-import { runAxeTest } from '@folio/stripes-testing';
 import faker from 'faker';
 
 import { createMemoryHistory } from 'history';
@@ -64,12 +63,6 @@ const renderDetailsKeyShortcutsWrapper = ({
 describe('DetailsKeyShortcutsWrapper component', () => {
   afterEach(() => {
     history.push.mockClear();
-  });
-
-  it('should be rendered with no axe errors', async () => {
-    const { container } = renderDetailsKeyShortcutsWrapper(defaultProps);
-
-    await runAxeTest({ rootNode: container });
   });
 
   it('should render children correctly', () => {

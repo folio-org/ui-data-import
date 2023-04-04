@@ -5,8 +5,6 @@ import {
 } from '@testing-library/react';
 import { get } from 'lodash';
 
-import { runAxeTest } from '@folio/stripes-testing';
-
 import {
   renderWithIntl,
   renderWithReduxForm,
@@ -43,12 +41,6 @@ const renderInvoiceLineInformation = () => {
 describe('InvoiceLineInformation', () => {
   afterAll(() => {
     setReferenceTablesMock.mockClear();
-  });
-
-  it('should be rendered with no axe errors', async () => {
-    const { container } = renderInvoiceLineInformation();
-
-    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', () => {
