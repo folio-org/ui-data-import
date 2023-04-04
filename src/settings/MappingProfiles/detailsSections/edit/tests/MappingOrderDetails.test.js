@@ -35,6 +35,7 @@ const renderMappingOrderDetails = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
+
 describe('MappingOrderDetails', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingOrderDetails();
