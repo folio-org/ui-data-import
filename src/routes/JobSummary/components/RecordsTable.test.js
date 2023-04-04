@@ -259,11 +259,11 @@ const renderRecordsTable = ({ isEdifactType = false }) => {
 };
 
 describe.skip('RecordsTable component', () => {
-  // TODO: Create separate ticket to fix all the accesibility tests	
-  it.skip('should be rendered with no axe errors', async () => {	
-    const { container } = renderRecordsTable({});	
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderRecordsTable({});
 
-    await runAxeTest({ rootNode: container });	
+    await runAxeTest({ rootNode: container });
   });
 
   it('should have proper columns', () => {
