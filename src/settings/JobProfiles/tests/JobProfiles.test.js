@@ -6,6 +6,7 @@ import {
 } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../test/jest/__mock__';
 
@@ -147,6 +148,12 @@ const renderJobProfiles = ({
 };
 
 describe.skip('<JobProfiles>', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobProfiles(jobProfilesProps);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render correct amount of items', () => {
     const { getByText } = renderJobProfiles(jobProfilesProps);
 
