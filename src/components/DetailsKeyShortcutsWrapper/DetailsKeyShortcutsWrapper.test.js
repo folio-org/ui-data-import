@@ -65,6 +65,12 @@ describe('DetailsKeyShortcutsWrapper component', () => {
   afterEach(() => {
     history.push.mockClear();
   });
+  
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderDetailsKeyShortcutsWrapper(defaultProps);
+
+    await runAxeTest({ rootNode: container });
+  });
 
   it('should render children correctly', () => {
     const { getByTestId } = renderDetailsKeyShortcutsWrapper(defaultProps);
