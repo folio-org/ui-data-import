@@ -7,6 +7,8 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 
+import '../../../../test/jest/__mock__';
+
 import {
   ACTION_TYPES,
   FOLIO_RECORD_TYPES,
@@ -17,7 +19,6 @@ import {
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../test/jest/helpers';
-import '../../../../test/jest/__mock__';
 
 import { MappingProfilesForm } from '../MappingProfilesForm';
 

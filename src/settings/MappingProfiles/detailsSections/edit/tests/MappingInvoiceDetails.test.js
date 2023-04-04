@@ -3,6 +3,8 @@ import { noop } from 'lodash';
 import faker from 'faker';
 import { runAxeTest } from '@folio/stripes-testing';
 
+import '../../../../../../test/jest/__mock__';
+
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
@@ -10,7 +12,6 @@ import {
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../test/jest/helpers';
-import '../../../../../../test/jest/__mock__';
 
 import { MappingInvoiceDetails } from '../MappingInvoiceDetails';
 import {
