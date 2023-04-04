@@ -9,7 +9,6 @@ import { Paneset } from '@folio/stripes/components';
 
 import { Harness } from '../../../test/helpers';
 import {
-  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
