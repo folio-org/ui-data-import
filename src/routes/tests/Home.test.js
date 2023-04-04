@@ -5,13 +5,14 @@ import {
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import '../../../test/jest/__mock__';
+
 import {
   renderWithIntl,
   translationsProperties,
   renderWithRedux,
   jobLogsData,
 } from '../../../test/jest/helpers';
-import '../../../test/jest/__mock__';
 
 import { DataFetcherContext } from '../../components';
 import { Home } from '../Home';

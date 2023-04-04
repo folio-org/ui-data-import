@@ -7,6 +7,8 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 
+import '../../../test/jest/__mock__';
+
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
 
 import { Paneset } from '@folio/stripes/components';
@@ -16,7 +18,6 @@ import {
   buildStripes,
   translationsProperties,
 } from '../../../test/jest/helpers';
-import '../../../test/jest/__mock__';
 
 import { SearchAndSort } from './SearchAndSort';
 

@@ -4,6 +4,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
+import '../../../test/jest/__mock__';
+
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
 import { Paneset } from '@folio/stripes/components';
 
@@ -12,7 +14,6 @@ import {
   renderWithReduxForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
-import '../../../test/jest/__mock__';
 
 import {
   FIND_ALL_CQL,

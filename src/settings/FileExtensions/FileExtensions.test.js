@@ -3,6 +3,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
+import '../../../test/jest/__mock__';
+
 import {
   buildResources,
   buildMutator,
@@ -14,7 +16,6 @@ import {
   renderWithReduxForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
-import '../../../test/jest/__mock__';
 
 import { FileExtensions } from './FileExtensions';
 
