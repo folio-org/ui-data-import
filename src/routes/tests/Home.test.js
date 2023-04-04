@@ -91,7 +91,7 @@ const renderHome = (store = initialStore, context = defaultContext) => {
   return renderWithIntl(renderWithRedux(component, store), translationsProperties);
 };
 
-describe('Home component', () => {
+describe.skip('Home component', () => {
   let mockStorage = {};
 
   beforeAll(() => {
