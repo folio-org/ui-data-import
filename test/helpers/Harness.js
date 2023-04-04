@@ -9,10 +9,22 @@ import {
 
 import '../jest/__mock__';
 
-import { StripesContext, createReactQueryClient } from '@folio/stripes/core';
+import { StripesContext } from '@folio/stripes/core';
 
 import translations from '../../translations/ui-data-import/en';
 import { prefixKeys } from './prefixKeys';
+
+const cacheTimeMinutes = 5;
+
+const createReactQueryClient = () => new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+      cacheTime: 1000 * 60 * cacheTimeMinutes,
+    },
+  },
+});
 
 const stripesDefaultProps = {
   okapi: { url: '' },
