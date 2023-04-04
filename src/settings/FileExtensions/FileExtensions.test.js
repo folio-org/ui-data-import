@@ -6,8 +6,6 @@ import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
-import '../../../test/jest/__mock__';
-
 import {
   buildResources,
   buildMutator,
