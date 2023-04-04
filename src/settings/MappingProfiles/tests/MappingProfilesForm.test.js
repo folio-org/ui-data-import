@@ -7,17 +7,18 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 
-import {
-  renderWithIntl,
-  renderWithReduxForm,
-  translationsProperties,
-} from '../../../../test/jest/helpers';
 import '../../../../test/jest/__mock__';
 
 import {
   ACTION_TYPES,
   FOLIO_RECORD_TYPES,
 } from '@folio/stripes-data-transfer-components';
+
+import {
+  renderWithIntl,
+  renderWithReduxForm,
+  translationsProperties,
+} from '../../../../test/jest/helpers';
 
 import { MappingProfilesForm } from '../MappingProfilesForm';
 
