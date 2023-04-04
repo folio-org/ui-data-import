@@ -1,6 +1,7 @@
 import React from 'react';
 import { noop } from 'lodash';
 import faker from 'faker';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
 
@@ -69,6 +70,12 @@ const renderMappingInvoiceDetails = () => {
 };
 
 describe('MappingInvoiceDetails', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingInvoiceDetails();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should have correct sections', async () => {
     const {
       findByRole,
