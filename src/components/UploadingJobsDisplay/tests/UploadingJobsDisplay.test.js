@@ -5,6 +5,7 @@ import {
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../test/jest/__mock__';
 
@@ -94,6 +95,12 @@ describe('UploadingJobsDisplay component', () => {
 
   afterAll(() => {
     delete global.fetch;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderUploadingJobsDisplay(defaultContext);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('renders correctly', async () => {
