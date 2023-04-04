@@ -1,5 +1,6 @@
 import React from 'react';
 import { waitFor } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -35,6 +36,12 @@ const renderEditKeyShortcutsWrapper = ({ onSubmit }) => {
 };
 
 describe('EditKeyShortcutsWrapper component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderEditKeyShortcutsWrapper({ onSubmit: mockOnSubmitProp });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render children correctly', () => {
     const { getByText } = renderEditKeyShortcutsWrapper({ onSubmit: mockOnSubmitProp });
 
