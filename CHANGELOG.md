@@ -8,7 +8,7 @@
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
 * Avoid private paths in stripes-core imports (UIDATIMP-1414)
 
-## **6.0.4** (in progress)
+## [6.0.8](https://github.com/folio-org/ui-data-import/tree/v6.0.8) (2023-04-04)
 
 ### Bugs fixed:
 * Order field mapping profile: Cannot save the profile when switching between Order formats (UIDATIMP-1419)
