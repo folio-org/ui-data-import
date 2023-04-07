@@ -7,11 +7,11 @@ import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
-import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
 import { Paneset } from '@folio/stripes/components';
 
 import { Harness } from '../../../test/helpers';
 import {
+  buildMutator,
   buildStripes,
   renderWithReduxForm,
   translationsProperties,

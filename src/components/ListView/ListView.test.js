@@ -9,9 +9,8 @@ import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
 import { runAxeTest } from '@folio/stripes-testing';
 
-import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
-
 import {
+  buildMutator,
   buildStripes,
   renderWithIntl,
   translationsProperties,

@@ -7,3 +7,4 @@ export * from './translationsProperties';
 export * from './shortcuts';
 export * from './jobLogsData';
 export * from './okapiMock';
+export * from './mutatorMock';
