@@ -71,7 +71,7 @@ const renderFundDistribution = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('FundDistribution', () => {
+describe('FundDistribution edit component', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
   });

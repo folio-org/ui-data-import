@@ -49,7 +49,7 @@ const renderEResourcesDetails = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('EResourcesDetails', () => {
+describe('EResourcesDetails edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderEResourcesDetails();
 

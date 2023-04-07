@@ -50,7 +50,7 @@ const renderVendor = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('Vendor', () => {
+describe('Vendor edit component', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
   });

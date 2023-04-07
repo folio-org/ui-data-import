@@ -69,7 +69,7 @@ const renderMappingInvoiceDetails = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('MappingInvoiceDetails', () => {
+describe('MappingInvoiceDetails edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingInvoiceDetails();
 

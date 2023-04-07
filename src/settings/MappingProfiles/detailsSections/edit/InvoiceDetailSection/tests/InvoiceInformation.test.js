@@ -27,7 +27,7 @@ const renderInvoiceInformation = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('InvoiceInformation', () => {
+describe('InvoiceInformation edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderInvoiceInformation();
 

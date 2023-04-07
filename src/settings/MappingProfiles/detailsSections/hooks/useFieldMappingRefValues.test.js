@@ -53,7 +53,7 @@ const initialStateValues = {
   }
 };
 
-describe('useFieldMappingRefValues', () => {
+describe('useFieldMappingRefValues hook', () => {
   beforeEach(() => {
     useSelectorMock.mockImplementation(selector => selector(initialStateValues));
   });

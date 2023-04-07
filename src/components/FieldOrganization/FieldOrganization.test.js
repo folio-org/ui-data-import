@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  fireEvent,
+  act,
   waitFor,
+  fireEvent,
 } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -55,6 +56,7 @@ describe('FieldOrganization component', () => {
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderFieldOrganization({ id: '1' });
+    await act(() => mutator.fieldOrganizationOrg.GET());
 
     await runAxeTest({ rootNode: container });
   });

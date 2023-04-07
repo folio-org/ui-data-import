@@ -109,11 +109,12 @@ describe('LogViewer component', () => {
   });
 
   it('should be rendered with default theme', () => {
-    const { getByText } = renderLogViewer(logViewerLogsProps);
-    const preElement = getByText('srs-marc-bib label');
+    const { container } = renderLogViewer(logViewerLogsProps);
+    const preElement = container.querySelector('#logs-pane');
 
     expect(preElement).toHaveClass('coy');
   });
+
   it('should be rendered', () => {
     const { getByText } = renderLogViewer({
       ...logViewerLogsProps,
@@ -240,14 +241,11 @@ describe('LogViewer component', () => {
 
   describe('when change the theme', () => {
     it('should change value', () => {
-      const {
-        container,
-        getByText,
-      } = renderLogViewer({
+      const { container } = renderLogViewer({
         ...logViewerLogsProps,
         ...logViewerOtherProps,
       });
-      const preElement = getByText('srs-marc-bib label');
+      const preElement = container.querySelector('#logs-pane');
       const selectControl = container.querySelector('.selectControl');
 
       fireEvent.change(selectControl, { target: { value: 'coy' } });

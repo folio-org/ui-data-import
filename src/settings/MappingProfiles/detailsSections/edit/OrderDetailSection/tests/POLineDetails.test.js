@@ -36,7 +36,7 @@ const renderPOLineDetails = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('POLineDetails', () => {
+describe('POLineDetails edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderPOLineDetails();
 

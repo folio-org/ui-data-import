@@ -29,15 +29,24 @@ jest.mock('../../../hooks', () => ({
   }),
 }));
 
+const okapiProps = {
+  tenant: 'test tenant',
+  token: 'test token',
+  url: 'test url',
+};
+
 const renderCostDetails = () => {
   const component = () => (
-    <CostDetails setReferenceTables={noop} />
+    <CostDetails
+      setReferenceTables={noop}
+      okapi={okapiProps}
+    />
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('CostDetails', () => {
+describe('CostDetails edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderCostDetails();
 

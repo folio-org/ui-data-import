@@ -64,7 +64,7 @@ const renderElectronicAccess = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('<ElectronicAccess>', () => {
+describe('ElectronicAccess edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderElectronicAccess();
 

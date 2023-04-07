@@ -12,6 +12,7 @@ import {
 import '../../../test/jest/__mock__';
 import { Paneset } from '@folio/stripes/components';
 import {
+  buildStripes,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
@@ -23,6 +24,8 @@ import {
 } from '../../utils';
 import { matchProfilesShape } from '.';
 import { MatchProfiles } from './MatchProfiles';
+
+const stripes = buildStripes();
 
 const history = createMemoryHistory();
 
@@ -48,14 +51,6 @@ const matchProfilesProps = {
       }],
     },
   },
-  stripes: {
-    okapi: {
-      tenant: 'test-tenant',
-      token: 'test-token',
-      url: 'test-url',
-    },
-    hasPerm: () => true,
-  },
   location: {
     search: 'data-import-profiles/matchProfiles',
     pathname: 'data-import-profiles/matchProfiles',
@@ -77,7 +72,6 @@ const matchProfilesProps = {
 
 const getMatchProfileComponent = ({
   resources,
-  stripes,
   location,
   label,
   selectedRecord,
@@ -99,6 +93,7 @@ const getMatchProfileComponent = ({
             selectedRecord={selectedRecord}
             checkboxList={checkboxList}
             setList={noop}
+            initialValues={{}}
           />
         </Paneset>
       </Router>
@@ -111,7 +106,7 @@ const renderMatchProfiles = props => {
   return render(renderWithReduxForm(component));
 };
 
-describe('MatchProfiles', () => {
+describe('MatchProfiles component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMatchProfiles(matchProfilesProps);
 

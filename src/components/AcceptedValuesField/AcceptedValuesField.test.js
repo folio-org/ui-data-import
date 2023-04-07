@@ -30,6 +30,8 @@ const okapiProps = {
   url: 'test url',
 };
 
+const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+
 const renderAcceptedValuesField = ({
   acceptedValuesList,
   wrapperSources,
@@ -223,6 +225,7 @@ describe('Accepted values field component', () => {
         });
 
         await waitFor(() => expect(findByText('withReferenceValues')).toBeDefined());
+        await waitFor(() => expect(mockConsoleError).toHaveBeenCalledTimes(2));
       });
     });
   });

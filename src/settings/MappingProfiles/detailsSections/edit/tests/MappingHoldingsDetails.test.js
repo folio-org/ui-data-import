@@ -67,7 +67,7 @@ const renderMappingHoldingsDetails = ({ referenceTables }) => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('<MappingHoldingsDetails>', () => {
+describe('MappingHoldingsDetails edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,

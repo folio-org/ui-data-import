@@ -155,6 +155,7 @@ export const Vendor = ({
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(VENDOR_FIELDS_MAP.ACCOUNT_NUMBER)}
             acceptedValuesList={accountNumbersOptions}
+            okapi={okapi}
             hasLoaded
           />
         </Col>

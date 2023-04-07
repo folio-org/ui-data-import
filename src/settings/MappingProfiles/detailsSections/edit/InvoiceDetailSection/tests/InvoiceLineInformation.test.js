@@ -23,6 +23,12 @@ jest.mock('../../../hooks', () => ({
   useFieldMappingRefValues: () => [[mockVendorRefNumberFields]],
 }));
 
+const okapiProps = {
+  tenant: 'test tenant',
+  token: 'test token',
+  url: 'test url',
+};
+
 const setReferenceTablesMock = jest.fn();
 
 const renderInvoiceLineInformation = () => {
@@ -33,14 +39,14 @@ const renderInvoiceLineInformation = () => {
       mappingFields={INVOICE.mappingFields}
       invoiceLinesFieldIndex={26}
       accountingNumberOptions={[]}
-      okapi={{}}
+      okapi={okapiProps}
     />
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('InvoiceLineInformation', () => {
+describe('InvoiceLineInformation edit component', () => {
   afterAll(() => {
     setReferenceTablesMock.mockClear();
   });

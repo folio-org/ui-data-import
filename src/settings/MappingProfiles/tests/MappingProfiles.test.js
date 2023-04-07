@@ -139,6 +139,7 @@ const renderMappingProfiles = ({
           checkboxList={checkboxList}
           setList={setList}
           detailProps={detailProps}
+          initialValues={{}}
         />
       </Paneset>
     </Router>
@@ -147,7 +148,7 @@ const renderMappingProfiles = ({
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('<MappingProfiles>', () => {
+describe('MappingProfiles component', () => {
   it('renders correctly', async () => {
     const { getByText } = renderMappingProfiles(mappingProfilesProps);
     const numberOfMappingProfiles = resources.mappingProfiles.other.totalRecords;

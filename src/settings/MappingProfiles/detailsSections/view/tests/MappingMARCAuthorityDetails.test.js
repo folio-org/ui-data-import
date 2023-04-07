@@ -24,7 +24,7 @@ const renderMappingMARCAuthorityDetails = ({ folioRecordType }) => {
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('MappingMARCAuthorityDetails', () => {
+describe('MappingMARCAuthorityDetails view component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingMARCAuthorityDetails({ folioRecordType: MARC_TYPES.MARC_AUTHORITY });
 

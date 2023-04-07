@@ -37,7 +37,7 @@ const renderMappingOrderDetails = () => {
 };
 
 
-describe('MappingOrderDetails', () => {
+describe('MappingOrderDetails edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingOrderDetails();
 

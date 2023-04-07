@@ -13,6 +13,12 @@ import {
 
 import { VendorInformation } from '../VendorInformation';
 
+const okapiProps = {
+  tenant: 'test tenant',
+  token: 'test token',
+  url: 'test url',
+};
+
 const renderVendorInformation = () => {
   const component = () => (
     <VendorInformation
@@ -21,14 +27,14 @@ const renderVendorInformation = () => {
       accountingCodeOptions={[]}
       onSelectVendor={noop}
       onClearVendor={noop}
-      okapi={{}}
+      okapi={okapiProps}
     />
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('VendorInformation', () => {
+describe('VendorInformation edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderVendorInformation();
 

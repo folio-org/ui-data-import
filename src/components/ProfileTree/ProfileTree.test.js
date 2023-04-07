@@ -47,6 +47,8 @@ window.ResizeObserver = jest.fn(() => ({
   unobserve() {},
 }));
 
+global.fetch = jest.fn();
+
 const profileTreeProps = ({
   allowUnlink,
   allowDelete,
@@ -117,6 +119,7 @@ const profileTreeProps = ({
         hasLoaded: true,
         records: [{
           name: 'testName',
+          id: 'jobProfileId',
           dataType: 'EDIFACT',
           metadata: {
             createdByUserId: 'testUserId',
@@ -151,12 +154,14 @@ const renderProfileTree = ({
 };
 
 describe('ProfileTree component', () => {
-  afterAll(() => {
-    delete window.ResizeObserver;
-  });
-
   afterEach(() => {
     Pluggable.mockClear();
+    global.fetch.mockClear();
+  });
+
+  afterAll(() => {
+    delete window.ResizeObserver;
+    delete global.fetch;
   });
 
   // TODO: Create separate ticket to fix all the accesibility tests
@@ -191,6 +196,24 @@ describe('ProfileTree component', () => {
   });
 
   it('should be rendered', async () => {
+    global.fetch.mockReturnValue({
+      ok: true,
+      json: async () => ({
+        id: 'testId',
+        profileId: 'testProfileId',
+        content: {
+          id: 'testContentId',
+          name: 'test name',
+          metadata: {
+            createdDate: '2023-04-06T08:55:23.034+00:00',
+            createdByUserId: 'fed7855f-c3c1-54ea-acc1-0a62cb1d15d3',
+            updatedByUserId: 'fed7855f-c3c1-54ea-acc1-0a62cb1d15d3',
+            updatedDate: '2023-04-06T08:55:23.034+00:00',
+          },
+        }
+      }),
+    });
+
     const { findAllByText } = renderProfileTree(profileTreeProps({
       allowUnlink: true,
       allowDelete: false,

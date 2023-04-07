@@ -70,7 +70,7 @@ const renderLocation = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('Location', () => {
+describe('Location edit component', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
   });

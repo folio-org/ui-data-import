@@ -54,7 +54,7 @@ const fieldsWithLabel = [{
 }];
 const fieldsWithoutLabel = [{ value: 'instance.metadata.updatedDate' }];
 const defaultIntl = { formatMessage: noop };
-const getFieldMatchedChildren = record => <span>{record.getFieldMatched(fieldsWithLabel, 'INSTANCE')}</span>;
+const getFieldMatchedChildren = record => <span key="testKey">{record.getFieldMatched(fieldsWithLabel, 'INSTANCE')}</span>;
 
 const renderMatchingFieldsManager = ({
   children,
@@ -84,7 +84,7 @@ describe('MatchingFieldsManager component', () => {
       const matchFieldsChildren = record => {
         const labelId = record.matchFields(resources, 'INSTANCE')[0].label;
 
-        return <span><FormattedMessage id={labelId} /></span>;
+        return <span key={labelId}><FormattedMessage id={labelId} /></span>;
       };
       const { getByText } = renderMatchingFieldsManager({ children: matchFieldsChildren });
 
@@ -111,7 +111,7 @@ describe('MatchingFieldsManager component', () => {
 
       describe('when record has from resources', () => {
         it('empty title should be rendered', () => {
-          const getFieldMatchedChildrenWithFromResources = record => <span>{record.getFieldMatched(resourcesWithFromResources, 'INSTANCE')}</span>;
+          const getFieldMatchedChildrenWithFromResources = record => <span key="testKey">{record.getFieldMatched(resourcesWithFromResources, 'INSTANCE')}</span>;
           const { container } = renderMatchingFieldsManager({ children: getFieldMatchedChildrenWithFromResources });
           const titleElement = container.querySelector('span').innerHTML;
 
@@ -121,7 +121,7 @@ describe('MatchingFieldsManager component', () => {
 
       describe('when record type doesn`t exist', () => {
         it('empty title should be rendered', () => {
-          const getFieldMatchedWithCategoryChildrenWithoutRecordType = record => <span>{record.getFieldMatchedWithCategory(fieldsWithLabel, null)}</span>;
+          const getFieldMatchedWithCategoryChildrenWithoutRecordType = record => <span key="testKey">{record.getFieldMatchedWithCategory(fieldsWithLabel, null)}</span>;
           const { container } = renderMatchingFieldsManager({ children: getFieldMatchedWithCategoryChildrenWithoutRecordType });
 
           const titleElement = container.querySelector('span').innerHTML;
@@ -133,7 +133,7 @@ describe('MatchingFieldsManager component', () => {
 
     describe('when record is MARC', () => {
       it('should be rendered', () => {
-        const getFieldMatchedMARCChildren = record => <span>{record.getFieldMatched(fieldsWithLabel, 'MARCBIB')}</span>;
+        const getFieldMatchedMARCChildren = record => <span key="testKey">{record.getFieldMatched(fieldsWithLabel, 'MARCBIB')}</span>;
         const { getByText } = renderMatchingFieldsManager({ children: getFieldMatchedMARCChildren });
 
         expect(getByText('instance.metadata.updatedDate')).toBeDefined();
@@ -144,7 +144,7 @@ describe('MatchingFieldsManager component', () => {
   describe('when getFieldMatchedWithCategory function is called', () => {
     describe('when fields have label', () => {
       it('should be rendered', () => {
-        const getFieldMatchedWithCategoryChildrenWithLabel = record => <span>{record.getFieldMatchedWithCategory(fieldsWithLabel, 'INSTANCE')}</span>;
+        const getFieldMatchedWithCategoryChildrenWithLabel = record => <span key="testKey">{record.getFieldMatchedWithCategory(fieldsWithLabel, 'INSTANCE')}</span>;
         const { getByText } = renderMatchingFieldsManager({ children: getFieldMatchedWithCategoryChildrenWithLabel });
 
         expect(getByText('Admin data: Updated date and time')).toBeDefined();
@@ -153,7 +153,7 @@ describe('MatchingFieldsManager component', () => {
 
     describe('when fields don`t have label', () => {
       it('empty title should be rendered', () => {
-        const getFieldMatchedWithCategoryChildrenWithoutLabel = record => <span>{record.getFieldMatchedWithCategory(fieldsWithoutLabel, 'INSTANCE')}</span>;
+        const getFieldMatchedWithCategoryChildrenWithoutLabel = record => <span key="testKey">{record.getFieldMatchedWithCategory(fieldsWithoutLabel, 'INSTANCE')}</span>;
         const { container } = renderMatchingFieldsManager({ children: getFieldMatchedWithCategoryChildrenWithoutLabel });
 
         const titleElement = container.querySelector('span').innerHTML;
@@ -166,7 +166,7 @@ describe('MatchingFieldsManager component', () => {
   describe('when getDropdownOptions function is called', () => {
     describe('when field hasn`t from resources', () => {
       it('should be rendered', () => {
-        const getDropdownOptionsChildren = record => <span>{record.getDropdownOptions(records)[0].label}</span>;
+        const getDropdownOptionsChildren = record => <span key="testKey">{record.getDropdownOptions(records)[0].label}</span>;
         const { getByText } = renderMatchingFieldsManager({ children: getDropdownOptionsChildren });
 
         expect(getByText('Admin data: Admin data')).toBeDefined();
@@ -174,7 +174,7 @@ describe('MatchingFieldsManager component', () => {
 
       it('should render Purchase Order Line POL', () => {
         const getDropdownOptionsChildren = record => {
-          return record.getDropdownOptions(records).map(rec => <span>{rec.label}</span>);
+          return record.getDropdownOptions(records).map(rec => <span key={rec.value}>{rec.label}</span>);
         };
         const { getByText } = renderMatchingFieldsManager({ children: getDropdownOptionsChildren });
 
@@ -183,7 +183,7 @@ describe('MatchingFieldsManager component', () => {
 
       it('should render Vendor reference number', () => {
         const getDropdownOptionsChildren = record => {
-          return record.getDropdownOptions(records).map(rec => <span key={rec.categoryId}>{rec.label}</span>);
+          return record.getDropdownOptions(records).map((rec, i) => <span key={i}>{rec.label}</span>);
         };
         const { getByText } = renderMatchingFieldsManager({ children: getDropdownOptionsChildren });
 
@@ -191,9 +191,9 @@ describe('MatchingFieldsManager component', () => {
       });
     });
 
-    describe('when field hasn from resources', () => {
+    describe('when field has from resources', () => {
       it('should be rendered', () => {
-        const getDropdownOptionsChildrenWithFromResources = record => <span>{record.getDropdownOptions(resourcesWithFromResources)[0].label}</span>;
+        const getDropdownOptionsChildrenWithFromResources = record => <span key="testKey">{record.getDropdownOptions(resourcesWithFromResources)[0].label}</span>;
         const { getByText } = renderMatchingFieldsManager({ children: getDropdownOptionsChildrenWithFromResources });
 
         expect(getByText('Identifier: testName')).toBeDefined();

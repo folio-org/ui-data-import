@@ -34,7 +34,7 @@ const renderMappingMARCBibDetails = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('<MARCBibDetails>', () => {
+describe('MARCBibDetails view component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
 

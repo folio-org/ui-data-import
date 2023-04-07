@@ -38,7 +38,7 @@ const renderInvoiceLineFundDistribution = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('InvoiceLineFundDistribution', () => {
+describe('InvoiceLineFundDistribution edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderInvoiceLineFundDistribution();
 

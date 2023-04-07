@@ -30,7 +30,7 @@ const renderMappingMARCAuthorityDetails = ({ folioRecordType }) => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('MappingMARCAuthorityDetails', () => {
+describe('MappingMARCAuthorityDetails edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingMARCAuthorityDetails({ folioRecordType: MARC_TYPES.MARC_AUTHORITY });
 

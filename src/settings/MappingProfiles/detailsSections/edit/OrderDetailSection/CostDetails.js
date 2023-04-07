@@ -38,7 +38,10 @@ import {
   SET_EXCHANGE_RATE_FIELD,
 } from '../../../../../utils';
 
-export const CostDetails = ({ setReferenceTables }) => {
+export const CostDetails = ({
+  setReferenceTables,
+  okapi,
+}) => {
   const COST_DETAILS_FIELDS_MAP = {
     PHYSICAL_UNIT_PRICE: getFieldName(47),
     QUANTITY_PHYSICAL: getFieldName(48),
@@ -173,6 +176,7 @@ export const CostDetails = ({ setReferenceTables }) => {
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={currenciesOptions}
+            okapi={okapi}
             required
           />
         </Col>

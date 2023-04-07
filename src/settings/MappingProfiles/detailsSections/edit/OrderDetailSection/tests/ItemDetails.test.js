@@ -71,7 +71,7 @@ const renderItemDetails = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('ItemDetails', () => {
+describe('ItemDetails edit component', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
   });

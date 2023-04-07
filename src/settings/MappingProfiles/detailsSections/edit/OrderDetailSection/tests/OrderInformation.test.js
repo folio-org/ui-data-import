@@ -102,7 +102,7 @@ const renderOrderInformation = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('OrderInformation', () => {
+describe('OrderInformation edit component', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
   });

@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithContext } from '@folio/stripes-data-transfer-components/test/jest/helpers';
@@ -22,8 +25,8 @@ const TestComponent = props => {
         type="text"
         id="name"
         name="name"
-        onChange={props.validate('hello')}
-        value="Hello"
+        onChange={() => props.validate('hello')}
+        value=""
         aria-label="Name"
       />
       <input
@@ -72,9 +75,11 @@ describe('With Validation component', () => {
 });
 
 describe('Check the validateQuotedStringOrMarcPath by', () => {
-  it('passing normal string and setting remove value prop as true', () => {
+  it('passing normal string and setting remove value prop as true', async () => {
     const { getByTestId } = renderWithValidation(true);
     const input = getByTestId('name');
+
+    fireEvent.change(input, { target: { value: 'Hello' } });
 
     waitFor(() => expect(input.value).toBe('Hello'));
   });

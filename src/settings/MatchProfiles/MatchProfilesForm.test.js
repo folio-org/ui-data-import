@@ -76,10 +76,10 @@ const matchProfilesFormProps = layerType => ({
           parentProfiles: [],
           childProfiles: [],
           metadata: {
-            createdDate: 1543741530000,
+            createdDate: '2023-02-16T17:00:00.558+00:00',
             createdByUserId: '',
             createdByUsername: '',
-            updatedDate: 1544000730000,
+            updatedDate: '2023-02-18T17:00:00.558+00:00',
             updatedByUserId: '',
             updatedByUsername: '',
           },
@@ -110,13 +110,19 @@ const matchProfilesFormProps = layerType => ({
       existingRecordType: 'MARC_AUTHORITY',
     },
     matchDetails: [{
+      incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+      existingRecordType: 'INSTANCE',
+      matchCriterion: 'EXACTLY_MATCHES',
       existingMatchExpression: {
         fields: [{
           label: 'field',
           value: 'instance.id',
         }],
+        dataValueType: 'test dataValueType',
+        qualifier: {},
       },
       incomingMatchExpression: {
+        dataValueType: 'test data value 1',
         fields: [{
           label: 'testLabel_2',
           value: null,
@@ -176,6 +182,7 @@ const renderMatchProfilesForm = ({
         transitionToParams={noop}
         onSubmit={jest.fn()}
         layerType={LAYER_TYPES.EDIT}
+        baseUrl="testBaseUrl"
       />
     </Router>
   );
@@ -201,7 +208,7 @@ const renderMatchProfilesForm = ({
   return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
-describe('MatchProfilesForm', () => {
+describe('MatchProfilesForm component', () => {
   afterEach(() => {
     handleProfileSave.mockClear();
   });

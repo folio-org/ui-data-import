@@ -14,7 +14,7 @@ jest.mock('./useFieldMappingFieldValue', () => ({
   useFieldMappingFieldValue: jest.fn(),
 }));
 
-describe('useDisabledOrderFields', () => {
+describe('useDisabledOrderFields hook', () => {
   afterEach(() => {
     useFieldMappingFieldValue.mockClear();
   });

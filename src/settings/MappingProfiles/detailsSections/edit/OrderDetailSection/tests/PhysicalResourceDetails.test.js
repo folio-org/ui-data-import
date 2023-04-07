@@ -59,7 +59,7 @@ const renderPhysicalResourceDetails = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('PhysicalResourceDetails', () => {
+describe('PhysicalResourceDetails edit component', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
   });

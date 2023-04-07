@@ -17,11 +17,17 @@ import {
 import { ExtendedInformation } from '../ExtendedInformation';
 import INVOICE from '../../../../initialDetails/INVOICE';
 
+const okapiProps = {
+  tenant: 'test tenant',
+  token: 'test token',
+  url: 'test url',
+};
+
 const renderExtendedInformation = () => {
   const component = () => (
     <ExtendedInformation
       mappingFields={INVOICE.mappingFields}
-      okapi={{}}
+      okapi={okapiProps}
       setReferenceTables={noop}
     />
   );
@@ -29,7 +35,7 @@ const renderExtendedInformation = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('ExtendedInformation', () => {
+describe('ExtendedInformation edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderExtendedInformation();
 

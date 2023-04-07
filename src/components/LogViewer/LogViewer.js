@@ -171,16 +171,16 @@ export const LogViewer = memo(({
             const code = item.logs || '';
             const codePortion = Array.isArray(code) ? code : [code];
 
-            return codePortion.map(portion => {
+            return codePortion.map((portion, index) => {
               const codeString = getCodeString(portion);
               const dataId = portion.id;
 
               return (
-                <>
+                <div key={index}>
                   {item.label}
                   {item.error && renderCodeHighlight(item.errorBlockId || 'error', item.error, themeModule.error)}
                   {renderCodeHighlight(dataId, codeString, themeModule.info)}
-                </>
+                </div>
               );
             });
           })}
