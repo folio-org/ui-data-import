@@ -7,14 +7,12 @@ import {
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
-
-import '../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../test/jest/helpers';
+import '../../../../test/jest/__mock__';
 
 import {
   JobProfilesForm,
@@ -47,10 +45,9 @@ const mutator = {
   },
 };
 
-const resources = buildResources({
-  resourceName: 'childWrappers',
-  records: childWrappers,
-});
+const resources = {
+  childWrappers: { records: childWrappers },
+};
 
 const parentResources = {
   jobProfiles: {},

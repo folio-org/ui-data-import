@@ -9,12 +9,12 @@ import { runAxeTest } from '@folio/stripes-testing';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import '../../../../test/jest/__mock__';
 import {
   buildStripes,
+  renderWithIntl,
   translationsProperties,
 } from '../../../../test/jest/helpers';
+import '../../../../test/jest/__mock__';
 
 import { ViewActionProfile } from './ViewActionProfile';
 

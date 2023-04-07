@@ -5,15 +5,10 @@ import { noop } from 'lodash';
 
 import '../../../../test/jest/__mock__';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
-import {
-  buildMutator,
-  buildResources,
-} from '@folio/stripes-data-transfer-components/test/helpers';
-
 import { Paneset } from '@folio/stripes/components';
+
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../test/jest/helpers';
@@ -36,43 +31,46 @@ const history = createMemoryHistory();
 
 history.push = jest.fn();
 
-const mappingDetails = getInitialDetails(FOLIO_RECORD_TYPES.INVOICE.type);
+const mappingDetails = getInitialDetails('INVOICE');
 
-const resources = buildResources({
-  resourceName: 'mappingProfiles',
-  records: [{
-    childProfiles: [],
-    deleted: false,
-    description: 'testDescription',
-    existingRecordType: 'INVOICE',
-    incomingRecordType: 'EDIFACT_INVOICE',
-    id: 'id1',
-    name: 'name1',
-    mappingDetails,
-    marcFieldProtectionSettings: [],
-    userInfo: {
-      firstName: 'System',
-      lastName: 'System',
-      userName: 'System',
-    },
-    metadata: {
-      createdByUserId: '00000000-0000-0000-0000-000000000000',
-      createdDate: '2021-03-01T15:00:00.000+00:00',
-      updatedByUserId: '00000000-0000-0000-0000-000000000000',
-      updatedDate: '2021-03-01T16:00:00.462+00:00',
-    },
-    parentProfiles: [],
-  }],
-  otherResources: {
-    query: {
-      query: '',
-      sort: 'name',
-    },
-    marcFieldProtectionSettings: { records: [] },
+const mappingProfileRecords = [{
+  childProfiles: [],
+  deleted: false,
+  description: 'testDescription',
+  existingRecordType: 'INVOICE',
+  incomingRecordType: 'EDIFACT_INVOICE',
+  id: 'id1',
+  name: 'name1',
+  mappingDetails,
+  marcFieldProtectionSettings: [],
+  userInfo: {
+    firstName: 'System',
+    lastName: 'System',
+    userName: 'System',
   },
-});
+  metadata: {
+    createdByUserId: '00000000-0000-0000-0000-000000000000',
+    createdDate: '2021-03-01T15:00:00.000+00:00',
+    updatedByUserId: '00000000-0000-0000-0000-000000000000',
+    updatedDate: '2021-03-01T16:00:00.462+00:00',
+  },
+  parentProfiles: [],
+}];
+const resources = {
+  mappingProfiles: {
+    records: mappingProfileRecords,
+    other: { totalRecords: mappingProfileRecords.length },
+    resultCount: 1,
+    hasLoaded: true,
+  },
+  query: {
+    query: '',
+    sort: 'name',
+  },
+  marcFieldProtectionSettings: { records: [] },
+};
 
-const mutator = buildMutator({
+const mutator = {
   query: {
     replace: noop,
     update: noop,
@@ -86,7 +84,7 @@ const mutator = buildMutator({
     PUT: noop,
     DELETE: noop,
   },
-});
+};
 
 const testSet = new Set();
 

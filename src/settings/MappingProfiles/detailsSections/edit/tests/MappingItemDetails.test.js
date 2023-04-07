@@ -4,10 +4,10 @@ import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../test/jest/helpers';

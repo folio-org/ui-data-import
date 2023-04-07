@@ -8,12 +8,14 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import '../../../../test/jest/__mock__';
+
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
 
-import '../../../../test/jest/__mock__';
 import { Paneset } from '@folio/stripes/components';
+
 import {
+  renderWithIntl,
   buildStripes,
   renderWithReduxForm,
   translationsProperties,

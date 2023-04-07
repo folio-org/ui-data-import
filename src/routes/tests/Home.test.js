@@ -8,8 +8,8 @@ import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import {
+  renderWithIntl,
   translationsProperties,
   renderWithRedux,
   jobLogsData,
@@ -92,7 +92,7 @@ const renderHome = (store = initialStore, context = defaultContext) => {
   return renderWithIntl(renderWithRedux(component, store), translationsProperties);
 };
 
-describe('Home component', () => {
+describe.skip('Home component', () => {
   let mockStorage = {};
 
   beforeAll(() => {

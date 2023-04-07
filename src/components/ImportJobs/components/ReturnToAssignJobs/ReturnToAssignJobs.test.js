@@ -3,11 +3,11 @@ import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../../test/jest/helpers';
 import '../../../../../test/jest/__mock__';
-
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import { translationsProperties } from '../../../../../test/jest/helpers';
 
 import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
 import { ReturnToAssignJobs } from './ReturnToAssignJobs';
