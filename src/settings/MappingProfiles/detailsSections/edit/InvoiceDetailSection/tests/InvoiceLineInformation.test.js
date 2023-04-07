@@ -8,6 +8,7 @@ import { get } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -23,11 +24,7 @@ jest.mock('../../../hooks', () => ({
   useFieldMappingRefValues: () => [[mockVendorRefNumberFields]],
 }));
 
-const okapiProps = {
-  tenant: 'test tenant',
-  token: 'test token',
-  url: 'test url',
-};
+const okapi = buildOkapi();
 
 const setReferenceTablesMock = jest.fn();
 
@@ -39,7 +36,7 @@ const renderInvoiceLineInformation = () => {
       mappingFields={INVOICE.mappingFields}
       invoiceLinesFieldIndex={26}
       accountingNumberOptions={[]}
-      okapi={okapiProps}
+      okapi={okapi}
     />
   );
 

@@ -5,6 +5,7 @@ import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -13,11 +14,7 @@ import '../../../../../../../test/jest/__mock__';
 
 import { VendorInformation } from '../VendorInformation';
 
-const okapiProps = {
-  tenant: 'test tenant',
-  token: 'test token',
-  url: 'test url',
-};
+const okapi = buildOkapi();
 
 const renderVendorInformation = () => {
   const component = () => (
@@ -27,7 +24,7 @@ const renderVendorInformation = () => {
       accountingCodeOptions={[]}
       onSelectVendor={noop}
       onClearVendor={noop}
-      okapi={okapiProps}
+      okapi={okapi}
     />
   );
 

@@ -8,6 +8,7 @@ import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -17,17 +18,13 @@ import '../../../../../../../test/jest/__mock__';
 import { ExtendedInformation } from '../ExtendedInformation';
 import INVOICE from '../../../../initialDetails/INVOICE';
 
-const okapiProps = {
-  tenant: 'test tenant',
-  token: 'test token',
-  url: 'test url',
-};
+const okapi = buildOkapi();
 
 const renderExtendedInformation = () => {
   const component = () => (
     <ExtendedInformation
       mappingFields={INVOICE.mappingFields}
-      okapi={okapiProps}
+      okapi={okapi}
       setReferenceTables={noop}
     />
   );

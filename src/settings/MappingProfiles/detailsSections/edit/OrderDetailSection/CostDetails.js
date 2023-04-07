@@ -254,4 +254,7 @@ export const CostDetails = ({
   );
 };
 
-CostDetails.propTypes = { setReferenceTables: PropTypes.func.isRequired };
+CostDetails.propTypes = {
+  okapi: PropTypes.object.isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
+};

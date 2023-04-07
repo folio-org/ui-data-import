@@ -321,7 +321,7 @@ describe.skip('SearchAndSort component', () => {
     });
   });
 
-  /* describe('when layer is edit', () => {
+  describe('when layer is edit', () => {
     it('EditRecordComponent should be rendered', () => {
       const { getByText } = renderSearchAndSort(searchAndSortProps({
         parentResources: resources(1, false),
@@ -345,9 +345,9 @@ describe.skip('SearchAndSort component', () => {
         expect(onEditMock).toHaveBeenCalled();
       });
     });
-  }); */
+  });
 
-  /* describe('when layer is duplicate', () => {
+  describe('when layer is duplicate', () => {
     it('EditRecordComponent should be rendered', () => {
       const { getByText } = renderSearchAndSort(searchAndSortProps({
         parentResources: resources(1, false),
@@ -371,5 +371,5 @@ describe.skip('SearchAndSort component', () => {
         expect(onCreateMock).toHaveBeenCalled();
       });
     });
-  }); */
+  });
 });

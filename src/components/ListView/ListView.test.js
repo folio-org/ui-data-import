@@ -9,6 +9,8 @@ import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
 import { runAxeTest } from '@folio/stripes-testing';
 
+import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
+
 import {
   buildStripes,
   renderWithIntl,
@@ -35,7 +37,7 @@ const mutator = buildMutator({
     DELETE: noop,
   },
   restoreDefaults: { POST: noop },
-};
+});
 
 const metadataMock = {
   createdByUserId: faker.random.uuid(),

@@ -10,6 +10,7 @@ import '../../../../test/jest/__mock__';
 import { ViewMatchCriterion } from './ViewMatchCriterion';
 
 jest.mock('.', () => ({
+  ...jest.requireActual('.'),
   MARCFieldSection: () => <span>MARCFieldSection</span>,
   IncomingSectionStatic: () => <span>IncomingSectionStatic</span>,
   QualifierSection: () => <span>QualifierSection</span>,

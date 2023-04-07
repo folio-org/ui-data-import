@@ -3,6 +3,7 @@ import { waitFor } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -23,11 +24,7 @@ const acceptedValuesListProp = [
   },
 ];
 
-const okapiProps = {
-  tenant: 'test tenant',
-  token: 'test token',
-  url: 'test url',
-};
+const okapi = buildOkapi();
 
 const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -51,7 +48,7 @@ const renderAcceptedValuesField = ({
       optionValue="name"
       optionTemplate={optionTemplate}
       setAcceptedValues={() => {}}
-      okapi={okapiProps}
+      okapi={okapi}
       isFormField={isFormField}
     />
   );

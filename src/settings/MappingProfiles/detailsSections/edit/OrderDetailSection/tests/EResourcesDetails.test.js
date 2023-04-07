@@ -6,6 +6,7 @@ import {
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -31,17 +32,13 @@ jest.mock('../../../hooks', () => ({
   }),
 }));
 
-const okapiProp = {
-  tenant: 'testTenant',
-  token: 'token.for.test',
-  url: 'https://folio-testing-okapi.dev.folio.org',
-};
+const okapi = buildOkapi();
 
 const renderEResourcesDetails = () => {
   const component = () => (
     <EResourcesDetails
       setReferenceTables={() => {}}
-      okapi={okapiProp}
+      okapi={okapi}
     />
   );
 

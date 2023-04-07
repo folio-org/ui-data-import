@@ -8,6 +8,7 @@ import '../../../../../../test/jest/__mock__';
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -49,11 +50,7 @@ const getAccountingNumberOptions = jest.spyOn(utils, 'getAccountingNumberOptions
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.INVOICE.type);
 const mappingDetailsProp = getInitialDetails(FOLIO_RECORD_TYPES.INVOICE.type);
 const getMappingSubfieldsFieldValueProp = jest.fn(() => '');
-const okapiProp = {
-  tenant: 'testTenant',
-  token: 'token.for.test',
-  url: 'https://folio-testing-okapi.dev.folio.org',
-};
+const okapi = buildOkapi();
 
 const renderMappingInvoiceDetails = () => {
   const component = () => (
@@ -62,7 +59,7 @@ const renderMappingInvoiceDetails = () => {
       initialFields={initialFieldsProp}
       setReferenceTables={noop}
       getMappingSubfieldsFieldValue={getMappingSubfieldsFieldValueProp}
-      okapi={okapiProp}
+      okapi={okapi}
     />
   );
 

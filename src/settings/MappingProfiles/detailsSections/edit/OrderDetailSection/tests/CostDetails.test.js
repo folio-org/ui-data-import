@@ -7,6 +7,7 @@ import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -28,17 +29,13 @@ jest.mock('../../../hooks', () => ({
   }),
 }));
 
-const okapiProps = {
-  tenant: 'test tenant',
-  token: 'test token',
-  url: 'test url',
-};
+const okapi = buildOkapi();
 
 const renderCostDetails = () => {
   const component = () => (
     <CostDetails
       setReferenceTables={noop}
-      okapi={okapiProps}
+      okapi={okapi}
     />
   );
 
