@@ -49,6 +49,7 @@ import {
   deleteJobExecutions,
   fieldsConfig,
   fileNameCellFormatter,
+  jobProfileNameCellFormatter,
 } from '../../utils';
 import {
   FILTERS,
@@ -388,6 +389,7 @@ class ViewAllLogs extends Component {
       }),
       fileName: record => fileNameCellFormatter(record, location),
       status: statusCellFormatter(formatMessage),
+      jobProfileName: jobProfileNameCellFormatter,
     };
   }
 

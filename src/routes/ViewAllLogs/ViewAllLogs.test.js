@@ -70,7 +70,10 @@ const getResources = query => ({
         completedDate: '2021-10-10T08:30:56.946+0000',
         id: 'testId1',
         fileName: 'testFile1',
-        jobProfileInfo: { name: 'test1' },
+        jobProfileInfo: {
+          name: 'jobProfileTestName1',
+          id: 'jobProfileTestId1',
+        },
         progress: {
           current: 0,
           total: 100,
@@ -80,7 +83,6 @@ const getResources = query => ({
           firstName: 'testFirstname1',
           lastName: 'testLastname1',
         },
-
       },
       {
         startedDate: '2021-10-11T07:00:56.946+0000',
@@ -126,7 +128,6 @@ const getResources = query => ({
     totalRecords: 100,
   },
 });
-
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -208,6 +209,12 @@ describe.skip('ViewAllLogs component', () => {
     const { getByText } = renderViewAllLogs(defaultQuery);
 
     expect(getByText(/3 logs found/i)).toBeInTheDocument();
+  });
+
+  it('should render job profile as a hotlink', () => {
+    const { getByText } = renderViewAllLogs(defaultQuery);
+
+    expect(getByText('jobProfileTestName1').href).toContain('/settings/data-import/job-profiles/view/jobProfileTestId1');
   });
 
   describe('SearchAndSort pane', () => {
