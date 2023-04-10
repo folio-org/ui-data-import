@@ -6,5 +6,5 @@ export * from './stripesMock';
 export * from './translationsProperties';
 export * from './shortcuts';
 export * from './jobLogsData';
-export * from './okapiMock';
-export * from './mutatorMock';
+export * from './buildOkapi';
+export * from './buildMutator';
