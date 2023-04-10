@@ -48,6 +48,8 @@ const mappingDetailsProp = [
     name: 'adjustments',
     path: 'invoice.adjustments[]',
     subfields: [{
+      order: 1,
+      path: 'invoice.adjustments[]',
       fields: [{
         name: 'description',
         value: 'a',
@@ -60,30 +62,40 @@ const mappingDetailsProp = [
         value: '',
       }, {
         name: 'exportToAccounting',
-        booleanFieldAction: '',
+        booleanFieldAction: 'ALL_TRUE',
       }, {
         name: 'fundDistributions',
         subfields: [{
+          order: 0,
+          path: 'fundDistributions',
           fields: [{
             name: 'fundId',
             value: '',
           }],
         }, {
+          order: 1,
+          path: 'fundDistributions',
           fields: [{
             name: 'expenseClassId',
             value: '',
           }],
         }, {
+          order: 2,
+          path: 'fundDistributions',
           fields: [{
             name: 'amount',
             value: '',
           }],
         }, {
+          order: 3,
+          path: 'fundDistributions',
           fields: [{
             name: 'value',
             value: 'testValue',
           }],
         }, {
+          order: 4,
+          path: 'fundDistributions',
           fields: [{
             name: 'distributionType',
             value: '',
@@ -123,7 +135,7 @@ const renderMappingInvoiceDetails = () => {
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('<MappingInvoiceDetails', () => {
+describe('MappingInvoiceDetails view component', () => {
   // TODO: Create separate ticket to fix all the accesibility tests
   it.skip('should be rendered with no axe errors', async () => {
     const { container } = renderMappingInvoiceDetails();

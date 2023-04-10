@@ -133,6 +133,7 @@ const renderActionProfiles = ({
           checkboxList={checkboxList}
           setList={setList}
           detailProps={detailProps}
+          initialValues={{}}
         />
       </Paneset>
     </Router>
@@ -141,7 +142,7 @@ const renderActionProfiles = ({
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('ActionProfiles', () => {
+describe('ActionProfiles component', () => {
   afterEach(() => {
     history.push.mockClear();
   });

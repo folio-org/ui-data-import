@@ -10,12 +10,15 @@ import { createMemoryHistory } from 'history';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildStripes,
   renderWithIntl,
   translationsProperties,
 } from '../../../../test/jest/helpers';
 import '../../../../test/jest/__mock__';
 
 import { ViewMatchProfile } from './ViewMatchProfile';
+
+const stripes = buildStripes();
 
 const history = createMemoryHistory();
 
@@ -34,13 +37,35 @@ const matchProfileRecord = (
       description,
       incomingRecordType: 'MARC_BIBLIOGRAPHIC',
       existingRecordType: 'INSTANCE',
-      incomingMatchExpression: 'testIncomingRecordLabel',
+      incomingMatchExpression: {
+        dataValueType: 'test data value 1',
+        fields: [{
+          label: 'test label 1',
+          value: 'text value 1',
+        }],
+        qualifier: {
+          comparisonPart: 'NUMERICS_ONLY',
+          qualifierType: 'BEGINS_WITH',
+          qualifierValue: 'test',
+        },
+      },
       existingMatchExpression: 'testExistingRecordLabel',
       matchCriterion: 'EXACTLY_MATCHES',
       matchDetails: [{
         incomingRecordType: 'MARC_BIBLIOGRAPHIC',
         existingRecordType: 'INSTANCE',
-        incomingMatchExpression: 'testIncomingRecordLabel',
+        incomingMatchExpression: {
+          dataValueType: 'test data value 1',
+          fields: [{
+            label: 'test label 1',
+            value: 'text value 1',
+          }],
+          qualifier: {
+            comparisonPart: 'NUMERICS_ONLY',
+            qualifierType: 'BEGINS_WITH',
+            qualifierValue: 'test',
+          },
+        },
         existingMatchExpression: 'testExistingRecordLabel',
         matchCriterion: 'EXACTLY_MATCHES',
       }],
@@ -73,7 +98,7 @@ const renderViewMatchProfile = ({
         history={history}
         onClose={noop}
         onDelete={noop}
-        stripes={{ hasPerm: () => true }}
+        stripes={stripes}
       />
     </Router>
   );
@@ -81,7 +106,7 @@ const renderViewMatchProfile = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('ViewMatchProfile', () => {
+describe('ViewMatchProfile component', () => {
   afterEach(() => {
     history.push.mockClear();
   });
@@ -93,10 +118,10 @@ describe('ViewMatchProfile', () => {
     await runAxeTest({ rootNode: container });
   });
 
-  it('match profile name should be rendered correctly', () => {
-    const { getAllByText } = renderViewMatchProfile(viewMatchProfileProps(matchProfileRecord()));
+  it('match profile name should be rendered correctly', async () => {
+    const { findAllByText } = renderViewMatchProfile(viewMatchProfileProps(matchProfileRecord()));
 
-    expect(getAllByText('testName')).toBeDefined();
+    await waitFor(() => expect(findAllByText('testName')).toBeDefined());
   });
 
   describe('when click on delete action button', () => {
@@ -171,18 +196,18 @@ describe('ViewMatchProfile', () => {
   });
 
   describe('when match profile is loading', () => {
-    it('spinner should be shown', () => {
-      const { getByText } = renderViewMatchProfile(viewMatchProfileProps(matchProfileRecord(false)));
+    it('spinner should be shown', async () => {
+      const { findByText } = renderViewMatchProfile(viewMatchProfileProps(matchProfileRecord(false)));
 
-      expect(getByText('Loading')).toBeDefined();
+      await waitFor(() => expect(findByText('Loading')).toBeDefined());
     });
   });
 
   describe('when match profile doesn`t exist', () => {
-    it('spinner should be shown', () => {
-      const { getByText } = renderViewMatchProfile(viewMatchProfileProps({ matchProfile: null }));
+    it('spinner should be shown', async () => {
+      const { findByText } = renderViewMatchProfile(viewMatchProfileProps({ matchProfile: null }));
 
-      expect(getByText('Loading')).toBeDefined();
+      await waitFor(() => expect(findByText('Loading')).toBeDefined());
     });
   });
 });

@@ -13,6 +13,8 @@ import {
 
 import { ProfileLinker } from './ProfileLinker';
 
+global.fetch = jest.fn();
+
 const onLink = jest.fn();
 
 const profileLinkerProps = {
@@ -50,15 +52,21 @@ const renderProfileLinker = ({
       initialData={initialData}
       setInitialData={setInitialData}
       okapi={okapi}
+      profileType="test profile type"
     />
   );
 
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('ProfileLinker', () => {
+describe('ProfileLinker component', () => {
   afterEach(() => {
     Pluggable.mockClear();
+    global.fetch.mockClear();
+  });
+
+  afterAll(() => {
+    delete global.fetch;
   });
 
   it('should be rendered with no axe errors', async () => {
@@ -95,6 +103,11 @@ describe('ProfileLinker', () => {
   });
 
   it('plugin info should be rendered', async () => {
+    global.fetch.mockReturnValue({
+      ok: true,
+      json: async () => {},
+    });
+
     const { getAllByText } = renderProfileLinker(profileLinkerProps);
 
     await Pluggable.mock.calls[0][0].renderTrigger({ buttonRefs: 'asd' });

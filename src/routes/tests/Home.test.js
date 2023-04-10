@@ -118,28 +118,28 @@ describe.skip('Home component', () => {
     await runAxeTest({ rootNode: container });
   });
 
-  it('should be rendered', () => {
-    const { getByText } = renderHome();
+  it('should be rendered', async () => {
+    const { findByText } = renderHome();
 
-    expect(getByText('Logs')).toBeDefined();
+    await waitFor(() => expect(findByText('Logs')).toBeDefined());
   });
 
-  it('should have actions menu', () => {
-    const { getByText } = renderHome();
+  it('should have actions menu', async () => {
+    const { findByText } = renderHome();
 
-    expect(getByText('Actions')).toBeDefined();
+    await waitFor(() => expect(findByText('Actions')).toBeDefined());
   });
 
   describe('when selected logs', () => {
     it('should render sub-heading', async () => {
       const {
         getAllByLabelText,
-        getByText,
+        findByText,
       } = renderHome();
 
       fireEvent.click(getAllByLabelText('select item')[0]);
 
-      expect(getByText('1 log selected')).toBeDefined();
+      await waitFor(() => expect(findByText('1 log selected')).toBeDefined());
     });
   });
 

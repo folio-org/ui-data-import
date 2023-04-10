@@ -59,7 +59,7 @@ const renderSection = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('Section', () => {
+describe('Section component', () => {
   describe('when label is provided', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderSection(sectionWithLabel);

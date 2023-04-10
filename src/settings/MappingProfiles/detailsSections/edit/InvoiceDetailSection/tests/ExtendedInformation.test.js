@@ -8,6 +8,7 @@ import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -17,11 +18,13 @@ import '../../../../../../../test/jest/__mock__';
 import { ExtendedInformation } from '../ExtendedInformation';
 import INVOICE from '../../../../initialDetails/INVOICE';
 
+const okapi = buildOkapi();
+
 const renderExtendedInformation = () => {
   const component = () => (
     <ExtendedInformation
       mappingFields={INVOICE.mappingFields}
-      okapi={{}}
+      okapi={okapi}
       setReferenceTables={noop}
     />
   );
@@ -29,7 +32,7 @@ const renderExtendedInformation = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('ExtendedInformation', () => {
+describe('ExtendedInformation edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderExtendedInformation();
 

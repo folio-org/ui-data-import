@@ -22,7 +22,7 @@ const renderRecordSelect = ({ isLocalLTR }) => {
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('RecordSelect', () => {
+describe('RecordSelect component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderRecordSelect({ isLocalLTR: false });
 

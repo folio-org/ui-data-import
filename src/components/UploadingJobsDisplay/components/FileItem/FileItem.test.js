@@ -22,7 +22,6 @@ const renderFileItem = ({
   onDelete,
   onCancelImport,
   status,
-  uploadedDate,
   loading,
   isSnapshotMode,
 }) => {
@@ -32,7 +31,7 @@ const renderFileItem = ({
       name={name}
       size={size}
       status={status}
-      uploadedDate={uploadedDate}
+      uploadedDate="2021-08-09T13:36:06.537+00:00"
       onDelete={onDelete}
       onCancelImport={onCancelImport}
       loading={loading}
@@ -142,10 +141,7 @@ describe('FileItem component', () => {
       });
 
       it('should render the uploaded date', () => {
-        const { getByText } = renderFileItem({
-          status: FILE_STATUSES.UPLOADED,
-          uploadedDate: '2021-08-09T13:36:06.537+00:00',
-        });
+        const { getByText } = renderFileItem({ status: FILE_STATUSES.UPLOADED });
 
         expect(getByText('8/9/2021')).toBeDefined();
       });

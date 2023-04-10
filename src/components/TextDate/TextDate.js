@@ -51,7 +51,6 @@ const propTypes = {
   readOnly: PropTypes.bool,
   required: PropTypes.bool,
   showCalendar: PropTypes.bool,
-  useInput: PropTypes.bool,
   usePortal: PropTypes.bool,
   value: PropTypes.string,
 };

@@ -29,7 +29,7 @@ const organization = {
   name: 'Amazon',
 };
 
-describe('useOrganizationValue', () => {
+describe('useOrganizationValue hook', () => {
   const mockGet = jest.fn(() => ({
     json: () => organization,
   }));

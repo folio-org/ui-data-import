@@ -21,8 +21,8 @@ const qualifierSectionWithoutQualifierType = {
   recordFieldType: 'incoming',
   qualifierData: {
     comparisonPart: 'NUMERICS_ONLY',
-    qualifierType: '',
-    qualifierValue: '',
+    qualifierType: null,
+    qualifierValue: null,
   },
 };
 
@@ -40,7 +40,7 @@ const renderQualifierSection = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('QualifierSection view', () => {
+describe('QualifierSection view component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderQualifierSection(qualifierSection);
 

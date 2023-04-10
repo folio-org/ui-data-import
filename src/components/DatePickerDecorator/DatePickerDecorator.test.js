@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
+import { noop } from 'lodash';
 
 import {
   renderWithIntl,
@@ -12,16 +13,22 @@ import { DatePickerDecorator } from './DatePickerDecorator';
 
 const onChange = jest.fn();
 
+const inputProps = {
+  value: '',
+  onChange,
+  onBlur: noop,
+  onDragStart: noop,
+  onDrop: noop,
+  onFocus: noop,
+};
+
 const renderDatePickerDecorator = () => {
   const wrappedComponent = () => <input aria-label="wrappedComponent" />;
   const component = (
     <DatePickerDecorator
       wrappedComponent={wrappedComponent}
       wrapperLabel="datePickerLabel"
-      input={{
-        value: '',
-        onChange,
-      }}
+      input={inputProps}
     />
   );
 

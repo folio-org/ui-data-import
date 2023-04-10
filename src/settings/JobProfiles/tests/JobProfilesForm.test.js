@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { fireEvent } from '@testing-library/react';
+import {
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -90,6 +93,7 @@ const jobProfilesFormProps = ({
     okapi: {
       url: '',
       tenant: '',
+      token: '',
     },
   },
   layerType,
@@ -118,6 +122,7 @@ const renderJobProfilesForm = ({
         layerType={layerType}
         mutator={mutator}
         resources={resources}
+        baseUrl="base-url"
       />
     </Router>
   );
@@ -125,7 +130,7 @@ const renderJobProfilesForm = ({
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('<JobProfilesForm>', () => {
+describe('JobProfilesForm component', () => {
   afterEach(() => {
     global.fetch.mockClear();
   });
@@ -142,25 +147,25 @@ describe('<JobProfilesForm>', () => {
 
   describe('when profile is duplicated', () => {
     describe('and there are attached profiles', () => {
-      it('should initialize the form with these profiles', () => {
-        const { getByText } = renderJobProfilesForm(jobProfilesFormProps({ layerType: LAYER_TYPES.DUPLICATE }));
+      it('should initialize the form with these profiles', async () => {
+        const { findByText } = renderJobProfilesForm(jobProfilesFormProps({ layerType: LAYER_TYPES.DUPLICATE }));
 
-        expect(getByText('Action profile: "Attached action profile"')).toBeDefined();
+        await waitFor(() => expect(findByText('Action profile: "Attached action profile"')).toBeDefined());
       });
     });
   });
 
   describe('should display correct title', () => {
-    it('when creating new profile', () => {
-      const { getAllByText } = renderJobProfilesForm(jobProfilesFormProps({}));
+    it('when creating new profile', async () => {
+      const { findAllByText } = renderJobProfilesForm(jobProfilesFormProps({}));
 
-      expect(getAllByText(/new job profile/i)).toBeDefined();
+      await waitFor(() => expect(findAllByText(/new job profile/i)).toBeDefined());
     });
 
-    it('when editing existing profile', () => {
-      const { getAllByText } = renderJobProfilesForm(jobProfilesFormProps({ idField: 'testId' }));
+    it('when editing existing profile', async () => {
+      const { findAllByText } = renderJobProfilesForm(jobProfilesFormProps({ idField: 'testId' }));
 
-      expect(getAllByText(/edit/i, { exact: false })).toBeDefined();
+      await waitFor(() => expect(findAllByText(/edit/i, { exact: false })).toBeDefined());
     });
   });
 
@@ -176,13 +181,15 @@ describe('<JobProfilesForm>', () => {
     expect(await fetchAssociations({ url: '/test-path' }, 'testId')).toEqual(expected);
   });
 
-  it('User can change "Accepted data type"', () => {
+  it('User can change "Accepted data type"', async () => {
     const {
       container,
-      getByRole,
+      findByRole,
     } = renderJobProfilesForm(jobProfilesFormProps({}));
 
-    fireEvent.change(getByRole('combobox', { name: /accepted data type/i }), { target: { value: 'EDIFACT' } });
+    const combobox = await findByRole('combobox', { name: /accepted data type/i });
+
+    fireEvent.change(combobox, { target: { value: 'EDIFACT' } });
 
     expect(container.querySelector('option[value="EDIFACT"]').selected).toBeTruthy();
   });
@@ -196,12 +203,15 @@ describe('<JobProfilesForm>', () => {
           json: async () => ({}),
         }));
 
-      const { getByRole } = renderJobProfilesForm(jobProfilesFormProps({ layerType: LAYER_TYPES.EDIT }));
+      const { findByRole } = renderJobProfilesForm(jobProfilesFormProps({ layerType: LAYER_TYPES.EDIT }));
 
-      fireEvent.change(getByRole('textbox', { name: /name/i }), { target: { value: 'test value' } });
-      fireEvent.click(getByRole('button', { name: /save as profile & close/i }));
+      const textBox = await findByRole('textbox', { name: /name/i });
+      fireEvent.change(textBox, { target: { value: 'test value' } });
 
-      expect(getByRole('button', { name: /save as profile & close/i })).toBeEnabled();
+      const saveButton = await findByRole('button', { name: /save as profile & close/i });
+      fireEvent.click(saveButton);
+
+      await waitFor(() => expect(saveButton).toBeEnabled());
     });
   });
 });

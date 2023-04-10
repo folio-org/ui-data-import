@@ -79,7 +79,7 @@ const renderMARCTableView = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('MARCTableView', () => {
+describe('MARCTableView component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMARCTableView(MARCTableViewProps);
 

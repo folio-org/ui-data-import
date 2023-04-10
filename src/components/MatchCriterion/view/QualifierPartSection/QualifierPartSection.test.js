@@ -20,7 +20,7 @@ const qualifierPartSection = {
 const qualifierPartSectionWithoutValue = {
   recordFieldType: 'incoming',
   qualifierData: {
-    comparisonPart: '',
+    comparisonPart: null,
     qualifierType: 'BEGINS_WITH',
     qualifierValue: 'test value',
   },
@@ -40,7 +40,7 @@ const renderQualifierPartSection = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('QualifierPartSection view', () => {
+describe('QualifierPartSection view component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderQualifierPartSection(qualifierPartSection);
 

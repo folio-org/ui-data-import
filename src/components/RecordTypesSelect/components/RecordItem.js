@@ -25,6 +25,7 @@ export const RecordItem = memo(({
   style,
   onClick,
   isEditable,
+  onToggle,
 }) => {
   const ref = useRef();
   const [recordSelectorOpen, setRecordSelectorOpen] = useState(false);
@@ -101,6 +102,7 @@ export const RecordItem = memo(({
         usePortal={false}
         relativePosition
         style={{ width: '100%' }}
+        onToggle={onToggle}
       />
     </div>
   );
@@ -114,6 +116,10 @@ RecordItem.propTypes = {
   style: PropTypes.object,
   onClick: PropTypes.func,
   isEditable: PropTypes.bool,
+  onToggle: PropTypes.func,
 };
 
-RecordItem.defaultProps = { isEditable: true };
+RecordItem.defaultProps = {
+  isEditable: true,
+  onToggle: noop,
+};

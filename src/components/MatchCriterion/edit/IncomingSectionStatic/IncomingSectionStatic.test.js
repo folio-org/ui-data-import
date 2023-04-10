@@ -48,7 +48,7 @@ const renderIncomingSectionStatic = ({
   return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
-describe('IncomingSectionStatic edit', () => {
+describe('IncomingSectionStatic edit component', () => {
   afterEach(() => {
     onTypeChangeMock.mockClear();
   });

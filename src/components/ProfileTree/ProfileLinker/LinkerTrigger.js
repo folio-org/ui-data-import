@@ -42,10 +42,10 @@ export const LinkerTrigger = ({
 );
 
 LinkerTrigger.propTypes = {
-  title: PropTypes.node.isRequired || PropTypes.string.isRequired,
   triggerRef: PropTypes.object.isRequired,
   ariaProps: PropTypes.object.isRequired,
   keyHandler: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
 };

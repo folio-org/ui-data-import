@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -12,7 +12,7 @@ import { LinkerTrigger } from './LinkerTrigger';
 const onClick = jest.fn();
 
 const linkerTriggerProps = {
-  triggerRef: {},
+  triggerRef: createRef(),
   ariaProps: {},
   keyHandler: jest.fn(),
   id: 'testId',
@@ -39,9 +39,9 @@ const renderLinkerTrigger = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('LinkerTrigger', () => {
+describe('LinkerTrigger component', () => {
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderLinkerTrigger({ ...linkerTriggerProps });
+    const { container } = renderLinkerTrigger(linkerTriggerProps);
 
     await runAxeTest({ rootNode: container });
   });
@@ -49,14 +49,14 @@ describe('LinkerTrigger', () => {
   it('should be rendered with node type title', () => {
     const { getByText } = renderLinkerTrigger({
       ...linkerTriggerProps,
-      title: <span>test node title</span>,
+      title: 'test node title',
     });
 
     expect(getByText('test node title')).toBeDefined();
   });
 
   it('should be rendered with FormattedMessage type title', () => {
-    const { getByText } = renderLinkerTrigger({ ...linkerTriggerProps });
+    const { getByText } = renderLinkerTrigger(linkerTriggerProps);
 
     expect(getByText('Click here to get started')).toBeDefined();
   });

@@ -47,7 +47,7 @@ jest.mock('@folio/stripes/components', () => ({
   ) : null)),
 }));
 
-const mockConsoleError = jest.spyOn(console, 'error');
+const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
 
 global.fetch = jest.fn();
 

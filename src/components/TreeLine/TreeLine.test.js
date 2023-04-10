@@ -105,7 +105,7 @@ window.ResizeObserver = jest.fn(() => ({
   unobserve() {},
 }));
 
-describe('TreeLine', () => {
+describe('TreeLine component', () => {
   afterAll(() => {
     delete window.ResizeObserver;
   });

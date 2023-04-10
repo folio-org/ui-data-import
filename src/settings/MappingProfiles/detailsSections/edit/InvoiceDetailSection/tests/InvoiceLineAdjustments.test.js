@@ -38,7 +38,7 @@ const renderInvoiceLineAdjustments = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('InvoiceLineAdjustments', () => {
+describe('InvoiceLineAdjustments edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderInvoiceLineAdjustments();
 

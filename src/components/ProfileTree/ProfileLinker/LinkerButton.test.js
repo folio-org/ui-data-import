@@ -39,7 +39,7 @@ const renderLinkerButton = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('LinkerButton', () => {
+describe('LinkerButton component', () => {
   afterEach(() => {
     onClick.mockClear();
   });

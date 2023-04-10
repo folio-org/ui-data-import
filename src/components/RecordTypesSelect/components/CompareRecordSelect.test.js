@@ -41,7 +41,7 @@ const renderCompareRecordSelect = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('CompareRecordSelect', () => {
+describe('CompareRecordSelect component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderCompareRecordSelect(compareRecordSelectProps);
 

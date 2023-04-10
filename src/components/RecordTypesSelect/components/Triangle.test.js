@@ -4,7 +4,7 @@ import { runAxeTest } from '@folio/stripes-testing';
 
 import { Triangle } from './Triangle';
 
-describe('Triangle', () => {
+describe('Triangle component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = render(<Triangle />);
 

@@ -10,12 +10,11 @@ import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
-import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
-
 import { Paneset } from '@folio/stripes/components';
 
 import { Harness } from '../../../test/helpers';
 import {
+  buildMutator,
   buildStripes,
   translationsProperties,
 } from '../../../test/jest/helpers';
@@ -175,14 +174,14 @@ describe.skip('SearchAndSort component', () => {
     onEditMock.mockClear();
   });
 
-  it('should be rendered with no axe errors', async () => {
+  it('should be rendered with no axe errors', () => {
     const { container } = renderSearchAndSort(searchAndSortProps({
       parentResources: resources(1, false),
       isFullScreen: true,
       route: `${pathname}/create`,
     }));
 
-    await runAxeTest({ rootNode: container });
+    runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

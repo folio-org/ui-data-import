@@ -10,13 +10,12 @@ import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../test/jest/__mock__';
 
-import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
-
 import { Paneset } from '@folio/stripes/components';
 
 import {
-  renderWithIntl,
+  buildMutator,
   buildStripes,
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../test/jest/helpers';

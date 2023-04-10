@@ -1,5 +1,9 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import {
+  act,
+  waitFor,
+  fireEvent,
+} from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
@@ -53,6 +57,7 @@ describe('FieldOrganization component', () => {
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderFieldOrganization({ id: '1' });
+    await act(() => mutator.fieldOrganizationOrg.GET());
 
     await runAxeTest({ rootNode: container });
   });
@@ -104,7 +109,7 @@ describe('FieldOrganization component', () => {
       const onSelect = jest.fn();
       const { findByDisplayValue } = renderFieldOrganization({ onSelect });
 
-      Pluggable.mock.calls[0][0].selectVendor({ name: 'org 2' });
+      await waitFor(() => Pluggable.mock.calls[0][0].selectVendor({ name: 'org 2' }));
 
       const inputValue = await findByDisplayValue('"org 2"');
 

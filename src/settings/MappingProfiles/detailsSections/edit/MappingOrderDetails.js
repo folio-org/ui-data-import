@@ -63,7 +63,10 @@ export const MappingOrderDetails = ({
           setReferenceTables={setReferenceTables}
           okapi={okapi}
         />
-        <CostDetails setReferenceTables={setReferenceTables} />
+        <CostDetails
+          setReferenceTables={setReferenceTables}
+          okapi={okapi}
+        />
         <FundDistribution
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}

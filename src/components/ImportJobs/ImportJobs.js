@@ -61,10 +61,12 @@ export class ImportJobs extends Component {
   };
 
   componentDidMount() {
+    this.mounted = true;
     this.timerHandler = setTimeout(() => { this.fetchUploadDefinition(); }, 1000);
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     clearTimeout(this.timerHandler);
   }
 
@@ -74,11 +76,13 @@ export class ImportJobs extends Component {
     try {
       const { updateUploadDefinition } = this.context;
 
-      const uploadDefinition = await updateUploadDefinition();
+      if (this.mounted) {
+        const uploadDefinition = await updateUploadDefinition();
 
-      await this.deleteUploadDefinitionWithoutFiles(uploadDefinition);
+        await this.deleteUploadDefinitionWithoutFiles(uploadDefinition);
 
-      this.setState({ hasLoaded: true });
+        this.setState({ hasLoaded: true });
+      }
     } catch (error) {
       console.error(error); // eslint-disable-line no-console
     }
@@ -133,11 +137,15 @@ export class ImportJobs extends Component {
   }
 
   onDragEnter = () => {
-    this.setState({ isDropZoneActive: true });
+    if (this.mounted) {
+      this.setState({ isDropZoneActive: true });
+    }
   };
 
   onDragLeave = () => {
-    this.setState({ isDropZoneActive: false });
+    if (this.mounted) {
+      this.setState({ isDropZoneActive: false });
+    }
   };
 
   onDrop = async acceptedFiles => {
@@ -146,12 +154,14 @@ export class ImportJobs extends Component {
 
     const { url: host } = okapi;
 
-    this.setState({ isDropZoneActive: false });
+    if (this.mounted) {
+      this.setState({ isDropZoneActive: false });
+    }
 
     try {
       const uploadDefinition = await updateUploadDefinition();
 
-      if (!isEmpty(uploadDefinition)) {
+      if (!isEmpty(uploadDefinition) && this.mounted) {
         this.setState({ prohibitFilesUploading: true });
 
         return;
@@ -242,17 +252,21 @@ export class ImportJobs extends Component {
   }
 
   showFilesExtensionsModal(payload) {
-    this.setState({
-      filesExtensionsModalOpen: true,
-      filesExtensionsModalType: payload.type,
-    });
+    if (this.mounted) {
+      this.setState({
+        filesExtensionsModalOpen: true,
+        filesExtensionsModalType: payload.type,
+      });
+    }
   }
 
   hideFilesExtensionsModal = () => {
-    this.setState({
-      filesExtensionsModalOpen: false,
-      filesExtensionsModalType: null,
-    });
+    if (this.mounted) {
+      this.setState({
+        filesExtensionsModalOpen: false,
+        filesExtensionsModalType: null,
+      });
+    }
   };
 
   getMessageById(idEnding, moduleName = 'ui-data-import') {
@@ -262,10 +276,12 @@ export class ImportJobs extends Component {
   }
 
   redirectToJobProfilePage = files => {
-    this.setState({
-      redirect: true,
-      files,
-    });
+    if (this.mounted) {
+      this.setState({
+        redirect: true,
+        files,
+      });
+    }
   };
 
   renderImportJobs() {

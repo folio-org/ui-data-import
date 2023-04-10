@@ -6,6 +6,7 @@ import {
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -18,24 +19,20 @@ import { BOOLEAN_ACTIONS } from '../../../../../../utils';
 
 jest.mock('../../../hooks', () => ({ useFieldMappingBoolFieldValue: () => ['ALL_FALSE'] }));
 
-const okapiProp = {
-  tenant: 'testTenant',
-  token: 'token.for.test',
-  url: 'https://folio-testing-okapi.dev.folio.org',
-};
+const okapi = buildOkapi();
 
 const renderPOLineDetails = () => {
   const component = () => (
     <POLineDetails
       setReferenceTables={() => {}}
-      okapi={okapiProp}
+      okapi={okapi}
     />
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('POLineDetails', () => {
+describe('POLineDetails edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderPOLineDetails();
 

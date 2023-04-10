@@ -250,7 +250,8 @@ const renderRecordsTable = ({ isEdifactType = false }) => {
         source={source}
         resultCountIncrement={5}
         pageAmount={5}
-        history={history}
+        history={{ push: noop }}
+        location="test location"
       />
     </BrowserRouter>
   );

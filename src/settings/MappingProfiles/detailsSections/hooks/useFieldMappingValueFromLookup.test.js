@@ -17,7 +17,7 @@ jest.mock('../utils', () => ({
   getMatchByUuidInQuotes: () => vendorId,
 }));
 
-describe('useFieldMappingValueFromLookup', () => {
+describe('useFieldMappingValueFromLookup hook', () => {
   it('should return correct value', () => {
     const { result } = renderHook(() => useFieldMappingValueFromLookup(VENDOR_FIELD));
     const [receivedId, receivedMapping] = result.current;

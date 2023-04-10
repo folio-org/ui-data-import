@@ -55,7 +55,7 @@ const renderMARCFieldSection = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('MARCFieldSection view', () => {
+describe('MARCFieldSection view component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMARCFieldSection(marcFieldSection);
 

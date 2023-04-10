@@ -68,7 +68,7 @@ const renderExistingSectionFolio = ({
   return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
-describe('ExistingSectionFolio edit', () => {
+describe('ExistingSectionFolio edit component', () => {
   afterEach(() => {
     onChangeFormStateMock.mockClear();
   });

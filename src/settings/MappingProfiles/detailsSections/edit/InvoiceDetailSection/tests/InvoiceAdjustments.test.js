@@ -37,7 +37,7 @@ const renderInvoiceAdjustments = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('InvoiceAdjustments', () => {
+describe('InvoiceAdjustments edit component', () => {
   afterAll(() => {
     setReferenceTablesMock.mockClear();
   });

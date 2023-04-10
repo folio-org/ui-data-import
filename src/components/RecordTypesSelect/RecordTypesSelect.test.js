@@ -29,7 +29,7 @@ const renderRecordTypesSelect = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('RecordTypesSelect', () => {
+describe('RecordTypesSelect component', () => {
   afterAll(() => {
     delete window.ResizeObserver;
   });

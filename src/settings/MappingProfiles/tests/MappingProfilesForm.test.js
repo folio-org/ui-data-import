@@ -124,7 +124,7 @@ const renderMappingProfilesForm = ({
 
 const spyConsoleError = jest.spyOn(console, 'error').mockImplementation(noop);
 
-describe('<MappingProfilesForm>', () => {
+describe('MappingProfilesForm component', () => {
   afterAll(() => {
     spyConsoleError.mockRestore();
     handleSubmit.mockRestore();

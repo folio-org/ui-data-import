@@ -33,7 +33,7 @@ const renderMARCFieldSection = ({
   return renderWithIntl(renderWithFinalForm(component), translationsProperties);
 };
 
-describe('MARCFieldSection edit', () => {
+describe('MARCFieldSection edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMARCFieldSection(marcFieldSection);
 
