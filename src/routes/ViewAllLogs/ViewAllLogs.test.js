@@ -7,8 +7,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
-import { ModuleHierarchyProvider } from '@folio/stripes/core';
-
 import {
   buildMutator,
   buildStripes,
@@ -163,29 +161,27 @@ stripes.connect = jest.fn(() => component => component);
 const renderViewAllLogs = query => {
   const component = (
     <Router>
-      <ModuleHierarchyProvider module="@folio/data-import">
-        <ViewAllLogs
-          mutator={mutator}
-          resources={getResources(query)}
-          disableRecordCreation={false}
-          history={{ push: noop }}
-          intl={{ formatMessage: jest.fn(() => 'test') }}
-          stripes={stripes}
-          setList={jest.fn()}
-          checkboxList={{
-            isAllSelected: false,
-            handleSelectAllCheckbox: noop,
-            selectedRecords: [],
-            selectRecord: noop,
-          }}
-          location={{
-            pathname: '/job-logs',
-            search: '?sort=-completedDate',
-          }}
-          match={{ params: {} }}
-          refreshRemote={noop}
-        />
-      </ModuleHierarchyProvider>
+      <ViewAllLogs
+        mutator={mutator}
+        resources={getResources(query)}
+        disableRecordCreation={false}
+        history={{ push: noop }}
+        intl={{ formatMessage: jest.fn(() => 'test') }}
+        stripes={stripes}
+        setList={jest.fn()}
+        checkboxList={{
+          isAllSelected: false,
+          handleSelectAllCheckbox: noop,
+          selectedRecords: [],
+          selectRecord: noop,
+        }}
+        location={{
+          pathname: '/job-logs',
+          search: '?sort=-completedDate',
+        }}
+        match={{ params: {} }}
+        refreshRemote={noop}
+      />
     </Router>
   );
 
