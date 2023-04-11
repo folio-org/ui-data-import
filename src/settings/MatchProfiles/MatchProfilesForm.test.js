@@ -97,13 +97,18 @@ const matchProfilesFormProps = layerType => ({
             label: 'field',
             value: 'instance.id',
           }],
+          dataValueType: 'test existing dataValueType',
         },
         incomingMatchExpression: {
           fields: [{
             label: 'testLabel_2',
             value: null,
           }],
+          dataValueType: 'test incoming dataValueType',
         },
+        incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+        existingRecordType: 'MARC_AUTHORITY',
+        matchCriterion: 'EXACTLY_MATCHES',
       }],
       incomingRecordType: 'MARC_BIBLIOGRAPHIC',
       existingRecordType: 'MARC_AUTHORITY',
@@ -199,6 +204,7 @@ const renderMatchProfilesForm = ({
         onCancel={noop}
         transitionToParams={noop}
         onSubmit={jest.fn()}
+        baseUrl="testBaseUrl"
       />
     </Router>
   );

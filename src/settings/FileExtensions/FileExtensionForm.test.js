@@ -67,7 +67,6 @@ const renderFileExtensionForm = ({
         onSubmitSuccess={onSubmitSuccess}
         onCancel={noop}
         transitionToParams={transitionToParams}
-        baseUrl="base-url"
       />
     </Router>
   );
@@ -186,7 +185,7 @@ describe('FileExtensionForm component', () => {
 
       fireEvent.change(fileExtensionField, { target: { value: '.txt' } });
       fireEvent.click(blockImportCheckbox);
-      fireEvent.click(getByText('Save as file extension & Close'));
+      fireEvent.submit(getByText('Save as file extension & Close'));
 
       expect(handleFormSubmit).toHaveBeenCalled();
     });
