@@ -57,7 +57,7 @@ export const TreeView = ({
 
 TreeView.propTypes = {
   data: PropTypes.shape({
-    connections: PropTypes.arrayOf(PropTypes.string),
+    connections: PropTypes.arrayOf(PropTypes.object),
     children: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   indentation: PropTypes.number, // in pixels

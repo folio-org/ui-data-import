@@ -36,7 +36,7 @@ const initialStateValues = {
 
 const useSelectorMock = reactRedux.useSelector;
 
-describe('useFieldMappingFieldValue', () => {
+describe('useFieldMappingFieldValue hook', () => {
   beforeEach(() => {
     useSelectorMock.mockImplementation(selector => selector(initialStateValues));
   });

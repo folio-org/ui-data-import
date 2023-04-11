@@ -20,7 +20,7 @@ const renderMappingInstanceDetails = () => {
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('<MappingInstanceDetails>', () => {
+describe('MappingInstanceDetails view component', () => {
   // TODO: Create separate ticket to fix all the accesibility tests
   it.skip('should be rendered with no axe errors', async () => {
     const { container } = renderMappingInstanceDetails();

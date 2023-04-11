@@ -10,6 +10,7 @@ import { createMemoryHistory } from 'history';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildStripes,
   renderWithIntl,
   translationsProperties,
 } from '../../../../test/jest/helpers';
@@ -22,6 +23,7 @@ const history = createMemoryHistory();
 history.push = jest.fn();
 
 const fileExtensionId = faker.random.uuid();
+const stripes = buildStripes();
 
 const resources = importBlocked => ({
   fileExtension: { records: [
@@ -73,7 +75,7 @@ const renderViewFileExtension = ({
         match={match}
         location={location}
         history={history}
-        stripes={{ hasPerm: () => true }}
+        stripes={stripes}
       />
     </Router>
   );
@@ -81,7 +83,7 @@ const renderViewFileExtension = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('ViewFileExtension', () => {
+describe('ViewFileExtension component', () => {
   afterEach(() => {
     history.push.mockClear();
   });

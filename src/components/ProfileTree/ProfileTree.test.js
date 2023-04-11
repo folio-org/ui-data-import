@@ -1,5 +1,8 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import {
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -45,6 +48,8 @@ window.ResizeObserver = jest.fn(() => ({
   observe() {},
   unobserve() {},
 }));
+
+global.fetch = jest.fn();
 
 const profileTreeProps = ({
   allowUnlink,
@@ -116,6 +121,7 @@ const profileTreeProps = ({
         hasLoaded: true,
         records: [{
           name: 'testName',
+          id: 'jobProfileId',
           dataType: 'EDIFACT',
           metadata: {
             createdByUserId: 'testUserId',
@@ -142,19 +148,22 @@ const renderProfileTree = ({
       okapi={okapi}
       resources={resources}
       setData={setData}
+      parentId="test parentId"
     />
   );
 
   return renderWithIntl(renderWithRedux(component), translationsProperties);
 };
 
-describe('ProfileTree', () => {
-  afterAll(() => {
-    delete window.ResizeObserver;
-  });
-
+describe('ProfileTree component', () => {
   afterEach(() => {
     Pluggable.mockClear();
+    global.fetch.mockClear();
+  });
+
+  afterAll(() => {
+    delete window.ResizeObserver;
+    delete global.fetch;
   });
 
   // TODO: Create separate ticket to fix all the accesibility tests
@@ -168,10 +177,10 @@ describe('ProfileTree', () => {
   });
 
   describe('when clicking on delete button', () => {
-    it('modal window shod be closed', () => {
+    it('modal window shod be closed', async () => {
       const {
         container,
-        getByText,
+        findByText,
       } = renderProfileTree(profileTreeProps({
         allowUnlink: false,
         allowDelete: true,
@@ -180,22 +189,40 @@ describe('ProfileTree', () => {
 
       fireEvent.click(onDeleteButton);
 
-      const deleteButtonModal = getByText('Confirm');
+      const deleteButtonModal = await findByText('Confirm');
 
       fireEvent.click(deleteButtonModal);
 
-      expect(deleteButtonModal).not.toBeVisible();
+      await waitFor(() => expect(deleteButtonModal).not.toBeVisible());
     });
   });
 
-  it('should be rendered', () => {
-    const { getAllByText } = renderProfileTree(profileTreeProps({
+  it('should be rendered', async () => {
+    global.fetch.mockReturnValue({
+      ok: true,
+      json: async () => ({
+        id: 'testId',
+        profileId: 'testProfileId',
+        content: {
+          id: 'testContentId',
+          name: 'test name',
+          metadata: {
+            createdDate: '2023-04-06T08:55:23.034+00:00',
+            createdByUserId: 'fed7855f-c3c1-54ea-acc1-0a62cb1d15d3',
+            updatedByUserId: 'fed7855f-c3c1-54ea-acc1-0a62cb1d15d3',
+            updatedDate: '2023-04-06T08:55:23.034+00:00',
+          },
+        }
+      }),
+    });
+
+    const { findAllByText } = renderProfileTree(profileTreeProps({
       allowUnlink: true,
       allowDelete: false,
     }));
 
     Pluggable.mock.calls[0][0].onLink([{ id: 'testId' }]);
 
-    expect(getAllByText('Match profile: "testName"')).toBeDefined();
+    await waitFor(() => expect(findAllByText('Match profile: "testName"')).toBeDefined());
   });
 });

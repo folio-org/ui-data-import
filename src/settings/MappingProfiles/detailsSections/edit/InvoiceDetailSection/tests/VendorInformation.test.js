@@ -5,6 +5,7 @@ import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -12,6 +13,8 @@ import {
 import '../../../../../../../test/jest/__mock__';
 
 import { VendorInformation } from '../VendorInformation';
+
+const okapi = buildOkapi();
 
 const renderVendorInformation = () => {
   const component = () => (
@@ -21,14 +24,14 @@ const renderVendorInformation = () => {
       accountingCodeOptions={[]}
       onSelectVendor={noop}
       onClearVendor={noop}
-      okapi={{}}
+      okapi={okapi}
     />
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('VendorInformation', () => {
+describe('VendorInformation edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderVendorInformation();
 

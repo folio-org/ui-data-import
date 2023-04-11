@@ -45,7 +45,7 @@ const renderLinkerMenu = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('LinkerMenu', () => {
+describe('LinkerMenu component', () => {
   afterEach(() => {
     onClick.mockClear();
   });

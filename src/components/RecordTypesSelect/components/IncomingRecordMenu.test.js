@@ -26,7 +26,7 @@ const renderIncomingRecordMenu = ({ open }) => {
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('IncomingRecordMenu', () => {
+describe('IncomingRecordMenu component', () => {
   afterEach(() => {
     onClick.mockClear();
   });

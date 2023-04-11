@@ -41,7 +41,7 @@ const renderMappingMARCBibDetails = ({
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('<MappingMARCBibDetails>', () => {
+describe('MappingMARCBibDetails edit component', () => {
   describe('when field mappings for MARC is "Updates"', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });

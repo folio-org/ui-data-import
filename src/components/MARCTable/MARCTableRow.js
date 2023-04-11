@@ -503,7 +503,7 @@ export const MARCTableRow = ({
                 component={TextArea}
                 aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.find' })}
                 validate={[validateRequiredField]}
-                marginBottom0
+                style={{ marginBottom: 0 }}
                 fullWidth
               />
             </div>
@@ -519,7 +519,7 @@ export const MARCTableRow = ({
                 component={TextArea}
                 aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.replaceWith' })}
                 validate={[validateRequiredField]}
-                marginBottom0
+                style={{ marginBottom: 0 }}
                 fullWidth
               />
             </div>
@@ -609,7 +609,7 @@ export const MARCTableRow = ({
             component={TextArea}
             validate={[validateRequiredField]}
             aria-label={formatMessage({ id: 'ui-data-import.settings.mappingProfile.marcTable.ariaLabel.data.text' })}
-            marginBottom0
+            style={{ marginBottom: 0 }}
           />
         </div>
       );

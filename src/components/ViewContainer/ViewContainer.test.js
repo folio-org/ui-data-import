@@ -3,9 +3,8 @@ import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
 import { runAxeTest } from '@folio/stripes-testing';
 
-import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
-
 import {
+  buildMutator,
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
@@ -65,7 +64,7 @@ const renderViewContainer = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe.skip('ViewContainer component', () => {
+describe('ViewContainer component', () => {
   const children = jest.fn().mockReturnValue('Children');
 
   afterEach(() => {

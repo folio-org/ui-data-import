@@ -6,14 +6,12 @@ import '../../../test/jest/__mock__';
 
 import { Line } from './Line';
 
-const parentContainer = <div>{' '}</div>;
-
 const lineWithParentContainer = {
   x0: 0,
   y0: 0,
   x1: 0,
   y1: 10,
-  container: parentContainer,
+  container: '.testClassName',
   className: 'tester',
   borderWidth: 2,
   borderStyle: 'solid',
@@ -51,7 +49,7 @@ const renderLine = ({
   return render(component);
 };
 
-describe('Line', () => {
+describe('Line component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderLine(lineWithParentContainer);
 

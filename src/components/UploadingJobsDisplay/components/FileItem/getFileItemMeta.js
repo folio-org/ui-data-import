@@ -16,7 +16,7 @@ import css from './FileItem.css';
 
 const Loading = () => (
   <FormattedMessage id="ui-data-import.loading">
-    {label => (
+    {([label]) => (
       <span
         data-test-preloader
         className={css.icon}
@@ -103,7 +103,7 @@ export const getFileItemMeta = ({
               <FormattedDate value={uploadedDate} />
             </span>
             <FormattedMessage id="ui-data-import.delete">
-              {label => (
+              {([label]) => (
                 <IconButton
                   data-test-delete-button
                   icon="trash"
@@ -138,7 +138,7 @@ export const getFileItemMeta = ({
             {!loading
               ? (
                 <FormattedMessage id="ui-data-import.delete">
-                  {label => (
+                  {([label]) => (
                     <IconButton
                       data-test-delete-button
                       icon="times"

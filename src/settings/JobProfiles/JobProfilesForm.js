@@ -12,7 +12,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import {
-  identity,
   get,
   isEqual,
   isEmpty,
@@ -294,7 +293,6 @@ export const JobProfilesFormComponent = memo(({
                       name="profile.dataType"
                       component={Select}
                       required
-                      itemToString={identity}
                       validate={validateRequiredField}
                       dataOptions={dataTypes}
                       placeholder={placeholder}
@@ -390,7 +388,7 @@ JobProfilesFormComponent.propTypes = {
   mutator: PropTypes.shape({ childWrappers: PropTypes.shape({ GET: PropTypes.func }) }).isRequired,
   resources: PropTypes.shape({ childWrappers: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }) }).isRequired,
   accordionStatusRef: PropTypes.object,
-  layerType: PropTypes.oneOfType(LAYER_TYPES),
+  layerType: PropTypes.oneOf(Object.values(LAYER_TYPES)),
 };
 
 export const JobProfilesForm = compose(

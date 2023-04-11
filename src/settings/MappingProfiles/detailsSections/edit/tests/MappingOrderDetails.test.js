@@ -6,6 +6,7 @@ import '../../../../../../test/jest/__mock__';
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -17,18 +18,14 @@ import { getInitialFields } from '../../../initialDetails';
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.ORDER.type);
 
 const setReferenceTablesMockProp = jest.fn();
-const okapiProp = {
-  tenant: 'testTenant',
-  token: 'token.for.test',
-  url: 'https://folio-testing-okapi.dev.folio.org',
-};
+const okapi = buildOkapi();
 
 const renderMappingOrderDetails = () => {
   const component = () => (
     <MappingOrderDetails
       initialFields={initialFieldsProp}
       setReferenceTables={setReferenceTablesMockProp}
-      okapi={okapiProp}
+      okapi={okapi}
     />
   );
 
@@ -36,7 +33,7 @@ const renderMappingOrderDetails = () => {
 };
 
 
-describe('MappingOrderDetails', () => {
+describe('MappingOrderDetails edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingOrderDetails();
 

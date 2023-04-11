@@ -2,6 +2,7 @@ import React from 'react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -46,24 +47,21 @@ const electronicAccessProp = [{
   order: 0,
   path: 'instance.electronicAccess[]',
 }];
-const okapiProp = {
-  tenant: 'testTenant',
-  token: 'token.for.test',
-  url: 'https://folio-testing-okapi.dev.folio.org',
-};
+
+const okapi = buildOkapi();
 
 const renderElectronicAccess = () => {
   const component = () => (
     <ElectronicAccess
       electronicAccess={electronicAccessProp}
-      okapi={okapiProp}
+      okapi={okapi}
     />
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('<ElectronicAccess>', () => {
+describe('ElectronicAccess edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderElectronicAccess();
 

@@ -7,6 +7,7 @@ import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -28,15 +29,20 @@ jest.mock('../../../hooks', () => ({
   }),
 }));
 
+const okapi = buildOkapi();
+
 const renderCostDetails = () => {
   const component = () => (
-    <CostDetails setReferenceTables={noop} />
+    <CostDetails
+      setReferenceTables={noop}
+      okapi={okapi}
+    />
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('CostDetails', () => {
+describe('CostDetails edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderCostDetails();
 

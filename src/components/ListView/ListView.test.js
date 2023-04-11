@@ -10,6 +10,8 @@ import { createMemoryHistory } from 'history';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildMutator,
+  buildStripes,
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
@@ -17,9 +19,9 @@ import '../../../test/jest/__mock__';
 
 import { ListView } from './ListView';
 
-const mutator = {
-  resultOffset: { replace: () => {} },
-  resultCount: { replace: noop },
+const stripes = buildStripes();
+
+const mutator = buildMutator({
   query: {
     replace: noop,
     update: noop,
@@ -34,7 +36,7 @@ const mutator = {
     DELETE: noop,
   },
   restoreDefaults: { POST: noop },
-};
+});
 
 const metadataMock = {
   createdByUserId: faker.random.uuid(),
@@ -219,8 +221,9 @@ const renderListView = ({
         initialValues={initialValues}
         columnWidths={columnWidths}
         objectName={objectName}
-        stripes={{ hasPerm: () => true }}
+        stripes={stripes}
         detailProps={detailProps}
+        ViewRecordComponent={noop}
       />
     </Router>
   );

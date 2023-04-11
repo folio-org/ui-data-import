@@ -67,7 +67,7 @@ const renderOptionsList = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('OptionsList', () => {
+describe('OptionsList component', () => {
   afterAll(() => {
     onSelectMock.mockClear();
   });

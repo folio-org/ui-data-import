@@ -7,6 +7,7 @@ import '../../../../../../test/jest/__mock__';
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -47,11 +48,7 @@ const referenceTablesProp = {};
 const setReferenceTablesMockProp = jest.fn();
 const getRepeatableFieldActionProp = jest.fn(() => '');
 
-const okapiProp = {
-  tenant: 'testTenant',
-  token: 'token.for.test',
-  url: 'https://folio-testing-okapi.dev.folio.org',
-};
+const okapi = buildOkapi();
 
 const renderMappingItemDetails = ({ referenceTables }) => {
   const component = () => (
@@ -60,14 +57,14 @@ const renderMappingItemDetails = ({ referenceTables }) => {
       referenceTables={referenceTables || referenceTablesProp}
       setReferenceTables={setReferenceTablesMockProp}
       getRepeatableFieldAction={getRepeatableFieldActionProp}
-      okapi={okapiProp}
+      okapi={okapi}
     />
   );
 
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('<MappingItemDetails>', () => {
+describe('MappingItemDetails edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -11,7 +11,7 @@ import '../../../../test/jest/__mock__';
 import { IncomingRecordTrigger } from './IncomingRecordTrigger';
 
 const incomingRecordTriggerProps = {
-  triggerRef: {},
+  triggerRef: createRef(),
   ariaProps: {},
   keyHandler: noop,
   onClick: noop,
@@ -42,7 +42,7 @@ const renderIncomingRecordTrigger = ({
   return renderWithIntl(component, translationsProperties);
 };
 
-describe('IncomingRecordTrigger', () => {
+describe('IncomingRecordTrigger component', () => {
   describe('when iconKey is given', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderIncomingRecordTrigger({
