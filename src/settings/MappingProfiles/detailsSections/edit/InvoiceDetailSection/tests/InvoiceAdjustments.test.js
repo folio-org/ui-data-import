@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -64,9 +61,16 @@ describe('InvoiceAdjustments edit component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderInvoiceAdjustments();
+    const {
+      container,
+      findByText,
+    } = renderInvoiceAdjustments();
 
-    await waitFor(() => runAxeTest({ rootNode: container }));
+    const invoiceAdjustmentsTitle = await findByText('Invoice adjustments');
+
+    expect(invoiceAdjustmentsTitle).toBeInTheDocument();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

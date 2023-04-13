@@ -106,9 +106,16 @@ describe('MappingInvoiceDetails edit component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderMappingInvoiceDetails();
+    const {
+      container,
+      findByRole,
+    } = renderMappingInvoiceDetails();
 
-    await waitFor(() => runAxeTest({ rootNode: container }));
+    const invoiceInformationSection = await findByRole('button', { name: /invoice information/i });
+
+    expect(invoiceInformationSection).toBeInTheDocument();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should have correct sections', async () => {

@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -49,9 +46,16 @@ describe('POLineDetails edit component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderPOLineDetails();
+    const {
+      container,
+      findByText,
+    } = renderPOLineDetails();
 
-    await waitFor(() => runAxeTest({ rootNode: container }));
+    const poLineDetailsTitle = await findByText('PO line details');
+
+    expect(poLineDetailsTitle).toBeInTheDocument();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

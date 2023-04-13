@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -62,9 +59,16 @@ describe('EResourcesDetails edit component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderEResourcesDetails();
+    const {
+      container,
+      findByText,
+    } = renderEResourcesDetails();
 
-    await waitFor(() => runAxeTest({ rootNode: container }));
+    const eResourceTitle = await findByText('E-resources details');
+
+    expect(eResourceTitle).toBeInTheDocument();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

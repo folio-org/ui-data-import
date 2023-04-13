@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -88,9 +85,16 @@ describe('FundDistribution edit component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderFundDistribution();
+    const {
+      container,
+      findByText,
+    } = renderFundDistribution();
 
-    await waitFor(() => runAxeTest({ rootNode: container }));
+    const fundDistributionTitle = await findByText('Fund distribution');
+
+    expect(fundDistributionTitle).toBeInTheDocument();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

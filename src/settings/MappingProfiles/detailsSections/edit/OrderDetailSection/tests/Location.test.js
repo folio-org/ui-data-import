@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -87,9 +84,16 @@ describe('Location edit component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderLocation();
+    const {
+      container,
+      findByText,
+    } = renderLocation();
 
-    await waitFor(() => runAxeTest({ rootNode: container }));
+    const locationTitle = await findByText('Location');
+
+    expect(locationTitle).toBeInTheDocument();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

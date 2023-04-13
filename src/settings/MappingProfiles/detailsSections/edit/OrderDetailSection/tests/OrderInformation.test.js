@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -118,9 +115,16 @@ describe('OrderInformation edit component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderOrderInformation();
+    const {
+      container,
+      findByText,
+    } = renderOrderInformation();
 
-    await waitFor(() => runAxeTest({ rootNode: container }));
+    const orderInformationTitle = await findByText('Order information');
+
+    expect(orderInformationTitle).toBeInTheDocument();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { waitFor } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
@@ -51,9 +50,16 @@ describe('MappingOrderDetails edit component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderMappingOrderDetails();
+    const {
+      container,
+      findByRole,
+    } = renderMappingOrderDetails();
 
-    await waitFor(() => runAxeTest({ rootNode: container }));
+    const orderInformationSection = await findByRole('button', { name: /order information/i });
+
+    expect(orderInformationSection).toBeInTheDocument();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should have correct sections', async () => {

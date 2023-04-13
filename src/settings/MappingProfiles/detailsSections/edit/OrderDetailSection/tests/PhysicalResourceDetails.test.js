@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -76,9 +73,16 @@ describe('PhysicalResourceDetails edit component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderPhysicalResourceDetails();
+    const {
+      container,
+      findByText,
+    } = renderPhysicalResourceDetails();
 
-    await waitFor(() => runAxeTest({ rootNode: container }));
+    const physicalResourceTitle = await findByText('Physical resource details');
+
+    expect(physicalResourceTitle).toBeInTheDocument();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

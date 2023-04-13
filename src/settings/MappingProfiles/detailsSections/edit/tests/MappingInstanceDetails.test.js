@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
@@ -85,9 +82,16 @@ describe('MappingInstanceDetails edit component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderMappingInstanceDetails({});
+    const {
+      container,
+      findByRole,
+    } = renderMappingInstanceDetails({});
 
-    await waitFor(() => runAxeTest({ rootNode: container }));
+    const adminDataSection = await findByRole('button', { name: /administrative data/i });
+
+    expect(adminDataSection).toBeInTheDocument();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should have correct sections', async () => {

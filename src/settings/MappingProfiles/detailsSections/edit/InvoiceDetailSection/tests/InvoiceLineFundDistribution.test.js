@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import {
   noop,
   get,
@@ -60,9 +57,16 @@ describe('InvoiceLineFundDistribution edit component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderInvoiceLineFundDistribution();
+    const {
+      container,
+      findByText,
+    } = renderInvoiceLineFundDistribution();
 
-    await waitFor(() => runAxeTest({ rootNode: container }));
+    const addFundDistributionButton = await findByText('Invoice line fund distribution');
+
+    expect(addFundDistributionButton).toBeInTheDocument();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {
