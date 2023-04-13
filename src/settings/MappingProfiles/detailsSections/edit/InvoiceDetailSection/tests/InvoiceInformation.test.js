@@ -8,6 +8,7 @@ import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -16,11 +17,20 @@ import '../../../../../../../test/jest/__mock__';
 
 import { InvoiceInformation } from '../InvoiceInformation';
 
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  InfoPopover: () => <span>InfoPopover</span>,
+}));
+
+global.fetch = jest.fn();
+
+const okapiMock = buildOkapi();
+
 const renderInvoiceInformation = () => {
   const component = () => (
     <InvoiceInformation
       setReferenceTables={noop}
-      okapi={{}}
+      okapi={okapiMock}
     />
   );
 
@@ -28,6 +38,19 @@ const renderInvoiceInformation = () => {
 };
 
 describe('InvoiceInformation edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
+  });
+
   it('should be rendered with no axe errors', async () => {
     const { container } = renderInvoiceInformation();
 
@@ -61,6 +84,12 @@ describe('InvoiceInformation edit component', () => {
     expect(within(queryByText('Invoice date')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Status')).getByText(/\*/i)).toBeDefined();
     expect(within(queryByText('Batch group')).getByText(/\*/i)).toBeDefined();
+  });
+
+  it('should render info icons for the particular fields', () => {
+    const { queryByText } = renderInvoiceInformation();
+
+    expect(within(queryByText('Acquisitions units')).getByText(/InfoPopover/i)).toBeDefined();
   });
 
   it('some fields should be disabled by default', () => {
