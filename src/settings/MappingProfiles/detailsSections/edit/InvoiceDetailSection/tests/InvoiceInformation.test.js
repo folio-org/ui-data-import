@@ -1,13 +1,14 @@
 import React from 'react';
 import {
   fireEvent,
-  within,
+  waitFor,
 } from '@testing-library/react';
 import { noop } from 'lodash';
 
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -16,11 +17,15 @@ import '../../../../../../../test/jest/__mock__';
 
 import { InvoiceInformation } from '../InvoiceInformation';
 
+global.fetch = jest.fn();
+
+const okapi = buildOkapi();
+
 const renderInvoiceInformation = () => {
   const component = () => (
     <InvoiceInformation
       setReferenceTables={noop}
-      okapi={{}}
+      okapi={okapi}
     />
   );
 
@@ -28,14 +33,34 @@ const renderInvoiceInformation = () => {
 };
 
 describe('InvoiceInformation edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
+  });
+
   it('should be rendered with no axe errors', async () => {
     const { container } = renderInvoiceInformation();
 
-    await runAxeTest({ rootNode: container });
+    await waitFor(() => runAxeTest({ rootNode: container }));
   });
 
-  it('should render correct fields', () => {
-    const { getByText } = renderInvoiceInformation();
+  it('should render correct fields', async () => {
+    const {
+      getByText,
+      findByText,
+    } = renderInvoiceInformation();
+
+    const inVoiceInformationTitle = await findByText('Invoice information');
+
+    expect(inVoiceInformationTitle).toBeInTheDocument();
 
     expect(getByText('Invoice date')).toBeInTheDocument();
     expect(getByText('Status')).toBeInTheDocument();
@@ -55,36 +80,51 @@ describe('InvoiceInformation edit component', () => {
     expect(getByText('Note')).toBeInTheDocument();
   });
 
-  it('should render required fields', () => {
-    const { queryByText } = renderInvoiceInformation();
+  it('should render required fields', async () => {
+    const { findByText } = renderInvoiceInformation();
 
-    expect(within(queryByText('Invoice date')).getByText(/\*/i)).toBeDefined();
-    expect(within(queryByText('Status')).getByText(/\*/i)).toBeDefined();
-    expect(within(queryByText('Batch group')).getByText(/\*/i)).toBeDefined();
+    const poStatusField = await findByText('Invoice date');
+    const vendorField = await findByText('Status');
+    const orderTypeField = await findByText('Batch group');
+
+    expect(poStatusField.lastElementChild.innerHTML).toEqual('*');
+    expect(vendorField.lastElementChild.innerHTML).toEqual('*');
+    expect(orderTypeField.lastElementChild.innerHTML).toEqual('*');
   });
 
-  it('some fields should be disabled by default', () => {
-    const { getByLabelText } = renderInvoiceInformation();
+  it('some fields should be disabled by default', async () => {
+    const { findByLabelText } = renderInvoiceInformation();
 
-    expect(getByLabelText(/status/i)).toBeDisabled();
-    expect(getByLabelText(/approval date/i)).toBeDisabled();
-    expect(getByLabelText(/approved by/i)).toBeDisabled();
-    expect(getByLabelText(/bill to address/i)).toBeDisabled();
-    expect(getByLabelText(/sub-total/i)).toBeDisabled();
-    expect(getByLabelText(/total adjustments/i)).toBeDisabled();
-    expect(getByLabelText(/calculated total amount/i)).toBeDisabled();
-    expect(getByLabelText(/lock total amount/i)).toBeDisabled();
+    const statusField = await findByLabelText(/status/i);
+    const approvalDateField = await findByLabelText(/approval date/i);
+    const approvedByField = await findByLabelText(/approved by/i);
+    const billToAddress = await findByLabelText(/bill to address/i);
+    const subTotalField = await findByLabelText(/sub-total/i);
+    const totalAdjustmentsField = await findByLabelText(/total adjustments/i);
+    const calculatedTotalAmountField = await findByLabelText(/calculated total amount/i);
+    const lockTotalAmount = await findByLabelText(/lock total amount/i);
+
+    expect(statusField).toBeDisabled();
+    expect(approvalDateField).toBeDisabled();
+    expect(approvedByField).toBeDisabled();
+    expect(billToAddress).toBeDisabled();
+    expect(subTotalField).toBeDisabled();
+    expect(totalAdjustmentsField).toBeDisabled();
+    expect(calculatedTotalAmountField).toBeDisabled();
+    expect(lockTotalAmount).toBeDisabled();
   });
 
   describe('when Lock total checkbox is checked', () => {
-    it('"Lock total amount" field should be enabled', () => {
-      const { getByLabelText } = renderInvoiceInformation();
+    it('"Lock total amount" field should be enabled', async () => {
+      const { findByLabelText } = renderInvoiceInformation();
 
-      const lockTotalCheckbox = getByLabelText('Lock total');
+      const lockTotalCheckbox = await findByLabelText('Lock total');
 
       fireEvent.click(lockTotalCheckbox);
 
-      expect(getByLabelText(/lock total amount/i)).not.toBeDisabled();
+      const lockTotalAmountField = await findByLabelText(/lock total amount/i);
+
+      expect(lockTotalAmountField).not.toBeDisabled();
     });
   });
 });

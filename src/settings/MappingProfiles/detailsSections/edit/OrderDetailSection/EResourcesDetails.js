@@ -186,6 +186,7 @@ export const EResourcesDetails = ({
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={createInventoryOptions}
             disabled={dismissCreateInventory || dismissElectronicDetails}
+            okapi={okapi}
           />
         </Col>
       </Row>

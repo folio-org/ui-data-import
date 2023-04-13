@@ -1,4 +1,5 @@
 import React from 'react';
+import { waitFor } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
@@ -14,6 +15,8 @@ import {
 
 import { MappingOrderDetails } from '../MappingOrderDetails';
 import { getInitialFields } from '../../../initialDetails';
+
+global.fetch = jest.fn();
 
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.ORDER.type);
 
@@ -34,10 +37,23 @@ const renderMappingOrderDetails = () => {
 
 
 describe('MappingOrderDetails edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
+  });
+
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingOrderDetails();
 
-    await runAxeTest({ rootNode: container });
+    await waitFor(() => runAxeTest({ rootNode: container }));
   });
 
   it('should have correct sections', async () => {

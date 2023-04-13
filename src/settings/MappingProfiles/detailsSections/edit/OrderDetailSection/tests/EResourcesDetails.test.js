@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   fireEvent,
-  within,
+  waitFor,
 } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -32,6 +32,8 @@ jest.mock('../../../hooks', () => ({
   }),
 }));
 
+global.fetch = jest.fn();
+
 const okapi = buildOkapi();
 
 const renderEResourcesDetails = () => {
@@ -46,14 +48,34 @@ const renderEResourcesDetails = () => {
 };
 
 describe('EResourcesDetails edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
+  });
+
   it('should be rendered with no axe errors', async () => {
     const { container } = renderEResourcesDetails();
 
-    await runAxeTest({ rootNode: container });
+    await waitFor(() => runAxeTest({ rootNode: container }));
   });
 
   it('should render correct fields', async () => {
-    const { getByText } = renderEResourcesDetails();
+    const {
+      getByText,
+      findByText,
+    } = renderEResourcesDetails();
+
+    const eResourceTitle = await findByText('E-resources details');
+
+    expect(eResourceTitle).toBeInTheDocument();
 
     expect(getByText('Access provider')).toBeInTheDocument();
     expect(getByText('Activation status')).toBeInTheDocument();
@@ -66,18 +88,21 @@ describe('EResourcesDetails edit component', () => {
     expect(getByText('URL')).toBeInTheDocument();
   });
 
-  it('should render info icons for sometimes required fields', () => {
-    const { queryByText } = renderEResourcesDetails();
+  it('should render info icons for sometimes required fields', async () => {
+    const { findByText } = renderEResourcesDetails();
 
-    expect(within(queryByText('Create inventory')).getByText(/InfoPopover/i)).toBeDefined();
-    expect(within(queryByText('Material type')).getByText(/InfoPopover/i)).toBeDefined();
+    const createInventoryField = await findByText('Create inventory');
+    const materialTypeField = await findByText('Material type');
+
+    expect(createInventoryField.lastElementChild.innerHTML).toEqual('InfoPopover');
+    expect(materialTypeField.lastElementChild.innerHTML).toEqual('InfoPopover');
   });
 
   describe('when click on unchecked "Activation status" checkbox', () => {
-    it('checkbox should be checked', () => {
-      const { getByLabelText } = renderEResourcesDetails();
+    it('checkbox should be checked', async () => {
+      const { findByLabelText } = renderEResourcesDetails();
 
-      const activationStatusCheckbox = getByLabelText('Activation status');
+      const activationStatusCheckbox = await findByLabelText('Activation status');
       fireEvent.click(activationStatusCheckbox);
 
       expect(activationStatusCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_TRUE);
@@ -85,10 +110,10 @@ describe('EResourcesDetails edit component', () => {
   });
 
   describe('when click on unchecked "Trial" checkbox', () => {
-    it('checkbox should be checked', () => {
-      const { getByLabelText } = renderEResourcesDetails();
+    it('checkbox should be checked', async () => {
+      const { findByLabelText } = renderEResourcesDetails();
 
-      const trialCheckbox = getByLabelText('Trial');
+      const trialCheckbox = await findByLabelText('Trial');
       fireEvent.click(trialCheckbox);
 
       expect(trialCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_TRUE);

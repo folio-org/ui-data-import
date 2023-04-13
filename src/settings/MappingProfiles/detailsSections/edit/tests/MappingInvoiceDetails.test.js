@@ -1,10 +1,14 @@
 import React from 'react';
-import { noop } from 'lodash';
 import faker from 'faker';
+import {
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
 
+import { Pluggable } from '@folio/stripes/core';
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
@@ -20,9 +24,7 @@ import {
   getInitialDetails,
 } from '../../../initialDetails';
 
-import * as utils from '../../utils';
-
-const organizationMock = {
+const organizationMock = [{
   id: 'orgId',
   name: 'org name',
   erpCode: 'erpCode',
@@ -30,7 +32,7 @@ const organizationMock = {
     appSystemNo: 'appSystemNo1',
     accountNo: 'accountNo1',
   }],
-};
+}];
 
 const mockVendorUUID = faker.random.uuid();
 
@@ -44,20 +46,38 @@ jest.mock('../../hooks', () => ({
   }),
 }));
 
-const getAccountingCodeOptions = jest.spyOn(utils, 'getAccountingCodeOptions');
-const getAccountingNumberOptions = jest.spyOn(utils, 'getAccountingNumberOptions');
+global.fetch = jest.fn();
+
+const vendor = {
+  id: 'd0fb5aa0-cdf1-11e8-a8d5-f2801f1b9fd1',
+  name: 'GOBI Library Solutions',
+  accounts: [{
+    name: 'Monographic ordering unit account',
+    accountNo: '1234',
+    description: 'Monographic ordering unit account',
+    appSystemNo: 'test',
+    paymentMethod: 'Credit Card',
+    accountStatus: 'Active',
+    contactInfo: 'cust.service03@amazon.com',
+    libraryCode: 'COB',
+    libraryEdiCode: '765987610',
+    notes: '',
+    acqUnitIds: [],
+  }],
+};
 
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.INVOICE.type);
 const mappingDetailsProp = getInitialDetails(FOLIO_RECORD_TYPES.INVOICE.type);
 const getMappingSubfieldsFieldValueProp = jest.fn(() => '');
 const okapi = buildOkapi();
+const setReferenceTablesMock = jest.fn();
 
 const renderMappingInvoiceDetails = () => {
   const component = () => (
     <MappingInvoiceDetails
       mappingDetails={mappingDetailsProp}
       initialFields={initialFieldsProp}
-      setReferenceTables={noop}
+      setReferenceTables={setReferenceTablesMock}
       getMappingSubfieldsFieldValue={getMappingSubfieldsFieldValueProp}
       okapi={okapi}
     />
@@ -67,10 +87,28 @@ const renderMappingInvoiceDetails = () => {
 };
 
 describe('MappingInvoiceDetails edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
+  afterEach(() => {
+    Pluggable.mockClear();
+    setReferenceTablesMock.mockClear();
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
+  });
+
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingInvoiceDetails();
 
-    await runAxeTest({ rootNode: container });
+    await waitFor(() => runAxeTest({ rootNode: container }));
   });
 
   it('should have correct sections', async () => {
@@ -110,16 +148,28 @@ describe('MappingInvoiceDetails edit component', () => {
   });
 
   describe('when vendor is selected', () => {
-    it('should get accounting code options', () => {
+    it('function to select vandor should be called', async () => {
       renderMappingInvoiceDetails();
 
-      expect(getAccountingCodeOptions).toHaveBeenCalledWith(organizationMock);
+      await waitFor(() => Pluggable.mock.calls[0][0].selectVendor(vendor));
+
+      expect(setReferenceTablesMock).toHaveBeenCalled();
     });
 
-    it('should get account number options', () => {
-      renderMappingInvoiceDetails();
+    describe('when clean the field', () => {
+      it('it should be empty', async () => {
+        const { findByLabelText } = renderMappingInvoiceDetails();
 
-      expect(getAccountingNumberOptions).toHaveBeenCalledWith(organizationMock);
+        await waitFor(() => Pluggable.mock.calls[0][0].selectVendor(vendor));
+
+        const clearButton = await findByLabelText('times-circle-solid');
+
+        fireEvent.click(clearButton);
+
+        const vendorNameField = await findByLabelText(/Vendor name/);
+
+        expect(vendorNameField.value).toEqual('');
+      });
     });
   });
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   fireEvent,
-  within,
+  waitFor,
 } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -39,6 +39,8 @@ jest.mock('../../../hooks', () => ({
     ]
   }]],
 }));
+
+global.fetch = jest.fn();
 
 const setReferenceTablesMock = jest.fn();
 
@@ -98,18 +100,38 @@ const renderOrderInformation = () => {
 };
 
 describe('OrderInformation edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
   afterEach(() => {
     setReferenceTablesMock.mockClear();
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
   });
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderOrderInformation();
 
-    await runAxeTest({ rootNode: container });
+    await waitFor(() => runAxeTest({ rootNode: container }));
   });
 
   it('should render correct fields', async () => {
-    const { getByText } = renderOrderInformation();
+    const {
+      getByText,
+      findByText,
+    } = renderOrderInformation();
+
+    const orderInformationTitle = await findByText('Order information');
+
+    expect(orderInformationTitle).toBeInTheDocument();
 
     expect(getByText('Purchase order status')).toBeInTheDocument();
     expect(getByText('Approved')).toBeInTheDocument();
@@ -132,79 +154,93 @@ describe('OrderInformation edit component', () => {
     expect(getByText('Note')).toBeInTheDocument();
   });
 
-  it('should render required fields', () => {
-    const { queryByText } = renderOrderInformation();
+  it('should render required fields', async () => {
+    const { findByText } = renderOrderInformation();
 
-    expect(within(queryByText('Purchase order status')).getByText(/\*/i)).toBeDefined();
-    expect(within(queryByText('Vendor')).getByText(/\*/i)).toBeDefined();
-    expect(within(queryByText('Order type')).getByText(/\*/i)).toBeDefined();
+    const poStatusField = await findByText('Purchase order status');
+    const vendorField = await findByText('Vendor');
+    const orderTypeField = await findByText('Order type');
+
+    expect(poStatusField.lastElementChild.innerHTML).toEqual('*');
+    expect(vendorField.lastElementChild.innerHTML).toEqual('*');
+    expect(orderTypeField.lastElementChild.innerHTML).toEqual('*');
   });
 
-  it('should render info icons for the particular fields', () => {
-    const { queryByText } = renderOrderInformation();
+  it('should render info icons for the particular fields', async () => {
+    const { findByText } = renderOrderInformation();
 
-    expect(within(queryByText('Purchase order status')).getByText(/InfoPopover/i)).toBeDefined();
+    const poStatusField = await findByText('Purchase order status');
+
+    expect(poStatusField.firstElementChild.innerHTML).toEqual('InfoPopover');
   });
 
   describe('should render validation error message when "Override purchase order lines limit setting" field value', () => {
-    it('is not wrapped into quotation marks', () => {
+    it('is not wrapped into quotation marks', async () => {
       const {
         getByText,
-        getByLabelText,
+        findByLabelText,
       } = renderOrderInformation();
 
-      const overrideLimitField = getByLabelText('Override purchase order lines limit setting');
+      const overrideLimitField = await findByLabelText('Override purchase order lines limit setting');
       fireEvent.change(overrideLimitField, { target: { value: '25' } });
       fireEvent.blur(overrideLimitField);
 
-      expect(getByText('Non-MARC value must use quotation marks')).toBeInTheDocument();
+      const validationMessage = getByText('Non-MARC value must use quotation marks');
+
+      expect(validationMessage).toBeInTheDocument();
     });
 
-    it('is less than 1', () => {
+    it('is less than 1', async () => {
       const {
         getByText,
-        getByLabelText,
+        findByLabelText,
       } = renderOrderInformation();
 
-      const overrideLimitField = getByLabelText('Override purchase order lines limit setting');
+      const overrideLimitField = await findByLabelText('Override purchase order lines limit setting');
       fireEvent.change(overrideLimitField, { target: { value: '"0"' } });
       fireEvent.blur(overrideLimitField);
 
-      expect(getByText('Please enter a whole number greater than 0 and less than 1000 to continue')).toBeInTheDocument();
+      const validationMessage = getByText('Please enter a whole number greater than 0 and less than 1000 to continue');
+
+      expect(validationMessage).toBeInTheDocument();
     });
 
-    it('is greater than 999', () => {
+    it('is greater than 999', async () => {
       const {
         getByText,
-        getByLabelText,
+        findByLabelText,
       } = renderOrderInformation();
 
-      const overrideLimitField = getByLabelText('Override purchase order lines limit setting');
+      const overrideLimitField = await findByLabelText('Override purchase order lines limit setting');
       fireEvent.change(overrideLimitField, { target: { value: '"1000"' } });
       fireEvent.blur(overrideLimitField);
 
-      expect(getByText('Please enter a whole number greater than 0 and less than 1000 to continue')).toBeInTheDocument();
+      const validationMessage = getByText('Please enter a whole number greater than 0 and less than 1000 to continue');
+
+      expect(validationMessage).toBeInTheDocument();
     });
 
-    it('is fractional', () => {
+    it('is fractional', async () => {
       const {
         getByText,
-        getByLabelText,
+        findByLabelText,
       } = renderOrderInformation();
 
-      const overrideLimitField = getByLabelText('Override purchase order lines limit setting');
+      const overrideLimitField = await findByLabelText('Override purchase order lines limit setting');
       fireEvent.change(overrideLimitField, { target: { value: '"2.5"' } });
       fireEvent.blur(overrideLimitField);
 
-      expect(getByText('Please enter a whole number greater than 0 and less than 1000 to continue')).toBeInTheDocument();
+      const validationMessage = getByText('Please enter a whole number greater than 0 and less than 1000 to continue');
+
+      expect(validationMessage).toBeInTheDocument();
     });
   });
 
   describe('when click on "Approved" checkbox', () => {
-    it('checkbox should be unchecked', () => {
-      const { getByLabelText } = renderOrderInformation();
+    it('checkbox should be unchecked', async () => {
+      const { findByLabelText } = renderOrderInformation();
 
-      const approvedCheckbox = getByLabelText('Approved');
+      const approvedCheckbox = await findByLabelText('Approved');
       fireEvent.click(approvedCheckbox);
 
       expect(approvedCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_FALSE);
@@ -212,26 +248,28 @@ describe('OrderInformation edit component', () => {
   });
 
   describe('when click "Add note" button', () => {
-    it('field for new note should be rendered', () => {
+    it('field for new note should be rendered', async () => {
       const {
-        getByRole,
+        findByRole,
         getByText,
       } = renderOrderInformation();
 
-      const addNoteButton = getByRole('button', { name: /Add note/i });
+      const addNoteButton = await findByRole('button', { name: /Add note/i });
       fireEvent.click(addNoteButton);
 
-      expect(getByText('Note')).toBeInTheDocument();
+      const noteField = getByText('Note');
+
+      expect(noteField).toBeInTheDocument();
     });
 
     describe('when click on trash icon button', () => {
-      it('function for changing form should be called', () => {
+      it('function for changing form should be called', async () => {
         const {
-          getByRole,
+          findByRole,
           getAllByRole,
         } = renderOrderInformation();
 
-        const addNoteButton = getByRole('button', { name: /Add note/i });
+        const addNoteButton = await findByRole('button', { name: /Add note/i });
         fireEvent.click(addNoteButton);
 
         const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
@@ -243,13 +281,13 @@ describe('OrderInformation edit component', () => {
   });
 
   describe('when change "Bill to name" field', () => {
-    it('"Bill to address" value should be changed', () => {
+    it('"Bill to address" value should be changed', async () => {
       const {
-        getByLabelText,
+        findByLabelText,
         getByText,
       } = renderOrderInformation();
 
-      const billToNameField = getByLabelText('Bill to name');
+      const billToNameField = await findByLabelText('Bill to name');
       fireEvent.change(billToNameField, { target: { value: 'test address name2' } });
 
       const billToAddressField = getByText('"test address2"');
@@ -259,13 +297,13 @@ describe('OrderInformation edit component', () => {
   });
 
   describe('when change "Ship to name" field', () => {
-    it('"Ship to address" value should be changed', () => {
+    it('"Ship to address" value should be changed', async () => {
       const {
-        getByLabelText,
+        findByLabelText,
         getByText,
       } = renderOrderInformation();
 
-      const shipToNameField = getByLabelText('Ship to name');
+      const shipToNameField = await findByLabelText('Ship to name');
       fireEvent.change(shipToNameField, { target: { value: 'test address name2' } });
 
       const shipToAddressField = getByText('"test address2"');

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   fireEvent,
-  within,
+  waitFor,
 } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -50,6 +50,8 @@ jest.mock('../../../hooks', () => ({
   }),
 }));
 
+global.fetch = jest.fn();
+
 const setReferenceTablesMock = jest.fn();
 
 const okapi = buildOkapi();
@@ -67,18 +69,38 @@ const renderLocation = () => {
 };
 
 describe('Location edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
   afterEach(() => {
     setReferenceTablesMock.mockClear();
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
   });
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderLocation();
 
-    await runAxeTest({ rootNode: container });
+    await waitFor(() => runAxeTest({ rootNode: container }));
   });
 
   it('should render correct fields', async () => {
-    const { getByText } = renderLocation();
+    const {
+      getByText,
+      findByText,
+    } = renderLocation();
+
+    const locationTitle = await findByText('Location');
+
+    expect(locationTitle).toBeInTheDocument();
 
     expect(getByText('Add location')).toBeInTheDocument();
     expect(getByText('Name (code)')).toBeInTheDocument();
@@ -86,22 +108,26 @@ describe('Location edit component', () => {
     expect(getByText('Quantity electronic')).toBeInTheDocument();
   });
 
-  it('should render info icons for sometimes required fields', () => {
-    const { queryByText } = renderLocation();
+  it('should render info icons for sometimes required fields', async () => {
+    const { findByText } = renderLocation();
 
-    expect(within(queryByText('Name (code)')).getByText(/InfoPopover/i)).toBeDefined();
-    expect(within(queryByText('Quantity physical')).getByText(/InfoPopover/i)).toBeDefined();
-    expect(within(queryByText('Quantity electronic')).getByText(/InfoPopover/i)).toBeDefined();
+    const nameField = await findByText('Name (code)');
+    const quantityPhysicalField = await findByText('Quantity physical');
+    const quantityElectronicField = await findByText('Quantity electronic');
+
+    expect(nameField.lastElementChild.innerHTML).toEqual('InfoPopover');
+    expect(quantityPhysicalField.lastElementChild.innerHTML).toEqual('InfoPopover');
+    expect(quantityElectronicField.lastElementChild.innerHTML).toEqual('InfoPopover');
   });
 
   describe('when click "Add location" button', () => {
-    it('fields for new location should be rendered', () => {
+    it('fields for new location should be rendered', async () => {
       const {
-        getByRole,
+        findByRole,
         getByText,
       } = renderLocation();
 
-      const addLocationButton = getByRole('button', { name: /Add location/i });
+      const addLocationButton = await findByRole('button', { name: /Add location/i });
       fireEvent.click(addLocationButton);
 
       expect(getByText('Name (code)')).toBeInTheDocument();
@@ -110,13 +136,13 @@ describe('Location edit component', () => {
     });
 
     describe('when click on trash icon button', () => {
-      it('function for changing form should be called', () => {
+      it('function for changing form should be called', async () => {
         const {
-          getByRole,
+          findByRole,
           getAllByRole,
         } = renderLocation();
 
-        const addLocationButton = getByRole('button', { name: /Add location/i });
+        const addLocationButton = await findByRole('button', { name: /Add location/i });
         fireEvent.click(addLocationButton);
 
         const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];

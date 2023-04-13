@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   fireEvent,
-  within,
+  waitFor,
 } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -19,6 +19,8 @@ import { BOOLEAN_ACTIONS } from '../../../../../../utils';
 
 jest.mock('../../../hooks', () => ({ useFieldMappingBoolFieldValue: () => ['ALL_FALSE'] }));
 
+global.fetch = jest.fn();
+
 const okapi = buildOkapi();
 
 const renderPOLineDetails = () => {
@@ -33,14 +35,34 @@ const renderPOLineDetails = () => {
 };
 
 describe('POLineDetails edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
+  });
+
   it('should be rendered with no axe errors', async () => {
     const { container } = renderPOLineDetails();
 
-    await runAxeTest({ rootNode: container });
+    await waitFor(() => runAxeTest({ rootNode: container }));
   });
 
   it('should render correct fields', async () => {
-    const { getByText } = renderPOLineDetails();
+    const {
+      getByText,
+      findByText,
+    } = renderPOLineDetails();
+
+    const poLineDetailsTitle = await findByText('PO line details');
+
+    expect(poLineDetailsTitle).toBeInTheDocument();
 
     expect(getByText('POL number')).toBeInTheDocument();
     expect(getByText('Acquisition method')).toBeInTheDocument();
@@ -60,19 +82,23 @@ describe('POLineDetails edit component', () => {
     expect(getByText('Line description')).toBeInTheDocument();
   });
 
-  it('should render required fields', () => {
-    const { queryByText } = renderPOLineDetails();
+  it('should render required fields', async () => {
+    const { findByText } = renderPOLineDetails();
 
-    expect(within(queryByText('Acquisition method')).getByText(/\*/i)).toBeDefined();
-    expect(within(queryByText('Order format')).getByText(/\*/i)).toBeDefined();
-    expect(within(queryByText('Receiving workflow')).getByText(/\*/i)).toBeDefined();
+    const acqMethodField = await findByText('Acquisition method');
+    const orderFormatField = await findByText('Order format');
+    const receivingWorkflowField = await findByText('Receiving workflow');
+
+    expect(acqMethodField.lastElementChild.innerHTML).toEqual('*');
+    expect(orderFormatField.lastElementChild.innerHTML).toEqual('*');
+    expect(receivingWorkflowField.lastElementChild.innerHTML).toEqual('*');
   });
 
   describe('when click on "Automatic export" checkbox', () => {
-    it('checkbox should be checked', () => {
-      const { getByLabelText } = renderPOLineDetails();
+    it('checkbox should be checked', async () => {
+      const { findByLabelText } = renderPOLineDetails();
 
-      const automaticExportCheckbox = getByLabelText('Automatic export');
+      const automaticExportCheckbox = await findByLabelText('Automatic export');
       fireEvent.click(automaticExportCheckbox);
 
       expect(automaticExportCheckbox.value).toBe(BOOLEAN_ACTIONS.ALL_TRUE);
@@ -80,12 +106,10 @@ describe('POLineDetails edit component', () => {
   });
 
   describe('when select receipt date', () => {
-    it('value for receipt date field should be changed', () => {
-      const {
-        getByLabelText,
-      } = renderPOLineDetails();
+    it('value for receipt date field should be changed', async () => {
+      const { findByLabelText } = renderPOLineDetails();
 
-      const receiptDateField = getByLabelText('Receipt date');
+      const receiptDateField = await findByLabelText('Receipt date');
       fireEvent.change(receiptDateField, { target: { value: '###TODAY###' } });
 
       expect(receiptDateField).toHaveValue('###TODAY###');
@@ -93,13 +117,13 @@ describe('POLineDetails edit component', () => {
   });
 
   describe('when change "Receiving workflow" field', () => {
-    it('value should be changed', () => {
+    it('value should be changed', async () => {
       const {
-        getByLabelText,
+        findByLabelText,
         getByText,
       } = renderPOLineDetails();
 
-      const receivingWorkflowField = getByLabelText('Receiving workflow*');
+      const receivingWorkflowField = await findByLabelText('Receiving workflow*');
       fireEvent.change(receivingWorkflowField, { target: { value: 'Synchronized' } });
 
       const receivingWorkflowValue = getByText('Synchronized');

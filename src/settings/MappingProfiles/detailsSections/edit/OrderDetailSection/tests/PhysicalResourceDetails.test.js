@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   fireEvent,
-  within,
+  waitFor,
 } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -39,6 +39,8 @@ jest.mock('../../../hooks', () => ({
   }),
 }));
 
+global.fetch = jest.fn();
+
 const setReferenceTablesMock = jest.fn();
 
 const okapi = buildOkapi();
@@ -56,18 +58,38 @@ const renderPhysicalResourceDetails = () => {
 };
 
 describe('PhysicalResourceDetails edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
   afterEach(() => {
     setReferenceTablesMock.mockClear();
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
   });
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderPhysicalResourceDetails();
 
-    await runAxeTest({ rootNode: container });
+    await waitFor(() => runAxeTest({ rootNode: container }));
   });
 
   it('should render correct fields', async () => {
-    const { getByText } = renderPhysicalResourceDetails();
+    const {
+      getByText,
+      findByText,
+    } = renderPhysicalResourceDetails();
+
+    const physicalResourceTitle = await findByText('Physical resource details');
+
+    expect(physicalResourceTitle).toBeInTheDocument();
 
     expect(getByText('Material supplier')).toBeInTheDocument();
     expect(getByText('Receipt due')).toBeInTheDocument();
@@ -78,34 +100,39 @@ describe('PhysicalResourceDetails edit component', () => {
     expect(getByText('Volume')).toBeInTheDocument();
   });
 
-  it('should render info icons for sometimes required fields', () => {
-    const { queryByText } = renderPhysicalResourceDetails();
+  it('should render info icons for sometimes required fields', async () => {
+    const { findByText } = renderPhysicalResourceDetails();
 
-    expect(within(queryByText('Create inventory')).getByText(/InfoPopover/i)).toBeDefined();
-    expect(within(queryByText('Material type')).getByText(/InfoPopover/i)).toBeDefined();
+    const createInventoryField = await findByText('Create inventory');
+    const materialTypeField = await findByText('Material type');
+
+    expect(createInventoryField.lastElementChild.innerHTML).toEqual('InfoPopover');
+    expect(materialTypeField.lastElementChild.innerHTML).toEqual('InfoPopover');
   });
 
   describe('when click "Add volume" button', () => {
-    it('fields for new volume should be rendered', () => {
+    it('fields for new volume should be rendered', async () => {
       const {
-        getByRole,
+        findByRole,
         getByText,
       } = renderPhysicalResourceDetails();
 
-      const addVolumeButton = getByRole('button', { name: /Add volume/i });
+      const addVolumeButton = await findByRole('button', { name: /Add volume/i });
       fireEvent.click(addVolumeButton);
 
-      expect(getByText('Volume')).toBeInTheDocument();
+      const volumeField = getByText('Volume');
+
+      expect(volumeField).toBeInTheDocument();
     });
 
     describe('when click on trash icon button', () => {
-      it('function for changing form should be called', () => {
+      it('function for changing form should be called', async () => {
         const {
-          getByRole,
+          findByRole,
           getAllByRole,
         } = renderPhysicalResourceDetails();
 
-        const addVolumeButton = getByRole('button', { name: /Add volume/i });
+        const addVolumeButton = await findByRole('button', { name: /Add volume/i });
         fireEvent.click(addVolumeButton);
 
         const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];

@@ -1,5 +1,8 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import {
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
@@ -74,19 +77,19 @@ describe('MappingHoldingsDetails edit component', () => {
   });
 
   afterEach(() => {
-    global.fetch.mockClear();
     onAdd.mockClear();
     onRemove.mockClear();
   });
 
   afterAll(() => {
+    global.fetch.mockClear();
     delete global.fetch;
   });
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingHoldingsDetails({});
 
-    await runAxeTest({ rootNode: container });
+    await waitFor(() => runAxeTest({ rootNode: container }));
   });
 
   it('should have correct sections', async () => {
@@ -165,7 +168,7 @@ describe('MappingHoldingsDetails edit component', () => {
     });
   });
 
-  describe('Administrative notes field', () => {
+  describe('"Administrative notes" field', () => {
     it('User can add administrative note info', async () => {
       const {
         findByRole,

@@ -1,5 +1,8 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import {
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
@@ -72,19 +75,19 @@ describe('MappingInstanceDetails edit component', () => {
   });
 
   afterEach(() => {
-    global.fetch.mockClear();
     onAdd.mockClear();
     onRemove.mockClear();
   });
 
   afterAll(() => {
+    global.fetch.mockClear();
     delete global.fetch;
   });
 
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingInstanceDetails({});
 
-    await runAxeTest({ rootNode: container });
+    await waitFor(() => runAxeTest({ rootNode: container }));
   });
 
   it('should have correct sections', async () => {
