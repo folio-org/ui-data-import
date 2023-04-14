@@ -22,6 +22,7 @@ import {
   getFieldName,
   getAcceptedValuesPath,
   getSubfieldName,
+  renderFieldLabelWithInfo,
 } from '../../utils';
 import {
   TRANSLATION_ID_PREFIX,
@@ -59,6 +60,11 @@ export const InvoiceInformation = ({
 
   const [lockTotalFromDetails] = useFieldMappingFieldValue([LOCK_TOTAL_FIELD]);
   const [isLockTotal, setIsLockTotal] = useState(!!lockTotalFromDetails);
+
+  const acqUnitsLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.acqUnitIds`,
+    `${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.acqUnitIds.info`,
+  );
 
   return (
     <Accordion
@@ -125,7 +131,7 @@ export const InvoiceInformation = ({
           <AcceptedValuesField
             component={TextField}
             name={getSubfieldName(INVOICE_INFO_FIELDS_MAP.ACQ_UNITS, 0, 0)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceInformation.field.acqUnitIds`} />}
+            label={acqUnitsLabel}
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
