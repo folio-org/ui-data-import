@@ -16,7 +16,8 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const Location = ({ mappingDetails }) => {
-  const permanentLocation = getFieldValue(mappingDetails, 'permanentLocationId', 'value');
+  const permanentLocationSubfields = getFieldValue(mappingDetails, 'permanentLocationId', 'subfields');
+  const permanentLocation = permanentLocationSubfields[0].fields[0].value;
   const temporaryLocation = getFieldValue(mappingDetails, 'temporaryLocationId', 'value');
   const shelvingOrder = getFieldValue(mappingDetails, 'shelvingOrder', 'value');
   const shelvingTitle = getFieldValue(mappingDetails, 'shelvingTitle', 'value');

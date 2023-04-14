@@ -8,6 +8,7 @@
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
 * Avoid private paths in stripes-core imports (UIDATIMP-1414)
 * View all: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1428)
+* Improve mapping profile for Holdings for handling multiple Holdings mapping (UIDATIMP-1443)
 
 ## [6.0.8](https://github.com/folio-org/ui-data-import/tree/v6.0.8) (2023-04-04)
 

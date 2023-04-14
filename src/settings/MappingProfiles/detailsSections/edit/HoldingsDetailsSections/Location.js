@@ -19,6 +19,8 @@ import {
 import {
   getAcceptedValuesPath,
   getFieldName,
+  getRepeatableAcceptedValuesPath,
+  getSubfieldName,
   renderFieldLabelWithInfo,
 } from '../../utils';
 import {
@@ -30,6 +32,21 @@ export const Location = ({
   setReferenceTables,
   okapi,
 }) => {
+  const LOCATION_FIELDS_MAP = {
+    PERMANENT: getSubfieldName(6, 0, 0),
+    PERMANENT_ACCEPTED_VALUES: getRepeatableAcceptedValuesPath(6, 0, 0),
+    TEMPORARY: getFieldName(7),
+    TEMPORARY_ACCEPTED_VALUES: getAcceptedValuesPath(7),
+    SHELVING_ORDER: getFieldName(8),
+    SHELVING_TITLE: getFieldName(9),
+    COPY_NUMBER: getFieldName(10),
+    CALL_NUMBER_TYPE: getFieldName(11),
+    CALL_NUMBER_TYPE_ACCEPTED_VALUES: getAcceptedValuesPath(11),
+    CALL_NUMBER_PREFIX: getFieldName(12),
+    CALL_NUMBER: getFieldName(13),
+    CALL_NUMBER_SUFFIX: getFieldName(14),
+  };
+
   const permanentLocationLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.location.field.permanent`,
     `${TRANSLATION_ID_PREFIX}.item.requiredWhenCreatingHoldings.info`,
@@ -47,7 +64,7 @@ export const Location = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(6)}
+            name={LOCATION_FIELDS_MAP.PERMANENT}
             label={permanentLocationLabel}
             optionValue="name"
             optionLabel="name"
@@ -57,7 +74,7 @@ export const Location = ({
               wrapperSourcePath: 'locations',
             }]}
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(6)}
+            acceptedValuesPath={LOCATION_FIELDS_MAP.PERMANENT_ACCEPTED_VALUES}
             optionTemplate="**name** (**code**)"
             okapi={okapi}
           />
@@ -68,7 +85,7 @@ export const Location = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(7)}
+            name={LOCATION_FIELDS_MAP.TEMPORARY}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.location.field.temporary`} />}
             optionValue="name"
             optionLabel="name"
@@ -79,7 +96,7 @@ export const Location = ({
             }]}
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(7)}
+            acceptedValuesPath={LOCATION_FIELDS_MAP.TEMPORARY_ACCEPTED_VALUES}
             optionTemplate="**name** (**code**)"
             okapi={okapi}
           />
@@ -92,7 +109,7 @@ export const Location = ({
         >
           <Field
             component={TextField}
-            name={getFieldName(8)}
+            name={LOCATION_FIELDS_MAP.SHELVING_ORDER}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingOrder`} />}
             disabled
           />
@@ -105,7 +122,7 @@ export const Location = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(9)}
+                name={LOCATION_FIELDS_MAP.SHELVING_TITLE}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.holdings.location.field.shelvingTitle`} />}
                 validate={[validation]}
               />
@@ -122,7 +139,7 @@ export const Location = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(10)}
+                name={LOCATION_FIELDS_MAP.COPY_NUMBER}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.copyNumber`} />}
                 validate={[validation]}
               />
@@ -137,7 +154,7 @@ export const Location = ({
         >
           <AcceptedValuesField
             component={TextField}
-            name={getFieldName(11)}
+            name={LOCATION_FIELDS_MAP.CALL_NUMBER_TYPE}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberType`} />}
             optionValue="name"
             optionLabel="name"
@@ -148,7 +165,7 @@ export const Location = ({
             }]}
             isRemoveValueAllowed
             setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(11)}
+            acceptedValuesPath={LOCATION_FIELDS_MAP.CALL_NUMBER_TYPE_ACCEPTED_VALUES}
             okapi={okapi}
           />
         </Col>
@@ -160,7 +177,7 @@ export const Location = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(12)}
+                name={LOCATION_FIELDS_MAP.CALL_NUMBER_PREFIX}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberPrefix`} />}
                 validate={[validation]}
               />
@@ -175,7 +192,7 @@ export const Location = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(13)}
+                name={LOCATION_FIELDS_MAP.CALL_NUMBER}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumber`} />}
                 validate={[validation]}
               />
@@ -191,7 +208,7 @@ export const Location = ({
             {validation => (
               <Field
                 component={TextField}
-                name={getFieldName(14)}
+                name={LOCATION_FIELDS_MAP.CALL_NUMBER_SUFFIX}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.field.callNumberSuffix`} />}
                 validate={[validation]}
               />

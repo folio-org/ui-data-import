@@ -69,10 +69,27 @@ const HOLDINGS = {
   }, {
     name: 'permanentLocationId',
     enabled: true,
-    path: 'holdings.permanentLocationId',
+    required: false,
+    path: 'holdings.permanentLocationId[]',
     value: '',
-    subfields: [],
-    acceptedValues: {},
+    repeatableFieldAction: 'EXTEND_EXISTING',
+    subfields: [
+      {
+        order: 0,
+        path: 'holdings.permanentLocationId[]',
+        fields: [
+          {
+            name: 'permanentLocationId',
+            enabled: true,
+            required: false,
+            path: 'holdings.permanentLocationId[]',
+            value: '',
+            subfields: [],
+            acceptedValues: {},
+          },
+        ],
+      },
+    ],
   }, {
     name: 'temporaryLocationId',
     enabled: true,
