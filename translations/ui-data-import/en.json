@@ -895,6 +895,7 @@
   "settings.mappingProfiles.map.invoice.invoiceInformation.field.approvalDate": "Approval date",
   "settings.mappingProfiles.map.invoice.invoiceInformation.field.approvedBy": "Approved by",
   "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds": "Acquisitions units",
+  "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds.info": "Invoice creation will error unless the importing user is a member of the specified acquisitions unit",
   "settings.mappingProfiles.map.invoice.invoiceInformation.field.billToName": "Bill to name",
   "settings.mappingProfiles.map.invoice.invoiceInformation.field.billToAddress": "Bill to address",
   "settings.mappingProfiles.map.invoice.invoiceInformation.field.batchGroupId": "Batch group",

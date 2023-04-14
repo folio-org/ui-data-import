@@ -8,6 +8,7 @@
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
 * Avoid private paths in stripes-core imports (UIDATIMP-1414)
 * Order field mapping: Add info icon to the Acq unit field (UIDATIMP-1426)
+* Invoice field mapping: Add info icon to the Acq unit field (UIDATIMP-1427)
 * View all: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1428)
 
 ## [6.0.8](https://github.com/folio-org/ui-data-import/tree/v6.0.8) (2023-04-04)
