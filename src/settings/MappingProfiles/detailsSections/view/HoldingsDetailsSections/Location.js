@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { get } from 'lodash';
 
 import {
   Accordion,
@@ -9,7 +10,7 @@ import {
   KeyValue,
 } from '@folio/stripes/components';
 
-import { ProhibitionIcon } from '../../../../../components/ProhibitionIcon';
+import { ProhibitionIcon } from '../../../../../components';
 
 import { getFieldValue } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
@@ -17,7 +18,7 @@ import { mappingProfileFieldShape } from '../../../../../utils';
 
 export const Location = ({ mappingDetails }) => {
   const permanentLocationSubfields = getFieldValue(mappingDetails, 'permanentLocationId', 'subfields');
-  const permanentLocation = permanentLocationSubfields[0].fields[0].value;
+  const permanentLocation = get(permanentLocationSubfields, '[0].fields[0].value', '');
   const temporaryLocation = getFieldValue(mappingDetails, 'temporaryLocationId', 'value');
   const shelvingOrder = getFieldValue(mappingDetails, 'shelvingOrder', 'value');
   const shelvingTitle = getFieldValue(mappingDetails, 'shelvingTitle', 'value');
