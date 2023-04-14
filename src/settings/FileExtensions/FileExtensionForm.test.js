@@ -67,7 +67,6 @@ const renderFileExtensionForm = ({
         onSubmitSuccess={onSubmitSuccess}
         onCancel={noop}
         transitionToParams={transitionToParams}
-        baseUrl="base-url"
       />
     </Router>
   );

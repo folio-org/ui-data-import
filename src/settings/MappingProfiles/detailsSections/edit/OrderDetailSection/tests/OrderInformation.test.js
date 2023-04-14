@@ -40,6 +40,7 @@ jest.mock('../../../hooks', () => ({
   }]],
 }));
 
+global.fetch = jest.fn();
 const setReferenceTablesMock = jest.fn();
 
 const okapi = buildOkapi();
@@ -98,8 +99,21 @@ const renderOrderInformation = () => {
 };
 
 describe('OrderInformation edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
   afterEach(() => {
     setReferenceTablesMock.mockClear();
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
   });
 
   it('should be rendered with no axe errors', async () => {
@@ -144,6 +158,7 @@ describe('OrderInformation edit component', () => {
     const { queryByText } = renderOrderInformation();
 
     expect(within(queryByText('Purchase order status')).getByText(/InfoPopover/i)).toBeDefined();
+    expect(within(queryByText('Acquisition units')).getByText(/InfoPopover/i)).toBeDefined();
   });
 
   describe('should render validation error message when "Override purchase order lines limit setting" field value', () => {

@@ -52,7 +52,6 @@ const renderProfileLinker = ({
       initialData={initialData}
       setInitialData={setInitialData}
       okapi={okapi}
-      profileType="test profile type"
     />
   );
 
