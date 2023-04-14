@@ -7,6 +7,7 @@
 * Create hotlink from file name in job profile detail view to job log details (UIDATIMP-1356)
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
 * Avoid private paths in stripes-core imports (UIDATIMP-1414)
+* Invoice field mapping: Add info icon to the Acq unit field (UIDATIMP-1427)
 * View all: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1428)
 * Improve mapping profile for Holdings for handling multiple Holdings mapping (UIDATIMP-1443)
 
