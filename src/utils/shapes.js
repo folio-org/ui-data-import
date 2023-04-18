@@ -195,9 +195,9 @@ export const mappingHoldingsRefTablesShape = PropTypes.shape({
 });
 
 export const okapiShape = PropTypes.shape({
-  tenant: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  tenant: PropTypes.string,
+  token: PropTypes.string,
+  url: PropTypes.string,
 });
 
 export const qualifierShape = PropTypes.shape({

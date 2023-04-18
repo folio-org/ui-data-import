@@ -250,7 +250,7 @@ const renderRecordsTable = ({ isEdifactType = false }) => {
         source={source}
         resultCountIncrement={5}
         pageAmount={5}
-        history={{ push: noop }}
+        history={history}
         location="test location"
       />
     </BrowserRouter>
@@ -259,7 +259,7 @@ const renderRecordsTable = ({ isEdifactType = false }) => {
   return renderWithIntl(component, translationsProperties);
 };
 
-describe.skip('RecordsTable component', () => {
+describe('RecordsTable component', () => {
   // TODO: Create separate ticket to fix all the accesibility tests
   it.skip('should be rendered with no axe errors', async () => {
     const { container } = renderRecordsTable({});

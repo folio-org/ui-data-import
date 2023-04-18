@@ -38,7 +38,6 @@ jest.mock('../../../hooks', () => ({
 }));
 
 global.fetch = jest.fn();
-
 const setReferenceTablesMock = jest.fn();
 
 const okapi = buildOkapi();

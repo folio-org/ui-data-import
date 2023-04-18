@@ -133,6 +133,10 @@ const OrderInformationComponent = ({
     `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.purchaseOrderStatus`,
     `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.purchaseOrderStatus.info`,
   );
+  const acqUnitsLabel = renderFieldLabelWithInfo(
+    `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.acquisitionUnits`,
+    `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.acquisitionUnits.info`,
+  );
 
   const isApprovalRequiredValue = useMemo(
     () => {
@@ -341,7 +345,7 @@ const OrderInformationComponent = ({
           <AcceptedValuesField
             component={TextField}
             name={getFieldName(ORDER_INFO_FIELDS_MAP.ACQ_UNITS)}
-            label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.acquisitionUnits`} />}
+            label={acqUnitsLabel}
             optionValue="name"
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
