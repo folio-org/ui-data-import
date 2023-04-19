@@ -1,5 +1,8 @@
 import React from 'react';
-import { Router } from 'react-router-dom';
+import {
+  Route,
+  Router,
+} from 'react-router-dom';
 import {
   fireEvent,
   waitFor,
@@ -25,18 +28,25 @@ const onSubmitSearchMock = jest.fn();
 const onSelectRowMock = jest.fn();
 const EditRecordComponentMock = jest.fn(() => <span>EditRecordComponent</span>);
 const CreateRecordComponentMock = jest.fn(() => <span>CreateRecordComponent</span>);
+const ViewRecordComponentMock = jest.fn(() => <span>ViewRecordComponent</span>);
 const onCreateMock = jest.fn(() => Promise.resolve({ id: 'testId' }));
 const onEditMock = jest.fn();
+const historyPushMock = jest.fn();
 
 jest.useFakeTimers();
+
+const fullWidthContainer = () => <span>fullWidthContainer</span>;
 
 const pathname = '/data-import/job-profile';
 const getHistory = (route = pathname) => ({
   length: 1,
   action: 'POP',
-  location: { pathname: route },
+  location: {
+    pathname: route,
+    search: '',
+  },
   block: noop,
-  push: noop,
+  push: historyPushMock,
   replace: noop,
   listen: noop,
   createHref: noop,
@@ -92,12 +102,14 @@ const searchAndSortProps = ({
   route = pathname,
 }) => ({
   history: getHistory(route),
-  location: { pathname: route },
+  location: {
+    pathname: route,
+    search: '',
+  },
   objectName: 'testObjectName',
   resultsLabel: <span>Results Label</span>,
   searchLabelKey: 'ui-data-import.settings.jobProfiles.title',
   resultCountMessageKey: 'ui-data-import.settings.jobProfiles.count',
-  fullWidthContainer: <span>fullWidthContainer</span>,
   finishedResourceName: 'jobProfiles',
   actionMenu: jest.fn(() => <span>Add</span>),
   isFullScreen,
@@ -119,7 +131,6 @@ const getSearchAndSortComponent = ({
   finishedResourceName,
   actionMenu,
   isFullScreen,
-  fullWidthContainer,
   parentResources,
   visibleColumns,
   nsParams,
@@ -128,35 +139,37 @@ const getSearchAndSortComponent = ({
 }) => (
   <Harness translations={translationsProperties}>
     <Router history={history}>
-      <Paneset>
-        <SearchAndSort
-          stripes={stripes}
-          objectName={objectName}
-          resultsLabel={resultsLabel}
-          initialResultCount={100}
-          resultCountIncrement={10}
-          searchLabelKey={searchLabelKey}
-          resultCountMessageKey={resultCountMessageKey}
-          showSingleResult
-          fullWidthContainer={fullWidthContainer}
-          location={location}
-          match={{ path: pathname }}
-          parentMutator={mutator}
-          parentResources={parentResources}
-          ViewRecordComponent={noop}
-          EditRecordComponent={EditRecordComponentMock}
-          CreateRecordComponent={CreateRecordComponentMock}
-          finishedResourceName={finishedResourceName}
-          actionMenu={actionMenu}
-          isFullScreen={isFullScreen}
-          visibleColumns={visibleColumns}
-          nsParams={nsParams}
-          onSubmitSearch={onSubmitSearchMock}
-          onSelectRow={onSelectRowMock}
-          onCreate={onCreateMock}
-          onEdit={onEditMock}
-        />
-      </Paneset>
+      <Route path={pathname}>
+        <Paneset>
+          <SearchAndSort
+            stripes={stripes}
+            objectName={objectName}
+            resultsLabel={resultsLabel}
+            initialResultCount={100}
+            resultCountIncrement={10}
+            searchLabelKey={searchLabelKey}
+            resultCountMessageKey={resultCountMessageKey}
+            showSingleResult
+            fullWidthContainer={fullWidthContainer}
+            location={location}
+            match={{ path: pathname }}
+            parentMutator={mutator}
+            parentResources={parentResources}
+            ViewRecordComponent={ViewRecordComponentMock}
+            EditRecordComponent={EditRecordComponentMock}
+            CreateRecordComponent={CreateRecordComponentMock}
+            finishedResourceName={finishedResourceName}
+            actionMenu={actionMenu}
+            isFullScreen={isFullScreen}
+            visibleColumns={visibleColumns}
+            nsParams={nsParams}
+            onSubmitSearch={onSubmitSearchMock}
+            onSelectRow={onSelectRowMock}
+            onCreate={onCreateMock}
+            onEdit={onEditMock}
+          />
+        </Paneset>
+      </Route>
     </Router>
   </Harness>
 );
@@ -165,13 +178,16 @@ const renderSearchAndSort = props => {
   return render(getSearchAndSortComponent(props));
 };
 
-describe.skip('SearchAndSort component', () => {
+describe('SearchAndSort component', () => {
   afterEach(() => {
     onSubmitSearchMock.mockClear();
     onSelectRowMock.mockClear();
     EditRecordComponentMock.mockClear();
+    CreateRecordComponentMock.mockClear();
+    ViewRecordComponentMock.mockClear();
     onCreateMock.mockClear();
     onEditMock.mockClear();
+    historyPushMock.mockClear();
   });
 
   it('should be rendered with no axe errors', () => {
@@ -317,6 +333,20 @@ describe.skip('SearchAndSort component', () => {
 
         expect(onCreateMock).toHaveBeenCalled();
       });
+
+      describe('when leave the create page', () => {
+        it('function for changing the URL should be called ', async () => {
+          renderSearchAndSort(searchAndSortProps({
+            parentResources: resources(1, false),
+            isFullScreen: true,
+            route: `${pathname}/create`,
+          }));
+
+          await waitFor(() => CreateRecordComponentMock.mock.calls[0][0].onCancel());
+
+          expect(historyPushMock).toHaveBeenCalledWith('/data-import/job-profile');
+        });
+      });
     });
   });
 
@@ -343,6 +373,20 @@ describe.skip('SearchAndSort component', () => {
 
         expect(onEditMock).toHaveBeenCalled();
       });
+
+      describe('when leave the edit page', () => {
+        it('function for changing the URL should be called ', async () => {
+          renderSearchAndSort(searchAndSortProps({
+            parentResources: resources(1, false),
+            isFullScreen: true,
+            route: `${pathname}/edit/testid`,
+          }));
+
+          await waitFor(() => EditRecordComponentMock.mock.calls[0][0].onCancel());
+
+          expect(historyPushMock).toHaveBeenCalledWith('/data-import/job-profile/view/testid');
+        });
+      });
     });
   });
 
@@ -368,6 +412,20 @@ describe.skip('SearchAndSort component', () => {
         await waitFor(() => EditRecordComponentMock.mock.calls[0][0].onSubmit());
 
         expect(onCreateMock).toHaveBeenCalled();
+      });
+
+      describe('when leave the duplicate page', () => {
+        it('function for changing the URL should be called ', async () => {
+          renderSearchAndSort(searchAndSortProps({
+            parentResources: resources(1, false),
+            isFullScreen: true,
+            route: `${pathname}/duplicate/testid`,
+          }));
+
+          await waitFor(() => EditRecordComponentMock.mock.calls[0][0].onCancel());
+
+          expect(historyPushMock).toHaveBeenCalledWith('/data-import/job-profile/view/testid');
+        });
       });
     });
   });

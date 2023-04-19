@@ -7,13 +7,14 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
+import '../../../test/jest/__mock__';
+
 import {
   buildMutator,
   buildStripes,
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
-import '../../../test/jest/__mock__';
 
 import ViewAllLogs, { ViewAllLogsManifest } from './ViewAllLogs';
 
@@ -155,9 +156,6 @@ jest.mock('@folio/stripes/components', () => ({
 const deleteJobExecutionsSpy = jest.spyOn(utils, 'deleteJobExecutions');
 
 const stripes = buildStripes();
-stripes.hasPerm = jest.fn(() => true);
-stripes.logger.log = jest.fn();
-stripes.connect = jest.fn(() => component => component);
 
 const renderViewAllLogs = query => {
   const component = (
@@ -349,7 +347,7 @@ describe.skip('ViewAllLogs component', () => {
     });
   });
 
-  describe('"Job profiles" selection', () => {
+  describe('Job profiles selection', () => {
     it('renders dropdown button', () => {
       const { getByRole } = renderViewAllLogs(defaultQuery);
 

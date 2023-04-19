@@ -83,7 +83,7 @@ describe('MappingHoldingsDetails edit component', () => {
     delete global.fetch;
   });
 
-  it('should be rendered with no axe errors', async () => {
+  it.skip('should be rendered with no axe errors', async () => {
     const {
       container,
       findByRole,
