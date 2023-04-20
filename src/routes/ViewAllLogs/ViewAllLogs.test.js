@@ -187,7 +187,7 @@ const renderViewAllLogs = query => {
   return renderWithIntl(component, translationsProperties);
 };
 
-describe.skip('ViewAllLogs component', () => {
+describe('ViewAllLogs component', () => {
   afterAll(() => {
     deleteJobExecutionsSpy.mockClear();
   });
