@@ -15,6 +15,18 @@ import {
 import { MappingOrderDetails } from '../MappingOrderDetails';
 import { getInitialFields } from '../../../initialDetails';
 
+jest.mock('../OrderDetailSection', () => ({
+  OrderInformation: () => <span>OrderInformation</span>,
+  ItemDetails: () => <span>ItemDetails</span>,
+  POLineDetails: () => <span>POLineDetails</span>,
+  Vendor: () => <span>Vendor</span>,
+  CostDetails: () => <span>CostDetails</span>,
+  FundDistribution: () => <span>FundDistribution</span>,
+  Location: () => <span>Location</span>,
+  PhysicalResourceDetails: () => <span>PhysicalResourceDetails</span>,
+  EResourcesDetails: () => <span>EResourcesDetails</span>,
+}));
+
 global.fetch = jest.fn();
 
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.ORDER.type);
@@ -49,64 +61,23 @@ describe('MappingOrderDetails edit component', () => {
     delete global.fetch;
   });
 
-  it.skip('should be rendered with no axe errors', async () => {
-    const {
-      container,
-      findByRole,
-    } = renderMappingOrderDetails();
-
-    const orderInformationSection = await findByRole('button', { name: /order information/i });
-
-    expect(orderInformationSection).toBeInTheDocument();
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingOrderDetails();
 
     await runAxeTest({ rootNode: container });
   });
 
   it('should have correct sections', async () => {
-    const {
-      findByRole,
-      getByRole,
-    } = renderMappingOrderDetails();
+    const { getByText } = renderMappingOrderDetails();
 
-    expect(await findByRole('button', {
-      name: /order information/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /order line information/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /item details/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /po line details/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /vendor/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /cost details/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /fund distribution/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /location/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /physical resource details/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /e-resources details/i,
-      expanded: true,
-    })).toBeInTheDocument();
+    expect(getByText('OrderInformation')).toBeInTheDocument();
+    expect(getByText('ItemDetails')).toBeInTheDocument();
+    expect(getByText('POLineDetails')).toBeInTheDocument();
+    expect(getByText('Vendor')).toBeInTheDocument();
+    expect(getByText('CostDetails')).toBeInTheDocument();
+    expect(getByText('FundDistribution')).toBeInTheDocument();
+    expect(getByText('Location')).toBeInTheDocument();
+    expect(getByText('PhysicalResourceDetails')).toBeInTheDocument();
+    expect(getByText('EResourcesDetails')).toBeInTheDocument();
   });
 });

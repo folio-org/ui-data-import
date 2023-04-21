@@ -1,59 +1,37 @@
 import React from 'react';
 import { runAxeTest } from '@folio/stripes-testing';
 
+import '../../../../../../../test/jest/__mock__';
+
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
+
 import {
   buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
-import '../../../../../../../test/jest/__mock__';
 
 import { ElectronicAccess } from '../ElectronicAccess';
+
+import {
+  getInitialDetails,
+  getReferenceTables,
+} from '../../../../initialDetails';
 
 jest.mock('../../../../../../components/AcceptedValuesField/AcceptedValuesField', () => ({
   ...jest.requireActual('../../../../../../components/AcceptedValuesField/AcceptedValuesField'),
   AcceptedValuesField: () => <span>AcceptedValuesField</span>,
 }));
 
-const electronicAccessProp = [{
-  fields: [{
-    acceptedValues: {},
-    enabled: true,
-    name: 'relationshipId',
-    path: 'instance.electronicAccess[].relationshipId',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'uri',
-    path: 'instance.electronicAccess[].uri',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'linkText',
-    path: 'instance.electronicAccess[].linkText',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'materialsSpecification',
-    path: 'instance.electronicAccess[].materialsSpecification',
-    value: '',
-  }, {
-    enabled: true,
-    name: 'publicNote',
-    path: 'instance.electronicAccess[].publicNote',
-    value: '',
-  }],
-  order: 0,
-  path: 'instance.electronicAccess[]',
-}];
+const { electronicAccess } = getReferenceTables(getInitialDetails(FOLIO_RECORD_TYPES.INSTANCE.type).mappingFields);
 
 const okapi = buildOkapi();
 
 const renderElectronicAccess = () => {
   const component = () => (
     <ElectronicAccess
-      electronicAccess={electronicAccessProp}
+      electronicAccess={electronicAccess}
       okapi={okapi}
     />
   );
@@ -61,7 +39,7 @@ const renderElectronicAccess = () => {
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe('ElectronicAccess edit component', () => {
+describe('Instance "Electronic access" edit component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderElectronicAccess();
 
