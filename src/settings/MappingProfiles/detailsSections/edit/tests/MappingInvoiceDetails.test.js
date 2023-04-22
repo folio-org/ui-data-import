@@ -54,24 +54,6 @@ jest.mock('../../hooks', () => ({
 
 global.fetch = jest.fn();
 
-const vendor = {
-  id: 'd0fb5aa0-cdf1-11e8-a8d5-f2801f1b9fd1',
-  name: 'GOBI Library Solutions',
-  accounts: [{
-    name: 'Monographic ordering unit account',
-    accountNo: '1234',
-    description: 'Monographic ordering unit account',
-    appSystemNo: 'test',
-    paymentMethod: 'Credit Card',
-    accountStatus: 'Active',
-    contactInfo: 'cust.service03@amazon.com',
-    libraryCode: 'COB',
-    libraryEdiCode: '765987610',
-    notes: '',
-    acqUnitIds: [],
-  }],
-};
-
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.INVOICE.type);
 const mappingDetailsProp = getInitialDetails(FOLIO_RECORD_TYPES.INVOICE.type);
 const getMappingSubfieldsFieldValueProp = jest.fn(() => '');
@@ -128,30 +110,4 @@ describe('MappingInvoiceDetails edit component', () => {
     expect(getByText('InvoiceLineFundDistribution')).toBeInTheDocument();
     expect(getByText('InvoiceLineAdjustments')).toBeInTheDocument();
   });
-
-  /* describe('when vendor is selected', () => {
-    it('function to select vandor should be called', async () => {
-      renderMappingInvoiceDetails();
-
-      await waitFor(() => Pluggable.mock.calls[0][0].selectVendor(vendor));
-
-      expect(setReferenceTablesMock).toHaveBeenCalled();
-    });
-
-    describe('when clean the field', () => {
-      it('it should be empty', async () => {
-        const { findByLabelText } = renderMappingInvoiceDetails();
-
-        await waitFor(() => Pluggable.mock.calls[0][0].selectVendor(vendor));
-
-        const clearButton = await findByLabelText('times-circle-solid');
-
-        fireEvent.click(clearButton);
-
-        const vendorNameField = await findByLabelText(/Vendor name/);
-
-        expect(vendorNameField.value).toEqual('');
-      });
-    });
-  }); */
 });

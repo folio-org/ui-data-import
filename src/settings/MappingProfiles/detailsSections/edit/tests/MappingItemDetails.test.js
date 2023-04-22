@@ -17,11 +17,7 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
-import {
-  getInitialDetails,
-  getInitialFields,
-  getReferenceTables,
-} from '../../../initialDetails';
+import { getInitialFields } from '../../../initialDetails';
 
 jest.mock('../ItemDetailSection', () => ({
   AdministrativeData: () => <span>AdministrativeData</span>,
@@ -44,27 +40,16 @@ global.fetch = jest.fn();
 
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.ITEM.type);
 
-const {
-  formerIds,
-  statisticalCodeIds,
-  administrativeNotes,
-  yearCaption,
-  notes,
-  circulationNotes,
-  electronicAccess,
-} = getReferenceTables(getInitialDetails(FOLIO_RECORD_TYPES.ITEM.type).mappingFields);
-
-const referenceTablesProp = {};
 const setReferenceTablesMockProp = jest.fn();
 const getRepeatableFieldActionProp = jest.fn(() => '');
 
 const okapi = buildOkapi();
 
-const renderMappingItemDetails = ({ referenceTables }) => {
+const renderMappingItemDetails = () => {
   const component = () => (
     <MappingItemDetails
       initialFields={initialFieldsProp}
-      referenceTables={referenceTables || referenceTablesProp}
+      referenceTables={{}}
       setReferenceTables={setReferenceTablesMockProp}
       getRepeatableFieldAction={getRepeatableFieldActionProp}
       okapi={okapi}
@@ -94,13 +79,13 @@ describe('MappingItemDetails edit component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderMappingItemDetails({});
+    const { container } = renderMappingItemDetails();
 
     await runAxeTest({ rootNode: container });
   });
 
   it('should have correct sections', async () => {
-    const { getByText } = renderMappingItemDetails({});
+    const { getByText } = renderMappingItemDetails();
 
     expect(getByText('AdministrativeData')).toBeInTheDocument();
     expect(getByText('ItemData')).toBeInTheDocument();
