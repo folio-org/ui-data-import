@@ -223,8 +223,8 @@ describe('JobProfiles component', () => {
     });
   });
 
-  describe('when click "New job profile" button', () => {
-    it('urk should be changed', async () => {
+  describe('when creating new job profile if user close', () => {
+    it('confirmation modal should appear', async () => {
       const {
         findByRole,
         getByText,

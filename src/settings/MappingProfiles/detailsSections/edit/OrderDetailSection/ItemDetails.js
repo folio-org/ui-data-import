@@ -183,7 +183,6 @@ export const ItemDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={boolAcceptedValuesOptions(formatMessage)}
-            okapi={okapi}
           />
         </Col>
       </Row>

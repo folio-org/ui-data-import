@@ -198,7 +198,6 @@ export const PhysicalResourceDetails = ({
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={createInventoryOptions}
             disabled={dismissCreateInventory || dismissPhysicalDetails}
-            okapi={okapi}
           />
         </Col>
       </Row>

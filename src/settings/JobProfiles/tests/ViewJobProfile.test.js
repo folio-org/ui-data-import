@@ -247,11 +247,9 @@ describe('ViewJobProfile component', () => {
       fireEvent.click(actionsButton);
 
       const firstDeleteButton = await findAllByText('Delete');
-
       fireEvent.click(firstDeleteButton[0]);
 
       const secondDeleteButton = await findAllByText('Delete');
-
       fireEvent.click(secondDeleteButton[1]);
 
       await waitFor(() => expect(queryByText('Delete job profile?')).not.toBeInTheDocument());
@@ -324,15 +322,12 @@ describe('ViewJobProfile component', () => {
       } = renderViewJobProfile(viewJobProfileProps(jobProfile, ['run']));
 
       const actionsButton = await findByRole('button', { name: /actions/i });
-
       fireEvent.click(actionsButton);
 
       const runButton = await findAllByText('Run');
-
       fireEvent.click(runButton[0]);
 
       const cancelButton = await findAllByText('Cancel');
-
       fireEvent.click(cancelButton[0]);
 
       await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).not.toBeInTheDocument());

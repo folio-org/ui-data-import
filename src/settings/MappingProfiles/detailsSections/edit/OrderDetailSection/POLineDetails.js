@@ -184,7 +184,6 @@ export const POLineDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={orderFormatOptions}
-            okapi={okapi}
             required
           />
         </Col>
@@ -212,7 +211,6 @@ export const POLineDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={receiptStatusOptions}
-            okapi={okapi}
           />
         </Col>
         <Col xs={3}>
@@ -224,7 +222,6 @@ export const POLineDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={paymentStatusOptions}
-            okapi={okapi}
           />
         </Col>
       </Row>
@@ -281,7 +278,6 @@ export const POLineDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={boolAcceptedValuesOptions(formatMessage)}
-            okapi={okapi}
           />
         </Col>
         <Col xs={4}>
@@ -293,7 +289,6 @@ export const POLineDetails = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={boolAcceptedValuesOptions(formatMessage)}
-            okapi={okapi}
           />
         </Col>
         <Col xs={4}>
@@ -307,7 +302,6 @@ export const POLineDetails = ({
             acceptedValuesList={receivingWorkflowOptions}
             parse={onReceivingWorkflowParse}
             format={onReceivingWorkflowFormat}
-            okapi={okapi}
             required
           />
         </Col>

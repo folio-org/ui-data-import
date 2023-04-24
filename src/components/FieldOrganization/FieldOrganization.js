@@ -145,8 +145,8 @@ FieldOrganization.propTypes = {
   name: PropTypes.string,
   required: PropTypes.bool,
   validate: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.func),
     PropTypes.func,
+    PropTypes.arrayOf(PropTypes.func),
   ]),
   mappingValue: PropTypes.string,
 };

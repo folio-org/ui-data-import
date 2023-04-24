@@ -233,7 +233,6 @@ const OrderInformationComponent = ({
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             acceptedValuesList={purchaseOrderStatusOptions}
-            okapi={okapi}
             required
           />
         </Col>

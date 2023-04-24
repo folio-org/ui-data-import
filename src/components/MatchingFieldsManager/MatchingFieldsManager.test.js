@@ -80,7 +80,7 @@ describe('MatchingFieldsManager component', () => {
     await runAxeTest({ rootNode: container });
   });
 
-  describe('when matchFileds function is called', () => {
+  describe('when matchFields function is called', () => {
     it('should be rendered', () => {
       const matchFieldsChildren = record => {
         const labelId = record.matchFields(resources, 'INSTANCE')[0].label;
