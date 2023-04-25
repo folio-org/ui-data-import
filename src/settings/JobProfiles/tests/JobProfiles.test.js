@@ -1,9 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import {
-  fireEvent,
-  waitFor,
-} from '@testing-library/react';
+import { MemoryRouter as Router } from 'react-router-dom';
+import { fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
@@ -14,6 +11,7 @@ import { Paneset } from '@folio/stripes/components';
 
 import {
   buildMutator,
+  buildOkapi,
   buildStripes,
   renderWithIntl,
   renderWithReduxForm,
@@ -26,6 +24,9 @@ import {
 } from '../JobProfiles';
 
 const history = createMemoryHistory();
+history.push = jest.fn();
+
+const okapi = buildOkapi();
 
 const stripes = buildStripes();
 
@@ -93,11 +94,6 @@ const jobProfilesProps = {
     pathname: '/settings/data-import/job-profiles',
     search: '?sort=name',
   },
-  okapi: {
-    tenant: 'tenant',
-    token: 'token',
-    url: '',
-  },
   selectedRecord: {
     record: {},
     hasLoaded: false,
@@ -114,7 +110,6 @@ const renderJobProfiles = ({
   setList,
   checkBoxList,
   label,
-  okapi,
   refreshRemote,
   detailProps,
 }) => {
@@ -138,6 +133,7 @@ const renderJobProfiles = ({
           okapi={okapi}
           refreshRemote={refreshRemote}
           detailProps={detailProps}
+          initialValues={{}}
         />
       </Paneset>
     </Router>
@@ -146,7 +142,11 @@ const renderJobProfiles = ({
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe.skip('<JobProfiles>', () => {
+describe('JobProfiles component', () => {
+  afterEach(() => {
+    history.push.mockClear();
+  });
+
   it('should be rendered with no axe errors', async () => {
     const { container } = renderJobProfiles(jobProfilesProps);
 
@@ -226,17 +226,22 @@ describe.skip('<JobProfiles>', () => {
   describe('when creating new job profile if user close', () => {
     it('confirmation modal should appear', async () => {
       const {
-        getByRole,
+        findByRole,
         getByText,
       } = renderJobProfiles(jobProfilesProps);
-      const actionsButton = getByRole('button', { name: /actions/i });
-
+      const actionsButton = await findByRole('button', { name: /actions/i });
       fireEvent.click(actionsButton);
-      await waitFor(() => fireEvent.click(getByText('New job profile')));
-      fireEvent.change(getByRole('textbox', { name: /name/i }), { target: { value: 'test value' } });
-      await waitFor(() => fireEvent.click(getByText('Close')));
 
-      await waitFor(() => expect(getByText(/areyousure/i)).toBeInTheDocument());
+      const newJobProfileButton = getByText('New job profile');
+      fireEvent.click(newJobProfileButton);
+
+      const nameField = await findByRole('textbox', { name: /name/i });
+      fireEvent.change(nameField, { target: { value: 'test value' } });
+
+      const closeButton = getByText('Close');
+      fireEvent.click(closeButton);
+
+      expect(getByText('Are you sure?')).toBeInTheDocument();
     });
   });
 });

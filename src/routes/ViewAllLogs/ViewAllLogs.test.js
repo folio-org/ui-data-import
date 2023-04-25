@@ -7,13 +7,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
+import '../../../test/jest/__mock__';
+
+import { ModuleHierarchyProvider } from '@folio/stripes/core';
+
 import {
   buildMutator,
   buildStripes,
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
-import '../../../test/jest/__mock__';
 
 import ViewAllLogs, { ViewAllLogsManifest } from './ViewAllLogs';
 
@@ -155,41 +158,40 @@ jest.mock('@folio/stripes/components', () => ({
 const deleteJobExecutionsSpy = jest.spyOn(utils, 'deleteJobExecutions');
 
 const stripes = buildStripes();
-stripes.hasPerm = jest.fn(() => true);
-stripes.logger.log = jest.fn();
-stripes.connect = jest.fn(() => component => component);
 
 const renderViewAllLogs = query => {
   const component = (
     <Router>
-      <ViewAllLogs
-        mutator={mutator}
-        resources={getResources(query)}
-        disableRecordCreation={false}
-        history={{ push: noop }}
-        intl={{ formatMessage: jest.fn(() => 'test') }}
-        stripes={stripes}
-        setList={jest.fn()}
-        checkboxList={{
-          isAllSelected: false,
-          handleSelectAllCheckbox: noop,
-          selectedRecords: [],
-          selectRecord: noop,
-        }}
-        location={{
-          pathname: '/job-logs',
-          search: '?sort=-completedDate',
-        }}
-        match={{ params: {} }}
-        refreshRemote={noop}
-      />
+      <ModuleHierarchyProvider module="@folio/data-import">
+        <ViewAllLogs
+          mutator={mutator}
+          resources={getResources(query)}
+          disableRecordCreation={false}
+          history={{ push: noop }}
+          intl={{ formatMessage: jest.fn(() => 'test') }}
+          stripes={stripes}
+          setList={jest.fn()}
+          checkboxList={{
+            isAllSelected: false,
+            handleSelectAllCheckbox: noop,
+            selectedRecords: [],
+            selectRecord: noop,
+          }}
+          location={{
+            pathname: '/job-logs',
+            search: '?sort=-completedDate',
+          }}
+          match={{ params: {} }}
+          refreshRemote={noop}
+        />
+      </ModuleHierarchyProvider>
     </Router>
   );
 
   return renderWithIntl(component, translationsProperties);
 };
 
-describe.skip('ViewAllLogs component', () => {
+describe('ViewAllLogs component', () => {
   afterAll(() => {
     deleteJobExecutionsSpy.mockClear();
   });
@@ -201,10 +203,12 @@ describe.skip('ViewAllLogs component', () => {
     await runAxeTest({ rootNode: container });
   });
 
-  it('should render correct number of records', () => {
-    const { getByText } = renderViewAllLogs(defaultQuery);
+  it('should render correct number of records', async () => {
+    const { findByText } = renderViewAllLogs(defaultQuery);
 
-    expect(getByText(/3 logs found/i)).toBeInTheDocument();
+    const numberOfRecordsTitle = await findByText(/3 logs found/i);
+
+    expect(numberOfRecordsTitle).toBeInTheDocument();
   });
 
   it('should render job profile as a hotlink', () => {
@@ -389,12 +393,12 @@ describe.skip('ViewAllLogs component', () => {
 
       it('should select all logs when click select all', async () => {
         const {
-          getByLabelText,
-          getAllByLabelText
+          findByLabelText,
+          findAllByLabelText
         } = renderViewAllLogs(defaultQuery);
 
-        const selectAllCheckbox = getByLabelText('select all items');
-        const allItemCheckboxes = getAllByLabelText('select item');
+        const selectAllCheckbox = await findByLabelText('select all items');
+        const allItemCheckboxes = await findAllByLabelText('select item');
 
         fireEvent.click(selectAllCheckbox);
 
@@ -441,7 +445,7 @@ describe.skip('ViewAllLogs component', () => {
         deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
 
         const {
-          getAllByLabelText,
+          findAllByLabelText,
           getByLabelText,
           getByText,
         } = renderViewAllLogs(defaultQuery);
@@ -451,14 +455,16 @@ describe.skip('ViewAllLogs component', () => {
         fireEvent.click(getByText('Delete selected logs'));
         fireEvent.click(getByText('Confirm'));
 
-        expect(getAllByLabelText('select item').every(checkbox => checkbox.disabled)).toBe(true);
+        const checkboxes = await findAllByLabelText('select item');
+
+        expect(checkboxes.every(checkbox => checkbox.disabled)).toBe(true);
       });
 
       it('is completed, all checkboxes should be enabled', async () => {
         deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
 
         const {
-          getAllByLabelText,
+          findAllByLabelText,
           getByLabelText,
           getByText,
         } = renderViewAllLogs(defaultQuery);
@@ -468,8 +474,9 @@ describe.skip('ViewAllLogs component', () => {
         fireEvent.click(getByText('Delete selected logs'));
         fireEvent.click(getByText('Confirm'));
 
-        await waitFor(() => expect(deleteJobExecutionsSpy).toHaveBeenCalled());
-        getAllByLabelText('select item').forEach(checkbox => expect(checkbox.disabled).toBeTruthy());
+        const checkboxes = await findAllByLabelText('select item');
+
+        expect(checkboxes.every(checkbox => checkbox.disabled)).toBe(true);
       });
 
       it('and successful callout should be displayed', async () => {

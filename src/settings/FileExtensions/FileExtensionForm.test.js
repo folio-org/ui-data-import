@@ -185,7 +185,7 @@ describe('FileExtensionForm component', () => {
 
       fireEvent.change(fileExtensionField, { target: { value: '.txt' } });
       fireEvent.click(blockImportCheckbox);
-      fireEvent.click(getByText('Save as file extension & Close'));
+      fireEvent.submit(getByText('Save as file extension & Close'));
 
       expect(handleFormSubmit).toHaveBeenCalled();
     });

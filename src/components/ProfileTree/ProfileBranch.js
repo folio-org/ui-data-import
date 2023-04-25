@@ -31,6 +31,7 @@ import { setCurrentProfileTreeContent } from '../../redux';
 
 import css from './ProfileTree.css';
 import {
+  okapiShape,
   PROFILE_LABEL_IDS,
   PROFILE_RELATION_TYPES,
   STATE_MANAGEMENT,
@@ -302,11 +303,7 @@ ProfileBranch.propTypes = {
   parentSectionKey: PropTypes.string.isRequired,
   parentSectionData: PropTypes.arrayOf(PropTypes.object).isRequired,
   setParentSectionData: PropTypes.func.isRequired,
-  okapi: PropTypes.shape({
-    tenant: PropTypes.string.isRequired,
-    token: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-  }).isRequired,
+  okapi: okapiShape.isRequired,
   resources: PropTypes.object.isRequired,
   profileType: PropTypes.string.isRequired,
   reactTo: PropTypes.oneOf(Object.values(PROFILE_RELATION_TYPES)),

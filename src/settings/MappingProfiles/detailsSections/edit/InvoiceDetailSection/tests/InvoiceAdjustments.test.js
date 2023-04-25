@@ -4,6 +4,7 @@ import { fireEvent } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -21,8 +22,11 @@ jest.mock('../../../hooks', () => ({
   useFieldMappingRefValues: () => [[mockAdjustmentsFields]],
 }));
 
+global.fetch = jest.fn();
+
 const initialFieldsMock = { adjustments: mockAdjustmentsFields };
 const setReferenceTablesMock = jest.fn();
+const okapi = buildOkapi();
 
 const renderInvoiceAdjustments = () => {
   const component = () => (
@@ -30,7 +34,7 @@ const renderInvoiceAdjustments = () => {
       setReferenceTables={setReferenceTablesMock}
       initialFields={initialFieldsMock}
       mappingFields={INVOICE.mappingFields}
-      okapi={{}}
+      okapi={okapi}
     />
   );
 
@@ -38,43 +42,71 @@ const renderInvoiceAdjustments = () => {
 };
 
 describe('InvoiceAdjustments edit component', () => {
-  afterAll(() => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
+  afterEach(() => {
     setReferenceTablesMock.mockClear();
   });
 
+  afterAll(() => {
+    setReferenceTablesMock.mockClear();
+    global.fetch.mockClear();
+    delete global.fetch;
+  });
+
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderInvoiceAdjustments();
+    const {
+      container,
+      findByText,
+    } = renderInvoiceAdjustments();
+
+    const invoiceAdjustmentsTitle = await findByText('Invoice adjustments');
+
+    expect(invoiceAdjustmentsTitle).toBeInTheDocument();
 
     await runAxeTest({ rootNode: container });
   });
 
-  it('should render correct fields', () => {
-    const { getByText } = renderInvoiceAdjustments();
+  it('should render correct fields', async () => {
+    const {
+      getByText,
+      findByText,
+    } = renderInvoiceAdjustments();
 
+    const invoiceAdjustmentsTitle = await findByText('Invoice adjustments');
+
+    expect(invoiceAdjustmentsTitle).toBeInTheDocument();
     expect(getByText('Add adjustment')).toBeInTheDocument();
   });
 
   describe('when clicking "Add adjustment" button', () => {
-    it('new Adjustment card should be rendered', () => {
+    it('new Adjustment card should be rendered', async () => {
       const {
-        getByRole,
+        findByRole,
         getByText,
       } = renderInvoiceAdjustments();
 
-      const addButton = getByRole('button', { name: 'Add adjustment' });
+      const addButton = await findByRole('button', { name: 'Add adjustment' });
       fireEvent.click(addButton);
 
       expect(getByText('Adjustment 1')).toBeInTheDocument();
     });
 
-    it('with correct fields', () => {
+    it('with correct fields', async () => {
       const {
+        findByRole,
         getByRole,
         getByText,
         getAllByText,
       } = renderInvoiceAdjustments();
 
-      const addButton = getByRole('button', { name: 'Add adjustment' });
+      const addButton = await findByRole('button', { name: 'Add adjustment' });
       fireEvent.click(addButton);
 
       expect(getByText('Description')).toBeInTheDocument();
@@ -88,13 +120,13 @@ describe('InvoiceAdjustments edit component', () => {
   });
 
   describe('when clicking on trash icon button for an adjustment', () => {
-    it('function for changing form should be called', () => {
+    it('function for changing form should be called', async () => {
       const {
-        getByRole,
+        findByRole,
         getAllByRole,
       } = renderInvoiceAdjustments();
 
-      const addButton = getByRole('button', { name: 'Add adjustment' });
+      const addButton = await findByRole('button', { name: 'Add adjustment' });
       fireEvent.click(addButton);
 
       const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];

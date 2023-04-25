@@ -367,7 +367,6 @@ const ViewJobProfileComponent = props => {
                     'runBy',
                   ]}
                   formatter={jobsUsingThisProfileFormatter}
-                  width="100%"
                 />
               ) : (
                 <Preloader

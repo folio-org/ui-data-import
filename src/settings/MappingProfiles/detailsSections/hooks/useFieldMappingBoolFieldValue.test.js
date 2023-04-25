@@ -23,7 +23,7 @@ const initialStateValues = {
               name: 'approved',
               path: 'order.po.approved',
               booleanFieldAction,
-              subfileds: [],
+              subfields: [],
               enabled: 'true',
               required: false,
             }]

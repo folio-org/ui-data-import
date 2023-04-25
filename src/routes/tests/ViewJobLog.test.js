@@ -81,31 +81,58 @@ const jobLogResources = hasLoaded => ({
   },
 });
 const srsMarcBibResources = recordType => ({
-  srsMarcBib: { records: [recordType === 'MARC' ? SRSMARCBibMARCJSONData : SRSMARCBibEDIFACTJSONData] },
+  srsMarcBib: {
+    records: [recordType === 'MARC' ? SRSMARCBibMARCJSONData : SRSMARCBibEDIFACTJSONData],
+    hasLoaded: true,
+  },
 });
 const instancesResources = {
-  instances: { records: [instanceJSONData] },
+  instances: {
+    records: [instanceJSONData],
+    hasLoaded: true,
+  },
 };
 const holdingsResources = {
-  holdings: { records: [holdingsJSONData] },
+  holdings: {
+    records: [holdingsJSONData],
+    hasLoaded: true,
+  },
 };
 const itemsResources = {
-  items: { records: [itemsJSONData] },
+  items: {
+    records: [itemsJSONData],
+    hasLoaded: true,
+  },
 };
 const orderResources = {
-  order: { records: [orderJSONData] },
+  order: {
+    records: [orderJSONData],
+    hasLoaded: true,
+  },
 };
 const poLineResources = {
-  poLine: { records: [poLineJSONData] },
+  poLine: {
+    records: [poLineJSONData],
+    hasLoaded: true,
+  },
 };
 const invoiceResources = {
-  invoice: { records: [invoiceJSONData] },
+  invoice: {
+    records: [invoiceJSONData],
+    hasLoaded: true,
+  },
 };
 const invoiceLineResources = {
-  invoiceLine: { records: [invoiceLineJSONData] },
+  invoiceLine: {
+    records: [invoiceLineJSONData],
+    hasLoaded: true,
+  },
 };
 const authoritiesResources = {
-  authorities: { records: [authorityJSONData] },
+  authorities: {
+    records: [authorityJSONData],
+    hasLoaded: true,
+  },
 };
 
 const getResources = ({

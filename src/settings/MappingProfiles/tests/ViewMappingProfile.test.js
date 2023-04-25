@@ -168,22 +168,26 @@ describe('ViewMappingProfile component', () => {
       await waitFor(() => expect(getByText('Confirmation modal')).toBeInTheDocument());
     });
 
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    it.skip('should be closed when cancelled', async () => {
+    it('should be closed when cancelled', async () => {
       const {
-        getByRole,
+        findByRole,
         getByText,
-        queryByText,
       } = renderViewMappingProfile(viewMappingProfilesProps);
 
-      fireEvent.click(getByRole('button', { name: /actions/i }));
-      fireEvent.click(getByRole('button', { name: /delete/i }));
+      const actionsButton = await findByRole('button', { name: /actions/i });
+      fireEvent.click(actionsButton);
 
-      await waitFor(() => expect(getByText('Confirmation modal')).toBeInTheDocument());
+      const deleteButton = await findByRole('button', { name: /delete/i });
+      fireEvent.click(deleteButton);
 
-      fireEvent.click(getByRole('button', { name: 'Cancel' }));
+      const confirmationModalTitle = getByText('Confirmation modal');
 
-      await waitFor(() => expect(queryByText('Confirmation modal')).not.toBeInTheDocument());
+      expect(confirmationModalTitle).toBeInTheDocument();
+
+      const cancelButton = await findByRole('button', { name: 'Cancel' });
+      fireEvent.click(cancelButton);
+
+      expect(confirmationModalTitle).not.toBeInTheDocument();
     });
 
     it('should be closed when confirmed', async () => {

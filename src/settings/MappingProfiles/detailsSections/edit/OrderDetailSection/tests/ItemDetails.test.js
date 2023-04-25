@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  within,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -53,6 +50,8 @@ jest.mock('../../../hooks', () => ({
   }]],
 }));
 
+global.fetch = jest.fn();
+
 const okapi = buildOkapi();
 
 const renderItemDetails = () => {
@@ -68,18 +67,45 @@ const renderItemDetails = () => {
 };
 
 describe('ItemDetails edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
   afterEach(() => {
     setReferenceTablesMock.mockClear();
   });
 
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
+  });
+
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderItemDetails();
+    const {
+      container,
+      findByText,
+    } = renderItemDetails();
+
+    const itemDetailsTitle = await findByText('Item details');
+
+    expect(itemDetailsTitle).toBeInTheDocument();
 
     await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {
-    const { getByText } = renderItemDetails();
+    const {
+      getByText,
+      findByText,
+    } = renderItemDetails();
+
+    const itemDetailsTitle = await findByText('Item details');
+
+    expect(itemDetailsTitle).toBeInTheDocument();
 
     expect(getByText('Title')).toBeInTheDocument();
     expect(getByText('Receiving note')).toBeInTheDocument();
@@ -100,20 +126,22 @@ describe('ItemDetails edit component', () => {
     expect(getByText('Internal note')).toBeInTheDocument();
   });
 
-  it('should render required fields', () => {
-    const { queryByText } = renderItemDetails();
+  it('should render required fields', async () => {
+    const { findByText } = renderItemDetails();
 
-    expect(within(queryByText('Title')).getByText(/\*/i)).toBeDefined();
+    const titleField = await findByText('Title');
+
+    expect(titleField.lastElementChild.innerHTML).toEqual('*');
   });
 
-  describe('when click "Add contributor" button', () => {
-    it('fields for new contributor should be rendered', () => {
+  describe('when click Add contributor button', () => {
+    it('fields for new contributor should be rendered', async () => {
       const {
-        getByRole,
+        findByRole,
         getByText,
       } = renderItemDetails();
 
-      const addContributorButton = getByRole('button', { name: /Add contributor/i });
+      const addContributorButton = await findByRole('button', { name: /Add contributor/i });
       fireEvent.click(addContributorButton);
 
       expect(getByText('Contributor')).toBeInTheDocument();
@@ -121,13 +149,13 @@ describe('ItemDetails edit component', () => {
     });
 
     describe('when click on trash icon button', () => {
-      it('function for changing form should be called', () => {
+      it('function for changing form should be called', async () => {
         const {
-          getByRole,
+          findByRole,
           getAllByRole,
         } = renderItemDetails();
 
-        const addContributorButton = getByRole('button', { name: /Add contributor/i });
+        const addContributorButton = await findByRole('button', { name: /Add contributor/i });
         fireEvent.click(addContributorButton);
 
         const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
@@ -139,13 +167,13 @@ describe('ItemDetails edit component', () => {
   });
 
   describe('when click "Add product ID and product ID type" button', () => {
-    it('fields for new contributor type should be rendered', () => {
+    it('fields for new contributor type should be rendered', async () => {
       const {
-        getByRole,
+        findByRole,
         getByText,
       } = renderItemDetails();
 
-      const addContributorTypeButton = getByRole('button', { name: /Add product ID and product ID type/i });
+      const addContributorTypeButton = await findByRole('button', { name: /Add product ID and product ID type/i });
       fireEvent.click(addContributorTypeButton);
 
       expect(getByText('Product ID')).toBeInTheDocument();
@@ -154,13 +182,13 @@ describe('ItemDetails edit component', () => {
     });
 
     describe('when click on trash icon button', () => {
-      it('function for changing form should be called', () => {
+      it('function for changing form should be called', async () => {
         const {
-          getByRole,
+          findByRole,
           getAllByRole,
         } = renderItemDetails();
 
-        const addContributorTypeButton = getByRole('button', { name: /Add product ID and product ID type/i });
+        const addContributorTypeButton = await findByRole('button', { name: /Add product ID and product ID type/i });
         fireEvent.click(addContributorTypeButton);
 
         const deleteButton = getAllByRole('button', { name: /delete this item/i })[1];

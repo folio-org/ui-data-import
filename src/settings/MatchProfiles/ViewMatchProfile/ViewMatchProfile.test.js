@@ -18,6 +18,8 @@ import '../../../../test/jest/__mock__';
 
 import { ViewMatchProfile } from './ViewMatchProfile';
 
+global.fetch = jest.fn();
+
 const stripes = buildStripes();
 
 const history = createMemoryHistory();
@@ -66,7 +68,14 @@ const matchProfileRecord = (
             qualifierValue: 'test',
           },
         },
-        existingMatchExpression: 'testExistingRecordLabel',
+        existingMatchExpression: {
+          fields: [{
+            label: 'field',
+            value: 'instance.id',
+          }],
+          dataValueType: 'test dataValueType',
+          qualifier: {},
+        },
         matchCriterion: 'EXACTLY_MATCHES',
       }],
     }],
@@ -107,8 +116,25 @@ const renderViewMatchProfile = ({
 };
 
 describe('ViewMatchProfile component', () => {
+  beforeEach(() => {
+    global.fetch.mockReturnValue({
+      ok: true,
+      json: async () => ({
+        identifierTypes: [{
+          id: '1',
+          name: 'ASIN',
+          source: 'folio',
+        }],
+      }),
+    });
+  });
+
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  afterAll(() => {
+    delete global.fetch;
   });
 
   // TODO: Create separate ticket to fix all the accesibility tests
@@ -125,13 +151,17 @@ describe('ViewMatchProfile component', () => {
   });
 
   describe('when click on delete action button', () => {
-    it('modal window should be shown', () => {
-      const { getByText } = renderViewMatchProfile(viewMatchProfileProps(matchProfileRecord(true, null, null)));
+    it('modal window should be shown', async () => {
+      const { findByText } = renderViewMatchProfile(viewMatchProfileProps(matchProfileRecord(true, null, null)));
 
-      fireEvent.click(getByText('Actions'));
-      fireEvent.click(getByText('Delete'));
+      const actionsButton = await findByText('Actions');
 
-      expect(getByText('Delete match profile?')).toBeDefined();
+      fireEvent.click(actionsButton);
+      const deleteButton = await findByText('Delete');
+
+      fireEvent.click(deleteButton);
+
+      await waitFor(() => expect(findByText('Delete match profile?')).toBeDefined());
     });
   });
 

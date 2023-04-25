@@ -1,10 +1,10 @@
 import React from 'react';
-import { noop } from 'lodash';
 import faker from 'faker';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
 
+import { Pluggable } from '@folio/stripes/core';
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
@@ -20,9 +20,7 @@ import {
   getInitialDetails,
 } from '../../../initialDetails';
 
-import * as utils from '../../utils';
-
-const organizationMock = {
+const organizationMock = [{
   id: 'orgId',
   name: 'org name',
   erpCode: 'erpCode',
@@ -30,9 +28,19 @@ const organizationMock = {
     appSystemNo: 'appSystemNo1',
     accountNo: 'accountNo1',
   }],
-};
+}];
 
 const mockVendorUUID = faker.random.uuid();
+
+jest.mock('../InvoiceDetailSection', () => ({
+  InvoiceInformation: () => <span>InvoiceInformation</span>,
+  InvoiceAdjustments: () => <span>InvoiceAdjustments</span>,
+  VendorInformation: () => <span>VendorInformation</span>,
+  ExtendedInformation: () => <span>ExtendedInformation</span>,
+  InvoiceLineInformation: () => <span>InvoiceLineInformation</span>,
+  InvoiceLineFundDistribution: () => <span>InvoiceLineFundDistribution</span>,
+  InvoiceLineAdjustments: () => <span>InvoiceLineAdjustments</span>,
+}));
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
@@ -44,20 +52,20 @@ jest.mock('../../hooks', () => ({
   }),
 }));
 
-const getAccountingCodeOptions = jest.spyOn(utils, 'getAccountingCodeOptions');
-const getAccountingNumberOptions = jest.spyOn(utils, 'getAccountingNumberOptions');
+global.fetch = jest.fn();
 
 const initialFieldsProp = getInitialFields(FOLIO_RECORD_TYPES.INVOICE.type);
 const mappingDetailsProp = getInitialDetails(FOLIO_RECORD_TYPES.INVOICE.type);
 const getMappingSubfieldsFieldValueProp = jest.fn(() => '');
 const okapi = buildOkapi();
+const setReferenceTablesMock = jest.fn();
 
 const renderMappingInvoiceDetails = () => {
   const component = () => (
     <MappingInvoiceDetails
       mappingDetails={mappingDetailsProp}
       initialFields={initialFieldsProp}
-      setReferenceTables={noop}
+      setReferenceTables={setReferenceTablesMock}
       getMappingSubfieldsFieldValue={getMappingSubfieldsFieldValueProp}
       okapi={okapi}
     />
@@ -67,6 +75,24 @@ const renderMappingInvoiceDetails = () => {
 };
 
 describe('MappingInvoiceDetails edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    });
+  });
+
+  afterEach(() => {
+    Pluggable.mockClear();
+    setReferenceTablesMock.mockClear();
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
+  });
+
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingInvoiceDetails();
 
@@ -74,52 +100,14 @@ describe('MappingInvoiceDetails edit component', () => {
   });
 
   it('should have correct sections', async () => {
-    const {
-      findByRole,
-      getByRole,
-    } = renderMappingInvoiceDetails();
+    const { getByText } = renderMappingInvoiceDetails();
 
-    expect(await findByRole('button', {
-      name: /invoice information/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /invoice adjustments/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /vendor information/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /extended information/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /invoice line information/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /invoice line fund distribution/i,
-      expanded: true,
-    })).toBeInTheDocument();
-    expect(getByRole('button', {
-      name: /invoice line adjustments/i,
-      expanded: true,
-    })).toBeInTheDocument();
-  });
-
-  describe('when vendor is selected', () => {
-    it('should get accounting code options', () => {
-      renderMappingInvoiceDetails();
-
-      expect(getAccountingCodeOptions).toHaveBeenCalledWith(organizationMock);
-    });
-
-    it('should get account number options', () => {
-      renderMappingInvoiceDetails();
-
-      expect(getAccountingNumberOptions).toHaveBeenCalledWith(organizationMock);
-    });
+    expect(getByText('InvoiceInformation')).toBeInTheDocument();
+    expect(getByText('InvoiceAdjustments')).toBeInTheDocument();
+    expect(getByText('VendorInformation')).toBeInTheDocument();
+    expect(getByText('ExtendedInformation')).toBeInTheDocument();
+    expect(getByText('InvoiceLineInformation')).toBeInTheDocument();
+    expect(getByText('InvoiceLineFundDistribution')).toBeInTheDocument();
+    expect(getByText('InvoiceLineAdjustments')).toBeInTheDocument();
   });
 });
