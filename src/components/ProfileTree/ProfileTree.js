@@ -29,6 +29,7 @@ import {
   PROFILE_TYPES,
   PROFILE_RELATION_TYPES,
   STATE_MANAGEMENT,
+  okapiShape,
 } from '../../utils';
 import {
   ProfileBranch,
@@ -243,11 +244,7 @@ export const ProfileTree = memo(({
 ProfileTree.propTypes = {
   linkingRules: PropTypes.object.isRequired,
   contentData: PropTypes.arrayOf(PropTypes.object).isRequired,
-  okapi: PropTypes.shape({
-    tenant: PropTypes.string.isRequired,
-    token: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-  }).isRequired,
+  okapi: okapiShape.isRequired,
   resources: PropTypes.object.isRequired,
   parentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   relationsToAdd: PropTypes.arrayOf(PropTypes.object),

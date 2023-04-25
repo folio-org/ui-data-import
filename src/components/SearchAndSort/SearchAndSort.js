@@ -139,7 +139,7 @@ export class SearchAndSort extends Component {
     resultsFormatter: PropTypes.object,
     defaultSort: PropTypes.string,
     finishedResourceName: PropTypes.string,
-    fullWidthContainer: PropTypes.instanceOf(Element),
+    fullWidthContainer: PropTypes.oneOfType([PropTypes.instanceOf(Element), PropTypes.elementType]),
     rowUpdater: PropTypes.func,
     isFullScreen: PropTypes.bool,
   };

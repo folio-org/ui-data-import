@@ -19,6 +19,7 @@ export const jobLogsData = [
     status: 'ERROR',
     uiStatus: 'ERROR',
     userId: '12bbfdb5-91be-50ab-ad28-0d737fb5756a',
+    startedDate: '2023-04-12T10:42:54.183+00:00',
   },
   {
     id: '2e149aef-bb77-45aa-8a28-e139674b55e1',
@@ -40,6 +41,7 @@ export const jobLogsData = [
     status: 'COMMITTED',
     uiStatus: 'RUNNING_COMPLETE',
     userId: '18bbfdb5-91be-50ab-ad28-0d737fb5758a',
+    startedDate: '2023-04-12T10:42:54.183+00:00',
   },
   {
     id: '4aa3f7f9-3fe5-4a29-a149-72f7b08879da',
@@ -61,6 +63,7 @@ export const jobLogsData = [
     status: 'COMMITTED',
     uiStatus: 'RUNNING_COMPLETE',
     userId: '19bbfdb5-91be-50ab-ad28-0d737fb5759a',
+    startedDate: '2023-04-13T10:42:54.183+00:00',
   },
   {
     id: '2e149aef-bb77-45aa-8a28-e139674b55e1',
@@ -82,5 +85,6 @@ export const jobLogsData = [
     status: 'COMMITTED',
     uiStatus: 'RUNNING_COMPLETE',
     userId: '18bbfdb5-91be-50ab-ad28-0d737fb5758a',
+    startedDate: '2023-04-14T10:42:54.183+00:00',
   },
 ];

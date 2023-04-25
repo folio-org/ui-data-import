@@ -92,7 +92,7 @@ const renderHome = (store = initialStore, context = defaultContext) => {
   return renderWithIntl(renderWithRedux(component, store), translationsProperties);
 };
 
-describe.skip('Home component', () => {
+describe('Home component', () => {
   let mockStorage = {};
 
   beforeAll(() => {
@@ -180,7 +180,7 @@ describe.skip('Home component', () => {
 
         const {
           getAllByLabelText,
-          getAllByRole,
+          findAllByRole,
           getByText,
         } = renderHome();
 
@@ -189,7 +189,7 @@ describe.skip('Home component', () => {
         fireEvent.click(getByText('Delete selected logs'));
         fireEvent.click(getByText('Confirm'));
 
-        const checkboxes = getAllByRole('checkbox');
+        const checkboxes = await findAllByRole('checkbox');
 
         checkboxes.forEach(checkbox => {
           expect(checkbox).toBeDisabled();

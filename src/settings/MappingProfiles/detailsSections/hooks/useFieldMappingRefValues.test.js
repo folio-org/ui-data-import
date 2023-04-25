@@ -42,7 +42,7 @@ const initialStateValues = {
               name: 'volumes',
               path: 'order.poLine.physical.volumes[]',
               value: '',
-              subfileds: [],
+              subfields: [],
               enabled: 'true',
               required: false,
             }]
