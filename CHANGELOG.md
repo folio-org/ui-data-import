@@ -10,6 +10,7 @@
 * Order field mapping: Add info icon to the Acq unit field (UIDATIMP-1426)
 * Invoice field mapping: Add info icon to the Acq unit field (UIDATIMP-1427)
 * View all: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1428)
+* DI Log: change Discarded to No action (UIDATIMP-1446)
 
 ## [6.0.8](https://github.com/folio-org/ui-data-import/tree/v6.0.8) (2023-04-04)
 

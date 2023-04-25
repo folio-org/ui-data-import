@@ -1134,7 +1134,7 @@
   "logLight.actionStatus.created": "Created",
   "logLight.actionStatus.updated": "Updated",
   "logLight.actionStatus.multiple": "Multiple",
-  "logLight.actionStatus.discarded": "Discarded",
+  "logLight.actionStatus.noAction": "No action",
   "recordTypesSelect.compareExisting": "Which type of existing record would you like to compare to the incoming {type} record?",
   "marc": "MARC",
   "incomingRecords": "Incoming records",

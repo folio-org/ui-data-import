@@ -259,7 +259,7 @@ const renderRecordsTable = ({ isEdifactType = false }) => {
   return renderWithIntl(component, translationsProperties);
 };
 
-describe.skip('RecordsTable component', () => {
+describe('RecordsTable component', () => {
   // TODO: Create separate ticket to fix all the accesibility tests
   it.skip('should be rendered with no axe errors', async () => {
     const { container } = renderRecordsTable({});
@@ -368,9 +368,9 @@ describe.skip('RecordsTable component', () => {
     it('the value should be a text', () => {
       const { getAllByText } = renderRecordsTable({});
 
-      const discardedStatuses = getAllByText('Discarded');
+      const noActionStatuses = getAllByText('No action');
 
-      discardedStatuses.forEach(status => {
+      noActionStatuses.forEach(status => {
         expect(status).not.toHaveAttribute('href');
       });
     });

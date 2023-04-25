@@ -110,7 +110,7 @@ describe('SummaryTable component', () => {
 
     expect(getByText('Created')).toBeDefined();
     expect(getByText('Updated')).toBeDefined();
-    expect(getByText('Discarded')).toBeDefined();
+    expect(getByText('No action')).toBeDefined();
     expect(errorRow.innerHTML).toEqual('Error');
   });
 });

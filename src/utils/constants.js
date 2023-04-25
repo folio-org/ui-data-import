@@ -768,7 +768,7 @@ export const RECORD_ACTION_STATUS_LABEL_IDS = {
   [RECORD_ACTION_STATUS.CREATED]: 'ui-data-import.logLight.actionStatus.created',
   [RECORD_ACTION_STATUS.UPDATED]: 'ui-data-import.logLight.actionStatus.updated',
   [RECORD_ACTION_STATUS.MULTIPLE]: 'ui-data-import.logLight.actionStatus.multiple',
-  [RECORD_ACTION_STATUS.DISCARDED]: 'ui-data-import.logLight.actionStatus.discarded',
+  [RECORD_ACTION_STATUS.DISCARDED]: 'ui-data-import.logLight.actionStatus.noAction',
 };
 
 export const STATE_MANAGEMENT = { REDUCER: 'folio-data-import_settings' };
