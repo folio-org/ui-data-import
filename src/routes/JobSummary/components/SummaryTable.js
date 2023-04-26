@@ -18,7 +18,7 @@ import {
 const summaryLabels = [
   <FormattedMessage id="ui-data-import.logLight.actionStatus.created" />,
   <FormattedMessage id="ui-data-import.logLight.actionStatus.updated" />,
-  <FormattedMessage id="ui-data-import.logLight.actionStatus.discarded" />,
+  <FormattedMessage id="ui-data-import.logLight.actionStatus.noAction" />,
   <FormattedMessage id="ui-data-import.error" />,
 ];
 

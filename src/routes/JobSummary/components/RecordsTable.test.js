@@ -368,9 +368,9 @@ describe('RecordsTable component', () => {
     it('the value should be a text', () => {
       const { getAllByText } = renderRecordsTable({});
 
-      const discardedStatuses = getAllByText('Discarded');
+      const noActionStatuses = getAllByText('No action');
 
-      discardedStatuses.forEach(status => {
+      noActionStatuses.forEach(status => {
         expect(status).not.toHaveAttribute('href');
       });
     });
