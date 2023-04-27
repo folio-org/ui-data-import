@@ -5,6 +5,8 @@ import React, {
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
 import {
   stripesConnect,
@@ -21,6 +23,8 @@ import {
   Pane,
   PaneHeader,
   Paneset,
+  Row,
+  Col,
 } from '@folio/stripes/components';
 import css from '@folio/stripes-data-transfer-components/lib/SearchAndSortPane/SearchAndSortPane.css';
 import sharedCss from '../../shared.css';
@@ -73,8 +77,12 @@ const JobSummaryComponent = props => {
   } = props;
 
   const dataType = jobExecutionsRecords[0]?.jobProfileInfo.dataType;
+  const jobProfileName = jobExecutionsRecords[0]?.jobProfileInfo.name;
+  const jobProfileId = jobExecutionsRecords[0]?.jobProfileInfo.id;
+
   const isEdifactType = dataType === DATA_TYPES[1];
   const jobExecutionsId = jobExecutionsRecords[0]?.id;
+  const jobExecutionsHrId = jobExecutionsRecords[0]?.hrId;
   const isErrorsOnly = !!query.errorsOnly;
 
   const { id } = useParams();
@@ -123,6 +131,16 @@ const JobSummaryComponent = props => {
     storage.setItem(PREVIOUS_LOCATIONS_KEY, previousLocations.current);
   };
 
+  const jobProfileLink = (
+    <Link to={{
+      pathname: `/settings/data-import/job-profiles/view/${jobProfileId}`,
+      search: '?sort=name',
+    }}
+    >
+      {jobProfileName}
+    </Link>
+  );
+
   const renderHeader = renderProps => {
     const resultCountMessageId = 'stripes-smart-components.searchResultsCountHeader';
     const label = (
@@ -144,10 +162,16 @@ const JobSummaryComponent = props => {
         {...renderProps}
         paneTitle={label}
         paneSub={(
-          <FormattedMessage
-            id={resultCountMessageId}
-            values={{ count: getSource().totalCount() }}
-          />
+          <>
+            <FormattedMessage
+              id="ui-data-import.jobHrId"
+              values={{ hrId: jobExecutionsHrId }}
+            />
+            <FormattedMessage
+              id={resultCountMessageId}
+              values={{ count: getSource().totalCount() }}
+            />
+          </>
         )}
         firstMenu={firstMenu}
       />
@@ -164,7 +188,16 @@ const JobSummaryComponent = props => {
         padContent={false}
         renderHeader={renderHeader}
       >
-        <div className={css.paneBody}>
+        <div className={classNames(css.paneBody, sharedCss.sideMargins)}>
+          <Row style={{ padding: '14px' }} center="xs">
+            <Col sm={6}>
+              <FormattedMessage
+                id="ui-data-import.jobProfileNameLink"
+                values={{ jobProfileLink }}
+              />
+            </Col>
+          </Row>
+          <hr />
           {!isErrorsOnly && (
             <div className={sharedCss.separatorLine}>
               <SummaryTable jobExecutionId={jobExecutionsId} />
@@ -258,8 +291,13 @@ JobSummaryComponent.propTypes = {
         PropTypes.shape({
           id: PropTypes.string.isRequired,
           fileName: PropTypes.string.isRequired,
+          hrId: PropTypes.number.isRequired,
           progress: PropTypes.shape({ total: PropTypes.number.isRequired }).isRequired,
-          jobProfileInfo: PropTypes.shape({ dataType: PropTypes.string.isRequired }).isRequired,
+          jobProfileInfo: PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+            dataType: PropTypes.string.isRequired,
+          }).isRequired,
         }),
       ).isRequired,
     }),

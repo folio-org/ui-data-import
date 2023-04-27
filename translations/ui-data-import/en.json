@@ -141,6 +141,8 @@
   "fileDefinitionDeleteError": "Internal error. Press {button} button to try again",
   "noUploadedFiles": "No files to show",
   "jobProfileName": "Job profile",
+  "jobProfileNameLink": "Job profile: {jobProfileLink}",
+  "jobHrId": "Job {hrId} • ",
   "matchProfileName": "Match profile",
   "actionProfileName": "Action profile",
   "mappingProfileName": "Field mapping profile",
