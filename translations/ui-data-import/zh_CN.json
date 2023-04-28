@@ -841,7 +841,6 @@
     "logLight.actionStatus.created": "已创建",
     "logLight.actionStatus.updated": "已更新",
     "logLight.actionStatus.multiple": "多个",
-    "logLight.actionStatus.discarded": "已舍弃",
     "noRecord": "无记录",
     "logViewer.filter.instance": "实例",
     "logViewer.filter.holdings": "馆藏",
@@ -1142,7 +1141,8 @@
     "settings.mappingProfiles.map.order.eResourcesDetails.field.electronicUnitPrice.info": "当订单格式为电子资源或实物/电子组合时必填。当导入任务创建待处理订单时，此字段控制通过订单应用程序打开采购订单时的典藏记录要求。当导入作业创建未结订单时，此字段反映作为操作包含在数据导入任务配置文件中的典藏记录要求",
     "settings.mappingProfiles.map.order.physicalResourceDetails.field.physicalUnitPrice.info": "当订单格式为实物资源、实物/电子组合或其他时必填。当导入任务创建待处理订单时，此字段控制通过订单应用程序打开采购订单时的典藏记录要求。当导入作业创建未结订单时，此字段反映作为操作包含在数据导入任务配置文件中的典藏记录要求",
     "settings.mappingProfiles.map.order.orderInformation.field.purchaseOrderStatus.info": "当采购订单状态为待定时，不要在任务配置文件中包含任何典藏操作。当采购订单状态为未结时，在任务配置文件中包含所需的典藏操作，前面是创建订单操作",
-    "logViewer.themes.label": "Use theme",
-    "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds.info": "Invoice creation will error unless the importing user is a member of the specified acquisitions unit",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits.info": "Order creation will error unless the importing user is a member of the specified acquisitions unit"
+    "logViewer.themes.label": "使用主题",
+    "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds.info": "除非导入用户是指定采购单位的成员，否则发票创建将出错",
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits.info": "除非导入用户是指定采购单位的成员，否则订单创建将出错",
+    "logLight.actionStatus.noAction": "无操作"
 }

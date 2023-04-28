@@ -841,7 +841,6 @@
     "logLight.actionStatus.created": "Criado",
     "logLight.actionStatus.updated": "Atualizado",
     "logLight.actionStatus.multiple": "Múltiplo",
-    "logLight.actionStatus.discarded": "Descartado",
     "noRecord": "Sem registro",
     "logViewer.filter.instance": "Instância",
     "logViewer.filter.holdings": "Coleções",
@@ -1144,5 +1143,6 @@
     "settings.mappingProfiles.map.order.orderInformation.field.purchaseOrderStatus.info": "Quando o status do pedido de compra estiver Pendente, não inclua nenhuma ação de Inventário no perfil de trabalho. Quando o status do pedido de compra estiver Aberto, inclua as ações de Inventário desejadas no perfil de trabalho, precedidas pela ação Criar pedidos",
     "logViewer.themes.label": "Usar tema",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds.info": "A criação da fatura apresentará erro, a menos que o usuário importador seja um membro da unidade de aquisições especificada",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits.info": "A criação do pedido apresentará erro, a menos que o usuário importador seja um membro da unidade de aquisições especificada"
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits.info": "A criação do pedido apresentará erro, a menos que o usuário importador seja um membro da unidade de aquisições especificada",
+    "logLight.actionStatus.noAction": "Nenhuma ação"
 }
