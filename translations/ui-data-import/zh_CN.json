@@ -1144,5 +1144,7 @@
     "logViewer.themes.label": "使用主题",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds.info": "除非导入用户是指定采购单位的成员，否则发票创建将出错",
     "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits.info": "除非导入用户是指定采购单位的成员，否则订单创建将出错",
-    "logLight.actionStatus.noAction": "无操作"
+    "logLight.actionStatus.noAction": "无操作",
+    "jobProfileNameLink": "Job profile: {jobProfileLink}",
+    "jobHrId": "Job {hrId} • "
 }

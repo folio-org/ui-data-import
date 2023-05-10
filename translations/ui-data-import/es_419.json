@@ -1144,5 +1144,7 @@
     "logViewer.themes.label": "Utilizar el tema",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds.info": "La creación de facturas dará error a menos que el usuario importador sea miembro de la unidad de adquisiciones especificada.",
     "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits.info": "La creación del pedido dará error a menos que el usuario importador sea miembro de la unidad de adquisiciones especificada.",
-    "logLight.actionStatus.noAction": "Ninguna acción"
+    "logLight.actionStatus.noAction": "Ninguna acción",
+    "jobProfileNameLink": "Perfil de trabajo: {jobProfileLink}",
+    "jobHrId": "Trabajo {hrId} - "
 }
