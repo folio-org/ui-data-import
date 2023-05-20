@@ -18,11 +18,34 @@ import {
 
 const mockJobLogData = {
   relatedInstanceInfo: { idList: [faker.random.uuid()] },
-  relatedHoldingsInfo: { idList: [faker.random.uuid()] },
-  relatedItemInfo: {
-    error: 'Error message',
-    idList: [faker.random.uuid()],
-  },
+  relatedHoldingsInfo: [
+    {
+      id: 'holdingId1',
+      hrid: 'holdingHrid1',
+      permanentLocationId: 'permanentLocationId1',
+      error: '',
+    },
+    {
+      id: 'holdingId2',
+      hrid: 'holdingHrid2',
+      permanentLocationId: 'permanentLocationId2',
+      error: '',
+    },
+  ],
+  relatedItemInfo: [
+    {
+      id: '',
+      hrid: '',
+      holdingsId: '',
+      error: 'Error message',
+    },
+    {
+      id: faker.random.uuid(),
+      hrid: 'itemHrid2',
+      holdingsId: 'holdingId1',
+      error: '',
+    },
+  ],
   relatedPoLineInfo: {
     idList: [faker.random.uuid()],
     orderId: faker.random.uuid(),
@@ -49,14 +72,17 @@ const mockInstanceJSONData = {
   source: 'MARC',
   title: 'Test instance title',
 };
-const mockHoldingsJSONData = {
-  id: faker.random.uuid(),
-  title: 'Test holdings title',
-};
-const mockItemsJSONData = {
-  id: faker.random.uuid(),
+const mockHoldingsJSONData = [{
+  id: 'holdingId1',
+  title: 'Test holdings title 1',
+}, {
+  id: 'holdingId2',
+  title: 'Test holdings title 2',
+}];
+const mockItemsJSONData = [{
+  id: 'itemId2',
   title: 'Test item title',
-};
+}];
 const mockOrderJSONData = {
   id: faker.random.uuid(),
   title: 'Test purchase order title',
@@ -77,19 +103,27 @@ const mockAuthorityJSONData = {
   id: faker.random.uuid(),
   title: 'Test authority title',
 };
+const mockLocationsData = [{
+  id: 'permanentLocationId1',
+  code: 'permanentLocationCode1',
+}, {
+  id: 'permanentLocationId2',
+  code: 'permanentLocationCode2',
+}];
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useJobLogRecordsQuery: jest.fn(() => ({ isLoading: false, data: mockJobLogData })),
   useSRSRecordQuery: jest.fn(() => ({ isLoading: false, data: mockSRSMARCBibMARCJSONData })),
   useInventoryInstancesByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockInstanceJSONData] })),
-  useInventoryHoldingsByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockHoldingsJSONData] })),
-  useInventoryItemsByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockItemsJSONData] })),
+  useInventoryHoldingsByIdQuery: jest.fn(() => ({ isLoading: false, data: mockHoldingsJSONData })),
+  useInventoryItemsByIdQuery: jest.fn(() => ({ isLoading: false, data: mockItemsJSONData })),
   useOrderByIdQuery: jest.fn(() => ({ isLoading: false, data: mockOrderJSONData })),
   usePOLinesByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockPoLineJSONData] })),
   useInvoicesByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockInvoiceJSONData] })),
   useInvoiceLineByIdQuery: jest.fn(() => ({ isLoading: false, data: mockInvoiceLineJSONData })),
   useAuthoritiesByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockAuthorityJSONData] })),
+  useLocationsQuery: jest.fn(() => ({ isLoading: false, data: mockLocationsData })),
 }));
 
 const renderViewJobLog = () => {
@@ -217,6 +251,15 @@ describe('View job log page', () => {
       });
 
       describe('and Holdings tag is active', () => {
+        it('should display permanent location code above each holding', () => {
+          const { getByText } = renderViewJobLog();
+
+          fireEvent.click(getByText('Holdings'));
+
+          expect(getByText('permanentLocationCode1')).toBeInTheDocument();
+          expect(getByText('permanentLocationCode2')).toBeInTheDocument();
+        });
+
         it('should display Holdings JSON details on the screen', () => {
           const {
             container,
@@ -224,9 +267,11 @@ describe('View job log page', () => {
           } = renderViewJobLog();
 
           fireEvent.click(getByText('Holdings'));
-          const codeElement = container.querySelector('code.info');
+          const codeElements = container.querySelectorAll('code.info');
 
-          expect(JSON.parse(codeElement.textContent)).toEqual(mockHoldingsJSONData);
+          [...codeElements].forEach((codeElement, i) => {
+            expect(JSON.parse(codeElement.textContent)).toEqual(mockHoldingsJSONData[i]);
+          });
         });
       });
 
