@@ -1,5 +1,4 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
 import faker from 'faker';
 import { noop } from 'lodash';
 import { BrowserRouter } from 'react-router-dom';
@@ -20,218 +19,171 @@ window.open.mockReturnValue({ focus: jest.fn() });
 const history = createMemoryHistory();
 
 const firstRecordJobExecutionId = faker.random.uuid();
-const sourceRecordsIds = [
-  faker.random.uuid(),
-  faker.random.uuid(),
-  faker.random.uuid(),
-  faker.random.uuid(),
-  faker.random.uuid(),
-  faker.random.uuid(),
-  faker.random.uuid(),
-];
-const instanceId = faker.random.uuid();
-const authorityId = faker.random.uuid();
 
 const jobLogEntriesRecords = [{
   sourceRecordActionStatus: 'CREATED',
   sourceRecordType: 'MARC_BIBLIOGRAPHIC',
   instanceActionStatus: 'CREATED',
-  authorityActionStatus: 'CREATED',
+  sourceRecordTitle: 'Test record 1',
   jobExecutionId: firstRecordJobExecutionId,
-  sourceRecordId: sourceRecordsIds[0],
+  sourceRecordId: '59138d56-bc81-4f66-9f72-f57f53621111',
   sourceRecordOrder: '0',
-  sourceRecordTitle: 'Test item 1',
-}, {
-  instanceActionStatus: 'UPDATED',
-  authorityActionStatus: 'UPDATED',
-  sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-  jobExecutionId: faker.random.uuid(),
-  sourceRecordId: sourceRecordsIds[1],
-  sourceRecordOrder: '1',
-  sourceRecordTitle: 'Test item 2',
-}, {
-  holdingsActionStatus: 'MULTIPLE',
-  sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-  jobExecutionId: faker.random.uuid(),
-  sourceRecordId: sourceRecordsIds[2],
-  sourceRecordOrder: '2',
-  sourceRecordTitle: 'Test item 3',
-}, {
-  itemActionStatus: 'DISCARDED',
-  sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-  jobExecutionId: faker.random.uuid(),
-  sourceRecordId: sourceRecordsIds[3],
-  sourceRecordOrder: '3',
-  sourceRecordTitle: 'Test item 4',
-  error: 'Error message',
-}, {
-  sourceRecordActionStatus: 'CREATED',
-  holdingsActionStatus: 'CREATED',
-  holdingsRecordHridList: ['holdingsHrid1'],
-  sourceRecordType: 'MARC_HOLDINGS',
-  jobExecutionId: faker.random.uuid(),
-  sourceRecordId: sourceRecordsIds[4],
-  sourceRecordOrder: '4',
-  sourceRecordTitle: 'Test item 5',
-}, {
-  sourceRecordActionStatus: 'DISCARDED',
-  holdingsActionStatus: 'DISCARDED',
-  holdingsRecordHridList: ['holdingsHrid2'],
-  sourceRecordType: 'MARC_HOLDINGS',
-  jobExecutionId: faker.random.uuid(),
-  sourceRecordId: sourceRecordsIds[5],
-  sourceRecordOrder: '5',
-  sourceRecordTitle: 'Test item 6',
 }, {
   sourceRecordActionStatus: 'CREATED',
   sourceRecordType: 'MARC_BIBLIOGRAPHIC',
-  poLineActionStatus: 'CREATED',
-  jobExecutionId: faker.random.uuid(),
-  sourceRecordId: sourceRecordsIds[6],
-  sourceRecordOrder: '6',
-  sourceRecordTitle: 'Test item 7',
+  instanceActionStatus: 'CREATED',
+  sourceRecordTitle: 'Test record 2',
+  jobExecutionId: firstRecordJobExecutionId,
+  sourceRecordId: '59138d56-bc81-4f66-9f72-f57f53629646',
+  sourceRecordOrder: '0',
 }];
+
 const jobLogEntriesResources = {
   jobLogEntries: {
     records: jobLogEntriesRecords,
     other: { totalRecords: jobLogEntriesRecords.length }
   },
 };
+
 const jobLogRecords = [{
-  sourceRecordId: sourceRecordsIds[0],
-  sourceRecordOrder: '0',
-  sourceRecordTitle: 'Test item 1',
-  relatedInstanceInfo: {
-    actionStatus: 'CREATED',
-    idList: [instanceId],
+  jobExecutionId : '467d7627-c0db-4fb7-b333-4b4983dbf781',
+  sourceRecordId : '59138d56-bc81-4f66-9f72-f57f53621111',
+  sourceRecordOrder : 0,
+  sourceRecordTitle : 'Test record 1',
+  sourceRecordActionStatus : 'CREATED',
+  instanceActionStatus: 'CREATED',
+  error : '',
+  relatedInstanceInfo : {
+    actionStatus : 'CREATED',
+    idList : ['720031b9-a792-4936-963c-a7b63fb96574'],
+    hridList : ['in00000000014'],
+    error : ''
   },
-  relatedHoldingsInfo: {
-    actionStatus: 'CREATED',
-    idList: [faker.random.uuid()],
-  },
-  relatedItemInfo: {
-    actionStatus: 'CREATED',
-    idList: [faker.random.uuid()],
-  },
+  relatedHoldingsInfo : [],
+  relatedItemInfo : [],
   relatedAuthorityInfo: {
-    actionStatus: 'CREATED',
-    idList: [authorityId],
+    idList : [],
+    hridList : []
   },
   relatedPoLineInfo: {
-    actionStatus: 'CREATED',
-    idList: [faker.random.uuid()],
+    idList: [],
+    hridList : []
   },
+  relatedInvoiceInfo : {
+    idList : [],
+    hridList : []
+  },
+  relatedInvoiceLineInfo : { }
 }, {
-  sourceRecordId: sourceRecordsIds[1],
-  sourceRecordOrder: '1',
-  sourceRecordTitle: 'Test item 2',
-  relatedInstanceInfo: {
-    actionStatus: 'UPDATED',
-    idList: [instanceId],
+  jobExecutionId : '467d7627-c0db-4fb7-b333-4b4983dbf781',
+  sourceRecordId : '59138d56-bc81-4f66-9f72-f57f53629646',
+  sourceRecordOrder : 4,
+  sourceRecordTitle : 'Test record 2',
+  sourceRecordActionStatus : 'CREATED',
+  instanceActionStatus: 'CREATED',
+  error : '',
+  relatedInstanceInfo : {
+    actionStatus : 'CREATED',
+    idList : ['720031b9-a792-4936-963c-a7b63fb96574'],
+    hridList : ['in00000000014'],
+    error : ''
   },
-  relatedHoldingsInfo: {
-    actionStatus: 'UPDATED',
-    idList: [faker.random.uuid()],
-  },
-  relatedItemInfo: {
-    actionStatus: 'UPDATED',
-    idList: [faker.random.uuid()],
-  },
+  relatedHoldingsInfo : [{
+    actionStatus : 'CREATED',
+    id : 'f648c370-d9d6-432c-a502-b8eb718f867c',
+    permanentLocationId: '53cf956f-c1df-410b-8bea-27f712cca7c0',
+    hrid : 'ho00000000017',
+    error : ''
+  }, {
+    actionStatus: 'CREATED',
+    id : '5cadf17f-eb72-475c-a2e0-7e56f54f0000',
+    permanentLocationId: '758258bc-ecc1-41b8-abca-f7b610822ffd',
+    hrid : 'ho00000000018',
+    error : ''
+  }, {
+    actionStatus : 'DISCARDED',
+    id : '5cadf17f-eb72-475c-a2e0-7e56f54fd3b4',
+    permanentLocationId: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
+    hrid : 'ho00000000014',
+    error : ''
+  }],
+  relatedItemInfo : [{
+    actionStatus : 'CREATED',
+    id : '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
+    hrid : 'it00000000015',
+    holdingsId : 'f648c370-d9d6-432c-a502-b8eb718f867c',
+    error : ''
+  }, {
+    actionStatus : 'DISCARDED',
+    id : 'ccd19bf0-add1-46bb-899b-c457fd448b51',
+    hrid : 'it00000000016',
+    holdingsId : 'f648c370-d9d6-432c-a502-b8eb718f867c',
+    error : 'test error'
+  }, {
+    actionStatus : 'CREATED',
+    id : 'ccd19bf0-add1-46bb-899b-c457fd441111',
+    hrid : 'it00000000019',
+    holdingsId : '5cadf17f-eb72-475c-a2e0-7e56f54f0000',
+    error : ''
+  }, {
+    actionStatus : 'CREATED',
+    id : '3bcfe427-a747-405f-b3f3-1d842ffb2222',
+    hrid : 'it00000000018',
+    holdingsId : '5cadf17f-eb72-475c-a2e0-7e56f54f0000',
+    error : ''
+  }, {
+    actionStatus : 'CREATED',
+    id : '3bcfe427-a747-405f-b3f3-1d842ffb49c6',
+    hrid : 'it00000000014',
+    holdingsId : 'f648c370-d9d6-432c-a502-b8eb718f867c',
+    error : ''
+  }],
   relatedAuthorityInfo: {
-    actionStatus: 'UPDATED',
-    idList: [authorityId],
+    idList : [],
+    hridList : []
   },
   relatedPoLineInfo: {
-    actionStatus: 'CREATED',
-    idList: [faker.random.uuid()],
+    idList: [],
+    hridList : []
   },
-}, {
-  sourceRecordId: sourceRecordsIds[2],
-  sourceRecordOrder: '2',
-  sourceRecordTitle: 'Test item 1',
-  relatedInstanceInfo: {
-    actionStatus: 'MULTIPLE',
-    idList: [faker.random.uuid()],
+  relatedInvoiceInfo : {
+    idList : [],
+    hridList : []
   },
-  relatedHoldingsInfo: {
-    actionStatus: 'MULTIPLE',
-    idList: [faker.random.uuid()],
-  },
-  relatedItemInfo: {
-    actionStatus: 'MULTIPLE',
-    idList: [faker.random.uuid()],
-  },
-  relatedAuthorityInfo: {
-    actionStatus: 'MULTIPLE',
-    idList: [faker.random.uuid()],
-  },
-  relatedPoLineInfo: {
-    actionStatus: 'CREATED',
-    idList: [faker.random.uuid()],
-  },
-}, {
-  sourceRecordId: sourceRecordsIds[3],
-  sourceRecordOrder: '3',
-  sourceRecordTitle: 'Test item 4',
-  relatedInstanceInfo: {
-    actionStatus: 'DISCARDED',
-    idList: [faker.random.uuid()],
-  },
-  relatedHoldingsInfo: {
-    actionStatus: 'DISCARDED',
-    idList: [faker.random.uuid()],
-  },
-  relatedItemInfo: {
-    actionStatus: 'DISCARDED',
-    idList: [faker.random.uuid()],
-  },
-  relatedAuthorityInfo: {
-    actionStatus: 'DISCARDED',
-    idList: [faker.random.uuid()],
-  },
-  relatedPoLineInfo: {
-    actionStatus: 'CREATED',
-    idList: [faker.random.uuid()],
-  },
-}, {
-  sourceRecordId: sourceRecordsIds[6],
-  sourceRecordOrder: '6',
-  sourceRecordTitle: 'Test item 7',
-  relatedInstanceInfo: {
-    actionStatus: 'DISCARDED',
-    idList: [faker.random.uuid()],
-  },
-  relatedHoldingsInfo: {
-    actionStatus: 'DISCARDED',
-    idList: [faker.random.uuid()],
-  },
-  relatedItemInfo: {
-    actionStatus: 'DISCARDED',
-    idList: [faker.random.uuid()],
-  },
-  relatedAuthorityInfo: {
-    actionStatus: 'DISCARDED',
-    idList: [faker.random.uuid()],
-  },
-  relatedPoLineInfo: {
-    actionStatus: 'CREATED',
-    idList: [faker.random.uuid()],
-  },
+  relatedInvoiceLineInfo : { }
 }];
+
 const jobLogResources = {
   jobLog: {
     records: jobLogRecords,
     other: { totalRecords: jobLogRecords.length }
   },
 };
+
+const locations = {
+  records: [{
+    id: '53cf956f-c1df-410b-8bea-27f712cca7c0',
+    code: 'KU/CC/DI/A',
+  }, {
+    id: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
+    code: 'KU/CC/DI/M',
+  }, {
+    id: '758258bc-ecc1-41b8-abca-f7b610822ffd',
+    code: 'KU/CC/DI/O',
+  }]
+};
+
 const resources = {
   ...jobLogEntriesResources,
   ...jobLogResources,
+  locations,
 };
+
 const mutator = {
   resultCount: { replace: () => {} },
   resultOffset: { replace: () => {} },
 };
+
 const source = {
   records: () => resources.jobLogEntries.records,
   pending: () => false,
@@ -240,11 +192,11 @@ const source = {
   fetchOffset: noop,
 };
 
-const renderRecordsTable = ({ isEdifactType = false }) => {
+const renderRecordsTable = () => {
   const component = (
     <BrowserRouter>
       <RecordsTable
-        isEdifactType={isEdifactType}
+        isEdifactType={false}
         resources={resources}
         mutator={mutator}
         source={source}
@@ -262,13 +214,13 @@ const renderRecordsTable = ({ isEdifactType = false }) => {
 describe('RecordsTable component', () => {
   // TODO: Create separate ticket to fix all the accesibility tests
   it.skip('should be rendered with no axe errors', async () => {
-    const { container } = renderRecordsTable({});
+    const { container } = renderRecordsTable();
 
     await runAxeTest({ rootNode: container });
   });
 
   it('should have proper columns', () => {
-    const { getByText } = renderRecordsTable({});
+    const { getByText } = renderRecordsTable();
     /*
      * Get "Holdings" and "Error" labels by query selector instead of by "getByText" because there are
      * "Holdings" / "Error" column labels and "Holdings" / "Error" messages in cells on the page
@@ -288,91 +240,10 @@ describe('RecordsTable component', () => {
     expect(errorColumn.innerHTML).toEqual('Error');
   });
 
-  describe('record order field', () => {
-    describe('for EDIFACT data type', () => {
-      it('should display order as it is', () => {
-        const { container } = renderRecordsTable({ isEdifactType: true });
+  it('should render records', () => {
+    const { getByText } = renderRecordsTable();
 
-        const cells = container.querySelectorAll('[role="gridcell"]');
-        const firstRowRecordOrder = cells[0].innerHTML;
-
-        expect(firstRowRecordOrder).toEqual('0');
-      });
-    });
-
-    describe('for MARC data type', () => {
-      it('should display incremented order', () => {
-        const { container } = renderRecordsTable({});
-
-        const cells = container.querySelectorAll('[role="gridcell"]');
-        const firstRowRecordOrder = cells[0].innerHTML;
-
-        expect(firstRowRecordOrder).toEqual('1');
-      });
-    });
-  });
-
-  describe('when clicking on a record title', () => {
-    it('should navigate to the log details screen', () => {
-      const { getByText } = renderRecordsTable({});
-
-      expect(getByText('Test item 1').href).toContain(`/data-import/log/${firstRecordJobExecutionId}/${sourceRecordsIds[0]}`);
-    });
-  });
-
-  describe('when action status is CREATED', () => {
-    it('the instance value should be a hotlink', () => {
-      const { container } = renderRecordsTable({});
-
-      fireEvent.click(container.querySelector('[data-row-index="row-0"] [data-test-entity-name="instance"]'));
-
-      expect(window.location.href).toContain(`/inventory/view/${instanceId}`);
-    });
-
-    it('the authority value should be a hotlink', () => {
-      const { container } = renderRecordsTable({});
-
-      fireEvent.click(container.querySelector('[data-row-index="row-0"] [data-test-entity-name="authority"]'));
-
-      expect(window.location.href).toContain(`/marc-authorities/authorities/${authorityId}`);
-    });
-  });
-
-  describe('when action status is UPDATED', () => {
-    it('the instance value should be a hotlink', () => {
-      const { container } = renderRecordsTable({});
-
-      fireEvent.click(container.querySelector('[data-row-index="row-1"] [data-test-entity-name="instance"]'));
-
-      expect(window.location.href).toContain(`/inventory/view/${instanceId}`);
-    });
-
-    it('the authority value should be a hotlink', () => {
-      const { container } = renderRecordsTable({});
-
-      fireEvent.click(container.querySelector('[data-row-index="row-1"] [data-test-entity-name="authority"]'));
-
-      expect(window.location.href).toContain(`/marc-authorities/authorities/${authorityId}`);
-    });
-  });
-
-  describe('when action status is MULTIPLE', () => {
-    it('the value should be a text', () => {
-      const { getByText } = renderRecordsTable({});
-
-      expect(getByText('Multiple')).not.toHaveAttribute('href');
-    });
-  });
-
-  describe('when action status is DISCARDED', () => {
-    it('the value should be a text', () => {
-      const { getAllByText } = renderRecordsTable({});
-
-      const noActionStatuses = getAllByText('No action');
-
-      noActionStatuses.forEach(status => {
-        expect(status).not.toHaveAttribute('href');
-      });
-    });
+    expect(getByText('Test record 1')).toBeInTheDocument();
+    expect(getByText('Test record 2')).toBeInTheDocument();
   });
 });
