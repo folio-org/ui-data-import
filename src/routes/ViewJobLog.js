@@ -72,10 +72,17 @@ const mockJobLogRecord = {
   relatedItemInfo: [
     {
       actionStatus: 'CREATED',
+      id: 'eedd13c4-7d40-4b1e-8f77-b0b9d19a896b',
+      hrid: 'item000000000002',
+      holdingsId: '',
+      error: '',
+    },
+    {
+      actionStatus: 'DISCARDED',
       id: '',
       hrid: '',
       holdingsId: '',
-      error: '',
+      error: 'ERROR AAAAA',
     },
   ],
   relatedAuthorityInfo: {
@@ -203,12 +210,26 @@ export const ViewJobLog = () => {
   const itemsLogs = useMemo(() => {
     const { relatedItemInfo } = jobLogData;
 
-    return [{
-      label: '',
-      logs: itemsData,
-      error: relatedItemInfo?.error || '',
-      errorBlockId: 'item-error',
-    }];
+    const getItemsLabel = (item = {}) => {
+      const { hrid } = item;
+
+      if (!hrid) return '';
+
+      return (
+        <Headline margin="none" className={sharedCss.leftMargin}>
+          {hrid}
+        </Headline>
+      );
+    };
+
+    return (
+      relatedItemInfo?.map((item) => ({
+        label: getItemsLabel(item),
+        logs: itemsData?.find((data) => data.id === item.id),
+        error: item.error || '',
+        errorBlockId: 'item-error',
+      })) || [{ logs: [] }]
+    );
   }, [itemsData, jobLogData]);
   const authorityLogs = useMemo(() => {
     const { relatedAuthorityInfo } = jobLogData;

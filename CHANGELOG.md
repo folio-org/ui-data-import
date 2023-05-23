@@ -12,6 +12,7 @@
 * View all: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1428)
 * Fix warnings in unit tests (part 2) (UIDATIMP-1437)
 * Update Log JSON screen to support multiple holdings (UIDATIMP-1439)
+* Update Log JSON screen to support multiple items (UIDATIMP-1440)
 * DI Log: change Discarded to No action (UIDATIMP-1446)
 * DI Log: Make some changes to the Log header (UIDATIMP-1447)
 * Refactor the ViewJobLog component to be a functional component (UIDATIMP-1457)
