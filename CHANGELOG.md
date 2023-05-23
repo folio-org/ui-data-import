@@ -13,6 +13,7 @@
 * Fix warnings in unit tests (part 2) (UIDATIMP-1437)
 * DI Log: change Discarded to No action (UIDATIMP-1446)
 * DI Log: Make some changes to the Log header (UIDATIMP-1447)
+* DI Job profiles: Redirect when job profile was deleted (UIDATIMP-1450)
 
 ## [6.0.8](https://github.com/folio-org/ui-data-import/tree/v6.0.8) (2023-04-04)
 

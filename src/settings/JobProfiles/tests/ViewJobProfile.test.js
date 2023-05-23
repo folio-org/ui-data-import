@@ -78,6 +78,7 @@ const viewJobProfileProps = (profile, actionMenuItems) => ({
     block: noop,
     push: noop,
     replace: noop,
+    go: noop,
   },
   location: {
     search: '',
@@ -253,6 +254,20 @@ describe('ViewJobProfile component', () => {
       fireEvent.click(secondDeleteButton[1]);
 
       await waitFor(() => expect(queryByText('Delete job profile?')).not.toBeInTheDocument());
+    });
+  });
+
+  describe('when job profile was deleted', () => {
+    it('should render information that it was deleted', () => {
+      const { getByText } = renderViewJobProfile(viewJobProfileProps({
+        records: [],
+        hasLoaded: false,
+        failed: { status: 404 },
+      }));
+
+      expect(getByText('Job profile deleted')).toBeInTheDocument();
+      expect(getByText('Not available - this job profile has been deleted')).toBeInTheDocument();
+      expect(getByText('Return to previous screen')).toBeInTheDocument();
     });
   });
 

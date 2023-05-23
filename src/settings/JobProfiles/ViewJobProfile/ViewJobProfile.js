@@ -64,6 +64,8 @@ import {
   fileNameCellFormatter,
 } from '../../../utils';
 
+import { NoJobProfilePane } from '.';
+
 import sharedCss from '../../../shared.css';
 
 const {
@@ -97,10 +99,12 @@ const ViewJobProfileComponent = props => {
   const jobProfileData = () => {
     const jobProfile = resources.jobProfileView || {};
     const [record] = jobProfile.records || [];
+    const { failed } = jobProfile;
 
     return {
       record,
       hasLoaded: jobProfile.hasLoaded,
+      failed,
     };
   };
 
@@ -247,6 +251,7 @@ const ViewJobProfileComponent = props => {
   const {
     hasLoaded,
     record: jobProfileRecord,
+    failed,
   } = jobProfileData();
   const {
     wrappers,
@@ -256,6 +261,15 @@ const ViewJobProfileComponent = props => {
     hasLoaded: jobsUsingThisProfileDataHasLoaded,
     jobExecutions: jobsUsingThisProfileData,
   } = getJobsUsingThisProfileData();
+
+  if (failed) {
+    return (
+      <NoJobProfilePane
+        onClose={onClose}
+        history={history}
+      />
+    );
+  }
 
   if (!jobProfileRecord || !hasLoaded) {
     return (
@@ -487,6 +501,7 @@ ViewJobProfileComponent.propTypes = {
           description: PropTypes.string,
         }),
       ),
+      failed: PropTypes.object,
     }),
     childWrappers: PropTypes.shape({
       hasLoaded: PropTypes.bool.isRequired,
