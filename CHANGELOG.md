@@ -14,6 +14,7 @@
 * DI Log: change Discarded to No action (UIDATIMP-1446)
 * DI Log: Make some changes to the Log header (UIDATIMP-1447)
 * DI Job profiles: Redirect when job profile was deleted (UIDATIMP-1450)
+* Refactor the ViewJobLog component to be a functional component (UIDATIMP-1457)
 
 ## [6.0.8](https://github.com/folio-org/ui-data-import/tree/v6.0.8) (2023-04-04)
 
