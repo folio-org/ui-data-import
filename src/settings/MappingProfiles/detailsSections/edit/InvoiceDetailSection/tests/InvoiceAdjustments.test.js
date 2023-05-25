@@ -11,6 +11,7 @@ import {
 } from '../../../../../../../test/jest/helpers';
 import '../../../../../../../test/jest/__mock__';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import INVOICE from '../../../../initialDetails/INVOICE';
 import { InvoiceAdjustments } from '../InvoiceAdjustments';
 import { getFieldValue } from '../../../utils';
@@ -45,7 +46,7 @@ describe('InvoiceAdjustments edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

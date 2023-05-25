@@ -11,6 +11,7 @@ import {
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import { Identifier } from '../Identifier';
 
 import {
@@ -32,7 +33,7 @@ describe('Instance "Identifier" edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

@@ -64,6 +64,7 @@ import {
   permissions,
   BASE_URLS,
   fileNameCellFormatter,
+  STATUS_CODES,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -262,7 +263,7 @@ const ViewJobProfileComponent = props => {
     jobExecutions: jobsUsingThisProfileData,
   } = getJobsUsingThisProfileData();
 
-  if (statusCode === 404) {
+  if (statusCode === STATUS_CODES.NOT_FOUND) {
     return (
       <NoJobProfilePane
         onClose={onClose}

@@ -18,6 +18,8 @@ import {
 } from '../../../../test/jest/helpers';
 import '../../../../test/jest/__mock__';
 
+import { STATUS_CODES } from '../../../utils';
+
 import { ViewJobProfile } from '../ViewJobProfile';
 
 global.fetch = jest.fn();
@@ -118,7 +120,7 @@ describe('ViewJobProfile component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });
@@ -263,7 +265,7 @@ describe('ViewJobProfile component', () => {
       const { getByText } = renderViewJobProfile(viewJobProfileProps({
         records: [],
         hasLoaded: false,
-        failed: { httpStatus: 404 },
+        failed: { httpStatus: STATUS_CODES.NOT_FOUND },
       }));
 
       expect(getByText('Job profile deleted')).toBeInTheDocument();

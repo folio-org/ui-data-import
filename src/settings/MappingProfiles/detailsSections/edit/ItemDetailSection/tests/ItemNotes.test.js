@@ -15,6 +15,7 @@ import {
 
 import { ItemNotes } from '../ItemNotes';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import {
   onAdd,
   onRemove,
@@ -59,7 +60,7 @@ describe('Item "Item notes" edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

@@ -11,6 +11,8 @@ import {
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
 
+import { STATUS_CODES } from '../../../../../../utils';
+
 import { Location } from '../Location';
 
 global.fetch = jest.fn();
@@ -32,7 +34,7 @@ describe('Holdings "Location" edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

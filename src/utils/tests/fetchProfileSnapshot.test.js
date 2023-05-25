@@ -3,7 +3,10 @@ import faker from 'faker';
 import '../../../test/jest/__mock__';
 
 import { fetchProfileSnapshot } from '../fetchProfileSnapshot';
-import { ASSOCIATION_TYPES } from '../constants';
+import {
+  ASSOCIATION_TYPES,
+  STATUS_CODES,
+} from '../constants';
 
 global.fetch = jest.fn();
 
@@ -13,7 +16,7 @@ describe('fetchProfileSnapshot function', () => {
   it('fetches correctly', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({ id: 'snapshotId' }),
     });
 
@@ -36,7 +39,7 @@ describe('fetchProfileSnapshot function', () => {
     jest.spyOn(console, 'error').mockImplementation(() => {});
     global.fetch.mockResolvedValueOnce({
       ok: false,
-      status: 500,
+      status: STATUS_CODES.INTERNAL_SERVER_ERROR,
       json: async () => ({}),
     });
 

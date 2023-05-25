@@ -12,6 +12,7 @@ import {
   translationsProperties,
 } from '../../../../../../test/jest/helpers';
 
+import { STATUS_CODES } from '../../../../../utils';
 import { MappingItemDetails } from '../MappingItemDetails';
 import {
   onAdd,
@@ -63,7 +64,7 @@ describe('MappingItemDetails edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

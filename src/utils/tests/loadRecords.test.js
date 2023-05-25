@@ -2,6 +2,7 @@ import faker from 'faker';
 
 import '../../../test/jest/__mock__';
 
+import { STATUS_CODES } from '../constants';
 import {
   fetchJobProfile,
   fetchUploadDefinition,
@@ -18,7 +19,7 @@ describe('fetchUploadDefinition function', () => {
   it('fetches upload definition of profile with given id', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({ id: 'uploadDefinitionId' }),
     });
 
@@ -38,7 +39,7 @@ describe('fetchUploadDefinition function', () => {
   it('when there is an error, throws response object', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: false,
-      status: 400,
+      status: STATUS_CODES.BAD_REQUEST,
     });
 
     const okapi = { url: 'https://test.com' };
@@ -52,7 +53,7 @@ describe('fetchUploadDefinition function', () => {
     } catch (e) {
       expect(e).toEqual({
         ok: false,
-        status: 400,
+        status: STATUS_CODES.BAD_REQUEST,
       });
     }
   });
@@ -89,7 +90,7 @@ describe('loadRecords function', () => {
   it('loads records', async () => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({ id: 'testId' }),
     });
 
@@ -111,7 +112,7 @@ describe('loadRecords function', () => {
     const expected = `${okapi.url}/data-import/uploadDefinitions/${uploadDefinitionId}/processFiles?defaultMapping=${defaultMapping}`;
 
     expect(global.fetch.mock.calls[1][0]).toBe(expected);
-    expect(data.status).toEqual(200);
+    expect(data.status).toEqual(STATUS_CODES.OK);
     expect(data.ok).toBeTruthy();
     expect(await data.json()).toEqual({ id: 'testId' });
   });
@@ -120,12 +121,12 @@ describe('loadRecords function', () => {
     global.fetch
       .mockResolvedValueOnce({
         ok: true,
-        status: 200,
+        status: STATUS_CODES.OK,
         json: async () => ({ id: 'uploadDefinitionId' }),
       })
       .mockResolvedValueOnce({
         ok: false,
-        status: 400,
+        status: STATUS_CODES.BAD_REQUEST,
       });
 
     const okapi = { url: 'https://test.com' };
@@ -147,7 +148,7 @@ describe('loadRecords function', () => {
     } catch (e) {
       expect(e).toEqual({
         ok: false,
-        status: 400,
+        status: STATUS_CODES.BAD_REQUEST,
       });
     }
   });

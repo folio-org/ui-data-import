@@ -1,3 +1,5 @@
+import { STATUS_CODES } from '../../utils';
+
 export const getCRUDActions = ({
   entityKey,
   mutator: {
@@ -36,7 +38,7 @@ export const getCRUDActions = ({
       return response || { ok: true };
     })
     .catch(error => {
-      if (error.status !== 409) {
+      if (error.status !== STATUS_CODES.CONFLICT) {
         onError('delete', record, error);
       }
 

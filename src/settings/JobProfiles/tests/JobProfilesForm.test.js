@@ -21,6 +21,7 @@ import {
 import {
   LAYER_TYPES,
   PROFILE_TYPES,
+  STATUS_CODES,
 } from '../../../utils';
 
 global.fetch = jest.fn();
@@ -173,7 +174,7 @@ describe('JobProfilesForm component', () => {
     const expected = [{ contentType: PROFILE_TYPES.ACTION_PROFILE }];
 
     global.fetch.mockResolvedValueOnce({
-      status: 200,
+      status: STATUS_CODES.OK,
       ok: true,
       json: async () => ({ childSnapshotWrappers: expected }),
     });
@@ -198,7 +199,7 @@ describe('JobProfilesForm component', () => {
     it('"Save as profile & Close" button should be active', async () => {
       global.fetch
         .mockReturnValue(Promise.resolve({
-          status: 200,
+          status: STATUS_CODES.OK,
           ok: true,
           json: async () => ({}),
         }));

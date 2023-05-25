@@ -15,6 +15,7 @@ import {
 
 import { LoanAndAvailability } from '../LoanAndAvailability';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import {
   onAdd,
   onRemove,
@@ -59,7 +60,7 @@ describe('Item "Loan and availability" edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });
