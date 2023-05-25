@@ -12,9 +12,11 @@ export const useInventoryHoldingsByIdQuery = (holdingsIds = []) => {
   const queryIds = holdingsIds.join(' or ');
 
   const query = useQuery(
-    [namespace, queryIds],
-    () => ky.get(`holdings-storage/holdings?query=id==(${queryIds})`).json(),
-    { enabled: Boolean(queryIds) },
+    {
+      queryKey: [namespace, queryIds],
+      queryFn: () => ky.get(`holdings-storage/holdings?query=id==(${queryIds})`).json(),
+      enabled: !!queryIds,
+    }
   );
 
   return {

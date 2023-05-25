@@ -10,8 +10,10 @@ export const useOrderByIdQuery = (orderId = null) => {
   const [namespace] = useNamespace({ key: 'orderById' });
 
   return useQuery(
-    [namespace, orderId],
-    () => ky.get(`orders/composite-orders/${orderId}`).json(),
-    { enabled: Boolean(orderId) },
+    {
+      queryKey: [namespace, orderId],
+      queryFn: () => ky.get(`orders/composite-orders/${orderId}`).json(),
+      enabled: !!orderId,
+    }
   );
 };

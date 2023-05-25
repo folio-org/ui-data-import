@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 
 import {
   useNamespace,
-  useOkapiKy
+  useOkapiKy,
 } from '@folio/stripes/core';
 
 export const useSRSRecordQuery = recordId => {
@@ -10,8 +10,10 @@ export const useSRSRecordQuery = recordId => {
   const [namespace] = useNamespace({ key: 'srsRecord' });
 
   return useQuery(
-    [namespace, recordId],
-    () => ky.get(`source-storage/records/${recordId}`).json(),
-    { enabled: Boolean(recordId) },
+    {
+      queryKey: [namespace, recordId],
+      queryFn: () => ky.get(`source-storage/records/${recordId}`).json(),
+      enabled: !!recordId,
+    }
   );
 };
