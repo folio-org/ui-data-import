@@ -46,6 +46,8 @@ import {
   ProfileTree,
 } from '../../../components';
 
+import { NoJobProfilePane } from '.';
+
 import {
   ENTITY_KEYS,
   PROFILE_TYPES,
@@ -62,6 +64,7 @@ import {
   permissions,
   BASE_URLS,
   fileNameCellFormatter,
+  STATUS_CODES,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -97,10 +100,12 @@ const ViewJobProfileComponent = props => {
   const jobProfileData = () => {
     const jobProfile = resources.jobProfileView || {};
     const [record] = jobProfile.records || [];
+    const { failed: { httpStatus: statusCode } } = jobProfile;
 
     return {
       record,
       hasLoaded: jobProfile.hasLoaded,
+      statusCode,
     };
   };
 
@@ -247,6 +252,7 @@ const ViewJobProfileComponent = props => {
   const {
     hasLoaded,
     record: jobProfileRecord,
+    statusCode,
   } = jobProfileData();
   const {
     wrappers,
@@ -256,6 +262,15 @@ const ViewJobProfileComponent = props => {
     hasLoaded: jobsUsingThisProfileDataHasLoaded,
     jobExecutions: jobsUsingThisProfileData,
   } = getJobsUsingThisProfileData();
+
+  if (statusCode === STATUS_CODES.NOT_FOUND) {
+    return (
+      <NoJobProfilePane
+        onClose={onClose}
+        history={history}
+      />
+    );
+  }
 
   if (!jobProfileRecord || !hasLoaded) {
     return (
@@ -487,6 +502,7 @@ ViewJobProfileComponent.propTypes = {
           description: PropTypes.string,
         }),
       ),
+      failed: PropTypes.shape({ httpStatus: PropTypes.number }),
     }),
     childWrappers: PropTypes.shape({
       hasLoaded: PropTypes.bool.isRequired,

@@ -10,6 +10,7 @@ import {
 } from '../../../../../../../test/jest/helpers';
 import '../../../../../../../test/jest/__mock__';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import { ItemDetails } from '../ItemDetails';
 
 const setReferenceTablesMock = jest.fn();
@@ -70,7 +71,7 @@ describe('ItemDetails edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

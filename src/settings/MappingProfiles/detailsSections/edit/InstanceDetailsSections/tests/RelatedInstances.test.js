@@ -8,6 +8,7 @@ import {
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import { RelatedInstances } from '../RelatedInstances';
 
 global.fetch = jest.fn();
@@ -22,7 +23,7 @@ describe('Instance "Related instances" edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

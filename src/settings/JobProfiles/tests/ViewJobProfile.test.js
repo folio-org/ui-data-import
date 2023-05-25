@@ -18,6 +18,8 @@ import {
 } from '../../../../test/jest/helpers';
 import '../../../../test/jest/__mock__';
 
+import { STATUS_CODES } from '../../../utils';
+
 import { ViewJobProfile } from '../ViewJobProfile';
 
 global.fetch = jest.fn();
@@ -47,6 +49,7 @@ const jobProfile = {
       },
     }],
   hasLoaded: true,
+  failed: false,
 };
 
 const fileId = faker.random.uuid();
@@ -78,6 +81,7 @@ const viewJobProfileProps = (profile, actionMenuItems) => ({
     block: noop,
     push: noop,
     replace: noop,
+    go: noop,
   },
   location: {
     search: '',
@@ -116,7 +120,7 @@ describe('ViewJobProfile component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });
@@ -253,6 +257,20 @@ describe('ViewJobProfile component', () => {
       fireEvent.click(secondDeleteButton[1]);
 
       await waitFor(() => expect(queryByText('Delete job profile?')).not.toBeInTheDocument());
+    });
+  });
+
+  describe('when job profile was deleted', () => {
+    it('should render information that it was deleted', () => {
+      const { getByText } = renderViewJobProfile(viewJobProfileProps({
+        records: [],
+        hasLoaded: false,
+        failed: { httpStatus: STATUS_CODES.NOT_FOUND },
+      }));
+
+      expect(getByText('Job profile deleted')).toBeInTheDocument();
+      expect(getByText('Not available - this job profile has been deleted')).toBeInTheDocument();
+      expect(getByText('Return to previous screen')).toBeInTheDocument();
     });
   });
 
