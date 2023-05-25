@@ -47,6 +47,7 @@ const jobProfile = {
       },
     }],
   hasLoaded: true,
+  failed: false,
 };
 
 const fileId = faker.random.uuid();
@@ -262,7 +263,7 @@ describe('ViewJobProfile component', () => {
       const { getByText } = renderViewJobProfile(viewJobProfileProps({
         records: [],
         hasLoaded: false,
-        failed: { status: 404 },
+        failed: { httpStatus: 404 },
       }));
 
       expect(getByText('Job profile deleted')).toBeInTheDocument();
