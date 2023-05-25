@@ -5,10 +5,11 @@ import {
   get,
 } from 'lodash';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
@@ -38,6 +39,12 @@ const renderInvoiceLineFundDistribution = () => {
 };
 
 describe('InvoiceLineFundDistribution', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderInvoiceLineFundDistribution();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render correct fields', () => {
     const { getByRole } = renderInvoiceLineFundDistribution();
 

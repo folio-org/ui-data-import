@@ -3,13 +3,14 @@ import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import {
-  buildMutator,
-  Harness,
-} from '@folio/stripes-data-transfer-components/test/helpers';
 import '../../../test/jest/__mock__';
+
+import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
 import { Paneset } from '@folio/stripes/components';
+
+import { Harness } from '../../../test/helpers';
 import {
   renderWithReduxForm,
   translationsProperties,
@@ -111,6 +112,12 @@ const renderMatchProfiles = props => {
 };
 
 describe('MatchProfiles', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMatchProfiles(matchProfilesProps);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should be rendered', () => {
     const { getByText } = renderMatchProfiles(matchProfilesProps);
 

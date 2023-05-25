@@ -3,14 +3,14 @@ import {
   fireEvent,
   within,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
+import '../../../../../../../test/jest/__mock__';
 
 import { PhysicalResourceDetails } from '../PhysicalResourceDetails';
 
@@ -61,6 +61,12 @@ const renderPhysicalResourceDetails = () => {
 describe('PhysicalResourceDetails', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderPhysicalResourceDetails();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

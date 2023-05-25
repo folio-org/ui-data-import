@@ -3,16 +3,22 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { waitFor } from '@testing-library/react';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { FileUploader } from '@folio/stripes-data-transfer-components';
 
+import { FileUploader } from '@folio/stripes-data-transfer-components';
 import { ConfirmationModal } from '@folio/stripes/components';
+
+import {
+  buildStripes,
+  renderWithIntl,
+  translationsProperties
+} from '../../../test/jest/helpers';
+
 import { ImportJobs } from './ImportJobs';
 import { ReturnToAssignJobs } from './components';
 import { UploadingJobsContext } from '../UploadingJobsContextProvider';
-import { translationsProperties } from '../../../test/jest/helpers';
 
 const mockOpenDialogWindow = jest.fn();
 
@@ -69,11 +75,16 @@ const defaultContext = {
   deleteUploadDefinition: noop,
 };
 
+const stripesMock = buildStripes();
+
 const renderImportJobs = context => {
   const component = (
     <Router>
       <UploadingJobsContext.Provider value={context}>
-        <ImportJobs />
+        <ImportJobs
+          stripes={stripesMock}
+          match={{ path: '' }}
+        />
       </UploadingJobsContext.Provider>
     </Router>
   );
@@ -84,6 +95,12 @@ const renderImportJobs = context => {
 describe('Import Jobs component', () => {
   beforeEach(() => {
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = await renderImportJobs(defaultContext);
+
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when is not loaded', () => {

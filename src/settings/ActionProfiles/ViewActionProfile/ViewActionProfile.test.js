@@ -4,13 +4,16 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../test/jest/helpers';
 import '../../../../test/jest/__mock__';
-import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { ViewActionProfile } from './ViewActionProfile';
 
@@ -81,6 +84,13 @@ const renderViewActionProfile = ({
 describe('ViewActionProfiles', () => {
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderViewActionProfile(viewActionProfileProps(actionProfileRecord()));
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('profile name should be rendered correctly', () => {

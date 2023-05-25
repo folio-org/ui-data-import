@@ -1,12 +1,13 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../../test/jest/helpers';
 import '../../../../../test/jest/__mock__';
-
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import { translationsProperties } from '../../../../../test/jest/helpers';
 
 import { UploadingJobsContext } from '../../../UploadingJobsContextProvider';
 import { ReturnToAssignJobs } from './ReturnToAssignJobs';
@@ -52,6 +53,12 @@ describe('ReturnToAssignJobs component', () => {
   afterEach(() => {
     mockOnResumeProp.mockClear();
     mockDeleteUploadDefinition.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderReturnToAssignJobs();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correctly', () => {

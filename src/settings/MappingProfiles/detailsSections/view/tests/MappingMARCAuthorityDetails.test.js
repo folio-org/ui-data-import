@@ -1,9 +1,11 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../../../test/jest/helpers';
 import '../../../../../../test/jest/__mock__';
-import { translationsProperties } from '../../../../../../test/jest/helpers';
 
 import { MappingMARCAuthorityDetails } from '../MappingMARCAuthorityDetails';
 import { MARC_TYPES } from '../../../../../utils';
@@ -24,6 +26,12 @@ const renderMappingMARCAuthorityDetails = ({ folioRecordType }) => {
 };
 
 describe('MappingMARCAuthorityDetails', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingMARCAuthorityDetails({ folioRecordType: MARC_TYPES.MARC_AUTHORITY });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should have correct section', () => {
     const { getByRole } = renderMappingMARCAuthorityDetails({ folioRecordType: MARC_TYPES.MARC_AUTHORITY });
 

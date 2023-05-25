@@ -1,12 +1,12 @@
 import React from 'react';
-
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../test/jest/__mock__';
 
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../test/jest/helpers';
@@ -37,6 +37,12 @@ const renderMappingOrderDetails = () => {
 
 
 describe('MappingOrderDetails', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingOrderDetails();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should have correct sections', async () => {
     const {
       findByRole,

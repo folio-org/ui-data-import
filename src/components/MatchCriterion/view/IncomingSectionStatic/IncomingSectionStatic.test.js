@@ -1,8 +1,11 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../../test/jest/helpers';
 import '../../../../../test/jest/__mock__';
-import { translationsProperties } from '../../../../../test/jest/helpers';
 
 import { IncomingSectionStatic } from './IncomingSectionStatic';
 
@@ -69,6 +72,12 @@ const renderIncomingSectionStatic = ({ staticValueDetails }) => {
 };
 
 describe('IncomingSectionStatic view', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderIncomingSectionStatic(incomingSectionStaticWithText);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when there is no value', () => {
     it('should be rendered empty', () => {
       const { queryByText } = renderIncomingSectionStatic(emptyIncomingSectionStatic);

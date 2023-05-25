@@ -5,15 +5,14 @@ import {
   screen,
   fireEvent,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import {
   MARCFieldProtection,
@@ -21,9 +20,8 @@ import {
   DISABLED_FOR_SUBFIELD_AND_INDICATORS_FIELDS,
 } from './MARCFieldProtection';
 
-const resources = buildResources({
-  resourceName: 'values',
-  records: [{
+const resources = {
+  values: { records: [{
     id: '2d706874-8a10-4d3e-a190-33c301d157e3',
     field: '001',
     indicator1: '',
@@ -75,8 +73,8 @@ const resources = buildResources({
       updatedByUsername: 'System',
     },
   },
-  ],
-});
+  ] },
+};
 const stripesCustomProps = {
   okapi: { url: 'https://folio-testing-okapi.dev.folio.org' },
   logger: { log: noop },
@@ -101,6 +99,13 @@ const renderMarcFieldProtection = () => {
 };
 
 describe('MARCFieldProtection component', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderMarcFieldProtection();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should be rendered', () => {
     const { getByText } = renderMarcFieldProtection();
 

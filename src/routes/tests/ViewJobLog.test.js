@@ -5,15 +5,11 @@ import {
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import faker from 'faker';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import {
-  buildResources,
-  buildMutator,
-  Harness,
-} from '@folio/stripes-data-transfer-components/test/helpers';
-
-import '../../../test/jest/__mock__';
+import { Harness } from '../../../test/helpers';
 import { translationsProperties } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { ViewJobLog } from '../ViewJobLog';
 
@@ -59,66 +55,58 @@ const authorityJSONData = {
   title: 'Test authority title',
 };
 
-const jobLogResources = hasLoaded => buildResources({
-  resourceName: 'jobLog',
-  records: [{
-    relatedInstanceInfo: { idList: [faker.random.uuid()] },
-    relatedHoldingsInfo: { idList: [faker.random.uuid()] },
-    relatedItemInfo: {
-      error: 'Error message',
-      idList: [faker.random.uuid()],
-    },
-    relatedPoLineInfo: {
-      idList: [faker.random.uuid()],
-      orderId: faker.random.uuid(),
-    },
-    relatedInvoiceInfo: { idList: [faker.random.uuid()] },
-    relatedInvoiceLineInfo: {
-      id: faker.random.uuid(),
-      fullInvoiceLineNumber: '1024200-1',
-    },
-    relatedAuthorityInfo: { idList: [faker.random.uuid()] },
-    sourceRecordOrder: 0,
-    sourceRecordTitle: 'Test record title',
-  }],
-  hasLoaded,
+const jobLogResources = hasLoaded => ({
+  jobLog: {
+    records: [{
+      relatedInstanceInfo: { idList: [faker.random.uuid()] },
+      relatedHoldingsInfo: { idList: [faker.random.uuid()] },
+      relatedItemInfo: {
+        error: 'Error message',
+        idList: [faker.random.uuid()],
+      },
+      relatedPoLineInfo: {
+        idList: [faker.random.uuid()],
+        orderId: faker.random.uuid(),
+      },
+      relatedInvoiceInfo: { idList: [faker.random.uuid()] },
+      relatedInvoiceLineInfo: {
+        id: faker.random.uuid(),
+        fullInvoiceLineNumber: '1024200-1',
+      },
+      relatedAuthorityInfo: { idList: [faker.random.uuid()] },
+      sourceRecordOrder: 0,
+      sourceRecordTitle: 'Test record title',
+    }],
+    hasLoaded,
+  },
 });
-const srsMarcBibResources = recordType => buildResources({
-  resourceName: 'srsMarcBib',
-  records: [recordType === 'MARC' ? SRSMARCBibMARCJSONData : SRSMARCBibEDIFACTJSONData],
+const srsMarcBibResources = recordType => ({
+  srsMarcBib: { records: [recordType === 'MARC' ? SRSMARCBibMARCJSONData : SRSMARCBibEDIFACTJSONData] },
 });
-const instancesResources = buildResources({
-  resourceName: 'instances',
-  records: [instanceJSONData],
-});
-const holdingsResources = buildResources({
-  resourceName: 'holdings',
-  records: [holdingsJSONData],
-});
-const itemsResources = buildResources({
-  resourceName: 'items',
-  records: [itemsJSONData],
-});
-const orderResources = buildResources({
-  resourceName: 'order',
-  records: [orderJSONData],
-});
-const poLineResources = buildResources({
-  resourceName: 'poLine',
-  records: [poLineJSONData],
-});
-const invoiceResources = buildResources({
-  resourceName: 'invoice',
-  records: [invoiceJSONData],
-});
-const invoiceLineResources = buildResources({
-  resourceName: 'invoiceLine',
-  records: [invoiceLineJSONData],
-});
-const authoritiesResources = buildResources({
-  resourceName: 'authorities',
-  records: [authorityJSONData],
-});
+const instancesResources = {
+  instances: { records: [instanceJSONData] },
+};
+const holdingsResources = {
+  holdings: { records: [holdingsJSONData] },
+};
+const itemsResources = {
+  items: { records: [itemsJSONData] },
+};
+const orderResources = {
+  order: { records: [orderJSONData] },
+};
+const poLineResources = {
+  poLine: { records: [poLineJSONData] },
+};
+const invoiceResources = {
+  invoice: { records: [invoiceJSONData] },
+};
+const invoiceLineResources = {
+  invoiceLine: { records: [invoiceLineJSONData] },
+};
+const authoritiesResources = {
+  authorities: { records: [authorityJSONData] },
+};
 
 const getResources = ({
   recordType,
@@ -136,7 +124,9 @@ const getResources = ({
   ...authoritiesResources,
 });
 
-const mutator = buildMutator({
+const mutator = {
+  resultCount: { replace: () => {} },
+  resultOffset: { replace: () => {} },
   instances: { GET: jest.fn() },
   holdings: { GET: jest.fn() },
   items: { GET: jest.fn() },
@@ -145,7 +135,7 @@ const mutator = buildMutator({
   invoice: { GET: jest.fn() },
   invoiceLine: { GET: jest.fn() },
   authorities: { GET: jest.fn() },
-});
+};
 
 const getViewJobLogComponent = ({
   recordType,
@@ -179,6 +169,15 @@ describe('View job log page', () => {
     '<div>' +
     '  <header />' +
     '</div>';
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderViewJobLog({
+      recordType: 'MARC',
+      jobLogHasLoaded: false,
+    });
+
+    await runAxeTest({ rootNode: container });
+  });
 
   describe('when component is updated', () => {
     it('should get JSON data for each record type', () => {
@@ -265,6 +264,12 @@ describe('View job log page', () => {
     });
 
     describe('when log for SRS MARC has loaded', () => {
+      it('should be rendered with no axe errors', async () => {
+        const { container } = renderViewJobLog({ recordType: 'MARC' });
+
+        await runAxeTest({ rootNode: container });
+      });
+
       it('should display SRS MARC JSON details on the screen', () => {
         const { container } = renderViewJobLog({ recordType: 'MARC' });
         const codeElement = container.querySelector('code.info');

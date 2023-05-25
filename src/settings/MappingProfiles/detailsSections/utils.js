@@ -293,7 +293,7 @@ export const clearFieldValue = ({ paths, setReferenceTables, isSubfield = false,
   if (isSubfield) {
     paths.forEach(path => {
       setReferenceTables(`${path}.subfields`, initialValue);
-      setReferenceTables(`${path}.repeatableFieldAction`, null);
+      setReferenceTables(`${path}.repeatableFieldAction`, '');
     });
   } else {
     paths.forEach(path => setReferenceTables(path, initialValue));

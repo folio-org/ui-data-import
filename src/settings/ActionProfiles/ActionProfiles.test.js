@@ -1,16 +1,16 @@
 import React from 'react';
+import faker from 'faker';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
+
+import '../../../test/jest/__mock__';
+
+import { Paneset } from '@folio/stripes/components';
 
 import {
-  buildResources,
-  buildMutator,
-} from '@folio/stripes-data-transfer-components/test/helpers';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import '../../../test/jest/__mock__';
-import { Paneset } from '@folio/stripes/components';
-import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
@@ -32,7 +32,19 @@ const history = createMemoryHistory();
 
 history.push = jest.fn();
 
-const resources = buildResources({
+const metadataMock = {
+  createdByUserId: faker.random.uuid(),
+  createdDate: '2023-02-16T21:48:26.558+00:00',
+  updatedByUserId: faker.random.uuid(),
+  updatedDate: '2023-02-16T21:48:26.558+00:00',
+};
+const userInfoMock = {
+  firstName: 'FirstName',
+  lastName: 'LastName',
+  userName: 'user_name',
+};
+
+const resources = {
   query: {
     filters: 'testFilter',
     notes: true,
@@ -43,9 +55,24 @@ const resources = buildResources({
     other: { totalRecords: 1 },
     successfulMutations: [{ record: { id: 'testId1' } }],
   },
-  actionProfiles: { records: ['test1', 'test2'] },
-});
-const mutator = buildMutator({
+  actionProfiles: {
+    records: [
+      {
+        name: 'test1',
+        metadata: metadataMock,
+        userInfo: userInfoMock,
+      },
+      {
+        name: 'test2',
+        metadata: metadataMock,
+        userInfo: userInfoMock,
+      },
+    ],
+    other: { totalRecords: 2 },
+    hasLoaded: true,
+  },
+};
+const mutator = {
   query: {
     replace: noop,
     update: noop,
@@ -55,7 +82,7 @@ const mutator = buildMutator({
     POST: noop,
     PUT: noop,
   },
-});
+};
 
 const actionProfilesProps = {
   location: {
@@ -117,6 +144,12 @@ const renderActionProfiles = ({
 describe('ActionProfiles', () => {
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderActionProfiles(actionProfilesProps);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

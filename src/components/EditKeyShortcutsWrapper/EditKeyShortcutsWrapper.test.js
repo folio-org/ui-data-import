@@ -1,16 +1,14 @@
 import React from 'react';
-
 import { waitFor } from '@testing-library/react';
-
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../test/jest/__mock__';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  renderWithIntl,
   renderWithFinalForm,
   translationsProperties,
   saveShortcut,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { EditKeyShortcutsWrapper } from './EditKeyShortcutsWrapper';
 
@@ -38,6 +36,12 @@ const renderEditKeyShortcutsWrapper = ({ onSubmit }) => {
 };
 
 describe('EditKeyShortcutsWrapper component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderEditKeyShortcutsWrapper({ onSubmit: mockOnSubmitProp });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render children correctly', () => {
     const { getByText } = renderEditKeyShortcutsWrapper({ onSubmit: mockOnSubmitProp });
 

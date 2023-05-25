@@ -1,8 +1,11 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../../test/jest/helpers';
 import '../../../../../test/jest/__mock__';
-import { translationsProperties } from '../../../../../test/jest/helpers';
 
 import { QualifierSection } from './QualifierSection';
 
@@ -38,6 +41,12 @@ const renderQualifierSection = ({
 };
 
 describe('QualifierSection view', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderQualifierSection(qualifierSection);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when there is a value', () => {
     it('should be rendered with additional content', () => {
       const { container } = renderQualifierSection(qualifierSection);

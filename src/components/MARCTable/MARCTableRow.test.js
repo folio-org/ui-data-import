@@ -1,13 +1,13 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { MARCTableRow } from './MARCTableRow';
 
@@ -47,6 +47,12 @@ const renderMARCTableRow = () => {
 describe('MARC modifications table row', () => {
   afterEach(() => {
     mockedFunctions.forEach(fn => fn.mockClear());
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMARCTableRow();
+
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when "Action" field changed', () => {

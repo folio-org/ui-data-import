@@ -1,9 +1,12 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
 
 import { ProfileLabel } from './ProfileLabel';
 
@@ -36,7 +39,6 @@ jest.mock('@folio/stripes/components', () => ({
 const profileLabelProps = ({
   allowUnlink,
   allowDelete,
-  record,
 }) => {
   return {
     linkingRules: {
@@ -65,9 +67,18 @@ const profileLabelProps = ({
     resources: {},
     label: 'test label',
     currentProfilesRelationTypes: 'ROOT',
-    record,
   };
 };
+
+const allowUnlinkProps = profileLabelProps({
+  allowUnlink: true,
+  allowDelete: false,
+});
+
+const allowDeleteProps = profileLabelProps({
+  allowUnlink: false,
+  allowDelete: true,
+});
 
 const renderProfileLabel = ({
   linkingRules,
@@ -78,7 +89,6 @@ const renderProfileLabel = ({
   setParentSectionData,
   resources,
   label,
-  record,
 }) => {
   const component = (
     <ProfileLabel
@@ -90,7 +100,6 @@ const renderProfileLabel = ({
       setParentSectionData={setParentSectionData}
       resources={resources}
       label={label}
-      record={record}
     />
   );
 
@@ -98,13 +107,15 @@ const renderProfileLabel = ({
 };
 
 describe('ProfileLabel', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderProfileLabel(allowUnlinkProps);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when unlink is allowed', () => {
     it('should be rendered unlink button', () => {
-      const { container } = renderProfileLabel(profileLabelProps({
-        allowUnlink: true,
-        allowDelete: false,
-        record: null,
-      }));
+      const { container } = renderProfileLabel(allowUnlinkProps);
       const unlinkButton = container.querySelector('[data-test-profile-unlink="true"]');
 
       expect(unlinkButton).toBeDefined();
@@ -116,11 +127,7 @@ describe('ProfileLabel', () => {
       const {
         container,
         getByText,
-      } = renderProfileLabel(profileLabelProps({
-        allowUnlink: true,
-        allowDelete: false,
-        record: null,
-      }));
+      } = renderProfileLabel(allowUnlinkProps);
       const unlinkButton = container.querySelector('[data-test-profile-unlink="true"]');
 
       fireEvent.click(unlinkButton);
@@ -134,11 +141,7 @@ describe('ProfileLabel', () => {
           container,
           getByText,
           queryByText,
-        } = renderProfileLabel(profileLabelProps({
-          allowUnlink: true,
-          allowDelete: false,
-          record: null,
-        }));
+        } = renderProfileLabel(allowUnlinkProps);
         const unlinkButton = container.querySelector('[data-test-profile-unlink="true"]');
 
         fireEvent.click(unlinkButton);
@@ -156,11 +159,7 @@ describe('ProfileLabel', () => {
         const {
           container,
           queryByText,
-        } = renderProfileLabel(profileLabelProps({
-          allowUnlink: true,
-          allowDelete: false,
-          record: null,
-        }));
+        } = renderProfileLabel(allowUnlinkProps);
         const unlinkButton = container.querySelector('[data-test-profile-unlink="true"]');
 
         fireEvent.click(unlinkButton);
@@ -179,11 +178,7 @@ describe('ProfileLabel', () => {
       const {
         container,
         getByText,
-      } = renderProfileLabel(profileLabelProps({
-        allowUnlink: false,
-        allowDelete: true,
-        record: null,
-      }));
+      } = renderProfileLabel(allowDeleteProps);
       const deleteButton = container.querySelector('[data-test-profile-delete="true"]');
 
       fireEvent.click(deleteButton);
@@ -197,11 +192,7 @@ describe('ProfileLabel', () => {
           container,
           getByText,
           queryByText,
-        } = renderProfileLabel(profileLabelProps({
-          allowUnlink: false,
-          allowDelete: true,
-          record: null,
-        }));
+        } = renderProfileLabel(allowDeleteProps);
         const deleteButton = container.querySelector('[data-test-profile-delete="true"]');
 
         fireEvent.click(deleteButton);
@@ -219,11 +210,7 @@ describe('ProfileLabel', () => {
         const {
           container,
           queryByText,
-        } = renderProfileLabel(profileLabelProps({
-          allowUnlink: false,
-          allowDelete: true,
-          record: null,
-        }));
+        } = renderProfileLabel(allowDeleteProps);
         const deleteButton = container.querySelector('[data-test-profile-delete="true"]');
 
         fireEvent.click(deleteButton);

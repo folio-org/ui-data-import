@@ -6,14 +6,15 @@ import {
   render,
 } from '@testing-library/react';
 import { noop } from 'lodash';
-
-import {
-  buildMutator,
-  Harness,
-} from '@folio/stripes-data-transfer-components/test/helpers';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
+
+import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
+
 import { Paneset } from '@folio/stripes/components';
+
+import { Harness } from '../../../test/helpers';
 import {
   buildStripes,
   translationsProperties,
@@ -172,6 +173,16 @@ describe.skip('SearchAndSort component', () => {
     EditRecordComponentMock.mockClear();
     onCreateMock.mockClear();
     onEditMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderSearchAndSort(searchAndSortProps({
+      parentResources: resources(1, false),
+      isFullScreen: true,
+      route: `${pathname}/create`,
+    }));
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

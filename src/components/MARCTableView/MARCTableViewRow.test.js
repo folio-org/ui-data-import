@@ -1,8 +1,11 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
 
 import { MARCTableViewRow } from './MARCTableViewRow';
 
@@ -58,6 +61,16 @@ const renderMARCTableViewRow = ({
 };
 
 describe('MARCTableViewRow', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMARCTableViewRow(MARCTableViewRowProps({
+      action: 'EDIT',
+      subaction: 'CREATE_NEW_FIELD',
+      text: 'testText',
+    }));
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when mapping details action is Edit', () => {
     describe('when mapping details subaction is not Replace', () => {
       describe('when row has the text ', () => {

@@ -1,12 +1,12 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
+import '../../../../../../../test/jest/__mock__';
 
 import { ElectronicAccess } from '../ElectronicAccess';
 
@@ -64,6 +64,12 @@ const renderElectronicAccess = () => {
 };
 
 describe('<ElectronicAccess>', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderElectronicAccess();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render correct fields', async () => {
     const { getByText } = renderElectronicAccess();
 

@@ -1,9 +1,12 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
 
 import { OptionsList } from './OptionsList';
 
@@ -67,6 +70,12 @@ const renderOptionsList = ({
 describe('OptionsList', () => {
   afterAll(() => {
     onSelectMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderOptionsList(notEmptyOptionsListProps);
+
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when there are options', () => {

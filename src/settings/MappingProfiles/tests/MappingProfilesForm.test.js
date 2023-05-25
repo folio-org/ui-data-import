@@ -9,13 +9,13 @@ import { noop } from 'lodash';
 
 import '../../../../test/jest/__mock__';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import {
   ACTION_TYPES,
   FOLIO_RECORD_TYPES,
 } from '@folio/stripes-data-transfer-components';
 
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../test/jest/helpers';

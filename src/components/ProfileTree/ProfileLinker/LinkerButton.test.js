@@ -1,9 +1,12 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../test/jest/helpers';
 import '../../../../test/jest/__mock__';
-import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { LinkerButton } from './LinkerButton';
 
@@ -39,6 +42,13 @@ const renderLinkerButton = ({
 describe('LinkerButton', () => {
   afterEach(() => {
     onClick.mockClear();
+  });
+
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderLinkerButton(linkerButtonProps);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered with FormattedMessage title', () => {

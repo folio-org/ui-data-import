@@ -5,13 +5,14 @@ import {
   get,
 } from 'lodash';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import '../../../../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
+import '../../../../../../../test/jest/__mock__';
 
 import { InvoiceLineAdjustments } from '../InvoiceLineAdjustments';
 import INVOICE from '../../../../initialDetails/INVOICE';
@@ -38,6 +39,12 @@ const renderInvoiceLineAdjustments = () => {
 };
 
 describe('InvoiceLineAdjustments', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderInvoiceLineAdjustments();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render correct fields', () => {
     const { getByRole } = renderInvoiceLineAdjustments();
 

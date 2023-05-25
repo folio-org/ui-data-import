@@ -1,10 +1,12 @@
 import React from 'react';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../test/jest/helpers';
 import '../../../../test/jest/__mock__';
-import { translationsProperties } from '../../../../test/jest/helpers';
 
 import { RecordSelect } from './RecordSelect';
 
@@ -21,6 +23,12 @@ const renderRecordSelect = ({ isLocalLTR }) => {
 };
 
 describe('RecordSelect', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderRecordSelect({ isLocalLTR: false });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('Records should be rendered', () => {
     const { getByText } = renderRecordSelect({ isLocalLTR: false });
 

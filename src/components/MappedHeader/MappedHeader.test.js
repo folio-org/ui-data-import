@@ -1,9 +1,11 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
 
 import { MappedHeader } from './MappedHeader';
 
@@ -21,6 +23,12 @@ const renderMappedHeader = ({ headersToSeparate }) => {
 };
 
 describe('Mapped header component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappedHeader({ headersToSeparate: ['header1', 'header2', 'header3'] });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should display 1 header without separators', () => {
     const { getByText } = renderMappedHeader({ headersToSeparate: ['header1'] });
 

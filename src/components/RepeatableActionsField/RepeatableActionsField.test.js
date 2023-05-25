@@ -1,19 +1,18 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
+import {
+  renderWithIntl,
+  renderWithReduxForm,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 import '../../../test/jest/__mock__';
 
 import {
   MAPPING_REPEATABLE_FIELD_ACTIONS,
   REPEATABLE_ACTIONS,
 } from '../../utils';
-
-import {
-  renderWithReduxForm,
-  translationsProperties,
-} from '../../../test/jest/helpers';
 
 import { RepeatableActionsField } from './RepeatableActionsField';
 
@@ -83,6 +82,12 @@ const renderRepeatableActionsField = ({
 describe('RepeatableActionsField component', () => {
   afterEach(() => {
     onRepeatableActionChangeMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderRepeatableActionsField(repeatableActionsFieldProps);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered with child component', () => {

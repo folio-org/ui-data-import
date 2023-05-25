@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "6.0.3",
+  "version": "6.0.8",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -14,7 +14,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test:unit": "jest --ci --coverage",
+    "test:unit": "jest --ci --coverage --max-old-space-size=20480",
     "test": "yarn run test:unit",
     "lint": "eslint .",
     "lintfix": "eslint . --fix",
@@ -36,6 +36,7 @@
     "@folio/stripes-final-form": "^7.0.0",
     "@folio/stripes-form": "^8.0.0",
     "@folio/stripes-smart-components": "^8.0.0",
+    "@folio/stripes-testing": "^4.5.0",
     "@formatjs/cli": "^4.2.10",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^10.4.7",

@@ -1,10 +1,15 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 import '../../../../test/jest/__mock__';
+
 import { Pluggable } from '@folio/stripes/core';
-import { translationsProperties } from '../../../../test/jest/helpers';
+
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../test/jest/helpers';
 
 import { ProfileLinker } from './ProfileLinker';
 
@@ -38,6 +43,7 @@ const renderProfileLinker = ({
     <ProfileLinker
       id={id}
       parentType={parentType}
+      profileType="profileType"
       onLink={onLink}
       linkingRules={linkingRules}
       dataKey={dataKey}
@@ -53,6 +59,12 @@ const renderProfileLinker = ({
 describe('ProfileLinker', () => {
   afterEach(() => {
     Pluggable.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderProfileLinker(profileLinkerProps);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

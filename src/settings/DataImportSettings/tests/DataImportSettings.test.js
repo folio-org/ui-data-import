@@ -4,15 +4,16 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { createMemoryHistory } from 'history';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
-import '../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   buildStripes,
   translationsProperties,
 } from '../../../../test/jest/helpers';
+import '../../../../test/jest/__mock__';
 
 import { DataImportSettings } from '../DataImportSettings';
 
@@ -52,6 +53,12 @@ const renderDataImportSettings = () => {
 };
 
 describe('<DataImportSettings>', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderDataImportSettings();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('renders correct heading', () => {
     const { getByText } = renderDataImportSettings();
 

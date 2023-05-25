@@ -1,17 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { fireEvent } from '@testing-library/react';
-
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
-
-import '../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../test/jest/helpers';
+import '../../../../test/jest/__mock__';
 
 import {
   JobProfilesForm,
@@ -44,10 +42,9 @@ const mutator = {
   },
 };
 
-const resources = buildResources({
-  resourceName: 'childWrappers',
-  records: childWrappers,
-});
+const resources = {
+  childWrappers: { records: childWrappers },
+};
 
 const parentResources = {
   jobProfiles: {},
@@ -135,6 +132,12 @@ describe('<JobProfilesForm>', () => {
 
   afterAll(() => {
     delete global.fetch;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobProfilesForm(jobProfilesFormProps({}));
+
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when profile is duplicated', () => {

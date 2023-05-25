@@ -3,14 +3,14 @@ import {
   fireEvent,
   within,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
+import '../../../../../../../test/jest/__mock__';
 
 import { Location } from '../Location';
 
@@ -72,6 +72,12 @@ const renderLocation = () => {
 describe('Location', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderLocation();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

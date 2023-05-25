@@ -4,14 +4,14 @@ import {
   waitFor,
   within,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithRedux,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import '../../../test/jest/__mock__';
 
 import { DataFetcherContext } from '../DataFetcher';
 import { Jobs } from './Jobs';
@@ -96,13 +96,19 @@ const renderJobs = (context = defaultContext) => {
   return renderWithIntl(renderWithRedux(component, initialStore), translationsProperties);
 };
 
-describe('Jobs', () => {
+describe('Jobs component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   afterAll(() => {
     delete global.fetch;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobs();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should contain "Running" section', () => {

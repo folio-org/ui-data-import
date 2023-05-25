@@ -3,15 +3,14 @@ import {
   fireEvent,
   within,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
-
-import '../../../../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
+import '../../../../../../../test/jest/__mock__';
 
 import { OrderInformation } from '../OrderInformation';
 
@@ -48,33 +47,33 @@ const okapiProp = {
   url: 'https://folio-testing-okapi.dev.folio.org',
 };
 const resourcesProp = {
-  ...buildResources({
-    resourceName: 'purchaseOrderLinesLimitSetting',
+  purchaseOrderLinesLimitSetting: {
     records: [{
       configs: [{ value: 'test purchaseOrderLinesLimitSetting' }]
     }],
-  }),
-  ...buildResources({
-    resourceName: 'isApprovalRequired',
+    hasLoaded: true,
+  },
+  isApprovalRequired: {
     records: [{
       configs: [{ value: '{ "isApprovalRequired": true }' }]
     }],
-  }),
-  ...buildResources({
-    resourceName: 'userCanEditPONumber',
+    hasLoaded: true,
+  },
+  userCanEditPONumber: {
     records: [{
       configs: [{ value: '{ "canUserEditOrderNumber": true }' }]
     }],
-  }),
-  ...buildResources({
-    resourceName: 'addresses',
+    hasLoaded: true,
+  },
+  addresses: {
     records: [{
       configs: [
         { value: '{ "name": "test address name","address": "test address" }' },
         { value: '{ "name": "test address name2","address": "test address2" }' },
       ]
     }],
-  }),
+    hasLoaded: true,
+  },
 };
 const poLinesLimitMock = {
   configs: [{ value: 'test purchaseOrderLinesLimitSetting' }]
@@ -104,6 +103,12 @@ const renderOrderInformation = () => {
 describe('OrderInformation', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderOrderInformation();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

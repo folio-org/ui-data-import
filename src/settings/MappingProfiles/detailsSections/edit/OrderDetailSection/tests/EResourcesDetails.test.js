@@ -3,14 +3,14 @@ import {
   fireEvent,
   within,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
-import '../../../../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
+import '../../../../../../../test/jest/__mock__';
 
 import { EResourcesDetails } from '../EResourcesDetails';
 
@@ -49,6 +49,12 @@ const renderEResourcesDetails = () => {
 };
 
 describe('EResourcesDetails', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderEResourcesDetails();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render correct fields', async () => {
     const { getByText } = renderEResourcesDetails();
 

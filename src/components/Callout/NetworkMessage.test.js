@@ -1,11 +1,18 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
 
 import { NetworkMessage } from './NetworkMessage';
+
+const errorMessageProps = {
+  type: 'error',
+  record: {},
+};
 
 const renderNetworkMessage = ({
   messageId,
@@ -25,12 +32,15 @@ const renderNetworkMessage = ({
 };
 
 describe('NetworkMessage component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderNetworkMessage(errorMessageProps);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when `messageId` prop is not passed and type is error', () => {
     it('then component should display default error message text', () => {
-      const { getByText } = renderNetworkMessage({
-        type: 'error',
-        record: {},
-      });
+      const { getByText } = renderNetworkMessage(errorMessageProps);
 
       expect(getByText('Server communication problem. Please try again')).toBeDefined();
     });

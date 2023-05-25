@@ -1,16 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
-  buildResources,
-  buildMutator,
-  Harness,
-} from '@folio/stripes-data-transfer-components/test/helpers';
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-
+  buildStripes,
+  renderWithIntl,
+  translationsProperties
+} from '../../../test/jest/helpers';
+import { Harness } from '../../../test/helpers';
 import '../../../test/jest/__mock__';
-import { translationsProperties } from '../../../test/jest/helpers';
 
 import { JobSummary } from './JobSummary';
 
@@ -20,32 +19,42 @@ jest.mock('./components', () => ({
   RecordsTable: () => 'RecordsTable',
 }));
 
-const getJobExecutionsResources = (dataType, jobExecutionsId = 'testId') => buildResources({
-  resourceName: 'jobExecutions',
-  records: [{
-    id: jobExecutionsId,
-    fileName: 'testFileName',
-    progress: { total: 10 },
-    jobProfileInfo: { dataType },
-  }],
+const getJobExecutionsResources = (dataType, jobExecutionsId = 'testId') => ({
+  jobExecutions: {
+    records: [{
+      id: jobExecutionsId,
+      fileName: 'testFileName',
+      progress: { total: 10 },
+      jobProfileInfo: { dataType },
+    }],
+    other: { totalRecords: 1 },
+    resultCount: 1,
+    hasLoaded: true,
+  },
 });
-const jobLogEntriesResources = buildResources({
-  resourceName: 'jobLogEntries',
-  records: [{}],
-});
-const jobLogResources = buildResources({
-  resourceName: 'jobLog',
-  records: [{}],
-});
+const jobLogEntriesResources = {
+  jobLogEntries: {
+    records: [{}],
+    resultCount: 1,
+    hasLoaded: true,
+    other: { totalRecords: 1 },
+  },
+};
+const jobLogResources = {
+  jobLog: { records: [{}] },
+};
 const getResources = (dataType, jobExecutionsId) => ({
   ...getJobExecutionsResources(dataType, jobExecutionsId),
   ...jobLogEntriesResources,
   ...jobLogResources,
+  query: { errorsOnly: false },
+  resultCount: 1,
 });
 
-const mutator = buildMutator({
+const mutator = {
   jobLog: { GET: jest.fn() },
-});
+};
+const stripesMock = buildStripes();
 
 const renderJobSummary = ({ dataType = 'MARC', resources }) => {
   const component = (
@@ -58,6 +67,7 @@ const renderJobSummary = ({ dataType = 'MARC', resources }) => {
           pathname: '',
         }}
         history={{ push: () => {} }}
+        stripes={stripesMock}
       />
     </Router>
   );
@@ -66,6 +76,12 @@ const renderJobSummary = ({ dataType = 'MARC', resources }) => {
 };
 
 describe('Job summary page', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobSummary({});
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should have a file name in the header', () => {
     const { getByText } = renderJobSummary({ dataType: 'EDIFACT' });
 

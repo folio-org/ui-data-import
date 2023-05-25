@@ -1,12 +1,13 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-data-transfer-components/test/jest/helpers';
-import '../../../../../test/jest/__mock__';
 import {
+  renderWithIntl,
   translationsProperties,
   renderWithFinalForm,
 } from '../../../../../test/jest/helpers';
+import '../../../../../test/jest/__mock__';
 
 import { IncomingSectionStatic } from './IncomingSectionStatic';
 
@@ -53,6 +54,12 @@ describe('IncomingSectionStatic edit', () => {
   });
 
   describe('dropdown with static values', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderIncomingSectionStatic(textIncomingSectionStatic);
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('sholud be rendered', () => {
       const { container } = renderIncomingSectionStatic(textIncomingSectionStatic);
       const dropdown = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.staticValueDetails.staticValueType"]');
