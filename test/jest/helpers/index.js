@@ -8,3 +8,4 @@ export * from './shortcuts';
 export * from './jobLogsData';
 export * from './buildOkapi';
 export * from './buildMutator';
+export * from './queryClientWrapper';
