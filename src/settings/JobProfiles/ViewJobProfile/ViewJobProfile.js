@@ -46,6 +46,8 @@ import {
   ProfileTree,
 } from '../../../components';
 
+import { NoJobProfilePane } from '.';
+
 import {
   ENTITY_KEYS,
   PROFILE_TYPES,
@@ -63,8 +65,6 @@ import {
   BASE_URLS,
   fileNameCellFormatter,
 } from '../../../utils';
-
-import { NoJobProfilePane } from '.';
 
 import sharedCss from '../../../shared.css';
 
