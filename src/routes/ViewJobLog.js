@@ -38,68 +38,6 @@ import sharedCss from '../shared.css';
 
 const { FILTER: { OPTIONS } } = LOG_VIEWER;
 
-// TODO: Use jobLogDataOriginal once BE is ready
-const mockJobLogRecord = {
-  jobExecutionId: 'e4daee41-8387-4e3a-a2f3-9d5865aba1d6',
-  sourceRecordId: 'f94727b0-c1f7-4756-b2b6-04a3031b1942',
-  sourceRecordOrder: 0,
-  sourceRecordTitle:
-    '180 ćwiczeń poprawiających koncentrację uwagi opartych na analizatorze słuchowym : ćwiczenia dla młodzieży i dorosłych / Grażyna Pawlik.',
-  sourceRecordActionStatus: 'CREATED',
-  error: '',
-  relatedInstanceInfo: {
-    actionStatus: 'CREATED',
-    idList: ['04731da0-bcf7-4fc8-884e-461c7dd2f8e0'],
-    hridList: ['in00000000016'],
-    error: '',
-  },
-  relatedHoldingsInfo: [
-    {
-      actionStatus: 'DISCARDED',
-      id: '',
-      hrid: '',
-      permanentLocationId: '53cf956f-c1df-410b-8bea-27f712cca7c0',
-      error: 'ERROR AAAAA',
-    },
-    {
-      actionStatus: 'CREATED',
-      id: '0c45bb50-7c9b-48b0-86eb-178a494e25fe',
-      hrid: 'hold000000000002',
-      permanentLocationId: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
-      error: '',
-    },
-  ],
-  relatedItemInfo: [
-    {
-      actionStatus: 'CREATED',
-      id: 'eedd13c4-7d40-4b1e-8f77-b0b9d19a896b',
-      hrid: 'item000000000002',
-      holdingsId: '',
-      error: '',
-    },
-    {
-      actionStatus: 'DISCARDED',
-      id: '',
-      hrid: '',
-      holdingsId: '',
-      error: 'ERROR AAAAA',
-    },
-  ],
-  relatedAuthorityInfo: {
-    idList: [],
-    hridList: [],
-  },
-  relatedPoLineInfo: {
-    idList: [],
-    hridList: [],
-  },
-  relatedInvoiceInfo: {
-    idList: [],
-    hridList: [],
-  },
-  relatedInvoiceLineInfo: {},
-};
-
 export const ViewJobLog = () => {
   const { id: logId, recordId } = useParams();
   const { search } = useLocation();
@@ -118,9 +56,8 @@ export const ViewJobLog = () => {
   const {
     isError: isJobLogError,
     isLoading: isJobLogLoading,
-    data: jobLogDataOriginal = {},
+    data: jobLogData = {},
   } = useJobLogRecordsQuery(logId, instanceLineIdParam || recordId);
-  const jobLogData = mockJobLogRecord;
   const { data: srsRecordData } = useSRSRecordQuery(recordId);
   const { data: instancesData } = useInventoryInstancesByIdQuery(instancesIds);
   const { data: holdingsData } = useInventoryHoldingsByIdQuery(holdingsIds);
