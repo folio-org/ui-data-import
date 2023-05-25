@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 import {
   getRecordActionStatusLabel,
@@ -13,13 +14,12 @@ export const AuthorityCell = ({
   jobLogRecords,
   sortedItemData,
 }) => {
-  const entityLabel = getRecordActionStatusLabel(authorityActionStatus);
-  const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-
   if (!authorityActionStatus && !isEmpty(sortedItemData)) {
     return fillCellWithNoValues(sortedItemData);
   }
 
+  const entityLabel = getRecordActionStatusLabel(authorityActionStatus);
+  const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
   const authorityId = sourceRecord?.relatedAuthorityInfo.idList[0];
   const path = `/marc-authorities/authorities/${authorityId}`;
 
@@ -28,4 +28,17 @@ export const AuthorityCell = ({
     || authorityActionStatus === RECORD_ACTION_STATUS.UPDATED);
 
   return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'authority');
+};
+
+AuthorityCell.propTypes = {
+  sourceRecordId: PropTypes.string.isRequired,
+  jobLogRecords: PropTypes.arrayOf(PropTypes.object),
+  sortedItemData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
+  authorityActionStatus: PropTypes.string,
+};
+
+AuthorityCell.defaultProps = {
+  jobLogRecords: [],
+  sortedItemData: [],
+  authorityActionStatus: '',
 };

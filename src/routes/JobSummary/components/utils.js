@@ -7,7 +7,9 @@ import {
 
 import { RECORD_ACTION_STATUS_LABEL_IDS } from '../../../utils';
 
-export const BaseLineCell = ({ children }) => <div style={{ display: 'inline-block', alignSelf: 'baseline' }}>{children}</div>;
+import sharedCss from '../../../shared.css';
+
+export const BaseLineCell = ({ children }) => <div className={sharedCss.baselineCell}>{children}</div>;
 
 export const getHotlinkCellFormatter = (isHotlink, entityLabel, path, entity) => {
   if (isHotlink) {

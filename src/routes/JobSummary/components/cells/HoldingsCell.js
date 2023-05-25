@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   getRecordActionStatusLabel,
@@ -45,4 +46,17 @@ export const HoldingsCell = ({
       {holdingsInfoCell}
     </BaseLineCell>
   );
+};
+
+HoldingsCell.propTypes = {
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  instanceId: PropTypes.string,
+  holdingsInfo: PropTypes.arrayOf(PropTypes.object),
+  itemInfo: PropTypes.arrayOf(PropTypes.object),
+};
+
+HoldingsCell.defaultProps = {
+  instanceId: '',
+  holdingsInfo: [],
+  itemInfo: [],
 };

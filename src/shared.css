@@ -74,3 +74,8 @@
 hr {
   margin: 0;
 }
+
+.baselineCell {
+  display: inline-block;
+  align-self: baseline;
+}

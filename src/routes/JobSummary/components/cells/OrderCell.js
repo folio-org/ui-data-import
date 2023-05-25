@@ -13,12 +13,11 @@ export const OrderCell = ({
   jobLogRecords,
   sortedItemData,
 }) => {
-  const entityLabel = getRecordActionStatusLabel(poLineActionStatus);
-
   if (!poLineActionStatus && !isEmpty(sortedItemData)) {
     return fillCellWithNoValues(sortedItemData);
   }
 
+  const entityLabel = getRecordActionStatusLabel(poLineActionStatus);
   const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
   const orderLineId = sourceRecord?.relatedPoLineInfo.idList[0];
   const path = `/orders/lines/view/${orderLineId}`;

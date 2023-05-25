@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 import {
   getRecordActionStatusLabel,
@@ -14,6 +15,10 @@ export const InvoiceCell = ({
   sortedItemData,
   sourceRecordOrder,
 }) => {
+  if (!invoiceActionStatus && !isEmpty(sortedItemData)) {
+    return fillCellWithNoValues(sortedItemData);
+  }
+
   const entityLabel = getRecordActionStatusLabel(invoiceActionStatus);
   const sourceRecord = jobLogRecords.find(item => {
     const isIdEqual = item.sourceRecordId === sourceRecordId;
@@ -21,10 +26,6 @@ export const InvoiceCell = ({
 
     return isIdEqual && isOrderEqual;
   });
-
-  if (!invoiceActionStatus && !isEmpty(sortedItemData)) {
-    return fillCellWithNoValues(sortedItemData);
-  }
 
   const invoiceId = sourceRecord?.relatedInvoiceInfo.idList[0];
   const invoiceLineId = sourceRecord?.relatedInvoiceLineInfo.id;
@@ -34,4 +35,18 @@ export const InvoiceCell = ({
   const isHotlink = isPathCorrect && (invoiceActionStatus === RECORD_ACTION_STATUS.CREATED);
 
   return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'invoice');
+};
+
+InvoiceCell.propTypes = {
+  sourceRecordId: PropTypes.string.isRequired,
+  sourceRecordOrder: PropTypes.number.isRequired,
+  jobLogRecords: PropTypes.arrayOf(PropTypes.object),
+  sortedItemData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
+  invoiceActionStatus: PropTypes.string,
+};
+
+InvoiceCell.defaultProps = {
+  jobLogRecords: [],
+  sortedItemData: [],
+  invoiceActionStatus: '',
 };

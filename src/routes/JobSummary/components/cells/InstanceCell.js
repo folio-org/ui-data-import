@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   getRecordActionStatusLabel,
@@ -22,4 +23,15 @@ export const InstanceCell = ({
     || instanceActionStatus === RECORD_ACTION_STATUS.UPDATED);
 
   return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'instance');
+};
+
+InstanceCell.propTypes = {
+  sourceRecordId: PropTypes.string.isRequired,
+  jobLogRecords: PropTypes.arrayOf(PropTypes.object),
+  instanceActionStatus: PropTypes.string,
+};
+
+InstanceCell.defaultProps = {
+  jobLogRecords: [],
+  instanceActionStatus: '',
 };
