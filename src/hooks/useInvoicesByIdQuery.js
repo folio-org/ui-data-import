@@ -12,9 +12,11 @@ export const useInvoicesByIdQuery = (invoicesIds = []) => {
   const queryIds = invoicesIds.join(' or ');
 
   const query = useQuery(
-    [namespace, queryIds],
-    () => ky.get(`invoice-storage/invoices?query=id==(${queryIds})`).json(),
-    { enabled: Boolean(queryIds) },
+    {
+      queryKey: [namespace, queryIds],
+      queryFn: () => ky.get(`invoice-storage/invoices?query=id==(${queryIds})`).json(),
+      enabled: !!queryIds,
+    }
   );
 
   return {

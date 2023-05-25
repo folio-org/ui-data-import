@@ -12,9 +12,11 @@ export const useAuthoritiesByIdQuery = (authoritiesIds = []) => {
   const queryIds = authoritiesIds.join(' or ');
 
   const query = useQuery(
-    [namespace, queryIds],
-    () => ky.get(`authority-storage/authorities?query=id==(${queryIds})`).json(),
-    { enabled: Boolean(queryIds) },
+    {
+      queryKey: [namespace, queryIds],
+      queryFn: () => ky.get(`authority-storage/authorities?query=id==(${queryIds})`).json(),
+      enabled: !!queryIds,
+    }
   );
 
   return {

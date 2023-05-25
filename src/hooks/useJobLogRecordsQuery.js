@@ -10,8 +10,10 @@ export const useJobLogRecordsQuery = (logId, recordId) => {
   const [namespace] = useNamespace({ key: 'jobLogRecords' });
 
   return useQuery(
-    [namespace, logId, recordId],
-    () => ky.get(`metadata-provider/jobLogEntries/${logId}/records/${recordId}`).json(),
-    { enabled: Boolean(logId && recordId) },
+    {
+      queryKey: [namespace, logId, recordId],
+      queryFn: () => ky.get(`metadata-provider/jobLogEntries/${logId}/records/${recordId}`).json(),
+      enabled: !!(logId && recordId),
+    }
   );
 };

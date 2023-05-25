@@ -12,9 +12,11 @@ export const useInventoryInstancesByIdQuery = (instancesIds = []) => {
   const queryIds = instancesIds.join(' or ');
 
   const query = useQuery(
-    [namespace, queryIds],
-    () => ky.get(`inventory/instances?query=id==(${queryIds})`).json(),
-    { enabled: Boolean(queryIds) },
+    {
+      queryKey: [namespace, queryIds],
+      queryFn: () => ky.get(`inventory/instances?query=id==(${queryIds})`).json(),
+      enabled: !!queryIds,
+    }
   );
 
   return {

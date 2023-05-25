@@ -10,8 +10,10 @@ export const useInvoiceLineByIdQuery = (invoiceLineId = null) => {
   const [namespace] = useNamespace({ key: 'invoiceLineById' });
 
   return useQuery(
-    [namespace, invoiceLineId],
-    () => ky.get(`invoice-storage/invoice-lines/${invoiceLineId}`).json(),
-    { enabled: Boolean(invoiceLineId) },
+    {
+      queryKey: [namespace, invoiceLineId],
+      queryFn: () => ky.get(`invoice-storage/invoice-lines/${invoiceLineId}`).json(),
+      enabled: !!invoiceLineId,
+    }
   );
 };
