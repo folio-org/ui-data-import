@@ -226,7 +226,7 @@ export const ViewJobLog = () => {
           </Headline>
         ),
         logs: invoicesData,
-        error: relatedInvoiceInfo.error || '',
+        error: relatedInvoiceInfo?.error || '',
         errorBlockId: 'invoice-error',
       },
     ];
