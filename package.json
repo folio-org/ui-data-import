@@ -209,6 +209,7 @@
           "source-storage.records.get",
           "change-manager.records.delete",
           "change-manager.jobexecutions.get",
+          "inventory-storage.authorities.collection.get",
           "invoice-storage.invoices.item.get",
           "invoice-storage.invoice-lines.item.get",
           "converter-storage.jobprofile.get",
