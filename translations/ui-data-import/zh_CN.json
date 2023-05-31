@@ -1145,6 +1145,9 @@
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds.info": "除非导入用户是指定采购单位的成员，否则发票创建将出错",
     "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits.info": "除非导入用户是指定采购单位的成员，否则订单创建将出错",
     "logLight.actionStatus.noAction": "无操作",
-    "jobProfileNameLink": "Job profile: {jobProfileLink}",
-    "jobHrId": "Job {hrId} • "
+    "jobProfileNameLink": "任务配置文件：{jobProfileLink}",
+    "jobHrId": "任务{hrId} •",
+    "jobProfile.deleted": "Job profile deleted",
+    "jobProfile.notAvailable": " Not available - this job profile has been deleted",
+    "returnToPreviousScreen": "Return to previous screen"
 }
