@@ -1146,5 +1146,8 @@
     "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits.info": "A criação do pedido apresentará erro, a menos que o usuário importador seja um membro da unidade de aquisições especificada",
     "logLight.actionStatus.noAction": "Nenhuma ação",
     "jobProfileNameLink": "Perfil do trabalho: {jobProfileLink}",
-    "jobHrId": "Trabalho {hrId} - "
+    "jobHrId": "Trabalho {hrId} - ",
+    "jobProfile.deleted": "Perfil de trabalho excluído",
+    "jobProfile.notAvailable": "Não disponível - este perfil de trabalho foi excluído",
+    "returnToPreviousScreen": "Voltar à tela anterior"
 }
