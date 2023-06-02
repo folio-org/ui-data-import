@@ -15,6 +15,7 @@
 * DI Log: Make some changes to the Log header (UIDATIMP-1447)
 * DI Job profiles: Redirect when job profile was deleted (UIDATIMP-1450)
 * Refactor the ViewJobLog component to be a functional component (UIDATIMP-1457)
+* Job summary - format numbers in summary table (UIDATIMP-1459)
 
 ### Bugs fixed:
 * Log page "Authority" tab of imported Marc Authority record is not displaying record's details (UIDATIMP-1458)
