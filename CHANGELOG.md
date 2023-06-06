@@ -18,6 +18,7 @@
 * Job summary - format numbers in summary table (UIDATIMP-1459)
 
 ### Bugs fixed:
+* Order field mapping profile: Fix Acquisitions units field label (UIDATIMP-1444)
 * Log page "Authority" tab of imported Marc Authority record is not displaying record's details (UIDATIMP-1458)
 
 ## [6.0.8](https://github.com/folio-org/ui-data-import/tree/v6.0.8) (2023-04-04)
