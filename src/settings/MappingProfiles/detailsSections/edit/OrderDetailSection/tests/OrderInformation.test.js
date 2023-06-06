@@ -148,7 +148,7 @@ describe('OrderInformation edit component', () => {
     expect(getByText('Suffix')).toBeInTheDocument();
     expect(getByText('Vendor')).toBeInTheDocument();
     expect(getByText('Order type')).toBeInTheDocument();
-    expect(getByText('Acquisition units')).toBeInTheDocument();
+    expect(getByText('Acquisitions units')).toBeInTheDocument();
     expect(getByText('Assigned to')).toBeInTheDocument();
     expect(getByText('Bill to name')).toBeInTheDocument();
     expect(getByText('Bill to address')).toBeInTheDocument();

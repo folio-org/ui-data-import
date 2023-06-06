@@ -134,7 +134,7 @@ const OrderInformationComponent = ({
     `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.purchaseOrderStatus.info`,
   );
   const acqUnitsLabel = renderFieldLabelWithInfo(
-    `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.acquisitionUnits`,
+    `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.acquisitionsUnits`,
     `${TRANSLATION_ID_PREFIX}.order.orderInformation.field.acquisitionUnits.info`,
   );
 
