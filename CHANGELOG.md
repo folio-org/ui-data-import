@@ -14,6 +14,7 @@
 * DI Log: change Discarded to No action (UIDATIMP-1446)
 * DI Log: Make some changes to the Log header (UIDATIMP-1447)
 * DI Job profiles: Redirect when job profile was deleted (UIDATIMP-1450)
+* Sorting on landing page gives error (UIDATIMP-1454)
 * Refactor the ViewJobLog component to be a functional component (UIDATIMP-1457)
 
 ### Bugs fixed:
