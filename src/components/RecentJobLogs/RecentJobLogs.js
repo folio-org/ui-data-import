@@ -16,7 +16,7 @@ const sortColumns = {
   ...DEFAULT_JOB_LOGS_SORT_COLUMNS,
   fileName: {
     sortFn: sortStrings,
-    useFormatterFn: true,
+    useFormatterFn: false,
   },
   status: {
     sortFn: sortStrings,
