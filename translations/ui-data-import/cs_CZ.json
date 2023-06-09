@@ -920,7 +920,6 @@
     "settings.mappingProfiles.map.order.orderInformation.field.suffix": "Přípona",
     "settings.mappingProfiles.map.order.orderInformation.field.vendor": "Prodejce",
     "settings.mappingProfiles.map.order.orderInformation.field.orderType": "Typ objednávky",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits": "Akviziční jednotky",
     "settings.mappingProfiles.map.order.orderInformation.field.assignedTo": "Přiřazeno",
     "settings.mappingProfiles.map.order.orderInformation.field.billToName": "Naúčtovat na jméno",
     "settings.mappingProfiles.map.order.orderInformation.field.billToAddress": "Naúčtovat na adresu",
@@ -1140,14 +1139,15 @@
     "settings.mappingProfiles.map.order.poLineDetails.field.paymentNotRequired": "Platba není vyžadována",
     "settings.mappingProfiles.map.order.eResourcesDetails.field.electronicUnitPrice.info": "Vyžadováno, pokud je formát objednávky Elektronický zdroj nebo mix P/E. Když úloha importu vytvoří čekající objednávku, toto pole řídí požadavky na záznam katalogu při otevření nákupní objednávky prostřednictvím aplikace Objednávky. Když úloha importu vytvoří otevřenou objednávku, toto pole odráží požadavky na záznam katalogu, které byly zahrnuty jako akce v profilu úlohy Import dat",
     "settings.mappingProfiles.map.order.physicalResourceDetails.field.physicalUnitPrice.info": "Vyžadováno, pokud je formát objednávky Fyzický zdroj, mix F/E nebo Jiný. Když úloha importu vytvoří čekající objednávku, toto pole řídí požadavky na záznam katalogu při otevření nákupní objednávky prostřednictvím aplikace Objednávky. Když úloha importu vytvoří otevřenou objednávku, toto pole odráží požadavky na záznam katalogu, které byly zahrnuty jako akce v profilu úlohy Import dat",
-    "settings.mappingProfiles.map.order.orderInformation.field.purchaseOrderStatus.info": "Pokud je stav nákupní objednávky Čeká na vyřízení, nezahrnujte do profilu úlohy žádné akce Katalogu. Když je stav nákupní objednávky Otevřený, zahrňte požadované akce Katalogu do profilu úlohy, kterým předchází akce Vytvořit objednávky",
+    "settings.mappingProfiles.map.order.orderInformation.field.purchaseOrderStatus.info": "Pokud je stav nákupní objednávky Čekající, nezahrnujte do profilu úlohy žádné akce Katalogu. Když je stav nákupní objednávky Otevřený, zahrňte požadované akce Katalogu do profilu úlohy, kterým předchází akce Vytvořit objednávky",
     "logViewer.themes.label": "Použijte motiv",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds.info": "Vytvoření faktury bude chybné, pokud importovaný uživatel není členem zadané akviziční jednotky",
     "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits.info": "Vytvoření objednávky bude chybné, pokud importovaný uživatel není členem zadané akviziční jednotky",
     "logLight.actionStatus.noAction": "Žádná akce",
     "jobProfileNameLink": "Profil úlohy: {jobProfileLink}",
     "jobHrId": "Úloha {hrId} •",
-    "jobProfile.deleted": "Job profile deleted",
-    "jobProfile.notAvailable": " Not available - this job profile has been deleted",
-    "returnToPreviousScreen": "Return to previous screen"
+    "jobProfile.deleted": "Profil úlohy byl smazán",
+    "jobProfile.notAvailable": "Není k dispozici - tento profil úlohy byl smazán",
+    "returnToPreviousScreen": "Návrat na předchozí obrazovku",
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units"
 }
