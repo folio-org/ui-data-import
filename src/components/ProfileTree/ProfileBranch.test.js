@@ -121,8 +121,7 @@ describe('ProfileBranch component', () => {
     delete window.ResizeObserver;
   });
 
-  // TODO: Create separate ticket to fix all the accesibility tests
-  it.skip('should be rendered with no axe errors', async () => {
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderProfileBranch(profileBranchProps);
 
     await runAxeTest({ rootNode: container });
@@ -139,8 +138,8 @@ describe('ProfileBranch component', () => {
   describe('when clicking on For matches button', () => {
     it('content block should be collapsed', () => {
       const { container } = renderProfileBranch(profileBranchProps);
-      const button = container.querySelector('.defaultCollapseButton');
-      const expandedBlock = container.querySelector('.content-wrap.expanded');
+      const button = container.querySelectorAll('.defaultCollapseButton')[0];
+      const expandedBlock = container.querySelectorAll('.content-wrap.expanded')[0];
 
       expect(expandedBlock).toHaveClass('expanded');
 
@@ -150,11 +149,11 @@ describe('ProfileBranch component', () => {
     });
   });
 
-  describe('when clicking on For non matches button', () => {
+  describe('when clicking on For non-matches button', () => {
     it('content block should be expanded', () => {
       const { container } = renderProfileBranch(profileBranchProps);
-      const button = container.querySelector('[aria-controls="accordion32"]');
-      const expandedBlock = container.querySelector('#accordion32');
+      const button = container.querySelectorAll('.defaultCollapseButton')[1];
+      const expandedBlock = container.querySelectorAll('.content-wrap.expanded')[1];
 
       expect(expandedBlock).toHaveClass('expanded');
 
