@@ -920,7 +920,6 @@
     "settings.mappingProfiles.map.order.orderInformation.field.suffix": "Sufijo",
     "settings.mappingProfiles.map.order.orderInformation.field.vendor": "Proveedor",
     "settings.mappingProfiles.map.order.orderInformation.field.orderType": "Tipo de pedido",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits": "Unidades de adquisición",
     "settings.mappingProfiles.map.order.orderInformation.field.assignedTo": "AsIgnado a",
     "settings.mappingProfiles.map.order.orderInformation.field.billToName": "factura a nombre",
     "settings.mappingProfiles.map.order.orderInformation.field.billToAddress": "Dirección de facturación",
@@ -1149,5 +1148,6 @@
     "jobHrId": "Trabajo {hrId} - ",
     "jobProfile.deleted": "Perfil del puesto suprimido",
     "jobProfile.notAvailable": " No disponible - este perfil de trabajo ha sido eliminado",
-    "returnToPreviousScreen": "Volver a la pantalla anterior"
+    "returnToPreviousScreen": "Volver a la pantalla anterior",
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units"
 }

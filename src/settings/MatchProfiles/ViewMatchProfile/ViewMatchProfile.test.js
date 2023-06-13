@@ -137,8 +137,7 @@ describe('ViewMatchProfile component', () => {
     delete global.fetch;
   });
 
-  // TODO: Create separate ticket to fix all the accesibility tests
-  it.skip('should be rendered with no axe errors', async () => {
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderViewMatchProfile(viewMatchProfileProps(matchProfileRecord()));
 
     await runAxeTest({ rootNode: container });

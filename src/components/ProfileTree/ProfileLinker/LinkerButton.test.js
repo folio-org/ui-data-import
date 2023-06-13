@@ -25,15 +25,17 @@ const renderLinkerButton = ({
   dataAttributes,
 }) => {
   const component = (
-    <LinkerButton
-      id={id}
-      entityKey={entityKey}
-      onClick={onClick}
-      searchLabel={searchLabel}
-      className={className}
-      isButtonDisabled={isButtonDisabled}
-      dataAttributes={dataAttributes}
-    />
+    <div role="menu">
+      <LinkerButton
+        id={id}
+        entityKey={entityKey}
+        onClick={onClick}
+        searchLabel={searchLabel}
+        className={className}
+        isButtonDisabled={isButtonDisabled}
+        dataAttributes={dataAttributes}
+      />
+    </div>
   );
 
   return renderWithIntl(component, translationsProperties);
@@ -44,8 +46,7 @@ describe('LinkerButton component', () => {
     onClick.mockClear();
   });
 
-  // TODO: Create separate ticket to fix all the accesibility tests
-  it.skip('should be rendered with no axe errors', async () => {
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderLinkerButton(linkerButtonProps);
 
     await runAxeTest({ rootNode: container });

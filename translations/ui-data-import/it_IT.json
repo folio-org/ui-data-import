@@ -920,7 +920,6 @@
     "settings.mappingProfiles.map.order.orderInformation.field.suffix": "Suffix",
     "settings.mappingProfiles.map.order.orderInformation.field.vendor": "Vendor",
     "settings.mappingProfiles.map.order.orderInformation.field.orderType": "Order type",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits": "Acquisition units",
     "settings.mappingProfiles.map.order.orderInformation.field.assignedTo": "Assigned to",
     "settings.mappingProfiles.map.order.orderInformation.field.billToName": "Bill to name",
     "settings.mappingProfiles.map.order.orderInformation.field.billToAddress": "Bill to address",
@@ -1149,5 +1148,6 @@
     "jobHrId": "Job {hrId} • ",
     "jobProfile.deleted": "Job profile deleted",
     "jobProfile.notAvailable": " Not available - this job profile has been deleted",
-    "returnToPreviousScreen": "Return to previous screen"
+    "returnToPreviousScreen": "Return to previous screen",
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units"
 }
