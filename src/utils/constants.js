@@ -4,6 +4,8 @@ import {
   FOLIO_RECORD_TYPES,
 } from '@folio/stripes-data-transfer-components';
 
+export const PREVIOUS_LOCATIONS_KEY = '@folio/data-import/prev-locations';
+
 export const FIND_ALL_CQL = 'cql.allRecords=1';
 
 export const NO_FILE_NAME = 'No file name';

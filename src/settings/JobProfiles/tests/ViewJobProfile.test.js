@@ -49,7 +49,7 @@ const jobProfile = {
       },
     }],
   hasLoaded: true,
-  failed: false,
+  failed: { httpStatus: 200 },
 };
 
 const fileId = faker.random.uuid();
