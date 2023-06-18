@@ -30,7 +30,7 @@
     }
   }
   & .filter {
-    min-width: 700px;
+    min-width: 800px;
     & .filter__label {
       margin-right: 5px;
       font-weight: bold;
