@@ -138,7 +138,13 @@ describe('ViewMatchProfile component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderViewMatchProfile(viewMatchProfileProps(matchProfileRecord()));
+    const {
+      container,
+      findByText,
+    } = renderViewMatchProfile(viewMatchProfileProps(matchProfileRecord()));
+    const matchProfileTitle = await findByText('Match profile');
+
+    expect(matchProfileTitle).toBeInTheDocument();
 
     await runAxeTest({ rootNode: container });
   });
