@@ -21,6 +21,7 @@
 ### Bugs fixed:
 * Fix all the failed accessibility tests in ui-data-import (UIDATIMP-1393)
 * Error when trying to close log details page after redirecting to Data import app from Job profiles page (UIDATIMP-1435)
+* JSON screen: Record type tabs do not fit into header box size (UIDATIMP-1442)
 * Order field mapping profile: Fix Acquisitions units field label (UIDATIMP-1444)
 * Log page "Authority" tab of imported Marc Authority record is not displaying record's details (UIDATIMP-1458)
 
