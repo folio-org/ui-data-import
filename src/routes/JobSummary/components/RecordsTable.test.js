@@ -212,9 +212,8 @@ const renderRecordsTable = () => {
 };
 
 describe('RecordsTable component', () => {
-  // TODO: Create separate ticket to fix all the accesibility tests
-  it.skip('should be rendered with no axe errors', async () => {
-    const { container } = renderRecordsTable();
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderRecordsTable({});
 
     await runAxeTest({ rootNode: container });
   });

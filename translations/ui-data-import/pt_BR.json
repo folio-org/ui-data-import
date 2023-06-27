@@ -920,7 +920,6 @@
     "settings.mappingProfiles.map.order.orderInformation.field.suffix": "Sufixo",
     "settings.mappingProfiles.map.order.orderInformation.field.vendor": "Fornecedor",
     "settings.mappingProfiles.map.order.orderInformation.field.orderType": "Tipo de pedido",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits": "Unidades de aquisição",
     "settings.mappingProfiles.map.order.orderInformation.field.assignedTo": "Atribuído a",
     "settings.mappingProfiles.map.order.orderInformation.field.billToName": "Nome para cobrança",
     "settings.mappingProfiles.map.order.orderInformation.field.billToAddress": "Endereço para cobrança",
@@ -1146,5 +1145,9 @@
     "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits.info": "A criação do pedido apresentará erro, a menos que o usuário importador seja um membro da unidade de aquisições especificada",
     "logLight.actionStatus.noAction": "Nenhuma ação",
     "jobProfileNameLink": "Perfil do trabalho: {jobProfileLink}",
-    "jobHrId": "Trabalho {hrId} - "
+    "jobHrId": "Trabalho {hrId} - ",
+    "jobProfile.deleted": "Perfil de trabalho excluído",
+    "jobProfile.notAvailable": "Não disponível - este perfil de trabalho foi excluído",
+    "returnToPreviousScreen": "Voltar à tela anterior",
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Unidades de aquisição"
 }

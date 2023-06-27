@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { isEmpty } from 'lodash';
 
 import {
   stripesConnect,
@@ -37,6 +38,7 @@ import {
 import {
   DATA_TYPES,
   storage,
+  PREVIOUS_LOCATIONS_KEY,
 } from '../../utils';
 
 const INITIAL_RESULT_COUNT = 100;
@@ -59,8 +61,6 @@ const sortMap = {
   invoiceStatus: 'invoice_action_status',
   error: 'error',
 };
-
-const PREVIOUS_LOCATIONS_KEY = '@folio/data-import/prev-locations';
 
 const JobSummaryComponent = props => {
   const {
@@ -127,8 +127,12 @@ const JobSummaryComponent = props => {
   };
 
   const handlePaneClose = () => {
-    history.push(previousLocations.current.pop());
-    storage.setItem(PREVIOUS_LOCATIONS_KEY, previousLocations.current);
+    if (isEmpty(previousLocations.current)) {
+      history.push('/data-import');
+    } else {
+      history.push(previousLocations.current.pop());
+      storage.setItem(PREVIOUS_LOCATIONS_KEY, previousLocations.current);
+    }
   };
 
   const jobProfileLink = (

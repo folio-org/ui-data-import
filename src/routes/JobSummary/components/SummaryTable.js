@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  FormattedNumber,
+} from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 
@@ -76,6 +79,7 @@ const SummaryTableComponent = ({
 
     const totalEntitiesKeys = ['totalCreatedEntities', 'totalUpdatedEntities', 'totalDiscardedEntities', 'totalErrors'];
     const cellContent = column[totalEntitiesKeys[rowIndex]];
+    const formattedCount = <FormattedNumber value={cellContent} />;
 
     if (isLastRow(rowIndex) && cellContent > 0) {
       return (
@@ -86,12 +90,12 @@ const SummaryTableComponent = ({
             state: { from: `${pathname}${search}` }
           }}
         >
-          {cellContent}
+          {formattedCount}
         </TextLink>
       );
     }
 
-    return cellContent;
+    return formattedCount;
   };
 
   const resultsFormatter = {
@@ -113,7 +117,7 @@ const SummaryTableComponent = ({
                 state: { from: `${pathname}${search}` }
               }}
             >
-              {totalErrors}
+              <FormattedNumber value={totalErrors} />
             </TextLink>
           )
           : totalErrors;

@@ -137,9 +137,14 @@ describe('ViewMatchProfile component', () => {
     delete global.fetch;
   });
 
-  // TODO: Create separate ticket to fix all the accesibility tests
-  it.skip('should be rendered with no axe errors', async () => {
-    const { container } = renderViewMatchProfile(viewMatchProfileProps(matchProfileRecord()));
+  it('should be rendered with no axe errors', async () => {
+    const {
+      container,
+      findByText,
+    } = renderViewMatchProfile(viewMatchProfileProps(matchProfileRecord()));
+    const matchProfileTitle = await findByText('Match profile');
+
+    expect(matchProfileTitle).toBeInTheDocument();
 
     await runAxeTest({ rootNode: container });
   });

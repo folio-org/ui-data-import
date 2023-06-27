@@ -920,7 +920,6 @@
     "settings.mappingProfiles.map.order.orderInformation.field.suffix": "Suffix",
     "settings.mappingProfiles.map.order.orderInformation.field.vendor": "Vendor",
     "settings.mappingProfiles.map.order.orderInformation.field.orderType": "Order type",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits": "Acquisition units",
     "settings.mappingProfiles.map.order.orderInformation.field.assignedTo": "Assigned to",
     "settings.mappingProfiles.map.order.orderInformation.field.billToName": "Bill to name",
     "settings.mappingProfiles.map.order.orderInformation.field.billToAddress": "Bill to address",
@@ -1146,5 +1145,9 @@
     "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits.info": "Order creation will error unless the importing user is a member of the specified acquisitions unit",
     "logLight.actionStatus.noAction": "No action",
     "jobProfileNameLink": "Job profile: {jobProfileLink}",
-    "jobHrId": "Job {hrId} • "
+    "jobHrId": "Job {hrId} • ",
+    "jobProfile.deleted": "Job profile deleted",
+    "jobProfile.notAvailable": " Not available - this job profile has been deleted",
+    "returnToPreviousScreen": "Return to previous screen",
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units"
 }

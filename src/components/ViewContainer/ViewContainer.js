@@ -16,6 +16,7 @@ import {
   createNetworkMessage,
 } from '../index';
 
+import { STATUS_CODES } from '../../utils';
 import sharedCss from '../../shared.css';
 
 export const ViewContainer = memo(({
@@ -68,7 +69,7 @@ export const ViewContainer = memo(({
   };
 
   const handleDeleteError = (record, error) => {
-    if (error.status === 409) {
+    if (error.status === STATUS_CODES.CONFLICT) {
       setShowExceptionModal(true);
     }
   };

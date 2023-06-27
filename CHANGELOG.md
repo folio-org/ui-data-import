@@ -14,6 +14,17 @@
 * Update Log details screen to support multiple holdings & items (UIDATIMP-1438)
 * DI Log: change Discarded to No action (UIDATIMP-1446)
 * DI Log: Make some changes to the Log header (UIDATIMP-1447)
+* DI Job profiles: Redirect when job profile was deleted (UIDATIMP-1450)
+* Sorting on landing page gives error (UIDATIMP-1454)
+* Refactor the ViewJobLog component to be a functional component (UIDATIMP-1457)
+* Job summary - format numbers in summary table (UIDATIMP-1459)
+
+### Bugs fixed:
+* Fix all the failed accessibility tests in ui-data-import (UIDATIMP-1393)
+* Error when trying to close log details page after redirecting to Data import app from Job profiles page (UIDATIMP-1435)
+* JSON screen: Record type tabs do not fit into header box size (UIDATIMP-1442)
+* Order field mapping profile: Fix Acquisitions units field label (UIDATIMP-1444)
+* Log page "Authority" tab of imported Marc Authority record is not displaying record's details (UIDATIMP-1458)
 
 ## [6.0.8](https://github.com/folio-org/ui-data-import/tree/v6.0.8) (2023-04-04)
 

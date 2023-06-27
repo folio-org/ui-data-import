@@ -19,8 +19,7 @@ const renderMappingOrderDetails = () => {
 };
 
 describe('MappingOrderDetails view component', () => {
-  // TODO: Create separate ticket to fix all the accesibility tests
-  it.skip('should be rendered with no axe errors', async () => {
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingOrderDetails();
 
     await runAxeTest({ rootNode: container });

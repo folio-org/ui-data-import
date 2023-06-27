@@ -14,6 +14,7 @@ import {
 
 import { ReceivingHistory } from '../ReceivingHistory';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import {
   onAdd,
   onRemove,
@@ -58,7 +59,7 @@ describe('Holdings "Receiving history" edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

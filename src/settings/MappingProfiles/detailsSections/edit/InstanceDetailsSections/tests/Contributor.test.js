@@ -19,6 +19,8 @@ import {
   getReferenceTables,
 } from '../../../../initialDetails';
 
+import { STATUS_CODES } from '../../../../../../utils';
+
 global.fetch = jest.fn();
 
 const { contributors } = getReferenceTables(getInitialDetails(FOLIO_RECORD_TYPES.INSTANCE.type).mappingFields);
@@ -38,7 +40,7 @@ describe('Instance "Contributor" edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

@@ -12,6 +12,7 @@ import {
 } from '../../../../../../../test/jest/helpers';
 import '../../../../../../../test/jest/__mock__';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import { InvoiceInformation } from '../InvoiceInformation';
 
 global.fetch = jest.fn();
@@ -33,7 +34,7 @@ describe('InvoiceInformation edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

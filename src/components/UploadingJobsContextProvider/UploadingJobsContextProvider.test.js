@@ -13,7 +13,10 @@ import { UploadingJobsContextProvider } from './UploadingJobsContextProvider';
 import { UploadingJobsContext } from './UploadingJobsContext';
 
 import * as utils from '../../utils/upload';
-import { FILE_STATUSES } from '../../utils';
+import {
+  FILE_STATUSES,
+  STATUS_CODES,
+} from '../../utils';
 
 global.fetch = jest.fn();
 
@@ -82,12 +85,12 @@ describe('UploadingJobsContextProvider component', () => {
     it('should call API delete upload definition and get latest upload definition', async () => {
       global.fetch
         .mockReturnValueOnce(Promise.resolve({
-          status: 200,
+          status: STATUS_CODES.OK,
           ok: true,
           json: async () => ({}),
         }))
         .mockResolvedValueOnce(Promise.resolve({
-          status: 200,
+          status: STATUS_CODES.OK,
           ok: true,
           json: async () => ({ uploadDefinitions: [{}] }),
         }));
@@ -107,12 +110,12 @@ describe('UploadingJobsContextProvider component', () => {
         it('should delete definition', async () => {
           global.fetch
             .mockReturnValue(Promise.resolve({
-              status: 200,
+              status: STATUS_CODES.OK,
               ok: true,
               json: async () => ({ uploadDefinitions: [{}] }),
             }))
             .mockReturnValueOnce(Promise.resolve({
-              status: 200,
+              status: STATUS_CODES.OK,
               ok: true,
               json: async () => ({ uploadDefinitions: [{ status: FILE_STATUSES.ERROR }] }),
             }));
@@ -134,12 +137,12 @@ describe('UploadingJobsContextProvider component', () => {
 
           global.fetch
             .mockReturnValue(Promise.resolve({
-              status: 200,
+              status: STATUS_CODES.OK,
               ok: true,
               json: async () => ({ uploadDefinitions: [{}] }),
             }))
             .mockReturnValueOnce(Promise.resolve({
-              status: 200,
+              status: STATUS_CODES.OK,
               ok: true,
               json: async () => ({ uploadDefinitions: uploadDefinition }),
             }));

@@ -15,6 +15,7 @@ import {
 
 import { HoldingsDetails } from '../HoldingsDetails';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import {
   onAdd,
   onRemove,
@@ -69,7 +70,7 @@ describe('Holdings "Holdings details" edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

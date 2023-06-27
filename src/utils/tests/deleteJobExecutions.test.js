@@ -1,4 +1,5 @@
 import '../../../test/jest/__mock__';
+import { STATUS_CODES } from '../constants';
 
 import { deleteJobExecutions } from '../deleteJobExecutions';
 
@@ -13,7 +14,7 @@ describe('deleteJobExecutions function', () => {
   it('fetches correctly', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({ jobExecutionDetails: [{}] }),
     });
 
@@ -28,7 +29,7 @@ describe('deleteJobExecutions function', () => {
     jest.spyOn(console, 'error').mockImplementation(() => {});
     global.fetch.mockResolvedValueOnce({
       ok: false,
-      status: 500,
+      status: STATUS_CODES.INTERNAL_SERVER_ERROR,
       json: async () => ({}),
     });
 
