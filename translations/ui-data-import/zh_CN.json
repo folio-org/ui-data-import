@@ -1146,8 +1146,8 @@
     "logLight.actionStatus.noAction": "无操作",
     "jobProfileNameLink": "任务配置文件：{jobProfileLink}",
     "jobHrId": "任务{hrId} •",
-    "jobProfile.deleted": "Job profile deleted",
-    "jobProfile.notAvailable": " Not available - this job profile has been deleted",
-    "returnToPreviousScreen": "Return to previous screen",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units"
+    "jobProfile.deleted": "任务配置文件已删除",
+    "jobProfile.notAvailable": "不可用 - 此任务配置文件已删除",
+    "returnToPreviousScreen": "返回上一屏幕",
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "采购单位"
 }
