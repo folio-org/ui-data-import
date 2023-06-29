@@ -1149,5 +1149,5 @@
     "jobProfile.deleted": "Profil úlohy byl smazán",
     "jobProfile.notAvailable": "Není k dispozici - tento profil úlohy byl smazán",
     "returnToPreviousScreen": "Návrat na předchozí obrazovku",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units"
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Akviziční jednotky"
 }
