@@ -17,6 +17,7 @@
 * Sorting on landing page gives error (UIDATIMP-1454)
 * Refactor the ViewJobLog component to be a functional component (UIDATIMP-1457)
 * Job summary - format numbers in summary table (UIDATIMP-1459)
+* Allow to handle text/plain content type when error occurs (UIDATIMP-1465)
 * Clear searches when switching between profile types (UIDATIMP-1461)
 
 ### Bugs fixed:
