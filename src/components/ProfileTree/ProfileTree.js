@@ -86,7 +86,7 @@ export const ProfileTree = memo(({
   const isSnakeCase = str => str && str.includes('_');
 
   const getLines = (lines, currentType, order, reactTo = null) => lines.map((item, index) => ({
-    profileId: item.profileId,
+    id: item.content.id,
     contentType: snakeCase(currentType).slice(0, -1).toLocaleUpperCase(),
     reactTo,
     content: item.content,
@@ -95,14 +95,14 @@ export const ProfileTree = memo(({
   }));
 
   const findRelIndex = (relations, masterId, line) => {
-    return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === line.profileId);
+    return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === line.content.id);
   };
 
   const composeRelations = (lines, masterId, masterType, detailType, reactTo, order) => lines.map((item, index) => {
     let rel = {
       masterProfileId: masterId,
       masterProfileType: isSnakeCase(masterType) ? masterType : snakeCase(masterType).slice(0, -1).toLocaleUpperCase(),
-      detailProfileId: item.profileId || item.id,
+      detailProfileId: item.content.id,
       detailProfileType: isSnakeCase(detailType) ? detailType : snakeCase(detailType).slice(0, -1).toLocaleUpperCase(),
       order: item.order || order + index,
     };
@@ -122,7 +122,7 @@ export const ProfileTree = memo(({
 
   const link = (initialData, setInitialData, lines, masterId, masterType, detailType, reactTo, localDataKey) => {
     const order = initialData.length ? (last(initialData).order + 1) : 0;
-    const linesToAdd = lines.filter(line => line.profileId !== masterId);
+    const linesToAdd = lines.filter(line => line.content.id !== masterId);
     const newData = [...initialData, ...getLines(linesToAdd, detailType, order, reactTo)];
     const profileTreeData = [...profileTreeContent];
 
@@ -141,7 +141,7 @@ export const ProfileTree = memo(({
   };
 
   const unlink = (parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey) => {
-    const index = parentData.findIndex(item => item.profileId === line.profileId);
+    const index = parentData.findIndex(item => item.content.id === line.content.id);
     const newIdx = findRelIndex(addedRelations, masterId, line);
     const profileTreeData = [...profileTreeContent];
 
@@ -191,7 +191,7 @@ export const ProfileTree = memo(({
           {contentData && contentData.length ? (
             contentData.map((item, i) => (
               <ProfileBranch
-                key={`profile-branch-${item.profileId}-${i}`}
+                key={`profile-branch-${item.content.id}-${i}`}
                 index={i}
                 reactTo={PROFILE_RELATION_TYPES.NONE}
                 linkingRules={linkingRules}

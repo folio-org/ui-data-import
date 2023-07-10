@@ -79,7 +79,9 @@ export const AssociatorEditable = memo(({
   const composedContentData = composeRelations(contentData);
 
   const link = lines => {
-    const uniqueLines = lines.filter(line => currentData.findIndex(item => item.id === line.id) === -1);
+    const uniqueLines = lines
+      .map(line => line.content)
+      .filter(line => currentData.findIndex(item => item.id === line.id) === -1);
     const newContentData = [...currentData, ...uniqueLines];
 
     // filter the associations that were already attached to a profile

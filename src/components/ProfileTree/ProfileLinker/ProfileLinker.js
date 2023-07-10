@@ -32,11 +32,9 @@ import css from '../ProfileTree.css';
 export const ProfileLinker = ({
   id,
   parentId,
-  rootId,
   parentType,
   profileType,
   onLink,
-  okapi,
   linkingRules: { profilesAllowed },
   dataKey,
   initialData,
@@ -91,16 +89,7 @@ export const ProfileLinker = ({
   };
 
   const addNewLines = entityKey => async records => {
-    const profileSnapshotPromises = records.map(profile => fetchProfileSnapshot(profile.id, ASSOCIATION_TYPES[entityKey], rootId, okapi));
-
-    try {
-      await Promise.all(profileSnapshotPromises)
-        .then(response => onLink(initialData, setInitialData, response, parentId, parentType, entityKey, reactTo, dataKey));
-    } catch (error) {
-      console.error(error); // eslint-disable-line no-console
-
-      onLink(initialData, setInitialData, [], parentId, parentType, entityKey, reactTo, dataKey);
-    }
+    onLink(initialData, setInitialData, records, parentId, parentType, entityKey, reactTo, dataKey);
   };
 
   return (

@@ -114,8 +114,8 @@ export const JobProfilesFormComponent = memo(({
   const isSubmitDisabled = pristine || submitting;
 
   const childWrappers = useMemo(
-    () => resources.childWrappers?.records[0]?.childSnapshotWrappers || [],
-    [resources.childWrappers.records],
+    () => resources.profileSnapshots?.records.at(-1)?.childSnapshotWrappers || [],
+    [resources.profileSnapshots.records],
   );
 
   const dispatch = useDispatch();
@@ -139,7 +139,7 @@ export const JobProfilesFormComponent = memo(({
 
   useEffect(() => {
     async function fetchChildWrappers() {
-      await mutator.childWrappers.GET();
+      await mutator.profileSnapshots.GET();
     }
 
     if (!isLayerCreate) {
@@ -230,7 +230,7 @@ export const JobProfilesFormComponent = memo(({
 
     const requests = profileTreeContent
       .filter(record => record.contentType === PROFILE_TYPES.ACTION_PROFILE)
-      .map(record => fetchAssociations(okapi, record.profileId));
+      .map(record => fetchAssociations(okapi, record.content.id));
 
     const associations = await Promise.all(requests);
 
@@ -354,7 +354,7 @@ export const JobProfilesFormComponent = memo(({
 });
 
 JobProfilesFormComponent.manifest = Object.freeze({
-  childWrappers: {
+  profileSnapshots: {
     type: 'okapi',
     GET: {
       path: createUrl('data-import-profiles/profileSnapshots/:{id}', {
@@ -385,8 +385,8 @@ JobProfilesFormComponent.propTypes = {
   parentResources: PropTypes.object.isRequired,
   transitionToParams: PropTypes.func.isRequired,
   baseUrl: PropTypes.string.isRequired,
-  mutator: PropTypes.shape({ childWrappers: PropTypes.shape({ GET: PropTypes.func }) }).isRequired,
-  resources: PropTypes.shape({ childWrappers: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }) }).isRequired,
+  mutator: PropTypes.shape({ profileSnapshots: PropTypes.shape({ GET: PropTypes.func }) }).isRequired,
+  resources: PropTypes.shape({ profileSnapshots: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }) }).isRequired,
   accordionStatusRef: PropTypes.object,
   layerType: PropTypes.oneOf(Object.values(LAYER_TYPES)),
 };
