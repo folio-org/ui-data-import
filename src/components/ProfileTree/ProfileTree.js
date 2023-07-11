@@ -98,11 +98,22 @@ export const ProfileTree = memo(({
     return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === line.content.id);
   };
 
-  const composeRelations = (lines, masterId, masterType, detailType, reactTo, order) => lines.map((item, index) => {
+  const composeRelations = ({
+    lines,
+    masterId,
+    masterType,
+    detailType,
+    masterWrapperId,
+    detailWrapperId,
+    reactTo,
+    order,
+  }) => lines.map((item, index) => {
     let rel = {
       masterProfileId: masterId,
+      masterWrapperId,
       masterProfileType: isSnakeCase(masterType) ? masterType : snakeCase(masterType).slice(0, -1).toLocaleUpperCase(),
       detailProfileId: item.content.id,
+      detailWrapperId,
       detailProfileType: isSnakeCase(detailType) ? detailType : snakeCase(detailType).slice(0, -1).toLocaleUpperCase(),
       order: item.order || order + index,
     };
@@ -127,7 +138,16 @@ export const ProfileTree = memo(({
     const profileTreeData = [...profileTreeContent];
 
     if (linesToAdd && linesToAdd.length) {
-      const relsToAdd = [...addedRelations, ...composeRelations(linesToAdd, masterId, masterType, detailType, reactTo, order)];
+      const relsToAdd = [...addedRelations, ...composeRelations({
+        lines: linesToAdd,
+        masterId,
+        masterType,
+        detailType,
+        masterWrapperId: null,
+        detailWrapperId: null,
+        reactTo,
+        order,
+      })];
 
       onLink(relsToAdd);
       setAddedRelations(relsToAdd);
@@ -146,7 +166,15 @@ export const ProfileTree = memo(({
     const profileTreeData = [...profileTreeContent];
 
     if (newIdx < 0) {
-      const newRels = composeRelations([line], masterId, masterType, detailType, reactTo);
+      const newRels = composeRelations({
+        lines: [line],
+        masterId,
+        masterType,
+        detailType,
+        masterWrapperId: line.masterWrapperId,
+        detailWrapperId: line.detailWrapperId,
+        reactTo,
+      });
       const relsToDel = [...deletedRelations, ...newRels];
 
       onUnlink(relsToDel);
