@@ -224,7 +224,7 @@ export class ActionProfiles extends Component {
     ],
     nonInteractiveHeaders: ['selected'],
     visibleColumns: ['selected', ...actionProfilesShape.visibleColumns],
-    columnWidths: { selected: '40px' },
+    columnWidths: { selected: '40px', name: '430px' },
     ViewRecordComponent: ViewActionProfile,
     CreateRecordComponent: CreateActionProfile,
     EditRecordComponent: EditActionProfile,

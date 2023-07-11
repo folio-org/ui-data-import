@@ -266,7 +266,7 @@ export class SearchAndSort extends Component {
   setInitialSortQueryParam() {
     const { defaultSort } = this.props;
 
-    this.transitionToParams({ sort: defaultSort });
+    this.transitionToParams({ query: '', sort: defaultSort });
   }
 
   focusSearchField = () => {
