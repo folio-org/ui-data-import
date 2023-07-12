@@ -23,7 +23,7 @@ export const NetworkMessage = memo(({
 
   const errorMessage = <><br /> {messageId}</>;
 
-  const sucessMassage = (
+  const successMassage = (
     <FormattedMessage
       id={`ui-data-import.${type}.${messageId}`}
       tagName="p"
@@ -42,7 +42,7 @@ export const NetworkMessage = memo(({
       />
       {type === 'error' && !messageId && communicationProblemMessage}
       {type === 'error' && messageId && errorMessage}
-      {type !== 'error' && sucessMassage}
+      {type !== 'error' && successMassage}
     </div>
   );
 });
