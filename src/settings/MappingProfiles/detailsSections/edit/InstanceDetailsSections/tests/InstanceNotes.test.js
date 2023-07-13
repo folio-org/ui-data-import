@@ -12,6 +12,7 @@ import {
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import { InstanceNotes } from '../InstanceNotes';
 
 import {
@@ -38,7 +39,7 @@ describe('Instance "Instance notes" edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

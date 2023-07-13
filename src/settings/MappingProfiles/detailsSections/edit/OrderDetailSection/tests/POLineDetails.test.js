@@ -12,7 +12,10 @@ import '../../../../../../../test/jest/__mock__';
 
 import { POLineDetails } from '../POLineDetails';
 
-import { BOOLEAN_ACTIONS } from '../../../../../../utils';
+import {
+  BOOLEAN_ACTIONS,
+  STATUS_CODES,
+} from '../../../../../../utils';
 
 jest.mock('../../../hooks', () => ({ useFieldMappingBoolFieldValue: () => ['ALL_FALSE'] }));
 
@@ -35,7 +38,7 @@ describe('POLineDetails edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

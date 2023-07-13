@@ -10,6 +10,7 @@ import {
 } from '../../../../../../../test/jest/helpers';
 import '../../../../../../../test/jest/__mock__';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import { Location } from '../Location';
 
 jest.mock('@folio/stripes/components', () => ({
@@ -69,7 +70,7 @@ describe('Location edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

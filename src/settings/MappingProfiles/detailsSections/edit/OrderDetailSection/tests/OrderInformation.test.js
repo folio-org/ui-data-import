@@ -12,7 +12,10 @@ import '../../../../../../../test/jest/__mock__';
 
 import { OrderInformation } from '../OrderInformation';
 
-import { BOOLEAN_ACTIONS } from '../../../../../../utils';
+import {
+  BOOLEAN_ACTIONS,
+  STATUS_CODES,
+} from '../../../../../../utils';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -99,7 +102,7 @@ describe('OrderInformation edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });
@@ -145,7 +148,7 @@ describe('OrderInformation edit component', () => {
     expect(getByText('Suffix')).toBeInTheDocument();
     expect(getByText('Vendor')).toBeInTheDocument();
     expect(getByText('Order type')).toBeInTheDocument();
-    expect(getByText('Acquisition units')).toBeInTheDocument();
+    expect(getByText('Acquisitions units')).toBeInTheDocument();
     expect(getByText('Assigned to')).toBeInTheDocument();
     expect(getByText('Bill to name')).toBeInTheDocument();
     expect(getByText('Bill to address')).toBeInTheDocument();

@@ -370,7 +370,10 @@ class ViewAllLogs extends Component {
 
   getResultsFormatter() {
     const {
-      intl: { formatMessage },
+      intl: {
+        formatMessage,
+        formatNumber,
+      },
       checkboxList: {
         selectedRecords,
         selectRecord,
@@ -386,6 +389,7 @@ class ViewAllLogs extends Component {
         selectedRecords,
         checkboxDisabled: isLogsDeletionInProgress,
         fieldsConfig,
+        formatNumber,
       }),
       fileName: record => fileNameCellFormatter(record, location),
       status: statusCellFormatter(formatMessage),

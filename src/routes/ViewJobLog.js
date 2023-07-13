@@ -147,12 +147,26 @@ export const ViewJobLog = () => {
   const itemsLogs = useMemo(() => {
     const { relatedItemInfo } = jobLogData;
 
-    return [{
-      label: '',
-      logs: itemsData,
-      error: relatedItemInfo?.error || '',
-      errorBlockId: 'item-error',
-    }];
+    const getItemsLabel = (item = {}) => {
+      const { hrid } = item;
+
+      if (!hrid) return '';
+
+      return (
+        <Headline margin="none" className={sharedCss.leftMargin}>
+          {hrid}
+        </Headline>
+      );
+    };
+
+    return (
+      relatedItemInfo?.map((item) => ({
+        label: getItemsLabel(item),
+        logs: itemsData?.find((data) => data.id === item.id),
+        error: item.error || '',
+        errorBlockId: 'item-error',
+      })) || [{ logs: [] }]
+    );
   }, [itemsData, jobLogData]);
   const authorityLogs = useMemo(() => {
     const { relatedAuthorityInfo } = jobLogData;
@@ -212,7 +226,7 @@ export const ViewJobLog = () => {
           </Headline>
         ),
         logs: invoicesData,
-        error: relatedInvoiceInfo.error || '',
+        error: relatedInvoiceInfo?.error || '',
         errorBlockId: 'invoice-error',
       },
     ];

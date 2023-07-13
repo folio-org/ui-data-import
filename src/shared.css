@@ -63,6 +63,10 @@
   word-break: break-word;
 }
 
+.headlineMargins {
+  margin: 2.5rem 1rem;
+}
+
 .leftMargin {
   margin-left: 5px;
 }

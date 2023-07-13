@@ -17,6 +17,8 @@ import '../../../test/jest/__mock__';
 
 import { JobSummary } from './JobSummary';
 
+import { PREVIOUS_LOCATIONS_KEY } from '../../utils';
+
 jest.mock('./components', () => ({
   ...jest.requireActual('./components'),
   SummaryTable: () => 'SummaryTable',
@@ -125,13 +127,28 @@ describe('Job summary page', () => {
   });
 
   describe('when close the pane', () => {
-    it('should call the handler to change the url', () => {
-      const { getByLabelText } = renderJobSummary({});
+    describe('when previous location is set', () => {
+      it('should redirect to the previous location', () => {
+        window.sessionStorage.setItem(PREVIOUS_LOCATIONS_KEY, JSON.stringify(['/test']));
 
-      const closeButton = getByLabelText('times');
-      fireEvent.click(closeButton);
+        const { getByLabelText } = renderJobSummary({});
 
-      expect(history.push).toHaveBeenCalled();
+        const closeButton = getByLabelText('times');
+        fireEvent.click(closeButton);
+
+        expect(history.push).toHaveBeenCalledWith('/test');
+      });
+    });
+
+    describe('when previous location is not set', () => {
+      it('should redirect to Data Import landing page', () => {
+        const { getByLabelText } = renderJobSummary({});
+
+        const closeButton = getByLabelText('times');
+        fireEvent.click(closeButton);
+
+        expect(history.push).toHaveBeenCalledWith('/data-import');
+      });
     });
   });
 

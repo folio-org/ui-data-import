@@ -4,6 +4,8 @@ import {
   FOLIO_RECORD_TYPES,
 } from '@folio/stripes-data-transfer-components';
 
+export const PREVIOUS_LOCATIONS_KEY = '@folio/data-import/prev-locations';
+
 export const FIND_ALL_CQL = 'cql.allRecords=1';
 
 export const NO_FILE_NAME = 'No file name';
@@ -857,4 +859,12 @@ export const MATCH_INCOMING_RECORD_TYPES = {
     captionId: 'ui-data-import.incomingRecordTypes.static',
     iconKey: '',
   },
+};
+
+export const STATUS_CODES = {
+  OK: 200,
+  BAD_REQUEST: 400,
+  NOT_FOUND: 404,
+  CONFLICT: 409,
+  INTERNAL_SERVER_ERROR: 500,
 };

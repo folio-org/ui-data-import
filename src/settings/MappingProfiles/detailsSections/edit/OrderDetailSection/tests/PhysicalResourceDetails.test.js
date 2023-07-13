@@ -10,6 +10,7 @@ import {
 } from '../../../../../../../test/jest/helpers';
 import '../../../../../../../test/jest/__mock__';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import { PhysicalResourceDetails } from '../PhysicalResourceDetails';
 
 jest.mock('@folio/stripes/components', () => ({
@@ -58,7 +59,7 @@ describe('PhysicalResourceDetails edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

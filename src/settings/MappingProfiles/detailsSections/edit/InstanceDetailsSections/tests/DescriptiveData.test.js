@@ -15,6 +15,7 @@ import {
 
 import { DescriptiveData } from '../DescriptiveData';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import {
   onAdd,
   onRemove,
@@ -75,7 +76,7 @@ describe('Instance "Descriptive data" edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

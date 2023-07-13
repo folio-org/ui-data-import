@@ -40,7 +40,7 @@ const mockJobLogData = {
       error: 'Error message',
     },
     {
-      id: faker.random.uuid(),
+      id: 'itemId2',
       hrid: 'itemHrid2',
       holdingsId: 'holdingId1',
       error: '',
@@ -276,6 +276,14 @@ describe('View job log page', () => {
       });
 
       describe('and Item tag is active', () => {
+        it('should display item hrid above the JSON details', () => {
+          const { getByText } = renderViewJobLog();
+
+          fireEvent.click(getByText('Item*'));
+
+          expect(getByText('itemHrid2')).toBeInTheDocument();
+        });
+
         it('should display Item JSON details on the screen', () => {
           const {
             container,
@@ -283,9 +291,9 @@ describe('View job log page', () => {
           } = renderViewJobLog();
 
           fireEvent.click(getByText('Item*'));
-          const codeElement = container.querySelector('code.info');
+          const codeElement = container.querySelectorAll('code.info')[1];
 
-          expect(JSON.parse(codeElement.textContent)).toEqual(mockItemsJSONData);
+          expect(JSON.parse(codeElement.textContent)).toEqual(mockItemsJSONData[0]);
         });
       });
 

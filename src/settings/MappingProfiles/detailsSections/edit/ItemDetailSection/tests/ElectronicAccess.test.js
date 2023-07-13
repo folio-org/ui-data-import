@@ -15,6 +15,7 @@ import {
 
 import { ElectronicAccess } from '../ElectronicAccess';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import {
   onAdd,
   onRemove,
@@ -59,7 +60,7 @@ describe('Item "Electronic access" edit component', () => {
   beforeAll(() => {
     global.fetch.mockResolvedValue({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({}),
     });
   });

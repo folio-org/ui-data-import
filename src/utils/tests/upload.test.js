@@ -1,4 +1,5 @@
 import '../../../test/jest/__mock__';
+import { STATUS_CODES } from '../constants';
 
 import {
   createUploadDefinition,
@@ -19,7 +20,7 @@ describe('createUploadDefinition function', () => {
   it('creates upload definition data sets', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({
         errors: [],
         id: 'uploadDefinitionId',
@@ -52,7 +53,7 @@ describe('createUploadDefinition function', () => {
   it('when there is api errors, returns appropriate value', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({ errors: [new Error('Api error')] }),
     });
 
@@ -78,7 +79,7 @@ describe('createUploadDefinition function', () => {
   it('when there is fetch error, throws response', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: false,
-      status: 400,
+      status: STATUS_CODES.BAD_REQUEST,
       json: async () => ({}),
     });
 
@@ -100,7 +101,7 @@ describe('createUploadDefinition function', () => {
       });
     } catch (e) {
       expect(e.ok).toBeFalsy();
-      expect(e.status).toBe(400);
+      expect(e.status).toBe(STATUS_CODES.BAD_REQUEST);
     }
   });
 });
@@ -113,7 +114,7 @@ describe('deleteFile function', () => {
   it('fires file deletion request', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({ msg: 'success' }),
     });
 
@@ -130,7 +131,7 @@ describe('deleteFile function', () => {
   it('when there is error, throws response', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: false,
-      status: 400,
+      status: STATUS_CODES.BAD_REQUEST,
     });
 
     const url = 'https://api.com/files';
@@ -140,7 +141,7 @@ describe('deleteFile function', () => {
       await deleteFile(url, headers);
     } catch (e) {
       expect(e.ok).toBeFalsy();
-      expect(e.status).toBe(400);
+      expect(e.status).toBe(STATUS_CODES.BAD_REQUEST);
     }
   });
 });
@@ -153,7 +154,7 @@ describe('deleteUploadDefinition function', () => {
   it('when there is error, throws response', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: false,
-      status: 400,
+      status: STATUS_CODES.BAD_REQUEST,
     });
 
     const url = 'https://api.com/files';
@@ -166,7 +167,7 @@ describe('deleteUploadDefinition function', () => {
       });
     } catch (e) {
       expect(e.ok).toBeFalsy();
-      expect(e.status).toBe(400);
+      expect(e.status).toBe(STATUS_CODES.BAD_REQUEST);
     }
   });
 });
@@ -183,7 +184,7 @@ describe('getLatestUploadDefinition function', () => {
   it('when there is error, throws response', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: false,
-      status: 400,
+      status: STATUS_CODES.BAD_REQUEST,
     });
 
     const url = 'https://api.com/files';
@@ -196,7 +197,7 @@ describe('getLatestUploadDefinition function', () => {
       });
     } catch (e) {
       expect(e.ok).toBeFalsy();
-      expect(e.status).toBe(400);
+      expect(e.status).toBe(STATUS_CODES.BAD_REQUEST);
     }
   });
 });
