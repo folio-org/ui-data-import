@@ -14,6 +14,7 @@
 * Update Log details screen to support multiple holdings & items (UIDATIMP-1438)
 * Update Log JSON screen to support multiple holdings (UIDATIMP-1439)
 * Update Log JSON screen to support multiple items (UIDATIMP-1440)
+* Improve mapping profile for Holdings for handling multiple Holdings mapping (UIDATIMP-1443)
 * DI Log: change Discarded to No action (UIDATIMP-1446)
 * DI Log: Make some changes to the Log header (UIDATIMP-1447)
 * DI Job profiles: Redirect when job profile was deleted (UIDATIMP-1450)
