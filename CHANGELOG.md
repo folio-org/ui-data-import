@@ -11,6 +11,7 @@
 * Invoice field mapping: Add info icon to the Acq unit field (UIDATIMP-1427)
 * View all: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1428)
 * Fix warnings in unit tests (part 2) (UIDATIMP-1437)
+* Update Log details screen to support multiple holdings & items (UIDATIMP-1438)
 * Update Log JSON screen to support multiple holdings (UIDATIMP-1439)
 * Update Log JSON screen to support multiple items (UIDATIMP-1440)
 * DI Log: change Discarded to No action (UIDATIMP-1446)

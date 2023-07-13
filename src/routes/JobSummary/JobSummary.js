@@ -283,6 +283,12 @@ JobSummaryComponent.manifest = Object.freeze({
     path: 'change-manager/jobExecutions/:{id}',
     throwErrors: false,
   },
+  locations: {
+    throwErrors: false,
+    type: 'okapi',
+    records: 'locations',
+    path: 'locations?limit=1000&query=cql.allRecords=1 sortby name',
+  }
 });
 
 JobSummaryComponent.propTypes = {
@@ -307,6 +313,7 @@ JobSummaryComponent.propTypes = {
     }),
     jobLogEntries: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
     jobLog: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
+    locations: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
   }).isRequired,
   location: PropTypes.oneOfType([
     PropTypes.shape({
