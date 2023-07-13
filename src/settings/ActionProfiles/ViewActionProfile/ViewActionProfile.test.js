@@ -89,8 +89,7 @@ describe('ViewActionProfiles component', () => {
     history.push.mockClear();
   });
 
-  // TODO: Create separate ticket to fix all the accesibility tests
-  it.skip('should be rendered with no axe errors', async () => {
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderViewActionProfile(viewActionProfileProps(actionProfileRecord()));
 
     await runAxeTest({ rootNode: container });

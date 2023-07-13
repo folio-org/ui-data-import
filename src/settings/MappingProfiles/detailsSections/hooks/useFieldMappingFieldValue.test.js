@@ -23,7 +23,7 @@ const initialStateValues = {
               name: 'currency',
               path: 'order.poLine.cost.currency',
               value: currency,
-              subfileds: [],
+              subfields: [],
               enabled: 'true',
               required: false,
             }]

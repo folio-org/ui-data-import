@@ -841,7 +841,6 @@
     "logLight.actionStatus.created": "已新增",
     "logLight.actionStatus.updated": "已更新",
     "logLight.actionStatus.multiple": "多个",
-    "logLight.actionStatus.discarded": "已舍弃",
     "noRecord": "无记录",
     "logViewer.filter.instance": "实例",
     "logViewer.filter.holdings": "馆藏",
@@ -921,7 +920,6 @@
     "settings.mappingProfiles.map.order.orderInformation.field.suffix": "Suffix",
     "settings.mappingProfiles.map.order.orderInformation.field.vendor": "Vendor",
     "settings.mappingProfiles.map.order.orderInformation.field.orderType": "Order type",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits": "Acquisition units",
     "settings.mappingProfiles.map.order.orderInformation.field.assignedTo": "Assigned to",
     "settings.mappingProfiles.map.order.orderInformation.field.billToName": "Bill to name",
     "settings.mappingProfiles.map.order.orderInformation.field.billToAddress": "Bill to address",
@@ -1141,5 +1139,15 @@
     "settings.mappingProfiles.map.order.poLineDetails.field.paymentNotRequired": "Payment not required",
     "settings.mappingProfiles.map.order.eResourcesDetails.field.electronicUnitPrice.info": "Required when Order format is Electronic resource or P/E mix. When import job creates a Pending order, this field controls the Inventory record requirements when the PO is opened via the Orders app. When import job creates an Open order, this field reflects the Inventory record requirements that were included as actions in the Data Import job profile",
     "settings.mappingProfiles.map.order.physicalResourceDetails.field.physicalUnitPrice.info": "Required when Order format is Physical resource, P/E mix, or Other. When import job creates a Pending order, this field controls the Inventory record requirements when the PO is opened via the Orders app. When import job creates an Open order, this field reflects the Inventory record requirements that were included as actions in the Data Import job profile",
-    "settings.mappingProfiles.map.order.orderInformation.field.purchaseOrderStatus.info": "When Purchase order status is Pending, do not include any Inventory actions in the job profile. When Purchase order status is Open, include the desired Inventory actions in the job profile, preceded by the Create orders action"
+    "settings.mappingProfiles.map.order.orderInformation.field.purchaseOrderStatus.info": "When Purchase order status is Pending, do not include any Inventory actions in the job profile. When Purchase order status is Open, include the desired Inventory actions in the job profile, preceded by the Create orders action",
+    "logViewer.themes.label": "Use theme",
+    "settings.mappingProfiles.map.invoice.invoiceInformation.field.acqUnitIds.info": "Invoice creation will error unless the importing user is a member of the specified acquisitions unit",
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionUnits.info": "Order creation will error unless the importing user is a member of the specified acquisitions unit",
+    "logLight.actionStatus.noAction": "No action",
+    "jobProfileNameLink": "Job profile: {jobProfileLink}",
+    "jobHrId": "Job {hrId} • ",
+    "jobProfile.deleted": "Job profile deleted",
+    "jobProfile.notAvailable": " Not available - this job profile has been deleted",
+    "returnToPreviousScreen": "Return to previous screen",
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units"
 }

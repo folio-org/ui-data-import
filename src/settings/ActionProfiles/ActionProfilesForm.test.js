@@ -342,7 +342,7 @@ describe('ActionProfilesForm component', () => {
 
         fireEvent.change(recordInput, { target: { value: 'INSTANCE' } });
 
-        await waitFor(() => fireEvent.click(getByText('Save as profile & Close')));
+        await waitFor(() => fireEvent.submit(getByText('Save as profile & Close')));
 
         await waitFor(() => expect(onSubmitMock).toHaveBeenCalledTimes(1));
       });

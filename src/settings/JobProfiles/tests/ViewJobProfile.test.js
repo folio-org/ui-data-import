@@ -11,13 +11,18 @@ import { runAxeTest } from '@folio/stripes-testing';
 import { noop } from 'lodash';
 
 import {
+  buildStripes,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../test/jest/helpers';
 import '../../../../test/jest/__mock__';
 
+import { STATUS_CODES } from '../../../utils';
+
 import { ViewJobProfile } from '../ViewJobProfile';
+
+global.fetch = jest.fn();
 
 const jobProfile = {
   records: [
@@ -44,9 +49,12 @@ const jobProfile = {
       },
     }],
   hasLoaded: true,
+  failed: { httpStatus: 200 },
 };
 
 const fileId = faker.random.uuid();
+
+const stripes = buildStripes();
 
 const viewJobProfileProps = (profile, actionMenuItems) => ({
   match: { params: { id: 'test id' } },
@@ -73,6 +81,7 @@ const viewJobProfileProps = (profile, actionMenuItems) => ({
     block: noop,
     push: noop,
     replace: noop,
+    go: noop,
   },
   location: {
     search: '',
@@ -99,10 +108,7 @@ const renderViewJobProfile = ({
         onClose={noop}
         onDelete={noop}
         actionMenuItems={actionMenuItems}
-        stripes={{
-          okapi: { url: '' },
-          hasPerm: () => true
-        }}
+        stripes={stripes}
       />
     </Router>
   );
@@ -110,9 +116,21 @@ const renderViewJobProfile = ({
   return renderWithIntl(renderWithReduxForm(component), translationsProperties);
 };
 
-describe.skip('ViewJobProfile component', () => {
-  // TODO: Create separate ticket to fix all the accesibility tests
-  it.skip('should be rendered with no axe errors', async () => {
+describe('ViewJobProfile component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: STATUS_CODES.OK,
+      json: async () => ({}),
+    });
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
+  });
+
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
     await runAxeTest({ rootNode: container });
@@ -121,40 +139,52 @@ describe.skip('ViewJobProfile component', () => {
   it('should render profile name correctly', async () => {
     const { findAllByText } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
-    await waitFor(() => expect(findAllByText('Inventory Single Record - Default Create Instance')).toBeDefined());
+    const profileName = await findAllByText('Inventory Single Record - Default Create Instance');
+
+    expect(profileName).toBeDefined();
   });
 
   it('should display "Summary" accordion', async () => {
     const { findByRole } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
-    await waitFor(() => expect(findByRole('button', { name: /summary/i })));
+    const summaryAccordion = await findByRole('button', { name: /summary/i });
+
+    expect(summaryAccordion).toBeInTheDocument();
   });
 
   it('should display "Tags" accordion', async () => {
     const { findByRole } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
-    await waitFor(() => expect(findByRole('button', { name: /tags/i })));
+    const tagsAccordion = await findByRole('button', { name: /tags/i });
+
+    expect(tagsAccordion).toBeInTheDocument();
   });
 
   it('should display "Overview" accordion', async () => {
     const { findByRole } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
-    await waitFor(() => expect(findByRole('button', { name: /overview/i })));
+    const overviewAccordion = await findByRole('button', { name: /overview/i });
+
+    expect(overviewAccordion).toBeInTheDocument();
   });
 
   it('should display "Jobs using this profile" accordion', async () => {
-    const { getByRole } = renderViewJobProfile(viewJobProfileProps(jobProfile));
+    const { findByRole } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
-    await waitFor(() => expect(getByRole('button', { name: /jobs using this profile/i })));
+    const jobsUsingAccordion = await findByRole('button', { name: /jobs using this profile/i });
+
+    expect(jobsUsingAccordion).toBeInTheDocument();
   });
 
   it('"Overview" section is open by default', async () => {
     const { findByRole } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
-    await waitFor(() => expect(findByRole('button', {
+    const expandedOverviewSection = await findByRole('button', {
       name: /overview/i,
       expanded: true,
-    })));
+    });
+
+    expect(expandedOverviewSection).toBeInTheDocument();
   });
 
   describe('Jobs using this profile section', () => {
@@ -167,7 +197,9 @@ describe.skip('ViewJobProfile component', () => {
     it('should display file names as a hotlink', async () => {
       const { findByText } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
-      await waitFor(() => expect(findByText('jobUsingProfile.mrc').href).toContain(`/data-import/job-summary/${fileId}`));
+      const fileNameHotLink = await findByText('jobUsingProfile.mrc');
+
+      expect(fileNameHotLink.href).toContain(`/data-import/job-summary/${fileId}`);
     });
   });
 
@@ -178,10 +210,15 @@ describe.skip('ViewJobProfile component', () => {
         findByText,
       } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
-      fireEvent.click(await findByRole('button', { name: /actions/i }));
-      fireEvent.click(await findByText('Delete'));
+      const actionsButton = await findByRole('button', { name: /actions/i });
+      fireEvent.click(actionsButton);
 
-      await waitFor(() => expect(findByText('Delete job profile?')).toBeInTheDocument());
+      const deleteButton = await findByText('Delete');
+      fireEvent.click(deleteButton);
+
+      const confirmationText = await findByText('Delete job profile?');
+
+      expect(confirmationText).toBeInTheDocument();
     });
   });
 
@@ -212,13 +249,27 @@ describe.skip('ViewJobProfile component', () => {
 
       fireEvent.click(actionsButton);
 
-      const firstDeleteButton = await findAllByText('Delete')[0];
-      const secondDeleteButton = await findAllByText('Delete')[1];
+      const firstDeleteButton = await findAllByText('Delete');
+      fireEvent.click(firstDeleteButton[0]);
 
-      fireEvent.click(firstDeleteButton);
-      fireEvent.click(secondDeleteButton);
+      const secondDeleteButton = await findAllByText('Delete');
+      fireEvent.click(secondDeleteButton[1]);
 
       await waitFor(() => expect(queryByText('Delete job profile?')).not.toBeInTheDocument());
+    });
+  });
+
+  describe('when job profile was deleted', () => {
+    it('should render information that it was deleted', () => {
+      const { getByText } = renderViewJobProfile(viewJobProfileProps({
+        records: [],
+        hasLoaded: false,
+        failed: { httpStatus: STATUS_CODES.NOT_FOUND },
+      }));
+
+      expect(getByText('Job profile deleted')).toBeInTheDocument();
+      expect(getByText('Not available - this job profile has been deleted')).toBeInTheDocument();
+      expect(getByText('Return to previous screen')).toBeInTheDocument();
     });
   });
 
@@ -233,8 +284,8 @@ describe.skip('ViewJobProfile component', () => {
 
       fireEvent.click(actionsButton);
 
-      const runButton = await findAllByText('Run')[0];
-      fireEvent.click(runButton);
+      const runButton = await findAllByText('Run');
+      fireEvent.click(runButton[0]);
 
       await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).toBeInTheDocument());
     });
@@ -243,22 +294,22 @@ describe.skip('ViewJobProfile component', () => {
   describe('when user confirm running job profile', () => {
     it('confirmation modal should be closed', async () => {
       const {
-        findByRole,
-        queryByText,
+        container,
+        findByText,
       } = renderViewJobProfile(viewJobProfileProps(jobProfile, ['run']));
-      const actionsButton = await findByRole('button', { name: /actions/i });
 
+      const actionsButton = await findByText('Actions');
       fireEvent.click(actionsButton);
 
-      const actionsMenu = document.querySelector('[class^=DropdownMenu]');
-
-      fireEvent.click(getByTextScreen(actionsMenu, 'Run'));
+      const runButton = await findByText('Run');
+      fireEvent.click(runButton);
 
       const confirmButton = document.querySelector('#clickable-run-job-profile-modal-confirm');
-
       fireEvent.click(confirmButton);
 
-      await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).not.toBeInTheDocument());
+      const modalTitle = container.querySelector('#run-job-profile-modal-label');
+
+      expect(modalTitle).not.toBeInTheDocument();
     });
 
     it('confirmation button should be disabled', async () => {
@@ -288,16 +339,13 @@ describe.skip('ViewJobProfile component', () => {
       } = renderViewJobProfile(viewJobProfileProps(jobProfile, ['run']));
 
       const actionsButton = await findByRole('button', { name: /actions/i });
-
       fireEvent.click(actionsButton);
 
-      const runButton = await findAllByText('Run')[0];
+      const runButton = await findAllByText('Run');
+      fireEvent.click(runButton[0]);
 
-      fireEvent.click(runButton);
-
-      const cancelButton = await findAllByText('Cancel')[0];
-
-      fireEvent.click(cancelButton);
+      const cancelButton = await findAllByText('Cancel');
+      fireEvent.click(cancelButton[0]);
 
       await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).not.toBeInTheDocument());
     });

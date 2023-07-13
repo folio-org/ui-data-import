@@ -99,8 +99,7 @@ const renderMarcFieldProtection = () => {
 };
 
 describe('MARCFieldProtection component', () => {
-  // TODO: Create separate ticket to fix all the accesibility tests
-  it.skip('should be rendered with no axe errors', async () => {
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderMarcFieldProtection();
 
     await runAxeTest({ rootNode: container });

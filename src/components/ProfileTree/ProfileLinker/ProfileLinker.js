@@ -23,6 +23,7 @@ import {
   ENTITY_KEYS,
   FILTER_QUERY_PARAMS,
   ASSOCIATION_TYPES,
+  okapiShape,
 } from '../../../utils';
 import { fetchProfileSnapshot } from '../../../utils/fetchProfileSnapshot';
 
@@ -152,11 +153,7 @@ ProfileLinker.propTypes = {
   dataKey: PropTypes.string.isRequired,
   initialData: PropTypes.arrayOf(PropTypes.object).isRequired,
   setInitialData: PropTypes.func.isRequired,
-  okapi: PropTypes.shape({
-    tenant: PropTypes.string.isRequired,
-    token: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-  }).isRequired,
+  okapi: okapiShape.isRequired,
   rootId: PropTypes.string,
   parentId: PropTypes.string,
   reactTo: PropTypes.oneOf(Object.values(PROFILE_RELATION_TYPES)),

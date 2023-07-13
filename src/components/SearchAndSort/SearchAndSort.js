@@ -139,7 +139,7 @@ export class SearchAndSort extends Component {
     resultsFormatter: PropTypes.object,
     defaultSort: PropTypes.string,
     finishedResourceName: PropTypes.string,
-    fullWidthContainer: PropTypes.instanceOf(Element),
+    fullWidthContainer: PropTypes.oneOfType([PropTypes.instanceOf(Element), PropTypes.elementType]),
     rowUpdater: PropTypes.func,
     isFullScreen: PropTypes.bool,
   };
@@ -266,7 +266,7 @@ export class SearchAndSort extends Component {
   setInitialSortQueryParam() {
     const { defaultSort } = this.props;
 
-    this.transitionToParams({ sort: defaultSort });
+    this.transitionToParams({ query: '', sort: defaultSort });
   }
 
   focusSearchField = () => {
@@ -277,6 +277,10 @@ export class SearchAndSort extends Component {
     const query = e.target.value;
 
     this.setState({ locallyChangedSearchTerm: query });
+
+    if (!query) {
+      this.onClearSearchQuery();
+    }
   };
 
   onSubmitSearch = e => {

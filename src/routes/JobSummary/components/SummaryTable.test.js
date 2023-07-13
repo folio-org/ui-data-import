@@ -58,8 +58,7 @@ const renderSummaryTable = (resourcesProp = resources) => {
 };
 
 describe('SummaryTable component', () => {
-  // TODO: Create separate ticket to fix all the accesibility tests
-  it.skip('should be rendered with no axe errors', async () => {
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderSummaryTable();
 
     await runAxeTest({ rootNode: container });
@@ -110,7 +109,7 @@ describe('SummaryTable component', () => {
 
     expect(getByText('Created')).toBeDefined();
     expect(getByText('Updated')).toBeDefined();
-    expect(getByText('Discarded')).toBeDefined();
+    expect(getByText('No action')).toBeDefined();
     expect(errorRow.innerHTML).toEqual('Error');
   });
 });

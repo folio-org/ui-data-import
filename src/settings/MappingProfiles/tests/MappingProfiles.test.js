@@ -8,6 +8,7 @@ import '../../../../test/jest/__mock__';
 import { Paneset } from '@folio/stripes/components';
 
 import {
+  buildMutator,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -70,7 +71,7 @@ const resources = {
   marcFieldProtectionSettings: { records: [] },
 };
 
-const mutator = {
+const mutator = buildMutator({
   query: {
     replace: noop,
     update: noop,
@@ -84,7 +85,7 @@ const mutator = {
     PUT: noop,
     DELETE: noop,
   },
-};
+});
 
 const testSet = new Set();
 

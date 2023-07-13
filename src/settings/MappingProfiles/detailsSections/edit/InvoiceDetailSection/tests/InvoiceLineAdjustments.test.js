@@ -8,6 +8,7 @@ import {
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -24,6 +25,8 @@ jest.mock('../../../hooks', () => ({
   useFieldMappingRefValues: () => [[mockLineAdjustmentsFields]],
 }));
 
+const okapi = buildOkapi();
+
 const renderInvoiceLineAdjustments = () => {
   const component = () => (
     <InvoiceLineAdjustments
@@ -31,7 +34,7 @@ const renderInvoiceLineAdjustments = () => {
       setReferenceTables={noop}
       mappingFields={INVOICE.mappingFields}
       initialFields={{}}
-      okapi={{}}
+      okapi={okapi}
     />
   );
 

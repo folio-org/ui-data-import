@@ -4,6 +4,8 @@ import {
   FOLIO_RECORD_TYPES,
 } from '@folio/stripes-data-transfer-components';
 
+export const PREVIOUS_LOCATIONS_KEY = '@folio/data-import/prev-locations';
+
 export const FIND_ALL_CQL = 'cql.allRecords=1';
 
 export const NO_FILE_NAME = 'No file name';
@@ -74,7 +76,7 @@ export const PRODUCT_IDS_FIELD = 'productIds';
 export const LOCATIONS_FIELD = 'locations';
 export const VOLUMES_FIELD = 'volumes';
 export const VENDOR_DETAILS_FIELD = 'vendorDetail';
-export const ORDER_FORMAT_FILED = 'orderFormat';
+export const ORDER_FORMAT_FIELD = 'orderFormat';
 export const QUANTITY_PHYSICAL_FIELD = 'quantityPhysical';
 export const QUANTITY_ELECTRONIC_FIELD = 'quantityElectronic';
 export const ADJUSTMENTS_FIELD = 'adjustments';
@@ -768,7 +770,7 @@ export const RECORD_ACTION_STATUS_LABEL_IDS = {
   [RECORD_ACTION_STATUS.CREATED]: 'ui-data-import.logLight.actionStatus.created',
   [RECORD_ACTION_STATUS.UPDATED]: 'ui-data-import.logLight.actionStatus.updated',
   [RECORD_ACTION_STATUS.MULTIPLE]: 'ui-data-import.logLight.actionStatus.multiple',
-  [RECORD_ACTION_STATUS.DISCARDED]: 'ui-data-import.logLight.actionStatus.discarded',
+  [RECORD_ACTION_STATUS.DISCARDED]: 'ui-data-import.logLight.actionStatus.noAction',
 };
 
 export const STATE_MANAGEMENT = { REDUCER: 'folio-data-import_settings' };
@@ -857,4 +859,12 @@ export const MATCH_INCOMING_RECORD_TYPES = {
     captionId: 'ui-data-import.incomingRecordTypes.static',
     iconKey: '',
   },
+};
+
+export const STATUS_CODES = {
+  OK: 200,
+  BAD_REQUEST: 400,
+  NOT_FOUND: 404,
+  CONFLICT: 409,
+  INTERNAL_SERVER_ERROR: 500,
 };

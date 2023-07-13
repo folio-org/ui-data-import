@@ -3,6 +3,7 @@ import smartComponentsTranslations from '@folio/stripes-smart-components/transla
 import stripesCoreTranslations from '@folio/stripes-core/translations/stripes-core/en';
 import stripesAcqComponentsTranslations from '@folio/stripes-acq-components/translations/stripes-acq-components/en';
 import stripesDataTransferComponentsTranslations from '@folio/stripes-data-transfer-components/translations/stripes-data-transfer-components/en';
+import stripesFormComponentsTranslations from '@folio/stripes-form/translations/stripes-form/en';
 
 export const translationsProperties = [
   {
@@ -24,5 +25,9 @@ export const translationsProperties = [
   {
     prefix: 'stripes-data-transfer-components',
     translations: stripesDataTransferComponentsTranslations,
+  },
+  {
+    prefix: 'stripes-form',
+    translations: stripesFormComponentsTranslations,
   },
 ];

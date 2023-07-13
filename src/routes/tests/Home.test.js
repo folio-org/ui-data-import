@@ -92,7 +92,7 @@ const renderHome = (store = initialStore, context = defaultContext) => {
   return renderWithIntl(renderWithRedux(component, store), translationsProperties);
 };
 
-describe.skip('Home component', () => {
+describe('Home component', () => {
   let mockStorage = {};
 
   beforeAll(() => {
@@ -111,8 +111,7 @@ describe.skip('Home component', () => {
     global.Storage.prototype.getItem.mockReset();
   });
 
-  // TODO: Create separate ticket to fix all the accesibility tests
-  it.skip('should be rendered with no axe errors', async () => {
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderHome(storeWithData);
 
     await runAxeTest({ rootNode: container });
@@ -180,7 +179,7 @@ describe.skip('Home component', () => {
 
         const {
           getAllByLabelText,
-          getAllByRole,
+          findAllByRole,
           getByText,
         } = renderHome();
 
@@ -189,7 +188,7 @@ describe.skip('Home component', () => {
         fireEvent.click(getByText('Delete selected logs'));
         fireEvent.click(getByText('Confirm'));
 
-        const checkboxes = getAllByRole('checkbox');
+        const checkboxes = await findAllByRole('checkbox');
 
         checkboxes.forEach(checkbox => {
           expect(checkbox).toBeDisabled();

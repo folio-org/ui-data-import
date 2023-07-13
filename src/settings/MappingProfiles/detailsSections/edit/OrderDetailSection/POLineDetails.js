@@ -337,6 +337,6 @@ export const POLineDetails = ({
 };
 
 POLineDetails.propTypes = {
-  setReferenceTables: PropTypes.object.isRequired,
+  setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
 };

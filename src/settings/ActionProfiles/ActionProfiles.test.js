@@ -61,11 +61,13 @@ const resources = {
         name: 'test1',
         metadata: metadataMock,
         userInfo: userInfoMock,
+        id: 'testId1',
       },
       {
         name: 'test2',
         metadata: metadataMock,
         userInfo: userInfoMock,
+        id: 'testId2',
       },
     ],
     other: { totalRecords: 2 },

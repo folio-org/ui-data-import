@@ -63,6 +63,18 @@
   word-break: break-word;
 }
 
+.headlineMargins {
+  margin: 2.5rem 1rem;
+}
+
 .leftMargin {
   margin-left: 5px;
+}
+
+.sideMargins {
+  margin: 0 20px;
+}
+
+hr {
+  margin: 0;
 }

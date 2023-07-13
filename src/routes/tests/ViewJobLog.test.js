@@ -1,167 +1,105 @@
 import React from 'react';
-import {
-  fireEvent,
-  render,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import faker from 'faker';
 import { runAxeTest } from '@folio/stripes-testing';
 
-import { Harness } from '../../../test/helpers';
-import { translationsProperties } from '../../../test/jest/helpers';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 import '../../../test/jest/__mock__';
 
 import { ViewJobLog } from '../ViewJobLog';
+import {
+  useJobLogRecordsQuery,
+  useSRSRecordQuery,
+} from '../../hooks';
 
-const SRSMARCBibMARCJSONData = {
+const mockJobLogData = {
+  relatedInstanceInfo: { idList: [faker.random.uuid()] },
+  relatedHoldingsInfo: { idList: [faker.random.uuid()] },
+  relatedItemInfo: {
+    error: 'Error message',
+    idList: [faker.random.uuid()],
+  },
+  relatedPoLineInfo: {
+    idList: [faker.random.uuid()],
+    orderId: faker.random.uuid(),
+  },
+  relatedInvoiceInfo: { idList: [faker.random.uuid()] },
+  relatedInvoiceLineInfo: {
+    id: faker.random.uuid(),
+    fullInvoiceLineNumber: '1024200-1',
+  },
+  relatedAuthorityInfo: { idList: [faker.random.uuid()] },
+  sourceRecordOrder: 0,
+  sourceRecordTitle: 'Test record title',
+};
+const mockSRSMARCBibMARCJSONData = {
   id: faker.random.uuid(),
   recordType: 'MARC',
 };
-const SRSMARCBibEDIFACTJSONData = {
+const mockSRSMARCBibEDIFACTJSONData = {
   id: faker.random.uuid(),
   recordType: 'EDIFACT',
 };
-const instanceJSONData = {
+const mockInstanceJSONData = {
   id: faker.random.uuid(),
   source: 'MARC',
   title: 'Test instance title',
 };
-const holdingsJSONData = {
+const mockHoldingsJSONData = {
   id: faker.random.uuid(),
   title: 'Test holdings title',
 };
-const itemsJSONData = {
+const mockItemsJSONData = {
   id: faker.random.uuid(),
   title: 'Test item title',
 };
-const orderJSONData = {
+const mockOrderJSONData = {
   id: faker.random.uuid(),
   title: 'Test purchase order title',
 };
-const poLineJSONData = {
+const mockPoLineJSONData = {
   id: faker.random.uuid(),
   title: 'Test po line title',
 };
-const invoiceJSONData = {
+const mockInvoiceJSONData = {
   id: faker.random.uuid(),
   title: 'Test invoice title',
 };
-const invoiceLineJSONData = {
+const mockInvoiceLineJSONData = {
   id: faker.random.uuid(),
   title: 'Test invoice line title',
 };
-const authorityJSONData = {
+const mockAuthorityJSONData = {
   id: faker.random.uuid(),
   title: 'Test authority title',
 };
 
-const jobLogResources = hasLoaded => ({
-  jobLog: {
-    records: [{
-      relatedInstanceInfo: { idList: [faker.random.uuid()] },
-      relatedHoldingsInfo: { idList: [faker.random.uuid()] },
-      relatedItemInfo: {
-        error: 'Error message',
-        idList: [faker.random.uuid()],
-      },
-      relatedPoLineInfo: {
-        idList: [faker.random.uuid()],
-        orderId: faker.random.uuid(),
-      },
-      relatedInvoiceInfo: { idList: [faker.random.uuid()] },
-      relatedInvoiceLineInfo: {
-        id: faker.random.uuid(),
-        fullInvoiceLineNumber: '1024200-1',
-      },
-      relatedAuthorityInfo: { idList: [faker.random.uuid()] },
-      sourceRecordOrder: 0,
-      sourceRecordTitle: 'Test record title',
-    }],
-    hasLoaded,
-  },
-});
-const srsMarcBibResources = recordType => ({
-  srsMarcBib: { records: [recordType === 'MARC' ? SRSMARCBibMARCJSONData : SRSMARCBibEDIFACTJSONData] },
-});
-const instancesResources = {
-  instances: { records: [instanceJSONData] },
-};
-const holdingsResources = {
-  holdings: { records: [holdingsJSONData] },
-};
-const itemsResources = {
-  items: { records: [itemsJSONData] },
-};
-const orderResources = {
-  order: { records: [orderJSONData] },
-};
-const poLineResources = {
-  poLine: { records: [poLineJSONData] },
-};
-const invoiceResources = {
-  invoice: { records: [invoiceJSONData] },
-};
-const invoiceLineResources = {
-  invoiceLine: { records: [invoiceLineJSONData] },
-};
-const authoritiesResources = {
-  authorities: { records: [authorityJSONData] },
-};
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useJobLogRecordsQuery: jest.fn(() => ({ isLoading: false, data: mockJobLogData })),
+  useSRSRecordQuery: jest.fn(() => ({ isLoading: false, data: mockSRSMARCBibMARCJSONData })),
+  useInventoryInstancesByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockInstanceJSONData] })),
+  useInventoryHoldingsByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockHoldingsJSONData] })),
+  useInventoryItemsByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockItemsJSONData] })),
+  useOrderByIdQuery: jest.fn(() => ({ isLoading: false, data: mockOrderJSONData })),
+  usePOLinesByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockPoLineJSONData] })),
+  useInvoicesByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockInvoiceJSONData] })),
+  useInvoiceLineByIdQuery: jest.fn(() => ({ isLoading: false, data: mockInvoiceLineJSONData })),
+  useAuthoritiesByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockAuthorityJSONData] })),
+}));
 
-const getResources = ({
-  recordType,
-  jobLogHasLoaded,
-}) => ({
-  ...jobLogResources(jobLogHasLoaded),
-  ...srsMarcBibResources(recordType),
-  ...instancesResources,
-  ...holdingsResources,
-  ...itemsResources,
-  ...orderResources,
-  ...poLineResources,
-  ...invoiceResources,
-  ...invoiceLineResources,
-  ...authoritiesResources,
-});
-
-const mutator = {
-  resultCount: { replace: () => {} },
-  resultOffset: { replace: () => {} },
-  instances: { GET: jest.fn() },
-  holdings: { GET: jest.fn() },
-  items: { GET: jest.fn() },
-  order: { GET: jest.fn() },
-  poLine: { GET: jest.fn() },
-  invoice: { GET: jest.fn() },
-  invoiceLine: { GET: jest.fn() },
-  authorities: { GET: jest.fn() },
-};
-
-const getViewJobLogComponent = ({
-  recordType,
-  jobLogHasLoaded = true,
-}) => (
-  <Harness translations={translationsProperties}>
+const renderViewJobLog = () => {
+  const component = (
     <Router>
-      <ViewJobLog
-        resources={getResources({
-          recordType,
-          jobLogHasLoaded,
-        })}
-        mutator={mutator}
-      />
+      <ViewJobLog />
     </Router>
-  </Harness>
-);
+  );
 
-const renderViewJobLog = ({
-  recordType,
-  jobLogHasLoaded,
-}) => {
-  return render(getViewJobLogComponent({
-    recordType,
-    jobLogHasLoaded,
-  }));
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('View job log page', () => {
@@ -171,45 +109,22 @@ describe('View job log page', () => {
     '</div>';
 
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderViewJobLog({
-      recordType: 'MARC',
-      jobLogHasLoaded: false,
-    });
+    const { container } = renderViewJobLog();
 
     await runAxeTest({ rootNode: container });
-  });
-
-  describe('when component is updated', () => {
-    it('should get JSON data for each record type', () => {
-      const { rerender } = renderViewJobLog({
-        recordType: 'MARC',
-        jobLogHasLoaded: false,
-      });
-
-      rerender(getViewJobLogComponent({ recordType: 'MARC' }));
-
-      expect(mutator.instances.GET).toHaveBeenCalled();
-      expect(mutator.holdings.GET).toHaveBeenCalled();
-      expect(mutator.items.GET).toHaveBeenCalled();
-      expect(mutator.order.GET).toHaveBeenCalled();
-      expect(mutator.poLine.GET).toHaveBeenCalled();
-      expect(mutator.invoice.GET).toHaveBeenCalled();
-      expect(mutator.invoiceLine.GET).toHaveBeenCalled();
-      expect(mutator.authorities.GET).toHaveBeenCalled();
-    });
   });
 
   describe('rendering header', () => {
     describe('when record type is MARC', () => {
       it('should display record title', () => {
-        const { queryByText } = renderViewJobLog({ recordType: 'MARC' });
+        const { queryByText } = renderViewJobLog();
 
         expect(queryByText('Import Log for Record')).toBeDefined();
         expect(queryByText('1 (Test record title)')).toBeDefined();
       });
 
       it('"SRS MARC" tab should be active by default', () => {
-        const { getByRole } = renderViewJobLog({ recordType: 'MARC' });
+        const { getByRole } = renderViewJobLog();
         const srsMarcBibTabElement = getByRole('tab', {
           name: 'SRS MARC',
           selected: true,
@@ -221,14 +136,22 @@ describe('View job log page', () => {
 
     describe('when record type is EDIFACT', () => {
       it('should display record title', () => {
-        const { queryByText } = renderViewJobLog({ recordType: 'EDIFACT' });
+        useSRSRecordQuery
+          .mockReturnValueOnce({ data: mockSRSMARCBibEDIFACTJSONData })
+          .mockReturnValueOnce({ data: mockSRSMARCBibEDIFACTJSONData });
+
+        const { queryByText } = renderViewJobLog();
 
         expect(queryByText('Import Log for Record')).toBeDefined();
         expect(queryByText('1024200-1 (Test record title)')).toBeDefined();
       });
 
       it('"Invoice" tab should be active by default', () => {
-        const { getByRole } = renderViewJobLog({ recordType: 'EDIFACT' });
+        useSRSRecordQuery
+          .mockReturnValueOnce({ data: mockSRSMARCBibEDIFACTJSONData })
+          .mockReturnValueOnce({ data: mockSRSMARCBibEDIFACTJSONData });
+
+        const { getByRole } = renderViewJobLog();
         const invoiceTabElement = getByRole('tab', {
           name: 'Invoice',
           selected: true,
@@ -239,13 +162,13 @@ describe('View job log page', () => {
     });
 
     it('should have "Show:" label', () => {
-      const { getByText } = renderViewJobLog({ recordType: 'MARC' });
+      const { getByText } = renderViewJobLog();
 
       expect(getByText('Show:')).toBeDefined();
     });
 
     it('should have 7 tabs', () => {
-      const { getAllByRole } = renderViewJobLog({ recordType: 'MARC' });
+      const { getAllByRole } = renderViewJobLog();
 
       expect(getAllByRole('tab').length).toEqual(7);
     });
@@ -254,6 +177,8 @@ describe('View job log page', () => {
   describe('rendering JSON screens', () => {
     describe('when log for SRS MARC has not loaded', () => {
       it('should render preloader component instead', () => {
+        useJobLogRecordsQuery.mockReturnValueOnce({ isLoading: true });
+
         const { getByText } = renderViewJobLog({
           recordType: 'MARC',
           jobLogHasLoaded: false,
@@ -265,16 +190,16 @@ describe('View job log page', () => {
 
     describe('when log for SRS MARC has loaded', () => {
       it('should be rendered with no axe errors', async () => {
-        const { container } = renderViewJobLog({ recordType: 'MARC' });
+        const { container } = renderViewJobLog();
 
         await runAxeTest({ rootNode: container });
       });
 
       it('should display SRS MARC JSON details on the screen', () => {
-        const { container } = renderViewJobLog({ recordType: 'MARC' });
+        const { container } = renderViewJobLog();
         const codeElement = container.querySelector('code.info');
 
-        expect(JSON.parse(codeElement.textContent)).toEqual(SRSMARCBibMARCJSONData);
+        expect(JSON.parse(codeElement.textContent)).toEqual(mockSRSMARCBibMARCJSONData);
       });
 
       describe('and Instance tag is active', () => {
@@ -282,12 +207,12 @@ describe('View job log page', () => {
           const {
             container,
             getByText,
-          } = renderViewJobLog({ recordType: 'MARC' });
+          } = renderViewJobLog();
 
           fireEvent.click(getByText('Instance'));
           const codeElement = container.querySelector('code.info');
 
-          expect(JSON.parse(codeElement.textContent)).toEqual(instanceJSONData);
+          expect(JSON.parse(codeElement.textContent)).toEqual(mockInstanceJSONData);
         });
       });
 
@@ -296,12 +221,12 @@ describe('View job log page', () => {
           const {
             container,
             getByText,
-          } = renderViewJobLog({ recordType: 'MARC' });
+          } = renderViewJobLog();
 
           fireEvent.click(getByText('Holdings'));
           const codeElement = container.querySelector('code.info');
 
-          expect(JSON.parse(codeElement.textContent)).toEqual(holdingsJSONData);
+          expect(JSON.parse(codeElement.textContent)).toEqual(mockHoldingsJSONData);
         });
       });
 
@@ -310,12 +235,12 @@ describe('View job log page', () => {
           const {
             container,
             getByText,
-          } = renderViewJobLog({ recordType: 'MARC' });
+          } = renderViewJobLog();
 
           fireEvent.click(getByText('Item*'));
           const codeElement = container.querySelector('code.info');
 
-          expect(JSON.parse(codeElement.textContent)).toEqual(itemsJSONData);
+          expect(JSON.parse(codeElement.textContent)).toEqual(mockItemsJSONData);
         });
       });
 
@@ -324,56 +249,60 @@ describe('View job log page', () => {
           const {
             container,
             getByText,
-          } = renderViewJobLog({ recordType: 'MARC' });
+          } = renderViewJobLog();
 
           fireEvent.click(getByText('Authority'));
           const codeElement = container.querySelector('code.info');
 
-          expect(JSON.parse(codeElement.textContent)).toEqual(authorityJSONData);
+          expect(JSON.parse(codeElement.textContent)).toEqual(mockAuthorityJSONData);
         });
       });
 
       describe('and Order tag is active', () => {
         it('should display Order Line JSON details on the screen', () => {
-          const { getByRole } = renderViewJobLog({ recordType: 'MARC' });
+          const { getByRole } = renderViewJobLog();
           const orderTabElement = getByRole('tab', { name: 'Order' });
 
           fireEvent.click(orderTabElement);
           const orderLineCodeElement = document.querySelectorAll('code.info')[0];
 
-          expect(JSON.parse(orderLineCodeElement.textContent)).toEqual(poLineJSONData);
+          expect(JSON.parse(orderLineCodeElement.textContent)).toEqual(mockPoLineJSONData);
         });
 
         it('should display Order JSON details on the screen', () => {
-          const { getByRole } = renderViewJobLog({ recordType: 'MARC' });
+          const { getByRole } = renderViewJobLog();
           const orderTabElement = getByRole('tab', { name: 'Order' });
 
           fireEvent.click(orderTabElement);
           const orderLineCodeElement = document.querySelectorAll('code.info')[1];
 
-          expect(JSON.parse(orderLineCodeElement.textContent)).toEqual(orderJSONData);
+          expect(JSON.parse(orderLineCodeElement.textContent)).toEqual(mockOrderJSONData);
         });
       });
 
       describe('and Invoice tag is active', () => {
         it('should display Invoice Line JSON details on the screen', () => {
-          const { getByRole } = renderViewJobLog({ recordType: 'EDIFACT' });
+          useSRSRecordQuery.mockReturnValueOnce({ data: mockSRSMARCBibEDIFACTJSONData });
+
+          const { getByRole } = renderViewJobLog();
           const invoiceTabElement = getByRole('tab', { name: 'Invoice' });
 
           fireEvent.click(invoiceTabElement);
           const invoiceLineCodeElement = document.querySelectorAll('code.info')[0];
 
-          expect(JSON.parse(invoiceLineCodeElement.textContent)).toEqual(invoiceLineJSONData);
+          expect(JSON.parse(invoiceLineCodeElement.textContent)).toEqual(mockInvoiceLineJSONData);
         });
 
         it('should display Invoice JSON details on the screen', () => {
-          const { getByRole } = renderViewJobLog({ recordType: 'EDIFACT' });
+          useSRSRecordQuery.mockReturnValueOnce({ data: mockSRSMARCBibEDIFACTJSONData });
+
+          const { getByRole } = renderViewJobLog();
           const invoiceTabElement = getByRole('tab', { name: 'Invoice' });
 
           fireEvent.click(invoiceTabElement);
           const invoiceCodeElement = document.querySelectorAll('code.info')[1];
 
-          expect(JSON.parse(invoiceCodeElement.textContent)).toEqual(invoiceJSONData);
+          expect(JSON.parse(invoiceCodeElement.textContent)).toEqual(mockInvoiceJSONData);
         });
       });
     });
@@ -381,14 +310,14 @@ describe('View job log page', () => {
 
   describe('rendering error details', () => {
     it('should render a tab with an asterisk', () => {
-      const { getByText } = renderViewJobLog({ recordType: 'MARC' });
+      const { getByText } = renderViewJobLog();
 
       expect(getByText('Item*')).toBeDefined();
     });
 
     describe('when clicking on the tab with an error', () => {
       it('should show an error message', () => {
-        const { getByText } = renderViewJobLog({ recordType: 'MARC' });
+        const { getByText } = renderViewJobLog();
 
         fireEvent.click(getByText('Item*'));
 

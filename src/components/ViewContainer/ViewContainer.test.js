@@ -12,7 +12,10 @@ import '../../../test/jest/__mock__';
 
 import { ViewContainer } from './ViewContainer';
 
-import { ENTITY_KEYS } from '../../utils';
+import {
+  ENTITY_KEYS,
+  STATUS_CODES,
+} from '../../utils';
 
 jest.mock('../Callout', () => ({ createNetworkMessage: () => () => 'message' }));
 
@@ -276,7 +279,7 @@ describe('ViewContainer component', () => {
           });
 
           const record = { id: '1' };
-          const error = { status: 400 };
+          const error = { status: STATUS_CODES.BAD_REQUEST };
 
           children.mock.calls[0][0].handleDeleteError(record, error);
 

@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  within,
-} from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -13,6 +10,7 @@ import {
 } from '../../../../../../../test/jest/helpers';
 import '../../../../../../../test/jest/__mock__';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import { FundDistribution } from '../FundDistribution';
 
 jest.mock('@folio/stripes/components', () => ({
@@ -51,6 +49,8 @@ jest.mock('../../../hooks', () => ({
   }]],
 }));
 
+global.fetch = jest.fn();
+
 const setReferenceTablesMock = jest.fn();
 
 const okapi = buildOkapi();
@@ -68,18 +68,45 @@ const renderFundDistribution = () => {
 };
 
 describe('FundDistribution edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: STATUS_CODES.OK,
+      json: async () => ({}),
+    });
+  });
+
   afterEach(() => {
     setReferenceTablesMock.mockClear();
   });
 
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
+  });
+
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderFundDistribution();
+    const {
+      container,
+      findByText,
+    } = renderFundDistribution();
+
+    const fundDistributionTitle = await findByText('Fund distribution');
+
+    expect(fundDistributionTitle).toBeInTheDocument();
 
     await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {
-    const { getByText } = renderFundDistribution();
+    const {
+      getByText,
+      findByText,
+    } = renderFundDistribution();
+
+    const fundDistributionTitle = await findByText('Fund distribution');
+
+    expect(fundDistributionTitle).toBeInTheDocument();
 
     expect(getByText('Add fund distribution')).toBeInTheDocument();
     expect(getByText('Fund ID')).toBeInTheDocument();
@@ -88,22 +115,26 @@ describe('FundDistribution edit component', () => {
     expect(getByText('Type')).toBeInTheDocument();
   });
 
-  it('should render info icons for sometimes required fields', () => {
-    const { queryByText } = renderFundDistribution();
+  it('should render info icons for sometimes required fields', async () => {
+    const { findByText } = renderFundDistribution();
 
-    expect(within(queryByText('Fund ID')).getByText(/InfoPopover/i)).toBeDefined();
-    expect(within(queryByText('Expense class')).getByText(/InfoPopover/i)).toBeDefined();
-    expect(within(queryByText('Value')).getByText(/InfoPopover/i)).toBeDefined();
+    const fundIDField = await findByText('Fund ID');
+    const expenseClassField = await findByText('Expense class');
+    const valueField = await findByText('Value');
+
+    expect(fundIDField.lastElementChild.innerHTML).toEqual('InfoPopover');
+    expect(expenseClassField.lastElementChild.innerHTML).toEqual('InfoPopover');
+    expect(valueField.lastElementChild.innerHTML).toEqual('InfoPopover');
   });
 
   describe('when click "Add fund distribution" button', () => {
-    it('fields for new fund distribution should be rendered', () => {
+    it('fields for new fund distribution should be rendered', async () => {
       const {
-        getByRole,
+        findByRole,
         getByText,
       } = renderFundDistribution();
 
-      const addFundDistributionButton = getByRole('button', { name: /Add fund distribution/i });
+      const addFundDistributionButton = await findByRole('button', { name: /Add fund distribution/i });
       fireEvent.click(addFundDistributionButton);
 
       expect(getByText('Fund ID')).toBeInTheDocument();
@@ -113,13 +144,13 @@ describe('FundDistribution edit component', () => {
     });
 
     describe('when click on trash icon button', () => {
-      it('function for changing form should be called', () => {
+      it('function for changing form should be called', async () => {
         const {
-          getByRole,
+          findByRole,
           getAllByRole,
         } = renderFundDistribution();
 
-        const addFundDistributionButton = getByRole('button', { name: /Add fund distribution/i });
+        const addFundDistributionButton = await findByRole('button', { name: /Add fund distribution/i });
         fireEvent.click(addFundDistributionButton);
 
         const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
@@ -133,31 +164,33 @@ describe('FundDistribution edit component', () => {
   describe('validation error', () => {
     const validationErrorMessage = 'Non-MARC value must use quotation marks';
 
-    it('should appear when fund distribution value is not wrapped into quotes', () => {
+    it('should appear when fund distribution value is not wrapped into quotes', async () => {
       const {
-        getByRole,
+        findByRole,
         getByText,
         getByLabelText,
       } = renderFundDistribution();
 
-      const addFundDistributionButton = getByRole('button', { name: /Add fund distribution/ });
+      const addFundDistributionButton = await findByRole('button', { name: /Add fund distribution/ });
       fireEvent.click(addFundDistributionButton);
 
       const valueField = getByLabelText(/Value/);
       fireEvent.change(valueField, { target : { value: '100' } });
       fireEvent.blur(valueField);
 
-      expect(getByText(validationErrorMessage)).toBeInTheDocument();
+      const errorMessage = getByText(validationErrorMessage);
+
+      expect(errorMessage).toBeInTheDocument();
     });
 
-    it('should not be shown when fund distribution value is marc field with subfield', () => {
+    it('should not be shown when fund distribution value is marc field with subfield', async () => {
       const {
-        getByRole,
+        findByRole,
         queryByText,
         getByLabelText,
       } = renderFundDistribution();
 
-      const addFundDistributionButton = getByRole('button', { name: /Add fund distribution/ });
+      const addFundDistributionButton = await findByRole('button', { name: /Add fund distribution/ });
       fireEvent.click(addFundDistributionButton);
 
       const valueField = getByLabelText(/Value/);
@@ -167,14 +200,14 @@ describe('FundDistribution edit component', () => {
       expect(queryByText(validationErrorMessage)).not.toBeInTheDocument();
     });
 
-    it('should not be shown when fund distribution value is wrapped into quotes', () => {
+    it('should not be shown when fund distribution value is wrapped into quotes', async () => {
       const {
-        getByRole,
+        findByRole,
         queryByText,
         getByLabelText,
       } = renderFundDistribution();
 
-      const addFundDistributionButton = getByRole('button', { name: /Add fund distribution/ });
+      const addFundDistributionButton = await findByRole('button', { name: /Add fund distribution/ });
       fireEvent.click(addFundDistributionButton);
 
       const valueField = getByLabelText(/Value/);

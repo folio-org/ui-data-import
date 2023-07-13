@@ -134,7 +134,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
       'updated',
       'updatedBy',
     ];
-  const columnWidths = { selected: '40px' };
+  const columnWidths = { selected: '40px', name: '430px' };
 
   const mapStateToProps = state => {
     const {

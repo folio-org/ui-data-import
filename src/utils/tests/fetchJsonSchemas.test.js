@@ -1,9 +1,11 @@
 import faker from 'faker';
+import '../../../test/jest/__mock__';
 import {
   fetchJsonSchema,
   getModuleVersion,
   handleAllRequests,
 } from '../fetchJsonShemas';
+import { STATUS_CODES } from '../constants';
 
 describe('getModuleVersion function', () => {
   it('returns module version of a module with given name', () => {
@@ -28,7 +30,7 @@ describe('fetchJsonSchema function', () => {
   it('fetches correctly', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({ properties: 'testSchema' }),
     });
     const path = 'testRecord.json';
@@ -49,7 +51,7 @@ describe('fetchJsonSchema function', () => {
     jest.spyOn(console, 'error').mockImplementation(() => {});
     global.fetch.mockResolvedValueOnce({
       ok: false,
-      status: 500,
+      status: STATUS_CODES.INTERNAL_SERVER_ERROR,
       json: async () => {},
     });
     const path = 'testRecord.json';

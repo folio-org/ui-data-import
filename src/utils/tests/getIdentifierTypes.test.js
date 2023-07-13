@@ -4,6 +4,7 @@ import { getIdentifierTypes } from '../getIdentifierTypes';
 import {
   PER_REQUEST_LIMIT,
   FIND_ALL_CQL,
+  STATUS_CODES,
 } from '..';
 
 global.fetch = jest.fn();
@@ -12,7 +13,7 @@ describe('getIdentifierTypes function', () => {
   it('should fetch data correctly', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: true,
-      status: 200,
+      status: STATUS_CODES.OK,
       json: async () => ({ id: 'testId' }),
     });
 
@@ -30,7 +31,7 @@ describe('getIdentifierTypes function', () => {
       jest.spyOn(console, 'error').mockImplementation(() => {});
       global.fetch.mockResolvedValueOnce({
         ok: false,
-        status: 500,
+        status: STATUS_CODES.INTERNAL_SERVER_ERROR,
         json: async () => ({}),
       });
 

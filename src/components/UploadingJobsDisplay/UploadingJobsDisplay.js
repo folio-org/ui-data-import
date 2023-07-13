@@ -39,6 +39,7 @@ import {
   xhrAddHeaders,
   generateSettingsLabel,
   FILE_STATUSES,
+  STATUS_CODES,
 } from '../../utils';
 import * as API from '../../utils/upload';
 import { createJobProfiles } from '../../settings/JobProfiles';
@@ -270,7 +271,7 @@ export class UploadingJobsDisplay extends Component {
           try {
             const parsedResponse = JSON.parse(responseText);
 
-            if (status === 200) {
+            if (status === STATUS_CODES.OK) {
               resolve(parsedResponse);
             } else {
               reject(parsedResponse);

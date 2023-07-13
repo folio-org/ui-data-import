@@ -9,14 +9,19 @@ import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../../../test/jest/__mock__';
 import {
+  buildOkapi,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
 } from '../../../../../../../test/jest/helpers';
 
+import { STATUS_CODES } from '../../../../../../utils';
 import { InvoiceLineFundDistribution } from '../InvoiceLineFundDistribution';
 import INVOICE from '../../../../initialDetails/INVOICE';
 
+global.fetch = jest.fn();
+
+const okapi = buildOkapi();
 const mockFundDistributionsFields = get(INVOICE.mappingFields, 'invoiceLines.[0].fields[14].subfields[0]');
 
 jest.mock('../../../hooks', () => ({
@@ -30,8 +35,8 @@ const renderInvoiceLineFundDistribution = () => {
       invoiceLinesFieldIndex={26}
       setReferenceTables={noop}
       initialFields={{}}
-      getMappingSubfieldsFieldValue={noop}
-      okapi={{}}
+      getMappingSubfieldsFieldValue={jest.fn().mockReturnValue('26')}
+      okapi={okapi}
     />
   );
 
@@ -39,26 +44,48 @@ const renderInvoiceLineFundDistribution = () => {
 };
 
 describe('InvoiceLineFundDistribution edit component', () => {
+  beforeAll(() => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: STATUS_CODES.OK,
+      json: async () => ({}),
+    });
+  });
+
+  afterAll(() => {
+    global.fetch.mockClear();
+    delete global.fetch;
+  });
+
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderInvoiceLineFundDistribution();
+    const {
+      container,
+      findByText,
+    } = renderInvoiceLineFundDistribution();
+
+    const addFundDistributionButton = await findByText('Invoice line fund distribution');
+
+    expect(addFundDistributionButton).toBeInTheDocument();
 
     await runAxeTest({ rootNode: container });
   });
 
-  it('should render correct fields', () => {
-    const { getByRole } = renderInvoiceLineFundDistribution();
+  it('should render correct fields', async () => {
+    const { findByRole } = renderInvoiceLineFundDistribution();
 
-    expect(getByRole('button', { name: 'Add fund distribution' })).toBeInTheDocument();
+    const addFundDistributionButton = await findByRole('button', { name: 'Add fund distribution' });
+
+    expect(addFundDistributionButton).toBeInTheDocument();
   });
 
   describe('when clicking "Add fund distribution" button', () => {
-    it('correct fields should be rendered', () => {
+    it('correct fields should be rendered', async () => {
       const {
-        getByRole,
+        findByRole,
         getByText,
       } = renderInvoiceLineFundDistribution();
 
-      const addButton = getByRole('button', { name: 'Add fund distribution' });
+      const addButton = await findByRole('button', { name: 'Add fund distribution' });
       fireEvent.click(addButton);
 
       expect(getByText('Fund ID')).toBeInTheDocument();
@@ -68,10 +95,12 @@ describe('InvoiceLineFundDistribution edit component', () => {
       expect(getByText('Amount')).toBeInTheDocument();
     });
 
-    it('some fields should be disabled by default', () => {
-      const { getByLabelText } = renderInvoiceLineFundDistribution();
+    it('some fields should be disabled by default', async () => {
+      const { findByLabelText } = renderInvoiceLineFundDistribution();
 
-      expect(getByLabelText('Amount')).toBeDisabled();
+      const amountField = await findByLabelText('Amount');
+
+      expect(amountField).toBeDisabled();
     });
   });
 });

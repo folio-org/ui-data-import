@@ -1,6 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { render } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import {
+  fireEvent,
+  render,
+} from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -13,19 +17,29 @@ import '../../../test/jest/__mock__';
 
 import { JobSummary } from './JobSummary';
 
+import { PREVIOUS_LOCATIONS_KEY } from '../../utils';
+
 jest.mock('./components', () => ({
   ...jest.requireActual('./components'),
   SummaryTable: () => 'SummaryTable',
   RecordsTable: () => 'RecordsTable',
 }));
 
+const history = createMemoryHistory();
+history.push = jest.fn();
+
 const getJobExecutionsResources = (dataType, jobExecutionsId = 'testId') => ({
   jobExecutions: {
     records: [{
       id: jobExecutionsId,
+      hrId: 12,
       fileName: 'testFileName',
       progress: { total: 10 },
-      jobProfileInfo: { dataType },
+      jobProfileInfo: {
+        dataType,
+        name: 'Test job profile',
+        id: 'testId',
+      },
     }],
     other: { totalRecords: 1 },
     resultCount: 1,
@@ -66,7 +80,7 @@ const renderJobSummary = ({ dataType = 'MARC', resources }) => {
           search: '',
           pathname: '',
         }}
-        history={{ push: () => {} }}
+        history={history}
         stripes={stripesMock}
       />
     </Router>
@@ -76,6 +90,10 @@ const renderJobSummary = ({ dataType = 'MARC', resources }) => {
 };
 
 describe('Job summary page', () => {
+  afterEach(() => {
+    history.push.mockClear();
+  });
+
   it('should be rendered with no axe errors', async () => {
     const { container } = renderJobSummary({});
 
@@ -88,10 +106,50 @@ describe('Job summary page', () => {
     expect(getByText('testFileName')).toBeDefined();
   });
 
-  it('should have total number of records in the subheader', () => {
-    const { getByText } = renderJobSummary({});
+  describe('subheader', () => {
+    it('should be rendered', () => {
+      const { getByText } = renderJobSummary({});
 
-    expect(getByText('1 record found')).toBeDefined();
+      expect(getByText('Job 12 • 1 record found')).toBeDefined();
+    });
+
+    it('should render total number of records', () => {
+      const { getByText } = renderJobSummary({});
+
+      expect(getByText(/1 record found/i)).toBeDefined();
+    });
+
+    it('should render hrId', () => {
+      const { getByText } = renderJobSummary({});
+
+      expect(getByText(/12/i)).toBeDefined();
+    });
+  });
+
+  describe('when close the pane', () => {
+    describe('when previous location is set', () => {
+      it('should redirect to the previous location', () => {
+        window.sessionStorage.setItem(PREVIOUS_LOCATIONS_KEY, JSON.stringify(['/test']));
+
+        const { getByLabelText } = renderJobSummary({});
+
+        const closeButton = getByLabelText('times');
+        fireEvent.click(closeButton);
+
+        expect(history.push).toHaveBeenCalledWith('/test');
+      });
+    });
+
+    describe('when previous location is not set', () => {
+      it('should redirect to Data Import landing page', () => {
+        const { getByLabelText } = renderJobSummary({});
+
+        const closeButton = getByLabelText('times');
+        fireEvent.click(closeButton);
+
+        expect(history.push).toHaveBeenCalledWith('/data-import');
+      });
+    });
   });
 
   it('should render the summary table', () => {
@@ -119,6 +177,7 @@ describe('Job summary page', () => {
             location={{
               search: '',
               pathname: '',
+              state: { from: 'test' }
             }}
             history={{ push: () => {} }}
           />
