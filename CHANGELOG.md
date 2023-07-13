@@ -9,6 +9,7 @@
 * Avoid private paths in stripes-core imports (UIDATIMP-1414)
 
 ## [6.0.9](https://github.com/folio-org/ui-data-import/tree/v6.0.9) (2023-07-31)
+* Change validation messages which were represented in code format (UIDATIMP-1473)
 
 ### Bugs fixed:
 * Allow to handle text/plain content type when error occurs (UIDATIMP-1465)
