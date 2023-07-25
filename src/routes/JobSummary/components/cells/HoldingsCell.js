@@ -35,7 +35,7 @@ export const HoldingsCell = ({
     return (
       <div key={index} style={{ paddingBottom: '7px' }}>
         {getHotlinkCellFormatter(isHotlink, entityLabel, path, 'holdings')}
-        {!isDiscarded ? ` (${locationCode})` : ''}
+        {!isDiscarded && locationCode ? ` (${locationCode})` : ''}
         {spacing}
       </div>
     );

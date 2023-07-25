@@ -43,8 +43,8 @@ export const getRecordActionStatusLabel = recordType => {
 };
 
 export const fillCellWithNoValues = (itemData, isErrorColumn = false) => {
-  const itemsInfoCell = itemData.map((sortedItems, itemIndex) => {
-    const groupOfItems = sortedItems.map((item, index) => (
+  const itemsInfoCell = itemData?.map((sortedItems, itemIndex) => {
+    const groupOfItems = sortedItems?.map((item, index) => (
       <div key={`group-${index}`}>
         <span>
           {item.error && isErrorColumn ? <FormattedMessage id="ui-data-import.error" /> : null}
