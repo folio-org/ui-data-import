@@ -193,6 +193,8 @@ export const RecordsTable = ({
       const itemData = sourceRecord?.relatedItemInfo;
 
       const groupedItemData = groupBy(itemData, 'holdingsId');
+      if (isEmpty(groupedItemData)) return <NoValue />;
+
       const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id]);
 
       return (
@@ -213,6 +215,8 @@ export const RecordsTable = ({
       const itemData = sourceRecord?.relatedItemInfo;
 
       const groupedItemData = groupBy(itemData, 'holdingsId');
+      if (isEmpty(groupedItemData)) return <NoValue />;
+
       const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id]);
 
       return (
@@ -234,6 +238,7 @@ export const RecordsTable = ({
       const itemData = sourceRecord?.relatedItemInfo;
 
       const groupedItemData = groupBy(itemData, 'holdingsId');
+      if (isEmpty(groupedItemData)) return <NoValue />;
       const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id]);
 
       return (
@@ -255,6 +260,8 @@ export const RecordsTable = ({
       const itemData = sourceRecord?.relatedItemInfo;
 
       const groupedItemData = groupBy(itemData, 'holdingsId');
+      if (isEmpty(groupedItemData)) return <NoValue />;
+
       const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id]);
 
       return (
