@@ -1127,6 +1127,7 @@
   "modal.cancelUpload.cancel": "No, do not delete",
   "modal.cancelUpload.confirm": "Yes, delete",
   "validation.enterValue": "Please enter a value",
+  "logViewer.partOfTotal": "{number} of {total}",
   "logViewer.invoice": "Invoice",
   "logViewer.invoiceLine": "Invoice line",
   "logViewer.order": "Order",
