@@ -26,7 +26,7 @@
   "jobProgress.partsRemaining": "Job parts remaining: {current} of {total}",
   "jobProgress.partsProcessed": "Job parts processed: {current} of {total}",
   "jobProgress.partsCompleted": "Completed: {amount}",
-  "jobProgress.partsCompletedWithErrors": "Completed with Errors: {amount}",
+  "jobProgress.partsCompletedWithErrors": "Completed with errors: {amount}",
   "jobProgress.partsFailed": "Failed: {amount}",
   "import-log": "Import Log for Record <b>{recordOrder} ({recordTitle})</b>",
   "noRecord": "No record",
