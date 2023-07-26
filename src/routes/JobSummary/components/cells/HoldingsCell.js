@@ -15,7 +15,7 @@ export const HoldingsCell = ({
   itemInfo,
   locations,
 }) => {
-  const holdingsInfoCell = holdingsInfo.map((holdings, index) => {
+  const holdingsInfoCell = holdingsInfo?.map((holdings, index) => {
     const entityLabel = getRecordActionStatusLabel(holdings.actionStatus);
     const holdingsId = holdings.id;
     const path = `/inventory/view/${instanceId}/${holdingsId}`;

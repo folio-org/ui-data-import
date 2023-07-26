@@ -175,7 +175,7 @@ export const RecordsTable = ({
       if (isEmpty(itemData)) return <NoValue />;
 
       const groupedItemData = groupBy(itemData, 'holdingsId');
-      const sortedItemData = holdingsData.map(holdings => groupedItemData[holdings.id]);
+      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id]);
 
       return (
         <ItemCell

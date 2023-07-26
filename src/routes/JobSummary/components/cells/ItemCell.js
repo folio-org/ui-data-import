@@ -12,8 +12,8 @@ export const ItemCell = ({
   sortedItemData,
   instanceId,
 }) => {
-  const itemsInfoCell = sortedItemData.map((sortedItems, itemIndex) => {
-    const groupOfItems = sortedItems.map((item, index) => {
+  const itemsInfoCell = sortedItemData?.map((sortedItems, itemIndex) => {
+    const groupOfItems = sortedItems?.map((item, index) => {
       const entityLabel = getRecordActionStatusLabel(item.actionStatus);
       const holdingsId = item.holdingsId;
       const itemId = item.id;
