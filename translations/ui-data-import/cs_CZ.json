@@ -16,7 +16,7 @@
     "uploadBtnText": "nebo vybrat soubory",
     "jobProfileName": "Profil úlohy",
     "jobExecutionHrId": "ID",
-    "jobCompletedDate": "Úloha dokončena",
+    "jobCompletedDate": "Dokončeno",
     "noPreviewsJobsMessage": "Žádné náhledy k zobrazení",
     "noRunningJobsMessage": "Žádné spuštěné úlohy k zobrazení",
     "loading": "Načítání",
@@ -1145,5 +1145,13 @@
     "jobProfile.deleted": "Profil úlohy byl smazán",
     "jobProfile.notAvailable": "Není k dispozici - tento profil úlohy byl smazán",
     "returnToPreviousScreen": "Návrat na předchozí obrazovku",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Akviziční jednotky"
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Akviziční jednotky",
+    "jobProgress.partsRemaining": "Job parts remaining: {current} of {total}",
+    "jobProgress.partsProcessed": "Job parts processed: {current} of {total}",
+    "jobProgress.partsCompleted": "Completed: {amount}",
+    "jobProgress.partsCompletedWithErrors": "Completed with errors: {amount}",
+    "jobProgress.partsFailed": "Failed: {amount}",
+    "uploadError": "There was a problem uploading the file. Please try again",
+    "modal.jobProfile.run.largeFileSplitting": "Large MARC files will be split into separate parts.",
+    "logViewer.partOfTotal": "{number} of {total}"
 }
