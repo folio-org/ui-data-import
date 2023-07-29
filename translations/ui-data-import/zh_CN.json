@@ -1145,5 +1145,13 @@
     "jobProfile.deleted": "任务配置文件已删除",
     "jobProfile.notAvailable": "不可用 - 此任务配置文件已删除",
     "returnToPreviousScreen": "返回上一屏幕",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "采购单位"
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "采购单位",
+    "jobProgress.partsRemaining": "Job parts remaining: {current} of {total}",
+    "jobProgress.partsProcessed": "Job parts processed: {current} of {total}",
+    "jobProgress.partsCompleted": "Completed: {amount}",
+    "jobProgress.partsCompletedWithErrors": "Completed with errors: {amount}",
+    "jobProgress.partsFailed": "Failed: {amount}",
+    "uploadError": "There was a problem uploading the file. Please try again",
+    "modal.jobProfile.run.largeFileSplitting": "Large MARC files will be split into separate parts.",
+    "logViewer.partOfTotal": "{number} of {total}"
 }
