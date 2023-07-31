@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -28,6 +29,12 @@ const renderBooleanActionField = ({ placeholder }) => {
 describe('Boolean action field component', () => {
   afterEach(() => {
     onBooleanFieldChangeMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderBooleanActionField({});
+
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when a form has wrapped component', () => {

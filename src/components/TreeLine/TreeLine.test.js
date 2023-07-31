@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { render } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
@@ -108,6 +108,12 @@ window.ResizeObserver = jest.fn(() => ({
 describe('TreeLine', () => {
   afterAll(() => {
     delete window.ResizeObserver;
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = render(parentContainer);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered inside container', () => {

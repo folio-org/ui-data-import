@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -62,6 +62,7 @@ const renderWithReferenceValues = ({
       value={value}
       onChange={onChange}
       disabled={disabled}
+      aria-label="wrappedComponent label"
     />
   );
 
@@ -93,6 +94,12 @@ describe('withReferenceValues component', () => {
     mockOnFieldChange.mockClear();
 
     mockInputOnchange.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderWithReferenceValues(withReferenceValuesProps);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render wrapped component correctly', () => {

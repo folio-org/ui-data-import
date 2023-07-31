@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -29,6 +30,12 @@ const renderMappingMARCAuthorityDetails = ({ folioRecordType }) => {
 };
 
 describe('MappingMARCAuthorityDetails', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingMARCAuthorityDetails({ folioRecordType: MARC_TYPES.MARC_AUTHORITY });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when field mappings for MARC is "Updates"', () => {
     it('should have correct fields', async () => {
       const { findByRole } = renderMappingMARCAuthorityDetails({ folioRecordType: MARC_TYPES.MARC_AUTHORITY });

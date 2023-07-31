@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -41,6 +42,13 @@ const renderLinkerButton = ({
 describe('LinkerButton', () => {
   afterEach(() => {
     onClick.mockClear();
+  });
+
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderLinkerButton(linkerButtonProps);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered with FormattedMessage title', () => {

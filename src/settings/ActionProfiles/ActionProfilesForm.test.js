@@ -6,6 +6,7 @@ import {
 } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -147,6 +148,12 @@ describe('ActionProfilesForm', () => {
   });
 
   describe('when form is in creating new record mode', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderActionProfilesForm(actionProfilesFormProps());
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('should be rendered', () => {
       const { getAllByText } = renderActionProfilesForm(actionProfilesFormProps());
 
@@ -344,6 +351,12 @@ describe('ActionProfilesForm', () => {
   });
 
   describe('when form is in edit mode', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('should be rendered', () => {
       const { getByText } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
 

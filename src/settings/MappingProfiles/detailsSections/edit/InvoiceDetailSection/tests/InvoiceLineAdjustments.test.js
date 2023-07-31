@@ -5,6 +5,8 @@ import {
   get,
 } from 'lodash';
 
+import { runAxeTest } from '@folio/stripes-testing';
+
 import {
   renderWithIntl,
   renderWithReduxForm,
@@ -37,6 +39,12 @@ const renderInvoiceLineAdjustments = () => {
 };
 
 describe('InvoiceLineAdjustments', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderInvoiceLineAdjustments();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render correct fields', () => {
     const { getByRole } = renderInvoiceLineAdjustments();
 

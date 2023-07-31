@@ -1,5 +1,6 @@
 import React from 'react';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -21,6 +22,12 @@ const renderInitialRecordSelect = () => {
 };
 
 describe('InitialRecordSelect', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderInitialRecordSelect();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('heading should be rendered', () => {
     const { getByText } = renderInitialRecordSelect();
     const heading = getByText('Which type of existing record would you like to compare to the incoming MARC record?');

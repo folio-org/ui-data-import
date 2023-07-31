@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   buildStripes,
@@ -75,6 +76,12 @@ const renderJobSummary = ({ dataType = 'MARC', resources }) => {
 };
 
 describe('Job summary page', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobSummary({});
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should have a file name in the header', () => {
     const { getByText } = renderJobSummary({ dataType: 'EDIFACT' });
 

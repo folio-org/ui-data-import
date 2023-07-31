@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -36,6 +37,12 @@ const renderMARCTable = (fields, columns) => {
 describe('MARC modifications table', () => {
   afterEach(() => {
     onChange.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMARCTable(initialFields, initialColumns);
+
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when "Add new row" button clicked', () => {

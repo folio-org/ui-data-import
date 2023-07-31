@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -10,6 +11,16 @@ import '../../../test/jest/__mock__';
 import { AcceptedValuesField } from './AcceptedValuesField';
 
 jest.mock('..', () => ({ withReferenceValues: () => <span>withReferenceValues</span> }));
+
+const acceptedValuesListProp = [
+  {
+    label: 'option 1',
+    name: 'option_1',
+  }, {
+    label: 'option 2',
+    name: 'option_2',
+  },
+];
 
 const renderAcceptedValuesField = ({
   acceptedValuesList,
@@ -50,19 +61,19 @@ describe('Accepted values field component', () => {
     delete global.fetch;
   });
 
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderAcceptedValuesField({
+      acceptedValuesList: acceptedValuesListProp,
+      isFormField: true,
+    });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when a wrapped component is the form field component', () => {
     it('then the wrapped component should be rendered', () => {
-      const acceptedValuesList = [
-        {
-          label: 'option 1',
-          name: 'option_1',
-        }, {
-          label: 'option 2',
-          name: 'option_2',
-        },
-      ];
       const { getByText } = renderAcceptedValuesField({
-        acceptedValuesList,
+        acceptedValuesList: acceptedValuesListProp,
         isFormField: true,
       });
 
@@ -72,17 +83,8 @@ describe('Accepted values field component', () => {
 
   describe('when a wrapped component is not the form field component', () => {
     it('then the wrapped component should be rendered', () => {
-      const acceptedValuesList = [
-        {
-          label: 'option 1',
-          name: 'option_1',
-        }, {
-          label: 'option 2',
-          name: 'option_2',
-        },
-      ];
       const { getByText } = renderAcceptedValuesField({
-        acceptedValuesList,
+        acceptedValuesList: acceptedValuesListProp,
         isFormField: false,
       });
 

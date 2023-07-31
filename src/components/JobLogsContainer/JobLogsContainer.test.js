@@ -1,5 +1,6 @@
 import React from 'react';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -73,6 +74,12 @@ const renderJobLogsContainer = record => {
 };
 
 describe('Job Logs container', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderJobLogsContainer(successfulRecord);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should be rendered with child component', () => {
     const { getByText } = renderJobLogsContainer(successfulRecord);
 

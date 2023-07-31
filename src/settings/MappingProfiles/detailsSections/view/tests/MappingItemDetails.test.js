@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -26,6 +27,13 @@ const renderMappingItemDetails = () => {
 };
 
 describe('<MappingItemDetails>', () => {
+  // TODO: Create separate ticket to fix all the accesibility tests
+  it.skip('should be rendered with no axe errors', async () => {
+    const { container } = renderMappingItemDetails();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should have correct sections', () => {
     const { getByRole } = renderMappingItemDetails();
 

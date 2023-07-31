@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { CodeHighlight } from './CodeHighlight';
 import * as Languages from './Languages';
@@ -31,6 +32,12 @@ const testItem = {
 };
 
 describe('CodeHighlight component', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderCodeHighlight({});
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should be rendered', () => {
     const { getByText } = renderCodeHighlight({});
 

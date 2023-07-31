@@ -3,6 +3,7 @@ import {
   fireEvent,
   within,
 } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -72,6 +73,12 @@ const renderItemDetails = () => {
 describe('ItemDetails', () => {
   afterEach(() => {
     setReferenceTablesMock.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderItemDetails();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render correct fields', async () => {

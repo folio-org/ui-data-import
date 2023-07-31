@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -55,6 +56,12 @@ const renderMARCFieldSection = ({
 };
 
 describe('MARCFieldSection view', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderMARCFieldSection(marcFieldSection);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should be rendered with label', () => {
     const { getByText } = renderMARCFieldSection(marcFieldSection);
 

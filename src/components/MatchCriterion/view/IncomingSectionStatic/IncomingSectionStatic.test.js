@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -71,6 +72,12 @@ const renderIncomingSectionStatic = ({ staticValueDetails }) => {
 };
 
 describe('IncomingSectionStatic view', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderIncomingSectionStatic(incomingSectionStaticWithText);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when there is no value', () => {
     it('should be rendered empty', () => {
       const { queryByText } = renderIncomingSectionStatic(emptyIncomingSectionStatic);

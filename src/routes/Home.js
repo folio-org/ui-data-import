@@ -237,6 +237,7 @@ export class Home extends Component {
       .catch(() => this.showDeleteLogsErrorMessage());
   }
 
+  // is used by menuTemplate
   isDeleteAllLogsDisabled() {
     return this.state.selectedLogsNumber === 0;
   }
