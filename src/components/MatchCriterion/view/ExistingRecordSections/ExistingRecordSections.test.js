@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -31,6 +32,12 @@ const renderExistingSectionFolio = ({
 };
 
 describe('ExistingRecordSections view', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderExistingSectionFolio(existingSectionFolio);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render a correct label', () => {
     const { getByText } = renderExistingSectionFolio(existingSectionFolio);
 

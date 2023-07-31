@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -26,6 +27,12 @@ const renderDefaultItemTemplate = () => {
 describe('Action menu Default Item Template', () => {
   afterEach(() => {
     onClick.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderDefaultItemTemplate();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

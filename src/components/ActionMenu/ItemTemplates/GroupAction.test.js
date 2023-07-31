@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -27,6 +28,12 @@ const renderGroupActionItemTemplate = ({ selectedCount = 0 }) => {
 describe('Action menu GroupAction Item Template', () => {
   afterEach(() => {
     menu.onToggle.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderGroupActionItemTemplate({});
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

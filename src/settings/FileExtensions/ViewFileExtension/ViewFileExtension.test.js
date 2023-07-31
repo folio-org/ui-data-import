@@ -7,6 +7,7 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -83,6 +84,12 @@ const renderViewFileExtension = ({
 describe('ViewFileExtension', () => {
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderViewFileExtension(viewFileExtensionProps);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should render extension name', () => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -43,6 +44,7 @@ const textDateProps = ({
   useInput: false,
   usePortal,
   value,
+  'aria-label': 'test label',
 });
 
 const renderTextDate = ({
@@ -63,6 +65,7 @@ const renderTextDate = ({
   useInput,
   usePortal,
   value,
+  ...rest
 }) => {
   const component = (
     <TextDate
@@ -84,6 +87,7 @@ const renderTextDate = ({
       useInput={useInput}
       usePortal={usePortal}
       value={value}
+      {...rest}
     />
   );
 
@@ -93,6 +97,12 @@ const renderTextDate = ({
 describe('TextDate', () => {
   afterEach(() => {
     onChange.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderTextDate(textDateProps(defaultTextDateProps));
+
+    await runAxeTest({ rootNode: container });
   });
 
   describe('when clicking on calendar icon', () => {

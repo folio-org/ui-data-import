@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../test/jest/__mock__';
 
@@ -58,6 +59,12 @@ const renderProfileLinker = ({
 describe('ProfileLinker', () => {
   afterEach(() => {
     Pluggable.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderProfileLinker(profileLinkerProps);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

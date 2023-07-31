@@ -5,6 +5,7 @@ import {
 } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import faker from 'faker';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import { Harness } from '../../../test/helpers';
 import { translationsProperties } from '../../../test/jest/helpers';
@@ -169,6 +170,15 @@ describe('View job log page', () => {
     '  <header />' +
     '</div>';
 
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderViewJobLog({
+      recordType: 'MARC',
+      jobLogHasLoaded: false,
+    });
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('when component is updated', () => {
     it('should get JSON data for each record type', () => {
       const { rerender } = renderViewJobLog({
@@ -254,6 +264,12 @@ describe('View job log page', () => {
     });
 
     describe('when log for SRS MARC has loaded', () => {
+      it('should be rendered with no axe errors', async () => {
+        const { container } = renderViewJobLog({ recordType: 'MARC' });
+
+        await runAxeTest({ rootNode: container });
+      });
+
       it('should display SRS MARC JSON details on the screen', () => {
         const { container } = renderViewJobLog({ recordType: 'MARC' });
         const codeElement = container.querySelector('code.info');

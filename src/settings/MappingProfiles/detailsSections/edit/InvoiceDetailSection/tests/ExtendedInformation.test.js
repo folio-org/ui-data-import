@@ -5,6 +5,8 @@ import {
 } from '@testing-library/react';
 import { noop } from 'lodash';
 
+import { runAxeTest } from '@folio/stripes-testing';
+
 import {
   renderWithIntl,
   renderWithReduxForm,
@@ -28,6 +30,12 @@ const renderExtendedInformation = () => {
 };
 
 describe('ExtendedInformation', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderExtendedInformation();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render correct fields', () => {
     const { getByText } = renderExtendedInformation();
 

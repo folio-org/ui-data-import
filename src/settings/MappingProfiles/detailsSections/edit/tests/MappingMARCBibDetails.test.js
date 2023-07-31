@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -42,6 +43,12 @@ const renderMappingMARCBibDetails = ({
 
 describe('<MappingMARCBibDetails>', () => {
   describe('when field mappings for MARC is "Updates"', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('should have correct fields', async () => {
       const { findByRole } = renderMappingMARCBibDetails({ folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC });
 
@@ -75,6 +82,19 @@ describe('<MappingMARCBibDetails>', () => {
   });
 
   describe('when field mappings for MARC is "Modifications"', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderMappingMARCBibDetails({
+        fieldMappingsForMARCField: FIELD_MAPPINGS_FOR_MARC.MODIFICATIONS,
+        folioRecordType: MARC_TYPES.MARC_BIBLIOGRAPHIC,
+        marcMappingDetails: [{
+          field: { subfields: [{}] },
+          order: 0,
+        }],
+      });
+
+      await runAxeTest({ rootNode: container });
+    });
+
     it('should have correct fields', async () => {
       const {
         findByRole,

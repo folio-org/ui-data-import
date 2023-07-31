@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../test/jest/__mock__';
 
@@ -109,6 +110,12 @@ const renderFileExtensions = ({
 describe('FileExtensions', () => {
   afterEach(() => {
     history.push.mockClear();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderFileExtensions(fileExtensionsProps);
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {

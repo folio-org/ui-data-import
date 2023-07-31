@@ -4,6 +4,7 @@ import {
   within,
 } from '@testing-library/react';
 import { noop } from 'lodash';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -36,6 +37,12 @@ const renderCostDetails = () => {
 };
 
 describe('CostDetails', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderCostDetails();
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render correct fields', async () => {
     const { getByText } = renderCostDetails();
 

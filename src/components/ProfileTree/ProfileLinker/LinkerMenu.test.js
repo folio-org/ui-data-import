@@ -1,4 +1,5 @@
 import React from 'react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -48,6 +49,13 @@ describe('LinkerMenu', () => {
   afterEach(() => {
     onClick.mockClear();
   });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderLinkerMenu(linkerMenuProps);
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should be rendered with label', () => {
     const { getByText } = renderLinkerMenu(linkerMenuProps);
 

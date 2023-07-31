@@ -1136,5 +1136,10 @@
     "settings.mappingProfiles.map.item.requiredWhenCreatingItem.info": "Necessário ao criar Item",
     "settings.mappingProfiles.map.item.requiredWhenCreatingHoldings.info": "Necessário ao criar Coleções",
     "logViewer.order": "Ordem",
-    "logViewer.orderLine": "Linha de pedido"
+    "logViewer.orderLine": "Linha de pedido",
+    "validation.integer": "Favor inserir um número inteiro maior que 0 e menor que 1000 para continuar",
+    "settings.mappingProfiles.map.order.poLineDetails.field.paymentNotRequired": "Pagamento não obrigatório",
+    "settings.mappingProfiles.map.order.eResourcesDetails.field.electronicUnitPrice.info": "Obrigatório quando o formato do pedido é recurso eletrônico ou misto Impresso/Eletrônico. Quando o trabalho de importação cria uma Ordem pendente, esse campo controla os requisitos de registro de estoque quando o pedido é aberto por meio do aplicativo Aquisições. Quando o trabalho de importação cria uma ordem Aberta, esse campo reflete os requisitos de registro de Inventário que foram incluídos como ações no perfil de trabalho Importação de Dados",
+    "settings.mappingProfiles.map.order.physicalResourceDetails.field.physicalUnitPrice.info": "Obrigatório quando o formato do pedido é Recurso físico, misto Impresso/Eletrônico ou outro. Quando o trabalho de importação cria uma ordem pendente, este campo controla os requisitos de registro de estoque quando o pedido é aberto por meio do aplicativo Aquisições. Quando o trabalho de importação cria um pedido aberto, este campo reflete os requisitos de registro de inventário que foram incluídos como ações no perfil do trabalho de importação de dados",
+    "settings.mappingProfiles.map.order.orderInformation.field.purchaseOrderStatus.info": "Quando o status da ordem de compra estiver Pendente, não inclua nenhuma ação de Inventário no perfil de trabalho. Quando o status da ordem de compra estiver Aberto, inclua as ações de Inventário desejadas no perfil de trabalho, precedidas pela ação Criar pedidos"
 }
