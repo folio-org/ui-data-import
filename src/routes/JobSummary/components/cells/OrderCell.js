@@ -1,4 +1,3 @@
-import { isEmpty } from 'lodash';
 import {
   getRecordActionStatusLabel,
   getHotlinkCellFormatter,
@@ -13,7 +12,7 @@ export const OrderCell = ({
   jobLogRecords,
   sortedItemData,
 }) => {
-  if (!poLineActionStatus && !isEmpty(sortedItemData)) {
+  if (!poLineActionStatus) {
     return fillCellWithNoValues(sortedItemData);
   }
 

@@ -10,8 +10,6 @@ import {
 
 import { ErrorCell } from '../ErrorCell';
 
-const errorProp = 'test error';
-
 const sortedItemDataProp = [
   [{
     actionStatus : 'CREATED',
@@ -35,21 +33,24 @@ const renderErrorCell = ({ error = '', sortedItemData }) => {
 
 describe('ErrorCell component', () => {
   it('should be rendered with no axe errors', async () => {
-    const { container } = renderErrorCell({ error: errorProp });
+    const { container } = renderErrorCell({ error: 'test error' });
 
     await runAxeTest({ rootNode: container });
   });
 
   describe('when error was occured', () => {
     it('error message should be rendered', () => {
-      const { getByText } = renderErrorCell({ error: errorProp });
+      const { getByText } = renderErrorCell({ error: 'test error' });
 
       expect(getByText('Error')).toBeInTheDocument();
     });
 
     describe('when item has an error', () => {
       it('error message should be rendered', () => {
-        const { getByText } = renderErrorCell({ sortedItemData: sortedItemDataProp });
+        const { getByText } = renderErrorCell({
+          error: 'test error',
+          sortedItemData: sortedItemDataProp,
+        });
 
         expect(getByText('Error')).toBeInTheDocument();
       });

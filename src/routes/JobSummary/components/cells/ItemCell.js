@@ -36,7 +36,7 @@ export const ItemCell = ({
     });
 
     return (
-      <div key={itemIndex} style={{ display: 'inline-block', paddingBottom: '7px' }}>
+      <div key={itemIndex} style={{ paddingBottom: '7px' }}>
         {groupOfItems}
       </div>
     );

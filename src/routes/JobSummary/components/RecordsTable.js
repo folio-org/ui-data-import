@@ -30,6 +30,7 @@ import {
   InvoiceCell,
   ErrorCell,
 } from '.';
+import { BaseLineCell } from './utils';
 
 export const RecordsTable = ({
   mutator,
@@ -142,10 +143,11 @@ export const RecordsTable = ({
     holdingsStatus: ({ sourceRecordId }) => {
       const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
       const holdingsInfo = sourceRecord?.relatedHoldingsInfo;
-      const itemInfo = sourceRecord?.relatedItemInfo;
-      const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
 
-      if (isEmpty(holdingsInfo)) return <NoValue />;
+      if (isEmpty(holdingsInfo)) return <BaseLineCell><NoValue /></BaseLineCell>;
+
+      const itemInfo = [...sourceRecord?.relatedItemInfo];
+      const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
 
       holdingsInfo.forEach(holdings => {
         const isDiscarded = holdings.actionStatus === 'DISCARDED';
@@ -172,9 +174,30 @@ export const RecordsTable = ({
       const itemData = sourceRecord?.relatedItemInfo;
       const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
 
-      if (isEmpty(itemData)) return <NoValue />;
+      if (isEmpty(itemData) && isEmpty(holdingsData)) return <BaseLineCell><NoValue /></BaseLineCell>;
 
-      const groupedItemData = groupBy(itemData, 'holdingsId');
+      if (isEmpty(itemData)) {
+        const emptyValues = holdingsData?.map((_, index) => <div key={index} style={{ paddingBottom: '7px' }}><NoValue /></div>);
+
+        return (
+          <BaseLineCell>
+            {emptyValues}
+          </BaseLineCell>
+        );
+      }
+
+      const itemInfo = [...sourceRecord?.relatedItemInfo];
+
+      holdingsData.forEach(holdings => {
+        const isDiscarded = holdings.actionStatus === 'DISCARDED';
+        const holdingsId = holdings.id;
+
+        if (isDiscarded && !itemInfo.find(item => item.holdingsId === holdingsId)) {
+          itemInfo.push({ holdingsId, error: true });
+        }
+      });
+
+      const groupedItemData = groupBy(itemInfo, 'holdingsId');
       const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id]);
 
       return (
@@ -193,9 +216,9 @@ export const RecordsTable = ({
       const itemData = sourceRecord?.relatedItemInfo;
 
       const groupedItemData = groupBy(itemData, 'holdingsId');
-      if (isEmpty(groupedItemData)) return <NoValue />;
 
-      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id]);
+      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id])
+        .map(element => (!element ? [{}] : element));
 
       return (
         <AuthorityCell
@@ -215,9 +238,9 @@ export const RecordsTable = ({
       const itemData = sourceRecord?.relatedItemInfo;
 
       const groupedItemData = groupBy(itemData, 'holdingsId');
-      if (isEmpty(groupedItemData)) return <NoValue />;
 
-      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id]);
+      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id])
+        .map(element => (element || [{}]));
 
       return (
         <OrderCell
@@ -238,8 +261,9 @@ export const RecordsTable = ({
       const itemData = sourceRecord?.relatedItemInfo;
 
       const groupedItemData = groupBy(itemData, 'holdingsId');
-      if (isEmpty(groupedItemData)) return <NoValue />;
-      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id]);
+
+      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id])
+        .map(element => (element || [{}]));
 
       return (
         <InvoiceCell
@@ -259,10 +283,19 @@ export const RecordsTable = ({
       const holdingsData = sourceRecord?.relatedHoldingsInfo;
       const itemData = sourceRecord?.relatedItemInfo;
 
-      const groupedItemData = groupBy(itemData, 'holdingsId');
-      if (isEmpty(groupedItemData)) return <NoValue />;
+      if (isEmpty(itemData) && holdingsData?.some(item => item.error)) {
+        return (
+          <ErrorCell
+            error={error}
+            sortedItemData={holdingsData?.map(item => [item])}
+          />
+        );
+      }
 
-      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id]);
+      const groupedItemData = groupBy(itemData, 'holdingsId');
+
+      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id])
+        .map(element => (element || [{ error: true }]));
 
       return (
         <ErrorCell
@@ -291,7 +324,7 @@ export const RecordsTable = ({
         recordNumber: '90px',
         title: '30%',
         holdingsStatus: '180px',
-        itemStatus: '180px',
+        itemStatus: '190px',
       }}
     />
   );

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
+
 import {
   getRecordActionStatusLabel,
   getHotlinkCellFormatter,
@@ -14,7 +14,7 @@ export const AuthorityCell = ({
   jobLogRecords,
   sortedItemData,
 }) => {
-  if (!authorityActionStatus && !isEmpty(sortedItemData)) {
+  if (!authorityActionStatus) {
     return fillCellWithNoValues(sortedItemData);
   }
 
