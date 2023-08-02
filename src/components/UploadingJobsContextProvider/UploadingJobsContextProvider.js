@@ -13,7 +13,8 @@ import {
 } from '@folio/stripes/core';
 import { createUrl } from '@folio/stripes-data-transfer-components';
 
-import { FILE_STATUSES, getStorageConfiguration } from '../../utils';
+import { FILE_STATUSES } from '../../utils/constants';
+import { getStorageConfiguration } from '../../utils/multipartUpload';
 import * as API from '../../utils/upload';
 import { UploadingJobsContext } from '.';
 
