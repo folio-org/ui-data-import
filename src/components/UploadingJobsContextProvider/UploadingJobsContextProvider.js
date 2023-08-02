@@ -9,17 +9,20 @@ import {
 import {
   withStripes,
   stripesShape,
+  withOkapiKy,
 } from '@folio/stripes/core';
 import { createUrl } from '@folio/stripes-data-transfer-components';
 
-import { FILE_STATUSES } from '../../utils';
+import { FILE_STATUSES, getStorageConfiguration } from '../../utils';
 import * as API from '../../utils/upload';
 import { UploadingJobsContext } from '.';
 
 @withStripes
+@withOkapiKy
 export class UploadingJobsContextProvider extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
+    okapiKy: PropTypes.func.isRequired,
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node,
@@ -33,7 +36,22 @@ export class UploadingJobsContextProvider extends Component {
       uploadDefinition: {},
       updateUploadDefinition: this.updateUploadDefinition,
       deleteUploadDefinition: this.deleteUploadDefinition,
+      uploadConfiguration: {},
     };
+  }
+
+  componentDidMount = () => {
+    this.getUploadConfiguration();
+  }
+
+  getUploadConfiguration = async () => {
+    const { okapiKy } = this.props;
+    const { splitStatus } = await getStorageConfiguration(okapiKy);
+    this.setState({
+      uploadConfiguration: {
+        canUseObjectStorage: splitStatus
+      }
+    });
   }
 
   deleteUploadDefinition = async () => {
