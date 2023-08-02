@@ -408,7 +408,7 @@ const ViewJobProfileComponent = props => {
                 id="ui-data-import.modal.jobProfile.run.message"
                 values={{ name: jobProfileRecord.name }}
               />
-              { uploadConfiguration.canUseObjectStorage && (
+              { uploadConfiguration?.canUseObjectStorage && (
                 <>
                   &nbsp;
                   <FormattedMessage
