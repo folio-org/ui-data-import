@@ -22,7 +22,7 @@ const getLatestUploadDefinitionSpy = jest.spyOn(utils, 'getLatestUploadDefinitio
 
 const mockResponse = jest.fn();
 jest.mock('../../utils/multipartUpload', () => ({
-  // ...jest.requireActual('../../utils/multipartUpload'),
+  ...jest.requireActual('../../utils/multipartUpload'),
   getStorageConfiguration: () => Promise.resolve(mockResponse())
 }));
 
