@@ -13,17 +13,24 @@ import { UploadingJobsContextProvider } from './UploadingJobsContextProvider';
 import { UploadingJobsContext } from './UploadingJobsContext';
 
 import * as utils from '../../utils/upload';
-import { FILE_STATUSES } from '../../utils';
+import { FILE_STATUSES } from '../../utils/constants';
 
 global.fetch = jest.fn();
 
 const deleteUploadDefinitionSpy = jest.spyOn(utils, 'deleteUploadDefinition');
 const getLatestUploadDefinitionSpy = jest.spyOn(utils, 'getLatestUploadDefinition');
 
+const mockResponse = jest.fn();
+jest.mock('../../utils/multipartUpload', () => ({
+  // ...jest.requireActual('../../utils/multipartUpload'),
+  getStorageConfiguration: () => Promise.resolve(mockResponse())
+}));
+
 const TestComponent = () => {
   const {
     updateUploadDefinition,
     deleteUploadDefinition,
+    uploadConfiguration
   } = useContext(UploadingJobsContext);
 
   return (
@@ -40,6 +47,7 @@ const TestComponent = () => {
       >
         deleteUploadDefinition
       </button>
+      <span>{JSON.stringify(uploadConfiguration)}</span>
       <span>Children</span>
     </>
   );
@@ -67,15 +75,31 @@ describe('UploadingJobsContextProvider component', () => {
   });
 
   it('should be rendered with no axe errors', async () => {
+    mockResponse.mockResolvedValueOnce({ splitStatus: true });
     const { container } = renderUploadingJobsContextProvider();
 
     await runAxeTest({ rootNode: container });
   });
 
   it('should render children', () => {
+    mockResponse.mockResolvedValueOnce({ splitStatus: true });
     const { getByText } = renderUploadingJobsContextProvider();
 
     expect(getByText('Children')).toBeDefined();
+  });
+
+  it('should render uploadConfiguration', async () => {
+    mockResponse.mockResolvedValueOnce({ splitStatus: true });
+    const { getByText } = renderUploadingJobsContextProvider();
+
+    await waitFor(() => expect(getByText('{"canUseObjectStorage":true}')).toBeDefined());
+  });
+
+  it('should render false uploadConfiguration', async () => {
+    mockResponse.mockResolvedValueOnce({ splitStatus: false });
+    const { getByText } = renderUploadingJobsContextProvider();
+
+    await waitFor(() => expect(getByText('{"canUseObjectStorage":false}')).toBeDefined());
   });
 
   describe('when deleting upload definition', () => {
@@ -92,6 +116,7 @@ describe('UploadingJobsContextProvider component', () => {
           json: async () => ({ uploadDefinitions: [{}] }),
         }));
 
+      mockResponse.mockResolvedValue({ splitStatus: true });
       const { getByText } = renderUploadingJobsContextProvider();
 
       fireEvent.click(getByText('deleteUploadDefinition'));
@@ -117,6 +142,7 @@ describe('UploadingJobsContextProvider component', () => {
               json: async () => ({ uploadDefinitions: [{ status: FILE_STATUSES.ERROR }] }),
             }));
 
+          mockResponse.mockResolvedValue({ splitStatus: true });
           const { getByText } = renderUploadingJobsContextProvider();
 
           fireEvent.click(getByText('updateUploadDefinition'));
@@ -144,6 +170,7 @@ describe('UploadingJobsContextProvider component', () => {
               json: async () => ({ uploadDefinitions: uploadDefinition }),
             }));
 
+          mockResponse.mockResolvedValue({ splitStatus: true });
           const { getByText } = renderUploadingJobsContextProvider();
 
           fireEvent.click(getByText('updateUploadDefinition'));
