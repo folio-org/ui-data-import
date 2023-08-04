@@ -104,10 +104,8 @@ export class UploadingJobsDisplay extends Component {
     const { configurationLoaded } = state;
     const { uploadConfiguration } = this.context;
     if (!configurationLoaded && typeof uploadConfiguration.canUseObjectStorage !== 'undefined') {
-      if (uploadConfiguration.canUseObjectStorage) {
-        this.setState({ configurationLoaded: true });
-        this.handleUploadJobs();
-      }
+      this.setState({ configurationLoaded: true });
+      this.handleUploadJobs();
     }
   }
 
