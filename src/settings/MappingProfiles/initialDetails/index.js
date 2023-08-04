@@ -24,11 +24,6 @@ const initialValues = {
   MARC_AUTHORITY,
 };
 
-const KEEP_SUBFIELDS_INITIAL = {
-  [FOLIO_RECORD_TYPES.INVOICE.type]: ['acqUnitIds'],
-  [FOLIO_RECORD_TYPES.HOLDINGS.type]: ['permanentLocationId'],
-};
-
 const modifyInvoiceLinesFieldDetails = field => {
   const invoiceLineSubfield = { ...field.subfields[0] };
 
@@ -103,13 +98,15 @@ export const getInitialDetails = (entity, stripRepeatableFields = false) => {
       if (field.name === 'invoiceLines') {
         return modifyInvoiceLinesFieldDetails(field);
       }
-    }
 
-    const keepSubfieldsInitial = KEEP_SUBFIELDS_INITIAL[entity]?.some(fieldName => fieldName === field.name);
+      if (field.name === 'acqUnitIds') {
+        return field;
+      }
+    }
 
     return {
       ...field,
-      subfields: keepSubfieldsInitial ? field.subfields : [],
+      subfields: [],
     };
   });
 
