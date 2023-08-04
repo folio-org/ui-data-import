@@ -213,15 +213,11 @@ export class UploadingJobsDisplay extends Component {
 
   async uploadJobs() {
     const { uploadConfiguration } = this.context;
-    // const { files } = this.state;
-    // this.selectedFile = files[Object.keys(files)[0]];
-    // this.handleDeleteFile();
     try {
       await this.fetchUploadDefinition();
 
       if (this.isSnapshotMode) {
         this.renderSnapshotData();
-
         return;
       }
 
@@ -229,6 +225,7 @@ export class UploadingJobsDisplay extends Component {
         this.multipartUpload();
         return;
       }
+
       this.uploadFiles();
     } catch (error) {
       console.error(error); // eslint-disable-line no-console
@@ -255,10 +252,6 @@ export class UploadingJobsDisplay extends Component {
 
   async uploadFiles() {
     const { files } = this.state;
-    if (!files) {
-      this.cancelCurrentFileUpload();
-      return Promise.reject();
-    }
     for (const fileKey of Object.keys(files)) {
       try {
         // cancel current and next file uploads if component is unmounted
