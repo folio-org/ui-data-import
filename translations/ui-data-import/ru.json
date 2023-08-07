@@ -189,10 +189,6 @@
     "marc": "MARC",
     "error.fileExtension.extension.invalid": "File extension {name} is not a valid format",
     "error.fileExtension.duplication.invalid": "File extension {name} already exists",
-    "error.jobProfile.duplication.invalid": "Профиль задания \"{name}\" уже существует",
-    "error.matchProfile.duplication.invalid": "Match profile \"{name}\" already exists",
-    "error.actionProfile.duplication.invalid": "Action profile \"{name}\" already exists",
-    "error.mappingProfile.duplication.invalid": "The field mapping profile \"{name}\" already exists",
     "existingRecords": "Существующие записи",
     "compare": "Сравнить",
     "compareHint": "You are comparing\nto this record",
@@ -1149,5 +1145,13 @@
     "jobProfile.deleted": "Job profile deleted",
     "jobProfile.notAvailable": " Not available - this job profile has been deleted",
     "returnToPreviousScreen": "Return to previous screen",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units"
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units",
+    "jobProgress.partsRemaining": "Job parts remaining: {current} of {total}",
+    "jobProgress.partsProcessed": "Job parts processed: {current} of {total}",
+    "jobProgress.partsCompleted": "Completed: {amount}",
+    "jobProgress.partsCompletedWithErrors": "Completed with errors: {amount}",
+    "jobProgress.partsFailed": "Failed: {amount}",
+    "uploadError": "There was a problem uploading the file. Please try again",
+    "modal.jobProfile.run.largeFileSplitting": "Large MARC files will be split into separate parts.",
+    "logViewer.partOfTotal": "{number} of {total}"
 }

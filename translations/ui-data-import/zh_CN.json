@@ -189,10 +189,6 @@
     "marc": "MARC",
     "error.fileExtension.extension.invalid": "文件扩展名{name}不是有效格式",
     "error.fileExtension.duplication.invalid": "文件扩展名{name}已存在",
-    "error.jobProfile.duplication.invalid": "任务配置文件\"{name}\"已存在",
-    "error.matchProfile.duplication.invalid": "匹配配置文件“ {name} ”已存在",
-    "error.actionProfile.duplication.invalid": "操作配置文件“ {name} ”已存在",
-    "error.mappingProfile.duplication.invalid": "字段映射配置文件“ {name} ”已存在",
     "existingRecords": "现有记录",
     "compare": "比较",
     "compareHint": "正比较到这个记录",
@@ -1149,5 +1145,13 @@
     "jobProfile.deleted": "任务配置文件已删除",
     "jobProfile.notAvailable": "不可用 - 此任务配置文件已删除",
     "returnToPreviousScreen": "返回上一屏幕",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "采购单位"
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "采购单位",
+    "jobProgress.partsRemaining": "Job parts remaining: {current} of {total}",
+    "jobProgress.partsProcessed": "Job parts processed: {current} of {total}",
+    "jobProgress.partsCompleted": "Completed: {amount}",
+    "jobProgress.partsCompletedWithErrors": "Completed with errors: {amount}",
+    "jobProgress.partsFailed": "Failed: {amount}",
+    "uploadError": "There was a problem uploading the file. Please try again",
+    "modal.jobProfile.run.largeFileSplitting": "Large MARC files will be split into separate parts.",
+    "logViewer.partOfTotal": "{number} of {total}"
 }
