@@ -22,7 +22,10 @@ describe('useLocationsQuery', () => {
   });
 
   it('should fetch locations', async () => {
-    const { result, waitFor } = renderHook(() => useLocationsQuery(), { wrapper: queryClientWrapper });
+    const {
+      result,
+      waitFor,
+    } = renderHook(() => useLocationsQuery(), { wrapper: queryClientWrapper });
 
     await waitFor(() => !result.current.isLoading);
 

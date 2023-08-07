@@ -2,7 +2,10 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 
-import { BaseLineCell, fillCellWithNoValues } from '../utils';
+import {
+  BaseLineCell,
+  fillCellWithNoValues,
+} from '../utils';
 
 export const ErrorCell = ({
   error,
