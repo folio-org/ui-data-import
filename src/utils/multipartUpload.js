@@ -74,7 +74,7 @@ class ProgressAccumulator {
   updateProgress = (value) => { this.totalProgress += value; }
 }
 
-async function sliceAndUploadParts(file, ky, fileKey, errorHandler, progressHandler, successHandler) {
+async function sliceAndUploadParts(file, ky, fileKey, errorHandler, progressHandler, successHandler, updateKeys) {
   let currentByte = 0;
   let currentPartNumber = 1;
   let _uploadKey;
@@ -111,14 +111,15 @@ async function sliceAndUploadParts(file, ky, fileKey, errorHandler, progressHand
   await finishUpload(eTags, _uploadKey, _uploadId, ky);
   // creating the date stamp expected by the UI here for now...
   const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toLocaleDateString() }] };
+  updateKeys((keys) => [...keys, _uploadKey]);
   successHandler(finishResponse, fileKey);
 }
 
-export function handleMultipartUpload(file, ky, fileKey, errorHandler, progressHandler, successHandler) {
-  sliceAndUploadParts(file, ky, fileKey, errorHandler, progressHandler, successHandler);
+export function handleMultipartUpload(file, ky, fileKey, errorHandler, progressHandler, successHandler, updateKeys) {
+  sliceAndUploadParts(file, ky, fileKey, errorHandler, progressHandler, successHandler, updateKeys);
 }
 
-export const handleObjectStorageUpload = (files, ky, errorHandler, progressHandler, successHandler) => {
+export const handleObjectStorageUpload = (files, ky, errorHandler, progressHandler, successHandler, updateKeys) => {
   const fileKeys = Object.keys(files);
-  Object.keys(files).forEach((fileKey, index) => handleMultipartUpload(files[fileKey], ky, fileKeys[index], errorHandler, progressHandler, successHandler));
+  Object.keys(files).forEach((fileKey, index) => handleMultipartUpload(files[fileKey], ky, fileKeys[index], errorHandler, progressHandler, successHandler, updateKeys));
 };

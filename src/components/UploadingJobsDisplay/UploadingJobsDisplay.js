@@ -245,6 +245,7 @@ export class UploadingJobsDisplay extends Component {
       this.handleFileUploadFail,
       this.onFileUploadProgress,
       this.handleFileUploadSuccess,
+      this.context.updateStorageKeys
     );
   }
 

@@ -51,6 +51,8 @@ const propTypes = {
   job: jobExecutionPropTypes.isRequired,
   intl: PropTypes.object.isRequired,
   handlePreview: PropTypes.func,
+  /* temporary boolean for whether or not to display info for composit jobs */
+  showPartProgress: PropTypes.bool,
 };
 
 const defaultProps = { handlePreview: noop };
@@ -60,6 +62,7 @@ const JobComponent = ({
   job,
   intl,
   handlePreview,
+  showPartProgress,
 }) => {
   const [deletionInProgress, setDeletionInProgress] = useState(false);
   const [showCancelJobModal, setShowCancelJobModal] = useState(false);
@@ -232,7 +235,45 @@ const JobComponent = ({
               />
             </>
           )}
-
+          {/* more composite job meta information */}
+          { showPartProgress && (
+            <>
+              <FormattedMessage
+                id="ui-data-import.jobProgress.partsRemaining"
+                tagName="div"
+                values={{ current: 21, total: 50 }}
+              />
+              <FormattedMessage
+                id="ui-data-import.jobProgress.partsProcessed"
+                tagName="div"
+                values={{ current: 29, total: 50 }}
+              />
+              <ul style={{ marginTop: '6px' }}>
+                <li>
+                  <FormattedMessage
+                    id="ui-data-import.jobProgress.partsCompleted"
+                    tagName="div"
+                    values={{ amount: 17 }}
+                  />
+                </li>
+                <li>
+                  <FormattedMessage
+                    id="ui-data-import.jobProgress.partsCompletedWithErrors"
+                    tagName="div"
+                    values={{ amount: 10 }}
+                  />
+                </li>
+                <li>
+                  <FormattedMessage
+                    id="ui-data-import.jobProgress.partsFailed"
+                    tagName="div"
+                    values={{ amount: 2 }}
+                  />
+                </li>
+              </ul>
+            </>
+          )}
+          {/* end composite job meta information */}
           {jobMeta.showPreview && (
             <div className={css.jobPreview}>
               <FormattedMessage id="ui-data-import.readyForPreview" />

@@ -35,6 +35,7 @@ export const loadRecords = async ({
   uploadDefinitionId,
   jobProfileInfo,
   defaultMapping,
+  storageKeys,
 }) => {
   const { url: host } = okapi;
 
@@ -43,24 +44,39 @@ export const loadRecords = async ({
     okapi,
   });
 
-  const uploadDefinitionsURL = createUrl(`${host}/data-import/uploadDefinitions/${uploadDefinitionId}/processFiles`,
-    { defaultMapping }, false);
+  let uploadDefinitionsURL;
+  let response;
 
-  const response = await fetch(uploadDefinitionsURL, {
-    method: 'POST',
-    headers: {
-      ...createOkapiHeaders(okapi),
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      uploadDefinition,
-      jobProfileInfo,
-    }),
-  });
+  if (storageKeys.length > 0) {
+    storageKeys.forEach(key => {
+      uploadDefinitionsURL = createUrl(`${host}/data-import/testFileSplit?`, { key }, true);
+    });
+
+    response = await fetch(uploadDefinitionsURL, {
+      headers: {
+        ...createOkapiHeaders(okapi),
+        'Content-Type': 'application/json',
+      }
+    });
+  } else {
+    uploadDefinitionsURL = createUrl(`${host}/data-import/uploadDefinitions/${uploadDefinitionId}/processFiles`,
+      { defaultMapping }, false);
+
+    response = await fetch(uploadDefinitionsURL, {
+      method: 'POST',
+      headers: {
+        ...createOkapiHeaders(okapi),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        uploadDefinition,
+        jobProfileInfo,
+      }),
+    });
+  }
 
   if (!response.ok) {
     throw response;
   }
-
   return response;
 };

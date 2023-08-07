@@ -38,6 +38,8 @@ export class UploadingJobsContextProvider extends Component {
       updateUploadDefinition: this.updateUploadDefinition,
       deleteUploadDefinition: this.deleteUploadDefinition,
       uploadConfiguration: {},
+      updateStorageKeys: this.updateStorageKeys,
+      storageKeys: []
     };
   }
 
@@ -52,6 +54,14 @@ export class UploadingJobsContextProvider extends Component {
       uploadConfiguration: {
         canUseObjectStorage: splitStatus
       }
+    });
+  }
+
+  updateStorageKeys = (fn) => {
+    this.setState((cur) => {
+      return {
+        storageKeys: fn(cur.storageKeys)
+      };
     });
   }
 

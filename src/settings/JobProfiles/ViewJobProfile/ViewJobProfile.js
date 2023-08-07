@@ -92,7 +92,7 @@ const ViewJobProfileComponent = props => {
   const [isConfirmButtonDisabled, setIsConfirmButtonDisabled] = useState(false);
 
   const calloutRef = useRef(null);
-  const { uploadDefinition, uploadConfiguration } = useContext(UploadingJobsContext);
+  const { uploadDefinition, uploadConfiguration, storageKeys } = useContext(UploadingJobsContext);
 
   const jobProfileData = () => {
     const jobProfile = resources.jobProfileView || {};
@@ -153,6 +153,7 @@ const ViewJobProfileComponent = props => {
         uploadDefinitionId: uploadDefinition.id,
         jobProfileInfo,
         defaultMapping: false,
+        storageKeys,
       });
 
       history.push('/data-import');
@@ -420,7 +421,7 @@ const ViewJobProfileComponent = props => {
           )}
           confirmLabel={<FormattedMessage id="ui-data-import.run" />}
           onCancel={() => setShowRunConfirmation(false)}
-          onConfirm={() => handleRun(jobProfileRecord)}
+          onConfirm={() => handleRun(jobProfileRecord, storageKeys)}
           isConfirmButtonDisabled={isConfirmButtonDisabled}
         />
         <Callout ref={calloutRef} />
