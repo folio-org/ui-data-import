@@ -31,7 +31,6 @@ function uploadPart(part, url, partNumber, totalParts, fileKey, progressHandler,
     partUploaderXhr.open('PUT', url, true);
     partUploaderXhr.upload.onprogress = event => {
       const { loaded, total } = event;
-      // console.log(`${partNumber} of ${totalParts} upload progress: ${(loaded / total) * 100}%`);
       const newEvent = {
         ...event,
         loaded: progressAccumulator.totalProgress + event.loaded,
@@ -107,9 +106,8 @@ async function sliceAndUploadParts(file, ky, fileKey, errorHandler, progressHand
       break;
     }
   }
-  // const finishResponse = await finishUpload(eTags, _uploadKey, _uploadId, ky);
   await finishUpload(eTags, _uploadKey, _uploadId, ky);
-  // creating the date stamp expected by the UI here for now...
+  // TODO - expect date string from backend when finishing the upload - creating the date stamp expected by the UI here for now...
   const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toLocaleDateString() }] };
   successHandler(finishResponse, fileKey);
 }
