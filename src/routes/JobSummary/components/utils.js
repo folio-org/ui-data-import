@@ -6,7 +6,10 @@ import {
 } from '@folio/stripes/components';
 
 import { isEmpty } from 'lodash';
-import { RECORD_ACTION_STATUS_LABEL_IDS } from '../../../utils';
+import {
+  RECORD_ACTION_STATUS,
+  RECORD_ACTION_STATUS_LABEL_IDS,
+} from '../../../utils';
 
 import sharedCss from '../../../shared.css';
 
@@ -73,4 +76,17 @@ export const fillCellWithNoValues = (itemData, isErrorColumn = false) => {
   }
 
   return renderNoValues(itemData, isErrorColumn);
+};
+
+/*
+  When there is general item error, BE sends response like this
+  realtedItemInfo: [{
+    actionStatus: "DISCARDED",
+    error: "Error",
+    hrid: "",
+  }];
+  This array always contains one item with status 'DISCARDED' and nas no holdingsId.
+*/
+export const isGeneralItemsError = (itemData, itemStatus) => {
+  return itemData?.length === 1 && !itemData[0].holdingsId && itemStatus === RECORD_ACTION_STATUS.DISCARDED;
 };

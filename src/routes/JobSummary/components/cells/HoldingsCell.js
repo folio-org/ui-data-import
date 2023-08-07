@@ -20,7 +20,7 @@ export const HoldingsCell = ({
     const holdingsId = holdings.id;
     const path = `/inventory/view/${instanceId}/${holdingsId}`;
     const locationId = holdings.permanentLocationId;
-    const isDiscarded = holdings.actionStatus === 'DISCARDED';
+    const isDiscarded = holdings.actionStatus === RECORD_ACTION_STATUS.DISCARDED;
 
     const locationCode = locations.find(locationItem => locationId === locationItem.id)?.code;
 

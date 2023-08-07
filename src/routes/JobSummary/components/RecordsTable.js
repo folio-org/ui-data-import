@@ -30,7 +30,8 @@ import {
   InvoiceCell,
   ErrorCell,
 } from '.';
-import { BaseLineCell } from './utils';
+import { BaseLineCell, isGeneralItemsError } from './utils';
+import { RECORD_ACTION_STATUS } from '../../../utils';
 
 export const RecordsTable = ({
   mutator,
@@ -103,6 +104,7 @@ export const RecordsTable = ({
     invoiceStatus: <FormattedMessage id="ui-data-import.recordTypes.invoice" />,
     error: <FormattedMessage id="ui-data-import.error" />,
   };
+
   const resultsFormatter = {
     recordNumber: ({ sourceRecordOrder }) => (
       <RecordNumberCell
@@ -146,11 +148,11 @@ export const RecordsTable = ({
 
       if (isEmpty(holdingsInfo)) return <BaseLineCell><NoValue /></BaseLineCell>;
 
-      const itemInfo = [...sourceRecord?.relatedItemInfo];
+      const itemInfo = sourceRecord?.relatedItemInfo ? [...sourceRecord?.relatedItemInfo] : [{}];
       const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
 
-      holdingsInfo.forEach(holdings => {
-        const isDiscarded = holdings.actionStatus === 'DISCARDED';
+      holdingsInfo?.forEach(holdings => {
+        const isDiscarded = holdings.actionStatus === RECORD_ACTION_STATUS.DISCARDED;
         const holdingsId = holdings.id;
 
         if (isDiscarded && !itemInfo.find(item => item.holdingsId === holdingsId)) {
@@ -168,16 +170,39 @@ export const RecordsTable = ({
         />
       );
     },
-    itemStatus: ({ sourceRecordId }) => {
+    itemStatus: ({
+      sourceRecordId,
+      itemActionStatus,
+    }) => {
       const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
       const holdingsData = sourceRecord?.relatedHoldingsInfo;
-      const itemData = sourceRecord?.relatedItemInfo;
+      const itemData = sourceRecord?.relatedItemInfo || [];
       const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
 
-      if (isEmpty(itemData) && isEmpty(holdingsData)) return <BaseLineCell><NoValue /></BaseLineCell>;
+      const isGeneralItemError = isGeneralItemsError(itemData, itemActionStatus);
+
+      if (isGeneralItemError) {
+        return (
+          <BaseLineCell>
+            <FormattedMessage id="ui-data-import.error" />
+          </BaseLineCell>
+        );
+      }
+
+      if (isEmpty(itemData) && isEmpty(holdingsData)) {
+        return (
+          <BaseLineCell>
+            <NoValue />
+          </BaseLineCell>
+        );
+      }
 
       if (isEmpty(itemData)) {
-        const emptyValues = holdingsData?.map((_, index) => <div key={index} style={{ paddingBottom: '7px' }}><NoValue /></div>);
+        const emptyValues = holdingsData?.map((_, index) => (
+          <div key={index} style={{ paddingBottom: '7px' }}>
+            <NoValue />
+          </div>
+        ));
 
         return (
           <BaseLineCell>
@@ -186,10 +211,10 @@ export const RecordsTable = ({
         );
       }
 
-      const itemInfo = [...sourceRecord?.relatedItemInfo];
+      const itemInfo = sourceRecord?.relatedItemInfo ? [...sourceRecord?.relatedItemInfo] : [{}];
 
       holdingsData.forEach(holdings => {
-        const isDiscarded = holdings.actionStatus === 'DISCARDED';
+        const isDiscarded = holdings.actionStatus === RECORD_ACTION_STATUS.DISCARDED;
         const holdingsId = holdings.id;
 
         if (isDiscarded && !itemInfo.find(item => item.holdingsId === holdingsId)) {
@@ -278,10 +303,21 @@ export const RecordsTable = ({
     error: ({
       error,
       sourceRecordId,
+      itemActionStatus,
     }) => {
       const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
       const holdingsData = sourceRecord?.relatedHoldingsInfo;
       const itemData = sourceRecord?.relatedItemInfo;
+
+      const isGeneralItemError = isGeneralItemsError(itemData, itemActionStatus);
+
+      if (isGeneralItemError) {
+        return (
+          <BaseLineCell>
+            <FormattedMessage id="ui-data-import.error" />
+          </BaseLineCell>
+        );
+      }
 
       if (isEmpty(itemData) && holdingsData?.some(item => item.error)) {
         return (

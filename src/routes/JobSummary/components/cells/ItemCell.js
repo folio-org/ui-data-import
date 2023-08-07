@@ -18,7 +18,7 @@ export const ItemCell = ({
       const holdingsId = item.holdingsId;
       const itemId = item.id;
       const path = `/inventory/view/${instanceId}/${holdingsId}/${itemId}`;
-      const isDiscarded = item.actionStatus === 'DISCARDED';
+      const isDiscarded = item.actionStatus === RECORD_ACTION_STATUS.DISCARDED;
 
       const hrId = item.hrid;
 
