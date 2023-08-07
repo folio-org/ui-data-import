@@ -184,7 +184,7 @@ export const RecordsTable = ({
       if (isGeneralItemError) {
         return (
           <BaseLineCell>
-            <FormattedMessage id="ui-data-import.error" />
+            <FormattedMessage id="ui-data-import.logLight.actionStatus.noAction" />
           </BaseLineCell>
         );
       }
