@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get, isEmpty, groupBy } from 'lodash';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
 
 import {
   buildSortOrder,
@@ -30,7 +33,12 @@ import {
   InvoiceCell,
   ErrorCell,
 } from '.';
-import { BaseLineCell, isGeneralItemsError } from './utils';
+import {
+  BaseLineCell,
+  getRelatedInfo,
+  groupAndSortDataForRender,
+  isGeneralItemsError,
+} from './utils';
 import { RECORD_ACTION_STATUS } from '../../../utils';
 
 export const RecordsTable = ({
@@ -143,15 +151,24 @@ export const RecordsTable = ({
       />
     ),
     holdingsStatus: ({ sourceRecordId }) => {
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const holdingsInfo = sourceRecord?.relatedHoldingsInfo;
+      const {
+        instanceData,
+        holdingsData,
+        itemData,
+      } = getRelatedInfo(jobLogRecords, sourceRecordId);
 
-      if (isEmpty(holdingsInfo)) return <BaseLineCell><NoValue /></BaseLineCell>;
+      if (isEmpty(holdingsData)) {
+        return (
+          <BaseLineCell>
+            <NoValue />
+          </BaseLineCell>
+        );
+      }
 
-      const itemInfo = sourceRecord?.relatedItemInfo ? [...sourceRecord?.relatedItemInfo] : [{}];
-      const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
+      const itemInfo = itemData ? [...itemData] : [{}];
+      const instanceId = instanceData?.idList[0];
 
-      holdingsInfo?.forEach(holdings => {
+      holdingsData?.forEach(holdings => {
         const isDiscarded = holdings.actionStatus === RECORD_ACTION_STATUS.DISCARDED;
         const holdingsId = holdings.id;
 
@@ -163,8 +180,7 @@ export const RecordsTable = ({
       return (
         <HoldingsCell
           instanceId={instanceId}
-          sourceRecord={sourceRecord}
-          holdingsInfo={holdingsInfo}
+          holdingsInfo={holdingsData}
           itemInfo={itemInfo}
           locations={locations.records}
         />
@@ -174,10 +190,11 @@ export const RecordsTable = ({
       sourceRecordId,
       itemActionStatus,
     }) => {
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const holdingsData = sourceRecord?.relatedHoldingsInfo;
-      const itemData = sourceRecord?.relatedItemInfo || [];
-      const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
+      const {
+        instanceData,
+        holdingsData,
+        itemData,
+      } = getRelatedInfo(jobLogRecords, sourceRecordId);
 
       const isGeneralItemError = isGeneralItemsError(itemData, itemActionStatus);
 
@@ -211,9 +228,10 @@ export const RecordsTable = ({
         );
       }
 
-      const itemInfo = sourceRecord?.relatedItemInfo ? [...sourceRecord?.relatedItemInfo] : [{}];
+      const itemInfo = itemData ? [...itemData] : [{}];
+      const instanceId = instanceData?.idList[0];
 
-      holdingsData.forEach(holdings => {
+      holdingsData?.forEach(holdings => {
         const isDiscarded = holdings.actionStatus === RECORD_ACTION_STATUS.DISCARDED;
         const holdingsId = holdings.id;
 
@@ -222,8 +240,7 @@ export const RecordsTable = ({
         }
       });
 
-      const groupedItemData = groupBy(itemInfo, 'holdingsId');
-      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id]);
+      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
 
       return (
         <ItemCell
@@ -236,14 +253,12 @@ export const RecordsTable = ({
       authorityActionStatus,
       sourceRecordId,
     }) => {
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const holdingsData = sourceRecord?.relatedHoldingsInfo;
-      const itemData = sourceRecord?.relatedItemInfo;
+      const {
+        holdingsData,
+        itemData,
+      } = getRelatedInfo(jobLogRecords, sourceRecordId);
 
-      const groupedItemData = groupBy(itemData, 'holdingsId');
-
-      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id])
-        .map(element => (!element ? [{}] : element));
+      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
 
       return (
         <AuthorityCell
@@ -258,14 +273,12 @@ export const RecordsTable = ({
       poLineActionStatus,
       sourceRecordId,
     }) => {
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const holdingsData = sourceRecord?.relatedHoldingsInfo;
-      const itemData = sourceRecord?.relatedItemInfo;
+      const {
+        holdingsData,
+        itemData,
+      } = getRelatedInfo(jobLogRecords, sourceRecordId);
 
-      const groupedItemData = groupBy(itemData, 'holdingsId');
-
-      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id])
-        .map(element => (element || [{}]));
+      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
 
       return (
         <OrderCell
@@ -281,14 +294,12 @@ export const RecordsTable = ({
       sourceRecordId,
       sourceRecordOrder,
     }) => {
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const holdingsData = sourceRecord?.relatedHoldingsInfo;
-      const itemData = sourceRecord?.relatedItemInfo;
+      const {
+        holdingsData,
+        itemData,
+      } = getRelatedInfo(jobLogRecords, sourceRecordId);
 
-      const groupedItemData = groupBy(itemData, 'holdingsId');
-
-      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id])
-        .map(element => (element || [{}]));
+      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
 
       return (
         <InvoiceCell
@@ -305,9 +316,10 @@ export const RecordsTable = ({
       sourceRecordId,
       itemActionStatus,
     }) => {
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const holdingsData = sourceRecord?.relatedHoldingsInfo;
-      const itemData = sourceRecord?.relatedItemInfo;
+      const {
+        holdingsData,
+        itemData,
+      } = getRelatedInfo(jobLogRecords, sourceRecordId);
 
       const isGeneralItemError = isGeneralItemsError(itemData, itemActionStatus);
 
@@ -328,10 +340,7 @@ export const RecordsTable = ({
         );
       }
 
-      const groupedItemData = groupBy(itemData, 'holdingsId');
-
-      const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id])
-        .map(element => (element || [{ error: true }]));
+      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData, true);
 
       return (
         <ErrorCell

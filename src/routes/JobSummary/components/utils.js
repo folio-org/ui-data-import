@@ -1,11 +1,14 @@
 import { FormattedMessage } from 'react-intl';
+import {
+  groupBy,
+  isEmpty,
+} from 'lodash';
 
 import {
   TextLink,
   NoValue,
 } from '@folio/stripes/components';
 
-import { isEmpty } from 'lodash';
 import {
   RECORD_ACTION_STATUS,
   RECORD_ACTION_STATUS_LABEL_IDS,
@@ -13,7 +16,11 @@ import {
 
 import sharedCss from '../../../shared.css';
 
-export const BaseLineCell = ({ children }) => <div className={sharedCss.baselineCell}>{children}</div>;
+export const BaseLineCell = ({ children }) => (
+  <div className={sharedCss.baselineCell}>
+    {children}
+  </div>
+);
 
 export const getHotlinkCellFormatter = (isHotlink, entityLabel, path, entity) => {
   if (isHotlink) {
@@ -43,7 +50,11 @@ export const getRecordActionStatusLabel = recordType => {
 
   const labelId = RECORD_ACTION_STATUS_LABEL_IDS[recordType];
 
-  return <BaseLineCell><FormattedMessage id={labelId} /></BaseLineCell>;
+  return (
+    <BaseLineCell>
+      <FormattedMessage id={labelId} />
+    </BaseLineCell>
+  );
 };
 
 const renderNoValues = (itemData, isErrorColumn) => {
@@ -60,7 +71,11 @@ const renderNoValues = (itemData, isErrorColumn) => {
       );
     });
 
-    return <div key={`cell-${itemIndex}`} style={{ paddingBottom: '7px' }}>{groupOfItems}</div>;
+    return (
+      <div key={`cell-${itemIndex}`} style={{ paddingBottom: '7px' }}>
+        {groupOfItems}
+      </div>
+    );
   });
 
   return (
@@ -72,7 +87,11 @@ const renderNoValues = (itemData, isErrorColumn) => {
 
 export const fillCellWithNoValues = (itemData, isErrorColumn = false) => {
   if (isEmpty(itemData)) {
-    return <BaseLineCell><NoValue /></BaseLineCell>;
+    return (
+      <BaseLineCell>
+        <NoValue />
+      </BaseLineCell>
+    );
   }
 
   return renderNoValues(itemData, isErrorColumn);
@@ -89,4 +108,26 @@ export const fillCellWithNoValues = (itemData, isErrorColumn = false) => {
 */
 export const isGeneralItemsError = (itemData, itemStatus) => {
   return itemData?.length === 1 && !itemData[0].holdingsId && itemStatus === RECORD_ACTION_STATUS.DISCARDED;
+};
+
+export const getRelatedInfo = (jobLogRecords, sourceRecordId) => {
+  const sourceRecord = jobLogRecords?.find(item => item.sourceRecordId === sourceRecordId);
+  const instanceData = sourceRecord?.relatedInstanceInfo;
+  const holdingsData = sourceRecord?.relatedHoldingsInfo;
+  const itemData = sourceRecord?.relatedItemInfo;
+
+  return {
+    instanceData,
+    holdingsData,
+    itemData,
+  };
+};
+
+export const groupAndSortDataForRender = (itemData, holdingsData, isError = false) => {
+  const groupedItemData = groupBy(itemData, 'holdingsId');
+  const sortedItemData = holdingsData?.map(holdings => groupedItemData[holdings.id]);
+
+  return isError
+    ? sortedItemData?.map(element => (element || [{ error: true }]))
+    : sortedItemData?.map(element => (element || [{}]));
 };
