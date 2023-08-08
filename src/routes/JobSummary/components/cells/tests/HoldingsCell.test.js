@@ -12,25 +12,25 @@ import {
 import { HoldingsCell } from '../HoldingsCell';
 
 const locationsProp = [{
-  id : 'testLocationId',
-  name : 'Annex',
-  code : 'KU/CC/DI/A',
+  id: 'testLocationId',
+  name: 'Annex',
+  code: 'KU/CC/DI/A',
 }];
 
 const holdingsInfoProp = (actionStatus = 'CREATED') => [{
   actionStatus,
-  id : 'testHoldingsId',
+  id: 'testHoldingsId',
   permanentLocationId: 'testLocationId',
-  hrid : 'ho00000000017',
-  error : ''
+  hrid: 'ho00000000017',
+  error: '',
 }];
 
 const itemInfo = [{
-  actionStatus : 'CREATED',
-  id : '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
-  hrid : 'it00000000015',
-  holdingsId : 'testHoldingsId',
-  error : ''
+  actionStatus: 'CREATED',
+  id: '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
+  hrid: 'it00000000015',
+  holdingsId: 'testHoldingsId',
+  error: '',
 }];
 
 const renderHoldingsCell = (holdingsInfo) => {
@@ -56,7 +56,7 @@ describe('HoldingsCell component', () => {
   });
 
   describe('when holdings was created', () => {
-    it('hotlink and location should be rendered', () => {
+    it('should render hotlink and location', () => {
       const {
         container,
         getByText,
@@ -69,7 +69,7 @@ describe('HoldingsCell component', () => {
   });
 
   describe('when holdings was updated', () => {
-    it('hotlink and location should be rendered', () => {
+    it('should render hotlink and location', () => {
       const {
         container,
         getByText,

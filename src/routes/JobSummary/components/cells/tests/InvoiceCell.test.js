@@ -15,24 +15,24 @@ const jobLogRecords = [{
   sourceRecordId: 'testId',
   sourceRecordOrder: 0,
   invoiceActionStatus: 'CREATED',
-  relatedInvoiceInfo : {
-    idList : ['testInvoiceId'],
-    hridList : []
+  relatedInvoiceInfo: {
+    idList: ['testInvoiceId'],
+    hridList: [],
   },
   relatedInvoiceLineInfo: {
     fullInvoiceLineNumber: 0,
     id: 'testInvoiceLineId',
-    hridList : [],
+    hridList: [],
   },
 }];
 
 const sortedItemData = [
   [{
-    actionStatus : 'CREATED',
-    id : '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
-    hrid : 'it00000000015',
-    holdingsId : 'testHoldingsId',
-    error : ''
+    actionStatu: 'CREATED',
+    id: '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
+    hrid: 'it00000000015',
+    holdingsId: 'testHoldingsId',
+    error: '',
   }]
 ];
 
@@ -60,7 +60,7 @@ describe('InvoiceCell component', () => {
   });
 
   describe('when invoice was created', () => {
-    it('hotlink should be rendered', () => {
+    it('should render hotlink', () => {
       const { container } = renderInvoiceCell('CREATED');
       const invoiceHotlink = container.querySelector('[data-test-entity-name="invoice"]');
 

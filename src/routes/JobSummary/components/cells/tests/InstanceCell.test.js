@@ -43,7 +43,7 @@ describe('InstanceCell component', () => {
   });
 
   describe('when instance was created', () => {
-    it('hotlink should be rendered', () => {
+    it('should render hotlink', () => {
       const { container } = renderInstanceCell('CREATED');
       const instanceHotlink = container.querySelector('[data-test-entity-name="instance"]');
 
@@ -52,7 +52,7 @@ describe('InstanceCell component', () => {
   });
 
   describe('when instance was updated', () => {
-    it('hotlink should be rendered', () => {
+    it('should render hotlink', () => {
       const { container } = renderInstanceCell('UPDATED');
       const instanceHotlink = container.querySelector('[data-test-entity-name="instance"]');
 

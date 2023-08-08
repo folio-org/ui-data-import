@@ -21,18 +21,18 @@ const jobLogRecords = [{
     idList: [faker.random.uuid()],
   },
   relatedHoldingsInfo: [{
-    actionStatus : 'CREATED',
-    id : 'testHoldingsId',
+    actionStatus: 'CREATED',
+    id: 'testHoldingsId',
     permanentLocationId: faker.random.uuid(),
-    hrid : 'ho00000000017',
-    error : ''
+    hrid: 'ho00000000017',
+    error: '',
   }],
   relatedItemInfo: [{
-    actionStatus : 'CREATED',
-    id : '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
-    hrid : 'it00000000015',
-    holdingsId : 'testHoldingsId',
-    error : ''
+    actionStatus: 'CREATED',
+    id: '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
+    hrid: 'it00000000015',
+    holdingsId: 'testHoldingsId',
+    error: '',
   }],
   relatedAuthorityInfo: {
     actionStatus: 'CREATED',
@@ -46,11 +46,11 @@ const jobLogRecords = [{
 
 const sortedItemData = [
   [{
-    actionStatus : 'CREATED',
-    id : '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
-    hrid : 'it00000000015',
-    holdingsId : 'testHoldingsId',
-    error : ''
+    actionStatus: 'CREATED',
+    id: '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
+    hrid: 'it00000000015',
+    holdingsId: 'testHoldingsId',
+    error: '',
   }]
 ];
 
@@ -77,7 +77,7 @@ describe('AuthorityCell component', () => {
   });
 
   describe('when authority was created', () => {
-    it('hotlink should be rendered', () => {
+    it('should render hotlink', () => {
       const { container } = renderAuthorityCell('CREATED');
       const authorityHotlink = container.querySelector('[data-test-entity-name="authority"]');
 
@@ -86,7 +86,7 @@ describe('AuthorityCell component', () => {
   });
 
   describe('when authority was updated', () => {
-    it('hotlink should be rendered', () => {
+    it('should render hotlink', () => {
       const { container } = renderAuthorityCell('UPDATED');
       const authorityHotlink = container.querySelector('[data-test-entity-name="authority"]');
 

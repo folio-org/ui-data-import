@@ -39,6 +39,7 @@ import {
   DATA_TYPES,
   storage,
   PREVIOUS_LOCATIONS_KEY,
+  PER_REQUEST_LIMIT,
 } from '../../utils';
 
 const INITIAL_RESULT_COUNT = 100;
@@ -287,7 +288,7 @@ JobSummaryComponent.manifest = Object.freeze({
     throwErrors: false,
     type: 'okapi',
     records: 'locations',
-    path: 'locations?limit=1000&query=cql.allRecords=1 sortby name',
+    path: `locations?limit=${PER_REQUEST_LIMIT}&query=cql.allRecords=1 sortby name`,
   }
 });
 

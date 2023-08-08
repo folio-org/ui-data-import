@@ -46,111 +46,111 @@ const jobLogEntriesResources = {
 };
 
 const jobLogRecords = [{
-  jobExecutionId : '467d7627-c0db-4fb7-b333-4b4983dbf781',
-  sourceRecordId : '59138d56-bc81-4f66-9f72-f57f53621111',
+  jobExecutionId: '467d7627-c0db-4fb7-b333-4b4983dbf781',
+  sourceRecordId: '59138d56-bc81-4f66-9f72-f57f53621111',
   sourceRecordOrder : 0,
-  sourceRecordTitle : 'Test record 1',
-  sourceRecordActionStatus : 'CREATED',
+  sourceRecordTitle: 'Test record 1',
+  sourceRecordActionStatus: 'CREATED',
   instanceActionStatus: 'CREATED',
-  error : '',
-  relatedInstanceInfo : {
-    actionStatus : 'CREATED',
-    idList : ['720031b9-a792-4936-963c-a7b63fb96574'],
-    hridList : ['in00000000014'],
-    error : ''
+  error: '',
+  relatedInstanceInfo: {
+    actionStatus: 'CREATED',
+    idList: ['720031b9-a792-4936-963c-a7b63fb96574'],
+    hridList: ['in00000000014'],
+    error: '',
   },
-  relatedHoldingsInfo : [],
-  relatedItemInfo : [],
+  relatedHoldingsInfo: [],
+  relatedItemInfo: [],
   relatedAuthorityInfo: {
-    idList : [],
-    hridList : []
+    idList: [],
+    hridList: [],
   },
   relatedPoLineInfo: {
     idList: [],
-    hridList : []
+    hridList: [],
   },
-  relatedInvoiceInfo : {
-    idList : [],
-    hridList : []
+  relatedInvoiceInfo: {
+    idList: [],
+    hridList: [],
   },
-  relatedInvoiceLineInfo : { }
+  relatedInvoiceLineInfo: { },
 }, {
-  jobExecutionId : '467d7627-c0db-4fb7-b333-4b4983dbf781',
-  sourceRecordId : '59138d56-bc81-4f66-9f72-f57f53629646',
+  jobExecutionId: '467d7627-c0db-4fb7-b333-4b4983dbf781',
+  sourceRecordId: '59138d56-bc81-4f66-9f72-f57f53629646',
   sourceRecordOrder : 4,
-  sourceRecordTitle : 'Test record 2',
-  sourceRecordActionStatus : 'CREATED',
+  sourceRecordTitle: 'Test record 2',
+  sourceRecordActionStatus: 'CREATED',
   instanceActionStatus: 'CREATED',
-  error : '',
-  relatedInstanceInfo : {
-    actionStatus : 'CREATED',
-    idList : ['720031b9-a792-4936-963c-a7b63fb96574'],
-    hridList : ['in00000000014'],
-    error : ''
+  error: '',
+  relatedInstanceInfo: {
+    actionStatus: 'CREATED',
+    idList: ['720031b9-a792-4936-963c-a7b63fb96574'],
+    hridList: ['in00000000014'],
+    error: '',
   },
-  relatedHoldingsInfo : [{
-    actionStatus : 'CREATED',
-    id : 'f648c370-d9d6-432c-a502-b8eb718f867c',
+  relatedHoldingsInfo: [{
+    actionStatus: 'CREATED',
+    id: 'f648c370-d9d6-432c-a502-b8eb718f867c',
     permanentLocationId: '53cf956f-c1df-410b-8bea-27f712cca7c0',
-    hrid : 'ho00000000017',
-    error : ''
+    hrid: 'ho00000000017',
+    error: '',
   }, {
     actionStatus: 'CREATED',
-    id : '5cadf17f-eb72-475c-a2e0-7e56f54f0000',
+    id: '5cadf17f-eb72-475c-a2e0-7e56f54f0000',
     permanentLocationId: '758258bc-ecc1-41b8-abca-f7b610822ffd',
-    hrid : 'ho00000000018',
-    error : ''
+    hrid: 'ho00000000018',
+    error: '',
   }, {
-    actionStatus : 'DISCARDED',
-    id : '5cadf17f-eb72-475c-a2e0-7e56f54fd3b4',
+    actionStatus: 'DISCARDED',
+    id: '5cadf17f-eb72-475c-a2e0-7e56f54fd3b4',
     permanentLocationId: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
-    hrid : 'ho00000000014',
-    error : ''
+    hrid: 'ho00000000014',
+    error: '',
   }],
-  relatedItemInfo : [{
-    actionStatus : 'CREATED',
-    id : '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
-    hrid : 'it00000000015',
-    holdingsId : 'f648c370-d9d6-432c-a502-b8eb718f867c',
-    error : ''
+  relatedItemInfo: [{
+    actionStatus: 'CREATED',
+    id: '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
+    hrid: 'it00000000015',
+    holdingsId: 'f648c370-d9d6-432c-a502-b8eb718f867c',
+    error: '',
   }, {
-    actionStatus : 'DISCARDED',
-    id : 'ccd19bf0-add1-46bb-899b-c457fd448b51',
-    hrid : 'it00000000016',
-    holdingsId : 'f648c370-d9d6-432c-a502-b8eb718f867c',
-    error : 'test error'
+    actionStatus: 'DISCARDED',
+    id: 'ccd19bf0-add1-46bb-899b-c457fd448b51',
+    hrid: 'it00000000016',
+    holdingsId: 'f648c370-d9d6-432c-a502-b8eb718f867c',
+    error: 'test error',
   }, {
-    actionStatus : 'CREATED',
-    id : 'ccd19bf0-add1-46bb-899b-c457fd441111',
-    hrid : 'it00000000019',
-    holdingsId : '5cadf17f-eb72-475c-a2e0-7e56f54f0000',
-    error : ''
+    actionStatus: 'CREATED',
+    id: 'ccd19bf0-add1-46bb-899b-c457fd441111',
+    hrid: 'it00000000019',
+    holdingsId: '5cadf17f-eb72-475c-a2e0-7e56f54f0000',
+    error: '',
   }, {
-    actionStatus : 'CREATED',
-    id : '3bcfe427-a747-405f-b3f3-1d842ffb2222',
-    hrid : 'it00000000018',
-    holdingsId : '5cadf17f-eb72-475c-a2e0-7e56f54f0000',
-    error : ''
+    actionStatus: 'CREATED',
+    id: '3bcfe427-a747-405f-b3f3-1d842ffb2222',
+    hrid: 'it00000000018',
+    holdingsId: '5cadf17f-eb72-475c-a2e0-7e56f54f0000',
+    error: '',
   }, {
-    actionStatus : 'CREATED',
-    id : '3bcfe427-a747-405f-b3f3-1d842ffb49c6',
-    hrid : 'it00000000014',
-    holdingsId : 'f648c370-d9d6-432c-a502-b8eb718f867c',
-    error : ''
+    actionStatus: 'CREATED',
+    id: '3bcfe427-a747-405f-b3f3-1d842ffb49c6',
+    hrid: 'it00000000014',
+    holdingsId: 'f648c370-d9d6-432c-a502-b8eb718f867c',
+    error: '',
   }],
   relatedAuthorityInfo: {
-    idList : [],
-    hridList : []
+    idList: [],
+    hridList: [],
   },
   relatedPoLineInfo: {
     idList: [],
-    hridList : []
+    hridList: [],
   },
-  relatedInvoiceInfo : {
-    idList : [],
-    hridList : []
+  relatedInvoiceInfo: {
+    idList: [],
+    hridList: [],
   },
-  relatedInvoiceLineInfo : { }
+  relatedInvoiceLineInfo: { },
 }];
 
 const jobLogResources = {

@@ -11,17 +11,17 @@ import {
 
 import { ItemCell } from '../ItemCell';
 
-const sortedItemDataProp = (actionStatus) => [
+const sortedItemDataProp = actionStatus => [
   [{
     actionStatus,
-    id : 'testItemId',
-    hrid : 'it00000000015',
-    holdingsId : 'testHoldingsId',
-    error : ''
+    id: 'testItemId',
+    hrid: 'it00000000015',
+    holdingsId: 'testHoldingsId',
+    error: '',
   }]
 ];
 
-const renderItemCell = (sortedItemData) => {
+const renderItemCell = sortedItemData => {
   const component = (
     <Router>
       <ItemCell
@@ -42,7 +42,7 @@ describe('ItemCell component', () => {
   });
 
   describe('when item was created', () => {
-    it('hotlink and hrid should be rendered', () => {
+    it('should render hotlink and hrid', () => {
       const {
         container,
         getByText,
@@ -55,7 +55,7 @@ describe('ItemCell component', () => {
   });
 
   describe('when item was updated', () => {
-    it('hotlink and location should be rendered', () => {
+    it('should render hotlink and hrid', () => {
       const {
         container,
         getByText,

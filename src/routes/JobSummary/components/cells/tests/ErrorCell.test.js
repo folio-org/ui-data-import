@@ -12,11 +12,11 @@ import { ErrorCell } from '../ErrorCell';
 
 const sortedItemDataProp = [
   [{
-    actionStatus : 'CREATED',
-    id : '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
-    hrid : 'it00000000015',
-    holdingsId : 'testHoldingsId',
-    error : 'test error'
+    actionStatus: 'CREATED',
+    id: '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
+    hrid: 'it00000000015',
+    holdingsId: 'testHoldingsId',
+    error: 'test error',
   }]
 ];
 
@@ -39,14 +39,14 @@ describe('ErrorCell component', () => {
   });
 
   describe('when error was occured', () => {
-    it('error message should be rendered', () => {
+    it('should render error message', () => {
       const { getByText } = renderErrorCell({ error: 'test error' });
 
       expect(getByText('Error')).toBeInTheDocument();
     });
 
     describe('when item has an error', () => {
-      it('error message should be rendered', () => {
+      it('should render error message', () => {
         const { getByText } = renderErrorCell({
           error: 'test error',
           sortedItemData: sortedItemDataProp,
