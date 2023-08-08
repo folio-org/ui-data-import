@@ -39,6 +39,7 @@ import {
   DATA_TYPES,
   storage,
   PREVIOUS_LOCATIONS_KEY,
+  PER_REQUEST_LIMIT,
 } from '../../utils';
 
 const INITIAL_RESULT_COUNT = 100;
@@ -283,6 +284,12 @@ JobSummaryComponent.manifest = Object.freeze({
     path: 'change-manager/jobExecutions/:{id}',
     throwErrors: false,
   },
+  locations: {
+    throwErrors: false,
+    type: 'okapi',
+    records: 'locations',
+    path: `locations?limit=${PER_REQUEST_LIMIT}&query=cql.allRecords=1 sortby name`,
+  }
 });
 
 JobSummaryComponent.propTypes = {
@@ -307,6 +314,7 @@ JobSummaryComponent.propTypes = {
     }),
     jobLogEntries: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
     jobLog: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
+    locations: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
   }).isRequired,
   location: PropTypes.oneOfType([
     PropTypes.shape({
