@@ -16,6 +16,7 @@ import {
 import {
   withStripes,
   stripesShape,
+  withOkapiKy,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -42,12 +43,13 @@ import {
 } from '../../utils';
 import * as API from '../../utils/upload';
 import { createJobProfiles } from '../../settings/JobProfiles';
-
+import { handleObjectStorageUpload } from '../../utils/multipartUpload';
 import css from './UploadingJobsDisplay.css';
 import sharedCss from '../../shared.css';
 
 @withRouter
 @withStripes
+@withOkapiKy
 export class UploadingJobsDisplay extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
@@ -64,6 +66,7 @@ export class UploadingJobsDisplay extends Component {
       }).isRequired,
       PropTypes.string.isRequired,
     ]),
+    okapiKy: PropTypes.func,
   };
 
   static contextType = UploadingJobsContext;
@@ -73,6 +76,7 @@ export class UploadingJobsDisplay extends Component {
   state = {
     files: {},
     hasLoaded: false,
+    configurationLoaded: typeof this.context.uploadConfiguration.canUseObjectStorage !== 'undefined',
     renderLeaveModal: false,
     renderCancelUploadFileModal: false,
     recordsLoadingInProgress: false,
@@ -90,8 +94,19 @@ export class UploadingJobsDisplay extends Component {
 
     this.setPageLeaveHandler();
     this.mapFilesToState();
-    await this.uploadJobs();
-    this.updateJobProfilesComponent();
+    if (this.state.configurationLoaded) {
+      await this.uploadJobs();
+      this.updateJobProfilesComponent();
+    }
+  }
+
+  componentDidUpdate(props, state) {
+    const { configurationLoaded } = state;
+    const { uploadConfiguration } = this.context;
+    if (!configurationLoaded && typeof uploadConfiguration.canUseObjectStorage !== 'undefined') {
+      this.setState({ configurationLoaded: true });
+      this.handleUploadJobs();
+    }
   }
 
   componentWillUnmount() {
@@ -102,6 +117,11 @@ export class UploadingJobsDisplay extends Component {
 
   calloutRef = createRef();
   selectedFile = null;
+
+  handleUploadJobs = async () => {
+    await this.uploadJobs();
+    this.updateJobProfilesComponent();
+  }
 
   mapFilesToState() {
     const {
@@ -190,12 +210,17 @@ export class UploadingJobsDisplay extends Component {
   }
 
   async uploadJobs() {
+    const { uploadConfiguration } = this.context;
     try {
       await this.fetchUploadDefinition();
 
       if (this.isSnapshotMode) {
         this.renderSnapshotData();
+        return;
+      }
 
+      if (uploadConfiguration.canUseObjectStorage) {
+        this.multipartUpload();
         return;
       }
 
@@ -211,9 +236,20 @@ export class UploadingJobsDisplay extends Component {
     }
   }
 
+  multipartUpload() {
+    const { files } = this.state;
+    const { okapiKy } = this.props;
+    handleObjectStorageUpload(
+      files,
+      okapiKy,
+      this.handleFileUploadFail,
+      this.onFileUploadProgress,
+      this.handleFileUploadSuccess,
+    );
+  }
+
   async uploadFiles() {
     const { files } = this.state;
-
     for (const fileKey of Object.keys(files)) {
       try {
         // cancel current and next file uploads if component is unmounted
