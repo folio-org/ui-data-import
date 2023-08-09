@@ -1,5 +1,11 @@
 import PropTypes from 'prop-types';
 
+const compositeDetailsShape = {
+  chunksCount: PropTypes.number,
+  totalRecordsCount: PropTypes.number,
+  currentlyProcessedCount: PropTypes.number,
+};
+
 export const jobExecutionPropTypes = PropTypes.shape({
   id: PropTypes.string.isRequired,
   hrId: PropTypes.number.isRequired,
@@ -26,4 +32,9 @@ export const jobExecutionPropTypes = PropTypes.shape({
   status: PropTypes.string.isRequired,
   uiStatus: PropTypes.string.isRequired,
   userId: PropTypes.string,
+  compositeDetails: PropTypes.shape({
+    processingInProgressState: PropTypes.shape(compositeDetailsShape),
+    committedState: PropTypes.shape(compositeDetailsShape),
+    errorState: PropTypes.shape(compositeDetailsShape)
+  })
 });

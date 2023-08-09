@@ -29,23 +29,6 @@ export class RunningJobs extends PureComponent {
 
     return (
       <div data-test-running-jobs>
-        {/* <Job
-          job={{
-            jobProfileInfo: { name: '1Beelion' },
-            fileName: '1Beelion.mrc',
-            uiStatus: 'RUNNING',
-            hrId: '000048394',
-            runBy: {
-              firstName: 'Homer',
-              lastName: 'J Simpson'
-            },
-            progress: {
-              current: 29,
-              total: 50,
-            },
-          }}
-          showPartProgress
-        /> */}
         <JobsListAccordion
           jobs={jobs}
           hasLoaded={hasLoaded}

@@ -40,6 +40,7 @@ const jobsUrlParams = [
   `uiStatusAny=${RUNNING}`,
   'limit=50',
   'sortBy=completed_date,desc',
+  'subordinationTypeNotAny=COMPOSITE_CHILD'
 ];
 
 const logsUrlParams = [
@@ -51,6 +52,7 @@ const logsUrlParams = [
   `fileNameNotAny=${NO_FILE_NAME}`,
   'limit=25',
   'sortBy=completed_date,desc',
+  'subordinationTypeNotAny=COMPOSITE_PARENT'
 ];
 
 const jobsUrl = createUrlFromArray('metadata-provider/jobExecutions', jobsUrlParams);
@@ -105,15 +107,19 @@ export class DataFetcher extends Component {
     },
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this.mounted = true;
-    await this.fetchResourcesData(true);
-    this.updateResourcesData();
+    this.initialize();
   }
 
   componentWillUnmount() {
     this.mounted = false;
     clearTimeout(this.timeoutId);
+  }
+
+  initialize = async () => {
+    await this.fetchResourcesData(true);
+    this.updateResourcesData();
   }
 
   updateResourcesData() {
@@ -134,7 +140,6 @@ export class DataFetcher extends Component {
     }
 
     const { mutator } = this.props;
-
     const fetchResourcesPromises = Object
       .values(mutator)
       .reduce((res, resourceMutator) => res.concat(this.fetchResourceData(resourceMutator)), []);
