@@ -8,10 +8,10 @@
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
 * Avoid private paths in stripes-core imports (UIDATIMP-1414)
 
-## [6.0.9](https://github.com/folio-org/ui-data-import/tree/v6.0.9) (2023-07-31)
+## [6.0.10](https://github.com/folio-org/ui-data-import/tree/v6.0.10) (2023-08-14)
 * Change validation messages which were represented in code format (UIDATIMP-1473)
 
-### Bugs fixed:
+## [6.0.9](https://github.com/folio-org/ui-data-import/tree/v6.0.9) (2023-07-31)
 * Allow to handle text/plain content type when error occurs (UIDATIMP-1465)
 
 ## [6.0.8](https://github.com/folio-org/ui-data-import/tree/v6.0.8) (2023-04-04)
