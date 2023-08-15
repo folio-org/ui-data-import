@@ -1,5 +1,8 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import {
+  renderHook,
+  waitFor,
+} from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -22,13 +25,8 @@ describe('useLocationsQuery', () => {
   });
 
   it('should fetch locations', async () => {
-    const {
-      result,
-      waitFor,
-    } = renderHook(() => useLocationsQuery(), { wrapper: queryClientWrapper });
+    const { result } = renderHook(() => useLocationsQuery(), { wrapper: queryClientWrapper });
 
-    await waitFor(() => !result.current.isLoading);
-
-    expect(result.current.data).toEqual(mockLocationsRecord);
+    await waitFor(() => expect(result.current.data).toEqual(mockLocationsRecord));
   });
 });

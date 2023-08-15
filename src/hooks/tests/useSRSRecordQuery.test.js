@@ -1,5 +1,8 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import {
+  waitFor,
+  renderHook,
+} from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -24,10 +27,8 @@ describe('useSRSRecordQuery', () => {
   it('should fetch SRS record', async () => {
     const id = 'recordId';
 
-    const { result, waitFor } = renderHook(() => useSRSRecordQuery(id), { wrapper: queryClientWrapper });
+    const { result } = renderHook(() => useSRSRecordQuery(id), { wrapper: queryClientWrapper });
 
-    await waitFor(() => !result.current.isLoading);
-
-    expect(result.current.data).toEqual(mockSRSMarcRecord);
+    await waitFor(() => expect(result.current.data).toEqual(mockSRSMarcRecord));
   });
 });

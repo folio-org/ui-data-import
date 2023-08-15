@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **6.1.0** (in progress)
+## **7.0.0** (in progress)
 
 ### Features added:
 * Landing page: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1355)
@@ -23,6 +23,7 @@
 * Allow to handle text/plain content type when error occurs (UIDATIMP-1465)
 * Clear searches when switching between profile types (UIDATIMP-1461)
 * Change validation messages which were represented in code format (UIDATIMP-1473)
+* *BREAKING* bump `react` to `v18`, and dev-deps accordingly (UIDATIMP-1485)
 
 ### Bugs fixed:
 * Fix all the failed accessibility tests in ui-data-import (UIDATIMP-1393)

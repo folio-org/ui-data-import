@@ -1,5 +1,8 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import {
+  waitFor,
+  renderHook,
+} from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -24,10 +27,8 @@ describe('useInvoicesByIdQuery', () => {
   it('should fetch invoices', async () => {
     const ids = ['invoiceId1', 'invoiceId1'];
 
-    const { result, waitFor } = renderHook(() => useInvoicesByIdQuery(ids), { wrapper: queryClientWrapper });
+    const { result } = renderHook(() => useInvoicesByIdQuery(ids), { wrapper: queryClientWrapper });
 
-    await waitFor(() => !result.current.isLoading);
-
-    expect(result.current.data).toEqual(mockInvoicesRecords);
+    await waitFor(() => expect(result.current.data).toEqual(mockInvoicesRecords));
   });
 });

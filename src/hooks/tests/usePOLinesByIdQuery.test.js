@@ -1,5 +1,8 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import {
+  waitFor,
+  renderHook,
+} from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -24,10 +27,8 @@ describe('usePOLinesByIdQuery', () => {
   it('should fetch PO lines', async () => {
     const ids = ['poLineId1', 'poLineId2'];
 
-    const { result, waitFor } = renderHook(() => usePOLinesByIdQuery(ids), { wrapper: queryClientWrapper });
+    const { result } = renderHook(() => usePOLinesByIdQuery(ids), { wrapper: queryClientWrapper });
 
-    await waitFor(() => !result.current.isLoading);
-
-    expect(result.current.data).toEqual(mockPoLinesRecords);
+    await waitFor(() => expect(result.current.data).toEqual(mockPoLinesRecords));
   });
 });

@@ -3,7 +3,10 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { renderHook } from '@testing-library/react-hooks';
+import {
+  waitFor,
+  renderHook,
+} from '@testing-library/react';
 import faker from 'faker';
 
 import '../../../../../test/jest/__mock__';
@@ -41,11 +44,9 @@ describe('useOrganizationValue hook', () => {
   });
 
   it('fetches organization when id is provided', async () => {
-    const { result, waitFor } = renderHook(() => useOrganizationValue(`"${organization.id}"`), { wrapper });
+    const { result } = renderHook(() => useOrganizationValue(`"${organization.id}"`), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
-
-    expect(result.current.organizationName).toEqual('"Amazon"');
+    await waitFor(() => expect(result.current.organizationName).toEqual('"Amazon"'));
     expect(mockGet).toHaveBeenCalledWith(`${VENDORS_API}/${organization.id}`);
   });
 
