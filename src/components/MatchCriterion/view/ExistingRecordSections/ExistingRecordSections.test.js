@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitFor } from '@testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {

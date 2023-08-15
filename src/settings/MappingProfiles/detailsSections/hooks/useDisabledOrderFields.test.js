@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../../test/jest/__mock__';
 

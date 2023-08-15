@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { runAxeTest } from '@folio/stripes-testing';

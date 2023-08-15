@@ -1,6 +1,6 @@
 import React from 'react';
 import { noop } from 'lodash';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {

@@ -3,7 +3,7 @@ import React from 'react';
 import {
   fireEvent,
   waitFor,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithContext } from '@folio/stripes-data-transfer-components/test/jest/helpers';

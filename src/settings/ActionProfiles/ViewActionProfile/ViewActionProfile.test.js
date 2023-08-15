@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import {
   fireEvent,
   waitFor,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import { noop } from 'lodash';

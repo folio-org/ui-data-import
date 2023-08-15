@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import {
   waitFor,
   fireEvent,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import { renderWithContext } from '@folio/stripes-data-transfer-components/test/jest/helpers';

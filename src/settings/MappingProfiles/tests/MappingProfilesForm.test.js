@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import {
   act,
   fireEvent,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 import { noop } from 'lodash';
 
 import '../../../../test/jest/__mock__';

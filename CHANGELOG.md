@@ -24,6 +24,7 @@
 * Clear searches when switching between profile types (UIDATIMP-1461)
 * Change validation messages which were represented in code format (UIDATIMP-1473)
 * *BREAKING* bump `react` to `v18`, and dev-deps accordingly (UIDATIMP-1485)
+* leverage jest-config-stripes for all jest and testing-library packages (UIDATIMP-1508)
 
 ### Bugs fixed:
 * Fix all the failed accessibility tests in ui-data-import (UIDATIMP-1393)

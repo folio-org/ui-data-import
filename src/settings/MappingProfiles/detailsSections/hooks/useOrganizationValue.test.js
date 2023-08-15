@@ -6,7 +6,7 @@ import {
 import {
   waitFor,
   renderHook,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 import faker from 'faker';
 
 import '../../../../../test/jest/__mock__';
