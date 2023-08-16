@@ -12,6 +12,8 @@ import '../../../test/jest/__mock__';
 import JobLogsContainer from './JobLogsContainer';
 import { FILE_STATUSES } from '../../utils';
 
+import UploadJobsContext from '../UploadingJobsContextProvider/UploadingJobsContext';
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({
@@ -19,6 +21,13 @@ jest.mock('react-router-dom', () => ({
     search: '?testKey=testValue',
   }),
 }));
+
+const splitRecord = {
+  status: FILE_STATUSES.COMMITTED,
+  progress: { current: 0 },
+  jobPartNumber: 2,
+  totalJobParts: 20
+};
 
 const successfulRecord = {
   status: FILE_STATUSES.COMMITTED,
@@ -50,8 +59,16 @@ const checkboxListProp = {
 };
 
 const stripes = buildStripes();
+const defaultUploadContext = {
+  uploadConfiguration: { splitStatus: false }
+};
 
-const renderJobLogsContainer = record => {
+const splittingUploadContext = {
+  uploadConfiguration: { splitStatus: true }
+};
+
+const renderJobLogsContainer = (record, context = defaultUploadContext) => {
+  const { Provider } = UploadJobsContext;
   const childComponent = listProps => {
     listProps.resultsFormatter.status(record);
     listProps.resultsFormatter.fileName(record);
@@ -65,9 +82,11 @@ const renderJobLogsContainer = record => {
   };
 
   const component = (
-    <JobLogsContainer checkboxList={checkboxListProp} stripes={stripes}>
-      {({ listProps }) => childComponent(listProps)}
-    </JobLogsContainer>
+    <Provider value={context}>
+      <JobLogsContainer checkboxList={checkboxListProp} stripes={stripes}>
+        {({ listProps }) => childComponent(listProps)}
+      </JobLogsContainer>
+    </Provider>
   );
 
   return renderWithIntl(component, translationsProperties);
@@ -115,6 +134,20 @@ describe('Job Logs container', () => {
       const { getByText } = renderJobLogsContainer(cancelledRecord);
 
       expect(getByText('Stopped by user')).toBeDefined();
+    });
+  });
+
+  describe('when large file splitting is enabled, display job parts column', () => {
+    it('then component should be rendered with appropriate text', () => {
+      const { getByText } = renderJobLogsContainer(splitRecord, splittingUploadContext);
+
+      expect(getByText('Job parts')).toBeInTheDocument();
+    });
+
+    it('should render the correct parts current and total for the job', () => {
+      const { getByText } = renderJobLogsContainer(splitRecord, splittingUploadContext);
+      const { jobPartNumber, totalJobParts } = splitRecord;
+      expect(getByText(`${jobPartNumber} of ${totalJobParts}`)).toBeInTheDocument();
     });
   });
 });
