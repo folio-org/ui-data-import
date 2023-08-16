@@ -347,7 +347,7 @@
     "settings.mappingProfiles.map.item.field.notes.addLabel": "Exemplaranmerkung hinzufügen",
     "settings.mappingProfiles.map.item.field.circulationNotes.legend": "Ausleih-/Rückgabeanmerkungen",
     "settings.mappingProfiles.map.item.field.circulationNotes.addLabel": "Ausleih-/Rückgabe-Anmerkung hinzufügen",
-    "settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatus": "Status: Exemplar beschädigt",
+    "settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatus": "Beschädigungsstatus des Exemplars",
     "settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatusDate": "Datum",
     "settings.mappingProfiles.map.item.itemNotes.section": "Anmerkungen zum Exemplar",
     "settings.mappingProfiles.map.item.itemLoans.section": "Ausleihe und Verfügbarkeit",
