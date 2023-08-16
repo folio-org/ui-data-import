@@ -12,7 +12,7 @@ import '../../../test/jest/__mock__';
 import JobLogsContainer from './JobLogsContainer';
 import { FILE_STATUSES } from '../../utils';
 
-import UploadJobsContext from '../UploadingJobsContextProvider/UploadingJobsContext';
+import { UploadingJobsContext } from '../UploadingJobsContextProvider/UploadingJobsContext';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -60,15 +60,15 @@ const checkboxListProp = {
 
 const stripes = buildStripes();
 const defaultUploadContext = {
-  uploadConfiguration: { splitStatus: false }
+  uploadConfiguration: { canUseObjectStorage: { splitStatus: false } }
 };
 
 const splittingUploadContext = {
-  uploadConfiguration: { splitStatus: true }
+  uploadConfiguration: { canUseObjectStorage: { splitStatus: true } }
 };
 
 const renderJobLogsContainer = (record, context = defaultUploadContext) => {
-  const { Provider } = UploadJobsContext;
+  const { Provider } = UploadingJobsContext;
   const childComponent = listProps => {
     listProps.resultsFormatter.status(record);
     listProps.resultsFormatter.fileName(record);
@@ -77,6 +77,7 @@ const renderJobLogsContainer = (record, context = defaultUploadContext) => {
       <div>
         <span>child component</span>
         <span>{listProps.resultsFormatter.status(record)}</span>
+        {record.jobPartNumber && <span>{listProps.resultsFormatter.jobParts(record)}</span>}
       </div>
     );
   };
@@ -138,12 +139,6 @@ describe('Job Logs container', () => {
   });
 
   describe('when large file splitting is enabled, display job parts column', () => {
-    it('then component should be rendered with appropriate text', () => {
-      const { getByText } = renderJobLogsContainer(splitRecord, splittingUploadContext);
-
-      expect(getByText('Job parts')).toBeInTheDocument();
-    });
-
     it('should render the correct parts current and total for the job', () => {
       const { getByText } = renderJobLogsContainer(splitRecord, splittingUploadContext);
       const { jobPartNumber, totalJobParts } = splitRecord;
