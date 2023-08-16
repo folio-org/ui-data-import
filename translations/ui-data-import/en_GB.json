@@ -17,6 +17,7 @@
     "jobProfileName": "Job profile",
     "jobExecutionHrId": "ID",
     "jobCompletedDate": "Ended running",
+    "jobParts": "Job parts",
     "noPreviewsJobsMessage": "No previews to show",
     "noRunningJobsMessage": "No running jobs to show",
     "loading": "Loading",
