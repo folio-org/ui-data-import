@@ -19,6 +19,7 @@ import {
 } from '../../utils';
 
 import { DataFetcherContext } from '.';
+import { requestConfiguration } from '../../utils/multipartUpload';
 
 const {
   RUNNING,
@@ -40,7 +41,6 @@ const jobsUrlParams = [
   `uiStatusAny=${RUNNING}`,
   'limit=50',
   'sortBy=completed_date,desc',
-  'subordinationTypeNotAny=COMPOSITE_CHILD'
 ];
 
 const logsUrlParams = [
@@ -52,27 +52,45 @@ const logsUrlParams = [
   `fileNameNotAny=${NO_FILE_NAME}`,
   'limit=25',
   'sortBy=completed_date,desc',
-  'subordinationTypeNotAny=COMPOSITE_PARENT'
 ];
 
 const jobsUrl = createUrlFromArray('metadata-provider/jobExecutions', jobsUrlParams);
 const logsUrl = createUrlFromArray('metadata-provider/jobExecutions', logsUrlParams);
+
+const compositeJobsUrl = createUrlFromArray('metadata-provider/jobExecutions', [...jobsUrlParams, 'subordinationTypeNotAny=COMPOSITE_CHILD']);
+const compositeLogsUrl = createUrlFromArray('metadata-provider/jobExecutions', [...logsUrlParams, 'subordinationTypeNotAny=COMPOSITE_PARENT']);
+
+export function getJobSplittingURL(resources, splittingURL, nonSplitting) {
+  if (!resources?.split_status.isPending) {
+    if (resources?.split_status?.records[0].splitStatus) {
+      return splittingURL;
+    } else if (resources?.split_status?.records[0].splitStatus === false) {
+      return nonSplitting;
+    }
+  }
+  return undefined;
+}
 
 @stripesConnect
 export class DataFetcher extends Component {
   static manifest = Object.freeze({
     jobs: {
       type: 'okapi',
-      path: jobsUrl,
+      path: (_q, _p, resources) => getJobSplittingURL(resources, compositeJobsUrl, jobsUrl),
       accumulate: true,
       throwErrors: false,
     },
     logs: {
       type: 'okapi',
-      path: logsUrl,
+      path: (_q, _p, resources) => getJobSplittingURL(resources, compositeLogsUrl, logsUrl),
       accumulate: true,
       throwErrors: false,
     },
+    splitStatus: {
+      type: 'okapi',
+      path: requestConfiguration,
+      throwErrors: false,
+    }
   });
 
   static propTypes = {
@@ -139,9 +157,10 @@ export class DataFetcher extends Component {
       return;
     }
 
-    const { mutator } = this.props;
+    const { mutator: { jobs, logs } } = this.props;
+
     const fetchResourcesPromises = Object
-      .values(mutator)
+      .values({ jobs, logs })
       .reduce((res, resourceMutator) => res.concat(this.fetchResourceData(resourceMutator)), []);
 
     try {
