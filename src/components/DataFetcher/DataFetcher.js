@@ -62,9 +62,9 @@ const compositeLogsUrl = createUrlFromArray('metadata-provider/jobExecutions', [
 
 export function getJobSplittingURL(resources, splittingURL, nonSplitting) {
   if (!resources?.split_status.isPending) {
-    if (resources?.split_status?.records[0].splitStatus) {
+    if (resources?.split_status?.records[0]?.splitStatus) {
       return splittingURL;
-    } else if (resources?.split_status?.records[0].splitStatus === false) {
+    } else if (resources?.split_status?.records[0]?.splitStatus === false) {
       return nonSplitting;
     }
   }
