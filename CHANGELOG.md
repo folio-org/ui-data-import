@@ -23,6 +23,7 @@
 * Allow to handle text/plain content type when error occurs (UIDATIMP-1465)
 * Clear searches when switching between profile types (UIDATIMP-1461)
 * Change validation messages which were represented in code format (UIDATIMP-1473)
+* Update Node.js to v18 in GitHub Actions (UIDATIMP-1507)
 
 ### Bugs fixed:
 * Fix all the failed accessibility tests in ui-data-import (UIDATIMP-1393)
