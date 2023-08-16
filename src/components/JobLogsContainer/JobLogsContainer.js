@@ -38,7 +38,7 @@ const JobLogsContainer = props => {
     ...rest
   } = props;
 
-  const { formatMessage } = useIntl();
+  const { formatMessage, formatNumber } = useIntl();
   const location = useLocation();
 
   const hasDeletePermission = stripes.hasPerm(permissions.DELETE_LOGS);
@@ -61,6 +61,7 @@ const JobLogsContainer = props => {
         selectedRecords,
         checkboxDisabled: checkboxesDisabled,
         fieldsConfig,
+        formatNumber
       }),
       fileName: record => fileNameCellFormatter(record, location),
       status: statusCellFormatter(formatMessage),
