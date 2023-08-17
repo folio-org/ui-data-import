@@ -12,6 +12,7 @@ import '../../../test/jest/__mock__';
 import {
   DataFetcher,
   DataFetcherContext,
+  getJobSplittingURL,
 } from '.';
 
 const reset = () => {};
@@ -96,6 +97,23 @@ describe('DataFetcher component', () => {
       const { getByText } = await renderDataFetcher(mutator);
 
       await waitFor(() => expect(getByText('error')).toBeDefined());
+    });
+  });
+
+  describe('getJobSplittingURL', () => {
+    const trueResources = { split_status: { isPending: false, records: [{ splitStatus: true }] } };
+    const falseResources = { split_status: { isPending: false, records: [{ splitStatus: false }] } };
+    const pendingResources = { split_status: { isPending: true, records: [] } };
+    it('given a splitStatus of true, it provides the "trueUrl" parameter', () => {
+      expect(getJobSplittingURL(trueResources, 'trueUrl', 'falseUrl')).toBe('trueUrl');
+    });
+
+    it('given a splitStatus of true, it provides the "falseUrl" parameter', () => {
+      expect(getJobSplittingURL(falseResources, 'trueUrl', 'falseUrl')).toBe('falseUrl');
+    });
+
+    it('given a pending split status, it returns undefined', () => {
+      expect(getJobSplittingURL(pendingResources, 'trueUrl', 'falseUrl')).toBeUndefined();
     });
   });
 });
