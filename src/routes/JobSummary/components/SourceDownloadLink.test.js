@@ -1,9 +1,5 @@
 import React from 'react';
 import {
-  waitFor,
-  act,
-} from '@testing-library/react';
-import {
   renderWithIntl,
 } from '../../../../test/jest/helpers';
 import '../../../../test/jest/__mock__';
@@ -21,6 +17,14 @@ jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   TextLink: ({children, href}) => <a href={href}>{children}</a>,
   Loading: () => <>Loading</>
+}));
+
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  useOkapiKy: () => ({}),
+  useCallout: jest.fn(() => ({
+    sendCallout: jest.fn()
+  })),
 }));
 
 const renderSourceDownloadLink = ({id = 'testId', fileName= 'testFilename'}) => {

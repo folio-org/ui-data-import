@@ -21,7 +21,7 @@ export const SourceDownloadLink = ({
 }) => {
   const [downloadUrl, setDownloadURL] = useState(null);
   const ky = useOkapiKy();
-  const { sendCallout } = useCallout();
+  const callout = useCallout();
   useEffect(() => {
     const requestDownloadUrl = async () => {
       try {
@@ -30,7 +30,7 @@ export const SourceDownloadLink = ({
           setDownloadURL(url);
         }
       } catch (err) {
-        sendCallout({
+        callout.sendCallout({
           message: (
             <FormattedMessage
               id="ui-data-import.downloadLinkRequestError"
