@@ -1,6 +1,7 @@
 import React, {
   useEffect,
-  useRef
+  useRef,
+  useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -21,6 +22,8 @@ import {
   Pane,
   PaneHeader,
   Paneset,
+  TextLink,
+  Layout
 } from '@folio/stripes/components';
 import css from '@folio/stripes-data-transfer-components/lib/SearchAndSortPane/SearchAndSortPane.css';
 import sharedCss from '../../shared.css';
@@ -28,12 +31,18 @@ import sharedCss from '../../shared.css';
 import {
   SummaryTable,
   RecordsTable,
+  SourceDownloadLink,
 } from './components';
 
 import {
   DATA_TYPES,
   storage,
 } from '../../utils';
+
+import { UploadingJobsContext } from '../../components';
+
+import { requestConfiguration } from '../../utils/multipartUpload';
+import { getJobSplittingURL } from '../../components/DataFetcher';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -72,13 +81,14 @@ const JobSummaryComponent = props => {
     history,
   } = props;
 
+  const { sourceUrl, splitStatus, ...restResources } = resources;
+  const { sourceUrl: sourceUrlMutator, splitStatus: splitStatusMutator, ...restMutator } = mutator;
   const dataType = jobExecutionsRecords[0]?.jobProfileInfo.dataType;
   const isEdifactType = dataType === DATA_TYPES[1];
   const jobExecutionsId = jobExecutionsRecords[0]?.id;
   const isErrorsOnly = !!query.errorsOnly;
-
   const { id } = useParams();
-
+  const { uploadConfiguration } = useContext(UploadingJobsContext);
   // persist previous jobExecutionsId
   const previousJobExecutionsIdRef = useRef(jobExecutionsId);
 
@@ -165,6 +175,12 @@ const JobSummaryComponent = props => {
         renderHeader={renderHeader}
       >
         <div className={css.paneBody}>
+          {uploadConfiguration?.canUseObjectStorage && (
+            <SourceDownloadLink
+              executionId={jobExecutionsId}
+              fileName={jobExecutionsRecords[0]?.fileName}
+            />
+          )}
           {!isErrorsOnly && (
             <div className={sharedCss.separatorLine}>
               <SummaryTable jobExecutionId={jobExecutionsId} />
@@ -172,8 +188,8 @@ const JobSummaryComponent = props => {
           )}
           <div className={css.searchResults}>
             <RecordsTable
-              resources={resources}
-              mutator={mutator}
+              resources={restResources}
+              mutator={restMutator}
               location={location}
               history={history}
               source={getSource()}
@@ -246,6 +262,17 @@ JobSummaryComponent.manifest = Object.freeze({
     path: 'change-manager/jobExecutions/:{id}',
     throwErrors: false,
   },
+  // sourceUrl : {
+  //   type: 'okapi',
+  //   path: (_p, _q, resources) => getJobSplittingURL(resources, 'data-import/jobExecutions/downloadUrl/:{id}' ),
+  //   records: 'url',
+  //   throwErrors: false,
+  // },
+  // splitStatus: {
+  //   type: 'okapi',
+  //   path: requestConfiguration,
+  //   throwErrors: false,
+  // }
 });
 
 JobSummaryComponent.propTypes = {
@@ -265,6 +292,7 @@ JobSummaryComponent.propTypes = {
     }),
     jobLogEntries: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
     jobLog: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
+    sourceUrl: PropTypes.shape({ records: PropTypes.shape({ url: PropTypes.string }) }),
   }).isRequired,
   location: PropTypes.oneOfType([
     PropTypes.shape({

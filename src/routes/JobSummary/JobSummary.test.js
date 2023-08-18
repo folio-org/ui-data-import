@@ -12,12 +12,25 @@ import { Harness } from '../../../test/helpers';
 import '../../../test/jest/__mock__';
 
 import { JobSummary } from './JobSummary';
+import { UploadingJobsContext } from '../../components';
 
 jest.mock('./components', () => ({
   ...jest.requireActual('./components'),
   SummaryTable: () => 'SummaryTable',
   RecordsTable: () => 'RecordsTable',
 }));
+
+const multipartUploadContext = {
+  uploadConfiguration: {
+    canUseObjectStorate: true
+  }
+};
+
+const defaultUploadContext = {
+  uploadConfiguration: {
+    canUseObjectStorate: false
+  }
+};
 
 const getJobExecutionsResources = (dataType, jobExecutionsId = 'testId') => ({
   jobExecutions: {
@@ -55,20 +68,22 @@ const mutator = {
   jobLog: { GET: jest.fn() },
 };
 const stripesMock = buildStripes();
-
-const renderJobSummary = ({ dataType = 'MARC', resources }) => {
+global.fetch = jest.fn();
+const renderJobSummary = ({ dataType = 'MARC', resources, context = defaultUploadContext }) => {
   const component = (
     <Router>
-      <JobSummary
-        resources={resources || getResources(dataType)}
-        mutator={mutator}
-        location={{
-          search: '',
-          pathname: '',
-        }}
-        history={{ push: () => {} }}
-        stripes={stripesMock}
-      />
+      <UploadingJobsContext.Provider value={context}>
+        <JobSummary
+          resources={resources || getResources(dataType)}
+          mutator={mutator}
+          location={{
+            search: '',
+            pathname: '',
+          }}
+          history={{ push: () => {} }}
+          stripes={stripesMock}
+        />
+      </UploadingJobsContext.Provider>
     </Router>
   );
 
