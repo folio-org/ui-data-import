@@ -25,6 +25,7 @@ import {
   ConfirmationModal,
   FormattedDate,
   FormattedTime,
+  Layout
 } from '@folio/stripes/components';
 import {
   Progress,
@@ -113,10 +114,15 @@ const JobComponent = ({
     } = job;
 
     try {
-      await API.deleteFile(
-        createJobUrl(id),
-        createOkapiHeaders(okapi),
-      );
+      // do split job cancelation logic here.
+      if (job.compositeDetails) {
+        // await cancelsplitjob...
+      } else {
+        await API.deleteFile(
+          createJobUrl(id),
+          createOkapiHeaders(okapi),
+        );
+      }
     } catch (error) {
       setDeletionInProgress(false);
 
@@ -144,7 +150,7 @@ const JobComponent = ({
     await deleteJob();
   };
 
-  const renderCompositeDetails = (jobEntry) => {
+  const collectCompositeJobValues = (jobEntry) => {
     const {
       compositeDetails,
     } = jobEntry;
@@ -177,6 +183,61 @@ const JobComponent = ({
     );
 
     const totalSliceAmount = inProgressSliceAmount + completedSliceAmount + failedSliceAmount;
+
+    return {
+      inProgressSliceAmount,
+      completedSliceAmount,
+      erroredSliceAmount,
+      failedSliceAmount,
+      totalSliceAmount,
+    };
+  };
+
+  const renderCancelModalMessage = (jobEntry) => {
+    const {
+      completedSliceAmount,
+      totalSliceAmount,
+    } = collectCompositeJobValues(jobEntry);
+
+    return (
+      <>
+        <FormattedMessage id="ui-data-import.modal.cancelRunningSplitJob.message" />
+        <p>
+          <FormattedMessage
+            id="ui-data-import.modal.cancelRunningSplitJob.message.pleaseNote"
+          />
+        </p>
+        <Layout className={`${css.compositeList} padding-end-gutter padding-start-gutter`} element="ul">
+          <li className={css.listItem}>
+            <FormattedMessage id="ui-data-import.modal.cancelRunningSplitJob.message.noRestart" />
+          </li>
+          <li className={css.listItem}>
+            <FormattedMessage id="ui-data-import.modal.cancelRunningSplitJob.message.noRevert" />
+          </li>
+          <li className={css.listItem}>
+            <FormattedMessage
+              id="ui-data-import.modal.cancelRunningSplitJob.message.jobParts"
+              values={{ current: completedSliceAmount, total: totalSliceAmount }}
+            />
+          </li>
+          <li className={css.listItem}>
+            <FormattedMessage
+              id="ui-data-import.modal.cancelRunningSplitJob.message.remaining"
+              values={{ remaining: totalSliceAmount - completedSliceAmount }}
+            />
+          </li>
+        </Layout>
+      </>
+    );
+  };
+
+  const renderCompositeDetails = (jobEntry) => {
+    const {
+      completedSliceAmount,
+      erroredSliceAmount,
+      failedSliceAmount,
+      totalSliceAmount,
+    } = collectCompositeJobValues(jobEntry);
 
     return (
       <>
@@ -333,12 +394,17 @@ const JobComponent = ({
       <ConfirmationModal
         id="cancel-running-job-modal"
         open={showCancelJobModal}
-        heading={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.header" />}
-        message={
+        heading={job.compositeDetails ?
+          <FormattedMessage id="ui-data-import.modal.cancelRunningSplitJob.header" /> :
+          <FormattedMessage id="ui-data-import.modal.cancelRunningJob.header" />
+          }
+        message={job.compositeDetails ?
+          renderCancelModalMessage(job) :
           <FormattedMessage
             id="ui-data-import.modal.cancelRunningJob.message"
             values={{ break: <br /> }}
-          />}
+          />
+        }
         bodyTag="div"
         confirmLabel={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.confirm" />}
         cancelLabel={<FormattedMessage id="ui-data-import.modal.cancelRunningJob.cancel" />}
