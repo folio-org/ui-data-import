@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -16,19 +16,20 @@ import { UploadingJobsContext } from '../../components';
 
 jest.mock('./components', () => ({
   ...jest.requireActual('./components'),
+  SourceDownloadLink: () => 'SourceDownloadLink',
   SummaryTable: () => 'SummaryTable',
   RecordsTable: () => 'RecordsTable',
 }));
 
 const multipartUploadContext = {
   uploadConfiguration: {
-    canUseObjectStorate: true
+    canUseObjectStorage: true
   }
 };
 
 const defaultUploadContext = {
   uploadConfiguration: {
-    canUseObjectStorate: false
+    canUseObjectStorage: false
   }
 };
 
@@ -68,7 +69,7 @@ const mutator = {
   jobLog: { GET: jest.fn() },
 };
 const stripesMock = buildStripes();
-global.fetch = jest.fn();
+
 const renderJobSummary = ({ dataType = 'MARC', resources, context = defaultUploadContext }) => {
   const component = (
     <Router>
@@ -146,5 +147,12 @@ describe('Job summary page', () => {
     rerender(component('testJobExecutionsId'));
 
     expect(mutator.jobLog.GET).toHaveBeenCalled();
+  });
+
+  it('should render a download link if multipart capability is present', () => {
+
+    const { getByText } = renderJobSummary({context: multipartUploadContext});
+
+    expect(getByText('SourceDownloadLink')).toBeInTheDocument();
   });
 });

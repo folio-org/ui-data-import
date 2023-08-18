@@ -11,9 +11,9 @@ import {
   Loading
 } from '@folio/stripes/components';
 
-import { useOkapiKy } from '@folio/stripes-core';
+import { useOkapiKy } from '@folio/stripes/core';
 
-import { getObjectStorageDownloadURL } from '../../../utils';
+import { getObjectStorageDownloadURL } from '../../../utils/multipartUpload';
 
 export const SourceDownloadLink = ({
   fileName,
@@ -23,11 +23,17 @@ export const SourceDownloadLink = ({
   const ky = useOkapiKy();
 
   useEffect(() => {
-    const requestDownloadUrl = () => {
-      // const { url } = await getObjectStorageDownloadURL(ky, executionId);
-      return 'blahblahblah';
+    let ignore = false;
+    const requestDownloadUrl = async () => {
+      const { url } = await getObjectStorageDownloadURL(ky, executionId);
+      if (!ignore) {
+        setDownloadURL(url);
+      }
     };
-    setDownloadURL(requestDownloadUrl());
+    requestDownloadUrl();
+    return () => {
+      ignore = true;
+    }
   }, [ky, executionId]);
 
   if (downloadUrl === null) {
