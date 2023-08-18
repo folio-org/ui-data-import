@@ -39,6 +39,7 @@ import { jobExecutionPropTypes } from './jobExecutionPropTypes';
 
 import * as API from '../../../../utils/upload';
 import * as CompositeJobFields from '../../../../utils/compositeJobStatus';
+import { cancelMultipartJob } from '../../../../utils';
 
 import {
   addHrid,
@@ -116,7 +117,7 @@ const JobComponent = ({
     try {
       // do split job cancelation logic here.
       if (job.compositeDetails) {
-        // await cancelsplitjob...
+        await cancelMultipartJob(id, createOkapiHeaders(okapi));
       } else {
         await API.deleteFile(
           createJobUrl(id),
