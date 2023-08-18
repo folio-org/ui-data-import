@@ -11,7 +11,7 @@ import {
   Loading
 } from '@folio/stripes/components';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useCallout } from '@folio/stripes/core';
 
 import { getObjectStorageDownloadURL } from '../../../utils/multipartUpload';
 
@@ -21,24 +21,36 @@ export const SourceDownloadLink = ({
 }) => {
   const [downloadUrl, setDownloadURL] = useState(null);
   const ky = useOkapiKy();
-
+  const { sendCallout } = useCallout();
   useEffect(() => {
-    let ignore = false;
     const requestDownloadUrl = async () => {
-      const { url } = await getObjectStorageDownloadURL(ky, executionId);
-      if (!ignore) {
-        setDownloadURL(url);
+      try {
+        const { url } = await getObjectStorageDownloadURL(ky, executionId);
+        if (url) {
+          setDownloadURL(url);
+        }
+      } catch (err) {
+        sendCallout({
+          message: (
+            <FormattedMessage
+              id="ui-data-import.downloadLinkRequestError"
+            />
+          ),
+          type: 'error',
+          timeout: 0,
+        });
       }
     };
-    requestDownloadUrl();
-    return () => {
-      ignore = true;
+    if (downloadUrl === null) {
+      requestDownloadUrl();
     }
-  }, [ky, executionId]);
+  }, []);
 
   if (downloadUrl === null) {
     return (
-      <Loading />
+      <Layout className="padding-all-gutter flex centerContent">
+        <Loading />
+      </Layout>
     );
   }
 
