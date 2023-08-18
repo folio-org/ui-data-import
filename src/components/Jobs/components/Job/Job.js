@@ -37,6 +37,8 @@ import { jobMetaTypes } from './jobMetaTypes';
 import { jobExecutionPropTypes } from './jobExecutionPropTypes';
 
 import * as API from '../../../../utils/upload';
+import * as CompositeJobFields from '../../../../utils/compositeJobStatus';
+
 import {
   addHrid,
   deleteHrid,
@@ -142,6 +144,85 @@ const JobComponent = ({
     await deleteJob();
   };
 
+  const renderCompositeDetails = (jobEntry) => {
+    const {
+      compositeDetails,
+    } = jobEntry;
+
+    const {
+      calculateJobSliceStats,
+      inProgressStatuses,
+      completeStatuses,
+      failedStatuses,
+    } = CompositeJobFields;
+
+    const inProgressSliceAmount = calculateJobSliceStats(
+      compositeDetails,
+      inProgressStatuses
+    );
+
+    const completedSliceAmount = calculateJobSliceStats(
+      compositeDetails,
+      completeStatuses
+    );
+
+    const erroredSliceAmount = calculateJobSliceStats(
+      compositeDetails,
+      ['errorState']
+    );
+
+    const failedSliceAmount = calculateJobSliceStats(
+      compositeDetails,
+      failedStatuses
+    );
+
+    const totalSliceAmount = inProgressSliceAmount + completedSliceAmount + failedSliceAmount;
+
+    return (
+      <>
+        <FormattedMessage
+          id="ui-data-import.jobProgress.partsRemaining"
+          tagName="div"
+          values={{
+            current: totalSliceAmount - (failedSliceAmount + completedSliceAmount),
+            total: totalSliceAmount
+          }}
+        />
+        <FormattedMessage
+          id="ui-data-import.jobProgress.partsProcessed"
+          tagName="div"
+          values={{
+            current: completedSliceAmount,
+            total: totalSliceAmount,
+          }}
+        />
+        <ul className={css.compositeList}>
+          <li className={css.listItem}>
+            <FormattedMessage
+              id="ui-data-import.jobProgress.partsCompleted"
+              tagName="div"
+              values={{ amount: completedSliceAmount }}
+            />
+          </li>
+          <li className={css.listItem}>
+            <FormattedMessage
+              id="ui-data-import.jobProgress.partsCompletedWithErrors"
+              tagName="div"
+              values={{ amount: erroredSliceAmount }}
+            />
+          </li>
+          <li className={css.listItem}>
+            <FormattedMessage
+              id="ui-data-import.jobProgress.partsFailed"
+              tagName="div"
+              values={{ amount: failedSliceAmount }}
+            />
+          </li>
+        </ul>
+      </>
+    );
+  };
+
   const {
     jobProfileInfo: { name },
     fileName,
@@ -172,7 +253,7 @@ const JobComponent = ({
           {fileName}
           {isDeletionInProgress && (
             <>
-            &nbsp;
+              &nbsp;
               <FormattedMessage
                 id="ui-data-import.stoppedJob"
                 tagName="span"
@@ -232,7 +313,7 @@ const JobComponent = ({
               />
             </>
           )}
-
+          {job.compositeDetails && renderCompositeDetails(job)}
           {jobMeta.showPreview && (
             <div className={css.jobPreview}>
               <FormattedMessage id="ui-data-import.readyForPreview" />

@@ -41,5 +41,6 @@ export const getJobLogsListColumnMapping = ({
     completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
     runBy: <FormattedMessage id="ui-data-import.runBy" />,
     hrId: <FormattedMessage id="ui-data-import.jobExecutionHrId" />,
+    jobParts: <FormattedMessage id="ui-data-import.jobParts" />,
   };
 };

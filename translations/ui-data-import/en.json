@@ -170,6 +170,7 @@
   "records": "Records",
   "jobStartedDate": "Started running",
   "jobCompletedDate": "Ended running",
+  "jobParts": "Job parts",
   "status": "Status",
   "failed": "Failed",
   "completed": "Completed",
