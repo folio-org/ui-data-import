@@ -115,7 +115,6 @@ const JobComponent = ({
     } = job;
 
     try {
-      // do split job cancelation logic here.
       if (job.compositeDetails) {
         await cancelMultipartJob(id, createOkapiHeaders(okapi));
       } else {
