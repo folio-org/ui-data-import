@@ -42,7 +42,9 @@ class DataImport extends Component {
     if (showSettings) {
       return (
         <CommandList commands={keyboardCommands}>
-          <DataImportSettings {...this.props} />
+          <UploadingJobsContextProvider>
+            <DataImportSettings {...this.props} />
+          </UploadingJobsContextProvider>
         </CommandList>
       );
     }
