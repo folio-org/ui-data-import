@@ -44,6 +44,7 @@ const renderProfileLinker = ({
   const component = (
     <ProfileLinker
       id={id}
+      masterWrapperId="masterWrapperId"
       parentType={parentType}
       profileType="profileType"
       onLink={onLink}

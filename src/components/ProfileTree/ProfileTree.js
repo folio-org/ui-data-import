@@ -40,6 +40,7 @@ import css from './ProfileTree.css';
 
 export const ProfileTree = memo(({
   parentId,
+  profileWrapperId,
   linkingRules,
   contentData,
   relationsToAdd,
@@ -61,6 +62,7 @@ export const ProfileTree = memo(({
     id: parentId,
     profileId: parentId,
     contentType: PROFILE_TYPES.JOB_PROFILE,
+    profileWrapperId,
   };
 
   const dispatch = useDispatch();
@@ -131,7 +133,17 @@ export const ProfileTree = memo(({
     } : rel;
   });
 
-  const link = (initialData, setInitialData, lines, masterId, masterType, detailType, reactTo, localDataKey) => {
+  const link = ({
+    initialData,
+    setInitialData,
+    lines,
+    masterId,
+    masterWrapperId,
+    masterType,
+    detailType,
+    reactTo,
+    localDataKey,
+  }) => {
     const order = initialData.length ? (last(initialData).order + 1) : 0;
     const linesToAdd = lines.filter(line => line.content.id !== masterId);
     const newData = [...initialData, ...getLines(linesToAdd, detailType, order, reactTo)];
@@ -143,7 +155,7 @@ export const ProfileTree = memo(({
         masterId,
         masterType,
         detailType,
-        masterWrapperId: null,
+        masterWrapperId,
         detailWrapperId: null,
         reactTo,
         order,
@@ -160,7 +172,18 @@ export const ProfileTree = memo(({
     setInitialData(newData);
   };
 
-  const unlink = (parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey) => {
+  const unlink = ({
+    parentData,
+    setParentData,
+    line,
+    masterId,
+    masterWrapperId,
+    masterType,
+    detailType,
+    detailWrapperId,
+    reactTo,
+    localDataKey,
+  }) => {
     const index = parentData.findIndex(item => item.content.id === line.content.id);
     const newIdx = findRelIndex(addedRelations, masterId, line);
     const profileTreeData = [...profileTreeContent];
@@ -171,8 +194,8 @@ export const ProfileTree = memo(({
         masterId,
         masterType,
         detailType,
-        masterWrapperId: line.masterWrapperId,
-        detailWrapperId: line.detailWrapperId,
+        masterWrapperId,
+        detailWrapperId,
         reactTo,
       });
       const relsToDel = [...deletedRelations, ...newRels];
@@ -208,10 +231,6 @@ export const ProfileTree = memo(({
     dispatch(setProfileTreeContent(getNewProfileTreeData(profileTreeData, line)));
   };
 
-  const remove = (parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey) => {
-    unlink(parentData, setParentData, line, masterId, masterType, detailType, reactTo, localDataKey);
-  };
-
   return (
     <div>
       <div className={classNames(css['profile-tree'], className)}>
@@ -233,7 +252,7 @@ export const ProfileTree = memo(({
                 rootId={parentRecordData.id}
                 onLink={link}
                 onUnlink={unlink}
-                onDelete={remove}
+                onDelete={unlink}
                 okapi={okapi}
                 showLabelsAsHotLink={showLabelsAsHotLink}
                 resources={resources}
@@ -252,6 +271,7 @@ export const ProfileTree = memo(({
           <ProfileLinker
             id="linker-root"
             parentId={parentId}
+            masterWrapperId={profileWrapperId}
             rootId={parentRecordData.id}
             parentType={ENTITY_KEYS.JOB_PROFILES}
             profileType={ENTITY_KEYS.JOB_PROFILES}
@@ -275,6 +295,7 @@ ProfileTree.propTypes = {
   okapi: okapiShape.isRequired,
   resources: PropTypes.object.isRequired,
   parentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  profileWrapperId: PropTypes.string,
   relationsToAdd: PropTypes.arrayOf(PropTypes.object),
   relationsToDelete: PropTypes.arrayOf(PropTypes.object),
   onLink: PropTypes.func,
@@ -288,6 +309,7 @@ ProfileTree.propTypes = {
 
 ProfileTree.defaultProps = {
   parentId: null,
+  profileWrapperId: null,
   relationsToAdd: [],
   relationsToDelete: [],
   onLink: noop,

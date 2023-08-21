@@ -149,6 +149,7 @@ const renderProfileTree = ({
       resources={resources}
       setData={setData}
       parentId="test parentId"
+      profileWrapperId="test profileWrapperId"
     />
   );
 

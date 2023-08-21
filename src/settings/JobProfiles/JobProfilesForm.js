@@ -117,6 +117,10 @@ export const JobProfilesFormComponent = memo(({
     () => resources.profileSnapshots?.records.at(-1)?.childSnapshotWrappers || [],
     [resources.profileSnapshots.records],
   );
+  const profileWrapperId = useMemo(
+    () => resources.profileSnapshots?.records.at(-1)?.profileWrapperId || null,
+    [resources.profileSnapshots.records],
+  );
 
   const dispatch = useDispatch();
   const currentJobProfileTreeContent = useSelector(state => {
@@ -316,6 +320,7 @@ export const JobProfilesFormComponent = memo(({
               >
                 <ProfileTree
                   parentId={profile.id}
+                  profileWrapperId={profileWrapperId}
                   linkingRules={PROFILE_LINKING_RULES}
                   contentData={profileTreeData}
                   hasLoaded

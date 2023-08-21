@@ -22,16 +22,15 @@ import {
   PROFILE_RELATION_TYPES,
   ENTITY_KEYS,
   FILTER_QUERY_PARAMS,
-  ASSOCIATION_TYPES,
   okapiShape,
 } from '../../../utils';
-import { fetchProfileSnapshot } from '../../../utils/fetchProfileSnapshot';
 
 import css from '../ProfileTree.css';
 
 export const ProfileLinker = ({
   id,
   parentId,
+  masterWrapperId,
   parentType,
   profileType,
   onLink,
@@ -89,7 +88,17 @@ export const ProfileLinker = ({
   };
 
   const addNewLines = entityKey => async records => {
-    onLink(initialData, setInitialData, records, parentId, parentType, entityKey, reactTo, dataKey);
+    onLink({
+      initialData,
+      setInitialData,
+      lines: records,
+      masterId: parentId,
+      masterWrapperId,
+      masterType: parentType,
+      detailType: entityKey,
+      reactTo,
+      localDataKey: dataKey,
+    });
   };
 
   return (
@@ -145,6 +154,7 @@ ProfileLinker.propTypes = {
   okapi: okapiShape.isRequired,
   rootId: PropTypes.string,
   parentId: PropTypes.string,
+  masterWrapperId: PropTypes.string,
   reactTo: PropTypes.oneOf(Object.values(PROFILE_RELATION_TYPES)),
   title: PropTypes.node || PropTypes.string,
   className: PropTypes.string,
@@ -153,6 +163,7 @@ ProfileLinker.propTypes = {
 ProfileLinker.defaultProps = {
   rootId: null,
   parentId: null,
+  masterWrapperId: null,
   title: '',
   className: '',
   reactTo: PROFILE_RELATION_TYPES.NONE,
