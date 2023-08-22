@@ -22,7 +22,6 @@ import {
   PROFILE_RELATION_TYPES,
   ENTITY_KEYS,
   FILTER_QUERY_PARAMS,
-  okapiShape,
 } from '../../../utils';
 
 import css from '../ProfileTree.css';
@@ -151,8 +150,6 @@ ProfileLinker.propTypes = {
   dataKey: PropTypes.string.isRequired,
   initialData: PropTypes.arrayOf(PropTypes.object).isRequired,
   setInitialData: PropTypes.func.isRequired,
-  okapi: okapiShape.isRequired,
-  rootId: PropTypes.string,
   parentId: PropTypes.string,
   masterWrapperId: PropTypes.string,
   reactTo: PropTypes.oneOf(Object.values(PROFILE_RELATION_TYPES)),
@@ -161,7 +158,6 @@ ProfileLinker.propTypes = {
 };
 
 ProfileLinker.defaultProps = {
-  rootId: null,
   parentId: null,
   masterWrapperId: null,
   title: '',
