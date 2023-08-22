@@ -5,6 +5,7 @@ import {
   fireEvent,
   waitFor,
   getByText as getByTextScreen,
+  within
 } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -18,6 +19,19 @@ import {
 import '../../../../test/jest/__mock__';
 
 import { ViewJobProfile } from '../ViewJobProfile';
+import { UploadingJobsContext } from '../../../components';
+
+const defaultContext = {
+  uploadConfiguration: {
+    canUseObjectStorage: false,
+  }
+};
+
+const multipartContext = {
+  uploadConfiguration: {
+    canUseObjectStorage: true,
+  }
+};
 
 const jobProfile = {
   records: [
@@ -64,6 +78,8 @@ const viewJobProfileProps = (profile, actionMenuItems) => ({
             lastName: 'lastName',
           },
           status: 'ERROR',
+          jobPartNumber: 1,
+          totalJobParts: 20,
         }],
       }],
       hasLoaded: true,
@@ -87,23 +103,26 @@ const renderViewJobProfile = ({
   location,
   resources,
   actionMenuItems,
+  context = defaultContext
 }) => {
   const component = () => (
     <Router>
-      <ViewJobProfile
-        resources={resources}
-        location={location}
-        match={match}
-        history={history}
-        tagsEnabled
-        onClose={noop}
-        onDelete={noop}
-        actionMenuItems={actionMenuItems}
-        stripes={{
-          okapi: { url: '' },
-          hasPerm: () => true
-        }}
-      />
+      <UploadingJobsContext.Provider value={context}>
+        <ViewJobProfile
+          resources={resources}
+          location={location}
+          match={match}
+          history={history}
+          tagsEnabled
+          onClose={noop}
+          onDelete={noop}
+          actionMenuItems={actionMenuItems}
+          stripes={{
+            okapi: { url: '' },
+            hasPerm: () => true
+          }}
+        />
+      </UploadingJobsContext.Provider>
     </Router>
   );
 
@@ -168,6 +187,20 @@ describe('<ViewJobProfile>', () => {
       const { getByText } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
       expect(getByText('jobUsingProfile.mrc').href).toContain(`/data-import/job-summary/${fileId}`);
+    });
+
+    it('should not display the "Job parts" column', () => {
+      const { queryByRole } = renderViewJobProfile(viewJobProfileProps(jobProfile));
+
+      expect(queryByRole('columnheader', { name: 'Job parts' })).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Jobs using this profile section - multipart capabilities', () => {
+    it('should display the "Job parts" column', () => {
+      const { getByRole } = renderViewJobProfile({ ...viewJobProfileProps(jobProfile), context: multipartContext });
+
+      expect(getByRole('columnheader', { name: 'Job parts' })).toBeInTheDocument();
     });
   });
 
@@ -261,11 +294,13 @@ describe('<ViewJobProfile>', () => {
 
       fireEvent.click(getByTextScreen(actionsMenu, 'Run'));
 
-      const confirmButton = document.querySelector('#clickable-run-job-profile-modal-confirm');
+      const confirmationModal = getByRole('dialog');
+
+      const confirmButton = within(confirmationModal).getByRole('button', { name: /run/i });
 
       fireEvent.click(confirmButton);
 
-      expect(confirmButton).toBeDisabled();
+      await waitFor(() => expect(within(confirmationModal).getByRole('button', { name: /run/i })).toBeDisabled());
     });
   });
 

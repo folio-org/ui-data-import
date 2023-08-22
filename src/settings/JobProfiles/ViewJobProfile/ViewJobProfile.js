@@ -384,6 +384,7 @@ const ViewJobProfileComponent = props => {
                     hrId: <FormattedMessage id="ui-data-import.settings.jobProfiles.jobID" />,
                     completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
                     runBy: <FormattedMessage id="ui-data-import.runBy" />,
+                    jobParts: <FormattedMessage id="ui-data-import.jobParts" />
                   }}
                   visibleColumns={getVisibleColumns(uploadConfiguration)}
                   formatter={jobsUsingThisProfileFormatter}
