@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
 
-import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 import {
   buildSortOrder,
-  createUrl,
   SORT_TYPES,
 } from '@folio/stripes-data-transfer-components/lib/utils';
 import { SearchResults } from '@folio/stripes-data-transfer-components/lib/SearchResults';
@@ -18,21 +19,27 @@ import {
 import {
   NoValue,
   MCLPagingTypes,
-  TextLink,
 } from '@folio/stripes/components';
 
 import {
-  RECORD_ACTION_STATUS,
-  RECORD_ACTION_STATUS_LABEL_IDS,
-} from '../../../utils';
-
-const getRecordActionStatusLabel = recordType => {
-  if (!recordType) return <NoValue />;
-
-  const labelId = RECORD_ACTION_STATUS_LABEL_IDS[recordType];
-
-  return <FormattedMessage id={labelId} />;
-};
+  RecordNumberCell,
+  TitleCell,
+  SRSMarcCell,
+  InstanceCell,
+  HoldingsCell,
+  ItemCell,
+  AuthorityCell,
+  OrderCell,
+  InvoiceCell,
+  ErrorCell,
+} from '.';
+import {
+  BaseLineCell,
+  getRelatedInfo,
+  groupAndSortDataForRender,
+  isGeneralItemsError,
+} from './utils';
+import { RECORD_ACTION_STATUS } from '../../../utils';
 
 export const RecordsTable = ({
   mutator,
@@ -40,7 +47,10 @@ export const RecordsTable = ({
   location,
   history,
   resources,
-  resources: { jobLog: { records: jobLogRecords } },
+  resources: {
+    jobLog: { records: jobLogRecords },
+    locations,
+  },
   source,
   maxSortKeys,
   defaultSort,
@@ -52,21 +62,6 @@ export const RecordsTable = ({
 
   // remove empty slots from sparse array
   const filteredJobLogEntriesRecords = resources.jobLogEntries?.records?.filter(record => !!record);
-
-  const getHotlinkCellFormatter = (isHotlink, entityLabel, path, entity) => {
-    if (isHotlink) {
-      return (
-        <TextLink
-          data-test-entity-name={entity}
-          to={path}
-        >
-          {entityLabel}
-        </TextLink>
-      );
-    }
-
-    return entityLabel;
-  };
 
   const transitionToParams = values => {
     const nsValues = mapNsKeys(values, nsParams);
@@ -117,12 +112,14 @@ export const RecordsTable = ({
     invoiceStatus: <FormattedMessage id="ui-data-import.recordTypes.invoice" />,
     error: <FormattedMessage id="ui-data-import.error" />,
   };
-  const resultsFormatter = {
-    recordNumber: ({ sourceRecordOrder }) => {
-      if (isEdifactType) return sourceRecordOrder;
 
-      return parseInt(sourceRecordOrder, 10) + 1;
-    },
+  const resultsFormatter = {
+    recordNumber: ({ sourceRecordOrder }) => (
+      <RecordNumberCell
+        isEdifactType={isEdifactType}
+        sourceRecordOrder={sourceRecordOrder}
+      />
+    ),
     title: ({
       sourceRecordTitle,
       sourceRecordId,
@@ -130,129 +127,228 @@ export const RecordsTable = ({
       sourceRecordActionStatus,
       holdingsActionStatus,
       invoiceLineJournalRecordId,
-    }) => {
-      const jobExecutionId = filteredJobLogEntriesRecords[0]?.jobExecutionId;
-      const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
-        isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
-
-      const isHoldingsRecordImportFailed = sourceRecordType === FOLIO_RECORD_TYPES.MARC_HOLDINGS.type
-        && (sourceRecordActionStatus === RECORD_ACTION_STATUS.DISCARDED
-          || holdingsActionStatus === RECORD_ACTION_STATUS.DISCARDED);
-
-      const title = isHoldingsRecordImportFailed
-        ? 'Holdings'
-        : sourceRecordTitle;
-
-      return (
-        <TextLink
-          target="_blank"
-          rel="noopener noreferrer"
-          to={path}
-        >
-          {title}
-        </TextLink>
-      );
-    },
-    srsMarcStatus: ({ sourceRecordActionStatus }) => getRecordActionStatusLabel(sourceRecordActionStatus),
+    }) => (
+      <TitleCell
+        isEdifactType={isEdifactType}
+        sourceRecordId={sourceRecordId}
+        sourceRecordType={sourceRecordType}
+        sourceRecordTitle={sourceRecordTitle}
+        holdingsActionStatus={holdingsActionStatus}
+        sourceRecordActionStatus={sourceRecordActionStatus}
+        invoiceLineJournalRecordId={invoiceLineJournalRecordId}
+        jobLogEntriesRecords={filteredJobLogEntriesRecords}
+      />
+    ),
+    srsMarcStatus: ({ sourceRecordActionStatus }) => <SRSMarcCell sourceRecordActionStatus={sourceRecordActionStatus} />,
     instanceStatus: ({
       instanceActionStatus,
       sourceRecordId,
-    }) => {
-      const entityLabel = getRecordActionStatusLabel(instanceActionStatus);
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const entityId = sourceRecord?.relatedInstanceInfo.idList[0];
-      const path = `/inventory/view/${entityId}`;
+    }) => (
+      <InstanceCell
+        instanceActionStatus={instanceActionStatus}
+        sourceRecordId={sourceRecordId}
+        jobLogRecords={jobLogRecords}
+      />
+    ),
+    holdingsStatus: ({ sourceRecordId }) => {
+      const {
+        instanceData,
+        holdingsData,
+        itemData,
+      } = getRelatedInfo(jobLogRecords, sourceRecordId);
 
-      const isPathCorrect = !!entityId;
-      const isHotlink = isPathCorrect && (instanceActionStatus === RECORD_ACTION_STATUS.CREATED
-        || instanceActionStatus === RECORD_ACTION_STATUS.UPDATED);
+      if (isEmpty(holdingsData)) {
+        return (
+          <BaseLineCell>
+            <NoValue />
+          </BaseLineCell>
+        );
+      }
 
-      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'instance');
-    },
-    holdingsStatus: ({
-      holdingsActionStatus,
-      sourceRecordId,
-    }) => {
-      const entityLabel = getRecordActionStatusLabel(holdingsActionStatus);
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
-      const holdingsId = sourceRecord?.relatedHoldingsInfo.idList[0];
-      const path = `/inventory/view/${instanceId}/${holdingsId}`;
+      const itemInfo = itemData ? [...itemData] : [{}];
+      const instanceId = instanceData?.idList[0];
 
-      const isPathCorrect = !!(instanceId && holdingsId);
-      const isHotlink = isPathCorrect && (holdingsActionStatus === RECORD_ACTION_STATUS.CREATED
-        || holdingsActionStatus === RECORD_ACTION_STATUS.UPDATED);
+      holdingsData?.forEach(holdings => {
+        const isDiscarded = holdings.actionStatus === RECORD_ACTION_STATUS.DISCARDED;
+        const holdingsId = holdings.id;
 
-      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'holdings');
+        if (isDiscarded && !itemInfo.find(item => item.holdingsId === holdingsId)) {
+          itemInfo.push({ holdingsId, error: true });
+        }
+      });
+
+      return (
+        <HoldingsCell
+          instanceId={instanceId}
+          holdingsInfo={holdingsData}
+          itemInfo={itemInfo}
+          locations={locations.records}
+        />
+      );
     },
     itemStatus: ({
-      itemActionStatus,
       sourceRecordId,
+      itemActionStatus,
     }) => {
-      const entityLabel = getRecordActionStatusLabel(itemActionStatus);
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const instanceId = sourceRecord?.relatedInstanceInfo.idList[0];
-      const holdingsId = sourceRecord?.relatedHoldingsInfo.idList[0];
-      const itemId = sourceRecord?.relatedItemInfo.idList[0];
-      const path = `/inventory/view/${instanceId}/${holdingsId}/${itemId}`;
+      const {
+        instanceData,
+        holdingsData,
+        itemData,
+      } = getRelatedInfo(jobLogRecords, sourceRecordId);
 
-      const isPathCorrect = !!(instanceId && holdingsId && itemId);
-      const isHotlink = isPathCorrect && (itemActionStatus === RECORD_ACTION_STATUS.CREATED
-        || itemActionStatus === RECORD_ACTION_STATUS.UPDATED);
+      const isGeneralItemError = isGeneralItemsError(itemData, itemActionStatus);
 
-      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'item');
+      if (isGeneralItemError) {
+        return (
+          <BaseLineCell>
+            <FormattedMessage id="ui-data-import.logLight.actionStatus.noAction" />
+          </BaseLineCell>
+        );
+      }
+
+      if (isEmpty(itemData) && isEmpty(holdingsData)) {
+        return (
+          <BaseLineCell>
+            <NoValue />
+          </BaseLineCell>
+        );
+      }
+
+      if (isEmpty(itemData)) {
+        const emptyValues = holdingsData?.map((_, index) => (
+          <div key={index} style={{ paddingBottom: '7px' }}>
+            <NoValue />
+          </div>
+        ));
+
+        return (
+          <BaseLineCell>
+            {emptyValues}
+          </BaseLineCell>
+        );
+      }
+
+      const itemInfo = itemData ? [...itemData] : [{}];
+      const instanceId = instanceData?.idList[0];
+
+      holdingsData?.forEach(holdings => {
+        const isDiscarded = holdings.actionStatus === RECORD_ACTION_STATUS.DISCARDED;
+        const holdingsId = holdings.id;
+
+        if (isDiscarded && !itemInfo.find(item => item.holdingsId === holdingsId)) {
+          itemInfo.push({ holdingsId, error: true });
+        }
+      });
+
+      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
+
+      return (
+        <ItemCell
+          sortedItemData={sortedItemData}
+          instanceId={instanceId}
+        />
+      );
     },
     authorityStatus: ({
       authorityActionStatus,
       sourceRecordId,
     }) => {
-      const entityLabel = getRecordActionStatusLabel(authorityActionStatus);
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const authorityId = sourceRecord?.relatedAuthorityInfo.idList[0];
-      const path = `/marc-authorities/authorities/${authorityId}`;
+      const {
+        holdingsData,
+        itemData,
+      } = getRelatedInfo(jobLogRecords, sourceRecordId);
 
-      const isPathCorrect = !!authorityId;
-      const isHotlink = isPathCorrect && (authorityActionStatus === RECORD_ACTION_STATUS.CREATED
-        || authorityActionStatus === RECORD_ACTION_STATUS.UPDATED);
+      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
 
-      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'authority');
+      return (
+        <AuthorityCell
+          authorityActionStatus={authorityActionStatus}
+          sourceRecordId={sourceRecordId}
+          jobLogRecords={jobLogRecords}
+          sortedItemData={sortedItemData}
+        />
+      );
     },
     orderStatus: ({
       poLineActionStatus,
       sourceRecordId,
     }) => {
-      const entityLabel = getRecordActionStatusLabel(poLineActionStatus);
-      const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-      const orderLineId = sourceRecord?.relatedPoLineInfo.idList[0];
-      const path = `/orders/lines/view/${orderLineId}`;
+      const {
+        holdingsData,
+        itemData,
+      } = getRelatedInfo(jobLogRecords, sourceRecordId);
 
-      const isPathCorrect = !!orderLineId;
-      const isHotlink = isPathCorrect && poLineActionStatus === RECORD_ACTION_STATUS.CREATED;
+      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
 
-      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'order');
+      return (
+        <OrderCell
+          poLineActionStatus={poLineActionStatus}
+          sourceRecordId={sourceRecordId}
+          jobLogRecords={jobLogRecords}
+          sortedItemData={sortedItemData}
+        />
+      );
     },
     invoiceStatus: ({
       invoiceActionStatus,
       sourceRecordId,
       sourceRecordOrder,
     }) => {
-      const entityLabel = getRecordActionStatusLabel(invoiceActionStatus);
-      const sourceRecord = jobLogRecords.find(item => {
-        const isIdEqual = item.sourceRecordId === sourceRecordId;
-        const isOrderEqual = item.relatedInvoiceLineInfo?.fullInvoiceLineNumber === sourceRecordOrder;
+      const {
+        holdingsData,
+        itemData,
+      } = getRelatedInfo(jobLogRecords, sourceRecordId);
 
-        return isIdEqual && isOrderEqual;
-      });
-      const invoiceId = sourceRecord?.relatedInvoiceInfo.idList[0];
-      const invoiceLineId = sourceRecord?.relatedInvoiceLineInfo.id;
-      const path = `/invoice/view/${invoiceId}/line/${invoiceLineId}/view`;
+      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
 
-      const isPathCorrect = !!(invoiceId && invoiceLineId);
-      const isHotlink = isPathCorrect && (invoiceActionStatus === RECORD_ACTION_STATUS.CREATED);
-
-      return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'invoice');
+      return (
+        <InvoiceCell
+          invoiceActionStatus={invoiceActionStatus}
+          sourceRecordId={sourceRecordId}
+          jobLogRecords={jobLogRecords}
+          sortedItemData={sortedItemData}
+          sourceRecordOrder={sourceRecordOrder}
+        />
+      );
     },
-    error: ({ error }) => (error ? <FormattedMessage id="ui-data-import.error" /> : ''),
+    error: ({
+      error,
+      sourceRecordId,
+      itemActionStatus,
+    }) => {
+      const {
+        holdingsData,
+        itemData,
+      } = getRelatedInfo(jobLogRecords, sourceRecordId);
+
+      const isGeneralItemError = isGeneralItemsError(itemData, itemActionStatus);
+
+      if (isGeneralItemError) {
+        return (
+          <BaseLineCell>
+            <FormattedMessage id="ui-data-import.error" />
+          </BaseLineCell>
+        );
+      }
+
+      if (isEmpty(itemData) && holdingsData?.some(item => item.error)) {
+        return (
+          <ErrorCell
+            error={error}
+            sortedItemData={holdingsData?.map(item => [item])}
+          />
+        );
+      }
+
+      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData, true);
+
+      return (
+        <ErrorCell
+          error={error}
+          sortedItemData={sortedItemData}
+        />
+      );
+    },
   };
 
   return (
@@ -272,6 +368,8 @@ export const RecordsTable = ({
       columnWidths={{
         recordNumber: '90px',
         title: '30%',
+        holdingsStatus: '180px',
+        itemStatus: '190px',
       }}
     />
   );
@@ -281,6 +379,7 @@ RecordsTable.propTypes = {
   resources: PropTypes.shape({
     jobLogEntries: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
     jobLog: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
+    locations: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
     query: PropTypes.object,
   }).isRequired,
   mutator: PropTypes.object.isRequired,

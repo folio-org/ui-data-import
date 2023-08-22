@@ -344,7 +344,7 @@ export class MatchProfiles extends Component {
     ],
     visibleColumns: ['selected', ...matchProfilesShape.visibleColumns],
     nonInteractiveHeaders: ['selected'],
-    columnWidths: { selected: '40px' },
+    columnWidths: { selected: '40px', name: '430px' },
     ViewRecordComponent: ViewMatchProfile,
     CreateRecordComponent: CreateMatchProfile,
     EditRecordComponent: EditMatchProfile,

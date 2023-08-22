@@ -189,10 +189,6 @@
     "marc": "MARC",
     "error.fileExtension.extension.invalid": "Dateierweiterung {name} ist kein gültiges Format",
     "error.fileExtension.duplication.invalid": "Dateierweiterung {name} bereits vorhanden",
-    "error.jobProfile.duplication.invalid": "Jobprofil \"{name}\" ist bereits vorhanden",
-    "error.matchProfile.duplication.invalid": "Matchprofil \"{name}\" bereits vorhanden",
-    "error.actionProfile.duplication.invalid": "Aktionsprofil \" {name} \" bereits vorhanden",
-    "error.mappingProfile.duplication.invalid": "Das Feldmappingprofil \"{name}\" ist bereits vorhanden",
     "existingRecords": "Vorhandene Datensätze",
     "compare": "Vergleichen",
     "compareHint": "Vergleich mit diesem Datensatz",
@@ -1149,5 +1145,13 @@
     "jobProfile.deleted": "Jobprofil gelöscht",
     "jobProfile.notAvailable": "Nicht verfügbar – dieses Jobprofil wurde gelöscht",
     "returnToPreviousScreen": "Zurück zum vorherigen Bildschirm",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Erwerbungsteams"
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Erwerbungsteams",
+    "jobProgress.partsRemaining": "Job parts remaining: {current} of {total}",
+    "jobProgress.partsProcessed": "Job parts processed: {current} of {total}",
+    "jobProgress.partsCompleted": "Completed: {amount}",
+    "jobProgress.partsCompletedWithErrors": "Completed with errors: {amount}",
+    "jobProgress.partsFailed": "Failed: {amount}",
+    "uploadError": "There was a problem uploading the file. Please try again",
+    "modal.jobProfile.run.largeFileSplitting": "Large MARC files will be split into separate parts.",
+    "logViewer.partOfTotal": "{number} of {total}"
 }

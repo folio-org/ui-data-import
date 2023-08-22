@@ -14,30 +14,35 @@ export const NetworkMessage = memo(({
     extension,
   } = record;
 
+  const communicationProblemMessage = (
+    <FormattedMessage
+      id="ui-data-import.communicationProblem"
+      tagName="p"
+    />
+  );
+
+  const errorMessage = <><br /> {messageId}</>;
+
+  const successMassage = (
+    <FormattedMessage
+      id={`ui-data-import.${type}.${messageId}`}
+      tagName="p"
+      values={{
+        name: recordName || profile?.name || extension,
+        action: <FormattedMessage id={`ui-data-import.action.${action}`} />,
+      }}
+    />
+  );
+
   return (
     <div>
       <FormattedMessage
         id={`ui-data-import.settings.${action}.${type}`}
         tagName="strong"
       />
-      {(type === 'error' && !messageId)
-        ? (
-          <FormattedMessage
-            id="ui-data-import.communicationProblem"
-            tagName="p"
-          />
-        )
-        : (
-          <FormattedMessage
-            id={`ui-data-import.${type}.${messageId}`}
-            tagName="p"
-            values={{
-              name: recordName || profile?.name || extension,
-              action: <FormattedMessage id={`ui-data-import.action.${action}`} />,
-            }}
-          />
-        )
-      }
+      {type === 'error' && !messageId && communicationProblemMessage}
+      {type === 'error' && messageId && errorMessage}
+      {type !== 'error' && successMassage}
     </div>
   );
 });

@@ -234,7 +234,7 @@ export class MappingProfiles extends Component {
     ],
     visibleColumns: ['selected', ...mappingProfilesShape.visibleColumns],
     nonInteractiveHeaders: ['selected'],
-    columnWidths: { selected: '40px' },
+    columnWidths: { selected: '40px', name: '430px' },
     isFullScreen: true,
     ViewRecordComponent: ViewMappingProfile,
     CreateRecordComponent: CreateMappingProfile,

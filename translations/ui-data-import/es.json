@@ -189,10 +189,6 @@
     "marc": "MARC",
     "error.fileExtension.extension.invalid": "La extensión de archivo {name} no es un formato válido",
     "error.fileExtension.duplication.invalid": "La extensión de archivo {name} ya existe",
-    "error.jobProfile.duplication.invalid": "El perfil de proceso \" {name} \" ya existe",
-    "error.matchProfile.duplication.invalid": "El perfil de coincidencia \" {name} \" ya existe",
-    "error.actionProfile.duplication.invalid": "El perfil de acción \" {name} \" ya existe",
-    "error.mappingProfile.duplication.invalid": "El perfil de mapeo de campo \" {name} \" ya existe",
     "existingRecords": "Registros existentes",
     "compare": "Comparar",
     "compareHint": "Estás comparando\na este registro",
@@ -1149,5 +1145,13 @@
     "jobProfile.deleted": "Job profile deleted",
     "jobProfile.notAvailable": " Not available - this job profile has been deleted",
     "returnToPreviousScreen": "Return to previous screen",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units"
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units",
+    "jobProgress.partsRemaining": "Job parts remaining: {current} of {total}",
+    "jobProgress.partsProcessed": "Job parts processed: {current} of {total}",
+    "jobProgress.partsCompleted": "Completed: {amount}",
+    "jobProgress.partsCompletedWithErrors": "Completed with errors: {amount}",
+    "jobProgress.partsFailed": "Failed: {amount}",
+    "uploadError": "There was a problem uploading the file. Please try again",
+    "modal.jobProfile.run.largeFileSplitting": "Large MARC files will be split into separate parts.",
+    "logViewer.partOfTotal": "{number} of {total}"
 }
