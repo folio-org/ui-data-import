@@ -189,10 +189,6 @@
     "marc": "MARC",
     "error.fileExtension.extension.invalid": "Rozszerzenie pliku {name} nie jest prawidłowym formatem",
     "error.fileExtension.duplication.invalid": "Rozszerzenie pliku {name} już istnieje",
-    "error.jobProfile.duplication.invalid": "Profil zadania \"{name}\" już istnieje",
-    "error.matchProfile.duplication.invalid": "Profil dopasowania \"{name}\" już istnieje",
-    "error.actionProfile.duplication.invalid": "Profil akcji \"{name}\" już istnieje",
-    "error.mappingProfile.duplication.invalid": "Profil mapowania pola \"{name}\" już istnieje",
     "existingRecords": "Istniejące rekordy",
     "compare": "Porównaj",
     "compareHint": "Porównujesz\ndo tego rekordu",
@@ -1149,5 +1145,13 @@
     "jobProfile.deleted": "Job profile deleted",
     "jobProfile.notAvailable": " Not available - this job profile has been deleted",
     "returnToPreviousScreen": "Return to previous screen",
-    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units"
+    "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Acquisitions units",
+    "jobProgress.partsRemaining": "Job parts remaining: {current} of {total}",
+    "jobProgress.partsProcessed": "Job parts processed: {current} of {total}",
+    "jobProgress.partsCompleted": "Completed: {amount}",
+    "jobProgress.partsCompletedWithErrors": "Completed with errors: {amount}",
+    "jobProgress.partsFailed": "Failed: {amount}",
+    "uploadError": "There was a problem uploading the file. Please try again",
+    "modal.jobProfile.run.largeFileSplitting": "Large MARC files will be split into separate parts.",
+    "logViewer.partOfTotal": "{number} of {total}"
 }

@@ -1,5 +1,6 @@
 import React, {
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -25,6 +26,7 @@ import {
   useInvoicesByIdQuery,
   useInvoiceLineByIdQuery,
   useAuthoritiesByIdQuery,
+  useLocationsQuery,
 } from '../hooks';
 
 import {
@@ -65,6 +67,7 @@ export const ViewJobLog = () => {
   const { data: invoicesData } = useInvoicesByIdQuery(invoicesIds);
   const { data: invoiceLineData } = useInvoiceLineByIdQuery(invoiceLineId);
   const { data: authoritiesData } = useAuthoritiesByIdQuery(authoritiesIds);
+  const { data: locationsData = [] } = useLocationsQuery();
 
   useEffect(() => {
     if (!isJobLogLoading && !isJobLogError) {
@@ -79,8 +82,8 @@ export const ViewJobLog = () => {
       } = jobLogData;
 
       setInstancesIds(relatedInstanceInfo.idList);
-      setHoldingsIds(relatedHoldingsInfo.idList);
-      setItemsIds(relatedItemInfo.idList);
+      setHoldingsIds(relatedHoldingsInfo.map((item) => item.id).filter((id) => !!id));
+      setItemsIds(relatedItemInfo.map((item) => item.id).filter((id) => !!id));
       setOrderId(relatedPoLineInfo?.orderId);
       setPoLinesIds(relatedPoLineInfo?.idList);
       setInvoicesIds(relatedInvoiceInfo.idList);
@@ -89,35 +92,145 @@ export const ViewJobLog = () => {
     }
   }, [isJobLogLoading, isJobLogError, jobLogData]);
 
-  const getErrorMessage = entityOption => {
-    if (isJobLogLoading || isJobLogError) return '';
+  const srsMarcBibLogs = useMemo(() => {
+    const { error } = jobLogData;
 
-    const {
-      error,
-      relatedInstanceInfo,
-      relatedHoldingsInfo,
-      relatedItemInfo,
-      relatedAuthorityInfo,
-      relatedPoLineInfo,
-      relatedInvoiceInfo,
-      relatedInvoiceLineInfo,
-    } = jobLogData;
-
-    const errors = {
-      [OPTIONS.SRS_MARC_BIB]: error || '',
-      [OPTIONS.INSTANCE]: relatedInstanceInfo.error || '',
-      [OPTIONS.HOLDINGS]: relatedHoldingsInfo.error || '',
-      [OPTIONS.ITEM]: relatedItemInfo.error || '',
-      [OPTIONS.ORDER]: relatedPoLineInfo.error || '',
-      [OPTIONS.AUTHORITY]: relatedAuthorityInfo.error || '',
-      [OPTIONS.INVOICE]: {
-        invoiceInfo: relatedInvoiceInfo.error || '',
-        invoiceLineInfo: relatedInvoiceLineInfo?.error || '',
+    return [
+      {
+        label: '',
+        logs: srsRecordData,
+        error: error || '',
+        errorBlockId: 'srs-marc-bib-error',
       },
+    ];
+  }, [jobLogData, srsRecordData]);
+  const instanceLogs = useMemo(() => {
+    const { relatedInstanceInfo } = jobLogData;
+
+    return [
+      {
+        label: '',
+        logs: instancesData,
+        error: relatedInstanceInfo?.error || '',
+        errorBlockId: 'instance-error',
+      },
+    ];
+  }, [instancesData, jobLogData]);
+  const holdingsLogs = useMemo(() => {
+    const { relatedHoldingsInfo } = jobLogData;
+
+    const getHoldingsLabel = (holding = {}) => {
+      const { permanentLocationId } = holding;
+
+      if (!permanentLocationId) return '';
+
+      const permanentLocation = locationsData.find(
+        (location) => location.id === permanentLocationId
+      );
+
+      return (
+        <Headline margin="none" className={sharedCss.leftMargin}>
+          {permanentLocation?.code}
+        </Headline>
+      );
     };
 
-    return errors[entityOption];
-  };
+    return (
+      relatedHoldingsInfo?.map((holding) => ({
+        label: getHoldingsLabel(holding),
+        logs: holdingsData?.find((data) => data.id === holding.id),
+        error: holding.error || '',
+        errorBlockId: 'holdings-error',
+      })) || [{ logs: [] }]
+    );
+  }, [holdingsData, jobLogData, locationsData]);
+  const itemsLogs = useMemo(() => {
+    const { relatedItemInfo } = jobLogData;
+
+    const getItemsLabel = (item = {}) => {
+      const { hrid } = item;
+
+      if (!hrid) return '';
+
+      return (
+        <Headline margin="none" className={sharedCss.leftMargin}>
+          {hrid}
+        </Headline>
+      );
+    };
+
+    return (
+      relatedItemInfo?.map((item) => ({
+        label: getItemsLabel(item),
+        logs: itemsData?.find((data) => data.id === item.id),
+        error: item.error || '',
+        errorBlockId: 'item-error',
+      })) || [{ logs: [] }]
+    );
+  }, [itemsData, jobLogData]);
+  const authorityLogs = useMemo(() => {
+    const { relatedAuthorityInfo } = jobLogData;
+
+    return [{
+      label: '',
+      logs: authoritiesData,
+      error: relatedAuthorityInfo?.error || '',
+      errorBlockId: 'authority-error',
+    }];
+  }, [authoritiesData, jobLogData]);
+  const orderLogs = useMemo(() => {
+    const { relatedPoLineInfo } = jobLogData;
+
+    return [
+      {
+        label: (
+          <Headline margin="none" className={sharedCss.leftMargin}>
+            <FormattedMessage id="ui-data-import.logViewer.orderLine" />
+          </Headline>
+        ),
+        logs: poLinesData,
+        error: relatedPoLineInfo?.error || '',
+        errorBlockId: 'order-line-error',
+      },
+      {
+        label: (
+          <Headline margin="none" className={sharedCss.leftMargin}>
+            <FormattedMessage id="ui-data-import.logViewer.order" />
+          </Headline>
+        ),
+        logs: orderData,
+      },
+    ];
+  }, [jobLogData, orderData, poLinesData]);
+  const invoiceLogs = useMemo(() => {
+    const {
+      relatedInvoiceLineInfo,
+      relatedInvoiceInfo,
+    } = jobLogData;
+
+    return [
+      {
+        label: (
+          <Headline margin="none" className={sharedCss.leftMargin}>
+            <FormattedMessage id="ui-data-import.logViewer.invoiceLine" />
+          </Headline>
+        ),
+        logs: invoiceLineData,
+        error: relatedInvoiceLineInfo?.error || '',
+        errorBlockId: 'invoice-line-error',
+      },
+      {
+        label: (
+          <Headline margin="none" className={sharedCss.leftMargin}>
+            <FormattedMessage id="ui-data-import.logViewer.invoice" />
+          </Headline>
+        ),
+        logs: invoicesData,
+        error: relatedInvoiceInfo?.error || '',
+        errorBlockId: 'invoice-error',
+      },
+    ];
+  }, [invoiceLineData, invoicesData, jobLogData]);
 
   if (isJobLogLoading) {
     return (
@@ -155,72 +268,13 @@ export const ViewJobLog = () => {
   };
 
   const logs = {
-    [OPTIONS.SRS_MARC_BIB]: [{
-      label: '',
-      logs: srsRecordData,
-      error: getErrorMessage(OPTIONS.SRS_MARC_BIB),
-      errorBlockId: 'srs-marc-bib-error',
-    }],
-    [OPTIONS.INSTANCE]: [{
-      label: '',
-      logs: instancesData,
-      error: getErrorMessage(OPTIONS.INSTANCE),
-      errorBlockId: 'instance-error',
-    }],
-    [OPTIONS.HOLDINGS]: [{
-      label: '',
-      logs: holdingsData,
-      error: getErrorMessage(OPTIONS.HOLDINGS),
-      errorBlockId: 'holdings-error',
-    }],
-    [OPTIONS.ITEM]: [{
-      label: '',
-      logs: itemsData,
-      error: getErrorMessage(OPTIONS.ITEM),
-      errorBlockId: 'item-error',
-    }],
-    [OPTIONS.AUTHORITY]: [{
-      label: '',
-      logs: authoritiesData,
-      error: getErrorMessage(OPTIONS.AUTHORITY),
-      errorBlockId: 'authority-error',
-    }],
-    [OPTIONS.ORDER]: [{
-      label: (
-        <Headline margin="none" className={sharedCss.leftMargin}>
-          <FormattedMessage id="ui-data-import.logViewer.orderLine" />
-        </Headline>
-      ),
-      logs: poLinesData,
-      error: getErrorMessage(OPTIONS.ORDER),
-      errorBlockId: 'order-line-error',
-    }, {
-      label: (
-        <Headline margin="none" className={sharedCss.leftMargin}>
-          <FormattedMessage id="ui-data-import.logViewer.order" />
-        </Headline>
-      ),
-      logs: orderData,
-    }],
-    [OPTIONS.INVOICE]: [{
-      label: (
-        <Headline margin="none" className={sharedCss.leftMargin}>
-          <FormattedMessage id="ui-data-import.logViewer.invoiceLine" />
-        </Headline>
-      ),
-      logs: invoiceLineData,
-      error: getErrorMessage(OPTIONS.INVOICE).invoiceLineInfo,
-      errorBlockId: 'invoice-line-error',
-    }, {
-      label: (
-        <Headline margin="none" className={sharedCss.leftMargin}>
-          <FormattedMessage id="ui-data-import.logViewer.invoice" />
-        </Headline>
-      ),
-      logs: invoicesData,
-      error: getErrorMessage(OPTIONS.INVOICE).invoiceInfo,
-      errorBlockId: 'invoice-error',
-    }],
+    [OPTIONS.SRS_MARC_BIB]: srsMarcBibLogs,
+    [OPTIONS.INSTANCE]: instanceLogs,
+    [OPTIONS.HOLDINGS]: holdingsLogs,
+    [OPTIONS.ITEM]: itemsLogs,
+    [OPTIONS.AUTHORITY]: authorityLogs,
+    [OPTIONS.ORDER]: orderLogs,
+    [OPTIONS.INVOICE]: invoiceLogs,
   };
 
   return (

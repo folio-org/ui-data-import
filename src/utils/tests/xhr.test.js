@@ -28,4 +28,15 @@ describe('getXHRErrorMessage', () => {
 
     expect(await getXHRErrorMessage(fakeXmlResponse)).toBe('Xhr error');
   });
+
+  describe('when response type is text/plain', () => {
+    it('should return correct response text', async () => {
+      const fakeXmlResponse = {
+        headers: new Map([['Content-Type', 'text/plain']]),
+        text: async () => 'text/plain response',
+      };
+
+      expect(await getXHRErrorMessage(fakeXmlResponse)).toBe('text/plain response');
+    });
+  });
 });

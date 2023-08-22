@@ -27,6 +27,10 @@ export const getXHRResponse = async response => {
     return response.json();
   }
 
+  if (contentType.startsWith('text/plain')) {
+    return response.text();
+  }
+
   return response;
 };
 
@@ -40,7 +44,7 @@ export const getXHRErrorMessage = async response => {
   try {
     const json = await getXHRResponse(response);
 
-    return get(json, 'errors.0.message', null);
+    return get(json, 'errors.0.message', null) || json;
   } catch (error) {
     return null;
   }

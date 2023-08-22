@@ -46,6 +46,18 @@ describe('NetworkMessage component', () => {
     });
   });
 
+  describe('when messageId prop is passed and type is error', () => {
+    it('then component should be rendered with message text depends on the parameters', () => {
+      const { getByText } = renderNetworkMessage({
+        messageId: 'Error message',
+        type: 'error',
+        record: { name: 'test record name' },
+      });
+
+      expect(getByText('Error message')).toBeDefined();
+    });
+  });
+
   describe('when messageId prop is passed and type is not error', () => {
     describe('and name is name of record', () => {
       it('then component should be rendered with message text depends on the parameters', () => {
