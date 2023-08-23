@@ -5,7 +5,6 @@ import {
   fireEvent,
   waitFor,
   getByText as getByTextScreen,
-  within
 } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -21,17 +20,16 @@ import '../../../../test/jest/__mock__';
 import { ViewJobProfile } from '../ViewJobProfile';
 import { UploadingJobsContext } from '../../../components';
 
-const defaultContext = {
-  uploadConfiguration: {
-    canUseObjectStorage: false,
+const uploadContext = (canUseObjectStorage) => (
+  {
+    uploadDefinition: {
+      id: 'testUploadDefinitionId'
+    },
+    uploadConfiguration: {
+      canUseObjectStorage,
+    }
   }
-};
-
-const multipartContext = {
-  uploadConfiguration: {
-    canUseObjectStorage: true,
-  }
-};
+);
 
 const jobProfile = {
   records: [
@@ -103,7 +101,7 @@ const renderViewJobProfile = ({
   location,
   resources,
   actionMenuItems,
-  context = defaultContext
+  context = uploadContext(false)
 }) => {
   const component = () => (
     <Router>
@@ -198,7 +196,7 @@ describe('<ViewJobProfile>', () => {
 
   describe('Jobs using this profile section - multipart capabilities', () => {
     it('should display the "Job parts" column', () => {
-      const { getByRole } = renderViewJobProfile({ ...viewJobProfileProps(jobProfile), context: multipartContext });
+      const { getByRole } = renderViewJobProfile({ ...viewJobProfileProps(jobProfile), context: uploadContext(true) });
 
       expect(getByRole('columnheader', { name: 'Job parts' })).toBeInTheDocument();
     });
@@ -294,13 +292,11 @@ describe('<ViewJobProfile>', () => {
 
       fireEvent.click(getByTextScreen(actionsMenu, 'Run'));
 
-      const confirmationModal = getByRole('dialog');
-
-      const confirmButton = within(confirmationModal).getByRole('button', { name: /run/i });
+      const confirmButton = document.querySelector('#clickable-run-job-profile-modal-confirm');
 
       fireEvent.click(confirmButton);
 
-      await waitFor(() => expect(within(confirmationModal).getByRole('button', { name: /run/i })).toBeDisabled());
+      await waitFor(() => expect(confirmButton).toBeDisabled());
     });
   });
 
