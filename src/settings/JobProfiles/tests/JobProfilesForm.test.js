@@ -26,9 +26,9 @@ import {
 
 global.fetch = jest.fn();
 
-const childWrappers = [
+const profileSnapshots = [
   {
-    childSnapshotWrappers: [{
+    profileSnapshots: [{
       content: { name: 'Attached action profile' },
       contentType: PROFILE_TYPES.ACTION_PROFILE,
       id: 'testId',
@@ -40,14 +40,14 @@ const childWrappers = [
 ];
 
 const mutator = {
-  childWrappers: {
-    GET: jest.fn().mockResolvedValue(childWrappers),
+  profileSnapshots: {
+    GET: jest.fn().mockResolvedValue(profileSnapshots),
     reset: jest.fn(),
   },
 };
 
 const resources = {
-  childWrappers: { records: childWrappers },
+  profileSnapshots: { records: profileSnapshots },
 };
 
 const parentResources = {
