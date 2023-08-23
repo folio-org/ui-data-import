@@ -32,14 +32,13 @@ import {
   createOkapiHeaders,
   createUrl,
 } from '@folio/stripes-data-transfer-components';
-import { permissions } from '../../../../utils';
+import { permissions, cancelMultipartJob } from '../../../../utils';
 
 import { jobMetaTypes } from './jobMetaTypes';
 import { jobExecutionPropTypes } from './jobExecutionPropTypes';
 
 import * as API from '../../../../utils/upload';
 import * as CompositeJobFields from '../../../../utils/compositeJobStatus';
-import { cancelMultipartJob } from '../../../../utils';
 
 import {
   addHrid,
