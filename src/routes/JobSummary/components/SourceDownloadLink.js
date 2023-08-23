@@ -22,6 +22,8 @@ export const SourceDownloadLink = ({
   const [downloadUrl, setDownloadURL] = useState(null);
   const ky = useOkapiKy();
   const callout = useCallout();
+
+  // Request the download link in onmount, hence the empty dependency array.
   useEffect(() => {
     const requestDownloadUrl = async () => {
       try {
@@ -44,7 +46,7 @@ export const SourceDownloadLink = ({
     if (downloadUrl === null) {
       requestDownloadUrl();
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (downloadUrl === null) {
     return (

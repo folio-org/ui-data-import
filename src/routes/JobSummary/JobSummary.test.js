@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -150,8 +150,7 @@ describe('Job summary page', () => {
   });
 
   it('should render a download link if multipart capability is present', () => {
-
-    const { getByText } = renderJobSummary({context: multipartUploadContext});
+    const { getByText } = renderJobSummary({ context: multipartUploadContext });
 
     expect(getByText('SourceDownloadLink')).toBeInTheDocument();
   });

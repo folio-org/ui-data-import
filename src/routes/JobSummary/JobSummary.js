@@ -22,8 +22,6 @@ import {
   Pane,
   PaneHeader,
   Paneset,
-  TextLink,
-  Layout
 } from '@folio/stripes/components';
 import css from '@folio/stripes-data-transfer-components/lib/SearchAndSortPane/SearchAndSortPane.css';
 import sharedCss from '../../shared.css';
@@ -40,9 +38,6 @@ import {
 } from '../../utils';
 
 import { UploadingJobsContext } from '../../components';
-
-import { requestConfiguration } from '../../utils/multipartUpload';
-import { getJobSplittingURL } from '../../components/DataFetcher';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -81,8 +76,6 @@ const JobSummaryComponent = props => {
     history,
   } = props;
 
-  const { sourceUrl, splitStatus, ...restResources } = resources;
-  const { sourceUrl: sourceUrlMutator, splitStatus: splitStatusMutator, ...restMutator } = mutator;
   const dataType = jobExecutionsRecords[0]?.jobProfileInfo.dataType;
   const isEdifactType = dataType === DATA_TYPES[1];
   const jobExecutionsId = jobExecutionsRecords[0]?.id;
@@ -188,8 +181,8 @@ const JobSummaryComponent = props => {
           )}
           <div className={css.searchResults}>
             <RecordsTable
-              resources={restResources}
-              mutator={restMutator}
+              resources={resources}
+              mutator={mutator}
               location={location}
               history={history}
               source={getSource()}
@@ -262,17 +255,6 @@ JobSummaryComponent.manifest = Object.freeze({
     path: 'change-manager/jobExecutions/:{id}',
     throwErrors: false,
   },
-  // sourceUrl : {
-  //   type: 'okapi',
-  //   path: (_p, _q, resources) => getJobSplittingURL(resources, 'data-import/jobExecutions/downloadUrl/:{id}' ),
-  //   records: 'url',
-  //   throwErrors: false,
-  // },
-  // splitStatus: {
-  //   type: 'okapi',
-  //   path: requestConfiguration,
-  //   throwErrors: false,
-  // }
 });
 
 JobSummaryComponent.propTypes = {
