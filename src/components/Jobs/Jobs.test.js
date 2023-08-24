@@ -18,8 +18,10 @@ import { Jobs } from './Jobs';
 
 import { JOB_STATUSES } from '../../utils';
 import * as API from '../../utils/upload';
+import * as multipartAPI from '../../utils/multipartUpload';
 
 const mockDeleteFile = jest.spyOn(API, 'deleteFile').mockResolvedValue(true);
+const mockCancelMultipartJob = jest.spyOn(multipartAPI, 'cancelMultipartJob').mockResolvedValue(true);
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -27,8 +29,10 @@ jest.mock('@folio/stripes/components', () => ({
     open,
     onCancel,
     onConfirm,
+    heading,
   }) => (open ? (
     <div>
+      <span>{heading}</span>
       <span>Confirmation Modal</span>
       <button
         type="button"
@@ -48,7 +52,6 @@ jest.mock('@folio/stripes/components', () => ({
 }));
 
 const mockConsoleError = jest.spyOn(console, 'error');
-
 global.fetch = jest.fn();
 
 const runningJobs = [
@@ -447,6 +450,17 @@ describe('Composite jobs - Jobs component', () => {
       await waitFor(() => expect(queryByText('Confirmation Modal')).not.toBeInTheDocument());
     });
 
+    it('Composite jobs - display correct modal label header', async () => {
+      const {
+        getByRole,
+        queryByText,
+      } = renderCompositeJobs();
+
+      fireEvent.click(getByRole('button', { name: /delete/i }));
+
+      await waitFor(() => expect(queryByText(/multipart/)).toBeInTheDocument());
+    });
+
     it('Composite jobs - should be closed when confirm button is clicked', async () => {
       const {
         getByRole,
@@ -462,13 +476,13 @@ describe('Composite jobs - Jobs component', () => {
     describe('Composite jobs - when there is a deletion error while cancelling job', () => {
       it('Composite jobs - console.error should be called', async () => {
         const error = new Error('Something went wrong. Try again.');
-        mockDeleteFile.mockRejectedValueOnce(error);
+        mockCancelMultipartJob.mockRejectedValueOnce(error);
         const { getByRole } = renderCompositeJobs();
 
         fireEvent.click(getByRole('button', { name: /delete/i }));
         fireEvent.click(getByRole('button', { name: 'Yes, cancel import job' }));
 
-        expect(mockDeleteFile).toHaveBeenCalledTimes(1);
+        expect(mockCancelMultipartJob).toHaveBeenCalledTimes(1);
         await waitFor(() => expect(mockConsoleError).toHaveBeenCalledWith(error));
       });
     });
