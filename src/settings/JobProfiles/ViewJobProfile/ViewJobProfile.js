@@ -271,9 +271,34 @@ const ViewJobProfileComponent = props => {
   const jobsUsingThisProfileFormatter = {
     ...listTemplate({}),
     fileName: record => fileNameCellFormatter(record, location),
+    jobParts: record => (
+      <FormattedMessage
+        id="ui-data-import.logViewer.partOfTotal"
+        values={{
+          number: record.jobPartNumber,
+          total: record.totalJobParts
+        }}
+      />
+    )
   };
+
   const tagsEntityLink = `data-import-profiles/jobProfiles/${jobProfileRecord.id}`;
   const isSettingsEnabled = stripes.hasPerm(permissions.SETTINGS_MANAGE) || stripes.hasPerm(permissions.SETTINGS_VIEW_ONLY);
+
+  const getVisibleColumns = (context) => {
+    const defaultVisibleColumns = [
+      'fileName',
+      'hrId',
+      'completedDate',
+      'runBy',
+    ];
+    if (context?.canUseObjectStorage) {
+      const columns = [...defaultVisibleColumns];
+      columns.splice(2, 0, 'jobParts');
+      return columns;
+    }
+    return defaultVisibleColumns;
+  };
 
   return (
     <DetailsKeyShortcutsWrapper
@@ -359,13 +384,9 @@ const ViewJobProfileComponent = props => {
                     hrId: <FormattedMessage id="ui-data-import.settings.jobProfiles.jobID" />,
                     completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
                     runBy: <FormattedMessage id="ui-data-import.runBy" />,
+                    jobParts: <FormattedMessage id="ui-data-import.jobParts" />
                   }}
-                  visibleColumns={[
-                    'fileName',
-                    'hrId',
-                    'completedDate',
-                    'runBy',
-                  ]}
+                  visibleColumns={getVisibleColumns(uploadConfiguration)}
                   formatter={jobsUsingThisProfileFormatter}
                   width="100%"
                 />
@@ -458,7 +479,6 @@ ViewJobProfileComponent.manifest = Object.freeze({
     type: 'okapi',
     path: (_q, _p) => {
       const { id } = _p;
-
       return createUrlFromArray('metadata-provider/jobExecutions', [
         `statusAny=${COMMITTED}`,
         `statusAny=${ERROR}`,

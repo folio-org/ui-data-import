@@ -39,46 +39,41 @@ class DataImport extends Component {
       match: { path },
     } = this.props;
 
-    if (showSettings) {
-      return (
-        <CommandList commands={keyboardCommands}>
-          <DataImportSettings {...this.props} />
-        </CommandList>
-      );
-    }
-
     return (
       <CommandList commands={keyboardCommands}>
         <UploadingJobsContextProvider>
-          <Switch>
-            <Route
-              path={path}
-              exact
-              render={props => (
-                <DataFetcher>
-                  <Home {...props} />
-                </DataFetcher>
-              )}
-            />
-            <Route
-              path={`${path}/job-profile`}
-              component={JobProfile}
-            />
-            <Route
-              path={`${path}/log/:id/:recordId`}
-              exact
-              component={ViewJobLog}
-            />
-            <Route
-              path={`${path}/job-summary/:id`}
-              exact
-              component={JobSummary}
-            />
-            <Route
-              path={`${path}/job-logs`}
-              component={ViewAllLogs}
-            />
-          </Switch>
+          { showSettings ?
+            <DataImportSettings {...this.props} /> :
+            <Switch>
+              <Route
+                path={path}
+                exact
+                render={props => (
+                  <DataFetcher>
+                    <Home {...props} />
+                  </DataFetcher>
+                )}
+              />
+              <Route
+                path={`${path}/job-profile`}
+                component={JobProfile}
+              />
+              <Route
+                path={`${path}/log/:id/:recordId`}
+                exact
+                component={ViewJobLog}
+              />
+              <Route
+                path={`${path}/job-summary/:id`}
+                exact
+                component={JobSummary}
+              />
+              <Route
+                path={`${path}/job-logs`}
+                component={ViewAllLogs}
+              />
+            </Switch>
+          }
         </UploadingJobsContextProvider>
       </CommandList>
     );
