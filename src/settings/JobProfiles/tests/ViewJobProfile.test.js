@@ -18,6 +18,18 @@ import {
 import '../../../../test/jest/__mock__';
 
 import { ViewJobProfile } from '../ViewJobProfile';
+import { UploadingJobsContext } from '../../../components';
+
+const uploadContext = (canUseObjectStorage) => (
+  {
+    uploadDefinition: {
+      id: 'testUploadDefinitionId'
+    },
+    uploadConfiguration: {
+      canUseObjectStorage,
+    }
+  }
+);
 
 const jobProfile = {
   records: [
@@ -64,6 +76,8 @@ const viewJobProfileProps = (profile, actionMenuItems) => ({
             lastName: 'lastName',
           },
           status: 'ERROR',
+          jobPartNumber: 1,
+          totalJobParts: 20,
         }],
       }],
       hasLoaded: true,
@@ -87,23 +101,26 @@ const renderViewJobProfile = ({
   location,
   resources,
   actionMenuItems,
+  context = uploadContext(false)
 }) => {
   const component = () => (
     <Router>
-      <ViewJobProfile
-        resources={resources}
-        location={location}
-        match={match}
-        history={history}
-        tagsEnabled
-        onClose={noop}
-        onDelete={noop}
-        actionMenuItems={actionMenuItems}
-        stripes={{
-          okapi: { url: '' },
-          hasPerm: () => true
-        }}
-      />
+      <UploadingJobsContext.Provider value={context}>
+        <ViewJobProfile
+          resources={resources}
+          location={location}
+          match={match}
+          history={history}
+          tagsEnabled
+          onClose={noop}
+          onDelete={noop}
+          actionMenuItems={actionMenuItems}
+          stripes={{
+            okapi: { url: '' },
+            hasPerm: () => true
+          }}
+        />
+      </UploadingJobsContext.Provider>
     </Router>
   );
 
@@ -168,6 +185,20 @@ describe('<ViewJobProfile>', () => {
       const { getByText } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
       expect(getByText('jobUsingProfile.mrc').href).toContain(`/data-import/job-summary/${fileId}`);
+    });
+
+    it('should not display the "Job parts" column', () => {
+      const { queryByRole } = renderViewJobProfile(viewJobProfileProps(jobProfile));
+
+      expect(queryByRole('columnheader', { name: 'Job parts' })).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Jobs using this profile section - multipart capabilities', () => {
+    it('should display the "Job parts" column', () => {
+      const { getByRole } = renderViewJobProfile({ ...viewJobProfileProps(jobProfile), context: uploadContext(true) });
+
+      expect(getByRole('columnheader', { name: 'Job parts' })).toBeInTheDocument();
     });
   });
 
@@ -265,7 +296,7 @@ describe('<ViewJobProfile>', () => {
 
       fireEvent.click(confirmButton);
 
-      expect(confirmButton).toBeDisabled();
+      await waitFor(() => expect(confirmButton).toBeDisabled());
     });
   });
 
