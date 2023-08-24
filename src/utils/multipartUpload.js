@@ -3,7 +3,21 @@ export const requestPartUploadURL = 'data-import/uploadUrl/subsequent';
 export const finishMPUploadEndpoint = 'data-import/assembleStorageFile';
 export const requestConfiguration = 'data-import/splitStatus';
 export const getDownloadLinkURL = (id) => `data-import/jobExecutions/${id}/downloadUrl`;
+export const cancelMultipartJobEndpoint = (id) => `data-import/jobExecutions/${id}/cancel`;
 const CHUNK_SIZE = 31457280; // 30 MB;
+
+export const cancelMultipartJob = async (id, headers) => {
+  const response = await fetch(cancelMultipartJobEndpoint(id), {
+    method: 'POST',
+    headers,
+  });
+
+  if (!response.ok) {
+    throw response;
+  }
+
+  return response;
+};
 
 export function getStorageConfiguration(ky) {
   return ky.get(requestConfiguration).json();
