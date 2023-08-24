@@ -30,6 +30,7 @@
   "beganRunning": "Began {time}",
   "endedRunning": "Ended {time}",
   "progressRunning": "In progress",
+  "downloadLinkRequestError": "There was a problem retrieving the download URL",
   "jobProgress.partsRemaining": "Job parts remaining: {current} of {total}",
   "jobProgress.partsProcessed": "Job parts processed: {current} of {total}",
   "jobProgress.partsCompleted": "Completed: {amount}",

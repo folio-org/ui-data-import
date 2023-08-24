@@ -11,6 +11,7 @@
     "beganRunning": "Began {time}",
     "endedRunning": "Ended {time}",
     "progressRunning": "In progress",
+    "downloadLinkRequestError": "There was a problem retrieving the download URL",
     "uploadTitle": "Drag and drop to start a new data import job",
     "activeUploadTitle": "Drop to start import",
     "uploadBtnText": "or choose files",

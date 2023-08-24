@@ -1,6 +1,7 @@
 import React, {
   useEffect,
-  useRef
+  useRef,
+  useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -28,12 +29,15 @@ import sharedCss from '../../shared.css';
 import {
   SummaryTable,
   RecordsTable,
+  SourceDownloadLink,
 } from './components';
 
 import {
   DATA_TYPES,
   storage,
 } from '../../utils';
+
+import { UploadingJobsContext } from '../../components';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -76,9 +80,8 @@ const JobSummaryComponent = props => {
   const isEdifactType = dataType === DATA_TYPES[1];
   const jobExecutionsId = jobExecutionsRecords[0]?.id;
   const isErrorsOnly = !!query.errorsOnly;
-
   const { id } = useParams();
-
+  const { uploadConfiguration } = useContext(UploadingJobsContext);
   // persist previous jobExecutionsId
   const previousJobExecutionsIdRef = useRef(jobExecutionsId);
 
@@ -165,6 +168,12 @@ const JobSummaryComponent = props => {
         renderHeader={renderHeader}
       >
         <div className={css.paneBody}>
+          {uploadConfiguration?.canUseObjectStorage && (
+            <SourceDownloadLink
+              executionId={jobExecutionsId}
+              fileName={jobExecutionsRecords[0]?.fileName}
+            />
+          )}
           {!isErrorsOnly && (
             <div className={sharedCss.separatorLine}>
               <SummaryTable jobExecutionId={jobExecutionsId} />
@@ -265,6 +274,7 @@ JobSummaryComponent.propTypes = {
     }),
     jobLogEntries: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
     jobLog: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
+    sourceUrl: PropTypes.shape({ records: PropTypes.shape({ url: PropTypes.string }) }),
   }).isRequired,
   location: PropTypes.oneOfType([
     PropTypes.shape({

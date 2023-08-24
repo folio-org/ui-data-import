@@ -2,6 +2,7 @@ export const initMPUploadEndpoint = 'data-import/uploadUrl';
 export const requestPartUploadURL = 'data-import/uploadUrl/subsequent';
 export const finishMPUploadEndpoint = 'data-import/assembleStorageFile';
 export const requestConfiguration = 'data-import/splitStatus';
+export const getDownloadLinkURL = (id) => `data-import/jobExecutions/${id}/downloadUrl`;
 export const cancelMultipartJobEndpoint = (id) => `data-import/jobExecutions/${id}/cancel`;
 const CHUNK_SIZE = 31457280; // 30 MB;
 
@@ -20,6 +21,10 @@ export const cancelMultipartJob = async (id, headers) => {
 
 export function getStorageConfiguration(ky) {
   return ky.get(requestConfiguration).json();
+}
+
+export function getObjectStorageDownloadURL(ky, id) {
+  return ky.get(getDownloadLinkURL(id)).json();
 }
 
 function initiateMultipartUpload(filename, ky) {
