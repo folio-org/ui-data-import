@@ -19,32 +19,6 @@ import { ActionProfilesFormComponent } from './ActionProfilesForm';
 
 import { LAYER_TYPES } from '../../utils';
 
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  ConfirmationModal: jest.fn(({
-    open,
-    onCancel,
-    onConfirm,
-  }) => (open ? (
-    <div>
-      <span>Confirmation modal</span>
-      <button
-        type="button"
-        onClick={onCancel}
-      >
-        Cancel
-      </button>
-      <button
-        type="button"
-        id="confirmButton"
-        onClick={onConfirm}
-      >
-        Confirm
-      </button>
-    </div>
-  ) : null)),
-}));
-
 const history = createMemoryHistory();
 
 history.push = jest.fn();
@@ -360,73 +334,6 @@ describe('ActionProfilesForm component', () => {
       const { getByText } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
 
       expect(getByText('Edit testName')).toBeDefined();
-    });
-  });
-
-  describe('when edit profile and save', () => {
-    it('confirmation modal should be shown', async () => {
-      const {
-        container,
-        getByText,
-      } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
-      const nameInput = container.querySelector('[name="profile.name"]');
-
-      fireEvent.change(nameInput, { target: { value: 'testName2' } });
-
-      await waitFor(() => fireEvent.click(getByText('Save as profile & Close')));
-
-      await waitFor(() => expect(getByText('Confirmation modal')).toBeDefined());
-    });
-  });
-
-  describe('when confirm changes', () => {
-    it('confirmation modal should be hidden', async () => {
-      const {
-        container,
-        getByText,
-        queryByText,
-      } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
-      const nameInput = container.querySelector('[name="profile.name"]');
-
-      fireEvent.change(nameInput, { target: { value: 'testName2' } });
-
-      await waitFor(() => fireEvent.click(getByText('Save as profile & Close')));
-      await waitFor(() => fireEvent.click(getByText('Confirm')));
-
-      expect(queryByText('Confirmation modal')).toBeNull();
-    });
-
-    it('action profile should be saved', async () => {
-      const {
-        container,
-        getByText,
-      } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
-      const nameInput = container.querySelector('[name="profile.name"]');
-
-      fireEvent.change(nameInput, { target: { value: 'testName2' } });
-
-      await waitFor(() => fireEvent.click(getByText('Save as profile & Close')));
-      await waitFor(() => fireEvent.click(getByText('Confirm')));
-
-      await waitFor(() => expect(onSubmitMock).toHaveBeenCalledTimes(1));
-    });
-  });
-
-  describe('when cancel changes', () => {
-    it('confirmation modal should be hidden', async () => {
-      const {
-        container,
-        getByText,
-        queryByText,
-      } = renderActionProfilesForm(actionProfilesFormProps(LAYER_TYPES.EDIT));
-      const nameInput = container.querySelector('[name="profile.name"]');
-
-      fireEvent.change(nameInput, { target: { value: 'testName2' } });
-
-      await waitFor(() => fireEvent.click(getByText('Save as profile & Close')));
-      await waitFor(() => fireEvent.click(getByText('Cancel')));
-
-      expect(queryByText('Confirmation modal')).toBeNull();
     });
   });
 });

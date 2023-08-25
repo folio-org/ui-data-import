@@ -1,5 +1,8 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import {
+  waitFor,
+  renderHook,
+} from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -25,10 +28,8 @@ describe('useJobLogRecordsQuery', () => {
     const logId = 'jobLogId';
     const recordId = 'recordId';
 
-    const { result, waitFor } = renderHook(() => useJobLogRecordsQuery(logId, recordId), { wrapper: queryClientWrapper });
+    const { result } = renderHook(() => useJobLogRecordsQuery(logId, recordId), { wrapper: queryClientWrapper });
 
-    await waitFor(() => !result.current.isLoading);
-
-    expect(result.current.data).toEqual(mockJobLogRecord);
+    await waitFor(() => expect(result.current.data).toEqual(mockJobLogRecord));
   });
 });

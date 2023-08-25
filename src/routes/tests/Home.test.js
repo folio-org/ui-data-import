@@ -108,7 +108,6 @@ describe('Home component', () => {
   afterAll(() => {
     deleteJobExecutionsSpy.mockClear();
     global.Storage.prototype.setItem.mockReset();
-    global.Storage.prototype.getItem.mockReset();
   });
 
   it('should be rendered with no axe errors', async () => {
