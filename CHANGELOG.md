@@ -22,6 +22,7 @@
 * Job summary - format numbers in summary table (UIDATIMP-1459)
 * Allow to handle text/plain content type when error occurs (UIDATIMP-1465)
 * Clear searches when switching between profile types (UIDATIMP-1461)
+* Extend schema for profile relations manipulations (UIDATIMP-1471)
 * Change validation messages which were represented in code format (UIDATIMP-1473)
 * *BREAKING* bump `react` to `v18`, and dev-deps accordingly (UIDATIMP-1485)
 * Update Node.js to v18 in GitHub Actions (UIDATIMP-1507)

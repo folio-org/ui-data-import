@@ -349,7 +349,13 @@ describe('ProfileAssociator component', () => {
       detailType: PROFILE_TYPES.JOB_PROFILE,
     });
 
-    act(() => Pluggable.mock.calls[0][0].onLink([{ id: 'testId' }]));
+    act(() => Pluggable.mock.calls[0][0].onLink([{
+      content: {
+        id: 'testId',
+        metadata: {},
+        userInfo: {},
+      },
+    }]));
     expect(getByText('Find Import Profile Plugin is not available now')).toBeInTheDocument();
   });
 });
