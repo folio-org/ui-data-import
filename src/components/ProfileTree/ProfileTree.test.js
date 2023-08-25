@@ -221,7 +221,13 @@ describe('ProfileTree component', () => {
       allowDelete: false,
     }));
 
-    Pluggable.mock.calls[0][0].onLink([{ id: 'testId' }]);
+    Pluggable.mock.calls[0][0].onLink([{
+      content: {
+        id: 'testId',
+        metadata: {},
+        userInfo: {},
+      },
+    }]);
 
     await waitFor(() => expect(findAllByText('Match profile: "testName"')).toBeDefined());
   });

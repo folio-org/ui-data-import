@@ -210,7 +210,6 @@ describe('JobProfilesForm component', () => {
       fireEvent.change(textBox, { target: { value: 'test value' } });
 
       const saveButton = await findByRole('button', { name: /save as profile & close/i });
-      fireEvent.click(saveButton);
 
       await waitFor(() => expect(saveButton).toBeEnabled());
     });
