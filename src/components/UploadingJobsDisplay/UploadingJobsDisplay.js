@@ -352,13 +352,28 @@ export class UploadingJobsDisplay extends Component {
     this.updateFileState(fileKey, { uploadedValue });
   };
 
-  handleFileUploadSuccess = (response, fileKey) => {
-    const { uploadedDate } = response.fileDefinitions.find(fileDefinition => fileDefinition.uiKey === fileKey);
+  handleFileUploadSuccess = (response, fileKey, multipart = false) => {
+    const { uploadedDate, name } = response.fileDefinitions.find(fileDefinition => fileDefinition.uiKey === fileKey);
+    const { uploadDefinition, updateUploadDefinition } = this.context;
 
     this.updateFileState(fileKey, {
       status: FILE_STATUSES.UPLOADED,
       uploadedDate,
     });
+
+    // for multipart object storage uploads, we update the name in the upload definition to be
+    // the upload key.
+    if (multipart) {
+      const contextFileDefIndex = uploadDefinition.fileDefinitions.findIndex(fileDef => fileDef.uiKey === fileKey);
+      if (contextFileDefIndex !== -1) {
+        const updatedUploadDefinition = { ...uploadDefinition };
+        updatedUploadDefinition.fileDefinitions[contextFileDefIndex] = {
+          ...updatedUploadDefinition.fileDefinitions[contextFileDefIndex],
+          name
+        };
+        updateUploadDefinition(updatedUploadDefinition);
+      }
+    }
   };
 
   handleFileUploadFail = fileKey => {

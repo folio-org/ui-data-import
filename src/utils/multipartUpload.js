@@ -127,8 +127,8 @@ async function sliceAndUploadParts(file, ky, fileKey, errorHandler, progressHand
   }
   await finishUpload(eTags, _uploadKey, _uploadId, ky);
   // TODO - expect date string from backend when finishing the upload - creating the date stamp expected by the UI here for now...
-  const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toLocaleDateString() }] };
-  successHandler(finishResponse, fileKey);
+  const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toLocaleDateString(), name: _uploadKey }] };
+  successHandler(finishResponse, fileKey, true);
 }
 
 export function handleMultipartUpload(file, ky, fileKey, errorHandler, progressHandler, successHandler) {
