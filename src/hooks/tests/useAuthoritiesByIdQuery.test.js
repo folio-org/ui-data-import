@@ -1,5 +1,8 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import {
+  waitFor,
+  renderHook,
+} from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -24,10 +27,8 @@ describe('useAuthoritiesByIdQuery', () => {
   it('should fetch authorities', async () => {
     const ids = ['authorityId1', 'authorityId2'];
 
-    const { result, waitFor } = renderHook(() => useAuthoritiesByIdQuery(ids), { wrapper: queryClientWrapper });
+    const { result } = renderHook(() => useAuthoritiesByIdQuery(ids), { wrapper: queryClientWrapper });
 
-    await waitFor(() => !result.current.isLoading);
-
-    expect(result.current.data).toEqual(mockAuthoritiesRecords);
+    await waitFor(() => expect(result.current.data).toEqual(mockAuthoritiesRecords));
   });
 });

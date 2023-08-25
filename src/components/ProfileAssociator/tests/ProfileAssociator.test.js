@@ -197,10 +197,7 @@ describe('ProfileAssociator component', () => {
     });
 
     it('user can clear search box', async () => {
-      const {
-        getByRole,
-        container,
-      } = renderProfileAssociator({
+      const { getByRole } = renderProfileAssociator({
         record: defaultRecord,
         isMultiSelect: true,
         useSearch: true,
@@ -210,9 +207,11 @@ describe('ProfileAssociator component', () => {
 
       fireEvent.change(searchInput, { target: { value: 'test' } });
 
-      searchInput.focus();
+      act(() => {
+        searchInput.focus();
+      });
 
-      fireEvent.click(container.querySelector('#input-jobProfiles-search-field-clear-button'));
+      fireEvent.click(getByRole('button', { name: /clear this field/i }));
 
       await waitFor(() => expect(getByRole('button', { name: /search/i })).toBeDisabled());
       await waitFor(() => expect(getByRole('searchbox', { name: /search job profiles/i }).value).toEqual(''));

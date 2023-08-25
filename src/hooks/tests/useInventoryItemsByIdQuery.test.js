@@ -1,5 +1,8 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import {
+  waitFor,
+  renderHook,
+} from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -24,10 +27,8 @@ describe('useInventoryItemsByIdQuery', () => {
   it('should fetch items', async () => {
     const ids = ['itemId1', 'itemId2'];
 
-    const { result, waitFor } = renderHook(() => useInventoryItemsByIdQuery(ids), { wrapper: queryClientWrapper });
+    const { result } = renderHook(() => useInventoryItemsByIdQuery(ids), { wrapper: queryClientWrapper });
 
-    await waitFor(() => !result.current.isLoading);
-
-    expect(result.current.data).toEqual(mockItemsRecords);
+    await waitFor(() => expect(result.current.data).toEqual(mockItemsRecords));
   });
 });

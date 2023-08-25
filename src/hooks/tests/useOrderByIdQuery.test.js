@@ -1,5 +1,8 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import {
+  waitFor,
+  renderHook,
+} from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -24,10 +27,8 @@ describe('useOrderByIdQuery', () => {
   it('should fetch order', async () => {
     const id = 'orderId';
 
-    const { result, waitFor } = renderHook(() => useOrderByIdQuery(id), { wrapper: queryClientWrapper });
+    const { result } = renderHook(() => useOrderByIdQuery(id), { wrapper: queryClientWrapper });
 
-    await waitFor(() => !result.current.isLoading);
-
-    expect(result.current.data).toEqual(mockOrderRecord);
+    await waitFor(() => expect(result.current.data).toEqual(mockOrderRecord));
   });
 });
