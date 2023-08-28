@@ -35,6 +35,19 @@ function getPartPresignedURL(partNumber, uploadId, key, ky) {
   return ky.get(requestPartUploadURL, { searchParams: { partNumber, key, uploadId } }).json();
 }
 
+export const getUpdateUploadDefinitionForObjectStorage = (uploadDefinition, fileKey, name) => {
+  const contextFileDefIndex = uploadDefinition.fileDefinitions.findIndex(fileDef => fileDef.uiKey === fileKey);
+  if (contextFileDefIndex !== -1) {
+    const updatedUploadDefinition = { ...uploadDefinition };
+    updatedUploadDefinition.fileDefinitions[contextFileDefIndex] = {
+      ...updatedUploadDefinition.fileDefinitions[contextFileDefIndex],
+      name
+    };
+    return updatedUploadDefinition;
+  }
+  return uploadDefinition;
+};
+
 function finishUpload(eTags, key, uploadId, ky) {
   return ky.post(
     finishMPUploadEndpoint,
