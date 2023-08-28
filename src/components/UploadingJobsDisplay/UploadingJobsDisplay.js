@@ -43,7 +43,7 @@ import {
 } from '../../utils';
 import * as API from '../../utils/upload';
 import { createJobProfiles } from '../../settings/JobProfiles';
-import { handleObjectStorageUpload } from '../../utils/multipartUpload';
+import { handleObjectStorageUpload, getUpdateUploadDefinitionForObjectStorage } from '../../utils/multipartUpload';
 import css from './UploadingJobsDisplay.css';
 import sharedCss from '../../shared.css';
 
@@ -364,15 +364,8 @@ export class UploadingJobsDisplay extends Component {
     // for multipart object storage uploads, we update the name in the upload definition to be
     // the upload key.
     if (multipart) {
-      const contextFileDefIndex = uploadDefinition.fileDefinitions.findIndex(fileDef => fileDef.uiKey === fileKey);
-      if (contextFileDefIndex !== -1) {
-        const updatedUploadDefinition = { ...uploadDefinition };
-        updatedUploadDefinition.fileDefinitions[contextFileDefIndex] = {
-          ...updatedUploadDefinition.fileDefinitions[contextFileDefIndex],
-          name
-        };
-        updateUploadDefinition(updatedUploadDefinition);
-      }
+      const updatedUploadDefinition = getUpdateUploadDefinitionForObjectStorage(uploadDefinition, fileKey, name);
+      updateUploadDefinition(updatedUploadDefinition);
     }
   };
 
