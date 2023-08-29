@@ -35,6 +35,19 @@ function getPartPresignedURL(partNumber, uploadId, key, ky) {
   return ky.get(requestPartUploadURL, { searchParams: { partNumber, key, uploadId } }).json();
 }
 
+export const getUpdateUploadDefinitionForObjectStorage = (uploadDefinition, fileKey, name) => {
+  const contextFileDefIndex = uploadDefinition.fileDefinitions.findIndex(fileDef => fileDef.uiKey === fileKey);
+  if (contextFileDefIndex !== -1) {
+    const updatedUploadDefinition = { ...uploadDefinition };
+    updatedUploadDefinition.fileDefinitions[contextFileDefIndex] = {
+      ...updatedUploadDefinition.fileDefinitions[contextFileDefIndex],
+      name
+    };
+    return updatedUploadDefinition;
+  }
+  return uploadDefinition;
+};
+
 function finishUpload(eTags, key, uploadId, ky) {
   return ky.post(
     finishMPUploadEndpoint,
@@ -127,8 +140,8 @@ async function sliceAndUploadParts(file, ky, fileKey, errorHandler, progressHand
   }
   await finishUpload(eTags, _uploadKey, _uploadId, ky);
   // TODO - expect date string from backend when finishing the upload - creating the date stamp expected by the UI here for now...
-  const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toLocaleDateString() }] };
-  successHandler(finishResponse, fileKey);
+  const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toLocaleDateString(), name: _uploadKey }] };
+  successHandler(finishResponse, fileKey, true);
 }
 
 export function handleMultipartUpload(file, ky, fileKey, errorHandler, progressHandler, successHandler) {
