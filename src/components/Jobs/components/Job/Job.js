@@ -39,6 +39,7 @@ import { jobExecutionPropTypes } from './jobExecutionPropTypes';
 
 import * as API from '../../../../utils/upload';
 import * as CompositeJobFields from '../../../../utils/compositeJobStatus';
+import { trimLeadNumbers } from '../../../../utils/multipartUpload';
 
 import {
   addHrid,
@@ -156,6 +157,7 @@ const JobComponent = ({
 
     const {
       calculateJobSliceStats,
+      calculateJobRecordsStats,
       inProgressStatuses,
       completeStatuses,
       failedStatuses,
@@ -178,10 +180,25 @@ const JobComponent = ({
 
     const failedSliceAmount = calculateJobSliceStats(
       compositeDetails,
-      failedStatuses
+      failedStatuses,
     );
 
     const totalSliceAmount = inProgressSliceAmount + completedSliceAmount + failedSliceAmount;
+
+    const inProgressRecords = calculateJobRecordsStats(
+      compositeDetails,
+      inProgressStatuses,
+    );
+
+    const completedRecords = calculateJobRecordsStats(
+      compositeDetails,
+      completeStatuses,
+    );
+
+    const failedRecords = calculateJobRecordsStats(
+      compositeDetails,
+      failedStatuses,
+    );
 
     return {
       inProgressSliceAmount,
@@ -189,6 +206,9 @@ const JobComponent = ({
       erroredSliceAmount,
       failedSliceAmount,
       totalSliceAmount,
+      inProgressRecords,
+      completedRecords,
+      failedRecords
     };
   };
 
@@ -236,10 +256,27 @@ const JobComponent = ({
       erroredSliceAmount,
       failedSliceAmount,
       totalSliceAmount,
+      inProgressRecords,
+      completedRecords,
+      failedRecords,
     } = collectCompositeJobValues(jobEntry);
+
+    const accProgress = { totalRecords: 0, processedRecords: 0 };
+    [inProgressRecords, completedRecords, failedRecords].reduce((acc = accProgress, curr) => {
+      acc.totalRecords += curr.totalRecords;
+      acc.processedRecords += curr.processedRecords;
+    });
 
     return (
       <>
+        <FormattedMessage
+          id="ui-data-import.progressRunning"
+          tagName="div"
+        />
+        <Progress
+          current={accProgress.processedRecords}
+          total={accProgress.totalRecords}
+        />
         <FormattedMessage
           id="ui-data-import.jobProgress.partsRemaining"
           tagName="div"
@@ -310,7 +347,7 @@ const JobComponent = ({
         <span>{name}</span>
         &nbsp;
         <span>
-          {fileName}
+          {trimLeadNumbers(fileName)}
           {isDeletionInProgress && (
             <>
               &nbsp;
@@ -361,7 +398,7 @@ const JobComponent = ({
               />
             </span>
           </div>
-          {jobMeta.showProgress && (
+          {jobMeta.showProgress && !job.compositeDetails && (
             <>
               <FormattedMessage
                 id="ui-data-import.progressRunning"

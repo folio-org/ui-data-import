@@ -3,7 +3,6 @@
 export const initMPUploadEndpoint = 'data-import/uploadUrl';
 export const requestPartUploadURL = 'data-import/uploadUrl/subsequent';
 export const getFinishUploadEndpoint = (uploadDefinitionId, fileId) => `data-import/uploadDefinitions/${uploadDefinitionId}/files/${fileId}/assembleStorageFile`;
-export const finishMPUploadEndpoint = 'data-import/assembleStorageFile';
 export const requestConfiguration = 'data-import/splitStatus';
 export const getDownloadLinkURL = (id) => `data-import/jobExecutions/${id}/downloadUrl`;
 export const cancelMultipartJobEndpoint = (id) => `data-import/jobExecutions/${id}/cancel`;
@@ -38,19 +37,6 @@ function getPartPresignedURL(partNumber, uploadId, key, ky) {
   return ky.get(requestPartUploadURL, { searchParams: { partNumber, key, uploadId } }).json();
 }
 
-export const getUpdateUploadDefinitionForObjectStorage = (uploadDefinition, fileKey, name) => {
-  const contextFileDefIndex = uploadDefinition.fileDefinitions.findIndex(fileDef => fileDef.uiKey === fileKey);
-  if (contextFileDefIndex !== -1) {
-    const updatedUploadDefinition = { ...uploadDefinition };
-    updatedUploadDefinition.fileDefinitions[contextFileDefIndex] = {
-      ...updatedUploadDefinition.fileDefinitions[contextFileDefIndex],
-      name
-    };
-    return updatedUploadDefinition;
-  }
-  return uploadDefinition;
-};
-
 function finishUpload(eTags, key, uploadId, uploadDefinitionId, fileDefinitionId, ky) {
   return ky.post(
     getFinishUploadEndpoint(uploadDefinitionId, fileDefinitionId),
@@ -58,6 +44,10 @@ function finishUpload(eTags, key, uploadId, uploadDefinitionId, fileDefinitionId
       key,
       tags: eTags } }
   ).json();
+}
+
+export function trimLeadNumbers(name) {
+  return name ? name.replace(/^\d*-/, '') : '';
 }
 
 class ProgressAccumulator {
@@ -171,92 +161,5 @@ export class MultipartUploader {
     Object.keys(this.files).forEach((fileKey, index) => this.sliceAndUploadParts(this.files[fileKey], fileKeys[index]));
   };
 }
-
-function uploadPart(part, url, partNumber, totalParts, fileKey, progressHandler, progressAccumulator) {
-  return new Promise((resolve, reject) => {
-    const partUploaderXhr = new XMLHttpRequest();
-    partUploaderXhr.open('PUT', url, true);
-    partUploaderXhr.upload.onprogress = event => {
-      const { loaded, total } = event;
-      const newEvent = {
-        ...event,
-        loaded: progressAccumulator.totalProgress + event.loaded,
-        total: progressAccumulator.size
-      };
-      progressHandler(fileKey, newEvent);
-      if (loaded === total) {
-        progressAccumulator.updateProgress(loaded);
-      }
-    };
-    partUploaderXhr.onreadystatechange = () => {
-      const {
-        status,
-        responseText,
-      } = partUploaderXhr;
-
-      try {
-        if (status === 200) {
-          const eTag = partUploaderXhr.getResponseHeader('ETag');
-          resolve(eTag);
-          return;
-        } else {
-          const parsedResponse = JSON.parse(responseText);
-          reject(parsedResponse);
-        }
-      } catch (error) {
-        reject(error);
-      }
-    };
-    partUploaderXhr.send(part);
-  });
-}
-
-async function sliceAndUploadParts(file, uploadDefinitionId, ky, fileKey, errorHandler, progressHandler, successHandler) {
-  let currentByte = 0;
-  let currentPartNumber = 1;
-  let _uploadKey;
-  let _uploadId;
-  let _uploadURL;
-  const progressAccumulator = new ProgressAccumulator(file.size);
-  const eTags = [];
-  const totalParts = Math.ceil(file.size / CHUNK_SIZE);
-  while (currentByte < file.size) {
-    const adjustedEnd = Math.min(file.size, currentByte + CHUNK_SIZE);
-    const chunk = file.file.slice(currentByte, adjustedEnd);
-    try {
-      if (currentByte === 0) {
-        const { url, uploadId, key } = await initiateMultipartUpload(file.name, ky);
-        _uploadId = uploadId;
-        _uploadKey = key;
-        _uploadURL = url;
-      } else {
-        const { url, key } = await getPartPresignedURL(currentPartNumber, _uploadId, _uploadKey, ky);
-        _uploadKey = key;
-        _uploadURL = url;
-      }
-
-      const eTag = await uploadPart(chunk, _uploadURL, currentPartNumber, totalParts, fileKey, progressHandler, progressAccumulator);
-      eTags.push(eTag);
-      currentPartNumber += 1;
-      currentByte += CHUNK_SIZE;
-    } catch (error) {
-      errorHandler(fileKey);
-      break;
-    }
-  }
-  await finishUpload(eTags, _uploadKey, _uploadId, uploadDefinitionId, file.id, ky);
-  // TODO - expect date string from backend when finishing the upload - creating the date stamp expected by the UI here for now...
-  const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toLocaleDateString(), name: _uploadKey }] };
-  successHandler(finishResponse, fileKey, true);
-}
-
-export function handleMultipartUpload(file, uploadDefinitionId, ky, fileKey, errorHandler, progressHandler, successHandler) {
-  sliceAndUploadParts(file, uploadDefinitionId, ky, fileKey, errorHandler, progressHandler, successHandler);
-}
-
-export const handleObjectStorageUpload = (files, uploadDefinitionId, ky, errorHandler, progressHandler, successHandler) => {
-  const fileKeys = Object.keys(files);
-  Object.keys(files).forEach((fileKey, index) => handleMultipartUpload(files[fileKey], uploadDefinitionId, ky, fileKeys[index], errorHandler, progressHandler, successHandler));
-};
 
 /* eslint-enable */
