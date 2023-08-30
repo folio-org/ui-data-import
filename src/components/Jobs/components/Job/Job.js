@@ -267,6 +267,13 @@ const JobComponent = ({
       acc.processedRecords += curr.processedRecords;
     });
 
+    // possibly ensure that our progress meter doesn't extend beyond 100%
+    const adjustedProgress = accProgress.processedRecords / accProgress.totalRecords;
+    if (adjustedProgress > 1.0) {
+      accProgress.totalRecords = 100;
+      accProgress.processedRecords = 100;
+    }
+
     return (
       <>
         <FormattedMessage
