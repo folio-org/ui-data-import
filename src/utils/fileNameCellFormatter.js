@@ -5,6 +5,8 @@ import {
   TextLink,
 } from '@folio/stripes/components';
 
+import { trimLeadNumbers } from './multipartUpload';
+
 export const fileNameCellFormatter = (record, location) => {
   const { pathname, search } = location;
 
@@ -15,7 +17,7 @@ export const fileNameCellFormatter = (record, location) => {
         state: { from: `${pathname}${search}` },
       }}
     >
-      {record.fileName || <NoValue /> }
+      { trimLeadNumbers(record.fileName) || <NoValue /> }
     </TextLink>
   );
 };

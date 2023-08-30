@@ -13,7 +13,7 @@ import {
 
 import { useOkapiKy, useCallout } from '@folio/stripes/core';
 
-import { getObjectStorageDownloadURL } from '../../../utils/multipartUpload';
+import { getObjectStorageDownloadURL, trimLeadNumbers } from '../../../utils/multipartUpload';
 
 export const SourceDownloadLink = ({
   fileName,
@@ -43,10 +43,10 @@ export const SourceDownloadLink = ({
         });
       }
     };
-    if (downloadUrl === null) {
+    if (downloadUrl === null && executionId) {
       requestDownloadUrl();
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [executionId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (downloadUrl === null) {
     return (
@@ -65,7 +65,7 @@ export const SourceDownloadLink = ({
           />
         </strong>
         <TextLink href={downloadUrl}>
-          {fileName}
+          {trimLeadNumbers(fileName)}
         </TextLink>
       </div>
     </Layout>

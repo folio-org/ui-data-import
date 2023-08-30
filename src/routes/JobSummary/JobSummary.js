@@ -170,7 +170,7 @@ const JobSummaryComponent = props => {
         <div className={css.paneBody}>
           {uploadConfiguration?.canUseObjectStorage && (
             <SourceDownloadLink
-              executionId={jobExecutionsId}
+              executionId={id}
               fileName={jobExecutionsRecords[0]?.fileName}
             />
           )}
