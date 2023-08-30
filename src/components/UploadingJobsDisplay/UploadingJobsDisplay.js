@@ -43,7 +43,7 @@ import {
 } from '../../utils';
 import * as API from '../../utils/upload';
 import { createJobProfiles } from '../../settings/JobProfiles';
-import { handleObjectStorageUpload, getUpdateUploadDefinitionForObjectStorage } from '../../utils/multipartUpload';
+import { MultipartUploader } from '../../utils/multipartUpload';
 import css from './UploadingJobsDisplay.css';
 import sharedCss from '../../shared.css';
 
@@ -237,15 +237,18 @@ export class UploadingJobsDisplay extends Component {
   }
 
   multipartUpload() {
+    const { uploadDefinition } = this.context;
     const { files } = this.state;
     const { okapiKy } = this.props;
-    handleObjectStorageUpload(
+    this.currentFileUploadXhr = new MultipartUploader(
+      uploadDefinition.id,
       files,
       okapiKy,
       this.handleFileUploadFail,
       this.onFileUploadProgress,
       this.handleFileUploadSuccess,
     );
+    this.currentFileUploadXhr.init();
   }
 
   async uploadFiles() {
@@ -352,21 +355,13 @@ export class UploadingJobsDisplay extends Component {
     this.updateFileState(fileKey, { uploadedValue });
   };
 
-  handleFileUploadSuccess = (response, fileKey, multipart = false) => {
-    const { uploadedDate, name } = response.fileDefinitions.find(fileDefinition => fileDefinition.uiKey === fileKey);
-    const { uploadDefinition, updateUploadDefinition } = this.context;
+  handleFileUploadSuccess = (response, fileKey) => {
+    const { uploadedDate } = response.fileDefinitions.find(fileDefinition => fileDefinition.uiKey === fileKey);
 
     this.updateFileState(fileKey, {
       status: FILE_STATUSES.UPLOADED,
       uploadedDate,
     });
-
-    // for multipart object storage uploads, we update the name in the upload definition to be
-    // the upload key.
-    if (multipart) {
-      const updatedUploadDefinition = getUpdateUploadDefinitionForObjectStorage(uploadDefinition, fileKey, name);
-      updateUploadDefinition(updatedUploadDefinition);
-    }
   };
 
   handleFileUploadFail = fileKey => {
