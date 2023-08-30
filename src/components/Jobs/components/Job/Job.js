@@ -274,8 +274,8 @@ const JobComponent = ({
           tagName="div"
         />
         <Progress
-          current={accProgress.processedRecords}
-          total={accProgress.totalRecords}
+          current={Number.isNaN(accProgress.processedRecords) ? 0 : accProgress.processedRecords}
+          total={Number.isNaN(accProgress.totalRecords) || accProgress.totalRecords === 0 ? 100 : accProgress.totalRecords}
         />
         <FormattedMessage
           id="ui-data-import.jobProgress.partsRemaining"
