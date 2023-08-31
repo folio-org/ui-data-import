@@ -330,8 +330,7 @@ describe('ListView component', () => {
           const closeModal = getByText('Confirm');
 
           await waitFor(() => fireEvent.click(closeModal));
-
-          expect(modalHeading).not.toBeVisible();
+          await waitFor(() => expect(modalHeading).not.toBeVisible());
         });
       });
     });

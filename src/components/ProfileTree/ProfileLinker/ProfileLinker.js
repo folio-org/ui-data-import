@@ -22,21 +22,17 @@ import {
   PROFILE_RELATION_TYPES,
   ENTITY_KEYS,
   FILTER_QUERY_PARAMS,
-  ASSOCIATION_TYPES,
-  okapiShape,
 } from '../../../utils';
-import { fetchProfileSnapshot } from '../../../utils/fetchProfileSnapshot';
 
 import css from '../ProfileTree.css';
 
 export const ProfileLinker = ({
   id,
   parentId,
-  rootId,
+  masterWrapperId,
   parentType,
   profileType,
   onLink,
-  okapi,
   linkingRules: { profilesAllowed },
   dataKey,
   initialData,
@@ -91,16 +87,17 @@ export const ProfileLinker = ({
   };
 
   const addNewLines = entityKey => async records => {
-    const profileSnapshotPromises = records.map(profile => fetchProfileSnapshot(profile.id, ASSOCIATION_TYPES[entityKey], rootId, okapi));
-
-    try {
-      await Promise.all(profileSnapshotPromises)
-        .then(response => onLink(initialData, setInitialData, response, parentId, parentType, entityKey, reactTo, dataKey));
-    } catch (error) {
-      console.error(error); // eslint-disable-line no-console
-
-      onLink(initialData, setInitialData, [], parentId, parentType, entityKey, reactTo, dataKey);
-    }
+    onLink({
+      initialData,
+      setInitialData,
+      lines: records,
+      masterId: parentId,
+      masterWrapperId,
+      masterType: parentType,
+      detailType: entityKey,
+      reactTo,
+      localDataKey: dataKey,
+    });
   };
 
   return (
@@ -153,17 +150,16 @@ ProfileLinker.propTypes = {
   dataKey: PropTypes.string.isRequired,
   initialData: PropTypes.arrayOf(PropTypes.object).isRequired,
   setInitialData: PropTypes.func.isRequired,
-  okapi: okapiShape.isRequired,
-  rootId: PropTypes.string,
   parentId: PropTypes.string,
+  masterWrapperId: PropTypes.string,
   reactTo: PropTypes.oneOf(Object.values(PROFILE_RELATION_TYPES)),
   title: PropTypes.node || PropTypes.string,
   className: PropTypes.string,
 };
 
 ProfileLinker.defaultProps = {
-  rootId: null,
   parentId: null,
+  masterWrapperId: null,
   title: '',
   className: '',
   reactTo: PROFILE_RELATION_TYPES.NONE,

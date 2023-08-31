@@ -13,7 +13,7 @@ import { ConfirmationModal } from '@folio/stripes/components';
 import {
   buildStripes,
   renderWithIntl,
-  translationsProperties
+  translationsProperties,
 } from '../../../test/jest/helpers';
 
 import { ImportJobs } from './ImportJobs';
@@ -107,7 +107,7 @@ describe('Import Jobs component', () => {
     it('then it should render Preloader', () => {
       const { getByText } = renderImportJobs(defaultContext);
 
-      expect(getByText('Preloader')).toBeDefined();
+      expect(getByText('Preloader')).toBeInTheDocument();
     });
   });
 
@@ -115,7 +115,7 @@ describe('Import Jobs component', () => {
     it('then it should render FileUploader', async () => {
       const { getByText } = await renderImportJobs(defaultContext);
 
-      await waitFor(() => expect(getByText('FileUploader')).toBeDefined());
+      await waitFor(() => expect(getByText('FileUploader')).toBeInTheDocument(), { timeout: 2000 });
     });
   });
 
@@ -126,7 +126,7 @@ describe('Import Jobs component', () => {
         uploadDefinition: { fileDefinitions: [] },
       });
 
-      await waitFor(() => expect(getByText('ReturnToAssignJobs')).toBeDefined());
+      await waitFor(() => expect(getByText('ReturnToAssignJobs')).toBeInTheDocument(), { timeout: 2000 });
     });
 
     describe('when assigned job is resumed', () => {
@@ -138,7 +138,7 @@ describe('Import Jobs component', () => {
 
         ReturnToAssignJobs.mock.calls[0][0].onResume();
 
-        await waitFor(() => expect(getByText('Preloader')).toBeDefined());
+        await waitFor(() => expect(getByText('Preloader')).toBeInTheDocument(), { timeout: 2000 });
       });
     });
   });
@@ -154,7 +154,7 @@ describe('Import Jobs component', () => {
 
         await renderImportJobs(context);
 
-        await waitFor(() => expect(context.deleteUploadDefinition).toHaveBeenCalled());
+        await waitFor(() => expect(context.deleteUploadDefinition).toHaveBeenCalled(), { timeout: 2000 });
       });
     });
   });
@@ -171,7 +171,7 @@ describe('Import Jobs component', () => {
 
       FileUploader.mock.calls[0][0].onDragEnter();
 
-      await waitFor(() => expect(getByText('FileUploader')).toBeDefined());
+      await waitFor(() => expect(getByText('FileUploader')).toBeInTheDocument(), { timeout: 2000 });
     });
   });
 

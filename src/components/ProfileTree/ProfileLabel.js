@@ -53,10 +53,14 @@ export const ProfileLabel = memo(({
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [unlinkConfirmationOpen, setUnlinkConfirmationOpen] = useState(false);
 
-  const { contentType: recordType } = recordData;
+  const {
+    contentType: recordType,
+    profileWrapperId: detailWrapperId = null,
+  } = recordData;
   const {
     contentType: parentType,
     profileId: parentId,
+    profileWrapperId: masterWrapperId = null,
   } = parentRecordData;
 
   const labelMode = record ? 'static' : 'editable';
@@ -68,6 +72,19 @@ export const ProfileLabel = memo(({
   });
   const columns = columnsAllowed[entityKey];
 
+  const unlinkingProfileData = {
+    parentData: parentSectionData,
+    setParentData: setParentSectionData,
+    line: recordData,
+    masterId: parentId,
+    masterWrapperId,
+    masterType: parentType,
+    detailType: recordType,
+    detailWrapperId,
+    reactTo,
+    localDataKey: parentSectionKey,
+  };
+
   const hasChildren = () => {
     const children = recordData.childSnapshotWrappers;
 
@@ -76,12 +93,12 @@ export const ProfileLabel = memo(({
 
   const handleUnlink = () => {
     setUnlinkConfirmationOpen(false);
-    onUnlink(parentSectionData, setParentSectionData, recordData, parentId, parentType, recordType, reactTo, parentSectionKey);
+    onUnlink(unlinkingProfileData);
   };
 
   const handleDelete = () => {
     setDeleteConfirmationOpen(false);
-    onDelete(parentSectionData, setParentSectionData, recordData, parentId, parentType, recordType, reactTo, parentSectionKey);
+    onDelete(unlinkingProfileData);
   };
 
   return (

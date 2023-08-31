@@ -1146,12 +1146,12 @@
     "jobProfile.notAvailable": "Není k dispozici - tento profil úlohy byl smazán",
     "returnToPreviousScreen": "Návrat na předchozí obrazovku",
     "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Akviziční jednotky",
-    "jobProgress.partsRemaining": "Job parts remaining: {current} of {total}",
-    "jobProgress.partsProcessed": "Job parts processed: {current} of {total}",
-    "jobProgress.partsCompleted": "Completed: {amount}",
-    "jobProgress.partsCompletedWithErrors": "Completed with errors: {amount}",
-    "jobProgress.partsFailed": "Failed: {amount}",
-    "uploadError": "There was a problem uploading the file. Please try again",
-    "modal.jobProfile.run.largeFileSplitting": "Large MARC files will be split into separate parts.",
-    "logViewer.partOfTotal": "{number} of {total}"
+    "jobProgress.partsRemaining": "Zbývající části úlohy: {current} z {total}",
+    "jobProgress.partsProcessed": "Zpracované části úlohy: {current} z {total}",
+    "jobProgress.partsCompleted": "Dokončeno: {amount}",
+    "jobProgress.partsCompletedWithErrors": "Dokončeno s chybami: {amount}",
+    "jobProgress.partsFailed": "Neúspěšný: {amount}",
+    "uploadError": "Vyskytl se problém při nahrávání souboru. Zkuste to prosím znovu",
+    "modal.jobProfile.run.largeFileSplitting": "Velké soubory MARC budou rozděleny na samostatné části.",
+    "logViewer.partOfTotal": "{number} z {total}"
 }

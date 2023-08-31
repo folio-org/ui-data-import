@@ -8,9 +8,6 @@
     "registry": "https://repository.folio.org/repository/npm-folio/"
   },
   "license": "Apache-2.0",
-  "engines": {
-    "node": ">=6.0.0"
-  },
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",

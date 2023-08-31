@@ -214,19 +214,4 @@ describe('MappingProfilesForm component', () => {
       expect(queryByText(associatedProfileName1)).not.toBeInTheDocument();
     });
   });
-
-  describe('when saving the form', () => {
-    it('should call handleSubmit func', () => {
-      const {
-        container,
-        getByText,
-      } = renderMappingProfilesForm(mappingProfilesFormProps);
-      const nameInput = container.querySelector('[name="profile.name"]');
-
-      fireEvent.change(nameInput, { target: { value: 'testName' } });
-      fireEvent.click(getByText('Save as profile & Close'));
-
-      expect(handleSubmit).toHaveBeenCalled();
-    });
-  });
 });

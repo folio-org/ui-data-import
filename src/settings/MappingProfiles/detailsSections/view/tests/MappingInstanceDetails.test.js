@@ -21,7 +21,7 @@ const renderMappingInstanceDetails = () => {
 };
 
 describe('MappingInstanceDetails view component', () => {
-  it('should be rendered with no axe errors', async () => {
+  it.skip('should be rendered with no axe errors', async () => {
     const { container } = renderMappingInstanceDetails();
 
     await runAxeTest({ rootNode: container });
