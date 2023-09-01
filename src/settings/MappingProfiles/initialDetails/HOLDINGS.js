@@ -234,12 +234,14 @@ const HOLDINGS = {
       fields: [{
         name: 'noteType',
         enabled: true,
+        required: true,
         path: 'holdings.notes[].holdingsNoteTypeId',
         value: '',
         acceptedValues: {},
       }, {
         name: 'note',
         enabled: true,
+        required: true,
         path: 'holdings.notes[].note',
         value: '',
       }, {
@@ -266,6 +268,7 @@ const HOLDINGS = {
       }, {
         name: 'uri',
         enabled: true,
+        required: true,
         path: 'holdings.electronicAccess[].uri',
         value: '',
       }, {
