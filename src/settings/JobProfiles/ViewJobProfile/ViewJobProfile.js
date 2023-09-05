@@ -4,7 +4,7 @@ import React, {
   useContext,
 } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { get } from 'lodash';
 
 import {
@@ -19,6 +19,8 @@ import {
   Callout,
   PaneHeader,
   AccordionStatus,
+  Icon,
+  SRStatus
 } from '@folio/stripes/components';
 import {
   withTags,
@@ -64,6 +66,8 @@ import {
   fileNameCellFormatter,
 } from '../../../utils';
 
+import RunJobModal from './RunJobModal';
+
 import sharedCss from '../../../shared.css';
 
 const {
@@ -90,9 +94,12 @@ const ViewJobProfileComponent = props => {
   const [showRunConfirmation, setShowRunConfirmation] = useState(false);
   const [isDeletionInProgress, setDeletionInProgress] = useState(false);
   const [isConfirmButtonDisabled, setIsConfirmButtonDisabled] = useState(false);
+  const [processingRequest, setProcessingRequest] = useState(false);
 
   const calloutRef = useRef(null);
+  const sRStatusRef = useRef(null);
   const { uploadDefinition, uploadConfiguration } = useContext(UploadingJobsContext);
+  const { formatMessage } = useIntl();
 
   const jobProfileData = () => {
     const jobProfile = resources.jobProfileView || {};
@@ -170,7 +177,8 @@ const ViewJobProfileComponent = props => {
 
   const handleRun = async record => {
     setIsConfirmButtonDisabled(true);
-
+    setProcessingRequest(true);
+    sRStatusRef.current?.sendMessage(formatMessage({ id: 'ui-data-import.processing' }));
     await handleLoadRecords(record);
   };
 
@@ -323,6 +331,7 @@ const ViewJobProfileComponent = props => {
         >
           {jobProfileRecord.name}
         </Headline>
+        <SRStatus ref={sRStatusRef} />
         <AccordionStatus ref={accordionStatusRef}>
           <AccordionSet>
             <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
@@ -419,7 +428,7 @@ const ViewJobProfileComponent = props => {
           onConfirm={() => handleDelete(jobProfileRecord)}
           onCancel={hideDeleteConfirmation}
         />
-        <ConfirmationModal
+        <RunJobModal
           id="run-job-profile-modal"
           open={showRunConfirmation}
           heading={<FormattedMessage id="ui-data-import.modal.jobProfile.run.header" />}
@@ -439,10 +448,15 @@ const ViewJobProfileComponent = props => {
               )}
             </>
           )}
-          confirmLabel={<FormattedMessage id="ui-data-import.run" />}
+          confirmLabel={processingRequest ? (
+            <Icon icon="spinner-ellipsis">
+              <span className="sr-only"><FormattedMessage id="ui-data-import.processing" /></span>
+            </Icon>) :
+            <FormattedMessage id="ui-data-import.run" />}
           onCancel={() => setShowRunConfirmation(false)}
           onConfirm={() => handleRun(jobProfileRecord)}
           isConfirmButtonDisabled={isConfirmButtonDisabled}
+          isCancelButtonDisabled={processingRequest}
         />
         <Callout ref={calloutRef} />
       </Pane>

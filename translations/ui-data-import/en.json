@@ -78,6 +78,7 @@
   "ok": "OK",
   "edit": "Edit",
   "editJobProfile": "Edit job profile",
+  "processing": "Processing your request to run the job",
   "run": "Run",
   "none": "None",
   "summary": "Summary",

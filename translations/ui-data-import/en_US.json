@@ -219,6 +219,7 @@
     "placeholder.jobExecutionHrId": "Search for ID",
     "placeholder.fileName": "Search for File name",
     "editJobProfile": "Edit job profile",
+    "processing": "Processing your request to run the job",
     "run": "Run",
     "modal.jobProfile.run.header": "Are you sure you want to run this job?",
     "modal.jobProfile.run.message": "You have selected the <b>\"{name}\"</b> job profile to <b>Run</b> the uploaded files.",

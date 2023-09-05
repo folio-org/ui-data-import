@@ -10,7 +10,7 @@ const CHUNK_SIZE = 31457280; // 30 MB;
 
 export const cancelMultipartJob = async (id, headers) => {
   const response = await fetch(cancelMultipartJobEndpoint(id), {
-    method: 'POST',
+    method: 'DELETE',
     headers,
   });
 
@@ -50,14 +50,14 @@ export function trimLeadNumbers(name) {
   return name ? name.replace(/^\d*-/, '') : '';
 }
 
-class ProgressAccumulator {
-  constructor(size) {
-    this.size = size;
-  }
+// class ProgressAccumulator {
+//   constructor(size) {
+//     this.size = size;
+//   }
 
-  totalProgress = 0;
-  updateProgress = (value) => { this.totalProgress += value; }
-}
+//   totalProgress = 0;
+//   updateProgress = (value) => { this.totalProgress += value; }
+// }
 
 export class MultipartUploader {
   constructor(uploadDefinitionId, files, ky, errorHandler, progressHandler, successHandler) {
@@ -67,10 +67,13 @@ export class MultipartUploader {
     this.progressHandler = progressHandler;
     this.successHandler = successHandler;
     this.xhr = null;
-    this.progressAccumulator = null;
     this.uploadDefinitionId = uploadDefinitionId;
     this.abort = false;
+    this.totalFileSize = 0;
+    this.totalUploadProgress = 0;
   }
+
+  updateProgress = (value) => { this.totalUploadProgress += value; }
 
   abort = () => {
     this.abort = true;
@@ -85,12 +88,12 @@ export class MultipartUploader {
         const { loaded, total } = event;
         const newEvent = {
           ...event,
-          loaded: this.progressAccumulator.totalProgress + event.loaded,
-          total: this.progressAccumulator.size
+          loaded: this.totalUploadProgress + event.loaded,
+          total: this.totalFileSize
         };
         this.progressHandler(fileKey, newEvent);
         if (loaded === total) {
-          this.progressAccumulator.updateProgress(loaded);
+          this.updateProgress(loaded);
         }
       };
       this.xhr.onreadystatechange = () => {
@@ -122,7 +125,7 @@ export class MultipartUploader {
     let _uploadKey;
     let _uploadId;
     let _uploadURL;
-    this.progressAccumulator = new ProgressAccumulator(file.size);
+    this.totalFileSize = file.size;
     const eTags = [];
     const totalParts = Math.ceil(file.size / CHUNK_SIZE);
     while (currentByte < file.size && !this.abort) {
