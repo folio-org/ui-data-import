@@ -9,7 +9,7 @@ import {
   injectIntl,
   FormattedMessage,
 } from 'react-intl';
-import { noop } from 'lodash';
+import { noop, isEqual } from 'lodash';
 import classNames from 'classnames';
 
 import {
@@ -50,6 +50,162 @@ import {
 
 import css from './Job.css';
 
+const collectCompositeJobValues = (jobEntry) => {
+  const {
+    compositeDetails,
+  } = jobEntry;
+
+  const {
+    calculateJobSliceStats,
+    calculateJobRecordsStats,
+    inProgressStatuses,
+    completeStatuses,
+    failedStatuses,
+  } = CompositeJobFields;
+
+  const inProgressSliceAmount = calculateJobSliceStats(
+    compositeDetails,
+    inProgressStatuses
+  );
+
+  const completedSliceAmount = calculateJobSliceStats(
+    compositeDetails,
+    completeStatuses
+  );
+
+  const erroredSliceAmount = calculateJobSliceStats(
+    compositeDetails,
+    ['errorState']
+  );
+
+  const failedSliceAmount = calculateJobSliceStats(
+    compositeDetails,
+    failedStatuses,
+  );
+
+  const totalSliceAmount = inProgressSliceAmount + completedSliceAmount + failedSliceAmount;
+
+  const inProgressRecords = calculateJobRecordsStats(
+    compositeDetails,
+    inProgressStatuses,
+  );
+
+  const completedRecords = calculateJobRecordsStats(
+    compositeDetails,
+    completeStatuses,
+  );
+
+  const failedRecords = calculateJobRecordsStats(
+    compositeDetails,
+    failedStatuses,
+  );
+
+  return {
+    inProgressSliceAmount,
+    completedSliceAmount,
+    erroredSliceAmount,
+    failedSliceAmount,
+    totalSliceAmount,
+    inProgressRecords,
+    completedRecords,
+    failedRecords
+  };
+};
+
+const renderCompositeDetails = (jobEntry, previousProgress = { processed: 0, total: 100 }, updateProgress = noop) => {
+  const {
+    completedSliceAmount,
+    erroredSliceAmount,
+    failedSliceAmount,
+    totalSliceAmount,
+    inProgressRecords,
+    completedRecords,
+    failedRecords,
+  } = collectCompositeJobValues(jobEntry);
+
+  const recordProgress = { total: 0, processed: 0 };
+  [inProgressRecords, completedRecords, failedRecords].reduce((acc = recordProgress, curr) => {
+    acc.total += curr.totalRecords;
+    acc.processed += curr.processedRecords;
+  });
+
+  const sliceProgress = {
+    total: totalSliceAmount,
+    processed: failedSliceAmount + completedSliceAmount,
+  };
+
+  const recordPercent = recordProgress.processed / recordProgress.total;
+  const slicePercent = sliceProgress.processed / sliceProgress.total;
+  let accProgress = (recordPercent > slicePercent) ? sliceProgress : recordProgress;
+
+  // Ensure progress does not diminish.
+  if ((previousProgress.processed / previousProgress.total) > (accProgress.processed / accProgress.total)) {
+    accProgress = previousProgress;
+  }
+
+  // Ensure that our progress meter doesn't extend beyond 100%
+  const adjustedProgress = accProgress.processedRecords / accProgress.totalRecords;
+  if (adjustedProgress > 1.0) {
+    accProgress.total = 100;
+    accProgress.processed = 100;
+  }
+
+  if (!isEqual(previousProgress, adjustedProgress)) updateProgress(adjustedProgress);
+
+  return (
+    <>
+      <FormattedMessage
+        id="ui-data-import.progressRunning"
+        tagName="div"
+      />
+      <Progress
+        current={Number.isNaN(accProgress.processed) ? 0 : accProgress.processed}
+        total={Number.isNaN(accProgress.total) || accProgress.total === 0 ? 100 : accProgress.total}
+      />
+      <FormattedMessage
+        id="ui-data-import.jobProgress.partsRemaining"
+        tagName="div"
+        values={{
+          current: totalSliceAmount - (failedSliceAmount + completedSliceAmount),
+          total: totalSliceAmount
+        }}
+      />
+      <FormattedMessage
+        id="ui-data-import.jobProgress.partsProcessed"
+        tagName="div"
+        values={{
+          current: completedSliceAmount,
+          total: totalSliceAmount,
+        }}
+      />
+      <ul className={css.compositeList}>
+        <li className={css.listItem}>
+          <FormattedMessage
+            id="ui-data-import.jobProgress.partsCompleted"
+            tagName="div"
+            values={{ amount: completedSliceAmount }}
+          />
+        </li>
+        <li className={css.listItem}>
+          <FormattedMessage
+            id="ui-data-import.jobProgress.partsCompletedWithErrors"
+            tagName="div"
+            values={{ amount: erroredSliceAmount }}
+          />
+        </li>
+        <li className={css.listItem}>
+          <FormattedMessage
+            id="ui-data-import.jobProgress.partsFailed"
+            tagName="div"
+            values={{ amount: failedSliceAmount }}
+          />
+        </li>
+      </ul>
+    </>
+  );
+};
+
+
 const propTypes = {
   stripes: stripesShape.isRequired,
   job: jobExecutionPropTypes.isRequired,
@@ -67,6 +223,7 @@ const JobComponent = ({
 }) => {
   const [deletionInProgress, setDeletionInProgress] = useState(false);
   const [showCancelJobModal, setShowCancelJobModal] = useState(false);
+  const [compositeProgress, updateCompositeProgress] = useState({ processed: 0, total: 100 });
   const calloutRef = useRef();
   const dispatch = useDispatch();
 
@@ -150,68 +307,6 @@ const JobComponent = ({
     await deleteJob();
   };
 
-  const collectCompositeJobValues = (jobEntry) => {
-    const {
-      compositeDetails,
-    } = jobEntry;
-
-    const {
-      calculateJobSliceStats,
-      calculateJobRecordsStats,
-      inProgressStatuses,
-      completeStatuses,
-      failedStatuses,
-    } = CompositeJobFields;
-
-    const inProgressSliceAmount = calculateJobSliceStats(
-      compositeDetails,
-      inProgressStatuses
-    );
-
-    const completedSliceAmount = calculateJobSliceStats(
-      compositeDetails,
-      completeStatuses
-    );
-
-    const erroredSliceAmount = calculateJobSliceStats(
-      compositeDetails,
-      ['errorState']
-    );
-
-    const failedSliceAmount = calculateJobSliceStats(
-      compositeDetails,
-      failedStatuses,
-    );
-
-    const totalSliceAmount = inProgressSliceAmount + completedSliceAmount + failedSliceAmount;
-
-    const inProgressRecords = calculateJobRecordsStats(
-      compositeDetails,
-      inProgressStatuses,
-    );
-
-    const completedRecords = calculateJobRecordsStats(
-      compositeDetails,
-      completeStatuses,
-    );
-
-    const failedRecords = calculateJobRecordsStats(
-      compositeDetails,
-      failedStatuses,
-    );
-
-    return {
-      inProgressSliceAmount,
-      completedSliceAmount,
-      erroredSliceAmount,
-      failedSliceAmount,
-      totalSliceAmount,
-      inProgressRecords,
-      completedRecords,
-      failedRecords
-    };
-  };
-
   const renderCancelModalMessage = (jobEntry) => {
     const {
       completedSliceAmount,
@@ -246,83 +341,6 @@ const JobComponent = ({
             />
           </li>
         </Layout>
-      </>
-    );
-  };
-
-  const renderCompositeDetails = (jobEntry) => {
-    const {
-      completedSliceAmount,
-      erroredSliceAmount,
-      failedSliceAmount,
-      totalSliceAmount,
-      inProgressRecords,
-      completedRecords,
-      failedRecords,
-    } = collectCompositeJobValues(jobEntry);
-
-    const accProgress = { totalRecords: 0, processedRecords: 0 };
-    [inProgressRecords, completedRecords, failedRecords].reduce((acc = accProgress, curr) => {
-      acc.totalRecords += curr.totalRecords;
-      acc.processedRecords += curr.processedRecords;
-    });
-
-    // possibly ensure that our progress meter doesn't extend beyond 100%
-    const adjustedProgress = accProgress.processedRecords / accProgress.totalRecords;
-    if (adjustedProgress > 1.0) {
-      accProgress.totalRecords = 100;
-      accProgress.processedRecords = 100;
-    }
-
-    return (
-      <>
-        <FormattedMessage
-          id="ui-data-import.progressRunning"
-          tagName="div"
-        />
-        <Progress
-          current={Number.isNaN(accProgress.processedRecords) ? 0 : accProgress.processedRecords}
-          total={Number.isNaN(accProgress.totalRecords) || accProgress.totalRecords === 0 ? 100 : accProgress.totalRecords}
-        />
-        <FormattedMessage
-          id="ui-data-import.jobProgress.partsRemaining"
-          tagName="div"
-          values={{
-            current: totalSliceAmount - (failedSliceAmount + completedSliceAmount),
-            total: totalSliceAmount
-          }}
-        />
-        <FormattedMessage
-          id="ui-data-import.jobProgress.partsProcessed"
-          tagName="div"
-          values={{
-            current: completedSliceAmount,
-            total: totalSliceAmount,
-          }}
-        />
-        <ul className={css.compositeList}>
-          <li className={css.listItem}>
-            <FormattedMessage
-              id="ui-data-import.jobProgress.partsCompleted"
-              tagName="div"
-              values={{ amount: completedSliceAmount }}
-            />
-          </li>
-          <li className={css.listItem}>
-            <FormattedMessage
-              id="ui-data-import.jobProgress.partsCompletedWithErrors"
-              tagName="div"
-              values={{ amount: erroredSliceAmount }}
-            />
-          </li>
-          <li className={css.listItem}>
-            <FormattedMessage
-              id="ui-data-import.jobProgress.partsFailed"
-              tagName="div"
-              values={{ amount: failedSliceAmount }}
-            />
-          </li>
-        </ul>
       </>
     );
   };
@@ -417,7 +435,7 @@ const JobComponent = ({
               />
             </>
           )}
-          {job.compositeDetails && renderCompositeDetails(job)}
+          {job.compositeDetails && renderCompositeDetails(job, compositeProgress, updateCompositeProgress)}
           {jobMeta.showPreview && (
             <div className={css.jobPreview}>
               <FormattedMessage id="ui-data-import.readyForPreview" />
