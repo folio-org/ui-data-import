@@ -124,7 +124,7 @@ const renderCompositeDetails = (jobEntry, previousProgress = { processed: 0, tot
   } = collectCompositeJobValues(jobEntry);
 
   const recordProgress = { total: 0, processed: 0 };
-  [inProgressRecords, completedRecords, failedRecords].reduce((acc = recordProgress, curr) => {
+  [inProgressRecords, completedRecords, failedRecords].reduce((acc = recordProgress, curr) => { // eslint-disable-line array-callback-return
     acc.total += curr.totalRecords;
     acc.processed += curr.processedRecords;
   });
