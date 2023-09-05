@@ -26,6 +26,7 @@
 * Change validation messages which were represented in code format (UIDATIMP-1473)
 * *BREAKING* bump `react` to `v18`, and dev-deps accordingly (UIDATIMP-1485)
 * Update Node.js to v18 in GitHub Actions (UIDATIMP-1507)
+* Provide "required" field for notes and electronic access subfields in field mapping (UIDATIMP-1384)
 
 ### Bugs fixed:
 * Fix all the failed accessibility tests in ui-data-import (UIDATIMP-1393)
