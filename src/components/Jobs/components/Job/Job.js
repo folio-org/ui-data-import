@@ -112,19 +112,9 @@ const collectCompositeJobValues = (jobEntry) => {
   };
 };
 
-const renderCompositeDetails = (jobEntry, previousProgress = { processed: 0, total: 100 }, updateProgress = noop) => {
-  const {
-    completedSliceAmount,
-    erroredSliceAmount,
-    failedSliceAmount,
-    totalSliceAmount,
-    inProgressRecords,
-    completedRecords,
-    failedRecords,
-  } = collectCompositeJobValues(jobEntry);
-
+export const calculateCompositeProgress = ({ totalSliceAmount, failedSliceAmount, completedSliceAmount }, recordProgressFields, previousProgress = { processed: 0, total: 100 }, updateProgress = noop) => {
   const recordProgress = { total: 0, processed: 0 };
-  [inProgressRecords, completedRecords, failedRecords].reduce((acc = recordProgress, curr) => { // eslint-disable-line array-callback-return
+  Object.values(recordProgressFields).reduce((acc = recordProgress, curr) => { // eslint-disable-line array-callback-return
     acc.total += curr.totalRecords;
     acc.processed += curr.processedRecords;
   });
@@ -143,14 +133,48 @@ const renderCompositeDetails = (jobEntry, previousProgress = { processed: 0, tot
     accProgress = previousProgress;
   }
 
-  // Ensure that our progress meter doesn't extend beyond 100%
-  const adjustedProgress = accProgress.processedRecords / accProgress.totalRecords;
-  if (adjustedProgress > 1.0) {
+  // Ensure that progress doesn't extend beyond 100%
+  const adjustedPercent = accProgress.processedRecords / accProgress.totalRecords;
+  if (adjustedPercent > 1.0) {
     accProgress.total = 100;
     accProgress.processed = 100;
   }
 
-  if (!isEqual(previousProgress, adjustedProgress)) updateProgress(adjustedProgress);
+  if (!isEqual(previousProgress, accProgress)) updateProgress(accProgress);
+
+  // replace any NaN values with numbers for total. Avoid dividing by zero.
+  // this attempts to resolve any NaN display problems.
+  if (Number.isNaN(accProgress.processed)) accProgress.processed = 0;
+  if (Number.isNaN(accProgress.total) || accProgress.total === 0) accProgress.total = 100;
+
+  return accProgress;
+};
+
+const renderCompositeDetails = (jobEntry, previousProgress = { processed: 0, total: 100 }, updateProgress = noop) => {
+  const {
+    completedSliceAmount,
+    erroredSliceAmount,
+    failedSliceAmount,
+    totalSliceAmount,
+    inProgressRecords,
+    completedRecords,
+    failedRecords,
+  } = collectCompositeJobValues(jobEntry);
+
+  const progress = calculateCompositeProgress(
+    {
+      totalSliceAmount,
+      failedSliceAmount,
+      completedSliceAmount,
+    },
+    {
+      inProgressRecords,
+      completedRecords,
+      failedRecords
+    },
+    previousProgress,
+    updateProgress
+  );
 
   return (
     <>
@@ -159,8 +183,8 @@ const renderCompositeDetails = (jobEntry, previousProgress = { processed: 0, tot
         tagName="div"
       />
       <Progress
-        current={Number.isNaN(accProgress.processed) ? 0 : accProgress.processed}
-        total={Number.isNaN(accProgress.total) || accProgress.total === 0 ? 100 : accProgress.total}
+        current={progress.processed}
+        total={progress.total}
       />
       <FormattedMessage
         id="ui-data-import.jobProgress.partsRemaining"
