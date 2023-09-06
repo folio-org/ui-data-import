@@ -207,6 +207,7 @@
           "converter-storage.profileassociation.get",
           "data-import.assembleStorageFile.post",
           "data-import.fileExtensions.get",
+          "data-import.jobexecution.cancel",
           "data-import.upload.file.post",
           "data-import.uploaddefinitions.delete",
           "data-import.uploaddefinitions.files.delete",
