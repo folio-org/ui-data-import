@@ -112,12 +112,19 @@ const collectCompositeJobValues = (jobEntry) => {
   };
 };
 
-export const calculateCompositeProgress = ({ totalSliceAmount, failedSliceAmount, completedSliceAmount }, recordProgressFields, previousProgress = { processed: 0, total: 100 }, updateProgress = noop) => {
-  const recordProgress = { total: 0, processed: 0 };
-  Object.values(recordProgressFields).reduce((acc = recordProgress, curr) => { // eslint-disable-line array-callback-return
-    acc.total += curr.totalRecords;
-    acc.processed += curr.processedRecords;
+export const calculateCompositeProgress = ({ totalSliceAmount, failedSliceAmount, completedSliceAmount }, { inProgressRecords, completedRecords, failedRecords }, previousProgress = { processed: 0, total: 100 }, updateProgress = noop) => {
+  const recordBaseProgress = { totalRecords: 0, processedRecords: 0 };
+  let recordProgress = [inProgressRecords, completedRecords, failedRecords].reduce((acc = recordBaseProgress, curr) => {
+    return {
+      totalRecords: acc.totalRecords + curr.totalRecords,
+      processedRecords: acc.processedRecords + curr.processedRecords,
+    };
   });
+
+  recordProgress = {
+    total: recordProgress.totalRecords,
+    processed: recordProgress.processedRecords
+  };
 
   const sliceProgress = {
     total: totalSliceAmount,
@@ -140,12 +147,10 @@ export const calculateCompositeProgress = ({ totalSliceAmount, failedSliceAmount
     accProgress.processed = 100;
   }
 
-  if (!isEqual(previousProgress, accProgress)) updateProgress(accProgress);
-
   // replace any NaN values with numbers for total. Avoid dividing by zero.
   // this attempts to resolve any NaN display problems.
-  if (Number.isNaN(accProgress.processed)) accProgress.processed = 0;
-  if (Number.isNaN(accProgress.total) || accProgress.total === 0) accProgress.total = 100;
+  // if (Number.isNaN(accProgress.processed)) accProgress.processed = 0;
+  // if (Number.isNaN(accProgress.total) || accProgress.total === 0) accProgress.total = 100;
 
   return accProgress;
 };
