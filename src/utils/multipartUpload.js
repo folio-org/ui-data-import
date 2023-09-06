@@ -68,7 +68,7 @@ export class MultipartUploader {
     this.successHandler = successHandler;
     this.xhr = null;
     this.uploadDefinitionId = uploadDefinitionId;
-    this.abort = false;
+    this.abortSignal = false;
     this.totalFileSize = 0;
     this.totalUploadProgress = 0;
   }
@@ -76,8 +76,8 @@ export class MultipartUploader {
   updateProgress = (value) => { this.totalUploadProgress += value; }
 
   abort = () => {
-    this.abort = true;
-    this.xhr.abort();
+    this.xhr?.abort();
+    this.abortSignal = true;
   }
 
   uploadPart = (part, url, partNumber, totalParts, fileKey) => {
@@ -107,6 +107,9 @@ export class MultipartUploader {
             const eTag = this.xhr.getResponseHeader('ETag');
             resolve(eTag);
             return;
+          } else if (status === 0) {
+            reject(new Error('userCancelled'));
+            return;
           } else {
             const parsedResponse = JSON.parse(responseText);
             reject(parsedResponse);
@@ -115,6 +118,11 @@ export class MultipartUploader {
           reject(error);
         }
       };
+
+      this.xhr.onabort = () => {
+        this.abortSignal = true;
+      };
+
       this.xhr.send(part);
     });
   };
@@ -128,7 +136,7 @@ export class MultipartUploader {
     this.totalFileSize = file.size;
     const eTags = [];
     const totalParts = Math.ceil(file.size / CHUNK_SIZE);
-    while (currentByte < file.size && !this.abort) {
+    while (currentByte < file.size && !this.abortSignal) {
       const adjustedEnd = Math.min(file.size, currentByte + CHUNK_SIZE);
       const chunk = file.file.slice(currentByte, adjustedEnd);
       try {
@@ -148,11 +156,11 @@ export class MultipartUploader {
         currentPartNumber += 1;
         currentByte += CHUNK_SIZE;
       } catch (error) {
-        this.errorHandler(fileKey);
+        if (error.message !== 'userCancelled') this.errorHandler(fileKey);
         break;
       }
     }
-    if (this.abort) return;
+    if (this.abortSignal) return;
     await finishUpload(eTags, _uploadKey, _uploadId, this.uploadDefinitionId, file.id, this.ky);
     // TODO - expect date string from backend when finishing the upload - creating the date stamp expected by the UI here for now...
     const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toLocaleDateString(), name: _uploadKey }] };

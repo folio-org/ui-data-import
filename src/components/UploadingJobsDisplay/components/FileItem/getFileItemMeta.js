@@ -93,6 +93,55 @@ export const getFileItemMeta = ({
         },
       };
     }
+    case FILE_STATUSES.UPLOADING_CANCELLABLE: {
+      return {
+        ...defaultFileMeta,
+        renderHeading: () => (
+          <>
+            <span className={css.fileItemHeaderName}>{name}</span>
+            <span className={classNames(css.fileItemHeaderContent, css.fileItemUploadedHeaderContent)}>
+              <FormattedDate value={uploadedDate} />
+            </span>
+            <FormattedMessage id="ui-data-import.delete">
+              {label => (
+                <IconButton
+                  data-test-delete-button
+                  icon="trash"
+                  size="small"
+                  ariaLabel={label}
+                  className={css.icon}
+                  onClick={cancelImport}
+                />
+              )}
+            </FormattedMessage>
+          </>
+        ),
+        renderProgress: () => {
+          if (isSnapshotMode) {
+            return (
+              <div
+                data-test-progress
+                className={css.progressMessage}
+              >
+                <FormattedMessage id="ui-data-import.uploadingMessage" />
+              </div>
+            );
+          }
+
+          return (
+            <Progress
+              payload={{ message: <FormattedMessage id="ui-data-import.uploadingMessage" /> }}
+              progressInfoType="messagedPercentage"
+              progressClassName={css.progress}
+              progressWrapperClassName={css.progressWrapper}
+              progressInfoClassName={css.progressInfo}
+              total={size}
+              current={uploadedValue}
+            />
+          );
+        },
+      };
+    }
     case FILE_STATUSES.UPLOADED: {
       return {
         ...defaultFileMeta,

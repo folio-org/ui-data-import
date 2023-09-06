@@ -192,9 +192,9 @@ export class UploadingJobsDisplay extends Component {
   }
 
   renderSnapshotData() {
-    const { uploadDefinition: { fileDefinitions } } = this.context;
+    const { uploadDefinition: { fileDefinitions }, uploadConfiguration } = this.context;
 
-    this.setState({ files: API.mapFilesToUI(fileDefinitions) });
+    this.setState({ files: API.mapFilesToUI(fileDefinitions, uploadConfiguration?.canUseObjectStorage) });
   }
 
   async fetchUploadDefinition() {
@@ -448,6 +448,11 @@ export class UploadingJobsDisplay extends Component {
     }, resolve);
   });
 
+  cancelAndDeleteUpload = () => {
+    this.cancelCurrentFileUpload();
+    this.handleDeleteFile();
+  };
+
   renderFiles() {
     const { files } = this.state;
 
@@ -486,7 +491,7 @@ export class UploadingJobsDisplay extends Component {
           errorMsgTranslationID={errorMsgTranslationID}
           uploadedDate={uploadedDate}
           onCancelImport={this.openCancelUploadModal}
-          onDelete={this.handleDeleteFile}
+          onDelete={status === FILE_STATUSES.UPLOADING_CANCELLABLE ? this.cancelAndDeleteUpload : this.handleDeleteFile}
         />
       );
     });
@@ -614,7 +619,7 @@ export class UploadingJobsDisplay extends Component {
               message={<FormattedMessage id="ui-data-import.modal.cancelUpload.message" />}
               confirmLabel={<FormattedMessage id="ui-data-import.modal.cancelUpload.confirm" />}
               cancelLabel={<FormattedMessage id="ui-data-import.modal.cancelUpload.cancel" />}
-              onConfirm={this.handleDeleteFile}
+              onConfirm={this.cancelAndDeleteUpload}
               onCancel={this.closeCancelUploadModal}
             />
           </Pane>

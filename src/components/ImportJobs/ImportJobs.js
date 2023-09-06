@@ -142,7 +142,7 @@ export class ImportJobs extends Component {
 
   onDrop = async acceptedFiles => {
     const { stripes: { okapi } } = this.props;
-    const { updateUploadDefinition } = this.context;
+    const { updateUploadDefinition, uploadConfiguration } = this.context;
 
     const { url: host } = okapi;
 
@@ -175,7 +175,7 @@ export class ImportJobs extends Component {
       return;
     }
 
-    const files = API.mapFilesToUI(acceptedFiles);
+    const files = API.mapFilesToUI(acceptedFiles, uploadConfiguration?.canUseObjectStorage);
 
     try {
       // post file upload definition with all files metadata as
