@@ -148,9 +148,9 @@ export const calculateCompositeProgress = ({ totalSliceAmount, failedSliceAmount
   }
 
   // replace any NaN values with numbers for total. Avoid dividing by zero.
-  // this attempts to resolve any NaN display problems.
-  // if (Number.isNaN(accProgress.processed)) accProgress.processed = 0;
-  // if (Number.isNaN(accProgress.total) || accProgress.total === 0) accProgress.total = 100;
+  // this attempts to resolve any NaN display problems when a job is early in the submission process.
+  if (Number.isNaN(accProgress.processed)) accProgress.processed = 0;
+  if (Number.isNaN(accProgress.total) || accProgress.total === 0) accProgress.total = 100;
 
   return accProgress;
 };
