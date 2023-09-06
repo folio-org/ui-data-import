@@ -99,9 +99,6 @@ export const getFileItemMeta = ({
         renderHeading: () => (
           <>
             <span className={css.fileItemHeaderName}>{name}</span>
-            <span className={classNames(css.fileItemHeaderContent, css.fileItemUploadedHeaderContent)}>
-              <FormattedDate value={uploadedDate} />
-            </span>
             <FormattedMessage id="ui-data-import.delete">
               {label => (
                 <IconButton
