@@ -1146,12 +1146,12 @@
     "jobProfile.notAvailable": " No disponible - este perfil de trabajo ha sido eliminado",
     "returnToPreviousScreen": "Volver a la pantalla anterior",
     "settings.mappingProfiles.map.order.orderInformation.field.acquisitionsUnits": "Unidades de adquisición",
-    "jobProgress.partsRemaining": "Partes de trabajo restantes: {actuales} de {totales}",
-    "jobProgress.partsProcessed": "Partes de trabajo procesadas: {actuales} de {totales}",
-    "jobProgress.partsCompleted": "Completado: {importe}",
+    "jobProgress.partsRemaining": "Partes de trabajo restantes: {current} de {total}",
+    "jobProgress.partsProcessed": "Partes de trabajo procesadas: {current} de {total}",
+    "jobProgress.partsCompleted": "Completado: {amount}",
     "jobProgress.partsCompletedWithErrors": "Completado con errores: {amount}",
-    "jobProgress.partsFailed": "Falló: {importe}",
+    "jobProgress.partsFailed": "Falló: {amount}",
     "uploadError": "Se ha producido un problema al cargar el archivo. Por favor, inténtelo de nuevo",
     "modal.jobProfile.run.largeFileSplitting": "Los archivos MARC de gran tamaño se dividirán en partes separadas.",
-    "logViewer.partOfTotal": "{número} de {total}"
+    "logViewer.partOfTotal": "{number} de {total}"
 }
