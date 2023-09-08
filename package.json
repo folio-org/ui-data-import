@@ -21,6 +21,9 @@
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-data-import ./translations/ui-data-import/compiled"
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "devDependencies": {
     "@babel/core": "^7.17.12",
     "@babel/eslint-parser": "^7.17.0",
