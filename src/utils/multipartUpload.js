@@ -8,12 +8,8 @@ export const getDownloadLinkURL = (id) => `data-import/jobExecutions/${id}/downl
 export const cancelMultipartJobEndpoint = (id) => `data-import/jobExecutions/${id}/cancel`;
 const CHUNK_SIZE = 31457280; // 30 MB;
 
-export const cancelMultipartJob = async (id, headers) => {
-  const response = await fetch(cancelMultipartJobEndpoint(id), {
-    method: 'DELETE',
-    headers,
-  });
-
+export const cancelMultipartJob = async (ky, id) => {
+  const response = await ky.delete(cancelMultipartJobEndpoint(id)).json();
   if (!response.ok) {
     throw response;
   }
@@ -88,7 +84,10 @@ export class MultipartUploader {
     return new Promise((resolve, reject) => {
       this.xhr = new XMLHttpRequest();
       this.xhr.open('PUT', url, true);
-      this.xhr.addEventListener('progress', this.handleProgress);
+      this.xhr.upload.addEventListener('progress', this.handleProgress);
+      this.xhr.upload.addEventListener('abort', () => {
+        this.abortSignal = true;
+      });
       this.xhr.addEventListener('readystatechange', () => {
         const {
           status,
@@ -111,11 +110,6 @@ export class MultipartUploader {
           reject(error);
         }
       });
-
-      this.xhr.addEventListener('abort', () => {
-        this.abortSignal = true;
-      });
-
       this.xhr.send(part);
     });
   };

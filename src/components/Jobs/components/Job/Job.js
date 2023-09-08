@@ -16,6 +16,7 @@ import {
   withStripes,
   stripesShape,
   IfPermission,
+  useOkapiKy,
 } from '@folio/stripes/core';
 
 import {
@@ -255,6 +256,7 @@ const JobComponent = ({
   const [compositeProgress, updateCompositeProgress] = useState({ processed: 0, total: 100 });
   const calloutRef = useRef();
   const dispatch = useDispatch();
+  const okapiKy = useOkapiKy();
 
   useEffect(() => {
     return () => dispatch(deleteHrid(job.hrId));
@@ -302,7 +304,7 @@ const JobComponent = ({
 
     try {
       if (job.compositeDetails) {
-        await cancelMultipartJob(id, createOkapiHeaders(okapi));
+        await cancelMultipartJob(okapiKy, id);
       } else {
         await API.deleteFile(
           createJobUrl(id),
