@@ -50,15 +50,6 @@ export function trimLeadNumbers(name) {
   return name ? name.replace(/^\d*-/, '') : '';
 }
 
-// class ProgressAccumulator {
-//   constructor(size) {
-//     this.size = size;
-//   }
-
-//   totalProgress = 0;
-//   updateProgress = (value) => { this.totalProgress += value; }
-// }
-
 export class MultipartUploader {
   constructor(uploadDefinitionId, files, ky, errorHandler, progressHandler, successHandler) {
     this.files = files;
@@ -80,23 +71,25 @@ export class MultipartUploader {
     this.abortSignal = true;
   }
 
+  handleProgress = (event) => {
+    const { loaded, total } = event;
+    const newEvent = {
+      ...event,
+      loaded: this.totalUploadProgress + event.loaded,
+      total: this.totalFileSize
+    };
+    this.progressHandler(this.currentFileKey, newEvent);
+    if (loaded === total) {
+      this.updateProgress(loaded);
+    }
+  }
+
   uploadPart = (part, url, partNumber, totalParts, fileKey) => {
     return new Promise((resolve, reject) => {
       this.xhr = new XMLHttpRequest();
       this.xhr.open('PUT', url, true);
-      this.xhr.upload.onprogress = event => {
-        const { loaded, total } = event;
-        const newEvent = {
-          ...event,
-          loaded: this.totalUploadProgress + event.loaded,
-          total: this.totalFileSize
-        };
-        this.progressHandler(fileKey, newEvent);
-        if (loaded === total) {
-          this.updateProgress(loaded);
-        }
-      };
-      this.xhr.onreadystatechange = () => {
+      this.xhr.addEventListener('progress', this.handleProgress);
+      this.xhr.addEventListener('readystatechange', () => {
         const {
           status,
           responseText,
@@ -117,17 +110,18 @@ export class MultipartUploader {
         } catch (error) {
           reject(error);
         }
-      };
+      });
 
-      this.xhr.onabort = () => {
+      this.xhr.addEventListener('abort', () => {
         this.abortSignal = true;
-      };
+      });
 
       this.xhr.send(part);
     });
   };
 
   sliceAndUploadParts = async (file, fileKey) => {
+    this.currentFileKey = fileKey;
     let currentByte = 0;
     let currentPartNumber = 1;
     let _uploadKey;
@@ -156,7 +150,7 @@ export class MultipartUploader {
         currentPartNumber += 1;
         currentByte += CHUNK_SIZE;
       } catch (error) {
-        if (error.message !== 'userCancelled') this.errorHandler(fileKey);
+        if (error.message !== 'userCancelled') this.errorHandler(fileKey, error);
         break;
       }
     }
@@ -165,6 +159,7 @@ export class MultipartUploader {
     // TODO - expect date string from backend when finishing the upload - creating the date stamp expected by the UI here for now...
     const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toLocaleDateString(), name: _uploadKey }] };
     this.successHandler(finishResponse, fileKey, true);
+    this.currentFileKey = null;
   };
 
   init = () => {
