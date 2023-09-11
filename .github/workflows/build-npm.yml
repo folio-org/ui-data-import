@@ -46,14 +46,6 @@ jobs:
       - name: Set Bun config
         run: printf '[install.scopes]\n"@folio" = "%s"\n' ${{ env.FOLIO_NPM_REGISTRY }} > bunfig.toml
 
-      - name: Publish bunfig
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: bunfig.toml
-          path: bunfig.toml
-          retention-days: 30
-
       - name: Set FOLIO NPM snapshot version
         run: |
           git clone https://github.com/folio-org/folio-tools.git
