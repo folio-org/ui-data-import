@@ -10,8 +10,6 @@
 #   - PUBLISH_MOD_DESCRIPTOR (boolean 'true' or 'false')
 #   - COMPILE_TRANSLATION_FILES (boolean 'true' or 'false')
 
-
-
 name: buildNPM Snapshot
 on: [push, pull_request]
 
@@ -35,21 +33,18 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - uses: folio-org/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Setup kernel for react native, increase watchers
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODEJS_VERSION }}
-          check-latest: true
-          always-auth: true
 
-      - name: Set yarn config
-        run: yarn config set @folio:registry $FOLIO_NPM_REGISTRY
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Set Bun config
+        run: echo '[install.scopes]\n"@folio" = "${{ env.FOLIO_NPM_REGISTRY }}"' > bunfig.toml
 
       - name: Set FOLIO NPM snapshot version
         run: |
@@ -59,43 +54,49 @@ jobs:
         env:
           JOB_ID: ${{ github.run_number }}
 
-      - name: Run yarn install
-        run: yarn install --ignore-scripts
+      - name: Run bun install
+        run: bun install --yarn # creates a Yarn lockfile, too!
 
-      - name: Run yarn list
-        run: yarn list --pattern @folio
+      - name: List installed packages
+        run: bun pm ls --all
 
-      - name: Run yarn lint
-        run: yarn lint
+      - name: Run bun lint
+        run: bun lint
         continue-on-error: true
 
-      - name: Run yarn test
-        run: xvfb-run --server-args="-screen 0 1024x768x24" yarn test $YARN_TEST_OPTIONS
+      - name: Run bun test
+        run: xvfb-run --server-args="-screen 0 1024x768x24" bun run test $YARN_TEST_OPTIONS
 
-      - name: Run yarn formatjs-compile
+      - name: Run formatjs-compile
         if: ${{ env.COMPILE_TRANSLATION_FILES == 'true' }}
-        run: yarn formatjs-compile
+        run: bun run formatjs-compile
 
       - name: Generate FOLIO module descriptor
         if: ${{ env.PUBLISH_MOD_DESCRIPTOR == 'true' }}
-        run: yarn build-mod-descriptor
+        run: bun run build-mod-descriptor
 
       - name: Print FOLIO module descriptor
         if: ${{ env.PUBLISH_MOD_DESCRIPTOR == 'true' }}
         run: cat module-descriptor.json
 
+      - name: Upload module descriptor
+        uses: actions/upload-artifact@v3
+        with:
+          name: ModuleDescriptor.json
+          path: module-descriptor.json
+          retention-days: 5
+
       - name: Publish Jest unit test results
         uses: docker://ghcr.io/enricomi/publish-unit-test-result-action:v1
-        if: always()
         with:
           github_token: ${{ github.token }}
-          files: "${{ env.JEST_JUNIT_OUTPUT_DIR }}/*.xml"
+          files: '${{ env.JEST_JUNIT_OUTPUT_DIR }}/*.xml'
           check_name: Jest Unit Test Results
           comment_mode: update last
           comment_title: Jest Unit Test Statistics
 
       - name: Publish Jest coverage report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: jest-coverage-report
@@ -107,13 +108,13 @@ jobs:
         if: always()
         with:
           github_token: ${{ github.token }}
-          files: "${{ env.BIGTEST_JUNIT_OUTPUT_DIR }}/*.xml"
+          files: '${{ env.BIGTEST_JUNIT_OUTPUT_DIR }}/*.xml'
           check_name: BigTest Unit Test Results
           comment_mode: update last
           comment_title: BigTest Unit Test Statistics
 
       - name: Publish BigTest coverage report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: bigtest-coverage-report
@@ -121,7 +122,7 @@ jobs:
           retention-days: 30
 
       - name: Publish yarn.lock
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: yarn.lock
@@ -198,4 +199,3 @@ jobs:
           data: ${{ steps.moduleDescriptor.outputs.content }}
           username: ${{ secrets.FOLIO_REGISTRY_USERNAME }}
           password: ${{ secrets.FOLIO_REGISTRY_PASSWORD }}
-

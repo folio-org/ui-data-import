@@ -11,8 +11,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test:unit": "jest --ci --coverage",
-    "test": "yarn run test:unit",
+    "test": "jest --ci --coverage",
     "lint": "eslint .",
     "lintfix": "eslint . --fix",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
