@@ -72,7 +72,7 @@ jobs:
         uses: oven-sh/setup-bun@v1
 
       - name: Set Bun config
-        run: echo '[install.scopes]\n"@folio" = "${{ env.FOLIO_NPM_REGISTRY }}"' > bunfig.toml
+        run: printf '[install.scopes]\n"@folio" = "%s"\n' ${{ env.FOLIO_NPM_REGISTRY }} > bunfig.toml
 
       - name: Run bun install
         run: bun install --yarn # creates a Yarn lockfile, too!

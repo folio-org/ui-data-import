@@ -44,7 +44,7 @@ jobs:
         uses: oven-sh/setup-bun@v1
 
       - name: Set Bun config
-        run: echo '[install.scopes]\n"@folio" = "${{ env.FOLIO_NPM_REGISTRY }}"' > bunfig.toml
+        run: printf '[install.scopes]\n"@folio" = "%s"\n' ${{ env.FOLIO_NPM_REGISTRY }} > bunfig.toml
 
       - name: Publish bunfig
         uses: actions/upload-artifact@v3
