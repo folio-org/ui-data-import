@@ -33,8 +33,8 @@ export const calculateJobRecordsStats = (obj, arr) => {
   let processedRecords = 0;
   arr.forEach((status) => {
     if (Object.hasOwn(obj, status)) {
-      if (!Number.isNaN(obj[status].totalRecordsCount)) totalRecords += obj[status].totalRecordsCount;
-      if (!Number.isNaN(obj[status].currentlyProcessedCount)) processedRecords += obj[status].currentlyProcessedCount;
+      if (!isNaN(obj[status].totalRecordsCount)) totalRecords += obj[status].totalRecordsCount;
+      if (!isNaN(obj[status].currentlyProcessedCount)) processedRecords += obj[status].currentlyProcessedCount;
     }
   });
   return { totalRecords, processedRecords };
@@ -94,7 +94,17 @@ export const collectCompositeJobValues = (jobEntry) => {
   };
 };
 
-export const calculateCompositeProgress = ({ totalSliceAmount, failedSliceAmount, completedSliceAmount }, { inProgressRecords, completedRecords, failedRecords }, previousProgress = { processed: 0, total: 100 }, updateProgress = noop) => {
+export const calculateCompositeProgress = ({
+  totalSliceAmount,
+  failedSliceAmount,
+  completedSliceAmount
+}, {
+  inProgressRecords,
+  completedRecords,
+  failedRecords
+}, previousProgress = { processed: 0, total: 100 },
+updateProgress = ()=>{}
+) => {
   const recordBaseProgress = { totalRecords: 0, processedRecords: 0 };
   let recordProgress = [inProgressRecords, completedRecords, failedRecords].reduce((acc, curr) => {
     return {
@@ -123,7 +133,7 @@ export const calculateCompositeProgress = ({ totalSliceAmount, failedSliceAmount
   }
 
   // Ensure that progress doesn't extend beyond 100%
-  const adjustedPercent = accProgress.processedRecords / accProgress.totalRecords;
+  const adjustedPercent = accProgress.processed / accProgress.total;
   if (adjustedPercent > 1.0) {
     accProgress.total = 100;
     accProgress.processed = 100;
@@ -131,8 +141,11 @@ export const calculateCompositeProgress = ({ totalSliceAmount, failedSliceAmount
 
   // replace any NaN values with numbers for total. Avoid dividing by zero.
   // this attempts to resolve any NaN display problems when a job is early in the submission process.
-  if (Number.isNaN(accProgress.processed)) accProgress.processed = 0;
-  if (Number.isNaN(accProgress.total) || accProgress.total === 0) accProgress.total = 100;
+  if (isNaN(accProgress.processed)) accProgress.processed = 0;
+  if (isNaN(accProgress.total) || accProgress.total === 0) {
+    accProgress.total = 100;
+    accProgress.processed = 0;
+  }
 
   return accProgress;
 };
