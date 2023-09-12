@@ -95,7 +95,8 @@
     "redux": "^4.0.5"
   },
   "resolutions": {
-    "moment": "~2.29.4"
+    "moment": "~2.29.4",
+    "@rehooks/local-storage": "2.4.4"
   },
   "optionalDependencies": {
     "@folio/plugin-find-organization": "^4.0.0"
