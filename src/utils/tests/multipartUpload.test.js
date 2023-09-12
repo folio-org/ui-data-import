@@ -14,7 +14,6 @@ import {
   getFinishUploadEndpoint,
   trimLeadNumbers,
 } from '../multipartUpload';
-import { noop } from 'lodash';
 
 const testId = 'testId'
 const responseMock = jest.fn();

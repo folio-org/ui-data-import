@@ -32,10 +32,37 @@ jest.mock('../../../utils/upload', () => ({
     .mockImplementation(() => Promise.resolve('deleted successfully'))
 }));
 
+const kyPostMock = jest.fn();
+const kyGetMock = jest.fn();
+const kyMock = () => ({
+  get: kyGetMock,
+  post: kyPostMock,
+});
+
+const mockMultipart = (
+  uploadDefId = 'test',
+  files = [],
+  ky = kyMock,
+  errorHandler = jest.fn(),
+  progressHandler = jest.fn(),
+  successHandler = jest.fn()
+) => {
+  return {
+    init: () => {
+      try {
+        ky.post();
+        progressHandler({ current: 30, total: 100 });
+        successHandler(successMock, mockKey, true)
+      } catch (error) {
+        errorHandler(error);
+      }
+    }
+  };
+}
 
 jest.mock('../../../utils/multipartUpload', () => ({
   ...jest.requireActual('../../../utils/multipartUpload'),
-  handleObjectStorageUpload: jest.fn().mockImplementation(() => {}),
+  MultipartUploader: mockMultipart,
 }));
 
 jest.mock('../../../settings/JobProfiles', () => ({ createJobProfiles: () => () => <span>JobProfiles</span> }));

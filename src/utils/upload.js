@@ -40,7 +40,7 @@ export const mapFilesToUI = (files = [], canUseObjectStorage = false) => {
     const uiKey = `${file.name}${file.lastModified}`;
     // if file is already uploaded it has already the `uiKey` and if not it should be assigned
     const key = file.uiKey || uiKey;
-    const status = file.status || canUseObjectStorage ? FILE_STATUSES.UPLOADING_CANCELLABLE : FILE_STATUSES.UPLOADING;
+    const status = file.status || (canUseObjectStorage ? FILE_STATUSES.UPLOADING_CANCELLABLE : FILE_STATUSES.UPLOADING);
 
     const preparedFile = {
       id: file.id,
