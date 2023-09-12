@@ -9,7 +9,7 @@ import {
   injectIntl,
   FormattedMessage,
 } from 'react-intl';
-import { noop, isEqual } from 'lodash';
+import { noop } from 'lodash';
 import classNames from 'classnames';
 
 import {
@@ -51,111 +51,6 @@ import {
 
 import css from './Job.css';
 
-const collectCompositeJobValues = (jobEntry) => {
-  const {
-    compositeDetails,
-  } = jobEntry;
-
-  const {
-    calculateJobSliceStats,
-    calculateJobRecordsStats,
-    inProgressStatuses,
-    completeStatuses,
-    failedStatuses,
-  } = CompositeJobFields;
-
-  const inProgressSliceAmount = calculateJobSliceStats(
-    compositeDetails,
-    inProgressStatuses
-  );
-
-  const completedSliceAmount = calculateJobSliceStats(
-    compositeDetails,
-    completeStatuses
-  );
-
-  const erroredSliceAmount = calculateJobSliceStats(
-    compositeDetails,
-    ['errorState']
-  );
-
-  const failedSliceAmount = calculateJobSliceStats(
-    compositeDetails,
-    failedStatuses,
-  );
-
-  const totalSliceAmount = inProgressSliceAmount + completedSliceAmount + failedSliceAmount;
-
-  const inProgressRecords = calculateJobRecordsStats(
-    compositeDetails,
-    inProgressStatuses,
-  );
-
-  const completedRecords = calculateJobRecordsStats(
-    compositeDetails,
-    completeStatuses,
-  );
-
-  const failedRecords = calculateJobRecordsStats(
-    compositeDetails,
-    failedStatuses,
-  );
-
-  return {
-    inProgressSliceAmount,
-    completedSliceAmount,
-    erroredSliceAmount,
-    failedSliceAmount,
-    totalSliceAmount,
-    inProgressRecords,
-    completedRecords,
-    failedRecords
-  };
-};
-
-export const calculateCompositeProgress = ({ totalSliceAmount, failedSliceAmount, completedSliceAmount }, { inProgressRecords, completedRecords, failedRecords }, previousProgress = { processed: 0, total: 100 }, updateProgress = noop) => {
-  const recordBaseProgress = { totalRecords: 0, processedRecords: 0 };
-  let recordProgress = [inProgressRecords, completedRecords, failedRecords].reduce((acc = recordBaseProgress, curr) => {
-    return {
-      totalRecords: acc.totalRecords + curr.totalRecords,
-      processedRecords: acc.processedRecords + curr.processedRecords,
-    };
-  });
-
-  recordProgress = {
-    total: recordProgress.totalRecords,
-    processed: recordProgress.processedRecords
-  };
-
-  const sliceProgress = {
-    total: totalSliceAmount,
-    processed: failedSliceAmount + completedSliceAmount,
-  };
-
-  const recordPercent = recordProgress.processed / recordProgress.total;
-  const slicePercent = sliceProgress.processed / sliceProgress.total;
-  let accProgress = (recordPercent > slicePercent) ? sliceProgress : recordProgress;
-
-  // Ensure progress does not diminish.
-  if ((previousProgress.processed / previousProgress.total) > (accProgress.processed / accProgress.total)) {
-    accProgress = previousProgress;
-  }
-
-  // Ensure that progress doesn't extend beyond 100%
-  const adjustedPercent = accProgress.processedRecords / accProgress.totalRecords;
-  if (adjustedPercent > 1.0) {
-    accProgress.total = 100;
-    accProgress.processed = 100;
-  }
-
-  // replace any NaN values with numbers for total. Avoid dividing by zero.
-  // this attempts to resolve any NaN display problems when a job is early in the submission process.
-  if (Number.isNaN(accProgress.processed)) accProgress.processed = 0;
-  if (Number.isNaN(accProgress.total) || accProgress.total === 0) accProgress.total = 100;
-
-  return accProgress;
-};
-
 const renderCompositeDetails = (jobEntry, previousProgress = { processed: 0, total: 100 }, updateProgress = noop) => {
   const {
     completedSliceAmount,
@@ -165,9 +60,9 @@ const renderCompositeDetails = (jobEntry, previousProgress = { processed: 0, tot
     inProgressRecords,
     completedRecords,
     failedRecords,
-  } = collectCompositeJobValues(jobEntry);
+  } = CompositeJobFields.collectCompositeJobValues(jobEntry);
 
-  const progress = calculateCompositeProgress(
+  const progress = CompositeJobFields.calculateCompositeProgress(
     {
       totalSliceAmount,
       failedSliceAmount,
@@ -342,7 +237,7 @@ const JobComponent = ({
     const {
       completedSliceAmount,
       totalSliceAmount,
-    } = collectCompositeJobValues(jobEntry);
+    } = CompositeJobFields.collectCompositeJobValues(jobEntry);
 
     return (
       <>

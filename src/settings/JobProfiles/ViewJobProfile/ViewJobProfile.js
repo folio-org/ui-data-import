@@ -2,6 +2,7 @@ import React, {
   useState,
   useRef,
   useContext,
+  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -100,6 +101,20 @@ const ViewJobProfileComponent = props => {
   const sRStatusRef = useRef(null);
   const { uploadDefinition, uploadConfiguration } = useContext(UploadingJobsContext);
   const { formatMessage } = useIntl();
+  const visibleColumns = useMemo(() => {
+    const defaultVisibleColumns = [
+      'fileName',
+      'hrId',
+      'completedDate',
+      'runBy',
+    ];
+    if (uploadConfiguration?.canUseObjectStorage) {
+      const columns = [...defaultVisibleColumns];
+      columns.splice(2, 0, 'jobParts');
+      return columns;
+    }
+    return defaultVisibleColumns;
+  }, uploadConfiguration?.canUseObjectStorage);
 
   const jobProfileData = () => {
     const jobProfile = resources.jobProfileView || {};
@@ -293,20 +308,7 @@ const ViewJobProfileComponent = props => {
   const tagsEntityLink = `data-import-profiles/jobProfiles/${jobProfileRecord.id}`;
   const isSettingsEnabled = stripes.hasPerm(permissions.SETTINGS_MANAGE) || stripes.hasPerm(permissions.SETTINGS_VIEW_ONLY);
 
-  const getVisibleColumns = (context) => {
-    const defaultVisibleColumns = [
-      'fileName',
-      'hrId',
-      'completedDate',
-      'runBy',
-    ];
-    if (context?.canUseObjectStorage) {
-      const columns = [...defaultVisibleColumns];
-      columns.splice(2, 0, 'jobParts');
-      return columns;
-    }
-    return defaultVisibleColumns;
-  };
+
 
   return (
     <DetailsKeyShortcutsWrapper
@@ -395,7 +397,7 @@ const ViewJobProfileComponent = props => {
                     runBy: <FormattedMessage id="ui-data-import.runBy" />,
                     jobParts: <FormattedMessage id="ui-data-import.jobParts" />
                   }}
-                  visibleColumns={getVisibleColumns(uploadConfiguration)}
+                  visibleColumns={visibleColumns}
                   formatter={jobsUsingThisProfileFormatter}
                   width="100%"
                 />

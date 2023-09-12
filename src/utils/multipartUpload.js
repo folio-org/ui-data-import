@@ -150,7 +150,6 @@ export class MultipartUploader {
     }
     if (this.abortSignal) return;
     await finishUpload(eTags, _uploadKey, _uploadId, this.uploadDefinitionId, file.id, this.ky);
-    // TODO - expect date string from backend when finishing the upload - creating the date stamp expected by the UI here for now...
     const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toLocaleDateString(), name: _uploadKey }] };
     this.successHandler(finishResponse, fileKey, true);
     this.currentFileKey = null;
@@ -158,7 +157,9 @@ export class MultipartUploader {
 
   init = () => {
     const fileKeys = Object.keys(this.files);
-    Object.keys(this.files).forEach((fileKey, index) => this.sliceAndUploadParts(this.files[fileKey], fileKeys[index]));
+    Object.keys(this.files).forEach(function(fileKey, index) {
+      this.sliceAndUploadParts(this.files[fileKey], fileKeys[index]);
+    }.bind(this));
   };
 }
 
