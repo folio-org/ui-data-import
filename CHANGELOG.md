@@ -6,6 +6,7 @@
 * Landing page: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1355)
 * Create hotlink from file name in job profile detail view to job log details (UIDATIMP-1356)
 * Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
+* * Provide "required" field for notes and electronic access subfields in field mapping (UIDATIMP-1384)
 * Avoid private paths in stripes-core imports (UIDATIMP-1414)
 * Order field mapping: Add info icon to the Acq unit field (UIDATIMP-1426)
 * Invoice field mapping: Add info icon to the Acq unit field (UIDATIMP-1427)
@@ -27,6 +28,7 @@
 * *BREAKING* bump `react` to `v18`, and dev-deps accordingly (UIDATIMP-1485)
 * Update Node.js to v18 in GitHub Actions (UIDATIMP-1507)
 * leverage jest-config-stripes for all jest and testing-library packages (UIDATIMP-1508)
+* *BREAKING* bump `react-intl` to `v6.4.4` (UIDATIMP-1520)
 
 ### Bugs fixed:
 * Fix all the failed accessibility tests in ui-data-import (UIDATIMP-1393)

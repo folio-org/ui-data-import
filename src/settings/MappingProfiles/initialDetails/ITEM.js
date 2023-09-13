@@ -201,12 +201,14 @@ const ITEM = {
       fields: [{
         name: 'itemNoteTypeId',
         enabled: true,
+        required: true,
         path: 'item.notes[].itemNoteTypeId',
         value: '',
         acceptedValues: {},
       }, {
         name: 'note',
         enabled: true,
+        required: true,
         path: 'item.notes[].note',
         value: '',
       }, {
@@ -292,6 +294,7 @@ const ITEM = {
       }, {
         name: 'uri',
         enabled: true,
+        required: true,
         path: 'item.electronicAccess[].uri',
         value: '',
       }, {
