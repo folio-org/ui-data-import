@@ -81,6 +81,44 @@ const INITIAL_QUERY = {
   qindex: '',
 };
 
+export const getLogsPath = (_q, _p, _r, _l, props) => {
+  return props.resources.splitStatus?.hasLoaded ? 'metadata-provider/jobExecutions' : undefined;
+};
+
+export const getLogsQuery = (_q, _p, resourceData, _l, props) => {
+  const {
+    qindex,
+    filters,
+    query,
+    sort,
+  } = resourceData.query || {};
+
+  const { resources : { splitStatus } } = props;
+
+  const queryValue = getQuery(query, qindex);
+  const filtersValues = getFilters(filters);
+  const sortValue = getSort(sort);
+
+  if (!filtersValues[FILTERS.ERRORS]) {
+    filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR, CANCELLED];
+  }
+
+  let adjustedQueryValue = { ...queryValue };
+  if (splitStatus.hasLoaded) {
+    if (splitStatus.records[0].splitStatus) {
+      adjustedQueryValue = { ...adjustedQueryValue, subordinationTypeNotAny: ['COMPOSITE_PARENT'] };
+    }
+  } else {
+    return {};
+  }
+
+  return {
+    ...adjustedQueryValue,
+    ...filtersValues,
+    ...sortValue,
+  };
+};
+
 export const ViewAllLogsManifest = Object.freeze({
   initializedFilterConfig: { initialValue: false },
   query: {
@@ -95,42 +133,8 @@ export const ViewAllLogsManifest = Object.freeze({
     resultOffset: '%{resultOffset}',
     records: 'jobExecutions',
     recordsRequired: '%{resultCount}',
-    path: (_q, _p, _r, _l, props) => {
-      return props.resources.splitStatus?.hasLoaded ? 'metadata-provider/jobExecutions' : undefined;
-    },
-    params: (_q, _p, resourceData, _l, props) => {
-      const {
-        qindex,
-        filters,
-        query,
-        sort,
-      } = resourceData.query || {};
-
-      const { resources : { splitStatus } } = props;
-
-      const queryValue = getQuery(query, qindex);
-      const filtersValues = getFilters(filters);
-      const sortValue = getSort(sort);
-
-      if (!filtersValues[FILTERS.ERRORS]) {
-        filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR, CANCELLED];
-      }
-
-      let adjustedQueryValue = { ...queryValue };
-      if (splitStatus.hasLoaded) {
-        if (splitStatus.records[0].splitStatus) {
-          adjustedQueryValue = { ...adjustedQueryValue, subordinationTypeNotAny: ['COMPOSITE_PARENT'] };
-        }
-      } else {
-        return {};
-      }
-
-      return {
-        ...adjustedQueryValue,
-        ...filtersValues,
-        ...sortValue,
-      };
-    },
+    path: getLogsPath,
+    params: getLogsQuery,
     perRequest: RESULT_COUNT_INCREMENT,
     throwErrors: false,
     shouldRefresh: () => true,
