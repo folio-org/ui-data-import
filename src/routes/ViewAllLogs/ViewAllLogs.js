@@ -104,7 +104,7 @@ export const getLogsQuery = (_q, _p, resourceData, _l, props) => {
   }
 
   let adjustedQueryValue = { ...queryValue };
-  if (splitStatus.hasLoaded) {
+  if (splitStatus?.hasLoaded) {
     if (splitStatus.records[0].splitStatus) {
       adjustedQueryValue = { ...adjustedQueryValue, subordinationTypeNotAny: ['COMPOSITE_PARENT'] };
     }

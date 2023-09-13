@@ -601,28 +601,28 @@ describe.skip('ViewAllLogs component', () => {
       expect(expectedSortBy).toEqual(query.sortBy);
     });
   });
+});
 
-  describe('getLogsPath function', () => {
-    it('returns expected path if multipart functionality is available', () => {
-      expect(getLogsPath(null, null, { query: {} }, null, { resources: { splitStatus: true } })).toBeDefined();
-    });
-
-    it('returns undefined path if multipart functionality is available', () => {
-      expect(getLogsPath(null, null, { query: {} }, null, { resources: {} })).toNotBeDefined();
-    });
+describe('ViewAllLogs - getLogsPath function', () => {
+  it('returns expected path if multipart functionality is available', () => {
+    expect(getLogsPath(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: true } } })).toBeDefined();
   });
 
-  describe('getLogsQuery function', () => {
-    it('returns expected query if multipart functionality is available', () => {
-      expect(getLogsQuery(null, null, { query: {} }, null, { resources: { splitStatus: true } })).toHaveProperty('subordinationTypeNotAny', ['COMPOSITE_PARENT']);
-    });
+  it('returns undefined path if splitStatus has not responded yet', () => {
+    expect(getLogsPath(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: false }} })).not.toBeDefined();
+  });
+});
 
-    it('returns expected query if multipart functionality is not available', () => {
-      expect(getLogsQuery(null, null, { query: {} }, null, { resources: { splitStatus: false } })).toNotHaveProperty('subordinationTypeNotAny', ['COMPOSITE_PARENT']);
-    });
+describe('ViewAllLogs - getLogsQuery function', () => {
+  it('returns expected query if multipart functionality is available', () => {
+    expect(getLogsQuery(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: true, records: [{ splitStatus: true }] } } })).toHaveProperty('subordinationTypeNotAny', ['COMPOSITE_PARENT']);
+  });
 
-    it('returns empty query if multipart check has not responded yet', () => {
-      expect(getLogsQuery(null, null, { query: {} }, null, { resources: {} })).toEqual({});
-    });
+  it('returns expected query if multipart functionality is not available', () => {
+    expect(getLogsQuery(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: true, records: [{splitStatus: false}] } }})).not.toHaveProperty('subordinationTypeNotAny', ['COMPOSITE_PARENT']);
+  });
+
+  it('returns empty query if multipart check has not responded yet', () => {
+    expect(getLogsQuery(null, null, { query: {} }, null, { resources: {} })).toEqual({});
   });
 });
