@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file */
-
 export const initMPUploadEndpoint = 'data-import/uploadUrl';
 export const requestPartUploadURL = 'data-import/uploadUrl/subsequent';
 export const getFinishUploadEndpoint = (uploadDefinitionId, fileId) => `data-import/uploadDefinitions/${uploadDefinitionId}/files/${fileId}/assembleStorageFile`;
@@ -80,7 +78,7 @@ export class MultipartUploader {
     }
   }
 
-  uploadPart = (part, url, partNumber, totalParts, fileKey) => {
+  uploadPart = (part, url) => {
     return new Promise((resolve, reject) => {
       this.xhr = new XMLHttpRequest();
       this.xhr.open('PUT', url, true);
@@ -156,11 +154,11 @@ export class MultipartUploader {
   };
 
   init = () => {
-    const fileKeys = Object.keys(this.files);
-    Object.keys(this.files).forEach(function(fileKey, index) {
-      this.sliceAndUploadParts(this.files[fileKey], fileKeys[index]);
-    }.bind(this));
+    Object.keys(this.files).forEach(this.handleFileUpload);
+    for (const fileKey in this.files) {
+      if (Object.hasOwn(this.files, fileKey)) {
+        this.sliceAndUploadParts(this.files[fileKey], fileKey);
+      }
+    }
   };
 }
-
-/* eslint-enable */
