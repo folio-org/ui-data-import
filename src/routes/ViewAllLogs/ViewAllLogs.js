@@ -528,7 +528,7 @@ class ViewAllLogs extends Component {
           resultsOnMarkPosition={this.onMarkPosition}
           resultsOnResetMarkedPosition={this.resetMarkedPosition}
           resultsCachedPosition={itemToView}
-          nonInteractiveHeaders={['selected']}
+          nonInteractiveHeaders={['selected', 'jobParts']}
         />
         <ConfirmationModal
           id="delete-selected-logs-modal"

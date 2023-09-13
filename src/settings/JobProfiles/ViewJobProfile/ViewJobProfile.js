@@ -399,6 +399,7 @@ const ViewJobProfileComponent = props => {
                   }}
                   visibleColumns={visibleColumns}
                   formatter={jobsUsingThisProfileFormatter}
+                  nonInteractiveHeaders={['jobParts']}
                   width="100%"
                 />
               ) : (
