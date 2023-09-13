@@ -154,7 +154,6 @@ export class MultipartUploader {
   };
 
   init = () => {
-    Object.keys(this.files).forEach(this.handleFileUpload);
     for (const fileKey in this.files) {
       if (Object.hasOwn(this.files, fileKey)) {
         this.sliceAndUploadParts(this.files[fileKey], fileKey);
