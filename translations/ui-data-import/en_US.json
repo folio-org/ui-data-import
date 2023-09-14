@@ -94,6 +94,7 @@
     "settings.jobProfiles.chooseAcceptedDataType": "Select accepted data type",
     "settings.jobProfiles.overview": "Overview",
     "fileDefinitionDeleteError": "Internal error. Press {button} button to try again",
+    "uploadConfigurationError": "There was a problem retrieving system status. Large files will not be split!",
     "communicationProblem": "Server communication problem. Please try again",
     "settings.jobProfile.title": "Job profile",
     "settings.save.error.network": "Record not saved:",

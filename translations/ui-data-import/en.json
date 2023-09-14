@@ -153,6 +153,7 @@
   "fileDeleteError": "Error while deleting {name} file",
   "jobDeleteError": "Error while deleting {name} job",
   "fileDefinitionDeleteError": "Internal error. Press {button} button to try again",
+  "uploadConfigurationError": "There was a problem retrieving system status. Large files will not be split!",
   "noUploadedFiles": "No files to show",
   "jobProfileName": "Job profile",
   "matchProfileName": "Match profile",
