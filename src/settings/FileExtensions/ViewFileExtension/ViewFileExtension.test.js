@@ -4,7 +4,7 @@ import faker from 'faker';
 import {
   fireEvent,
   waitFor,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
 import { runAxeTest } from '@folio/stripes-testing';

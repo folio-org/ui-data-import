@@ -3,7 +3,7 @@ import {
   fireEvent,
   render,
   waitFor,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 import { usePrevious } from '../hooks';
 
 function TestComponent() {

@@ -5,7 +5,7 @@ import {
   fireEvent,
   waitFor,
   getByText as getByTextScreen,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import { noop } from 'lodash';

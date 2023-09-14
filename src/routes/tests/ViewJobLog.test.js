@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import faker from 'faker';
 import { runAxeTest } from '@folio/stripes-testing';

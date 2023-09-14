@@ -1,25 +1,9 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-const path = require('path');
-
-const esModules = ['@folio', 'ky', 'uuid'].join('|');
+const config = require('@folio/jest-config-stripes');
+const acqConfigs = require('@folio/stripes-acq-components/jest.config');
 
 module.exports = {
-  collectCoverageFrom: [
-    '**/(lib|src)/**/*.{js,jsx}',
-    '!**/node_modules/**',
-    '!**/test/**',
-  ],
-  coverageDirectory: './artifacts/coverage-jest/',
-  coverageReporters: ['lcov'],
-  reporters: ['jest-junit', 'default'],
-  transform: { '^.+\\.(js|jsx)$': path.join(__dirname, './test/jest/jest-transformer.js') },
-  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
-  moduleNameMapper: {
-    '^.+\\.(css)$': 'identity-obj-proxy',
-    '^.+\\.(svg)$': 'identity-obj-proxy',
+  ...config,
+  transform: {
+    ...acqConfigs.transform,
   },
-  testEnvironment: 'jsdom',
-  testMatch: ['**/(lib|src)/**/?(*.)test.{js,jsx}'],
-  testPathIgnorePatterns: ['/node_modules/'],
-  setupFilesAfterEnv: [path.join(__dirname, './test/jest/jest.setup.js')],
 };

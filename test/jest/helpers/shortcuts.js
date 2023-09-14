@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/react';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 export const openEditShortcut = element => {
   fireEvent.keyDown(element, {

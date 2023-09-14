@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter as Router } from 'react-router-dom';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';

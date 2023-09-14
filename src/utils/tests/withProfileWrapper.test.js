@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { render } from '@folio/jest-config-stripes/testing-library/react';
 import { withProfileWrapper } from '../withProfileWrapper';
 
 describe('withProfileWrapper HOC', () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   fireEvent,
   within,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 import { get } from 'lodash';
 
 import { runAxeTest } from '@folio/stripes-testing';

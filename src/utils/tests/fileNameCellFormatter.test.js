@@ -1,5 +1,5 @@
 import { Router } from 'react-router-dom';
-import { render } from '@testing-library/react';
+import { render } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 
 import '../../../test/jest/__mock__';
