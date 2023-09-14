@@ -101,6 +101,7 @@ const ViewJobProfileComponent = props => {
   const sRStatusRef = useRef(null);
   const { uploadDefinition, uploadConfiguration } = useContext(UploadingJobsContext);
   const { formatMessage } = useIntl();
+  const objectStorageConfiguration = uploadConfiguration?.canUseObjectStorage;
   const visibleColumns = useMemo(() => {
     const defaultVisibleColumns = [
       'fileName',
@@ -108,13 +109,13 @@ const ViewJobProfileComponent = props => {
       'completedDate',
       'runBy',
     ];
-    if (uploadConfiguration?.canUseObjectStorage) {
+    if (objectStorageConfiguration) {
       const columns = [...defaultVisibleColumns];
       columns.splice(2, 0, 'jobParts');
       return columns;
     }
     return defaultVisibleColumns;
-  }, uploadConfiguration?.canUseObjectStorage);
+  }, [objectStorageConfiguration]);
 
   const jobProfileData = () => {
     const jobProfile = resources.jobProfileView || {};
