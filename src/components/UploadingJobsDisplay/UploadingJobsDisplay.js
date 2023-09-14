@@ -188,7 +188,7 @@ export class UploadingJobsDisplay extends Component {
   get filesUploading() {
     const { files } = this.state;
 
-    return !this.isSnapshotMode && some(files, file => file.status === FILE_STATUSES.UPLOADING);
+    return !this.isSnapshotMode && some(files, file => file.status === FILE_STATUSES.UPLOADING || file.status === FILE_STATUSES.UPLOADING_CANCELLABLE);
   }
 
   renderSnapshotData() {
