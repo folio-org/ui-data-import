@@ -5,11 +5,15 @@ import {
   every,
   isEmpty,
 } from 'lodash';
+import {
+  FormattedMessage
+} from 'react-intl';
 
 import {
   withStripes,
   stripesShape,
   withOkapiKy,
+  CalloutContext
 } from '@folio/stripes/core';
 import { createUrl } from '@folio/stripes-data-transfer-components';
 
@@ -30,6 +34,7 @@ export class UploadingJobsContextProvider extends Component {
     ]).isRequired,
   };
 
+  static contextType = CalloutContext;
   constructor(props) {
     super(props);
 
@@ -46,13 +51,26 @@ export class UploadingJobsContextProvider extends Component {
   }
 
   getUploadConfiguration = async () => {
-    const { okapiKy } = this.props;
-    const { splitStatus } = await getStorageConfiguration(okapiKy);
-    this.setState({
-      uploadConfiguration: {
-        canUseObjectStorage: splitStatus
-      }
-    });
+    try {
+      const { okapiKy } = this.props;
+      const { splitStatus } = await getStorageConfiguration(okapiKy);
+      this.setState({
+        uploadConfiguration: {
+          canUseObjectStorage: splitStatus
+        }
+      });
+    } catch (error) {
+      const { sendCallout } = this.context;
+      sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-data-import.uploadConfigurationRetrievalError" />
+      });
+      this.setState({
+        uploadConfiguration: {
+          canUseObjectStorage: false
+        }
+      });
+    }
   }
 
   deleteUploadDefinition = async () => {
