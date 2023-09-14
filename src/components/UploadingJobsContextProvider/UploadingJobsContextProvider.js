@@ -63,7 +63,7 @@ export class UploadingJobsContextProvider extends Component {
       const { sendCallout } = this.context;
       sendCallout({
         type: 'error',
-        message: <FormattedMessage id="ui-data-import.uploadConfigurationRetrievalError" />
+        message: <FormattedMessage id="ui-data-import.uploadConfigurationError" />
       });
       this.setState({
         uploadConfiguration: {
