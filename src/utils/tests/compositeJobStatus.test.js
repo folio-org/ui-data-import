@@ -116,7 +116,7 @@ describe('compositeJobStatus utilities', () => {
         inProgressRecords,
         completedRecords,
         failedRecords
-      })).toEqual({ total: 754, processed: 230 });
+      }, 754)).toEqual({ total: 754, processed: 230 });
     });
     it('if progress percent is greater than 100%, return 100%', () => {
       expect(calculateCompositeProgress(
@@ -124,7 +124,7 @@ describe('compositeJobStatus utilities', () => {
           inProgressRecords : { totalRecords: 100, processedRecords: 200 },
           completedRecords: { totalRecords: 100, processedRecords: 200 },
           failedRecords: { totalRecords: 100, processedRecords: 200 }
-        }, prevProgress
+        }, 100, prevProgress
       )).toEqual({ total: 100, processed: 100 });
     });
     it('if supplied values are NaN, return a 0 percentage...', () => {
@@ -132,14 +132,15 @@ describe('compositeJobStatus utilities', () => {
         inProgressRecords : { processedRecords: 200 },
         completedRecords: { processedRecords: 200 },
         failedRecords: { processedRecords: 200 }
-      }, prevProgress)).toEqual({ total: 100, processed: 0 });
+      }, {}, prevProgress)).toEqual({ total: 100, processed: 0 });
     });
     it('if result and previous are the same, do not call updateProgress', () => {
       expect(calculateCompositeProgress({
-        inProgressRecords : { processedRecords: 200 },
-        completedRecords: { processedRecords: 200 },
-        failedRecords: { processedRecords: 200 }
+        inProgressRecords : { processedRecords: 0 },
+        completedRecords: { processedRecords: 0 },
+        failedRecords: { processedRecords: 0 }
       },
+      100,
       { total: 100, processed: 0 },
       updateProgressMock)).toEqual({ total: 100, processed: 0 });
       expect(updateProgressMock).not.toHaveBeenCalled();
@@ -151,9 +152,10 @@ describe('compositeJobStatus utilities', () => {
           completedRecords: { totalRecords: 100, processedRecords: 50 },
           failedRecords: { totalRecords: 0, processedRecords: 0 }
         },
-        { total: 100, processed: 30 },
+        200,
+        { total: 200, processed: 30 },
         updateProgressMock
-      )).toEqual({ total: 100, processed: 50 });
+      )).toEqual({ total: 200, processed: 60 });
       expect(updateProgressMock).toHaveBeenCalled();
     });
   });

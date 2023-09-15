@@ -106,7 +106,6 @@ updateProgress = () => {}) => {
   const recordBaseProgress = { totalRecords: 0, processedRecords: 0 };
   let recordProgress = [inProgressRecords, completedRecords, failedRecords].reduce((acc, curr) => {
     return {
-      totalRecords: acc.totalRecords + curr.totalRecords,
       processedRecords: acc.processedRecords + curr.processedRecords,
     };
   }, recordBaseProgress);

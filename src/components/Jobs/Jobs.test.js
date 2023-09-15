@@ -121,7 +121,8 @@ const runningCompositeJobs = [{
       totalRecordsCount: 1000,
       currentlyProcessedCount: 1000
     }
-  }
+  },
+  totalRecordsInFile: 200
 }
 ];
 
@@ -376,7 +377,7 @@ describe('Composite jobs - Jobs component', () => {
       });
 
       it('Composite jobs - should display total number of records', () => {
-        const totalRecords = runningCompositeJobs[0].progress.total;
+        const totalRecords = runningCompositeJobs[0].totalRecordsInFile;
 
         expect(within(jobCard).getByText(`${totalRecords} records`)).toBeInTheDocument();
       });
