@@ -64,15 +64,11 @@ const renderCompositeDetails = (jobEntry, previousProgress = { processed: 0, tot
 
   const progress = CompositeJobFields.calculateCompositeProgress(
     {
-      totalSliceAmount,
-      failedSliceAmount,
-      completedSliceAmount,
-    },
-    {
       inProgressRecords,
       completedRecords,
       failedRecords
     },
+    jobEntry.totalRecordsInFile,
     previousProgress,
     updateProgress
   );
@@ -338,7 +334,7 @@ const JobComponent = ({
             {jobMeta && (
               <FormattedMessage
                 id="ui-data-import.recordsCount"
-                values={{ count: total }}
+                values={{ count: job.compositeDetails ? job.totalRecordsInFile : total }}
                 tagName="span"
               />
             )}

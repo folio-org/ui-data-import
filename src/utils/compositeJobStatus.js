@@ -33,8 +33,9 @@ export const calculateJobRecordsStats = (obj, arr) => {
   let processedRecords = 0;
   arr.forEach((status) => {
     if (Object.hasOwn(obj, status)) {
-      if (!isNaN(obj[status].totalRecordsCount)) totalRecords += obj[status].totalRecordsCount;
-      if (!isNaN(obj[status].currentlyProcessedCount)) processedRecords += obj[status].currentlyProcessedCount;
+      // disable eslint here - Number.isNaN will return true if the value is anything besides NaN. i.e. Number.isNaN(undefined) = false.
+      if (!isNaN(obj[status].totalRecordsCount)) totalRecords += obj[status].totalRecordsCount; // eslint-disable-line no-restricted-globals
+      if (!isNaN(obj[status].currentlyProcessedCount)) processedRecords += obj[status].currentlyProcessedCount; // eslint-disable-line no-restricted-globals
     }
   });
   return { totalRecords, processedRecords };
@@ -95,16 +96,13 @@ export const collectCompositeJobValues = (jobEntry) => {
 };
 
 export const calculateCompositeProgress = ({
-  totalSliceAmount,
-  failedSliceAmount,
-  completedSliceAmount
-}, {
   inProgressRecords,
   completedRecords,
-  failedRecords
-}, previousProgress = { processed: 0, total: 100 },
-updateProgress = ()=>{}
-) => {
+  failedRecords,
+},
+totalRecords,
+previousProgress = { processed: 0, total: 100 },
+updateProgress = () => {}) => {
   const recordBaseProgress = { totalRecords: 0, processedRecords: 0 };
   let recordProgress = [inProgressRecords, completedRecords, failedRecords].reduce((acc, curr) => {
     return {
@@ -114,38 +112,34 @@ updateProgress = ()=>{}
   }, recordBaseProgress);
 
   recordProgress = {
-    total: recordProgress.totalRecords,
+    total: totalRecords,
     processed: recordProgress.processedRecords
   };
 
-  const sliceProgress = {
-    total: totalSliceAmount,
-    processed: failedSliceAmount + completedSliceAmount,
-  };
-
-  const recordPercent = recordProgress.processed / recordProgress.total;
-  const slicePercent = sliceProgress.processed / sliceProgress.total;
-  let accProgress = (recordPercent > slicePercent) ? sliceProgress : recordProgress;
-
   // Ensure progress does not diminish.
-  if ((previousProgress.processed / previousProgress.total) > (accProgress.processed / accProgress.total)) {
-    accProgress = previousProgress;
+  if ((previousProgress.processed / previousProgress.total) > (recordProgress.processed / recordProgress.total)) {
+    recordProgress = previousProgress;
   }
 
   // Ensure that progress doesn't extend beyond 100%
-  const adjustedPercent = accProgress.processed / accProgress.total;
+  const adjustedPercent = recordProgress.processed / recordProgress.total;
   if (adjustedPercent > 1.0) {
-    accProgress.total = 100;
-    accProgress.processed = 100;
+    recordProgress.total = 100;
+    recordProgress.processed = 100;
   }
 
   // replace any NaN values with numbers for total. Avoid dividing by zero.
-  // this attempts to resolve any NaN display problems when a job is early in the submission process.
-  if (isNaN(accProgress.processed)) accProgress.processed = 0;
-  if (isNaN(accProgress.total) || accProgress.total === 0) {
-    accProgress.total = 100;
-    accProgress.processed = 0;
+  // this attempts to resolve any NaN display problems when a job is early in the submission process
+  // we disable eslint here - Number.isNaN will return true if the value is anything besides NaN.
+  if (isNaN(recordProgress.processed)) recordProgress.processed = 0; // eslint-disable-line no-restricted-globals
+  if (isNaN(recordProgress.total) || recordProgress.total === 0) { // eslint-disable-line no-restricted-globals
+    recordProgress.total = 100;
+    recordProgress.processed = 0;
   }
 
-  return accProgress;
+  if (previousProgress.processed !== recordProgress.processed) {
+    updateProgress(recordProgress);
+  }
+
+  return recordProgress;
 };

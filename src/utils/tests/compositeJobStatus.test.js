@@ -101,58 +101,60 @@ describe('compositeJobStatus utilities', () => {
 
   describe('calculateCompositeProgress -', () => {
     const {
-      completedSliceAmount,
-      failedSliceAmount,
-      totalSliceAmount,
       inProgressRecords,
       completedRecords,
       failedRecords
     } = collectCompositeJobValues(mockJob);
     const prevProgress = { processed: 80, total: 90 };
-    const updateProgress = jest.fn();
+    const updateProgressMock = jest.fn();
+
+    beforeEach(() => {
+      updateProgressMock.mockReset();
+    });
     it('calculates progress as expected', () => {
       expect(calculateCompositeProgress({
-        totalSliceAmount,
-        failedSliceAmount,
-        completedSliceAmount
-      },{
         inProgressRecords,
         completedRecords,
         failedRecords
       })).toEqual({ total: 754, processed: 230 });
     });
-    it('if previous progress is greater, return previous progress', () => {
-      expect(calculateCompositeProgress({
-        totalSliceAmount,
-        failedSliceAmount,
-        completedSliceAmount
-      },{
-        inProgressRecords,
-        completedRecords,
-        failedRecords
-      }, prevProgress)).toEqual(prevProgress);
-    });
     it('if progress percent is greater than 100%, return 100%', () => {
-      expect(calculateCompositeProgress({
-        totalSliceAmount: 30,
-        failedSliceAmount: 90,
-        completedSliceAmount: 90
-      },{
-        inProgressRecords : {totalRecords: 100, processedRecords: 200},
-        completedRecords: {totalRecords: 100, processedRecords: 200},
-        failedRecords: {totalRecords: 100, processedRecords: 200}
-      }, prevProgress)).toEqual({total: 100, processed: 100 });
+      expect(calculateCompositeProgress(
+        {
+          inProgressRecords : { totalRecords: 100, processedRecords: 200 },
+          completedRecords: { totalRecords: 100, processedRecords: 200 },
+          failedRecords: { totalRecords: 100, processedRecords: 200 }
+        }, prevProgress
+      )).toEqual({ total: 100, processed: 100 });
     });
     it('if supplied values are NaN, return a 0 percentage...', () => {
       expect(calculateCompositeProgress({
-        totalSliceAmount: undefined,
-        failedSliceAmount: 90,
-        completedSliceAmount: 90
-      },{
-        inProgressRecords : {processedRecords: 200},
-        completedRecords: {processedRecords: 200},
-        failedRecords: {processedRecords: 200}
-      }, prevProgress)).toEqual({total: 100, processed: 0 });
+        inProgressRecords : { processedRecords: 200 },
+        completedRecords: { processedRecords: 200 },
+        failedRecords: { processedRecords: 200 }
+      }, prevProgress)).toEqual({ total: 100, processed: 0 });
+    });
+    it('if result and previous are the same, do not call updateProgress', () => {
+      expect(calculateCompositeProgress({
+        inProgressRecords : { processedRecords: 200 },
+        completedRecords: { processedRecords: 200 },
+        failedRecords: { processedRecords: 200 }
+      },
+      { total: 100, processed: 0 },
+      updateProgressMock)).toEqual({ total: 100, processed: 0 });
+      expect(updateProgressMock).not.toHaveBeenCalled();
+    });
+    it('if result and previous are different, do not call updateProgress', () => {
+      expect(calculateCompositeProgress(
+        {
+          inProgressRecords : { totalRecords: 100, processedRecords: 10 },
+          completedRecords: { totalRecords: 100, processedRecords: 50 },
+          failedRecords: { totalRecords: 0, processedRecords: 0 }
+        },
+        { total: 100, processed: 30 },
+        updateProgressMock
+      )).toEqual({ total: 100, processed: 50 });
+      expect(updateProgressMock).toHaveBeenCalled();
     });
   });
 });
