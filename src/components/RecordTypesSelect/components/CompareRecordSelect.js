@@ -145,6 +145,7 @@ export const CompareRecordSelect = memo(({
             className={css.incomingRecord}
             style={{ height }}
             isEditable={isEditable}
+            existingRecordType={existingRecord.type}
           />
           <div
             ref={compareElemRef}

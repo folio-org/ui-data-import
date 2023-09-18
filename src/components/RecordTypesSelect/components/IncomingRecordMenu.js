@@ -7,6 +7,7 @@ import {
   Button,
   DropdownMenu,
 } from '@folio/stripes/components';
+import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import { MATCH_INCOMING_RECORD_TYPES } from '../../../utils';
 
@@ -16,8 +17,25 @@ export const IncomingRecordMenu = ({
   onToggle,
   keyHandler,
   dataAttributes,
+  existingRecordType,
 }) => {
-  const incomingRecordTypes = omit(MATCH_INCOMING_RECORD_TYPES, MATCH_INCOMING_RECORD_TYPES.MARC_HOLDINGS.type);
+  const getIncomingRecordTypesOptions = (existingType) => {
+    switch (existingType) {
+      case FOLIO_RECORD_TYPES.INSTANCE.type: {
+        return omit(MATCH_INCOMING_RECORD_TYPES, [
+          MATCH_INCOMING_RECORD_TYPES.MARC_HOLDINGS.type,
+          MATCH_INCOMING_RECORD_TYPES.MARC_AUTHORITY.type,
+        ]);
+      }
+
+      default: {
+        return omit(MATCH_INCOMING_RECORD_TYPES, [
+          MATCH_INCOMING_RECORD_TYPES.MARC_HOLDINGS.type,
+        ]);
+      }
+    }
+  };
+  const incomingRecordTypes = getIncomingRecordTypesOptions(existingRecordType);
 
   return (
     <DropdownMenu
@@ -52,6 +70,7 @@ IncomingRecordMenu.propTypes = {
   onToggle: PropTypes.func.isRequired,
   keyHandler: PropTypes.func.isRequired,
   dataAttributes: PropTypes.object,
+  existingRecordType: PropTypes.string,
 };
 
 IncomingRecordMenu.defaultProps = { dataAttributes: null };
