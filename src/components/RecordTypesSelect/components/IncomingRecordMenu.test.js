@@ -13,13 +13,14 @@ import { IncomingRecordMenu } from './IncomingRecordMenu';
 
 const onClick = jest.fn();
 
-const renderIncomingRecordMenu = ({ open }) => {
+const renderIncomingRecordMenu = props => {
   const component = (
     <IncomingRecordMenu
-      open={open}
       onClick={onClick}
       onToggle={noop}
       keyHandler={noop}
+      existingRecordType="INSTANCE"
+      {...props}
     />
   );
 
@@ -42,7 +43,6 @@ describe('IncomingRecordMenu component', () => {
       const { getByText } = renderIncomingRecordMenu({ open: false });
 
       expect(getByText('MARC Bibliographic')).not.toBeVisible();
-      expect(getByText('MARC Authority')).not.toBeVisible();
       expect(getByText('Static value (submatch only)')).not.toBeVisible();
     });
   });

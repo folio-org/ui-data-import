@@ -1,15 +1,16 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import { omit } from 'lodash';
 
 import {
   Button,
   DropdownMenu,
 } from '@folio/stripes/components';
-import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
-import { MATCH_INCOMING_RECORD_TYPES } from '../../../utils';
+import {
+  ALLOWED_INCOMING_RECORD_TYPES,
+  MATCH_INCOMING_RECORD_TYPES,
+} from '../../../utils';
 
 export const IncomingRecordMenu = ({
   open,
@@ -19,23 +20,7 @@ export const IncomingRecordMenu = ({
   dataAttributes,
   existingRecordType,
 }) => {
-  const getIncomingRecordTypesOptions = (existingType) => {
-    switch (existingType) {
-      case FOLIO_RECORD_TYPES.INSTANCE.type: {
-        return omit(MATCH_INCOMING_RECORD_TYPES, [
-          MATCH_INCOMING_RECORD_TYPES.MARC_HOLDINGS.type,
-          MATCH_INCOMING_RECORD_TYPES.MARC_AUTHORITY.type,
-        ]);
-      }
-
-      default: {
-        return omit(MATCH_INCOMING_RECORD_TYPES, [
-          MATCH_INCOMING_RECORD_TYPES.MARC_HOLDINGS.type,
-        ]);
-      }
-    }
-  };
-  const incomingRecordTypes = getIncomingRecordTypesOptions(existingRecordType);
+  const incomingRecordTypes = ALLOWED_INCOMING_RECORD_TYPES[existingRecordType];
 
   return (
     <DropdownMenu
