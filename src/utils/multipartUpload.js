@@ -45,7 +45,7 @@ export function trimLeadNumbers(name) {
 }
 
 export class MultipartUploader {
-  constructor(uploadDefinitionId, files, ky, errorHandler, progressHandler, successHandler) {
+  constructor(uploadDefinitionId, files, ky, errorHandler, progressHandler, successHandler, intl) {
     this.files = files;
     this.ky = ky;
     this.errorHandler = errorHandler;
@@ -56,6 +56,7 @@ export class MultipartUploader {
     this.abortSignal = false;
     this.totalFileSize = 0;
     this.totalUploadProgress = 0;
+    this.intl = intl;
   }
 
   updateProgress = (value) => { this.totalUploadProgress += value; }
@@ -78,7 +79,7 @@ export class MultipartUploader {
     }
   }
 
-  uploadPart = (part, url) => {
+  uploadPart = (part, url, fileKey) => {
     return new Promise((resolve, reject) => {
       this.xhr = new XMLHttpRequest();
       this.xhr.open('PUT', url, true);
@@ -107,6 +108,10 @@ export class MultipartUploader {
         } catch (error) {
           reject(error);
         }
+      });
+      this.xhr.addEventListener('error', () => {
+        this.abortSignal = true;
+        this.errorHandler(fileKey, new Error(this.intl.formatMessage({ id: 'ui-data-import.upload.invalid' })));
       });
       this.xhr.send(part);
     });
@@ -143,6 +148,7 @@ export class MultipartUploader {
         currentByte += CHUNK_SIZE;
       } catch (error) {
         if (error.message !== 'userCancelled') this.errorHandler(fileKey, error);
+        this.abortSignal = true;
         break;
       }
     }

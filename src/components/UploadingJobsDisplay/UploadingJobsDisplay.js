@@ -3,7 +3,7 @@ import React, {
   createRef,
 } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import {
   isEmpty,
@@ -50,6 +50,7 @@ import sharedCss from '../../shared.css';
 @withRouter
 @withStripes
 @withOkapiKy
+@injectIntl
 export class UploadingJobsDisplay extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
@@ -67,6 +68,9 @@ export class UploadingJobsDisplay extends Component {
       PropTypes.string.isRequired,
     ]),
     okapiKy: PropTypes.func,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func
+    }).isRequired,
   };
 
   static contextType = UploadingJobsContext;
@@ -239,7 +243,7 @@ export class UploadingJobsDisplay extends Component {
   multipartUpload() {
     const { uploadDefinition } = this.context;
     const { files } = this.state;
-    const { okapiKy } = this.props;
+    const { okapiKy, intl } = this.props;
     this.currentFileUploadXhr = new MultipartUploader(
       uploadDefinition.id,
       files,
@@ -247,6 +251,7 @@ export class UploadingJobsDisplay extends Component {
       this.handleFileUploadFail,
       this.onFileUploadProgress,
       this.handleFileUploadSuccess,
+      intl,
     );
     this.currentFileUploadXhr.init();
   }
