@@ -36,9 +36,6 @@ const renderIncomingRecordTrigger = ({
       captionId={captionId}
       iconKey={iconKey}
       isExpanded={isExpanded}
-      incomingType="MARC_BIBLIOGRAPHIC"
-      existingType="INSTANCE"
-      setIncomingRecord={jest.fn()}
     />
   );
 

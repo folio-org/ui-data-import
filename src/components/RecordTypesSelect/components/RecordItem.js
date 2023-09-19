@@ -42,9 +42,6 @@ export const RecordItem = memo(({
     <IncomingRecordTrigger
       className={className}
       style={style}
-      setIncomingRecord={setIncomingRecord}
-      incomingType={incomingRecord.type}
-      existingType={existingRecordType}
       onClick={() => setRecordSelectorOpen(!recordSelectorOpen)}
       iconKey={incomingRecord.iconKey}
       captionId={incomingRecord.captionId}

@@ -20,6 +20,7 @@ const renderIncomingRecordMenu = props => {
       onToggle={noop}
       keyHandler={noop}
       existingRecordType="INSTANCE"
+      open={props.open}
       {...props}
     />
   );
