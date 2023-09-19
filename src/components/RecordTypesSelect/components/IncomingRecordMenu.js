@@ -1,14 +1,16 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import { omit } from 'lodash';
 
 import {
   Button,
   DropdownMenu,
 } from '@folio/stripes/components';
 
-import { MATCH_INCOMING_RECORD_TYPES } from '../../../utils';
+import {
+  ALLOWED_INCOMING_RECORD_TYPES,
+  MATCH_INCOMING_RECORD_TYPES,
+} from '../../../utils';
 
 export const IncomingRecordMenu = ({
   open,
@@ -16,8 +18,9 @@ export const IncomingRecordMenu = ({
   onToggle,
   keyHandler,
   dataAttributes,
+  existingRecordType,
 }) => {
-  const incomingRecordTypes = omit(MATCH_INCOMING_RECORD_TYPES, MATCH_INCOMING_RECORD_TYPES.MARC_HOLDINGS.type);
+  const incomingRecordTypes = ALLOWED_INCOMING_RECORD_TYPES[existingRecordType];
 
   return (
     <DropdownMenu
@@ -52,6 +55,7 @@ IncomingRecordMenu.propTypes = {
   onToggle: PropTypes.func.isRequired,
   keyHandler: PropTypes.func.isRequired,
   dataAttributes: PropTypes.object,
+  existingRecordType: PropTypes.string,
 };
 
 IncomingRecordMenu.defaultProps = { dataAttributes: null };
