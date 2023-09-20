@@ -107,19 +107,19 @@ describe('DataFetcher component', () => {
   });
 
   describe('getJobSplittingURL', () => {
-    const trueResources = { split_status: { isPending: false, records: [{ splitStatus: true }] } };
-    const falseResources = { split_status: { isPending: false, records: [{ splitStatus: false }] } };
-    const pendingResources = { split_status: { isPending: true, records: [] } };
+    const trueResources = { splitStatus: { isPending: false, records: [{ splitStatus: true }] } };
+    const falseResources = { splitStatus: { isPending: false, records: [{ splitStatus: false }] } };
+    const pendingResources = { splitStatus: { isPending: true, records: [] } };
     it('given a splitStatus of true, it provides the "trueUrl" parameter', () => {
-      expect(getJobSplittingURL(trueResources, 'trueUrl', 'falseUrl')).toBe('trueUrl');
+      expect(getJobSplittingURL({ resources: trueResources }, 'trueUrl', 'falseUrl')).toBe('trueUrl');
     });
 
     it('given a splitStatus of true, it provides the "falseUrl" parameter', () => {
-      expect(getJobSplittingURL(falseResources, 'trueUrl', 'falseUrl')).toBe('falseUrl');
+      expect(getJobSplittingURL({ resources: falseResources }, 'trueUrl', 'falseUrl')).toBe('falseUrl');
     });
 
     it('given a pending split status, it returns undefined', () => {
-      expect(getJobSplittingURL(pendingResources, 'trueUrl', 'falseUrl')).toBeUndefined();
+      expect(getJobSplittingURL({ resources: pendingResources }, 'trueUrl', 'falseUrl')).toBeUndefined();
     });
   });
 });
