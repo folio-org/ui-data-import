@@ -53,6 +53,12 @@ const resources = buildResources({
       fileName: 'testFileName',
     }],
   }],
+  otherResources: {
+    splitStatus: {
+      hasLoaded: true,
+      records: [{ splitStatus: true }]
+    }
+  }
 });
 
 const TestComponent = () => {

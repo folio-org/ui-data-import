@@ -135,8 +135,15 @@ export class DataFetcher extends Component {
   };
 
   componentDidMount() {
+    const { resources:{ splitStatus } } = this.props;
+    const { statusLoaded } = this.state;
     this.mounted = true;
     this.initialFetchPending = false;
+    if (!statusLoaded && splitStatus?.hasLoaded) {
+      this.setState({ statusLoaded: true }, () => {
+        if (!this.initialFetchPending) this.initialize();
+      });
+    }
   }
 
   componentDidUpdate(props, state) {
