@@ -40,8 +40,8 @@ const kyMock = () => ({
 });
 
 const mockMultipart = (
-  uploadDefId = 'test',
-  files = [],
+  uploadDefId = 'test', // eslint-disable-line
+  files = [], // eslint-disable-line
   ky = kyMock,
   errorHandler = jest.fn(),
   progressHandler = jest.fn(),
@@ -52,13 +52,13 @@ const mockMultipart = (
       try {
         ky.post();
         progressHandler({ current: 30, total: 100 });
-        successHandler(successMock, mockKey, true)
+        successHandler();
       } catch (error) {
         errorHandler(error);
       }
     }
   };
-}
+};
 
 jest.mock('../../../utils/multipartUpload', () => ({
   ...jest.requireActual('../../../utils/multipartUpload'),

@@ -205,12 +205,12 @@ describe('getLatestUploadDefinition function', () => {
 describe('mapFilesToUI', () => {
   it('Given an undefined status value, and canUseObjectStorage: true, sets status to "UPLOADING-CANCELLABLE"', () => {
     const files = mapFilesToUI([{ name: 'testfile', lastModified: '202021122' }], true);
-    expect(files['testfile202021122']).toHaveProperty('status', 'UPLOADING-CANCELLABLE');
+    expect(files.testfile202021122).toHaveProperty('status', 'UPLOADING-CANCELLABLE');
   });
 
   it('Given an undefined status value, and canUseObjectStorage: false, sets status to "UPLOADING"', () => {
     const files = mapFilesToUI([{ name: 'testfile', lastModified: '202021122' }], false);
-    expect(files['testfile202021122']).toHaveProperty('status', 'UPLOADING');
+    expect(files.testfile202021122).toHaveProperty('status', 'UPLOADING');
   });
 
   it('Given empty parameters, returns an empty object', () => {

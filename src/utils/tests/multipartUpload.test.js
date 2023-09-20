@@ -15,32 +15,32 @@ import {
   trimLeadNumbers,
 } from '../multipartUpload';
 
-const testId = 'testId'
+const testId = 'testId';
 const responseMock = jest.fn();
 const getMock = jest.fn((url) => {
   if (url === initMPUploadEndpoint) {
-      return {
-        json: () => { return Promise.resolve({ url: 'testUrl', uploadId: testId, key: 'testKey' })}
-      }
+    return {
+      json: () => { return Promise.resolve({ url: 'testUrl', uploadId: testId, key: 'testKey' }); }
+    };
   }
   if (url === requestPartUploadURL) {
-      return {
-        json: () => { return Promise.resolve({ url: 'testSubsequentUrl', key: 'testSubsequentKey' })}
-      }
+    return {
+      json: () => { return Promise.resolve({ url: 'testSubsequentUrl', key: 'testSubsequentKey' }); }
+    };
   }
   if (url.startsWith(getFinishUploadEndpoint(testId, 'undefined'))) {
-      return {
-        json: () => { return Promise.resolve({ ok: true })}
-      }
+    return {
+      json: () => { return Promise.resolve({ ok: true }); }
+    };
   }
   if (url.startsWith(cancelMultipartJobEndpoint(testId))) {
     return {
-      json: () => { return Promise.resolve({ ok: true })}
-    }
-}
+      json: () => { return Promise.resolve({ ok: true }); }
+    };
+  }
   return { json: () => {
     return Promise.resolve(responseMock());
-  }};
+  } };
 });
 
 const kyMock = {
@@ -128,10 +128,10 @@ describe('MultipartUploader class', () => {
   const successHandler = jest.fn();
   const createMultipartUploader = (size = 31457280) => new MultipartUploader(
     testId,
-    {file1: {
+    { file1: {
       file: getFileOfSize(size),
-      size: size
-    }},
+      size
+    } },
     kyMock,
     errorHandler,
     progressHandler,
@@ -154,13 +154,13 @@ describe('MultipartUploader class', () => {
     uploader = createMultipartUploader();
     uploader.init();
     await waitFor(() => expect(mockXHR.addEventListener).toHaveBeenCalled());
-    let progress = mockXHR.upload.addEventListener.mock.calls[0][1];
+    const progress = mockXHR.upload.addEventListener.mock.calls[0][1];
     progress({ loaded: 12, total: 100 });
     expect(progressHandler).toHaveBeenCalled();
     mockXHR.status = 200;
     progress({ loaded: 100, total: 100 });
     expect(progressHandler).toHaveBeenCalledTimes(2);
-    let readystatechange = mockXHR.addEventListener.mock.calls[0][1];
+    const readystatechange = mockXHR.addEventListener.mock.calls[0][1];
     readystatechange();
     await waitFor(() => expect(successHandler).toBeCalled());
     expect(mockXHR.open).toHaveBeenCalled();
@@ -177,7 +177,7 @@ describe('MultipartUploader class', () => {
     mockXHR.status = 200;
     readystatechange();
     await waitFor(() => expect(mockXHR.send).toHaveBeenCalledTimes(2));
-    readystatechange = mockXHR.addEventListener.mock.calls[2][1]
+    readystatechange = mockXHR.addEventListener.mock.calls[2][1];
     readystatechange();
     await waitFor(() => expect(successHandler).toBeCalled());
     await waitFor(() => expect(errorHandler).toHaveBeenCalledTimes(0));
@@ -192,10 +192,10 @@ describe('MultipartUploader class', () => {
     mockXHR.status = 200;
     readystatechange();
     mockXHR.status = 0;
-    await waitFor(() => expect(mockXHR.open).toHaveBeenCalledTimes(2))
+    await waitFor(() => expect(mockXHR.open).toHaveBeenCalledTimes(2));
     readystatechange = mockXHR.addEventListener.mock.calls[2][1];
     uploader.abort();
-    let abort = mockXHR.upload.addEventListener.mock.calls[3][1];
+    const abort = mockXHR.upload.addEventListener.mock.calls[3][1];
     abort();
     readystatechange();
     expect(uploader.abortSignal).toBe(true);
@@ -212,8 +212,8 @@ describe('MultipartUploader class', () => {
     mockXHR.status = 200;
     readystatechange();
     mockXHR.status = 500;
-    mockXHR.responseText = JSON.stringify({ message: 'there was a problem!' })
-    await waitFor(() => expect(mockXHR.open).toHaveBeenCalledTimes(2))
+    mockXHR.responseText = JSON.stringify({ message: 'there was a problem!' });
+    await waitFor(() => expect(mockXHR.open).toHaveBeenCalledTimes(2));
     readystatechange = mockXHR.addEventListener.mock.calls[2][1];
     readystatechange();
     expect(uploader.abortSignal).toBe(false);
