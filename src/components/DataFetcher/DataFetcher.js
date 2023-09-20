@@ -60,12 +60,12 @@ const logsUrl = createUrlFromArray('metadata-provider/jobExecutions', logsUrlPar
 const compositeJobsUrl = createUrlFromArray('metadata-provider/jobExecutions', [...jobsUrlParams, 'subordinationTypeNotAny=COMPOSITE_CHILD']);
 const compositeLogsUrl = createUrlFromArray('metadata-provider/jobExecutions', [...logsUrlParams, 'subordinationTypeNotAny=COMPOSITE_PARENT']);
 
-export function getJobSplittingURL(props, splittingURL, nonSplitting) {
-  const { resources } = props;
-  if (!resources?.splitStatus.isPending) {
-    if (resources?.splitStatus?.records[0]?.splitStatus) {
+export function getJobSplittingURL(resources, splittingURL, nonSplitting) {
+  const { split_status: splitStatus } = resources;
+  if (!splitStatus?.isPending) {
+    if (splitStatus?.records[0]?.splitStatus) {
       return splittingURL;
-    } else if (resources?.splitStatus?.records[0]?.splitStatus === false) {
+    } else if (splitStatus?.records[0]?.splitStatus === false) {
       return nonSplitting;
     }
   }
@@ -77,13 +77,13 @@ export class DataFetcher extends Component {
   static manifest = Object.freeze({
     jobs: {
       type: 'okapi',
-      path: (_q, _p, _r, _l, props) => getJobSplittingURL(props, compositeJobsUrl, jobsUrl),
+      path: (_q, _p, resources) => getJobSplittingURL(resources, compositeJobsUrl, jobsUrl),
       accumulate: true,
       throwErrors: false,
     },
     logs: {
       type: 'okapi',
-      path: (_q, _p, _r, _l, props) => getJobSplittingURL(props, compositeLogsUrl, logsUrl),
+      path: (_q, _p, resources) => getJobSplittingURL(resources, compositeLogsUrl, logsUrl),
       accumulate: true,
       throwErrors: false,
     },
