@@ -27,6 +27,7 @@
 * Change validation messages which were represented in code format (UIDATIMP-1473)
 * *BREAKING* bump `react` to `v18`, and dev-deps accordingly (UIDATIMP-1485)
 * Match profile: update options for Instance "Incoming records" (UIDATIMP-1501)
+* Match profile: update options for Holdings "Incoming records" (UIDATIMP-1502)
 * Update Node.js to v18 in GitHub Actions (UIDATIMP-1507)
 * leverage jest-config-stripes for all jest and testing-library packages (UIDATIMP-1508)
 * *BREAKING* bump `react-intl` to `v6.4.4` (UIDATIMP-1520)
