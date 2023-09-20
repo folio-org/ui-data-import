@@ -135,7 +135,8 @@ describe('MultipartUploader class', () => {
     kyMock,
     errorHandler,
     progressHandler,
-    successHandler
+    successHandler,
+    { formatMessage: jest.fn() }
   );
 
   beforeEach(() => {
@@ -176,7 +177,7 @@ describe('MultipartUploader class', () => {
     mockXHR.status = 200;
     readystatechange();
     await waitFor(() => expect(mockXHR.send).toHaveBeenCalledTimes(2));
-    readystatechange = mockXHR.addEventListener.mock.calls[1][1]
+    readystatechange = mockXHR.addEventListener.mock.calls[2][1]
     readystatechange();
     await waitFor(() => expect(successHandler).toBeCalled());
     await waitFor(() => expect(errorHandler).toHaveBeenCalledTimes(0));
@@ -192,7 +193,7 @@ describe('MultipartUploader class', () => {
     readystatechange();
     mockXHR.status = 0;
     await waitFor(() => expect(mockXHR.open).toHaveBeenCalledTimes(2))
-    readystatechange = mockXHR.addEventListener.mock.calls[1][1];
+    readystatechange = mockXHR.addEventListener.mock.calls[2][1];
     uploader.abort();
     let abort = mockXHR.upload.addEventListener.mock.calls[3][1];
     abort();
@@ -213,7 +214,7 @@ describe('MultipartUploader class', () => {
     mockXHR.status = 500;
     mockXHR.responseText = JSON.stringify({ message: 'there was a problem!' })
     await waitFor(() => expect(mockXHR.open).toHaveBeenCalledTimes(2))
-    readystatechange = mockXHR.addEventListener.mock.calls[1][1];
+    readystatechange = mockXHR.addEventListener.mock.calls[2][1];
     readystatechange();
     expect(uploader.abortSignal).toBe(false);
     await waitFor(() => expect(successHandler).toHaveBeenCalledTimes(0));
