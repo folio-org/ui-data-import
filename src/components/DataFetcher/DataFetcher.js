@@ -89,8 +89,10 @@ export class DataFetcher extends Component {
     splitStatus: {
       type: 'okapi',
       path: requestConfiguration,
+      shouldRefreshRemote: () => false,
       throwErrors: false,
-    }
+    },
+    splitConfiguration: {}
   });
 
   static propTypes = {
@@ -113,6 +115,12 @@ export class DataFetcher extends Component {
           PropTypes.shape({ jobExecutions: PropTypes.arrayOf(jobExecutionPropTypes).isRequired }),
         ).isRequired,
       }),
+      splitStatus: PropTypes.shape({
+        hasLoaded: PropTypes.bool,
+        records: PropTypes.arrayOf(
+          PropTypes.shape({ splitStatus: PropTypes.bool.isRequired }),
+        ).isRequired,
+      }),
     }).isRequired,
     updateInterval: PropTypes.number, // milliseconds
   };
@@ -120,6 +128,7 @@ export class DataFetcher extends Component {
   static defaultProps = { updateInterval: DEFAULT_FETCHER_UPDATE_INTERVAL };
 
   state = {
+    statusLoaded: false,
     contextData: { // eslint-disable-line object-curly-newline
       hasLoaded: false,
     },
@@ -127,7 +136,17 @@ export class DataFetcher extends Component {
 
   componentDidMount() {
     this.mounted = true;
-    this.initialize();
+    this.initialFetchPending = false;
+  }
+
+  componentDidUpdate(props, state) {
+    const { resources:{ splitStatus } } = props;
+    const { statusLoaded } = state;
+    if (!statusLoaded && splitStatus?.hasLoaded) {
+      this.setState({ statusLoaded: true }, () => {
+        if (!this.initialFetchPending) this.initialize();
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -164,6 +183,7 @@ export class DataFetcher extends Component {
       .reduce((res, resourceMutator) => res.concat(this.fetchResourceData(resourceMutator)), []);
 
     try {
+      this.initialFetchPending = true;
       await Promise.all(fetchResourcesPromises);
       this.mapResourcesToState();
     } catch (error) {
