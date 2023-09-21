@@ -79,11 +79,10 @@ describe('IncomingRecordMenu component', () => {
     });
 
     describe('when exisiting record type is "MARC_BIBLIOGRAPHIC"', () => {
-      it('should render "MARC Bibliographic", "MARC Authority" and "Static value" options', () => {
+      it('should render "MARC Bibliographic" and "Static value" options', () => {
         const { getByText } = renderIncomingRecordMenu({ open: true, existingRecordType: 'MARC_BIBLIOGRAPHIC' });
 
         expect(getByText('MARC Bibliographic')).toBeVisible();
-        expect(getByText('MARC Authority')).toBeVisible();
         expect(getByText('Static value (submatch only)')).toBeVisible();
       });
     });
