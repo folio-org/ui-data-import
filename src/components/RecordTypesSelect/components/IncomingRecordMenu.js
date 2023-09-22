@@ -51,6 +51,7 @@ IncomingRecordMenu.propTypes = {
   onToggle: PropTypes.func.isRequired,
   keyHandler: PropTypes.func.isRequired,
   dataAttributes: PropTypes.object,
+  existingRecordType: PropTypes.string,
 };
 
 IncomingRecordMenu.defaultProps = { dataAttributes: null };

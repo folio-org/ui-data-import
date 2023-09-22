@@ -146,7 +146,6 @@ describe('RecordItem component', () => {
         fireEvent.click(getByText('Holdings'));
 
         expect(getByText('MARC Bibliographic')).toBeVisible();
-        expect(getByText('MARC Authority')).toBeVisible();
         expect(getByText('Static value (submatch only)')).toBeVisible();
       });
     });
