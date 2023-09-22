@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
@@ -53,66 +53,68 @@ history.push = jest.fn();
 
 const handleProfileSave = jest.spyOn(utils, 'handleProfileSave');
 
+const mockProfileFormValue = {
+  parentProfiles: [{
+    id: '0d85d496-4504-4e79-be97-c6995d101b7e',
+    contentType: 'MAPPING_PROFILE',
+    content: {
+      id: '0d85d496-4504-4e79-be97-c6995d101b7e',
+      name: 'Order from MARC 1',
+      description: 'Order from CoolVendor MARC order record',
+      tags: { tagList: ['cool-vendor'] },
+      incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+      existingRecordType: 'ORDER',
+      deleted: false,
+      userInfo: {
+        firstName: 'DIKU',
+        lastName: 'ADMINISTRATOR',
+        userName: 'diku_admin',
+      },
+      parentProfiles: [],
+      childProfiles: [],
+      metadata: {
+        createdDate: '2023-02-16T17:00:00.558+00:00',
+        createdByUserId: '',
+        createdByUsername: '',
+        updatedDate: '2023-02-18T17:00:00.558+00:00',
+        updatedByUserId: '',
+        updatedByUsername: '',
+      },
+    },
+    childSnapshotWrappers: [],
+  }],
+  childProfiles: [],
+  name: 'testName',
+  folioRecord: null,
+  action: null,
+  description: 'testDescription',
+  id: 'testId',
+  matchDetails: [{
+    existingMatchExpression: {
+      fields: [{
+        label: 'field',
+        value: 'instance.id',
+      }],
+      dataValueType: 'test dataValueType',
+      qualifier: {},
+    },
+    incomingMatchExpression: {
+      dataValueType: 'test data value 1',
+      fields: [{
+        label: 'testLabel_2',
+        value: null,
+      }],
+    },
+    incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+    existingRecordType: 'INSTANCE',
+    matchCriterion: 'EXACTLY_MATCHES',
+  }],
+  incomingRecordType: 'MARC_BIBLIOGRAPHIC',
+  existingRecordType: 'INSTANCE',
+};
 const matchProfilesFormProps = layerType => ({
   initialValues: {
-    profile: {
-      parentProfiles: [{
-        id: '0d85d496-4504-4e79-be97-c6995d101b7e',
-        contentType: 'MAPPING_PROFILE',
-        content: {
-          id: '0d85d496-4504-4e79-be97-c6995d101b7e',
-          name: 'Order from MARC 1',
-          description: 'Order from CoolVendor MARC order record',
-          tags: { tagList: ['cool-vendor'] },
-          incomingRecordType: 'MARC_BIBLIOGRAPHIC',
-          existingRecordType: 'ORDER',
-          deleted: false,
-          userInfo: {
-            firstName: 'DIKU',
-            lastName: 'ADMINISTRATOR',
-            userName: 'diku_admin',
-          },
-          parentProfiles: [],
-          childProfiles: [],
-          metadata: {
-            createdDate: '2023-02-16T17:00:00.558+00:00',
-            createdByUserId: '',
-            createdByUsername: '',
-            updatedDate: '2023-02-18T17:00:00.558+00:00',
-            updatedByUserId: '',
-            updatedByUsername: '',
-          },
-        },
-        childSnapshotWrappers: [],
-      }],
-      childProfiles: [],
-      name: 'testName',
-      folioRecord: null,
-      action: null,
-      description: 'testDescription',
-      id: 'testId',
-      matchDetails: [{
-        existingMatchExpression: {
-          fields: [{
-            label: 'field',
-            value: 'instance.id',
-          }],
-          dataValueType: 'test existing dataValueType',
-        },
-        incomingMatchExpression: {
-          fields: [{
-            label: 'testLabel_2',
-            value: null,
-          }],
-          dataValueType: 'test incoming dataValueType',
-        },
-        incomingRecordType: 'MARC_BIBLIOGRAPHIC',
-        existingRecordType: 'MARC_AUTHORITY',
-        matchCriterion: 'EXACTLY_MATCHES',
-      }],
-      incomingRecordType: 'MARC_BIBLIOGRAPHIC',
-      existingRecordType: 'MARC_AUTHORITY',
-    },
+    profile: mockProfileFormValue,
     matchDetails: [{
       incomingRecordType: 'MARC_BIBLIOGRAPHIC',
       existingRecordType: 'INSTANCE',
@@ -149,6 +151,7 @@ const matchProfilesFormProps = layerType => ({
   form: {
     getState: jest.fn(() => ({
       values: {
+        profile: mockProfileFormValue,
         addRelation: [],
         deleteRelation: [],
       },
@@ -259,8 +262,8 @@ describe('MatchProfilesForm component', () => {
 
     describe('when name is set', () => {
       it('name input should change the value', () => {
-        const { container } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
-        const nameInput = container.querySelector('[name="profile.name"]');
+        renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
+        const nameInput = screen.getByRole('textbox', { name: 'Name' });
 
         fireEvent.change(nameInput, { target: { value: 'test' } });
 
@@ -269,13 +272,13 @@ describe('MatchProfilesForm component', () => {
     });
 
     describe('when incoming MARC Bibliographic record values are set', () => {
-      it('inputs whould change the value', () => {
-        const { container } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
+      it('inputs would change the value', () => {
+        renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
 
-        const fieldInput = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[0].value"]');
-        const in1Input = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[1].value"]');
-        const in2Input = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[2].value"]');
-        const subfieldInput = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[3].value"]');
+        const fieldInput = screen.getByRole('textbox', { name: 'Field' });
+        const in1Input = screen.getByRole('textbox', { name: 'In. 1' });
+        const in2Input = screen.getByRole('textbox', { name: 'In. 2' });
+        const subfieldInput = screen.getByRole('textbox', { name: 'Subfield' });
 
         fireEvent.change(fieldInput, { target: { value: '0011' } });
         fireEvent.change(in1Input, { target: { value: '**' } });
@@ -306,15 +309,12 @@ describe('MatchProfilesForm component', () => {
 
     describe('when form has data to create record', () => {
       it('record should be saved', () => {
-        const {
-          container,
-          getByText,
-        } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
-        const nameInput = container.querySelector('[name="profile.name"]');
-        const fieldInput = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[0].value"]');
-        const in1Input = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[1].value"]');
-        const in2Input = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[2].value"]');
-        const subfield = container.querySelector('[name="profile.matchDetails[0].incomingMatchExpression.fields[3].value"]');
+        const { getByText } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
+        const nameInput = screen.getByRole('textbox', { name: 'Name' });
+        const fieldInput = screen.getByRole('textbox', { name: 'Field' });
+        const in1Input = screen.getByRole('textbox', { name: 'In. 1' });
+        const in2Input = screen.getByRole('textbox', { name: 'In. 2' });
+        const subfield = screen.getByRole('textbox', { name: 'Subfield' });
 
         fireEvent.change(nameInput, { target: { value: 'test' } });
         fireEvent.change(fieldInput, { target: { value: '001' } });

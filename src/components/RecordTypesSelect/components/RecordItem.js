@@ -26,6 +26,7 @@ export const RecordItem = memo(({
   onClick,
   isEditable,
   onToggle,
+  incomingRecordOptions,
 }) => {
   const ref = useRef();
   const [recordSelectorOpen, setRecordSelectorOpen] = useState(false);
@@ -55,6 +56,7 @@ export const RecordItem = memo(({
         onClick(record);
         setRecordSelectorOpen(!recordSelectorOpen);
       }}
+      incomingRecordOptions={incomingRecordOptions}
       {...menuProps}
     />
   );
@@ -117,6 +119,7 @@ RecordItem.propTypes = {
   onClick: PropTypes.func,
   isEditable: PropTypes.bool,
   onToggle: PropTypes.func,
+  incomingRecordOptions: PropTypes.object,
 };
 
 RecordItem.defaultProps = {

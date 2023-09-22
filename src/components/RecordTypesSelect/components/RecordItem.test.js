@@ -9,6 +9,7 @@ import {
 import '../../../../test/jest/__mock__';
 
 import { RecordItem } from './RecordItem';
+import { MATCH_INCOMING_RECORD_TYPES } from '../../../utils';
 
 const onClick = jest.fn();
 
@@ -31,6 +32,7 @@ const renderRecordItem = ({
       className={className}
       isEditable={isEditable}
       onClick={onClick}
+      incomingRecordOptions={MATCH_INCOMING_RECORD_TYPES}
     />
   );
 

@@ -117,11 +117,11 @@ const validate = values => {
     }
   };
 
-  if (isMARCType(incomingRecordType)) {
+  if (isMARCType(incomingRecordType) && !isEmpty(incomingRecordFields)) {
     validateMARCRecordFields('incoming', incomingRecordFields);
   }
 
-  if (isMARCType(existingRecordType)) {
+  if (isMARCType(existingRecordType) && !isEmpty(existingRecordFields)) {
     validateMARCRecordFields('existing', existingRecordFields);
   } else if (!existingRecordFields[0].value) {
     set(errors, 'profile.matchDetails[0].existingMatchExpression.fields[0].value', enterValueMessage);
@@ -147,8 +147,8 @@ export const MatchProfilesFormComponent = memo(({
 
   const { profile } = initialValues;
   const {
-    existingRecordType,
-    incomingRecordType,
+    existingRecordType: initialExistingRecordType,
+    incomingRecordType: initialIncomingRecordType,
     name,
     matchDetails,
   } = profile;
@@ -161,8 +161,8 @@ export const MatchProfilesFormComponent = memo(({
 
   const currentStaticValueType = get(form.getState(), ['values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
 
-  const [incomingRecord, setIncomingRecord] = useState(MATCH_INCOMING_RECORD_TYPES[incomingRecordType]);
-  const [existingRecord, setExistingRecord] = useState(existingRecordType || '');
+  const [incomingRecord, setIncomingRecord] = useState(MATCH_INCOMING_RECORD_TYPES[initialIncomingRecordType]);
+  const [existingRecord, setExistingRecord] = useState(FOLIO_RECORD_TYPES[initialExistingRecordType]);
   const [existingRecordFields, setExistingRecordFields] = useState([]);
   const [staticValueType, setStaticValueType] = useState(currentStaticValueType);
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
@@ -182,7 +182,7 @@ export const MatchProfilesFormComponent = memo(({
 
   const getInitialFields = (matchFields, getDropdownOptions) => {
     if (isEditMode || isDuplicateMode) {
-      const matches = matchFields(jsonSchemas[existingRecordType], existingRecordType);
+      const matches = matchFields(jsonSchemas[initialExistingRecordType], initialExistingRecordType);
 
       return getDropdownOptions(matches);
     }
@@ -243,11 +243,12 @@ export const MatchProfilesFormComponent = memo(({
     }
   };
 
-  const handleExistingRecordChange = (type, matchFields, getDropdownOptions) => {
+  const handleExistingRecordChange = (record, matchFields, getDropdownOptions) => {
+    const { type } = record;
     const matches = matchFields(jsonSchemas[type], type);
     const options = getDropdownOptions(matches);
 
-    setExistingRecord(type);
+    setExistingRecord(record);
     setExistingRecordFields(options);
     changeFormState('profile.existingRecordType', type);
     matchDetails.forEach((item, i) => {
@@ -268,7 +269,7 @@ export const MatchProfilesFormComponent = memo(({
     ? formatMessage({ id: incomingRecord.captionId })
     : '';
   const existingRecordLabel = !isEmpty(existingRecord)
-    ? formatMessage({ id: FOLIO_RECORD_TYPES[existingRecord].captionId })
+    ? formatMessage({ id: existingRecord.captionId })
     : '';
 
   return (
@@ -337,9 +338,9 @@ export const MatchProfilesFormComponent = memo(({
                   <>
                     <RecordTypesSelect
                       id="panel-existing-edit"
-                      existingRecordType={existingRecordType}
-                      incomingRecordType={incomingRecordType}
-                      onExistingSelect={({ type }) => handleExistingRecordChange(type, matchFields, getDropdownOptions)}
+                      existingRecordType={initialExistingRecordType}
+                      incomingRecordType={initialIncomingRecordType}
+                      onExistingSelect={(record) => handleExistingRecordChange(record, matchFields, getDropdownOptions)}
                       onIncomingSelect={handleIncomingRecordChange}
                     />
                     <Accordion
@@ -356,8 +357,8 @@ export const MatchProfilesFormComponent = memo(({
                           <MatchCriterion
                             repeatableIndex={index}
                             matchDetails={field}
-                            incomingRecordType={incomingRecord.type}
-                            existingRecordType={existingRecord}
+                            incomingRecordType={incomingRecord?.type}
+                            existingRecordType={existingRecord?.type}
                             staticValueType={staticValueType}
                             incomingRecordLabel={incomingRecordLabel}
                             existingRecordLabel={existingRecordLabel}

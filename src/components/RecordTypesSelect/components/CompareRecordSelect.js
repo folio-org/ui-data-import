@@ -38,6 +38,7 @@ export const CompareRecordSelect = memo(({
   existingRecord,
   setExistingRecord,
   setIncomingRecord,
+  incomingRecordOptions,
   isEditable,
   isLocalLTR,
 }) => {
@@ -145,6 +146,7 @@ export const CompareRecordSelect = memo(({
             className={css.incomingRecord}
             style={{ height }}
             isEditable={isEditable}
+            incomingRecordOptions={incomingRecordOptions}
           />
           <div
             ref={compareElemRef}
@@ -193,6 +195,7 @@ CompareRecordSelect.propTypes = {
   setIncomingRecord: PropTypes.func,
   incomingRecord: PropTypes.object,
   existingRecord: PropTypes.object,
+  incomingRecordOptions: PropTypes.object,
   isEditable: PropTypes.bool,
   isLocalLTR: PropTypes.bool,
 };

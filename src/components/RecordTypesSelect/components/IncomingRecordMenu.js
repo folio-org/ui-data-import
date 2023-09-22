@@ -1,7 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import { omit } from 'lodash';
 
 import {
   Button,
@@ -16,9 +15,8 @@ export const IncomingRecordMenu = ({
   onToggle,
   keyHandler,
   dataAttributes,
+  incomingRecordOptions,
 }) => {
-  const incomingRecordTypes = omit(MATCH_INCOMING_RECORD_TYPES, MATCH_INCOMING_RECORD_TYPES.MARC_HOLDINGS.type);
-
   return (
     <DropdownMenu
       role="menu"
@@ -29,7 +27,7 @@ export const IncomingRecordMenu = ({
       open={open}
       minWidth="auto"
     >
-      {Object.keys(incomingRecordTypes).map((recordType, i) => {
+      {Object.keys(incomingRecordOptions).map((recordType, i) => {
         return (
           <Button
             key={i}
@@ -47,6 +45,7 @@ export const IncomingRecordMenu = ({
 };
 
 IncomingRecordMenu.propTypes = {
+  incomingRecordOptions: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   onToggle: PropTypes.func.isRequired,

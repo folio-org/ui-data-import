@@ -10,6 +10,7 @@ import {
 import '../../../../test/jest/__mock__';
 
 import { IncomingRecordMenu } from './IncomingRecordMenu';
+import { MATCH_INCOMING_RECORD_TYPES } from '../../../utils';
 
 const onClick = jest.fn();
 
@@ -20,6 +21,7 @@ const renderIncomingRecordMenu = ({ open }) => {
       onClick={onClick}
       onToggle={noop}
       keyHandler={noop}
+      incomingRecordOptions={MATCH_INCOMING_RECORD_TYPES}
     />
   );
 
