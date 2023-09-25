@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  screen,
+  fireEvent,
+} from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';

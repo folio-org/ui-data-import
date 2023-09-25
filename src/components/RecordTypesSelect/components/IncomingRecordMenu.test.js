@@ -21,6 +21,7 @@ const renderIncomingRecordMenu = props => {
       onToggle={noop}
       keyHandler={noop}
       incomingRecordOptions={MATCH_INCOMING_RECORD_TYPES}
+      {...props}
     />
   );
 
