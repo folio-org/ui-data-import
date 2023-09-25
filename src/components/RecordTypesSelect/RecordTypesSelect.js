@@ -2,11 +2,13 @@ import React, {
   memo,
   useState,
   useEffect,
+  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import {
   debounce,
   noop,
+  pick,
 } from 'lodash';
 
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
@@ -19,7 +21,7 @@ import { MATCH_INCOMING_RECORD_TYPES } from '../../utils';
 const useForceUpdate = () => useState()[1];
 
 const useUpdateOnResize = () => {
-  // forceUpdate is used to re-render elements that are depending on DOM such as TreeLine
+  // forceUpdate is used to re-render elements that depend on DOM such as TreeLine
   const forceUpdate = useForceUpdate();
 
   useEffect(() => {
@@ -33,8 +35,8 @@ const useUpdateOnResize = () => {
 
 export const RecordTypesSelect = memo(({
   id,
-  existingRecordType,
-  incomingRecordType,
+  existingRecordType: initialExistingRecord,
+  incomingRecordType: initialIncomingRecord,
   onExistingSelect,
   onIncomingSelect,
   isEditable,
@@ -42,20 +44,66 @@ export const RecordTypesSelect = memo(({
   const IS_LOCALE_LTR = document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT;
 
   useUpdateOnResize();
-  const [existingRecord, setExistingRecord] = useState(undefined);
-  const [incomingRecord, setIncomingRecord] = useState(undefined);
+  const [existingRecord, setExistingRecord] = useState(FOLIO_RECORD_TYPES[initialExistingRecord]);
+  const [incomingRecord, setIncomingRecord] = useState(MATCH_INCOMING_RECORD_TYPES[initialIncomingRecord]);
+  const existingRecordType = existingRecord?.type;
 
-  useEffect(() => {
-    setExistingRecord(FOLIO_RECORD_TYPES?.[existingRecordType]);
-  }, [existingRecordType]);
+  const getIncomingRecordOptions = (recordType) => {
+    switch (recordType) {
+      case FOLIO_RECORD_TYPES.INSTANCE.type: {
+        return pick(MATCH_INCOMING_RECORD_TYPES, [
+          MATCH_INCOMING_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type,
+          MATCH_INCOMING_RECORD_TYPES.STATIC_VALUE.type,
+        ]);
+      }
+      case FOLIO_RECORD_TYPES.HOLDINGS.type: {
+        return pick(MATCH_INCOMING_RECORD_TYPES, [
+          MATCH_INCOMING_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type,
+          MATCH_INCOMING_RECORD_TYPES.STATIC_VALUE.type,
+        ]);
+      }
+      case FOLIO_RECORD_TYPES.ITEM.type: {
+        return pick(MATCH_INCOMING_RECORD_TYPES, [
+          MATCH_INCOMING_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type,
+          MATCH_INCOMING_RECORD_TYPES.STATIC_VALUE.type,
+        ]);
+      }
+      case FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type: {
+        return pick(MATCH_INCOMING_RECORD_TYPES, [
+          MATCH_INCOMING_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type,
+          MATCH_INCOMING_RECORD_TYPES.STATIC_VALUE.type,
+        ]);
+      }
+      case FOLIO_RECORD_TYPES.MARC_AUTHORITY.type: {
+        return pick(MATCH_INCOMING_RECORD_TYPES, [
+          MATCH_INCOMING_RECORD_TYPES.MARC_AUTHORITY.type,
+          MATCH_INCOMING_RECORD_TYPES.STATIC_VALUE.type,
+        ]);
+      }
+      default: {
+        return MATCH_INCOMING_RECORD_TYPES;
+      }
+    }
+  };
 
-  useEffect(() => {
-    setIncomingRecord(MATCH_INCOMING_RECORD_TYPES?.[incomingRecordType]);
-  }, [incomingRecordType]);
+  const incomingRecordOptions = useMemo(
+    () => getIncomingRecordOptions(existingRecordType),
+    [existingRecordType],
+  );
 
-  const handleSelect = selectedRecord => {
-    setExistingRecord(selectedRecord);
+  const handleIncomingRecordSelect = selectedRecord => {
+    onIncomingSelect(selectedRecord);
+    setIncomingRecord(selectedRecord);
+  };
+
+  const handleExistingRecordSelect = selectedRecord => {
     onExistingSelect(selectedRecord);
+    setExistingRecord(selectedRecord);
+
+    const updatedIncomingRecordOptions = getIncomingRecordOptions(selectedRecord.type);
+    const defaultIncomingRecord = Object.values(updatedIncomingRecordOptions)[0];
+
+    handleIncomingRecordSelect(defaultIncomingRecord);
   };
 
   return (
@@ -69,8 +117,9 @@ export const RecordTypesSelect = memo(({
             id={id}
             incomingRecord={incomingRecord}
             existingRecord={existingRecord}
-            setExistingRecord={handleSelect}
-            setIncomingRecord={onIncomingSelect}
+            setExistingRecord={handleExistingRecordSelect}
+            setIncomingRecord={handleIncomingRecordSelect}
+            incomingRecordOptions={incomingRecordOptions}
             isEditable={isEditable}
             isLocalLTR={IS_LOCALE_LTR}
           />
@@ -78,7 +127,7 @@ export const RecordTypesSelect = memo(({
         : (
           <InitialRecordSelect
             id={id}
-            onItemSelect={handleSelect}
+            onItemSelect={handleExistingRecordSelect}
             isEditable={isEditable}
             isLocalLTR={IS_LOCALE_LTR}
           />

@@ -7,10 +7,7 @@ import {
   DropdownMenu,
 } from '@folio/stripes/components';
 
-import {
-  ALLOWED_INCOMING_RECORD_TYPES,
-  MATCH_INCOMING_RECORD_TYPES,
-} from '../../../utils';
+import { MATCH_INCOMING_RECORD_TYPES } from '../../../utils';
 
 export const IncomingRecordMenu = ({
   open,
@@ -18,10 +15,8 @@ export const IncomingRecordMenu = ({
   onToggle,
   keyHandler,
   dataAttributes,
-  existingRecordType,
+  incomingRecordOptions,
 }) => {
-  const incomingRecordTypes = ALLOWED_INCOMING_RECORD_TYPES[existingRecordType];
-
   return (
     <DropdownMenu
       role="menu"
@@ -32,7 +27,7 @@ export const IncomingRecordMenu = ({
       open={open}
       minWidth="auto"
     >
-      {Object.keys(incomingRecordTypes).map((recordType, i) => {
+      {Object.keys(incomingRecordOptions).map((recordType, i) => {
         return (
           <Button
             key={i}
@@ -50,6 +45,7 @@ export const IncomingRecordMenu = ({
 };
 
 IncomingRecordMenu.propTypes = {
+  incomingRecordOptions: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   onToggle: PropTypes.func.isRequired,

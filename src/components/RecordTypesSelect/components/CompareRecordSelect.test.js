@@ -8,6 +8,7 @@ import {
 import '../../../../test/jest/__mock__';
 
 import { CompareRecordSelect } from './CompareRecordSelect';
+import { MATCH_INCOMING_RECORD_TYPES } from '../../../utils';
 
 const compareRecordSelectProps = {
   id: 'match.value-type.static-value',
@@ -33,6 +34,7 @@ const renderCompareRecordSelect = ({
     <CompareRecordSelect
       existingRecord={existingRecord}
       incomingRecord={incomingRecord}
+      incomingRecordOptions={MATCH_INCOMING_RECORD_TYPES}
       isLocalLTR={isLocalLTR}
       id={id}
     />
