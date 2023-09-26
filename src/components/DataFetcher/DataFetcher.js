@@ -19,6 +19,7 @@ import {
 } from '../../utils';
 
 import { DataFetcherContext } from '.';
+import { requestConfiguration } from '../../utils/multipartUpload';
 
 const {
   RUNNING,
@@ -56,19 +57,40 @@ const logsUrlParams = [
 const jobsUrl = createUrlFromArray('metadata-provider/jobExecutions', jobsUrlParams);
 const logsUrl = createUrlFromArray('metadata-provider/jobExecutions', logsUrlParams);
 
+const compositeJobsUrl = createUrlFromArray('metadata-provider/jobExecutions', [...jobsUrlParams, 'subordinationTypeNotAny=COMPOSITE_CHILD']);
+const compositeLogsUrl = createUrlFromArray('metadata-provider/jobExecutions', [...logsUrlParams, 'subordinationTypeNotAny=COMPOSITE_PARENT']);
+
+export function getJobSplittingURL(resources, splittingURL, nonSplitting) {
+  const { split_status: splitStatus } = resources;
+  if (!splitStatus?.isPending) {
+    if (splitStatus?.records[0]?.splitStatus) {
+      return splittingURL;
+    } else if (splitStatus?.records[0]?.splitStatus === false) {
+      return nonSplitting;
+    }
+  }
+  return undefined;
+}
+
 @stripesConnect
 export class DataFetcher extends Component {
   static manifest = Object.freeze({
     jobs: {
       type: 'okapi',
-      path: jobsUrl,
+      path: (_q, _p, resources) => getJobSplittingURL(resources, compositeJobsUrl, jobsUrl),
       accumulate: true,
       throwErrors: false,
     },
     logs: {
       type: 'okapi',
-      path: logsUrl,
+      path: (_q, _p, resources) => getJobSplittingURL(resources, compositeLogsUrl, logsUrl),
       accumulate: true,
+      throwErrors: false,
+    },
+    splitStatus: {
+      type: 'okapi',
+      path: requestConfiguration,
+      shouldRefreshRemote: () => false,
       throwErrors: false,
     },
   });
@@ -100,20 +122,32 @@ export class DataFetcher extends Component {
   static defaultProps = { updateInterval: DEFAULT_FETCHER_UPDATE_INTERVAL };
 
   state = {
+    statusLoaded: false,
     contextData: { // eslint-disable-line object-curly-newline
       hasLoaded: false,
     },
   };
 
   async componentDidMount() {
+    const { resources:{ splitStatus } } = this.props;
+    const { statusLoaded } = this.state;
     this.mounted = true;
-    await this.fetchResourcesData(true);
-    this.updateResourcesData();
+    this.initialFetchPending = false;
+    if (!statusLoaded && splitStatus?.hasLoaded) {
+      this.setState({ statusLoaded: true }, () => {
+        if (!this.initialFetchPending) this.initialize();
+      });
+    }
   }
 
   componentWillUnmount() {
     this.mounted = false;
     clearTimeout(this.timeoutId);
+  }
+
+  initialize = async () => {
+    await this.fetchResourcesData(true);
+    this.updateResourcesData();
   }
 
   updateResourcesData() {
@@ -133,10 +167,10 @@ export class DataFetcher extends Component {
       return;
     }
 
-    const { mutator } = this.props;
+    const { mutator: { jobs, logs } } = this.props;
 
     const fetchResourcesPromises = Object
-      .values(mutator)
+      .values({ jobs, logs })
       .reduce((res, resourceMutator) => res.concat(this.fetchResourceData(resourceMutator)), []);
 
     try {
@@ -163,12 +197,12 @@ export class DataFetcher extends Component {
 
   /** @param  {boolean} [isEmpty] flag to fill contextData with empty data */
   mapResourcesToState(isEmpty) {
-    const { resources } = this.props;
+    const { resources: { jobs, logs } } = this.props;
 
     const contextData = { hasLoaded: true };
 
-    forEach(resources, (resourceValue, resourceName) => {
-      contextData[resourceName] = isEmpty ? [] : get(resourceValue, ['records', 0, 'jobExecutions'], {});
+    forEach({ jobs, logs }, (resourceValue, resourceName) => {
+      contextData[resourceName] = isEmpty ? [] : get(resourceValue, ['records', 0, 'jobExecutions'], []);
     });
 
     this.setState({ contextData });
