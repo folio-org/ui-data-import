@@ -10,31 +10,31 @@ import {
 
 const mockJob = {
   compositeDetails: {
-    fileUploadedState:{ totalRecordsCount: 100, currentlyProcessedCount: 33, chunksCount: 10},
-    parsingInProgressState:{ totalRecordsCount: 100, currentlyProcessedCount: 33, chunksCount: 10},
-    parsingFinishedState:{ totalRecordsCount: 100, currentlyProcessedCount: 33, chunksCount: 10},
-    processingInProgressState:{ totalRecordsCount: 100, currentlyProcessedCount: 33, chunksCount: 10},
-    processingFinishedState:{ totalRecordsCount: 100, currentlyProcessedCount: 33, chunksCount: 10},
-    commitInProgressState:{ totalRecordsCount: 100, currentlyProcessedCount: 33, chunksCount: 10},
-    errorState:{ totalRecordsCount: 50, currentlyProcessedCount: 10, chunksCount: 30},
-    discardedState:{ totalRecordsCount: 50, currentlyProcessedCount: 10, chunksCount: 30},
-    cancelledState:{ totalRecordsCount: 50, currentlyProcessedCount: 10, chunksCount: 30},
-    committedState:{ totalRecordsCount: 4, currentlyProcessedCount: 2, chunksCount: 50}
+    fileUploadedState:{ totalRecordsCount: 100, currentlyProcessedCount: 33, chunksCount: 10 },
+    parsingInProgressState:{ totalRecordsCount: 100, currentlyProcessedCount: 33, chunksCount: 10 },
+    parsingFinishedState:{ totalRecordsCount: 100, currentlyProcessedCount: 33, chunksCount: 10 },
+    processingInProgressState:{ totalRecordsCount: 100, currentlyProcessedCount: 33, chunksCount: 10 },
+    processingFinishedState:{ totalRecordsCount: 100, currentlyProcessedCount: 33, chunksCount: 10 },
+    commitInProgressState:{ totalRecordsCount: 100, currentlyProcessedCount: 33, chunksCount: 10 },
+    errorState:{ totalRecordsCount: 50, currentlyProcessedCount: 10, chunksCount: 30 },
+    discardedState:{ totalRecordsCount: 50, currentlyProcessedCount: 10, chunksCount: 30 },
+    cancelledState:{ totalRecordsCount: 50, currentlyProcessedCount: 10, chunksCount: 30 },
+    committedState:{ totalRecordsCount: 4, currentlyProcessedCount: 2, chunksCount: 50 }
   }
 };
 
 const mockNaNJob = {
   compositeDetails: {
-    fileUploadedState:{ chunksCount: 10},
-    parsingInProgressState:{ chunksCount: 10},
-    parsingFinishedState:{ chunksCount: 10},
-    processingInProgressState:{ chunksCount: 10},
-    processingFinishedState:{ chunksCount: 10},
-    commitInProgressState:{ chunksCount: 10},
-    errorState:{ chunksCount: 30},
-    discardedState:{ chunksCount: 30},
-    cancelledState:{ chunksCount: 30},
-    committedState:{ chunksCount: 50}
+    fileUploadedState:{ chunksCount: 10 },
+    parsingInProgressState:{ chunksCount: 10 },
+    parsingFinishedState:{ chunksCount: 10 },
+    processingInProgressState:{ chunksCount: 10 },
+    processingFinishedState:{ chunksCount: 10 },
+    commitInProgressState:{ chunksCount: 10 },
+    errorState:{ chunksCount: 30 },
+    discardedState:{ chunksCount: 30 },
+    cancelledState:{ chunksCount: 30 },
+    committedState:{ chunksCount: 50 }
   }
 };
 

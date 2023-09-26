@@ -609,7 +609,7 @@ describe('ViewAllLogs - getLogsPath function', () => {
   });
 
   it('returns undefined path if splitStatus has not responded yet', () => {
-    expect(getLogsPath(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: false }} })).not.toBeDefined();
+    expect(getLogsPath(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: false } } })).not.toBeDefined();
   });
 });
 
@@ -619,7 +619,7 @@ describe('ViewAllLogs - getLogsQuery function', () => {
   });
 
   it('returns expected query if multipart functionality is not available', () => {
-    expect(getLogsQuery(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: true, records: [{splitStatus: false}] } }})).not.toHaveProperty('subordinationTypeNotAny', ['COMPOSITE_PARENT']);
+    expect(getLogsQuery(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: true, records: [{ splitStatus: false }] } } })).not.toHaveProperty('subordinationTypeNotAny', ['COMPOSITE_PARENT']);
   });
 
   it('returns empty query if multipart check has not responded yet', () => {
